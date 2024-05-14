@@ -1,6 +1,9 @@
 ﻿using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Model.Document;
+using CSETWebCore.Model.Question;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Elfie.Model.Map;
 using System.Collections.Generic;
 
 namespace CSETWebCore.Api.Controllers
@@ -21,6 +24,13 @@ namespace CSETWebCore.Api.Controllers
                                                                 [FromQuery] int id6, [FromQuery] int id7, [FromQuery] int id8, [FromQuery] int id9, [FromQuery] int id10)
         {
             return _context.Get_Cie_Merge_Conflicts(id1, id2, id3, id4, id5, id6, id7, id8, id9, id10);
+        }
+
+        [HttpPost]
+        [Route("api/saveNewDocumentsForMerge")]
+        public IActionResult SaveNewDocumentsForMerge([FromBody] List<DocumentWithAnswerId> documents)
+        {
+            return Ok();
         }
     }
 }
