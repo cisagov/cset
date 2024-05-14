@@ -202,7 +202,7 @@ export class MergeCieAnalysisComponent implements OnInit {
         console.log(myDocuments)
 
         if (myDocuments.length > 0) {
-          this.maturitySvc.getQuestionsList("CIE", false).subscribe(
+          this.maturitySvc.getQuestionsList(false).subscribe(
             (response: any) => {
               console.log(response)
               for (let i = 0; i < response.groupings[0].subGroupings.length; i++) {
