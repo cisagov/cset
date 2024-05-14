@@ -21,744 +21,209 @@
   SOFTWARE.
 -------------------------->
 <div class="white-panel d-flex justify-content-start flex-column flex-11a tutorial">
-  <h3 class="wrap-text mb-3">CMMC Tutorial</h3>
-
-  <article>
-    <div class="description_on_page">
-      <div class="mb-5">
-
-        <h4>1. CMMC 2.0 Tutorial for CSET® </h4>
-
-        <div class="mb-5">
-          <h5>Overview</h5>
-
-          <p>
-            The CMMC framework consists of the security requirements from NIST SP 800-171 Rev 2, Protecting Controlled
-            Unclassified Information in Nonfederal Systems and Organizations, and a subset of the requirements from NIST
-            SP
-            800-172, Enhanced Security Requirements for Protecting Controlled Unclassified Information: A Supplement to
-            NIST
-            Special Publication 800-171. The model framework organizes these practices into a set of domains, which map
-            directly to the NIST SP 800-171 Rev 2 families.There are three levels within CMMC-Level 1, Level 2, and
-            Level
-            3-as described in the sections below.
-          </p>
-        </div>
-
-        <div class="mb-5">
-          <h5>CMMC Levels</h5>
-
-          <p>
-            The CMMC model measures the implementation of cybersecurity requirements at three levels. Each level
-            consists
-            of
-            a set of CMMC practices:
-          </p>
-
-          <ul>
-            <li>Level 1: Encompasses the basic safeguarding requirements for FCI specified in FAR Clause 52.204-21.</li>
-            <li>Level 2: Encompasses the security requirements for CUI specified in NIST SP 800-171 Rev 2 per DFARS
-              Clause
-              252.204-7012 [3, 4, 5].</li>
-            <li>Level 3: Information on Level 3 will be released at a later date and will contain a subset of the
-              security
-              requirements specified in NIST SP 800-172 [6].</li>
-          </ul>
-
-          <p>
-            The CMMC levels and associated sets of practices across domains are cumulative. More specifically, for an
-            organization to achieve a specific CMMC level, it must also demonstrate achievement of the preceding lower
-            levels. For the case in which an organization does not meet its targeted level, it will be certified at the
-            highest level for which it has achieved all applicable practices.
-          </p>
-
-
-          <h6>CMMC 2.0 Overview</h6>
-
-          <p>
-            Figure 1 provides an overview of the CMMC 2.0 Levels.
-          </p>
-
-          <div class="mb-5">
-            <img alt="" style="border: solid 0px; width: 800px" class="h-auto" [class.w-100]="layoutSvc.hp"
-              src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom.png"
-              data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_2.png"
-              data-full-width="2254" data-full-height="968" />
-
-            <p class="font-italic">
-              Figure 1. CMMC 1.0 to 2.0 Level Overview
-            </p>
-          </div>
-
-
-          <h6>CMMC Level 1</h6>
-
-          <p>Practices: Foundational</p>
-          <p>
-            Level 1 focuses on the protection of FCI and consists of only practices that correspond to the basic
-            safeguarding requirements specified in 48 CFR 52.204-21, commonly referred to as the FAR Clause [3].
-          </p>
-
-          <h6>CMMC Level 2</h6>
-          <p>
-            Practices: Advanced
-          </p>
-          <p>
-            Level 2 focuses on the protection of CUI and encompasses the 110 security requirements specified in NIST SP
-            800-171 Rev 2 [4].
-          </p>
-
-          <h6>CMMC Level 3</h6>
-          <p>
-            Practices: Expert
-          </p>
-          <p>
-            Level 3 will be based on a subset of NIST SP 800-172 requirements [6]. Details will be released at a later
-            date.
-          </p>
-
-
-        </div>
-
-        <div class="mb-5">
-          <h5>CMMC Domains</h5>
-
-          <p>
-            The CMMC model consists of 14 domains that align with the families specified in NIST SP 800-171. These
-            domains
-            and their abbreviations are as follows:
-          </p>
-          <ul>
-            <li>Access Control (AC)</li>
-            <li>Awareness & Training (AT)</li>
-            <li>Audit & Accountability (AU)</li>
-            <li>Configuration Management (CM)</li>
-            <li>Identification & Authentication (IA)</li>
-            <li>Incident Response (IR)</li>
-            <li>Maintenance (MA)</li>
-            <li>Media Protection (MP)</li>
-            <li>Personnel Security (PS)</li>
-            <li>Physical Protection (PE)</li>
-            <li>Risk Assessment (RA)</li>
-            <li>Security Assessment (CA)</li>
-            <li>System and Communications Protection (SC)</li>
-            <li>System and Information Integrity (SI)</li>
-          </ul>
-        </div>
-
-        <div class="mb-5">
-          <h5>CMMC Practices</h5>
-
-          <h6>Overview</h6>
-
-          <p>
-            The CMMC model measures the implementation of the NIST SP 800-171 Rev 2 [4] security requirements. The
-            practices
-            originate from the safeguarding requirements and security requirements specified in FAR Clause 52.204-21 [3]
-            and
-            DFARS Clause 252.204-7012 [5], respectively.
-          </p>
-
-          <ul>
-            <li>Level 1 is equivalent to all of the safeguarding requirements from FAR Clause 52.204-21.</li>
-            <li> Level 2 is equivalentto all of the security requirements in NIST SP 800-171 Revision 2.</li>
-            <li>Level 3 will be based on a subset of NIST SP 800-172 and more detailed information will be released at a
-              later date.</li>
-          </ul>
-
-
-
-          <h6>List of Practices</h6>
-
-          <p>
-            This subsection itemizes the practices for each domain and at each level. Each practice has a practice
-            identification number in the format &mdash; <strong>DD.L#-REQ</strong> &mdash; where:
-          </p>
-
-          <ul>
-            <li>DD is the two-letter domain abbreviation;</li>
-            <li>L# is the level number; and</li>
-            <li>REQ is the NIST SP 800-171 Rev 2 or NIST SP 800-172 security requirement number.</li>
-          </ul>
-
-          <p>
-            Below the identification number, a short name identifier is provided for each practice, meant to be used for
-            quick reference only. Finally, each practice has a complete practice statement.
-          </p>
-
-        </div>
-      </div> <!-- end of section 1. -->
-
-
-      <div class="mb-5">
-        <h4>2. Scoping</h4>
-
-        <h5>Level 1 Self-Assessment Scope</h5>
-
-        <p>
-          Prior to a Level 1 Cybersecurity Maturity Model Certification (CMMC) Self-Assessment, the contractor must
-          specify the CMMC Self-Assessment Scope. The CMMC Self-Assessment Scope informs which assets within the
-          contractor's environment will be assessed and the details of the self-assessment.
-        </p>
-
-        <h6>
-          FCI Assets
-        </h6>
-        <p>
-          Federal Contract Information (FCI) Assets process, store, or transmit FCI as follows:
-        </p>
-        <ul>
-          <li>Process - FCI can be used by an asset (e.g., accessed, entered, edited, generated, manipulated, or
-            printed).
-          </li>
-          <li>Store - FCI is inactive or at rest on an asset (e.g., located on electronic media, in system component
-            memory, or in physical format such as paper documents).</li>
-          <li>Transmit - FCI is being transferred from one asset to another asset (e.g., data in transit using physical
-            or
-            digital transport methods).</li>
-        </ul>
-
-        <p>
-          FCI Assets are part of the CMMC Self-Assessment Scope and are assessed against applicable CMMC practices.
-        </p>
-        <p>
-          Additional information on CMMC 2.0 Level 1 scope can be found in
-          <a href="{{documentURL('CMMC_Scope_Level1_V2.0_FINAL_20211203.pdf')}}" target="_blank">CMMC Self-Assessment
-            Scope Level 1 Version 2.0 December 2021</a>.
-        </p>
-
-        <h6>
-          Additional Guidance on Level 1 Scoping Activities
-        </h6>
-        <p>
-          To appropriately scope a CMMC Level 1 self-assessment, the contractor should consider the people, technology,
-          facilities, and external service providers within their environment that process, store, or transmit FCI.
-        </p>
-      </div>
-
-
-
-      <div class="mb-5">
-
-
-        <h5>Level 2 Scope</h5>
-
-        <h6>
-          Identifying the CMMC Assessment Scope
-        </h6>
-        <p>
-          For CMMC 2.0 scope guidance, the <a href="{{documentURL('CMMC_Scope_Level2_V2.0_FINAL_20211203.pdf')}}"
-            target="_blank">CMMC Self-Assessment
-            Scope Level 2 Version 2.0 December 2021</a> provides
-          information on the <strong>categorization of assets</strong> that, in turn, inform the specification of
-          assessment scope for a
-          Cybersecurity Maturity Model Certification (CMMC) assessment. The scoping guide discusses CMMC asset
-          categories as well as the associated requirements for Defense Industrial Base (DIB) contractors and CMMC
-          assessments.
-        </p>
-
-        <h6>
-          CMMC Asset Categories
-        </h6>
-        <p>
-          The <a href="{{documentURL('CMMC_AG_Level1_V2.0_Final_20211210.pdf')}}" target="_blank">CMMC Assessment Guide
-            Level 2 Version 2.0 December 2021</a> maps contractor assets into one of five
-          categories. <strong>Table 1 in the Assessment Guide</strong> describes each asset category, contractor
-          requirements, and
-          assessment requirements. Additional information about each asset category is provided in the ensuing sections.
-        </p>
-
-        <h6>
-          Defining the CMMC Assessment Scope
-        </h6>
-        <p>
-          After categorizing their assets, the contractor then specifies the CMMC Assessment Scope. See the <a
-            href="{{documentURL('CMMC_AG_Level2_V2.0_Final_20211210.pdf')}}" target="_blank">CMMC
-            Self-Assessment Scope Level 2 Version 2.0 December 2021</a> for next steps in the scoping process.
-        </p>
-      </div>
-
-      <div class="mb-5">
-
-
-        <h4>3. Navigating the Assessment</h4>
-
-        <h5>CMMC Practice Question Layout </h5>
-
-        <img alt="Image of the various components of the CSET tool with annotations."
-          style="border: solid 1px #ccc; width: 776px" class="h-auto" [class.w-100]="layoutSvc.hp"
-          src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_3.png"
-          data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_4.png"
-          data-full-width="2208" data-full-height="862" />
-
-        <div class="pl-5 mt-4 mb-5">
-          <div class="mb-3">
-            <div class="mb-2 d-flex flex-row align-items-center">
-              <img alt="" style="border: solid 0px;  float: left; " width="40" height="40"
-                class="de_custom_img de_780D01ADE8"
-                src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_5.png" />
-              <h5>Domain and Domain Acronym</h5>
-            </div>
-
-            <img alt="" style="border: solid 0px;  " width="150" height="22" class="mb-4"
-              src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_6.png"
-              data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_7.png"
-              data-full-width="352" data-full-height="52" />
-          </div>
-
-          <div class="mb-3">
-            <div class="mb-2 d-flex flex-row align-items-center">
-              <img alt="" style="border: solid 0px;  float: left; " width="40" height="40"
-                class="de_custom_img de_780D01ADE8"
-                src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_8.png" />
-              <h5>Practice Identifier</h5>
-            </div>
-
-            <img alt="" style="border: solid 0px;  " width="150" height="39" class="de_custom_img de_780D01ADE8"
-              src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_9.png"
-              data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_9.png"
-              data-full-width="192" data-full-height="50" />
-
-            <p>
-              Each practice has a practice identification number in the format &mdash; DD.L#-REQ &mdash; where:
-            </p>
-            <ul>
-              <li>DD is the two-letter domain abbreviation;</li>
-              <li>L# is the level number; and</li>
-              <li>
-                REQ is the NIST SP 800-171 Rev 2 or NIST SP 800-172 security requirement number.
-              </li>
-            </ul>
-          </div>
-
-
-          <div class="mb-3">
-            <div class="mb-2 d-flex flex-row align-items-center">
-              <img alt="" style="border: solid 0px;  float: left; " width="40" height="40"
-                class="de_custom_img de_780D01ADE8"
-                src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_10.png" />
-              <h5>Level Indicator</h5>
-            </div>
-          </div>
-
-          <img alt="" style="border: solid 0px;  " width="100" height="33" class="mb-3"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_11.png" />
-
-          <p>
-            Indicates the
-            corresponding level associated with the practice statement. CMMC provides a benchmark against which an
-            organization can evaluate the current <strong>level</strong> of capability of its processes, practices, and
-            methods and set goals and priorities for improvement.
-          </p>
-
-
-          <div class="mb-3">
-            <div class="mb-2 d-flex flex-row align-items-center">
-              <img alt="" style="border: solid 0px;  float: left; " width="40" height="40"
-                class="de_custom_img de_780D01ADE8"
-                src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_12.png" />
-              <h5>CSET Icons</h5>
-            </div>
-          </div>
-
-          <img alt="" style="border: solid 0px; width: 400px" class="h-auto" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_13.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_14.png"
-            data-full-width="834" data-full-height="80" />
-          <p>In the
-            <strong>CSET Icons</strong> section below, you will find a breakdown of each of the CSET-specific icons and
-            how they help
-            facilitate a CMMC assessment.
-          </p>
-
-
-          <div class="mb-3">
-            <div class="mb-2 d-flex flex-row align-items-center">
-              <img alt="" style="border: solid 0px;  float: left; " width="40" height="40"
-                src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_15.png" />
-              <h5>Assessment Findings (CSET Answer Key)</h5>
-            </div>
-          </div>
-
-          <img alt="" style="border: solid 0px;  " width="200" height="53"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_16.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_17.png"
-            data-full-width="434" data-full-height="116" />
-          <p>A full breakdown of
-            the CMMC Assessment Findings (CSET Answer Key) is below.</p>
-
-
-
-          <div class="mb-3">
-            <div class="mb-2 d-flex flex-row align-items-center">
-              <img alt="" style="border: solid 0px;  float: left; " width="40" height="40"
-                src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_18.png" />
-              <h5>Progress Indicator</h5>
-            </div>
-          </div>
-
-          <img alt="" style="border: solid 0px;  " width="50" height="49" class="de_custom_img de_780D01ADE8"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_19.png" />
-
-          <p>
-            The Progress Indicator will turn blue and complete the circle as the questions in each Capability area are
-            completed. When all the questions are complete, the Progress Indicator will show a check mark.
-          </p>
-
-
-          <div class="mb-5">
-
-            <p>
-              <img alt="Image of the Yes Icon answer choice." style="vertical-align: baseline" width="53" height="40"
-                class="mr-3" src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_20.png" />
-
-              <strong>MET</strong> is presented as <strong>Yes</strong> in the CSET Assessment Tool. The contractor
-              successfully meets the practice. For each
-              practice marked MET, the assessor includes statements that indicate the response conforms to the
-              objectives
-              and documents the appropriate evidence to support the response.
-            </p>
-
-            <p>
-              For <strong>MET (Yes)</strong>, the assessor can use the <strong>Observations</strong> field to record
-              applicable observations.
-            </p>
-
-            <img alt="" style="border: solid 1px #ccc; width: 600px" class="h-auto" [class.w-100]="layoutSvc.hp"
-              src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_21.png"
-              data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_22.png"
-              data-full-width="1866" data-full-height="290" />
-          </div>
-
-          <div class="mb-5">
-            <p>
-              <img alt="Image of the No Icon answer choice." style="vertical-align: baseline" width="53" height="40"
-                class="mr-3" src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_23.png" />
-
-              <strong>NOT MET</strong> is presented as <strong>NO</strong> in the CSET Assessment tool. The contractor
-              has
-              not met the practice. For each practice marked NOT MET, the assessor includes statements that explain why
-              and documents the appropriate evidence that the contractor does not conform to the objectives.
-            </p>
-
-            <p>
-              For <strong>NOT MET</strong> <strong>(No)</strong>, the assessor can use the
-              <strong>Observations</strong> field to record applicable observations.
-            </p>
-
-            <img alt="" style="border: solid 1px #ccc; width: 600px" class="h-auto" [class.w-100]="layoutSvc.hp"
-              src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_24.png"
-              data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_25.png"
-              data-full-width="1875" data-full-height="255" />
-          </div>
-
-          <div class="mb-5">
-            <p>
-              <img alt="" style="vertical-align: baseline" class="mr-3" width="50" height="47"
-                src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_26.png" /> <strong>NOT
-                APPLICABLE</strong> indicates the practice does not apply to the contractor. For each practice marked
-              NA, the assessor is required to include a statement that explains why the practice does not apply to the
-              contractor.
-            </p>
-            <p>Assessor comments may be recorded in the <strong>Observations</strong> field in the
-              CSET icon tray.</p>
-          </div>
-
-
-          <div class="mb-5">
-            <h5>Mark for Review</h5>
-            <p>
-              The <strong>Mark for Review</strong> function allows a user to mark a practice
-              question
-              for further review.
-            </p>
-            <img alt="" style="border: solid 1px #ccc;" width="200" height="100"
-              src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_27.png"
-              data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_28.png"
-              data-full-width="630" data-full-height="316" />
-          </div>
-
-        </div>
-
-
-
-        <h4>3.1 CMMC 2.0 Assessment Components in CSET®</h4>
-
-        <div class="mb-5">
-          <h5>Supplemental Guidance</h5>
-
-          <p>Users can refer to the supporting authorities and additional guidance provided under
-            <strong>Supplemental Guidance</strong>.
-          </p>
-
-          <p><em>NOTE: The "FURTHER GUIDANCE" section below NIST SP 800-171A
-              guidance is derived from previous CMMC 1.02 guidance for informational purposes only. It will be updated
-              when the
-              CMMC 2.0 publications become available.</em></p>
-
-
-          <img alt="" style="border: solid 1px #ccc; width: 600px" class="h-auto" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_29.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_30.png"
-            data-full-width="1848" data-full-height="1383" />
-        </div>
-
-        <div class="mb-5">
-          <h5>Comments </h5>
-          <p>
-            The comments
-            function
-            allows the assessor to record non-structured comments for each question during the assessment. In contrast,
-            the
-            Observations function (also useful for commenting) is more rigid and contains required fields.
-          </p>
-
-          <img alt="" style="border: solid 1px #ccc; width: 600px" class="h-auto" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_31.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_32.png"
-            data-full-width="1835" data-full-height="533" />
-        </div>
-
-        <div class="mb-5">
-          <h5>Artifacts/Documents </h5>
-          <p>
-            Assessors can use
-            the
-            Artifacts/Documents function to attach relevant evidence to each practice question.
-          </p>
-
-          <img alt="" style="border: solid 1px #ccc; width: 600px" class="h-auto" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_33.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_34.png"
-            data-full-width="1835" data-full-height="619" />
-        </div>
-
-        <div class="mb-5">
-          <h5>Attached Artifacts/Documents</h5>
-          <p>
-            The documents
-            will
-            appear listed by file name beneath the question when attached. A red indicator will appear on the
-            icon
-            for each question where evidence has been attached.
-          </p>
-
-          <img alt="" style="border: solid 1px #ccc; width: 600px" class="h-auto" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_33.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_34.png"
-            data-full-width="1835" data-full-height="619" />
-
-        </div>
-
-        <div class="mb-5">
-          <h5>Attached Documents Storage</h5>
-          <p>
-            Access your attached documents, artifacts, and evidence under the <img alt="" style="border: solid 0px;  "
-              width="40" height="31"
-              src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_35.png" /> Tools
-            Menu next to the CSET Logo on the upper left side of the screen.
-          </p>
-
-          <img alt="Image shows the Assessment Documents location under the Tools menu."
-            style="border: solid 0px; width: 400px" class="h-auto mb-4" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_36.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_37.png"
-            data-full-width="1135" data-full-height="985" />
-
-          <p>
-            The Assessment Documents tab will open up a pop-up window showing all documents that are attached to the
-            Assessment. Documents are organized by title.
-          </p>
-
-          <img alt="" style="border: solid 1px #ccc; width: 600px" class="h-auto" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_38.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_39.png"
-            data-full-width="2390" data-full-height="1552" />
-
-        </div>
-
-
-        <div class="mb-5">
-          <h5>References </h5>
-          <p>
-            Users can click on the <strong>References</strong> icon to open links to CMMC .pdf
-            documentation. Documents will open in a separate window.&#160; These documents can also be found in the
-            <a href="/resource-library" target="_blank">CSET Resource Library.</a>
-          </p>
-
-          <img alt="" style="border: solid 1px #ccc; width: 600px" class="h-auto" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_40.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_41.png"
-            data-full-width="1833" data-full-height="942" />
-        </div>
-
-
-        <div class="mb-5">
-          <h5>Observations</h5>
-          <p>
-            The Observations Icon opens a pop-up window that allows an assessor to record their observations for each
-            practice question.
-          </p>
-          <img alt="" style="border: solid 1px #ccc; width: 600px" class="h-auto mb-4" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_42.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_43.png"
-            data-full-width="1842" data-full-height="682" />
-          <p>
-            Once a user has entered their observations, a red indicator highlights the icon and the observations are
-            listed beneath the practice question in order of entry.
-          </p>
-        </div>
-
-
-        <div class="mb-5">
-          <h5>Observations Details Pop-Up Screen</h5>
-          <p>
-            After selecting the Observations Icon, the Observations Details screen appears.
-          </p>
-          <img alt="" style="border: solid 1px #ccc; width: 600px" class="h-auto" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_44.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_45.png"
-            data-full-width="1981" data-full-height="1376" />
-        </div>
-
-        <div class="mb-5">
-          <h5>Feedback</h5>
-          <p>
-            Users can record Feedback during the assessment for submission to CSET/CISA. Some examples of submitted
-            feedback include commentary on the subject matter of the question, the structure of the question, and how
-            the question and layout can be improved.
-          </p>
-          <img alt="" style="border: solid 1px #ccc; width: 600px" class="h-auto" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_46.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_47.png"
-            data-full-width="1832" data-full-height="400" />
-        </div>
-
-
-        <div class="mb-5">
-
-          <h4>3.2 Results </h4>
-
-          <img alt="Image shows the Results tab selected." style="border: solid 1px #ccc; width: 350px"
-            class="h-auto mb-4" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_48.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_49.png"
-            data-full-width="760" data-full-height="96" />
-
-          <p>
-            CMMC presents the Results of an assessment with the following sidebar navigation options:
-          </p>
-
-          <img alt="" style="border: solid 1px #ccc;  " width="200" height="450" class="de_custom_img de_780D01ADE8"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_50.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_51.png"
-            data-full-width="579" data-full-height="1302" />
-          <p>
-          <p class="font-italic">Figure: Navigation showing CMMC 2.0 Results options.
-          </p>
-
-          <p>
-            The primary deliverables of the CMMC 2.0 assessment are the <strong>Performance by
-              Level</strong>, <strong>Performance by Domain</strong>, and the <strong>NIST 800-171A SPRS</strong>
-            interpretation based on the 110 requirements in NIST 800-171. To learn more about the CMMC Results and
-            Report
-            functionality, visit the <strong>Results</strong> and <strong>Reports</strong> section of the CMMC User
-            Guide.
-            To learn more about the NIST SPRS scoring methodology presented in the <strong>Results</strong> section,
-            please review
-            <a href="{{documentURL('NIST SP 800-171 Assessment Methodology Version 1.2.1  6.24.2020.pdf')}}"
-              target="_blank">NIST SP 800-171 DoD Assessment Methodology, Version 1.2.1.</a>
-          </p>
-
-          <img alt="" style="border: solid 1px #ccc; width: 400px" class="h-auto" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_52.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_53.png"
-            data-full-width="935" data-full-height="1396" />
-          <p class="font-italic mb-4">
-            Figure: Performance by Level
-          </p>
-
-          <img alt="" style="border: solid 1px #ccc; width: 600px" class="h-auto" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_54.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_55.png"
-            data-full-width="1898" data-full-height="1124" />
-          <p class="font-italic mb-4">
-            Figure: Performance by Domain
-          </p>
-
-          <img alt="" style="border: solid 1px #ccc; width: 600px" class="h-auto" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_56.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_57.png"
-            data-full-width="2512" data-full-height="1661" />
-          <p class="font-italic">
-            Figure: SPRS Scorecard
-          </p>
-        </div>
-
-
-
-        <div class="mb-5">
-          <h4>3.3 Reports</h4>
-
-          <p>
-            This section
-            includes
-            the <strong>Executive Summary Report, Deficiency Report,</strong> and
-            <strong>Comments/Questions Marked for Review Report</strong> specific to CMMC 2.0.
-          </p>
-
-          <img alt="" style="border: solid 1px #ccc; width: 600px" class="h-auto" [class.w-100]="layoutSvc.hp"
-            src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_58.png"
-            data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_59.png"
-            data-full-width="2544" data-full-height="1317" />
-
-        </div>
-
-
-      </div> <!-- end of section 3 -->
-
-
-      <div class="mb-5">
-        <h4>4. Submit Feedback</h4>
-
-        <p>At the end of the assessment, users are invited to submit their feedback on the CSET Assessment.</p>
-
-        <img alt="" style="border: solid 1px #ccc; width: 600px" class="h-auto" [class.w-100]="layoutSvc.hp"
-          src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_60.png"
-          data-full-src="assets/images/CMMC/tutorial2/drex_cmmc_2_0_tutorial_for_cset___custom_61.png"
-          data-full-width="2371" data-full-height="1224" />
-
-      </div>
-
-
-      <div class="mb-5">
-        <h4>References</h4>
-        <ol>
-          <li>U.S. Executive Office of the President, Council of Economic Advisers (CEA). The Cost of Malicious Cyber
-            Activity to the U.S. Economy, available online at
-            https://www.whitehouse.gov/wp-content/uploads/2018/02/The-Cost-of-Malicious
-            Cyber-Activity-to-the-U.S.-Economy.pdf, February 2018</li>
-          <li>Center for Strategic and International Studies (CSIS) and McAfee, Economic Impact of Cybercrime - No
-            Slowing
-            Down, February 2018</li>
-          <li>48 Code of Federal Regulations (CFR) 52.204-21, Basic Safeguarding of Covered Contractor Information
-            Systems, Federal Acquisition Regulation (FAR), 1 Oct 2016</li>
-          <li>NIST Special Publication (SP) 800-171 Revision (Rev) 2, Protecting Controlled Unclassified Information
-            in
-            Nonfederal Systems and Organizations, U.S. Department of Commerce National Institute of Standards and
-            Technology (NIST), December 2016 (updated June 2018)</li>
-          <li>DFARS 252.204-7012, Safeguarding Covered Defense Information and Cyber Incident Reporting, October 2016
-          </li>
-          <li>NIST SP 800-172, Enhanced Security Requirements for Protecting Controlled Unclassified Information:
-            ASupplement to NIST Special Publication 800-171, U.S. Department of Commerce National Institute of
-            Standards
-            and Technology (NIST), February 2021</li>
-        </ol>
-      </div>
-
-
-
-      <app-nav-back-next [page]="'tutorial-cmmc2'"></app-nav-back-next>
+  <h3 class="wrap-text mb-3">Cybersecurity Maturity Model Certification 2.0 (CMMC) Tutorial</h3>
+
+  <div class="mb-4">
+
+    <h5>Overview</h5>
+    <p>
+      The CMMC framework consists of the security requirements from NIST SP 800-171 Rev 2, Protecting Controlled
+      Unclassified Information in Nonfederal Systems and Organizations, and a subset of the requirements from NIST SP
+      800-172, Enhanced Security Requirements for Protecting Controlled Unclassified Information: A Supplement to NIST
+      Special Publication 800-171.
+    </p>
+
+    <p>
+      The model framework organizes these practices into a set of domains, which map directly to the NIST SP 800-171 Rev
+      2 families. The practices originate from the safeguarding requirements and security requirements specified in FAR
+      Clause 52.204-21 [3] and DFARS Clause 252.204-7012 [5], respectively.
+    </p>
+
+    <h5 class="mt-4">CMMC Levels</h5>
+
+    <div>
+      The CMMC model measures the implementation of cybersecurity requirements at three levels. Each level consists of a
+      set of CMMC practices:
     </div>
-  </article>
+    <ul>
+      <li>
+        <strong>Level 1 - Foundational:</strong> Focuses on the protection of FCI and consists only of practices that
+        correspond to the
+        basic safeguarding requirements specified in 48 CFR 52.204-21, commonly referred to as the FAR Clause [3].
+      </li>
+      <li>
+        <strong>Level 2 - Advanced:</strong> Encompasses the security requirements for CUI specified in NIST SP 800-171
+        Rev 2 per DFARS
+        Clause 252.204-7012 [3, 4, 5].
+      </li>
+      <li>
+        <strong>Level 3 - Expert:</strong> Information on Level 3 will be released at a later date and will contain a
+        subset of the
+        security requirements specified in NIST SP 800-172 [6].
+      </li>
+    </ul>
+
+    <p>
+      The CMMC levels and associated sets of practices across domains are cumulative. More specifically, for an
+      organization to achieve a specific CMMC level, it must also demonstrate achievement of the preceding lower levels.
+      For the case in which an organization does not meet its targeted level, it will be certified at the highest level
+      for which it has achieved all applicable practices.
+    </p>
+
+    <div class="img-frame">
+      <img alt="CMMC Model" style="width: 100%; max-width: 800px" src="assets/images/CMMC/tutorial2/Picture1.png" />
+      <div class="img-title">
+        Figure 1 provides an overview of the CMMC 2.0 levels.
+      </div>
+    </div>
+
+
+
+    <h5 class="mt-4">Assessment</h5>
+
+    <p>
+      The CMMC assessment consists of 14 domains that align with the families specified in NIST SP 800-171 . The number
+      of practices (questions) varies based on the selected level. The domains and their abbreviations are as follows:
+    </p>
+
+    <ul>
+      <li>Access Control (AC)</li>
+      <li>Awareness & Training (AT)</li>
+      <li>Audit & Accountability (AU)</li>
+      <li>Configuration Management (CM)</li>
+      <li>Identification & Authentication (IA)</li>
+      <li>Incident Response (IR)</li>
+      <li>Maintenance (MA)</li>
+      <li>Media Protection (MP)</li>
+      <li>Personnel Security (PS)</li>
+      <li>Physical Protection (PE)</li>
+      <li>Risk Assessment (RA)</li>
+      <li>Security Assessment (CA)</li>
+      <li>System and Communications Protection (SC)</li>
+      <li>System and Information Integrity (SI)</li>
+    </ul>
+
+    <p>
+      Each practice includes the following components.
+    </p>
+
+    <div class="img-frame">
+      <img src="assets/images/CMMC/tutorial2/Picture2.png" style="max-width: 100%; width: 750px">
+    </div>
+
+    <h6>Domain</h6>
+
+    <div class="img-frame">
+      <img src="assets/images/CMMC/tutorial2/Picture3.png" style="max-width: 100%; width: 700px">
+    </div>
+
+    <p>
+      Each domain has a set of associated practices.
+    </p>
+
+    <h6>Practice Identifier</h6>
+
+    <div class="img-frame">
+      <img src="assets/images/CMMC/tutorial2/Picture4.png" style="width: 100px">
+    </div>
+
+    <div>
+      Each question has an assigned practice identifier structured as follows: DD.L#-REQ
+    </div>
+    <ul>
+      <li>DD is the two-letter domain abbreviation</li>
+      <li>L# is the level number</li>
+      <li>REQ is the NIST SP 800-171 Rev 2 or NIST SP 800-172 Security Requirement Number</li>
+    </ul>
+
+    <p>
+      An example of the above structure is AC:L1-3.1.1, which represents Access Control, Level 1, NIST SP 800-171 Rev 2
+      3.1.1. The blue oval beneath each identifier indicates the level for the practice.
+    </p>
+
+    <h6>
+      Practice
+    </h6>
+    <div class="img-frame">
+      <img src="assets/images/CMMC/tutorial2/Picture5.png">
+    </div>
+
+    <p>
+      The mitigation(s) that organizations should implement to achieve the corresponding NIST cybersecurity standards.
+    </p>
+
+    <h6>
+      Assessment Objectives
+    </h6>
+
+    <div class="img-frame">
+      <img src="assets/images/CMMC/tutorial2/Picture6.png">
+    </div>
+
+    <p>
+      Objectives used to determine whether the organization has implemented the practice.
+    </p>
+
+    <h6>
+      CSET Icons
+    </h6>
+    <div class="img-frame">
+      <img src="assets/images/CMMC/tutorial2/Picture7.png" style="width: 300px">
+    </div>
+
+    <div>
+      Selecting the Supplemental Guidance icon provides information on:
+    </div>
+    <ul>
+      <li>Assessment Objectives</li>
+      <li>Potential Assessment Methods and Objectives</li>
+      <li>Discussion</li>
+      <li>References</li>
+    </ul>
+
+    <h6>
+      Answer Buttons
+    </h6>
+    <div class="img-frame">
+      <img src="assets/images/CMMC/tutorial2/Picture8.png" style="width: 160px">
+    </div>
+
+    <div>
+      Select the applicable answer for each question. Unanswered questions are calculated as a “No” response.
+    </div>
+    <ul>
+      <li><strong>Yes</strong> - the contractor meets all the assessment objectives.</li>
+      <li><strong>No</strong> - the contractor meets some or none of the assessment objectives.</li>
+      <li><strong>N/A</strong> - the practice is not applicable to the contractor.</li>
+    </ul>
+
+    <div class="img-frame">
+      <img src="assets/images/CMMC/tutorial2/Picture9.png" style="max-width: 100%;">
+    </div>
+
+
+    <h5 class="mt-4">Scoring</h5>
+
+    <p style="color: red; font-style: italic;">
+      Can we include a short blurb that explains the SPRS score?  We need to explain why they won't always see it (it's only available for level 2)
+    </p>
+
+    <h5 class="mt-4">
+      Additional Resources
+    </h5>
+
+    <p>
+      Additional information on how to complete a CSET assessment is available in the CSET User Guide. To access the
+      user guide, select the option from the Help dropdown menu in the CSET tool bar.
+    </p>
+
+    <p>
+      Please visit <a href="https://dodcio.defense.gov/CMMC/Documentation/"
+        target="_blank">https://dodcio.defense.gov/CMMC/Documentation/</a>
+      for more information, including CMMC Assessment Guides and Scoping Guidance for each level.
+    </p>
+
+  </div>
+
+  <app-nav-back-next [page]="'tutorial-cmmc2'"></app-nav-back-next>
 </div>
