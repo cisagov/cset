@@ -59,6 +59,8 @@ export class MergeCieAnalysisComponent implements OnInit {
 
 
   assessmentIssues = new Map();
+  assessmentDocuments = new Map();
+
   newAnswerIds = new Map();
   parentQuestionIds = new Set([10932]);
 
@@ -88,6 +90,8 @@ export class MergeCieAnalysisComponent implements OnInit {
   assessmentsProcessed: number = 0;
   questionsProcessed: number = 0;
 
+  navCounter: number = 0;
+
   constructor(
     public cieSvc: CieService,
     public assessSvc: AssessmentService,
@@ -106,9 +110,8 @@ export class MergeCieAnalysisComponent implements OnInit {
     this.getPrimaryAssessDetails();
     this.getConflicts();
     this.getIssues();
-
     this.getExistingAssessmentAnswers();
-    
+    this.getDocuments();
   }
 
   getPrimaryAssessDetails() {
@@ -139,6 +142,8 @@ export class MergeCieAnalysisComponent implements OnInit {
         } else {
           this.cieSvc.getNames().subscribe((result: any) => this.getAssessmentNames(result));
         }
+
+        //this.getDocuments();
       }
     );
   }
@@ -184,6 +189,49 @@ export class MergeCieAnalysisComponent implements OnInit {
   }
 
   
+  getDocuments() {
+    this.cieSvc.getDocuments().subscribe(
+      (details: any) => {
+        let myDocuments = [];
+        console.log(details)
+        details.forEach(pair => {
+          pair.documents.forEach(doc => {
+            myDocuments.push(doc);
+          });
+        });
+        console.log(myDocuments)
+
+        if (myDocuments.length > 0) {
+          this.maturitySvc.getQuestionsList("CIE", false).subscribe(
+            (response: any) => {
+              console.log(response)
+              for (let i = 0; i < response.groupings[0].subGroupings.length; i++) {
+                for (let j = 0; j < response.groupings[0].subGroupings[i].subGroupings.length; j++) {
+                  for (let k = 0; k < response.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
+                    let question = response.groupings[0].subGroupings[i].subGroupings[j].questions[k];
+                    myDocuments.forEach(docs => {
+                      if (question.answer_Id == docs.answer_Id) {
+                        if (this.assessmentDocuments.get(question.answer_Id) !== undefined) {
+                          let arr = this.assessmentDocuments.get(question.answer_Id);
+                          let savedDocuments = arr.concat(myDocuments);
+                          this.assessmentDocuments.set(question.answer_Id, savedDocuments);
+                        } else {
+                          this.assessmentDocuments.set(question.answer_Id, myDocuments);
+                        }
+                        console.log(this.assessmentDocuments);
+                      }
+                      
+                    });
+                    
+                  }
+                }
+              }
+            });
+        }
+      }
+    );
+  }
+
 
   getExistingAssessmentAnswers() {
     this.assessSvc.getAssessmentToken(this.cieSvc.assessmentsToMerge[this.dataReceivedCount]).then(() => {
@@ -371,6 +419,7 @@ export class MergeCieAnalysisComponent implements OnInit {
 
   navToHome() {
     this.cieSvc.prepForMerge = false;
+    this.navCounter = 0;
     this.router.navigate(['/landing-page']);
   }
 
@@ -526,23 +575,45 @@ export class MergeCieAnalysisComponent implements OnInit {
     }
   }
 
-  saveNewIssues(parentKey: number, issueArray: any[]) {
+  saveNewIssues(questionId: number, issueArray: any[]) {
     // For every issue we have from the original assessments
     issueArray.forEach((issue, index) => {
-      let actionItemsOverride: ActionItemText[] = [];
+      issue.observation_Id = 0;
+      issue.answer_Id = this.newAnswerIds.get(questionId);
 
-        issue.observation_Id = 0;
-        issue.answer_Id = this.newAnswerIds.get(parentKey);
+      this.observationSvc.saveObservation(issue).subscribe((response: any) => {
+        this.navCounter ++;
+        if (index === (issueArray.length - 1) && this.navCounter == 2) {
+          this.navToHome();
+        }
+      });
+    });
+  }
 
-        this.observationSvc.saveObservation(issue).subscribe((response: any) => {
-          // this.observationSvc.saveIssueText(actionItemsOverride, response).subscribe();
+  saveNewDocuments(documentArray: Map<number, any>) {
+    console.log(documentArray)
 
-          if (index === (issueArray.length - 1)) {
+    documentArray.forEach((assessPair, index) => {
+      console.log(assessPair)
+      assessPair.forEach((doc, index2) => {
+        doc.document_Id = 0;
+        doc.answer_Id = this.newAnswerIds.get(doc.question_Id);
+      });
+      console.log(assessPair)
+
+      this.cieSvc.saveDocuments(assessPair).subscribe(
+        (response: any) => {
+          this.navCounter ++;
+          if (this.navCounter == 2) {
             this.navToHome();
           }
-        });
-      // });
+      });
+      
     });
+
+    console.log(documentArray)
+    // For every document we have from the original assessments
+    
   }
 
   createMergedAssessment() {
@@ -566,7 +637,7 @@ export class MergeCieAnalysisComponent implements OnInit {
 
             // Pull the new assessment details (mostly empty/defaults)
             this.assessSvc.getAssessmentDetail().subscribe((details: AssessmentDetail) => {
-
+              console.log(details)
               // Update the assessment with the new data and send it back.
               for (let i = 0; i < 10; i++) {
                 switch (i + 1) {
@@ -680,13 +751,13 @@ export class MergeCieAnalysisComponent implements OnInit {
 
                     // This block uses the previous answer_Id's to persist issues on the new assessment
                     const iterator = this.assessmentIssues.entries();
-                    let parentKey = 0;
+                    let questionId = 0;
 
                     if (this.assessmentIssues.size !== 0) {
                       for (let iter of iterator) {
-                        parentKey = iter[0];
-                        let issueArray = this.assessmentIssues.get(parentKey);
-                        this.saveNewIssues(parentKey, issueArray);
+                        questionId = iter[0];
+                        let issueArray = this.assessmentIssues.get(questionId);
+                        this.saveNewIssues(questionId, issueArray);
                       }
                     } else {
                       // If we dont have any issues, we can be done.
@@ -694,11 +765,16 @@ export class MergeCieAnalysisComponent implements OnInit {
                       this.assessmentCombinedText.clear();
                       this.navToHome();
                     }
+
+                    console.log(this.assessmentDocuments)
+                    this.saveNewDocuments(this.assessmentDocuments);
+
                   //}
                 });
               });
-
+              
             });
+
           });
         });
   }

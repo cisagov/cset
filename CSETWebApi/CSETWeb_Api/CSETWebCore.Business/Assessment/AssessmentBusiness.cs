@@ -1025,21 +1025,27 @@ namespace CSETWebCore.Business.Assessment
             }
 
             List<MergeDocuments> documentsPerAssessment = new List<MergeDocuments>();
-
             foreach (int assessId in myList)
             {
                 var results = (from a in _context.ANSWER
-                               join f in _context.DOC on a.Answer_Id equals f.Answer_Id
+                               join da in _context.DOCUMENT_ANSWERS on a.Answer_Id equals da.Answer_Id
+                               join f in _context.DOCUMENT_FILE on da.Document_Id  equals f.Document_Id
                                where a.Assessment_Id == assessId
-                               select new { a, f }).ToList();
+                               select new { a, da, f }).ToList();
 
-                var answerFindingPair = results.Select(x => new { x.a, x.f }).Distinct();
+                var answerFindingPair = results.Select(x => new { x.a, x.da, x.f }).Distinct();
 
-                List<Model.Document> documentList = new List<Model.Document>();
-                //answerFindingPair.Where(x => x.a.Assessment_Id == assessId).Select(x => x.f);
+                List<DocumentWithAnswerId> documentList = new List<DocumentWithAnswerId>();
                 foreach (var pair in answerFindingPair)
                 {
-                    documentList.Add(pair.f);
+                    DocumentWithAnswerId document = new DocumentWithAnswerId();
+                    document.Document_Id = pair.f.Document_Id;
+                    document.FileName = pair.f.Name;
+                    document.Title = pair.f.Title;
+                    document.Answer_Id = pair.da.Answer_Id;
+                    document.Question_Id = pair.a.Question_Or_Requirement_Id;
+                    
+                    documentList.Add(document);
                 }
 
                 documentsPerAssessment.Add(new MergeDocuments(assessId, documentList));

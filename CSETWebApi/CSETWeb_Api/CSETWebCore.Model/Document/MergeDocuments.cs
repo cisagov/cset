@@ -11,7 +11,7 @@ namespace CSETWebCore.Model.Document
     {
         public MergeDocuments() { }
 
-        public MergeDocuments(int assessmentId, List<Document> documents)
+        public MergeDocuments(int assessmentId, List<DocumentWithAnswerId> documents)
         {
             this.assessmentId = assessmentId;
             this.documents = documents;
@@ -19,6 +19,6 @@ namespace CSETWebCore.Model.Document
 
 
         public int assessmentId { get; set; }
-        public List<Document> documents { get; set; }
+        public List<DocumentWithAnswerId> documents { get; set; }
     }
 }

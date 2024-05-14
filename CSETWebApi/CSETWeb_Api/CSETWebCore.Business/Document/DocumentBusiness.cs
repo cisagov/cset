@@ -285,5 +285,65 @@ namespace CSETWebCore.Business.Document
 
             return list;
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="tmpFilename"></param>
+        /// <param name="fileHash"></param>
+        /// <param name="answerId"></param>
+        /// <param name="File_Upload_Id"></param>
+        /// <param name="stream_id">only used if moving away from the blob process</param>
+        public void CopyFilesForMerge(List<DocumentWithAnswerId> documents)
+        {
+            //foreach (var doc in documents)
+            //{
+            //    // first see if the document already exists on any question in this Assessment, based on the filename and hash
+            //    var doc = _context.DOCUMENT_FILE.Where(f => f.FileMd5 == file.FileHash
+            //        && f.Name == file.FileName
+            //        && f.Assessment_Id == this.assessmentId).FirstOrDefault();
+
+            //    if (doc == null)
+            //    {
+            //        doc = new DOCUMENT_FILE()
+            //        {
+            //            Assessment_Id = this.assessmentId,
+            //            Title = string.IsNullOrWhiteSpace(title) ? "click to edit title" : title,
+            //            Path = file.FileName,  // this may end up being some other reference
+            //            Name = file.FileName,
+            //            FileMd5 = file.FileHash,
+            //            ContentType = file.ContentType,
+            //            CreatedTimestamp = DateTime.Now,
+            //            UpdatedTimestamp = DateTime.Now,
+            //            Data = file.FileBytes
+            //        };
+
+            //    }
+            //    else
+            //    {
+            //        doc.Title = string.IsNullOrWhiteSpace(title) ? doc.Title : title;
+            //        doc.Name = file.FileName;
+            //    }
+
+            //    var answer = _context.ANSWER.Where(a => a.Answer_Id == answerId).FirstOrDefault();
+            //    _context.DOCUMENT_FILE.Update(doc);
+            //    _context.SaveChanges();
+
+            //    DOCUMENT_ANSWERS temp = new DOCUMENT_ANSWERS() { Answer_Id = answer.Answer_Id, Document_Id = doc.Document_Id };
+            //    if (_context.DOCUMENT_ANSWERS.Find(temp.Document_Id, temp.Answer_Id) == null)
+            //    {
+            //        _context.DOCUMENT_ANSWERS.Add(temp);
+            //    }
+            //    else
+            //    {
+            //        _context.DOCUMENT_ANSWERS.Update(temp);
+            //    }
+
+            //    _context.SaveChanges();
+            //    _assessmentUtil.TouchAssessment(doc.Assessment_Id);
+            //}
+        }
     }
 }
