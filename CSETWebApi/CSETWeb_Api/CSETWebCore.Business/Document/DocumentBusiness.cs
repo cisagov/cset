@@ -12,6 +12,8 @@ using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System;
+using LogicExtensions;
+using CSETWebCore.Model.Question;
 
 namespace CSETWebCore.Business.Document
 {
@@ -288,62 +290,44 @@ namespace CSETWebCore.Business.Document
 
 
         /// <summary>
-        /// 
+        /// Merging assessments' documents into a single new assessment
         /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="tmpFilename"></param>
-        /// <param name="fileHash"></param>
-        /// <param name="answerId"></param>
-        /// <param name="File_Upload_Id"></param>
-        /// <param name="stream_id">only used if moving away from the blob process</param>
+        /// <param name=documents></param>
         public void CopyFilesForMerge(List<DocumentWithAnswerId> documents)
         {
-            //foreach (var doc in documents)
-            //{
-            //    // first see if the document already exists on any question in this Assessment, based on the filename and hash
-            //    var doc = _context.DOCUMENT_FILE.Where(f => f.FileMd5 == file.FileHash
-            //        && f.Name == file.FileName
-            //        && f.Assessment_Id == this.assessmentId).FirstOrDefault();
+            foreach (var file in documents)
+            {
+                // get the file to copy
+                DOCUMENT_FILE docToCopy = _context.DOCUMENT_FILE.Where(f => f.Document_Id == file.Document_Id).FirstOrDefault();
 
-            //    if (doc == null)
-            //    {
-            //        doc = new DOCUMENT_FILE()
-            //        {
-            //            Assessment_Id = this.assessmentId,
-            //            Title = string.IsNullOrWhiteSpace(title) ? "click to edit title" : title,
-            //            Path = file.FileName,  // this may end up being some other reference
-            //            Name = file.FileName,
-            //            FileMd5 = file.FileHash,
-            //            ContentType = file.ContentType,
-            //            CreatedTimestamp = DateTime.Now,
-            //            UpdatedTimestamp = DateTime.Now,
-            //            Data = file.FileBytes
-            //        };
+                int assessId = _context.ANSWER.Where(a => a.Answer_Id == file.Answer_Id).Select(x => x.Assessment_Id).FirstOrDefault();
 
-            //    }
-            //    else
-            //    {
-            //        doc.Title = string.IsNullOrWhiteSpace(title) ? doc.Title : title;
-            //        doc.Name = file.FileName;
-            //    }
+                DOCUMENT_FILE newDoc = new DOCUMENT_FILE()
+                {
+                    Assessment_Id = assessId,
+                    Title = string.IsNullOrWhiteSpace(docToCopy.Title) ? "click to edit title" : docToCopy.Title,
+                    Path = docToCopy.Path,  // this may end up being some other reference
+                    Name = docToCopy.Name,
+                    FileMd5 = docToCopy.FileMd5,
+                    ContentType = docToCopy.ContentType,
+                    CreatedTimestamp = DateTime.Now,
+                    UpdatedTimestamp = DateTime.Now,
+                    Data = docToCopy.Data
+                };
 
-            //    var answer = _context.ANSWER.Where(a => a.Answer_Id == answerId).FirstOrDefault();
-            //    _context.DOCUMENT_FILE.Update(doc);
-            //    _context.SaveChanges();
+                if (newDoc != null && assessId != 0)
+                {
+                    _context.DOCUMENT_FILE.Add(newDoc);
+                    _context.SaveChanges();
 
-            //    DOCUMENT_ANSWERS temp = new DOCUMENT_ANSWERS() { Answer_Id = answer.Answer_Id, Document_Id = doc.Document_Id };
-            //    if (_context.DOCUMENT_ANSWERS.Find(temp.Document_Id, temp.Answer_Id) == null)
-            //    {
-            //        _context.DOCUMENT_ANSWERS.Add(temp);
-            //    }
-            //    else
-            //    {
-            //        _context.DOCUMENT_ANSWERS.Update(temp);
-            //    }
+                    DOCUMENT_ANSWERS temp = new DOCUMENT_ANSWERS() { Answer_Id = file.Answer_Id, Document_Id = newDoc.Document_Id };
+                    _context.DOCUMENT_ANSWERS.Add(temp);
+                    _context.SaveChanges();
 
-            //    _context.SaveChanges();
-            //    _assessmentUtil.TouchAssessment(doc.Assessment_Id);
-            //}
+                    _assessmentUtil.TouchAssessment(docToCopy.Assessment_Id);
+                }
+
+            }
         }
     }
 }

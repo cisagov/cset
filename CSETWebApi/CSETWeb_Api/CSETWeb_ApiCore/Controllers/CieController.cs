@@ -1,4 +1,6 @@
-﻿using CSETWebCore.DataLayer.Model;
+﻿using CSETWebCore.Business.Document;
+using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Question;
 using Microsoft.AspNetCore.Http;
@@ -12,10 +14,12 @@ namespace CSETWebCore.Api.Controllers
     public class CieController : ControllerBase
     {
         public CSETContext _context;
+        public IDocumentBusiness _documentBusiness;
 
-        public CieController(CSETContext context)
+        public CieController(CSETContext context, IDocumentBusiness documentBusiness)
         {
             _context = context;
+            _documentBusiness = documentBusiness;
         }
 
         [HttpGet]
@@ -30,6 +34,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/saveNewDocumentsForMerge")]
         public IActionResult SaveNewDocumentsForMerge([FromBody] List<DocumentWithAnswerId> documents)
         {
+            _documentBusiness.CopyFilesForMerge(documents);
             return Ok();
         }
     }
