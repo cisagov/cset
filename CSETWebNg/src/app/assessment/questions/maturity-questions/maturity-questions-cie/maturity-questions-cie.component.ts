@@ -132,7 +132,7 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
     this.sectionId = +this.route.snapshot.params['sec'];
     const magic = this.navSvc.getMagic();
     this.groupings = null;
-    this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false, this.sectionId.valueOf()).subscribe(
+    this.maturitySvc.getQuestionsList(false, this.sectionId.valueOf()).subscribe(
       (response: MaturityQuestionResponse) => {
         this.completionSvc.setQuestionArray(response);
         this.modelName = response.modelName;
