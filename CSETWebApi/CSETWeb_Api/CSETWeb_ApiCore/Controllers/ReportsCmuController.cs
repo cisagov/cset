@@ -287,12 +287,20 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/cmu/widget/heatmap")]
-        public IActionResult GetHeatmapWidget([FromQuery] string domain,[FromQuery] string mil, [FromQuery] double? scale = null)
+        public IActionResult GetHeatmapWidget([FromQuery] string domain, [FromQuery] string mil, [FromQuery] double? scale = null)
         {
             var assessmentId = _token.AssessmentForUser();
 
             _scoring.InstantiateScoringHelper(assessmentId);
-            var xDomain = _scoring.XDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']/Mil[@label='{mil}']");
+
+
+            var xPath = $"//Domain[@abbreviation='{domain}']";
+            if (mil != null)
+            {
+                xPath = $"//Domain[@abbreviation='{domain}']/Mil[@label='{mil}']";
+            }
+
+            var xDomain = _scoring.XDoc.XPathSelectElement(xPath);
             if (xDomain == null)
             {
                 return NotFound();
@@ -644,24 +652,41 @@ namespace CSETWebCore.Api.Controllers
             List<List<object>> charts = new List<List<object>>();
             foreach (XElement domain in XDocument.Root.Elements())
             {
-                List<object> chartList = new List<object>();
+                List<object> chartList = [];
 
-                for (int i = 1; i <= 5; i++)
+
+                // This domain has Mil children
+                if (domain.Elements().All(e => e.Name == "Mil"))
                 {
-                    XElement mil = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
-                    el.Attribute("label").Value == "MIL-" + i);
+                    for (int i = 1; i <= 5; i++)
+                    {
+                        // look for a Mil child by name: MIL-N
+                        XElement mil = domain.Elements().FirstOrDefault(el => el.Attribute("label") != null &&
+                        el.Attribute("label").Value == "MIL-" + i);
 
 
-                    if (i == 1)
-                    {
-                        chartList.Add(new GoalsHeatMap(mil, 26).ToString());
-                    }
-                    else
-                    {
-                        var milGoals = mil.Descendants("Goal").FirstOrDefault();
-                        chartList.Add(new QuestionsHeatMap(milGoals, true, 26).ToString());
+                        // if we found the Mil element, generate heatmaps for his goals
+                        if (mil != null)
+                        {
+                            if (i == 1)
+                            {
+                                chartList.Add(new GoalsHeatMap(mil, 26).ToString());
+                            }
+                            else
+                            {
+                                var milGoals = mil.Descendants("Goal").FirstOrDefault();
+                                chartList.Add(new QuestionsHeatMap(milGoals, true, 26).ToString());
+                            }
+                        }
                     }
                 }
+
+                // This Domain has Goal children
+                if (domain.Elements().All(e => e.Name == "Goal"))
+                {
+                    chartList.Add(new GoalsHeatMap(domain, 26).ToString());
+                }
+
 
                 charts.Add(chartList);
             }
