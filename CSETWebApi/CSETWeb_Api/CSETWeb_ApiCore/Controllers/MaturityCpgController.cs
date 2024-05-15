@@ -92,13 +92,12 @@ namespace CSETWebCore.Api.Controllers
             foreach (var item in dbList)
             {
                 // translate if necessary
-                item.Title = _overlay.GetMaturityGrouping(item.Grouping_Id, lang)?.Title ?? item.Title;
-
-                if (!resp.Exists(x => x.Name == item.Title))
+                item.title = _overlay.GetMaturityGrouping(item.grouping_id, lang)?.Title ?? item.title;
+                if (!resp.Exists(x => x.Name == item.title))
                 {
                     var domain = new AnswerDistribDomain()
                     {
-                        Name = item.Title,
+                        Name = item.title,
                         Series = InitializeSeries()
                     };
 
@@ -111,7 +110,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 domain.Series.ForEach(y =>
                 {
-                    double percent = CalculatePercent(dbList.Where(g => g.Title == domain.Name).ToList(), y.Name);
+                    double percent = CalculatePercent(dbList.Where(g => g.title == domain.Name).ToList(), y.Name);
                     y.Value = percent;
 
                 });
@@ -127,8 +126,8 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         private double CalculatePercent(List<GetAnswerDistribGroupingsResult> r, string ansName)
         {
-            var target = r.FirstOrDefault(x => x.Answer_Text == ansName)?.Answer_Count ?? 0;
-            var total = r.Select(x => x.Answer_Count).Sum();
+            var target = r.FirstOrDefault(x => x.answer_text == ansName)?.answer_count ?? 0;
+            var total = r.Select(x => x.answer_count).Sum();
 
             return ((double)target * 100d / (double)total);
         }
