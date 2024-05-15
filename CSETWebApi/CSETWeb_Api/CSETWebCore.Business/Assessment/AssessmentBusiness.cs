@@ -996,7 +996,6 @@ namespace CSETWebCore.Business.Assessment
                 var answerFindingPair = results.Select(x => new { x.a, x.f }).Distinct();
 
                 List<FINDING> observationList = new List<FINDING>();
-                //answerFindingPair.Where(x => x.a.Assessment_Id == assessId).Select(x => x.f);
                 foreach (var pair in answerFindingPair)
                 {
                     observationList.Add(pair.f);

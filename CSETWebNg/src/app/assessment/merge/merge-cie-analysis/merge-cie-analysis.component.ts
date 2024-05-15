@@ -159,6 +159,9 @@ export class MergeCieAnalysisComponent implements OnInit {
           });
         });
 
+        console.log('unmapped issues:')
+        console.log(myIssues)
+
         if (myIssues.length > 0) {
           this.maturitySvc.getQuestionsList(false).subscribe(
             (response: any) => {
@@ -168,12 +171,14 @@ export class MergeCieAnalysisComponent implements OnInit {
                     let question = response.groupings[0].subGroupings[i].subGroupings[j].questions[k];
                     myIssues.forEach(obs => {
                       if (question.questionId == obs.answer.question_Or_Requirement_Id) {
-                        if (this.assessmentIssues.get(question.questionId) !== undefined) {
-                          let arr = this.assessmentIssues.get(question.questionId);
-                          let savedIssues = arr.concat(myIssues);
-                          this.assessmentIssues.set(question.questionId, savedIssues);
+                        if (this.assessmentIssues.get(question.questionId) != null) {
+                          let obsForQuestion = this.assessmentIssues.get(question.questionId);
+                          obsForQuestion.push(obs);
+                          this.assessmentIssues.set(question.questionId, obsForQuestion);
                         } else {
-                          this.assessmentIssues.set(question.questionId, myIssues);
+                          let obsArray = [];
+                          obsArray.push(obs);
+                          this.assessmentIssues.set(question.questionId, obsArray);
                         }
                       }
                       
@@ -182,8 +187,11 @@ export class MergeCieAnalysisComponent implements OnInit {
                   }
                 }
               }
+              console.log('mapped issues:')
+              console.log(this.assessmentIssues)
             });
         }
+        
       }
     );
   }
@@ -762,11 +770,17 @@ export class MergeCieAnalysisComponent implements OnInit {
                       // If we dont have any issues, we can be done.
                       this.mergeConflicts = [];
                       this.assessmentCombinedText.clear();
-                      this.navToHome();
+                      this.navCounter++;
                     }
 
-                    console.log(this.assessmentDocuments)
-                    this.saveNewDocuments(this.assessmentDocuments);
+                    if (this.assessmentIssues.size !== 0) {
+                      this.saveNewDocuments(this.assessmentDocuments);
+
+                    } else {
+                      this.mergeConflicts = [];
+                      this.assessmentCombinedText.clear();
+                      this.navCounter++;
+                    }
 
                   //}
                 });
