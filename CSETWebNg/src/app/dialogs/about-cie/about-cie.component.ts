@@ -33,10 +33,6 @@ import { VersionService } from '../../services/version.service';
   styleUrls: ['./about-cie.component.scss']
 })
 export class AboutCieComponent {
-
-  ngOnInit(): void {
-    this.version = this.versionSvc.localVersion;
-   };
   version: any;
   helpContactEmail = this.configSvc.helpContactEmail;
   helpContactPhone = this.configSvc.helpContactPhone;
@@ -44,7 +40,14 @@ export class AboutCieComponent {
   constructor(private dialog: MatDialogRef<AboutCieComponent>,
     public configSvc: ConfigService,
     public versionSvc: VersionService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      this.versionSvc.localVersionObservable$.subscribe(localVersion => {
+        this.version = localVersion;
+      });
+  }
+
+  ngOnInit(): void {
+   };
 
   close() {
     return this.dialog.close();
