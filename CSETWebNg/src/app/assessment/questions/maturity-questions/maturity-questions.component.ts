@@ -112,7 +112,7 @@ export class MaturityQuestionsComponent implements OnInit {
     // NOTE: langChanges$ will emit the active language on subscription,
     // so load() will always fire on initial page load
     this.tSvc.langChanges$.subscribe(() => {
-      
+
       // check for assessment existence so that this isn't triggered when logging
       // in after a timeout.  In that scenario there is no assessment ID in the JWT
       // and the call to load questions or groupings will crash.
@@ -156,7 +156,7 @@ export class MaturityQuestionsComponent implements OnInit {
    */
   loadQuestions() {
     this.completionSvc.reset();
-    
+
     const magic = this.navSvc.getMagic();
     this.groupings = null;
     this.maturitySvc.getQuestionsList(false).subscribe(
@@ -178,7 +178,7 @@ export class MaturityQuestionsComponent implements OnInit {
         // set the message with the current "no" answer value
         const codeForNo = this.assessSvc.assessment?.maturityModel?.modelId == 12 ? 'NI' : 'N';
         const noValue = this.questionsSvc.answerButtonLabel(this.modelName, codeForNo);
-        this.msgUnansweredEqualsNo = this.tSvc.translate('unanswered equals no', { 'no-ans': noValue });
+        this.msgUnansweredEqualsNo = this.tSvc.translate('questions.unanswered equals no', { 'no-ans': noValue });
 
         this.loaded = true;
 

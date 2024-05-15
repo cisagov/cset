@@ -10,8 +10,10 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Authentication;
+using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -50,6 +52,13 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             var biz = new ConversionBusiness(_context, _assessmentUtil);
             return Ok(biz.IsEntryCF(assessmentId));
+        }
+        [HttpPost]
+        [Route("api/convert/cf/entrys")]
+        public IActionResult IsEntrysCF(List<int> assessmentIds)
+        {   
+            var biz = new ConversionBusiness(_context, _assessmentUtil);
+            return Ok(biz.IsEntryCF(assessmentIds));
         }
 
 
