@@ -182,40 +182,10 @@
       </button>
     </div>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('IMR') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>CISA Incident Management Review</h4>
+    <!-- IMR -->
+    <app-reports-imr *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('IMR')" 
+    [securitySelected]="securitySelected" [securityIdentifier]="securityIdentifier"></app-reports-imr>
 
-      <div class="d-flex flex-row" style="align-items: end">
-        <div class="mr-3 mb-3">
-          <button tabindex="0" (click)="clickReportLink('imrreport')" class="btn btn-link btn-link-dark">
-            IMR Report
-          </button>
-        </div>
-        <div class="form-group">
-          <label class="mb-1" for="securityId">Confidentiality</label>
-          <select class="form-control" [(ngModel)]="securitySelected" id="securityId" name="securityId" tabindex="0"
-            (change)="onSelectSecurity($event.target.value)">
-            <option *ngFor="let s of securityIdentifier" [value]="s.confidentialTypeKey">
-              {{ s.confidentialTypeKey }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('genDeficiencyReport?m=IMR')" class="btn btn-link btn-link-dark">
-          IMR Deficiency Report
-        </button>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('commentsmfr')" class="btn btn-link btn-link-dark text-left">
-          Comments and Marked for Review
-        </button>
-      </div>
-    </div>
 
     <div *ngIf="
         !!assessSvc.assessment &&

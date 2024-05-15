@@ -655,6 +655,8 @@ import { AnalyticsComponent } from './assessment/results/analytics/analytics.com
 import { AnalyticsloginComponent } from './assessment/results/analysis/analytics-login/analytics-login.component';
 import { AnalyticsService } from './services/analytics.service';
 import { UploadDemographicsComponent } from './dialogs/import demographics/import-demographics.component';
+import { ReportsImrComponent } from './assessment/results/reports/reports-imr/reports-imr.component';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -1258,7 +1260,8 @@ import { UploadDemographicsComponent } from './dialogs/import demographics/impor
     AnalyticsComponent, 
     ReferencesSectionComponent,
     CisaWorkflowWarningsComponent,
-    AnalyticsloginComponent
+    AnalyticsloginComponent,
+    ReportsImrComponent
   ],
   providers: [
     TranslocoService,
