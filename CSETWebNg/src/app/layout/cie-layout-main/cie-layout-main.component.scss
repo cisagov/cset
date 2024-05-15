@@ -3739,6 +3739,17 @@ div.tutorial h6 {
   margin-bottom: 0.2rem;
 }
 
+.tutorial .img-frame {
+  border: 1px solid #ddd;
+  margin-bottom: 1rem;
+  width: fit-content;
+}
+
+.tutorial .img-frame .img-title {
+  font-style: italic;
+  text-align: center;
+}
+
 .max-1000 {
   max-width: 1000px;
 }

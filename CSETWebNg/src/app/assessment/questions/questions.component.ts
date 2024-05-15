@@ -239,8 +239,9 @@ export class QuestionsComponent implements AfterViewChecked, OnInit {
    * Retrieves the complete list of questions
    */
   loadQuestions() {
-    // set the message with the current "no" answer value
-    this.msgUnansweredEqualsNo = this.tSvc.translate('unanswered equals no', { 'no-ans': this.questionsSvc.answerButtonLabel('', 'N') });
+    // set the message with the current "no" answer value.  
+    this.msgUnansweredEqualsNo = this.tSvc.translate('questions.unanswered equals no', { 'no-ans': this.questionsSvc.answerButtonLabel('', 'N') });
+
     this.completionSvc.reset();
 
     this.questionsSvc.getQuestionsList().subscribe(
