@@ -47,9 +47,14 @@ import { DateTime } from "luxon";
 import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
 import { TranslocoService } from "@ngneat/transloco";
 import { DateAdapter } from '@angular/material/core';
+import { HydroService } from "../../services/hydro.service";
+import { CieService } from "../../services/cie.service";
+import { ConversionService } from "../../services/conversion.service";
 
 
 interface UserAssessment {
+  isEntry: boolean;
+  isEntryString: string;
   assessmentId: number;
   assessmentName: string;
   useDiagram: boolean;
@@ -88,6 +93,7 @@ export class MyAssessmentsComponent implements OnInit {
   appTitle: string;
   isTSA: boolean = false;
   isCSET: boolean = false;
+  isCF: boolean = false;
   exportExtension: string;
   importExtensions: string;
 
@@ -101,6 +107,7 @@ export class MyAssessmentsComponent implements OnInit {
   disabledEncrypt: boolean = false;
 
   timer = ms => new Promise(res => setTimeout(res, ms));
+  
 
   constructor(
     public configSvc: ConfigService,
@@ -118,7 +125,10 @@ export class MyAssessmentsComponent implements OnInit {
     private ncuaSvc: NCUAService,
     public layoutSvc: LayoutService,
     public dateAdapter: DateAdapter<any>,
-    public reportSvc: ReportService
+    public reportSvc: ReportService,
+    private hydroSvc: HydroService,
+    public cieSvc: CieService,
+    public conversionSvc: ConversionService
   ) { }
 
   ngOnInit() {
@@ -139,6 +149,9 @@ export class MyAssessmentsComponent implements OnInit {
       case 'TSA':
         this.isTSA = true;
         break;
+      case 'CF':
+        this.isCF = true;
+        break;
       default:
         this.isCSET = true;
     }
@@ -149,6 +162,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
     this.ncuaSvc.assessmentsToMerge = [];
+    this.cieSvc.assessmentsToMerge = [];
 
     this.assessSvc.getEncryptPreference().subscribe((result: boolean) => this.preventEncrypt = result);
 
@@ -214,11 +228,17 @@ export class MyAssessmentsComponent implements OnInit {
       this.navSvc.beginAssessment(+rid);
     }
 
+    let assessmentiDs = [];
+
     this.assessSvc.getAssessmentsCompletion().pipe(
       concatMap((assessmentsCompletionData: any[]) =>
         this.assessSvc.getAssessments().pipe(
           map((assessments: UserAssessment[]) => {
             assessments.forEach((item, index, arr) => {
+              if(this.isCF){
+                assessmentiDs.push(item.assessmentId);
+                item.isEntry = false;                
+              }
               let type = '';
               if (item.useDiagram) type += ', Diagram';
               item.questionAlias = 'questions';
@@ -236,9 +256,27 @@ export class MyAssessmentsComponent implements OnInit {
               item.totalAvailableQuestionsCount =
                 (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
                 (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
-                (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
+                (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);              
             });
-            this.sortedAssessments = assessments;
+            if(this.isCF){
+              this.conversionSvc.isEntryCfAssessments(assessmentiDs).subscribe(
+                (result: any) => {
+                  result.forEach((element: any) => {
+                    let assessment = assessments.find(x => x.assessmentId === element.assessmentId);
+                    if (assessment) {
+                      assessment.isEntry = element.isEntry;
+                      assessment.isEntryString = element.isEntry ? 'Entry' : 'Full';                        
+                      if(assessment.isEntry)
+                        assessment.totalAvailableQuestionsCount = 20;
+                    }
+                  });
+                  this.sortedAssessments = assessments;
+                }
+              );
+            }
+            else{
+              this.sortedAssessments = assessments;
+            }
           },
             error => {
               console.log(
@@ -428,6 +466,10 @@ export class MyAssessmentsComponent implements OnInit {
 
   proceedToMerge() {
     this.router.navigate(['/examination-merge']);
+  }
+
+  proceedToCieMerge() {
+    this.router.navigate(['/merge-cie-analysis']);
   }
 
   clickNewAssessmentButton() {

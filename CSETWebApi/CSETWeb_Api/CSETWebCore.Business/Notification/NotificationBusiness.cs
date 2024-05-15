@@ -49,6 +49,10 @@ namespace CSETWebCore.Business.Notification
         public void SetScope()
         {
             _scope = _tokenManager.Payload("scope");
+            if (_scope == null)
+            {
+                _scope = "CSET";
+            }
         }
 
         public void SetScope(string scope)

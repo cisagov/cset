@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, isDevMode } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -42,6 +42,7 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
   currentTab: string;
   isSearch: boolean = false;
   searchString: string = "";
+  devMode: boolean = isDevMode();
   @ViewChild('tabs') tabsElementRef: ElementRef;
 
   constructor(
@@ -69,7 +70,7 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
     if (!!this.tabsElementRef) {
       const tabsEl = this.tabsElementRef.nativeElement;
       tabsEl.classList.add('sticky-tabs');
-      if (this.authSvc.isLocal) {
+      if (this.authSvc.isLocal && this.devMode) {
         tabsEl.style.top = '81px';
       } else {
         tabsEl.style.top = '62px';

@@ -12,6 +12,7 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { filter } from 'rxjs/operators';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-principle-summary',
@@ -56,6 +57,7 @@ export class PrincipleSummaryComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
+    private navSvc: NavigationService,
     public maturitySvc: MaturityService
   ) {
     // listen for NavigationEnd to know when the page changed
@@ -71,11 +73,17 @@ export class PrincipleSummaryComponent implements OnInit {
 
   
   ngOnInit() {
-    this.grabQuestions();
+    //this.grabQuestions();
+  }
+
+  ngOnDestroy(): void {
+    this._routerSub.unsubscribe();
   }
 
   grabQuestions() {
     this.sectionId = +this.route.snapshot.params['pri'];
+    const magic = this.navSvc.getMagic();
+    this.response = null;
 
     this.maturitySvc.getGroupingQuestions(this.sectionId).subscribe((r: any) => {
       this.response = r;

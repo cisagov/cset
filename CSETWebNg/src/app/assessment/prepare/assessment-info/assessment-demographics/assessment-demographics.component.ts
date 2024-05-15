@@ -31,6 +31,8 @@ import { ConfigService } from '../../../../services/config.service';
 import { Observable } from 'rxjs';
 import { OkayComponent } from '../../../../dialogs/okay/okay.component';
 import { MatDialog } from '@angular/material/dialog';
+import { UploadDemographicsComponent } from "../../../../dialogs/import demographics/import-demographics.component";
+
 
 
 interface DemographicsAssetValue {
@@ -71,7 +73,7 @@ export class AssessmentDemographicsComponent implements OnInit {
     @Input() events: Observable<void>;
 
     private eventsSubscription: any;
-
+    unsupportedImportFile: boolean = false;
     sectorsList: Sector[];
     sizeList: AssessmentSize[];
     assetValues: DemographicsAssetValue[];
@@ -131,55 +133,31 @@ export class AssessmentDemographicsComponent implements OnInit {
     }
 
     // Functionality to import demographic information, excluding contacts, organization point of contact, facilitator, critical service point of contact 
-    importClick($event){
-        const fileReader = new FileReader();
-        const text = fileReader.readAsText($event.target.files[0], "UTF-8");
-        fileReader.onload = () => {
-            const text = fileReader.result;
-            const data = JSON.parse(String(text))
-            this.demographicData = data;
-            this.populateIndustryOptions(this.demographicData.sectorId);
-            this.setAssetValue(this.demographicData.assetValue)
-            this.updateDemographics();
-          };
-        
-          fileReader.onerror = () => {
-            console.log(fileReader.error);
-          };
+    importClick(event){
+        let dialogRef = null;
+        this.unsupportedImportFile = false;
+        if (event.target.files[0].name.endsWith(".json")) {
+          // Call Standard import service
+          dialogRef = this.dialog.open(UploadDemographicsComponent, {
+            data: { files: event.target.files, IsNormalLoad: true }
+          });
+        } else {
+          this.unsupportedImportFile = true;
+        }
+    
+        if (!this.unsupportedImportFile) {
+          dialogRef.afterClosed().subscribe(result => {
+            this.getDemographics()
+            this.getOrganizationTypes()
+            this.assessSvc.refreshAssessment()
+          });
+        }
     }
 
 
     //Functionality to export demographic information, excluding contacts, organization point of contact, facilitator, critical service point of contact 
     exportClick(){
-        if (this.demographicData.organizationName){
-            //Replace organization point of contact, facilitator, and critical service point of contact w/ null 
-            let tempOrgPOC = this.demographicData.orgPointOfContact
-            let tempFacil = this.demographicData.facilitator
-            let tempCritPOC = this.demographicData.pointOfContact
-            this.demographicData.orgPointOfContact = null; 
-            this.demographicData.facilitator = null; 
-            this.demographicData.pointOfContact = null; 
-
-            //File name will be saved with '_' instead of any invalid characters         
-            var FileSaver = require('file-saver');            
-            var demoString = JSON.stringify(this.demographicData);
-            const blob = new Blob([demoString], { type: 'application/json' });
-            var fileName = this.demographicData.organizationName.replaceAll("[<>:\"\/\\|?*]","_");
-            this.demographicData.orgPointOfContact = tempOrgPOC
-            this.demographicData.facilitator = tempFacil
-            this.demographicData.pointOfContact = tempCritPOC           
-            try {
-            FileSaver.saveAs(blob, fileName + ".json");
-            } catch (error) {
-            console.error("Error during file download:", error);
-            }
-        
-        } else {
-        const msg2 = 'Name of organization required before export';
-        const titleComplete = 'Organization Name Required'
-        const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
-        dlgOkay.componentInstance.hasHeader = true;
-        }
+        this.demoSvc.exportDemographics()
     }
 
 

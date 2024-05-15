@@ -34,6 +34,11 @@ namespace CSETWebCore.Model.Maturity
         public string Description { get; set; }
 
         /// <summary>
+        /// An optional description.  Usually displayed below the title.
+        /// </summary>
+        public string Description_Extended { get; set; }
+
+        /// <summary>
         /// an optional remark for each domain in the model
         /// </summary>
         public string DomainRemark { get; set; }

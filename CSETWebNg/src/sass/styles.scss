@@ -3074,7 +3074,6 @@ table.td-text-left td {
 
 .trend-table-width {
   max-width: 100%;
-  width: 100vw;
 }
 
 @media only screen and (max-width: 767px) {
@@ -3159,4 +3158,15 @@ div.tutorial h6 {
   font-weight: bold !important;
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.tutorial .img-frame {
+  border: 1px solid #ddd;
+  margin-bottom: 1rem;
+  width: fit-content;
+}
+
+.tutorial .img-frame .img-title {
+  font-style: italic;
+  text-align: center;
 }

@@ -70,7 +70,7 @@
 
 
     <p class="mb-4" *ngIf="!!groupings">
-      {{ msgUnansweredEqualsNo }}
+      {{t('questions.instructions 1')}} {{ msgUnansweredEqualsNo }}
     </p>
 
     <div class="mb-4" *ngIf="this.assessSvc.assessment?.maturityModel?.modelId == 11">

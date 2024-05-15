@@ -69,30 +69,30 @@ export class ResourceLibraryService {
 
   /**
    * Formats a URL of a provided document.  Sends the document ID to the
-   * 'referencedocument' endpoint.  
+   * 'refdoc' endpoint.  
    * 
    * Bookmarks to an actual sectionRef are appended to the URL.
    * 
    * The "isOnlineUrlLive" code will pull documents from the cloud-based
    * Resource Library when it is available at a future date.
    */
-  formatDocumentUrl(doc: ReferenceDocLink, bookmark?: any): string {
+  formatDocumentUrl(docLink: ReferenceDocLink, bookmark?: any): string {
     if (typeof bookmark === 'undefined') {
       bookmark = '';
     }
 
     // First look to see if this is a URL
-    if (doc.url) {
+    if (docLink.url) {
       if (bookmark) {
-        return doc.url + "#" + bookmark.sectionRef;
+        return docLink.url + "#" + bookmark.sectionRef;
       }
       
-      return doc.url;
+      return docLink.url;
     }
 
     // April 2024 - moving to this method of querying documents; by ID rather than filename
-    if (doc.fileId) {
-      return this.configSvc.apiUrl + 'referencedocument/' + doc.fileId + '#' + bookmark.sectionRef;
+    if (docLink.fileId) {
+      return this.configSvc.refDocUrl + docLink.fileId + '#' + bookmark.sectionRef;
     }
 
     // April 2024 - phasing out this older way of querying documents by filename
@@ -101,7 +101,7 @@ export class ResourceLibraryService {
     // }
 
     if (this.configSvc.isOnlineUrlLive) {
-      return this.configSvc.onlineUrl + "/" + this.configSvc.config.api.documentsIdentifier + "/" + doc.fileName + '#' + bookmark.sectionRef;
+      return this.configSvc.onlineUrl + "/" + this.configSvc.config.api.documentsIdentifier + "/" + docLink.fileName + '#' + bookmark.sectionRef;
     }
 
     return '';

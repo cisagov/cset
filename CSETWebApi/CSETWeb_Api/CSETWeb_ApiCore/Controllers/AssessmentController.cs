@@ -43,12 +43,13 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IGalleryEditor _galleryEditor;
+        private readonly IUtilities _utilities;
 
         public AssessmentController(IAssessmentBusiness assessmentBusiness,
             IACETAssessmentBusiness acetAssessmentBusiness,
             ITokenManager tokenManager, IDocumentBusiness documentBusiness, CSETContext context,
             IStandardsBusiness standards, IAssessmentUtil assessmentUtil,
-            IAdminTabBusiness adminTabBusiness, IGalleryEditor galleryEditor)
+            IAdminTabBusiness adminTabBusiness, IGalleryEditor galleryEditor, IUtilities utilities)
         {
             _assessmentBusiness = assessmentBusiness;
             _acsetAssessmentBusiness = acetAssessmentBusiness;
@@ -59,6 +60,7 @@ namespace CSETWebCore.Api.Controllers
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
             _galleryEditor = galleryEditor;
+            _utilities = utilities;
         }
 
         /// <summary>
@@ -325,7 +327,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// Returns a string indicating the last modified date/time,
+        /// Returns a DateTime indicating the last modified date/time,
         /// converted to the user's timezone.
         /// </summary>
         /// <returns></returns>
@@ -334,18 +336,10 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetLastModified()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            var tzOffset = _tokenManager.PayloadInt(Constants.Constants.Token_TimezoneOffsetKey);
 
             var dt = _assessmentBusiness.GetLastModifiedDateUtc(assessmentId);
-            dt = DateTime.SpecifyKind(dt, DateTimeKind.Utc);
 
-            var offset = Offset.FromSeconds(-((tzOffset ?? 0) * 60));
-            var instant = Instant.FromDateTimeUtc(dt);
-            var dtLocal = instant.WithOffset(offset)
-                          .LocalDateTime
-                          .ToDateTimeUnspecified();
-
-            return Ok(dtLocal.ToString("MM/dd/yyyy hh:mm:ss tt zzz"));
+            return Ok(new { LastModifiedDate = _utilities.UtcToLocal(dt) });
         }
 
 
@@ -473,6 +467,16 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             this._assessmentBusiness.MoveHydroActionsOutOfIseActions();
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/getAssessmentObservations")]
+        public IActionResult GetAssessmentObservations([FromQuery] int id1, [FromQuery] int id2, [FromQuery] int id3,
+                                                       [FromQuery] int id4, [FromQuery] int id5, [FromQuery] int id6,
+                                                       [FromQuery] int id7, [FromQuery] int id8, [FromQuery] int id9, [FromQuery] int id10)
+        {
+            
+            return Ok(this._assessmentBusiness.GetAssessmentObservations(id1, id2, id3, id4, id5, id6, id7, id8, id9, id10));
         }
     }
 }

@@ -766,5 +766,86 @@ namespace CSETWebCore.Api.Controllers
             CisaAssessorWorkflowFieldValidator validator = new CisaAssessorWorkflowFieldValidator(demographics, iodDemograhics, cisServiceDemographics, cisServiceComposition);
             return Ok(validator.ValidateFields());
         }
+
+
+        
+        [HttpGet]
+        [Route("api/reports/getCieAllQuestions")]
+        public IActionResult GetCieAllQuestions()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _report.SetReportsAssessmentId(assessmentId);
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+            MaturityBasicReportData data = new MaturityBasicReportData();
+
+            data.MatAnsweredQuestions = _report.GetCieQuestionList(0);
+            data.Information = _report.GetInformation();
+            return Ok(data);
+        }
+
+        [HttpGet]
+        [Route("api/reports/getCiePrincipleQuestions")]
+        public IActionResult getCiePrincipleQuestions()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _report.SetReportsAssessmentId(assessmentId);
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+            MaturityBasicReportData data = new MaturityBasicReportData();
+
+            data.MatAnsweredQuestions = _report.GetCieQuestionList(5);
+            data.Information = _report.GetInformation();
+            return Ok(data);
+        }
+
+        [HttpGet]
+        [Route("api/reports/getCiePhaseQuestions")]
+        public IActionResult getCiePhaseQuestions()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _report.SetReportsAssessmentId(assessmentId);
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+            MaturityBasicReportData data = new MaturityBasicReportData();
+
+            // the '4' signals to get levels 1 - 4
+            data.MatAnsweredQuestions = _report.GetCieQuestionList(4);
+            data.Information = _report.GetInformation();
+            return Ok(data);
+        }
+
+
+        [HttpGet]
+        [Route("api/reports/getCieNaQuestions")]
+        public IActionResult getCieNaQuestions()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _report.SetReportsAssessmentId(assessmentId);
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+            MaturityBasicReportData data = new MaturityBasicReportData();
+
+            // the '4' signals to get levels 1 - 4
+            data.MatAnsweredQuestions = _report.GetCieQuestionList(0, true);
+            data.Information = _report.GetInformation();
+            return Ok(data);
+        }
+
+        //[HttpGet]
+        //[Route("api/reports/getCieNaQuestions")]
+        //public IActionResult getCieNaQuestions()
+        //{
+        //    var assessmentId = _token.AssessmentForUser();
+        //    _report.SetReportsAssessmentId(assessmentId);
+        //    _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+        //    MaturityBasicReportData data = new MaturityBasicReportData();
+
+        //    // the '4' signals to get levels 1 - 4
+        //    data.MatAnsweredQuestions = _report.GetCieQuestionList(0, true);
+        //    data.Information = _report.GetInformation();
+        //    return Ok(data);
+        //}
     }
 }
