@@ -21,12 +21,12 @@ namespace CSETWebCore.Business.Contact
         /// <summary>
         /// The set name for the Cyber Florida trimmed down CSF set
         /// </summary>
-        private readonly string CF_CSF_SetName = "Florida_NCSF_V1";
+        private readonly string CF_CSF_SetName = "Florida_NCSF_V2";
 
         /// <summary>
         /// The set name for Cybersecurity Framework v1.1
         /// </summary>
-        private readonly string CF_SetName = "NCSF_V1";
+        private readonly string CF_SetName = "NCSF_V2";
 
 
         /// <summary>
@@ -62,6 +62,16 @@ namespace CSETWebCore.Business.Contact
             }
 
             return false;
+        }
+
+        public List<CFEntry> IsEntryCF(List<int> assessmentIds)
+        {
+            List<CFEntry> results = new List<CFEntry>();
+            foreach (var assessmentId in assessmentIds)
+            {
+                results.Add(new CFEntry() { AssessmentId = assessmentId, IsEntry = IsEntryCF(assessmentId) });
+            }
+            return results;
         }
 
 

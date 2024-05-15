@@ -40,6 +40,15 @@ SOFTWARE.
   opacity: 20%;
 }
 
+.card-image-child-cf{
+  height: 190px !important;
+  right: -20px;
+  top: -28px;
+  clip-path: inset(0);
+  position: absolute;
+  opacity: 100%;
+}
+
 .swiper-button-prev.swiper-button-disabled,
 .swiper-button-next.swiper-button-disabled {
   opacity: 0;
