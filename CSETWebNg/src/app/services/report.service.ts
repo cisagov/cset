@@ -130,6 +130,16 @@ export class ReportService {
   }
 
   /**
+   *
+   */
+  clickReportLink(reportType: string, securitySelected: boolean = false, print: boolean = false) {
+    const url = '/index.html?returnPath=report/' + reportType;
+    localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
+    localStorage.setItem('report-confidentiality', securitySelected.toString());
+    window.open(url, '_blank');
+  }
+  
+  /**
    * Converts linebreak characters to HTML <br> tag.
    */
   formatLinebreaks(text: string) {
