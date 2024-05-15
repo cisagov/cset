@@ -232,7 +232,8 @@
                         <td *ngIf="isTSA">{{isTSA &&
                             (assessment.workflow=='BASE'||assessment.workflow=='CSET'||assessment.workflow==null) ?
                             'CSET' :
-                            'TSA' }}</td>
+                            'TSA' }}
+                        </td>
                         <td *ngIf="isCF">{{assessment.isEntryString}}</td>
                         <td>{{assessment.type}}</td>
                         <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.lastModifiedDate | localizeDate}}
@@ -243,14 +244,17 @@
                             <ng-container *ngIf="assessment.iseSubmitted">{{
                                 systemTimeTranslator(assessment.submittedDate, 'short') }}</ng-container>
                         </td>
+                        <td>{{assessment.type}}</td>
+                        <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.lastModifiedDate | localizeDate}}</td>
                         <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate, 'med')}}</td>
-
-                        <td *ngIf="showColumn('primary-assessor')">
-                            <!--{{assessment.creatorName}}--> {{assessment.firstName}} {{assessment.lastName}}
+                        <td *ngIf="showColumn('ise-submitted')">
+                            <ng-container *ngIf="assessment.iseSubmitted">
+                                {{ systemTimeTranslator(assessment.submittedDate, 'short') }}
+                            </ng-container>
                         </td>
+                        <td *ngIf="showColumn('primary-assessor')">{{assessment.firstName}} {{assessment.lastName}}</td>
                         <td>
-                            <div
-                                *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">
+                            <div *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">
                                 <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
                                     {{ { c: assessment.completedQuestionsCount, t:
                                     assessment.totalAvailableQuestionsCount, qa: this.assessment.questionAlias, l:
