@@ -368,22 +368,23 @@ namespace CSETWebCore.Helpers
             // Domain rollup
             foreach (var domain in XDoc.Descendants("Domain").ToList())
             {
-                var myMils = domain.Descendants("Mil");
+                // Some models may have Mil elements as children, some may have Domain elements as children
+                var myChildren = domain.Elements();
 
                 // start with red
                 SetColor(domain, "red");
 
 
                 // promote to yellow
-                if (myMils.Any(m => GetColor(m) == "yellow")
-                    || myMils.Any(m => GetColor(m) == "green"))
+                if (myChildren.Any(m => GetColor(m) == "yellow")
+                    || myChildren.Any(m => GetColor(m) == "green"))
                 {
                     SetColor(domain, "yellow");
                 }
 
 
                 // promote to green
-                if (myMils.All(m => GetColor(m) == "green"))
+                if (myChildren.All(m => GetColor(m) == "green"))
                 {
                     SetColor(domain, "green");
                 }
