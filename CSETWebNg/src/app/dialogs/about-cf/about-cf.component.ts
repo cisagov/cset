@@ -25,6 +25,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { environment } from '../../../environments/environment';
 import { ConfigService } from '../../services/config.service';
+import { VersionService } from '../../services/version.service';
 
 @Component({
   selector: 'app-about-cf',
@@ -35,6 +36,7 @@ export class AboutCfComponent implements OnInit {
 
   constructor(private dialog: MatDialogRef<AboutCfComponent>,
     public configSvc: ConfigService,
+    public versionSvc: VersionService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
 
@@ -46,9 +48,9 @@ export class AboutCfComponent implements OnInit {
     if (this.configSvc.config.debug.showBuildTime ?? false) {
       this.linkerTime = localStorage.getItem('cset.linkerDate');
     }
-
+    this.version = this.versionSvc.localVersion;
   }
-  version = environment.visibleVersion;
+  version: any;
   helpContactEmail = this.configSvc.helpContactEmail;
   helpContactPhone = this.configSvc.helpContactPhone;
 
