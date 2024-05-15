@@ -39,6 +39,7 @@ import { DateAdapter } from '@angular/material/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { ReportService } from './report.service';
 import { DateTime } from 'luxon';
+import { VersionService } from './version.service';
 
 let headers = {
   headers: new HttpHeaders()
@@ -100,6 +101,7 @@ export class NCUAService {
   questions: any = null;
   iseIrps: any = null;
   information: any = null;
+  version: any;
   jsonString: any = {
     "metaData": {
       "assessmentName": '',
@@ -140,8 +142,12 @@ export class NCUAService {
     private authSvc: AuthenticationService,
     private dateAdapter: DateAdapter<any>,
     private tSvc: TranslocoService,
-    private reportSvc: ReportService
+    private reportSvc: ReportService,
+    public versionSvc: VersionService
   ) {
+    this.versionSvc.localVersionObservable$.subscribe(localVersion => {
+      this.version = localVersion;
+    });
     this.init();
   }
 
@@ -612,7 +618,7 @@ export class NCUAService {
       "region": this.assessmentSvc.assessment.regionCode,
       "assets": this.assessmentSvc.assessment.assets,
       "guid": this.questions.assessmentGuid,
-      "acet_version": environment.visibleVersion,
+      "acet_version": this.version,
       "db_version": this.questions.csetVersion
     };
 

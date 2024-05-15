@@ -33,26 +33,26 @@ import { VersionService } from '../../services/version.service';
   styleUrls: ['./about-cf.component.scss']
 })
 export class AboutCfComponent implements OnInit {
+  version: any;
+  helpContactEmail = this.configSvc.helpContactEmail;
+  helpContactPhone = this.configSvc.helpContactPhone;
+  linkerTime: string = null;
+
 
   constructor(private dialog: MatDialogRef<AboutCfComponent>,
     public configSvc: ConfigService,
     public versionSvc: VersionService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      this.versionSvc.localVersionObservable$.subscribe(localVersion => {
+        this.version = localVersion;
+      });
+     }
 
-
-  linkerTime: string = null;
-  /**
-   * 
-   */
   ngOnInit() {
     if (this.configSvc.config.debug.showBuildTime ?? false) {
       this.linkerTime = localStorage.getItem('cset.linkerDate');
     }
-    this.version = this.versionSvc.localVersion;
   }
-  version: any;
-  helpContactEmail = this.configSvc.helpContactEmail;
-  helpContactPhone = this.configSvc.helpContactPhone;
 
   close() {
     return this.dialog.close();

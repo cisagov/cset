@@ -44,7 +44,11 @@ export class AboutCsetComponent implements OnInit {
   constructor(private dialog: MatDialogRef<AboutCsetComponent>,
     public configSvc: ConfigService,
     public versionSvc: VersionService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { 
+      this.versionSvc.localVersionObservable$.subscribe(localVersion => {
+        this.version = localVersion;
+      });
+    }
 
   /**
    * 
@@ -53,6 +57,5 @@ export class AboutCsetComponent implements OnInit {
     if (this.configSvc.config.debug.showBuildTime ?? false) {
       this.linkerTime = localStorage.getItem('cset.linkerDate');
     }
-    this.version = this.versionSvc.localVersion;
   }
 }

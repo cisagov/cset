@@ -41,10 +41,13 @@ export class AboutComponent {
   constructor(private dialog: MatDialogRef<AboutComponent>,
     public configSvc: ConfigService,
     public versionSvc: VersionService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { 
+      this.versionSvc.localVersionObservable$.subscribe(localVersion => {
+        this.version = localVersion;
+      });
+    }
 
     ngOnInit() {
-      this.version = this.versionSvc.localVersion;
     }
 
     close() {

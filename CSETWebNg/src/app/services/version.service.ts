@@ -7,6 +7,8 @@ import { environment } from '../../environments/environment';
 // import { AppVersion } from '../models/app-version';
 import { data } from 'jquery';
 import { version } from 'os';
+
+
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
   params: new HttpParams()
@@ -16,6 +18,9 @@ const headers = {
 })
 
 export class VersionService {
+  private localVersionSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public localVersionObservable$: Observable<string> = this.localVersionSubject.asObservable();
+
   actualVersion:string='';
   githubVersion=[]
   public localVersion: string;
@@ -25,16 +30,20 @@ export class VersionService {
 
   constructor(
     private http: HttpClient,
-    private configSvc: ConfigService
-  ) { }
+    private configSvc: ConfigService, 
+    
+  ) {
+    this.getLatestVersion();
+   }
 
-  async getLatestVersion(): Promise<void> {
+  getLatestVersion() {
     this.getGithubLatestRelease().subscribe(data=>{
       this.actualVersion=data.tag_name.substring(1)
       this.githubVersion=data.tag_name.substring(1).split('.').map(x => parseInt(x, 10))
       if(data){
         this.getInstalledVersion().subscribe(version=>{
           this.localVersion=version.majorVersion.toString()+'.'+version.minorVersion.toString()+'.'+version.patch.toString()+'.'+version.build.toString();
+          this.localVersionSubject.next(this.localVersion);
           if(version.majorVersion < this.githubVersion[0] ||
             (version.majorVersion === this.githubVersion[0] && version.minorVersion < this.githubVersion[1]) ||
             (version.majorVersion === this.githubVersion[0] && version.minorVersion === this.githubVersion[1] && version.patch < this.githubVersion[2]) ||
@@ -51,11 +60,6 @@ export class VersionService {
     error => {
       console.log(error)
     }
-  }
-
-  async getLatestVersionPromise(): Promise<any> {
-    await this.getLatestVersion()
-    return this.localVersion
   }
 
   getGithubLatestRelease():Observable<any>{
