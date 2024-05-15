@@ -108,7 +108,7 @@ export class OpenEndedQuestionsComponent implements OnInit {
   loadQuestions() {
     this.groupings = null;
     this.maturitySvc
-      .getQuestionsList(this.configSvc.installationMode, false)
+      .getQuestionsList(false)
       .subscribe(
         (response: MaturityQuestionResponse) => {
           this.modelName = response.modelName;

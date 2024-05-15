@@ -55,7 +55,6 @@
     "maturity detail": "Detalle de madurez",
     "no search results": "No se encontraron artículos que coincidan con la solicitud de búsqueda.",
     "auto load guidance": "Carga automática de guía",
-    "unanswered equals no": "Las preguntas sin respuesta se calculan como una respuesta '{{no-ans}}'",
     "to start an assessment": "Para iniciar una nueva evaluación, haz clic en una tarjeta. Para ver detalles adicionales, haz clic en el icono {icon}.",
     "missing email": "Se requiere la dirección de correo electrónico",
     "invalid email format": "Formato de correo inválido",
@@ -387,6 +386,8 @@
         }
     },
     "questions": {
+        "instructions 1": "Seleccione la respuesta aplicable para cada una de las siguientes preguntas.",
+        "unanswered equals no": "Las preguntas sin respuesta se calculan como una respuesta '{{no-ans}}.'",
         "cpg answer key": "Clave de Respuestas CPG"
     },
     "tooltip": {

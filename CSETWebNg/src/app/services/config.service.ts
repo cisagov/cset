@@ -33,6 +33,11 @@ export class ConfigService {
   apiUrl: string;
   appUrl: string;
   docUrl: string;
+  refDocUrl: string;
+
+  // used to build a true URL to the API endpoint that serves gen_file documents
+  referenceDocSegment = 'api/refdoc';
+
   onlineUrl: string;
   analyticsUrl: string = "http://localhost:5278/";
 
@@ -147,9 +152,11 @@ export class ConfigService {
     if (localStorage.getItem('apiUrl') != null) {
       this.apiUrl = localStorage.getItem('apiUrl') + '/' + this.config.api.apiIdentifier + '/';
       this.docUrl = localStorage.getItem('apiUrl') + '/' + this.config.api.documentsIdentifier + '/';
+      this.refDocUrl = localStorage.getItem('apiUrl') + '/' + this.referenceDocSegment + '/';
     } else {
       this.apiUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.config.api.apiIdentifier + '/';
       this.docUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.config.api.documentsIdentifier + '/';
+      this.refDocUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.referenceDocSegment + '/';
     }
 
     this.appUrl = appProtocol + this.config.app.appUrl + appPort;

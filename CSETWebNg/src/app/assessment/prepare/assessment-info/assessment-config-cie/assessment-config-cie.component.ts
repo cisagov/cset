@@ -101,13 +101,8 @@ export class AssessmentConfigCieComponent {
   /**
    *
    */
-  confirmImportSurvey(importSelect: any) {
-    if (this.dialog.openDialogs[0]) {
-      return;
-    }
-
-    let assessToBeImported = +importSelect.value;
-
+  confirmImportSurvey() {
+    this.cisSvc.saveBaseline(this.baselineAssessmentId);
     const dialogRef = this.dialog.open(ConfirmComponent);
 
     dialogRef.componentInstance.confirmMessage =
@@ -117,7 +112,7 @@ export class AssessmentConfigCieComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.cisSvc.importSurvey(this.assessSvc.assessment.id, assessToBeImported)
+        this.cisSvc.importSurvey(this.assessSvc.assessment.id, this.baselineAssessmentId)
           .subscribe(() => {
             this.dialog.open(AlertComponent, {
               data: { messageText: 'Import complete.' }
