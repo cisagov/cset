@@ -10,7 +10,7 @@ namespace CSETWebCore.DataLayer.Model;
 
 public partial class ANSWER_PROFILE
 {
-    public int Asessment_Id { get; set; }
+    public int Assessment_Id { get; set; }
 
     [Key]
     public int Profile_Id { get; set; }
@@ -24,7 +24,7 @@ public partial class ANSWER_PROFILE
     [InverseProperty("Profile")]
     public virtual ICollection<ANSWER_CLONE> ANSWER_CLONE { get; set; } = new List<ANSWER_CLONE>();
 
-    [ForeignKey("Asessment_Id")]
+    [ForeignKey("Assessment_Id")]
     [InverseProperty("ANSWER_PROFILE")]
-    public virtual ASSESSMENTS Asessment { get; set; }
+    public virtual ASSESSMENTS Assessment { get; set; }
 }
