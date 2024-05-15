@@ -80,7 +80,7 @@
 
 
   <p *ngIf="!!categories" class="mb-4">
-    {{ msgUnansweredEqualsNo }}
+    {{t('questions.instructions 1')}} {{ msgUnansweredEqualsNo }}
   </p>
   <p *ngIf="configSvc.installationMode == 'CF' && assessSvc.usesStandard('Florida_NCSF_V1')"
     style="color:red; font-weight: bold;">
