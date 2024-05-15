@@ -52,7 +52,6 @@
     "maturity detail": "Maturity Detail",
     "no search results": "No items were found matching the search request.",
     "auto load guidance": "Auto-load Guidance",
-    "unanswered equals no": "Unanswered questions are calculated as a '{{no-ans}}' response",
     "to start an assessment": "To start a new assessment, click on a card.  To view additional details click the {icon} icon.",
     "missing email": "Email address is required",
     "invalid email format": "Invalid email format",
@@ -450,6 +449,8 @@
         }
     },
     "questions": {
+        "instructions 1": "Select the applicable answer for each of the following questions.",
+        "unanswered equals no": "Unanswered questions are calculated as a '{{no-ans}}' response.",
         "cpg answer key": "CPG Answer Key"
     },
     "tooltip": {
