@@ -25,6 +25,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { environment } from '../../../environments/environment';
 import { ConfigService } from '../../services/config.service';
+import { VersionService } from '../../services/version.service';
 
 @Component({
   selector: 'app-about-renew',
@@ -32,13 +33,16 @@ import { ConfigService } from '../../services/config.service';
   styleUrls: ['./about-renew.component.scss']
 })
 export class AboutRenewComponent implements OnInit {
+  version: any;
+  helpContactEmail = this.configSvc.helpContactEmail;
+  helpContactPhone = this.configSvc.helpContactPhone;
+  linkerTime: string = null;
 
   constructor(private dialog: MatDialogRef<AboutRenewComponent>,
     public configSvc: ConfigService,
+    public versionSvc: VersionService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-
-  linkerTime: string = null;
   /**
    * 
    */
@@ -46,11 +50,9 @@ export class AboutRenewComponent implements OnInit {
     if (this.configSvc.config.debug.showBuildTime ?? false) {
       this.linkerTime = localStorage.getItem('cset.linkerDate');
     }
-
+    this.version = this.versionSvc.localVersion;
   }
-  version = environment.visibleVersion;
-  helpContactEmail = this.configSvc.helpContactEmail;
-  helpContactPhone = this.configSvc.helpContactPhone;
+  
 
   close() {
     return this.dialog.close();

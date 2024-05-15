@@ -25,6 +25,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { environment } from '../../../environments/environment';
 import { ConfigService } from '../../services/config.service';
+import { VersionService } from '../../services/version.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-about-cset',
@@ -33,7 +35,7 @@ import { ConfigService } from '../../services/config.service';
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AboutCsetComponent implements OnInit {
-  version = environment.visibleVersion;
+  version: any;
   helpContactEmail = this.configSvc.helpContactEmail;
   helpContactPhone = this.configSvc.helpContactPhone;
 
@@ -41,6 +43,7 @@ export class AboutCsetComponent implements OnInit {
 
   constructor(private dialog: MatDialogRef<AboutCsetComponent>,
     public configSvc: ConfigService,
+    public versionSvc: VersionService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   /**
@@ -50,5 +53,6 @@ export class AboutCsetComponent implements OnInit {
     if (this.configSvc.config.debug.showBuildTime ?? false) {
       this.linkerTime = localStorage.getItem('cset.linkerDate');
     }
+    this.version = this.versionSvc.localVersion;
   }
 }
