@@ -179,6 +179,8 @@ export class MyAssessmentsComponent implements OnInit {
       if (this.ncuaSvc.switchStatus) {
         return false;
       }
+
+      return false;
     }
 
     if (column == 'ise-submitted') {
