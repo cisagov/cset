@@ -37,24 +37,27 @@ export class ImrReportComponent implements OnInit {
   model: CmuReportModel = {};
   modelReferences;
   any;
-  securityLevel: string = '';
+  confidentiality: string = '';
 
   constructor(
     private cmuSvc: CmuService,
     public reportSvc: ReportService,
     private titleSvc: Title,
     public configSvc: ConfigService
-  ) {}
+  ) { }
 
+  /**
+   * 
+   */
   ngOnInit(): void {
-    this.titleSvc.setTitle('IMR Report - ' + this.configSvc.behaviors.defaultTitle);
+    const conf = localStorage.getItem('report-confidentiality');
+    localStorage.removeItem('report-confidentiality');
 
-    const securityLevel = localStorage.getItem('report-confidentiality');
-    if (securityLevel) {
-      securityLevel !== 'None' ? (this.securityLevel = securityLevel) : (this.securityLevel = '');
-      localStorage.removeItem('report-confidentiality');
+    if (conf) {
+      conf !== 'None' ? (this.confidentiality = conf) : (this.confidentiality = '');
     }
 
+    this.titleSvc.setTitle('IMR Report - ' + this.configSvc.behaviors.defaultTitle);
     this.reportSvc.getAssessmentInfoForReport().subscribe((resp: any) => {
       this.model.assessmentDetails = resp;
     });

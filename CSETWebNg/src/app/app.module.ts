@@ -655,6 +655,13 @@ import { AnalyticsComponent } from './assessment/results/analytics/analytics.com
 import { AnalyticsloginComponent } from './assessment/results/analysis/analytics-login/analytics-login.component';
 import { AnalyticsService } from './services/analytics.service';
 import { UploadDemographicsComponent } from './dialogs/import demographics/import-demographics.component';
+import { ReportListComponent } from './assessment/results/reports/report-list/report-list.component';
+import { ReportsImrComponent } from './assessment/results/reports/report-list/reports-imr/reports-imr.component';
+import { ReportsCisComponent } from './assessment/results/reports/report-list/reports-cis/reports-cis.component';
+import { ReportsCmmc2Component } from './assessment/results/reports/report-list/reports-cmmc2/reports-cmmc2.component';
+import { ReportsCrrComponent } from './assessment/results/reports/report-list/reports-crr/reports-crr.component';
+import { ReportsEdmComponent } from './assessment/results/reports/report-list/reports-edm/reports-edm.component';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -1258,7 +1265,13 @@ import { UploadDemographicsComponent } from './dialogs/import demographics/impor
     AnalyticsComponent, 
     ReferencesSectionComponent,
     CisaWorkflowWarningsComponent,
-    AnalyticsloginComponent
+    AnalyticsloginComponent,
+    ReportsImrComponent,
+    ReportsCisComponent,
+    ReportsCmmc2Component,
+    ReportListComponent,
+    ReportsCrrComponent,
+    ReportsEdmComponent
   ],
   providers: [
     TranslocoService,
