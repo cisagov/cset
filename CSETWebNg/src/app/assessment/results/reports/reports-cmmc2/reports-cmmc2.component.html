@@ -1,0 +1,43 @@
+<div class="d-flex flex-column justify-content-start align-items-start mb-4">
+     <h4>Capability Maturity Model Certification (CMMC) 2.0</h4>
+
+     <div style="border: 1px solid #ddd; border-radius: .5rem; padding: 1rem;" class="mb-3 w-100">
+          <button (click)="reportSvc.clickReportLink('executivecmmc2')" tabindex="0"
+               class="btn btn-link btn-link-dark text-left">
+               CMMC 2.0 - Executive Summary
+          </button>
+          <div>
+               The report includes graphs to highlight compliance by level, compliance by domain, and the SPRS
+               Scorecard. Additionally, it includes a compilation of all CMMC practices and their responses, along with
+               their corresponding assessment objectives and SPRS value.
+          </div>
+     </div>
+
+
+     <div style="border: 1px solid #ddd; border-radius: .5rem; padding: 1rem;" class="mb-3 w-100">
+          <button tabindex="0" (click)="reportSvc.clickReportLink('cmmc2DeficiencyReport')"
+               class="btn btn-link btn-link-dark text-left">
+               CMMC 2.0 - Deficiency Report
+          </button>
+          <div>
+               The report contains a list of all CMMC practices that were marked as “No” or unanswered during the
+               assessment
+               process. This report serves to identify potential deficiencies or gaps in the contractor’s cybersecurity
+               practices.
+          </div>
+     </div>
+
+
+     <div style="border: 1px solid #ddd; border-radius: .5rem; padding: 1rem;" class="mb-3 w-100">
+          <button tabindex="0" (click)="reportSvc.clickReportLink('cmmc2CommentsMarked')"
+               class="btn btn-link btn-link-dark text-left">
+               CMMC 2.0 - Comments and Marked for Review
+          </button>
+          <div>
+               This document consolidates all practices that have received comments and have been flagged for review
+               during
+               the assessment process. It provides an overview of areas where further attention or clarification may be
+               needed.
+          </div>
+     </div>
+</div>
