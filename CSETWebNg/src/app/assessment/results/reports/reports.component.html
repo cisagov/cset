@@ -284,37 +284,10 @@
       </div>
     </div>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('CIS') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>CISA Cyber Infrastructure Survey (CIS)</h4>
+    
+    <!-- CIS -->
+    <app-reports-cis *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CIS')"></app-reports-cis>
 
-      <div>
-        <button tabindex="0" (click)="clickReportLink('cisSurveyReport')" class="btn btn-link btn-link-dark text-left">
-          Survey Report
-        </button>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('cisSectionScoringReport')"
-          class="btn btn-link btn-link-dark text-left">
-          Section Scoring Report
-        </button>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('cisRankedDeficiencyReport')"
-          class="btn btn-link btn-link-dark text-left">
-          Deficiency Report
-        </button>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('cisCommentsmarked')"
-          class="btn btn-link btn-link-dark text-left">
-          Comments and Marked for Review
-        </button>
-      </div>
-    </div>
 
     <div *ngIf="
         !!assessSvc.assessment &&
