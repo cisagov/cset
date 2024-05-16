@@ -756,6 +756,100 @@ namespace CSETWebCore.Api.Controllers
             return Ok(new { no = filteredGroupingsS, unanswered = filteredGroupingsU });
         }
 
+        [HttpGet]
+        [Route("api/getMaturityDeficiencyListSdOwner")]
+        public IActionResult GetDeficiencyListSdOwner()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var biz = new NestedStructure(assessmentId, 0, _context);
+            List<Grouping> filteredGroupingsU = new List<Grouping>();
+            List<Grouping> filteredGroupingsNo = new List<Grouping>();
+            List<Grouping> filteredGroupingsNa = new List<Grouping>();
+
+            foreach (var b in biz.MyModel.Groupings)
+            {
+                var questionsU = new List<Question>();
+                var questionsNo = new List<Question>();
+                var questionsNa = new List<Question>();
+
+                foreach (var q in b.Questions)
+                {
+                    var question = new Question();
+                    if (q.AnswerText == "U")
+                    {
+                        question = new Question()
+                        {
+                            QuestionType = q.QuestionType,
+                            DisplayNumber = q.DisplayNumber,
+                            QuestionText = q.QuestionText,
+                            MarkForReview = q.MarkForReview,
+                            AnswerText = "Unanswered"
+                        };
+                        questionsU.Add(question);
+                    }
+
+                    if (q.AnswerText == "N")
+                    {                        
+                        question = new Question()
+                        {
+                            QuestionType = q.QuestionType,
+                            DisplayNumber = q.DisplayNumber,
+                            QuestionText = q.QuestionText,
+                            MarkForReview = q.MarkForReview,
+                            AnswerText = "No"
+                        };
+                        questionsNo.Add(question);
+                    }
+
+                    if (q.AnswerText == "NA")
+                    {
+                        question = new Question()
+                        {
+                            QuestionType = q.QuestionType,
+                            DisplayNumber = q.DisplayNumber,
+                            QuestionText = q.QuestionText,
+                            MarkForReview = q.MarkForReview,
+                            AnswerText = "NA"
+                        };
+                        questionsNa.Add(question);
+                    }
+                }
+
+                if (questionsU.Any())
+                {
+                    filteredGroupingsU.Add(new Grouping
+                    {
+                        Title = b.Title,
+                        Questions = questionsU
+                    });
+                }
+
+                if (questionsNo.Any())
+                {
+                    filteredGroupingsNo.Add(new Grouping
+                    {
+                        Title = b.Title,
+                        Questions = questionsNo
+                    });
+                }
+
+                if (questionsNa.Any())
+                {
+                    filteredGroupingsNa.Add(new Grouping
+                    {
+                        Title = b.Title,
+                        Questions = questionsNa
+                    });
+                }
+
+                questionsU = new List<Question>();
+                questionsNo = new List<Question>();
+            }
+
+            return Ok(new { no = filteredGroupingsNo, unanswered = filteredGroupingsU, na = filteredGroupingsNa });
+        }
+
         /// <summary>
         /// get all comments and marked for review
         /// </summary>
