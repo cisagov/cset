@@ -45,13 +45,9 @@
     </button>
   </div>
 
-
   <div [class.div-shield]="disableEntirePage">
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
+    <div *ngIf="!!assessSvc.assessment && (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile" 
+      class="d-flex flex-column justify-content-start align-items-start mb-4">
       <h4>{{t('standards and diagram')}}</h4>
       <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         {{t('executive summary')}}
@@ -468,6 +464,22 @@
             Comments and Marked for Review
           </button>
         </div>
+      </div>
+
+      <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('SD02 Owner')" class="d-flex flex-column justify-content-start align-items-start mb-4">
+        <div *ngIf="!isMobile">
+          <h4>SD02 Owner Reports</h4>
+          <div>
+            <button (click)="clickReportLink('sdo-executive-summary')" tabindex="0" class="btn btn-link btn-link-dark text-left">Executive Summary</button>
+          </div>
+          <div>
+            <button (click)="clickReportLink('sdo-gap-report')" tabindex="0" class="btn btn-link btn-link-dark text-left">Deficiency Report</button>
+          </div>
+          <div>
+            <button (click)="clickReportLink('sdo-comments-and-mfr')" tabindex="0" class="btn btn-link btn-link-dark text-left">Comments and Marked for Review</button>
+          </div>
+        </div>
+        <div *ngIf="isMobile"></div>
       </div>
 
       <div *ngIf="!!assessSvc.assessment &&
