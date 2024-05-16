@@ -31,6 +31,7 @@ import { GroupingDescriptionComponent } from '../../assessment/questions/groupin
 import { ObservationsService } from '../../services/observations.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { environment } from '../../../environments/environment';
+import { VersionService } from '../../services/version.service';
 
 
 @Component({
@@ -46,7 +47,7 @@ export class IseDataComponent implements OnInit {
   fileName: string = '';
   examLevel: string = '';
 
-  versionName: string = environment.version;
+  versionName: string;
 
   currentDate: any;
 
@@ -59,8 +60,11 @@ export class IseDataComponent implements OnInit {
     public acetSvc: ACETService,
     public configSvc: ConfigService,
     public ncuaSvc: NCUAService,
-    public observationSvc: ObservationsService
-  ) { }
+    public observationSvc: ObservationsService, 
+    public versionSvc: VersionService
+  ) {  this.versionSvc.localVersionObservable$.subscribe(localVersion => {
+    this.versionName = localVersion;
+  });}
 
   ngOnInit(): void {
     this.titleService.setTitle("Data Report - ISE");

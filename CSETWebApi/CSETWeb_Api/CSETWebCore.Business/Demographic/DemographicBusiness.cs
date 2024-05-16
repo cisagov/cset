@@ -206,7 +206,7 @@ namespace CSETWebCore.Business.Demographic
             }
 
             demo.CustomersSupported = da.CustomersSupported;
-            demo.CyberRiskService = da.cyberRiskService;
+            demo.CyberRiskService = da.CyberRiskService;
             demo.CioExists = da.CIOExists;
             demo.CisoExists = da.CISOExists;
             demo.Employees = da.Employees;
@@ -254,7 +254,7 @@ namespace CSETWebCore.Business.Demographic
             dbDemog.CIOExists = demographics.CioExists;
             dbDemog.CISOExists = demographics.CisoExists;
             dbDemog.CyberTrainingProgramExists = demographics.CyberTrainingProgramExists;
-            dbDemog.cyberRiskService = demographics.CyberRiskService;
+            dbDemog.CyberRiskService = demographics.CyberRiskService;
 
             _context.DEMOGRAPHIC_ANSWERS.Update(dbDemog);
             _context.SaveChanges();

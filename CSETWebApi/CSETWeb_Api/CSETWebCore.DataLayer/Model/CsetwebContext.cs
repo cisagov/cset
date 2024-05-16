@@ -8,10 +8,6 @@ namespace CSETWebCore.DataLayer.Model;
 
 public partial class CsetwebContext : DbContext
 {
-    public CsetwebContext()
-    {
-    }
-
     public CsetwebContext(DbContextOptions<CsetwebContext> options)
         : base(options)
     {
@@ -621,7 +617,7 @@ public partial class CsetwebContext : DbContext
         {
             entity.Property(e => e.Profile_Date).HasDefaultValueSql("(getdate())");
 
-            entity.HasOne(d => d.Asessment).WithMany(p => p.ANSWER_PROFILE).HasConstraintName("FK_ANSWER_PROFILE_ASSESSMENTS");
+            entity.HasOne(d => d.Assessment).WithMany(p => p.ANSWER_PROFILE).HasConstraintName("FK_ANSWER_PROFILE_ASSESSMENTS");
         });
 
         modelBuilder.Entity<ANSWER_QUESTION_TYPES>(entity =>
@@ -1883,7 +1879,9 @@ public partial class CsetwebContext : DbContext
 
             entity.HasOne(d => d.Gen_File).WithMany(p => p.MATURITY_REFERENCES).HasConstraintName("FK_MATURITY_REFERENCES_GEN_FILE");
 
-            entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_REFERENCES).HasConstraintName("FK_MATURITY_REFERENCES_MATURITY_QUESTIONS");
+            entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_REFERENCES)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MATURITY_REFERENCES_MATURITY_QUESTIONS");
         });
 
         modelBuilder.Entity<MATURITY_REFERENCE_TEXT>(entity =>
@@ -2647,7 +2645,7 @@ public partial class CsetwebContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SUB_CATEGORY_ANSWERS_Answer_Lookup");
 
-            entity.HasOne(d => d.Assessement).WithMany(p => p.SUB_CATEGORY_ANSWERS).HasConstraintName("FK_SUB_CATEGORY_ANSWERS_ASSESSMENTS");
+            entity.HasOne(d => d.Assessment).WithMany(p => p.SUB_CATEGORY_ANSWERS).HasConstraintName("FK_SUB_CATEGORY_ANSWERS_ASSESSMENTS");
 
             entity.HasOne(d => d.Heading_Pair).WithMany(p => p.SUB_CATEGORY_ANSWERS)
                 .HasPrincipalKey(p => p.Heading_Pair_Id)
@@ -2809,7 +2807,6 @@ public partial class CsetwebContext : DbContext
         });
         modelBuilder.HasSequence<int>("MaturityNodeSequence");
 
-        OnModelCreatingGeneratedProcedures(modelBuilder);
         OnModelCreatingPartial(modelBuilder);
     }
 

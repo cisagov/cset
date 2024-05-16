@@ -97,7 +97,6 @@ export class AssessmentConfigIodComponent implements OnInit {
   }
 
   updateDemographicsIod() {
-    console.log(this.iodDemographics);
     this.iodDemoSvc.updateDemographic(this.iodDemographics);
   }
 
