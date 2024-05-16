@@ -100,27 +100,10 @@
       </button>
     </div>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('CMMC2') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>Capability Maturity Model Certification (CMMC) 2.0</h4>
 
-      <button (click)="clickReportLink('executivecmmc2')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        CMMC 2.0 - Executive Summary
-      </button>
+    <!-- CMMC2 -->
+    <app-reports-cmmc2 *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC2') && !isMobile"></app-reports-cmmc2>
 
-      <button tabindex="0" (click)="clickReportLink('cmmc2DeficiencyReport')"
-        class="btn btn-link btn-link-dark text-left">
-        CMMC 2.0 - Deficiency Report
-      </button>
-
-      <button tabindex="0" (click)="clickReportLink('cmmc2CommentsMarked')"
-        class="btn btn-link btn-link-dark text-left">
-        CMMC 2.0 - Comments and Marked for Review
-      </button>
-    </div>
 
     <div *ngIf="
         !!assessSvc.assessment &&
@@ -284,7 +267,7 @@
       </div>
     </div>
 
-    
+
     <!-- CIS -->
     <app-reports-cis *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CIS')"></app-reports-cis>
 
