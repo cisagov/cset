@@ -28,6 +28,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { AuthenticationService } from './authentication.service';
 import { JwtParser } from '../helpers/jwt-parser';
 import { DateTime } from 'luxon';
+import { ConfigurableFocusTrap } from '@angular/cdk/a11y';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -38,7 +39,8 @@ export class ReportService {
   private initialized = false;
   private apiUrl: string;
 
-  securityIdentifiers: any[];
+  confidentialityLevels: any[];
+  confidentiality = '';
 
   /**
    *
@@ -50,9 +52,16 @@ export class ReportService {
       this.initialized = true;
     }
 
-    this.getSecurityIdentifiers().subscribe((x: any) => {
-      this.securityIdentifiers = x;
+    this.getConfidentialityLevels().subscribe((x: any) => {
+      this.confidentialityLevels = x;
     });
+  }
+
+  /**
+   * 
+   */
+  public getConfidentialityLevels() {
+    return this.http.get(this.apiUrl + 'reports/getconfidentialtypes');
   }
 
   /**
@@ -88,9 +97,6 @@ export class ReportService {
     });
   }
 
-  public getSecurityIdentifiers() {
-    return this.http.get(this.apiUrl + 'reports/getconfidentialtypes');
-  }
   /**
    * Calls the getAltList API endpoint to get all ALT answer justifications for the assessment.
    * @returns
@@ -136,15 +142,15 @@ export class ReportService {
   }
 
   /**
-   *
+   * Opens a new window/tab
    */
-  clickReportLink(reportType: string, securitySelected: boolean = false, print: boolean = false) {
+  clickReportLink(reportType: string, print: boolean = false) {
     const url = '/index.html?returnPath=report/' + reportType;
     localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
-    localStorage.setItem('report-confidentiality', securitySelected.toString());
+    localStorage.setItem('report-confidentiality', this.confidentiality);
     window.open(url, '_blank');
   }
-  
+
   /**
    * Converts linebreak characters to HTML <br> tag.
    */
@@ -226,12 +232,12 @@ export class ReportService {
     const jwt = new JwtParser();
     const parsedToken = jwt.decodeToken(this.authSvc.userToken());
     let t = DateTime.fromISO(d.toString());
-    t = t.plus({minute:t.offset});
+    t = t.plus({ minute: t.offset });
 
     if (format == 'date') {
       return t.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATE_SHORT);
     }
-    else  {
+    else {
       return t.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS);
     }
   }

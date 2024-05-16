@@ -8,11 +8,9 @@ import { ReportService } from '../../../../services/report.service';
 })
 export class ReportListComponent {
 
-  @Input()
-  securityIdentifier: any = [];
 
   @Input()
-  securitySelected: any;
+  confidentiality: any;
 
   @Input()
   sectionTitle: string;
@@ -21,11 +19,16 @@ export class ReportListComponent {
   list: any[];
 
 
-
-
+  /**
+   * 
+   */
   constructor(public reportSvc: ReportService) { }
 
+  /**
+   * 
+   */
   onSelectSecurity(val) {
-    this.securitySelected = val;
+    this.confidentiality = val;
+    this.reportSvc.confidentiality = val;
   }
 }
