@@ -200,7 +200,7 @@ namespace CSETWebCore.Model.Nested
         public int QuestionId { get; set; }
         public string QuestionText { get; set; }
         public int? OptionId { get; set; }
-        public string? OptionText { get; set; }
+        public string OptionText { get; set; }
         public decimal? Weight { get; set; }
         public bool Selected { get; set; }
         public string Type { get; set; }

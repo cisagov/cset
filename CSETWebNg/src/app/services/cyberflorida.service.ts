@@ -12,6 +12,8 @@ const headers = {
   providedIn: 'root'
 })
 export class CyberFloridaService {
+  
+  
   clearState() {
     this.needArray = [
       { id: 12297, answer: null },
@@ -35,10 +37,36 @@ export class CyberFloridaService {
       { id: 1938, answer: null },
       { id: 1939, answer: null }
     ];  
+    this.needArray2 = [
+      { id: 36409, answer: null },
+      { id: 36417, answer: null },
+      { id: 36419, answer: null },
+      { id: 36429, answer: null },
+      { id: 36439, answer: null },
+      { id: 36442, answer: null },
+      { id: 36444, answer: null },
+      { id: 36445, answer: null },
+      { id: 36479, answer: null },
+      { id: 36484, answer: null },
+      { id: 36487, answer: null },
+      { id: 36491, answer: null },
+      { id: 36494, answer: null },
+      { id: 36497, answer: null },
+      { id: 36503, answer: null },
+      { id: 1920, answer: null },
+      { id: 1925, answer: null },
+      { id: 1937, answer: null },
+      { id: 1938, answer: null },
+      { id: 1939, answer: null }
+    ];
+    this.needArrays = [this.needArray, this.needArray2];
   }
 
 
-  needArray = [];
+  needArray: { id: number; answer: any; }[];
+  needArray2: { id: number; answer: any; }[];
+  needArrays: { id: number; answer: any; }[][];
+
   private apiUrl: string;
 
   constructor(
@@ -51,13 +79,18 @@ export class CyberFloridaService {
 
   isAssessmentComplete(): boolean {    
     let isComplete = true;
-    this.needArray.forEach(function (value) {
-      if (value.answer == null) {
-        isComplete = isComplete && false;
-      }
-      else if(value.answer.answerText=='U'){
-        isComplete = isComplete && false;
-      }
+    this.needArrays.forEach((needArray) => {  
+      isComplete = true;    
+      needArray.forEach(function (value) {
+        if (value.answer == null) {
+          isComplete = isComplete && false;
+        }
+        else if(value.answer.answerText=='U'){
+          isComplete = isComplete && false;
+        }
+      });
+      if(isComplete)
+        return isComplete;
     });
     return isComplete;
   }
@@ -65,20 +98,26 @@ export class CyberFloridaService {
   updateCompleteStatus(answer: Answer) {  
     //have a list of all the 20 necessary id's
     //then when the list is complete enable the navigation
-    this.needArray.forEach(function (value) {
-      if(value.id == answer.questionId)
-       value.answer = answer;
-    });
+    this.needArrays.forEach((needArray) => {
+      needArray.forEach(function (value) {        
+        if(value.id == answer.questionId){
+          value.answer = answer;
+        }                    
+      });
+  });
   }
 
   getInitialState(){
     this.clearState();
     return new Promise((resolve, reject)=> {
       this.http.get(this.apiUrl + 'cf/isComplete').toPromise()
-      .then((data)=>{          
-            for(let a in data){            
-              this.updateCompleteStatus(data[a]);
-            }
+      .then((data: any[])=>{    
+            data.forEach(element => {
+              for(let a in element){            
+                this.updateCompleteStatus(element[a]);
+              }  
+            });      
+            
             resolve('initial state pulled');
         }
       );

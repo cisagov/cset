@@ -25,6 +25,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { environment } from '../../../environments/environment';
 import { ConfigService } from '../../services/config.service';
+import { VersionService } from '../../services/version.service';
 
 @Component({
   selector: 'app-about-cie',
@@ -32,15 +33,21 @@ import { ConfigService } from '../../services/config.service';
   styleUrls: ['./about-cie.component.scss']
 })
 export class AboutCieComponent {
-
-  ngOnInit(): void { };
-  version = environment.visibleVersion;
+  version: any;
   helpContactEmail = this.configSvc.helpContactEmail;
   helpContactPhone = this.configSvc.helpContactPhone;
 
   constructor(private dialog: MatDialogRef<AboutCieComponent>,
     public configSvc: ConfigService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    public versionSvc: VersionService,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      this.versionSvc.localVersionObservable$.subscribe(localVersion => {
+        this.version = localVersion;
+      });
+  }
+
+  ngOnInit(): void {
+   };
 
   close() {
     return this.dialog.close();
