@@ -176,10 +176,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       this.isCyberFlorida = false;
     }
 
-    this.reportSvc.getSecurityIdentifiers().subscribe((data) => {
-      this.securityIdentifier = data;
-    });
-
     this.assessSvc.getLastModified().subscribe((data: any) => {
       this.lastModifiedTimestamp = data.lastModifiedDate;
     });
