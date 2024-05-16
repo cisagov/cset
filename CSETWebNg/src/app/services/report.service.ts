@@ -38,6 +38,8 @@ export class ReportService {
   private initialized = false;
   private apiUrl: string;
 
+  securityIdentifiers: any[];
+
   /**
    *
    */
@@ -47,6 +49,10 @@ export class ReportService {
       this.apiUrl = this.configSvc.apiUrl;
       this.initialized = true;
     }
+
+    this.getSecurityIdentifiers().subscribe((x: any) => {
+      this.securityIdentifiers = x;
+    });
   }
 
   /**
