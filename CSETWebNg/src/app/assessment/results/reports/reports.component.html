@@ -106,17 +106,17 @@
 
     <!-- EDM -->
     <app-reports-edm *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
-      [securitySelected]="securitySelected"></app-reports-edm>
+      [confidentiality]="confidentiality"></app-reports-edm>
 
 
     <!-- CRR -->
     <app-reports-crr *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CRR')"
-      [securitySelected]="securitySelected"></app-reports-crr>
+      [confidentiality]="confidentiality"></app-reports-crr>
 
 
     <!-- IMR -->
     <app-reports-imr *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('IMR')"
-      [securitySelected]="securitySelected"></app-reports-imr>
+      [confidentiality]="confidentiality"></app-reports-imr>
 
 
     <!-- CIS -->

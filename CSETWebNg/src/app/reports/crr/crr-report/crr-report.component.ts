@@ -26,6 +26,8 @@ import { CmuService } from './../../../services/cmu.service';
 import { CmuReportModel } from '../../../models/reports.model';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
+import { ReportService } from '../../../services/report.service';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-crr-report',
@@ -34,15 +36,22 @@ import { ConfigService } from '../../../services/config.service';
 })
 export class CrrReportComponent implements OnInit {
   cmuModel: CmuReportModel;
-  securityLevel: string = '';
+  confidentiality: string = '';
 
-  constructor(private cmuSvc: CmuService, private titleSvc: Title, public configSvc: ConfigService) {}
+  constructor(
+    private cmuSvc: CmuService,
+    private titleSvc: Title,
+    public configSvc: ConfigService,
+    public reportSvc: ReportService,
+    public route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    const securityLevel = localStorage.getItem('report-confidentiality');
-    if (securityLevel) {
-      securityLevel !== 'None' ? (this.securityLevel = securityLevel) : (this.securityLevel = '');
-      localStorage.removeItem('report-confidentiality');
+    const conf = localStorage.getItem('report-confidentiality');
+    localStorage.removeItem('report-confidentiality');
+
+    if (conf) {
+      conf !== 'None' ? (this.confidentiality = conf) : (this.confidentiality = '');
     }
 
     this.titleSvc.setTitle('CRR Report - ' + this.configSvc.behaviors.defaultTitle);
