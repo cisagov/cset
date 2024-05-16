@@ -34,7 +34,8 @@
     </div>
   </div>
 
-  <app-cisa-workflow-warnings [invalidFields]="cisaAssessorWorkflowFieldValidation?.invalidFields"></app-cisa-workflow-warnings>
+  <app-cisa-workflow-warnings
+    [invalidFields]="cisaAssessorWorkflowFieldValidation?.invalidFields"></app-cisa-workflow-warnings>
 
   <!-- Moved this check from inside the component to here to prevent extra whitespace when not CF -->
   <app-assessment-convert-cf *ngIf="isCfEntry" class="mt-4"></app-assessment-convert-cf>
@@ -100,122 +101,31 @@
       </button>
     </div>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('CMMC2') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>Capability Maturity Model Certification (CMMC) 2.0</h4>
 
-      <button (click)="clickReportLink('executivecmmc2')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        CMMC 2.0 - Executive Summary
-      </button>
 
-      <button tabindex="0" (click)="clickReportLink('cmmc2DeficiencyReport')"
-        class="btn btn-link btn-link-dark text-left">
-        CMMC 2.0 - Deficiency Report
-      </button>
 
-      <button tabindex="0" (click)="clickReportLink('cmmc2CommentsMarked')"
-        class="btn btn-link btn-link-dark text-left">
-        CMMC 2.0 - Comments and Marked for Review
-      </button>
-    </div>
+    <!-- EDM -->
+    <app-reports-edm *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
+      [confidentiality]="confidentiality"></app-reports-edm>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('EDM') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>CISA External Dependencies Management</h4>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('edm')" class="btn btn-link btn-link-dark text-left">
-          EDM Report
-        </button>
 
-        <button class="btn btn-link btn-link-dark text-left" (click)="clickReportLink('edm', true)"
-          matTooltip="Select Print to PDF to save as a PDF">
-          Print EDM Report
-        </button>
-      </div>
+    <!-- CRR -->
+    <app-reports-crr *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CRR')"
+      [confidentiality]="confidentiality"></app-reports-crr>
 
-      <button tabindex="0" (click)="clickReportLink('edmDeficiencyReport')"
-        class="btn btn-link btn-link-dark text-left">
-        EDM Deficiency Report
-      </button>
 
-      <button tabindex="0" (click)="clickReportLink('edmCommentsmarked')" class="btn btn-link btn-link-dark text-left">
-        EDM Comments and Marked for Review
-      </button>
-    </div>
+    <!-- IMR -->
+    <app-reports-imr *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('IMR')"
+      [confidentiality]="confidentiality"></app-reports-imr>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('CRR') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>CISA Cyber Resilience Review</h4>
 
-      <div class="d-flex flex-row" style="align-items: end">
-        <div class="mr-3 mb-3">
-          <button tabindex="0" (click)="clickReportLink('crrreport')" class="btn btn-link btn-link-dark">
-            CRR Report
-          </button>
-        </div>
-        <div class="form-group">
-          <label class="mb-1" for="securityId">Confidentiality</label>
-          <select class="form-control" [(ngModel)]="securitySelected" id="securityId" name="securityId" tabindex="0"
-            (change)="onSelectSecurity($event.target.value)">
-            <option *ngFor="let s of securityIdentifier" [value]="s.confidentialTypeKey">
-              {{ s.confidentialTypeKey }}
-            </option>
-          </select>
-        </div>
-      </div>
+    <!-- CIS -->
+    <app-reports-cis *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CIS')"></app-reports-cis>
 
-      <button tabindex="0" (click)="clickReportLink('crrDeficiencyReport')" class="btn btn-link btn-link-dark">
-        CRR Deficiency Report
-      </button>
 
-      <button tabindex="0" (click)="clickReportLink('crrCommentsMarked')" class="btn btn-link btn-link-dark">
-        CRR Comments and Marked for Review
-      </button>
-    </div>
+    <!-- CMMC2 -->
+    <app-reports-cmmc2 *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC2')"></app-reports-cmmc2>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('IMR') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>CISA Incident Management Review</h4>
-
-      <div class="d-flex flex-row" style="align-items: end">
-        <div class="mr-3 mb-3">
-          <button tabindex="0" (click)="clickReportLink('imrreport')" class="btn btn-link btn-link-dark">
-            IMR Report
-          </button>
-        </div>
-        <div class="form-group">
-          <label class="mb-1" for="securityId">Confidentiality</label>
-          <select class="form-control" [(ngModel)]="securitySelected" id="securityId" name="securityId" tabindex="0"
-            (change)="onSelectSecurity($event.target.value)">
-            <option *ngFor="let s of securityIdentifier" [value]="s.confidentialTypeKey">
-              {{ s.confidentialTypeKey }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('genDeficiencyReport?m=IMR')" class="btn btn-link btn-link-dark">
-          IMR Deficiency Report
-        </button>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('commentsmfr')" class="btn btn-link btn-link-dark text-left">
-          Comments and Marked for Review
-        </button>
-      </div>
-    </div>
 
     <div *ngIf="
         !!assessSvc.assessment &&
@@ -314,37 +224,7 @@
       </div>
     </div>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('CIS') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>CISA Cyber Infrastructure Survey (CIS)</h4>
 
-      <div>
-        <button tabindex="0" (click)="clickReportLink('cisSurveyReport')" class="btn btn-link btn-link-dark text-left">
-          Survey Report
-        </button>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('cisSectionScoringReport')"
-          class="btn btn-link btn-link-dark text-left">
-          Section Scoring Report
-        </button>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('cisRankedDeficiencyReport')"
-          class="btn btn-link btn-link-dark text-left">
-          Deficiency Report
-        </button>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('cisCommentsmarked')"
-          class="btn btn-link btn-link-dark text-left">
-          Comments and Marked for Review
-        </button>
-      </div>
-    </div>
 
     <div *ngIf="
         !!assessSvc.assessment &&
@@ -470,27 +350,32 @@
         </div>
       </div>
 
+
       <div *ngIf="!!assessSvc.assessment &&
           assessSvc.usesMaturityModel('CIE') &&
           !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
         <h4>Cyber-Informed Engineering (CIE)</h4>
         <div>
-          <button (click)="clickReportLink('cieNotApplicable')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+          <button (click)="clickReportLink('cieNotApplicable')" tabindex="0"
+            class="btn btn-link btn-link-dark text-left">
             Export Not Applicable Questions Tear Out Sheets
           </button>
         </div>
         <div>
-          <button (click)="clickReportLink('ciePrincipleOnly')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+          <button (click)="clickReportLink('ciePrincipleOnly')" tabindex="0"
+            class="btn btn-link btn-link-dark text-left">
             Export Principle-Only CIE-CSET Report
           </button>
         </div>
         <div>
-          <button (click)="clickReportLink('ciePrinciplePhase')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+          <button (click)="clickReportLink('ciePrinciplePhase')" tabindex="0"
+            class="btn btn-link btn-link-dark text-left">
             Export Principle-Phase CIE-CSET Report
           </button>
         </div>
         <div>
-          <button (click)="clickReportLink('cieAllQuestions')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+          <button (click)="clickReportLink('cieAllQuestions')" tabindex="0"
+            class="btn btn-link btn-link-dark text-left">
             Export All CIE-CSET Report
           </button>
         </div>
@@ -539,10 +424,11 @@
           </button>
 
         </div>
-        
+
       </div>
     </div>
   </div>
+
   <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
     [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
 </div>
