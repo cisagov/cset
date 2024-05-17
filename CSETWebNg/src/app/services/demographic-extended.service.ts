@@ -124,7 +124,7 @@ export class DemographicExtendedService {
 
   getThePropertyCompleteList(obj) {
     var keys = [];
-    var exceptList = ["subSector", "sector", "assessment", "hb7055Party", "hb7055Grant"];
+    var exceptList = ["subSector", "sector", "assessment", "hb7055Party", "hb7055Grant",'cyberRiskService'];
     for (var key in obj) {
       if (!exceptList.includes(key)) {
         keys.push(key);
