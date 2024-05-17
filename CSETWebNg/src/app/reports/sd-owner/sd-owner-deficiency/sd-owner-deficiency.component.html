@@ -31,17 +31,15 @@
 
         <div class="disclaimer-blurb mt-4">
             <p>
-                This deficiency report lists the statements that are currently unanswered, have been answered with 
-                "No" or answered "N/A".
+                This deficiency report shows the overall status of the assessment and how each question was answered.
+                The report then lists statements that are currently unanswered, have been answered with 
+                "No" or answered "N/A" for further review.
             </p>
             <p>
-                This is often referred to as the Gap Report. This report intends to list the gaps so that users of
+                This is often referred to as the Gap Report. This report intends to show gaps so that users of
                 the report can prioritize work and make a plan to implement the controls necessary
-                to satisfy the practice.
+                to satisfy the practice. If many questions are answered N/A, this should also be examined.
             </p>
-            <p>
-                The percentage gap in each goal is also listed and will help to prioritize areas to concentrate on.
-                Too many questions answered "N/A" should also be looked at in more detail.</p>
         </div>
 
         <div *ngIf="loading; else mainContent" class="spinner-container" style="margin: 2em auto">
@@ -49,6 +47,33 @@
         </div>
 
         <ng-template #mainContent>
+            <div class="answeredQuestions">
+                <h1>Answered Questions</h1>
+                <div class="row">
+                    <div class="column">
+                        <div>
+                            <ngx-charts-pie-chart
+                                [view]="view"
+                                [scheme]="colorScheme"
+                                [results]="this.graphData"
+                                [gradient]="gradient"
+                                [legendPosition]="legendPosition"
+                                [labels]="showLabels"
+                                [doughnut]="isDoughnut">
+                            </ngx-charts-pie-chart>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h2>Breakdown:</h2>
+                            <div class="breakdown-text">
+                                Yes Responses: {{ yesAnswers }} ({{ yesPercent }}%)<br>
+                                No Responses: {{ noAnswers }} ({{ noPercent }}%)<br>
+                                N/A Responses: {{ naAnswers }} ({{ naPercent }}%)<br>
+                                Unanswered: {{ unanswered }} ({{ unansweredPercent }}%)<br>
+                            </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="d-flex flex-row justify-content-between align-items-end" *ngIf="responseU.length > 0">
 

@@ -763,20 +763,23 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var biz = new NestedStructure(assessmentId, 0, _context);
-            List<Grouping> filteredGroupingsU = new List<Grouping>();
+            List<Grouping> filteredGroupingsYes = new List<Grouping>();
             List<Grouping> filteredGroupingsNo = new List<Grouping>();
             List<Grouping> filteredGroupingsNa = new List<Grouping>();
+            List<Grouping> filteredGroupingsU = new List<Grouping>();
 
             foreach (var b in biz.MyModel.Groupings)
             {
-                var questionsU = new List<Question>();
+                var questionsYes = new List<Question>();
                 var questionsNo = new List<Question>();
                 var questionsNa = new List<Question>();
+                var questionsU = new List<Question>();
 
                 foreach (var q in b.Questions)
                 {
                     var question = new Question();
-                    if (q.AnswerText == "U")
+
+                    if (q.AnswerText == "Y")
                     {
                         question = new Question()
                         {
@@ -784,13 +787,13 @@ namespace CSETWebCore.Api.Controllers
                             DisplayNumber = q.DisplayNumber,
                             QuestionText = q.QuestionText,
                             MarkForReview = q.MarkForReview,
-                            AnswerText = "Unanswered"
+                            AnswerText = "Yes"
                         };
-                        questionsU.Add(question);
+                        questionsYes.Add(question);
                     }
 
                     if (q.AnswerText == "N")
-                    {                        
+                    {
                         question = new Question()
                         {
                             QuestionType = q.QuestionType,
@@ -814,14 +817,27 @@ namespace CSETWebCore.Api.Controllers
                         };
                         questionsNa.Add(question);
                     }
+
+                    if (q.AnswerText == "U")
+                    {
+                        question = new Question()
+                        {
+                            QuestionType = q.QuestionType,
+                            DisplayNumber = q.DisplayNumber,
+                            QuestionText = q.QuestionText,
+                            MarkForReview = q.MarkForReview,
+                            AnswerText = "Unanswered"
+                        };
+                        questionsU.Add(question);
+                    }
                 }
 
-                if (questionsU.Any())
+                if (questionsYes.Any())
                 {
-                    filteredGroupingsU.Add(new Grouping
+                    filteredGroupingsYes.Add(new Grouping
                     {
                         Title = b.Title,
-                        Questions = questionsU
+                        Questions = questionsYes
                     });
                 }
 
@@ -843,12 +859,24 @@ namespace CSETWebCore.Api.Controllers
                     });
                 }
 
-                questionsU = new List<Question>();
+                if (questionsU.Any())
+                {
+                    filteredGroupingsU.Add(new Grouping
+                    {
+                        Title = b.Title,
+                        Questions = questionsU
+                    });
+                }
+
+                questionsYes = new List<Question>();
                 questionsNo = new List<Question>();
+                questionsNa = new List<Question>();
+                questionsU = new List<Question>();
             }
 
-            return Ok(new { no = filteredGroupingsNo, unanswered = filteredGroupingsU, na = filteredGroupingsNa });
+            return Ok(new { yes = filteredGroupingsYes, no = filteredGroupingsNo, na = filteredGroupingsNa, unanswered = filteredGroupingsU });
         }
+
 
         /// <summary>
         /// get all comments and marked for review

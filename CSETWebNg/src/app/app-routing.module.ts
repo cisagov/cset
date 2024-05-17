@@ -227,7 +227,6 @@ import { CieAllQuestionsComponent } from './reports/cie/cie-all-questions/cie-al
 import { CiePrincipleOnlyComponent } from './reports/cie/cie-principle-only/cie-principle-only.component';
 import { CiePrinciplePhaseComponent } from './reports/cie/cie-principle-phase/cie-principle-phase.component';
 import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-not-applicable.component';
-import { SdOwnerExecutiveSummaryComponent } from './reports/sd-owner/sd-owner-summary/sd-owner-executive-summary.component';
 import { SdOwnerDeficiencyComponent } from './reports/sd-owner/sd-owner-deficiency/sd-owner-deficiency.component';
 import { SdOwnerCommentsMfrComponent } from './reports/sd-owner/sd-owner-comments/sd-owner-comments-mfr.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
@@ -576,7 +575,6 @@ const appRoutes: Routes = [
       { path: 'sd-answer-summary', component: SdAnswerSummaryReportComponent },
       { path: 'key-report', component: KeyReportComponent },
       { path: 'sd-deficiency', component: TsaSdComponent },
-      { path: 'sdo-executive-summary', component: SdOwnerExecutiveSummaryComponent },
       { path: 'sdo-gap-report', component: SdOwnerDeficiencyComponent },
       { path: 'sdo-comments-and-mfr', component: SdOwnerCommentsMfrComponent },
       { path: 'appkeyreport', component: KeyReportComponent }
