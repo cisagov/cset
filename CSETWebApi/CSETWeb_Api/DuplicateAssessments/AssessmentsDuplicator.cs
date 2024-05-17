@@ -45,6 +45,7 @@ namespace DuplicateAssessments
             AssessmentExportManager exportManager = new AssessmentExportManager(_context);
 
             Guid[] guidsToExport = _context.ASSESSMENTS                
+                //.Where(x=> x.Assessment_Id ==571)
                 .Select(a => a.Assessment_GUID).ToArray();
             //comment out the below line to no longer debug
             //guidsToExport = new Guid[] { new Guid("F2776CC4-0FBA-4C15-A845-305FC4A70082") };
