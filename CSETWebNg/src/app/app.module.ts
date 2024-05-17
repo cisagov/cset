@@ -648,7 +648,6 @@ import { CieAllQuestionsComponent } from './reports/cie/cie-all-questions/cie-al
 import { CiePrincipleOnlyComponent } from './reports/cie/cie-principle-only/cie-principle-only.component';
 import { CiePrinciplePhaseComponent } from './reports/cie/cie-principle-phase/cie-principle-phase.component';
 import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-not-applicable.component';
-import { SdOwnerExecutiveSummaryComponent } from './reports/sd-owner/sd-owner-summary/sd-owner-executive-summary.component';
 import { SdOwnerDeficiencyComponent } from './reports/sd-owner/sd-owner-deficiency/sd-owner-deficiency.component';
 import { SdOwnerCommentsMfrComponent } from './reports/sd-owner/sd-owner-comments/sd-owner-comments-mfr.component';
 
@@ -1257,7 +1256,6 @@ import { UploadDemographicsComponent } from './dialogs/import demographics/impor
     CiePrincipleOnlyComponent,
     CiePrinciplePhaseComponent,
     CieNotApplicableComponent,
-    SdOwnerExecutiveSummaryComponent,
     SdOwnerDeficiencyComponent,
     SdOwnerCommentsMfrComponent,
     AboutCieComponent, 
