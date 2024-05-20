@@ -21,45 +21,26 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { HttpClient } from '@angular/common/http';
-import {
-  TRANSLOCO_LOADER,
-  Translation,
-  TranslocoLoader,
-  TRANSLOCO_CONFIG,
-  translocoConfig,
-  TranslocoModule
-} from '@ngneat/transloco';
-import { Injectable, isDevMode, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 
-
-@Injectable({ providedIn: 'root' })
-export class TranslocoHttpLoader implements TranslocoLoader {
-  constructor(private http: HttpClient) { }
-
-  getTranslation(lang: string) {
-    return this.http.get<Translation>(`assets/i18n/${lang}.json`);
-  }
-}
-
-@NgModule({
-  exports: [TranslocoModule],
-  providers: [
-    {
-      provide: TRANSLOCO_CONFIG,
-      useValue: translocoConfig({
-        availableLangs: ['en', 'uk', 'es'],
-        defaultLang: 'en',
-        fallbackLang: 'en',
-        missingHandler: {
-          useFallbackTranslation: true,
-          logMissingKey: false
-        },
-        reRenderOnLangChange: true,
-        prodMode: !isDevMode(),
-      })
-    },
-    { provide: TRANSLOCO_LOADER, useClass: TranslocoHttpLoader }
-  ]
+@Component({
+  selector: 'app-report-list-imr',
+  templateUrl: './report-list-imr.component.html'
 })
-export class TranslocoRootModule { }
+export class ReportListImrComponent {
+
+  reportList = [
+    {
+      linkUrl: "imrreport",
+      securityPicker: true
+    },
+    {
+      linkUrl: "genDeficiencyReport?m=IMR"
+    },
+    {
+      linkUrl: "commentsmfr"
+    }
+  ];
+
+
+}

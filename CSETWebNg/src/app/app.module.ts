@@ -658,11 +658,11 @@ import { AnalyticsloginComponent } from './assessment/results/analysis/analytics
 import { AnalyticsService } from './services/analytics.service';
 import { UploadDemographicsComponent } from './dialogs/import demographics/import-demographics.component';
 import { ReportListComponent } from './assessment/results/reports/report-list/report-list.component';
-import { ReportsImrComponent } from './assessment/results/reports/report-list/reports-imr/reports-imr.component';
-import { ReportsCisComponent } from './assessment/results/reports/report-list/reports-cis/reports-cis.component';
-import { ReportsCmmc2Component } from './assessment/results/reports/report-list/reports-cmmc2/reports-cmmc2.component';
-import { ReportsCrrComponent } from './assessment/results/reports/report-list/reports-crr/reports-crr.component';
-import { ReportsEdmComponent } from './assessment/results/reports/report-list/reports-edm/reports-edm.component';
+import { ReportListImrComponent } from './assessment/results/reports/report-list/report-list-imr/report-list-imr.component';
+import { ReportListCisComponent } from './assessment/results/reports/report-list/report-list-cis/report-list-cis.component';
+import { ReportListCmmc2Component } from './assessment/results/reports/report-list/report-list-cmmc2/report-list-cmmc2.component';
+import { ReportListCrrComponent } from './assessment/results/reports/report-list/report-list-crr/report-list-crr.component';
+import { ReportListEdmComponent } from './assessment/results/reports/report-list/report-list-edm/report-list-edm.component';
 
 @NgModule({
   imports: [
@@ -1270,12 +1270,12 @@ import { ReportsEdmComponent } from './assessment/results/reports/report-list/re
     ReferencesSectionComponent,
     CisaWorkflowWarningsComponent,
     AnalyticsloginComponent,
-    ReportsImrComponent,
-    ReportsCisComponent,
-    ReportsCmmc2Component,
+    ReportListImrComponent,
+    ReportListCisComponent,
+    ReportListCmmc2Component,
     ReportListComponent,
-    ReportsCrrComponent,
-    ReportsEdmComponent
+    ReportListCrrComponent,
+    ReportListEdmComponent
   ],
   providers: [
     TranslocoService,
