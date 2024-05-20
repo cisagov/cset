@@ -42,8 +42,8 @@
 
   <div class="d-flex flex-column justify-content-start align-items-start mb-4" *ngIf="showObservationTearouts()">
     <button (click)="clickReportLink('observations')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-      {{ t('observations tear-out sheets.report title') }}
-    </button>
+      {{t('observations tear-out sheets.report title')}}:
+    </button> 
   </div>
 
   <div [class.div-shield]="disableEntirePage">
