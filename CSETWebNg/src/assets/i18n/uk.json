@@ -259,12 +259,12 @@
         "role": "Роль",
         "participant": "Учасник",
         "facilitator": "Фасилітатор",
-        "save": "Save",
-        "cancel": "Cancel",
-        "change": "Change",
-        "remove": "Remove",
-        "not authorized message": "You are not authorized to make changes to the contacts on this assessment.",
-        "contact an administrator message": "Please contact an administrator for this assessment to make changes, or to gain administrative access."
+        "save": "Зберегти",
+        "cancel": "Скасувати",
+        "change": "Змінити",
+        "remove": "Видалити",
+        "not authorized message": "Ви не маєте права вносити зміни до контактів у цьому оцінюванні.",
+        "contact an administrator message": "Будь ласка, зв’яжіться з адміністратором для цього оцінювання, щоб внести зміни або отримати адміністративний доступ."
     },
     "answer-options": {
         "button-labels": {
@@ -404,7 +404,7 @@
         "medium": "Середній",
         "high": "Високий",
         "basic": "Базовий",
-        "incomplete": "Incomplete",
+        "incomplete": "Неповний",
         "ad hoc": "Ad Hoc",
         "baseline": "Baseline",
         "evolving": "Evolving",
@@ -458,9 +458,9 @@
     "dialogs": {
         "alert": "Попередження",
         "please confirm": "Підтвердження",
-        "remove contact": "Are you sure you want to remove {{firstName}} {{lastName}} from this assessment?",
-        "remove assessment": "Are you sure you want to remove {{assessmentName}}?",
-        "confirm create new assessment": "Are you sure you want to create a new assessment?"
+        "remove contact": "Ви впевнені, що хочете видалити {{firstName}} {{lastName}} з цього оцінювання?",
+        "remove assessment": "Ви впевнені, що хочете видалити {{assessmentName}}?",
+        "confirm create new assessment": "Ви впевнені, що хочете створити нове оцінювання?"
     },
     "reports": {
         "assessment complete message": "Дякуємо за завершення оцінювання. Звіти на цій сторінці містять підсумки ваших результатів, які можуть допомогти вашій організації планувати кібербезпеку та розвиватися в майбутньому. Оцінка востаннє оновлювалася {date}.",
