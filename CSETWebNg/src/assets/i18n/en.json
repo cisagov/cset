@@ -266,7 +266,7 @@
         "high level desc exec sec comments": "High-Level Assessment Description Executive Summary & Comments",
         "reports": "Reports",
         "feedback": "Feedback",
-        "analytics":"Analytics",
+        "analytics": "Analytics",
         "assessment complete": "Assessment Complete",
         "performance summary": "Performance Summary",
         "security practice checklist": "Security Practice Checklist",
@@ -592,6 +592,84 @@
         "confirm create new assessment": "Are you sure you want to create a new assessment?"
     },
     "reports": {
+        "launch": {
+            "crr": {
+                "1": {
+                    "title": "CRR Report",
+                    "desc": "The report includes a wide array of charts and graphs designed to visually present and summarize the responses gathered throughout the assessment process, enabling organizations to analyze and assess their incident management capabilities effectively. Organizations can gauge if their incident management functions align with the National Institute of Standards and Technology (NIST) Cybersecurity Framework (CSF), as assessment results are depicted in terms relative to the NIST CSF. Additionally, the report includes a compilation of all CRR practices along with their corresponding references."
+                },
+                "2": {
+                    "title": "CRR Deficiency Report",
+                    "desc": ""
+                },
+                "3": {
+                    "title": "CRR Comments and Marked for Review",
+                    "desc": ""
+                }
+            },
+            "imr": {
+                "1": {
+                    "title": "IMR Report",
+                    "desc": "The report includes a wide array of charts and graphs designed to visually present and summarize the responses gathered throughout the assessment process, enabling organizations to analyze and assess their incident management capabilities effectively. Organizations can gauge if their incident management functions align with the National Institute of Standards and Technology (NIST) Cybersecurity Framework (CSF), as assessment results are depicted in terms relative to the NIST CSF. Additionally, the report includes a compilation of all IMR practices along with their corresponding references."
+                },
+                "2": {
+                    "title": "IMR Deficiency Report",
+                    "desc": "The report contains a list of all IMR practices that were marked as “No” or unanswered during the assessment process. This report serves to identify potential deficiencies or gaps in the organization's incident management practices and provides suggested areas for improvement."
+                },
+                "3": {
+                    "title": "Comments and Marked for Review",
+                    "desc": "This document consolidates all practices that have received comments and have been flagged for review during the assessment process as well as other remarks. It provides an overview of areas where further attention or clarification may be needed."
+                }
+            },
+            "cis": {
+                "1": {
+                    "title": "Survey Report",
+                    "desc": "The report contains a list of all survey questions and their corresponding answers."
+                },
+                "2": {
+                    "title": "Section Scoring Report",
+                    "desc": "The report compiles all the sub-domain charts, each displaying a score based on how the associated questions were answered. If a baseline survey was selected on the Critical Service Information page, the corresponding baseline score for each sub-domain will also be displayed."
+                },
+                "3": {
+                    "title": "Deficiency Report",
+                    "desc": "To run the Deficiency Report, a baseline survey must be selected on the Critical Service Information page. The report displays a chart indicating whether the organization’s cybersecurity infrastructure practices have remained unchanged, worsened, or improved compared to the baseline for each sub-domain."
+                },
+                "4": {
+                    "title": "Comments and Marked for Review",
+                    "desc": " This document consolidates all practices that have received comments or have been flagged for review during the survey process. It provides an overview of areas where further attention or clarification may be needed."
+                }
+            },
+            "edm": {
+                "1": {
+                    "title": "EDM Report",
+                    "desc": "The report includes a wide array of charts and graphs designed to visually present and summarize the responses gathered throughout the assessment process, enabling organizations to analyze and assess their incident management capabilities effectively. Organizations can gauge if their incident management functions align with the National Institute of Standards and Technology (NIST) Cybersecurity Framework (CSF), as assessment results are depicted in terms relative to the NIST CSF. Additionally, the report includes a compilation of all CRR practices along with their corresponding references."
+                },
+                "2": {
+                    "title": "Print EDM Report",
+                    "desc": "Opens the report and initiates the print process.  To save as a PDF, select 'Print to PDF.'"
+                },
+                "3": {
+                    "title": "EDM Deficiency Report"
+                },
+                "4": {
+                    "title": "EDM Comments and Marked for Review"
+                }
+            },
+            "cmmc2": {
+                "1": {
+                    "title": "CMMC 2.0 - Executive Summary",
+                    "desc": "The report includes graphs to highlight compliance by level, compliance by domain, and the SPRS Scorecard. Additionally, it includes a compilation of all CMMC practices and their responses, along with their corresponding assessment objectives and SPRS value."
+                },
+                "2": {
+                    "title": "CMMC 2.0 - Deficiency Report",
+                    "desc": "The report contains a list of all CMMC practices that were marked as “No” or unanswered during theassessment process. This report serves to identify potential deficiencies or gaps in the contractor’s cybersecurity practices."
+                },
+                "3": {
+                    "title": "CMMC 2.0 - Comments and Marked for Review",
+                    "desc": "This document consolidates all practices that have received comments and have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
+                }
+            }
+        },
         "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated {date}.",
         "reports run prior message": "Any reports run prior to that update may not reflect the current state of the assessment.",
         "printing report instructions button": "Printing Reports Instructions",

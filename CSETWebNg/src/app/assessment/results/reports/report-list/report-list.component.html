@@ -1,12 +1,12 @@
-<div class="d-flex flex-column justify-content-start align-items-start mb-4">
+<div class="d-flex flex-column justify-content-start align-items-start mb-4" *transloco="let t">
      <h4>{{sectionTitle}}</h4>
 
-     <div *ngFor="let rl of list" class="mb-3 p-3 w-100" [class.gray-box]="rl.linkDescription?.length > 0">
+     <div *ngFor="let rl of list; let i = index" class="mb-3 p-3 w-100" [class.gray-box]="translateDesc(sectionId, i).length > 0">
           <div class="d-flex flex-row" style="align-items: end">
                <div>
                     <button tabindex="0" (click)="reportSvc.clickReportLink(rl.linkUrl, rl.print ?? false)"
                          class="btn btn-link btn-link-dark px-0 pt-0">
-                         {{ rl.linkTitle }}
+                         {{ t('reports.launch.' + sectionId.toLowerCase() + '.' + (i+1) + '.title') }}
                     </button>
                </div>
                <div class="ml-4" *ngIf="rl.securityPicker">
@@ -19,8 +19,8 @@
                     </select>
                </div>
           </div>
-          <div *ngIf="rl.linkDescription?.length > 0" class="mt-3">
-               {{rl.linkDescription}}
+          <div *ngIf="translateDesc(sectionId, i).length > 0" class="mt-1">
+               {{ translateDesc(sectionId, i) }}
           </div>
      </div>
 </div>
