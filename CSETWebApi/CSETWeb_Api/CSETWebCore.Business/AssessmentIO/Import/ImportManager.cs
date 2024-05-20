@@ -260,18 +260,15 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             using (assessmentsZipArchive)
             {
                 ZipFile zip = ZipFile.Read(assessmentsZipArchive);
-                List<Task> importTasks = new List<Task>();
 
                 foreach (ZipEntry entry in zip)
                 {
                     using (MemoryStream stream = new MemoryStream())
                     {
                         entry.Extract(stream);
-                        importTasks.Add(ProcessCSETAssessmentImport(stream.ToArray(), null, null, _context, overwriteAssessment: overwriteAssessments));
+                        await ProcessCSETAssessmentImport(stream.ToArray(), null, null, _context, overwriteAssessment: overwriteAssessments);
                     }
                 }
-
-                await Task.WhenAll(importTasks);
             }
         }
 
