@@ -1,0 +1,189 @@
+<!----------------------
+
+   Copyright 2024 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="report-body mb-5">
+
+    <div class="flex-container">
+        <app-cover-sheet-a [title]="'DEFICIENCY REPORT'"
+            [assessmentName]="assessmentName" [assessmentDate]="assessmentDate" [assessorName]="assessorName"
+            [facilityName]="facilityName"></app-cover-sheet-a>
+    </div>
+    <div class="page-break">
+
+        <div class="disclaimer-blurb mt-4">
+            <p>
+                This deficiency report shows the overall status of the assessment and how each question was answered.
+                The report then lists statements that are currently unanswered, have been answered with 
+                "No" or answered "N/A" for further review.
+            </p>
+            <p>
+                This is often referred to as the Gap Report. This report intends to show gaps so that users of
+                the report can prioritize work and make a plan to implement the controls necessary
+                to satisfy the practice. If many questions are answered N/A, this should also be examined.
+            </p>
+        </div>
+
+        <div *ngIf="loading; else mainContent" class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+
+        <ng-template #mainContent>
+            <div class="answeredQuestions">
+                <h1>Answered Questions</h1>
+                <div class="row">
+                    <div class="column">
+                        <div>
+                            <ngx-charts-pie-chart
+                                [view]="view"
+                                [scheme]="colorScheme"
+                                [results]="this.graphData"
+                                [gradient]="gradient"
+                                [legendPosition]="legendPosition"
+                                [labels]="showLabels"
+                                [doughnut]="isDoughnut">
+                            </ngx-charts-pie-chart>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h2>Breakdown:</h2>
+                            <div class="breakdown-text">
+                                Yes Responses: {{ yesAnswers }} ({{ yesPercent }}%)<br>
+                                No Responses: {{ noAnswers }} ({{ noPercent }}%)<br>
+                                N/A Responses: {{ naAnswers }} ({{ naPercent }}%)<br>
+                                Unanswered: {{ unanswered }} ({{ unansweredPercent }}%)<br>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row justify-content-between align-items-end" *ngIf="responseU.length > 0">
+
+                <h1 class="page-title" style="margin: 2em 0 0.5em 0;">Unanswered - Deficiencies</h1>
+                <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
+                        src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+            </div>
+            <hr class="page-line m-0" *ngIf="responseU.length > 0">
+
+            <div *ngFor="let g of responseU" style="padding-left: 10px;">
+                <h1 style="font-size:16pt; font-weight:bold; margin:1em 0 0 0">{{g.title}}</h1>
+                <table role="presentation">
+                    <ng-template ngFor let-s [ngForOf]="g.questions">
+                        <tr>
+                            <td colspan="4">
+                                <h2>{{s.displayNumber}}</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="deficiencies-list-item" style="width:630px;"><b>{{s.questionText}}</b></td>
+
+                            <td
+                                style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555;width:100px;">
+                                <div>
+                                    {{s.answerText}}
+                                </div>
+                            </td>
+                            <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.markForReview"
+                                    src="assets/images/icons/MarkedFlag.png"></td>
+                        </tr>
+
+                    </ng-template>
+                </table>
+                <hr class="my-2">
+            </div>
+
+            <div class="d-flex flex-row justify-content-between align-items-end" *ngIf="responseNo.length > 0">
+
+                <h1 class="page-title" style="margin: 2em 0 0.5em 0;">No - Deficiencies</h1>
+                <p style="color: #de761c; text-align: right;">Marked for Review - <img class="MarkedFlag"
+                        src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+            </div>
+            <hr class="page-line m-0" *ngIf="responseNo.length > 0">
+
+            <div *ngFor="let g of responseNo" style="padding-left: 10px;">
+                <h1 style="font-size:16pt; font-weight:bold; margin:1em 0 0 0">{{g.title}}</h1>
+                <table role="presentation">
+                    <ng-template ngFor let-s [ngForOf]="g.questions">
+                        <tr>
+                            <td colspan="4">
+                                <h2>{{s.displayNumber}}</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="deficiencies-list-item" style="width:630px;"><b>{{s.questionText}}</b></td>
+
+                            <td
+                                style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555;width:100px;">
+                                <div>
+                                    {{s.answerText}}
+                                </div>
+                            </td>
+                            <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.markForReview"
+                                    src="assets/images/icons/MarkedFlag.png"></td>
+                        </tr>
+
+                    </ng-template>
+                </table>
+                <hr class="my-2">
+            </div>
+
+            <div class="d-flex flex-row justify-content-between align-items-end" *ngIf="responseNa.length > 0">
+
+                <h1 class="page-title" style="margin: 2em 0 0.5em 0;">N/A Answers - Deficiencies</h1>
+                <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
+                        src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+            </div>
+            <hr class="page-line m-0" *ngIf="responseNa.length > 0">
+
+            <div *ngFor="let g of responseNa" style="padding-left: 10px;">
+                <h1 style="font-size: 16pt; font-weight: bold; margin:1em 0 0 0">{{g.title}}</h1>
+                <table role="presentation">
+                    <ng-template ngFor let-s [ngForOf]="g.questions">
+                        <tr>
+                            <td colspan="4">
+                                <h2>{{s.displayNumber}}</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="deficiencies-list-item" style="width:630px;"><b>{{s.questionText}}</b></td>
+
+                            <td
+                                style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555;width:100px;">
+                                <div>
+                                    {{s.answerText}}
+                                </div>
+                            </td>
+                            <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.markForReview"
+                                    src="assets/images/icons/MarkedFlag.png"></td>
+                        </tr>
+
+                    </ng-template>
+                </table>
+                <hr class="my-2">
+            </div>
+
+            <div *ngIf="(!responseU || responseU.length == 0) && (!responseNo || responseNo.length == 0) && (!responseNa || responseNa.length == 0)" class="mt-3">
+                There are no deficiencies to display
+            </div>
+
+        </ng-template>
+    </div>
+</div>
