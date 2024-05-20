@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-reports-cis',
-  templateUrl: './reports-cis.component.html'
+  selector: 'app-report-list-cis',
+  templateUrl: './report-list-cis.component.html'
 })
-export class ReportsCisComponent {
+export class ReportListCisComponent {
 
   reportList = [
     {
