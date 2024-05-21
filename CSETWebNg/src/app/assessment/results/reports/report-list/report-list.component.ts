@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ReportService } from '../../../../services/report.service';
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -7,7 +7,7 @@ import { TranslocoService } from '@ngneat/transloco';
   templateUrl: './report-list.component.html',
   styleUrls: ['./report-list.component.scss']
 })
-export class ReportListComponent {
+export class ReportListComponent implements OnInit {
 
 
   @Input()
@@ -16,7 +16,6 @@ export class ReportListComponent {
   @Input()
   sectionId: string;
 
-  @Input()
   sectionTitle: string;
 
   @Input()
@@ -31,6 +30,11 @@ export class ReportListComponent {
     public tSvc: TranslocoService
   ) { }
 
+  ngOnInit(): void {
+    const key = 'reports.launch.' + this.sectionId.toLowerCase() + '.sectionTitle';
+    this.sectionTitle = this.tSvc.translate(key);
+  }
+
   /**
    * 
    */
@@ -43,7 +47,7 @@ export class ReportListComponent {
    * Returns the translation, or an empty string
    */
   translateDesc(section: string, index: number): string {
-    const key = 'reports.launch.' + section.toLowerCase() + '.' + (index + 1) + '.desc'
+    const key = 'reports.launch.' + section.toLowerCase() + '.' + (index + 1) + '.desc';
     const val = this.tSvc.translate(key);
     return val === key ? '' : val;
   }
