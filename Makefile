@@ -1,4 +1,6 @@
 .PHONY: help build-backend launch-backend build-frontend launch-frontend launch-db load-db remove-db
+include .env
+export
 
 # target: help - Display callable targets.
 help:
