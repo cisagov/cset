@@ -369,6 +369,7 @@ import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
 import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra/tutorial-rra.component';
+import { TutorialCpgComponent } from './assessment/prepare/maturity/tutorial-cpg/tutorial-cpg.component';
 import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level-results/rra-level-results.component';
 import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
 import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
@@ -664,6 +665,7 @@ import { ReportListCmmc2Component } from './assessment/results/reports/report-li
 import { ReportListCrrComponent } from './assessment/results/reports/report-list/report-list-crr/report-list-crr.component';
 import { ReportListEdmComponent } from './assessment/results/reports/report-list/report-list-edm/report-list-edm.component';
 import { ReportsRraComponent } from './assessment/results/reports/report-list/reports-rra/reports-rra.component';
+import { ReportsListCpgComponent } from './assessment/results/reports/report-list/reports-list-cpg/reports-list-cpg.component';
 
 @NgModule({
   imports: [
@@ -949,6 +951,7 @@ import { ReportsRraComponent } from './assessment/results/reports/report-list/re
     TutorialEdmComponent,
     TutorialRraComponent,
     TutorialCrrComponent,
+    TutorialCpgComponent,
     LoginAcetComponent,
     LoginCsetComponent,
     LoginRraComponent,
@@ -1277,7 +1280,8 @@ import { ReportsRraComponent } from './assessment/results/reports/report-list/re
     ReportListComponent,
     ReportListCrrComponent,
     ReportListEdmComponent, 
-    ReportsRraComponent
+    ReportsRraComponent, 
+    ReportsListCpgComponent
   ],
   providers: [
     TranslocoService,
