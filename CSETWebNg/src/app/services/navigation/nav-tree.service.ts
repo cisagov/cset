@@ -43,7 +43,7 @@ export class NavTreeService {
   workflow: Document
 
   sideNavScrollLocation = 0;
-  
+
   public currentPage: string;
 
   public magic: string;
@@ -88,7 +88,7 @@ export class NavTreeService {
     this.tocControl.dataNodes = this.dataSource.data;
 
     this.setQuestionsTree();
-    
+
     this.tocControl.expandAll();
 
     // remembers state of ToC dropdown for CIE
@@ -106,7 +106,7 @@ export class NavTreeService {
     const toc: NavTreeNode[] = [];
     if (!this.workflow) return toc;
     this.domToNav(this.workflow.documentElement.children, toc);
-    
+
     return toc;
   }
 
@@ -313,11 +313,12 @@ export class NavTreeService {
 
   setSideNavScrollLocation(targetId) {
     const sideNav = document.getElementsByClassName("mat-drawer-inner-container");
+    // const target = document.getElementById(targetId);
     if (sideNav.length > 0) {
-      let target = document.getElementById(targetId);
-      if (target != null) {
-        target.scrollIntoView({ behavior: "smooth"});
-      }
+      // console.log(target)
+      sideNav[0].scrollTo(0, this.sideNavScrollLocation);
+      // target.scrollIntoView(true);
+      // target.scrollBy(0, -50);
     }
   }
 
@@ -326,14 +327,14 @@ export class NavTreeService {
 
     if (!this.cieSvc.tutorialExpanded) {
       if (node != null) this.tocControl.collapse(node);
-    } 
+    }
     else if (node != null) this.tocControl.expand(node);
-    
+
     node = this.findInTree(this.tocControl.dataNodes, 'cie-example');
 
     if (!this.cieSvc.exampleExpanded) {
       if (node != null) this.tocControl.collapse(node);
-    } 
+    }
     else if (node != null) this.tocControl.expand(node);
   }
 }
