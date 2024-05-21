@@ -202,9 +202,9 @@
     "security practice checklist": "Контрольний список практики безпеки",
     "goal performance": "Цільова продуктивність",
     "assessment tiers": "Рівні оцінювання",
-    "overview": "Overview",
-    "additional resources": "Additional resources",
-    "goal": "Goal",
+    "overview": "Огляд",
+    "additional resources": "Додаткові ресурси",
+    "goal": "Мета",
     "cset icons": "CSET Icons",
     "answer buttons": "Answer Buttons"
   },
@@ -470,6 +470,23 @@
     "confirm create new assessment": "Ви впевнені, що хочете створити нове оцінювання?"
   },
   "reports": {
+    "launch": {
+      "rra": {
+        "sectionTitle": "CISA Оцінка готовності до рейдерського програмного забезпечення",
+        "1": {
+          "title": "RRA Звіт",
+          "desc": "The report includes a wide array of charts and graphs designed to visually present and summarize the responses gathered throughout the assessment process. Additionally, it includes a compilation of all RRA practices along with their corresponding references. This report provides a comprehensive overview of the assessment outcomes, enabling organizations to analyze and assess their ransomware readiness effectively."
+        },
+        "2": {
+          "title": "Звіт про недоліки за RRA",
+          "desc": "The report contains a list of all RRA practices that were marked as “No” or unanswered during the assessment process. This report serves to identify potential deficiencies or gaps in the organization’s ransomware readiness practices and provides suggested areas for improvement."
+        },
+        "3": {
+          "title": "Коментарі та Позначені для Перегляду",
+          "desc": "This document consolidates all practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
+        }
+      }
+    },
     "assessment complete message": "Дякуємо за завершення оцінювання. Звіти на цій сторінці містять підсумки ваших результатів, які можуть допомогти вашій організації планувати кібербезпеку та розвиватися в майбутньому. Оцінка востаннє оновлювалася {date}.",
     "reports run prior message": "Будь-які звіти, створені до цього оновлення, можуть не відображати поточний стан оцінювання.",
     "printing report instructions button": "Інструкції щодо друку звіту",
