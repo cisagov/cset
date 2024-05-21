@@ -1,4 +1,5 @@
 *.bak
+*.env
 *.log
 *.zip
 dist
