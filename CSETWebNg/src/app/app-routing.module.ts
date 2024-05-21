@@ -230,6 +230,7 @@ import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-
 import { SdOwnerDeficiencyComponent } from './reports/sd-owner/sd-owner-deficiency/sd-owner-deficiency.component';
 import { SdOwnerCommentsMfrComponent } from './reports/sd-owner/sd-owner-comments/sd-owner-comments-mfr.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
+import { TutorialCpgComponent } from './assessment/prepare/maturity/tutorial-cpg/tutorial-cpg.component';
 
 const appRoutes: Routes = [
 
@@ -367,6 +368,7 @@ const appRoutes: Routes = [
               { path: 'tutorial-imr', component: TutorialImrComponent },
               { path: 'tutorial-rra', component: TutorialRraComponent },
               { path: 'tutorial-cis', component: TutorialCisComponent },
+              { path: 'tutorial-cpg', component: TutorialCpgComponent},
               { path: 'tutorial-cie', component: TutorialCieComponent,
                 children: [
                 { path: 'quick-facts-cie', component: QuickFactsCieComponent },

@@ -174,12 +174,13 @@
     "practices": "Практики",
     "requirements": "Вимоги",
     "other remarks": "Other Remarks",
-    "imr tutorial": "IMR Tutorial",
-    "cmmc tutorial": "CMMC Tutorial",
-    "cis tutorial": "CIS Tutorial",
-    "edm tutorial": "EDM Tutorial",
-    "crr tutorial": "CRR Tutorial",
+    "imr tutorial": "IMR Підручник",
+    "cmmc tutorial": "CMMC Підручник",
+    "cis tutorial": "CIS Підручник",
+    "edm tutorial": "EDM Підручник",
+    "crr tutorial": "CRR Підручник",
     "rra tutorial": "Посібник із готовності до програм-вимагачів",
+    "cpg tutorial": "CPG Підручник",
     "analysis dashboard": "Інформаційна панель аналізу",
     "standard results": "Стандартні результати",
     "assessment compliance": "Оцінка відповідності",
@@ -205,8 +206,8 @@
     "overview": "Огляд",
     "additional resources": "Додаткові ресурси",
     "goal": "Мета",
-    "cset icons": "CSET Icons",
-    "answer buttons": "Answer Buttons"
+    "cset icons": "CSET іконки",
+    "answer buttons": "Кнопки відповіді"
   },
   "buttons": {
     "ok": "OK",
@@ -475,15 +476,26 @@
         "sectionTitle": "CISA Оцінка готовності до рейдерського програмного забезпечення",
         "1": {
           "title": "RRA Звіт",
-          "desc": "The report includes a wide array of charts and graphs designed to visually present and summarize the responses gathered throughout the assessment process. Additionally, it includes a compilation of all RRA practices along with their corresponding references. This report provides a comprehensive overview of the assessment outcomes, enabling organizations to analyze and assess their ransomware readiness effectively."
+          "desc": "Звіт містить широкий набір діаграм і графіків, призначених для візуального представлення та узагальнення відповідей, зібраних протягом процесу оцінювання. Крім того, він містить збірку всіх практик RRA разом із відповідними посиланнями. Цей звіт містить вичерпний огляд результатів оцінки, що дає змогу організаціям ефективно аналізувати та оцінювати свою готовність до програм-вимагачів."
         },
         "2": {
           "title": "Звіт про недоліки за RRA",
-          "desc": "The report contains a list of all RRA practices that were marked as “No” or unanswered during the assessment process. This report serves to identify potential deficiencies or gaps in the organization’s ransomware readiness practices and provides suggested areas for improvement."
+          "desc": "Звіт містить перелік усіх практик RRA, які були позначені як «Ні» або без відповіді під час процесу оцінювання. Цей звіт слугує для виявлення потенційних недоліків або прогалин у практиці організації щодо готовності до програм-вимагачів і містить пропозиції щодо покращення."
         },
         "3": {
           "title": "Коментарі та Позначені для Перегляду",
-          "desc": "This document consolidates all practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
+          "desc": "Цей документ об’єднує всі практики, які отримали коментарі або були позначені для перевірки під час процесу оцінювання. Він містить огляд областей, де може знадобитися додаткова увага чи роз’яснення."
+        }
+      },
+      "cpg": {
+        "sectionTitle": "Міжгалузеві цілі кібербезпеки (CPG)",
+        "1": {
+          "title": "CPG звіт",
+          "desc": "Звіт CPG містить підсумок ефективності CPG і контрольний список практики безпеки."
+        },
+        "2": {
+          "title": "CPG Дефіцит",
+          "desc": "Звіт містить список усіх методів безпеки, які були позначені як «Не реалізовано» або без відповіді під час процесу оцінювання. Цей звіт слугує для виявлення недоліків або прогалин у практиці кібербезпеки організації та містить пропозиції щодо покращення."
         }
       }
     },
@@ -540,7 +552,7 @@
       "no observations message": "Оцінка не містить жодних спостережень, які призначаються окремій особі.",
       "question identifier": "Ідентифікатор питання",
       "question text": "Текст запитання",
-      "summary": "This document contains a list of all observations identified and recorded during the assessment. For more information, view the Observations Tear Out Sheets page in the CSET User Guide."
+      "summary": "Цей документ містить перелік усіх спостережень, виявлених і записаних під час оцінювання. Для отримання додаткової інформації перегляньте сторінку Observations Tear Out Sheets у посібнику користувача CSET."
     },
     "core": {
       "dashboard": {
@@ -789,7 +801,9 @@
           "p": {
             "1": "Ця діаграма показує розподіл відповідей для кожної категорії практики безпеки",
             "2": "Таблиця нижче показує відсотки розподілу відповідей за кожною категорією, як зазначено на діаграмі вище",
-            "3": "Ця таблиця містить усі заходи безпеки та способи їх виконання"
+            "3": "Ця таблиця містить усі заходи безпеки та способи їх виконання",
+            "a": "Зведена діаграма CPG Performance Summary надає загальний огляд того, наскільки добре організація досягає цілей у кожній категорії практики безпеки. Він представляє відсоток розподілу кожного типу відповіді на категорію. Крім того, дані відображаються в таблиці під діаграмою для подальшого вивчення.",
+            "b": "Контрольний список практики безпеки містить вичерпний огляд результатів оцінки, включно з TTP або розглянутими ризиками та рекомендованими діями. Крім того, контрольний список містить такі критерії, як «Вплив», «Вартість» і «Складність» для кожної цілі. Ці критерії можуть допомогти організаціям оцінити важливість і наслідки кожної практики та визначити пріоритети для їх впровадження."
           },
           "current assessment": "Поточна оцінка",
           "notes": "Додаткові відомості",
@@ -820,8 +834,8 @@
         "comments and marked for review": "Коментарі та Позначені для Перегляду",
         "cisa ransomware readiness assessment": "CISA Оцінка готовності до рейдерського програмного забезпечення",
         "assessment full title": "готовності до рейдерського програмного забезпечення",
-        "goal performance summary": "The Goal Performance chart provides a high-level overview of how well an organization meets each ransomware readiness goal. It presents the percentage of practice compliance for each goal in a bar chart. Additionally, the data is displayed in a table below the chart for further examination.",
-        "assessment tiers summary": "The Assessment Tiers charts visually represents the implementation status of ransomware readiness practices within an organization across the basic, intermediate, and advanced tiers. The charts display the number of “yes,” “no,” and “unanswered” responses per tier, as well as the distribution percentage of each response type per tier.",
+        "goal performance summary": "Діаграма цільової ефективності надає загальний огляд того, наскільки добре організація досягає кожної цілі щодо готовності до програм-вимагачів. Він представляє відсоток виконання практики для кожної цілі на гістограмі. Крім того, дані відображаються в таблиці під діаграмою для подальшого вивчення.",
+        "assessment tiers summary": "Діаграми рівнів оцінювання візуально представляють стан впровадження практик готовності до програм-вимагачів в організації на базовому, середньому та розширеному рівнях. На діаграмах показано кількість відповідей «так», «ні» та «без відповіді» на рівень, а також відсоток розподілу кожного типу відповідей на рівень.",
         "report": {
           "assessment tiers": "Рівні оцінки RRA",
           "answered tier": "Практики, відповіді на рівні оцінки",
@@ -834,7 +848,7 @@
           "percentage of practices": "Відсоток виконаних практик",
           "scores calculated as yes": "Оцінки обчислюються як відсоток відповідей ter «Так».",
           "rra performance summary": "Зведення про ефективність RRA",
-          "performance summary text": "The RRA Performance Summary charts illustrate the distribution percentage of each response type overall and across all tiers.",
+          "performance summary text": "Зведені діаграми ефективності RRA ілюструють відсоток розподілу кожного типу відповіді в цілому та на всіх рівнях.",
           "percentage of practices by goal": "Відсоток виконаних практик за цілями",
           "rra practices": "Оцінка практик RRA",
           "total practices": "Загальна кількість практик",
@@ -1162,43 +1176,77 @@
     "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Веб-сайт</a>"
   },
   "tutorials": {
+    "function": "функція",
+    "practice identifier": "Ідентифікатор практики",
+    "security practice": "Практика безпеки",
+    "outcome": "Результат",
+    "additional resources": "Додаткову інформацію про проходження оцінювання CSET можна знайти в посібнику користувача CSET. Щоб отримати доступ до посібника користувача, виберіть опцію зі спадного меню «Довідка» на панелі інструментів CSET.",
+    "please visit": "Будь ласка, відвідайте",
+    "for more information": "для отримання додаткової інформації.",
     "rra": {
       "title": "Посібник із готовності до програм-вимагачів",
       "yes": "Так",
       "no": "Немає",
-      "1": "Ransomware is an ever-evolving form of malware designed to encrypt files on a device, rendering any files and the systems that rely on them unusable. Malicious actors then demand ransom in exchange for decryption. Ransomware actors often target and threaten to sell or leak exfiltrated data or authentication information if the ransom is not paid.",
-      "2": "The Ransomware Readiness Assessment (RRA) provides a clear path for improvement and contains a series of tiered questions categorized as basic, intermediate, and advanced.",
-      "3": "Organizations that are unfamiliar with ransomware and need to begin basic cyber hygiene safeguards against ransomware threats should focus on implementing the basic tier of practices.",
-      "4": "After completing the basic tier of the improvement effort, organizations looking to further improve their risk posture against ransomware should implement the intermediate tier of practices.",
-      "5": "Organizations that have already adopted basic and intermediate level RRA practices and are looking to improve their response to ransomware threats should focus on adopting the practices in the advanced tier.",
-      "6": "The RRA consists of 48 practices (questions), each aligning with one of the following ten goals.",
-      "6a": "Robust Data Backup",
-      "6b": "Web Browser Management and DNS Filtering",
-      "6c": "Phishing Prevention and Awareness",
-      "6d": "Network Perimeter Monitoring",
-      "6e": "Asset Management",
-      "6f": "Patch and Update Management",
-      "6g": "User and Access Management",
-      "6h": "Application Integrity and Allowlist",
-      "6i": "Incident Response",
-      "6j": "Risk Management",
-      "7": "Each practice includes the following components.",
-      "8": "Each goal has a set of associated practices. A brief overview of its purpose and suggested approaches are provided alongside each goal.",
-      "9": "Practice Identifier",
-      "10": "Each question has an assigned practice identifier structured as follows:",
-      "11": "Goal [GG]: Level [B,I,A]. Question Number [Q##]",
-      "12": "An example of the above structure is NM:B.Q01, which represents Network Perimeter Monitoring, Level Basic, Question Number 1. The blue oval beneath each identifier indicates the basic, intermediate, or advanced tier for the practice.",
-      "13": "Questions designed to evaluate if the organization has implemented the associated goal.",
-      "14": "Selecting the Supplemental Guidance icon provides information on:",
-      "14a": "Question Intent",
-      "14b": "Possible Actions (if applicable)",
-      "14c": "Criteria for “Yes” Response",
-      "15": "Select the applicable answer for each question. Unanswered questions are calculated as a “No” response.",
-      "15a": "– the organization fully performs the activity specified in the question.",
-      "15b": "– the organization does not perform the activity completely.",
-      "16": "Additional information on how to complete a CSET assessment is available in the CSET User Guide. To access the user guide, select the option from the Help dropdown menu in the CSET tool bar.",
-      "17a": "Please visit ",
-      "17b": "for more information."
+      "1": "Програми-вимагачі — це форма зловмисного програмного забезпечення, що постійно розвивається, призначена для шифрування файлів на пристрої, роблячи будь-які файли та системи, які від них залежать, непридатними. Потім зловмисники вимагають викуп в обмін на розшифровку. Зловмисники-вимагачі часто націлюються та погрожують продати або розкрити викрадені дані або інформацію для автентифікації, якщо викуп не буде сплачено.",
+      "2": "Оцінка готовності програм-вимагачів (RRA) забезпечує чіткий шлях для вдосконалення та містить серію багаторівневих запитань, класифікованих як базові, середні та складні.",
+      "3": "Організаціям, які не знайомі з програмами-вимагачами та яким потрібно розпочати базові заходи кібергігієни проти загроз програм-вимагачів, слід зосередитися на впровадженні базового рівня практик.",
+      "4": "Після завершення основного рівня вдосконалення організації, які хочуть ще більше покращити свій ризик проти програм-вимагачів, повинні запровадити проміжний рівень практик.",
+      "5": "Організаціям, які вже запровадили базовий і середній рівень RRA і хочуть покращити свою реакцію на загрози програм-вимагачів, слід зосередитися на застосуванні практик на розширеному рівні.",
+      "6": "RRA складається з 48 вправ (запитань), кожне з яких відповідає одній із наступних десяти цілей.",
+      "6a": "Надійне резервне копіювання даних",
+      "6b": "Керування веб-браузером і DNS-фільтрація",
+      "6c": "Запобігання фішингу та поінформованість",
+      "6d": "Моніторинг периметра мережі",
+      "6e": "Управління активами",
+      "6f": "Керування виправленнями та оновленнями",
+      "6g": "Керування користувачами та доступом",
+      "6h": "Цілісність програми та білий список",
+      "6i": "Реагування на інцидент",
+      "6j": "Управління ризиками",
+      "7": "Кожна практика включає наступні компоненти.",
+      "8": "Кожна мета має набір пов’язаних практик. Поряд із кожною ціллю надається короткий огляд її мети та запропонованих підходів.",
+      "10": "Кожне запитання має ідентифікатор практики, структурований таким чином:",
+      "11": "Ціль [GG]: Рівень [B,I,A]. Номер запитання [Q##]",
+      "12": "Прикладом наведеної вище структури є NM:B.Q01, яка представляє моніторинг периметра мережі, базовий рівень, питання номер 1. Синій овал під кожним ідентифікатором вказує на базовий, середній або просунутий рівень практики.",
+      "13": "Питання, призначені для оцінки того, чи досягла організація відповідну мету.",
+      "14": "Вибір піктограми «Додаткова інструкція» надає інформацію про:",
+      "14a": "Намір запитання",
+      "14b": "Можливі дії (якщо застосовно)",
+      "14c": "Критерії відповіді «Так».",
+      "15": "Виберіть відповідну відповідь для кожного запитання. Питання без відповіді зараховуються як відповідь «Ні».",
+      "15a": "– організація в повному обсязі здійснює зазначену в запитанні діяльність.",
+      "15b": "– організація не здійснює діяльність повністю."
+    },
+    "cpg": {
+      "title": "Навчальний посібник із міжгалузевих цілей ефективності кібербезпеки (CPG)",
+      "1": "У липні 2021 року президент Байден підписав Меморандум про національну безпеку (NSM)-5: Покращення кібербезпеки для систем контролю критичної інфраструктури. Цей меморандум вимагає від CISA, у координації з Національним інститутом стандартів і технологій (NIST) і міжвідомчою спільнотою, розробити базові цілі кібербезпеки, узгоджені для всіх секторів критичної інфраструктури.",
+      "2": "Цілі ефективності кібербезпеки (CPG) — це пріоритетна підмножина практик кібербезпеки ІТ та ОТ, спрямованих на ефективне пом’якшення ризиків для громадськості та операцій критичної інфраструктури (CI) будь-якого розміру. CPG не є всеохоплюючими, але функціонують як основа рекомендованих практик, які організації повинні включити як частину своїх комплексних програм кібербезпеки.",
+      "3": "Оцінка CPG складається з 38 методів безпеки (запитань), кожне з яких узгоджується з однією з п’яти функцій NIST CSF.",
+      "3a": "Ідентифікувати",
+      "3b": "Захищати",
+      "3c": "Виявляти",
+      "3d": "Відповісти",
+      "3e": "Відновити",
+      "4": "Кожна практика безпеки включає такі компоненти.",
+      "5": "Кожна функція NIST CSF має набір пов’язаних заходів безпеки.",
+      "6": "Кожне запитання має ідентифікатор практики.",
+      "7": "Засоби пом’якшення, які організації повинні впроваджувати для досягнення відповідного результату та зменшення впливу пов’язаного TTP або ризику.",
+      "8": "Передбачуваний результат, якого прагне досягти відповідна практика безпеки.",
+      "9": "Вибір піктограми «Додаткова інструкція» надає інформацію про:",
+      "9a": "Область застосування",
+      "9a1": "Набір або підмножина активів, до яких організації мають застосовувати практику безпеки.",
+      "9b": "Рекомендована дія",
+      "9b1": "Приклади підходів, які допоможуть організаціям просуватися до досягнення цілей ефективності.",
+      "10": "Вибір піктограми «Посилання» надає інформацію про:",
+      "10a": "NIST CSF довідка",
+      "10a1": "Підкатегорія CSF, яка найбільше стосується практики безпеки.",
+      "10b": "TTP/Ризик адресовано",
+      "10b1": "Або основний набір TTP MITER ATT&CK, або набір організаційних ризиків, які стануть менш імовірними або впливовими, якщо ціль буде реалізовано.",
+      "11": "Виберіть відповідну відповідь для кожного запитання. Питання без відповіді розраховуються як відповідь «Ні».",
+      "11a": "– Організація впровадила та продовжує підтримувати рекомендовані дії або відповідну альтернативу, необхідну для досягнення заявленого результату.",
+      "11b": "– Організація перебуває в процесі впровадження рекомендованих дій у рамках цілі або відповідної альтернативи для досягнення заявленого результату.",
+      "11c": "– Організація визначила повний набір необхідних заходів, необхідних для досягнення заявленого результату мети.",
+      "11d": "– Організація не має найближчих планів реалізації рекомендованих дій для досягнення мети."
     }
   }
 }
