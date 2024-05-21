@@ -594,6 +594,7 @@
     "reports": {
         "launch": {
             "crr": {
+                "sectionTitle": "CISA Cyber Resilience Review",
                 "1": {
                     "title": "CRR Report",
                     "desc": "The report includes a wide array of charts and graphs designed to visually present and summarize the responses gathered throughout the assessment process, enabling organizations to analyze and assess their incident management capabilities effectively. Organizations can gauge if their incident management functions align with the National Institute of Standards and Technology (NIST) Cybersecurity Framework (CSF), as assessment results are depicted in terms relative to the NIST CSF. Additionally, the report includes a compilation of all CRR practices along with their corresponding references."
@@ -608,6 +609,7 @@
                 }
             },
             "imr": {
+                "sectionTitle": "CISA Incident Management Review",
                 "1": {
                     "title": "IMR Report",
                     "desc": "The report includes a wide array of charts and graphs designed to visually present and summarize the responses gathered throughout the assessment process, enabling organizations to analyze and assess their incident management capabilities effectively. Organizations can gauge if their incident management functions align with the National Institute of Standards and Technology (NIST) Cybersecurity Framework (CSF), as assessment results are depicted in terms relative to the NIST CSF. Additionally, the report includes a compilation of all IMR practices along with their corresponding references."
@@ -622,6 +624,7 @@
                 }
             },
             "cis": {
+                "sectionTitle": "CISA Cyber Infrastructure Survey (CIS)",
                 "1": {
                     "title": "Survey Report",
                     "desc": "The report contains a list of all survey questions and their corresponding answers."
@@ -640,6 +643,7 @@
                 }
             },
             "edm": {
+                "sectionTitle": "CISA External Dependencies Management",
                 "1": {
                     "title": "EDM Report",
                     "desc": "The report includes a wide array of charts and graphs designed to visually present and summarize the responses gathered throughout the assessment process, enabling organizations to analyze and assess their incident management capabilities effectively. Organizations can gauge if their incident management functions align with the National Institute of Standards and Technology (NIST) Cybersecurity Framework (CSF), as assessment results are depicted in terms relative to the NIST CSF. Additionally, the report includes a compilation of all CRR practices along with their corresponding references."
@@ -656,6 +660,7 @@
                 }
             },
             "cmmc2": {
+                "sectionTitle": "Capability Maturity Model Certification (CMMC) 2.0",
                 "1": {
                     "title": "CMMC 2.0 - Executive Summary",
                     "desc": "The report includes graphs to highlight compliance by level, compliance by domain, and the SPRS Scorecard. Additionally, it includes a compilation of all CMMC practices and their responses, along with their corresponding assessment objectives and SPRS value."
