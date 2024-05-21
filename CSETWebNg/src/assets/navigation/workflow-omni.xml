@@ -11,6 +11,7 @@
         <node d="crr tutorial" id="tutorial-crr" path="assessment/{:id}/prepare/tutorial-crr" visible="MATURITY:4" />
         <node d="imr tutorial" id="tutorial-imr" path="assessment/{:id}/prepare/tutorial-imr" visible="MATURITY:15" />
         <node d="rra tutorial" id="tutorial-rra" path="assessment/{:id}/prepare/tutorial-rra" visible="MATURITY:5 ORIGIN-NOT:CF" />
+        <node d="cpg tutorial" id="tutorial-cpg" path="assessment/{:id}/prepare/tutorial-cpg" visible="MATURITY:11" />
 
         <!-- vanilla prepare pages -->
         <node d="assessment configuration" id="info1" path="assessment/{:id}/prepare/info1" visible="INSTALL-MODE-NONE(TSA,IOD,ISE) MATURITY-NONE(10,17)" />
