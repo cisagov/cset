@@ -298,6 +298,8 @@
     "export": "Export",
     "export json": "JSON",
     "import": "Import",
+    "import demographics": "Import Demographics",
+    "export demographics": "Export Demographics",
     "enter password": "Enter Password",
     "export all": "Export All",
     "export all to excel": "Export All to Excel",
@@ -366,7 +368,7 @@
     "upgrade message": "We hope you find these reports helpful.  You can expand these results with more information by completing the full assessment here.  To participate in the Cyber Florida Full Assessment click the convert button below.",
     "upgrade confirm 1": "Upgrading the assessment.  Would you like to continue?",
     "upgrade confirm 2": "The assessment has been converted.",
-    "title upgrade complete": "Conversion Complete",
+    "title upgrade compl ete": "Conversion Complete",
     "upgrade button": "Convert to Full Assessment"
   },
   "answer-options": {

@@ -663,6 +663,7 @@ import { ReportsCisComponent } from './assessment/results/reports/report-list/re
 import { ReportsCmmc2Component } from './assessment/results/reports/report-list/reports-cmmc2/reports-cmmc2.component';
 import { ReportsCrrComponent } from './assessment/results/reports/report-list/reports-crr/reports-crr.component';
 import { ReportsEdmComponent } from './assessment/results/reports/report-list/reports-edm/reports-edm.component';
+import { ReportsRraComponent } from './assessment/results/reports/report-list/reports-rra/reports-rra.component';
 
 @NgModule({
   imports: [
@@ -1275,7 +1276,8 @@ import { ReportsEdmComponent } from './assessment/results/reports/report-list/re
     ReportsCmmc2Component,
     ReportListComponent,
     ReportsCrrComponent,
-    ReportsEdmComponent
+    ReportsEdmComponent, 
+    ReportsRraComponent
   ],
   providers: [
     TranslocoService,
