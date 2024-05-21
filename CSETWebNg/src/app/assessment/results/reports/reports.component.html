@@ -254,25 +254,9 @@
         </div>
       </div>
 
-
-      <div *ngIf="
-          !!assessSvc.assessment &&
-          assessSvc.usesMaturityModel('CPG') &&
-          !isMobile
-        " class="d-flex flex-column justify-content-start align-items-start mb-4">
-        <h4>CISA {{t('core.cpg.report title')}}</h4>
-
-        <div>
-          <button tabindex="0" (click)="clickReportLink('cpgReport')" class="btn btn-link btn-link-dark text-left">
-            {{t('core.cpg.report.cpg report')}}
-          </button>
-        </div>
-        <div>
-          <button tabindex="0" (click)="clickReportLink('cpgDeficiency')" class="btn btn-link btn-link-dark text-left">
-            {{t('core.cpg.deficiency.cpg deficiency')}}
-          </button>
-        </div>
-      </div>
+      <!-- CPG -->
+      <app-reports-list-cpg *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile"></app-reports-list-cpg>
+      
 
 
       <div *ngIf="
