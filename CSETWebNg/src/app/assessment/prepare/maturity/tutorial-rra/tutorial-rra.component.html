@@ -23,111 +23,83 @@
 <div class="white-panel d-flex justify-content-start flex-column flex-11a tutorial"
     *transloco="let t; read: 'tutorials.rra'">
     <h3 class="wrap-text mb-3">{{t('title')}}</h3>
-    <div>
+    <div *transloco="let k">
+        <h5 >{{k('titles.overview')}}</h5>
         <p>{{t('1')}}</p>
 
         <p>{{t('2')}}</p>
+        <ul>
+            <li>{{t('3')}}</li>
 
-        <p>{{t('3')}}</p>
+            <li>{{t('4')}}</li>
 
-        <p><b>{{t('4')}}</b></p>
+            <li>{{t('5')}}</li>
+        </ul>
+        <h5 >{{k('titles.assessment')}}</h5>
+        <p>{{t('6')}}</p>
+        <ul>
+            <li>{{t('6a')}}</li>
+            <li>{{t('6b')}}</li>
+            <li>{{t('6c')}}</li>
+            <li>{{t('6d')}}</li>
+            <li>{{t('6e')}}</li>
+            <li>{{t('6f')}}</li>
+            <li>{{t('6g')}}</li>
+            <li>{{t('6h')}}</li>
+            <li>{{t('6i')}}</li>
+            <li>{{t('6j')}}</li>
+        </ul>
 
-        <p>{{t('5a')}} <a href="https://www.cisa.gov/publication/ransomware-guide" target="_blank">{{t('5b')}}</a>
-            {{t('5c')}}</p>
+        <p>{{t('7')}}</p>
+        <div class="img-frame">
+            <img src="assets/images/RRA/tutorial/Picture7.png" style="width: 650px">
+        </div>
+        
+        <h6>{{k('titles.goal')}}</h6>
 
-        <p>{{t('6a')}} <a href="https://www.cisa.gov/news/2021/01/21/cisa-launches-campaign-reduce-risk-ransomware"
-                target="_blank">{{t('6b')}}</a>{{t('6c')}}</p>
+        <div class="img-frame">
+            <img src="assets/images/RRA/tutorial/Picture8.png" style="width: 650px">
+        </div>
 
-        <p>{{t('7a')}} <a
-                href="https://www.cisa.gov/sites/default/files/publications/CISA_Fact_Sheet-Rising_Ransomware_Threat_to_OT_Assets_508C.pdf"
-                target="_blank">{{t('7b')}}</a>{{t('7c')}}</p>
+        <p>{{t('8')}}</p>
+        <h6>{{t('9')}}</h6>
 
-        <p>{{t('8a')}} <a href="https://www.cisa.gov/ransomware-alerts-and-tips" target="_blank">{{t('8b')}}</a>
-            {{t('8c')}}</p>
-
-        <p><b>{{t('9')}}</b></p>
-
+        <div class="img-frame">
+            <img src="assets/images/RRA/tutorial/Picture9.png" style="width: 100px">
+        </div>
         <p>{{t('10')}}</p>
-
         <p>{{t('11')}}</p>
-
-        <p><b>{{t('12a')}}</b> [GG] : <b>{{t('12b')}}</b> [B,I,A] .
-            <b>{{t('12c')}}</b> [Q##]
-        </p>
-
-        <p>{{t('13a')}} <b>AM:I.Q03</b> {{t('13b')}} <b>{{t('13c')}}</b></p>
-
-        <p>{{t('14')}}
-        </p>
-
-        <p><img src="assets/images/RRA/tutorial/image001{{'img suffix' | transloco}}.png"
-                alt="tier indicator example" /></p>
-
-
+        <p>{{t('12')}}</p>
+        <h6>{{k('reports.core.rra.report.practice')}}</h6>
+        <div class="img-frame">
+            <img src="assets/images/RRA/tutorial/Picture10.png" style="width: 300px">
+        </div>
+        <p>{{t('13')}}</p>
+        <h6>{{k('titles.cset icons')}}</h6>
+        <div class="img-frame">
+            <img src="assets/images/icons/cset-icons.png" style="width: 300px">
+        </div>
+        <p>{{t('14')}}</p>
+        <ul>
+            <li>{{t('14a')}}</li>
+            <li>{{t('14b')}}</li>
+            <li>{{t('14c')}}</li>
+        </ul>
+        <div class="img-frame">
+            <img src="assets/images/RRA/tutorial/Picture11.png" style="width: 600px">
+        </div>
+        <h6>{{k('titles.answer buttons')}}</h6>
+        <div class="img-frame">
+            <img src="assets/images/icons/answer-buttons.png" style="width: 100px">
+        </div>
         <p>{{t('15')}}</p>
         <ul>
-            <li>{{t('15a')}}</li>
-            <li>{{t('15b')}}</li>
+            <li><b>{{k('answer-options.button-labels.yes')}}</b> {{t('15a')}}</li>
+            <li><b>{{k('answer-options.button-labels.no')}}</b> {{t('15b')}}</li>
         </ul>
-
-
-        <p><b>{{t('16')}}</b></p>
-        <ul>
-            <li>{{t('16a')}}</li>
-            <li>{{t('16b')}}</li>
-            <li>{{t('16c')}}</li>
-        </ul>
-
-
-        <p>{{t('17')}}</p>
-
-        <p>{{t('18')}}</p>
-
-        <p><img src="assets/images/RRA/tutorial/image004{{'img suffix' | transloco}}.png" alt="yes no answer controls"
-                style="border: 1px solid #ccc" /></p>
-
-        <ul type="disc">
-            <li><b>{{t('yes')}}</b> – {{t('19a')}}</li>
-            <li><b>{{t('no')}}</b> – {{t('19b')}}</li>
-        </ul>
-
-        <p>{{t('20')}}</p>
-
-        <p><img src="assets/images/RRA/tutorial/image006{{'img suffix' | transloco}}.png" alt="question format example"
-                style="height: 6rem; border: 1px solid #ccc" [class.w-100]="layoutSvc.hp" /></p>
-
-        <p><img src="assets/images/RRA/tutorial/image008.png" alt="Mark for Review" style="height:2rem" />
-            <span [innerHTML]="t('21a')"></span>: {{t('21b')}}
-        </p>
-
-        <p><img src="assets/images/RRA/tutorial/image009.jpg" alt="Guidance Icon" v:shapes="Picture_x0020_23" />
-            <span [innerHTML]="t('22a')"></span>: {{t('22b')}}
-        </p>
-
-        <p><img src="assets/images/RRA/tutorial/image011.jpg" alt="Comments Icon" v:shapes="Picture_x0020_22" />
-            <span [innerHTML]="t('23a')"></span>: {{t('23b')}}
-        </p>
-
-        <p>{{t('24')}}</p>
-
-        <p><img src="assets/images/RRA/tutorial/image013.jpg" alt="Artifacts References Icon"
-                v:shapes="Picture_x0020_21" />
-            <span [innerHTML]="t('25a')"></span>: {{t('25b')}}
-            {{t('25c')}} <img src="assets/images/RRA/tutorial/image014{{'img suffix' | transloco}}.png" style="vertical-align: top" alt="Tools" />
-        </p>
-
-        <p><img src="assets/images/RRA/tutorial/image015.jpg" alt="References Icon" v:shapes="Picture_x0020_20" />
-            <span [innerHTML]="t('26a')"></span>: {{t('26b')}}
-        </p>
-
-        <p><img src="assets/images/RRA/tutorial/image016.jpg" alt="Observations Icon" v:shapes="Picture_x0020_19" />
-            <span [innerHTML]="t('27a')"></span>: {{t('27b')}}
-        </p>
-
-        <p><img src="assets/images/RRA/tutorial/image018.jpg" alt="Feedback Icon" v:shapes="Picture_x0020_18" />
-            <span [innerHTML]="t('28a')"></span>: {{t('28b')}}
-        </p>
+        <h6>{{k('titles.additional resources')}}</h6>
+        <p>{{t('16')}}</p>
+        <p>{{t('17a')}}<a href ="https://www.cisa.gov/stopransomware">https://www.cisa.gov/stopransomware</a>{{t('17b')}}</p>
     </div>
-
     <app-nav-back-next [page]="'tutorial-rra'"></app-nav-back-next>
 </div>
