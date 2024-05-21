@@ -130,26 +130,26 @@
 
 
     <!-- EDM -->
-    <app-reports-edm *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
-      [confidentiality]="confidentiality"></app-reports-edm>
+    <app-report-list-edm *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
+      [confidentiality]="confidentiality"></app-report-list-edm>
 
 
     <!-- CRR -->
-    <app-reports-crr *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CRR')"
-      [confidentiality]="confidentiality"></app-reports-crr>
+    <app-report-list-crr *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CRR')"
+      [confidentiality]="confidentiality"></app-report-list-crr>
 
 
     <!-- IMR -->
-    <app-reports-imr *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('IMR')"
-      [confidentiality]="confidentiality"></app-reports-imr>
+    <app-report-list-imr *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('IMR')"
+      [confidentiality]="confidentiality"></app-report-list-imr>
 
 
     <!-- CIS -->
-    <app-reports-cis *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CIS')"></app-reports-cis>
+    <app-report-list-cis *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CIS')"></app-report-list-cis>
 
 
     <!-- CMMC2 -->
-    <app-reports-cmmc2 *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC2')"></app-reports-cmmc2>
+    <app-report-list-cmmc2 *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC2')"></app-report-list-cmmc2>
 
     <!-- RRA -->
     <app-reports-rra *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('RRA') && !isMobile">
