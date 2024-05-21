@@ -45,7 +45,9 @@ import { ConversionService } from '../../../services/conversion.service';
   selector: 'app-reports',
   templateUrl: './reports.component.html',
   // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: { class: 'd-flex flex-column flex-11a' }, 
+  styleUrls: ['./reports.component.scss']
+
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
   /**
