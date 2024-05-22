@@ -314,112 +314,61 @@ export class NavTreeService {
   /**
    * 
    */
-  setSideNavScrollLocation(targetId) {
+  setSideNavScrollLocation(targetId: string) {
     const sideNavQ = document.getElementsByClassName("mat-drawer-inner-container");
     if (sideNavQ.length == 0) {
       return;
     }
-    let scrollDiv = sideNavQ[0];
+    const scrollDiv = sideNavQ[0];
 
-
-
-    // first, scroll to where we think is right, then we will adjust.
+    // Scroll to the last known position
     scrollDiv.scrollTo(0, this.sideNavScrollLocation);
 
-    // find the target element
+    // If needed, scroll into view
+    this.scrollElementIntoView(targetId, scrollDiv);
+  }
+
+  /**
+   * Move the scroll position into view.
+   */
+  scrollElementIntoView(targetId: string, scrollDiv: Element) {
     const element = document.getElementById(targetId);
     if (!element) {
       return;
     }
 
-    console.log('rect after first scroll: ');
-    const rect1 = element.getBoundingClientRect();
-    console.log(rect1.top);
-
-
     const parent = element.closest('mat-sidenav');
     if (!parent) {
       return;
     }
-    const parentRect = parent.getBoundingClientRect();
-    const distanceToTop = rect1.top - parentRect.top + parent.scrollTop;
 
-    console.log('distanceToTop:', distanceToTop);
+    // Get the bounding rectangles of the parent and child views
+    const parentRect = parent.getBoundingClientRect()
+    const childRect = element.getBoundingClientRect();
 
-    if (!element) {
-      return;
-    }
-    
-    
-    
-    // Get the element's bounding rectangle relative to the viewport
-    const rect = element.getBoundingClientRect();
-    
-    
-    const rectTop = rect.top;
-    const rectBottom = rectTop + rect.height;
-    
-    
-    
-    // Get the viewport height
-    const clientHeight = scrollDiv.clientHeight;
-    
-    // Get the scroll position from the top (amount scrolled)
-    const scrollTop = scrollDiv.scrollTop;
-    
-    
-    // now see if the current node is "off the page" and adjust
+    // Calculate the relative top and bottom positions of the sidenav view
+    const distanceToTop = childRect.top - parentRect.top + parent.scrollTop;
+    const distanceToBottom = parentRect.bottom - childRect.bottom - parent.scrollTop;
 
-    // target is above top edge
+    // Initialize desired scroll position
+    let desiredScrollTop = 0;
+
+    // If target is above top edge then calculate the desired scroll position
     if (distanceToTop < 0) {
-      console.log('ABOVE');
-      this.scrollElementToTop(scrollDiv, distanceToTop, scrollTop);
-      return;
+      desiredScrollTop = scrollDiv.scrollTop + distanceToTop - 3;
     }
 
-    // target bottom is below bottom edge.  The "if" seems to be calculating right.  But the scrolling method is broken.
-    if (rectBottom > clientHeight) {
-      console.log('BELOW');
-      this.scrollElementToBottom(parent, distanceToTop, scrollTop);
-      return;
+    // If target is below bottom edge then calculate the desired scroll position
+    if (distanceToBottom < 0) {
+      desiredScrollTop = scrollDiv.scrollTop - distanceToBottom + 3;
     }
-  }
-
-  /**
-   * Determine the scrollTop to get the rect at the top of the 
-   * scrolling div / viewport.
-   */
-  scrollElementToTop(scrollDiv, dtt: number, curScrollTop: number) {
-    const desiredScrollTop = curScrollTop + dtt - 3;
 
     // Enforce scroll bounds (prevent negative scrolling)
     const scrollTop = Math.max(desiredScrollTop, 0);
 
-    // Smooth scroll animation (optional)
+    // Scroll to desired position (smooth animation is optional)
     scrollDiv.scrollTo({
       top: scrollTop,
-      behavior: 'smooth' // Add 'smooth' for smooth scrolling animation
-    });
-  }
-
-  /**
-   * Determine the scrollTop to get the rect to display
-   * just above the bottom edge of the scrolling div / viewport.
-   */
-  scrollElementToBottom(scrollableDiv, dtt: number, curScrollTop: number) {
-
-    const clientHeight = scrollableDiv.clientHeight;
-
-  // the new scrolltop is some relation between curScrollTop, dtt and clientHeight
-
-    // Calculate desired scroll position with boundary enforcement
-    const desiredScrollTop = 0; // Math.max(0, Math.min(rect.bottom - clientHeight, scrollableDiv.scrollHeight - clientHeight));
-
-    console.log('desiredScrollTop:', desiredScrollTop);
-
-    // Smooth scroll animation (optional)
-    scrollableDiv.scrollTo({
-      top: desiredScrollTop,
       behavior: 'smooth' // Add 'smooth' for smooth scrolling animation
     });
   }
