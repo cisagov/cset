@@ -360,7 +360,7 @@ export class NavTreeService {
 
     // If target is below bottom edge then calculate the desired scroll position
     if (distanceToBottom < 0) {
-      desiredScrollTop = scrollDiv.scrollTop - distanceToBottom + 3;
+      desiredScrollTop = scrollDiv.scrollTop - distanceToBottom + 6;
     }
 
     // Enforce scroll bounds (prevent negative scrolling)
