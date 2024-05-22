@@ -350,6 +350,11 @@ export class NavTreeService {
     const distanceToTop = childRect.top - parentRect.top + parent.scrollTop;
     const distanceToBottom = parentRect.bottom - childRect.bottom - parent.scrollTop;
 
+    // If the target is already in view then do nothing
+    if (distanceToTop > 0 && distanceToBottom > 0) {
+      return;
+    }
+
     // Initialize desired scroll position
     let desiredScrollTop = 0;
 
