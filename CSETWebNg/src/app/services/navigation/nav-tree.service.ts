@@ -247,10 +247,10 @@ export class NavTreeService {
 
     setTimeout(() => {
       const currentNode = this.findInTree(this.dataSource.data, id);
-
       if (!!currentNode) {
         currentNode.isCurrent = true;
         this.currentPage = currentNode.value;
+
         this.setSideNavScrollLocation(currentNode.value);
       }
     }, delay);
@@ -311,17 +311,76 @@ export class NavTreeService {
     }
   }
 
-  setSideNavScrollLocation(targetId) {
-    const sideNav = document.getElementsByClassName("mat-drawer-inner-container");
-    // const target = document.getElementById(targetId);
-    if (sideNav.length > 0) {
-      // console.log(target)
-      sideNav[0].scrollTo(0, this.sideNavScrollLocation);
-      // target.scrollIntoView(true);
-      // target.scrollBy(0, -50);
+  /**
+   * 
+   */
+  setSideNavScrollLocation(targetId: string) {
+    const sideNavQ = document.getElementsByClassName("mat-drawer-inner-container");
+    if (sideNavQ.length == 0) {
+      return;
     }
+    const scrollDiv = sideNavQ[0];
+
+    // Scroll to the last known position
+    scrollDiv.scrollTo(0, this.sideNavScrollLocation);
+
+    // If needed, scroll into view
+    this.scrollElementIntoView(targetId, scrollDiv);
   }
 
+  /**
+   * Move the scroll position into view.
+   */
+  scrollElementIntoView(targetId: string, scrollDiv: Element) {
+    const element = document.getElementById(targetId);
+    if (!element) {
+      return;
+    }
+
+    const parent = element.closest('mat-sidenav');
+    if (!parent) {
+      return;
+    }
+
+    // Get the bounding rectangles of the parent and child views
+    const parentRect = parent.getBoundingClientRect()
+    const childRect = element.getBoundingClientRect();
+
+    // Calculate the relative top and bottom positions of the sidenav view
+    const distanceToTop = childRect.top - parentRect.top + parent.scrollTop;
+    const distanceToBottom = parentRect.bottom - childRect.bottom - parent.scrollTop;
+
+    // If the target is already in view then do nothing
+    if (distanceToTop >= 0 && distanceToBottom >= 0) {
+      return;
+    }
+
+    // Initialize desired scroll position
+    let desiredScrollTop = 0;
+
+    // If target is above top edge then calculate the desired scroll position
+    if (distanceToTop < 0) {
+      desiredScrollTop = scrollDiv.scrollTop + distanceToTop - 3;
+    }
+
+    // If target is below bottom edge then calculate the desired scroll position
+    if (distanceToBottom < 0) {
+      desiredScrollTop = scrollDiv.scrollTop - distanceToBottom + 6;
+    }
+
+    // Enforce scroll bounds (prevent negative scrolling)
+    const scrollTop = Math.max(desiredScrollTop, 0);
+
+    // Scroll to desired position (smooth animation is optional)
+    scrollDiv.scrollTo({
+      top: scrollTop,
+      behavior: 'smooth' // Add 'smooth' for smooth scrolling animation
+    });
+  }
+
+  /**
+   * 
+   */
   applyCieToCStates() {
     let node = this.findInTree(this.tocControl.dataNodes, 'tutorial-cie');
 
