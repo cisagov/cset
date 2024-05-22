@@ -26,9 +26,6 @@
 <loc>http://evaluation_preparation.htm</loc>
 </url>
 <url>
-<loc>http://restricting_signups_with_an_allowlist.htm</loc>
-</url>
-<url>
 <loc>http://import_export_a_cset_assessment.htm</loc>
 </url>
 <url>
@@ -111,6 +108,9 @@
 </url>
 <url>
 <loc>http://change_password.htm</loc>
+</url>
+<url>
+<loc>http://user_language.htm</loc>
 </url>
 <url>
 <loc>http://help_menu.htm</loc>
