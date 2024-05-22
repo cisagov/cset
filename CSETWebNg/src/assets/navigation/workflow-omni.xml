@@ -30,7 +30,7 @@
         <node displaytext="CIE Analysis Configuration" id="assessment-config-cie" path="assessment/{:id}/prepare/assessment-config-cie" visible="MATURITY:17" />
         
         <!-- CIS config page -->
-        <node d="critical service information" id="config-cis" path="assessment/{:id}/prepare/config-cis" visible="MATURITY:8" />
+        <node d="cis config" id="config-cis" path="assessment/{:id}/prepare/config-cis" visible="MATURITY:8" />
 
         <node d="cie tutorial.cie tutorial" id="tutorial-cie" visible="MATURITY:17" >
             <node d="cie tutorial.quick facts" id="quick-facts-cie" path="assessment/{:id}/prepare/tutorial-cie/quick-facts-cie" />
