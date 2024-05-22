@@ -40,12 +40,12 @@ export class DemographicService {
   apiUrl: string;
   id: number;
   shortLivedToken: any;
-  
+
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private configSvc: ConfigService,
-    private authSvc: AuthenticationService, 
+    private authSvc: AuthenticationService,
     public fileSvc: FileUploadClientService,
     public assessSvc: AssessmentService
   )
@@ -60,6 +60,10 @@ export class DemographicService {
 
   getAllAssetValues() {
     return this.http.get(this.apiUrl + 'AssetValues');
+  }
+
+  getAllStatesAndProvinces() {
+    return this.http.get(this.apiUrl + 'StatesAndProvinces');
   }
 
   getSizeValues() {

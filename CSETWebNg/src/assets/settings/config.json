@@ -70,7 +70,8 @@
     "showVulnerabilitiesDiagramInventoryTab": false,
     "additionalUserGuides": [],
     "showMalcolmAnswerComparison": false,
-    "replaceAssessmentWithAnalysis": false
+    "replaceAssessmentWithAnalysis": false,
+    "showPostalCode": false
   },
   "answerOptionsDefault": [
     {
