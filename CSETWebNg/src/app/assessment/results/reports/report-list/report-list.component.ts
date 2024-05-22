@@ -31,6 +31,9 @@ export class ReportListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (!this.sectionId) {
+      return;
+    }
     const key = 'reports.launch.' + this.sectionId.toLowerCase() + '.sectionTitle';
     this.sectionTitle = this.tSvc.translate(key);
   }
