@@ -247,10 +247,10 @@ export class NavTreeService {
 
     setTimeout(() => {
       const currentNode = this.findInTree(this.dataSource.data, id);
-
       if (!!currentNode) {
         currentNode.isCurrent = true;
         this.currentPage = currentNode.value;
+
         this.setSideNavScrollLocation(currentNode.value);
       }
     }, delay);
@@ -311,17 +311,168 @@ export class NavTreeService {
     }
   }
 
+  /**
+   * 
+   */
   setSideNavScrollLocation(targetId) {
-    const sideNav = document.getElementsByClassName("mat-drawer-inner-container");
-    // const target = document.getElementById(targetId);
-    if (sideNav.length > 0) {
-      // console.log(target)
-      sideNav[0].scrollTo(0, this.sideNavScrollLocation);
-      // target.scrollIntoView(true);
-      // target.scrollBy(0, -50);
+    const sideNavQ = document.getElementsByClassName("mat-drawer-inner-container");
+    if (sideNavQ.length == 0) {
+      return;
     }
+    let scrollDiv = sideNavQ[0];
+
+    
+
+    // first, scroll to where we think is right, then we will adjust.
+    scrollDiv.scrollTo(0, this.sideNavScrollLocation);
+
+    // find the target element
+    const element = document.getElementById(targetId);
+    if (!element) {
+      return;
+    }
+
+    console.log('rect after first scroll: ');
+    const rect1 = element.getBoundingClientRect();
+    console.log(rect1.top);
+
+
+    const parent = element.closest('mat-sidenav');
+    if (!parent) {
+      return;
+    }
+    const parentRect = parent.getBoundingClientRect();
+    const distanceToTop = rect1.top - parentRect.top + parent.scrollTop;
+
+    console.log('distanceToTop:', distanceToTop);
+
+
+
+
+
+
+    // wait for the scroll to finish?
+    setTimeout(() => {
+      // now see if the current node is "off the page" and adjust
+
+      if (!element) {
+        return;
+      }
+
+      console.log('-------- adjusting -----');
+
+      // Get the element's bounding rectangle relative to the viewport
+      const rect = element.getBoundingClientRect();
+
+      // we aren't getting the true bounding rect coordinates - we have to fudge 
+
+      const rectTop = rect.top;
+      const rectBottom = rectTop + rect.height;
+
+      console.log('rectangle for id:', targetId);
+      console.log(rectTop);
+
+      // Get the viewport height
+      const clientHeight = scrollDiv.clientHeight;
+
+      // Get the scroll position from the top (amount scrolled)
+      const scrollTop = scrollDiv.scrollTop;
+
+      // Check if element's top is visible within viewport
+      const isTopVisible = rectTop >= 0 && rectTop < clientHeight;
+
+      // Check if element's bottom is visible within viewport
+      const isBottomVisible = rectBottom > 0 && rectBottom <= clientHeight + scrollTop;
+
+      // Overall visibility check (entire element within viewport)
+      const isFullyVisible = isTopVisible && isBottomVisible;
+
+
+      const isBelow = rectBottom > clientHeight;
+      if (isBelow) {
+        console.log('BELOW');
+        setTimeout(() => {
+          this.scrollElementToBottom(parent, rect);
+          return;
+        }, 100);
+      }
+
+      const isAbove = distanceToTop < 0;
+      if (isAbove) {
+        console.log('ABOVE');
+        setTimeout(() => {
+          this.scrollElementToTop(parent, rect1);
+          return;
+        }, 100);
+      }
+    }, 1500);
   }
 
+  /**
+   * 
+   * @param scrollableDiv 
+   * @param targetElement 
+   */
+  scrollElementToTop(parent, rect: DOMRect) {
+    const scrollableDiv = parent.querySelector('.mat-drawer-inner-container');
+    const scrollRect = scrollableDiv.getBoundingClientRect();
+
+    console.log('scrollRect:', scrollRect);
+    
+    const rectTop = rect.top;
+
+    // Calculate the desired scroll position to bring element to top
+    let desiredScrollTop = rectTop;
+
+    console.log('desiredScrollTop:', desiredScrollTop);
+
+desiredScrollTop = 425;
+
+
+    // Enforce scroll bounds (prevent negative scrolling)
+    const scrollTop = Math.max(desiredScrollTop, 0);
+
+    // Smooth scroll animation (optional)
+    scrollableDiv.scrollTo({
+      top: scrollTop,
+      behavior: 'smooth' // Add 'smooth' for smooth scrolling animation
+    });
+  }
+
+  /**
+   * 
+   * @param scrollableDiv 
+   * @param targetElement 
+   */
+  scrollElementToBottom(scrollableDiv, rect: DOMRect) {
+    const fudgeFactor = 132;
+    const rectTop = rect.top - fudgeFactor;
+    const rectBottom = rect.bottom - fudgeFactor;
+
+    const clientHeight = scrollableDiv.clientHeight - fudgeFactor;
+
+    console.log('rectTop fudged:', rectTop);
+    console.log('rectBottom fudged:', rectBottom);
+    console.log('scrollableDiv.scrollHeight:', scrollableDiv.scrollHeight);
+    console.log('clientHeight:', clientHeight);
+    console.log('(rectBottom) - clientHeight:', (rectBottom) - clientHeight);
+    console.log('scrollableDiv.scrollHeight - clientHeight:', scrollableDiv.scrollHeight - clientHeight);
+
+    // Calculate desired scroll position with boundary enforcement
+    const desiredScrollTop = Math.max(0, Math.min(rectBottom - clientHeight, scrollableDiv.scrollHeight - clientHeight));
+
+    console.log('desiredScrollTop:', desiredScrollTop);
+
+    // Smooth scroll animation (optional)
+    scrollableDiv.scrollTo({
+      top: desiredScrollTop,
+      behavior: 'smooth' // Add 'smooth' for smooth scrolling animation
+    });
+  }
+
+  /**
+   * 
+   */
   applyCieToCStates() {
     let node = this.findInTree(this.tocControl.dataNodes, 'tutorial-cie');
 
