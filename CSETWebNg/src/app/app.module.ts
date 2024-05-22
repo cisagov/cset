@@ -112,6 +112,7 @@ import { ContactItemComponent } from './assessment/prepare/assessment-info/asses
 // eslint-disable-next-line max-len
 import { AssessmentDemographicsComponent } from './assessment/prepare/assessment-info/assessment-demographics/assessment-demographics.component';
 import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
+import { AssessmentDetailTsaComponent } from './assessment/prepare/assessment-info/assessment-detail-tsa/assessment-detail-tsa.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { AssessmentInfoTsaComponent } from './assessment/prepare/assessment-info/assessment-info-tsa/assessment-info-tsa.component';
@@ -781,6 +782,7 @@ import { ReportsListCpgComponent } from './assessment/results/reports/report-lis
     AssessmentContactsComponent,
     AssessmentDemographicsComponent,
     AssessmentInfoNcuaComponent,
+    AssessmentDetailTsaComponent,
     AssessmentDetailNcuaComponent,
     ResultsComponent,
     SalSimpleComponent,
@@ -1269,8 +1271,8 @@ import { ReportsListCpgComponent } from './assessment/results/reports/report-lis
     CieNotApplicableComponent,
     SdOwnerDeficiencyComponent,
     SdOwnerCommentsMfrComponent,
-    AboutCieComponent, 
-    AnalyticsComponent, 
+    AboutCieComponent,
+    AnalyticsComponent,
     ReferencesSectionComponent,
     CisaWorkflowWarningsComponent,
     AnalyticsloginComponent,
@@ -1279,8 +1281,8 @@ import { ReportsListCpgComponent } from './assessment/results/reports/report-lis
     ReportListCmmc2Component,
     ReportListComponent,
     ReportListCrrComponent,
-    ReportListEdmComponent, 
-    ReportsRraComponent, 
+    ReportListEdmComponent,
+    ReportsRraComponent,
     ReportsListCpgComponent
   ],
   providers: [
@@ -1360,7 +1362,7 @@ import { ReportsListCpgComponent } from './assessment/results/reports/report-lis
     Utilities,
     NCUAService,
     GalleryService,
-    FooterService, 
+    FooterService,
     AnalyticsService
   ],
   bootstrap: [AppComponent]
