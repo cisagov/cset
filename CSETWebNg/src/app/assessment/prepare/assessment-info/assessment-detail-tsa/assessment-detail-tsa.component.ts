@@ -39,7 +39,7 @@ export class AssessmentDetailTsaComponent implements OnInit {
     assessmentName: ''
   };
 
-  statesAndProvincesOptions: string[];
+  statesAndProvincesOptions: any[];
 
   /**
    *
@@ -59,7 +59,7 @@ export class AssessmentDetailTsaComponent implements OnInit {
     }
 
     this.demoSvc.getAllStatesAndProvinces().subscribe({
-      next: (data: string[]) => {
+      next: (data: any[]) => {
         this.statesAndProvincesOptions = data;
       },
       error: (err: any) => console.error(err)
