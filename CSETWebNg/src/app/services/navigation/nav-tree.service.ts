@@ -351,7 +351,7 @@ export class NavTreeService {
     const distanceToBottom = parentRect.bottom - childRect.bottom - parent.scrollTop;
 
     // If the target is already in view then do nothing
-    if (distanceToTop > 0 && distanceToBottom > 0) {
+    if (distanceToTop >= 0 && distanceToBottom >= 0) {
       return;
     }
 
