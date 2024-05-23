@@ -21,7 +21,7 @@
         "isAcetOnly": false,
         "showFacilityName": false,
         "showCityName": false,
-        "showStateName": false,
+        "showStateName": true,
         "showContacts": false,
         "showOrganizationName": false,
         "showBusinessAgencyName": false,
@@ -32,6 +32,7 @@
         "showEnableProtectedFeatures": false,
         "showComments": false,
         "showFeedback": false,
-        "showCisaAssessorWorkflowSwitch": false
+        "showCisaAssessorWorkflowSwitch": false,
+        "showPostalCode": false
     }
 }

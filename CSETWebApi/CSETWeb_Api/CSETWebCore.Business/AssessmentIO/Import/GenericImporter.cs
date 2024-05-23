@@ -254,13 +254,15 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     {
                         HandleNulls(xTable, tableName, colName, prop);
                     }
-
                     // convert dummy '0' ID values to null 
                     var ruleZeroToNull = xTable.SelectSingleNode(string.Format("Column[@name='{1}']/Rule[@action='zeroToNull']", tableName, colName));
-                    if (ruleZeroToNull != null && Convert.ToInt32(prop.Value) == 0)
+                    if(prop.Value.HasValues)
+                    if (ruleZeroToNull != null && prop.Value != null && Convert.ToInt32(prop.Value ?? 0) == 0)
                     {
                         prop.Value = null;
                     }
+                    
+                    
 
 
                     // mapped ID
