@@ -79,7 +79,14 @@
                             {{ q.shortName }}
                         </div>
 
-                        <app-question-text [questionText]="q.questionText"></app-question-text>
+                        <ng-container *ngIf="q.questionText.length > 0">
+                            <app-question-text [questionText]="q.questionText"></app-question-text>
+                        </ng-container>
+
+                        <!-- CPG style questions -->
+                        <ng-container *ngIf="q.securityPractice?.length > 0">
+                            <app-question-text-cpg [question]="q"></app-question-text-cpg>
+                        </ng-container>
 
                         <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
 
@@ -141,7 +148,14 @@
                             {{ q.shortName }}
                         </div>
 
-                        <app-question-text [questionText]="q.questionText"></app-question-text>
+                        <ng-container *ngIf="q.questionText.length > 0">
+                            <app-question-text [questionText]="q.questionText"></app-question-text>
+                        </ng-container>
+
+                        <!-- CPG style questions -->
+                        <ng-container *ngIf="q.securityPractice?.length > 0">
+                            <app-question-text-cpg [question]="q"></app-question-text-cpg>
+                        </ng-container>
 
                         <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
                     </div>
