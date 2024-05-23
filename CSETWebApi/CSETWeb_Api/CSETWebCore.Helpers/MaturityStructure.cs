@@ -253,13 +253,6 @@ namespace CSETWebCore.Helpers
                         question.Scope = o.Scope;
                         question.RiskAddressed = o.RiskAddressed;
                         question.RecommendedAction = o.RecommendAction;
-
-                        var p = Parser.Parse(o.QuestionText, ".");
-                        var practice = p.Select(".cpg-practice").FirstOrDefault()?.Html();
-                        question.SecurityPractice = practice ?? question.SecurityPractice;
-
-                        var outcome = p.Select(".cpg-outcome").FirstOrDefault()?.Html();
-                        question.Outcome = outcome ?? question.Outcome;
                     }
 
                     grouping.Questions.Add(question);
