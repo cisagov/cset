@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CSETWebCore.Api.Controllers
 {
+    [Route("api/version")]
     public class VersionController : Controller
     {
         private readonly IVersionBusiness _versionBusiness;
@@ -28,12 +29,12 @@ namespace CSETWebCore.Api.Controllers
 
         }
         [HttpGet]
-        [Route("api/version/getVersionNumber")]
+        [Route("getVersionNumber")]
         public IActionResult getVersionNumber()
         {
             var versionResponse = _versionBusiness.getversionNumber();
             return Ok(versionResponse);
         }
-      
+
     }
 }

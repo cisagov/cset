@@ -25,6 +25,9 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { environment } from '../../../environments/environment';
 import { ConfigService } from '../../services/config.service';
+import { VersionService } from '../../services/version.service';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-about-acet',
@@ -32,13 +35,22 @@ import { ConfigService } from '../../services/config.service';
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
+
+
+
 export class AboutAcetComponent {
-  version = environment.visibleVersion;
+  version: string;
   helpContactEmail = this.configSvc.helpContactEmail;
   helpContactPhone = this.configSvc.helpContactPhone;
 
   constructor(private dialog: MatDialogRef<AboutAcetComponent>,
     public configSvc: ConfigService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    public versionSvc: VersionService,
+    @Inject(MAT_DIALOG_DATA) public data: any) { 
+      this.versionSvc.localVersionObservable$.subscribe(localVersion => {
+        this.version = localVersion;
+      });
+    }
+
 
 }
