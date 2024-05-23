@@ -79,7 +79,7 @@
                             {{ q.shortName }}
                         </div>
 
-                        <ng-container *ngIf="q.questionText.length > 0">
+                        <ng-container *ngIf="q.questionText?.length > 0">
                             <app-question-text [questionText]="q.questionText"></app-question-text>
                         </ng-container>
 

@@ -362,7 +362,9 @@
   "questions": {
     "instructions 1": "Виберіть відповідну відповідь для кожного з наступних запитань.",
     "unanswered equals no": "Питання без відповіді обчислюються як відповідь '{{no-ans}}.'",
-    "cpg answer key": "CPG Відповідний ключ"
+    "cpg answer key": "CPG Відповідний ключ",
+    "security practice": "Практика безпеки",
+    "outcome": "Результат"
   },
   "tooltip": {
     "view detail": "Переглянути деталі",
