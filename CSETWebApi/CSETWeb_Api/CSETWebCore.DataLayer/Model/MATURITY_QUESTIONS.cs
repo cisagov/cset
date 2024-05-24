@@ -66,6 +66,11 @@ public partial class MATURITY_QUESTIONS
 
     public string Services { get; set; }
 
+    public string Outcome { get; set; }
+
+    [StringLength(300)]
+    public string Security_Practice { get; set; }
+
     [ForeignKey("Grouping_Id")]
     [InverseProperty("MATURITY_QUESTIONS")]
     public virtual MATURITY_GROUPINGS Grouping { get; set; }

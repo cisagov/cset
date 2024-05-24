@@ -219,6 +219,7 @@
                     <th aria-label="{{t('status')}}" style="width:15%;">{{t('status')}}</th>
                     <th aria-label="delete assessment" style="width:5%; min-width:25px;"></th>
                     <th aria-label="export assessment" style="width:5%;"></th>
+                    <th aria-label="export JSON" style="width:5%;" *ngIf="showColumn('export json')"></th>
                     <th aria-label="Analytics" style="width:5%;" *ngIf="showColumn('analytics')"></th>
                     <tr *ngFor="let assessment of sortedAssessments;  let i = index">
                         <td>
