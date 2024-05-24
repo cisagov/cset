@@ -49,14 +49,6 @@ export class CiePrincipleOnlyComponent {
           for (let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
             this.expandedOptions.set(domain?.title, false);
-
-            // // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
-            // // goes through questions
-            // for (let k = 0; k < subcat?.questions?.length; k++) {
-
-            //   this.expandedOptions.set(domain?.title, false);
-            //   // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
-            // }
           }
         }
 

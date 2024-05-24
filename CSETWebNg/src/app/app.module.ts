@@ -655,6 +655,8 @@ import { AnalyticsComponent } from './assessment/results/analytics/analytics.com
 import { AnalyticsloginComponent } from './assessment/results/analysis/analytics-login/analytics-login.component';
 import { AnalyticsService } from './services/analytics.service';
 import { UploadDemographicsComponent } from './dialogs/import demographics/import-demographics.component';
+import { CieDocumentsReportComponent } from './reports/cie/cie-documents-report/cie-documents-report.component';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -1254,6 +1256,7 @@ import { UploadDemographicsComponent } from './dialogs/import demographics/impor
     CiePrincipleOnlyComponent,
     CiePrinciplePhaseComponent,
     CieNotApplicableComponent,
+    CieDocumentsReportComponent,
     AboutCieComponent, 
     AnalyticsComponent, 
     ReferencesSectionComponent,
