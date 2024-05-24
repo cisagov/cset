@@ -326,6 +326,7 @@ import { MaturityQuestionsIseComponent } from './assessment/questions/maturity-q
 import { EdmComponent } from './reports/edm/edm.component';
 import { TooltipModule } from '@cloudfactorydk/ng2-tooltip-directive';
 import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
+import { QuestionTextCpgComponent } from './assessment/questions/question-text/question-text-cpg/question-text-cpg.component';
 import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';
 import { CmmcFilteringService } from './services/filtering/maturity-filtering/cmmc-filtering.service';
 import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
@@ -668,6 +669,7 @@ import { ReportListEdmComponent } from './assessment/results/reports/report-list
 import { ReportsRraComponent } from './assessment/results/reports/report-list/reports-rra/reports-rra.component';
 import { ReportsListCpgComponent } from './assessment/results/reports/report-list/reports-list-cpg/reports-list-cpg.component';
 
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -969,6 +971,7 @@ import { ReportsListCpgComponent } from './assessment/results/reports/report-lis
     EdmCommentsmarkedComponent,
     CisCommentsmarkedComponent,
     QuestionTextComponent,
+    QuestionTextCpgComponent,
     GlossaryTermComponent,
     PlaceholderQuestionsComponent,
     FeatureOptionComponent,
