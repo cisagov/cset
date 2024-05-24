@@ -904,6 +904,8 @@ namespace CSETWebCore.Business.Maturity
                     q.Question_Text = o.QuestionText;
                     q.Supplemental_Info = o.SupplementalInfo;
                     q.Examination_Approach = o.ExaminationApproach;
+                    q.Security_Practice = o.SecurityPractice;
+                    q.Outcome = o.Outcome;
                     q.Scope = o.Scope;
                     q.Recommend_Action = o.RecommendAction;
                     q.Risk_Addressed = o.RiskAddressed;
@@ -1021,6 +1023,8 @@ namespace CSETWebCore.Business.Maturity
                         QuestionType = "Maturity",
                         QuestionText = myQ.Question_Text,
 
+                        SecurityPractice = myQ.Security_Practice,
+                        Outcome = myQ.Outcome,
                         Scope = myQ.Scope,
                         RecommendedAction = myQ.Recommend_Action,
                         RiskAddressed = myQ.Risk_Addressed,

@@ -95,7 +95,17 @@ namespace CSETWebCore.Model.Question
         public List<string> CsfMappings { get; set; } = new List<string>();
 
         /// <summary>
-        /// 
+        /// CPG Practice description
+        /// </summary>
+        public string SecurityPractice {  get; set; }
+
+        /// <summary>
+        /// CPG Outcome
+        /// </summary>
+        public string Outcome { get; set; }
+
+        /// <summary>
+        /// CPG Scope
         /// </summary>
         public string Scope { get; set; }
 
