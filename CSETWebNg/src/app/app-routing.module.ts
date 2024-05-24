@@ -228,6 +228,7 @@ import { CiePrincipleOnlyComponent } from './reports/cie/cie-principle-only/cie-
 import { CiePrinciplePhaseComponent } from './reports/cie/cie-principle-phase/cie-principle-phase.component';
 import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-not-applicable.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
+import { CieDocumentsReportComponent } from './reports/cie/cie-documents-report/cie-documents-report.component';
 
 const appRoutes: Routes = [
 
@@ -393,7 +394,6 @@ const appRoutes: Routes = [
                 ]
               },
               { path: 'config-cis', component: ConfigCisComponent },
-              { path: 'how-to-use-cie', component: HowToUseCieComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
@@ -419,12 +419,13 @@ const appRoutes: Routes = [
               { path: '**', redirectTo: 'info1' }
             ]
           },
-
           { path: 'questions', component: QuestionsComponent },
           { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
           { path: 'maturity-questions-ise', component: MaturityQuestionsIseComponent },
+          { path: 'instructions-cie', component: HowToUseCieComponent },
+
           { path: 'maturity-questions-cie/:sec', component: MaturityQuestionsCieComponent },
           { path: 'question-block-cie/:sec', component: QuestionBlockCieComponent },
           { path: 'principle-summary/:pri', component: PrincipleSummaryComponent },
@@ -550,6 +551,7 @@ const appRoutes: Routes = [
       { path: 'ciePrincipleOnly', component: CiePrincipleOnlyComponent },
       { path: 'ciePrinciplePhase', component: CiePrinciplePhaseComponent },
       { path: 'cieNotApplicable', component: CieNotApplicableComponent },
+      { path: 'cieDocumentsReport', component: CieDocumentsReportComponent },
       { path: 'crrreport', component: CrrReportComponent },
       { path: 'crrDeficiencyReport', component: CrrDeficiencyComponent },
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },
