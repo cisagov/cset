@@ -72,6 +72,7 @@ namespace CSETWebCore.Business.Demographic
             // get any additional values we need from DETAILS_DEMOGRAPHICS
             var extBiz = new DemographicExtBusiness(_context);
             demographics.CisaRegion = (int?)extBiz.GetX(assessmentId, "CISA-REGION");
+            demographics.OrgPointOfContact = (int?)extBiz.GetX(assessmentId, "ORG-POC");
 
 
             return demographics;
