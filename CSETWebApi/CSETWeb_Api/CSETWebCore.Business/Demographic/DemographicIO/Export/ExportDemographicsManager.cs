@@ -88,6 +88,10 @@ namespace CSETWebCore.Business.Demographic.Export
 
             foreach (var item in _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId))
             {
+                if (item.DataItemName == "ORG-POC")
+                {
+                    continue;
+                }
                 model.jDETAILS_DEMOGRAPHICS.Add(TinyMapper.Map<DETAILS_DEMOGRAPHICS, jDETAILS_DEMOGRAPHICS>(item));
             }
 
