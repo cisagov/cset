@@ -158,8 +158,11 @@ export class MyAssessmentsComponent implements OnInit {
 
     if (localStorage.getItem("returnPath")) { }
     else {
-      this.navTreeSvc.clearTree(this.navSvc.getMagic());
+      this.navTreeSvc.clearTree(this.navSvc.getMagic());      
     }
+    // if(this.isCF){
+    //   this.navTreeSvc.clearNoMatterWhat();
+    // }
 
     this.ncuaSvc.assessmentsToMerge = [];
     this.cieSvc.assessmentsToMerge = [];
