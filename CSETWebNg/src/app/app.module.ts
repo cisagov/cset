@@ -667,8 +667,8 @@ import { ReportListCisComponent } from './assessment/results/reports/report-list
 import { ReportListCmmc2Component } from './assessment/results/reports/report-list/report-list-cmmc2/report-list-cmmc2.component';
 import { ReportListCrrComponent } from './assessment/results/reports/report-list/report-list-crr/report-list-crr.component';
 import { ReportListEdmComponent } from './assessment/results/reports/report-list/report-list-edm/report-list-edm.component';
-import { ReportsRraComponent } from './assessment/results/reports/report-list/reports-rra/reports-rra.component';
-import { ReportsListCpgComponent } from './assessment/results/reports/report-list/reports-list-cpg/reports-list-cpg.component';
+import { ReportListRraComponent } from './assessment/results/reports/report-list/reports-rra/report-list-rra.component';
+import { ReportListCpgComponent } from './assessment/results/reports/report-list/reports-list-cpg/report-list-cpg.component';
 import { ReportListMvraComponent } from './assessment/results/reports/report-list/report-list-mvra/report-list-mvra.component';
 
 
@@ -1288,8 +1288,8 @@ import { ReportListMvraComponent } from './assessment/results/reports/report-lis
     ReportListComponent,
     ReportListCrrComponent,
     ReportListEdmComponent,
-    ReportsRraComponent,
-    ReportsListCpgComponent, 
+    ReportListRraComponent,
+    ReportListCpgComponent, 
     ReportListMvraComponent
   ],
   providers: [

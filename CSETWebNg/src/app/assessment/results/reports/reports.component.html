@@ -136,8 +136,8 @@
     <app-report-list-cmmc2 *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC2')"></app-report-list-cmmc2>
 
     <!-- RRA -->
-    <app-reports-rra *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('RRA') && !isMobile">
-    </app-reports-rra>
+    <app-report-list-rra *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('RRA') && !isMobile">
+    </app-report-list-rra>
 
     <div *ngIf="
         !!assessSvc.assessment &&
@@ -245,7 +245,7 @@
       </app-report-list-mvra>
 
       <!-- CPG -->
-      <app-reports-list-cpg *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile"></app-reports-list-cpg>
+      <app-report-list-cpg *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile"></app-report-list-cpg>
       
 
 
