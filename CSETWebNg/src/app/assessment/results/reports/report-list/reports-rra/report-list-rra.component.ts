@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-reports-rra',
-  templateUrl: './reports-rra.component.html'
+  selector: 'app-report-list-rra',
+  templateUrl: './report-list-rra.component.html'
 })
-export class ReportsRraComponent {
+export class ReportListRraComponent {
   reportList = [
     {
       linkUrl: "rrareport",
