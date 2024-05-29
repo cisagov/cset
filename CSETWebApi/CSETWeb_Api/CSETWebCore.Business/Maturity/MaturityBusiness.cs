@@ -24,6 +24,7 @@ using System.Xml.Linq;
 using CSETWebCore.Model.Mvra;
 using CSETWebCore.Business.Acet;
 using CSETWebCore.DataLayer.Manual;
+using CSETWebCore.Business.Aggregation;
 
 
 namespace CSETWebCore.Business.Maturity
@@ -40,7 +41,7 @@ namespace CSETWebCore.Business.Maturity
 
         private AdditionalSupplemental _addlSuppl;
 
-        public readonly List<string> ModelsWithTargetLevel = new List<string>() { "ACET", "CMMC", "CMMC2" };
+        public readonly List<string> ModelsWithTargetLevel = ["ACET", "CMMC", "CMMC2"];
 
         public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
         {
@@ -891,6 +892,15 @@ namespace CSETWebCore.Business.Maturity
             var questions = questionQuery.ToList();
 
 
+
+
+
+
+
+
+
+
+
             // apply translation overlay to the questions
             foreach (var q in questions)
             {
@@ -1078,7 +1088,20 @@ namespace CSETWebCore.Business.Maturity
                     newGrouping.Questions.Add(qa);
                 }
 
+
+
+
+
+                // Randy - 5/28/24 - sorting messes up our SSG inserts.  Do we need to sort at this point?
+                // Isn't it already sorted?
                 newGrouping.Questions.Sort((a, b) => a.Sequence.CompareTo(b.Sequence));
+
+                // .... or ..... we insert the applicable append questions here ....
+
+
+                AppendQuestions(newGrouping.Questions);
+
+
 
                 // Recurse down to build subgroupings
                 BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers, lang);
@@ -2414,6 +2437,47 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return questionAnswer;
+        }
+
+
+
+        /// <summary>
+        /// Include additional questions.  This was created to include SSG questions 
+        /// along with CPG questions, based on the assessment's SECTOR.
+        /// </summary>
+        /// <param name="questions"></param>
+        private void AppendQuestions(List<QuestionAnswer> questions)
+        {
+            // include 'additional' questions that are appended to the model.
+            // Created for SSGs, appended to CPG.  Dependent on the assessment's sector.
+
+
+            var result = from mqa in _context.MQ_APPEND
+                         join mq in _context.MATURITY_QUESTIONS on mqa.NewMatQuestionId equals mq.Mat_Question_Id
+                         select new { mqa, mq };
+
+            var appendedQuestions = result.ToList();
+
+            foreach (var appendQ in appendedQuestions)
+            {
+                if (appendQ.mqa.InsertOrReplace == "I")
+                {
+                    var target = questions.Where(x => x.QuestionId == appendQ.mqa.HomeMatQuestionId).FirstOrDefault();
+                    if (target != null)
+                    {
+                        var index = questions.IndexOf(target);
+
+                        if (index >= 0)
+                        {
+                            questions.Insert(index, appendQ.mq);
+                        }
+                    }
+                }
+            }
+
+            var xxxx = 1;
+
+
         }
     }
 }

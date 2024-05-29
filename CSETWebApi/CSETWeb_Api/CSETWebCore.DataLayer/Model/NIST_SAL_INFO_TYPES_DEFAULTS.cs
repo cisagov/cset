@@ -13,8 +13,6 @@ namespace CSETWebCore.DataLayer.Model;
 /// </summary>
 public partial class NIST_SAL_INFO_TYPES_DEFAULTS
 {
-    public int Type_Id { get; set; }
-
     [Key]
     [StringLength(50)]
     public string Type_Value { get; set; }
@@ -42,4 +40,6 @@ public partial class NIST_SAL_INFO_TYPES_DEFAULTS
 
     [StringLength(50)]
     public string NIST_Number { get; set; }
+
+    public int Type_Id { get; set; }
 }

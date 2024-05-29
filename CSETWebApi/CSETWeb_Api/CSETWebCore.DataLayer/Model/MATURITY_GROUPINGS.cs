@@ -22,8 +22,6 @@ public partial class MATURITY_GROUPINGS
     [StringLength(3000)]
     public string Description { get; set; }
 
-    public string Description_Extended { get; set; }
-
     public int Maturity_Model_Id { get; set; }
 
     public int Sequence { get; set; }
@@ -42,6 +40,8 @@ public partial class MATURITY_GROUPINGS
 
     [StringLength(20)]
     public string Title_Prefix { get; set; }
+
+    public string Description_Extended { get; set; }
 
     [InverseProperty("Grouping")]
     public virtual ICollection<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; } = new List<MATURITY_DOMAIN_REMARKS>();
