@@ -339,7 +339,7 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; }
 
-    public virtual DbSet<MQ_APPEND> MQ_APPEND { get; set; }
+    public virtual DbSet<MQ_BONUS> MQ_BONUS { get; set; }
 
     public virtual DbSet<NAVIGATION_STATE> NAVIGATION_STATE { get; set; }
 

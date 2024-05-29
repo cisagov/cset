@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model;
 
-[PrimaryKey("HomeMatQuestionId", "NewMatQuestionId")]
-public partial class MQ_APPEND
+[PrimaryKey("TargetQuestionId", "BonusQuestionId")]
+public partial class MQ_BONUS
 {
     [Key]
-    public int HomeMatQuestionId { get; set; }
+    public int TargetQuestionId { get; set; }
 
     [Key]
-    public int NewMatQuestionId { get; set; }
+    public int BonusQuestionId { get; set; }
 
     [Required]
     [StringLength(1)]
-    public string InsertOrReplace { get; set; }
+    public string Action { get; set; }
 
     public int ModelId { get; set; }
 }
