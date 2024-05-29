@@ -145,6 +145,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IDocumentBusiness, DocumentBusiness>();
             services.AddTransient<IHtmlFromXamlConverter, HtmlFromXamlConverter>();
             services.AddTransient<IMaturityBusiness, MaturityBusiness>();
+            services.AddTransient<IACETMaturityBusiness, ACETMaturityBusiness>();
             services.AddTransient<INotificationBusiness, NotificationBusiness>();
             services.AddTransient<IParameterContainer, ParameterContainer>();
             services.AddTransient<IPasswordHash, PasswordHash>();
