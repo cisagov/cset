@@ -1573,7 +1573,11 @@
       "13": "Each question has an assigned practice identifier structured as follows:",
       "14": "Domain [DD]: Sub-Domain [SD]- Goal [G#]. Question Number [Q#]",
       "15": "Selecting the Supplemental Guidance icon provides information on:",
-      "15a": "Importance"
+      "15a": "Importance",
+      "15b": "Question Intent",
+      "15c": "Criteria for Full Implementation Response",
+      "15d": "Criteria for Partial Implementation Response",
+      "15e": "Possible Evidence"
     }
   }
 }
