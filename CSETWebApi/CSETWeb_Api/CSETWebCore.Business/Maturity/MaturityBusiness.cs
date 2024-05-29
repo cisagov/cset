@@ -14,7 +14,6 @@ using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Edm;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
-using CSETWebCore.Model.Sal;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
@@ -22,9 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using CSETWebCore.Model.Mvra;
-using CSETWebCore.Business.Acet;
-using CSETWebCore.DataLayer.Manual;
-using CSETWebCore.Business.Aggregation;
+
 
 
 namespace CSETWebCore.Business.Maturity
@@ -45,6 +42,18 @@ namespace CSETWebCore.Business.Maturity
 
         public readonly List<string> ModelsWithTargetLevel = ["ACET", "CMMC", "CMMC2"];
 
+
+        /// <summary>
+        /// A list of additional questions (e.g., Sector-Specific Goals (SSG)) applicable to the assessment
+        /// </summary>
+        private List<AdditionalQuestionDefinition> _additionalQuestions;
+
+        private List<object> _allAnswersForAssessment;
+
+
+        /// <summary>
+        /// CTOR
+        /// </summary>
         public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
         {
             _context = context;
@@ -624,7 +633,7 @@ namespace CSETWebCore.Business.Maturity
 
 
 
- 
+
 
 
         public AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, string installationMode, int maturityModelId = 3)
@@ -1028,39 +1037,10 @@ namespace CSETWebCore.Business.Maturity
                 {
                     FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
 
-                    var qa = new QuestionAnswer()
-                    {
-                        DisplayNumber = myQ.Question_Title,
-                        QuestionId = myQ.Mat_Question_Id,
-                        ParentQuestionId = myQ.Parent_Question_Id,
-                        Sequence = myQ.Sequence,
-                        ShortName = myQ.Short_Name,
-                        QuestionType = "Maturity",
-                        QuestionText = myQ.Question_Text,
 
-                        SecurityPractice = myQ.Security_Practice,
-                        Outcome = myQ.Outcome,
-                        Scope = myQ.Scope,
-                        RecommendedAction = myQ.Recommend_Action,
-                        RiskAddressed = myQ.Risk_Addressed,
-                        Services = myQ.Services,
-
-                        Answer = answer?.a.Answer_Text,
-                        AltAnswerText = answer?.a.Alternate_Justification,
-                        FreeResponseAnswer = answer?.a.Free_Response_Answer,
-
-                        Comment = answer?.a.Comment,
-                        Feedback = answer?.a.FeedBack,
-                        MarkForReview = answer?.a.Mark_For_Review ?? false,
-                        Reviewed = answer?.a.Reviewed ?? false,
-
-                        Is_Maturity = true,
-                        MaturityModelId = sg.Maturity_Model_Id,
-                        MaturityLevel = myQ.Maturity_Level.Level,
-                        MaturityLevelName = myQ.Maturity_Level.Level_Name,
-                        IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
-                        SetName = string.Empty
-                    };
+                    var qa = BuildQuestionAnswer(myQ, answer);
+                    qa.MaturityModelId = sg.Maturity_Model_Id;
+                    qa.IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id);
 
 
                     // Include CSF mappings
@@ -1094,23 +1074,62 @@ namespace CSETWebCore.Business.Maturity
                 }
 
 
-
-
-
-                // Randy - 5/28/24 - sorting messes up our SSG inserts.  Do we need to sort at this point?
-                // Isn't it already sorted?
                 newGrouping.Questions.Sort((a, b) => a.Sequence.CompareTo(b.Sequence));
 
-                // .... or ..... we insert the applicable append questions here ....
 
-
-                AppendQuestions(newGrouping.Questions);
+                // Randy - add any applicable questions to this grouping
+                AppendQuestions(newGrouping.Questions, answers.ToList());
 
 
 
                 // Recurse down to build subgroupings
                 BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers, lang);
             }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="myQ"></param>
+        /// <param name="answer"></param>
+        /// <returns></returns>
+        private QuestionAnswer BuildQuestionAnswer(MATURITY_QUESTIONS myQ, FullAnswer answer)
+        {
+            var qa = new QuestionAnswer()
+            {
+                DisplayNumber = myQ.Question_Title,
+                QuestionId = myQ.Mat_Question_Id,
+                ParentQuestionId = myQ.Parent_Question_Id,
+                Sequence = myQ.Sequence,
+                ShortName = myQ.Short_Name,
+                QuestionType = "Maturity",
+                QuestionText = myQ.Question_Text,
+
+                SecurityPractice = myQ.Security_Practice,
+                Outcome = myQ.Outcome,
+                Scope = myQ.Scope,
+                RecommendedAction = myQ.Recommend_Action,
+                RiskAddressed = myQ.Risk_Addressed,
+                Services = myQ.Services,
+
+                Answer = answer?.a.Answer_Text,
+                AltAnswerText = answer?.a.Alternate_Justification,
+                FreeResponseAnswer = answer?.a.Free_Response_Answer,
+
+                Comment = answer?.a.Comment,
+                Feedback = answer?.a.FeedBack,
+                MarkForReview = answer?.a.Mark_For_Review ?? false,
+                Reviewed = answer?.a.Reviewed ?? false,
+
+                Is_Maturity = true,
+
+                MaturityLevel = myQ.Maturity_Level.Level,
+                MaturityLevelName = myQ.Maturity_Level.Level_Name,
+                SetName = string.Empty
+            };
+
+            return qa;
         }
 
 
@@ -1229,7 +1248,7 @@ namespace CSETWebCore.Business.Maturity
             return dbAnswer.Answer_Id;
         }
 
-    
+
         /// <summary>
         /// Get edm scoring
         /// </summary>
@@ -1334,7 +1353,7 @@ namespace CSETWebCore.Business.Maturity
             return glossaryTerms.ToList();
         }
 
- 
+
         /// <summary>
         /// Get the string value for the overall IRP mapping
         /// </summary>
@@ -1781,38 +1800,54 @@ namespace CSETWebCore.Business.Maturity
         /// along with CPG questions, based on the assessment's SECTOR.
         /// </summary>
         /// <param name="questions"></param>
-        private void AppendQuestions(List<QuestionAnswer> questions)
+        private void AppendQuestions(List<QuestionAnswer> groupingQuestions, List<FullAnswer> answers)
         {
-            // include 'additional' questions that are appended to the model.
-            // Created for SSGs, appended to CPG.  Dependent on the assessment's sector.
-
-
-            var result = from mqa in _context.MQ_APPEND
-                         join mq in _context.MATURITY_QUESTIONS on mqa.NewMatQuestionId equals mq.Mat_Question_Id
-                         select new { mqa, mq };
-
-            var appendedQuestions = result.ToList();
-
-            foreach (var appendQ in appendedQuestions)
+            // lazy initialize
+            if (_additionalQuestions == null)
             {
-                if (appendQ.mqa.InsertOrReplace == "I")
-                {
-                    var target = questions.Where(x => x.QuestionId == appendQ.mqa.HomeMatQuestionId).FirstOrDefault();
-                    if (target != null)
-                    {
-                        var index = questions.IndexOf(target);
+                var result = from mqa in _context.MQ_BONUS
+                             join mq in _context.MATURITY_QUESTIONS on mqa.BonusQuestionId equals mq.Mat_Question_Id
+                             select new AdditionalQuestionDefinition() { Question = mq, MqAppend = mqa };
 
-                        if (index >= 0)
-                        {
-                            questions.Insert(index, appendQ.mq);
-                        }
+                _additionalQuestions = result.ToList();
+            }
+
+
+            // see if any of the questions in this grouping should be preceded/followed/replaced
+            // by an "additional question"
+            for (int i = groupingQuestions.Count - 1; i >= 0; i--)
+            {
+                QuestionAnswer targetQ = groupingQuestions[i];
+
+                var aq = _additionalQuestions.FirstOrDefault(x => x.MqAppend.TargetQuestionId == targetQ.QuestionId);
+                if (aq != null)
+                {
+                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == aq.Question.Mat_Question_Id).FirstOrDefault();
+
+                    var newQ = BuildQuestionAnswer(aq.Question, answer);
+                    newQ.IsAdditionalCpg = true;
+
+                    // "Action" will be B, A or R
+                    switch (aq.MqAppend.Action)
+                    {
+                        // insert BEFORE
+                        case "B":
+                            groupingQuestions.Insert(i, newQ);
+                            break;
+
+                        // insert AFTER
+                        case "A":
+                            groupingQuestions.Insert(i + 1, newQ);
+                            break;
+
+                        // REPLACE
+                        case "R":
+                            groupingQuestions.Insert(i + 1, newQ);
+                            groupingQuestions.RemoveAt(i);
+                            break;
                     }
                 }
             }
-
-            var xxxx = 1;
-
-
         }
     }
 }
