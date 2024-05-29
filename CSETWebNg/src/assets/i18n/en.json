@@ -242,6 +242,7 @@
     "crr tutorial": "CRR Tutorial",
     "rra tutorial": "Ransomware Readiness Tutorial",
     "cpg tutorial": "CPG Tutorial",
+    "mvra tutorial": "MVRA Tutorial",
     "cie tutorial": {
       "cie tutorial": "CIE Tutorial",
       "quick facts": "Quick Facts",
@@ -1475,6 +1476,9 @@
     "additional resources": "Additional information on how to complete a CSET assessment is available in the CSET User Guide. To access the user guide, select the option from the Help dropdown menu in the CSET tool bar.",
     "please visit": "Please visit",
     "for more information": "for more information.",
+    "critical service": "Critical Service",
+    "asset types": "Asset Types",
+    "practice": "Practice",
     "rra": {
       "title": "Ransomware Readiness Tutorial",
       "yes": "Yes",
@@ -1539,6 +1543,37 @@
       "11b": "– An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
       "11c": "– An organization has identified the full set of required activities required to meet the stated outcome of a goal.",
       "11d": "– An organization has no immediate plans to implement the recommended actions for a goal."
+    },
+    "mvra": {
+      "title": "Minimum Viable Resilience Assessment (MVRA) Tutorial",
+      "1": "The Minimum Viable Resilience Assessment (MVRA) evaluates an organization’s cyber resilience and draws on insights from the HVA Assessment, Cyber Essentials, Cyber Resilience Review (CRR), the Resilience Management Model (RMM), and other CISA assessments, as well as risk insights (e.g., CISA Bad Practices).",
+      "2": "Since the MVRA incorporates key components from several assessments and frameworks, it’s broadly applicable to Strategically Important Entities (SIE), High Value Assets (HVA), Federal Civilian Executive Branch (FCEB), State, local, tribal, and territorial (SLTT) governments, and critical infrastructure.",
+      "3": "The MVRA structure is derived from the NIST Cybersecurity Framework (CSF), CISA Cyber Essentials, and NIST 800-160 Vol 2. Rev 1 (NIST 800-160).",
+      "4": "The scope of this assessment focuses on the critical services essential to the success of an organization’s mission and the assets necessary to provide those services. The MVRA evaluates the information technology (IT) and operational technology (OT) used to deliver or secure the critical services.",
+      "5": "A critical service is defined as a set of important activities that the organization carries out, in the production of a product or while providing services to its customers. A service that the loss thereof would result in physical destruction, safety, and health effects (e.g., a chemical release or loss of traffic controls), theft of sensitive information that can be exploited, business interruption (e.g., denial of service), or other economic loss to the organization or its customers/users.A critical service is defined as a set of important activities that the organization carries out, in the production of a product or while providing services to its customers. A service that the loss thereof would result in physical destruction, safety, and health effects (e.g., a chemical release or loss of traffic controls), theft of sensitive information that can be exploited, business interruption (e.g., denial of service), or other economic loss to the organization or its customers/users.",
+      "6": "The MVRA considers four categories of assets: People, Information, Technology, and Facilities. The definition for each asset type is listed below:",
+      "6a1": "People",
+      "6a2": ": the staff (both internal and external to the organization) such as people that support data centers or otherwise use information and communications technology to operate, monitor, and support the service.",
+      "6b1": "Information",
+      "6b2": ": account information, technology asset configuration files, operational data, customer information, and other information necessary for the delivery of a service.",
+      "6c1": "Technology",
+      "6c2": ": computers (hardware), software, control systems, or other technology including external information systems used by the organization to deliver the service.",
+      "6d1": "Facilities",
+      "6d2": ": office buildings, data centers, and other physical structures supporting the delivery of the service.",
+      "7": "The MVRA consists of 524 practices (questions), each aligning with a goal associated with one of the four domains specified in NIST 800-160.",
+      "7a": "Anticipate",
+      "7b": "Withstand",
+      "7c": "Recover",
+      "7d": "Adapt",
+      "8": "Each practice includes the following components.",
+      "9": "Sub-Domain",
+      "10": "Each sub-domain consists of a set of goals with associated practices.",
+      "11": "The intended cybersecurity outcome that each of its associated practices aims to enable.",
+      "12": "Questions designed to evaluate if the organization has implemented the associated goal.",
+      "13": "Each question has an assigned practice identifier structured as follows:",
+      "14": "Domain [DD]: Sub-Domain [SD]- Goal [G#]. Question Number [Q#]",
+      "15": "Selecting the Supplemental Guidance icon provides information on:",
+      "15a": "Importance"
     }
   }
 }
