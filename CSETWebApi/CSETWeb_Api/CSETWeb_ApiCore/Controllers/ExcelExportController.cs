@@ -21,6 +21,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _token;
         private readonly IDataHandling _data;
         private readonly IMaturityBusiness _maturity;
+        private readonly IACETMaturityBusiness _acetMaturity;
         private readonly IACETDashboardBusiness _acet;
         private readonly IHttpContextAccessor _http;
         private CSETContext _context;
@@ -29,16 +30,17 @@ namespace CSETWebCore.Api.Controllers
         private string excelContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         private string excelExtension = ".xlsx";
 
-        public ExcelExportController(ITokenManager token, IDataHandling data, IMaturityBusiness maturity,
+        public ExcelExportController(ITokenManager token, IDataHandling data, IACETMaturityBusiness acetMaturity, IMaturityBusiness maturity,
             IACETDashboardBusiness acet, IHttpContextAccessor http, CSETContext context)
         {
             _token = token;
             _data = data;
             _maturity = maturity;
+            _acetMaturity = acetMaturity;
             _acet = acet;
             _http = http;
             _context = context;
-            _exporter = new ExcelExporter(_context, _data, _maturity, _acet, _http);
+            _exporter = new ExcelExporter(_context, _data, _acetMaturity, _acet, _http);
         }
 
 

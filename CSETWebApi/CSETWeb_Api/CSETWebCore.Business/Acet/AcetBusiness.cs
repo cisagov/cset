@@ -44,7 +44,7 @@ namespace CSETWebCore.Business.Acet
             Model.Acet.ACETDashboard result = GetIrpCalculation(assessmentId);
 
             result.Domains = new List<DashboardDomain>();
-            MaturityBusiness matManager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            ACETMaturityBusiness matManager = new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
             var domains = matManager.GetMaturityAnswers(assessmentId, lang);
             foreach (var d in domains)
