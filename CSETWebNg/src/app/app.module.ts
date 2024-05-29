@@ -372,6 +372,7 @@ import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficie
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
 import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra/tutorial-rra.component';
 import { TutorialCpgComponent } from './assessment/prepare/maturity/tutorial-cpg/tutorial-cpg.component';
+import { TutorialMvraComponent } from './assessment/prepare/maturity/tutorial-mvra/tutorial-mvra.component';
 import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level-results/rra-level-results.component';
 import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
 import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
@@ -956,6 +957,7 @@ import { ReportsListCpgComponent } from './assessment/results/reports/report-lis
     TutorialRraComponent,
     TutorialCrrComponent,
     TutorialCpgComponent,
+    TutorialMvraComponent,
     LoginAcetComponent,
     LoginCsetComponent,
     LoginRraComponent,
