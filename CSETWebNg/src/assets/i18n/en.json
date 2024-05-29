@@ -712,6 +712,13 @@
           "title": "CPG Deficiency",
           "desc": "The report contains a list of all security practices that were marked as “Not Implemented” or unanswered during the assessment process. This report serves to identify deficiencies or gaps in the organization’s cybersecurity practices and provides suggested areas for improvement."
         }
+      },
+      "mvra": {
+        "sectionTitle": "Minimum Viable Resilience Assessment (MVRA) - DRAFT",
+        "1": {
+          "title": "MVRA Report",
+          "desc": "This report includes charts and tables that summarize the responses gathered throughout the assessment process, enabling organizations to analyze and assess their cybersecurity capabilities effectively. The report presents the organization’s performance by domain, sub-domain, and tier."
+        }
       }
     },
     "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated {date}.",

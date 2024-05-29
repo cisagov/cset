@@ -240,19 +240,9 @@
 
 
     <div>
-      <div *ngIf="
-          !!assessSvc.assessment &&
-          assessSvc.usesMaturityModel('MVRA') &&
-          !isMobile
-        " class="d-flex flex-column justify-content-start align-items-start mb-4">
-        <h4>CISA Minimum Viable Resilience Assessment (MVRA) - DRAFT</h4>
-
-        <div>
-          <button tabindex="0" (click)="clickReportLink('mvraReport')" class="btn btn-link btn-link-dark text-left">
-            MVRA Report
-          </button>
-        </div>
-      </div>
+      <!-- MVRA -->
+      <app-report-list-mvra *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('MVRA') && !isMobile">
+      </app-report-list-mvra>
 
       <!-- CPG -->
       <app-reports-list-cpg *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile"></app-reports-list-cpg>
