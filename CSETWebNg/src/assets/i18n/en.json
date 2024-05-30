@@ -659,17 +659,19 @@
         "sectionTitle": "CISA External Dependencies Management",
         "1": {
           "title": "EDM Report",
-          "desc": "The report includes a wide array of charts and graphs designed to visually present and summarize the responses gathered throughout the assessment process, enabling organizations to analyze and assess their incident management capabilities effectively. Organizations can gauge if their incident management functions align with the National Institute of Standards and Technology (NIST) Cybersecurity Framework (CSF), as assessment results are depicted in terms relative to the NIST CSF. Additionally, the report includes a compilation of all CRR practices along with their corresponding references."
+          "desc": "The report includes a wide array of charts and graphs designed to visually present and summarize the responses gathered throughout the assessment process, enabling organizations to analyze and assess their external dependencies management capabilities effectively. Organizations can gauge if their cybersecurity functions align with the National Institute of Standards and Technology (NIST) Cybersecurity Framework (CSF), as assessment results are depicted in terms relative to the NIST CSF. Additionally, the report includes a compilation of all EDM practices along with their corresponding references."
         },
         "2": {
           "title": "Print EDM Report",
           "desc": "Opens the report and initiates the print process.  To save as a PDF, select 'Print to PDF.'"
         },
         "3": {
-          "title": "EDM Deficiency Report"
+          "title": "EDM Deficiency Report",
+          "desc": "The report contains a list of all EDM practices that were marked as “No,” “Incomplete,” or unanswered during the assessment process. This report serves to identify potential deficiencies or gaps in the organization’s external dependencies management practices and provides suggested areas for improvement."
         },
         "4": {
-          "title": "EDM Comments and Marked for Review"
+          "title": "EDM Comments and Marked for Review",
+          "desc": "This document consolidates all practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
         }
       },
       "cmmc2": {
