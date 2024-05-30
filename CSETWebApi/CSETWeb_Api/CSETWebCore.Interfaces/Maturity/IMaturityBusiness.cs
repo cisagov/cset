@@ -38,10 +38,6 @@ namespace CSETWebCore.Interfaces.Maturity
         List<GlossaryEntry> GetGlossaryEntries(int modelId);
         List<GlossaryEntry> GetGlossaryEntries(string modelName);
 
-        string GetOverallIrp(int assessmentId);
-        int GetOverallIrpNumber(int assessmentId);
-        Model.Acet.ACETDashboard GetIrpCalculation(int assessmentId);
-        void UpdateACETDashboardSummary(int assessmentId, Model.Acet.ACETDashboard summary);
         void PersistSelectedMaturityModel(int assessmentId, string modelName);
         void PersistMaturityLevel(int assessmentId, int level);
     }

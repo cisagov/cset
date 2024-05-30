@@ -1,0 +1,133 @@
+﻿using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Model.Maturity;
+using CSETWebCore.Model.Question;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CSETWebCore.Helpers
+{
+    /// <summary>
+    /// Adds additional questions 
+    /// </summary>
+    public class MaturityBonusQuestions
+    {
+        private CSETContext _context;
+
+        /// <summary>
+        /// A secondary maturity model whose questions should be included in the assessment (SSG)
+        /// </summary>
+        public int? BonusModelId;
+
+        /// <summary>
+        /// A list of additional questions (e.g., Sector-Specific Goals (SSG)) applicable to the assessment
+        /// </summary>
+        public List<AdditionalQuestionDefinition> BonusQuestions;
+
+
+        /// <summary>
+        /// CTOR
+        /// </summary>
+        /// <param name="context"></param>
+        public MaturityBonusQuestions(CSETContext context, int assessmentId)
+        {
+            _context = context;
+
+
+            BonusModelId = DetermineBonusModel(assessmentId);
+
+            var result = from mqa in _context.MQ_BONUS
+                         join mq in _context.MATURITY_QUESTIONS on mqa.BonusQuestionId equals mq.Mat_Question_Id
+                         where mqa.ModelId == BonusModelId
+                         select new AdditionalQuestionDefinition() { Question = mq, MqAppend = mqa };
+
+            BonusQuestions = result.ToList();
+        }
+
+
+
+        /// <summary>
+        /// Include additional questions.  This was created to add SSG questions 
+        /// to a CPG assessment based on the assessment's SECTOR.
+        /// </summary>
+        /// <param name="questions"></param>
+        public void AppendBonusQuestions(List<QuestionAnswer> groupingQuestions, List<FullAnswer> answers)
+        {
+            // see if any of the questions in this grouping should be preceded/followed/replaced
+            // by an "additional question"
+            for (int i = groupingQuestions.Count - 1; i >= 0; i--)
+            {
+                QuestionAnswer targetQ = groupingQuestions[i];
+
+                var aq = BonusQuestions.FirstOrDefault(x => x.MqAppend.BaseQuestionId == targetQ.QuestionId);
+                if (aq != null)
+                {
+                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == aq.Question.Mat_Question_Id).FirstOrDefault();
+
+                    var newQ = QuestionAnswerBuilder.BuildQuestionAnswer(aq.Question, answer);
+                    newQ.IsAdditionalCpg = true;
+
+                    // "Action" will be B, A or R
+                    switch (aq.MqAppend.Action.ToUpper())
+                    {
+                        // insert BEFORE
+                        case "B":
+                            groupingQuestions.Insert(i, newQ);
+                            break;
+
+                        // insert AFTER
+                        case "A":
+                            groupingQuestions.Insert(i + 1, newQ);
+                            break;
+
+                        // REPLACE
+                        case "R":
+                            groupingQuestions.Insert(i + 1, newQ);
+                            groupingQuestions.RemoveAt(i);
+                            break;
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Determines which Model is applicable to the assessment
+        /// as an SSG "bonus."
+        /// 
+        /// These relationships could be defined in the database at some
+        /// point, but due to the complexity of 2 different storage locations,
+        /// for now they are defined here.  
+        /// </summary>
+        /// <returns></returns>
+        private int? DetermineBonusModel(int assessmentId)
+        {
+            // define the SSG model Ids we currently support
+            const int CHEM = 18;
+
+
+
+            var ddSector = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id != assessmentId && x.DataItemName == "SECTOR").FirstOrDefault();
+            if (ddSector.IntValue == 19)
+            {
+                return CHEM;
+            }
+
+
+            var demographics = _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            if (demographics != null)
+            {
+                if (demographics.SectorId == 1)
+                {
+                    return CHEM;
+                }
+            }
+
+            // no sector has been selected, so no bonus model is applicable
+            return null;
+        }
+    }
+}
