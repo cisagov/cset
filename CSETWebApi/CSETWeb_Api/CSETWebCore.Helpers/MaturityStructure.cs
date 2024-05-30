@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using CSETWebCore.Model.Maturity.CPG;
 using NSoup.Parse;
+using CSETWebCore.Model.Maturity;
 
 
 
@@ -52,6 +53,12 @@ namespace CSETWebCore.Helpers
         /// </summary>
         private TranslationOverlay _overlay;
 
+        /// <summary>
+        /// An instance of MaturityBonusQuestions
+        /// </summary>
+        private MaturityBonusQuestions _mbq;
+
+
 
         /// <summary>
         /// Returns a populated instance of the maturity grouping
@@ -69,6 +76,8 @@ namespace CSETWebCore.Helpers
             // set up translation resources
             this._overlay = new TranslationOverlay();
             this._lang = lang;
+
+            this._mbq = new MaturityBonusQuestions(context, assessmentId);
 
 
             LoadStructure();
@@ -187,16 +196,18 @@ namespace CSETWebCore.Helpers
 
 
                 // are there any questions that belong to this grouping?
-                var myQuestions = questions.Where(x => x.Grouping_Id == sg.Grouping_Id).ToList();
+                var myQuestionsNative = questions.Where(x => x.Grouping_Id == sg.Grouping_Id).ToList();
 
-                var parentQuestionIDs = myQuestions.Select(x => x.Parent_Question_Id).Distinct().ToList();
+                var parentQuestionIDs = myQuestionsNative.Select(x => x.Parent_Question_Id).Distinct().ToList();
 
-                foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
+                foreach (var myQNative in myQuestionsNative.OrderBy(s => s.Sequence))
                 {
                     FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
+                    var myQ = BuildQuestionAnswer.Build(myQ, answer);
 
                     var question = new Model.Maturity.CPG.Question();
-                    question.QuestionId = myQ.Mat_Question_Id;
+
+                    question.QuestionId = myQ.QuestionId;
                     question.ParentQuestionId = myQ.Parent_Question_Id;
                     question.Sequence = myQ.Sequence;
                     question.DisplayNumber = myQ.Question_Title;
@@ -220,7 +231,7 @@ namespace CSETWebCore.Helpers
                         question.RiskAddressed = myQ.Risk_Addressed;
 
                         // Include CSF mappings
-                        var csfList = _addlSuppl.GetCsfMappings(myQ.Mat_Question_Id, "Maturity");
+                        var csfList = _addlSuppl.GetCsfMappings(myQ.QuestionId, "Maturity");
                         foreach (var csf in csfList)
                         {
                             question.CSF.Add(csf);
@@ -259,8 +270,62 @@ namespace CSETWebCore.Helpers
                 }
 
 
+                // ----------------
+                // Randy - check for bonus questions here
+                // ----------------
+                AppendBonusQuestions(myQuestionsNative, answers);
+
+
+
                 // Recurse down to build subgroupings
                 GetSubgroups(grouping.Groupings, sg.Grouping_Id, allGroupings, questions, answers, remarks);
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="groupingQuestions"></param>
+        /// <param name="answers"></param>
+        private void AppendBonusQuestions(List<MATURITY_QUESTIONS> groupingQuestions, List<FullAnswer> answers)
+        {
+            // see if any of the questions in this grouping should be preceded/followed/replaced
+            // by an "additional question"
+            for (int i = groupingQuestions.Count - 1; i >= 0; i--)
+            {
+                var targetQ = groupingQuestions[i];
+
+                var aq = _mbq.BonusQuestions.FirstOrDefault(x => x.MqAppend.BaseQuestionId == targetQ.Mat_Question_Id);
+                if (aq != null)
+                {
+                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == aq.Question.Mat_Question_Id).FirstOrDefault();
+
+                    var newQ = BuildQuestionAnswer.BuildNative(aq.Question, answer);
+
+                    newQ.IsAdditionalCpg = true;
+                    
+
+                    // "Action" will be B, A or R
+                    switch (aq.MqAppend.Action.ToUpper())
+                    {
+                        // insert BEFORE
+                        case "B":
+                            groupingQuestions.Insert(i, newQ);
+                            break;
+
+                        // insert AFTER
+                        case "A":
+                            groupingQuestions.Insert(i + 1, newQ);
+                            break;
+
+                        // REPLACE
+                        case "R":
+                            groupingQuestions.Insert(i + 1, newQ);
+                            groupingQuestions.RemoveAt(i);
+                            break;
+                    }
+                }
             }
         }
 

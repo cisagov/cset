@@ -42,13 +42,9 @@ namespace CSETWebCore.Business.Maturity
 
         public readonly List<string> ModelsWithTargetLevel = ["ACET", "CMMC", "CMMC2"];
 
+        private MaturityBonusQuestions _mbq;
 
-        /// <summary>
-        /// A list of additional questions (e.g., Sector-Specific Goals (SSG)) applicable to the assessment
-        /// </summary>
-        private List<AdditionalQuestionDefinition> _additionalQuestions;
 
-        private List<object> _allAnswersForAssessment;
 
 
         /// <summary>
@@ -199,7 +195,6 @@ namespace CSETWebCore.Business.Maturity
 
         public List<GroupScores> Get_LevelScoresByGroup(int assessmentId, int mat_model_id)
         {
-
             var list = _context.usp_countsForLevelsByGroupMaturityModel(assessmentId, mat_model_id);
 
             //while the answer text is not null 
@@ -230,8 +225,8 @@ namespace CSETWebCore.Business.Maturity
                         }
                         break;
                 }
-
             }
+
             List<GroupScores> groupScores = new List<GroupScores>();
 
             foreach (var keyPair in levels)
@@ -243,6 +238,7 @@ namespace CSETWebCore.Business.Maturity
                     Maturity_Level_Name = "We'll get there"
                 });
             }
+
             return groupScores;
         }
 
@@ -758,6 +754,7 @@ namespace CSETWebCore.Business.Maturity
             return levelScore;
         }
 
+
         private int GetFunctionCredit(List<DomainScore> domains)
         {
             var total = domains.Count();
@@ -772,6 +769,7 @@ namespace CSETWebCore.Business.Maturity
             return 0;
         }
 
+
         private string GetDomainRating(List<LevelScore> levels)
         {
             var total = levels.Sum(x => x.TotalTiers);
@@ -785,6 +783,7 @@ namespace CSETWebCore.Business.Maturity
             }
             return "Fail";
         }
+
 
         private LevelScore GetLevelScore(List<CapabilityScore> scores, string level)
         {
@@ -879,6 +878,10 @@ namespace CSETWebCore.Business.Maturity
 
 
 
+            _mbq = new MaturityBonusQuestions(_context, assessmentId);
+            
+
+
             // Get all maturity questions for the model regardless of level.
             // The user may choose to see questions above the target level via filtering. 
             var questionQuery = _context.MATURITY_QUESTIONS
@@ -904,15 +907,6 @@ namespace CSETWebCore.Business.Maturity
 
 
             var questions = questionQuery.ToList();
-
-
-
-
-
-
-
-
-
 
 
             // apply translation overlay to the questions
@@ -1038,7 +1032,7 @@ namespace CSETWebCore.Business.Maturity
                     FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
 
 
-                    var qa = BuildQuestionAnswer(myQ, answer);
+                    var qa = BuildQuestionAnswer.Build(myQ, answer);
                     qa.MaturityModelId = sg.Maturity_Model_Id;
                     qa.IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id);
 
@@ -1078,58 +1072,13 @@ namespace CSETWebCore.Business.Maturity
 
 
                 // Randy - add any applicable questions to this grouping
-                AppendQuestions(newGrouping.Questions, answers.ToList());
+                _mbq.AppendBonusQuestions(newGrouping.Questions, answers.ToList());
 
 
 
                 // Recurse down to build subgroupings
                 BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers, lang);
             }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="myQ"></param>
-        /// <param name="answer"></param>
-        /// <returns></returns>
-        private QuestionAnswer BuildQuestionAnswer(MATURITY_QUESTIONS myQ, FullAnswer answer)
-        {
-            var qa = new QuestionAnswer()
-            {
-                DisplayNumber = myQ.Question_Title,
-                QuestionId = myQ.Mat_Question_Id,
-                ParentQuestionId = myQ.Parent_Question_Id,
-                Sequence = myQ.Sequence,
-                ShortName = myQ.Short_Name,
-                QuestionType = "Maturity",
-                QuestionText = myQ.Question_Text,
-
-                SecurityPractice = myQ.Security_Practice,
-                Outcome = myQ.Outcome,
-                Scope = myQ.Scope,
-                RecommendedAction = myQ.Recommend_Action,
-                RiskAddressed = myQ.Risk_Addressed,
-                Services = myQ.Services,
-
-                Answer = answer?.a.Answer_Text,
-                AltAnswerText = answer?.a.Alternate_Justification,
-                FreeResponseAnswer = answer?.a.Free_Response_Answer,
-
-                Comment = answer?.a.Comment,
-                Feedback = answer?.a.FeedBack,
-                MarkForReview = answer?.a.Mark_For_Review ?? false,
-                Reviewed = answer?.a.Reviewed ?? false,
-
-                Is_Maturity = true,
-
-                MaturityLevel = myQ.Maturity_Level.Level,
-                MaturityLevelName = myQ.Maturity_Level.Level_Name,
-                SetName = string.Empty
-            };
-
-            return qa;
         }
 
 
