@@ -57,8 +57,8 @@ export class CpgCostImpactComplexityComponent implements OnInit {
     this.grayDollars = "$".repeat(4 - Number.parseInt(this.cost));
 
     // i18n
-    this.impactWord = this.tSvc.translate('reports.core.cpg.report.' + this.impact.toLowerCase());
-    this.complexityWord = this.tSvc.translate('reports.core.cpg.report.' + this.complexity.toLowerCase());
+    this.impactWord = !!this.impact ? this.tSvc.translate('reports.core.cpg.report.' + this.impact.toLowerCase()) : 'UNKNOWN';
+    this.complexityWord = !!this.complexity ? this.tSvc.translate('reports.core.cpg.report.' + this.complexity.toLowerCase()) : 'UNKNOWN';
   }
 
   lowMedHigh(val: string) {

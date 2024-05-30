@@ -1032,7 +1032,7 @@ namespace CSETWebCore.Business.Maturity
                     FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
 
 
-                    var qa = BuildQuestionAnswer.Build(myQ, answer);
+                    var qa = QuestionAnswerBuilder.BuildQuestionAnswer(myQ, answer);
                     qa.MaturityModelId = sg.Maturity_Model_Id;
                     qa.IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id);
 
@@ -1343,7 +1343,7 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public Model.Maturity.CPG.ContentModel GetMaturityStructure(int assessmentId, bool includeSupplemental, string lang)
         {
-            var ss = new MaturityStructure(assessmentId, _context, includeSupplemental, lang);
+            var ss = new CpgStructure(assessmentId, _context, includeSupplemental, lang);
             return ss.Top;
         }
 
@@ -1489,63 +1489,6 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return questionAnswer;
-        }
-
-
-
-        /// <summary>
-        /// Include additional questions.  This was created to include SSG questions 
-        /// along with CPG questions, based on the assessment's SECTOR.
-        /// </summary>
-        /// <param name="questions"></param>
-        private void AppendQuestions(List<QuestionAnswer> groupingQuestions, List<FullAnswer> answers)
-        {
-            // lazy initialize
-            if (_additionalQuestions == null)
-            {
-                var result = from mqa in _context.MQ_BONUS
-                             join mq in _context.MATURITY_QUESTIONS on mqa.BonusQuestionId equals mq.Mat_Question_Id
-                             select new AdditionalQuestionDefinition() { Question = mq, MqAppend = mqa };
-
-                _additionalQuestions = result.ToList();
-            }
-
-
-            // see if any of the questions in this grouping should be preceded/followed/replaced
-            // by an "additional question"
-            for (int i = groupingQuestions.Count - 1; i >= 0; i--)
-            {
-                QuestionAnswer targetQ = groupingQuestions[i];
-
-                var aq = _additionalQuestions.FirstOrDefault(x => x.MqAppend.BaseQuestionId == targetQ.QuestionId);
-                if (aq != null)
-                {
-                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == aq.Question.Mat_Question_Id).FirstOrDefault();
-
-                    var newQ = BuildQuestionAnswer(aq.Question, answer);
-                    newQ.IsAdditionalCpg = true;
-
-                    // "Action" will be B, A or R
-                    switch (aq.MqAppend.Action)
-                    {
-                        // insert BEFORE
-                        case "B":
-                            groupingQuestions.Insert(i, newQ);
-                            break;
-
-                        // insert AFTER
-                        case "A":
-                            groupingQuestions.Insert(i + 1, newQ);
-                            break;
-
-                        // REPLACE
-                        case "R":
-                            groupingQuestions.Insert(i + 1, newQ);
-                            groupingQuestions.RemoveAt(i);
-                            break;
-                    }
-                }
-            }
         }
     }
 }

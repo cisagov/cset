@@ -29,7 +29,7 @@ namespace CSETWebCore.Helpers
     /// in their grouping structure.
     /// 
     /// </summary>
-    public class MaturityStructure
+    public class CpgStructure
     {
         private readonly CSETContext _context;
 
@@ -65,7 +65,7 @@ namespace CSETWebCore.Helpers
         /// and question structure for an assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityStructure(int assessmentId, CSETContext context, bool includeText, string lang)
+        public CpgStructure(int assessmentId, CSETContext context, bool includeText, string lang)
         {
             this.AssessmentId = assessmentId;
             this._context = context;
@@ -77,6 +77,8 @@ namespace CSETWebCore.Helpers
             this._overlay = new TranslationOverlay();
             this._lang = lang;
 
+
+            // Determine any bonus questions that apply to this assessment
             this._mbq = new MaturityBonusQuestions(context, assessmentId);
 
 
@@ -200,20 +202,10 @@ namespace CSETWebCore.Helpers
 
                 var parentQuestionIDs = myQuestionsNative.Select(x => x.Parent_Question_Id).Distinct().ToList();
 
-                foreach (var myQNative in myQuestionsNative.OrderBy(s => s.Sequence))
+                foreach (var myQ in myQuestionsNative.OrderBy(s => s.Sequence))
                 {
                     FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
-                    var myQ = BuildQuestionAnswer.Build(myQ, answer);
-
-                    var question = new Model.Maturity.CPG.Question();
-
-                    question.QuestionId = myQ.QuestionId;
-                    question.ParentQuestionId = myQ.Parent_Question_Id;
-                    question.Sequence = myQ.Sequence;
-                    question.DisplayNumber = myQ.Question_Title;
-                    question.Answer = answer?.a.Answer_Text ?? "";
-                    question.Comment = answer?.a.Comment ?? "";
-                    question.IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id);
+                    var question = QuestionAnswerBuilder.BuildCpgQuestion(myQ, answer);
 
 
                     if (_includeText)
@@ -231,7 +223,7 @@ namespace CSETWebCore.Helpers
                         question.RiskAddressed = myQ.Risk_Addressed;
 
                         // Include CSF mappings
-                        var csfList = _addlSuppl.GetCsfMappings(myQ.QuestionId, "Maturity");
+                        var csfList = _addlSuppl.GetCsfMappings(myQ.Mat_Question_Id, "Maturity");
                         foreach (var csf in csfList)
                         {
                             question.CSF.Add(csf);
@@ -270,11 +262,7 @@ namespace CSETWebCore.Helpers
                 }
 
 
-                // ----------------
-                // Randy - check for bonus questions here
-                // ----------------
-                AppendBonusQuestions(myQuestionsNative, answers);
-
+                AppendBonusQuestions(grouping.Questions, answers);
 
 
                 // Recurse down to build subgroupings
@@ -284,24 +272,25 @@ namespace CSETWebCore.Helpers
 
 
         /// <summary>
-        /// 
+        /// This is a specialized version of the method in MaturityBonusQuestions that deals with CPG Questions.  
+        /// It should be refactored so that we aren't repeating the same logic here.
         /// </summary>
         /// <param name="groupingQuestions"></param>
         /// <param name="answers"></param>
-        private void AppendBonusQuestions(List<MATURITY_QUESTIONS> groupingQuestions, List<FullAnswer> answers)
+        private void AppendBonusQuestions(List<Question> groupingQuestions, List<FullAnswer> answers)
         {
             // see if any of the questions in this grouping should be preceded/followed/replaced
-            // by an "additional question"
+            // by an additional (bonus) question
             for (int i = groupingQuestions.Count - 1; i >= 0; i--)
             {
-                var targetQ = groupingQuestions[i];
+                Question targetQ = groupingQuestions[i];
 
-                var aq = _mbq.BonusQuestions.FirstOrDefault(x => x.MqAppend.BaseQuestionId == targetQ.Mat_Question_Id);
+                var aq = _mbq.BonusQuestions.FirstOrDefault(x => x.MqAppend.BaseQuestionId == targetQ.QuestionId);
                 if (aq != null)
                 {
                     FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == aq.Question.Mat_Question_Id).FirstOrDefault();
 
-                    var newQ = BuildQuestionAnswer.BuildNative(aq.Question, answer);
+                    var newQ = QuestionAnswerBuilder.BuildCpgQuestion(aq.Question, answer);
 
                     newQ.IsAdditionalCpg = true;
                     
@@ -328,6 +317,5 @@ namespace CSETWebCore.Helpers
                 }
             }
         }
-
     }
 }

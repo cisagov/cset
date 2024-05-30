@@ -44,7 +44,12 @@ namespace CSETWebCore.Helpers
                          where mqa.ModelId == BonusModelId
                          select new AdditionalQuestionDefinition() { Question = mq, MqAppend = mqa };
 
-            BonusQuestions = result.ToList();
+            foreach (var item in result)
+            {
+                item.Question.MATURITY_QUESTION_PROPS = _context.MATURITY_QUESTION_PROPS.Where(x => x.Mat_Question_Id == item.Question.Mat_Question_Id).ToList();
+            }
+
+            this.BonusQuestions = result.ToList();
         }
 
 
