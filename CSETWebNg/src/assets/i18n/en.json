@@ -610,15 +610,15 @@
         "sectionTitle": "CISA Cyber Resilience Review",
         "1": {
           "title": "CRR Report",
-          "desc": "The report includes a wide array of charts and graphs designed to visually present and summarize the responses gathered throughout the assessment process, enabling organizations to analyze and assess their incident management capabilities effectively. Organizations can gauge if their incident management functions align with the National Institute of Standards and Technology (NIST) Cybersecurity Framework (CSF), as assessment results are depicted in terms relative to the NIST CSF. Additionally, the report includes a compilation of all CRR practices along with their corresponding references."
+          "desc": "The report includes a wide array of charts and graphs designed to visually present and summarize the responses gathered throughout the assessment process, enabling organizations to analyze and assess their cyber resilience capabilities effectively. Organizations can gauge if their cyber resilience functions align with the National Institute of Standards and Technology (NIST) Cybersecurity Framework (CSF), as assessment results are depicted in terms relative to the NIST CSF. Additionally, the report includes a compilation of all CRR practices along with their corresponding references."
         },
         "2": {
           "title": "CRR Deficiency Report",
-          "desc": ""
+          "desc": "The report contains a list of all CRR practices that were marked as “No,” “Incomplete,” or unanswered during the assessment process. This report serves to identify potential deficiencies or gaps in the organization’s cyber resilience practices and provides suggested areas for improvement."
         },
         "3": {
           "title": "CRR Comments and Marked for Review",
-          "desc": ""
+          "desc": "This document consolidates all practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
         }
       },
       "imr": {
