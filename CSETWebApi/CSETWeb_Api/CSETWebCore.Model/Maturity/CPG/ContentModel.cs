@@ -36,6 +36,7 @@ namespace CSETWebCore.Model.Maturity.CPG
         public string Answer { get; set; }
         public string Comment { get; set; }
         public bool IsParentQuestion { get; set; }
+        public bool IsAdditionalCpg {  get; set; }
         public string QuestionText { get; set; }
 		public string Supplemental { get; set; }
 		public string Scope { get; set; }

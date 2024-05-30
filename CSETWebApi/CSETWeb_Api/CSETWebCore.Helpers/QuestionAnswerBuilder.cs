@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace CSETWebCore.Helpers
 {
+    /// <summary>
+    /// Builds a few different incarnations of question objects.
+    /// </summary>
     public class QuestionAnswerBuilder
     {
         public static QuestionAnswer BuildQuestionAnswer(MATURITY_QUESTIONS myQ, FullAnswer answer)
