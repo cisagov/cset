@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model;
 
-[PrimaryKey("TargetQuestionId", "BonusQuestionId")]
+[PrimaryKey("BaseQuestionId", "BonusQuestionId")]
 public partial class MQ_BONUS
 {
     [Key]
-    public int TargetQuestionId { get; set; }
+    public int BaseQuestionId { get; set; }
 
     [Key]
     public int BonusQuestionId { get; set; }

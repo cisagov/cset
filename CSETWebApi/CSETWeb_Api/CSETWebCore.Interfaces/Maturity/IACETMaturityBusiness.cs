@@ -24,6 +24,11 @@ namespace CSETWebCore.Interfaces.Maturity
         List<string> IrpSwitchIse(int irpRating);
         Dictionary<int, MaturityMap> GetRequirementMaturityLevels();
         Model.Acet.ACETDashboard LoadDashboard(int assessmentId, string lang = "en");
+        string GetOverallIrp(int assessmentId);
+        int GetOverallIrpNumber(int assessmentId);
+        Model.Acet.ACETDashboard GetIrpCalculation(int assessmentId);
+        void UpdateACETDashboardSummary(int assessmentId, Model.Acet.ACETDashboard summary);
+        
 
     }
 }
