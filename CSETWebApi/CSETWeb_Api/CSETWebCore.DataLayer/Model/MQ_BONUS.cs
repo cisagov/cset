@@ -21,5 +21,6 @@ public partial class MQ_BONUS
     [StringLength(1)]
     public string Action { get; set; }
 
+    [Required]
     public int ModelId { get; set; }
 }
