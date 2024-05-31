@@ -51,10 +51,6 @@ export interface NavTreeNode {
   providedIn: 'root'
 })
 export class NavigationService implements OnDestroy, OnInit{
-
-
-
-
   /**
    * The workflow is stored in a DOM so that we can easily navigate around the tree
    */
@@ -455,5 +451,8 @@ export class NavigationService implements OnDestroy, OnInit{
    */
   setCurrentPage(id: string) {
     this.navTreeSvc.setCurrentPage(id);
+  }
+  clearNoMatterWhat() {
+    this.navTreeSvc.clearNoMatterWhat();
   }
 }

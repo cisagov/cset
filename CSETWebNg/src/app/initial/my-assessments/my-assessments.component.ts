@@ -151,6 +151,7 @@ export class MyAssessmentsComponent implements OnInit {
         break;
       case 'CF':
         this.isCF = true;
+        this.navTreeSvc.clearNoMatterWhat();
         break;
       default:
         this.isCSET = true;
