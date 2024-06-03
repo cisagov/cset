@@ -4,28 +4,19 @@
 // 
 // 
 //////////////////////////////// 
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//using System.Xml.Linq;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using CSETWebCore.Model.Maturity.CPG;
-using NSoup.Parse;
-using CSETWebCore.Model.Maturity;
-
 
 
 namespace CSETWebCore.Helpers
 {
     /// <summary>
     /// The idea is a lightweight XDocument based 
-    /// representation of any maturity model's questions
+    /// representation of the CPG model's questions
     /// in their grouping structure.
     /// 
     /// </summary>
@@ -226,14 +217,14 @@ namespace CSETWebCore.Helpers
                         var csfList = _addlSuppl.GetCsfMappings(myQ.Mat_Question_Id, "Maturity");
                         foreach (var csf in csfList)
                         {
-                            question.CSF.Add(csf);
+                            question.CsfMappings.Add(csf);
                         }
 
                         // Include any TTPs
                         var ttpList = _addlSuppl.GetTTPReferenceList(myQ.Mat_Question_Id);
                         foreach (var ttp in ttpList)
                         {
-                            question.TTP.Add(ttp.Description);
+                            question.TTP.Add(ttp);
                         }
 
 
@@ -292,8 +283,14 @@ namespace CSETWebCore.Helpers
 
                     var newQ = QuestionAnswerBuilder.BuildCpgQuestion(aq.Question, answer);
 
-                    newQ.IsAdditionalCpg = true;
-                    
+                    newQ.IsBonusQuestion = true;
+
+                    // Include CSF mappings
+                    newQ.CsfMappings = _addlSuppl.GetCsfMappings(newQ.QuestionId, "Maturity");
+
+                    // Include any TTPs
+                    newQ.TTP = _addlSuppl.GetTTPReferenceList(newQ.QuestionId);
+
 
                     // "Action" will be B, A or R
                     switch (aq.MqAppend.Action.ToUpper())

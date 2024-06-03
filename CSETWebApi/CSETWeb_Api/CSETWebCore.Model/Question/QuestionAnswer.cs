@@ -138,6 +138,6 @@ namespace CSETWebCore.Model.Question
         /// <summary>
         /// Indicates if the question is "additional", like an SSG question embedded in a CPG assessment.
         /// </summary>
-        public bool IsAdditionalCpg { get; set; } = false;
+        public bool IsBonusQuestion { get; set; } = false;
     }
 }
