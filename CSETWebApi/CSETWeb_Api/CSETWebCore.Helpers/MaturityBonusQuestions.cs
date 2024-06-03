@@ -59,7 +59,7 @@ namespace CSETWebCore.Helpers
         /// to a CPG assessment based on the assessment's SECTOR.
         /// </summary>
         /// <param name="questions"></param>
-        public void AppendBonusQuestions(List<QuestionAnswer> groupingQuestions, List<FullAnswer> answers)
+        public void AppendBonusQuestions(List<QuestionAnswer> groupingQuestions, List<FullAnswer> answers, AdditionalSupplemental addlSuppl)
         {
             // see if any of the questions in this grouping should be preceded/followed/replaced
             // by an "additional question"
@@ -73,7 +73,14 @@ namespace CSETWebCore.Helpers
                     FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == aq.Question.Mat_Question_Id).FirstOrDefault();
 
                     var newQ = QuestionAnswerBuilder.BuildQuestionAnswer(aq.Question, answer);
-                    newQ.IsAdditionalCpg = true;
+                    newQ.IsBonusQuestion = true;
+
+                    // Include CSF mappings
+                    newQ.CsfMappings = addlSuppl.GetCsfMappings(newQ.QuestionId, "Maturity");
+
+                    // Include any TTPs
+                    newQ.TTP = addlSuppl.GetTTPReferenceList(newQ.QuestionId);
+
 
                     // "Action" will be B, A or R
                     switch (aq.MqAppend.Action.ToUpper())
@@ -100,12 +107,12 @@ namespace CSETWebCore.Helpers
 
 
         /// <summary>
-        /// Determines which Model is applicable to the assessment
+        /// Determines which Model is also applicable to the assessment
         /// as an SSG "bonus."
         /// 
         /// These relationships could be defined in the database at some
         /// point, but due to the complexity of 2 different storage locations,
-        /// for now they are defined here.  
+        /// for now they are defined here as code.  
         /// </summary>
         /// <returns></returns>
         private int? DetermineBonusModel(int assessmentId)

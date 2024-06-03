@@ -1071,8 +1071,8 @@ namespace CSETWebCore.Business.Maturity
                 newGrouping.Questions.Sort((a, b) => a.Sequence.CompareTo(b.Sequence));
 
 
-                // Randy - add any applicable questions to this grouping
-                _mbq.AppendBonusQuestions(newGrouping.Questions, answers.ToList());
+                // Include any applicable bonus questions to this grouping
+                _mbq.AppendBonusQuestions(newGrouping.Questions, answers.ToList(), _addlSuppl);
 
 
 
