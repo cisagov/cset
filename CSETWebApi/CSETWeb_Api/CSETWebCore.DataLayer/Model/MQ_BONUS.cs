@@ -17,10 +17,21 @@ public partial class MQ_BONUS
     [Key]
     public int BonusQuestionId { get; set; }
 
+    public int ModelId { get; set; }
+
     [Required]
     [StringLength(1)]
     public string Action { get; set; }
 
-    [Required]
-    public int ModelId { get; set; }
+    [ForeignKey("BaseQuestionId")]
+    [InverseProperty("MQ_BONUSBaseQuestion")]
+    public virtual MATURITY_QUESTIONS BaseQuestion { get; set; }
+
+    [ForeignKey("BonusQuestionId")]
+    [InverseProperty("MQ_BONUSBonusQuestion")]
+    public virtual MATURITY_QUESTIONS BonusQuestion { get; set; }
+
+    [ForeignKey("ModelId")]
+    [InverseProperty("MQ_BONUS")]
+    public virtual MATURITY_MODELS Model { get; set; }
 }
