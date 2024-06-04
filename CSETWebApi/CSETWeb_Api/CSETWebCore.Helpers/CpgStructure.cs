@@ -276,8 +276,8 @@ namespace CSETWebCore.Helpers
             {
                 Question targetQ = groupingQuestions[i];
 
-                var aq = _mbq.BonusQuestions.FirstOrDefault(x => x.MqAppend.BaseQuestionId == targetQ.QuestionId);
-                if (aq != null)
+                var aqs = _mbq.BonusQuestions.Where(x => x.MqAppend.BaseQuestionId == targetQ.QuestionId).ToList();
+                foreach (var aq in aqs)
                 {
                     FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == aq.Question.Mat_Question_Id).FirstOrDefault();
 

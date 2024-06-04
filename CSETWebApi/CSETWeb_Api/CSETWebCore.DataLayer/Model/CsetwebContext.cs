@@ -1940,6 +1940,23 @@ public partial class CsetwebContext : DbContext
                 .HasConstraintName("FK_MODES_MATURITY_MODELS_SETS");
         });
 
+        modelBuilder.Entity<MQ_BONUS>(entity =>
+        {
+            entity.HasKey(e => new { e.BaseQuestionId, e.BonusQuestionId }).HasName("PK_MQ_APPEND");
+
+            entity.HasOne(d => d.BaseQuestion).WithMany(p => p.MQ_BONUSBaseQuestion)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_mq_bonus_mat_q1");
+
+            entity.HasOne(d => d.BonusQuestion).WithMany(p => p.MQ_BONUSBonusQuestion)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_mq_bonus_mat_q");
+
+            entity.HasOne(d => d.Model).WithMany(p => p.MQ_BONUS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_mq_bonus_mat_model");
+        });
+
         modelBuilder.Entity<NAVIGATION_STATE>(entity =>
         {
             entity.Property(e => e.IsAvailable).HasDefaultValue(true);

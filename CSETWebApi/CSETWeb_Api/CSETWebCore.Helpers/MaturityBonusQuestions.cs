@@ -67,12 +67,13 @@ namespace CSETWebCore.Helpers
             {
                 QuestionAnswer targetQ = groupingQuestions[i];
 
-                var aq = BonusQuestions.FirstOrDefault(x => x.MqAppend.BaseQuestionId == targetQ.QuestionId);
-                if (aq != null)
-                {
-                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == aq.Question.Mat_Question_Id).FirstOrDefault();
+                var bonuses = BonusQuestions.Where(x => x.MqAppend.BaseQuestionId == targetQ.QuestionId).ToList();
 
-                    var newQ = QuestionAnswerBuilder.BuildQuestionAnswer(aq.Question, answer);
+                foreach (var bonus in bonuses)
+                {
+                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == bonus.Question.Mat_Question_Id).FirstOrDefault();
+
+                    var newQ = QuestionAnswerBuilder.BuildQuestionAnswer(bonus.Question, answer);
                     newQ.IsBonusQuestion = true;
 
                     // Include CSF mappings
@@ -83,7 +84,7 @@ namespace CSETWebCore.Helpers
 
 
                     // "Action" will be B, A or R
-                    switch (aq.MqAppend.Action.ToUpper())
+                    switch (bonus.MqAppend.Action.ToUpper())
                     {
                         // insert BEFORE
                         case "B":

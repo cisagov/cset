@@ -5,22 +5,13 @@
 // 
 //////////////////////////////// 
 using Microsoft.AspNetCore.Mvc;
-using CSETWebCore.Business.Acet;
 using CSETWebCore.Business.Maturity;
-using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
-using CSETWebCore.Model.Maturity;
-using Microsoft.AspNetCore.Authorization;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
-using System.Xml.XPath;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
 using CSETWebCore.Helpers;
 
 
@@ -89,6 +80,11 @@ namespace CSETWebCore.Api.Controllers
 
             var dbList = _context.GetAnswerDistribGroupings(assessmentId);
 
+
+            // Include any SSG questions
+            IncludeSsgQuestions(assessmentId, dbList);
+
+
             foreach (var item in dbList)
             {
                 // translate if necessary
@@ -117,6 +113,65 @@ namespace CSETWebCore.Api.Controllers
             });
 
             return Ok(resp);
+        }
+
+
+        /// <summary>
+        /// Includes answer counts for any applicable SSG questions.
+        /// </summary>
+        /// <param name="list"></param>
+        private void IncludeSsgQuestions(int assessmentId, IList<GetAnswerDistribGroupingsResult> list)
+        {
+            var mbq = new MaturityBonusQuestions(_context, assessmentId);
+            var bonusModelId = mbq.BonusModelId;
+            if (bonusModelId == null)
+            {
+                return;
+            }
+
+
+            // Get the answer text (and groupings from the 'base' questions)
+            var bonusQuery = from bonus in _context.MQ_BONUS
+                             join cpgQ in _context.MATURITY_QUESTIONS on bonus.BaseQuestionId equals cpgQ.Mat_Question_Id
+                             join ans1 in _context.ANSWER on bonus.BonusQuestionId equals ans1.Question_Or_Requirement_Id into ansContainer
+                             from ans in ansContainer.DefaultIfEmpty()
+                             where bonus.ModelId == bonusModelId && (ans == null || ans.Question_Type == "Maturity")
+                             select new { bonusQId = bonus.BonusQuestionId, answer = ans, GroupingId = cpgQ.Grouping_Id };
+
+
+            // Add bonus question answers to distribution counts
+            foreach (var bonusQ in bonusQuery.ToList())
+            {
+                var item = list.FirstOrDefault(x => x.grouping_id == bonusQ.GroupingId && x.answer_text == bonusQ.answer?.Answer_Text);
+
+                if (item != null)
+                {
+                    item.answer_count++;
+                }
+                else
+                {
+                    // find the "U" item in list and increment
+                    var unansweredItem = list.Where(x => x.grouping_id == bonusQ.GroupingId && x.answer_text == "U").FirstOrDefault();
+
+                    if (unansweredItem != null)
+                    {
+                        unansweredItem.answer_count++;
+                    }
+                    else
+                    {
+                        // create a "U" item for the grouping
+                        var newListItem = new GetAnswerDistribGroupingsResult()
+                        {
+                            answer_count = 1,
+                            answer_text = "U",
+                            grouping_id = (int)bonusQ.GroupingId
+                        };
+                        newListItem.title = list.Where(x => x.grouping_id == newListItem.grouping_id).FirstOrDefault()?.title;
+
+                        list.Add(newListItem);
+                    }
+                }
+            }
         }
 
 

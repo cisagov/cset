@@ -25,7 +25,7 @@
 </div>
 
 <div *ngIf="question?.csfMappings?.length > 0" class="mb-4">
-    <div class="sub-header-1">NIST Cybsersecurity Framework (CSF) Reference</div>
+    <div class="sub-header-1">NIST Cybersecurity Framework (CSF) Reference</div>
     <div>
         <span *ngFor="let c of question.csfMappings; let i = index">
             {{c}}{{i === question.csfMappings.length - 1 ? '' : ', '}}
