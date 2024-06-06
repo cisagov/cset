@@ -25,15 +25,23 @@ namespace CSETWebCore.Business.ACETDashboard
         private CSETContext _context;
         private IAssessmentUtil _assessmentUtil;
         private IMaturityBusiness _maturity;
+        private IACETMaturityBusiness _acetMaturity;
         private IAdminTabBusiness _adminTab;
         private TranslationOverlay _overlay;
 
 
-        public ACETDashboardBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IMaturityBusiness maturity, IAdminTabBusiness adminTab)
+        public ACETDashboardBusiness(
+            CSETContext context, 
+            IAssessmentUtil assessmentUtil, 
+            IMaturityBusiness maturity, 
+            IACETMaturityBusiness acetMaturity, 
+            IAdminTabBusiness adminTab
+            )
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
             _maturity = maturity;
+            _acetMaturity = acetMaturity;
             _adminTab = adminTab;
 
             _overlay = new TranslationOverlay();
@@ -51,7 +59,7 @@ namespace CSETWebCore.Business.ACETDashboard
 
             result.Domains = new List<DashboardDomain>();
 
-            List<MaturityDomain> domains = _maturity.GetMaturityAnswers(assessmentId, lang);
+            List<MaturityDomain> domains = _acetMaturity.GetMaturityAnswers(assessmentId, lang);
 
             foreach (var d in domains)
             {

@@ -121,7 +121,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SetMaturityLevel([FromBody] int level)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistMaturityLevel(assessmentId, level);
+            new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistMaturityLevel(assessmentId, level);
             return Ok();
         }
 
@@ -544,93 +544,7 @@ namespace CSETWebCore.Api.Controllers
         // --------------------------------------
 
 
-        /// <summary>
-        /// Get maturity calculations
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/getMaturityResults")]
-        public IActionResult GetMaturityResults()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            var lang = _tokenManager.GetCurrentLanguage();
-
-            MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var maturity = manager.GetMaturityAnswers(assessmentId, lang);
-
-            return Ok(maturity);
-        }
-
-        /// <summary>
-        /// Get maturity calculations
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/getIseMaturityResults")]
-        public IActionResult GetIseMaturityResults()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var maturity = manager.GetIseMaturityAnswers(assessmentId);
-
-            return Ok(maturity);
-        }
-
-
-        /// <summary>
-        /// Get maturity range based on IRP rating
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/getMaturityRange")]
-        public IActionResult GetMaturityRange()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var maturityRange = manager.GetMaturityRange(assessmentId);
-            return Ok(maturityRange);
-        }
-
-
-        /// <summary>
-        /// Get IRP total for maturity
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/getOverallIrpForMaturity")]
-        public IActionResult GetOverallIrp()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            return Ok(new AcetBusiness(_context, _assessmentUtil, _adminTabBusiness).GetOverallIrp(assessmentId));
-        }
-
-
-        /// <summary>
-        /// Get target band for maturity
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/getTargetBand")]
-        public IActionResult GetTargetBand()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetTargetBandOnly(assessmentId));
-        }
-
-
-        /// <summary>
-        /// Set target band for maturity rating
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("api/setTargetBand")]
-        public IActionResult SetTargetBand([FromBody] bool value)
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).SetTargetBandOnly(assessmentId, value);
-            return Ok();
-        }
-
+        
 
         /// <summary>
         /// get maturity definiciency list
@@ -755,6 +669,128 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(new { no = filteredGroupingsS, unanswered = filteredGroupingsU });
         }
+
+        [HttpGet]
+        [Route("api/getMaturityDeficiencyListSdOwner")]
+        public IActionResult GetDeficiencyListSdOwner()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var biz = new NestedStructure(assessmentId, 0, _context);
+            List<Grouping> filteredGroupingsYes = new List<Grouping>();
+            List<Grouping> filteredGroupingsNo = new List<Grouping>();
+            List<Grouping> filteredGroupingsNa = new List<Grouping>();
+            List<Grouping> filteredGroupingsU = new List<Grouping>();
+
+            foreach (var b in biz.MyModel.Groupings)
+            {
+                var questionsYes = new List<Question>();
+                var questionsNo = new List<Question>();
+                var questionsNa = new List<Question>();
+                var questionsU = new List<Question>();
+
+                foreach (var q in b.Questions)
+                {
+                    var question = new Question();
+
+                    if (q.AnswerText == "Y")
+                    {
+                        question = new Question()
+                        {
+                            QuestionType = q.QuestionType,
+                            DisplayNumber = q.DisplayNumber,
+                            QuestionText = q.QuestionText,
+                            MarkForReview = q.MarkForReview,
+                            AnswerText = "Yes"
+                        };
+                        questionsYes.Add(question);
+                    }
+
+                    if (q.AnswerText == "N")
+                    {
+                        question = new Question()
+                        {
+                            QuestionType = q.QuestionType,
+                            DisplayNumber = q.DisplayNumber,
+                            QuestionText = q.QuestionText,
+                            MarkForReview = q.MarkForReview,
+                            AnswerText = "No"
+                        };
+                        questionsNo.Add(question);
+                    }
+
+                    if (q.AnswerText == "NA")
+                    {
+                        question = new Question()
+                        {
+                            QuestionType = q.QuestionType,
+                            DisplayNumber = q.DisplayNumber,
+                            QuestionText = q.QuestionText,
+                            MarkForReview = q.MarkForReview,
+                            AnswerText = "NA"
+                        };
+                        questionsNa.Add(question);
+                    }
+
+                    if (q.AnswerText == "U")
+                    {
+                        question = new Question()
+                        {
+                            QuestionType = q.QuestionType,
+                            DisplayNumber = q.DisplayNumber,
+                            QuestionText = q.QuestionText,
+                            MarkForReview = q.MarkForReview,
+                            AnswerText = "Unanswered"
+                        };
+                        questionsU.Add(question);
+                    }
+                }
+
+                if (questionsYes.Any())
+                {
+                    filteredGroupingsYes.Add(new Grouping
+                    {
+                        Title = b.Title,
+                        Questions = questionsYes
+                    });
+                }
+
+                if (questionsNo.Any())
+                {
+                    filteredGroupingsNo.Add(new Grouping
+                    {
+                        Title = b.Title,
+                        Questions = questionsNo
+                    });
+                }
+
+                if (questionsNa.Any())
+                {
+                    filteredGroupingsNa.Add(new Grouping
+                    {
+                        Title = b.Title,
+                        Questions = questionsNa
+                    });
+                }
+
+                if (questionsU.Any())
+                {
+                    filteredGroupingsU.Add(new Grouping
+                    {
+                        Title = b.Title,
+                        Questions = questionsU
+                    });
+                }
+
+                questionsYes = new List<Question>();
+                questionsNo = new List<Question>();
+                questionsNa = new List<Question>();
+                questionsU = new List<Question>();
+            }
+
+            return Ok(new { yes = filteredGroupingsYes, no = filteredGroupingsNo, na = filteredGroupingsNa, unanswered = filteredGroupingsU });
+        }
+
 
         /// <summary>
         /// get all comments and marked for review

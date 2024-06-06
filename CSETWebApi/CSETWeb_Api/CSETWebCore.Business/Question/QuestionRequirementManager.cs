@@ -83,10 +83,10 @@ namespace CSETWebCore.Business.Question
             // Get any subcategory answers for the assessment
             SubCatAnswers = (from sca in _context.SUB_CATEGORY_ANSWERS
                              join usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on sca.Heading_Pair_Id equals usch.Heading_Pair_Id
-                             where sca.Assessement_Id == AssessmentId
+                             where sca.Assessment_Id == AssessmentId
                              select new SubCategoryAnswersPlus()
                              {
-                                 AssessmentId = sca.Assessement_Id,
+                                 AssessmentId = sca.Assessment_Id,
                                  HeadingId = sca.Heading_Pair_Id,
                                  AnswerText = sca.Answer_Text,
                                  GroupHeadingId = usch.Question_Group_Heading_Id,

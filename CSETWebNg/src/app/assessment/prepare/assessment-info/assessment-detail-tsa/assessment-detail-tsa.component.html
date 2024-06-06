@@ -1,0 +1,92 @@
+<!----------------------
+
+   Copyright 2024 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<ng-container *transloco="let t">
+  <h4>{{t('organization details')}}</h4>
+  <form #f="ngForm">
+      <div class="form-row">
+          <p *ngIf="showAssessmentNameDisclaimer()">{{t('no pii in name')}}</p>
+          <div class="form-group col-md-6">
+
+              <label class="mb-1" for="name">{{t('assessment name')}}</label>
+              <input type="text" maxlength="100" [disabled]="configSvc.installationMode === 'ACET'"
+                  class="form-control" id="name" name="name" required focusOnInit="true"
+                  [(ngModel)]="assessment.assessmentName" (ngModelChange)="assessment.assessmentName"
+                  (change)="update($event)" autofocus tabindex="0">
+              <div class="invalid-feedback d-block text-muted" *ngIf="configSvc.installationMode === 'ACET'">
+                  Auto-populated based on data provided
+              </div>
+          </div>
+          <div class="form-group col-md-6">
+              <label class="mb-1" for="date">{{t('assessment date')}}</label>
+              <input matInput MatDatepickerInput class="form-control" id="date" name="date"
+                  [(ngModel)]="assessment.assessmentDate" [matDatepicker]="picker" (focus)="picker.open()"
+                  (blur)="update($event)" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
+              <mat-datepicker #picker></mat-datepicker>
+          </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6" *ngIf="showFacilityName()">
+            <label class="mb-1" for="facility">{{t('facility name')}}</label>
+            <input type="text" maxlength="100" class="form-control" id="facility" name="facility"
+                [(ngModel)]="assessment.facilityName" (change)="update($event)" tabindex="0">
+        </div>
+        <div class="form-group col-md-6" *ngIf="showStateName()">
+          <label class="mb-1" for="stateProvRegion">{{t('state province region')}}</label>
+          <select maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion"
+              [(ngModel)]="assessment.stateProvRegion" (change)="update($event)" tabindex="0">
+              <option [ngValue]="null">-- Select State/Province/Region --</option>
+              <option *ngFor="let stateOrProvince of statesAndProvincesOptions" [value]="stateOrProvince.displayName">
+                {{ stateOrProvince.displayName }}
+              </option>
+           </select>
+      </div>
+      </div>
+      <div class="form-row">
+          <div class="form-group col-md-6" *ngIf="showCityName()">
+              <label class="mb-1" for="citySite">{{t('city or site name')}}</label>
+              <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite"
+                  [(ngModel)]="assessment.cityOrSiteName" (change)="update($event)" tabindex="0">
+          </div>
+          <div class="form-group col-md-6" *ngIf="showPostalCode()">
+            <label class="mb-1" for="postalCode">{{t('postal code')}}</label>
+            <input type="text" maxlength="12" class="form-control" id="postalCode" name="postalCode"
+                [(ngModel)]="assessment.postalCode" (change)="update($event)" tabindex="0">
+        </div>
+      </div>
+  </form>
+  <div class="mt-4">
+      <h4>{{t('assessment type')}}</h4>
+      <h5>{{ assessment.typeTitle || 'Blank Assessment' }}</h5>
+      <p *ngIf="assessment.typeDescription && assessment.typeTitle != assessment.typeDescription"
+          [innerHtml]="assessment.typeDescription | safe"></p>
+
+      <div *ngIf="isAwwa">
+          <p>
+              Results from the <a href="https://awwa.org/cyber" target="_blank">AWWA Cybersecurity Assessment Tool</a>
+              can be imported into this assessment.
+          </p>
+          <button class="btn btn-primary" (click)="showAwwaDialog()">Import AWWA Tool Results</button>
+      </div>
+
+  </div>
+</ng-container>
