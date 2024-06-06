@@ -208,20 +208,12 @@ namespace CSETWebCore.Helpers
                     if (_includeText)
                     {
                         question.QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> ");
-
-
-                        // Currently in CPG the "practice" text is embedded in the full question text HTML.
-                        // We need to pull it out for the report.
-                        var p = Parser.Parse(question.QuestionText, ".");
-                        var cpgPractice = p.Select(".cpg-practice");
-                        question.Practice = cpgPractice.FirstOrDefault()?.Html();
-
-                        var cpgOutcome = p.Select(".cpg-outcome");
-                        question.Outcome = cpgOutcome.FirstOrDefault()?.Html();
-
-
                         question.Supplemental = myQ.Supplemental_Info;
 
+
+                        // CPG question elements
+                        question.SecurityPractice = myQ.Security_Practice;
+                        question.Outcome = myQ.Outcome;
                         question.Scope = myQ.Scope;
                         question.RecommendedAction = myQ.Recommend_Action;
                         question.Services = myQ.Services;
@@ -256,16 +248,11 @@ namespace CSETWebCore.Helpers
                     if (o != null)
                     {
                         question.QuestionText = o.QuestionText;
+                        question.SecurityPractice = o.SecurityPractice;
+                        question.Outcome = o.Outcome;
                         question.Scope = o.Scope;
                         question.RiskAddressed = o.RiskAddressed;
                         question.RecommendedAction = o.RecommendAction;
-
-                        var p = Parser.Parse(o.QuestionText, ".");
-                        var practice = p.Select(".cpg-practice").FirstOrDefault()?.Html();
-                        question.Practice = practice ?? question.Practice;
-
-                        var outcome = p.Select(".cpg-outcome").FirstOrDefault()?.Html();
-                        question.Outcome = outcome ?? question.Outcome;
                     }
 
                     grouping.Questions.Add(question);

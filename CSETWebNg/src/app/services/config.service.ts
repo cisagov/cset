@@ -40,7 +40,8 @@ export class ConfigService {
 
   onlineUrl: string;
   analyticsUrl: string = "http://localhost:5278/";
-
+  
+  csetGithubApiUrl: string;
   helpContactEmail: string;
   helpContactPhone: string;
 
@@ -163,6 +164,7 @@ export class ConfigService {
     this.analyticsUrl = "http://localhost:5278/";
     this.helpContactEmail = this.config.helpContactEmail;
     this.helpContactPhone = this.config.helpContactPhone;
+    this.csetGithubApiUrl = this.config.csetGithubApiUrl;
 
     this.galleryLayout = this.config.galleryLayout?.toString() || 'CSET';
     this.mobileEnvironment = this.config.mobileEnvironment;

@@ -45,7 +45,9 @@ import { ConversionService } from '../../../services/conversion.service';
   selector: 'app-reports',
   templateUrl: './reports.component.html',
   // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: { class: 'd-flex flex-column flex-11a' }, 
+  styleUrls: ['./reports.component.scss']
+
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
   /**
@@ -58,8 +60,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   disableIseReportLinks: boolean = true;
   disableEntirePage: boolean = false;
 
-  securityIdentifier: any = [];
-  securitySelected: string = 'None';
+  confidentiality: string = 'None';
   isMobile = false;
 
   lastModifiedTimestamp: string = '';
@@ -176,10 +177,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       this.isCyberFlorida = false;
     }
 
-    this.reportSvc.getSecurityIdentifiers().subscribe((data) => {
-      this.securityIdentifier = data;
-    });
-
     this.assessSvc.getLastModified().subscribe((data: any) => {
       this.lastModifiedTimestamp = data.lastModifiedDate;
     });
@@ -226,12 +223,14 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   *
+   * Opens a new browser window/tab for the specified report.
+   * 
+   * This will become deprecated once all report links are moved off of this page
+   * and into their own sub-components.
    */
-  clickReportLink(reportType: string, print: boolean = false) {
+  clickReportLink(reportType: string) {
     const url = '/index.html?returnPath=report/' + reportType;
     localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
-    localStorage.setItem('report-confidentiality', this.securitySelected);
     window.open(url, '_blank');
   }
 
@@ -239,7 +238,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
    *
    */
   clickReportService(report: string) {
-    this.reportSvc.getPdf(report, this.securitySelected).subscribe((data) => {
+    this.reportSvc.getPdf(report, this.confidentiality).subscribe((data) => {
       saveAs(data, 'test.pdf');
     });
   }
@@ -311,7 +310,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   onSelectSecurity(val) {
-    this.securitySelected = val;
+    this.confidentiality = val;
   }
 
   showExcelExportDialog() {

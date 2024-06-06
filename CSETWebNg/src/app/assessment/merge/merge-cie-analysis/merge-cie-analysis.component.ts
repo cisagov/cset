@@ -59,6 +59,8 @@ export class MergeCieAnalysisComponent implements OnInit {
 
 
   assessmentIssues = new Map();
+  assessmentDocuments = new Map();
+
   newAnswerIds = new Map();
   parentQuestionIds = new Set([10932]);
 
@@ -88,6 +90,8 @@ export class MergeCieAnalysisComponent implements OnInit {
   assessmentsProcessed: number = 0;
   questionsProcessed: number = 0;
 
+  navCounter: number = 0;
+
   constructor(
     public cieSvc: CieService,
     public assessSvc: AssessmentService,
@@ -105,9 +109,9 @@ export class MergeCieAnalysisComponent implements OnInit {
     this.pageLoading = true;
     this.getPrimaryAssessDetails();
     this.getConflicts();
-    // this.getIssues();
+    this.getIssues();
     this.getExistingAssessmentAnswers();
-    
+    this.getDocuments();
   }
 
   getPrimaryAssessDetails() {
@@ -138,6 +142,8 @@ export class MergeCieAnalysisComponent implements OnInit {
         } else {
           this.cieSvc.getNames().subscribe((result: any) => this.getAssessmentNames(result));
         }
+
+        //this.getDocuments();
       }
     );
   }
@@ -146,13 +152,14 @@ export class MergeCieAnalysisComponent implements OnInit {
     this.cieSvc.getObservations().subscribe(
       (details: any) => {
         let myIssues = [];
-        console.log(details)
 
         details.forEach(pair => {
           pair.observations.forEach(obs => {
             myIssues.push(obs);
           });
         });
+
+        console.log('unmapped issues:')
         console.log(myIssues)
 
         if (myIssues.length > 0) {
@@ -162,14 +169,68 @@ export class MergeCieAnalysisComponent implements OnInit {
                 for (let j = 0; j < response.groupings[0].subGroupings[i].subGroupings.length; j++) {
                   for (let k = 0; k < response.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
                     let question = response.groupings[0].subGroupings[i].subGroupings[j].questions[k];
+                    myIssues.forEach(obs => {
+                      if (question.questionId == obs.answer.question_Or_Requirement_Id) {
+                        if (this.assessmentIssues.get(question.questionId) != null) {
+                          let obsForQuestion = this.assessmentIssues.get(question.questionId);
+                          obsForQuestion.push(obs);
+                          this.assessmentIssues.set(question.questionId, obsForQuestion);
+                        } else {
+                          let obsArray = [];
+                          obsArray.push(obs);
+                          this.assessmentIssues.set(question.questionId, obsArray);
+                        }
+                      }
+                      
+                    });
                     
-                    if (this.assessmentIssues.get(question.questionId) !== undefined) {
-                      let arr = this.assessmentIssues.get(question.questionId);
-                      let savedIssues = arr.concat(myIssues);
-                      this.assessmentIssues.set(question.questionId, savedIssues);
-                    } else {
-                      this.assessmentIssues.set(question.questionId, myIssues);
-                    }
+                  }
+                }
+              }
+              console.log('mapped issues:')
+              console.log(this.assessmentIssues)
+            });
+        }
+        
+      }
+    );
+  }
+
+  
+  getDocuments() {
+    this.cieSvc.getDocuments().subscribe(
+      (details: any) => {
+        let myDocuments = [];
+        console.log(details)
+        details.forEach(pair => {
+          pair.documents.forEach(doc => {
+            myDocuments.push(doc);
+          });
+        });
+        console.log(myDocuments)
+
+        if (myDocuments.length > 0) {
+          this.maturitySvc.getQuestionsList(false).subscribe(
+            (response: any) => {
+              console.log(response)
+              for (let i = 0; i < response.groupings[0].subGroupings.length; i++) {
+                for (let j = 0; j < response.groupings[0].subGroupings[i].subGroupings.length; j++) {
+                  for (let k = 0; k < response.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
+                    let question = response.groupings[0].subGroupings[i].subGroupings[j].questions[k];
+                    myDocuments.forEach(docs => {
+                      if (question.answer_Id == docs.answer_Id) {
+                        if (this.assessmentDocuments.get(question.answer_Id) !== undefined) {
+                          let arr = this.assessmentDocuments.get(question.answer_Id);
+                          let savedDocuments = arr.concat(myDocuments);
+                          this.assessmentDocuments.set(question.answer_Id, savedDocuments);
+                        } else {
+                          this.assessmentDocuments.set(question.answer_Id, myDocuments);
+                        }
+                        console.log(this.assessmentDocuments);
+                      }
+                      
+                    });
+                    
                   }
                 }
               }
@@ -177,7 +238,8 @@ export class MergeCieAnalysisComponent implements OnInit {
         }
       }
     );
-  }  
+  }
+
 
   getExistingAssessmentAnswers() {
     this.assessSvc.getAssessmentToken(this.cieSvc.assessmentsToMerge[this.dataReceivedCount]).then(() => {
@@ -194,6 +256,60 @@ export class MergeCieAnalysisComponent implements OnInit {
     let l = 0;
     // A 3 tiered loop to check under ever grouping level to grab ALL questions
     for (let i = 0; i < response.groupings[0].subGroupings.length; i++) {
+      for (let m = 0; m < response.groupings[0].subGroupings[i].questions.length; m++) {
+        let question = response.groupings[0].subGroupings[i].questions[m];
+
+        // Combine the existing responses
+        if (question.freeResponseAnswer != "" && question.freeResponseAnswer != null) {
+
+          // if the question didn't previously have a mapped response text
+          if (!this.assessmentFreeResponses.has(question.questionId) && question.answer == 'U') {
+            this.assessmentFreeResponses.set(question.questionId, question.freeResponseAnswer);
+          } 
+          else if (!this.assessmentNAReasons.has(question.questionId) && question.answer == 'NA') {
+            this.assessmentNAReasons.set(question.questionId, question.freeResponseAnswer);
+          } 
+          else if (this.assessmentFreeResponses.has(question.questionId)) {
+            let myString = this.assessmentFreeResponses.get(question.questionId);
+            myString += ("\n" + question.freeResponseAnswer);
+            this.assessmentFreeResponses.set(question.questionId, myString);
+          }
+          else if (this.assessmentNAReasons.has(question.questionId)) {
+            let myString = this.assessmentNAReasons.get(question.questionId);
+            myString += ("\n" + question.freeResponseAnswer);
+            this.assessmentNAReasons.set(question.questionId, myString);
+          }
+        }
+
+        let answerToSave: Answer = {
+          answerId: null,
+          questionId: question.questionId,
+          questionType: null,
+          questionNumber: '0',
+          answerText: question.answer,
+          altAnswerText: question.altAnswerText,
+          freeResponseAnswer: null,//(question.answer == 'U' && this.assessmentFreeResponses.has(question.questionId)) ? this.assessmentFreeResponses.get(question.questionId) : ((question.answer == 'NA' && this.assessmentNAReasons.has(question.questionId)) ? this.assessmentNAReasons.get(question.questionId) : null),
+          comment: question.comment,
+          feedback: null,
+          markForReview: question.markForReview,
+          reviewed: false,
+          is_Component: false,
+          is_Requirement: false,
+          is_Maturity: true,
+          componentGuid: '00000000-0000-0000-0000-000000000000'
+        }
+
+        if (this.assessmentsProcessed === 0) {
+          // If it's our first pass through, set all the questions.
+          this.existingAssessmentAnswers.push(answerToSave);
+        } else if (this.assessmentsProcessed > 0 && (this.existingAssessmentAnswers[l].freeResponseAnswer == null
+          && this.existingAssessmentAnswers[l].answerText == 'U')
+        ) {
+          // If it's not our first pass through, ONLY add questions if it was unanswered previously
+          this.existingAssessmentAnswers[l] = answerToSave;
+        }
+        l++;
+      }
       for (let j = 0; j < response.groupings[0].subGroupings[i].subGroupings.length; j++) {
         for (let k = 0; k < response.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
           let question = response.groupings[0].subGroupings[i].subGroupings[j].questions[k];
@@ -204,11 +320,9 @@ export class MergeCieAnalysisComponent implements OnInit {
             // if the question didn't previously have a mapped response text
             if (!this.assessmentFreeResponses.has(question.questionId) && question.answer == 'U') {
               this.assessmentFreeResponses.set(question.questionId, question.freeResponseAnswer);
-              //this.assessmentAnswers.set(question.questionId, question.answerText);
             } 
             else if (!this.assessmentNAReasons.has(question.questionId) && question.answer == 'NA') {
               this.assessmentNAReasons.set(question.questionId, question.freeResponseAnswer);
-              //this.assessmentAnswers.set(question.questionId, question.answerText);
             } 
             else if (this.assessmentFreeResponses.has(question.questionId)) {
               let myString = this.assessmentFreeResponses.get(question.questionId);
@@ -313,6 +427,7 @@ export class MergeCieAnalysisComponent implements OnInit {
 
   navToHome() {
     this.cieSvc.prepForMerge = false;
+    this.navCounter = 0;
     this.router.navigate(['/landing-page']);
   }
 
@@ -468,23 +583,44 @@ export class MergeCieAnalysisComponent implements OnInit {
     }
   }
 
-  saveNewIssues(parentKey: number, issueArray: any[]) {
+  saveNewIssues(questionId: number, issueArray: any[]) {
     // For every issue we have from the original assessments
     issueArray.forEach((issue, index) => {
-      let actionItemsOverride: ActionItemText[] = [];
+      issue.observation_Id = 0;
+      issue.answer_Id = this.newAnswerIds.get(questionId);
 
-        issue.observation_Id = 0;
-        issue.answer_Id = this.newAnswerIds.get(parentKey);
+      this.observationSvc.saveObservation(issue).subscribe((response: any) => {
+        this.navCounter ++;
+        if (index === (issueArray.length - 1) && this.navCounter == 2) {
+          this.navToHome();
+        }
+      });
+    });
+  }
 
-        this.observationSvc.saveObservation(issue).subscribe((response: any) => {
-          // this.observationSvc.saveIssueText(actionItemsOverride, response).subscribe();
+  saveNewDocuments(documentArray: Map<number, any>) {
+    console.log(documentArray)
 
-          if (index === (issueArray.length - 1)) {
+    documentArray.forEach((assessPair, index) => {
+      console.log(assessPair)
+      assessPair.forEach((doc, index2) => {
+        doc.answer_Id = this.newAnswerIds.get(doc.question_Id);
+      });
+      console.log(assessPair)
+
+      this.cieSvc.saveDocuments(assessPair).subscribe(
+        (response: any) => {
+          this.navCounter ++;
+          if (this.navCounter == 2) {
             this.navToHome();
           }
-        });
-      // });
+      });
+      
     });
+
+    console.log(documentArray)
+    // For every document we have from the original assessments
+    
   }
 
   createMergedAssessment() {
@@ -508,7 +644,7 @@ export class MergeCieAnalysisComponent implements OnInit {
 
             // Pull the new assessment details (mostly empty/defaults)
             this.assessSvc.getAssessmentDetail().subscribe((details: AssessmentDetail) => {
-
+              console.log(details)
               // Update the assessment with the new data and send it back.
               for (let i = 0; i < 10; i++) {
                 switch (i + 1) {
@@ -622,25 +758,36 @@ export class MergeCieAnalysisComponent implements OnInit {
 
                     // This block uses the previous answer_Id's to persist issues on the new assessment
                     const iterator = this.assessmentIssues.entries();
-                    let parentKey = 0;
+                    let questionId = 0;
 
                     if (this.assessmentIssues.size !== 0) {
                       for (let iter of iterator) {
-                        parentKey = iter[0];
-                        let issueArray = this.assessmentIssues.get(parentKey);
-                        this.saveNewIssues(parentKey, issueArray);
+                        questionId = iter[0];
+                        let issueArray = this.assessmentIssues.get(questionId);
+                        this.saveNewIssues(questionId, issueArray);
                       }
                     } else {
                       // If we dont have any issues, we can be done.
                       this.mergeConflicts = [];
                       this.assessmentCombinedText.clear();
-                      this.navToHome();
+                      this.navCounter++;
                     }
+
+                    if (this.assessmentIssues.size !== 0) {
+                      this.saveNewDocuments(this.assessmentDocuments);
+
+                    } else {
+                      this.mergeConflicts = [];
+                      this.assessmentCombinedText.clear();
+                      this.navCounter++;
+                    }
+
                   //}
                 });
               });
-
+              
             });
+
           });
         });
   }

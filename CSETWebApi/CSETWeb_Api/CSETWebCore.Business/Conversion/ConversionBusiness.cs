@@ -21,12 +21,13 @@ namespace CSETWebCore.Business.Contact
         /// <summary>
         /// The set name for the Cyber Florida trimmed down CSF set
         /// </summary>
-        private readonly string CF_CSF_SetName = "Florida_NCSF_V1";
+        private readonly string CF_CSF_SetName = "Florida_NCSF_V2";
+        private readonly string[] CF_CSF_SetNames = { "Florida_NCSF_V2", "Florida_NCSF_V1" };
 
         /// <summary>
         /// The set name for Cybersecurity Framework v1.1
         /// </summary>
-        private readonly string CF_SetName = "NCSF_V1";
+        private readonly string CF_SetName = "NCSF_V2";
 
 
         /// <summary>
@@ -54,7 +55,7 @@ namespace CSETWebCore.Business.Contact
                 x.Assessment_Id == assessmentId && x.DataItemName == "MATURITY-SUBMODEL" && x.StringValue == "RRA CF");
 
             var availStandard = _context.AVAILABLE_STANDARDS
-                .Where(x => x.Assessment_Id == assessmentId && x.Set_Name == CF_CSF_SetName && x.Selected).FirstOrDefault();
+                .Where(x => x.Assessment_Id == assessmentId && CF_CSF_SetNames.Contains(x.Set_Name) && x.Selected).FirstOrDefault();
 
             if (cfRraRecord != null || availStandard != null)
             {
@@ -62,6 +63,16 @@ namespace CSETWebCore.Business.Contact
             }
 
             return false;
+        }
+
+        public List<CFEntry> IsEntryCF(List<int> assessmentIds)
+        {
+            List<CFEntry> results = new List<CFEntry>();
+            foreach (var assessmentId in assessmentIds)
+            {
+                results.Add(new CFEntry() { AssessmentId = assessmentId, IsEntry = IsEntryCF(assessmentId) });
+            }
+            return results;
         }
 
 

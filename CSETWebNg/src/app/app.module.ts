@@ -112,6 +112,7 @@ import { ContactItemComponent } from './assessment/prepare/assessment-info/asses
 // eslint-disable-next-line max-len
 import { AssessmentDemographicsComponent } from './assessment/prepare/assessment-info/assessment-demographics/assessment-demographics.component';
 import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
+import { AssessmentDetailTsaComponent } from './assessment/prepare/assessment-info/assessment-detail-tsa/assessment-detail-tsa.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { AssessmentInfoTsaComponent } from './assessment/prepare/assessment-info/assessment-info-tsa/assessment-info-tsa.component';
@@ -325,6 +326,7 @@ import { MaturityQuestionsIseComponent } from './assessment/questions/maturity-q
 import { EdmComponent } from './reports/edm/edm.component';
 import { TooltipModule } from '@cloudfactorydk/ng2-tooltip-directive';
 import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
+import { QuestionTextCpgComponent } from './assessment/questions/question-text/question-text-cpg/question-text-cpg.component';
 import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';
 import { CmmcFilteringService } from './services/filtering/maturity-filtering/cmmc-filtering.service';
 import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
@@ -369,6 +371,8 @@ import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
 import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra/tutorial-rra.component';
+import { TutorialCpgComponent } from './assessment/prepare/maturity/tutorial-cpg/tutorial-cpg.component';
+import { TutorialMvraComponent } from './assessment/prepare/maturity/tutorial-mvra/tutorial-mvra.component';
 import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level-results/rra-level-results.component';
 import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
 import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
@@ -648,6 +652,8 @@ import { CieAllQuestionsComponent } from './reports/cie/cie-all-questions/cie-al
 import { CiePrincipleOnlyComponent } from './reports/cie/cie-principle-only/cie-principle-only.component';
 import { CiePrinciplePhaseComponent } from './reports/cie/cie-principle-phase/cie-principle-phase.component';
 import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-not-applicable.component';
+import { SdOwnerDeficiencyComponent } from './reports/sd-owner/sd-owner-deficiency/sd-owner-deficiency.component';
+import { SdOwnerCommentsMfrComponent } from './reports/sd-owner/sd-owner-comments/sd-owner-comments-mfr.component';
 
 import { ReferencesSectionComponent } from './assessment/questions/references-section/references-section.component';
 import { CisaWorkflowWarningsComponent } from './assessment/results/reports/cisa-workflow-warnings/cisa-workflow-warnings.component';
@@ -655,6 +661,17 @@ import { AnalyticsComponent } from './assessment/results/analytics/analytics.com
 import { AnalyticsloginComponent } from './assessment/results/analysis/analytics-login/analytics-login.component';
 import { AnalyticsService } from './services/analytics.service';
 import { UploadDemographicsComponent } from './dialogs/import demographics/import-demographics.component';
+import { ReportListComponent } from './assessment/results/reports/report-list/report-list.component';
+import { ReportListImrComponent } from './assessment/results/reports/report-list/report-list-imr/report-list-imr.component';
+import { ReportListCisComponent } from './assessment/results/reports/report-list/report-list-cis/report-list-cis.component';
+import { ReportListCmmc2Component } from './assessment/results/reports/report-list/report-list-cmmc2/report-list-cmmc2.component';
+import { ReportListCrrComponent } from './assessment/results/reports/report-list/report-list-crr/report-list-crr.component';
+import { ReportListEdmComponent } from './assessment/results/reports/report-list/report-list-edm/report-list-edm.component';
+import { ReportListRraComponent } from './assessment/results/reports/report-list/reports-rra/report-list-rra.component';
+import { ReportListCpgComponent } from './assessment/results/reports/report-list/reports-list-cpg/report-list-cpg.component';
+import { ReportListMvraComponent } from './assessment/results/reports/report-list/report-list-mvra/report-list-mvra.component';
+
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -769,6 +786,7 @@ import { UploadDemographicsComponent } from './dialogs/import demographics/impor
     AssessmentContactsComponent,
     AssessmentDemographicsComponent,
     AssessmentInfoNcuaComponent,
+    AssessmentDetailTsaComponent,
     AssessmentDetailNcuaComponent,
     ResultsComponent,
     SalSimpleComponent,
@@ -939,6 +957,8 @@ import { UploadDemographicsComponent } from './dialogs/import demographics/impor
     TutorialEdmComponent,
     TutorialRraComponent,
     TutorialCrrComponent,
+    TutorialCpgComponent,
+    TutorialMvraComponent,
     LoginAcetComponent,
     LoginCsetComponent,
     LoginRraComponent,
@@ -954,6 +974,7 @@ import { UploadDemographicsComponent } from './dialogs/import demographics/impor
     EdmCommentsmarkedComponent,
     CisCommentsmarkedComponent,
     QuestionTextComponent,
+    QuestionTextCpgComponent,
     GlossaryTermComponent,
     PlaceholderQuestionsComponent,
     FeatureOptionComponent,
@@ -1254,11 +1275,22 @@ import { UploadDemographicsComponent } from './dialogs/import demographics/impor
     CiePrincipleOnlyComponent,
     CiePrinciplePhaseComponent,
     CieNotApplicableComponent,
-    AboutCieComponent, 
-    AnalyticsComponent, 
+    SdOwnerDeficiencyComponent,
+    SdOwnerCommentsMfrComponent,
+    AboutCieComponent,
+    AnalyticsComponent,
     ReferencesSectionComponent,
     CisaWorkflowWarningsComponent,
-    AnalyticsloginComponent
+    AnalyticsloginComponent,
+    ReportListImrComponent,
+    ReportListCisComponent,
+    ReportListCmmc2Component,
+    ReportListComponent,
+    ReportListCrrComponent,
+    ReportListEdmComponent,
+    ReportListRraComponent,
+    ReportListCpgComponent, 
+    ReportListMvraComponent
   ],
   providers: [
     TranslocoService,
@@ -1337,7 +1369,7 @@ import { UploadDemographicsComponent } from './dialogs/import demographics/impor
     Utilities,
     NCUAService,
     GalleryService,
-    FooterService, 
+    FooterService,
     AnalyticsService
   ],
   bootstrap: [AppComponent]

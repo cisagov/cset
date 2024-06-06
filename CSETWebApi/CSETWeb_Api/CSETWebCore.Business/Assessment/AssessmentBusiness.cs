@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
@@ -18,6 +17,7 @@ using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Observations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +33,7 @@ namespace CSETWebCore.Business.Assessment
         private readonly IContactBusiness _contactBusiness;
         private readonly ISalBusiness _salBusiness;
         private readonly IMaturityBusiness _maturityBusiness;
+        private readonly IACETMaturityBusiness _acetMaturityBusiness;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IStandardsBusiness _standardsBusiness;
         private readonly IDiagramManager _diagramManager;
@@ -996,7 +997,6 @@ namespace CSETWebCore.Business.Assessment
                 var answerFindingPair = results.Select(x => new { x.a, x.f }).Distinct();
 
                 List<FINDING> observationList = new List<FINDING>();
-                //answerFindingPair.Where(x => x.a.Assessment_Id == assessId).Select(x => x.f);
                 foreach (var pair in answerFindingPair)
                 {
                     observationList.Add(pair.f);
@@ -1006,6 +1006,52 @@ namespace CSETWebCore.Business.Assessment
             }
 
             return observationsPerAssessment;
+        }
+
+        public IEnumerable<MergeDocuments> GetAssessmentDocuments(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10)
+        {
+            int?[] myArray = new int?[]
+            {
+                id1,id2,id3,id4,id5,id6,id7,id8,id9,id10
+            };
+
+            List<int?> myList = new List<int?>();
+            foreach (int? item in myArray)
+            {
+                if (item != null && item != 0)
+                {
+                    myList.Add(item);
+                }
+            }
+
+            List<MergeDocuments> documentsPerAssessment = new List<MergeDocuments>();
+            foreach (int assessId in myList)
+            {
+                var results = (from a in _context.ANSWER
+                               join da in _context.DOCUMENT_ANSWERS on a.Answer_Id equals da.Answer_Id
+                               join f in _context.DOCUMENT_FILE on da.Document_Id  equals f.Document_Id
+                               where a.Assessment_Id == assessId
+                               select new { a, da, f }).ToList();
+
+                var answerFindingPair = results.Select(x => new { x.a, x.da, x.f }).Distinct();
+
+                List<DocumentWithAnswerId> documentList = new List<DocumentWithAnswerId>();
+                foreach (var pair in answerFindingPair)
+                {
+                    DocumentWithAnswerId document = new DocumentWithAnswerId();
+                    document.Document_Id = pair.f.Document_Id;
+                    document.FileName = pair.f.Name;
+                    document.Title = pair.f.Title;
+                    document.Answer_Id = pair.da.Answer_Id;
+                    document.Question_Id = pair.a.Question_Or_Requirement_Id;
+                    
+                    documentList.Add(document);
+                }
+
+                documentsPerAssessment.Add(new MergeDocuments(assessId, documentList));
+            }
+
+            return documentsPerAssessment;
         }
     }
 }

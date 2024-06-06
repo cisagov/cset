@@ -287,7 +287,7 @@ namespace CSETWebCore.Business.Reports
             var myMaturityLevels = _context.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
             // get the target maturity level IDs
-            var targetRange = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityRangeIds(_assessmentId);
+            var targetRange = new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityRangeIds(_assessmentId);
 
             var questions = _context.MATURITY_QUESTIONS.Where(q =>
                 myModel.model_id == q.Maturity_Model_Id
@@ -455,7 +455,7 @@ namespace CSETWebCore.Business.Reports
             var myMaturityLevels = _context.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
             // get the target maturity level IDs
-            var targetRange = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetIseMaturityRangeIds(_assessmentId);
+            var targetRange = new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetIseMaturityRangeIds(_assessmentId);
 
             var questions = _context.MATURITY_QUESTIONS.Where(q =>
                 myModel.model_id == q.Maturity_Model_Id
@@ -580,7 +580,7 @@ namespace CSETWebCore.Business.Reports
             var myMaturityLevels = _context.MATURITY_LEVELS.Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
             // get the target maturity level IDs
-            var targetRange = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetIseMaturityRangeIds(_assessmentId);
+            var targetRange = new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetIseMaturityRangeIds(_assessmentId);
 
             var questions = _context.MATURITY_QUESTIONS.Where(q =>
                 myModel.model_id == q.Maturity_Model_Id).ToList();
