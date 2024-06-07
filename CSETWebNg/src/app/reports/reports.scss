@@ -472,8 +472,11 @@ table.td-padding-half-rem td {
   padding: .5rem;
 }
 
-.shaded-red {
+.shaded-red td {
   background-color: #ffe7e7;
+  @media print {
+     background-color: #ffe7e7 !important;
+  }
 }
 
 .text-underline {
