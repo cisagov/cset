@@ -40,6 +40,10 @@
   <ItemGroup>
 	<None Include="Documents\**" CopyToOutputDirectory="PreserveNewest" LinkBase="Documents\" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Remove="Controllers\RLaasController.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Documents\cdDocs_CRR\" />
