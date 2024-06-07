@@ -45,7 +45,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
 
         public List<SimpleNode> GetTreeNodes()
         {
-            return getNodes(this.TopNodes.ToList());
+            return GetNodes(this.TopNodes.ToList());
         }
 
 
@@ -55,7 +55,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
         /// </summary>
         /// <param name="nodes"></param>
         /// <returns></returns>
-        private List<SimpleNode> getNodes(List<ResourceNode> nodes)
+        private List<SimpleNode> GetNodes(List<ResourceNode> nodes)
         {
             List<SimpleNode> rlist = new List<SimpleNode>();
 
@@ -63,7 +63,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
 
             foreach (ResourceNode r in nodes)
             {
-                List<SimpleNode> schildren = getNodes(r.Nodes.ToList());
+                List<SimpleNode> schildren = GetNodes(r.Nodes.ToList());
 
                 // don't include structure/parent nodes without children
                 if (r is NoneNode && schildren.Count == 0)
@@ -73,6 +73,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
 
                 s = new SimpleNode()
                 {
+                    DocId = r.ID.ToString(),
                     label = r.TreeTextNode,
                     value = r.FileName,
                     children = schildren,
