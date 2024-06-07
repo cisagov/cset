@@ -4,11 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="RLaaS\**" />
-    <EmbeddedResource Remove="RLaaS\**" />
-    <None Remove="RLaaS\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Remove="App_Data\assessmentInviteTemplate_ACET.html" />
