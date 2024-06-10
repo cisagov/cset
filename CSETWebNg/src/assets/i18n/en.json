@@ -417,7 +417,7 @@
       "yes(c)": "Yes Compensating Control",
       "imp-cpg": "Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
       "prog-cpg": "In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
-      "scoped-cpg": "Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal.",
+      "scoped-cpg": "Scoped - An organization has identified the full set of activities required to meet the stated outcome of a goal.",
       "not-cpg": "Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal.",
       "fi-c2m2": "Fully Implemented - Complete",
       "li-c2m2": "Largely Implemented - Complete, but with a recognized opportunity for improvement",
@@ -682,7 +682,7 @@
         },
         "2": {
           "title": "CMMC 2.0 - Deficiency Report",
-          "desc": "The report contains a list of all CMMC practices that were marked as “No” or unanswered during theassessment process. This report serves to identify potential deficiencies or gaps in the contractor’s cybersecurity practices."
+          "desc": "The report contains a list of all CMMC practices that were marked as “No” or unanswered during the assessment process. This report serves to identify potential deficiencies or gaps in the contractor’s cybersecurity practices."
         },
         "3": {
           "title": "CMMC 2.0 - Comments and Marked for Review",
@@ -776,7 +776,7 @@
       "no observations message": "The assessment does not contain any observations that are assigned to an individual.",
       "question identifier": "Question Identifier",
       "question text": "Question Text",
-      "summary": "This document contains a list of all Observations identified and recorded during the assessment. For more information, view the Observations Tear Out Sheets page in the CSET User Guide."
+      "summary": "This document contains a list of all observations identified and recorded during the assessment. For more information, view the Observations Tear Out Sheets page in the CSET User Guide."
     },
     "core": {
       "dashboard": {
@@ -1550,7 +1550,7 @@
       "11": "Select the applicable answer for each question. Unanswered questions are calculated as a “Not” response.",
       "11a": "– An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
       "11b": "– An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
-      "11c": "– An organization has identified the full set of required activities required to meet the stated outcome of a goal.",
+      "11c": "– An organization has identified the full set of activities required to meet the stated outcome of a goal.",
       "11d": "– An organization has no immediate plans to implement the recommended actions for a goal."
     },
     "mvra": {
@@ -1559,7 +1559,7 @@
       "2": "Since the MVRA incorporates key components from several assessments and frameworks, it’s broadly applicable to Strategically Important Entities (SIE), High Value Assets (HVA), Federal Civilian Executive Branch (FCEB), State, local, tribal, and territorial (SLTT) governments, and critical infrastructure.",
       "3": "The MVRA structure is derived from the NIST Cybersecurity Framework (CSF), CISA Cyber Essentials, and NIST 800-160 Vol 2. Rev 1 (NIST 800-160).",
       "4": "The scope of this assessment focuses on the critical services essential to the success of an organization’s mission and the assets necessary to provide those services. The MVRA evaluates the information technology (IT) and operational technology (OT) used to deliver or secure the critical services.",
-      "5": "A critical service is defined as a set of important activities that the organization carries out, in the production of a product or while providing services to its customers. A service that the loss thereof would result in physical destruction, safety, and health effects (e.g., a chemical release or loss of traffic controls), theft of sensitive information that can be exploited, business interruption (e.g., denial of service), or other economic loss to the organization or its customers/users.A critical service is defined as a set of important activities that the organization carries out, in the production of a product or while providing services to its customers. A service that the loss thereof would result in physical destruction, safety, and health effects (e.g., a chemical release or loss of traffic controls), theft of sensitive information that can be exploited, business interruption (e.g., denial of service), or other economic loss to the organization or its customers/users.",
+      "5": "A critical service is defined as a set of important activities that the organization carries out, in the production of a product or while providing services to its customers. A service that the loss thereof would result in physical destruction, safety, and health effects (e.g., a chemical release or loss of traffic controls), theft of sensitive information that can be exploited, business interruption (e.g., denial of service), or other economic loss to the organization or its customers/users.",
       "6": "The MVRA considers four categories of assets: People, Information, Technology, and Facilities. The definition for each asset type is listed below:",
       "6a1": "People",
       "6a2": ": the staff (both internal and external to the organization) such as people that support data centers or otherwise use information and communications technology to operate, monitor, and support the service.",
@@ -1586,7 +1586,11 @@
       "15b": "Question Intent",
       "15c": "Criteria for Full Implementation Response",
       "15d": "Criteria for Partial Implementation Response",
-      "15e": "Possible Evidence"
+      "15e": "Possible Evidence",
+      "16": "An example of the above structure is WI:AT-1.Q1, which represents Withstand, Awareness and Training, Goal 1, Question 1. The blue oval beneath each identifier indicates the basic, intermediate, or advanced tier for the practice.",
+      "17": "- the organization fully performs the activity specified in the question.",
+      "18": "- the organization partially performs the activity.",
+      "19": "- the organization does not perform the activity at all."
     }
   }
 }
