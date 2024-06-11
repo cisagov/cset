@@ -68,13 +68,7 @@ export class EmailComponent implements OnInit {
   }
 
   send() {
-
     const sendList = this.emailSvc.getCleanEmailList(this.textList);
-    // this.body =   this.body + '<br><a href="'
-    // + this.configSvc.appUrl
-    // + 'index.html?assessment_id='
-    // + this.assessSvc.id()
-    // + '">Click here to view your CSET assessment</a>';
     this.emailSvc.sendInvites(this.subject, this.body, sendList).subscribe(
       x => {
         this.dialog.close(x);

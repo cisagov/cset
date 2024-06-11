@@ -43,7 +43,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="searchRequest"></param>
         /// <returns></returns>        
         [HttpPost]
-        [Route("api/ResourceLibrary")]
+        [Route("api/library/search")]
         public IActionResult GetDetails([FromBody] SearchRequest searchRequest)
         {
             if (String.IsNullOrWhiteSpace(searchRequest.term))
@@ -64,7 +64,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/ResourceLibrary/tree")]
+        [Route("api/library/tree")]
         public List<SimpleNode> GetTree()
         {
             IResourceLibraryRepository resource = new ResourceLibraryRepository(_context, new CSETGlobalProperties(_context));
@@ -72,7 +72,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/ResourceLibrary/doc")]
+        [Route("api/library/flowdoc")]
         public string GetFlowDoc(string type, int id)
         {
             // pull the flowdoc from the database
