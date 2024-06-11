@@ -178,6 +178,7 @@ namespace CSETWebCore.Business.Demographic
             // Not all fields are stored in DEMOGRAPHICS table ... store some in DETAILS-DEMOGRAPHICS
             var extBiz = new DemographicExtBusiness(_context);
             extBiz.SaveX(demographics.AssessmentId, "CISA-REGION", demographics.CisaRegion);
+            extBiz.SaveX(demographics.AssessmentId, "ORG-POC", demographics.OrgPointOfContact);
 
 
 
