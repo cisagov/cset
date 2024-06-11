@@ -1590,7 +1590,8 @@
       "16": "An example of the above structure is WI:AT-1.Q1, which represents Withstand, Awareness and Training, Goal 1, Question 1. The blue oval beneath each identifier indicates the basic, intermediate, or advanced tier for the practice.",
       "17": "- the organization fully performs the activity specified in the question.",
       "18": "- the organization partially performs the activity.",
-      "19": "- the organization does not perform the activity at all."
+      "19": "- the organization does not perform the activity at all.",
+      "20": "Select the applicable answer for each question."
     }
   }
 }
