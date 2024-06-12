@@ -205,7 +205,7 @@ namespace CSETWebCore.Helpers
             {
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
-                return new List<string>();
+                return [];
             }
         }
     }
