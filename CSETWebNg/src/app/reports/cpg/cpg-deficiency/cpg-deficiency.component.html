@@ -45,10 +45,9 @@
                 <tr>
                     <td class="deficiencies-list-item" style="font-weight: bold; width: 50px;">{{s.mat.question_Title}}
                     </td>
-                    <td class="deficiencies-list-comment">{{parseQuestionText(s.mat.question_Text)}}</td>
+                    <td class="deficiencies-list-comment">{{s.mat.security_Practice}}</td>
                     <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                         <div style="width: 9rem; font-weight: bold;">
-                            <!-- {{s.answer.answer_Text}} -->
                             {{questionsSvc.answerDisplayLabel(11, s.answer.answer_Text)}}
                         </div>
                     </td>

@@ -1781,6 +1781,12 @@ namespace CSETWebCore.Business.Reports
                     identifier = f.mq.Question_Title;
                     questionText = f.mq.Question_Text;
 
+                    // CPG is a special case
+                    if (!String.IsNullOrEmpty(f.mq.Security_Practice))
+                    {
+                        questionText = f.mq.Security_Practice;
+                    }
+
                     // overlay
                     MaturityQuestionOverlay o = _overlay.GetMaturityQuestion(f.mq.Mat_Question_Id, lang);
                     if (o != null)
