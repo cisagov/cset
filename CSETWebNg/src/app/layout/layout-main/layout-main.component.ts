@@ -53,10 +53,9 @@ export class LayoutMainComponent  implements OnInit {
 
   display = "none";
   displayNotifications="none";
-  localVersion:string='';
-  actualVersion:string='';
-  githubVersion=[]
-  showVersionNotification = false;
+  localVersion: string;
+  
+  
    
   constructor(
     public auth: AuthenticationService,
@@ -71,25 +70,7 @@ export class LayoutMainComponent  implements OnInit {
     public versionSvc:VersionService
   ) { }
   ngOnInit() {
-    this.versionSvc.getGithubLatestRelease().subscribe(data=>{
-      this.actualVersion=data.tag_name.substring(1)
-      this.githubVersion=data.tag_name.substring(1).split('.').map(x => parseInt(x, 10))
-      if(data){
-        this.versionSvc.getInstalledVersion().subscribe(version=>{
-          this.localVersion=version.majorVersion.toString()+'.'+version.minorVersion.toString()+'.'+version.patch.toString()+'.'+version.build.toString();
-          if(version.majorVersion < this.githubVersion[0] ||
-            (version.majorVersion === this.githubVersion[0] && version.minorVersion < this.githubVersion[1]) ||
-            (version.majorVersion === this.githubVersion[0] && version.minorVersion === this.githubVersion[1] && version.patch < this.githubVersion[2]) ||
-            (version.majorVersion === this.githubVersion[0] && version.minorVersion === this.githubVersion[1] && version.patch === this.githubVersion[2] && version.build < this.githubVersion[3]))
-         {
-          this.showVersionNotification=true;
-         }
-        else{
-          this.showVersionNotification=false;
-        }
-        })
-      }
-    })
+    this.versionSvc.getLatestVersion();
   }
   /**
    * Indicates if the user is currently within the Module Builder pages.

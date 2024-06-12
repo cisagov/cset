@@ -66,6 +66,8 @@ export class ResourceLibraryComponent implements OnInit {
   searchString: string;
   apiUrl: string;
   docUrl: string;
+  libraryUrl: string;
+  refDocUrl: string;
   selectedPane = 'search';
   dialogRef: MatDialogRef<OkayComponent>;
   isLoading: boolean;
@@ -86,7 +88,9 @@ export class ResourceLibraryComponent implements OnInit {
   ngOnInit() {
     this.isexpanded = true;
     this.apiUrl = this.configSvc.apiUrl;
-    this.docUrl = this.configSvc.docUrl;
+    this.libraryUrl = this.configSvc.libraryUrl;
+    this.refDocUrl = this.configSvc.refDocUrl;
+    this.docUrl = this.configSvc.refDocUrl;
 
     this.titleSvc.setTitle(this.configSvc.behaviors.defaultTitle);
 
@@ -100,12 +104,10 @@ export class ResourceLibraryComponent implements OnInit {
         this.setFilter(value);
       });
 
-    const timeout = setTimeout(() => { this.isLoading = true; }, 1000);
-    this.http.get(this.apiUrl + 'ResourceLibrary/tree').subscribe(
+    this.http.get(this.libraryUrl + 'tree').subscribe(
       (response: NavTreeNode[]) => {
         this.navTreeSvc.setTree(response, this.navSvc.getMagic(), true);
         this.isLoading = false;
-        clearTimeout(timeout);
       }
     );
   }
@@ -162,7 +164,7 @@ export class ResourceLibraryComponent implements OnInit {
 
   search(term: string) {
     this.http.post(
-      this.apiUrl + 'ResourceLibrary',
+      this.libraryUrl + 'search',
       {
         term: term,
         isProcurement: true,
@@ -214,7 +216,7 @@ export class ResourceLibraryComponent implements OnInit {
     }
 
     this.http.get(
-      this.apiUrl + 'ResourceLibrary/doc?type=' + docType + '&id=' + id,
+      this.libraryUrl + 'flowdoc?type=' + docType + '&id=' + id,
       headers)
       .subscribe(
         (docHtml: string) => {
