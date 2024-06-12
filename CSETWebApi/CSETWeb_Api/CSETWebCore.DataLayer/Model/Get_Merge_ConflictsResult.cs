@@ -17,6 +17,8 @@ namespace CSETWebCore.DataLayer.Model
         public string Answer_Text1 { get; set; }
         public string Comment1 { get; set; }
         public string Alt_Text1 { get; set; }
+
+        public string Feedback1 { get; set; }
         public string Free_Response_Answer1 { get; set; }
 
         public string Assessment_Name2 { get; set; }
@@ -25,6 +27,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Answer_Text2 { get; set; }
         public string Comment2 { get; set; }
         public string Alt_Text2 { get; set; }
+        public string Feedback2 { get; set; }
         public string Free_Response_Answer2 { get; set; }
 
         public string Assessment_Name3 { get; set; }
@@ -33,6 +36,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Answer_Text3 { get; set; }
         public string Comment3 { get; set; }
         public string Alt_Text3 { get; set; }
+        public string Feedback3 { get; set; }
         public string Free_Response_Answer3 { get; set; }
 
         public string Assessment_Name4 { get; set; }
@@ -41,6 +45,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Answer_Text4 { get; set; }
         public string Comment4 { get; set; }
         public string Alt_Text4 { get; set; }
+        public string Feedback4 { get; set; }
         public string Free_Response_Answer4 { get; set; }
 
         public string Assessment_Name5 { get; set; }
@@ -49,6 +54,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Answer_Text5 { get; set; }
         public string Comment5 { get; set; }
         public string Alt_Text5 { get; set; }
+        public string Feedback5 { get; set; }
         public string Free_Response_Answer5 { get; set; }
 
         public string Assessment_Name6 { get; set; }
@@ -57,6 +63,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Answer_Text6 { get; set; }
         public string Comment6 { get; set; }
         public string Alt_Text6 { get; set; }
+        public string Feedback6 { get; set; }
         public string Free_Response_Answer6 { get; set; }
 
         public int? Assessment_id7 { get; set; }
@@ -65,6 +72,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Answer_Text7 { get; set; }
         public string Comment7 { get; set; }
         public string Alt_Text7 { get; set; }
+        public string Feedback7 { get; set; }
         public string Free_Response_Answer7 { get; set; }
 
         public string Assessment_Name8 { get; set; }
@@ -72,7 +80,9 @@ namespace CSETWebCore.DataLayer.Model
         public int? Question_Or_Requirement_Id8 { get; set; }
         public string Answer_Text8 { get; set; }
         public string Comment8 { get; set; }
+
         public string Alt_Text8 { get; set; }
+        public string Feedback8 { get; set; }
         public string Free_Response_Answer8 { get; set; }
 
         public string Assessment_Name9 { get; set; }
@@ -81,6 +91,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Answer_Text9 { get; set; }
         public string Comment9 { get; set; }
         public string Alt_Text9 { get; set; }
+        public string Feedback9 { get; set; }
         public string Free_Response_Answer9 { get; set; }
 
         public string Assessment_Name10 { get; set; }
@@ -89,6 +100,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Answer_Text10 { get; set; }
         public string Comment10 { get; set; }
         public string Alt_Text10 { get; set; }
+        public string Feedback10 { get; set; }
         public string Free_Response_Answer10 { get; set; }
 
     }

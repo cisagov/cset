@@ -24,6 +24,9 @@ export class CieNotApplicableComponent {
   examLevel: string = '';
   loading: boolean = true;
 
+  principleFound: boolean = false;
+  phaseFound: boolean = false;
+
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
   constructor(
@@ -42,10 +45,13 @@ export class CieNotApplicableComponent {
     this.cieSvc.getCieNaQuestions().subscribe(
       (r: any) => {
         this.response = r;
-
         // goes through domains
         for (let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
           let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
+
+          if (domain?.questions?.length > 0) {
+            this.principleFound = true;
+          }
           // goes through subcategories
           for (let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
@@ -53,10 +59,13 @@ export class CieNotApplicableComponent {
 
             // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
             // goes through questions
+            if (subcat?.questions?.length > 0) {
+              this.phaseFound = true;
+            }
             for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
-
-                this.expandedOptions.set(domain?.title + '_' + subcat?.title, false);
+              
+              this.expandedOptions.set(domain?.title + '_' + subcat?.title, false);
                 // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
             }
           }
