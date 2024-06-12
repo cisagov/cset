@@ -40,6 +40,8 @@ import { ObservationsService } from '../../../services/observations.service';
 import { CisaWorkflowFieldValidationResponse } from '../../../models/demographics-iod.model';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConversionService } from '../../../services/conversion.service';
+import { AssessmentDocumentsComponent } from '../../../dialogs/assessment-documents/assessment-documents.component';
+import { CieDocumentsComponent } from '../../../dialogs/cie-documents/cie-documents.component';
 
 @Component({
   selector: 'app-reports',
@@ -383,6 +385,15 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         return "background-color: #3B68AA; color: white;";
       }
     }
+  }
+
+  showAssessDocs() {
+    if (this.dialog.openDialogs[0]) {
+      return;
+    }
+    // , {width: '800px', height: "500px"}
+    this.dialogRef = this.dialog.open(CieDocumentsComponent);
+    this.dialogRef.afterClosed().subscribe();
   }
 
 }

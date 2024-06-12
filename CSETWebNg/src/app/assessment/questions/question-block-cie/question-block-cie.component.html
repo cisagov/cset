@@ -119,7 +119,8 @@
 
                             <textarea id="{{'freeResponse-q-' + q.questionId}}" class="form-control mb-2"
                                 [style]="('width: 100%; min-height: 40px; max-height: ' + summaryBoxMax + 'px')"
-                                [value]="freeResponseAnswers.get(q.questionId)" [placeholder]="(q.answer != 'NA' ? textPlaceholderEmpty : textPlaceholderNA)"
+                                [value]="freeResponseAnswers.get(q.questionId) != null ? freeResponseAnswers.get(q.questionId) : ''" 
+                                [placeholder]="(q.answer != 'NA' ? textPlaceholderEmpty : textPlaceholderNA)"
                                 (focus)="autoResize(q.questionId)" (keydown)="autoResize(q.questionId)"
                                 (change)="changeText(q, $event)" spellcheck="true"></textarea>
                             

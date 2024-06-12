@@ -17,9 +17,11 @@ using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Diagram;
+using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Reports;
+using CSETWebCore.Model.Set;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -2153,7 +2155,8 @@ namespace CSETWebCore.Business.Reports
                     {
                         foreach (var question in assesmentFactor.Questions)
                         {
-                            if (question.Answer != null)
+                            // if the report shows N/A only, make sure the answer's included are only "NA"
+                            if (question.Answer != null && (filterForNa ? question.Answer == "NA" : true))
                             {
                                 var newQuestion = new MaturityAnsweredQuestions()
                                 {
@@ -2254,6 +2257,209 @@ namespace CSETWebCore.Business.Reports
             return maturityDomains;
         }
 
+        //
+
+        public List<MatAnsweredQuestionDomain> GetCieDocumentsForAssessment()
+        {
+            Dictionary<int, List<DocumentWithAnswerId>> docDictionary = new Dictionary<int, List<DocumentWithAnswerId>>();
+
+            List<DocumentWithAnswerId> documentList = new List<DocumentWithAnswerId>();
+
+            var results = (from f in _context.DOCUMENT_FILE
+                           join da in _context.DOCUMENT_ANSWERS on f.Document_Id equals da.Document_Id
+                           join a in _context.ANSWER on da.Answer_Id equals a.Answer_Id
+                           join q in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals q.Mat_Question_Id
+                           where f.Assessment_Id == _assessmentId
+                           select new { f, da, a, q }).ToList();
+
+            var questionIds = results.DistinctBy(x => x.q.Mat_Question_Id).ToList();
+
+            results.ForEach(doc =>
+            {
+                DocumentWithAnswerId newDoc = new DocumentWithAnswerId()
+                {
+                    Answer_Id = doc.da.Answer_Id,
+                    Title = doc.f.Title,
+                    FileName = doc.f.Name,
+                    Document_Id = doc.da.Document_Id,
+                    Question_Id = doc.a.Question_Or_Requirement_Id,
+                    Question_Title = doc.q.Question_Title
+                };
+                documentList.Add(newDoc);
+                if (docDictionary.ContainsKey(newDoc.Question_Id))
+                {
+                    docDictionary[newDoc.Question_Id].Add(newDoc);
+                }
+                else
+                {
+                    docDictionary.Add(newDoc.Question_Id, [newDoc]);
+                }
+            });
+
+            //
+            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+
+
+            var myModel = _context.AVAILABLE_MATURITY_MODELS
+                .Include(x => x.model)
+                .Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+
+            List<MATURITY_QUESTIONS> questions = new List<MATURITY_QUESTIONS>();
+
+            questions = _context.MATURITY_QUESTIONS.Where(q =>
+                myModel.model_id == q.Maturity_Model_Id).ToList();
+
+
+            // Get all MATURITY answers for the assessment
+            //IQueryable<FullAnswer> answers = new IQueryable<FullAnswer>();
+
+            var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Maturity")
+                          from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
+                          select new FullAnswer() { a = a, b = b };
+
+            // Get all subgroupings for this maturity model
+            var allGroupings = _context.MATURITY_GROUPINGS
+                .Include(x => x.Type)
+                .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
+
+            //Get All the Observations and issues with the Observations. 
+
+
+            // Recursively build the grouping/question hierarchy
+            var questionGrouping = new MaturityGrouping();
+            BuildSubGroupings(questionGrouping, null, allGroupings, questions, answers.ToList());
+
+            var maturityDomains = new List<MatAnsweredQuestionDomain>();
+
+            // ToDo: Refactor the following stucture of loops
+            foreach (var domain in questionGrouping.SubGroupings)
+            {
+                var newDomain = new MatAnsweredQuestionDomain()
+                {
+                    Title = domain.Title,
+                    IsDeficient = false,
+                    AssessmentFactors = new List<MaturityAnsweredQuestionsAssesment>()
+                };
+                foreach (var assesmentFactor in domain.SubGroupings)
+                {
+                    var newAssesmentFactor = new MaturityAnsweredQuestionsAssesment()
+                    {
+                        Title = assesmentFactor.Title,
+                        IsDeficient = false,
+                        Components = new List<MaturityAnsweredQuestionsComponent>(),
+                        Questions = new List<MaturityAnsweredQuestions>()
+                    };
+
+
+                    if (assesmentFactor.Questions.Count > 0)
+                    {
+                        foreach (var question in assesmentFactor.Questions)
+                        {
+                            // if the report shows N/A only, make sure the answer's included are only "NA"
+                            if (docDictionary.ContainsKey(question.QuestionId))
+                            {
+                                var newQuestion = new MaturityAnsweredQuestions()
+                                {
+                                    Title = question.DisplayNumber,
+                                    QuestionText = question.QuestionText,
+                                    MaturityLevel = question.MaturityLevel.ToString(),
+                                    AnswerText = question.Answer,
+                                    Comment = question.Comment,
+                                    MarkForReview = question.MarkForReview,
+                                    MatQuestionId = question.QuestionId,
+                                    FreeResponseText = question.FreeResponseAnswer,
+                                    Documents = docDictionary[question.QuestionId]
+                                };
+
+                                if (question.Answer == "N")
+                                {
+                                    newDomain.IsDeficient = true;
+                                    newAssesmentFactor.IsDeficient = true;
+                                }
+
+                                if (question.Comment != null)
+                                {
+                                    newQuestion.Comments = "Yes";
+                                }
+                                else
+                                {
+                                    newQuestion.Comments = "No";
+                                }
+                                if (newQuestion.MaturityLevel == "5")
+                                {
+                                    newAssesmentFactor.Questions.Add(newQuestion);
+                                }
+                            }
+                        }
+                    }
+                    foreach (var component in assesmentFactor.SubGroupings)
+                    {
+                        var newComponent = new MaturityAnsweredQuestionsComponent()
+                        {
+                            Title = component.Title,
+                            IsDeficient = false,
+                            Questions = new List<MaturityAnsweredQuestions>(),
+                        };
+
+                        foreach (var question in component.Questions)
+                        {
+                            if (docDictionary.ContainsKey(question.QuestionId))
+                            {
+                                var newQuestion = new MaturityAnsweredQuestions()
+                                {
+                                    Title = question.DisplayNumber,
+                                    QuestionText = question.QuestionText,
+                                    MaturityLevel = question.MaturityLevel.ToString(),
+                                    AnswerText = question.Answer,
+                                    Comment = question.Comment,
+                                    MarkForReview = question.MarkForReview,
+                                    MatQuestionId = question.QuestionId,
+                                    FreeResponseText = question.FreeResponseAnswer,
+                                    Documents = docDictionary[question.QuestionId]
+                                };
+
+                                if (question.Answer == "N")
+                                {
+                                    newDomain.IsDeficient = true;
+                                    newAssesmentFactor.IsDeficient = true;
+                                    newComponent.IsDeficient = true;
+                                }
+
+                                if (question.Comment != null)
+                                {
+                                    newQuestion.Comments = "Yes";
+                                }
+                                else
+                                {
+                                    newQuestion.Comments = "No";
+                                }
+
+                                newComponent.Questions.Add(newQuestion);
+                            }
+                        }
+                        if (newComponent.Questions.Count > 0)
+                        {
+                            newAssesmentFactor.Components.Add(newComponent);
+                            //newAssesmentFactor.Questions.AddRange(newComponent.Questions);
+                        }
+                    }
+                    if (newAssesmentFactor.Components.Count > 0)
+                    {
+                        newDomain.AssessmentFactors.Add(newAssesmentFactor);
+                    }
+                    //}
+
+                }
+                if (newDomain.AssessmentFactors.Count > 0)
+                {
+                    maturityDomains.Add(newDomain);
+                }
+            }
+            //
+
+            return maturityDomains;
+        }
+        //
     }
 }
 

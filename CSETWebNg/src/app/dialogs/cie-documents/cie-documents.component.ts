@@ -21,33 +21,34 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { CieService } from '../../services/cie.service';
 
 @Component({
-  selector: 'app-assessment-documents',
-  templateUrl: './assessment-documents.component.html',
+  selector: 'app-cie-documents',
+  templateUrl: './cie-documents.component.html',
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class AssessmentDocumentsComponent implements OnInit {
+export class CieDocumentsComponent implements OnInit {
 
   documents: any[] = null;
 
-  constructor(private dialog: MatDialogRef<AssessmentDocumentsComponent>,
+  constructor(private dialog: MatDialogRef<CieDocumentsComponent>,
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
     public assessSvc: AssessmentService,
-    public fileSvc: FileUploadClientService) { }
+    public fileSvc: FileUploadClientService,
+    private cieSvc: CieService) { }
 
   ngOnInit() {
-    this.assessSvc.getAssessmentDocuments().subscribe((response: any) => {
+    this.cieSvc.getCieAssessmentDocuments().subscribe((response: any[]) => {
       this.documents = response;
-      console.log(this.documents)
     });
   }
 

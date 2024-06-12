@@ -14,6 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using LogicExtensions;
 using CSETWebCore.Model.Question;
+using CSETWebCore.Business.Reports;
+using CSETWebCore.Model.Maturity;
 
 namespace CSETWebCore.Business.Document
 {
@@ -346,5 +348,6 @@ namespace CSETWebCore.Business.Document
             _context.SaveChanges();
 
         }
+
     }
 }

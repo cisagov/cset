@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Model.Document;
 using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Maturity
@@ -83,7 +84,7 @@ namespace CSETWebCore.Model.Maturity
         public string Comment { get; set; }
         public int MatQuestionId { get; set; }
         public string FreeResponseText { get; set; }
+        public List<DocumentWithAnswerId> Documents { get; set; }
     }
-
 
 }
