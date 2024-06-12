@@ -1,0 +1,121 @@
+<!---------------------- 
+
+   Copyright 2024 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="white-panel d-flex justify-content-start flex-column flex-11a tutorial"
+    *transloco="let t; read: 'tutorials.cpg'">
+    <h3 class="wrap-text mb-3">{{t('title')}}</h3>
+    <div *transloco="let k">
+        <h5 >{{k('titles.overview')}}</h5>
+        <p>{{t('1')}}</p>
+
+        <p>{{t('2')}}</p>
+
+        <h5 >{{k('titles.assessment')}}</h5>
+        <p>{{t('3')}}</p>
+        <ul>
+            <li>{{t('3a')}}</li>
+            <li>{{t('3b')}}</li>
+            <li>{{t('3c')}}</li>
+            <li>{{t('3d')}}</li>
+            <li>{{t('3e')}}</li>
+        </ul>
+
+        <p>{{t('4')}}</p>
+        <div class="img-frame">
+            <img src="assets/images/CPG/tutorial/Picture1.png" style="width: 550px">
+        </div>
+        
+        <h6>{{k('tutorials.function')}}</h6>
+        <div class="img-frame">
+            <img src="assets/images/CPG/tutorial/Picture2.png" style="width: 350px">
+        </div>
+        <p>{{t('5')}}</p>
+
+        <h6>{{k('tutorials.practice identifier')}}</h6>
+        <div class="img-frame">
+            <img src="assets/images/CPG/tutorial/Picture3.png" style="width: 60px">
+        </div>
+        <p>{{t('6')}}</p>
+
+        <h6>{{k('tutorials.security practice')}}</h6>
+        <div class="img-frame">
+            <img src="assets/images/CPG/tutorial/Picture4.png" style="width: 60px">
+        </div>
+        <p>{{t('7')}}</p>
+
+        <h6>{{k('tutorials.outcome')}}</h6>
+        <div class="img-frame">
+            <img src="assets/images/CPG/tutorial/Picture5.png" style="width: 250px">
+        </div>
+        <p>{{t('8')}}</p>
+
+        <h6>{{k('titles.cset icons')}}</h6>
+        <div class="img-frame">
+            <img src="assets/images/icons/cset-icons.png" style="width: 300px">
+        </div>
+
+        <p>{{t('9')}}</p>
+        <ul>
+            <li>{{t('9a')}}</li>
+            <ul>
+                <li>{{t('9a1')}}</li>
+            </ul>
+            <li>{{t('9b')}}</li>
+            <ul>
+                <li>{{t('9b1')}}</li>
+            </ul>
+        </ul>
+        <div class="img-frame">
+            <img src="assets/images/CPG/tutorial/Picture6.png" style="width: 400px">
+        </div>
+        <p>{{t('10')}}</p>
+        <ul>
+            <li>{{t('10a')}}</li>
+            <ul>
+                <li>{{t('10a1')}}</li>
+            </ul>
+            <li>{{t('10b')}}</li>
+            <ul>
+                <li>{{t('10b1')}}</li>
+            </ul>
+        </ul>
+        <div class="img-frame">
+            <img src="assets/images/CPG/tutorial/Picture7.png" style="width: 400px">
+        </div>
+        
+        <h6>{{k('titles.answer buttons')}}</h6>
+        <div class="img-frame">
+            <img src="assets/images/CPG/tutorial/Picture8.png" style="width: 300px">
+        </div>
+        <p>{{t('11')}}</p>
+        <ul>
+            <li><b>{{k('answer-options.labels.imp-cpg')}}</b> {{t('11a')}}</li>
+            <li><b>{{k('answer-options.labels.prog-cpg')}}</b> {{t('11b')}}</li>
+            <li><b>{{k('answer-options.labels.scoped-cpg')}}</b> {{t('11c')}}</li>
+            <li><b>{{k('answer-options.labels.not-cpg')}}</b> {{t('11d')}}</li>
+        </ul>
+        <h5>{{k('titles.additional resources')}}</h5>
+        <p>{{k('tutorials.additional resources')}}</p>
+        <p>{{k('tutorials.please visit')}} <a href ="https://www.cisa.gov/cpgs">https://www.cisa.gov/cpgs</a> {{k('tutorials.for more information')}}</p>
+    </div>
+    <app-nav-back-next [page]="'tutorial-cpg'"></app-nav-back-next>
+</div>

@@ -188,6 +188,9 @@ namespace CSETWebCore.Helpers
 
                         xQuestion.SetAttributeValue("supplemental", myQ.Supplemental_Info);
 
+                        // CPG question elements
+                        xQuestion.SetAttributeValue("securitypractice", myQ.Security_Practice);
+                        xQuestion.SetAttributeValue("outcome", myQ.Outcome);
                         xQuestion.SetAttributeValue("scope", myQ.Scope);
                         xQuestion.SetAttributeValue("recommendedaction", myQ.Recommend_Action);
                         xQuestion.SetAttributeValue("services", myQ.Services);

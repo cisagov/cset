@@ -375,6 +375,7 @@ namespace CSETWebCore.Business.Demographic
             SaveInt(demographic.AssessmentId, "DISRUPTED-SECTOR1", demographic.DisruptedSector1);
             SaveInt(demographic.AssessmentId, "DISRUPTED-SECTOR2", demographic.DisruptedSector2);
             SaveString(demographic.AssessmentId, "CRIT-DEPEND-INCIDENT-RESPONSE", demographic.CriticalDependencyIncidentResponseSupport);
+            SaveInt(demographic.AssessmentId, "ORG-POC", demographic.OrgPointOfContact);
 
 
             SaveBool(demographic.AssessmentId, "STANDARD-USED", demographic.UsesStandard);
@@ -391,6 +392,7 @@ namespace CSETWebCore.Business.Demographic
             SaveString(demographic.AssessmentId, "BARRIER1", demographic.Barrier1);
             SaveString(demographic.AssessmentId, "BARRIER2", demographic.Barrier2);
             SaveString(demographic.AssessmentId, "BUSINESS-UNIT", demographic.BusinessUnit);
+           
 
             _context.SaveChanges();
             AssessmentNaming.ProcessName(_context, userid, demographic.AssessmentId);

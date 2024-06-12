@@ -22,7 +22,7 @@
 -------------------------->
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a" *transloco="let t">
     <h3>{{t('titles.goal performance')}}</h3>
-
+    
     <div *ngIf="!initialized">
         <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
             <div style="max-width: 50px; max-height: 50px;"></div>
@@ -33,6 +33,7 @@
         <div clas="container">
             <div class="row mb-5">
                 <div class="col-12">
+                    <p>{{t('reports.core.rra.goal performance summary')}}</p>
                     <h5>{{t('reports.core.rra.report.rra performance by goal')}}</h5>
                     <p>{{t('reports.core.rra.report.performance by goal text')}}</p>
                     <app-rra-answer-compliance></app-rra-answer-compliance>

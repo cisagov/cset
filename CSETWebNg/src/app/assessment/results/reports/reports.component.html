@@ -34,24 +34,34 @@
     </div>
   </div>
 
-  <app-cisa-workflow-warnings [invalidFields]="cisaAssessorWorkflowFieldValidation?.invalidFields"></app-cisa-workflow-warnings>
+  <app-cisa-workflow-warnings
+    [invalidFields]="cisaAssessorWorkflowFieldValidation?.invalidFields"></app-cisa-workflow-warnings>
 
   <!-- Moved this check from inside the component to here to prevent extra whitespace when not CF -->
   <app-assessment-convert-cf *ngIf="isCfEntry" class="mt-4"></app-assessment-convert-cf>
 
-  <div class="d-flex flex-column justify-content-start align-items-start mb-4" *ngIf="showObservationTearouts()">
-    <button (click)="clickReportLink('observations')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-      {{ t('observations tear-out sheets.report title') }}
-    </button>
-  </div>
+
+  <!-- Observation Tear Out Sheets -->
+  <div class="d-flex flex-column justify-content-start align-items-start mb-4">
+    <div class="mb-3 p-3 w-100" [class.gray-box]="true">
+         <div class="d-flex flex-row" style="align-items: end">
+              <div>
+                   <button tabindex="0" (click)="clickReportLink('observations')"
+                        class="btn btn-link btn-link-dark px-0 pt-0">
+                        {{t('observations tear-out sheets.report title')}}
+                   </button>
+              </div>
+         </div>
+         <div class="mt-3">
+          {{t('observations tear-out sheets.summary')}}
+         </div>
+    </div>
+</div>
 
 
   <div [class.div-shield]="disableEntirePage">
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
+    <div *ngIf="!!assessSvc.assessment && (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile" 
+      class="d-flex flex-column justify-content-start align-items-start mb-4">
       <h4>{{t('standards and diagram')}}</h4>
       <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         {{t('executive summary')}}
@@ -100,147 +110,34 @@
       </button>
     </div>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('CMMC2') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>Capability Maturity Model Certification (CMMC) 2.0</h4>
 
-      <button (click)="clickReportLink('executivecmmc2')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        CMMC 2.0 - Executive Summary
-      </button>
 
-      <button tabindex="0" (click)="clickReportLink('cmmc2DeficiencyReport')"
-        class="btn btn-link btn-link-dark text-left">
-        CMMC 2.0 - Deficiency Report
-      </button>
 
-      <button tabindex="0" (click)="clickReportLink('cmmc2CommentsMarked')"
-        class="btn btn-link btn-link-dark text-left">
-        CMMC 2.0 - Comments and Marked for Review
-      </button>
-    </div>
+    <!-- EDM -->
+    <app-report-list-edm *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
+      [confidentiality]="confidentiality"></app-report-list-edm>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('EDM') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>CISA External Dependencies Management</h4>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('edm')" class="btn btn-link btn-link-dark text-left">
-          EDM Report
-        </button>
 
-        <button class="btn btn-link btn-link-dark text-left" (click)="clickReportLink('edm', true)"
-          matTooltip="Select Print to PDF to save as a PDF">
-          Print EDM Report
-        </button>
-      </div>
+    <!-- CRR -->
+    <app-report-list-crr *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CRR')"
+      [confidentiality]="confidentiality"></app-report-list-crr>
 
-      <button tabindex="0" (click)="clickReportLink('edmDeficiencyReport')"
-        class="btn btn-link btn-link-dark text-left">
-        EDM Deficiency Report
-      </button>
 
-      <button tabindex="0" (click)="clickReportLink('edmCommentsmarked')" class="btn btn-link btn-link-dark text-left">
-        EDM Comments and Marked for Review
-      </button>
-    </div>
+    <!-- IMR -->
+    <app-report-list-imr *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('IMR')"
+      [confidentiality]="confidentiality"></app-report-list-imr>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('CRR') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>CISA Cyber Resilience Review</h4>
 
-      <div class="d-flex flex-row" style="align-items: end">
-        <div class="mr-3 mb-3">
-          <button tabindex="0" (click)="clickReportLink('crrreport')" class="btn btn-link btn-link-dark">
-            CRR Report
-          </button>
-        </div>
-        <div class="form-group">
-          <label class="mb-1" for="securityId">Confidentiality</label>
-          <select class="form-control" [(ngModel)]="securitySelected" id="securityId" name="securityId" tabindex="0"
-            (change)="onSelectSecurity($event.target.value)">
-            <option *ngFor="let s of securityIdentifier" [value]="s.confidentialTypeKey">
-              {{ s.confidentialTypeKey }}
-            </option>
-          </select>
-        </div>
-      </div>
+    <!-- CIS -->
+    <app-report-list-cis *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CIS')"></app-report-list-cis>
 
-      <button tabindex="0" (click)="clickReportLink('crrDeficiencyReport')" class="btn btn-link btn-link-dark">
-        CRR Deficiency Report
-      </button>
 
-      <button tabindex="0" (click)="clickReportLink('crrCommentsMarked')" class="btn btn-link btn-link-dark">
-        CRR Comments and Marked for Review
-      </button>
-    </div>
+    <!-- CMMC2 -->
+    <app-report-list-cmmc2 *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC2')"></app-report-list-cmmc2>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('IMR') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>CISA Incident Management Review</h4>
-
-      <div class="d-flex flex-row" style="align-items: end">
-        <div class="mr-3 mb-3">
-          <button tabindex="0" (click)="clickReportLink('imrreport')" class="btn btn-link btn-link-dark">
-            IMR Report
-          </button>
-        </div>
-        <div class="form-group">
-          <label class="mb-1" for="securityId">Confidentiality</label>
-          <select class="form-control" [(ngModel)]="securitySelected" id="securityId" name="securityId" tabindex="0"
-            (change)="onSelectSecurity($event.target.value)">
-            <option *ngFor="let s of securityIdentifier" [value]="s.confidentialTypeKey">
-              {{ s.confidentialTypeKey }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('genDeficiencyReport?m=IMR')" class="btn btn-link btn-link-dark">
-          IMR Deficiency Report
-        </button>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('commentsmfr')" class="btn btn-link btn-link-dark text-left">
-          Comments and Marked for Review
-        </button>
-      </div>
-    </div>
-
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('RRA') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>{{t('core.rra.cisa ransomware readiness assessment')}}</h4>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('rrareport')" class="btn btn-link btn-link-dark text-left">
-          {{t('core.rra.report title')}}
-        </button>
-      </div>
-
-      <div>
-        <button tabindex="0" (click)="clickReportLink('rraDeficiencyReport')"
-          class="btn btn-link btn-link-dark text-left">
-          {{t('core.rra.rra deficiency report')}}
-        </button>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('commentsmfr')" class="btn btn-link btn-link-dark text-left">
-          {{t('core.rra.comments and marked for review')}}
-        </button>
-      </div>
-    </div>
+    <!-- RRA -->
+    <app-report-list-rra *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('RRA') && !isMobile">
+    </app-report-list-rra>
 
     <div *ngIf="
         !!assessSvc.assessment &&
@@ -314,37 +211,7 @@
       </div>
     </div>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('CIS') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>CISA Cyber Infrastructure Survey (CIS)</h4>
 
-      <div>
-        <button tabindex="0" (click)="clickReportLink('cisSurveyReport')" class="btn btn-link btn-link-dark text-left">
-          Survey Report
-        </button>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('cisSectionScoringReport')"
-          class="btn btn-link btn-link-dark text-left">
-          Section Scoring Report
-        </button>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('cisRankedDeficiencyReport')"
-          class="btn btn-link btn-link-dark text-left">
-          Deficiency Report
-        </button>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('cisCommentsmarked')"
-          class="btn btn-link btn-link-dark text-left">
-          Comments and Marked for Review
-        </button>
-      </div>
-    </div>
 
     <div *ngIf="
         !!assessSvc.assessment &&
@@ -373,39 +240,13 @@
 
 
     <div>
-      <div *ngIf="
-          !!assessSvc.assessment &&
-          assessSvc.usesMaturityModel('MVRA') &&
-          !isMobile
-        " class="d-flex flex-column justify-content-start align-items-start mb-4">
-        <h4>CISA Minimum Viable Resilience Assessment (MVRA) - DRAFT</h4>
+      <!-- MVRA -->
+      <app-report-list-mvra *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('MVRA') && !isMobile">
+      </app-report-list-mvra>
 
-        <div>
-          <button tabindex="0" (click)="clickReportLink('mvraReport')" class="btn btn-link btn-link-dark text-left">
-            MVRA Report
-          </button>
-        </div>
-      </div>
-
-
-      <div *ngIf="
-          !!assessSvc.assessment &&
-          assessSvc.usesMaturityModel('CPG') &&
-          !isMobile
-        " class="d-flex flex-column justify-content-start align-items-start mb-4">
-        <h4>CISA {{t('core.cpg.report title')}}</h4>
-
-        <div>
-          <button tabindex="0" (click)="clickReportLink('cpgReport')" class="btn btn-link btn-link-dark text-left">
-            {{t('core.cpg.report.cpg report')}}
-          </button>
-        </div>
-        <div>
-          <button tabindex="0" (click)="clickReportLink('cpgDeficiency')" class="btn btn-link btn-link-dark text-left">
-            {{t('core.cpg.deficiency.cpg deficiency')}}
-          </button>
-        </div>
-      </div>
+      <!-- CPG -->
+      <app-report-list-cpg *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile"></app-report-list-cpg>
+      
 
 
       <div *ngIf="
@@ -470,27 +311,44 @@
         </div>
       </div>
 
+      <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('SD02 Owner')" class="d-flex flex-column justify-content-start align-items-start mb-4">
+        <div *ngIf="!isMobile">
+          <h4>SD02 Owner Reports</h4>
+          <div>
+            <button (click)="clickReportLink('sdo-gap-report')" tabindex="0" class="btn btn-link btn-link-dark text-left">Deficiency Report</button>
+          </div>
+          <div>
+            <button (click)="clickReportLink('sdo-comments-and-mfr')" tabindex="0" class="btn btn-link btn-link-dark text-left">Comments and Marked for Review</button>
+          </div>
+        </div>
+        <div *ngIf="isMobile"></div>
+      </div>
+
       <div *ngIf="!!assessSvc.assessment &&
           assessSvc.usesMaturityModel('CIE') &&
           !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
         <h4>Cyber-Informed Engineering (CIE)</h4>
         <div>
-          <button (click)="clickReportLink('cieNotApplicable')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+          <button (click)="clickReportLink('cieNotApplicable')" tabindex="0"
+            class="btn btn-link btn-link-dark text-left">
             Export Not Applicable Questions Tear Out Sheets
           </button>
         </div>
         <div>
-          <button (click)="clickReportLink('ciePrincipleOnly')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+          <button (click)="clickReportLink('ciePrincipleOnly')" tabindex="0"
+            class="btn btn-link btn-link-dark text-left">
             Export Principle-Only CIE-CSET Report
           </button>
         </div>
         <div>
-          <button (click)="clickReportLink('ciePrinciplePhase')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+          <button (click)="clickReportLink('ciePrinciplePhase')" tabindex="0"
+            class="btn btn-link btn-link-dark text-left">
             Export Principle-Phase CIE-CSET Report
           </button>
         </div>
         <div>
-          <button (click)="clickReportLink('cieAllQuestions')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+          <button (click)="clickReportLink('cieAllQuestions')" tabindex="0"
+            class="btn btn-link btn-link-dark text-left">
             Export All CIE-CSET Report
           </button>
         </div>
@@ -544,10 +402,11 @@
           </button>
 
         </div>
-        
+
       </div>
     </div>
   </div>
+
   <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
     [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
 </div>

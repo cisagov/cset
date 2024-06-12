@@ -25,6 +25,7 @@ namespace CSETWebCore.Model.Demographic
         public string OrganizationName { get; set; }
         public int? Sector { get; set; }
         public int? Subsector { get; set; }
+        public int? OrgPointOfContact { get; set; }
 
         [DisplayName("CISA Region")]
         public int? CisaRegion { get; set; }

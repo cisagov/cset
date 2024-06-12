@@ -1,299 +1,305 @@
 {
-    "NOTENODE": "Casing on config chain matters, the only item that should be changed here is the current ConfigChain value.  Once that is changed everything else should be set",
-    "currentConfigChain": [
-        "CIE"
-    ],
-    "defaultLang": "en",
-    "isRunningAnonymous": false,
-    "app": {
-        "protocol": "http",
-        "url": "localhost",
-        "port": "4200"
+  "NOTENODE": "Casing on config chain matters, the only item that should be changed here is the current ConfigChain value.  Once that is changed everything else should be set",
+  "currentConfigChain": ["CSET"],
+  "defaultLang": "en",
+  "isRunningAnonymous": false,
+  "app": {
+    "protocol": "http",
+    "host": "localhost",
+    "port": "4200"
+  },
+  "api": {
+    "protocol": "http",
+    "host": "localhost",
+    "port": "5000",
+    "apiIdentifier": "api",
+    "documentsIdentifier": "Documents",
+    "onlineUrl": "https://cset.inl.gov"
+  },
+  "library": {
+    "protocol": "http",
+    "host": "localhost",
+    "port": "5000",
+    "apiIdentifier": "api"
+  },
+  "csetGithubApiUrl": "https://api.github.com/repos/cisagov/cset/releases/latest",
+  "helpContactEmail": "CSET_PMO@cisa.dhs.gov",
+  "helpContactPhone": "",
+  "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
+  "supplementalAutoloadInitialValue": false,
+  "debug": {
+    "showBuildTime": false,
+    "showQuestionAndRequirementIDs": false,
+    "canDeleteCustomModules": true,
+    "showExportAllButton": false
+  },
+  "galleryLayout": "CSET",
+  "installationMode": "CSET",
+  "mobileEnvironment": "",
+  "behaviors": {
+    "defaultTitle": "CSET",
+    "showDisclaimer": true,
+    "showModuleBuilder": true,
+    "showModuleImport": true,
+    "showModuleContentReport": true,
+    "showAssessmentDocuments": true,
+    "showObservations": true,
+    "showFacilitatorDropDown": true,
+    "showNameDisclaimer": false,
+    "showAggregation": true,
+    "showAnalytics": true,
+    "showAnalyticsAtTheEnd": true,
+    "showMenuParameterEditor": true,
+    "showMenuLanguagePicker": true,
+    "showAnalyticsColumnOnLanding": true,
+    "splashPageHTML": "dist/assets/splash.html",
+    "homeComponentForCurrentInstallationMode": "",
+    "defaultMaturityModel": "",
+    "isAcetOnly": false,
+    "showExportOnReports": true,
+    "showFacilityName": true,
+    "showCityName": true,
+    "showStateName": true,
+    "showContacts": true,
+    "showOrganizationName": true,
+    "showBusinessAgencyName": true,
+    "showCriticalService": true,
+    "allowDiagram": true,
+    "showPrivacyWarning": false,
+    "showTrend": true,
+    "showCompare": true,
+    "showComments": true,
+    "showFeedback": true,
+    "showEnableProtectedFeatures": true,
+    "showCisaAssessorWorkflowSwitch": true,
+    "showUpdateDiagramCsafVulnerabilitiesButton": false,
+    "showVulnerabilitiesDiagramInventoryTab": false,
+    "additionalUserGuides": [],
+    "showMalcolmAnswerComparison": false,
+    "replaceAssessmentWithAnalysis": false,
+    "showPostalCode": false
+  },
+  "answerOptionsDefault": [
+    {
+      "code": "U",
+      "buttonLabelKey": "U"
     },
-    "api": {
-        "protocol": "http",
-        "url": "localhost",
-        "port": "5000",
-        "apiIdentifier": "api",
-        "documentsIdentifier": "Documents",
-        "onlineUrl": "https://cset.inl.gov"
+    {
+      "code": "Y",
+      "buttonLabelKey": "Yes",
+      "buttonCss": "btn-yes"
     },
-    "helpContactEmail": "CSET_PMO@cisa.dhs.gov",
-    "helpContactPhone": "",
-    "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
-    "supplementalAutoloadInitialValue": false,
-    "debug": {
-        "showBuildTime": false,
-        "showQuestionAndRequirementIDs": false,
-        "canDeleteCustomModules": true,
-        "showExportAllButton": false
+    {
+      "code": "N",
+      "buttonLabelKey": "No",
+      "buttonCss": "btn-no"
     },
-    "galleryLayout": "CSET",
-    "installationMode": "CSET",
-    "mobileEnvironment": "",
-    "behaviors": {
-        "defaultTitle": "CSET",
-        "showDisclaimer": true,
-        "showModuleBuilder": true,
-        "showModuleImport": true,
-        "showModuleContentReport": true,
-        "showAssessmentDocuments": true,
-        "showObservations": true,
-        "showFacilitatorDropDown": true,
-        "showNameDisclaimer": false,
-        "showAggregation": true,
-        "showAnalytics": true,
-        "showAnalyticsAtTheEnd": true,
-        "showMenuParameterEditor": true,
-        "showMenuLanguagePicker": true,
-        "showAnalyticsColumnOnLanding": true,
-        "splashPageHTML": "dist/assets/splash.html",
-        "homeComponentForCurrentInstallationMode": "",
-        "defaultMaturityModel": "",
-        "isAcetOnly": false,
-        "showExportOnReports": true,
-        "showFacilityName": true,
-        "showCityName": true,
-        "showStateName": true,
-        "showContacts": true,
-        "showOrganizationName": true,
-        "showBusinessAgencyName": true,
-        "showCriticalService": true,
-        "allowDiagram": true,
-        "showPrivacyWarning": false,
-        "showTrend": true,
-        "showCompare": true,
-        "showComments": true,
-        "showFeedback": true,
-        "showEnableProtectedFeatures": true,
-        "showCisaAssessorWorkflowSwitch": true,
-        "showUpdateDiagramCsafVulnerabilitiesButton": false,
-        "showVulnerabilitiesDiagramInventoryTab": false,
-        "additionalUserGuides": [],
-        "showMalcolmAnswerComparison": false,
-        "replaceAssessmentWithAnalysis": false
+    {
+      "code": "NA",
+      "buttonLabelKey": "N/A",
+      "buttonCss": "btn-na"
     },
-    "answerOptionsDefault": [
+    {
+      "code": "A",
+      "buttonLabelKey": "Alt",
+      "buttonCss": "btn-alt"
+    },
+    {
+      "code": "I",
+      "buttonLabelKey": "Inc",
+      "buttonCss": "btn-inc"
+    },
+    {
+      "code": "Iss",
+      "buttonLabelKey": "Issue(N)",
+      "buttonCss": "btn-iss"
+    }
+  ],
+  "moduleBehaviors": [
+    {
+      "moduleName": "EDM",
+      "questionIcons": {
+        "showDetails": false,
+        "guidanceIcon": "G",
+        "showReviewed": false
+      }
+    },
+    {
+      "moduleName": "CRR",
+      "questionIcons": {
+        "showDetails": false,
+        "guidanceIcon": "G",
+        "showReviewed": false
+      }
+    },
+    {
+      "moduleName": "IMR",
+      "showMaturityLevelBadge": false,
+      "showCriticalServiceDemog": false,
+      "questionIcons": {
+        "showDetails": false,
+        "guidanceIcon": "G",
+        "showReviewed": false
+      }
+    },
+    {
+      "moduleName": "RRA",
+      "questionIcons": {
+        "showDetails": false,
+        "guidanceIcon": "G",
+        "showReviewed": false
+      }
+    },
+    {
+      "moduleName": "CIS",
+      "questionIcons": {
+        "showDetails": false,
+        "showObservations": false,
+        "showReferences": false,
+        "showReviewed": false
+      }
+    },
+    {
+      "moduleName": "SD02 Series",
+      "questionIcons": {
+        "showDetails": false
+      }
+    },
+    {
+      "moduleName": "CPG",
+      "showMaturityLevelBadge": false,
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
         {
-            "code": "U",
-            "buttonLabelKey": "U"
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes"
         },
         {
-            "code": "Y",
-            "buttonLabelKey": "Yes",
-            "buttonCss": "btn-yes"
+          "code": "I",
+          "buttonLabelKey": "Prog-CPG",
+          "buttonCss": "btn-na"
         },
         {
-            "code": "N",
-            "buttonLabelKey": "No",
-            "buttonCss": "btn-no"
+          "code": "S",
+          "buttonLabelKey": "Scoped-CPG",
+          "buttonCss": "btn-alt"
         },
         {
-            "code": "NA",
-            "buttonLabelKey": "N/A",
-            "buttonCss": "btn-na"
-        },
-        {
-            "code": "A",
-            "buttonLabelKey": "Alt",
-            "buttonCss": "btn-alt"
-        },
-        {
-            "code": "I",
-            "buttonLabelKey": "Inc",
-            "buttonCss": "btn-inc"
-        },
-        {
-            "code": "Iss",
-            "buttonLabelKey": "Issue(N)",
-            "buttonCss": "btn-iss"
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no"
         }
-    ],
-    "moduleBehaviors": [
+      ]
+    },
+    {
+      "moduleName": "C2M2",
+      "questionIcons": {
+        "showReviewed": false
+      },
+      "answerOptions": [
         {
-            "moduleName": "EDM",
-            "questionIcons": {
-                "showDetails": false,
-                "guidanceIcon": "G",
-                "showReviewed": false
-            }
+          "code": "FI",
+          "buttonLabelKey": "FI-C2M2",
+          "buttonCss": "btn-c2m2-fi"
         },
         {
-            "moduleName": "CRR",
-            "questionIcons": {
-                "showDetails": false,
-                "guidanceIcon": "G",
-                "showReviewed": false
-            }
+          "code": "LI",
+          "buttonLabelKey": "LI-C2M2",
+          "buttonCss": "btn-c2m2-li"
         },
         {
-            "moduleName": "IMR",
-            "showMaturityLevelBadge": false,
-            "showCriticalServiceDemog": false,
-            "questionIcons": {
-                "showDetails": false,
-                "guidanceIcon": "G",
-                "showReviewed": false
-            }
+          "code": "PI",
+          "buttonLabelKey": "PI-C2M2",
+          "buttonCss": "btn-c2m2-pi"
         },
         {
-            "moduleName": "RRA",
-            "questionIcons": {
-                "showDetails": false,
-                "guidanceIcon": "G",
-                "showReviewed": false
-            }
-        },
-        {
-            "moduleName": "CIS",
-            "questionIcons": {
-                "showDetails": false,
-                "showObservations": false,
-                "showReferences": false,
-                "showReviewed": false
-            }
-        },
-        {
-            "moduleName": "SD02 Series",
-            "questionIcons": {
-                "showDetails": false
-            }
-        },
-        {
-            "moduleName": "CPG",
-            "showMaturityLevelBadge": false,
-            "questionIcons": {
-                "showDetails": false,
-                "showReviewed": false
-            },
-            "answerOptions": [
-                {
-                    "code": "Y",
-                    "buttonLabelKey": "Imp-CPG",
-                    "buttonCss": "btn-yes"
-                },
-                {
-                    "code": "I",
-                    "buttonLabelKey": "Prog-CPG",
-                    "buttonCss": "btn-na"
-                },
-                {
-                    "code": "S",
-                    "buttonLabelKey": "Scoped-CPG",
-                    "buttonCss": "btn-alt"
-                },
-                {
-                    "code": "N",
-                    "buttonLabelKey": "Not-CPG",
-                    "buttonCss": "btn-no"
-                }
-            ]
-        },
-        {
-            "moduleName": "C2M2",
-            "questionIcons": {
-                "showReviewed": false
-            },
-            "answerOptions": [
-                {
-                    "code": "FI",
-                    "buttonLabelKey": "FI-C2M2",
-                    "buttonCss": "btn-c2m2-fi"
-                },
-                {
-                    "code": "LI",
-                    "buttonLabelKey": "LI-C2M2",
-                    "buttonCss": "btn-c2m2-li"
-                },
-                {
-                    "code": "PI",
-                    "buttonLabelKey": "PI-C2M2",
-                    "buttonCss": "btn-c2m2-pi"
-                },
-                {
-                    "code": "NI",
-                    "buttonLabelKey": "NI-C2M2",
-                    "buttonCss": "btn-c2m2-ni"
-                }
-            ]
-        },
-        {
-            "moduleName": "ACET",
-            "independentSuppGuidance": true,
-            "answerOptions": [
-                {
-                    "skin": "ACET",
-                    "code": "A",
-                    "buttonLabelKey": "Yes(C)",
-                    "buttonCss": "btn-alt",
-                    "note": "This will only apply in the ACET skin.  See QuestionsService"
-                }
-            ]
-        },
-        {
-            "moduleName": "ISE",
-            "questionIcons": {
-                "showObservations": false
-            },
-            "answerOptions": [
-                {
-                    "code": "Y",
-                    "buttonLabelKey": "Yes",
-                    "buttonCss": "btn-yes"
-                },
-                {
-                    "code": "N",
-                    "buttonLabelKey": "No",
-                    "buttonCss": "btn-no"
-                },
-                {
-                    "code": "U",
-                    "buttonLabelKey": "Unanswered"
-                }
-            ]
-        },
-        {
-            "moduleName": "HYDRO",
-            "questionIcons": {
-                "showDetails": false,
-                "showGuidance": false,
-                "showObservations": false,
-                "showReferences": false
-            }
-        },
-        {
-            "moduleName": "MVRA",
-            "answerOptions": [
-                {
-                    "code": "Y",
-                    "buttonLabelKey": "Fully-MVRA",
-                    "buttonCss": "btn-yes"
-                },
-                {
-                    "code": "N",
-                    "buttonLabelKey": "Not-MVRA",
-                    "buttonCss": "btn-no"
-                },
-                {
-                    "code": "A",
-                    "buttonLabelKey": "Partial-MVRA",
-                    "buttonCss": "btn-alt"
-                }
-            ]
+          "code": "NI",
+          "buttonLabelKey": "NI-C2M2",
+          "buttonCss": "btn-c2m2-ni"
         }
-    ],
-    "languageOptions": [
+      ]
+    },
+    {
+      "moduleName": "ACET",
+      "independentSuppGuidance": true,
+      "answerOptions": [
         {
-            "value": "en",
-            "name": "English"
-        },
-        {
-            "value": "es",
-            "name": "Español"
-        },
-        {
-            "value": "uk",
-            "name": "українська"
+          "skin": "ACET",
+          "code": "A",
+          "buttonLabelKey": "Yes(C)",
+          "buttonCss": "btn-alt",
+          "note": "This will only apply in the ACET skin.  See QuestionsService"
         }
-    ]
+      ]
+    },
+    {
+      "moduleName": "ISE",
+      "questionIcons": {
+        "showObservations": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Yes",
+          "buttonCss": "btn-yes"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "No",
+          "buttonCss": "btn-no"
+        },
+        {
+          "code": "U",
+          "buttonLabelKey": "Unanswered"
+        }
+      ]
+    },
+    {
+      "moduleName": "HYDRO",
+      "questionIcons": {
+        "showDetails": false,
+        "showGuidance": false,
+        "showObservations": false,
+        "showReferences": false
+      }
+    },
+    {
+      "moduleName": "MVRA",
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Fully-MVRA",
+          "buttonCss": "btn-yes"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-MVRA",
+          "buttonCss": "btn-no"
+        },
+        {
+          "code": "A",
+          "buttonLabelKey": "Partial-MVRA",
+          "buttonCss": "btn-alt"
+        }
+      ]
+    }
+  ],
+  "languageOptions": [
+    {
+      "value": "en",
+      "name": "English"
+    },
+    {
+      "value": "es",
+      "name": "Español"
+    },
+    {
+      "value": "uk",
+      "name": "українська"
+    }
+  ]
 }
