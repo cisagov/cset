@@ -13,8 +13,8 @@ using CSETWebCore.Model.ResourceLibrary;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
+using Org.BouncyCastle.Crypto.Modes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,7 +34,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IHtmlFromXamlConverter _html;
         private readonly IFlowDocManager _flow;
 
-        public ResourceLibraryController(CSETContext context, IWebHostEnvironment environment, IConfiguration configuration, 
+        public ResourceLibraryController(CSETContext context, IWebHostEnvironment environment, IConfiguration configuration,
             IHtmlFromXamlConverter html, IFlowDocManager flow)
         {
             _context = context;
@@ -51,6 +51,9 @@ namespace CSETWebCore.Api.Controllers
         /// 
         /// If binary data is in the [Data] column, that is returned.  
         /// Otherwise a physical file is located and returned.
+        /// 
+        /// If there is no physical file, the "cloud" resource library
+        /// server is queried.
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
@@ -63,27 +66,52 @@ namespace CSETWebCore.Api.Controllers
 
             if (fileResp == null)
             {
-                NLog.LogManager.GetCurrentClassLogger().Warn($"Reference document '{fileId}' was requested but does not exist.");
+                // Fallback to cloud CSET Library
 
-
-
-
-
-                // FALLBACK TO CLOUD SERVER
-                HttpClient req = new HttpClient();
-                var ggg = req.GetAsync($"http://csetac:5780/api/library/doc/{fileId}").Result;
-                Console.WriteLine(ggg);
-
-                if (!ggg.IsSuccessStatusCode)
+                var libHost = _configuration.GetValue<string>("Library:Host");
+                var libPort = _configuration.GetValue<string>("Library:Port");
+                if (libPort != null)
                 {
-                    return StatusCode((int)ggg.StatusCode);
+                    libPort = $":{libPort}";
+                }
+
+                if (libHost == null)
+                {
+                    // No fallback available
+                    return NotFound();
                 }
 
 
+                HttpClient req = new HttpClient();
+                HttpResponseMessage libResponse;
+
+                var url = $"http://{libHost}{libPort}/api/library/doc/{fileId}";
+
+                try
+                {
+                    libResponse = req.GetAsync(url).Result;
+                }
+                catch (Exception ex)
+                {
+                    NLog.LogManager.GetCurrentClassLogger().Error($"Error making doc request to '{url}': {ex.Message}");
+                    return NotFound();
+                }
 
 
-                return NotFound();
+                if (!libResponse.IsSuccessStatusCode)
+                {
+                    NLog.LogManager.GetCurrentClassLogger().Warn($"Reference document '{fileId}' was requested but does not exist.");
+                    return StatusCode((int)libResponse.StatusCode);
+                }
+
+
+                NLog.LogManager.GetCurrentClassLogger().Info($"Reference document '{fileId}' was downloaded from the cloud library.");
+
+
+                // repackage the stream and return it
+                return File(libResponse.Content.ReadAsStream(), libResponse.Content.Headers.ContentType.ToString());
             }
+
 
             // In case we want download statistics
             NLog.LogManager.GetCurrentClassLogger().Info($"Reference document '{fileResp.Id}' was downloaded.");
