@@ -69,7 +69,7 @@ export class ResourceLibraryService {
 
   /**
    * Formats a URL of a provided document.  Sends the document ID to the
-   * 'refdoc' endpoint.  
+   * 'library' endpoint.  
    * 
    * Bookmarks to an actual sectionRef are appended to the URL.
    * 

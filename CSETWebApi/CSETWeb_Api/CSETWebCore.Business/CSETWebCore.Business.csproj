@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
+
   <ItemGroup>
     <None Remove="App_Data\assessmentInviteTemplate_ACET.html" />
     <None Remove="App_Data\assessmentInviteTemplate_CF.html" />

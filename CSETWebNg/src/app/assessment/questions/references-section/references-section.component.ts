@@ -27,7 +27,7 @@ export class ReferencesSectionComponent {
 
   /**
    * Formats a URL to the document.  Handles uploaded documents via the
-   * 'refdoc' endpoint as well as direct PDFs stored on the
+   * 'library' endpoint as well as direct PDFs stored on the
    * file system in the API.
    * Bookmarks to an actual sectionRef are appended to the URL.
    */

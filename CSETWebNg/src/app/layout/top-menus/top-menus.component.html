@@ -122,38 +122,14 @@
                 <span class="cset-icons-pdf-doc fs-base mr-2 align-middle"></span>
                 <span>ISE User Guide</span>
             </a>
-            <a *ngIf="isGuideVisible('CIS')" mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_cis/index.htm">
-                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
-                <span>CIS</span>
-            </a>
             <a *ngIf="isGuideVisible('CMMC')" mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_cmmc/index.htm">
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>CMMC 1.0</span>
-            </a>
-            <a *ngIf="isGuideVisible('CMMC2')" mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_cmmc2/index.htm">
-                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
-                <span>CMMC 2.0</span>
-            </a>
-            <a *ngIf="isGuideVisible('CRR')" mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_crr/index.htm">
-                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
-                <span>CRR</span>
-            </a>
-            <a *ngIf="isGuideVisible('EDM')" mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_edm/index.htm">
-                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
-                <span>EDM</span>
             </a>
             <button *ngIf="isGuideVisible('RRA')" mat-menu-item (click)="ransomwareReadiness()">
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>{{t('reports.core.rra.assessment full title')}}</span>
             </button>
-            <a *ngIf="isGuideVisible('MVRA')" mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_mvra/index.htm">
-                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
-                <span>MVRA</span>
-            </a>
-            <a *ngIf="isGuideVisible('CPG')" mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_cpg/index.htm">
-                <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
-                <span>CPG</span>
-            </a>
             <a *ngIf="isGuideVisible('TSA')" mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_tsa/index.htm">
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>TSA</span>

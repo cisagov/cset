@@ -49,7 +49,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/refdoc/{fileId}")]
+        [Route("api/library/doc/{fileId}")]
         public IActionResult FindReferenceDocument(string fileId)
         {
             var hashLocation = fileId.IndexOf('#');

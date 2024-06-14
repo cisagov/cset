@@ -465,8 +465,8 @@ namespace CSETWebCore.Business.Aggregation
 
 
         /// <summary>
-        /// Returns a list of questions or requirements that are answered "N"
-        /// in every assessment in the comparison.  
+        /// Returns a list of questions or requirements that are answered "N" for no
+        /// or "U" for unanswered in every assessment in the comparison.  
         /// 
         /// Note that if the comparison has assessments in both
         /// Questions and Requirements mode, there will be no common "N" answers.
@@ -486,8 +486,8 @@ namespace CSETWebCore.Business.Aggregation
 
             foreach (int assessmentId in assessmentIds)
             {
-                var answeredNo = _context.Answer_Standards_InScope
-                    .Where(x => x.assessment_id == assessmentId && x.answer_text == "N").ToList();
+                var isNoOrUnanswered = _context.Answer_Standards_InScope
+                    .Where(x => x.assessment_id == assessmentId && (x.answer_text == "N" || x.answer_text == "U")).ToList();
 
                 // get the assessments 'mode'
                 var assessmentMode = _context.STANDARD_SELECTION
@@ -496,7 +496,7 @@ namespace CSETWebCore.Business.Aggregation
 
                 if (assessmentMode.StartsWith("Q"))
                 {
-                    questionsAnsweredNo.Add(answeredNo.Where(x => x.mode == "Q")
+                    questionsAnsweredNo.Add(isNoOrUnanswered.Where(x => x.mode == "Q")
                         .Select(x => x.question_or_requirement_id).ToList());
                     requirementsAnsweredNo.Add(new List<int>());
                 }
@@ -504,7 +504,7 @@ namespace CSETWebCore.Business.Aggregation
                 if (assessmentMode.StartsWith("R"))
                 {
                     questionsAnsweredNo.Add(new List<int>());
-                    requirementsAnsweredNo.Add(answeredNo.Where(x => x.mode == "R")
+                    requirementsAnsweredNo.Add(isNoOrUnanswered.Where(x => x.mode == "R")
                         .Select(x => x.question_or_requirement_id).ToList());
                 }
             }
@@ -520,22 +520,22 @@ namespace CSETWebCore.Business.Aggregation
         /// <summary>
         /// Build a list of Questions with common "N" answers.
         /// </summary>
-        /// <param name="answeredNo"></param>
+        /// <param name="isNoOrUnanswered"></param>
         /// <param name="db"></param>
         /// <returns></returns>
-        public List<MissedQuestion> BuildQList(List<List<int>> answeredNo)
+        public List<MissedQuestion> BuildQList(List<List<int>> isNoOrUnanswered)
         {
             var resp = new List<MissedQuestion>();
 
-            if (answeredNo.Count == 0)
+            if (isNoOrUnanswered.Count == 0)
             {
                 return resp;
             }
 
-            var intersectionQ = answeredNo
+            var intersectionQ = isNoOrUnanswered
             .Skip(1)
             .Aggregate(
-                new HashSet<int>(answeredNo.First()),
+                new HashSet<int>(isNoOrUnanswered.First()),
                 (h, e) => { h.IntersectWith(e); return h; }
             );
 
@@ -566,21 +566,21 @@ namespace CSETWebCore.Business.Aggregation
         /// <summary>
         /// Build a list of Requirements with common "N" answers.
         /// </summary>
-        /// <param name="answeredNo"></param>
+        /// <param name="isNoOrUnanswered"></param>
         /// <param name="db"></param>
         /// <returns></returns>
-        public List<MissedQuestion> BuildRList(List<List<int>> answeredNo)
+        public List<MissedQuestion> BuildRList(List<List<int>> isNoOrUnanswered)
         {
             var resp = new List<MissedQuestion>();
 
-            if (answeredNo.Count == 0)
+            if (isNoOrUnanswered.Count == 0)
             {
                 return resp;
             }
-            var intersectionR = answeredNo
+            var intersectionR = isNoOrUnanswered
                 .Skip(1)
                 .Aggregate(
-                    new HashSet<int>(answeredNo.First()),
+                    new HashSet<int>(isNoOrUnanswered.First()),
                     (h, e) => { h.IntersectWith(e); return h; }
                 );
 
