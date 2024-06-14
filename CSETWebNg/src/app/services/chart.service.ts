@@ -344,23 +344,28 @@ export class ChartService {
   /**
    *
    */
-  buildStackedHorizBarChart(canvasId: string, x: any) {
-    let tempChart = Chart.getChart(canvasId);
+  buildStackedHorizBarChart(canvasId: string, chartConfig: any) {
+    const tempChart = Chart.getChart(canvasId);
     if (tempChart) {
       tempChart.destroy();
     }
     return new Chart(canvasId, {
       type: 'bar',
       data: {
-        labels: x.labels,
-        datasets: x.datasets
+        labels: chartConfig.labels,
+        datasets: chartConfig.datasets
       },
       options: {
         indexAxis: 'y',
         animation: { duration: 100 }, // general animation time
         scales: {
           x: {
-            stacked: true
+            stacked: true,
+            beginAtZero: true,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
           },
           y: {
             stacked: true

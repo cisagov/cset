@@ -6,7 +6,6 @@
 //////////////////////////////// 
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -30,11 +29,8 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http.Extensions;
 using CSETWebCore.Helpers;
 using CSETWebCore.Model.Document;
-using DocumentFormat.OpenXml.Office2021.DocumentTasks;
-using System.ComponentModel.Design;
-using System.Numerics;
 using Microsoft.IdentityModel.Tokens;
-using DocumentFormat.OpenXml.Wordprocessing;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -45,6 +41,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _token;
         private readonly IAssessmentBusiness _assessment;
         private readonly IMaturityBusiness _maturity;
+        private readonly IACETMaturityBusiness _acetMaturity;
         private readonly IHttpContextAccessor _http;
         private readonly IDataHandling _dataHandling;
         private readonly IACETDashboardBusiness _acet;
@@ -54,8 +51,10 @@ namespace CSETWebCore.Api.Controllers
 
         private readonly object _object;
 
+
         public DiagramController(IDiagramManager diagram, ITokenManager token,
-            IAssessmentBusiness assessment, IDataHandling dataHandling, IMaturityBusiness maturity,
+            IAssessmentBusiness assessment, IDataHandling dataHandling, 
+            IMaturityBusiness maturity, IACETMaturityBusiness acetMaturity,
             IHttpContextAccessor http, IACETDashboardBusiness acet, IWebHostEnvironment webHost, CSETContext context)
         {
             _diagram = diagram;
@@ -63,12 +62,14 @@ namespace CSETWebCore.Api.Controllers
             _assessment = assessment;
             _dataHandling = dataHandling;
             _maturity = maturity;
+            _acetMaturity = acetMaturity;
             _http = http;
             _acet = acet;
             _webHost = webHost;
             _context = context;
             _object = new object();
         }
+
 
         [CsetAuthorize]
         [Route("api/diagram/save")]
@@ -98,6 +99,7 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+
         [CsetAuthorize]
         [Route("api/diagram/saveComponent")]
         [HttpPost]
@@ -106,6 +108,7 @@ namespace CSETWebCore.Api.Controllers
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
             _diagram.SaveComponent(component, (int)assessmentId);
         }
+
 
         [CsetAuthorize]
         [Route("api/diagram/analysis")]
@@ -117,6 +120,7 @@ namespace CSETWebCore.Api.Controllers
             DecodeDiagram(req);
             return PerformAnalysis(req, assessmentId ?? 0);
         }
+
 
         private void DecodeDiagram(DiagramRequest req)
         {
@@ -135,6 +139,7 @@ namespace CSETWebCore.Api.Controllers
                 req.DiagramXml = decodedString;
             }
         }
+
 
         private List<IDiagramAnalysisNodeMessage> PerformAnalysis(DiagramRequest req, int assessmentId)
         {
@@ -468,11 +473,12 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetExcelExportDiagram()
         {
             var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
-            var stream = new ExcelExporter(_context, _dataHandling, _maturity, _acet, _http).ExportToExcellDiagram(assessmentId ?? 0);
+            var stream = new ExcelExporter(_context, _dataHandling, _acetMaturity, _acet, _http).ExportToExcellDiagram(assessmentId ?? 0);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         }
+
 
         /// <summary>
         /// get cset diagram templates
@@ -488,6 +494,7 @@ namespace CSETWebCore.Api.Controllers
             var templates = _diagram.GetDiagramTemplates();
             return templates;
         }
+
 
         /// <summary>
         /// Get all availabes alerts & advisories from the stored CSAF json files.
@@ -510,6 +517,7 @@ namespace CSETWebCore.Api.Controllers
                 return StatusCode(500);
             }
         }
+
 
         /// <summary>
         /// uploads new CSAF json files to Documents/DiagramVulnerabilities/CSAF to be used for network diagram alerts & advisories
@@ -592,6 +600,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok("CSAF file upload success.");
         }
 
+
         /// <summary>
         /// Saves a new vendor / updates a vendor that was added manually by the user.
         /// </summary>
@@ -613,6 +622,7 @@ namespace CSETWebCore.Api.Controllers
                 return StatusCode(500);
             }
         }
+
 
         /// <summary>
         /// Deletes all CSAF files than contain a given vendor (this assumes each CSAF file only contains a single vendor).

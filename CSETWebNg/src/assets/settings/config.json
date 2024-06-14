@@ -5,16 +5,22 @@
   "isRunningAnonymous": false,
   "app": {
     "protocol": "http",
-    "url": "localhost",
+    "host": "localhost",
     "port": "4200"
   },
   "api": {
     "protocol": "http",
-    "url": "localhost",
+    "host": "localhost",
     "port": "5000",
     "apiIdentifier": "api",
     "documentsIdentifier": "Documents",
     "onlineUrl": "https://cset.inl.gov"
+  },
+  "library": {
+    "protocol": "http",
+    "host": "localhost",
+    "port": "5000",
+    "apiIdentifier": "api"
   },
   "csetGithubApiUrl": "https://api.github.com/repos/cisagov/cset/releases/latest",
   "helpContactEmail": "CSET_PMO@cisa.dhs.gov",

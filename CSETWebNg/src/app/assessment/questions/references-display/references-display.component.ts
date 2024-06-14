@@ -94,7 +94,7 @@ export class ReferencesDisplayComponent implements OnInit {
 
   /**
     * Replaces all occurrences of the token {{ cset_refdoc_url }}
-    * with the refdoc URL for the installation.
+    * with the library URL for the installation.
     */
   replaceRefDocUrl(s: string) {
     return s.replaceAll("{{ cset_refdoc_url }}", this.configSvc.refDocUrl);
