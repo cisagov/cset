@@ -89,7 +89,7 @@
                 Are you intending to apply for the State of Florida Local Cybersecurity Grant Program? The full
                 assessments completes the requirements for house bill 7055?
             </p>
-            <input class="radio-custom" style="visibility: visible" name="hb7055GrantNo" id="hb7055GrantNo" type="radio"
+            <input #radioNo class="radio-custom" style="visibility: visible" name="hb7055GrantNo" id="hb7055GrantNo" type="radio"
                 autocomplete="off" tabindex="1" (click)="sethb7055Grant('N')"
                 [checked]="demographicData.hb7055GrantGrant == 'N'">
             <label class="radio-custom-label" for="hb7055GrantNo">No</label>
