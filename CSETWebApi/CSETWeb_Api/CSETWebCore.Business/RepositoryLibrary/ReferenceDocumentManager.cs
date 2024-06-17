@@ -118,30 +118,5 @@ namespace CSETWebCore.Business.RepositoryLibrary
                 return null;
             }
         }
-
-
-        /// <summary>
-        /// Returns a list of physical files in the Documents folder.
-        /// </summary>
-        /// <returns></returns>
-        public List<string> GetBuildDocuments()
-        {
-            var physicalDocPath = _configuration.GetValue<string>("RefDocPath") ?? "Documents";
-
-            try
-            {
-                List<string> availableRefDocs = new DirectoryInfo(physicalDocPath)
-                    .GetFiles().ToList()
-                    .Select(f => f.Name)
-                    .ToList();
-                return availableRefDocs;
-            }
-            catch (Exception exc)
-            {
-                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
-
-                return new List<string>();
-            }
-        }
     }
 }
