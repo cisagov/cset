@@ -192,7 +192,7 @@ export class ConfigService {
     // take precedence over the config file, since Electron uses it to dynamically set the port.
     const rl = this.config.library;
     if (!!localStorageLibraryUrl) {
-      this.libraryUrl = localStorageLibraryUrl + '/library/';
+      this.libraryUrl = localStorageLibraryUrl + '/' + this.config.api.apiIdentifier + '/library/';
     } else if (!!rl) {
       const rlProtocol = rl.protocol + '://';
       const rlPort = !!rl.port ? ':' + rl.port : '';
