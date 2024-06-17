@@ -58,7 +58,7 @@ export class ConfigService {
 
   onlineUrl: string;
   analyticsUrl: string = "http://localhost:5278/";
-  
+
   csetGithubApiUrl: string;
   helpContactEmail: string;
   helpContactPhone: string;
@@ -172,18 +172,22 @@ export class ConfigService {
 
 
     const localStorageApiUrl = localStorage.getItem('apiUrl');
+    const localStoragelibraryUrl = localStorage.getItem('libraryUrl');
     if (!!localStorageApiUrl) {
       this.apiUrl = localStorageApiUrl + '/' + this.config.api.apiIdentifier + '/';
       this.docUrl = localStorageApiUrl + '/' + this.config.api.documentsIdentifier + '/';
-      this.libraryUrl = localStorageApiUrl + '/library/';
-      this.refDocUrl = this.libraryUrl + 'doc/';
     } else {
       this.apiUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/';
       this.docUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.documentsIdentifier + '/';
-      this.libraryUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/library/';
-      this.refDocUrl = this.libraryUrl + 'doc/';
     }
 
+    if (!!localStoragelibraryUrl) {
+      this.libraryUrl = localStorageApiUrl + '/library/';
+    } else {
+      this.libraryUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/library/';
+    }
+
+    this.refDocUrl = this.libraryUrl + 'doc/';
 
     this.appUrl = appProtocol + this.config.app.host + appPort;
     this.analyticsUrl = "http://localhost:5278/";
@@ -199,7 +203,7 @@ export class ConfigService {
        this.libraryUrl = rlProtocol + rl.host + rlPort + '/' + (rl.apiIdentifier ?? 'api') + '/library/'
        this.refDocUrl = this.libraryUrl + 'doc/';
      }
- 
+
 
     this.galleryLayout = this.config.galleryLayout?.toString() || 'CSET';
     this.mobileEnvironment = this.config.mobileEnvironment;
@@ -340,7 +344,7 @@ export class ConfigService {
             // change favicon and title
             const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
             link.href = 'assets/icons/favicon_cie.ico?app=cie1';
-  
+
             var title = this.document.querySelector('title');
             title.innerText = 'CSET-CIE';
           }
