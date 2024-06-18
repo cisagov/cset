@@ -80,3 +80,8 @@ li button span {
   height: 30px;
   width: 30px;
 }
+
+.sticky-tabs {
+  position: sticky;
+  z-index: 999;
+}
