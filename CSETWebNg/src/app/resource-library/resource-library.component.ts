@@ -21,7 +21,7 @@
 //
 ////////////////////////////////
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, isDevMode } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Title } from "@angular/platform-browser";
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -31,6 +31,7 @@ import { OkayComponent } from '../dialogs/okay/okay.component';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { NavigationService } from '../services/navigation/navigation.service';
 import { NavTreeService } from '../services/navigation/nav-tree.service';
+import { AuthenticationService } from '../services/authentication.service';
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
   params: new HttpParams()
@@ -60,12 +61,14 @@ interface LibrarySearchResponse {
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class ResourceLibraryComponent implements OnInit {
+export class ResourceLibraryComponent implements OnInit, AfterViewInit {
   results: LibrarySearchResponse[];
   searchTerm: string;
   searchString: string;
   apiUrl: string;
   docUrl: string;
+  libraryUrl: string;
+  refDocUrl: string;
   selectedPane = 'search';
   dialogRef: MatDialogRef<OkayComponent>;
   isLoading: boolean;
@@ -74,19 +77,24 @@ export class ResourceLibraryComponent implements OnInit {
   children?: LibrarySearchResponse[];
   filter: string = '';
   setFilterDebounced = new Subject<string>();
+  @ViewChild('tabs') tabsElementRef: ElementRef;
+  devMode: boolean = isDevMode();
 
   constructor(private configSvc: ConfigService,
     private http: HttpClient,
     public navSvc: NavigationService,
     public navTreeSvc: NavTreeService,
     public dialog: MatDialog,
+    private authSvc: AuthenticationService,
     public titleSvc: Title) {
   }
 
   ngOnInit() {
     this.isexpanded = true;
     this.apiUrl = this.configSvc.apiUrl;
-    this.docUrl = this.configSvc.docUrl;
+    this.libraryUrl = this.configSvc.libraryUrl;
+    this.refDocUrl = this.configSvc.refDocUrl;
+    this.docUrl = this.configSvc.refDocUrl;
 
     this.titleSvc.setTitle(this.configSvc.behaviors.defaultTitle);
 
@@ -100,16 +108,25 @@ export class ResourceLibraryComponent implements OnInit {
         this.setFilter(value);
       });
 
-    const timeout = setTimeout(() => { this.isLoading = true; }, 1000);
-    this.http.get(this.apiUrl + 'ResourceLibrary/tree').subscribe(
+    this.http.get(this.libraryUrl + 'tree').subscribe(
       (response: NavTreeNode[]) => {
         this.navTreeSvc.setTree(response, this.navSvc.getMagic(), true);
         this.isLoading = false;
-        clearTimeout(timeout);
       }
     );
   }
 
+  ngAfterViewInit(): void {
+    if (!!this.tabsElementRef) {
+      const tabsEl = this.tabsElementRef.nativeElement;
+      tabsEl.classList.add('sticky-tabs');
+      if (this.authSvc.isLocal && this.devMode) {
+        tabsEl.style.top = '81px';
+      } else {
+        tabsEl.style.top = '62px';
+      }
+    }
+  }
 
   setFilter(filter: string) {
     this.filter = filter ?? '';
@@ -162,7 +179,7 @@ export class ResourceLibraryComponent implements OnInit {
 
   search(term: string) {
     this.http.post(
-      this.apiUrl + 'ResourceLibrary',
+      this.libraryUrl + 'search',
       {
         term: term,
         isProcurement: true,
@@ -214,7 +231,7 @@ export class ResourceLibraryComponent implements OnInit {
     }
 
     this.http.get(
-      this.apiUrl + 'ResourceLibrary/doc?type=' + docType + '&id=' + id,
+      this.libraryUrl + 'flowdoc?type=' + docType + '&id=' + id,
       headers)
       .subscribe(
         (docHtml: string) => {

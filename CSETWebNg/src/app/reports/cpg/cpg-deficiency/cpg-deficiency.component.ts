@@ -87,12 +87,4 @@ export class CpgDeficiencyComponent implements OnInit {
       this.loading = true;
     })
   }
-
-  parseQuestionText(textWithHtml: string) {
-    let startOfRealText = textWithHtml.indexOf(this.cpgPracticeTag) + this.cpgPracticeTag.length;
-    let endOfRealText = textWithHtml.indexOf('<', startOfRealText);
-
-    return textWithHtml.substring(startOfRealText, endOfRealText);
-  }
-
 }

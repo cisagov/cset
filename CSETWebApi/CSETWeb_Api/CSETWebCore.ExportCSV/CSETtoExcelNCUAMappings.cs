@@ -23,18 +23,18 @@ namespace CSETWebCore.ExportCSV
     {
         private CSETContext db;
         private readonly IACETDashboardBusiness _acet;
-        private readonly IMaturityBusiness _maturity;
+        private readonly IACETMaturityBusiness _acetMaturity;
 
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="db"></param>
-        public CSETtoExcelNCUAMappings(CSETContext db, IACETDashboardBusiness acet, IMaturityBusiness maturity)
+        public CSETtoExcelNCUAMappings(CSETContext db, IACETDashboardBusiness acet, IACETMaturityBusiness acetMaturity)
         {
             this.db = db;
             _acet = acet;
-            _maturity = maturity;
+            _acetMaturity = acetMaturity;
         }
 
 
@@ -131,7 +131,7 @@ namespace CSETWebCore.ExportCSV
 
             // A few helper classes gather data
             var acetDashboard = _acet.LoadDashboard(assessmentID);
-            var maturityDomains = _maturity.GetMaturityAnswers(assessmentID);
+            var maturityDomains = _acetMaturity.GetMaturityAnswers(assessmentID);
 
             // Build the row for the assessment
             SingleRowExport export = null;

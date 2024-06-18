@@ -1,0 +1,125 @@
+<!---------------------- 
+
+   Copyright 2024 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="white-panel d-flex justify-content-start flex-column flex-11a tutorial"
+    *transloco="let t; read: 'tutorials.mvra'">
+    <h3 class="wrap-text mb-3">{{t('title')}}</h3>
+    <div *transloco="let k">
+        <h5 >{{k('titles.overview')}}</h5>
+        <p>{{t('1')}}</p>
+
+        <p>{{t('2')}}</p>
+        
+        <p>{{t('3')}}</p>
+
+        <h5 >{{k('extras.scope')}}</h5>
+
+        <p>{{t('4')}}</p>
+
+        <h5 >{{k('tutorials.critical service')}}</h5>
+
+        <p>{{t('5')}}</p>
+
+        <h5 >{{k('tutorials.asset types')}}</h5>
+
+        <p>{{t('6')}}</p>
+        <ul>
+            <li><b>{{t('6a1')}}</b>{{t('6a2')}}</li>
+            <li><b>{{t('6b1')}}</b>{{t('6b2')}}</li>
+            <li><b>{{t('6c1')}}</b>{{t('6c2')}}</li>
+            <li><b>{{t('6d1')}}</b>{{t('6d2')}}</li>
+        </ul>
+
+        <h5 >{{k('titles.assessment')}}</h5>
+
+        <p>{{t('7')}}</p>
+        
+        <ul>
+            <li>{{t('7a')}}</li>
+            <li>{{t('7b')}}</li>
+            <li>{{t('7c')}}</li>
+            <li>{{t('7d')}}</li>
+        </ul>
+
+        <p>{{t('8')}}</p>
+        <div class="img-frame">
+            <img src="assets/images/MVRA/tutorial/Picture1.png" style="width: 550px">
+        </div>
+
+        <h6>{{t('9')}}</h6>
+        <div class="img-frame">
+            <img src="assets/images/MVRA/tutorial/Picture2.png" style="width: 250px">
+        </div>
+        <p>{{t('10')}}</p>
+
+        <h6>{{k('titles.goal')}}</h6>
+        <div class="img-frame">
+            <img src="assets/images/MVRA/tutorial/Picture3.png" style="width: 550px">
+        </div>
+        <p>{{t('11')}}</p>
+
+        <h6>{{k('tutorials.practice')}}</h6>
+        <div class="img-frame">
+            <img src="assets/images/MVRA/tutorial/Picture4.png" style="width: 550px">
+        </div>
+        <p>{{t('12')}}</p>
+
+        <h6>{{k('tutorials.practice identifier')}}</h6>
+        <div class="img-frame">
+            <img src="assets/images/MVRA/tutorial/Picture5.png" style="width: 100px">
+        </div>
+        
+        <p>{{t('13')}}</p>
+        <p>{{t('14')}}</p>
+        <p>{{t('16')}}</p>
+
+        <h6>{{k('titles.cset icons')}}</h6>
+        <div class="img-frame">
+            <img src="assets/images/MVRA/tutorial/Picture6.png" style="width: 250px">
+        </div>
+
+        <p>{{t('15')}}</p>
+        <ul>
+            <li>{{t('15a')}}</li>
+            <li>{{t('15b')}}</li>
+            <li>{{t('15c')}}</li>
+            <li>{{t('15d')}}</li>
+            <li>{{t('15e')}}</li>
+        </ul>
+
+        <h6>{{k('titles.answer buttons')}}</h6>
+        <div class="img-frame">
+            <img src="assets/images/MVRA/tutorial/Picture7.png" style="width: 250px">
+        </div>
+        <p>{{t('20')}}</p>
+        <ul>
+            <li><b>{{k('answer-options.button-labels.fully-mvra')}}</b> {{t('17')}}</li>
+            <li><b>{{k('answer-options.button-labels.partial-mvra')}}</b> {{t('18')}}</li>
+            <li><b>{{k('answer-options.button-labels.not-mvra')}}</b> {{t('19')}}</li>
+            
+        </ul>
+        <h5>{{k('titles.additional resources')}}</h5>
+        <p>{{k('tutorials.additional resources')}}</p>
+        
+    </div>
+    <app-nav-back-next [page]="'tutorial-mvra'"></app-nav-back-next>
+</div>

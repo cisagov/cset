@@ -19,6 +19,7 @@ namespace CSETWebCore.ExportCSV
         private CSETContext _context;
         private readonly IDataHandling _dataHandling;
         private readonly IMaturityBusiness _maturity;
+        private readonly IACETMaturityBusiness _acetMaturity;
         private readonly IACETDashboardBusiness _acet;
         private readonly IHttpContextAccessor _http;
 
@@ -31,12 +32,12 @@ namespace CSETWebCore.ExportCSV
         /// <param name="maturity"></param>
         /// <param name="acet"></param>
         /// <param name="http"></param>
-        public ExcelExporter(CSETContext context, IDataHandling dataHandling, IMaturityBusiness maturity,
+        public ExcelExporter(CSETContext context, IDataHandling dataHandling, IACETMaturityBusiness acetMaturity,
             IACETDashboardBusiness acet, IHttpContextAccessor http)
         {
             _context = context;
             _dataHandling = dataHandling;
-            _maturity = maturity;
+            _acetMaturity = acetMaturity;
             _acet = acet;
             _http = http;
         }
@@ -69,7 +70,7 @@ namespace CSETWebCore.ExportCSV
         public MemoryStream ExportToExcelISE(int assessmentID, string type = "ISE")
         {
             var stream = new MemoryStream();
-            CSETtoExcelNCUAMappings export = new CSETtoExcelNCUAMappings(_context, _acet, _maturity);
+            CSETtoExcelNCUAMappings export = new CSETtoExcelNCUAMappings(_context, _acet, _acetMaturity);
             export.ProcessAssessment(assessmentID, stream, type);
             return stream;
 
@@ -79,7 +80,7 @@ namespace CSETWebCore.ExportCSV
         public MemoryStream ExportToExcelAllNCUA(int userID, string type = "")
         {
             var stream = new MemoryStream();
-            CSETtoExcelNCUAMappings export = new CSETtoExcelNCUAMappings(_context, _acet, _maturity);
+            CSETtoExcelNCUAMappings export = new CSETtoExcelNCUAMappings(_context, _acet, _acetMaturity);
             export.ProcessAllAssessmentsForUser(userID, stream, type);
             return stream;
         }

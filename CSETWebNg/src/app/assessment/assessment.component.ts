@@ -26,7 +26,8 @@ import {
   Component,
   EventEmitter,
   OnInit,
-  Output, HostListener
+  Output, HostListener,
+  ApplicationRef
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
@@ -66,6 +67,7 @@ export class AssessmentComponent implements OnInit {
 
 
   @Output() navSelected = new EventEmitter<string>();
+  isSet: boolean;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -80,15 +82,23 @@ export class AssessmentComponent implements OnInit {
     public navTreeSvc: NavTreeService,
     public layoutSvc: LayoutService,
     public tSvc: TranslocoService,
-    private configSvc: ConfigService
+    private configSvc: ConfigService,
+    private appRef: ApplicationRef
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
     this.setTab('prepare');
-    this.navSvc.activeResultsView = null;
+    this.navSvc.activeResultsView = null;    
+    this.isSet=false;
   }
 
   ngOnInit(): void {
+    //This is a hack to force the app to update the view after the assessment is loaded
+    //but not the first time.
+    if(this.isSet){
+      this.isSet = true;
+      this.appRef.tick();
+    }
     this.evaluateWindowSize();
 
     if (this.configSvc.behaviors.replaceAssessmentWithAnalysis) {
