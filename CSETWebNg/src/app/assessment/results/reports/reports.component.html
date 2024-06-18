@@ -80,38 +80,10 @@
       </button>
     </div>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('CMMC') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>Capability Maturity Model Certification (CMMC) 1.0</h4>
-
-      <button (click)="clickReportLink('executivecmmc')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        CMMC Executive Summary
-      </button>
-
-      <button (click)="clickReportLink('sitesummarycmmc')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        CMMC Site Summary Report
-      </button>
-
-      <button tabindex="0" (click)="clickReportLink('cmmcDeficiencyReport')"
-        class="btn btn-link btn-link-dark text-left">
-        CMMC Deficiency Report
-      </button>
-
-      <button tabindex="0" (click)="clickReportLink('cmmcCommentsMarked')" class="btn btn-link btn-link-dark text-left">
-        CMMC Comments and Marked for Review
-      </button>
-
-      <button tabindex="0" (click)="clickReportLink('cmmcAltJustifications')"
-        class="btn btn-link btn-link-dark text-left">
-        CMMC Alternate Justifications
-      </button>
-    </div>
-
-
-
+    <!-- CMMC -->
+    <app-report-list-cmmc *ngIf="!!assessSvc.assessment &&
+    assessSvc.usesMaturityModel('CMMC') &&
+    !isMobile"></app-report-list-cmmc>
 
     <!-- EDM -->
     <app-report-list-edm *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
