@@ -75,6 +75,7 @@ export class GalleryService {
         ///NOTE THIS runs the default item if there is only one item automatically
         if (this.configSvc.installationMode == "CF") {
           if (this.authSvc.isFirstLogin()) {
+            this.navSvc.clearNoMatterWhat();
             this.assessSvc.clearFirstTime();
             this.authSvc.setFirstLogin(false);
             this.navSvc.beginNewAssessmentGallery(this.rows[0].galleryItems[0]);
