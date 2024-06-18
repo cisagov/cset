@@ -30,17 +30,35 @@ import { merge } from 'lodash';
 
 @Injectable()
 export class ConfigService {
+  /**
+   * The full URL of the API
+   */
   apiUrl: string;
+
+  /**
+   * The full URL of the UI
+   */
   appUrl: string;
+
+  /**
+   * This is the host + "Documents".  Used for accessibility statement, etc.
+   */
   docUrl: string;
+
+  /**
+   * This is host/api/library/doc. Used for reference document retrieval.
+   */
   refDocUrl: string;
 
-  // used to build a true URL to the API endpoint that serves gen_file documents
-  referenceDocSegment = 'api/refdoc';
+  /**
+   * host/api/library
+   */
+  libraryUrl: string;
+
 
   onlineUrl: string;
   analyticsUrl: string = "http://localhost:5278/";
-  
+
   csetGithubApiUrl: string;
   helpContactEmail: string;
   helpContactPhone: string;
@@ -146,25 +164,44 @@ export class ConfigService {
     this.publicDomainName = this.config.publicDomainName;
     this.assetsUrl = 'assets/';
     this.installationMode = this.config.installationMode;
+
     const apiPort = this.config.api.port != '' ? ':' + this.config.api.port : '';
     const appPort = this.config.app.port != '' ? ':' + this.config.app.port : '';
     const apiProtocol = this.config.api.protocol + '://';
     const appProtocol = this.config.app.protocol + '://';
-    if (localStorage.getItem('apiUrl') != null) {
-      this.apiUrl = localStorage.getItem('apiUrl') + '/' + this.config.api.apiIdentifier + '/';
-      this.docUrl = localStorage.getItem('apiUrl') + '/' + this.config.api.documentsIdentifier + '/';
-      this.refDocUrl = localStorage.getItem('apiUrl') + '/' + this.referenceDocSegment + '/';
+
+
+    const localStorageApiUrl = localStorage.getItem('apiUrl');
+    const localStorageLibraryUrl = localStorage.getItem('libraryUrl');
+    if (!!localStorageApiUrl) {
+      this.apiUrl = localStorageApiUrl + '/' + this.config.api.apiIdentifier + '/';
+      this.docUrl = localStorageApiUrl + '/' + this.config.api.documentsIdentifier + '/';
     } else {
-      this.apiUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.config.api.apiIdentifier + '/';
-      this.docUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.config.api.documentsIdentifier + '/';
-      this.refDocUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.referenceDocSegment + '/';
+      this.apiUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/';
+      this.docUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.documentsIdentifier + '/';
     }
 
-    this.appUrl = appProtocol + this.config.app.appUrl + appPort;
+    this.appUrl = appProtocol + this.config.app.host + appPort;
     this.analyticsUrl = "http://localhost:5278/";
     this.helpContactEmail = this.config.helpContactEmail;
     this.helpContactPhone = this.config.helpContactPhone;
     this.csetGithubApiUrl = this.config.csetGithubApiUrl;
+
+    // configure the reference document URL if the "library" property is defined
+    // or if passed in as query param and stored as local storage variable. Local storage should
+    // take precedence over the config file, since Electron uses it to dynamically set the port.
+    const rl = this.config.library;
+    if (!!localStorageLibraryUrl) {
+      this.libraryUrl = localStorageLibraryUrl + '/' + this.config.api.apiIdentifier + '/library/';
+    } else if (!!rl) {
+      const rlProtocol = rl.protocol + '://';
+      const rlPort = !!rl.port ? ':' + rl.port : '';
+      this.libraryUrl = rlProtocol + rl.host + rlPort + '/' + (rl.apiIdentifier ?? 'api') + '/library/'
+    } else {
+      this.libraryUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/library/';
+    }
+
+    this.refDocUrl = this.libraryUrl + 'doc/';
 
     this.galleryLayout = this.config.galleryLayout?.toString() || 'CSET';
     this.mobileEnvironment = this.config.mobileEnvironment;
@@ -305,7 +342,7 @@ export class ConfigService {
             // change favicon and title
             const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
             link.href = 'assets/icons/favicon_cie.ico?app=cie1';
-  
+
             var title = this.document.querySelector('title');
             title.innerText = 'CSET-CIE';
           }

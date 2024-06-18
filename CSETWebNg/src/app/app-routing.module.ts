@@ -231,6 +231,7 @@ import { SdOwnerDeficiencyComponent } from './reports/sd-owner/sd-owner-deficien
 import { SdOwnerCommentsMfrComponent } from './reports/sd-owner/sd-owner-comments/sd-owner-comments-mfr.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { TutorialCpgComponent } from './assessment/prepare/maturity/tutorial-cpg/tutorial-cpg.component';
+import { TutorialMvraComponent } from './assessment/prepare/maturity/tutorial-mvra/tutorial-mvra.component';
 
 const appRoutes: Routes = [
 
@@ -369,6 +370,7 @@ const appRoutes: Routes = [
               { path: 'tutorial-rra', component: TutorialRraComponent },
               { path: 'tutorial-cis', component: TutorialCisComponent },
               { path: 'tutorial-cpg', component: TutorialCpgComponent},
+              { path: 'tutorial-mvra', component: TutorialMvraComponent},
               { path: 'tutorial-cie', component: TutorialCieComponent,
                 children: [
                 { path: 'quick-facts-cie', component: QuickFactsCieComponent },

@@ -45,11 +45,6 @@ export class ResourceLibraryService {
     }
   }
 
-  showResourceLibrary() {
-    return this.http.get(this.apiUrl + 'ShowResourceLibrary');
-  }
-
-
   /**
    * Gets the Url of the document based on the given name.
    * @param documentName
@@ -69,7 +64,7 @@ export class ResourceLibraryService {
 
   /**
    * Formats a URL of a provided document.  Sends the document ID to the
-   * 'refdoc' endpoint.  
+   * 'library' endpoint.  
    * 
    * Bookmarks to an actual sectionRef are appended to the URL.
    * 
@@ -86,7 +81,7 @@ export class ResourceLibraryService {
       if (bookmark) {
         return docLink.url + "#" + bookmark.sectionRef;
       }
-      
+
       return docLink.url;
     }
 

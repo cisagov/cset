@@ -72,6 +72,7 @@ namespace CSETWebCore.Business.Demographic
             // get any additional values we need from DETAILS_DEMOGRAPHICS
             var extBiz = new DemographicExtBusiness(_context);
             demographics.CisaRegion = (int?)extBiz.GetX(assessmentId, "CISA-REGION");
+            demographics.OrgPointOfContact = (int?)extBiz.GetX(assessmentId, "ORG-POC");
 
 
             return demographics;
@@ -177,6 +178,7 @@ namespace CSETWebCore.Business.Demographic
             // Not all fields are stored in DEMOGRAPHICS table ... store some in DETAILS-DEMOGRAPHICS
             var extBiz = new DemographicExtBusiness(_context);
             extBiz.SaveX(demographics.AssessmentId, "CISA-REGION", demographics.CisaRegion);
+            extBiz.SaveX(demographics.AssessmentId, "ORG-POC", demographics.OrgPointOfContact);
 
 
 

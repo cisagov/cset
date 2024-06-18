@@ -121,7 +121,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SetMaturityLevel([FromBody] int level)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistMaturityLevel(assessmentId, level);
+            new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistMaturityLevel(assessmentId, level);
             return Ok();
         }
 
@@ -544,93 +544,7 @@ namespace CSETWebCore.Api.Controllers
         // --------------------------------------
 
 
-        /// <summary>
-        /// Get maturity calculations
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/getMaturityResults")]
-        public IActionResult GetMaturityResults()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            var lang = _tokenManager.GetCurrentLanguage();
-
-            MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var maturity = manager.GetMaturityAnswers(assessmentId, lang);
-
-            return Ok(maturity);
-        }
-
-        /// <summary>
-        /// Get maturity calculations
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/getIseMaturityResults")]
-        public IActionResult GetIseMaturityResults()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var maturity = manager.GetIseMaturityAnswers(assessmentId);
-
-            return Ok(maturity);
-        }
-
-
-        /// <summary>
-        /// Get maturity range based on IRP rating
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/getMaturityRange")]
-        public IActionResult GetMaturityRange()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var maturityRange = manager.GetMaturityRange(assessmentId);
-            return Ok(maturityRange);
-        }
-
-
-        /// <summary>
-        /// Get IRP total for maturity
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/getOverallIrpForMaturity")]
-        public IActionResult GetOverallIrp()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            return Ok(new AcetBusiness(_context, _assessmentUtil, _adminTabBusiness).GetOverallIrp(assessmentId));
-        }
-
-
-        /// <summary>
-        /// Get target band for maturity
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/getTargetBand")]
-        public IActionResult GetTargetBand()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetTargetBandOnly(assessmentId));
-        }
-
-
-        /// <summary>
-        /// Set target band for maturity rating
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("api/setTargetBand")]
-        public IActionResult SetTargetBand([FromBody] bool value)
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).SetTargetBandOnly(assessmentId, value);
-            return Ok();
-        }
-
+        
 
         /// <summary>
         /// get maturity definiciency list

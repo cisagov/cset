@@ -27,7 +27,8 @@ li.active {
   border-radius: 5px 5px 0 0;
 
 }
-ul.nav-tabs li.active button{
+
+ul.nav-tabs li.active button {
   font-size: 1rem !important;
   padding-top: 11px;
   padding-bottom: 11px;
@@ -38,13 +39,14 @@ ul.nav-tabs li {
   padding-bottom: 2px;
 }
 
-li.active button span{
+li.active button span {
   padding-bottom: 0;
 }
 
-li button span{
+li button span {
   padding-bottom: 6px;
 }
+
 .input-bar {
   display: table;
   width: 100%;
@@ -54,6 +56,32 @@ li button span{
   display: table-cell;
 }
 
-.input-bar-item > button {
+.input-bar-item>button {
   margin-left: 5px;
+}
+
+.btn-filter-clear {
+  position: absolute;
+  right: 6.5rem;
+  top: .3rem;
+  padding: 0;
+  z-index: 100;
+  background-color: transparent;
+  height: 30px;
+  width: 30px;
+}
+
+.btn-search-clear {
+  position: absolute;
+  right: 170px;
+  padding: 0;
+  z-index: 100;
+  background-color: transparent;
+  height: 30px;
+  width: 30px;
+}
+
+.sticky-tabs {
+  position: sticky;
+  z-index: 999;
 }

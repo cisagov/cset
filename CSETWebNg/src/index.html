@@ -61,12 +61,15 @@
             var redirectid = getParameterByName("assessment_id");
             var returnPath = getParameterByName("returnPath");
             var apiUrl = getParameterByName("apiUrl");
+            var libraryUrl = getParameterByName("libraryUrl");
             if (redirectid != null)
                 localStorage.setItem("redirectid", redirectid);
             if (returnPath != null)
                 localStorage.setItem("returnPath", returnPath);
             if (apiUrl != null)
                 localStorage.setItem("apiUrl", apiUrl);
+            if (apiUrl != null)
+                localStorage.setItem("libraryUrl", libraryUrl);
         } else {
             // Sorry! No Web Storage support..
         }

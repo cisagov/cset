@@ -214,7 +214,7 @@ function createWindow() {
 
     // Check angular config file for initial API port and increment port automatically if designated port is already taken
     let apiPort = parseInt(config.api.port);
-    let apiUrl = config.api.url;
+    let apiUrl = config.api.host;
     assignPort(apiPort, null, apiUrl).then(assignedApiPort => {
       log.info('API launching on port', assignedApiPort);
       launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe', assignedApiPort, mainWindow);
@@ -232,7 +232,8 @@ function createWindow() {
               pathname: path.join(__dirname, 'dist/index.html'),
               protocol: 'file:',
               query: {
-                apiUrl: config.api.protocol + '://' + config.api.url + ':' + assignedApiPort,
+                apiUrl: config.api.protocol + '://' + config.api.host + ':' + assignedApiPort,
+                libraryUrl: config.api.protocol + '://' + config.api.host + ':' + assignedApiPort
               },
               slashes: true
             })
@@ -247,7 +248,9 @@ function createWindow() {
         pathname: path.join(__dirname, 'dist/index.html'),
         protocol: 'file:',
         query: {
-          apiUrl: config.api.protocol + '://' + config.api.url + ':' + config.api.port
+          apiUrl: config.api.protocol + '://' + config.api.host + ':' + config.api.port,
+          libraryUrl: config.api.protocol + '://' + config.api.host + ':' + config.api.port
+
         },
         slashes: true
       })
@@ -415,7 +418,7 @@ app.on('window-all-closed', () => {
 function launchAPI(exeDir, fileName, port, window) {
   let exe = exeDir + '/' + fileName;
   let options = { cwd: exeDir };
-  let args = ['--urls', config.api.protocol + '://' + config.api.url + ':' + port]
+  let args = ['--urls', config.api.protocol + '://' + config.api.host + ':' + port]
   let apiProcess = child(exe, args, options, (error) => {
     if (error) {
       window.loadFile(path.join(__dirname, '/dist/assets/app-startup-error.html'));
