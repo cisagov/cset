@@ -41,17 +41,13 @@ namespace CSETWebCore.Helpers
             out List<ReferenceDocLink> sourceDocList,
             out List<ReferenceDocLink> additionalDocList)
         {
-            // Create a list of documents we actual have on board, so that we don't build any dead links
-            List<string> onboardRefDocs = GetBuildDocuments();
-
-
             // Source Documents  
             var q1 = _context.REQUIREMENT_SOURCE_FILES
                 .Include(x => x.Gen_File)
                 .Where(s => s.Requirement_Id == requirementId)
                 .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Destination_String = s.Destination_String, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
 
-            sourceDocList = SortList(q1, onboardRefDocs);
+            sourceDocList = SortList(q1);
 
 
             // Additional Resource Documents
@@ -61,7 +57,7 @@ namespace CSETWebCore.Helpers
                 .OrderBy(s => s.Sequence)
                 .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Destination_String = s.Destination_String, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
 
-            additionalDocList = SortList(q2, onboardRefDocs);
+            additionalDocList = SortList(q2);
         }
 
 
@@ -74,17 +70,13 @@ namespace CSETWebCore.Helpers
              out List<ReferenceDocLink> sourceDocList,
             out List<ReferenceDocLink> additionalDocList)
         {
-            // Create a list of documents we actual have on board, so that we don't build any dead links
-            List<string> onboardRefDocs = GetBuildDocuments();
-
-
             // Source Documents  
             var q1 = _context.MATURITY_SOURCE_FILES
                 .Include(x => x.Gen_File)
                 .Where(s => s.Mat_Question_Id == maturityQuestion_ID)
                 .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, File_Type_Id = s.Gen_File.File_Type_Id ?? 0, Section_Ref = s.Section_Ref, Destination_String = s.Destination_String, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
 
-            sourceDocList = SortList(q1, onboardRefDocs);
+            sourceDocList = SortList(q1);
 
 
             // Additional Resource Documents
@@ -94,7 +86,7 @@ namespace CSETWebCore.Helpers
                 .OrderBy(s => s.Sequence)
                 .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, File_Type_Id = s.Gen_File.File_Type_Id ?? 0, Section_Ref = s.Section_Ref, Destination_String = s.Destination_String, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
 
-            additionalDocList = SortList(q2, onboardRefDocs);
+            additionalDocList = SortList(q2);
         }
 
 
@@ -106,15 +98,14 @@ namespace CSETWebCore.Helpers
         /// no links rendered.  This will allow us to list references to documents that are not onboard in CSET
         /// but the user could look up on their own. 
         /// </summary>
-        private List<ReferenceDocLink> SortList(IQueryable<GenFileView> docList, List<string> onboardRefDocs)
+        private List<ReferenceDocLink> SortList(IQueryable<GenFileView> docList)
         {
             var sorted = docList.Where(x => x.Sequence != null).OrderBy(x => x.Sequence).ToList();
             sorted.AddRange(docList.Where(x => x.Sequence == null));
 
-            var availableDocs = sorted.Where(d => onboardRefDocs.Contains(d.File_Name) || d.Is_Uploaded || string.IsNullOrEmpty(d.File_Name)).ToList();
 
             var outList = new List<ReferenceDocLink>();
-            foreach (var doc in availableDocs)
+            foreach (var doc in sorted)
             {
                 var docLink = new ReferenceDocLink()
                 {
@@ -205,7 +196,7 @@ namespace CSETWebCore.Helpers
             {
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
-                return new List<string>();
+                return [];
             }
         }
     }
