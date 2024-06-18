@@ -608,5 +608,52 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(true);
         }
+
+
+        /// <summary>
+        /// Updates the "bookmark" field in the user's record for the assessment.
+        /// Allows the front end to auto-navigate to the user's last page when
+        /// opening an assessment.
+        /// </summary>
+        [HttpPost]
+        [Route("api/contacts/bookmark")]
+        public IActionResult UpdateBookmark([FromBody] BookmarkRequest req)
+        {
+            int? currentUserId = _token.GetUserId();
+            int assessmentId = _token.AssessmentForUser();
+
+            var ac = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == currentUserId && x.Assessment_Id == assessmentId).FirstOrDefault();
+            if (ac == null)
+            {
+                // no contact record - just do nothing
+                return Ok();
+            }
+
+            ac.Bookmark = req.Bookmark;
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [HttpGet]
+        [Route("api/contacts/bookmark")]
+        public IActionResult GetBookmark()
+        {
+            int? currentUserId = _token.GetUserId();
+            int assessmentId = _token.AssessmentForUser();
+
+            var ac = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == currentUserId && x.Assessment_Id == assessmentId).FirstOrDefault();
+            if (ac == null)
+            {
+                // no contact record - just do nothing
+                return Ok();
+            }
+
+            return Ok(ac.Bookmark);
+        }
     }
 }

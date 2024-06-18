@@ -130,7 +130,7 @@ export class NavigationService implements OnDestroy{
    *
    */
   getFramework() {
-    return this.http.get(this.configSvc.apiUrl + "standard/IsFramework");
+    return this.http.get(this.configSvc.apiUrl + 'standard/IsFramework');
   }
 
   setACETSelected(acet: boolean) {
@@ -192,7 +192,15 @@ export class NavigationService implements OnDestroy{
         this.assessSvc.initCyberFlorida(assessmentId);
       }
       else {
-        this.navDirect('phase-prepare');
+        // starting navigation
+        this.http.get(this.configSvc.apiUrl + 'contacts/bookmark', { responseType: 'text' }).subscribe((x: string) => {
+          if (!!x && x.length > 0) {
+            this.navTreeSvc.setCurrentPage(x);
+            this.navDirect(x);
+            }
+        });
+
+        this.navDirect('phase-prepare', false);
       }
 
     });
@@ -200,7 +208,7 @@ export class NavigationService implements OnDestroy{
 
   beginNewAssessmentGallery(item: any) {
     this.assessSvc.newAssessmentGallery(item).then(() => {
-      this.navDirect('phase-prepare');
+      this.navDirect('phase-prepare', false);
     });
   }
 
@@ -340,7 +348,7 @@ export class NavigationService implements OnDestroy{
    * Routes to the path configured for the specified pageId.
    * @param value
    */
-  navDirect(id: string) {
+  navDirect(id: string, persist: boolean = true) {
     // if the target is a simple string, find it in the pages structure
     // and navigate to its path
     if (typeof id == 'string') {
@@ -357,22 +365,30 @@ export class NavigationService implements OnDestroy{
         return;
       }
 
-      this.routeToTarget(target);
+      this.routeToTarget(target, persist);
       return;
     }
   }
 
   /**
    * Navigates to the path specified in the target node.
+   * The current navigation ID will be persisted to the database 
+   * unless we are specifically told not to.
    */
-  routeToTarget(target: HTMLElement) {
-    this.navTreeSvc.setCurrentPage(target.id);
-    this.destinationId = target.id;
+  routeToTarget(targetNode: HTMLElement, persist: boolean = true) {
+    // save the bookmark 
+    if (persist) {
+      this.http.post(this.configSvc.apiUrl + 'contacts/bookmark', { bookmark: targetNode.id }).subscribe();
+    }
+
+
+    this.navTreeSvc.setCurrentPage(targetNode.id);
+    this.destinationId = targetNode.id;
 
     this.buildTree();
 
     // determine the route path
-    const targetPath = target.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
+    const targetPath = targetNode.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
     this.router.navigate([targetPath]);
   }
 
