@@ -35,6 +35,7 @@ import { CieService } from '../cie.service';
   providedIn: 'root'
 })
 export class NavTreeService {
+  
 
   dataSource: MatTreeNestedDataSource<NavTreeNode> = new MatTreeNestedDataSource<NavTreeNode>();
   dataChange: BehaviorSubject<NavTreeNode[]> = new BehaviorSubject<NavTreeNode[]>([]);
@@ -191,7 +192,11 @@ export class NavTreeService {
       this.tocControl.dataNodes = this.dataSource.data;
     }
   }
-
+  clearNoMatterWhat() {
+    this.isNavLoading = true;
+    this.dataSource.data = null;
+    this.tocControl.dataNodes = this.dataSource.data;
+  }
 
 
   /**

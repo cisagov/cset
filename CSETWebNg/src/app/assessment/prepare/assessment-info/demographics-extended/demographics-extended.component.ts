@@ -52,6 +52,7 @@ export class DemographicsExtendedComponent implements OnInit {
   cioList: any[];
   cisoList: any[];
   trainingList: any[];
+  radioNo: any;
 
   /**
    * This is the model that contains the current answers
@@ -346,6 +347,7 @@ export class DemographicsExtendedComponent implements OnInit {
   setHb7055(value: string) {
     this.demographicData.hb7055 = value;
     if (value !== 'Y') {
+      this.radioNo.value = '';
       this.demographicData.hb7055Party = '';
     }
     this.updateDemographics();
@@ -355,12 +357,19 @@ export class DemographicsExtendedComponent implements OnInit {
     this.demographicData.hb7055Party = event.target.value;
     this.updateDemographics();
   }
+  getGrant():boolean{    
+    return (this.demographicData.hb7055Grant == 'Y');
+  }
+  getGrantNo():boolean{
+    return (this.demographicData.hb7055Grant == 'N');
+  }
   sethb7055Grant(value: string) {
     this.demographicData.hb7055Grant = value;
-    if (value !== 'Y') {
-      this.demographicData.hb7055Grant = '';
-    }
+    if (value != 'Y') {
+      this.demographicData.hb7055Grant = '';      
+    }    
     this.updateDemographics();
+
   }
   setInfrastructureItOt(value: string) {
     this.demographicData.infrastructureItOt = value;

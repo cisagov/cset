@@ -1,56 +1,50 @@
-//////////////////////////////// 
+﻿//////////////////////////////// 
 // 
 //   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
-using Microsoft.AspNetCore.Mvc;
+using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Model.ResourceLibrary;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
-using CSETWebCore.DataLayer.Model;
-using Microsoft.AspNetCore.StaticFiles;
-using Microsoft.AspNetCore.Http;
 
 
-namespace CSETWebCore.Api.Controllers
+namespace CSETWebCore.Business.RepositoryLibrary
 {
-    [ApiController]
-    public class ReferenceDocumentsController : ControllerBase
+    public class ReferenceDocumentManager
     {
         private readonly CSETContext _context;
+        private readonly IWebHostEnvironment _environment;
+        private readonly IConfiguration _configuration;
 
-        public ReferenceDocumentsController(CSETContext context)
+        /// <summary>
+        /// 
+        /// </summary>
+        public ReferenceDocumentManager(CSETContext context, IWebHostEnvironment environment, IConfiguration configuration)
         {
             _context = context;
-        }
-
-        [HttpGet]
-        [Route("api/HasLocalDocuments")]
-        public IActionResult HasLocalDocuments()
-        {
-            var docPath = Path.Combine((string)AppDomain.CurrentDomain.GetData("ContentRootPath"), "Documents", "cag.pdf");
-            if (System.IO.File.Exists(docPath))
-            {
-                return Ok(true);
-            }
-            else
-            {
-                return Ok(false);
-            }
+            _environment = environment;
+            _configuration = configuration;
         }
 
 
         /// <summary>
-        /// This can find a file in the GEN_FILE table either by
-        /// filename or by the file's ID.
+        /// Locates a reference document defined in the GEN_FILE table.  The identifier can be the 
+        /// Gen_File_Id or the name of the physical file.
+        /// 
+        /// If a record is found, its binary Stream is returned if the Data column contains data.
+        /// 
+        /// If not, the physical file is found and returned as a Stream.
         /// </summary>
-        /// <param name="file"></param>
+        /// <param name="fileId"></param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("api/library/doc/{fileId}")]
-        public IActionResult FindReferenceDocument(string fileId)
+        public ReferenceFileResponse? FindReferenceDocument(string fileId)
         {
             var hashLocation = fileId.IndexOf('#');
             if (hashLocation > -1)
@@ -69,7 +63,6 @@ namespace CSETWebCore.Api.Controllers
                 }
             }
 
-
             var files = from gf in _context.GEN_FILE
                         join ft1 in _context.FILE_TYPE on gf.File_Type_Id equals ft1.File_Type_Id into tt
                         from ft in tt.DefaultIfEmpty()
@@ -79,7 +72,7 @@ namespace CSETWebCore.Api.Controllers
             var refDoc = files.FirstOrDefault();
             if (refDoc == null)
             {
-                return new NotFoundResult();
+                return null;
             }
 
 
@@ -94,7 +87,9 @@ namespace CSETWebCore.Api.Controllers
                 }
                 else
                 {
-                    var docPath = Path.Combine((string)AppDomain.CurrentDomain.GetData("ContentRootPath"), "Documents", refDoc.gf.File_Name);
+                    var physicalDocPath = _configuration.GetValue<string>("RefDocPath") ?? "Documents";
+
+                    var docPath = Path.Combine(_environment.ContentRootPath, physicalDocPath, refDoc.gf.File_Name);
                     stream = new FileStream(docPath, FileMode.Open, FileAccess.Read);
                 }
 
@@ -113,17 +108,14 @@ namespace CSETWebCore.Api.Controllers
                     .TryGetContentType(filename, out contentType);
                 }
 
-                var contentDisposition = new ContentDispositionHeaderValue("inline");
-                contentDisposition.FileName = filename;
-                Response.Headers.Append("Content-Disposition", contentDisposition.ToString());
 
-                return File(stream, contentType);
+                return new ReferenceFileResponse() { Id = refDoc.gf.Gen_File_Id, FileName = filename, ContentType = contentType, Stream = stream };
             }
             catch (Exception ex)
             {
                 NLog.LogManager.GetCurrentClassLogger().Error(ex);
 
-                return new NotFoundResult();
+                return null;
             }
         }
     }
