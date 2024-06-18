@@ -44,7 +44,7 @@ namespace CSETWebCore.Business.Demographic
             //--------------------------------
             // _demographics validation
             //--------------------------------
-            PropertyInfo[] demoProperties = typeof(Demographics).GetProperties();
+            List<PropertyInfo> demoProperties = typeof(Demographics).GetProperties().ToList();
             // We only need to make sure that the critical service is not null in base demographics object
             var criticalService = demoProperties.Where(p => p.Name.Equals("CriticalService")).FirstOrDefault();
             if (string.IsNullOrWhiteSpace((string)criticalService.GetValue(_demographics)))
@@ -55,7 +55,12 @@ namespace CSETWebCore.Business.Demographic
             //--------------------------------
             // _demographicsExt validation
             //--------------------------------
-            PropertyInfo[] demoExtProperties = typeof(DemographicExt).GetProperties();
+            List<PropertyInfo> demoExtProperties = typeof(DemographicExt).GetProperties().ToList();
+
+            // remove Org Point of Contact - currently stored as DemographicExt but not required
+            demoExtProperties.RemoveAll(x => x.Name == "OrgPointOfContact");
+
+
             foreach (PropertyInfo property in demoExtProperties)
             {
                 var displayName = GetDisplayName(_demographicExt, property.Name);
@@ -103,7 +108,7 @@ namespace CSETWebCore.Business.Demographic
             //--------------------------------
             // _cisServiceDemographics validation
             //--------------------------------
-            PropertyInfo[] cisServiceDemoProperties = typeof(CisServiceDemographics).GetProperties();
+            List<PropertyInfo> cisServiceDemoProperties = typeof(CisServiceDemographics).GetProperties().ToList();
             foreach (PropertyInfo property in cisServiceDemoProperties)
             {
                 var displayName = GetDisplayName(_cisServiceDemographics, property.Name);
@@ -128,7 +133,7 @@ namespace CSETWebCore.Business.Demographic
             //--------------------------------
             // _cisServiceComposition validation
             //--------------------------------
-            PropertyInfo[] cisServiceCompProperties = typeof(CisServiceComposition).GetProperties();
+            List<PropertyInfo> cisServiceCompProperties = typeof(CisServiceComposition).GetProperties().ToList();
             foreach (PropertyInfo property in cisServiceCompProperties)
             {
                 var displayName = GetDisplayName(_cisServiceComposition, property.Name);
