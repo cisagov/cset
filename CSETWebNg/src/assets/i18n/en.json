@@ -678,11 +678,11 @@
         "sectionTitle": "Capability Maturity Model Certification (CMMC) 1.0",
         "1": {
           "title": "CMMC Executive Summary",
-          "desc": "The report includes graphs to highlight compliance by level, compliance by domain, and the compliance score breakdown."
+          "desc": "The report includes the executive summary, the assessment target level, and a set of charts that highlight compliance by level, compliance by domain, and the compliance score breakdown."
         },
         "2": {
           "title": "CMMC Site Summary Report",
-          "desc": "The report includes CMMC target levels, complieance by level, compliance by domain, and compliance score breakdown. Additionally, it includes requirements scoring and gap list."
+          "desc": "The report includes the same information as the Executive Summary as well as site information, an explanation of CMMC processes and practices, a list of all requirements and their corresponding answers, and a list of all deficiencies."
         },
         "3": {
           "title": "CMMC Deficiency Report",
@@ -743,6 +743,32 @@
         "1": {
           "title": "MVRA Report",
           "desc": "This report includes charts and tables that summarize the responses gathered throughout the assessment process, enabling organizations to analyze and assess their cybersecurity capabilities effectively. The report presents the organization’s performance by domain, sub-domain, and tier."
+        }
+      },
+      "c2m2": {
+        "sectionTitle": "Cybersecurity Capability Maturity Model (C2M2)",
+        "1": {
+          "title": "C2M2 Report",
+          "desc": "This report includes a detailed description of the model architecture, a series of charts and tables that summarize the responses gathered throughout the assessment process, self-evaluation notes, and a list of all partially implemented and not implemented practices. This report enables organizations to analyze and assess their cybersecurity capabilities effectively and identify areas for improvement."
+        }
+      },
+      "diagram": {
+        "sectionTitle": "Network Diagram",
+        "1": {
+          "title": "Executive Summary",
+          "desc": "This report includes the high-level assessment description, the executive summary, the Security Assurance Level (SAL), and a set of charts that highlight overall compliance and compliance by component type."
+        },
+        "2": {
+          "title": "Site Summary Report",
+          "desc": "This report includes the same information as the Executive Summary as well as site information, the network diagram, component compliance by subject area, findings and recommendations from basic network analysis, the document library, comments, alternate justifications for responses, and questions marked for review."
+        },
+        "3": {
+          "title": "Site Cybersecurity Plan",
+          "desc": "This template is intended to be used as a tool for the development of a security plan. The template assists in identifying the controls in place and those needing further implementation based upon the answers provided in the assessment. The purpose of the security plan is to provide an overview of the security requirements of the system and describe the controls in place or planned, for meeting those requirements. "
+        },
+        "4": {
+          "title": "Site Detail Report",
+          "desc": "This report includes the same information as the Site Summary Report as well as a list of all network component questions and their corresponding answers."
         }
       }
     },
