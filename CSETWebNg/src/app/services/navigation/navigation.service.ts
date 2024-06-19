@@ -50,7 +50,7 @@ export interface NavTreeNode {
 @Injectable({
   providedIn: 'root'
 })
-export class NavigationService implements OnDestroy, OnInit{
+export class NavigationService implements OnDestroy, OnInit {
   /**
    * The workflow is stored in a DOM so that we can easily navigate around the tree
    */
@@ -111,7 +111,7 @@ export class NavigationService implements OnDestroy, OnInit{
   }
 
   ngOnInit(): void {
-    
+
   }
   ngOnDestroy() {
     this.assessSvc.assessmentStateChanged.unsubscribe()
@@ -191,23 +191,14 @@ export class NavigationService implements OnDestroy, OnInit{
         this.assessSvc.initCyberFlorida(assessmentId);
       }
       else {
-        // starting navigation
-        this.http.get(this.configSvc.apiUrl + 'contacts/bookmark', { responseType: 'text' }).subscribe((x: string) => {
-          if (!!x && x.length > 0) {
-            this.navTreeSvc.setCurrentPage(x);
-            this.navDirect(x);
-            }
-        });
-
-        this.navDirect('phase-prepare', false);
+        this.navDirect('phase-prepare');
       }
-
     });
   }
 
   beginNewAssessmentGallery(item: any) {
     this.assessSvc.newAssessmentGallery(item).then(() => {
-      this.navDirect('phase-prepare', false);
+      this.navDirect('phase-prepare');
     });
   }
 
@@ -264,7 +255,7 @@ export class NavigationService implements OnDestroy, OnInit{
   isNextEnabled(cur: string): boolean {
     if (!this.workflow) return true;
     const originPage = this.workflow.getElementById(cur);
-    
+
     if (originPage == null) {
       return true;
     }
@@ -347,7 +338,7 @@ export class NavigationService implements OnDestroy, OnInit{
    * Routes to the path configured for the specified pageId.
    * @param value
    */
-  navDirect(id: string, persist: boolean = true) {
+  navDirect(id: string) {
     // if the target is a simple string, find it in the pages structure
     // and navigate to its path
     if (typeof id == 'string') {
@@ -364,23 +355,15 @@ export class NavigationService implements OnDestroy, OnInit{
         return;
       }
 
-      this.routeToTarget(target, persist);
+      this.routeToTarget(target);
       return;
     }
   }
 
   /**
    * Navigates to the path specified in the target node.
-   * The current navigation ID will be persisted to the database 
-   * unless we are specifically told not to.
    */
-  routeToTarget(targetNode: HTMLElement, persist: boolean = true) {
-    // save the bookmark 
-    if (persist) {
-      this.http.post(this.configSvc.apiUrl + 'contacts/bookmark', { bookmark: targetNode.id }).subscribe();
-    }
-
-
+  routeToTarget(targetNode: HTMLElement) {
     this.navTreeSvc.setCurrentPage(targetNode.id);
     this.destinationId = targetNode.id;
 
@@ -404,7 +387,7 @@ export class NavigationService implements OnDestroy, OnInit{
     let target = this.workflow.getElementById(id);
 
     if (!target) {
-      console.error(`No workflow element found for id ${id}`);
+      console.error(`No workflow element found for id '${id}'`);
       return false;
     }
 
@@ -468,7 +451,20 @@ export class NavigationService implements OnDestroy, OnInit{
   setCurrentPage(id: string) {
     this.navTreeSvc.setCurrentPage(id);
   }
+
+  /**
+   * 
+   */
   clearNoMatterWhat() {
     this.navTreeSvc.clearNoMatterWhat();
+  }
+
+  /**
+   * Jump to the last question answered.
+   */
+  resumeQuestions() {
+    this.http.get(this.configSvc.apiUrl + 'contacts/bookmark', {responseType: 'text'}).subscribe(x => {
+      console.log(x);
+    });
   }
 }

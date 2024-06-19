@@ -82,6 +82,13 @@
                 <span class="cset2-icons-compare fs-base mr-2 align-middle"></span>
                 <span>{{ t('menu.tools.compare') }}</span>
             </button>
+
+            <hr class="menu-divider" />
+
+            <button mat-menu-item (click)="navSvc.resumeQuestions()" *ngIf="showMenuItem('resume')">
+                <span class="fa fa-bolt fs-base mr-2 align-middle"></span>
+                <span>Resume Questions</span>
+            </button>
         </mat-menu>
     </ng-container>
 
