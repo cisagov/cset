@@ -56,29 +56,14 @@
           {{t('observations tear-out sheets.summary')}}
          </div>
     </div>
-</div>
+  </div>
 
+  
 
   <div [class.div-shield]="disableEntirePage">
-    <div *ngIf="!!assessSvc.assessment && (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile" 
-      class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>{{t('standards and diagram')}}</h4>
-      <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{t('executive summary')}}
-      </button>
 
-      <button (click)="clickReportLink('sitesummary')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{t('site summary report')}}
-      </button>
-
-      <button (click)="clickReportLink('securityplan')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{t('site cybersecurity plan')}}
-      </button>
-
-      <button (click)="clickReportLink('detail')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{t('site detail report')}}
-      </button>
-    </div>
+    <!-- DIAGRAM -->
+    <app-report-list-diagram *ngIf="!!assessSvc.assessment && (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile"></app-report-list-diagram>
 
     <!-- CMMC -->
     <app-report-list-cmmc *ngIf="!!assessSvc.assessment &&
@@ -219,21 +204,10 @@
       <!-- CPG -->
       <app-report-list-cpg *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile"></app-report-list-cpg>
       
-
-
-      <div *ngIf="
-          !!assessSvc.assessment &&
-          assessSvc.usesMaturityModel('C2M2') &&
-          !isMobile
-        " class="d-flex flex-column justify-content-start align-items-start mb-4">
-        <h4>Cybersecurity Capability Maturity Model (C2M2)</h4>
-
-        <div>
-          <button tabindex="0" (click)="clickReportLink('c2m2Report')" class="btn btn-link btn-link-dark text-left">
-            C2M2 Report
-          </button>
-        </div>
-      </div>
+      <!-- C2M2 -->
+      <app-report-list-c2m2 *ngIf="!!assessSvc.assessment &&
+      assessSvc.usesMaturityModel('C2M2') &&
+      !isMobile"></app-report-list-c2m2>
 
 
       <div *ngIf="
