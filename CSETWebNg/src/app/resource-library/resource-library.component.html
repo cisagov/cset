@@ -23,7 +23,7 @@
 <div class="rl d-flex flex-column flex-11a" *transloco="let t">
 
   <!-- Tabs -->
-  <ul class="nav nav-tabs d-flex flex-00a">
+  <ul #tabs class="nav nav-tabs d-flex flex-00a">
     <li style="margin-left: 45px;" [class.active]="selectedPane === 'search'" (click)="selectedPane = 'search'"
       class="d-flex align-items-center flex-00a">
       <button class="btn bgc-trans d-flex align-items-center flex-11a" matTooltip="Search the resource library">

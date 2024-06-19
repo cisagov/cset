@@ -72,7 +72,7 @@
 <div class="mb-5">
     <div class="form-group mb-5">
         <p class="font-italic">
-            Are you completing the full assessment (156 questions) as local government submitter in response to
+            Are you completing the full assessment (154 questions) as local government submitter in response to
             <a href="https://www.flsenate.gov/Committees/billsummaries/2022/html/2864" target="_blank">Florida House
                 Bill 7055</a>?
         </p>
@@ -89,7 +89,7 @@
                 Are you intending to apply for the State of Florida Local Cybersecurity Grant Program? The full
                 assessments completes the requirements for house bill 7055?
             </p>
-            <input class="radio-custom" style="visibility: visible" name="hb7055GrantNo" id="hb7055GrantNo" type="radio"
+            <input #radioNo class="radio-custom" style="visibility: visible" name="hb7055GrantNo" id="hb7055GrantNo" type="radio"
                 autocomplete="off" tabindex="1" (click)="sethb7055Grant('N')"
                 [checked]="demographicData.hb7055GrantGrant == 'N'">
             <label class="radio-custom-label" for="hb7055GrantNo">No</label>
