@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Router } from '@angular/router';
 import { AssessmentService } from '../assessment.service';
-import { EventEmitter, Injectable, OnDestroy, Output } from "@angular/core";
+import { EventEmitter, Injectable, OnDestroy, OnInit, Output } from "@angular/core";
 import { ConfigService } from '../config.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MaturityService } from '../maturity.service';
@@ -50,11 +50,7 @@ export interface NavTreeNode {
 @Injectable({
   providedIn: 'root'
 })
-export class NavigationService implements OnDestroy{
-
-
-
-
+export class NavigationService implements OnDestroy, OnInit{
   /**
    * The workflow is stored in a DOM so that we can easily navigate around the tree
    */
@@ -114,6 +110,9 @@ export class NavigationService implements OnDestroy{
     });
   }
 
+  ngOnInit(): void {
+    
+  }
   ngOnDestroy() {
     this.assessSvc.assessmentStateChanged.unsubscribe()
   }
@@ -468,5 +467,8 @@ export class NavigationService implements OnDestroy{
    */
   setCurrentPage(id: string) {
     this.navTreeSvc.setCurrentPage(id);
+  }
+  clearNoMatterWhat() {
+    this.navTreeSvc.clearNoMatterWhat();
   }
 }
