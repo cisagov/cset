@@ -744,6 +744,13 @@
           "title": "MVRA Report",
           "desc": "This report includes charts and tables that summarize the responses gathered throughout the assessment process, enabling organizations to analyze and assess their cybersecurity capabilities effectively. The report presents the organization’s performance by domain, sub-domain, and tier."
         }
+      },
+      "c2m2": {
+        "sectionTitle": "Cybersecurity Capability Maturity Model (C2M2)",
+        "1": {
+          "title": "C2M2 Report",
+          "desc": "This report includes a detailed description of the model architecture, a series of charts and tables that summarize the responses gathered throughout the assessment process, self-evaluation notes, and a list of all partially implemented and not implemented practices. This report enables organizations to analyze and assess their cybersecurity capabilities effectively and identify areas for improvement."
+        }
       }
     },
     "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated {date}.",
