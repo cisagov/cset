@@ -671,6 +671,7 @@ import { ReportListRraComponent } from './assessment/results/reports/report-list
 import { ReportListCpgComponent } from './assessment/results/reports/report-list/reports-list-cpg/report-list-cpg.component';
 import { ReportListMvraComponent } from './assessment/results/reports/report-list/report-list-mvra/report-list-mvra.component';
 import { ReportListCmmcComponent } from './assessment/results/reports/report-list/report-list-cmmc/report-list-cmmc.component';
+import { ReportListC2M2Component } from './assessment/results/reports/report-list/report-list-c2m2/report-list-c2m2.component';
 
 
 @NgModule({
@@ -1292,7 +1293,8 @@ import { ReportListCmmcComponent } from './assessment/results/reports/report-lis
     ReportListRraComponent,
     ReportListCpgComponent, 
     ReportListMvraComponent, 
-    ReportListCmmcComponent
+    ReportListCmmcComponent, 
+    ReportListC2M2Component
   ],
   providers: [
     TranslocoService,
