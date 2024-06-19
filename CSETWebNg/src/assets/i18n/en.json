@@ -678,11 +678,11 @@
         "sectionTitle": "Capability Maturity Model Certification (CMMC) 1.0",
         "1": {
           "title": "CMMC Executive Summary",
-          "desc": "The report includes graphs to highlight compliance by level, compliance by domain, and the compliance score breakdown."
+          "desc": "The report includes the executive summary, the assessment target level, and a set of charts that highlight compliance by level, compliance by domain, and the compliance score breakdown."
         },
         "2": {
           "title": "CMMC Site Summary Report",
-          "desc": "The report includes CMMC target levels, complieance by level, compliance by domain, and compliance score breakdown. Additionally, it includes requirements scoring and gap list."
+          "desc": "The report includes the same information as the Executive Summary as well as site information, an explanation of CMMC processes and practices, a list of all requirements and their corresponding answers, and a list of all deficiencies."
         },
         "3": {
           "title": "CMMC Deficiency Report",
