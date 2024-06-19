@@ -219,21 +219,10 @@
       <!-- CPG -->
       <app-report-list-cpg *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile"></app-report-list-cpg>
       
-
-
-      <div *ngIf="
-          !!assessSvc.assessment &&
-          assessSvc.usesMaturityModel('C2M2') &&
-          !isMobile
-        " class="d-flex flex-column justify-content-start align-items-start mb-4">
-        <h4>Cybersecurity Capability Maturity Model (C2M2)</h4>
-
-        <div>
-          <button tabindex="0" (click)="clickReportLink('c2m2Report')" class="btn btn-link btn-link-dark text-left">
-            C2M2 Report
-          </button>
-        </div>
-      </div>
+      <!-- C2M2 -->
+      <app-report-list-c2m2 *ngIf="!!assessSvc.assessment &&
+      assessSvc.usesMaturityModel('C2M2') &&
+      !isMobile"></app-report-list-c2m2>
 
 
       <div *ngIf="
