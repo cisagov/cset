@@ -229,7 +229,17 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'analysis/getbesttoworst', '');
   }
 
+  getMaturityMissedQuestions() {
+    return this.http.post(this.apiUrl + 'getmissedquestions', {});
+  }
 
+  getMaturitySalComparison() {
+    return this.http.post(this.apiUrl + 'analysis/salcomparison', {});
+  }
+
+  getMaturityBestToWorst() {
+    return this.http.post(this.apiUrl + 'analysis/getbesttoworst', '');
+  }
 
 
   //////////////////////////////// Merge //////////////////////////////////////
