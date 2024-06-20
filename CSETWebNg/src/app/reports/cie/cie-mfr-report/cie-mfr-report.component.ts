@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Pipe } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ReportService } from '../../../services/report.service';
 import { ACETService } from '../../../services/acet.service';
@@ -32,25 +32,35 @@ import { ObservationsService } from '../../../services/observations.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { CieService } from '../../../services/cie.service';
-import { FileUploadClientService } from '../../../services/file-client.service';
 import { AuthenticationService } from '../../../services/authentication.service';
-@Component({
-  selector: 'app-cie-all-questions',
-  templateUrl: './cie-all-questions.component.html',
-  styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-all-questions.component.scss']
-})
-export class CieAllQuestionsComponent {
+import { FileUploadClientService } from '../../../services/file-client.service';
 
+@Component({
+  selector: 'app-cie-mfr-report',
+  templateUrl: './cie-mfr-report.component.html',
+  styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-mfr-report.component.scss'],
+  host: { class: 'd-flex flex-column flex-11a' }
+})
+
+export class CieMfrReportComponent implements OnInit {
   response: any = {};
+  documents: any = {};
+
 
   hasComments: any[] = [];
   // showSubcats: Map<String, boolean> = new Map<String, boolean>();
   expandedOptions: Map<String, boolean> = new Map<String, boolean>();
-  principleTitleList: string[] = [];
-  phaseTitleList: string[] = [];
+  shouldIShowMap: Map<String, boolean> = new Map<String, boolean>();
 
   examLevel: string = '';
   loading: boolean = true;
+
+  principleFound: boolean = false;
+  phaseFound: boolean = false;
+
+  principleTitleList: string[] = [];
+  phaseTitleList: string[] = [];
+
 
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
@@ -62,20 +72,23 @@ export class CieAllQuestionsComponent {
     public cieSvc: CieService,
     public configSvc: ConfigService,
     public observationSvc: ObservationsService,
-    public fileSvc: FileUploadClientService,
-    public authSvc: AuthenticationService
+    private authSvc: AuthenticationService,
+    private fileSvc: FileUploadClientService
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Export All CIE-CSET - Report");
-
-    this.cieSvc.getCieAllQuestions().subscribe(
+    this.titleService.setTitle("Marked for Review CIE-CSET - Report");
+    
+    this.cieSvc.getCieAllMfrQuestionsWithDocuments().subscribe(
       (r: any) => {
         this.response = r;
-        console.log(this.response)
         // goes through domains
         for (let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
           let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
+
+          if (domain?.questions?.length > 0) {
+            this.principleFound = true;
+          }
           // goes through subcategories
           for (let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
@@ -84,12 +97,15 @@ export class CieAllQuestionsComponent {
             this.phaseTitleList.push('Phase_' + domain?.title);
             // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
             // goes through questions
+            if (subcat?.questions?.length > 0) {
+              this.phaseFound = true;
+            }
             for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
-
-                this.expandedOptions.set('Phase_' + domain?.title + '_' + subcat?.title, false);
+              this.expandedOptions.set('Phase_' + domain?.title + '_' + subcat?.title, false);
                 this.phaseTitleList.push('Phase_' + domain?.title + '_' + subcat?.title);
-                // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
+              //this.expandedOptions.set(domain?.title + '_' + subcat?.title, false);
+
             }
           }
         }
@@ -100,13 +116,25 @@ export class CieAllQuestionsComponent {
   }
 
   /**
-   * checks if the quesiton needs to appear
+   *
    */
-  requiredQuestion(q: any) {
-    if (q.answerText == 'U' && q.maturityLevel == 'CORE+') {
-      return false;
-    }
-    return true;
+  download(doc: any) {
+    // get short-term JWT from API
+    this.authSvc.getShortLivedToken().subscribe((response: any) => {
+      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
+      window.open(url, "_blank");
+    });
+  }
+
+  /**
+   *
+   */
+  downloadFile(document) {
+    this.fileSvc.downloadFile(document.document_Id).subscribe((data: Response) => {
+      // this.downloadFileData(data),
+    },
+      error => console.log(error)
+    );
   }
 
   /**
@@ -117,6 +145,7 @@ export class CieAllQuestionsComponent {
     this.expandedOptions.set(title, !expand);
     return expand;
   }
+
   /**
    * checks if section should expand by checking the boolean value attached to the 'title'
    */
@@ -145,28 +174,6 @@ export class CieAllQuestionsComponent {
       combinedClass += 'bottom-half-border';
     }
     return combinedClass;
-  }
-
-  /**
-   *
-   */
-  download(doc: any) {
-    // get short-term JWT from API
-    this.authSvc.getShortLivedToken().subscribe((response: any) => {
-      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.open(url, "_blank");
-    });
-  }
-
-  /**
-   *
-   */
-  downloadFile(document) {
-    this.fileSvc.downloadFile(document.document_Id).subscribe((data: Response) => {
-      // this.downloadFileData(data),
-    },
-      error => console.log(error)
-    );
   }
 
   /**

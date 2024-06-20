@@ -16,6 +16,7 @@ import { GroupingDescriptionComponent } from '../grouping-description/grouping-d
 import { IssuesComponent } from '../issues/issues.component';
 import { Observation } from '../observations/observations.model';
 import { QuestionExtrasDialogComponent } from '../question-extras-dialog/question-extras-dialog.component';
+import { CieService } from '../../../services/cie.service';
 
 @Component({
   selector: 'app-question-block-cie',
@@ -41,13 +42,17 @@ export class QuestionBlockCieComponent implements OnInit {
 
   contactInitials = "";
   freeResponseSegment = "";
-  convoBuffer = '\n- - End of Response - -\n';
+  //convoBuffer = '\n- - End of Response - -\n';
 
   showQuestionIds = false;
 
   maturityModelId: number;
   maturityModelName: string;
 
+  options: any =  {
+    eagerSupplemental: true,
+    showMfr: true
+  };
 
   /**
    * Constructor.
@@ -60,7 +65,7 @@ export class QuestionBlockCieComponent implements OnInit {
     public acetFilteringSvc: AcetFilteringService,
     public layoutSvc: LayoutService,
     public completionSvc: CompletionService,
-    public ncuaSvc: NCUAService,
+    public cieSvc: CieService,
     public dialog: MatDialog,
     private observationSvc: ObservationsService
   ) {
@@ -77,7 +82,8 @@ export class QuestionBlockCieComponent implements OnInit {
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
       this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
       this.maturityModelName = this.assessSvc.assessment.maturityModel.modelName;
-
+      // this.freeResponseAnswers.clear();
+      // this.cieSvc.feedbackMap.clear();
       this.myGrouping.questions.forEach(question => {
         this.freeResponseAnswers.set(question.questionId, question.freeResponseAnswer);
       });
@@ -187,6 +193,8 @@ export class QuestionBlockCieComponent implements OnInit {
       questionNumber: "0",
       answerText: q.answer,
       altAnswerText: q.altAnswerText,
+      // comment: q.comment,
+      // feedback: q.feedback,
       comment: q.comment,
       feedback: q.feedback,
       markForReview: q.markForReview,
@@ -194,7 +202,8 @@ export class QuestionBlockCieComponent implements OnInit {
       is_Component: q.is_Component,
       is_Requirement: q.is_Requirement,
       is_Maturity: q.is_Maturity,
-      componentGuid: q.componentGuid
+      componentGuid: q.componentGuid,
+      freeResponseAnswer: this.freeResponseAnswers.get(q.questionId)
     };
 
     // Errors out on ISE answers. Commenting out for now.
@@ -205,33 +214,10 @@ export class QuestionBlockCieComponent implements OnInit {
 
     this.questionsSvc.storeAnswer(answer).subscribe
       (result => {
-        this.checkForIssues(q, oldAnswerValue);
+        // this.checkForIssues(q, oldAnswerValue);
       });
   }
 
-  checkForIssues(q: Question, oldAnswerValue: string) {
-    let count = this.ncuaSvc.questionCheck.get(q.parentQuestionId);
-    let value = (count != undefined) ? count : 0;
-
-    if (q.answer === 'N') {
-      value++;
-      this.ncuaSvc.questionCheck.set(q.parentQuestionId, value);
-
-    } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
-      value--;
-      if (value < 1) {
-        this.ncuaSvc.questionCheck.delete(q.parentQuestionId);
-
-        if (this.ncuaSvc.issueObservationId.has(q.parentQuestionId)) {
-          let observationId = this.ncuaSvc.issueObservationId.get(q.parentQuestionId);
-          this.ncuaSvc.issueObservationId.delete(q.parentQuestionId);
-          this.deleteIssue(observationId, true);
-        }
-      } else {
-        this.ncuaSvc.questionCheck.set(q.parentQuestionId, value);
-      }
-    }
-  }
 
   /**
    *
@@ -317,7 +303,8 @@ export class QuestionBlockCieComponent implements OnInit {
         is_Component: q.is_Component,
         is_Requirement: q.is_Requirement,
         is_Maturity: q.is_Maturity,
-        componentGuid: q.componentGuid
+        componentGuid: q.componentGuid,
+        freeResponseAnswer: q.freeResponseAnswer
       };
 
       this.refreshReviewIndicator();
@@ -360,9 +347,7 @@ export class QuestionBlockCieComponent implements OnInit {
   changeText(q: Question, e: any) {
     // if they clicked on the same answer that was previously set, "un-set" it
 
-    let newFreeResponse = e.target.value;
-    q.freeResponseAnswer = newFreeResponse;
-    q = this.applyContactAndEndTag(q);
+    q.freeResponseAnswer = this.cieSvc.applyContactAndEndTag(e.target.value, '\n- - End of Response - -\n');
     this.freeResponseAnswers.set(q.questionId, q.freeResponseAnswer);
     const answer: Answer = {
       answerId: q.answer_Id,
@@ -371,8 +356,8 @@ export class QuestionBlockCieComponent implements OnInit {
       questionNumber: "0",
       answerText: q.answer,
       altAnswerText: q.altAnswerText,
-      comment: q.comment,
-      feedback: q.feedback,
+      comment: this.cieSvc.commentMap.get(q.questionId),
+      feedback: this.cieSvc.feedbackMap.get(q.questionId),
       markForReview: q.markForReview,
       reviewed: q.reviewed,
       is_Component: q.is_Component,
@@ -394,33 +379,33 @@ export class QuestionBlockCieComponent implements OnInit {
       });
   }
 
-  applyContactAndEndTag(q: Question) {
-    let bracketContact = '[' + this.assessSvc.assessment.assessmentName + ']';
+  // applyContactAndEndTag(q: Question) {
+  //   let bracketContact = '[' + this.assessSvc.assessment.assessmentName + ']';
 
-    if (q.freeResponseAnswer.indexOf(bracketContact) !== 0) {
-      if (!!q.freeResponseAnswer) {
-        if (q.freeResponseAnswer.indexOf('[') !== 0) {
-          this.freeResponseSegment = bracketContact + ' ' + q.freeResponseAnswer;
-          q.freeResponseAnswer = this.freeResponseSegment + this.convoBuffer;
-        }
+  //   if (q.freeResponseAnswer.indexOf(bracketContact) !== 0) {
+  //     if (!!q.freeResponseAnswer) {
+  //       if (q.freeResponseAnswer.indexOf('[') !== 0) {
+  //         this.freeResponseSegment = bracketContact + ' ' + q.freeResponseAnswer;
+  //         q.freeResponseAnswer = this.freeResponseSegment + this.convoBuffer;
+  //       }
 
-        else {
-          let previousContactInitials = q.freeResponseAnswer.substring(q.freeResponseAnswer.lastIndexOf('[') + 1, q.freeResponseAnswer.lastIndexOf(']'));
-          let endOfLastBuffer = q.freeResponseAnswer.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
-          if (previousContactInitials !== this.assessSvc.assessment.assessmentName) {
-            // if ( endOfLastBuffer !== q.altAnswerText.length || endOfLastBuffer !== q.altAnswerText.length - 1) {
-            let oldComments = q.freeResponseAnswer.substring(0, endOfLastBuffer);
-            let newComment = q.freeResponseAnswer.substring(oldComments.length);
+  //       else {
+  //         let previousContactInitials = q.freeResponseAnswer.substring(q.freeResponseAnswer.lastIndexOf('[') + 1, q.freeResponseAnswer.lastIndexOf(']'));
+  //         let endOfLastBuffer = q.freeResponseAnswer.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
+  //         if (previousContactInitials !== this.assessSvc.assessment.assessmentName) {
+  //           // if ( endOfLastBuffer !== q.altAnswerText.length || endOfLastBuffer !== q.altAnswerText.length - 1) {
+  //           let oldComments = q.freeResponseAnswer.substring(0, endOfLastBuffer);
+  //           let newComment = q.freeResponseAnswer.substring(oldComments.length);
 
-            q.freeResponseAnswer = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
-            // }
-          }
-        }
-      }
-    }
+  //           q.freeResponseAnswer = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
+  //           // }
+  //         }
+  //       }
+  //     }
+  //   }
 
-    return q;
-  }
+  //   return q;
+  // }
 
   autoResize(id: number) {
     let textArea = document.getElementById("freeResponse-q-" + id);
@@ -640,8 +625,6 @@ export class QuestionBlockCieComponent implements OnInit {
       (details) => {
         this.extras = details;
         this.extras.questionId = q.questionId;
-
-        
 
       });
   }

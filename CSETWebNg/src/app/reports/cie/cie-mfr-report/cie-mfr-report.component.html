@@ -23,10 +23,10 @@
     <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
-                EXPORT NOT APPLICABLE
+                MARKED FOR REVIEW
             </p>
             <p class="report-title">
-                TEAR-OUT SHEETS
+                CIE-CSET REPORT
             </p>
         </div>
         
@@ -93,18 +93,21 @@
             </div>
 
             <div class="d-flex align-items-start flex-11a">
-                <button class="btn background-1 m-0 cie-questions-header-collapse-button-radius" (click)="expandAll(false, 'Principle')"
+                <button class="btn background-1 m-0 cie-questions-header-collapse-button-radius" 
+                    (click)="expandAll(false, 'Principle')"
                     [matTooltip]="t('buttons.collapse all')" [aria-label]="t('buttons.collapse all')">
                     <i class="fas fa-compress-alt" style="color: white;"></i>
                 </button>
-                <button class="btn background-1 m-0 br-0 cie-questions-header-expand-button-radius" (click)="expandAll(true, 'Principle')" 
+                <button class="btn background-1 m-0 br-0 cie-questions-header-expand-button-radius" 
+                    (click)="expandAll(true, 'Principle')" 
                     [matTooltip]="t('buttons.expand all')" [aria-label]="t('buttons.expand all')">
                     <i class="fas fa-expand-alt" style="color: white;"></i>
                 </button>
             </div>
         </div>
-
+        
         <div *ngIf="principleFound; else emptyPrinciple">
+            
             <table class="table-responsive td-align-top td-padding-half-rem">
                 <tr class="report-text-blue">
                     <td style="width: 12.5%"></td>
@@ -112,6 +115,22 @@
                     <td></td>
                     <td style="width: 12.5%">Answered?</td>
                 </tr>
+                <!-- <tr *ngFor="let doc of response?.documents">
+                    <td>
+                        <div>{{doc.question_Title}}</div>
+                    </td>
+                    <td>
+                        <div>{{doc.title}}</div>
+                    </td>
+                    <td>
+                        <div>{{doc.fileName}}</div>
+                    </td>
+                    <td>
+                        <button (click)="download(doc)" class="fs-base-6 cset-icons-export-up c-primary cursor-pointer btn-link"
+                            matTooltip="Download document"></button>
+                    </td>
+                </tr> -->
+                <!--  -->
                 <ng-container *ngFor="let d of response?.matAnsweredQuestions">
                     <ng-container *ngFor="let f of d.assessmentFactors">
                         <tr class="rkw-domain">
@@ -131,27 +150,25 @@
                                 <td class="pr-5" colspan="2" [innerHTML]="q.questionText"></td>
                                 <td class="pr-5" [innerHTML]="(q.answerText == 'U' ? (q.freeResponseText != null ? 'Yes' : 'No') : 'NA')"></td>
                             </tr>
-                            <tr *ngIf="q.title != 'Question K' && shouldExpand('Principle_' + f.title) && q.maturityLevel == '5' && q.freeResponseText != null"
-                                >
+                            <tr *ngIf="q.title != 'Question K' && shouldExpand('Principle_' + f.title) && q.maturityLevel == '5' && q.freeResponseText != null">
                                 <td></td>
-                                <td class="pr-5" colspan="3" style="white-space: pre-wrap;" [innerHTML]="'Explanation: \n' + q.freeResponseText"></td>
+                                <td class="pr-5" colspan="2" style="white-space: pre-wrap;" [innerHTML]="q.freeResponseText"></td>
+                                <td></td>
                             </tr>
-                            <tr *ngIf="q.title != 'Question K' && shouldExpand('Principle_' + f.title)
-                                && q.maturityLevel == '5' && q.documents != null">
+                            <tr *ngIf="q.title != 'Question K' && shouldExpand('Principle_' + f.title) && q.maturityLevel == '5' && q.documents != null">
                                 <td></td>
-                                <td class="pr-5" colspan="3" style="white-space: pre-wrap;">
+                                <td class="pr-5" colspan="2">
                                     Documents:
                                     <ul *ngFor="let doc of q.documents">
                                         <li> 
-                                            <button (click)="download(doc)"
-                                                class="btn btn-link" style="color: #285464;;
+                                            <button (click)="download(doc)" class="btn btn-link" style="color: #285464; 
                                                 background-color:transparent;" tabindex="0">  
                                                 {{doc.title + ' | ' + doc.fileName}}                                         
                                             </button>
                                         </li>
-
                                     </ul>
                                 </td>
+                                <td></td>
                             </tr>
                         </ng-container>
                     </ng-container>
@@ -160,7 +177,7 @@
         </div>
 
         <ng-template #emptyPrinciple>
-            There are no Not Applicable Questions.
+            There are no Marked For Review Questions.
         </ng-template>
 
         <div class="page-break"></div>
@@ -171,11 +188,13 @@
             </div>
 
             <div class="d-flex align-items-start flex-11a">
-                <button class="btn background-1 m-0 cie-questions-header-collapse-button-radius" (click)="expandAll(false, 'Phase')"
+                <button class="btn background-1 m-0 cie-questions-header-collapse-button-radius" 
+                    (click)="expandAll(false, 'Phase')"
                     [matTooltip]="t('buttons.collapse all')" [aria-label]="t('buttons.collapse all')">
                     <i class="fas fa-compress-alt" style="color: white;"></i>
                 </button>
-                <button class="btn background-1 m-0 br-0 cie-questions-header-expand-button-radius" (click)="expandAll(true, 'Phase')" 
+                <button class="btn background-1 m-0 br-0 cie-questions-header-expand-button-radius" 
+                    (click)="expandAll(true, 'Phase')" 
                     [matTooltip]="t('buttons.expand all')" [aria-label]="t('buttons.expand all')">
                     <i class="fas fa-expand-alt" style="color: white;"></i>
                 </button>
@@ -183,6 +202,7 @@
         </div>
 
         <div *ngIf="phaseFound; else emptyPhase">
+
             <table class="table-responsive td-align-top td-padding-half-rem">
                 <tr class="report-text-blue">
                     <td style="width: 12.5%"></td>
@@ -232,33 +252,36 @@
                                         >
                                         <td class="font-weight-bold text-nowrap">{{q.title}}</td>
                                         <td class="pr-5" colspan="2" [innerHTML]="q.questionText"></td>
-                                        <td class="pr-5" [innerHTML]="(q.answerText == 'U' ? '' : 'NA')"></td>
+                                        <td class="pr-5" [innerHTML]="(q.answerText == 'U' ? (q.freeResponseText != null ? 'Yes' : 'No') : 'NA')"></td>
                                     </tr>
                                     <tr *ngIf="q.title != 'Question K' && shouldExpand('Phase_' + f.title + '_' + c.title) && shouldExpand('Phase_' + f.title) && q.maturityLevel != '5' && q.freeResponseText != null"
                                         [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''">
                                         <td></td>
-                                        <td class="pr-5" colspan="3" style="white-space: pre-wrap;" [innerHTML]="'Explanation: \n' + q.freeResponseText"></td>
+                                        <td class="pr-5" colspan="2" style="white-space: pre-wrap;" [innerHTML]="q.freeResponseText"></td>
+                                        <td></td>
                                     </tr>
-
-                                    <tr *ngIf="q.title != 'Question K' && shouldExpand('Phase_' + f.title + '_' + c.title) && shouldExpand('Phase_' + f.title) 
-                                        && q.maturityLevel != '5' && q.documents != null"
+                                    <!--  -->
+                                    <tr *ngIf="q.title != 'Question K' && shouldExpand('Phase_' + f.title + '_' + c.title) && shouldExpand('Phase_' + f.title) && q.maturityLevel != '5' && q.documents != null"
                                         [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''">
-                                    <td></td>
-                                    <td class="pr-5" colspan="3" style="white-space: pre-wrap;">
-                                        Documents:
-                                        <ul *ngFor="let doc of q.documents">
-                                            <li> 
-                                                <button (click)="download(doc)"
-                                                    class="btn btn-link" style="color: #285464;;
-                                                    background-color:transparent;" tabindex="0">  
-                                                    {{doc.title + ' | ' + doc.fileName}}                                         
-                                                </button>
-                                            </li>
-
-                                        </ul>
-                                    </td>
-                                </tr>
-                                    
+                                        <td></td>
+                                        <td class="pr-5" colspan="2" style="white-space: pre-wrap;">
+                                            Documents:
+                                            <ul *ngFor="let doc of q.documents">
+                                                <li> 
+                                                    <button (click)="download(doc)"
+                                                        class="btn btn-link" style="color: #285464;;
+                                                        background-color:transparent;" tabindex="0">  
+                                                        {{doc.title + ' | ' + doc.fileName}}                                         
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <!-- <button (click)="download(doc)" class="fs-base-6 cset-icons-export-up c-primary cursor-pointer btn-link"
+                                                matTooltip="Download document"></button> -->
+                                        </td>
+                                    </tr>
+                                    <!--  -->
                                 </ng-container>
                             <!-- </ng-container> -->
                         </ng-container>
@@ -267,8 +290,7 @@
             </table>
         </div>
         <ng-template #emptyPhase>
-            There are no Not Applicable Questions.
+            There are no Marked For Review Questions.
         </ng-template>
-        <!-- </div> -->
     </ng-template>
 </div>

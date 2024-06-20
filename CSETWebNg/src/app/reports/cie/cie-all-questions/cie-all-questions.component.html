@@ -18,7 +18,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div *transloco="let t" class="report-body mb-5">
 
     <div class="flex-container">
         <div class="column mt-3">
@@ -45,7 +45,8 @@
 
                 <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
                 <div class="title-page-content">{{response?.information?.assessment_Date |
-                    localizeDate}}
+                    localizeDate
+                }}
                 </div>
                 <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
             </div>
@@ -91,15 +92,26 @@
             <div style="align-self: flex-end;">
                 <div class="h2 report-text-blue">Principle Scope</div>
             </div>
+
+            <div class="d-flex align-items-start flex-11a">
+                <button class="btn background-1 m-0 cie-questions-header-collapse-button-radius" (click)="expandAll(false, 'Principle')"
+                    [matTooltip]="t('buttons.collapse all')" [aria-label]="t('buttons.collapse all')">
+                    <i class="fas fa-compress-alt" style="color: white;"></i>
+                </button>
+                <button class="btn background-1 m-0 br-0 cie-questions-header-expand-button-radius" (click)="expandAll(true, 'Principle')" 
+                    [matTooltip]="t('buttons.expand all')" [aria-label]="t('buttons.expand all')">
+                    <i class="fas fa-expand-alt" style="color: white;"></i>
+                </button>
+            </div>
         </div>
 
         <!--  -->
         <table class="table-responsive td-align-top td-padding-half-rem">
             <tr class="report-text-blue">
+                <td style="width: 12.5%"></td>
+                <td style="width: 75%">Question</td>
                 <td></td>
-                <td>Question</td>
-                <td></td>
-                <td>Response Given</td>
+                <td style="width: 12.5%">Answered?</td>
             </tr>
             <ng-container *ngFor="let d of response?.matAnsweredQuestions">
                 <ng-container *ngFor="let f of d.assessmentFactors">
@@ -125,7 +137,23 @@
                             <td></td>
                             <td class="pr-5" colspan="3" style="white-space: pre-wrap;" [innerHTML]="'Explanation: \n' + q.freeResponseText"></td>
                         </tr>
-                        
+                        <tr *ngIf="q.title != 'Question K' && shouldExpand('Principle_' + f.title)
+                                && q.maturityLevel == '5' && q.documents != null">
+                                <td></td>
+                                <td class="pr-5" colspan="3" style="white-space: pre-wrap;">
+                                    Documents:
+                                    <ul *ngFor="let doc of q.documents">
+                                        <li> 
+                                            <button (click)="download(doc)"
+                                                class="btn btn-link" style="color: #285464;;
+                                                background-color:transparent;" tabindex="0">  
+                                                {{doc.title + ' | ' + doc.fileName}}                                         
+                                            </button>
+                                        </li>
+
+                                    </ul>
+                                </td>
+                            </tr>
                     </ng-container>
                 </ng-container>
             </ng-container>
@@ -138,14 +166,26 @@
             <div style="align-self: flex-end;">
                 <div class="h2 report-text-blue">Principle-Phase Scope</div>
             </div>
+
+            <div class="d-flex align-items-start flex-11a">
+                <button class="btn background-1 cie-questions-header-collapse-button-radius" (click)="expandAll(false, 'Phase')"
+                    [matTooltip]="t('buttons.collapse all')" [aria-label]="t('buttons.collapse all')">
+                    <i class="fas fa-compress-alt" style="color: white"></i>
+                </button>
+                <button class="btn background-1 cie-questions-header-expand-button-radius" (click)="expandAll(true, 'Phase')" 
+                    [matTooltip]="t('buttons.expand all')" [aria-label]="t('buttons.expand all')">
+                    <i class="fas fa-expand-alt" style="color: white"></i>
+                </button>
+            </div>    
         </div>
 
+        
         <table class="table-responsive td-align-top td-padding-half-rem">
             <tr class="report-text-blue">
+                <td style="width: 12.5%"></td>
+                <td style="width: 75%">Question</td>
                 <td></td>
-                <td>Question</td>
-                <td></td>
-                <td>Response Given</td>
+                <td style="width: 12.5%">Answered?</td>
             </tr>
             <ng-container *ngFor="let d of response?.matAnsweredQuestions">
                 <ng-container *ngFor="let f of d.assessmentFactors">
@@ -195,6 +235,25 @@
                                     [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''">
                                     <td></td>
                                     <td class="pr-5" colspan="3" style="white-space: pre-wrap;" [innerHTML]="'Explanation: \n' + q.freeResponseText"></td>
+                                </tr>
+
+                                <tr *ngIf="q.title != 'Question K' && shouldExpand('Phase_' + f.title + '_' + c.title) && shouldExpand('Phase_' + f.title) 
+                                    && q.maturityLevel != '5' && q.documents != null"
+                                    [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''">
+                                    <td></td>
+                                    <td class="pr-5" colspan="3" style="white-space: pre-wrap;">
+                                        Documents:
+                                        <ul *ngFor="let doc of q.documents">
+                                            <li> 
+                                                <button (click)="download(doc)"
+                                                    class="btn btn-link" style="color: #285464;;
+                                                    background-color:transparent;" tabindex="0">  
+                                                    {{doc.title + ' | ' + doc.fileName}}                                         
+                                                </button>
+                                            </li>
+
+                                        </ul>
+                                    </td>
                                 </tr>
                                 
                             </ng-container>

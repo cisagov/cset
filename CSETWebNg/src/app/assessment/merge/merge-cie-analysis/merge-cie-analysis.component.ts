@@ -55,11 +55,14 @@ export class MergeCieAnalysisComponent implements OnInit {
   assessmentAnswers = new Map();
   assessmentFreeResponses = new Map();
   assessmentNAReasons = new Map();
-  assessmentCombinedText = new Map();
-
+  assessmentFeedback = new Map();
+  assessmentComment = new Map();
+  assessmentCombinedFreeResponse = new Map();
+  assessmentCombinedFeedback = new Map();
+  assessmentCombinedComment = new Map();
 
   assessmentIssues = new Map();
-  assessmentDocuments = new Map();
+  assessmentDocuments = new Map<number, any[]>();
 
   newAnswerIds = new Map();
   parentQuestionIds = new Set([10932]);
@@ -107,6 +110,8 @@ export class MergeCieAnalysisComponent implements OnInit {
 
   ngOnInit() {
     this.pageLoading = true;
+    this.assessmentDocuments.clear();
+    this.assessmentIssues.clear();
     this.getPrimaryAssessDetails();
     this.getConflicts();
     this.getIssues();
@@ -135,15 +140,12 @@ export class MergeCieAnalysisComponent implements OnInit {
     // run stored proc to grab any differing answers between assessments
     this.cieSvc.getAnswers().subscribe(
       (response: any) => {
-
         if (response.length > 0) {
           this.mergeConflicts = response;
           this.getAssessmentNames();
         } else {
           this.cieSvc.getNames().subscribe((result: any) => this.getAssessmentNames(result));
         }
-
-        //this.getDocuments();
       }
     );
   }
@@ -158,9 +160,6 @@ export class MergeCieAnalysisComponent implements OnInit {
             myIssues.push(obs);
           });
         });
-
-        console.log('unmapped issues:')
-        console.log(myIssues)
 
         if (myIssues.length > 0) {
           this.maturitySvc.getQuestionsList(false).subscribe(
@@ -187,8 +186,6 @@ export class MergeCieAnalysisComponent implements OnInit {
                   }
                 }
               }
-              console.log('mapped issues:')
-              console.log(this.assessmentIssues)
             });
         }
         
@@ -201,36 +198,54 @@ export class MergeCieAnalysisComponent implements OnInit {
     this.cieSvc.getDocuments().subscribe(
       (details: any) => {
         let myDocuments = [];
-        console.log(details)
         details.forEach(pair => {
           pair.documents.forEach(doc => {
             myDocuments.push(doc);
           });
         });
-        console.log(myDocuments)
 
         if (myDocuments.length > 0) {
           this.maturitySvc.getQuestionsList(false).subscribe(
             (response: any) => {
-              console.log(response)
               for (let i = 0; i < response.groupings[0].subGroupings.length; i++) {
+                for (let m = 0; m < response.groupings[0].subGroupings[i].questions.length; m++) {
+                  let question = response.groupings[0].subGroupings[i].questions[m];
+                  myDocuments.forEach(doc => {
+                    if (question.questionId == doc.question_Id) {
+                      if (this.assessmentDocuments.get(question.questionId) !== undefined) {
+                        let existingDocuments = this.assessmentDocuments.get(question.questionId);
+                        doc.answer_Id = this.newAnswerIds.get(question.questionId);
+                        existingDocuments.push(doc);
+
+                        this.assessmentDocuments.set(question.questionId, existingDocuments);
+                      } else {
+                        doc.answer_Id = this.newAnswerIds.get(question.questionId);
+
+                        this.assessmentDocuments.set(question.questionId, [doc]);
+                      }
+                    }
+                    
+                  });
+                }
                 for (let j = 0; j < response.groupings[0].subGroupings[i].subGroupings.length; j++) {
                   for (let k = 0; k < response.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
                     let question = response.groupings[0].subGroupings[i].subGroupings[j].questions[k];
-                    myDocuments.forEach(docs => {
-                      if (question.answer_Id == docs.answer_Id) {
-                        if (this.assessmentDocuments.get(question.answer_Id) !== undefined) {
-                          let arr = this.assessmentDocuments.get(question.answer_Id);
-                          let savedDocuments = arr.concat(myDocuments);
-                          this.assessmentDocuments.set(question.answer_Id, savedDocuments);
+                    myDocuments.forEach(doc => {
+                      if (question.questionId == doc.question_Id) {
+                        if (this.assessmentDocuments.get(question.questionId) !== undefined) {
+                          let existingDocuments = this.assessmentDocuments.get(question.questionId);
+                          doc.answer_Id = this.newAnswerIds.get(question.questionId);
+                          existingDocuments.push(doc);
+
+                          this.assessmentDocuments.set(question.questionId, existingDocuments);
                         } else {
-                          this.assessmentDocuments.set(question.answer_Id, myDocuments);
+                          doc.answer_Id = this.newAnswerIds.get(question.questionId);
+
+                          this.assessmentDocuments.set(question.questionId, [doc]);
                         }
-                        console.log(this.assessmentDocuments);
                       }
                       
                     });
-                    
                   }
                 }
               }
@@ -281,6 +296,30 @@ export class MergeCieAnalysisComponent implements OnInit {
           }
         }
 
+        if (question.feedback != null && question.feedback != '') {
+          // if the question didn't previously have a mapped feedback
+          if (!this.assessmentFeedback.has(question.questionId)) {
+            this.assessmentFeedback.set(question.questionId, question.feedback);
+          } 
+          else if (this.assessmentFeedback.has(question.questionId)) {
+            let myString = this.assessmentFeedback.get(question.questionId);
+            myString += ("\n" + question.feedback);
+            this.assessmentFeedback.set(question.questionId, myString);
+          }
+        }
+
+        if (question.comment != null && question.comment != '') {
+          // if the question didn't previously have a mapped feedback
+          if (!this.assessmentComment.has(question.questionId)) {
+            this.assessmentComment.set(question.questionId, question.comment);
+          } 
+          else if (this.assessmentComment.has(question.questionId)) {
+            let myString = this.assessmentComment.get(question.questionId);
+            myString += ("\n" + question.comment);
+            this.assessmentComment.set(question.questionId, myString);
+          }
+        }
+
         let answerToSave: Answer = {
           answerId: null,
           questionId: question.questionId,
@@ -288,9 +327,9 @@ export class MergeCieAnalysisComponent implements OnInit {
           questionNumber: '0',
           answerText: question.answer,
           altAnswerText: question.altAnswerText,
-          freeResponseAnswer: null,//(question.answer == 'U' && this.assessmentFreeResponses.has(question.questionId)) ? this.assessmentFreeResponses.get(question.questionId) : ((question.answer == 'NA' && this.assessmentNAReasons.has(question.questionId)) ? this.assessmentNAReasons.get(question.questionId) : null),
+          freeResponseAnswer: question.freeResponseAnswer,//(question.answer == 'U' && this.assessmentFreeResponses.has(question.questionId)) ? this.assessmentFreeResponses.get(question.questionId) : ((question.answer == 'NA' && this.assessmentNAReasons.has(question.questionId)) ? this.assessmentNAReasons.get(question.questionId) : null),
           comment: question.comment,
-          feedback: null,
+          feedback: question.feedback,
           markForReview: question.markForReview,
           reviewed: false,
           is_Component: false,
@@ -336,6 +375,32 @@ export class MergeCieAnalysisComponent implements OnInit {
             }
           }
 
+          
+          if (question.feedback != null && question.feedback != '') {
+            // if the question didn't previously have a mapped feedback
+            if (!this.assessmentFeedback.has(question.questionId)) {
+              this.assessmentFeedback.set(question.questionId, question.feedback);
+            } 
+            else if (this.assessmentFeedback.has(question.questionId)) {
+              let myString = this.assessmentFeedback.get(question.questionId);
+              myString += ("\n" + question.feedback);
+              this.assessmentFeedback.set(question.questionId, myString);
+            }
+          }
+
+          if (question.comment != null && question.comment != '') {
+            // if the question didn't previously have a mapped feedback
+            if (!this.assessmentComment.has(question.questionId)) {
+              this.assessmentComment.set(question.questionId, question.comment);
+            } 
+            else if (this.assessmentComment.has(question.questionId)) {
+              let myString = this.assessmentComment.get(question.questionId);
+              myString += ("\n" + question.comment);
+              this.assessmentComment.set(question.questionId, myString);
+            }
+          }
+  
+
           let answerToSave: Answer = {
             answerId: null,
             questionId: question.questionId,
@@ -343,9 +408,9 @@ export class MergeCieAnalysisComponent implements OnInit {
             questionNumber: '0',
             answerText: question.answer,
             altAnswerText: question.altAnswerText,
-            freeResponseAnswer: null,//(question.answer == 'U' && this.assessmentFreeResponses.has(question.questionId)) ? this.assessmentFreeResponses.get(question.questionId) : ((question.answer == 'NA' && this.assessmentNAReasons.has(question.questionId)) ? this.assessmentNAReasons.get(question.questionId) : null),
+            freeResponseAnswer: question.freeResponseAnswer,//(question.answer == 'U' && this.assessmentFreeResponses.has(question.questionId)) ? this.assessmentFreeResponses.get(question.questionId) : ((question.answer == 'NA' && this.assessmentNAReasons.has(question.questionId)) ? this.assessmentNAReasons.get(question.questionId) : null),
             comment: question.comment,
-            feedback: null,
+            feedback: question.feedback,
             markForReview: question.markForReview,
             reviewed: false,
             is_Component: false,
@@ -380,6 +445,14 @@ export class MergeCieAnalysisComponent implements OnInit {
         }
         else if (this.assessmentNAReasons.has(this.existingAssessmentAnswers[i].questionId) && this.existingAssessmentAnswers[i].answerText == 'NA') {
           this.existingAssessmentAnswers[i].freeResponseAnswer = this.assessmentNAReasons.get(this.existingAssessmentAnswers[i].questionId);
+        }
+
+        if (this.assessmentFeedback.has(this.existingAssessmentAnswers[i].questionId)) {
+          this.existingAssessmentAnswers[i].feedback = this.assessmentFeedback.get(this.existingAssessmentAnswers[i].questionId);
+        }
+
+        if (this.assessmentComment.has(this.existingAssessmentAnswers[i].questionId)) {
+          this.existingAssessmentAnswers[i].comment = this.assessmentComment.get(this.existingAssessmentAnswers[i].questionId);
         }
       }
       // Stop the loading spinner once we're done with all our prep
@@ -467,91 +540,190 @@ export class MergeCieAnalysisComponent implements OnInit {
 
   }
 
-  combineFreeResponse() {
+  combineFields() {
+    this.assessmentCombinedFreeResponse.clear();
+    this.assessmentCombinedFeedback.clear();
+    this.assessmentCombinedComment.clear();
+    
     for (let i = 0; i < this.mergeConflicts.length; i++) {
-      let combinedText = '';
-
+      let combinedFreeResponse = '';
+      let combinedFeedback = '';
+      let combinedComment = '';
+      
       let selectedAnswer = this.mergeRadioSelections[i];
-      for (let j = 0; j < 10; j++) {
 
+      for (let j = 0; j < 10; j++) {
 
         switch (j + 1) {
           case 1:
+            // free response
             if (this.mergeConflicts[i].answer_Text1 != null && this.mergeConflicts[i].answer_Text1 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer1 != null) {
-                combinedText += this.mergeConflicts[i].free_Response_Answer1;
+                combinedFreeResponse += this.mergeConflicts[i].free_Response_Answer1;
               }
+            }
+            //feedback
+            if (this.mergeConflicts[i].feedback1 != null) {
+              combinedFeedback += this.mergeConflicts[i].feedback1;
+            }
+            //comment
+            if (this.mergeConflicts[i].comment1 != null) {
+              combinedComment += this.mergeConflicts[i].comment1;
             }
             break;
           case 2:
+            // free response
             if (this.mergeConflicts[i].answer_Text2 != null && this.mergeConflicts[i].answer_Text2 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer2 != null) {
-                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer2;
+                combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer2;
               }            
+            }
+            //feedback
+            if (this.mergeConflicts[i].feedback2 != null) {
+              combinedFeedback += '\n ' + this.mergeConflicts[i].feedback2;
+            }
+            //comment
+            if (this.mergeConflicts[i].comment2 != null) {
+              combinedComment += '\n ' + this.mergeConflicts[i].comment2;
             }
             break;
           case 3:
+            // free response
             if (this.mergeConflicts[i].answer_Text3 != null && this.mergeConflicts[i].answer_Text3 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer3 != null) {
-                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer3;
+                combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer3;
               }            
-            }            
+            }   
+            //feedback
+            if (this.mergeConflicts[i].feedback3 != null) {
+              combinedFeedback += '\n ' + this.mergeConflicts[i].feedback3;
+            }
+            //comment
+            if (this.mergeConflicts[i].comment3 != null) {
+              combinedComment += '\n ' + this.mergeConflicts[i].comment3;
+            }         
             break;
           case 4:
+            // free response
             if (this.mergeConflicts[i].answer_Text4 != null && this.mergeConflicts[i].answer_Text4 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer4 != null) {
-                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer4;
+                combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer4;
               }            
-            }            
+            }    
+            //feedback
+            if (this.mergeConflicts[i].feedback4 != null) {
+              combinedFeedback += '\n ' + this.mergeConflicts[i].feedback4;
+            }
+            //comment
+            if (this.mergeConflicts[i].comment4 != null) {
+              combinedComment += '\n ' + this.mergeConflicts[i].comment4;
+            }        
             break;
           case 5:
+            // free response
             if (this.mergeConflicts[i].answer_Text5 != null && this.mergeConflicts[i].answer_Text5 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer5 != null) {
-                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer5;
+                combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer5;
               }            
-            }            
+            }  
+            //feedback
+            if (this.mergeConflicts[i].feedback5 != null) {
+              combinedFeedback += '\n ' + this.mergeConflicts[i].feedback5;
+            }
+            //comment
+            if (this.mergeConflicts[i].comment5 != null) {
+              combinedComment += '\n ' + this.mergeConflicts[i].comment5;
+            }          
             break;
           case 6:
+            // free response
             if (this.mergeConflicts[i].answer_Text6 != null && this.mergeConflicts[i].answer_Text6 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer6 != null) {
-                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer6;
+                combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer6;
               }            
-            }            
+            }       
+            //feedback
+            if (this.mergeConflicts[i].feedback6 != null) {
+              combinedFeedback += '\n ' + this.mergeConflicts[i].feedback6;
+            }
+            //comment
+            if (this.mergeConflicts[i].comment6 != null) {
+              combinedComment += '\n ' + this.mergeConflicts[i].comment6;
+            }     
             break;
           case 7:
+            // free response
             if (this.mergeConflicts[i].answer_Text7 != null && this.mergeConflicts[i].answer_Text7 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer7 != null) {
-                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer7;
+                combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer7;
               }            
-            }            
+            }     
+            //feedback
+            if (this.mergeConflicts[i].feedback7 != null) {
+              combinedFeedback += '\n ' + this.mergeConflicts[i].feedback7;
+            }
+            //comment
+            if (this.mergeConflicts[i].comment7 != null) {
+              combinedComment += '\n ' + this.mergeConflicts[i].comment7;
+            }       
             break;
           case 8:
+            // free response
             if (this.mergeConflicts[i].answer_Text8 != null && this.mergeConflicts[i].answer_Text8 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer8 != null) {
-                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer8;
+                combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer8;
               }            
-            }            
+            }    
+            //feedback
+            if (this.mergeConflicts[i].feedback8 != null) {
+              combinedFeedback += '\n ' + this.mergeConflicts[i].feedback8;
+            }
+            //comment
+            if (this.mergeConflicts[i].comment8 != null) {
+              combinedComment += '\n ' + this.mergeConflicts[i].comment8;
+            }        
             break;
           case 9:
+            // free response
             if (this.mergeConflicts[i].answer_Text9 != null && this.mergeConflicts[i].answer_Text9 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer9 != null) {
-                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer9;
+                combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer9;
               }            
-            }            
+            }   
+            //feedback
+            if (this.mergeConflicts[i].feedback9 != null) {
+              combinedFeedback += '\n ' + this.mergeConflicts[i].feedback9;
+            }
+            //comment
+            if (this.mergeConflicts[i].comment9 != null) {
+              combinedComment += '\n ' + this.mergeConflicts[i].comment9;
+            }         
             break;
           case 10:
+            // free response
             if (this.mergeConflicts[i].answer_Text10 != null && this.mergeConflicts[i].answer_Text10 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer10 != null) {
-                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer10;
+                combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer10;
               }            
-            }            
+            }  
+            //feedback
+            if (this.mergeConflicts[i].feedback10 != null) {
+              combinedFeedback += '\n ' + this.mergeConflicts[i].feedback10;
+            }
+            //comment
+            if (this.mergeConflicts[i].comment10 != null) {
+              combinedComment += '\n ' + this.mergeConflicts[i].comment10;
+            }          
             break;
           default:
             break;
         }
       }
 
-      this.assessmentCombinedText.set(this.mergeConflicts[i].question_Or_Requirement_Id1, combinedText);
+      this.assessmentCombinedFreeResponse.set(this.mergeConflicts[i].question_Or_Requirement_Id1, combinedFreeResponse);
+      this.assessmentCombinedFeedback.set(this.mergeConflicts[i].question_Or_Requirement_Id1, combinedFeedback);
+      this.assessmentCombinedComment.set(this.mergeConflicts[i].question_Or_Requirement_Id1, combinedComment);
+
     }
 
     //return combinedText;
@@ -562,7 +734,6 @@ export class MergeCieAnalysisComponent implements OnInit {
     // Make sure we pull in comments from all conflicting answers
     let comment = "";
     for (let i = 0; i < length; i++) {
-      
       this.selectedMergeAnswers[i] = {
         answerId: null,
         questionId: this.mergeConflicts[i].question_Or_Requirement_Id1,
@@ -570,9 +741,9 @@ export class MergeCieAnalysisComponent implements OnInit {
         questionNumber: '0',
         answerText: answers[i],
         altAnswerText: null,
-        freeResponseAnswer: this.assessmentCombinedText.get(this.mergeConflicts[i].question_Or_Requirement_Id1),//(answers[i] == 'U' && this.assessmentFreeResponses.has(this.mergeConflicts[i].question_Or_Requirement_Id1)) ? this.assessmentFreeResponses.get(this.mergeConflicts[i].question_Or_Requirement_Id1) : ((answers[i] == 'NA' && this.assessmentNAReasons.has(this.mergeConflicts[i].question_Or_Requirement_Id1)) ? this.assessmentNAReasons.get(this.mergeConflicts[i].question_Or_Requirement_Id1) : null),
-        comment: null,
-        feedback: null,
+        freeResponseAnswer: this.assessmentCombinedFreeResponse.get(this.mergeConflicts[i].question_Or_Requirement_Id1),
+        comment: this.assessmentCombinedComment.get(this.mergeConflicts[i].question_Or_Requirement_Id1),
+        feedback: this.assessmentCombinedFeedback.get(this.mergeConflicts[i].question_Or_Requirement_Id1),
         markForReview: false,
         reviewed: false,
         is_Component: false,
@@ -591,42 +762,34 @@ export class MergeCieAnalysisComponent implements OnInit {
 
       this.observationSvc.saveObservation(issue).subscribe((response: any) => {
         this.navCounter ++;
-        if (index === (issueArray.length - 1) && this.navCounter == 2) {
+        if (index === (issueArray.length - 1) && this.navCounter >= 2) {
           this.navToHome();
         }
       });
     });
   }
 
-  saveNewDocuments(documentArray: Map<number, any>) {
-    console.log(documentArray)
-
+  saveNewDocuments(questionId: number, documentArray: any[]) {
     documentArray.forEach((assessPair, index) => {
-      console.log(assessPair)
-      assessPair.forEach((doc, index2) => {
-        doc.answer_Id = this.newAnswerIds.get(doc.question_Id);
-      });
-      console.log(assessPair)
-
-      this.cieSvc.saveDocuments(assessPair).subscribe(
-        (response: any) => {
-          this.navCounter ++;
-          if (this.navCounter == 2) {
-            this.navToHome();
-          }
-      });
-      
+      assessPair.answer_Id = this.newAnswerIds.get(questionId);
     });
 
-    console.log(documentArray)
-    // For every document we have from the original assessments
+    this.cieSvc.saveDocuments(documentArray).subscribe(
+      (response: any) => {
+        this.navCounter ++;
+        if (this.navCounter >= 2) {
+          this.navToHome();
+        }
+    });
+
     
   }
 
   createMergedAssessment() {
     // Null out the button to prevent multiple clicks
     this.attemptingToMerge = true;
-    this.combineFreeResponse();
+    
+    this.combineFields(); //freeResponse, feedback, comment
 
     this.convertToAnswerType(this.mergeRadioSelections.length, this.mergeRadioSelections);
     localStorage.setItem('questionSet', 'Maturity');
@@ -644,64 +807,70 @@ export class MergeCieAnalysisComponent implements OnInit {
 
             // Pull the new assessment details (mostly empty/defaults)
             this.assessSvc.getAssessmentDetail().subscribe((details: AssessmentDetail) => {
-              console.log(details)
               // Update the assessment with the new data and send it back.
-              for (let i = 0; i < 10; i++) {
-                switch (i + 1) {
-                  case 1:
-                    if (this.mergeConflicts[0].assessment_Name1 != null) {
-                      details.assessmentName = "Merged " + (i + 1) + " Analysis";
-                    }
-                    break;
-                  case 2:
-                    if (this.mergeConflicts[0].assessment_Name2 != null) {
-                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                    }
-                    break;
-                  case 3:
-                    if (this.mergeConflicts[0].assessment_Name3 != null) {
-                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                    }           
-                    break;
-                  case 4:
-                    if (this.mergeConflicts[0].assessment_Name4 != null) {
-                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                    }          
-                    break;
-                  case 5:
-                    if (this.mergeConflicts[0].assessment_Name5 != null) {
-                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                    }           
-                    break;
-                  case 6:
-                    if (this.mergeConflicts[0].assessment_Name6 != null) {
-                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                    }           
-                    break;
-                  case 7:
-                    if (this.mergeConflicts[0].assessment_Name7 != null) {
-                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                    }            
-                    break;
-                  case 8:
-                    if (this.mergeConflicts[0].assessment_Name8 != null) {
-                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                    }          
-                    break;
-                  case 9:
-                    if (this.mergeConflicts[0].assessment_Name9 != null) {
-                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                    }           
-                    break;
-                  case 10:
-                    if (this.mergeConflicts[0].assessment_Name10 != null) {
-                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                    }           
-                    break;
-                  default:
-                    break;
+
+              if (this.mergeConflicts.length > 0) {
+                for (let i = 0; i < 10; i++) {
+                  switch (i + 1) {
+                    case 1:
+                      if (this.mergeConflicts[0].assessment_Name1 != null) {
+                        details.assessmentName = "Merged " + (i + 1) + " Analysis";
+                      }
+                      break;
+                    case 2:
+                      if (this.mergeConflicts[0].assessment_Name2 != null) {
+                        details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                      }
+                      break;
+                    case 3:
+                      if (this.mergeConflicts[0].assessment_Name3 != null) {
+                        details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                      }           
+                      break;
+                    case 4:
+                      if (this.mergeConflicts[0].assessment_Name4 != null) {
+                        details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                      }          
+                      break;
+                    case 5:
+                      if (this.mergeConflicts[0].assessment_Name5 != null) {
+                        details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                      }           
+                      break;
+                    case 6:
+                      if (this.mergeConflicts[0].assessment_Name6 != null) {
+                        details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                      }           
+                      break;
+                    case 7:
+                      if (this.mergeConflicts[0].assessment_Name7 != null) {
+                        details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                      }            
+                      break;
+                    case 8:
+                      if (this.mergeConflicts[0].assessment_Name8 != null) {
+                        details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                      }          
+                      break;
+                    case 9:
+                      if (this.mergeConflicts[0].assessment_Name9 != null) {
+                        details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                      }           
+                      break;
+                    case 10:
+                      if (this.mergeConflicts[0].assessment_Name10 != null) {
+                        details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                      }           
+                      break;
+                    default:
+                      break;
+                  }
                 }
               }
+              else {
+                details.assessmentName = "Merged with no conflicts";
+              }
+
 
               details.facilityName = this.primaryAssessDetails.facilityName;
               details.cityOrSiteName = this.primaryAssessDetails.cityOrSiteName;
@@ -714,10 +883,12 @@ export class MergeCieAnalysisComponent implements OnInit {
               // Set all of the questions "details" (answerText, comments, etc).
               // This traverses our question list and overrides anything in there if we've
               // picked a new answer with the merge conflict.
+
               for (let i = 0; i < this.selectedMergeAnswers.length; i++) {
                 for (let j = 0; j < this.existingAssessmentAnswers.length; j++) {
-                  if (this.selectedMergeAnswers[i].questionId === this.existingAssessmentAnswers[j].questionId) {
+                  if (this.existingAssessmentAnswers[j].questionId === this.selectedMergeAnswers[i].questionId) {
                     this.existingAssessmentAnswers[j].comment = this.selectedMergeAnswers[i].comment;
+                    this.existingAssessmentAnswers[j].feedback = this.selectedMergeAnswers[i].feedback;
 
                     if (this.existingAssessmentAnswers[j].answerText == this.selectedMergeAnswers[i].answerText) {
                       if (this.selectedMergeAnswers[i].freeResponseAnswer != null && this.selectedMergeAnswers[i].freeResponseAnswer != 'null') {
@@ -726,14 +897,12 @@ export class MergeCieAnalysisComponent implements OnInit {
                       }
                     }
                     else {
-                      
                       if (this.selectedMergeAnswers[i].freeResponseAnswer != null && this.selectedMergeAnswers[i].freeResponseAnswer != 'null') {
                         this.existingAssessmentAnswers[j].freeResponseAnswer = this.selectedMergeAnswers[i].freeResponseAnswer;
                       }
                     }
 
                     this.existingAssessmentAnswers[j].answerText = this.selectedMergeAnswers[i].answerText;
-
                   }
                 }
               }
@@ -745,22 +914,23 @@ export class MergeCieAnalysisComponent implements OnInit {
 
                     // Grab all the new answer_id's to save Issues to the new questions
                     for (let i = 0; i < questionListResponse.groupings[0].subGroupings.length; i++) {
+                      for (let m = 0; m < questionListResponse.groupings[0].subGroupings[i].questions.length; m++) {
+                        let question = questionListResponse.groupings[0].subGroupings[i].questions[m];
+                        this.newAnswerIds.set(question.questionId, question.answer_Id);
+                      }
                       for (let j = 0; j < questionListResponse.groupings[0].subGroupings[i].subGroupings.length; j++) {
                         for (let k = 0; k < questionListResponse.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
                           let question = questionListResponse.groupings[0].subGroupings[i].subGroupings[j].questions[k];
-
-                          //if (question.isParentQuestion === true) {
-                            this.newAnswerIds.set(question.questionId, question.answer_Id);
-                          //}
+                          this.newAnswerIds.set(question.questionId, question.answer_Id);
                         }
                       }
                     }
 
                     // This block uses the previous answer_Id's to persist issues on the new assessment
-                    const iterator = this.assessmentIssues.entries();
-                    let questionId = 0;
+                    if (this.assessmentIssues.size > 0) {
+                      const iterator = this.assessmentIssues.entries();
+                      let questionId = 0;
 
-                    if (this.assessmentIssues.size !== 0) {
                       for (let iter of iterator) {
                         questionId = iter[0];
                         let issueArray = this.assessmentIssues.get(questionId);
@@ -769,19 +939,29 @@ export class MergeCieAnalysisComponent implements OnInit {
                     } else {
                       // If we dont have any issues, we can be done.
                       this.mergeConflicts = [];
-                      this.assessmentCombinedText.clear();
+                      
                       this.navCounter++;
                     }
 
-                    if (this.assessmentIssues.size !== 0) {
-                      this.saveNewDocuments(this.assessmentDocuments);
+                    // This block uses the previous answer_Id's to persist documents on the new assessment
+                    if (this.assessmentDocuments.size > 0) {
+                      const iterator = this.assessmentDocuments.entries();
+                      let questionId = 0;
 
+                      for (let iter of iterator) {
+                        questionId = iter[0];
+                        let documentArray = this.assessmentDocuments.get(questionId);
+                        this.saveNewDocuments(questionId, documentArray);
+                      }
                     } else {
                       this.mergeConflicts = [];
-                      this.assessmentCombinedText.clear();
+                      this.assessmentCombinedFreeResponse.clear();
+                      this.assessmentCombinedFeedback.clear();
+                      this.assessmentCombinedComment.clear();
                       this.navCounter++;
                     }
-
+                    
+                    
                   //}
                 });
               });

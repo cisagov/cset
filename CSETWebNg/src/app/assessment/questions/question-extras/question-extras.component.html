@@ -283,17 +283,25 @@
         </ng-template>
 
         <div *ngIf=" !!extras && mode === 'CMNT'">
-            <div class="form-group">
+            <div *ngIf="!assessSvc.usesMaturityModel('CIE'); else cieComment" class="form-group">
                 <textarea appAutoSize [(ngModel)]="myQuestion.comment" (change)="saveComment($event)"
                     style="min-height: 72px; width: 100%" class="form-control"></textarea>
             </div>
+            <ng-template #cieComment class="form-group">
+                <textarea appAutoSize [value]="cieSvc.commentMap.get(myQuestion.questionId) != null ? cieSvc.commentMap.get(myQuestion.questionId) : ''" 
+                (change)="saveComment($event)" maxlength="2048" style="min-height: 72px; width: 100%" class="form-control"></textarea>
+            </ng-template>
         </div>
 
         <div *ngIf=" !!extras && mode === 'FDBK'">
-            <div class="form-group">
+            <div *ngIf="!assessSvc.usesMaturityModel('CIE'); else cieFeedback" class="form-group">
                 <textarea appAutoSize [(ngModel)]="myQuestion.feedback" (change)="saveFeedback($event)" maxlength="2048"
                     style="min-height: 72px; width: 100%" class="form-control"></textarea>
             </div>
+            <ng-template #cieFeedback class="form-group">
+                <textarea appAutoSize [value]="cieSvc.feedbackMap.get(myQuestion.questionId) != null ? cieSvc.feedbackMap.get(myQuestion.questionId) : ''" 
+                (change)="saveFeedback($event)" maxlength="2048" style="min-height: 72px; width: 100%" class="form-control"></textarea>
+            </ng-template>
         </div>
 
         <div *ngIf=" !!extras && mode === 'DOCS'">
