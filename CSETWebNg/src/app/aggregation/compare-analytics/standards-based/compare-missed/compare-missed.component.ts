@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { AggregationService } from '../../../services/aggregation.service';
+import { AggregationService } from '../../../../services/aggregation.service';
 
 @Component({
   selector: 'app-compare-missed',

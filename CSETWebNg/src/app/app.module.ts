@@ -250,10 +250,10 @@ import { AliasAssessmentsComponent } from './aggregation/alias-assessments/alias
 import { AggregationDetailComponent } from './aggregation/aggregation-detail/aggregation-detail.component';
 import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
-import { CompareSummaryComponent } from './aggregation/compare-analytics/compare-summary/compare-summary.component';
-import { CompareMissedComponent } from './aggregation/compare-analytics/compare-missed/compare-missed.component';
-import { CompareIndividualComponent } from './aggregation/compare-analytics/compare-individual/compare-individual.component';
-import { CompareBestworstComponent } from './aggregation/compare-analytics/compare-bestworst/compare-bestworst.component';
+import { CompareSummaryComponent } from './aggregation/compare-analytics/standards-based/compare-summary/compare-summary.component';
+import { CompareMissedComponent } from './aggregation/compare-analytics/standards-based/compare-missed/compare-missed.component';
+import { CompareIndividualComponent } from './aggregation/compare-analytics/standards-based/compare-individual/compare-individual.component';
+import { CompareBestworstComponent } from './aggregation/compare-analytics/standards-based/compare-bestworst/compare-bestworst.component';
 import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
 import { ChartService } from './services/chart.service';
 import { ChartColors } from './services/chart.service';
@@ -1289,7 +1289,7 @@ import { ReportListMvraComponent } from './assessment/results/reports/report-lis
     ReportListCrrComponent,
     ReportListEdmComponent,
     ReportListRraComponent,
-    ReportListCpgComponent, 
+    ReportListCpgComponent,
     ReportListMvraComponent
   ],
   providers: [
