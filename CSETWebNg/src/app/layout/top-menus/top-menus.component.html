@@ -83,12 +83,13 @@
                 <span>{{ t('menu.tools.compare') }}</span>
             </button>
 
-            <hr class="menu-divider" />
-
-            <button mat-menu-item (click)="navSvc.resumeQuestions()" *ngIf="showMenuItem('resume')">
-                <span class="fa fa-bolt fs-base mr-2 align-middle"></span>
-                <span>Resume Questions</span>
-            </button>
+            <ng-container *ngIf="showMenuItem('resume')">
+                <hr class="menu-divider" />
+                <button mat-menu-item (click)="navSvc.resumeQuestions()">
+                    <span class="fa fa-bolt fs-base mr-2 align-middle"></span>
+                    <span>{{ t('menu.tools.resume questions') }}</span>
+                </button>
+            </ng-container>
         </mat-menu>
     </ng-container>
 

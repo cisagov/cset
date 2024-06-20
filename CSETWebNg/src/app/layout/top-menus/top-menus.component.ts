@@ -254,6 +254,10 @@ export class TopMenusComponent implements OnInit {
       return this.configSvc.behaviors?.showMenuLanguagePicker ?? false;
     }
 
+    if (item == 'resume') {
+      return this.inAssessment() ?? false;
+    }
+
 
     return true;
   }

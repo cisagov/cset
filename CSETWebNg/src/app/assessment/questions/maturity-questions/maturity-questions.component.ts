@@ -124,8 +124,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.scrollToTarget();
-    }, 200);
+      this.scrollToResumeQuestionsTarget();
+    }, 500);
   }
 
   /**
@@ -265,25 +265,28 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  scrollToTarget() {
+  /**
+   * If a "resume questions" target is defined, attempt to scroll to it.
+   */
+  scrollToResumeQuestionsTarget() {
     // scroll to the target question if we have one
-    const scrollTarget = this.navSvc.resumeScrollTarget;
-    this.navSvc.resumeScrollTarget = null;
+    const scrollTarget = this.navSvc.resumeQuestionsTarget;
+    this.navSvc.resumeQuestionsTarget = null;
     if (!scrollTarget) {
       return;
     }
 
-    var g = scrollTarget.split(',').find(x => x.startsWith('MG:'))?.replace('MG:', '');
-    let q = scrollTarget.split(',').find(x => x.startsWith('MQ:'))?.replace('MQ:', '');
+    var mg = scrollTarget.split(',').find(x => x.startsWith('MG:'))?.replace('MG:', '');
+    let mq = scrollTarget.split(',').find(x => x.startsWith('MQ:'))?.replace('MQ:', '');
 
     // expand the question's group
-    var groupToExpand = this.findGroupingById(Number(g), this.groupings);
+    var groupToExpand = this.findGroupingById(Number(mg), this.groupings);
     if (!!groupToExpand) {
       groupToExpand.expanded = true;
     }
 
     // scroll to the question
-    let qqElement = document.getElementById(`qq${q}`);
+    let qqElement = document.getElementById(`mq${mq}`);
     setTimeout(() => {
       qqElement.scrollIntoView({ behavior: 'smooth' });
       return;
