@@ -142,7 +142,7 @@ namespace CSETWebCore.Api.Controllers
 
                 JToken element = document["app"];
 
-                element["url"] = context.Host.Host;
+                element["host"] = context.Host.Host;
                 if (String.IsNullOrWhiteSpace(context.Headers["X-Forwarded-Proto"]))
                 {
                     element["protocol"] = context.Scheme;
@@ -160,7 +160,7 @@ namespace CSETWebCore.Api.Controllers
                 }
 
                 element = document["api"];
-                element["url"] = context.Host.Host;
+                element["host"] = context.Host.Host;
                 if (String.IsNullOrWhiteSpace(context.Headers["X-Forwarded-Proto"]))
                 {
                     element["protocol"] = context.Scheme;
