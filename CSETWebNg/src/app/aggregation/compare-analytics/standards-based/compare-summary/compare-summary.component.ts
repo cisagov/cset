@@ -22,9 +22,9 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { AggregationService } from '../../../services/aggregation.service';
-import { ChartService } from '../../../services/chart.service';
-import { ColorService } from '../../../services/color.service';
+import { AggregationService } from '../../../../services/aggregation.service';
+import { ChartService } from '../../../../services/chart.service';
+import { ColorService } from '../../../../services/color.service';
 
 @Component({
   selector: 'app-compare-summary',
