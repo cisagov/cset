@@ -177,6 +177,7 @@ namespace CSETWebCore.Api.Controllers
                 }
 
                 element = document["library"];
+                element["host"] = context.Host.Host;
                 if (String.IsNullOrWhiteSpace(context.Headers["X-Forwarded-Proto"]))
                 {
                     element["protocol"] = context.Scheme;
