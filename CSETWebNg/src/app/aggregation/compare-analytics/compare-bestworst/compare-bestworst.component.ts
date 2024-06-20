@@ -63,7 +63,7 @@ export class CompareBestworstComponent implements OnInit {
     this.currentCategory = cat;
 
     // create chart data skeleton
-    const x = {
+    const chartConfig = {
       labels: [],
       datasets: [
         { label: 'Yes', data: [], backgroundColor: "#28A745" },
@@ -71,25 +71,14 @@ export class CompareBestworstComponent implements OnInit {
         { label: 'Not Applicable', data: [], backgroundColor: "#007BFF" },
         { label: 'Alternate', data: [], backgroundColor: "#FFC107" },
         { label: 'Unanswered', data: [], backgroundColor: "#CCCCCC" }
-      ],
-      options: {
-        maintainAspectRatio: true,
-        scales: {
-          xAxes: [{
-            ticks: {
-              min: 0,
-              max: 200
-            }
-          }]
-        }
-      }
+      ]
     };
 
     // populate chart data object 
     cat.assessments.forEach(a => {
-      x.labels.push(a.assessmentName);
+      chartConfig.labels.push(a.assessmentName);
 
-      const ds = x.datasets;
+      const ds = chartConfig.datasets;
       ds.find(x => x.label === 'Yes').data.push(a.yesValue);
       ds.find(x => x.label === 'No').data.push(a.noValue);
       ds.find(x => x.label === 'Not Applicable').data.push(a.naValue);
@@ -97,9 +86,9 @@ export class CompareBestworstComponent implements OnInit {
       ds.find(x => x.label === 'Unanswered').data.push(a.unansweredValue);
     });
 
-    if (!!this.chartAnswerBreakdown) {
+    if (this.chartAnswerBreakdown) {
       this.chartAnswerBreakdown.destroy();
     }
-    this.chartAnswerBreakdown = this.chartSvc.buildStackedHorizBarChart('canvasAnswerBreakdown', x);
+    this.chartAnswerBreakdown = this.chartSvc.buildStackedHorizBarChart('canvasAnswerBreakdown', chartConfig);
   }
 }

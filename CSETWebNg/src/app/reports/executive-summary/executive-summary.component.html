@@ -49,7 +49,7 @@
     <app-overall-compliance></app-overall-compliance>
 
     <h1 *ngIf="response?.information.assessment_Description">
-      {{t('reports.high level assessment desc')}}
+      {{t('reports.high level assessment label')}}
     </h1>
     <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.assessment_Description)">
     </p>

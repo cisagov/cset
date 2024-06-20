@@ -29,6 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using static Lucene.Net.Util.Fst.Util;
 
 
@@ -188,6 +189,12 @@ namespace CSETWebCore.Business.Reports
             if (myModel.model.Model_Name.ToUpper() == "CRR")
             {
                 ignoreParentQuestions = true;
+                deficientAnswerValues = new List<string>() { "N", "U", "I" };
+            }
+
+            // IMR considers unanswered and incomplete as deficient
+            if (myModel.model.Model_Name.ToUpper() == "IMR")
+            {
                 deficientAnswerValues = new List<string>() { "N", "U", "I" };
             }
 
@@ -1773,6 +1780,12 @@ namespace CSETWebCore.Business.Reports
                 case "Maturity":
                     identifier = f.mq.Question_Title;
                     questionText = f.mq.Question_Text;
+
+                    // CPG is a special case
+                    if (!String.IsNullOrEmpty(f.mq.Security_Practice))
+                    {
+                        questionText = f.mq.Security_Practice;
+                    }
 
                     // overlay
                     MaturityQuestionOverlay o = _overlay.GetMaturityQuestion(f.mq.Mat_Question_Id, lang);
