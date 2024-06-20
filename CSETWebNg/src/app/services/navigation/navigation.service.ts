@@ -78,6 +78,11 @@ export class NavigationService implements OnDestroy, OnInit {
 
   cisSubnodes = null;
 
+  /**
+   * Defines the grouping or question to scroll to when "resuming"
+   */
+  resumeScrollTarget: string = null;
+
 
 
   /**
@@ -464,7 +469,26 @@ export class NavigationService implements OnDestroy, OnInit {
    */
   resumeQuestions() {
     this.http.get(this.configSvc.apiUrl + 'contacts/bookmark', {responseType: 'text'}).subscribe(x => {
-      console.log(x);
+      // set the target so that the question page will know where to scroll to
+      this.resumeScrollTarget = x;
+
+
+
+      // is there a specific nav node for the grouping? (nested)
+      var g = x.split(',').find(x => x.startsWith('MG:'))?.replace('MG:', '');
+
+
+      // first see if this grouping has its own page
+      let e = this.workflow.getElementById('maturity-questions-nested-' + g);
+      if (!!e) {
+        this.navDirect(e.id);
+        return;
+      }
+
+      // no nested grouping page, look for generic questions page
+      e = this.workflow.getElementById('maturity-questions');
+      let q = x.split(',').find(x => x.startsWith('MQ:'))?.replace('MQ:', '');
+      this.navDirect(e.id);
     });
   }
 }
