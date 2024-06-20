@@ -32,5 +32,10 @@ namespace CSETWebCore.Model.Document
         /// 
         /// </summary>
         public int Question_Id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Question_Title { get; set; }
     }
 }

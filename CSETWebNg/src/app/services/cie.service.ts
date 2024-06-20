@@ -12,6 +12,8 @@ import { AcetFilteringService } from './filtering/maturity-filtering/acet-filter
 import { IRPService } from './irp.service';
 import { MaturityService } from './maturity.service';
 import { ReportService } from './report.service';
+import { Question } from '../models/questions.model';
+import { List } from 'lodash';
 
 let headers = {
   headers: new HttpHeaders()
@@ -32,14 +34,21 @@ export class CieService {
   hasShownCharterWarning: boolean = false;
   apiUrl = this.configSvc.apiUrl;
 
-  exampleExpanded = true;
-  tutorialExpanded = true;
+  exampleExpanded = false;
+  tutorialExpanded = false;
+
+  contactInitials = "";
+  freeResponseSegment = "";
+
+  feedbackMap: Map<number, string> = new Map<number, string>();
+  commentMap: Map<number, string> = new Map<number, string>();
 
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
     public dialog: MatDialog,
     public acetFilteringSvc: AcetFilteringService,
+    public assessSvc: AssessmentService,
     private maturitySvc: MaturityService,
     private acetSvc: ACETService,
     private irpSvc: IRPService,
@@ -175,6 +184,14 @@ export class CieService {
   getCieNaQuestions() {
     return this.http.get(this.configSvc.apiUrl + 'reports/getCieNaQuestions');
   }
+  
+  getCieAssessmentDocuments() {
+    return this.http.get(this.apiUrl + 'reports/getCieAllQuestionsWithDocuments');
+  }
+
+  getCieAllMfrQuestionsWithDocuments() {
+    return this.http.get(this.apiUrl + 'reports/getCieAllMfrQuestionsWithDocuments');
+  }
 
   getObservations() {
     let id1 = this.assessmentsToMerge[0];
@@ -211,7 +228,44 @@ export class CieService {
   }
 
   saveDocuments(documentsForAssessment: any[]) {
-    
-    return this.http.post(this.apiUrl + 'saveNewDocumentsForMerge', documentsForAssessment, headers)
+    console.log(documentsForAssessment)
+
+    const documents: DocumentsForMerge = {
+      DocumentWithAnswerId: documentsForAssessment
+    };
+    console.log(documents)
+    return this.http.post(this.apiUrl + 'saveNewDocumentsForMerge', documents)
   }
+
+  applyContactAndEndTag(textToAppend: string, convoBuffer: string) {
+    let bracketContact = '[' + this.assessSvc.assessment.assessmentName + ']';
+
+    if (textToAppend.indexOf(bracketContact) !== 0) {
+      if (!!textToAppend) {
+        if (textToAppend.indexOf('[') !== 0) {
+          this.freeResponseSegment = bracketContact + ' ' + textToAppend;
+          textToAppend = this.freeResponseSegment + convoBuffer;
+        }
+
+        else {
+          let previousContactInitials = textToAppend.substring(textToAppend.lastIndexOf('[') + 1, textToAppend.lastIndexOf(']'));
+          let endOfLastBuffer = textToAppend.lastIndexOf(convoBuffer) + convoBuffer.length;
+          if (previousContactInitials !== this.assessSvc.assessment.assessmentName) {
+            // if ( endOfLastBuffer !== q.altAnswerText.length || endOfLastBuffer !== q.altAnswerText.length - 1) {
+            let oldComments = textToAppend.substring(0, endOfLastBuffer);
+            let newComment = textToAppend.substring(oldComments.length);
+
+            textToAppend = oldComments + bracketContact + ' ' + newComment + convoBuffer;
+            // }
+          }
+        }
+      }
+    }
+
+    return textToAppend;
+  }
+}
+
+export interface DocumentsForMerge {
+  DocumentWithAnswerId: any[];
 }

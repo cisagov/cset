@@ -661,6 +661,7 @@ import { AnalyticsComponent } from './assessment/results/analytics/analytics.com
 import { AnalyticsloginComponent } from './assessment/results/analysis/analytics-login/analytics-login.component';
 import { AnalyticsService } from './services/analytics.service';
 import { UploadDemographicsComponent } from './dialogs/import demographics/import-demographics.component';
+import { CieMfrReportComponent } from './reports/cie/cie-mfr-report/cie-mfr-report.component';
 import { ReportListComponent } from './assessment/results/reports/report-list/report-list.component';
 import { ReportListImrComponent } from './assessment/results/reports/report-list/report-list-imr/report-list-imr.component';
 import { ReportListCisComponent } from './assessment/results/reports/report-list/report-list-cis/report-list-cis.component';
@@ -1278,6 +1279,9 @@ import { ReportListC2M2Component } from './assessment/results/reports/report-lis
     CiePrincipleOnlyComponent,
     CiePrinciplePhaseComponent,
     CieNotApplicableComponent,
+    CieMfrReportComponent,
+    AboutCieComponent, 
+    AnalyticsComponent, 
     SdOwnerDeficiencyComponent,
     SdOwnerCommentsMfrComponent,
     AboutCieComponent,

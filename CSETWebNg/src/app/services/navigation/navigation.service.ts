@@ -101,6 +101,10 @@ export class NavigationService implements OnDestroy, OnInit {
     this.assessSvc.assessmentStateChanged.subscribe((reloadState) => {
       switch (reloadState) {
         case 123:
+          // remembers state of ToC dropdown for CIE
+          if (this.assessSvc.usesMaturityModel('CIE')) {
+            this.navTreeSvc.applyCieToCStates();
+          }
           break;
         case 124:
           this.buildTree();
@@ -110,6 +114,10 @@ export class NavigationService implements OnDestroy, OnInit {
         case 125:
           this.buildTree();
           this.navDirect('phase-prepare');
+          // remembers state of ToC dropdown for CIE
+          if (this.assessSvc.usesMaturityModel('CIE')) {
+            this.navTreeSvc.applyCieToCStates();
+          }
           break;
       }
     });

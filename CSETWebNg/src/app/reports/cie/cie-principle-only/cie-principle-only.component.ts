@@ -7,6 +7,8 @@ import { ConfigService } from '../../../services/config.service';
 import { ObservationsService } from '../../../services/observations.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { ReportService } from '../../../services/report.service';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { FileUploadClientService } from '../../../services/file-client.service';
 
 @Component({
   selector: 'app-cie-principle-only',
@@ -19,6 +21,7 @@ export class CiePrincipleOnlyComponent {
   hasComments: any[] = [];
   // showSubcats: Map<String, boolean> = new Map<String, boolean>();
   expandedOptions: Map<String, boolean> = new Map<String, boolean>();
+  principleTitleList: string[] = [];
 
   examLevel: string = '';
   loading: boolean = true;
@@ -32,7 +35,9 @@ export class CiePrincipleOnlyComponent {
     private titleService: Title,
     public cieSvc: CieService,
     public configSvc: ConfigService,
-    public observationSvc: ObservationsService
+    public observationSvc: ObservationsService,
+    public authSvc: AuthenticationService,
+    public fileSvc: FileUploadClientService
   ) { }
 
   ngOnInit(): void {
@@ -45,19 +50,8 @@ export class CiePrincipleOnlyComponent {
         // goes through domains
         for (let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
           let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
-          // goes through subcategories
-          for (let j = 0; j < domain.components?.length; j++) {
-            let subcat = domain?.components[j];
-            this.expandedOptions.set(domain?.title, false);
-
-            // // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
-            // // goes through questions
-            // for (let k = 0; k < subcat?.questions?.length; k++) {
-
-            //   this.expandedOptions.set(domain?.title, false);
-            //   // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
-            // }
-          }
+          this.expandedOptions.set(domain?.title, false);
+          this.principleTitleList.push(domain?.title);
         }
 
         this.loading = false;
@@ -112,5 +106,37 @@ export class CiePrincipleOnlyComponent {
       combinedClass += 'bottom-half-border';
     }
     return combinedClass;
+  }
+
+  /**
+   *
+   */
+  download(doc: any) {
+    // get short-term JWT from API
+    this.authSvc.getShortLivedToken().subscribe((response: any) => {
+      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
+      window.open(url, "_blank");
+    });
+  }
+
+  /**
+   *
+   */
+  downloadFile(document) {
+    this.fileSvc.downloadFile(document.document_Id).subscribe((data: Response) => {
+      // this.downloadFileData(data),
+    },
+      error => console.log(error)
+    );
+  }
+
+  /**
+   * Controls the mass expansion/collapse of all subcategories on the screen.
+   * @param mode
+   */
+  expandAll(mode: boolean) {
+    for(let i = 0; i < this.principleTitleList.length; i++ ) {
+      this.expandedOptions.set(this.principleTitleList[i], mode);
+    }
   }
 }

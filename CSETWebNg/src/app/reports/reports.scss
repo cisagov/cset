@@ -1836,6 +1836,20 @@ div.spinner-size-50 {
 
 
 
+
+
+///   CIE Styles ////////////////////////////////////////////////
+.cie-questions-header-collapse-button-radius {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+.cie-questions-header-expand-button-radius {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+
+
 /// nested formatting ///////////////////////////////////
 .nested-question-title {
   font-weight: bold;
