@@ -13,6 +13,7 @@ import { IRPService } from './irp.service';
 import { MaturityService } from './maturity.service';
 import { ReportService } from './report.service';
 import { Question } from '../models/questions.model';
+import { List } from 'lodash';
 
 let headers = {
   headers: new HttpHeaders()
@@ -183,10 +184,13 @@ export class CieService {
   getCieNaQuestions() {
     return this.http.get(this.configSvc.apiUrl + 'reports/getCieNaQuestions');
   }
-
   
   getCieAssessmentDocuments() {
     return this.http.get(this.apiUrl + 'reports/getCieAllQuestionsWithDocuments');
+  }
+
+  getCieAllMfrQuestionsWithDocuments() {
+    return this.http.get(this.apiUrl + 'reports/getCieAllMfrQuestionsWithDocuments');
   }
 
   getObservations() {
@@ -224,8 +228,13 @@ export class CieService {
   }
 
   saveDocuments(documentsForAssessment: any[]) {
-    
-    return this.http.post(this.apiUrl + 'saveNewDocumentsForMerge', documentsForAssessment, headers)
+    console.log(documentsForAssessment)
+
+    const documents: DocumentsForMerge = {
+      DocumentWithAnswerId: documentsForAssessment
+    };
+    console.log(documents)
+    return this.http.post(this.apiUrl + 'saveNewDocumentsForMerge', documents)
   }
 
   applyContactAndEndTag(textToAppend: string, convoBuffer: string) {
@@ -255,4 +264,8 @@ export class CieService {
 
     return textToAppend;
   }
+}
+
+export interface DocumentsForMerge {
+  DocumentWithAnswerId: any[];
 }

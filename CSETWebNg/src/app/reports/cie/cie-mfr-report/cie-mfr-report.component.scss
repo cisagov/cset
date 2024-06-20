@@ -35,3 +35,11 @@ SOFTWARE.
     border-bottom: thin black;
     border-right: thin black;
 }
+.cie-questions-header-collapse-button-radius {
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}
+.cie-questions-header-expand-button-radius {
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+}

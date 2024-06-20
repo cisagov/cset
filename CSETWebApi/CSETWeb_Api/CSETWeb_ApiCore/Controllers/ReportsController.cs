@@ -873,6 +873,21 @@ namespace CSETWebCore.Api.Controllers
             return Ok(data);
         }
 
+
+        [HttpGet]
+        [Route("api/reports/getCieAllMfrQuestionsWithDocuments")]
+        public IActionResult GetCieAllMfrQuestionsWithDocuments()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _report.SetReportsAssessmentId(assessmentId);
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+            MaturityBasicReportData data = new MaturityBasicReportData();
+
+            data.MatAnsweredQuestions = _report.GetCieMfrQuestionList();
+            data.Information = _report.GetInformation();
+            return Ok(data);
+        }
         //[HttpGet]
         //[Route("api/reports/getCieNaQuestions")]
         //public IActionResult getCieNaQuestions()
