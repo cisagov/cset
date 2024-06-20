@@ -141,8 +141,7 @@ namespace CSETWebCore.Api.Controllers
                 document.Add("rewrittenByRedirect", "true");
 
                 JToken element = document["app"];
-
-                element["url"] = context.Host.Host;
+                element["host"] = context.Host.Host;
                 if (String.IsNullOrWhiteSpace(context.Headers["X-Forwarded-Proto"]))
                 {
                     element["protocol"] = context.Scheme;
@@ -160,7 +159,24 @@ namespace CSETWebCore.Api.Controllers
                 }
 
                 element = document["api"];
-                element["url"] = context.Host.Host;
+                element["host"] = context.Host.Host;
+                if (String.IsNullOrWhiteSpace(context.Headers["X-Forwarded-Proto"]))
+                {
+                    element["protocol"] = context.Scheme;
+                    string port = "443";
+                    if ((context.Host.Port == 80) || (context.Host.Port == 443))
+                        port = "";
+                    else
+                        port = (context.Host.Port == null) ? "" : context.Host.Port.ToString();
+                    element["port"] = port;
+                }
+                else
+                {
+                    element["protocol"] = context.Headers["X-Forwarded-Proto"].ToString();
+                    element["port"] = context.Headers["X-Forwarded-Port"].ToString();
+                }
+
+                element = document["library"];
                 if (String.IsNullOrWhiteSpace(context.Headers["X-Forwarded-Proto"]))
                 {
                     element["protocol"] = context.Scheme;
