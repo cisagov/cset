@@ -96,15 +96,16 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
             Dictionary<int, DOCUMENT_FILE> oldIdToNewDocument = new Dictionary<int, DOCUMENT_FILE>();
             AssessmentDetail detail = null;
+            Guid assessmentGuid = _model.jASSESSMENTS.FirstOrDefault().Assessment_GUID;
 
             if (overwriteAssessment)
             {
-                detail = _assessmentBiz.GetAssessmentDetail(_model.jASSESSMENTS.FirstOrDefault().Assessment_GUID);
+                detail = _assessmentBiz.GetAssessmentDetail(assessmentGuid);
             }
 
             if (detail == null)
             {
-                detail = _assessmentBiz.CreateNewAssessmentForImport(_currentUserId, _accessKey);
+                detail = _assessmentBiz.CreateNewAssessmentForImport(_currentUserId, _accessKey, assessmentGuid);
             }
 
             int assessmentId = detail.Id;

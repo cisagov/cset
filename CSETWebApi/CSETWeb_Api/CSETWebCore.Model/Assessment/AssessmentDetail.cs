@@ -51,6 +51,8 @@ namespace CSETWebCore.Model.Assessment
         public string Workflow { get; set; }
         public Guid? GalleryItemGuid { get; set; }
 
+        public Guid AssessmentGuid { get; set; }
+
         /// <summary>
         /// Created to be flexible to able to 'flag' an assessment for a special behavior
         /// </summary>
