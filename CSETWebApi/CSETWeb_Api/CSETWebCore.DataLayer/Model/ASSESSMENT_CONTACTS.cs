@@ -59,7 +59,7 @@ public partial class ASSESSMENT_CONTACTS
     public bool Is_Site_Participant { get; set; }
 
     [StringLength(100)]
-    public string Bookmark { get; set; }
+    public string Last_Q_Answered { get; set; }
 
     [ForeignKey("Assessment_Id")]
     [InverseProperty("ASSESSMENT_CONTACTS")]

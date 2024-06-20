@@ -627,7 +627,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            return Ok(ac.Bookmark);
+            return Ok(ac.Last_Q_Answered);
         }
     }
 }

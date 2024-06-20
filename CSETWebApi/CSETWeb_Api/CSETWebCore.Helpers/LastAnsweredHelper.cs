@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2024 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CSETWebCore.Model.Question;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.AdminTab;
+
 
 namespace CSETWebCore.Helpers
 {
@@ -15,8 +16,6 @@ namespace CSETWebCore.Helpers
     /// </summary>
     public class LastAnsweredHelper
     {
-
-
         private readonly CSETContext _context;
 
 
@@ -24,6 +23,7 @@ namespace CSETWebCore.Helpers
         {
             _context = context;
         }
+
 
         /// <summary>
         /// Save the group/requirement/question/option so that the user can return to the last question answered
@@ -51,24 +51,24 @@ namespace CSETWebCore.Helpers
 
                 var dbQuestion = _context.MATURITY_QUESTIONS.Where(x => x.Mat_Question_Id == ans.QuestionId).FirstOrDefault();
 
-                ac.Bookmark = $"MG:{dbQuestion.Grouping_Id},MQ:{ans.QuestionId}";
+                ac.Last_Q_Answered = $"MG:{dbQuestion.Grouping_Id},MQ:{ans.QuestionId}";
 
                 if (ans.OptionId != null && ans.OptionId != 0)
                 {
-                    ac.Bookmark += $",MO:{ans.OptionId}";
+                    ac.Last_Q_Answered += $",MO:{ans.OptionId}";
                 }
             }
 
 
             if (ans.QuestionType.ToLower() == "requirement")
             {
-                ac.Bookmark = $"R:{ans.QuestionId}";
+                ac.Last_Q_Answered = $"R:{ans.QuestionId}";
             }
 
 
             if (ans.QuestionType.ToLower() == "question")
             {
-                ac.Bookmark = $"Q:{ans.QuestionId}";
+                ac.Last_Q_Answered = $"Q:{ans.QuestionId}";
             }
 
 
