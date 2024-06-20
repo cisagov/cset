@@ -44,6 +44,7 @@ import { AggregationService } from '../../services/aggregation.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
+import { NavigationService } from '../../services/navigation/navigation.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { GalleryService } from '../../services/gallery.service';
 import { SetBuilderService } from './../../services/set-builder.service';
@@ -74,7 +75,8 @@ export class TopMenusComponent implements OnInit {
     public dialog: MatDialog,
     public router: Router,
     private _hotkeysService: HotkeysService,
-    private gallerySvc: GalleryService
+    private gallerySvc: GalleryService,
+    private navSvc: NavigationService
   ) { }
 
   ngOnInit(): void {
@@ -250,6 +252,10 @@ export class TopMenusComponent implements OnInit {
 
     if (item == 'language picker') {
       return this.configSvc.behaviors?.showMenuLanguagePicker ?? false;
+    }
+
+    if (item == 'resume') {
+      return this.inAssessment() ?? false;
     }
 
 
@@ -492,8 +498,6 @@ export class TopMenusComponent implements OnInit {
       (data: any) => {
         // the update user request happened when the dialog's form was saved
         this.dialogRef = undefined;
-        //this.goHome();
-        //window.location.reload();
       },
       (error) => console.log(error.message)
     );
