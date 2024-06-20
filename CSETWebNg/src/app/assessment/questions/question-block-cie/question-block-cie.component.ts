@@ -49,6 +49,10 @@ export class QuestionBlockCieComponent implements OnInit {
   maturityModelId: number;
   maturityModelName: string;
 
+  options: any =  {
+    eagerSupplemental: true,
+    showMfr: true
+  };
 
   /**
    * Constructor.
@@ -621,8 +625,6 @@ export class QuestionBlockCieComponent implements OnInit {
       (details) => {
         this.extras = details;
         this.extras.questionId = q.questionId;
-
-        
 
       });
   }

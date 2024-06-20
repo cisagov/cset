@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Malcolm;
+using CSETWebCore.Business.Contact;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -513,7 +514,6 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _token.AssessmentForUser();
             var fm = new ObservationsManager(_context, assessmentId);
-
 
             if (obs.IsObservationEmpty(cancel))
             {

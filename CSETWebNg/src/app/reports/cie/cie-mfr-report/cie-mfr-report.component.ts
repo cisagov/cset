@@ -36,13 +36,13 @@ import { AuthenticationService } from '../../../services/authentication.service'
 import { FileUploadClientService } from '../../../services/file-client.service';
 
 @Component({
-  selector: 'app-cie-documents-report',
-  templateUrl: './cie-documents-report.component.html',
-  styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-documents-report.component.scss'],
+  selector: 'app-cie-mfr-report',
+  templateUrl: './cie-mfr-report.component.html',
+  styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-mfr-report.component.scss'],
   host: { class: 'd-flex flex-column flex-11a' }
 })
 
-export class CieDocumentsReportComponent implements OnInit {
+export class CieMfrReportComponent implements OnInit {
   response: any = {};
   documents: any = {};
 
@@ -54,6 +54,13 @@ export class CieDocumentsReportComponent implements OnInit {
 
   examLevel: string = '';
   loading: boolean = true;
+
+  principleFound: boolean = false;
+  phaseFound: boolean = false;
+
+  principleTitleList: string[] = [];
+  phaseTitleList: string[] = [];
+
 
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
@@ -70,23 +77,33 @@ export class CieDocumentsReportComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Documents CIE-CSET - Report");
+    this.titleService.setTitle("Marked for Review CIE-CSET - Report");
     
-    this.cieSvc.getCieAssessmentDocuments().subscribe(
+    this.cieSvc.getCieAllMfrQuestionsWithDocuments().subscribe(
       (r: any) => {
         this.response = r;
-        console.log(this.response)
         // goes through domains
         for (let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
           let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
+
+          if (domain?.questions?.length > 0) {
+            this.principleFound = true;
+          }
           // goes through subcategories
           for (let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
-            this.expandedOptions.set(domain?.title + '_' + subcat?.title, false);
+            this.expandedOptions.set('Principle_' + domain?.title, false);
+            this.principleTitleList.push('Principle_' + domain?.title);
+            this.phaseTitleList.push('Phase_' + domain?.title);
             // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
             // goes through questions
+            if (subcat?.questions?.length > 0) {
+              this.phaseFound = true;
+            }
             for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
+              this.expandedOptions.set('Phase_' + domain?.title + '_' + subcat?.title, false);
+                this.phaseTitleList.push('Phase_' + domain?.title + '_' + subcat?.title);
               //this.expandedOptions.set(domain?.title + '_' + subcat?.title, false);
 
             }
@@ -98,14 +115,27 @@ export class CieDocumentsReportComponent implements OnInit {
     );
   }
 
+  /**
+   *
+   */
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
       const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.location.href = url;
+      window.open(url, "_blank");
     });
   }
 
+  /**
+   *
+   */
+  downloadFile(document) {
+    this.fileSvc.downloadFile(document.document_Id).subscribe((data: Response) => {
+      // this.downloadFileData(data),
+    },
+      error => console.log(error)
+    );
+  }
 
   /**
    * Flips the 'expand' boolean value based off the given 'title' key
@@ -144,5 +174,22 @@ export class CieDocumentsReportComponent implements OnInit {
       combinedClass += 'bottom-half-border';
     }
     return combinedClass;
+  }
+
+  /**
+   * Controls the mass expansion/collapse of all subcategories on the screen.
+   * @param mode
+   */
+  expandAll(mode: boolean, principleOrPhase: string) {
+    if (principleOrPhase == 'Principle') {
+      for(let i = 0; i < this.principleTitleList.length; i++ ) {
+        this.expandedOptions.set(this.principleTitleList[i], mode);
+      }
+    }
+    if (principleOrPhase == 'Phase') {
+      for(let i = 0; i < this.phaseTitleList.length; i++ ) {
+        this.expandedOptions.set(this.phaseTitleList[i], mode);
+      }
+    }
   }
 }

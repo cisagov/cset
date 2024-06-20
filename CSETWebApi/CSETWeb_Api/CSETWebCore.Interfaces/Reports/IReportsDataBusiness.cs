@@ -63,5 +63,6 @@ namespace CSETWebCore.Interfaces.Reports
         List<BasicReportData.RequirementControl> GetControlsDiagram(string applicationMode);
         List<MatAnsweredQuestionDomain> GetCieQuestionList(int matLevel, bool filterForNa = false);
         List<MatAnsweredQuestionDomain> GetCieDocumentsForAssessment();
+        List<MatAnsweredQuestionDomain> GetCieMfrQuestionList();
     }
 }

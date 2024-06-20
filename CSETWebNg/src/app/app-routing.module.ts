@@ -230,7 +230,7 @@ import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-
 import { SdOwnerDeficiencyComponent } from './reports/sd-owner/sd-owner-deficiency/sd-owner-deficiency.component';
 import { SdOwnerCommentsMfrComponent } from './reports/sd-owner/sd-owner-comments/sd-owner-comments-mfr.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
-import { CieDocumentsReportComponent } from './reports/cie/cie-documents-report/cie-documents-report.component';
+import { CieMfrReportComponent } from './reports/cie/cie-mfr-report/cie-mfr-report.component';
 import { TutorialCpgComponent } from './assessment/prepare/maturity/tutorial-cpg/tutorial-cpg.component';
 import { TutorialMvraComponent } from './assessment/prepare/maturity/tutorial-mvra/tutorial-mvra.component';
 
@@ -557,7 +557,7 @@ const appRoutes: Routes = [
       { path: 'ciePrincipleOnly', component: CiePrincipleOnlyComponent },
       { path: 'ciePrinciplePhase', component: CiePrinciplePhaseComponent },
       { path: 'cieNotApplicable', component: CieNotApplicableComponent },
-      { path: 'cieDocumentsReport', component: CieDocumentsReportComponent },
+      { path: 'cieMfrReport', component: CieMfrReportComponent },
       { path: 'crrreport', component: CrrReportComponent },
       { path: 'crrDeficiencyReport', component: CrrDeficiencyComponent },
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },

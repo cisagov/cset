@@ -7,6 +7,8 @@ import { ConfigService } from '../../../services/config.service';
 import { ObservationsService } from '../../../services/observations.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { ReportService } from '../../../services/report.service';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { FileUploadClientService } from '../../../services/file-client.service';
 
 @Component({
   selector: 'app-cie-principle-phase',
@@ -20,6 +22,7 @@ export class CiePrinciplePhaseComponent {
   hasComments: any[] = [];
   // showSubcats: Map<String, boolean> = new Map<String, boolean>();
   expandedOptions: Map<String, boolean> = new Map<String, boolean>();
+  phaseTitleList: string[] = [];
 
   examLevel: string = '';
   loading: boolean = true;
@@ -33,7 +36,9 @@ export class CiePrinciplePhaseComponent {
     private titleService: Title,
     public cieSvc: CieService,
     public configSvc: ConfigService,
-    public observationSvc: ObservationsService
+    public observationSvc: ObservationsService,
+    public authSvc: AuthenticationService,
+    public fileSvc: FileUploadClientService
   ) { }
 
   ngOnInit(): void {
@@ -50,6 +55,7 @@ export class CiePrinciplePhaseComponent {
           for (let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
             this.expandedOptions.set(domain?.title + '_' + subcat?.title, false);
+            this.phaseTitleList.push('Phase_' + domain?.title);
 
             // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
             // goes through questions
@@ -57,6 +63,7 @@ export class CiePrinciplePhaseComponent {
               let question = subcat?.questions[k];
 
                 this.expandedOptions.set(domain?.title + '_' + subcat?.title, false);
+                this.phaseTitleList.push('Phase_' + domain?.title + '_' + subcat?.title);
                 // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
             }
           }
@@ -113,5 +120,37 @@ export class CiePrinciplePhaseComponent {
       combinedClass += 'bottom-half-border';
     }
     return combinedClass;
+  }
+  
+  /**
+   *
+   */
+  download(doc: any) {
+    // get short-term JWT from API
+    this.authSvc.getShortLivedToken().subscribe((response: any) => {
+      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
+      window.open(url, "_blank");
+    });
+  }
+
+  /**
+   *
+   */
+  downloadFile(document) {
+    this.fileSvc.downloadFile(document.document_Id).subscribe((data: Response) => {
+      // this.downloadFileData(data),
+    },
+      error => console.log(error)
+    );
+  }
+
+  /**
+   * Controls the mass expansion/collapse of all subcategories on the screen.
+   * @param mode
+   */
+  expandAll(mode: boolean) {
+    for(let i = 0; i < this.phaseTitleList.length; i++ ) {
+      this.expandedOptions.set(this.phaseTitleList[i], mode);
+    }
   }
 }
