@@ -23,6 +23,8 @@ public partial class MQ_BONUS
     [StringLength(1)]
     public string Action { get; set; }
 
+    public int Sequence { get; set; }
+
     [ForeignKey("BaseQuestionId")]
     [InverseProperty("MQ_BONUSBaseQuestion")]
     public virtual MATURITY_QUESTIONS BaseQuestion { get; set; }
