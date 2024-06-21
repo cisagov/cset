@@ -23,7 +23,7 @@
 <div *transloco="let t" class="question-group mb-3">
     <div class="subcat-header" [class.flat-bottom]="myGrouping.expanded" (click)="toggleExpansion()"
         (keydown.Spacebar)="toggleExpansion()" (keydown.Enter)="toggleExpansion()"
-        [attr.aria-expanded]="myGrouping.expanded">
+        [attr.aria-expanded]="myGrouping.expanded" id="gg{{myGrouping.groupingID}}">
         <div class="sub-head-1" tabindex="0">
             <div *ngIf="myGrouping.title != ''" class="sub-head-2">
                 {{ myGrouping.title }}
@@ -59,7 +59,7 @@
 
     <!-- this houses all of the questions -->
     <div class="subcat-question-list px-3 pt-0 pb-3" [class.display-none]="!myGrouping.expanded">
-        <div *ngFor="let q of myGrouping.questions" class="question-row d-flex flex-column" [class.bonus-ssg-question]="q.isBonusQuestion"
+        <div *ngFor="let q of myGrouping.questions"  id="mq{{q.questionId}}" class="question-row d-flex flex-column" [class.bonus-ssg-question]="q.isBonusQuestion"
             [class.pb-3]="q.isParentQuestion" [class.display-none]="!q.visible">
 
             <div class="w-100 mt-3 mb-1 d-flex flex-row" *ngIf="!layoutSvc.hp">
