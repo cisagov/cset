@@ -217,7 +217,9 @@ namespace CSETWebCore.Business.Aggregation
                     AssessmentId = dbAA.Assessment_Id,
                     Alias = dbAA.Alias,
                     AssessmentName = dbAA.Assessment.INFORMATION.Assessment_Name,
-                    AssessmentDate = dbAA.Assessment.Assessment_Date
+                    AssessmentDate = dbAA.Assessment.Assessment_Date,
+                    useMaturity = dbAA.Assessment.UseMaturity,
+                    useStandard = dbAA.Assessment.UseStandard
                 };
 
                 l.Add(aa);
