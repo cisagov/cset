@@ -19,7 +19,7 @@ namespace CSETWebCore.Interfaces.Assessment
     {
         AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow, GalleryConfig config);
         int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment);
-        AssessmentDetail CreateNewAssessmentForImport(int? currentUserId, string accessKey);
+        AssessmentDetail CreateNewAssessmentForImport(int? currentUserId, string accessKey, Guid assessmentGuid);
         IEnumerable<usp_Assessments_For_UserResult> GetAssessmentsForUser(int userId);
         IEnumerable<usp_Assessments_For_UserResult> GetAssessmentsForAccessKey(string accessKey);
         AnalyticsAssessment GetAnalyticsAssessmentDetail(int assessmentId);
