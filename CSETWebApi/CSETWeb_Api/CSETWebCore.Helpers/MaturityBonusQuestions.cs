@@ -67,7 +67,7 @@ namespace CSETWebCore.Helpers
             {
                 QuestionAnswer targetQ = groupingQuestions[i];
 
-                var bonuses = BonusQuestions.Where(x => x.MqAppend.BaseQuestionId == targetQ.QuestionId).ToList();
+                var bonuses = BonusQuestions.Where(x => x.MqAppend.BaseQuestionId == targetQ.QuestionId).OrderBy(x => x.MqAppend.Sequence).Reverse().ToList();
 
                 foreach (var bonus in bonuses)
                 {
