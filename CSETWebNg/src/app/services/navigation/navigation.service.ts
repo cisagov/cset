@@ -50,7 +50,7 @@ export interface NavTreeNode {
 @Injectable({
   providedIn: 'root'
 })
-export class NavigationService implements OnDestroy, OnInit{
+export class NavigationService implements OnDestroy, OnInit {
   /**
    * The workflow is stored in a DOM so that we can easily navigate around the tree
    */
@@ -77,6 +77,11 @@ export class NavigationService implements OnDestroy, OnInit{
   diagramSelected = true;
 
   cisSubnodes = null;
+
+  /**
+   * Defines the grouping or question to scroll to when "resuming"
+   */
+  resumeQuestionsTarget: string = null;
 
 
 
@@ -111,7 +116,7 @@ export class NavigationService implements OnDestroy, OnInit{
   }
 
   ngOnInit(): void {
-    
+
   }
   ngOnDestroy() {
     this.assessSvc.assessmentStateChanged.unsubscribe()
@@ -129,7 +134,7 @@ export class NavigationService implements OnDestroy, OnInit{
    *
    */
   getFramework() {
-    return this.http.get(this.configSvc.apiUrl + "standard/IsFramework");
+    return this.http.get(this.configSvc.apiUrl + 'standard/IsFramework');
   }
 
   setACETSelected(acet: boolean) {
@@ -193,7 +198,6 @@ export class NavigationService implements OnDestroy, OnInit{
       else {
         this.navDirect('phase-prepare');
       }
-
     });
   }
 
@@ -256,7 +260,7 @@ export class NavigationService implements OnDestroy, OnInit{
   isNextEnabled(cur: string): boolean {
     if (!this.workflow) return true;
     const originPage = this.workflow.getElementById(cur);
-    
+
     if (originPage == null) {
       return true;
     }
@@ -364,14 +368,14 @@ export class NavigationService implements OnDestroy, OnInit{
   /**
    * Navigates to the path specified in the target node.
    */
-  routeToTarget(target: HTMLElement) {
-    this.navTreeSvc.setCurrentPage(target.id);
-    this.destinationId = target.id;
+  routeToTarget(targetNode: HTMLElement) {
+    this.navTreeSvc.setCurrentPage(targetNode.id);
+    this.destinationId = targetNode.id;
 
     this.buildTree();
 
     // determine the route path
-    const targetPath = target.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
+    const targetPath = targetNode.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
     this.router.navigate([targetPath]);
   }
 
@@ -388,7 +392,7 @@ export class NavigationService implements OnDestroy, OnInit{
     let target = this.workflow.getElementById(id);
 
     if (!target) {
-      console.error(`No workflow element found for id ${id}`);
+      console.error(`No workflow element found for id '${id}'`);
       return false;
     }
 
@@ -452,7 +456,41 @@ export class NavigationService implements OnDestroy, OnInit{
   setCurrentPage(id: string) {
     this.navTreeSvc.setCurrentPage(id);
   }
+
+  /**
+   * 
+   */
   clearNoMatterWhat() {
     this.navTreeSvc.clearNoMatterWhat();
+  }
+
+  /**
+   * Jump to the last question answered.
+   */
+  resumeQuestions() {
+    this.http.get(this.configSvc.apiUrl + 'contacts/bookmark', { responseType: 'text' }).subscribe(x => {
+
+      if (!x) {
+        this.navDirect('phase-assessment');
+        return;
+      }
+
+
+      // set the target so that the question page will know where to scroll to
+      this.resumeQuestionsTarget = x;
+
+
+      // is there a specific nav node for the grouping? (nested)
+      var g = x.split(',').find(x => x.startsWith('MG:'))?.replace('MG:', '');
+      let e = this.workflow.getElementById('maturity-questions-nested-' + g);
+      if (!!e) {
+        this.navDirect(e.id);
+        return;
+      }
+
+
+      // if we don't have to land on a specific nested page, we should be able to just jump to the assessment phase
+      this.navDirect('phase-assessment');
+    });
   }
 }
