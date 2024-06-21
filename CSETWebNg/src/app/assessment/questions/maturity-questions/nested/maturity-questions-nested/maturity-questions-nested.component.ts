@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { IntegrityCheckOption, QuestionGrouping } from '../../../../../models/questions.model';
 import { AssessmentService } from '../../../../../services/assessment.service';
@@ -41,7 +41,7 @@ import { HydroService } from '../../../../../services/hydro.service';
   templateUrl: './maturity-questions-nested.component.html',
   styleUrls: ['./maturity-questions-nested.component.scss']
 })
-export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
+export class MaturityQuestionsNestedComponent implements OnInit, AfterViewInit, OnDestroy {
 
   modelName: string;
 
@@ -106,6 +106,12 @@ export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
     }
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.scrollToResumeQuestionsTarget();
+    }, 500);
+  }
+
   ngOnDestroy(): void {
     this._routerSub.unsubscribe();
   }
@@ -152,6 +158,32 @@ export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
         console.log('Error getting questions: ' + (<Error>error).stack);
       }
     );
+  }
+
+  /**
+   * If a "resume questions" target is defined, attempt to scroll to it
+   */
+  scrollToResumeQuestionsTarget() {
+    // scroll to the target question if we have one
+    const scrollTarget = this.navSvc.resumeQuestionsTarget;
+    this.navSvc.resumeQuestionsTarget = null;
+    if (!scrollTarget) {
+      return;
+    }
+
+    var mq = scrollTarget.split(',').find(x => x.startsWith('MQ:'))?.replace('MQ:', '');
+
+    // scroll to the question
+    let mqElement = document.getElementById(`mq${mq}`);
+
+    console.log(`mq${mq}`, mqElement);
+
+    if (mqElement) {
+      setTimeout(() => {
+        mqElement.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }, 1000);
+    }
   }
 
   /**
