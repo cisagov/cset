@@ -141,7 +141,7 @@ namespace CSETWebCore.Business.Assessment
 
 
 
-        public AssessmentDetail CreateNewAssessmentForImport(int? currentUserId, string accessKey, Guid assessmentGuid)
+        public AssessmentDetail CreateNewAssessmentForImport(int? currentUserId, string accessKey, Guid assessmentGuid = new Guid())
         {
             DateTime nowUTC = DateTime.Now;
             AssessmentDetail newAssessment = new AssessmentDetail
@@ -645,9 +645,13 @@ namespace CSETWebCore.Business.Assessment
             {
                 dbAssessment = new ASSESSMENTS();
 
-                if (assessment.AssessmentGuid != Guid.Empty) 
-                { 
+                if (assessment.AssessmentGuid != Guid.Empty)
+                {
                     dbAssessment.Assessment_GUID = assessment.AssessmentGuid;
+                }
+                else 
+                {
+                    dbAssessment.Assessment_GUID = Guid.NewGuid();
                 }
 
                 _context.ASSESSMENTS.Add(dbAssessment);
