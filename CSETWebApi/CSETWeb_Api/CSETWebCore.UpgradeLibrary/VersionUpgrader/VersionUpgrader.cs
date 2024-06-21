@@ -114,6 +114,7 @@ namespace UpgradeLibrary.Upgrade
             converters.Add("12.1.8.0", new ConvertDatabase12200(path));
             converters.Add("12.2.0.0", new ConvertDatabase12210(path));
             converters.Add("12.2.1.0", new ConvertDatabase12220(path));
+            converters.Add("12.2.2.0", new ConvertDatabase12230(path));
         }
 
         public void UpgradeOnly(Version currentVersion, string tempConnect)
