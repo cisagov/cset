@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
@@ -44,7 +44,7 @@ import { TranslocoService } from '@ngneat/transloco';
   selector: 'app-maturity-questions',
   templateUrl: './maturity-questions.component.html'
 })
-export class MaturityQuestionsComponent implements OnInit {
+export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   groupings: QuestionGrouping[] = [];
   pageTitle: string = '';
@@ -120,6 +120,12 @@ export class MaturityQuestionsComponent implements OnInit {
         this.load();
       }
     });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.scrollToResumeQuestionsTarget();
+    }, 500);
   }
 
   /**
@@ -257,6 +263,47 @@ export class MaturityQuestionsComponent implements OnInit {
     g.subGroupings.forEach((sg: QuestionGrouping) => {
       this.recurseExpansion(sg, mode);
     });
+  }
+
+  /**
+   * If a "resume questions" target is defined, attempt to scroll to it.
+   */
+  scrollToResumeQuestionsTarget() {
+    // scroll to the target question if we have one
+    const scrollTarget = this.navSvc.resumeQuestionsTarget;
+    this.navSvc.resumeQuestionsTarget = null;
+    if (!scrollTarget) {
+      return;
+    }
+
+    var mg = scrollTarget.split(',').find(x => x.startsWith('MG:'))?.replace('MG:', '');
+    let mq = scrollTarget.split(',').find(x => x.startsWith('MQ:'))?.replace('MQ:', '');
+
+    // expand the question's group
+    var groupToExpand = this.findGroupingById(Number(mg), this.groupings);
+    if (!!groupToExpand) {
+      groupToExpand.expanded = true;
+    }
+
+    // scroll to the question
+    let qqElement = document.getElementById(`mq${mq}`);
+    setTimeout(() => {
+      qqElement.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }, 1000);
+  }
+
+  /**
+   * Recurse grouping tree, looking for the ID
+   */
+  findGroupingById(id: number, groupings: any[]) {
+    var grp = groupings.find(x => x.groupingID == id);
+    if (!!grp) {
+      return grp;
+    }
+    for (var i = 0; i < groupings.length; i++) {
+      return this.findGroupingById(id, groupings[i].subGroupings);
+    }
   }
 
   /**
