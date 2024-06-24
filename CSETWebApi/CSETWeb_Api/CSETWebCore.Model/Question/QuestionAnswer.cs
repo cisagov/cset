@@ -133,11 +133,5 @@ namespace CSETWebCore.Model.Question
         public bool Is_Component { get; set; }
         public Guid ComponentGuid { get; set; }
         public bool Is_Requirement { get; set; }
-
-
-        /// <summary>
-        /// Indicates if the question is "additional", like an SSG question embedded in a CPG assessment.
-        /// </summary>
-        public bool IsBonusQuestion { get; set; } = false;
     }
 }

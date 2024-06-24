@@ -56,9 +56,6 @@ public partial class MATURITY_MODELS
     [InverseProperty("Model_NameNavigation")]
     public virtual ICollection<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; } = new List<MODES_SETS_MATURITY_MODELS>();
 
-    [InverseProperty("Model")]
-    public virtual ICollection<MQ_BONUS> MQ_BONUS { get; set; } = new List<MQ_BONUS>();
-
     [ForeignKey("Maturity_Level_Usage_Type")]
     [InverseProperty("MATURITY_MODELS")]
     public virtual MATURITY_LEVEL_USAGE_TYPES Maturity_Level_Usage_TypeNavigation { get; set; }

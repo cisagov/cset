@@ -102,12 +102,6 @@ public partial class MATURITY_QUESTIONS
     [InverseProperty("Mat_Question")]
     public virtual ICollection<MATURITY_SUB_MODEL_QUESTIONS> MATURITY_SUB_MODEL_QUESTIONS { get; set; } = new List<MATURITY_SUB_MODEL_QUESTIONS>();
 
-    [InverseProperty("BaseQuestion")]
-    public virtual ICollection<MQ_BONUS> MQ_BONUSBaseQuestion { get; set; } = new List<MQ_BONUS>();
-
-    [InverseProperty("BonusQuestion")]
-    public virtual ICollection<MQ_BONUS> MQ_BONUSBonusQuestion { get; set; } = new List<MQ_BONUS>();
-
     [ForeignKey("Mat_Question_Type")]
     [InverseProperty("MATURITY_QUESTIONS")]
     public virtual MATURITY_QUESTION_TYPES Mat_Question_TypeNavigation { get; set; }

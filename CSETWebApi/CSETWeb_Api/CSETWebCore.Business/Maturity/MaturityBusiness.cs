@@ -41,9 +41,6 @@ namespace CSETWebCore.Business.Maturity
 
         public readonly List<string> ModelsWithTargetLevel = ["ACET", "CMMC", "CMMC2"];
 
-        private MaturityBonusQuestions _mbq;
-
-
 
 
         /// <summary>
@@ -884,10 +881,6 @@ namespace CSETWebCore.Business.Maturity
 
             // get the levels and their display names for this model
             response.Levels = GetMaturityLevelsForModel(targetModelId, response.MaturityTargetLevel);
-
-
-
-            _mbq = new MaturityBonusQuestions(_context, assessmentId);
             
 
 
@@ -1078,11 +1071,6 @@ namespace CSETWebCore.Business.Maturity
 
 
                 newGrouping.Questions.Sort((a, b) => a.Sequence.CompareTo(b.Sequence));
-
-
-                // Include any applicable bonus questions to this grouping
-                _mbq.AppendBonusQuestions(newGrouping.Questions, answers.ToList(), _addlSuppl);
-
 
 
                 // Recurse down to build subgroupings
