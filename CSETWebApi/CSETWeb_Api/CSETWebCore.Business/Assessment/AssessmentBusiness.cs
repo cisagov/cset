@@ -140,12 +140,20 @@ namespace CSETWebCore.Business.Assessment
         }
 
 
-
-        public AssessmentDetail CreateNewAssessmentForImport(int? currentUserId, string accessKey)
+        /// <summary>
+        /// Creates a new assessment for import. The assessmentGuid parameter is optional. If specified, the newly created assessment
+        /// will use the provided guid value. Otherwise, it will be asssigned randomly.
+        /// </summary>
+        /// <param name="currentUserId"></param>
+        /// <param name="accessKey"></param>
+        /// <param name="assessmentGuid"></param>
+        /// <returns></returns>
+        public AssessmentDetail CreateNewAssessmentForImport(int? currentUserId, string accessKey, Guid assessmentGuid = new Guid())
         {
             DateTime nowUTC = DateTime.Now;
             AssessmentDetail newAssessment = new AssessmentDetail
             {
+                AssessmentGuid = assessmentGuid,
                 AssessmentName = "New Assessment",
                 AssessmentDate = nowUTC,
                 CreatorId = currentUserId,
@@ -410,6 +418,7 @@ namespace CSETWebCore.Business.Assessment
             if (result != null)
             {
                 assessment.Id = result.aa.Assessment_Id;
+                assessment.AssessmentGuid = result.aa.Assessment_GUID;
                 assessment.GalleryItemGuid = result.aa.GalleryItemGuid;
                 assessment.AssessmentName = result.ii.Assessment_Name;
                 assessment.AssessmentDate = result.aa.Assessment_Date;
@@ -642,6 +651,16 @@ namespace CSETWebCore.Business.Assessment
             if (dbAssessment == null)
             {
                 dbAssessment = new ASSESSMENTS();
+
+                if (assessment.AssessmentGuid != Guid.Empty)
+                {
+                    dbAssessment.Assessment_GUID = assessment.AssessmentGuid;
+                }
+                else 
+                {
+                    dbAssessment.Assessment_GUID = Guid.NewGuid();
+                }
+
                 _context.ASSESSMENTS.Add(dbAssessment);
                 _context.SaveChanges();
                 assessmentId = dbAssessment.Assessment_Id;
