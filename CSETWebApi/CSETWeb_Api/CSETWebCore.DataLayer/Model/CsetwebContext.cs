@@ -293,6 +293,8 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
 
+    public virtual DbSet<LU_WEIGHTS> LU_WEIGHTS { get; set; }
+
     public virtual DbSet<MALCOLM_ANSWERS> MALCOLM_ANSWERS { get; set; }
 
     public virtual DbSet<MALCOLM_MAPPING> MALCOLM_MAPPING { get; set; }
@@ -339,13 +341,13 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; }
 
-    public virtual DbSet<MQ_BONUS> MQ_BONUS { get; set; }
-
     public virtual DbSet<NAVIGATION_STATE> NAVIGATION_STATE { get; set; }
 
     public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
 
     public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
+
+    public virtual DbSet<NCSF_MIGRATION> NCSF_MIGRATION { get; set; }
 
     public virtual DbSet<NERC_RISK_RANKING> NERC_RISK_RANKING { get; set; }
 
@@ -517,13 +519,9 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<ACCESS_KEY_ASSESSMENT>(entity =>
         {
-            entity.HasOne(d => d.AccessKeyNavigation).WithMany(p => p.ACCESS_KEY_ASSESSMENT)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ACCESS_KEY");
+            entity.HasOne(d => d.AccessKeyNavigation).WithMany(p => p.ACCESS_KEY_ASSESSMENT).HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ACCESS_KEY");
 
-            entity.HasOne(d => d.Assessment).WithMany(p => p.ACCESS_KEY_ASSESSMENT)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ASSESSMENTS");
+            entity.HasOne(d => d.Assessment).WithMany(p => p.ACCESS_KEY_ASSESSMENT).HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ASSESSMENTS");
         });
 
         modelBuilder.Entity<ADDRESS>(entity =>
@@ -1764,6 +1762,11 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Level_Name).HasComment("The Level Name is used to");
         });
 
+        modelBuilder.Entity<LU_WEIGHTS>(entity =>
+        {
+            entity.HasKey(e => e.DisplayID).HasName("PK__LU_WEIGH__76EAD95D2B2B4749");
+        });
+
         modelBuilder.Entity<MALCOLM_ANSWERS>(entity =>
         {
             entity.HasOne(d => d.Assessment).WithMany(p => p.MALCOLM_ANSWERS).HasConstraintName("FK_MALCOLM_ANSWERS_ASSESSMENTS");
@@ -1938,23 +1941,6 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Set_NameNavigation).WithMany(p => p.MODES_SETS_MATURITY_MODELS)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_MODES_MATURITY_MODELS_SETS");
-        });
-
-        modelBuilder.Entity<MQ_BONUS>(entity =>
-        {
-            entity.HasKey(e => new { e.BaseQuestionId, e.BonusQuestionId }).HasName("PK_MQ_APPEND");
-
-            entity.HasOne(d => d.BaseQuestion).WithMany(p => p.MQ_BONUSBaseQuestion)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_mq_bonus_mat_q1");
-
-            entity.HasOne(d => d.BonusQuestion).WithMany(p => p.MQ_BONUSBonusQuestion)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_mq_bonus_mat_q");
-
-            entity.HasOne(d => d.Model).WithMany(p => p.MQ_BONUS)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_mq_bonus_mat_model");
         });
 
         modelBuilder.Entity<NAVIGATION_STATE>(entity =>

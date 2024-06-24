@@ -44,10 +44,6 @@ namespace CSETWebCore.Helpers
         /// </summary>
         private TranslationOverlay _overlay;
 
-        /// <summary>
-        /// An instance of MaturityBonusQuestions
-        /// </summary>
-        private MaturityBonusQuestions _mbq;
 
 
 
@@ -67,11 +63,6 @@ namespace CSETWebCore.Helpers
             // set up translation resources
             this._overlay = new TranslationOverlay();
             this._lang = lang;
-
-
-            // Determine any bonus questions that apply to this assessment
-            this._mbq = new MaturityBonusQuestions(context, assessmentId);
-
 
             LoadStructure();
         }
@@ -253,65 +244,8 @@ namespace CSETWebCore.Helpers
                 }
 
 
-                AppendBonusQuestions(grouping.Questions, answers);
-
-
                 // Recurse down to build subgroupings
                 GetSubgroups(grouping.Groupings, sg.Grouping_Id, allGroupings, questions, answers, remarks);
-            }
-        }
-
-
-        /// <summary>
-        /// This is a specialized version of the method in MaturityBonusQuestions that deals with CPG Questions.  
-        /// It should be refactored so that we aren't repeating the same logic here.
-        /// </summary>
-        /// <param name="groupingQuestions"></param>
-        /// <param name="answers"></param>
-        private void AppendBonusQuestions(List<Question> groupingQuestions, List<FullAnswer> answers)
-        {
-            // see if any of the questions in this grouping should be preceded/followed/replaced
-            // by an additional (bonus) question
-            for (int i = groupingQuestions.Count - 1; i >= 0; i--)
-            {
-                Question targetQ = groupingQuestions[i];
-
-                var aqs = _mbq.BonusQuestions.Where(x => x.MqAppend.BaseQuestionId == targetQ.QuestionId).ToList();
-                foreach (var aq in aqs)
-                {
-                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == aq.Question.Mat_Question_Id).FirstOrDefault();
-
-                    var newQ = QuestionAnswerBuilder.BuildCpgQuestion(aq.Question, answer);
-
-                    newQ.IsBonusQuestion = true;
-
-                    // Include CSF mappings
-                    newQ.CsfMappings = _addlSuppl.GetCsfMappings(newQ.QuestionId, "Maturity");
-
-                    // Include any TTPs
-                    newQ.TTP = _addlSuppl.GetTTPReferenceList(newQ.QuestionId);
-
-
-                    // "Action" will be B, A or R
-                    switch (aq.MqAppend.Action.ToUpper())
-                    {
-                        // insert BEFORE
-                        case "B":
-                            groupingQuestions.Insert(i, newQ);
-                            break;
-
-                        // insert AFTER
-                        case "A":
-                            groupingQuestions.Insert(i + 1, newQ);
-                            break;
-
-                        // REPLACE
-                        case "R":
-                            groupingQuestions.Insert(i + 1, newQ);
-                            groupingQuestions.RemoveAt(i);
-                            break;
-                    }
-                }
             }
         }
     }

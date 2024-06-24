@@ -37,13 +37,6 @@ namespace CSETWebCore.Model.Maturity.CPG
         public string Answer { get; set; }
         public string Comment { get; set; }
         public bool IsParentQuestion { get; set; }
-
-        /// <summary>
-        /// Indicates an additional question added to the model,
-        /// originally designed for SSG questions.
-        /// </summary>
-        public bool IsBonusQuestion {  get; set; }
-
         public string QuestionText { get; set; }
 		public string Supplemental { get; set; }
 		public string Scope { get; set; }
