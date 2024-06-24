@@ -238,20 +238,7 @@
             </div>
 
             <div *ngIf=" !!extras && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
-
-                <div *ngIf="!!tab?.requirementsData?.supplementalInfo"
-                    [innerHTML]="tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html'">
-                </div>
-
-                <div *ngIf="!seperateGuidanceFromApproach()">
-                    <hr
-                        *ngIf="!!tab?.requirementsData?.supplementalInfo && !!tab?.requirementsData?.examinationApproach">
-                    <div
-                        [innerHTML]="tab?.requirementsData?.examinationApproach ? (tab?.requirementsData?.examinationApproach | linebreak | safe: 'html') : ''">
-                    </div>
-                </div>
-
-                <!-- "pieces" -->
+                <!-- CPG "pieces" -->
 
                 <div *ngIf="!!myQuestion.scope" class="mb-3">
                     <div class="sub-header-1">{{t('extras.scope')}}</div>
@@ -275,6 +262,22 @@
                     <div [innerHTML]="myQuestion.services">
                     </div>
                 </div>
+
+
+                <!-- Supplemental Info -->
+                <div *ngIf="!!tab?.requirementsData?.supplementalInfo"
+                    [innerHTML]="tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html'">
+                </div>
+
+                
+                <div *ngIf="!seperateGuidanceFromApproach()">
+                    <hr
+                        *ngIf="!!tab?.requirementsData?.supplementalInfo && !!tab?.requirementsData?.examinationApproach">
+                    <div
+                        [innerHTML]="tab?.requirementsData?.examinationApproach ? (tab?.requirementsData?.examinationApproach | linebreak | safe: 'html') : ''">
+                    </div>
+                </div>
+
 
                 <div *ngIf="!supplementalExists()">
                     {{msgNoSupplemental}}
