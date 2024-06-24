@@ -16,9 +16,9 @@ How Do I Use CSET?
 
 
 ## Download
-[Download the latest CSET release](https://cset-download.inl.gov/)
+[CSET Releases](https://github.com/cisagov/cset/releases/)
 
-[Older Versions of CSET For Windows](https://github.com/cisagov/cset/releases/)
+Local installers ("standalone") are available as well as binaries for creating enterprise installations.
 
 
 ## Documentation

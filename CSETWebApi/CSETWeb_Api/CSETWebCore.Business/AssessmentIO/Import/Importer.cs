@@ -95,15 +95,20 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             //update the answer id's             
 
             Dictionary<int, DOCUMENT_FILE> oldIdToNewDocument = new Dictionary<int, DOCUMENT_FILE>();
-            AssessmentDetail detail = null;
+            Guid assessmentGuid = _model.jASSESSMENTS.FirstOrDefault().Assessment_GUID;
 
-            if (overwriteAssessment)
-            {
-                detail = _assessmentBiz.GetAssessmentDetail(_model.jASSESSMENTS.FirstOrDefault().Assessment_GUID);
-            }
+            AssessmentDetail detail = _assessmentBiz.GetAssessmentDetail(assessmentGuid);
 
+            // If no assessment exists with given GUID, import using provided GUID
             if (detail == null)
             {
+                detail = _assessmentBiz.CreateNewAssessmentForImport(_currentUserId, _accessKey, assessmentGuid);
+            }
+            else if (!overwriteAssessment) 
+            {
+                // At this point we know the assessment with provided GUID already exists.
+                // If we are not overwriting an assessment, create a new assessment for import with new GUID.
+                // Otherwise, the code will carry on using the existing assessment detail object to "overwrite" it.
                 detail = _assessmentBiz.CreateNewAssessmentForImport(_currentUserId, _accessKey);
             }
 
