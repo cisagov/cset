@@ -44,7 +44,7 @@ namespace CSETWebCore.Business.Maturity
             //the default is EDM
             //if the application is ACET the default is ACET
 
-            return base.ProcessModelDefaults(assessmentId, installationMode, 1);
+            return base.ProcessModelDefaults(assessmentId, 1);
         }
 
 
@@ -64,10 +64,10 @@ namespace CSETWebCore.Business.Maturity
         }
 
 
-        public override MaturityResponse GetMaturityQuestions(int assessmentId, bool fill, int groupingId, string installationMode, string lang)
+        public override MaturityResponse GetMaturityQuestions(int assessmentId, bool fill, int groupingId, string lang)
         {
             var response = new MaturityResponse();
-            var myModel = ProcessModelDefaults(assessmentId, installationMode, 1);
+            var myModel = ProcessModelDefaults(assessmentId, 1);
 
             var myModelDefinition = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();
 
@@ -85,7 +85,7 @@ namespace CSETWebCore.Business.Maturity
                 response.MaturityTargetLevel = response.OverallIRP;
             }
 
-            response = base.GetMaturityQuestions(assessmentId, fill, groupingId, installationMode, lang);
+            response = base.GetMaturityQuestions(assessmentId, fill, groupingId, lang);
 
             return response;
         }

@@ -57,7 +57,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   loaded = false;
 
   grouping: QuestionGrouping | null;
-  groupingId: Number;
+  groupingId: string; // this is a string to be able to support 'bonus'
   title: string;
 
   msgUnansweredEqualsNo = '';
@@ -88,7 +88,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((e: any) => {
       if (e.urlAfterRedirects.includes('/maturity-questions/')) {
-        this.groupingId = +this.route.snapshot.params['grp'];
+        this.groupingId = this.route.snapshot.params['grp'];
         this.loadGrouping(+this.groupingId);
       }
     });
@@ -134,9 +134,9 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   load() {
     // determine whether displaying a grouping or all questions for the model
     this.grouping = null;
-    this.groupingId = +this.route.snapshot.params['grp'];
+    this.groupingId = this.route.snapshot.params['grp'];
 
-    if (!this.groupingId) {
+    if (!this.groupingId || this.groupingId.toLowerCase() == 'bonus') {
       this.loadQuestions();
     } else {
       this.loadGrouping(+this.groupingId);
@@ -165,7 +165,22 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
     const magic = this.navSvc.getMagic();
     this.groupings = null;
-    this.maturitySvc.getQuestionsList(false).subscribe(
+
+
+
+    var lll = this.maturitySvc.getQuestionsList(false);
+
+    console.log(this.groupingId);
+    if (this.groupingId?.toLowerCase() == 'bonus') {
+      const bonusModelId = 18; // RKWTODO:
+      lll = this.maturitySvc.getBonusQuestionList(bonusModelId);
+    }
+
+
+
+
+
+    lll.subscribe(
       (response: MaturityQuestionResponse) => {
         this.modelId = response.modelId;
         this.modelName = response.modelName;

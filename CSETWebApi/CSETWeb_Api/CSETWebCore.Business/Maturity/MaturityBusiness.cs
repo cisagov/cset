@@ -10,7 +10,6 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
-using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Edm;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
@@ -632,7 +631,7 @@ namespace CSETWebCore.Business.Maturity
 
 
 
-        public AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, string installationMode, int maturityModelId = 3)
+        public AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, int maturityModelId = 3)
         {
             //if the available maturity model is not selected and the application is CSET
             //the default is EDM
@@ -829,10 +828,10 @@ namespace CSETWebCore.Business.Maturity
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public virtual MaturityResponse GetMaturityQuestions(int assessmentId, bool fill, int groupingId, string installationMode, string lang)
+        public virtual MaturityResponse GetMaturityQuestions(int assessmentId, bool fill, int groupingId, string lang)
         {
             var response = new MaturityResponse();
-            return GetMaturityQuestions(assessmentId, installationMode, fill, groupingId, response, lang);
+            return GetMaturityQuestions(assessmentId, fill, groupingId, response, null, lang);
         }
 
 
@@ -840,33 +839,43 @@ namespace CSETWebCore.Business.Maturity
         /// Assembles a response consisting of maturity questions for the assessment.
         /// </summary>
         /// <returns></returns>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId, MaturityResponse response, string lang)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, bool fill, int groupingId, MaturityResponse response, int? modelId, string lang)
         {
             if (fill)
             {
                 _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
             }
 
-            var myModel = ProcessModelDefaults(assessmentId, installationMode);
+            var defaultModel = ProcessModelDefaults(assessmentId);
+
+            var targetModelId = defaultModel.model_id;
 
 
-            var myModelDefinition = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();
+            // If the model ID was specified by the caller, use that instead of the assessment's model
+            if (modelId != null)
+            {
+                targetModelId = (int)modelId;
+            }
 
-            if (myModelDefinition == null)
+
+
+            var targetModel = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == targetModelId).FirstOrDefault();
+
+            if (targetModel == null)
             {
                 return response;
             }
 
 
-            response.ModelId = myModelDefinition.Maturity_Model_Id;
-            response.ModelName = myModelDefinition.Model_Name;
+            response.ModelId = targetModel.Maturity_Model_Id;
+            response.ModelName = targetModel.Model_Name;
 
-            response.QuestionsAlias = myModelDefinition.Questions_Alias ?? "Questions";
+            response.QuestionsAlias = targetModel.Questions_Alias ?? "Questions";
 
 
-            if (myModelDefinition.Answer_Options != null)
+            if (targetModel.Answer_Options != null)
             {
-                response.AnswerOptions = myModelDefinition.Answer_Options.Split(',').ToList();
+                response.AnswerOptions = targetModel.Answer_Options.Split(',').ToList();
                 response.AnswerOptions.ForEach(x => x = x.Trim());
             }
 
@@ -874,7 +883,7 @@ namespace CSETWebCore.Business.Maturity
             response.MaturityTargetLevel = GetMaturityTargetLevel(assessmentId);
 
             // get the levels and their display names for this model
-            response.Levels = GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel);
+            response.Levels = GetMaturityLevelsForModel(targetModelId, response.MaturityTargetLevel);
 
 
 
@@ -888,9 +897,9 @@ namespace CSETWebCore.Business.Maturity
                 .Include(x => x.Maturity_Level)
                 .Include(x => x.MATURITY_QUESTION_PROPS)
                 .Where(q =>
-                myModel.model_id == q.Maturity_Model_Id);
+                targetModelId == q.Maturity_Model_Id);
 
-            if (groupingId != 0 && myModel.model_id != 17)
+            if (groupingId != 0 && targetModelId != 17)
             {
                 questionQuery = questionQuery.Where(x => x.Question_Text.StartsWith("A"));
             }
@@ -941,7 +950,7 @@ namespace CSETWebCore.Business.Maturity
             // Get all subgroupings for this maturity model
             var allGroupings = _context.MATURITY_GROUPINGS
                 .Include(x => x.Type)
-                .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
+                .Where(x => x.Maturity_Model_Id == targetModel.Maturity_Model_Id).ToList();
 
 
             // overlay group properties for language
@@ -977,7 +986,7 @@ namespace CSETWebCore.Business.Maturity
             response.Groupings = tempModel.SubGroupings;
 
             // Add any glossary terms
-            response.Glossary = this.GetGlossaryEntries(myModel.model_id);
+            response.Glossary = this.GetGlossaryEntries(targetModel.Maturity_Model_Id);
 
             return response;
         }

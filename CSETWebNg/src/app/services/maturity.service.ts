@@ -213,10 +213,10 @@ export class MaturityService {
 
 
   /**
-   * Asks the API for all maturity questions/answers for the current assessment.
+   * Asks the API for all maturity questions/answers for the current assessment. 
    */
   getQuestionsList(fillEmpty: boolean, groupingId?: number) {
-    let url = this.configSvc.apiUrl + 'MaturityQuestions?fill=' + fillEmpty;
+    let url = this.configSvc.apiUrl + 'maturity/questions?fill=' + fillEmpty;
 
     if (!!groupingId) {
       url = url + '&groupingId=' + groupingId;
@@ -231,6 +231,14 @@ export class MaturityService {
   getGroupingQuestions(groupingId: Number) {
     return this.http.get(this.configSvc.apiUrl
       + 'maturity/questions/grouping?groupingId=' + groupingId);
+  }
+
+  /**
+   * Asks the API for 'bonus' (SSG) questions.
+   */
+  getBonusQuestionList(bonusModelId: number) {
+    return this.http.get(this.configSvc.apiUrl
+      + 'maturity/questions/bonus?m=' + bonusModelId);
   }
 
   /**
