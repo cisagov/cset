@@ -172,9 +172,16 @@
                     [matTooltip]="t('buttons.collapse all')" [aria-label]="t('buttons.collapse all')">
                     <i class="fas fa-compress-alt" style="color: white"></i>
                 </button>
-                <button class="btn background-1 cie-questions-header-expand-button-radius" (click)="expandAll(true, 'Phase')" 
+                <!-- <button class="btn background-1 cie-questions-header-expand-button-radius" (click)="expandAll(true, 'Phase')" 
                     [matTooltip]="t('buttons.expand all')" [aria-label]="t('buttons.expand all')">
                     <i class="fas fa-expand-alt" style="color: white"></i>
+                </button> -->
+                <button class="btn background-1 cie-questions-header-collapse-button-radius cie-questions-header-expand-button-radius"
+                    (click)="expandAll(true, 'Phase')" [matTooltip]="t('buttons.expand all')" [aria-label]="t('buttons.expand all')">
+                    <i class="fas fa-expand-alt" style="color: white"></i>
+                </button>
+                <button class="btn background-1 cie-questions-header-expand-button-radius" (click)="showFilterDialog()">
+                    <i class="cset-icons-filter" [matTooltip]="t('buttons.filter')" [aria-label]="t('buttons.filter')"></i>
                 </button>
             </div>    
         </div>

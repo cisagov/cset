@@ -181,7 +181,6 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
     var r = scrollTarget.split(',').find(x => x.startsWith('R:'))?.replace('R:', '');
     let q = scrollTarget.split(',').find(x => x.startsWith('Q:'))?.replace('Q:', '');
 
-
     // NEED TO DETERMINE WHICH GROUP TO EXPAND
       // // expand the question's group
       // var groupToExpand = this.findGroupingById(Number(g), this.groupings);

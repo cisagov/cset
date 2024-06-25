@@ -21,9 +21,9 @@
   SOFTWARE.
 -------------------------->
 <div *transloco="let t" class="question-group mb-3" style="margin-bottom: 0;">
-    <!-- Hides the ISE CORE+ only sub cats unless they need to be shown -->
     <ng-container *ngIf="myGrouping != null && myGrouping.title != 'General'">
-        <div *ngIf="assessSvc.applicationMode == 'F'" class="subcat-header" [class.flat-bottom]="myGrouping.expanded" (click)="toggleExpansion()"
+        <div *ngIf="assessSvc.applicationMode == 'F'"  [id]="'maturity-questions-cie-' + myGrouping.groupingID"
+            class="subcat-header" [class.flat-bottom]="myGrouping.expanded" (click)="toggleExpansion()"
             (keydown.Spacebar)="toggleExpansion()" (keydown.Enter)="toggleExpansion()"
             [attr.aria-expanded]="myGrouping.expanded">
             <div class="sub-head-1" tabindex="0">
@@ -66,7 +66,7 @@
 
         </div>
 
-        <div class="subcat-question-list" style="padding: 1em;" 
+        <div class="subcat-question-list" style="padding: 1em;"
             [class.display-none]="!myGrouping.expanded && assessSvc.applicationMode == 'F'">
             <div *ngFor="let q of myGrouping.questions" id="{{'question-' + q.questionId}}" class="mb-3"
                 [class.div-shield]="!shouldIShow(q)" 
@@ -118,7 +118,10 @@
                         <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
 
                         <div *ngIf="q.questionType == 'Maturity'">
-                            <app-question-extras [myQuestion]="q" [myOptions]="options"></app-question-extras>
+                            <div *ngIf="assessSvc.applicationMode == 'P' || myGrouping.expanded">
+                                <app-question-extras [myQuestion]="q" [myOptions]="options"></app-question-extras>
+
+                            </div>
                             
                             <textarea id="{{'freeResponse-q-' + q.questionId}}" class="form-control mb-2"
                                 [style]="('width: 100%; min-height: 40px; max-height: ' + summaryBoxMax + 'px')"

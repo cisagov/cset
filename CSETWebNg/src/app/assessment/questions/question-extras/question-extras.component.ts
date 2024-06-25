@@ -228,7 +228,6 @@ export class QuestionExtrasComponent implements OnInit {
     if (this.assessSvc.usesMaturityModel('CIE')) {
       this.myQuestion.comment = this.cieSvc.applyContactAndEndTag(e.target.value, '\n- - End of Comment - -\n');
       this.cieSvc.commentMap.set(this.myQuestion.questionId, this.myQuestion.comment);
-      console.log('comment saved')
     }
     else {
       this.answer.comment = e.target.value;
@@ -253,7 +252,6 @@ export class QuestionExtrasComponent implements OnInit {
     if (this.assessSvc.usesMaturityModel('CIE')) {
       this.myQuestion.feedback = this.cieSvc.applyContactAndEndTag(e.target.value, '\n- - End of Feedback - -\n');
       this.cieSvc.feedbackMap.set(this.myQuestion.questionId, this.myQuestion.feedback);
-      console.log('feedback saved')
     }
     else {
       this.myQuestion.feedback = e.target.value;

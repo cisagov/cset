@@ -2596,7 +2596,8 @@ namespace CSETWebCore.Business.Reports
                                     MarkForReview = question.MarkForReview,
                                     MatQuestionId = question.QuestionId,
                                     FreeResponseText = question.FreeResponseAnswer,
-                                    Documents = docDictionary[question.QuestionId]
+                                    Documents = docDictionary[question.QuestionId],
+                                    IsDeficient = false
                                 };
 
                                 if (question.Answer == "N")
@@ -2643,7 +2644,8 @@ namespace CSETWebCore.Business.Reports
                                     MarkForReview = question.MarkForReview,
                                     MatQuestionId = question.QuestionId,
                                     FreeResponseText = question.FreeResponseAnswer,
-                                    Documents = docDictionary[question.QuestionId]
+                                    Documents = docDictionary[question.QuestionId],
+                                    IsDeficient = false
                                 };
 
                                 if (question.Answer == "N")

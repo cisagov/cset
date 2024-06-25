@@ -384,19 +384,19 @@ export class NavTreeService {
   }
 
   /**
-   * 
+   * retains CIE Tutorial and Example section states between tree builds
    */
   applyCieToCStates() {
     let node = this.findInTree(this.tocControl.dataNodes, 'tutorial-cie');
 
-    if (!this.cieSvc.tutorialExpanded) {
+    if (this.cieSvc.tutorialExpanded == null || !this.cieSvc.tutorialExpanded) {
       if (node != null) this.tocControl.collapse(node);
     }
     else if (node != null) this.tocControl.expand(node);
 
     node = this.findInTree(this.tocControl.dataNodes, 'cie-example');
 
-    if (!this.cieSvc.exampleExpanded) {
+    if (this.cieSvc.exampleExpanded == null || !this.cieSvc.exampleExpanded) {
       if (node != null) this.tocControl.collapse(node);
     }
     else if (node != null) this.tocControl.expand(node);
