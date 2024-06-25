@@ -141,11 +141,20 @@ export class PageVisibilityService {
         show = show && !this.standardAny(c);
       }
 
+
       // Look for a maturity target level greater than X
       if (c.startsWith('TARGET-LEVEL-GT:')) {
         let target = c.substring(c.indexOf(':') + 1);
         show = show && this.assessSvc.assessment.maturityModel.maturityTargetLevel > Number.parseInt(target);
       }
+
+
+      // Determine if a Sector-Specific Goal is applicable
+      if (c == 'SSG-ANY') {
+        show = show && this.assessSvc.assessment.sectorId == 19;
+      }
+
+
 
       if (c == ('SHOW-FEEDBACK')) {
         show = show && this.configSvc.behaviors.showFeedback;
