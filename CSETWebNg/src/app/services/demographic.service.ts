@@ -28,6 +28,7 @@ import { Demographic } from '../models/assessment-info.model';
 import { AuthenticationService } from './authentication.service';
 import { FileUploadClientService } from './file-client.service';
 import { AssessmentService } from './assessment.service';
+import { BehaviorSubject } from 'rxjs';
 
 
 const headers = {
@@ -40,7 +41,7 @@ export class DemographicService {
   apiUrl: string;
   id: number;
   shortLivedToken: any;
-
+  
 
   constructor(
     private http: HttpClient,
@@ -87,6 +88,9 @@ export class DemographicService {
    * @param demographic
    */
   updateDemographic(demographic: Demographic) {
+    this.assessSvc.assessment.sectorId = demographic.sectorId;
+    this.assessSvc.assessmentStateChanged.next(126);
+    
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
       .subscribe(() => {
         if (this.configSvc.cisaAssessorWorkflow) {

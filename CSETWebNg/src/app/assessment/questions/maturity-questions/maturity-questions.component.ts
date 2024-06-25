@@ -39,6 +39,8 @@ import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { CompletionService } from '../../../services/completion.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { DemographicService } from '../../../services/demographic.service';
+import { DemographicIodService } from '../../../services/demographic-iod.service';
 
 @Component({
   selector: 'app-maturity-questions',
@@ -68,6 +70,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   constructor(
     public assessSvc: AssessmentService,
+    public demoSvc: DemographicService,
+    public demoIodSvc: DemographicIodService,
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
@@ -167,20 +171,18 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.groupings = null;
 
 
+    // determine which endpoint to call to get the question list
+    var obsGetQ = this.maturitySvc.getQuestionsList(false);
 
-    var lll = this.maturitySvc.getQuestionsList(false);
-
-    console.log(this.groupingId);
     if (this.groupingId?.toLowerCase() == 'bonus') {
-      const bonusModelId = 18; // RKWTODO:
-      lll = this.maturitySvc.getBonusQuestionList(bonusModelId);
+
+      console.log('AIA', this.assessSvc.assessment );
+
+      const bonusModelId = 18; // RKWTODO: figure out which bonus model to retrieve
+      obsGetQ = this.maturitySvc.getBonusQuestionList(bonusModelId);
     }
 
-
-
-
-
-    lll.subscribe(
+    obsGetQ.subscribe(
       (response: MaturityQuestionResponse) => {
         this.modelId = response.modelId;
         this.modelName = response.modelName;

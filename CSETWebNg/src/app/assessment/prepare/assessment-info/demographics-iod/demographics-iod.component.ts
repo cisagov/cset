@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DemographicIodService } from '../../../../services/demographic-iod.service';
 import { DemographicsIod } from '../../../../models/demographics-iod.model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
@@ -21,6 +21,8 @@ export class DemographicsIodComponent implements OnInit {
   @Input() events: Observable<void>;
 
   private eventsSubscription: any;
+
+  sectorChanged: BehaviorSubject<boolean> = new BehaviorSubject(true);
   
   /**
    * The principal model for this page
@@ -73,6 +75,8 @@ export class DemographicsIodComponent implements OnInit {
       this.demoSvc.getSubsectors(this.demographicData.sector).subscribe((data: any[]) => {
         this.demographicData.listSubsectors = data;
       });
+      this.assessSvc.assessment.sectorId = this.demographicData.sector;
+      this.assessSvc.assessmentStateChanged.next(126);
     }
   }
 
