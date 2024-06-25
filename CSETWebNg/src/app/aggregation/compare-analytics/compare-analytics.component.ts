@@ -50,7 +50,7 @@ export class CompareAnalyticsComponent implements OnInit {
       this.type = params['type'];
     }
     );
-    this.tab = 'SUMMARY';
+    this.tab = this.type === 'maturity-based' ? 'INDIVIDUAL' : 'SUMMARY';
   }
 
   /**
