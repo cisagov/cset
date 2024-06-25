@@ -52,12 +52,19 @@
       <hr class="w-100 hr-sal mt-1" />
 
       <div class="mt-0 mr-0 d-flex flex-column justify-content-start flex-11a">
-        <div [ngSwitch]="tab" class="d-flex flex-column justify-content-start flex-00a">
+        <div *ngIf="this.type === 'maturity-based'; else standardsBased" [ngSwitch]="tab"
+          class="d-flex flex-column justify-content-start flex-00a">
+          <app-compare-maturity-summary *ngSwitchCase="'SUMMARY'"></app-compare-maturity-summary>
+          <app-compare-maturity-missed *ngSwitchCase="'MISSED'"></app-compare-maturity-missed>
+          <app-compare-maturity-individual *ngSwitchCase="'INDIVIDUAL'"></app-compare-maturity-individual>
+          <app-compare-maturity-bestworst *ngSwitchCase="'BESTWORST'"></app-compare-maturity-bestworst>
+        </div>
+        <ng-template #standardsBased [ngSwitch]="tab">
           <app-compare-summary *ngSwitchCase="'SUMMARY'"></app-compare-summary>
           <app-compare-missed *ngSwitchCase="'MISSED'"></app-compare-missed>
           <app-compare-individual *ngSwitchCase="'INDIVIDUAL'"></app-compare-individual>
           <app-compare-bestworst *ngSwitchCase="'BESTWORST'"></app-compare-bestworst>
-        </div>
+        </ng-template>
       </div>
     </div>
 
