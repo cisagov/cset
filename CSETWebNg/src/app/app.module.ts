@@ -254,7 +254,6 @@ import { CompareSummaryComponent } from './aggregation/compare-analytics/standar
 import { CompareMissedComponent } from './aggregation/compare-analytics/standards-based/compare-missed/compare-missed.component';
 import { CompareIndividualComponent } from './aggregation/compare-analytics/standards-based/compare-individual/compare-individual.component';
 import { CompareBestworstComponent } from './aggregation/compare-analytics/standards-based/compare-bestworst/compare-bestworst.component';
-import { CompareMaturitySummaryComponent } from './aggregation/compare-analytics/maturity-based/compare-summary/compare-summary.component';
 import { CompareMaturityMissedComponent } from './aggregation/compare-analytics/maturity-based/compare-missed/compare-missed.component';
 import { CompareMaturityIndividualComponent } from './aggregation/compare-analytics/maturity-based/compare-individual/compare-individual.component';
 import { CompareMaturityBestworstComponent } from './aggregation/compare-analytics/maturity-based/compare-bestworst/compare-bestworst.component';
@@ -901,7 +900,6 @@ import { ReportListMvraComponent } from './assessment/results/reports/report-lis
     CompareMissedComponent,
     CompareIndividualComponent,
     CompareBestworstComponent,
-    CompareMaturitySummaryComponent,
     CompareMaturityMissedComponent,
     CompareMaturityIndividualComponent,
     CompareMaturityBestworstComponent,
