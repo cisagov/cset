@@ -286,7 +286,7 @@ const appRoutes: Routes = [
       },
       { path: 'alias-assessments/:id', component: AliasAssessmentsComponent },
       { path: 'aggregation-detail/:id', component: AggregationDetailComponent },
-      { path: 'compare-analytics/:id', component: CompareAnalyticsComponent },
+      { path: 'compare-analytics/:id/:type', component: CompareAnalyticsComponent },
       { path: 'trend-analytics/:id', component: TrendAnalyticsComponent },
 
       { path: 'importModule', component: ImportComponent },
@@ -369,24 +369,27 @@ const appRoutes: Routes = [
               { path: 'tutorial-imr', component: TutorialImrComponent },
               { path: 'tutorial-rra', component: TutorialRraComponent },
               { path: 'tutorial-cis', component: TutorialCisComponent },
-              { path: 'tutorial-cpg', component: TutorialCpgComponent},
-              { path: 'tutorial-mvra', component: TutorialMvraComponent},
-              { path: 'tutorial-cie', component: TutorialCieComponent,
+              { path: 'tutorial-cpg', component: TutorialCpgComponent },
+              { path: 'tutorial-mvra', component: TutorialMvraComponent },
+              {
+                path: 'tutorial-cie', component: TutorialCieComponent,
                 children: [
-                { path: 'quick-facts-cie', component: QuickFactsCieComponent },
-                { path: 'overview-cie', component: OverviewCieComponent },
-                { path: 'background-cie', component: BackgroundCieComponent },
-                { path: 'principles-cie', component: PrinciplesCieComponent },
-                { path: 'lifecycle-cie', component: LifecycleCieComponent },
+                  { path: 'quick-facts-cie', component: QuickFactsCieComponent },
+                  { path: 'overview-cie', component: OverviewCieComponent },
+                  { path: 'background-cie', component: BackgroundCieComponent },
+                  { path: 'principles-cie', component: PrinciplesCieComponent },
+                  { path: 'lifecycle-cie', component: LifecycleCieComponent },
                 ]
               },
-              { path: 'cie-example', 
-                component: CieExampleComponent, 
+              {
+                path: 'cie-example',
+                component: CieExampleComponent,
                 canActivate: [AssessGuard],
                 canActivateChild: [AssessGuard],
                 children: [
                   { path: 'cie-background', component: CieBackgroundComponent },
-                  { path: 'cie-analysis', 
+                  {
+                    path: 'cie-analysis',
                     component: CieAnalysisComponent,
                     canActivate: [AssessGuard],
                     canActivateChild: [AssessGuard],
