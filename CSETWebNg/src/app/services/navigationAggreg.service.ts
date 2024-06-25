@@ -35,7 +35,7 @@ import { AggregationService } from './aggregation.service';
   providedIn: 'root'
 })
 export class NavigationAggregService {
-  useMaturity: boolean = false
+  compareType: string = "standards-based";
 
   pages = [
     {
@@ -66,8 +66,8 @@ export class NavigationAggregService {
   constructor(
     private aggregationSvc: AggregationService,
     private router: Router
-  ) { }
-
+  ) {
+  }
 
   /**
    *
@@ -120,21 +120,13 @@ export class NavigationAggregService {
       newPageIndex = newPageIndex + 1;
       showPage = this.shouldIShow(this.pages[newPageIndex].condition);
     }
-    const newPath = this.pages[newPageIndex].path.replace('{:id}', this.aggregationSvc.id().toString()).replace('{:type}', this.compareAssessmentsType());
-    this.router.navigate([newPath]);
-  }
-
-  /**
-   * Determine if we are in maturity or standards-based mode.
-   */
-  compareAssessmentsType(): string {
     this.aggregationSvc.getAssessments().subscribe({
       next: (data: any) => {
-        this.useMaturity = data.assessments[0].useMaturity
+        this.compareType = data.assessments[0].useMaturity ? "maturity-based" : "standards-based";
+        const newPath = this.pages[newPageIndex].path.replace('{:id}', this.aggregationSvc.id().toString()).replace('{:type}', this.compareType);
+        this.router.navigate([newPath]);
       }
-    })
-
-    return this.useMaturity ? 'maturity-based' : 'standards-based'
+    });
   }
 
   /**
