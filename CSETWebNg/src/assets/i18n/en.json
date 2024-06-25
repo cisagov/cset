@@ -775,38 +775,38 @@
         "sectionTitle": "ACET Reports",
         "1": {
           "title": "ACET Executive Summary",
-          "desc": "Exec summary desc"
+          "desc": "This report includes site information, maturity details for each domain and sub-domain, the inherent risk profile, and the overall cybersecurity maturity level of each domain."
         },
         "2": {
           "title": "ACET Gap Report",
-          "desc": "Gaps desc"
+          "desc": "This report includes a list of all statements that were marked as “No” during the assessment process. This report serves to identify potential deficiencies or gaps in the organization’s cybersecurity practices."
         },
         "3": {
           "title": "ACET Comments and Marked for Review",
-          "desc": "Comments desc"
+          "desc": "This document consolidates all statements that have received comments and have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
         },
         "4": {
           "title": "ACET Answered Statements",
-          "desc": "Answered desc"
+          "desc": "This report contains a list of all statements within the organization’s maturity level, which includes their answer to each statement and whether a comment was added to the statement."
         },
         "5": {
           "title": "ACET Compensating Controls",
-          "desc": "Compensating desc"
+          "desc": "This report includes a list of all statements that were marked as “Alt” during the assessment process and includes any justifications or comments that were provided."
         }
       },
       "vadr": {
         "sectionTitle": "Validated Architecture Design Review (VADR)",
         "1": {
           "title": "VADR Report",
-          "desc": "Report desc"
+          "desc": "This report contains a series of charts and tables that summarize the organization’s performance overall and by goal. The report also includes suggested areas for improvement and a list of all practices with their corresponding references."
         },
         "2": {
           "title": "VADR Deficiency Report",
-          "desc": "Deficiency desc"
+          "desc": "This report contains a list of all security practices that were marked as “No” or unanswered during the assessment process. This report serves to identify deficiencies or gaps in the organization’s cybersecurity practices and provides suggested areas for improvement."
         },
         "3": {
           "title": "VADR Open Ended Questions Report",
-          "desc": "Questions desc"
+          "desc": "This report contains a list of all open ended questions within the assessment. Users can filter the report to show all questions or only show questions that have received answers."
         }
       },
       "ise": {
