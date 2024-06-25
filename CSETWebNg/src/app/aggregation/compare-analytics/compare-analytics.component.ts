@@ -22,12 +22,10 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { Router } from '../../../../node_modules/@angular/router';
 import { AggregationService } from '../../services/aggregation.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
-import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
@@ -36,20 +34,22 @@ import { ConfigService } from '../../services/config.service';
   host: { class: 'd-flex flex-column flex-11a trend-table-width' }
 })
 export class CompareAnalyticsComponent implements OnInit {
-
+  type: string;
   tab: string;
 
   constructor(
     public aggregationSvc: AggregationService,
     public route: ActivatedRoute,
     public dialog: MatDialog,
-    private authSvc: AuthenticationService,
     public navAggSvc: NavigationAggregService,
     public configSvc: ConfigService,
-    private router: Router,
   ) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.type = params['type'];
+    }
+    );
     this.tab = 'SUMMARY';
   }
 
