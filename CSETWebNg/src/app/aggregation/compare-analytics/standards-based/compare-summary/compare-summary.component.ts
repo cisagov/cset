@@ -40,8 +40,6 @@ export class CompareSummaryComponent implements OnInit {
   chartCategoryAverage: any;
   catAvgHeight: number;
 
-  chartsMaturityCompliance: any[];
-
   assessmentColors: Map<string, string>;
 
   /**
@@ -59,8 +57,8 @@ export class CompareSummaryComponent implements OnInit {
   }
 
   populateCharts() {
-    const aggregationId = this.aggregationSvc.id();
-    var aggId: number = +localStorage.getItem("aggregationId");
+    const aggId: number = +localStorage.getItem("aggregationId");
+
     // Overall Average
     this.aggregationSvc.getOverallAverageSummary(aggId).subscribe((x: any) => {
 
@@ -116,28 +114,6 @@ export class CompareSummaryComponent implements OnInit {
       if (this.chartCategoryAverage.canvas) {
         (<HTMLElement>this.chartCategoryAverage.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
       }
-    });
-
-
-    // Maturity Compliance By Model/Domain
-    this.aggregationSvc.getAggregationMaturity(aggId).subscribe((resp: any) => {
-      let showLegend = true;
-
-      if (!resp.length) {
-        showLegend = false;
-        resp = [{
-          chartName: '',
-          labels: ['No Maturity Models Selected'],
-          datasets: [{ data: 0 }],
-          chart: null
-        }];
-      }
-
-      this.chartsMaturityCompliance = resp;
-
-      resp.forEach(x => {
-        this.buildMaturityChart(x, showLegend);
-      });
     });
   }
 
