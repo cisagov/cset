@@ -770,6 +770,96 @@
           "title": "Site Detail Report",
           "desc": "This report includes the same information as the Site Summary Report as well as a list of all network component questions and their corresponding answers."
         }
+      },
+      "acet": {
+        "sectionTitle": "ACET Reports",
+        "1": {
+          "title": "ACET Executive Summary",
+          "desc": "Exec summary desc"
+        },
+        "2": {
+          "title": "ACET Gap Report",
+          "desc": "Gaps desc"
+        },
+        "3": {
+          "title": "ACET Comments and Marked for Review",
+          "desc": "Comments desc"
+        },
+        "4": {
+          "title": "ACET Answered Statements",
+          "desc": "Answered desc"
+        },
+        "5": {
+          "title": "ACET Compensating Controls",
+          "desc": "Compensating desc"
+        }
+      },
+      "vadr": {
+        "sectionTitle": "Validated Architecture Design Review (VADR)",
+        "1": {
+          "title": "VADR Report",
+          "desc": "Report desc"
+        },
+        "2": {
+          "title": "VADR Deficiency Report",
+          "desc": "Deficiency desc"
+        },
+        "3": {
+          "title": "VADR Open Ended Questions Report",
+          "desc": "Questions desc"
+        }
+      },
+      "ise": {
+        "sectionTitle": "ISE Reports",
+        "1": {
+          "title": "ISE MERIT SCOPE REPORT (copy paste to Execution Result)",
+          "desc": "This report includes copy instructions, work performed, results of review and issues."
+        },
+        "2": {
+          "title": "ISE EXAMINATION REPORT (attach as Document in Scope Task)",
+          "desc": "This report includes results of review, statement overview, statement summary, and issues."
+        },
+        "3": {
+          "title": "ISE Answered Statements",
+          "desc": "This report includes answered statements."
+        },
+        "4": {
+          "title": "ISE Examiner Notes",
+          "desc": "This report includes examiner notes."
+        }
+      },
+      "hydro": {
+        "sectionTitle": "Hydropower Cybersecurity Valuation Framework (HYDRO)",
+        "1": {
+          "title": "Action Items Report",
+          "desc": "This report includes action items by implementation status."
+        }
+      },
+      "sd02 series": {
+        "sectionTitle": "Pipeline Security Directive (SD02 Series)",
+        "1": {
+          "title": "Answer Summary",
+          "desc": "This report indicates how each question of the Security Directive Pipeline was answered."
+        },
+        "2": {
+          "title": "Deficiency Report",
+          "desc": "This report serves to identify deficiencies or gaps to help prioritize areas to concentrate on."
+        },
+        "3": {
+          "title": "Comments and Marked for Review",
+          "desc": "This document consolidates all practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
+        }
+      },
+      "sd02 owner": {
+        "sectionTitle": "SD02 Owner Reports",
+        "1": {
+          "title": "Deficiency Report",
+          "desc": "This report serves to identify deficiencies or gaps to help prioritize areas to concentrate on."
+        },
+        "2": {
+          "title": "Comments and Marked for Review",
+          "desc": "This document consolidates all practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
+        }
       }
     },
     "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated {date}.",
