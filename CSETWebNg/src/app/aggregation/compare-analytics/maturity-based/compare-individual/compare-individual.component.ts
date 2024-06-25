@@ -24,7 +24,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../../../services/aggregation.service';
 import { ChartService } from '../../../../services/chart.service';
-import { Chart } from 'chart.js';
 import { ColorService } from '../../../../services/color.service';
 
 @Component({
@@ -36,9 +35,7 @@ import { ColorService } from '../../../../services/color.service';
 export class CompareMaturityIndividualComponent implements OnInit {
 
   answerCounts: any[] = null;
-  chartOverallComparison: Chart;
-  chartCategoryPercent: Chart;
-  sals: any;
+  chartsMaturityCompliance: any[];
 
   constructor(
     public aggregationSvc: AggregationService,
@@ -51,8 +48,8 @@ export class CompareMaturityIndividualComponent implements OnInit {
   }
 
   populateCharts() {
-    const aggregationId = this.aggregationSvc.id();
-    var aggId: number = +localStorage.getItem("aggregationId");
+    const aggId: number = +localStorage.getItem("aggregationId");
+
     // Assessment Answer Summary - tabular data
     this.aggregationSvc.getAnswerTotals(aggId).subscribe((x: any) => {
       // 
@@ -60,29 +57,36 @@ export class CompareMaturityIndividualComponent implements OnInit {
     });
 
 
-    // Overall Comparison
-    this.aggregationSvc.getOverallComparison().subscribe((x: any) => {
+    // Maturity Compliance By Model/Domain
+    this.aggregationSvc.getAggregationMaturity(aggId).subscribe((resp: any) => {
+      let showLegend = true;
 
-      // apply visual attributes
-      x.datasets.forEach((ds: any) => {
-        ds.backgroundColor = this.colorSvc.getColorForAssessment(ds.label);
-        ds.borderColor = ds.backgroundColor;
+      if (!resp.length) {
+        showLegend = false;
+        resp = [{
+          chartName: '',
+          labels: ['No Maturity Models Selected'],
+          datasets: [{ data: 0 }],
+          chart: null
+        }];
+      }
+
+      this.chartsMaturityCompliance = resp;
+
+      resp.forEach(x => {
+        this.buildMaturityChart(x, showLegend);
       });
+    });
+  }
 
-      this.chartOverallComparison = this.chartSvc.buildHorizBarChart('canvasOverallComparison', x, true, true);
+  buildMaturityChart(c, showLegend) {
+    c.datasets.forEach(ds => {
+      ds.backgroundColor = this.colorSvc.getColorForAssessment(ds.label);
     });
 
 
-    // Comparison of Security Assurance Levels (SAL)
-    this.aggregationSvc.getMaturitySalComparison().subscribe((x: any) => {
-      this.sals = x;
-    });
-
-
-    // Category Percentage Comparison
-    this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
-      this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
-      (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
-    });
+    setTimeout(() => {
+      c.chart = this.chartSvc.buildHorizBarChart('canvasMaturityBars-' + c.chartName, c, showLegend, true)
+    }, 1000);
   }
 }

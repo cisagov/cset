@@ -49,58 +49,18 @@
   </div>
 </div>
 
-<div class="chart d-flex flex-column flex-00a">
-  <h3>Overall Comparison</h3>
-  <div *ngIf="chartOverallComparison == null">
+<div class="chart d-flex flex-column flex-00a mb-5">
+  <h3>
+    Domain-Level Compliance
+  </h3>
+  <div *ngIf="!chartsMaturityCompliance">
     <div class="spinner-container" style="margin: 2em auto">
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <canvas id="canvasOverallComparison" style="max-height: 50rem;">{{ chartOverallComparison }}</canvas>
-</div>
-
-<div class=" chart d-flex flex-column flex-00a">
-  <h3>Comparison of Security Assurance Levels</h3>
-  <div *ngIf="sals == null">
-    <div class="spinner-container" style="margin: 2em auto">
-      <div style="max-width: 50px; max-height: 50px;"></div>
-    </div>
-  </div>
-
-  <div class="d-table">
-    <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell border-bottom">{{ a.alias }}</div>
-    </div>
-    <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Very High'">Very
-        High</div>
-    </div>
-    <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'High'">High
-      </div>
-    </div>
-    <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Moderate'">
-        Moderate</div>
-    </div>
-    <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Low'">Low</div>
-    </div>
-    <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'None'">None
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="chart d-flex flex-column flex-00a">
-  <h3>Category Percent Comparisons</h3>
-  <div *ngIf="chartCategoryPercent == null">
-    <div class="spinner-container" style="margin: 2em auto">
-      <div style="max-width: 50px; max-height: 50px;"></div>
-    </div>
-  </div>
-  <div class="chart-container" style="position: relative; width: 100%">
-    <canvas id="canvasCategoryPercent">{{ chartCategoryPercent }}</canvas>
+  <div *ngFor="let i of chartsMaturityCompliance" class="my-4">
+    <h5>{{i.chartName}}</h5>
+    <canvas id="{{ 'canvasMaturityBars-' + i.chartName }}"
+      style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ i }}</canvas>
   </div>
 </div>
