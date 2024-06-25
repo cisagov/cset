@@ -58,7 +58,7 @@ export class ConfigService {
 
   onlineUrl: string;
   analyticsUrl: string = "http://localhost:5278/";
-  
+
   csetGithubApiUrl: string;
   helpContactEmail: string;
   helpContactPhone: string;
@@ -172,18 +172,14 @@ export class ConfigService {
 
 
     const localStorageApiUrl = localStorage.getItem('apiUrl');
+    const localStorageLibraryUrl = localStorage.getItem('libraryUrl');
     if (!!localStorageApiUrl) {
       this.apiUrl = localStorageApiUrl + '/' + this.config.api.apiIdentifier + '/';
       this.docUrl = localStorageApiUrl + '/' + this.config.api.documentsIdentifier + '/';
-      this.libraryUrl = localStorageApiUrl + '/library/';
-      this.refDocUrl = this.libraryUrl + 'doc/';
     } else {
       this.apiUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/';
       this.docUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.documentsIdentifier + '/';
-      this.libraryUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/library/';
-      this.refDocUrl = this.libraryUrl + 'doc/';
     }
-
 
     this.appUrl = appProtocol + this.config.app.host + appPort;
     this.analyticsUrl = "http://localhost:5278/";
@@ -191,15 +187,21 @@ export class ConfigService {
     this.helpContactPhone = this.config.helpContactPhone;
     this.csetGithubApiUrl = this.config.csetGithubApiUrl;
 
-     // configure the reference document URL if the "library" property is defined
-     const rl = this.config.library;
-     if (!!rl) {
-       const rlProtocol = rl.protocol + '://';
-       const rlPort = !!rl.port ? ':' + rl.port : '';
-       this.libraryUrl = rlProtocol + rl.host + rlPort + '/' + (rl.apiIdentifier ?? 'api') + '/library/'
-       this.refDocUrl = this.libraryUrl + 'doc/';
-     }
- 
+    // configure the reference document URL if the "library" property is defined
+    // or if passed in as query param and stored as local storage variable. Local storage should
+    // take precedence over the config file, since Electron uses it to dynamically set the port.
+    const rl = this.config.library;
+    if (!!localStorageLibraryUrl) {
+      this.libraryUrl = localStorageLibraryUrl + '/' + this.config.api.apiIdentifier + '/library/';
+    } else if (!!rl) {
+      const rlProtocol = rl.protocol + '://';
+      const rlPort = !!rl.port ? ':' + rl.port : '';
+      this.libraryUrl = rlProtocol + rl.host + rlPort + '/' + (rl.apiIdentifier ?? 'api') + '/library/'
+    } else {
+      this.libraryUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/library/';
+    }
+
+    this.refDocUrl = this.libraryUrl + 'doc/';
 
     this.galleryLayout = this.config.galleryLayout?.toString() || 'CSET';
     this.mobileEnvironment = this.config.mobileEnvironment;
@@ -340,7 +342,7 @@ export class ConfigService {
             // change favicon and title
             const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
             link.href = 'assets/icons/favicon_cie.ico?app=cie1';
-  
+
             var title = this.document.querySelector('title');
             title.innerText = 'CSET-CIE';
           }
