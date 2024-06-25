@@ -85,6 +85,7 @@ namespace CSETWebCore.Model.Maturity
         public int MatQuestionId { get; set; }
         public string FreeResponseText { get; set; }
         public List<DocumentWithAnswerId> Documents { get; set; }
+        public bool IsDeficient { get; set; }
     }
 
 }

@@ -285,4 +285,146 @@ export class QuestionFilterService {
       d.visible = (!!d.categories.find(c => c.visible));
     });
   }
+
+  // cie filter for reports
+  /**
+   * This is an overload of evaluateFilters, which takes a list
+   * of Domains.  This version wraps the category list in
+   * a dummy Domain and calls evaluateFilters.
+   * @param categories 
+   */
+  public evaluateFiltersForReportCategories(categories: any[]) {
+    var dummyDomain: Domain = {
+      categories: [],
+      displayText: '',
+      domainName: '',
+      domainText: '',
+      isDomain: true,
+      setName: '',
+      setShortName: '',
+      visible: true
+    };
+    dummyDomain.categories = categories;
+
+    var dummyDomainList = [];
+    dummyDomainList.push(dummyDomain);
+
+    return this.evaluateReportFilters(dummyDomainList);
+  }
+
+
+  /**
+   * Sets the Visible property on all Questions, Subcategories and Categories
+   * based on the current filter settings.
+   * @param cats
+   */
+  public evaluateReportFilters(domains: any[]) {
+    if (!domains) {
+      return;
+    }
+
+    const filterStringLowerCase = this.filterSearchString.toLowerCase();
+
+    domains.forEach(d => {
+      d.assesmentFactor.forEach(c => { // categories / principles
+        c.questions.forEach(q => {
+          // start with false, then set true if possible
+          q.isDeficient = false;
+
+          // If search string is specified, any questions that don't contain the string
+          // are not shown.  No need to check anything else.
+          if (this.filterSearchString.length > 0
+            && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
+            return;
+          }
+
+          // evaluate answers
+          if (this.answerOptions.includes(q.answer) && this.showFilters.includes(q.answer)) {
+            q.isDeficient = true;
+          }
+
+          // consider null answers as 'U'
+          if ((q.answer == null || q.answer == 'U') && this.showFilters.includes('U')) {
+            q.isDeficient = true;
+          }
+
+          // evaluate other features
+          if (this.showFilters.includes('C') && q.comment && q.comment.length > 0) {
+            q.isDeficient = true;
+          }
+
+          if (this.showFilters.includes('FB') && q.feedback && q.feedback.length > 0) {
+            q.isDeficient = true;
+          }
+
+          if (this.showFilters.includes('M') && q.markForReview) {
+            q.isDeficient = true;
+          }
+
+          if (this.showFilters.includes('O') && q.hasObservation) {
+            q.isDeficient = true;
+          }
+
+          if (this.showFilters.includes('FR') && q.freeResponseAnswer && q.freeResponseAnswer.length > 0) {
+            q.isDeficient = true;
+          }
+        });
+
+        c.components.forEach(s => { // subCategories / phases
+          s.questions.forEach(q => {
+            // start with false, then set true if possible
+            q.isDeficient = false;
+
+            // If search string is specified, any questions that don't contain the string
+            // are not shown.  No need to check anything else.
+            if (this.filterSearchString.length > 0
+              && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
+              return;
+            }
+
+            // evaluate answers
+            if (this.answerOptions.includes(q.answer) && this.showFilters.includes(q.answer)) {
+              q.isDeficient = true;
+            }
+
+            // consider null answers as 'U'
+            if ((q.answer == null || q.answer == 'U') && this.showFilters.includes('U')) {
+              q.isDeficient = true;
+            }
+
+            // evaluate other features
+            if (this.showFilters.includes('C') && q.comment && q.comment.length > 0) {
+              q.isDeficient = true;
+            }
+
+            if (this.showFilters.includes('FB') && q.feedback && q.feedback.length > 0) {
+              q.isDeficient = true;
+            }
+
+            if (this.showFilters.includes('M') && q.markForReview) {
+              q.isDeficient = true;
+            }
+
+            if (this.showFilters.includes('O') && q.hasObservation) {
+              q.isDeficient = true;
+            }
+
+            if (this.showFilters.includes('FR') && q.freeResponseAnswer && q.freeResponseAnswer.length > 0) {
+              q.isDeficient = true;
+            }
+          });
+
+          // evaluate subcat visiblity
+          s.isDeficient = (!!s.questions.find(q => q.isDeficient));
+        });
+
+        // evaluate category heading visibility
+        c.isDeficient = (!!c.subCategories.find(s => s.isDeficient));
+      });
+
+      // evaluate domain heading visibility
+      d.isDeficient = (!!d.categories.find(c => c.isDeficient));
+    });
+  }
+  //
 }

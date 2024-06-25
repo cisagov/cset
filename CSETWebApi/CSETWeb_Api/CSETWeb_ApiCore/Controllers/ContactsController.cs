@@ -21,6 +21,7 @@ using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using LogicExtensions;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -621,13 +622,26 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
 
             var ac = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == currentUserId && x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            // if the group has a parent, find it to append
+            int group = ac.Last_Q_Answered.Split(',').ToList().Find(x => x.StartsWith("MG:")).Replace("MG:", "").ToInt32();
+            var parentGroup = _context.MATURITY_GROUPINGS.Where(x => x.Grouping_Id == group).FirstOrDefault();
+
             if (ac == null)
             {
                 // no contact record - just do nothing
                 return Ok();
             }
 
-            return Ok(ac.Last_Q_Answered);
+            string lastQAnswered = ac.Last_Q_Answered;
+
+            // checking if this is the overall holder group (useless info) or a domain (useful)
+            if (parentGroup?.Parent_Id != null)
+            {
+                lastQAnswered += ",PG:" + parentGroup.Grouping_Id;
+            }
+
+            return Ok(lastQAnswered);
         }
     }
 }

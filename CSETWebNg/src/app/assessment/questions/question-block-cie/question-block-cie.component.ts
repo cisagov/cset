@@ -17,6 +17,7 @@ import { IssuesComponent } from '../issues/issues.component';
 import { Observation } from '../observations/observations.model';
 import { QuestionExtrasDialogComponent } from '../question-extras-dialog/question-extras-dialog.component';
 import { CieService } from '../../../services/cie.service';
+import { NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-question-block-cie',
@@ -40,7 +41,6 @@ export class QuestionBlockCieComponent implements OnInit {
   textPlaceholderNA = "Explain why this question is Not Applicable here (Optional)";
   freeResponseAnswers: Map<number, string> = new Map<number, string>();
 
-  contactInitials = "";
   freeResponseSegment = "";
   //convoBuffer = '\n- - End of Response - -\n';
 
@@ -67,7 +67,8 @@ export class QuestionBlockCieComponent implements OnInit {
     public completionSvc: CompletionService,
     public cieSvc: CieService,
     public dialog: MatDialog,
-    private observationSvc: ObservationsService
+    private observationSvc: ObservationsService,
+    private navSvc: NavigationService
   ) {
 
   }
@@ -92,11 +93,8 @@ export class QuestionBlockCieComponent implements OnInit {
 
     }
 
-    this.assessSvc.getAssessmentContacts().then((response: any) => {
-      this.contactInitials = response.contactList[0].firstName;
-    });
-
     this.showQuestionIds = false; //this.configSvc.showQuestionAndRequirementIDs();
+  
   }
 
   /**
@@ -426,20 +424,6 @@ export class QuestionBlockCieComponent implements OnInit {
    * @param observationid
    */
   addEditIssue(parentId, observationId) {
-    /* 
-    * Per the customer's requests, an Issue's title should include the main 
-    * grouping header text and the sub grouping header text.
-    * this is an attempt to re-create that data which is outside of an Issue's scope.
-    * SCUEP q's 1- 7 and CORE/CORE+ q's 1 - 10 use one domain, CORE/CORE+ q's 11+ have a different domain
-    * this checks the q's parentQuestionId to see if it's SCUEP 1 - 7 or CORE/CORE+ 1 - 10 and sets the name accordingly
-    */
-    let name = "";
-    if (this.myGrouping.questions[0].questionId <= 7674) {
-      name = ("Information Security Program, " + this.myGrouping.title);
-    } else {
-      name = ("Cybersecurity Controls, " + this.myGrouping.title);
-    }
-
     const observation: Observation = {
       question_Id: parentId,
       questionType: this.myGrouping.questions[0].questionType,
@@ -454,7 +438,7 @@ export class QuestionBlockCieComponent implements OnInit {
       recommendations: '',
       resolution_Date: null,
       vulnerabilities: '',
-      title: name,
+      title: this.myGrouping.title,
       type: null,
       risk_Area: 'Transaction',
       sub_Risk: 'Information Systems & Technology Controls',
@@ -620,13 +604,13 @@ export class QuestionBlockCieComponent implements OnInit {
   }
 
 
-  getDetails(q: Question) {
-    this.questionsSvc.getDetails(q.questionId, q.questionType).subscribe(
-      (details) => {
-        this.extras = details;
-        this.extras.questionId = q.questionId;
+  // getDetails(q: Question) {
+  //   this.questionsSvc.getDetails(q.questionId, q.questionType).subscribe(
+  //     (details) => {
+  //       this.extras = details;
+  //       this.extras.questionId = q.questionId;
 
-      });
-  }
+  //     });
+  // }
 
 }

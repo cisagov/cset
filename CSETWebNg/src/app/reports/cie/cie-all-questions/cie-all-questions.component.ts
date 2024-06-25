@@ -34,6 +34,9 @@ import { QuestionsService } from '../../../services/questions.service';
 import { CieService } from '../../../services/cie.service';
 import { FileUploadClientService } from '../../../services/file-client.service';
 import { AuthenticationService } from '../../../services/authentication.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
+import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 @Component({
   selector: 'app-cie-all-questions',
   templateUrl: './cie-all-questions.component.html',
@@ -52,6 +55,8 @@ export class CieAllQuestionsComponent {
   examLevel: string = '';
   loading: boolean = true;
 
+  filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
+
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
   constructor(
@@ -63,7 +68,9 @@ export class CieAllQuestionsComponent {
     public configSvc: ConfigService,
     public observationSvc: ObservationsService,
     public fileSvc: FileUploadClientService,
-    public authSvc: AuthenticationService
+    public authSvc: AuthenticationService,
+    private dialog: MatDialog,
+    public filterSvc: QuestionFilterService
   ) { }
 
   ngOnInit(): void {
@@ -184,5 +191,30 @@ export class CieAllQuestionsComponent {
         this.expandedOptions.set(this.phaseTitleList[i], mode);
       }
     }
+  }
+
+  /**
+   * Re-evaluates the visibility of all questions/subcategories/categories
+   * based on the current filter settings.
+   * Also re-draws the sidenav category tree, skipping categories
+   * that are not currently visible.
+   */
+  refreshQuestionVisibility() {
+    this.filterSvc.evaluateFiltersForReportCategories(this.response?.matAnsweredQuestions[0]);
+  }
+  
+  /**
+   *
+   */
+  showFilterDialog() {
+    this.filterDialogRef = this.dialog.open(QuestionFiltersComponent);
+    this.filterDialogRef.componentInstance.filterChanged.asObservable().subscribe(() => {
+      this.refreshQuestionVisibility();
+    });
+    this.filterDialogRef
+      .afterClosed()
+      .subscribe(() => {
+        this.refreshQuestionVisibility();
+      });
   }
 }
