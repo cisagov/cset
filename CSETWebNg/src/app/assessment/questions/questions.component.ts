@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ViewChild, AfterViewChecked, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewChecked, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { QuestionFiltersComponent } from "../../dialogs/question-filters/question-filters.component";
 import { QuestionResponse, Category } from '../../models/questions.model';
@@ -40,7 +40,7 @@ import { TranslocoService } from '@ngneat/transloco';
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class QuestionsComponent implements AfterViewChecked, OnInit {
+export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewInit {
   @ViewChild('questionBlock') questionBlock;
 
   categories: Category[] = null;
@@ -132,6 +132,12 @@ export class QuestionsComponent implements AfterViewChecked, OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.scrollToResumeQuestionsTarget();
+    }, 500);
+  }
+
   /**
    * Wait until the DOM is loaded so that we can scroll, if needed.
    */
@@ -155,6 +161,55 @@ export class QuestionsComponent implements AfterViewChecked, OnInit {
     const t = document.getElementById(targetID);
     if (!!t) {
       t.scrollIntoView();
+    }
+  }
+
+  /**
+   * NOT YET OPERATIONAL
+   * 
+   * If a "resume questions" target is defined, attempt to
+   * scroll to it.
+   */
+  scrollToResumeQuestionsTarget() {
+    // scroll to the target question if we have one
+    const scrollTarget = this.navSvc.resumeQuestionsTarget;
+    this.navSvc.resumeQuestionsTarget = null;
+    if (!scrollTarget) {
+      return;
+    }
+
+    var r = scrollTarget.split(',').find(x => x.startsWith('R:'))?.replace('R:', '');
+    let q = scrollTarget.split(',').find(x => x.startsWith('Q:'))?.replace('Q:', '');
+
+
+    // NEED TO DETERMINE WHICH GROUP TO EXPAND
+      // // expand the question's group
+      // var groupToExpand = this.findGroupingById(Number(g), this.groupings);
+      // if (!!groupToExpand) {
+      //   groupToExpand.expanded = true;
+      // }
+
+
+    // scroll to the question
+    let qqElement = document.getElementById(`qq${q}`);
+    if (!!qqElement) {
+      setTimeout(() => {
+        qqElement.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }, 1000);
+    }
+  }
+
+  /**
+   * Recurse grouping tree, looking for the ID
+   */
+  findGroupingById(id: number, groupings: any[]) {
+    var grp = groupings.find(x => x.groupingID == id);
+    if (!!grp) {
+      return grp;
+    }
+    for (var i = 0; i < groupings.length; i++) {
+      return this.findGroupingById(id, groupings[i].subGroupings);
     }
   }
 
