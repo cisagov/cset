@@ -61,6 +61,10 @@ export class MergeCieAnalysisComponent implements OnInit {
   assessmentCombinedFeedback = new Map();
   assessmentCombinedComment = new Map();
 
+  assessmentContacts: any = [];
+  contactsUpdated: number = 0;
+  contactsToUpdate: number = 0;
+
   assessmentIssues = new Map();
   assessmentDocuments = new Map<number, any[]>();
 
@@ -94,6 +98,9 @@ export class MergeCieAnalysisComponent implements OnInit {
   questionsProcessed: number = 0;
 
   navCounter: number = 0;
+  documentsProcessed: boolean = false;
+  issuesProcessed: boolean = false;
+
 
   constructor(
     public cieSvc: CieService,
@@ -114,9 +121,10 @@ export class MergeCieAnalysisComponent implements OnInit {
     this.assessmentIssues.clear();
     this.getPrimaryAssessDetails();
     this.getConflicts();
+    this.getContacts();
     this.getIssues();
-    this.getExistingAssessmentAnswers();
     this.getDocuments();
+    this.getExistingAssessmentAnswers();
   }
 
   getPrimaryAssessDetails() {
@@ -148,6 +156,19 @@ export class MergeCieAnalysisComponent implements OnInit {
         }
       }
     );
+  }
+
+  getContacts() {
+    let assessmentIds = [];
+
+    for (let i = 0; i < this.cieSvc.assessmentsToMerge.length; i++) {
+      assessmentIds.push(this.cieSvc.assessmentsToMerge[i]);
+    }
+
+    this.assessSvc.getAssessmentContactsById(assessmentIds).subscribe((result: any) => {
+      this.assessmentContacts = result;
+      this.contactsToUpdate = this.assessmentContacts.length;
+    });
   }
 
   getIssues() {
@@ -193,7 +214,6 @@ export class MergeCieAnalysisComponent implements OnInit {
     );
   }
 
-  
   getDocuments() {
     this.cieSvc.getDocuments().subscribe(
       (details: any) => {
@@ -254,7 +274,6 @@ export class MergeCieAnalysisComponent implements OnInit {
       }
     );
   }
-
 
   getExistingAssessmentAnswers() {
     this.assessSvc.getAssessmentToken(this.cieSvc.assessmentsToMerge[this.dataReceivedCount]).then(() => {
@@ -400,7 +419,6 @@ export class MergeCieAnalysisComponent implements OnInit {
             }
           }
   
-
           let answerToSave: Answer = {
             answerId: null,
             questionId: question.questionId,
@@ -782,7 +800,6 @@ export class MergeCieAnalysisComponent implements OnInit {
         }
     });
 
-    
   }
 
   createMergedAssessment() {
@@ -871,7 +888,6 @@ export class MergeCieAnalysisComponent implements OnInit {
                 details.assessmentName = "Merged with no conflicts";
               }
 
-
               details.facilityName = this.primaryAssessDetails.facilityName;
               details.cityOrSiteName = this.primaryAssessDetails.cityOrSiteName;
               details.stateProvRegion = this.primaryAssessDetails.stateProvRegion;
@@ -880,96 +896,114 @@ export class MergeCieAnalysisComponent implements OnInit {
               details.useMaturity = true;
               details.maturityModel = this.maturitySvc.getModel("CIE");
               this.assessSvc.updateAssessmentDetails(details);
-              // Set all of the questions "details" (answerText, comments, etc).
-              // This traverses our question list and overrides anything in there if we've
-              // picked a new answer with the merge conflict.
 
-              for (let i = 0; i < this.selectedMergeAnswers.length; i++) {
-                for (let j = 0; j < this.existingAssessmentAnswers.length; j++) {
-                  if (this.existingAssessmentAnswers[j].questionId === this.selectedMergeAnswers[i].questionId) {
-                    this.existingAssessmentAnswers[j].comment = this.selectedMergeAnswers[i].comment;
-                    this.existingAssessmentAnswers[j].feedback = this.selectedMergeAnswers[i].feedback;
-
-                    if (this.existingAssessmentAnswers[j].answerText == this.selectedMergeAnswers[i].answerText) {
-                      if (this.selectedMergeAnswers[i].freeResponseAnswer != null && this.selectedMergeAnswers[i].freeResponseAnswer != 'null') {
-                        //this.existingAssessmentAnswers[j].freeResponseAnswer = this.selectedMergeAnswers[i].freeResponseAnswer;
-                        //this.existingAssessmentAnswers[j].freeResponseAnswer += "\n" + this.selectedMergeAnswers[i].freeResponseAnswer;
-                      }
-                    }
-                    else {
-                      if (this.selectedMergeAnswers[i].freeResponseAnswer != null && this.selectedMergeAnswers[i].freeResponseAnswer != 'null') {
-                        this.existingAssessmentAnswers[j].freeResponseAnswer = this.selectedMergeAnswers[i].freeResponseAnswer;
-                      }
-                    }
-
-                    this.existingAssessmentAnswers[j].answerText = this.selectedMergeAnswers[i].answerText;
-                  }
-                }
-              }
-
-              // Send off a list of the assessment's new answers to the API to save.
-              this.questionSvc.storeAllAnswers(this.existingAssessmentAnswers).subscribe((response: any) => {
-                this.maturitySvc.getQuestionsList(false).subscribe(
-                  (questionListResponse: MaturityQuestionResponse) => {
-
-                    // Grab all the new answer_id's to save Issues to the new questions
-                    for (let i = 0; i < questionListResponse.groupings[0].subGroupings.length; i++) {
-                      for (let m = 0; m < questionListResponse.groupings[0].subGroupings[i].questions.length; m++) {
-                        let question = questionListResponse.groupings[0].subGroupings[i].questions[m];
-                        this.newAnswerIds.set(question.questionId, question.answer_Id);
-                      }
-                      for (let j = 0; j < questionListResponse.groupings[0].subGroupings[i].subGroupings.length; j++) {
-                        for (let k = 0; k < questionListResponse.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
-                          let question = questionListResponse.groupings[0].subGroupings[i].subGroupings[j].questions[k];
-                          this.newAnswerIds.set(question.questionId, question.answer_Id);
-                        }
-                      }
-                    }
-
-                    // This block uses the previous answer_Id's to persist issues on the new assessment
-                    if (this.assessmentIssues.size > 0) {
-                      const iterator = this.assessmentIssues.entries();
-                      let questionId = 0;
-
-                      for (let iter of iterator) {
-                        questionId = iter[0];
-                        let issueArray = this.assessmentIssues.get(questionId);
-                        this.saveNewIssues(questionId, issueArray);
-                      }
-                    } else {
-                      // If we dont have any issues, we can be done.
-                      this.mergeConflicts = [];
-                      
-                      this.navCounter++;
-                    }
-
-                    // This block uses the previous answer_Id's to persist documents on the new assessment
-                    if (this.assessmentDocuments.size > 0) {
-                      const iterator = this.assessmentDocuments.entries();
-                      let questionId = 0;
-
-                      for (let iter of iterator) {
-                        questionId = iter[0];
-                        let documentArray = this.assessmentDocuments.get(questionId);
-                        this.saveNewDocuments(questionId, documentArray);
-                      }
-                    } else {
-                      this.mergeConflicts = [];
-                      this.assessmentCombinedFreeResponse.clear();
-                      this.assessmentCombinedFeedback.clear();
-                      this.assessmentCombinedComment.clear();
-                      this.navCounter++;
-                    }
-                    
-                    
-                  //}
-                });
-              });
-              
+              // Add all the contacts contained in the merging assessments and save them in this new one
+              this.saveNewAssessmentContacts(0);
             });
-
-          });
         });
+    });
+  }
+
+  saveNewAssessmentContacts(num: number) {
+    this.assessSvc.createMergeContact(this.assessmentContacts[num]).subscribe(() => {
+      if (this.contactsUpdated != (this.contactsToUpdate - 1)) {
+        this.contactsUpdated++;
+        this.saveNewAssessmentContacts(this.contactsUpdated);
+      } else {
+        this.updateNewAssessmentAnswers();
+      }
+    });
+  }
+
+  updateNewAssessmentAnswers() {
+    // Set all of the questions "details" (answerText, comments, etc).
+    // This traverses our question list and overrides anything in there if we've
+    // picked a new answer with the merge conflict.
+    for (let i = 0; i < this.selectedMergeAnswers.length; i++) {
+      for (let j = 0; j < this.existingAssessmentAnswers.length; j++) {
+        if (this.existingAssessmentAnswers[j].questionId === this.selectedMergeAnswers[i].questionId) {
+          this.existingAssessmentAnswers[j].comment = this.selectedMergeAnswers[i].comment;
+          this.existingAssessmentAnswers[j].feedback = this.selectedMergeAnswers[i].feedback;
+
+          if (this.existingAssessmentAnswers[j].answerText == this.selectedMergeAnswers[i].answerText) {
+            if (this.selectedMergeAnswers[i].freeResponseAnswer != null && this.selectedMergeAnswers[i].freeResponseAnswer != 'null') {
+              //this.existingAssessmentAnswers[j].freeResponseAnswer = this.selectedMergeAnswers[i].freeResponseAnswer;
+              //this.existingAssessmentAnswers[j].freeResponseAnswer += "\n" + this.selectedMergeAnswers[i].freeResponseAnswer;
+            }
+          }
+          else {
+            if (this.selectedMergeAnswers[i].freeResponseAnswer != null && this.selectedMergeAnswers[i].freeResponseAnswer != 'null') {
+              this.existingAssessmentAnswers[j].freeResponseAnswer = this.selectedMergeAnswers[i].freeResponseAnswer;
+            }
+          }
+
+          this.existingAssessmentAnswers[j].answerText = this.selectedMergeAnswers[i].answerText;
+        }
+      }
+    }
+    
+    this.saveNewAssessmentAnswers();
+  }
+
+  saveNewAssessmentAnswers() {
+    // Send off a list of the assessment's new answers to the API to save.
+    this.questionSvc.storeAllAnswers(this.existingAssessmentAnswers).subscribe((response: any) => {
+      this.maturitySvc.getQuestionsList(false).subscribe((questionListResponse: MaturityQuestionResponse) => {
+        // Grab all the new answer_id's to save Issues to the new questions
+        for (let i = 0; i < questionListResponse.groupings[0].subGroupings.length; i++) {
+          for (let m = 0; m < questionListResponse.groupings[0].subGroupings[i].questions.length; m++) {
+            let question = questionListResponse.groupings[0].subGroupings[i].questions[m];
+            this.newAnswerIds.set(question.questionId, question.answer_Id);
+          }
+          for (let j = 0; j < questionListResponse.groupings[0].subGroupings[i].subGroupings.length; j++) {
+            for (let k = 0; k < questionListResponse.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
+              let question = questionListResponse.groupings[0].subGroupings[i].subGroupings[j].questions[k];
+              this.newAnswerIds.set(question.questionId, question.answer_Id);
+            }
+          }
+        }
+
+        // This block uses the previous answer_Id's to persist issues on the new assessment
+        if (this.assessmentIssues.size > 0) {
+          const iterator = this.assessmentIssues.entries();
+          let questionId = 0;
+
+          for (let iter of iterator) {
+            questionId = iter[0];
+            let issueArray = this.assessmentIssues.get(questionId);
+            this.saveNewIssues(questionId, issueArray);
+          }
+        } else {
+          // If we dont have any issues, we can be done.
+          this.mergeConflicts = [];
+          this.issuesProcessed = true;
+          this.navCounter++;
+        }
+
+        // This block uses the previous answer_Id's to persist documents on the new assessment
+        if (this.assessmentDocuments.size > 0) {
+          const iterator = this.assessmentDocuments.entries();
+          let questionId = 0;
+
+          for (let iter of iterator) {
+            questionId = iter[0];
+            let documentArray = this.assessmentDocuments.get(questionId);
+            this.saveNewDocuments(questionId, documentArray);
+          }
+        } else {
+          this.mergeConflicts = [];
+          this.assessmentCombinedFreeResponse.clear();
+          this.assessmentCombinedFeedback.clear();
+          this.assessmentCombinedComment.clear();
+          this.documentsProcessed = true;
+          this.navCounter++;
+        }  
+      });
+    });
+
+    if (this.issuesProcessed && this.documentsProcessed) {
+      this.navToHome();
+    }
   }
 
 }

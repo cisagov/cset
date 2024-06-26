@@ -66,6 +66,17 @@ namespace CSETWebCore.Api.Controllers
             return Ok(resp);
         }
 
+        /// <summary>
+        /// Returns contacts for the specified assessmentIds
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/contactsById")]
+        public IActionResult GetContactsForAssessmentById(int id1, int id2, int id3, int id4, int id5, int id6, int id7, int id8, int id9, int id10)
+        {
+            var contacts = _contact.GetContactsByAssessmentId(id1, id2, id3, id4, id5, id6, id7, id8, id9, id10);
+            return Ok(contacts);
+        }
 
         /// <summary>
         /// Returns the ContactDetail for the current user on the specified Assessment.
@@ -102,7 +113,36 @@ namespace CSETWebCore.Api.Controllers
             newContact.PrimaryEmail = newContact.PrimaryEmail ?? "";
 
             List<ContactDetail> details = new List<ContactDetail>(1);
-            details.Add(_contact.CreateAndAddContactToAssessment(newContact));
+            details.Add(_contact.CreateAndAddContactToAssessment(newContact, false));
+
+            ContactsListResponse resp = new ContactsListResponse
+            {
+                ContactList = details,
+                CurrentUserRole = _contact.GetUserRoleOnAssessment((int)_token.GetCurrentUserId(), assessmentId) ?? 0
+            };
+            return Ok(resp);
+        }
+
+        /// <summary>
+        /// Persists a single ContactDetail to the database during a merge.
+        /// </summary>
+        /// <param name="newContact"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/contacts/addnewmergecontact")]
+        public IActionResult CreateAndAddContactToAssessmentDuringMerge([FromBody] ContactCreateParameters newContact)
+        {
+            int assessmentId = _token.AssessmentForUser();
+            string app_code = _token.Payload(Constants.Constants.Token_Scope);
+
+            // Make sure the user is an admin on this assessment
+            _token.AuthorizeAdminRole();
+
+            newContact.AssessmentId = assessmentId;
+            newContact.PrimaryEmail = newContact.PrimaryEmail ?? "";
+
+            List<ContactDetail> details = new List<ContactDetail>(1);
+            details.Add(_contact.CreateAndAddContactToAssessment(newContact, true));
 
             ContactsListResponse resp = new ContactsListResponse
             {
