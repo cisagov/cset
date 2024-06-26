@@ -51,7 +51,7 @@ export class CompareMaturityIndividualComponent implements OnInit {
     const aggId: number = +localStorage.getItem("aggregationId");
 
     // Assessment Answer Summary - tabular data
-    this.aggregationSvc.getAnswerTotals(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getMaturityAnswerTotals(aggId).subscribe((x: any) => {
       // 
       this.answerCounts = x;
     });

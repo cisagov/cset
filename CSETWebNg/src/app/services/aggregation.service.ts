@@ -168,6 +168,10 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'analysis/getanswertotals?aggregationID=' + aggId, '');
   }
 
+  getMaturityAnswerTotals(aggId) {
+    return this.http.post(this.apiUrl + 'analysis/getmaturityanswertotals?aggregationID=' + aggId, '');
+  }
+
 
 
   ////////////////////////////////  Trend  //////////////////////////////////
@@ -231,10 +235,6 @@ export class AggregationService {
 
   getMaturityMissedQuestions() {
     return this.http.post(this.apiUrl + 'getmissedquestions', {});
-  }
-
-  getMaturitySalComparison() {
-    return this.http.post(this.apiUrl + 'analysis/salcomparison', {});
   }
 
   getMaturityBestToWorst() {
