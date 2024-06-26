@@ -27,8 +27,8 @@ export const environment = {
   apiUrl: '',
   docUrl: '',
   csetGithubApiUrl: '',
-  visibleVersion: '12.2.3.0',
-  version: '12.2.3.0',
+  visibleVersion: '12.2.4.0',
+  version: '12.2.4.0',
   helpContactEmail: '',
   helpContactPhone: ''
 };
