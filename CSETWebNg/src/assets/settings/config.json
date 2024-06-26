@@ -1,6 +1,6 @@
 {
   "NOTENODE": "Casing on config chain matters, the only item that should be changed here is the current ConfigChain value.  Once that is changed everything else should be set",
-  "currentConfigChain": ["CF"],
+  "currentConfigChain": ["CSET"],
   "defaultLang": "en",
   "isRunningAnonymous": false,
   "app": {
@@ -273,7 +273,24 @@
         "showDetails": false,
         "showGuidance": false,
         "showReferences": false
-      }
+      },
+      "answerOptions": [
+        {
+          "code": "NA",
+          "buttonLabelKey": "NA",
+          "buttonCss": "btn-na"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "No",
+          "buttonCss": "btn-no"
+        },
+        {
+          "code": "Y",
+          "buttonLabelKey": "Yes",
+          "buttonCss": "btn-yes"
+        }
+      ]
     },
     {
       "moduleName": "MVRA",

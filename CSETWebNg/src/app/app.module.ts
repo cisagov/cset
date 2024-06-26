@@ -164,6 +164,7 @@ import { KeyboardShortcutsComponent } from './dialogs/keyboard-shortcuts/keyboar
 import { LicenseComponent } from './dialogs/license/license.component';
 import { OkayComponent } from './dialogs/okay/okay.component';
 import { QuestionFiltersComponent } from './dialogs/question-filters/question-filters.component';
+import { QuestionFiltersReportsComponent } from './dialogs/question-filters-reports/question-filters-reports.component';
 import { TermsOfUseComponent } from './dialogs/terms-of-use/terms-of-use.component';
 import { AccessibilityStatementComponent } from './dialogs/accessibility-statement/accessibility-statement.component';
 import { UploadExportComponent } from './dialogs/upload-export/upload-export.component';
@@ -856,6 +857,7 @@ import { ReportListC2M2Component } from './assessment/results/reports/report-lis
     TermsOfUseComponent,
     AccessibilityStatementComponent,
     QuestionFiltersComponent,
+    QuestionFiltersReportsComponent,
     AssessmentDocumentsComponent,
     InlineParameterComponent,
     GlobalParametersComponent,
