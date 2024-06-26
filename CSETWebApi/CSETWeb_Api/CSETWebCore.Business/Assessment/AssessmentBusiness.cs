@@ -991,16 +991,25 @@ namespace CSETWebCore.Business.Assessment
             {
                 var results = (from a in _context.ANSWER
                                join f in _context.FINDING on a.Answer_Id equals f.Answer_Id
-                               join fc in _context.FINDING_CONTACT on f.Finding_Id equals fc.Finding_Id
                                where a.Assessment_Id == assessId
                                select new { a, f }).ToList();
 
                 var answerFindingPair = results.Select(x => new { x.a, x.f }).Distinct();
 
                 List<FINDING> observationList = new List<FINDING>();
+
                 foreach (var pair in answerFindingPair)
                 {
                     observationList.Add(pair.f);
+                }
+
+                foreach (var obs in observationList)
+                {
+                    var findingContact = _context.FINDING_CONTACT.Where(x => x.Finding_Id == obs.Finding_Id).ToList();
+                    if (findingContact != null)
+                    {
+                        obs.FINDING_CONTACT = findingContact;
+                    }
                 }
 
                 observationsPerAssessment.Add(new MergeObservation(assessId, observationList));

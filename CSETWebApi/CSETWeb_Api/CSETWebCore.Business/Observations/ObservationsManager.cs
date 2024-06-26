@@ -156,6 +156,12 @@ namespace CSETWebCore.Business.Observations
         {
             ObservationData fm = new ObservationData(observation, _context);
             int id = fm.Save();
+
+            // IF MERGE
+            // IF fm._webObservation.ObservationContacts > 0 AND SELECT Finding_Contact (Where x.Finding_Id == id)
+                // _context.add(fm._webObservation.ObservationContact) <-- Maybe add a new function here inside the business and not manager? Idk.
+                // _context.save()
+            // 
             return id;
         }
 
