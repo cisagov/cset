@@ -562,7 +562,7 @@ export class AssessmentService {
     if (modelName == '*' && !!this.assessment.maturityModel.modelName) {
       return true;
     }
-
+    
     return this.assessment.maturityModel.modelName.toLowerCase() === modelName.toLowerCase();
   }
 

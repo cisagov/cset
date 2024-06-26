@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CharterMismatchComponent } from '../dialogs/charter-mistmatch/charter-mismatch.component';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { TranslocoService } from '@ngneat/transloco';
 import { DateAdapter } from '@angular/material/core';
 import { ACETService } from './acet.service';
@@ -14,6 +14,8 @@ import { MaturityService } from './maturity.service';
 import { ReportService } from './report.service';
 import { Question } from '../models/questions.model';
 import { List } from 'lodash';
+import { QuestionFilterService } from './filtering/question-filter.service';
+import { QuestionFiltersReportsComponent } from '../dialogs/question-filters-reports/question-filters-reports.component';
 
 let headers = {
   headers: new HttpHeaders()
@@ -43,6 +45,8 @@ export class CieService {
   feedbackMap: Map<number, string> = new Map<number, string>();
   commentMap: Map<number, string> = new Map<number, string>();
 
+  filterDialogRef: MatDialogRef<QuestionFiltersReportsComponent>;
+
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
@@ -56,7 +60,8 @@ export class CieService {
     private authSvc: AuthenticationService,
     private dateAdapter: DateAdapter<any>,
     private tSvc: TranslocoService,
-    private reportSvc: ReportService
+    private reportSvc: ReportService,
+    private filterSvc: QuestionFilterService
   ) { }
 
   /*

@@ -2196,7 +2196,8 @@ namespace CSETWebCore.Business.Reports
                                     MarkForReview = question.MarkForReview,
                                     MatQuestionId = question.QuestionId,
                                     FreeResponseText = question.FreeResponseAnswer,
-                                    Documents = docDictionary.ContainsKey(question.QuestionId) ? docDictionary[question.QuestionId] : null
+                                    Documents = docDictionary.ContainsKey(question.QuestionId) ? docDictionary[question.QuestionId] : null,
+                                    Visible = true
                                 };
 
                                 if (question.Answer == "N")
@@ -2243,7 +2244,8 @@ namespace CSETWebCore.Business.Reports
                                     MarkForReview = question.MarkForReview,
                                     MatQuestionId = question.QuestionId,
                                     FreeResponseText = question.FreeResponseAnswer,
-                                    Documents = docDictionary.ContainsKey(question.QuestionId) ? docDictionary[question.QuestionId] : null
+                                    Documents = docDictionary.ContainsKey(question.QuestionId) ? docDictionary[question.QuestionId] : null,
+                                    Visible = true
                                 };
 
                                 if (question.Answer == "N")
@@ -2395,7 +2397,8 @@ namespace CSETWebCore.Business.Reports
                                     MarkForReview = question.MarkForReview,
                                     MatQuestionId = question.QuestionId,
                                     FreeResponseText = question.FreeResponseAnswer,
-                                    Documents = docDictionary.ContainsKey(question.QuestionId) ? docDictionary[question.QuestionId] : null
+                                    Documents = docDictionary.ContainsKey(question.QuestionId) ? docDictionary[question.QuestionId] : null,
+                                    Visible = true
                                 };
 
                                 if (question.Answer == "N")
@@ -2442,7 +2445,8 @@ namespace CSETWebCore.Business.Reports
                                     MarkForReview = question.MarkForReview,
                                     MatQuestionId = question.QuestionId,
                                     FreeResponseText = question.FreeResponseAnswer,
-                                    Documents = docDictionary.ContainsKey(question.QuestionId) ? docDictionary[question.QuestionId] : null
+                                    Documents = docDictionary.ContainsKey(question.QuestionId) ? docDictionary[question.QuestionId] : null,
+                                    Visible = true
                                 };
 
                                 if (question.Answer == "N")
@@ -2574,6 +2578,7 @@ namespace CSETWebCore.Business.Reports
                     {
                         Title = assesmentFactor.Title,
                         IsDeficient = false,
+                        AreQuestionsDeficient = false,
                         Components = new List<MaturityAnsweredQuestionsComponent>(),
                         Questions = new List<MaturityAnsweredQuestions>()
                     };
@@ -2597,7 +2602,7 @@ namespace CSETWebCore.Business.Reports
                                     MatQuestionId = question.QuestionId,
                                     FreeResponseText = question.FreeResponseAnswer,
                                     Documents = docDictionary[question.QuestionId],
-                                    IsDeficient = false
+                                    Visible = true
                                 };
 
                                 if (question.Answer == "N")
@@ -2645,7 +2650,7 @@ namespace CSETWebCore.Business.Reports
                                     MatQuestionId = question.QuestionId,
                                     FreeResponseText = question.FreeResponseAnswer,
                                     Documents = docDictionary[question.QuestionId],
-                                    IsDeficient = false
+                                    Visible = true
                                 };
 
                                 if (question.Answer == "N")
