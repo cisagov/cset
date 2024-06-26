@@ -273,7 +273,24 @@
         "showDetails": false,
         "showGuidance": false,
         "showReferences": false
-      }
+      },
+      "answerOptions": [
+        {
+          "code": "NA",
+          "buttonLabelKey": "NA",
+          "buttonCss": "btn-na"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "No",
+          "buttonCss": "btn-no"
+        },
+        {
+          "code": "Y",
+          "buttonLabelKey": "Yes",
+          "buttonCss": "btn-yes"
+        }
+      ]
     },
     {
       "moduleName": "MVRA",

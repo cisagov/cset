@@ -100,6 +100,11 @@ body {
   height: auto;
 }
 
+.Filter {
+  width: 15px;
+  height: auto;
+}
+
 .WarningTriangle {
   width: 15px;
   height: auto;
@@ -2149,7 +2154,7 @@ div.spinner-size-50 {
 
 /////////// custom checkbox and radio styles
 
-$secondary-color: #777;
+$secondary-color: #094997;
 
 .checkbox-custom,
 .radio-custom {
@@ -2220,4 +2225,31 @@ $secondary-color: #777;
   background-color: lighten($secondary-color, 35%);
 }
 
+//
+
+.btn-secondary {
+  background-color: #d9d9d9;
+  color: #262626;
+  height: fit-content;
+}
+
+.btn-secondary:hover {
+  background-color: $secondary-color;
+  border-color: $secondary-color;
+  color: white;
+  fill: white;
+}
+
+.btn-secondary > Label {
+  font-weight: 500;
+}
+
+.btn-secondary:hover > Label {
+  color: white;
+  fill: white;
+}
+
+.btn-secondary:disabled {
+  fill: white;
+}
 //////////////////////////////////////////////////////////////////

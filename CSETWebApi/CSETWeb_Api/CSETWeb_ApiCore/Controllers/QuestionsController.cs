@@ -507,7 +507,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="obs"></param>
         [HttpPost]
         [Route("api/AnswerSaveObservation")]
-        public IActionResult SaveObservation([FromBody] Observation obs, [FromQuery] bool cancel = false)
+        public IActionResult SaveObservation([FromBody] Observation obs, [FromQuery] bool cancel = false, [FromQuery] bool merge = false)
         {
             int assessmentId = _token.AssessmentForUser();
             var fm = new ObservationsManager(_context, assessmentId);
@@ -519,7 +519,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            var id = fm.UpdateObservation(obs);
+            var id = fm.UpdateObservation(obs, merge);
 
             return Ok(id);
         }
@@ -542,7 +542,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            var id = fm.UpdateObservation(obs);
+            var id = fm.UpdateObservation(obs, false);
 
             return Ok(id);
         }

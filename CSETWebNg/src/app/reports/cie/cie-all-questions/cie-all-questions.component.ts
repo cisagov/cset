@@ -35,8 +35,9 @@ import { CieService } from '../../../services/cie.service';
 import { FileUploadClientService } from '../../../services/file-client.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
+import { QuestionFiltersReportsComponent } from '../../../dialogs/question-filters-reports/question-filters-reports.component';
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
+
 @Component({
   selector: 'app-cie-all-questions',
   templateUrl: './cie-all-questions.component.html',
@@ -55,7 +56,7 @@ export class CieAllQuestionsComponent {
   examLevel: string = '';
   loading: boolean = true;
 
-  filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
+  filterDialogRef: MatDialogRef<QuestionFiltersReportsComponent>;
 
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
@@ -70,7 +71,7 @@ export class CieAllQuestionsComponent {
     public fileSvc: FileUploadClientService,
     public authSvc: AuthenticationService,
     private dialog: MatDialog,
-    public filterSvc: QuestionFilterService
+    private filterSvc: QuestionFilterService
   ) { }
 
   ngOnInit(): void {
@@ -79,7 +80,6 @@ export class CieAllQuestionsComponent {
     this.cieSvc.getCieAllQuestions().subscribe(
       (r: any) => {
         this.response = r;
-        console.log(this.response)
         // goes through domains
         for (let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
           let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
@@ -199,22 +199,22 @@ export class CieAllQuestionsComponent {
    * Also re-draws the sidenav category tree, skipping categories
    * that are not currently visible.
    */
-  refreshQuestionVisibility() {
-    this.filterSvc.evaluateFiltersForReportCategories(this.response?.matAnsweredQuestions[0]);
+  refreshQuestionVisibility(matLevel: number) {
+    this.filterSvc.evaluateFiltersForReportCategories(this.response?.matAnsweredQuestions[0], matLevel);
   }
   
   /**
    *
    */
-  showFilterDialog() {
-    this.filterDialogRef = this.dialog.open(QuestionFiltersComponent);
+  showFilterDialog(matLevel: number) {
+    this.filterDialogRef = this.dialog.open(QuestionFiltersReportsComponent);
     this.filterDialogRef.componentInstance.filterChanged.asObservable().subscribe(() => {
-      this.refreshQuestionVisibility();
+      this.refreshQuestionVisibility(matLevel);
     });
     this.filterDialogRef
       .afterClosed()
       .subscribe(() => {
-        this.refreshQuestionVisibility();
+        this.refreshQuestionVisibility(matLevel);
       });
   }
 }

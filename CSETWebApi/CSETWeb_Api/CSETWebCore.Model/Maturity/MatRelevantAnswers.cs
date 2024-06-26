@@ -46,6 +46,7 @@ namespace CSETWebCore.Model.Maturity
 
         public string Title { get; set; }
         public bool IsDeficient { get; set; }
+        public bool AreFactorQuestionsDeficient { get; set; }
         public List<MaturityAnsweredQuestionsAssesment> AssessmentFactors { get; set; }
     }
 
@@ -56,6 +57,7 @@ namespace CSETWebCore.Model.Maturity
         }
         public string Title { get; set; }
         public bool IsDeficient { get; set; }
+        public bool AreQuestionsDeficient { get; set; }
         public List<MaturityAnsweredQuestionsComponent> Components { get; set; }
         public List<MaturityAnsweredQuestions>? Questions { get; set; }
 
@@ -85,7 +87,7 @@ namespace CSETWebCore.Model.Maturity
         public int MatQuestionId { get; set; }
         public string FreeResponseText { get; set; }
         public List<DocumentWithAnswerId> Documents { get; set; }
-        public bool IsDeficient { get; set; }
+        public bool Visible { get; set; }
     }
 
 }
