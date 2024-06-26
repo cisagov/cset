@@ -53,7 +53,7 @@ export class CieNotApplicableComponent {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Export Not Applicable CIE-CSET - Report");
+    this.titleService.setTitle("Export Not Applicable CIE - Report");
 
     this.cieSvc.getCieNaQuestions().subscribe(
       (r: any) => {

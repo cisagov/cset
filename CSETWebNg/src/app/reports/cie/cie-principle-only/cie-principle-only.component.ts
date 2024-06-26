@@ -48,7 +48,7 @@ export class CiePrincipleOnlyComponent {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Export Principle-Scope CIE-CSET - Report");
+    this.titleService.setTitle("Export Principle-Scope CIE - Report");
 
     this.cieSvc.getCiePrincipleQuestions().subscribe(
       (r: any) => {
