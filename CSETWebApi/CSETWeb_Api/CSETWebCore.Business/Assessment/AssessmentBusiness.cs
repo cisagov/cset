@@ -991,6 +991,7 @@ namespace CSETWebCore.Business.Assessment
             {
                 var results = (from a in _context.ANSWER
                                join f in _context.FINDING on a.Answer_Id equals f.Answer_Id
+                               join fc in _context.FINDING_CONTACT on f.Finding_Id equals fc.Finding_Id
                                where a.Assessment_Id == assessId
                                select new { a, f }).ToList();
 
