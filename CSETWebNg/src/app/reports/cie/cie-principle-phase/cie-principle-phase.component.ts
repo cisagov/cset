@@ -49,7 +49,7 @@ export class CiePrinciplePhaseComponent {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Export Principle-Phase CIE-CSET - Report");
+    this.titleService.setTitle("Export Principle-Phase CIE - Report");
 
     this.cieSvc.getCieAllQuestions().subscribe(
       (r: any) => {

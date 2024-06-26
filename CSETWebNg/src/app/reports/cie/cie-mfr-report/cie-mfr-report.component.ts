@@ -83,7 +83,7 @@ export class CieMfrReportComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Marked for Review CIE-CSET - Report");
+    this.titleService.setTitle("Marked for Review CIE - Report");
     
     this.cieSvc.getCieAllMfrQuestionsWithDocuments().subscribe(
       (r: any) => {
