@@ -53,7 +53,7 @@ export class CieNotApplicableComponent {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Export Not Applicable CIE-CSET - Report");
+    this.titleService.setTitle("Export Not Applicable CIE - Report");
 
     this.cieSvc.getCieNaQuestions().subscribe(
       (r: any) => {
@@ -79,11 +79,11 @@ export class CieNotApplicableComponent {
             }
             for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
-              
+
               this.expandedOptions.set(domain?.title + '_' + subcat?.title, false);
               this.expandedOptions.set('Phase_' + domain?.title + '_' + subcat?.title, false);
               this.phaseTitleList.push('Phase_' + domain?.title + '_' + subcat?.title);
-                  
+
               // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
             }
           }
@@ -149,7 +149,7 @@ export class CieNotApplicableComponent {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
       const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.open(url, "_blank");
+      window.location.href = url;
     });
   }
 
@@ -190,7 +190,7 @@ export class CieNotApplicableComponent {
   refreshQuestionVisibility(matLevel: number) {
     this.filterSvc.evaluateFiltersForReportCategories(this.response?.matAnsweredQuestions[0], matLevel);
   }
-  
+
   /**
    *
    */

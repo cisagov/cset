@@ -186,7 +186,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras.listTabs[0];
 
 
-        // Component detail toggle 
+        // Component detail toggle
         if (this.toggleComponent == true) {
           this.toggleExtras('COMPONENT')
           this.toggleComponent = false;
@@ -209,7 +209,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Translates the level to the user's language.  
+   * Translates the level to the user's language.
    * Returns empty string if no level is present.
    */
   salLevel(level: string) {
@@ -628,7 +628,7 @@ export class QuestionExtrasComponent implements OnInit {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
       const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.open(url, "_blank");
+      window.location.href = url;
     });
   }
 
@@ -647,8 +647,8 @@ export class QuestionExtrasComponent implements OnInit {
    */
   supplementalExists() {
     return (
-      !!this.tab?.requirementsData?.supplementalInfo 
-      || !!this.myQuestion.scope 
+      !!this.tab?.requirementsData?.supplementalInfo
+      || !!this.myQuestion.scope
       || !!this.myQuestion.recommendedAction
       || !!this.myQuestion.services);
   }
@@ -824,8 +824,8 @@ formatDocumentUrl(document: ReferenceDocLink, bookmark: any) {
 
   /**
    * For CIE, where feedback can be merged with other assessments
-   * @param q 
-   * @returns 
+   * @param q
+   * @returns
    */
   getFeedback(q: Question) {
     if (this.cieSvc.feedbackMap.get(q.questionId) == null && q.feedback == null) {
