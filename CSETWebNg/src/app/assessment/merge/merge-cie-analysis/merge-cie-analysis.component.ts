@@ -777,12 +777,15 @@ export class MergeCieAnalysisComponent implements OnInit {
     issueArray.forEach((issue, index) => {
       if (issue.findinG_CONTACT.length > 0) {
         issue.Observation_Contacts = issue.findinG_CONTACT;
+        issue.Observation_Contacts.forEach((contact) => {
+          contact.Selected = true;
+        });
         console.log(issue);
       }
       issue.observation_Id = 0;
       issue.answer_Id = this.newAnswerIds.get(questionId);
 
-      this.observationSvc.saveObservation(issue).subscribe((response: any) => {
+      this.observationSvc.saveObservation(issue, false, true).subscribe((response: any) => {
 
         if (index === (issueArray.length - 1)) {
           this.navCounter++;

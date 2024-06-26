@@ -9,6 +9,9 @@ import { QuestionsService } from '../../../services/questions.service';
 import { ReportService } from '../../../services/report.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { FileUploadClientService } from '../../../services/file-client.service';
+import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { QuestionFiltersReportsComponent } from '../../../dialogs/question-filters-reports/question-filters-reports.component';
 
 @Component({
   selector: 'app-cie-principle-only',
@@ -26,6 +29,8 @@ export class CiePrincipleOnlyComponent {
   examLevel: string = '';
   loading: boolean = true;
 
+  filterDialogRef: MatDialogRef<QuestionFiltersReportsComponent>;
+
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
   constructor(
@@ -37,7 +42,9 @@ export class CiePrincipleOnlyComponent {
     public configSvc: ConfigService,
     public observationSvc: ObservationsService,
     public authSvc: AuthenticationService,
-    public fileSvc: FileUploadClientService
+    public fileSvc: FileUploadClientService,
+    private dialog: MatDialog,
+    private filterSvc: QuestionFilterService
   ) { }
 
   ngOnInit(): void {
@@ -138,5 +145,30 @@ export class CiePrincipleOnlyComponent {
     for(let i = 0; i < this.principleTitleList.length; i++ ) {
       this.expandedOptions.set(this.principleTitleList[i], mode);
     }
+  }
+  
+  /**
+   * Re-evaluates the visibility of all questions/subcategories/categories
+   * based on the current filter settings.
+   * Also re-draws the sidenav category tree, skipping categories
+   * that are not currently visible.
+   */
+  refreshQuestionVisibility(matLevel: number) {
+    this.filterSvc.evaluateFiltersForReportCategories(this.response?.matAnsweredQuestions[0], matLevel);
+  }
+  
+  /**
+   *
+   */
+  showFilterDialog(matLevel: number) {
+    this.filterDialogRef = this.dialog.open(QuestionFiltersReportsComponent);
+    this.filterDialogRef.componentInstance.filterChanged.asObservable().subscribe(() => {
+      this.refreshQuestionVisibility(matLevel);
+    });
+    this.filterDialogRef
+      .afterClosed()
+      .subscribe(() => {
+        this.refreshQuestionVisibility(matLevel);
+      });
   }
 }
