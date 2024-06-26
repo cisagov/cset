@@ -540,10 +540,6 @@ namespace CSETWebCore.DatabaseManager
                 {
                     return "RENEWWeb";
                 }
-                else if (ApplicationCode.Equals("CIE")) 
-                {
-                    return "CIEWeb";
-                }
                 else
                 {
                     return ClientCode + "Web";
