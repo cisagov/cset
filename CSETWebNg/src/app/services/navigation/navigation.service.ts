@@ -212,6 +212,9 @@ export class NavigationService implements OnDestroy, OnInit {
         this.assessSvc.initCyberFlorida(assessmentId);
       }
       else {
+        if (this.assessSvc.usesMaturityModel('CIE')) {
+          this.navTreeSvc.applyCieToCStates();
+        }
         this.navDirect('phase-prepare');
       }
     });
@@ -219,6 +222,9 @@ export class NavigationService implements OnDestroy, OnInit {
 
   beginNewAssessmentGallery(item: any) {
     this.assessSvc.newAssessmentGallery(item).then(() => {
+      if (this.assessSvc.usesMaturityModel('CIE')) {
+        this.navTreeSvc.applyCieToCStates();
+      }
       this.navDirect('phase-prepare');
     });
   }
