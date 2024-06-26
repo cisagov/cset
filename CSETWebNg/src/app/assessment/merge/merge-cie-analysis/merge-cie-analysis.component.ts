@@ -775,13 +775,21 @@ export class MergeCieAnalysisComponent implements OnInit {
   saveNewIssues(questionId: number, issueArray: any[]) {
     // For every issue we have from the original assessments
     issueArray.forEach((issue, index) => {
+      if (issue.findinG_CONTACT.length > 0) {
+        issue.Observation_Contacts = issue.findinG_CONTACT;
+        console.log(issue);
+      }
       issue.observation_Id = 0;
       issue.answer_Id = this.newAnswerIds.get(questionId);
 
       this.observationSvc.saveObservation(issue).subscribe((response: any) => {
-        this.navCounter ++;
-        if (index === (issueArray.length - 1) && this.navCounter >= 2) {
-          this.navToHome();
+
+        if (index === (issueArray.length - 1)) {
+          this.navCounter++;
+
+          if (this.navCounter >= 2) {
+            this.navToHome();
+          }
         }
       });
     });
@@ -963,7 +971,7 @@ export class MergeCieAnalysisComponent implements OnInit {
           }
         }
 
-        // This block uses the previous answer_Id's to persist issues on the new assessment
+        // This block uses the previous answer_Id's to persist issues on the new assessment'
         if (this.assessmentIssues.size > 0) {
           const iterator = this.assessmentIssues.entries();
           let questionId = 0;
@@ -976,8 +984,11 @@ export class MergeCieAnalysisComponent implements OnInit {
         } else {
           // If we dont have any issues, we can be done.
           this.mergeConflicts = [];
-          this.issuesProcessed = true;
           this.navCounter++;
+
+          if (this.navCounter >= 2) {
+            this.navToHome();
+          }
         }
 
         // This block uses the previous answer_Id's to persist documents on the new assessment
@@ -995,15 +1006,14 @@ export class MergeCieAnalysisComponent implements OnInit {
           this.assessmentCombinedFreeResponse.clear();
           this.assessmentCombinedFeedback.clear();
           this.assessmentCombinedComment.clear();
-          this.documentsProcessed = true;
           this.navCounter++;
+
+          if (this.navCounter >= 2) {
+            this.navToHome();
+          }
         }  
       });
     });
-
-    if (this.issuesProcessed && this.documentsProcessed) {
-      this.navToHome();
-    }
   }
 
 }
