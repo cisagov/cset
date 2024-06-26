@@ -278,6 +278,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     // User Guide
     this._hotkeysService.add(new Hotkey('alt+g', (event: KeyboardEvent): boolean => {
       switch (this.configSvc.installationMode || '') {
+        case "CIE":
+          window.open(this.docUrl + "htmlhelp/index.htm", "_blank");
+          break;
         case "ACET":
           window.open(this.docUrl + "htmlhelp_acet/index.htm", "_blank");
           break;
