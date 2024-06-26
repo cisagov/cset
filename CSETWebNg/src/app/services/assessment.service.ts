@@ -238,6 +238,27 @@ export class AssessmentService {
   }
 
   /**
+   * 
+   */
+  getAssessmentContactsById(ids: number[]) {
+    var id1 = (ids[0] != undefined ? ids[0] : 0);
+    var id2 = (ids[1] != undefined ? ids[1] : 0);
+    var id3 = (ids[2] != undefined ? ids[2] : 0);
+    var id4 = (ids[3] != undefined ? ids[3] : 0);
+    var id5 = (ids[4] != undefined ? ids[4] : 0);
+    var id6 = (ids[5] != undefined ? ids[5] : 0);
+    var id7 = (ids[6] != undefined ? ids[6] : 0);
+    var id8 = (ids[7] != undefined ? ids[7] : 0);
+    var id9 = (ids[8] != undefined ? ids[8] : 0);
+    var id10 = (ids[9] != undefined ? ids[9] : 0);
+
+    headers.params = headers.params.set('id1', id1).set('id2', id2).set('id3', id3).set('id4', id4)
+    .set('id5', id5).set('id6', id6).set('id7', id7).set('id8', id8).set('id9', id9).set('id10', id10);
+
+    return this.http.get(this.apiUrl + 'contactsById', headers);
+  }
+
+  /**
    *
    */
   getOrganizationTypes() {
@@ -274,9 +295,30 @@ export class AssessmentService {
    */
   createContact(contact: User) {
     const body = this.configSvc.config.defaultInviteTemplate;
-    return this.http.post(
-      this.apiUrl + 'contacts/addnew',
-      {
+    return this.http.post(this.apiUrl + 'contacts/addnew', {
+        firstName: contact.firstName,
+        lastName: contact.lastName,
+        primaryEmail: contact.primaryEmail,
+        title: contact.title,
+        phone: contact.phone,
+        cellPhone: contact.cellPhone,
+        reportsTo: contact.reportsTo,
+        organizationName: contact.organizationName,
+        siteName: contact.siteName,
+        emergencyCommunicationsProtocol: contact.emergencyCommunicationsProtocol,
+        isSiteParticipant: contact.isSiteParticipant,
+        isPrimaryPoc: contact.isPrimaryPoc,
+        assessmentRoleId: contact.assessmentRoleId,
+        subject: this.configSvc.config.defaultInviteSubject,
+        body: body
+      },
+      headers
+    );
+  }
+
+  createMergeContact(contact: User) {
+    const body = this.configSvc.config.defaultInviteTemplate;
+    return this.http.post(this.apiUrl + 'contacts/addnewmergecontact', {
         firstName: contact.firstName,
         lastName: contact.lastName,
         primaryEmail: contact.primaryEmail,
