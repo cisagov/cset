@@ -83,8 +83,8 @@ export class CieMfrReportComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Marked for Review CIE-CSET - Report");
-    
+    this.titleService.setTitle("Marked for Review CIE - Report");
+
     this.cieSvc.getCieAllMfrQuestionsWithDocuments().subscribe(
       (r: any) => {
         this.response = r;
@@ -128,7 +128,7 @@ export class CieMfrReportComponent implements OnInit {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
       const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.open(url, "_blank");
+      window.location.href = url;
     });
   }
 
@@ -208,7 +208,7 @@ export class CieMfrReportComponent implements OnInit {
   refreshQuestionVisibility(matLevel: number) {
     this.filterSvc.evaluateFiltersForReportCategories(this.response?.matAnsweredQuestions[0], matLevel);
   }
-  
+
   /**
    *
    */

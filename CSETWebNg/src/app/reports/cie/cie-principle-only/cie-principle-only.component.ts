@@ -48,7 +48,7 @@ export class CiePrincipleOnlyComponent {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Export Principle-Scope CIE-CSET - Report");
+    this.titleService.setTitle("Export Principle-Scope CIE - Report");
 
     this.cieSvc.getCiePrincipleQuestions().subscribe(
       (r: any) => {
@@ -122,7 +122,7 @@ export class CiePrincipleOnlyComponent {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
       const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.open(url, "_blank");
+      window.location.href = url;
     });
   }
 
@@ -146,7 +146,7 @@ export class CiePrincipleOnlyComponent {
       this.expandedOptions.set(this.principleTitleList[i], mode);
     }
   }
-  
+
   /**
    * Re-evaluates the visibility of all questions/subcategories/categories
    * based on the current filter settings.
@@ -156,7 +156,7 @@ export class CiePrincipleOnlyComponent {
   refreshQuestionVisibility(matLevel: number) {
     this.filterSvc.evaluateFiltersForReportCategories(this.response?.matAnsweredQuestions[0], matLevel);
   }
-  
+
   /**
    *
    */
