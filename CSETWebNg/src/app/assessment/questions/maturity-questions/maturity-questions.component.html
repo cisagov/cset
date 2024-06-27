@@ -68,10 +68,15 @@
       Above Target Level</div>
 
 
+    <ng-container *ngIf="!!groupings">
+      <p class="mb-4" *ngIf="this.groupingId?.toLowerCase() == 'bonus'">
+        {{t('questions.instructions ssg')}}
+      </p>
 
-    <p class="mb-4" *ngIf="!!groupings">
-      {{t('questions.instructions 1')}} {{ msgUnansweredEqualsNo }}
-    </p>
+      <p class="mb-4">
+        {{t('questions.instructions 1')}} {{ msgUnansweredEqualsNo }}
+      </p>
+    </ng-container>
 
     <div class="mb-4" *ngIf="this.assessSvc.assessment?.maturityModel?.modelId == 11">
       <strong>{{t('questions.cpg answer key')}}</strong>

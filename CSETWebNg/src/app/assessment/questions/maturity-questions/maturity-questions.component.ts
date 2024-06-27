@@ -41,6 +41,7 @@ import { CompletionService } from '../../../services/completion.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { DemographicService } from '../../../services/demographic.service';
 import { DemographicIodService } from '../../../services/demographic-iod.service';
+import { SsgService } from '../../../services/ssg.service';
 
 @Component({
   selector: 'app-maturity-questions',
@@ -77,6 +78,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public questionsSvc: QuestionsService,
     public completionSvc: CompletionService,
     public cisSvc: CisService,
+    public ssgSvc: SsgService,
     public maturityFilteringSvc: MaturityFilteringService,
     public filterSvc: QuestionFilterService,
     public glossarySvc: GlossaryService,
@@ -174,12 +176,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     // determine which endpoint to call to get the question list
     var obsGetQ = this.maturitySvc.getQuestionsList(false);
 
+
     if (this.groupingId?.toLowerCase() == 'bonus') {
-
-      console.log('AIA', this.assessSvc.assessment );
-
-      const bonusModelId = 18; // RKWTODO: figure out which bonus model to retrieve
+      const bonusModelId = this.ssgSvc.ssgBonusModel()
       obsGetQ = this.maturitySvc.getBonusQuestionList(bonusModelId);
+
     }
 
     obsGetQ.subscribe(
@@ -189,13 +190,19 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.questionsAlias = response.questionsAlias;
         this.groupings = response.groupings;
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
-
+        
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;
         this.filterSvc.maturityModelId = response.modelId;
         this.filterSvc.maturityModelName = response.modelName;
 
-        this.pageTitle = this.tSvc.translate('titles.' + this.questionsAlias.toLowerCase().trim()) + ' - ' + this.modelName;
+        if (this.groupingId?.toLowerCase() == 'bonus') {
+          this.pageTitle = this.tSvc.translate(`titles.ssg.${this.ssgSvc.ssgSimpleSectorLabel()}`);
+        } else {
+          this.pageTitle = this.tSvc.translate('titles.' + this.questionsAlias.toLowerCase().trim()) + ' - ' + this.modelName;
+        }
+
+
         this.glossarySvc.glossaryEntries = response.glossary;
 
         // set the message with the current "no" answer value

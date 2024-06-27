@@ -21,8 +21,6 @@ export class DemographicsIodComponent implements OnInit {
   @Input() events: Observable<void>;
 
   private eventsSubscription: any;
-
-  sectorChanged: BehaviorSubject<boolean> = new BehaviorSubject(true);
   
   /**
    * The principal model for this page
@@ -76,7 +74,7 @@ export class DemographicsIodComponent implements OnInit {
         this.demographicData.listSubsectors = data;
       });
       this.assessSvc.assessment.sectorId = this.demographicData.sector;
-      this.assessSvc.assessmentStateChanged.next(126);
+      this.assessSvc.assessmentStateChanged$.next(126);
     }
   }
 
