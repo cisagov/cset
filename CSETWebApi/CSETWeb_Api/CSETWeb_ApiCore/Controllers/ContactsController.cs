@@ -669,15 +669,30 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
+            var parentGroup = new MATURITY_GROUPINGS();
+
             // if the group has a parent, find it to append
-            int group = ac.Last_Q_Answered.Split(',').ToList().Find(x => x.StartsWith("MG:")).Replace("MG:", "").ToInt32();
-            var parentGroup = _context.MATURITY_GROUPINGS.Where(x => x.Grouping_Id == group).FirstOrDefault();
+            if (ac.Last_Q_Answered != null)
+            {
+                string group = "";
+                group = ac.Last_Q_Answered.Split(',').ToList().Find(x => x.StartsWith("MG:")).Replace("MG:", "");
+
+                if (group != null)
+                {
+                    int groupInt = group.ToInt32();
+                    int? parentGroupId = _context.MATURITY_GROUPINGS.Where(x => x.Grouping_Id == groupInt).Select(x => x.Parent_Id).FirstOrDefault();
+                    if (parentGroupId != null)
+                    {
+                        parentGroup = _context.MATURITY_GROUPINGS.Where(x => x.Grouping_Id == parentGroupId).FirstOrDefault();
+                    }
+                }
+            }
 
 
             string lastQAnswered = ac.Last_Q_Answered;
 
             // checking if this is the overall holder group (useless info) or a domain (useful)
-            if (parentGroup?.Parent_Id != null)
+            if (parentGroup != null && parentGroup.Parent_Id != null)
             {
                 lastQAnswered += ",PG:" + parentGroup.Grouping_Id;
             }

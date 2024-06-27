@@ -515,7 +515,8 @@ export class NavigationService implements OnDestroy, OnInit {
       var pg = x.split(',').find(x => x.startsWith('PG:'))?.replace('PG:', '');
       if (pg != null) {
         e = this.workflow.getElementById('maturity-questions-cie-' + pg);
-        console.log(pg)
+      } else {
+        e = this.workflow.getElementById('maturity-questions-cie-' + g);
       }
 
       if (!!e) {
