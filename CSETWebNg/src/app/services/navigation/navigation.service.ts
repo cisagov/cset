@@ -98,8 +98,7 @@ export class NavigationService implements OnDestroy, OnInit {
     private navTreeSvc: NavTreeService
   ) {
     this.setWorkflow('omni');
-    this.assessSvc.assessmentStateChanged.subscribe((reloadState) => {
-      console.log('state changed', reloadState);
+    this.assessSvc.assessmentStateChanged$.subscribe((reloadState) => {
       switch (reloadState) {
         case 123:
           break;
@@ -113,6 +112,7 @@ export class NavigationService implements OnDestroy, OnInit {
           this.navDirect('phase-prepare');
           break;
         case 126:
+          // refresh tree only
           this.buildTree();
           break;
       }
@@ -122,10 +122,8 @@ export class NavigationService implements OnDestroy, OnInit {
   ngOnInit(): void {  }
 
   ngOnDestroy() {
-    this.assessSvc.assessmentStateChanged.unsubscribe()
+    this.assessSvc.assessmentStateChanged$.unsubscribe()
   }
-
-  
 
   /**
    * Generates a random 'magic number'.

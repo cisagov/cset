@@ -89,7 +89,7 @@ export class DemographicService {
    */
   updateDemographic(demographic: Demographic) {
     this.assessSvc.assessment.sectorId = demographic.sectorId;
-    this.assessSvc.assessmentStateChanged.next(126);
+    this.assessSvc.assessmentStateChanged$.next(126);
     
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
       .subscribe(() => {

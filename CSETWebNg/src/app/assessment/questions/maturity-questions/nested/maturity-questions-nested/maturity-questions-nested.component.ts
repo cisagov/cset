@@ -99,7 +99,7 @@ export class MaturityQuestionsNestedComponent implements OnInit, AfterViewInit, 
 
     // listen for score changes caused by questions being answered
     if (this.maturitySvc.showChartOnNestedQPage()) {
-      this.cisSvc.cisScore.subscribe((s) => {
+      this.cisSvc.cisScore$.subscribe((s) => {
         this.sectionScore = s;
         this.updateChart();
       });

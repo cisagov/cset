@@ -156,7 +156,7 @@
         <node d="maturity questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" visible="OPTION:MATURITY MATURITY-NONE(1,10,8,9,14,13,17)" />
 
         <!-- Bonus model (SSG) -->
-        <node displaytext="SSG!" id="maturity-questions-bonus" path="assessment/{:id}/maturity-questions/bonus" visible="MATURITY-ANY(11) SSG-ANY" />
+        <node d="ssg" ssg="true" id="maturity-questions-bonus" path="assessment/{:id}/maturity-questions/bonus" visible="MATURITY-ANY(11) SECTOR-ANY(1,19)" />
 
 
 
