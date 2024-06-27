@@ -509,6 +509,48 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
+        /// Returns answer breakdown for all associated maturity-based assessments.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/aggregation/analysis/getmaturityanswertotals")]
+        public IActionResult GetMaturityAnswerTotals(int aggregationID)
+        {
+            var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
+                .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
+                .ToList();
+
+            List<AnswerCounts> response = new List<AnswerCounts>();
+
+            foreach (var a in assessmentList)
+            {
+                _context.LoadStoredProc("[usp_getStandardSummaryOverall]")
+                    .WithSqlParam("assessment_id", a.Assessment_Id)
+                    .ExecuteStoredProc((handler) =>
+                    {
+                        var results = (List<usp_getStandardSummaryOverall>)handler.ReadToList<usp_getStandardSummaryOverall>();
+
+                        var ansCount = new AnswerCounts()
+                        {
+                            AssessmentId = a.Assessment_Id,
+                            Alias = a.Alias,
+                            Total = results.Max(x => x.Total),
+                            Y = results.Where(x => x.Answer_Text == "Y").FirstOrDefault().qc,
+                            N = results.Where(x => x.Answer_Text == "N").FirstOrDefault().qc,
+                            A = results.Where(x => x.Answer_Text == "A").FirstOrDefault().qc,
+                            NA = results.Where(x => x.Answer_Text == "NA").FirstOrDefault().qc,
+                            U = results.Where(x => x.Answer_Text == "U").FirstOrDefault().qc
+                        };
+
+                        response.Add(ansCount);
+                    });
+            }
+
+            return Ok(response);
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>

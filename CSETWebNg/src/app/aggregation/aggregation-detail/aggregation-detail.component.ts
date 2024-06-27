@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
 import { AggregationService } from '../../services/aggregation.service';
 
@@ -31,7 +31,7 @@ import { AggregationService } from '../../services/aggregation.service';
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class AggregationDetailComponent implements OnInit {
+export class AggregationDetailComponent {
 
   aggregationName: string;
 
@@ -42,13 +42,6 @@ export class AggregationDetailComponent implements OnInit {
     public aggregationSvc: AggregationService,
     public navAggSvc: NavigationAggregService
   ) { }
-
-  /**
-   *
-   */
-  ngOnInit() {
-    // this.aggregationName = this.aggregationSvc.;
-  }
 
   updateAggregation() {
     this.aggregationSvc.updateAggregation().subscribe();

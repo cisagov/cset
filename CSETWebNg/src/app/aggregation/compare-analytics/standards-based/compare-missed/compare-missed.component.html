@@ -1,0 +1,47 @@
+<!---------------------- 
+
+   Copyright 2024 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="text-left">
+  <div class="mb-3">
+    This table lists questions or requirements that were answered 'No' in all assessments.
+  </div>
+  <table class="assessment-summary td-p-1 td-text-left mb-5">
+    <tr>
+      <th class="pr-5">Category</th>
+      <th class="pr-5">Subcategory</th>
+      <th>Question</th>
+    </tr>
+    <tr *ngFor="let q of missedQuestions">
+      <td class="pr-5">{{ q.category }}</td>
+      <td class="pr-5">{{ q.subcategory }}</td>
+      <td>{{ q.questionText }}</td>
+    </tr>
+  </table>
+  <div *ngIf="missedQuestions == null">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
+  <div *ngIf="missedQuestions?.length === 0" class="mb-5 alert-warning p-3 font-weight-bold text-center">
+    There are no questions that were answered 'No' on all assessments.
+  </div>
+</div>
