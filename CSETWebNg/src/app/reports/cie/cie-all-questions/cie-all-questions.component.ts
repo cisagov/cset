@@ -75,7 +75,7 @@ export class CieAllQuestionsComponent {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Export All CIE-CSET - Report");
+    this.titleService.setTitle("Export All CIE - Report");
 
     this.cieSvc.getCieAllQuestions().subscribe(
       (r: any) => {
