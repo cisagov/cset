@@ -43,7 +43,7 @@ switch (installationMode) {
     break;
   case 'CIE':
     clientCode = 'CIE';
-    appName = 'CSET-CIE';
+    appName = 'CIE';
     break;
   default:
     clientCode = 'DHS';
