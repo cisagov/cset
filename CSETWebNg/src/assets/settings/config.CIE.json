@@ -19,7 +19,7 @@
         "showFeedback": true,
         "showBusinessAgencyName": true,
         "showCriticalService": true,
-        "additionalUserGuides": ["CSET"],
+        "additionalUserGuides": [],
         "showCisaAssessorWorkflowSwitch": false,
         "replaceAssessmentWithAnalysis": true
     }
