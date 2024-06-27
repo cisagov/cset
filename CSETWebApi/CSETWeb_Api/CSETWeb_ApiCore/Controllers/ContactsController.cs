@@ -663,15 +663,16 @@ namespace CSETWebCore.Api.Controllers
 
             var ac = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == currentUserId && x.Assessment_Id == assessmentId).FirstOrDefault();
 
-            // if the group has a parent, find it to append
-            int group = ac.Last_Q_Answered.Split(',').ToList().Find(x => x.StartsWith("MG:")).Replace("MG:", "").ToInt32();
-            var parentGroup = _context.MATURITY_GROUPINGS.Where(x => x.Grouping_Id == group).FirstOrDefault();
-
             if (ac == null)
             {
                 // no contact record - just do nothing
                 return Ok();
             }
+
+            // if the group has a parent, find it to append
+            int group = ac.Last_Q_Answered.Split(',').ToList().Find(x => x.StartsWith("MG:")).Replace("MG:", "").ToInt32();
+            var parentGroup = _context.MATURITY_GROUPINGS.Where(x => x.Grouping_Id == group).FirstOrDefault();
+
 
             string lastQAnswered = ac.Last_Q_Answered;
 
