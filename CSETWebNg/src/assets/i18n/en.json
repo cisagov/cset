@@ -58,16 +58,16 @@
   "invalid email format": "Invalid email format",
   "account already exists": "An account already exists for the email address",
   "emails do not match": "Emails do not match",
-  "email not allowed": "The specified email is not allowed by this CSET installation",
+  "email not allowed": "The specified email is not allowed by this installation",
   "unknown error": "Unknown error",
   "user inactive": "User is inactive",
   "control priorities intro1": "Information on ranking can be found in the <a href=\"",
   "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">User Guide</a>.",
   "local installation": "Local Installation",
-  "new version": "A new version of CSET is available.",
+  "new version": "A new version is available.",
   "your version": "Your version:",
   "version available": "Available version:",
-  "link version": "Click here to view or download CSET releases.",
+  "link version": "Click here to view or download releases.",
   "legend": "Legend",
   "img suffix": "_en",
   "publisher": {
@@ -78,6 +78,14 @@
       "org short name": "CISA",
       "show ip rights assertion": true,
       "ip dist": "the CSET Program Office"
+    },
+    "cie": {
+      "app long name": "Cyber Informed Engineering",
+      "app short name": "CIE",
+      "org long name": "Department of Energy",
+      "org short name": "DOE",
+      "show ip rights assertion": false,
+      "ip dist": "the CIE Program Office"   
     },
     "iod": {
       "app long name": "Cyber Security Evaluation Tool",
@@ -95,22 +103,22 @@
       "show ip rights assertion": false
     },
     "tsa": {
-      "app long name": "Cyber Security Evaluation Tool",
-      "app short name": "CSET",
+      "app long name": "TSA Assessment Tool",
+      "app short name": "TSA",
       "org long name": "Transportation Security Administration",
       "org short name": "TSA",
       "show ip rights assertion": false
     },
     "cf": {
-      "app long name": "Cyber Security Evaluation Tool",
-      "app short name": "CSET",
+      "app long name": "Cyber Florida Assessment Tool",
+      "app short name": "CF",
       "org long name": "Cyber Florida",
       "org short name": "CF",
       "show ip rights assertion": false
     },
     "renew": {
-      "app long name": "Cyber Security Evaluation Tool",
-      "app short name": "CSET Renewables",
+      "app long name": "INL Renewables",
+      "app short name": "Renewables",
       "org long name": "Idaho National Laboratory",
       "org short name": "INL",
       "show ip rights assertion": false
@@ -865,8 +873,8 @@
     "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated {date}.",
     "reports run prior message": "Any reports run prior to that update may not reflect the current state of the assessment.",
     "printing report instructions button": "Printing Reports Instructions",
-    "printing instructions electron": "To print or save any of these reports as PDF, click the report which will open in a new window. In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print. To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
-    "printing instructions non-electron": "To print or save any of these reports as PDF, click the report which will open in a new window. In the top left corner of the report window, click the \"File\" button in the menu bar and select \"Print\" (CTRL + P). To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
+    "printing instructions electron": "To print or save any of these reports as PDF, click the report which will open in a new window. In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print. To export a copy of your assessment to another location (.csetw), click the logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
+    "printing instructions non-electron": "To print or save any of these reports as PDF, click the report which will open in a new window. In the top left corner of the report window, click the \"File\" button in the menu bar and select \"Print\" (CTRL + P). To export a copy of your assessment to another location (.csetw), click the logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
     "site information": "Site Information",
     "executive summary": "Executive Summary",
     "network diagram": "Network Diagram",
@@ -915,7 +923,7 @@
       "no observations message": "The assessment does not contain any observations that are assigned to an individual.",
       "question identifier": "Question Identifier",
       "question text": "Question Text",
-      "summary": "This document contains a list of all observations identified and recorded during the assessment. For more information, view the Observations Tear Out Sheets page in the CSET User Guide."
+      "summary": "This document contains a list of all observations identified and recorded during the assessment. For more information, view the Observations Tear Out Sheets page in the User Guide."
     },
     "core": {
       "dashboard": {
@@ -992,7 +1000,7 @@
         "signature example text 2": "Date",
         "introduction": "Introduction",
         "template instructions": "Template instructions and directives are given in italicized 10 point font and should be replaced appropriately.",
-        "template instructions text 1": "This security plan template is intended to be used as a tool for the development of a security plan. This template will assist you in identifying the controls in place and those needing further implementation based upon the answers provided in the accompanying Cybersecurity Evaluation Tool (CSET) assessment. The basic process for this plan development would be to first determine risk, second select the countermeasures necessary to mitigate the risk to an acceptable level, and finally follow through to ensure that the countermeasures are implemented to the expected level.",
+        "template instructions text 1": "This security plan template is intended to be used as a tool for the development of a security plan. This template will assist you in identifying the controls in place and those needing further implementation based upon the answers provided in the accompanying assessment. The basic process for this plan development would be to first determine risk, second select the countermeasures necessary to mitigate the risk to an acceptable level, and finally follow through to ensure that the countermeasures are implemented to the expected level.",
         "template instructions text 2": "The purpose of the security plan is to provide an overview of the security requirements of the system and describe the controls in place or planned, for meeting those requirements. The site cybersecurity plan also delineates responsibilities and expected behavior of all individuals who access the system. The security plan should be viewed as documentation of the structured process of planning adequate, cost effective security protection for a system. It should reflect input from various managers with responsibilities concerning the system, including information owners, the system operator, and the system security manager. Additional information may be included in the basic plan and the structure and format organized according to agency needs, so long as the major sections described in this document are adequately covered and readily identifiable.",
         "template instructions text 3": "The System Owner is responsible for ensuring that the security plan is prepared and for implementing the plan and monitoring its effectiveness. Security plans should reflect input from various individuals with responsibilities concerning the system, including functional “end users,” Information Owners, the System Administrator, and the System Security Manager",
         "template bullets": "This template may also include:",
@@ -1067,7 +1075,7 @@
         "consequence bullet text 4": "Estimate the potential cost in terms of economic impact to both the site and surrounding communities. (Consider any losses to community structures and any costs associated with displacement.)",
         "consequence bullet text 5": "Estimate the potential cost of environmental cleanup to the site and surrounding communities. (Consider the cost for cleanup, fines, litigation, long term monitoring, etc.)",
         "threat": "Threat",
-        "threat text": "The threat portion of the equation can be deduced from the recommended implementation priorities list. The priorities are based on incident data collected by the ICS-CERT watch floor and subject matter experts as of the time of publication of CSET. Top priorities are controls that mitigate the most actively exploited vulnerabilities with the most significant consequences.",
+        "threat text": "The threat portion of the equation can be deduced from the recommended implementation priorities list. The priorities are based on incident data collected by the ICS-CERT watch floor and subject matter experts as of the time of publication. Top priorities are controls that mitigate the most actively exploited vulnerabilities with the most significant consequences.",
         "cost benefit analysis": "Cost Benefit Analysis",
         "cost benefit text": "The cost of implementing controls with respect to the additional security provided is the final step in selecting the controls to implement.",
         "basic model": "Basic Model",
@@ -1086,7 +1094,7 @@
         "plan controls text": "This section lists all the controls which constitute the security plan and implementation status.   To enable easier reading of the controls list a table key is included at the start of this section. In this section the terms Control and Requirement are used interchangeably to indicate the mitigation effort as defined in the given standard.",
         "table key header": "Table Key and Field Descriptions:",
         "requirement title": "Requirement Title",
-        "cset question requirement category": "CSET Question/Requirement Category",
+        "cset question requirement category": "Question/Requirement Category",
         "control level": "Control Level",
         "implementation status": "Implementation Status",
         "short standard name": "Short Standard Name (Optional, may not be included in the table)",
@@ -1095,8 +1103,8 @@
         "affected components": "Affected Components  (Optional, may not be included in the table)",
         "related questions": "Related Questions and Answers",
         "requirement title text": "Is the control title as it is generally defined in the standard document from which this control is derived",
-        "cset question category": "CSET Question Category",
-        "cset question category text": "Shows the CSET question category from the global questions list.  Questions from multiple standards have been consolidated together in the CSET tool and assigned a common category.",
+        "cset question category": "Question Category",
+        "cset question category text": "Shows the question category from the global questions list.  Questions from multiple standards have been consolidated together in the tool and assigned a common category.",
         "control level text": "Mapped to one of Low, Moderate, High, or Very High.  A value of none indicates that the level was not defined for the given information type in the standard.",
         "implementation status text": "Shows the percentage complete as the number of yes and alternate answers / total related questions for this control. The percentage implemented will not necessarily be reflective of the amount of work required to implement the control but is merely an indicator of how many of the questions related to the control have been addressed so far.",
         "short standard name text": "An indicator of which standard this control is derived from.",
@@ -1335,9 +1343,9 @@
   },
   "feedback": {
     "page title": "Feedback",
-    "text 1": "Feedback is a mechanism for submitting changes or suggestions for a question asked in CSET. Feedback is entered by clicking the",
+    "text 1": "Feedback is a mechanism for submitting changes or suggestions for a question. Feedback is entered by clicking the",
     "text 2": "icon below the question.",
-    "text 3": "Please ensure that the feedback you provide does not include any proprietary or assessment related information. These comments should be considered part of a public community discussion with regard to the questions, requirements, CSET feature requests or bug notifications.",
+    "text 3": "Please ensure that the feedback you provide does not include any proprietary or assessment related information. These comments should be considered part of a public community discussion with regard to the questions, requirements, feature requests or bug notifications.",
     "copy paste": "Copy text to clipboard and paste into an email. Send the email to {{address}}.",
     "no feedback exists": "There is no feedback for any question in this assessment."
   },
@@ -1384,7 +1392,7 @@
     "resource library": "Resource Library",
     "help": {
       "help": "Help",
-      "cset user guide": "CSET User Guide",
+      "cset user guide": "User Guide",
       "about": "About",
       "keyboard shortcuts": "Keyboard Shortcuts",
       "legal": {
@@ -1525,12 +1533,12 @@
     "answer security question": "Please answer the security question and click Reset Password to receive an email with a temporary password.",
     "changed dialog title": "Password Changed",
     "changed message": "Your password has been changed successfully",
-    "enter email cset": "Enter the email address associated with your CSET account",
+    "enter email cset": "Enter the email address associated with your login account",
     "enter email rra": "Enter the email address associated with your RRA account",
     "enter email acet": "Enter the email address associated with your ACET account",
-    "enter email tsa": "Enter the email address associated with your CSET TSA account",
-    "enter email renew": "Enter the email address associated with your CSET Renewables account",
-    "enter email cf": "Enter the email address associated with your Cyber Florida CSET account",
+    "enter email tsa": "Enter the email address associated with your TSA account",
+    "enter email renew": "Enter the email address associated with your Renewables account",
+    "enter email cf": "Enter the email address associated with your Cyber Florida account",
     "ransomware explanation": "Ransomware is an ever-evolving form of malware designed to encrypt files on a device, rendering any files and the systems that rely on them unusable. Malicious actors then demand ransom in exchange for decryption. These resources are designed to help individuals and organizations prevent attacks that can severely impact business processes and leave organizations without the data they need to operate and deliver mission-critical services."
   },
   "about": {
@@ -1541,8 +1549,8 @@
     "contact": "Contact",
     "learn more": "To learn more about cyber vulnerabilities, training, standards, and references, visit the <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">CISA Vulnerability Management website</a> or contact <a class=\"wrap-text\" href=\"mailto:vulnerability@cisa.gov\" class=\"mailto\">vulnerability@cisa.gov</a>.",
     "encourage reporting": "CISA — Cybersecurity and Infrastructure Security Agency — encourages you to report suspicious cyber activity, incidents, and vulnerabilities affecting critical infrastructure control systems.",
-    "cset training resources": "CSET Training Resources",
-    "training available": "CSET training is available through the following resources",
+    "cset training resources": "Training Resources",
+    "training available": "training is available through the following resources",
     "video tutorials": "Video Tutorials",
     "cisa training program": "CISA Cybersecurity Training Program",
     "training description": "The training program events consist of Web-Based Training courses, 'regional' training courses and workshops at venues in various locations, in addition to the 5-day training event held in Idaho Falls, Idaho.",
@@ -1576,11 +1584,11 @@
     "keyboard shortcuts": "Keyboard Shortcuts"
   },
   "errors": {
-    "import unsuported file 1": "Error: Unsupported file. Only CSET Web files can be imported for enterprise installations.",
+    "import unsuported file 1": "Error: Unsupported file. Only .csetw files can be imported for enterprise installations.",
     "import unsuported file 2": "For more information, see the import section of the user guide"
   },
   "welcome page": {
-    "internet explorer": "Internet Explorer has been detected as your current browser. \nSome functionality of CSET is not fully supported by Internet Explorer. \nUsing another browser such as Chrome, Firefox or Edge is strongly recommended to improve your experience.",
+    "internet explorer": "Internet Explorer has been detected as your current browser. \nInternet Explorer is not supported. \nUsing another browser such as Chrome, Firefox or Edge is strongly recommended to improve your experience.",
     "welcome to acet": "Welcome to The Toolbox",
     "welcome to": "Welcome to {{appTitle}}",
     "to get started": "To get started, select from one of the options below:",
@@ -1605,9 +1613,9 @@
     "bad user": "The user does not exist or is not active",
     "no questions defined": "You have no security questions defined for your account. Please consider adding security questions the next time you are logged in.",
     "password expired": "Password is expired. Click 'Reset Password'",
-    "running locally": "CSET is running locally. No login is required.",
-    "error encountered": "An error was encountered while running CSET",
-    "enter name and email": "Enter your name and email address to register a new CSET account"
+    "running locally": "The application is running locally. No login is required.",
+    "error encountered": "An error was encountered while running the application",
+    "enter name and email": "Enter your name and email address to register a new account"
   },
   "footer": {
     "faq": "FAQ",
@@ -1622,7 +1630,7 @@
     "practice identifier": "Practice Identifier",
     "security practice": "Security Practice",
     "outcome": "Outcome",
-    "additional resources": "Additional information on how to complete a CSET assessment is available in the CSET User Guide. To access the user guide, select the option from the Help dropdown menu in the CSET tool bar.",
+    "additional resources": "Additional information on how to complete an assessment is available in the User Guide. To access the user guide, select the option from the Help dropdown menu in the tool bar.",
     "please visit": "Please visit",
     "for more information": "for more information.",
     "critical service": "Critical Service",
