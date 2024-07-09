@@ -22,7 +22,7 @@ Local installers ("standalone") are available as well as binaries for creating e
 
 
 ## Documentation
-See the [**CSET documentation**](docs/README.md).
+See the [**CSET documentation**](install-and-troubleshooting-guides/README.md).
 
 
 ## License
