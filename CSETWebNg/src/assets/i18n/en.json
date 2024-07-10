@@ -1298,7 +1298,7 @@
         "answered statements report title 2": "REPORT",
         "answered statements": "Answered Statements",
         "report desc 1": "This report includes all the statements within your maturity level, your answers, and whether there is a comment attached to the statement.",
-        "report desc 2": "The statement set is determined by your maturity level.",
+        "report desc 2": "The answered statement set will only show statements at or below your maturity level.",
         "maturity level key": "Maturity Level Key",
         "answers": "Answers",
         "comments": "Comments"
