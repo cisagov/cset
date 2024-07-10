@@ -41,18 +41,20 @@ export class SsgService {
 
    /**
    * Returns a simple keyword that describes the assessment's
-   * sector.  This keyword is concatenated to form a title.
+   * sector.  This keyword is concatenated to form a translation key.
    * 
    * Because IOD and everyone else use different sector/industry
    * value lists, these will likely be defined in pairs, one
    * cyber sector and one NIPP sector.
    */
    ssgSimpleSectorLabel() {
-    const s = this.assessSvc.assessment.sectorId;
+    const s : number = Number(this.assessSvc.assessment?.sectorId);
+
     if ([1, 19].includes(s)) {
       return 'chemical';
     }
-    return null;
+
+    return 'other';
   }
 
   /**
@@ -64,9 +66,10 @@ export class SsgService {
    * cyber sector and one NIPP sector.
    */
   ssgBonusModel() {
-    const s = this.assessSvc.assessment.sectorId;
+    const s : number = Number(this.assessSvc.assessment?.sectorId);
+    
     if ([1, 19].includes(s)) {
-      return 18;
+      return 18; // chemical
     }
     return null;
   }
