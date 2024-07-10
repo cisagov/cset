@@ -180,7 +180,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     if (this.groupingId?.toLowerCase() == 'bonus') {
       const bonusModelId = this.ssgSvc.ssgBonusModel()
       obsGetQ = this.maturitySvc.getBonusQuestionList(bonusModelId);
-
     }
 
     obsGetQ.subscribe(
