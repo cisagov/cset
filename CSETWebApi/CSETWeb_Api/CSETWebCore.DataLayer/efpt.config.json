@@ -2,6 +2,7 @@
    "CodeGenerationMode": 4,
    "ContextClassName": "CsetwebContext",
    "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
    "ModelNamespace": null,
@@ -523,6 +524,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[LU_WEIGHTS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[MALCOLM_ANSWERS]",
          "ObjectType": 0
       },
@@ -624,6 +629,10 @@
       },
       {
          "Name": "[dbo].[NCSF_FUNCTIONS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NCSF_MIGRATION]",
          "ObjectType": 0
       },
       {
@@ -1071,6 +1080,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[Get_Cie_Merge_Conflicts]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[Get_Merge_Conflicts]",
          "ObjectType": 1
       },
@@ -1176,6 +1189,10 @@
       },
       {
          "Name": "[dbo].[SP_SearchTables]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[spEXECsp_RECOMPILE]",
          "ObjectType": 1
       },
       {
@@ -1409,9 +1426,29 @@
       {
          "Name": "[dbo].[usp_StatementsReviewedTabTotals]",
          "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[convert_sal_short]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[convert_sal]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[func_AM]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[func_MQ]",
+         "ObjectType": 2
+      },
+      {
+         "Name": "[dbo].[Split]",
+         "ObjectType": 2
       }
    ],
-   "UiHint": null,
+   "UiHint": "(localdb)\\inllocaldb2022.CSETWeb",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
@@ -1429,7 +1466,6 @@
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": false,
-   "UsePrefixNavigationNaming": false,
    "UseSchemaFolders": false,
    "UseSchemaNamespaces": false,
    "UseSpatial": false,

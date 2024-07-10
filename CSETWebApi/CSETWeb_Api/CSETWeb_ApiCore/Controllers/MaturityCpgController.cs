@@ -5,22 +5,13 @@
 // 
 //////////////////////////////// 
 using Microsoft.AspNetCore.Mvc;
-using CSETWebCore.Business.Acet;
 using CSETWebCore.Business.Maturity;
-using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
-using CSETWebCore.Model.Maturity;
-using Microsoft.AspNetCore.Authorization;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
-using System.Xml.XPath;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
 using CSETWebCore.Helpers;
 
 
@@ -37,7 +28,6 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _reports;
 
-        private readonly TranslationOverlay _overlay;
 
 
         /// <summary>
@@ -51,8 +41,6 @@ namespace CSETWebCore.Api.Controllers
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
             _reports = reports;
-
-            _overlay = new TranslationOverlay();
         }
 
 
@@ -85,73 +73,29 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             var lang = _tokenManager.GetCurrentLanguage();
 
-            var resp = new List<AnswerDistribDomain>();
-
-            var dbList = _context.GetAnswerDistribGroupings(assessmentId);
-
-            foreach (var item in dbList)
-            {
-                // translate if necessary
-                item.title = _overlay.GetMaturityGrouping(item.grouping_id, lang)?.Title ?? item.title;
-                if (!resp.Exists(x => x.Name == item.title))
-                {
-                    var domain = new AnswerDistribDomain()
-                    {
-                        Name = item.title,
-                        Series = InitializeSeries()
-                    };
-
-                    resp.Add(domain);
-                }
-            }
-
-            // determine percentages for each answer count in the distribution
-            resp.ForEach(domain =>
-            {
-                domain.Series.ForEach(y =>
-                {
-                    double percent = CalculatePercent(dbList.Where(g => g.title == domain.Name).ToList(), y.Name);
-                    y.Value = percent;
-
-                });
-            });
+            var cpgBiz = new CpgBusiness(_context, lang);
+            var resp = cpgBiz.GetAnswerDistribForDomains(assessmentId);
 
             return Ok(resp);
         }
 
 
         /// <summary>
-        /// Calculates the percentage based on all answer values for the domain
+        /// Returns the applicable SSG model ID (if any)
         /// </summary>
         /// <returns></returns>
-        private double CalculatePercent(List<GetAnswerDistribGroupingsResult> r, string ansName)
+        [HttpGet]
+        [Route("api/ssg/modelid")]
+        public IActionResult GetSsgModelId()
         {
-            var target = r.FirstOrDefault(x => x.answer_text == ansName)?.answer_count ?? 0;
-            var total = r.Select(x => x.answer_count).Sum();
+            int assessmentId = _tokenManager.AssessmentForUser();
+            var lang = _tokenManager.GetCurrentLanguage();
 
-            return ((double)target * 100d / (double)total);
-        }
+            var cpgBiz = new CpgBusiness(_context, lang);
 
+            var ssgModelId = cpgBiz.DetermineSsgModel(assessmentId);
 
-        /// <summary>
-        /// Initializes 'empty' percentge slots for potential CPG answers.
-        /// </summary>
-        /// <returns></returns>
-        private List<Series> InitializeSeries()
-        {
-            var list = new List<Series>();
-
-            var values = new List<string>() { "Y", "I", "S", "N", "U" };
-            foreach (string s in values)
-            {
-                list.Add(new Series()
-                {
-                    Name = s,
-                    Value = 0
-                });
-            }
-
-            return list;
+            return Ok(ssgModelId);
         }
     }
 }

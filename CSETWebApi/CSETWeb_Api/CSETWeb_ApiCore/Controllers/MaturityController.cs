@@ -4,7 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Acet;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
@@ -12,19 +11,14 @@ using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Maturity;
+using CSETWebCore.Model.Nested;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using System.Xml.XPath;
-using Newtonsoft.Json;
-using CSETWebCore.Api.Interfaces;
-using NLog;
-using CSETWebCore.Model.Nested;
-using DocumentFormat.OpenXml.Office2013.Excel;
-using J2N.Numerics;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -130,7 +124,7 @@ namespace CSETWebCore.Api.Controllers
         /// 
         /// </summary>
         [HttpGet]
-        [Route("api/MaturityQuestions")]
+        [Route("api/maturity/questions")]
         public IActionResult GetQuestions(bool fill, int groupingId = 0)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
@@ -139,11 +133,30 @@ namespace CSETWebCore.Api.Controllers
 
             if (installationMode == "ACET")
             {
-                return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, fill, groupingId, installationMode, lang));
+                return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, fill, groupingId, lang));
             }
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, fill, groupingId, installationMode, lang));
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, fill, groupingId, lang));
         }
+
+
+        /// <summary>
+        /// Returns a "bonus" maturity model.  This is the generic term being used
+        /// for the Sector-Specific Goal (SSG) models that are appended to a CPG assessment.
+        /// </summary>
+        [HttpGet]
+        [Route("api/maturity/questions/bonus")]
+        public IActionResult GetBonusModelQuestions([FromQuery] int m)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            string lang = _tokenManager.GetCurrentLanguage();
+
+            MaturityResponse resp = new();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(
+                assessmentId, false, 0, resp, m, lang));
+        }
+
 
         [HttpGet]
         [Route("api/maturity/targetlevel")]
@@ -544,7 +557,7 @@ namespace CSETWebCore.Api.Controllers
         // --------------------------------------
 
 
-        
+
 
         /// <summary>
         /// get maturity definiciency list
