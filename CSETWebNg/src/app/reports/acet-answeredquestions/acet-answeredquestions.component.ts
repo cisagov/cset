@@ -28,6 +28,7 @@ import { ACETService } from '../../services/acet.service';
 import { ConfigService } from '../../services/config.service';
 import { QuestionsService } from '../../services/questions.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { MaturityService } from '../../services/maturity.service';
 
 
 @Component({
@@ -37,6 +38,7 @@ import { TranslocoService } from '@ngneat/transloco';
 })
 export class AcetAnsweredQuestionsComponent implements OnInit {
   response: any = {};
+  targetLevel: any;
 
   constructor(
     public reportSvc: ReportService,
@@ -44,7 +46,8 @@ export class AcetAnsweredQuestionsComponent implements OnInit {
     public acetSvc: ACETService,
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
-    private tSvc: TranslocoService
+    private tSvc: TranslocoService, 
+    public matSvc: MaturityService
   ) { }
 
   ngOnInit(): void {
@@ -57,6 +60,16 @@ export class AcetAnsweredQuestionsComponent implements OnInit {
       error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );
 
+    // Get current maturity levels
+    this.acetSvc.getMatRange().subscribe(
+      (r: any) => {
+        let list = JSON.stringify(r)
+        let cleanedString: string = list.replace(/[\[\]"]+/g, '');
+        let final: string = cleanedString.replace(/,/g, '/');
+        this.targetLevel = final;
+      });
+      
+    
   }
 
 
