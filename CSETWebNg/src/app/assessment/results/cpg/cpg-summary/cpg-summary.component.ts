@@ -74,7 +74,7 @@ export class CpgSummaryComponent implements OnInit {
    * This may need to be made smarter in the future.
    */
   determineSsg() {
-    const ssgSectors = [1, 19];
-    return ssgSectors.indexOf(this.assessSvc.assessment?.sectorId) >= 0;
+    const allSsgSectors = [1, 19];
+    return allSsgSectors.includes(Number(this.assessSvc.assessment?.sectorId));
   }
 }
