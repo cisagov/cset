@@ -25,6 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../../../services/config.service';
 import { CpgService } from '../../../../services/cpg.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { AssessmentService } from '../../../../services/assessment.service';
 
 @Component({
   selector: 'app-cpg-summary',
@@ -35,7 +36,10 @@ export class CpgSummaryComponent implements OnInit {
 
   answerDistribByDomain: any[];
 
+  isSsgApplicable = false;
+
   constructor(
+    public assessSvc: AssessmentService,
     public cpgSvc: CpgService,
     public configSvc: ConfigService,
     public tSvc: TranslocoService
@@ -60,6 +64,17 @@ export class CpgSummaryComponent implements OnInit {
       });
 
       this.answerDistribByDomain = resp;
+
+      this.isSsgApplicable = this.determineSsg();
     });
+  }
+
+  /**
+   * Simply indicates if any SSG is applicable due to the sector ID.
+   * This may need to be made smarter in the future.
+   */
+  determineSsg() {
+    const allSsgSectors = [1, 19];
+    return allSsgSectors.includes(Number(this.assessSvc.assessment?.sectorId));
   }
 }

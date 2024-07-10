@@ -6,9 +6,12 @@
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.Linq;
 using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Snickler.EFCore;
@@ -945,11 +948,33 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
 
-        public virtual IList<GetAnswerDistribGroupingsResult> GetAnswerDistribGroupings(int assessmentId)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <param name="modelId"></param>
+        /// <returns></returns>
+        public virtual IList<GetAnswerDistribGroupingsResult> GetAnswerDistribGroupings(int assessmentId, int? modelId = null)
         {
+            // use the supplied modelId or if null, the proc will default to the principal model of the assessment
+            object m = modelId;
+            if (modelId == null)
+            {
+                m = DBNull.Value;
+            }
+
+
+            var parms = new IDbDataParameter[]
+            {
+                 new SqlParameter("@assessmentId", assessmentId),
+                 new SqlParameter("@modelId", m),
+            };
+
+
             IList<GetAnswerDistribGroupingsResult> myrval = null;
             this.LoadStoredProc("GetAnswerDistribGroupings")
-                .WithSqlParam("@assessmentId", assessmentId)
+                .WithSqlParams(parms)
                 .ExecuteStoredProc((handler) =>
                 {
                     myrval = handler.ReadToList<GetAnswerDistribGroupingsResult>();

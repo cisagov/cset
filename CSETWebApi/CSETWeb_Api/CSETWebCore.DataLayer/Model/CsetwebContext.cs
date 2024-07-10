@@ -293,6 +293,8 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
 
+    public virtual DbSet<LU_WEIGHTS> LU_WEIGHTS { get; set; }
+
     public virtual DbSet<MALCOLM_ANSWERS> MALCOLM_ANSWERS { get; set; }
 
     public virtual DbSet<MALCOLM_MAPPING> MALCOLM_MAPPING { get; set; }
@@ -344,6 +346,8 @@ public partial class CsetwebContext : DbContext
     public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
 
     public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
+
+    public virtual DbSet<NCSF_MIGRATION> NCSF_MIGRATION { get; set; }
 
     public virtual DbSet<NERC_RISK_RANKING> NERC_RISK_RANKING { get; set; }
 
@@ -515,13 +519,9 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<ACCESS_KEY_ASSESSMENT>(entity =>
         {
-            entity.HasOne(d => d.AccessKeyNavigation).WithMany(p => p.ACCESS_KEY_ASSESSMENT)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ACCESS_KEY");
+            entity.HasOne(d => d.AccessKeyNavigation).WithMany(p => p.ACCESS_KEY_ASSESSMENT).HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ACCESS_KEY");
 
-            entity.HasOne(d => d.Assessment).WithMany(p => p.ACCESS_KEY_ASSESSMENT)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ASSESSMENTS");
+            entity.HasOne(d => d.Assessment).WithMany(p => p.ACCESS_KEY_ASSESSMENT).HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ASSESSMENTS");
         });
 
         modelBuilder.Entity<ADDRESS>(entity =>
@@ -575,10 +575,10 @@ public partial class CsetwebContext : DbContext
                 .HasComment("The Answer Text is used to");
             entity.Property(e => e.Comment).HasComment("The Comment is used to");
             entity.Property(e => e.Component_Guid).HasComment("The Component Guid is used to");
-            entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end,(0)))", false);
-            entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end,(0)))", false);
-            entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end,(0)))", false);
-            entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end,(0)))", false);
+            entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end))", false);
+            entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end))", false);
+            entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end))", false);
+            entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end))", false);
             entity.Property(e => e.Mark_For_Review).HasComment("The Mark For Review is used to");
             entity.Property(e => e.Question_Number).HasComment("The Question Number is used to");
             entity.Property(e => e.Question_Or_Requirement_Id).HasComment("The Question Or Requirement Id is used to");
@@ -1762,6 +1762,11 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Level_Name).HasComment("The Level Name is used to");
         });
 
+        modelBuilder.Entity<LU_WEIGHTS>(entity =>
+        {
+            entity.HasKey(e => e.DisplayID).HasName("PK__LU_WEIGH__76EAD95D2B2B4749");
+        });
+
         modelBuilder.Entity<MALCOLM_ANSWERS>(entity =>
         {
             entity.HasOne(d => d.Assessment).WithMany(p => p.MALCOLM_ANSWERS).HasConstraintName("FK_MALCOLM_ANSWERS_ASSESSMENTS");
@@ -1879,9 +1884,7 @@ public partial class CsetwebContext : DbContext
 
             entity.HasOne(d => d.Gen_File).WithMany(p => p.MATURITY_REFERENCES).HasConstraintName("FK_MATURITY_REFERENCES_GEN_FILE");
 
-            entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_REFERENCES)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_MATURITY_REFERENCES_MATURITY_QUESTIONS");
+            entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_REFERENCES).HasConstraintName("FK_MATURITY_REFERENCES_MATURITY_QUESTIONS");
         });
 
         modelBuilder.Entity<MATURITY_REFERENCE_TEXT>(entity =>
@@ -2807,6 +2810,7 @@ public partial class CsetwebContext : DbContext
         });
         modelBuilder.HasSequence<int>("MaturityNodeSequence");
 
+        OnModelCreatingGeneratedProcedures(modelBuilder);
         OnModelCreatingPartial(modelBuilder);
     }
 

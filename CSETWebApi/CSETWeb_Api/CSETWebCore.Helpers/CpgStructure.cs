@@ -4,31 +4,23 @@
 // 
 // 
 //////////////////////////////// 
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//using System.Xml.Linq;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using CSETWebCore.Model.Maturity.CPG;
-using NSoup.Parse;
-
 
 
 namespace CSETWebCore.Helpers
 {
     /// <summary>
     /// The idea is a lightweight XDocument based 
-    /// representation of any maturity model's questions
+    /// representation of the CPG model's questions
     /// in their grouping structure.
     /// 
     /// </summary>
-    public class MaturityStructure
+    public class CpgStructure
     {
         private readonly CSETContext _context;
 
@@ -53,12 +45,14 @@ namespace CSETWebCore.Helpers
         private TranslationOverlay _overlay;
 
 
+
+
         /// <summary>
         /// Returns a populated instance of the maturity grouping
         /// and question structure for an assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityStructure(int assessmentId, CSETContext context, bool includeText, string lang)
+        public CpgStructure(int assessmentId, CSETContext context, bool includeText, string lang)
         {
             this.AssessmentId = assessmentId;
             this._context = context;
@@ -69,7 +63,6 @@ namespace CSETWebCore.Helpers
             // set up translation resources
             this._overlay = new TranslationOverlay();
             this._lang = lang;
-
 
             LoadStructure();
         }
@@ -187,22 +180,14 @@ namespace CSETWebCore.Helpers
 
 
                 // are there any questions that belong to this grouping?
-                var myQuestions = questions.Where(x => x.Grouping_Id == sg.Grouping_Id).ToList();
+                var myQuestionsNative = questions.Where(x => x.Grouping_Id == sg.Grouping_Id).ToList();
 
-                var parentQuestionIDs = myQuestions.Select(x => x.Parent_Question_Id).Distinct().ToList();
+                var parentQuestionIDs = myQuestionsNative.Select(x => x.Parent_Question_Id).Distinct().ToList();
 
-                foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
+                foreach (var myQ in myQuestionsNative.OrderBy(s => s.Sequence))
                 {
                     FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
-
-                    var question = new Model.Maturity.CPG.Question();
-                    question.QuestionId = myQ.Mat_Question_Id;
-                    question.ParentQuestionId = myQ.Parent_Question_Id;
-                    question.Sequence = myQ.Sequence;
-                    question.DisplayNumber = myQ.Question_Title;
-                    question.Answer = answer?.a.Answer_Text ?? "";
-                    question.Comment = answer?.a.Comment ?? "";
-                    question.IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id);
+                    var question = QuestionAnswerBuilder.BuildCpgQuestion(myQ, answer);
 
 
                     if (_includeText)
@@ -223,14 +208,14 @@ namespace CSETWebCore.Helpers
                         var csfList = _addlSuppl.GetCsfMappings(myQ.Mat_Question_Id, "Maturity");
                         foreach (var csf in csfList)
                         {
-                            question.CSF.Add(csf);
+                            question.CsfMappings.Add(csf);
                         }
 
                         // Include any TTPs
                         var ttpList = _addlSuppl.GetTTPReferenceList(myQ.Mat_Question_Id);
                         foreach (var ttp in ttpList)
                         {
-                            question.TTP.Add(ttp.Description);
+                            question.TTP.Add(ttp);
                         }
 
 
@@ -263,6 +248,5 @@ namespace CSETWebCore.Helpers
                 GetSubgroups(grouping.Groupings, sg.Grouping_Id, allGroupings, questions, answers, remarks);
             }
         }
-
     }
 }

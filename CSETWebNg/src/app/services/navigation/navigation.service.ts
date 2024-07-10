@@ -98,7 +98,7 @@ export class NavigationService implements OnDestroy, OnInit {
     private navTreeSvc: NavTreeService
   ) {
     this.setWorkflow('omni');
-    this.assessSvc.assessmentStateChanged.subscribe((reloadState) => {
+    this.assessSvc.assessmentStateChanged$.subscribe((reloadState) => {
       switch (reloadState) {
         case 123:
           break;
@@ -111,15 +111,18 @@ export class NavigationService implements OnDestroy, OnInit {
           this.buildTree();
           this.navDirect('phase-prepare');
           break;
+        case 126:
+          // refresh tree only
+          this.buildTree();
+          break;
       }
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {  }
 
-  }
   ngOnDestroy() {
-    this.assessSvc.assessmentStateChanged.unsubscribe()
+    this.assessSvc.assessmentStateChanged$.unsubscribe()
   }
 
   /**

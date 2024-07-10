@@ -105,6 +105,31 @@
     "description": ""
   },
   {
+    "groupingId": "560",
+    "title": "Ідентифікувати",
+    "description": ""
+  },
+  {
+    "groupingId": "561",
+    "title": "Захищати",
+    "description": ""
+  },
+  {
+    "groupingId": "562",
+    "title": "Виявляти",
+    "description": ""
+  },
+  {
+    "groupingId": "563",
+    "title": "Відповісти",
+    "description": ""
+  },
+  {
+    "groupingId": "564",
+    "title": "Відновити",
+    "description": ""
+  },
+  {
     "groupingId": "502",
     "title": "Управління ризиками",
     "description": "[UK] Establish, operate, and maintain an enterprise cyber risk management program to identify, analyze, and respond to cyber risk the organization is subject to, including its business units, subsidiaries, related interconnected infrastructure, and stakeholders."
