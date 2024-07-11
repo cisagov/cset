@@ -26,9 +26,9 @@ import { Title } from '@angular/platform-browser';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { CpgService } from '../../../services/cpg.service';
+import { SsgService } from '../../../services/ssg.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { RraDataService } from '../../../services/rra-data.service';
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
@@ -53,18 +53,24 @@ export class CpgDeficiencyComponent implements OnInit {
   facilityName: string;
 
   info: any;
+
+  // deficient answers in the principal model
   def: any;
+
+  // deficient SSG answers
+  ssgIncluded = false;
+  ssg: any;
 
   /**
    * 
    */
   constructor(
-    public rraDataSvc: RraDataService,
+    public assessSvc: AssessmentService,
     public titleSvc: Title,
     public maturitySvc: MaturityService,
-    private assessSvc: AssessmentService,
     public questionsSvc: QuestionsService,
     public cpgSvc: CpgService,
+    public ssgSvc: SsgService,
     public configSvc: ConfigService,
     public tSvc: TranslocoService
   ) { }
@@ -75,7 +81,22 @@ export class CpgDeficiencyComponent implements OnInit {
   ngOnInit(): void {
     this.titleSvc.setTitle(this.tSvc.translate('reports.core.cpg.deficiency.cpg deficiency') + " - " + this.configSvc.behaviors.defaultTitle);
 
-    this.maturitySvc.getMaturityDeficiency('CPG').subscribe((resp: any) => {
+    // make sure that the assessSvc has the assessment loaded so that we can determine any SSG model applicable
+    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
+      this.assessSvc.assessment = assessmentDetail;
+      var ssgModelId = this.ssgSvc.ssgBonusModel();
+  
+      // get any deficient answers for the SSG model
+      if (!!ssgModelId) {
+        this.ssgIncluded = true;
+        this.maturitySvc.getMaturityDeficiency(ssgModelId).subscribe((resp: any) => {
+          this.ssg = resp.deficienciesList;
+        });
+      }
+    });
+
+    // get the deficient answers for the CPG model
+    this.maturitySvc.getMaturityDeficiency(11).subscribe((resp: any) => {
       this.info = resp.information;
       this.def = resp.deficienciesList;
 
@@ -85,6 +106,6 @@ export class CpgDeficiencyComponent implements OnInit {
       this.facilityName = this.info.facility_Name;
 
       this.loading = true;
-    })
+    });
   }
 }
