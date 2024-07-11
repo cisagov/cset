@@ -283,7 +283,7 @@ export class MaturityService {
    * @param maturityModel
    */
   getMaturityDeficiency(maturityModel) {
-    return this.http.get(this.configSvc.apiUrl + 'getMaturityDeficiencyList?maturity=' + maturityModel);
+    return this.http.get(this.configSvc.apiUrl + 'maturity/deficiency?maturity=' + maturityModel);
   }
 
   getMaturityDeficiencySd() {

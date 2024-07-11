@@ -73,4 +73,12 @@ export class SsgService {
     }
     return null;
   }
+
+  /**
+   * Indicates if any of the SSGs apply to the assessment
+   * due to its sector.
+   */
+  doesSsgApply() {
+    return this.ssgBonusModel() != null;
+  }
 }
