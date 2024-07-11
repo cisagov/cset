@@ -560,22 +560,31 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// get maturity definiciency list
+        /// Get maturity definiciency list.  
+        /// If the maturity query parm is null, gets the main model for the assessment.
+        /// If the parm is specified, gets that model's deficient answers for the assessment.  This is used for SSG bonus models.
         /// </summary>
         /// <param name="maturity"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/getMaturityDeficiencyList")]
-        public IActionResult GetDeficiencyList()
+        [Route("api/maturity/deficiency")]
+        public IActionResult GetDeficiencyList([FromQuery] string maturity)
         {
             try
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
                 _reports.SetReportsAssessmentId(assessmentId);
 
+
+                int? modelId = null;
+                if (maturity != null)
+                {
+                    modelId = int.Parse(maturity);
+                }
+
                 var data = new MaturityBasicReportData
                 {
-                    DeficienciesList = _reports.GetMaturityDeficiencies(),
+                    DeficienciesList = _reports.GetMaturityDeficiencies(modelId),
                     Information = _reports.GetInformation()
                 };
 
