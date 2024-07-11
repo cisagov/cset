@@ -1,6 +1,4 @@
 ---
-version: "3.8"
-
 services:
   sqlserver:
     container_name: cset-mssql
