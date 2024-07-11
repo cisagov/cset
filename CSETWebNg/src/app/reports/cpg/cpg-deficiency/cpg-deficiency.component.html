@@ -22,8 +22,8 @@
 -------------------------->
 <div class="report-body mb-5" *transloco="let t">
 
-    <app-cover-sheet-a title="{{ 'reports.core.cpg.deficiency.report title' | transloco }}" [assessmentName]="assessmentName"
-        [assessmentDate]="assessmentDate" [assessorName]="assessorName"
+    <app-cover-sheet-a title="{{ 'reports.core.cpg.deficiency.report title' | transloco }}"
+        [assessmentName]="assessmentName" [assessmentDate]="assessmentDate" [assessorName]="assessorName"
         [facilityName]="facilityName"></app-cover-sheet-a>
 
     <div class="disclaimer-blurb mt-4">
@@ -40,7 +40,7 @@
     <hr class="page-break m-0">
 
     <div *ngIf="loading">
-        <table role="presentation">
+        <table role="presentation" class="w-100">
             <ng-template ngFor let-s [ngForOf]="def">
                 <tr>
                     <td class="deficiencies-list-item" style="font-weight: bold; width: 50px;">{{s.mat.question_Title}}
@@ -68,10 +68,52 @@
                 </tr>
 
             </ng-template>
-
         </table>
+
         <div *ngIf="def.length == 0">
             {{t('reports.core.cpg.deficiency.p.4')}}
         </div>
+
+
+        <div *ngIf="ssgIncluded" class="mt-5">
+            <h1>
+                {{t('reports.core.cpg.deficiency.ssg deficiencies')}} 
+            </h1>
+            <table role="presentation" class="w-100">
+                <ng-template ngFor let-s [ngForOf]="ssg">
+                    <tr>
+                        <td class="deficiencies-list-item" style="font-weight: bold; width: 50px;" class="pr-3">
+                            {{s.mat.question_Title}}
+                        </td>
+                        <td class="deficiencies-list-comment">{{s.mat.security_Practice}}</td>
+                        <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
+                            <div style="width: 9rem; font-weight: bold;">
+                                {{questionsSvc.answerDisplayLabel(11, s.answer.answer_Text)}}
+                            </div>
+                        </td>
+                        <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
+                                src="assets/images/icons/MarkedFlag.png"></td>
+                    </tr>
+
+                    <tr *ngIf="s.answer.comment">
+                        <td></td>
+                        <td>
+                            <app-mat-comments [comment]="s.answer.comment"></app-mat-comments>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <hr class="my-2">
+                        </td>
+                    </tr>
+
+                </ng-template>
+            </table>
+
+            <div *ngIf="ssg.length == 0">
+                {{t('reports.core.cpg.deficiency.p.4')}}
+            </div>
+        </div>
+
     </div>
 </div>

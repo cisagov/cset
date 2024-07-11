@@ -1172,7 +1172,7 @@
             "3": "This table lists all security practices and how they have been answered.",
             "a": "The CPG Performance Summary chart provides a high-level overview of how well an organization meets the goals within each security practice category. It presents the distribution percentage of each response type per category. Additionally, the data is displayed in a table below the chart for further examination.",
             "b": "The Security Practice Checklist contains a comprehensive overview of the assessment results, including the TTPs or risks addressed and recommended actions. Additionally, the checklist incorporates criteria such as “Impact,” “Cost,” and “Complexity” for each goal. These criteria can help organizations evaluate the importance and effects of each practice and prioritize them for implementation.",
-            "ssg": "Sector-Specific Goal questions are included in these results."
+            "ssg": "Sector-Specific Goal answers are included in these results."
           },
           "current assessment": "Current Assessment",
           "notes": "Notes",
@@ -1188,6 +1188,7 @@
           "report title": "DEFICIENCY REPORT CYBERSECURITY PERFORMANCE GOALS (CPG)",
           "cpg deficiency": "CPG Deficiency",
           "deficiencies": "Deficiencies",
+          "ssg deficiencies": "Sector-Specific Deficiencies",
           "p": {
             "1": "This deficiency report lists the practices that are \"Not Implemented\" or unanswered.",
             "2": "This is often referred to as the GAP Report. This report intends to list the gaps, assist users of the report in identifying gaps, prioritizing work, and beginning to make a plan to address the gaps by implementing the controls necessary to come into compliance with the associated practice.",
