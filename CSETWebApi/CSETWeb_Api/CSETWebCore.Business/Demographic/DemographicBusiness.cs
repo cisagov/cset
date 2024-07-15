@@ -134,7 +134,25 @@ namespace CSETWebCore.Business.Demographic
             string assetValue = _context.DEMOGRAPHICS_ASSET_VALUES.Where(dav => dav.DemographicsAssetId == demographics.AssetValue).FirstOrDefault()?.AssetValue;
             string assetSize = _context.DEMOGRAPHICS_SIZE.Where(dav => dav.DemographicId == demographics.Size).FirstOrDefault()?.Size;
 
+            //Clear out corresponding DETAILS_DEMOGRAPHICS values if new values set by non-assessor
+            if (demographics.SectorId != null)
+            {
+                var rec = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == demographics.AssessmentId && x.DataItemName == "SECTOR").FirstOrDefault();
+                rec.IntValue = null;
+            }
+            if (demographics.OrganizationType != null)
+            {
+                var rec = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == demographics.AssessmentId && x.DataItemName == "ORG-TYPE").FirstOrDefault();
+                rec.IntValue = null;
+            }
+            if (demographics.Agency != null)
+            {
+                var rec = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == demographics.AssessmentId && x.DataItemName == "BUSINESS-UNIT").FirstOrDefault();
+                rec.StringValue = null;
+            }
+
             // If the user selected nothing for sector or industry, store a null - 0 violates foreign key
+
             if (demographics.SectorId == 0)
             {
                 demographics.SectorId = null;
@@ -146,6 +164,7 @@ namespace CSETWebCore.Business.Demographic
             }
 
             var dbDemographics = _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == demographics.AssessmentId).FirstOrDefault();
+
             if (dbDemographics == null)
             {
                 dbDemographics = new DEMOGRAPHICS()
