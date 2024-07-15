@@ -295,27 +295,8 @@ namespace CSETWebCore.Business.Demographic
         public void SaveX(int assessmentId, string recName, object value)
         {
             var rec = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == recName).FirstOrDefault();
-            var demo = _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
-            //Clear out corresponding DEMOGRAPHICS values if new values set by assessor
-            var userId = _context.Assessments_For_User.Where(user => user.AssessmentId == assessmentId).FirstOrDefault();
-            var user = _context.USERS.Where(user => user.UserId == userId.UserId).FirstOrDefault();
-            if (user.CisaAssessorWorkflow)
-            {
-                if (recName == "SECTOR")
-                {
-                    demo.SectorId = null;
-                }
-                if (recName == "ORG-TYPE")
-                {
-                    demo.OrganizationType = null;
-                }
-                if (recName == "BUSINESS-UNIT")
-                {
-                    demo.Agency = null;
-                }
-            }
-            
+            this.ClearValues(assessmentId, recName);
 
             if (rec == null)
             {
@@ -357,6 +338,29 @@ namespace CSETWebCore.Business.Demographic
             _context.SaveChanges();
         }
 
+        //Clear out corresponding DEMOGRAPHICS values if new values set by assessor
+        public void ClearValues(int assessmentId, string recName)
+        {
+            var demo = _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            var userId = _context.Assessments_For_User.Where(user => user.AssessmentId == assessmentId).FirstOrDefault();
+            var user = _context.USERS.Where(user => user.UserId == userId.UserId).FirstOrDefault();
+            if (user.CisaAssessorWorkflow)
+            {
+                if (recName == "SECTOR")
+                {
+                    demo.SectorId = null;
+                }
+                if (recName == "ORG-TYPE")
+                {
+                    demo.OrganizationType = null;
+                }
+                if (recName == "BUSINESS-UNIT")
+                {
+                    demo.Agency = null;
+                }
+            }
+            _context.SaveChanges();
+        }
 
         /// <summary>
         /// 
