@@ -344,7 +344,7 @@ namespace CSETWebCore.Business.Demographic
             var demo = _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             var userId = _context.Assessments_For_User.Where(user => user.AssessmentId == assessmentId).FirstOrDefault();
             var user = _context.USERS.Where(user => user.UserId == userId.UserId).FirstOrDefault();
-            if (user.CisaAssessorWorkflow)
+            if (user.CisaAssessorWorkflow && demo != null)
             {
                 if (recName == "SECTOR")
                 {
@@ -352,7 +352,9 @@ namespace CSETWebCore.Business.Demographic
                 }
                 if (recName == "ORG-TYPE")
                 {
-                    demo.OrganizationType = null;
+                  demo.OrganizationType = null;
+                    demo.IndustryId = null;
+                    
                 }
                 if (recName == "BUSINESS-UNIT")
                 {
