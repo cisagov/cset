@@ -376,8 +376,8 @@ export class QuestionExtrasComponent implements OnInit {
     this.dialog.open(ObservationsComponent, {
       data: obs,
       disableClose: true,
-      width: this.layoutSvc.hp ? '90%' : '600px',
-      maxWidth: this.layoutSvc.hp ? '90%' : '600px',
+      width: this.layoutSvc.hp ? '90%' : '750px',
+      maxWidth: this.layoutSvc.hp ? '90%' : '750px',
     }
 
     )
