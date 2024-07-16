@@ -65,7 +65,7 @@ export class SsgService {
    * value lists, these will likely be defined in pairs, one
    * cyber sector and one NIPP sector.
    */
-  ssgBonusModel() {
+  ssgBonusModel(): number {
     const s : number = Number(this.assessSvc.assessment?.sectorId);
     
     if ([1, 19].includes(s)) {
