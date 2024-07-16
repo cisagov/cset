@@ -63,8 +63,14 @@
 
     <div class="page-break">
         <h1>{{t('reports.core.cpg.report.security practice checklist')}}</h1>
-        <p class="mb-0"> {{t('reports.core.cpg.report.p.3')}}</p>
+        <p class="mb-0">{{t('reports.core.cpg.report.p.3')}}</p>
         <app-cpg-practice-table></app-cpg-practice-table>
+    </div>
+
+    <div class="page-break" *ngIf="isSsgApplicable">
+        <h1>{{t('reports.core.cpg.report.ssg security practice checklist')}}</h1>
+        <p class="mb-0"> {{t('reports.core.cpg.report.p.4')}}</p>
+        <app-cpg-practice-table [ssgModelId]="ssgBonusModel"></app-cpg-practice-table>
     </div>
 
 </div>

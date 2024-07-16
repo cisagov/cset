@@ -10,9 +10,6 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
-using System.Collections.Generic;
-using System.Linq;
-using CSETWebCore.Helpers;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -50,7 +47,7 @@ namespace CSETWebCore.Api.Controllers
         /// to a single domain.
         /// </summary>
         [HttpGet]
-        [Route("api/maturitystructure/cpg")]
+        [Route("api/maturity/structure/cpg")]
         public IActionResult GetQuestions()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
@@ -58,6 +55,26 @@ namespace CSETWebCore.Api.Controllers
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var x = biz.GetMaturityStructure(assessmentId, true, lang);
+
+            return Ok(x);
+        }
+
+
+        /// <summary>
+        /// Returns the maturity grouping/question structure for an assessment.
+        /// Specifying a query parameter of domainAbbreviation will limit the response
+        /// to a single domain.
+        /// </summary>
+        [HttpGet]
+        [Route("api/maturity/structure/cpg/bonus")]
+        public IActionResult GetQuestionsForModel([FromQuery] int modelId)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            var lang = _tokenManager.GetCurrentLanguage();
+
+            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var x = biz.GetMaturityStructure(assessmentId, true, lang, modelId);
+
             return Ok(x);
         }
 

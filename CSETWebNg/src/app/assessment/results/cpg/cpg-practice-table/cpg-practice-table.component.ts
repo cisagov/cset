@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ColorService } from '../../../../services/color.service';
 import { CpgService } from '../../../../services/cpg.service';
 
@@ -33,6 +33,12 @@ import { CpgService } from '../../../../services/cpg.service';
 export class CpgPracticeTableComponent implements OnInit {
 
   model: any;
+
+  /**
+   * To render a practice table for a specified model
+   */
+  @Input()
+  ssgModelId?: number;
 
 
   /**
@@ -47,40 +53,45 @@ export class CpgPracticeTableComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.model = this.cpgSvc.getStructure().subscribe((resp: any) => {
+    let modelId = null;
+
+    if (!!this.ssgModelId) {
+      modelId = this.ssgModelId;
+    }
+
+    // we need an optional argument to getStructure.  Either get CPG or a specified SSG model.
+    this.model = this.cpgSvc.getStructure(modelId).subscribe((resp: any) => {
       this.model = resp;
     });
   }
 
   /**
-   * White text for all except DETECT (yellow)
-   */
-  textColor(groupId: number): string {
-    if (groupId == 202) {
-      return '#000';
-    }
-    return '#fff';
-  }
-
-  /**
    * Returns the color for the CSF function of the group.
    * This is specific to CPG grouping IDs.
+   * 
+   * As SSG models are added to CSET the new grouping codes will be
+   * added to this logic.
    */
   backgroundColor(groupId: number): string {
     switch (groupId) {
       case 200:
+      case 560:
         // identify
         return this.colorSvc.nistCsfFuncColor('ID');
       case 201:
+      case 561:
         // protect
         return this.colorSvc.nistCsfFuncColor('PR');
       case 202:
+      case 562:
         // detect
         return this.colorSvc.nistCsfFuncColor('DE');
       case 203:
+      case 563:
         // respond
         return this.colorSvc.nistCsfFuncColor('RS');
       case 204:
+      case 564:
         // recover
         return this.colorSvc.nistCsfFuncColor('RC');
       default:
