@@ -202,6 +202,11 @@ namespace CSETWebCore.Business.Demographic
                 {
                     _context.DETAILS_DEMOGRAPHICS.Remove(rec);
                 }
+                rec = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == demographics.AssessmentId && x.DataItemName == "SUBSECTOR").FirstOrDefault();
+                if (rec != null)
+                {
+                    _context.DETAILS_DEMOGRAPHICS.Remove(rec);
+                }
             }
             if (demographics.OrganizationType != null)
             {
