@@ -26,6 +26,13 @@ namespace CSETWebCore.Helpers
 
         public int AssessmentId { get; set; }
 
+        /// <summary>
+        /// The structure can also be used to define an SSG model
+        /// besides the main CPG model.  This attribute is set
+        /// to load the SSG model.
+        /// </summary>
+        public int? ModelId { get; set; }
+
         public ContentModel Top { get; set; }
 
         private AdditionalSupplemental _addlSuppl { get; set; }
@@ -52,11 +59,27 @@ namespace CSETWebCore.Helpers
         /// and question structure for an assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public CpgStructure(int assessmentId, CSETContext context, bool includeText, string lang)
+        public CpgStructure(int assessmentId, CSETContext context, bool includeText, string lang, int? modelId)
         {
             this.AssessmentId = assessmentId;
             this._context = context;
             this._includeText = includeText;
+
+            if (modelId == null)
+            {
+                var availModel = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == this.AssessmentId && x.Selected).FirstOrDefault();
+                if (availModel == null)
+                {
+                    return;
+                }
+
+                this.ModelId = availModel.model_id;
+            }
+            else
+            {
+                this.ModelId = (int)modelId;
+            }
+
 
             this._addlSuppl = new AdditionalSupplemental(context);
 
@@ -76,23 +99,17 @@ namespace CSETWebCore.Helpers
         {
             Top = new ContentModel();
 
-
-            // determine the assessment's maturity model
-            var model = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == this.AssessmentId && x.Selected).FirstOrDefault();
-            if (model == null)
-            {
-                return;
-            }
-
-            var mm = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == model.model_id).FirstOrDefault();
+            var mm = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == this.ModelId).FirstOrDefault();
             if (mm == null)
             {
                 return;
             }
 
+
             Top.AssessmentId = this.AssessmentId;
             Top.ModelName = mm.Model_Name;
-            Top.ModelId = model.model_id;
+            Top.ModelId = (int)this.ModelId;
+
 
 
             // Get all maturity questions for the model regardless of level.
@@ -101,8 +118,7 @@ namespace CSETWebCore.Helpers
                 .Include(x => x.Maturity_Level)
                 .Include(x => x.MATURITY_REFERENCE_TEXT)
                 .Include(x => x.MATURITY_QUESTION_PROPS)
-                .Where(q =>
-                model.model_id == q.Maturity_Model_Id).ToList();
+                .Where(q => q.Maturity_Model_Id == ModelId).ToList();
 
 
             // cull any questions that are above the target level (if the model supports a target)
@@ -124,7 +140,7 @@ namespace CSETWebCore.Helpers
             // Get all subgroupings for this maturity model
             var allGroupings = _context.MATURITY_GROUPINGS
                 .Include(x => x.Type)
-                .Where(x => x.Maturity_Model_Id == model.model_id).ToList();
+                .Where(x => x.Maturity_Model_Id == ModelId).ToList();
 
             // Get all remarks
             var allRemarks = _context.MATURITY_DOMAIN_REMARKS

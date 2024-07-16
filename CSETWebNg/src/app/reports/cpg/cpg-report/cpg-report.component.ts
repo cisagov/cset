@@ -47,6 +47,7 @@ export class CpgReportComponent implements OnInit {
   answerDistribByDomain: any;
 
   isSsgApplicable = false;
+  ssgBonusModel: number = null;
 
 
   /**
@@ -77,6 +78,7 @@ export class CpgReportComponent implements OnInit {
 
       this.assessSvc.assessment = assessmentDetail;
       this.isSsgApplicable = this.ssgSvc.doesSsgApply();
+      this.ssgBonusModel = this.ssgSvc.ssgBonusModel();
     });
 
     this.cpgSvc.getAnswerDistrib().subscribe((resp: any) => {

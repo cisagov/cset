@@ -67,6 +67,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId));
         }
 
+
         /// <summary>
         /// Set selected maturity models for the assessment.
         /// </summary>
@@ -78,6 +79,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetDomainRemarks(assessmentId));
         }
+
 
         /// <summary>
         /// Set selected maturity models for the assessment.
@@ -91,6 +93,7 @@ namespace CSETWebCore.Api.Controllers
             new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).SetDomainRemarks(assessmentId, remarks);
             return Ok();
         }
+
 
         /// <summary>
         /// Return the current maturity level for an assessment.
@@ -167,6 +170,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetTargetLevel(assessmentId));
         }
 
+
         [HttpGet]
         [Route("api/MaturityModel/GetLevelScoresByGroup")]
         public IActionResult GetLevelScoresByGroup(int mat_model_id)
@@ -175,6 +179,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness)
                 .Get_LevelScoresByGroup(assessmentId, mat_model_id));
         }
+
 
         /// <summary>        
         /// </summary>
@@ -264,6 +269,7 @@ namespace CSETWebCore.Api.Controllers
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var x = biz.GetMaturityStructureForModel(modelId, assessmentId);
+
             return Ok(x.Model);
         }
 
@@ -276,6 +282,7 @@ namespace CSETWebCore.Api.Controllers
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var x = biz.GetGroupingTitles(modelId, lang);
+
             return Ok(x);
         }
 
@@ -292,6 +299,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var biz = new NestedStructure(assessmentId, sectionId, _context);
+
             return Ok(biz.MyModel);
         }
 
@@ -386,8 +394,8 @@ namespace CSETWebCore.Api.Controllers
             resp.Description_Extended = grouping.Description_Extended;
 
             return Ok(resp);
-
         }
+
 
         /// <summary>
         /// Returns list of CIE assessments accessible to the current user.
@@ -402,8 +410,10 @@ namespace CSETWebCore.Api.Controllers
 
             var biz = new CieQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             var x = biz.GetMyCieAssessments(assessmentId, userId);
+
             return Ok(x);
         }
+
 
         /// <summary>
         /// Returns list of CIS assessments accessible to the current user.
@@ -418,6 +428,7 @@ namespace CSETWebCore.Api.Controllers
 
             var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             var x = biz.GetMyCisAssessments(assessmentId, userId);
+
             return Ok(x);
         }
 
@@ -449,6 +460,7 @@ namespace CSETWebCore.Api.Controllers
             var assessmentId = _tokenManager.AssessmentForUser();
             var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             var chartData = cisBiz.GetDeficiencyChartData();
+
             return Ok(chartData);
         }
 
@@ -460,6 +472,7 @@ namespace CSETWebCore.Api.Controllers
             var assessmentId = _tokenManager.AssessmentForUser();
             var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             var chartData = cisBiz.GetSectionScoringCharts();
+
             return Ok(chartData);
         }
 
@@ -475,6 +488,7 @@ namespace CSETWebCore.Api.Controllers
             var assessmentId = _tokenManager.AssessmentForUser();
             var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             biz.ImportCisAnswers(request.Dest, request.Source);
+
             return Ok();
         }
 
@@ -491,6 +505,7 @@ namespace CSETWebCore.Api.Controllers
 
             var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             var integrityCheckOptions = cisBiz.GetIntegrityCheckOptions();
+
             return Ok(integrityCheckOptions);
         }
 
