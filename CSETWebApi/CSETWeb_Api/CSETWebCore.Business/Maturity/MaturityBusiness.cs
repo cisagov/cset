@@ -1333,14 +1333,27 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
-        /// 
+        /// This method gets the CPG model.
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <param name="includeSupplemental"></param>
         /// <returns></returns>
         public Model.Maturity.CPG.ContentModel GetMaturityStructure(int assessmentId, bool includeSupplemental, string lang)
         {
-            var ss = new CpgStructure(assessmentId, _context, includeSupplemental, lang);
+            var ss = new CpgStructure(assessmentId, _context, includeSupplemental, lang, null);
+            return ss.Top;
+        }
+
+
+        /// <summary>
+        /// This method gets a specified SSG model, but in the CPG structure needed for reports.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <param name="includeSupplemental"></param>
+        /// <returns></returns>
+        public Model.Maturity.CPG.ContentModel GetMaturityStructure(int assessmentId, bool includeSupplemental, string lang, int modelId)
+        {
+            var ss = new CpgStructure(assessmentId, _context, includeSupplemental, lang, modelId);
             return ss.Top;
         }
 
