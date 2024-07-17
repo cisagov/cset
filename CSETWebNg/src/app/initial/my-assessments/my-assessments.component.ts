@@ -147,6 +147,8 @@ export class MyAssessmentsComponent implements OnInit {
         this.ncuaSvc.reset();
         break;
       case 'TSA':
+        // ACET files shouldn't be imported into the TSA version
+        this.importExtensions = this.importExtensions.replace(', .acet', '');
         this.isTSA = true;
         break;
       case 'CF':
