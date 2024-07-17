@@ -7,6 +7,7 @@
 using CSETWebCore.Api.Models;
 using CSETWebCore.Business.RepositoryLibrary;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.ResourceLibrary;
 using CSETWebCore.Model.ResourceLibrary;
@@ -14,7 +15,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Org.BouncyCastle.Crypto.Modes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,14 +46,15 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// This can find a file in the GEN_FILE table either by
-        /// filename or by the file's ID.
+        /// This can find a file in the GEN_FILE table either by filename or by the file's ID.
         /// 
-        /// If binary data is in the [Data] column, that is returned.  
-        /// Otherwise a physical file is located and returned.
+        /// If binary data is in the [Data] column, that is returned.  Otherwise a physical file 
+        /// is located and returned.
         /// 
-        /// If there is no physical file, the "cloud" resource library
-        /// server is queried.
+        /// If there is no physical file, the "cloud" resource library server is queried.  
+        /// 
+        /// The binary data for the file is stored in the local GEN_FILE record so that the record 
+        /// can be locally sourced from now on.
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
@@ -61,8 +62,8 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/library/doc/{fileId}")]
         public IActionResult GetReferenceDocument(string fileId)
         {
-            var manager = new ReferenceDocumentManager(_context, _environment, _configuration);
-            var fileResp = manager.FindReferenceDocument(fileId);
+            var refDocManager = new ReferenceDocumentManager(_context, _environment, _configuration);
+            var fileResp = refDocManager.FindLocalReferenceDocument(fileId);
 
             if (fileResp == null)
             {
@@ -78,7 +79,7 @@ namespace CSETWebCore.Api.Controllers
                 if (libHost == null)
                 {
                     // No fallback available
-                    return NotFound();
+                    return GetErrorResponseFile("NoHostDefined.html");
                 }
 
 
@@ -94,7 +95,8 @@ namespace CSETWebCore.Api.Controllers
                 catch (Exception ex)
                 {
                     NLog.LogManager.GetCurrentClassLogger().Error($"Error making doc request to '{url}': {ex.Message}");
-                    return NotFound();
+
+                    return GetErrorResponseFile("DocumentNotFound.html");
                 }
 
 
@@ -108,8 +110,19 @@ namespace CSETWebCore.Api.Controllers
                 NLog.LogManager.GetCurrentClassLogger().Info($"Reference document '{fileId}' was downloaded from the cloud library.");
 
 
+                var stream = libResponse.Content.ReadAsStream();
+
+
+                // Save document content to the local GEN_FILE record so that we never have to pull from the cloud again
+                if (int.TryParse(fileId, out int genFileId))
+                {
+                    refDocManager.SaveDataBuffer(genFileId, stream);
+                }
+
+
                 // repackage the stream and return it
-                return File(libResponse.Content.ReadAsStream(), libResponse.Content.Headers.ContentType.ToString());
+                stream.Position = 0;
+                return File(stream, libResponse.Content.Headers.ContentType.ToString());
             }
 
 
@@ -122,6 +135,21 @@ namespace CSETWebCore.Api.Controllers
             Response.Headers.Append("Content-Disposition", contentDisposition.ToString());
 
             return File(fileResp.Stream, fileResp.ContentType);
+        }
+
+
+
+        /// <summary>
+        /// Returns a FileContentResult that wraps the the requested app_data file.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        private FileContentResult GetErrorResponseFile(string fileName)
+        {
+            var rh = new ResourceHelper();
+            var bytes = rh.GetCopiedResourceAsBytes(Path.Combine("app_data", fileName));
+
+            return File(bytes, "text/html");
         }
 
 

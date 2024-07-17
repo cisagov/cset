@@ -44,7 +44,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
         /// </summary>
         /// <param name="fileId"></param>
         /// <returns></returns>
-        public ReferenceFileResponse? FindReferenceDocument(string fileId)
+        public ReferenceFileResponse? FindLocalReferenceDocument(string fileId)
         {
             var hashLocation = fileId.IndexOf('#');
             if (hashLocation > -1)
@@ -116,6 +116,28 @@ namespace CSETWebCore.Business.RepositoryLibrary
                 NLog.LogManager.GetCurrentClassLogger().Error(ex);
 
                 return null;
+            }
+        }
+
+
+        /// <summary>
+        /// Overwrites the GEN_FILE [Data] column with the contents of the Stream.
+        /// </summary>
+        /// <param name="genFileId"></param>
+        /// <param name="stream"></param>
+        public void SaveDataBuffer(int genFileId, Stream stream)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                var genfile = _context.GEN_FILE.Where(x => x.Gen_File_Id == genFileId).FirstOrDefault();
+                if (genfile == null)
+                {
+                    return;
+                }
+
+                stream.CopyTo(ms);
+                genfile.Data = ms.ToArray();
+                _context.SaveChanges();
             }
         }
     }
