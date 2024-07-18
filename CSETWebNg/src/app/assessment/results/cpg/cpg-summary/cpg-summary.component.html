@@ -27,6 +27,9 @@
     </p>
     <p>
         {{t('reports.core.cpg.report.p.1')}}
+        <ng-container *ngIf="isSsgApplicable">
+            {{t('reports.core.cpg.report.p.ssg')}}
+        </ng-container>
     </p>
 
     <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain" class="mb-5"></app-cpg-domain-summary>

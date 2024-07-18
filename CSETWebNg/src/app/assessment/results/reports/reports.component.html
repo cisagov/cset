@@ -56,62 +56,17 @@
           {{t('observations tear-out sheets.summary')}}
          </div>
     </div>
-</div>
-
+  </div>
 
   <div [class.div-shield]="disableEntirePage">
-    <div *ngIf="!!assessSvc.assessment && (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile" 
-      class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>{{t('standards and diagram')}}</h4>
-      <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{t('executive summary')}}
-      </button>
 
-      <button (click)="clickReportLink('sitesummary')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{t('site summary report')}}
-      </button>
+    <!-- DIAGRAM -->
+    <app-report-list-diagram *ngIf="!!assessSvc.assessment && (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile"></app-report-list-diagram>
 
-      <button (click)="clickReportLink('securityplan')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{t('site cybersecurity plan')}}
-      </button>
-
-      <button (click)="clickReportLink('detail')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{t('site detail report')}}
-      </button>
-    </div>
-
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('CMMC') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>Capability Maturity Model Certification (CMMC) 1.0</h4>
-
-      <button (click)="clickReportLink('executivecmmc')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        CMMC Executive Summary
-      </button>
-
-      <button (click)="clickReportLink('sitesummarycmmc')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        CMMC Site Summary Report
-      </button>
-
-      <button tabindex="0" (click)="clickReportLink('cmmcDeficiencyReport')"
-        class="btn btn-link btn-link-dark text-left">
-        CMMC Deficiency Report
-      </button>
-
-      <button tabindex="0" (click)="clickReportLink('cmmcCommentsMarked')" class="btn btn-link btn-link-dark text-left">
-        CMMC Comments and Marked for Review
-      </button>
-
-      <button tabindex="0" (click)="clickReportLink('cmmcAltJustifications')"
-        class="btn btn-link btn-link-dark text-left">
-        CMMC Alternate Justifications
-      </button>
-    </div>
-
-
-
+    <!-- CMMC -->
+    <app-report-list-cmmc *ngIf="!!assessSvc.assessment &&
+    assessSvc.usesMaturityModel('CMMC') &&
+    !isMobile"></app-report-list-cmmc>
 
     <!-- EDM -->
     <app-report-list-edm *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
@@ -139,101 +94,87 @@
     <app-report-list-rra *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('RRA') && !isMobile">
     </app-report-list-rra>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('ACET') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>{{ t('acet.acet reports') }}</h4>
-      <!-- commenting out this warning for now because NCUA people wanted reports always available -->
-      <!-- <div *ngIf="disableAcetReportLinks" class="
-        alert-warning
-        mt-2
-        mb-2
-        d-flex
-        flex-row
-        justify-content-center
-        align-items-center
-        flex-11a
-        ng-star-inserted
-      ">
-        <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
-        <span class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-          Some reports are disabled until all statements have been answered.
-        </span>
-      </div> -->
-      <button (click)="clickReportLink('acetexecutive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{ t('acet.executive summary.executive summary') }}
-      </button>
-      <button (click)="clickReportLink('acetgaps')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{ t('acet.gap report.gap report') }}
-      </button>
-      <button (click)="clickReportLink('acetcommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{ t('acet.comments and mfr.comments report') }}
-      </button>
-      <button (click)="clickReportLink('acetansweredquestions')" tabindex="0"
-        class="btn btn-link btn-link-dark text-left">
-        {{ t('acet.answered statements.answered statements report') }}
-      </button>
-      <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0"
-        class="btn btn-link btn-link-dark text-left">
-        {{ t('acet.compensating controls.compensating controls report') }}
-      </button>
-    </div>
+    <!-- ACET -->
+    <app-report-list-acet *ngIf="!!assessSvc.assessment &&
+    assessSvc.usesMaturityModel('ACET') &&
+    !isMobile">
+    </app-report-list-acet>
 
-    <div *ngIf="assessSvc.isISE() && !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>ISE Reports</h4>
-
-      <app-ise-warnings [iseHasBeenSubmitted]="iseHasBeenSubmitted"
-        [disableIseReportLinks]="disableIseReportLinks"></app-ise-warnings>
-
-      <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableSubmitButton()">
-        ISE MERIT SCOPE REPORT (copy paste to Execution Result)
-      </button>
-
-      <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableSubmitButton()">
-        ISE EXAMINATION REPORT (attach as Document in Scope Task)
-      </button>
-
-      <button (click)="clickReportLink('iseansweredquestions')" tabindex="0"
-        class="btn btn-link btn-link-dark text-left">
-        ISE Answered Statements
-      </button>
-
-      <button (click)="clickReportLink('iseexaminer')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        ISE Examiner Notes
-      </button>
-
+    <!-- ISE -->
+    <app-ise-warnings *ngIf="assessSvc.isISE() && !isMobile" [iseHasBeenSubmitted]="iseHasBeenSubmitted"
+    [disableIseReportLinks]="disableIseReportLinks"></app-ise-warnings>
+    <app-report-list-ise *ngIf="assessSvc.isISE() && !isMobile">
+    </app-report-list-ise>
+    <div>
       <div *ngIf="this.ncuaSvc.submitInProgress" class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px"></div>
-      </div>
     </div>
 
 
+    <!-- VADR -->
+    <app-report-list-vadr *ngIf="!!assessSvc.assessment &&
+    assessSvc.usesMaturityModel('VADR') &&
+    !isMobile">
+    </app-report-list-vadr>
+    
+    <!-- MVRA -->
+    <app-report-list-mvra *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('MVRA') && !isMobile">
+    </app-report-list-mvra>
 
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('VADR') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>Validated Architecture Design Review (VADR)</h4>
+    <!-- CPG -->
+    <app-report-list-cpg *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile"></app-report-list-cpg>
+    
+    <!-- C2M2 -->
+    <app-report-list-c2m2 *ngIf="!!assessSvc.assessment &&
+    assessSvc.usesMaturityModel('C2M2') &&
+    !isMobile"></app-report-list-c2m2>
+
+    <!-- HYDRO -->
+    <app-report-list-hydro *ngIf="!!assessSvc.assessment &&
+    assessSvc.usesMaturityModel('HYDRO') &&
+    !isMobile"></app-report-list-hydro>
+    <!-- below is commented out until the VaR scores are collected/calculated -->
+      <!-- <div>
+        <button tabindex="0" (click)="clickReportLink('hydroReport')" class="btn btn-link btn-link-dark text-left">
+          HYDRO Report
+        </button>
+      </div> -->
+
+    <!-- SD02 Series -->
+    <app-report-list-sd02Series *ngIf="!!assessSvc.assessment &&
+    assessSvc.usesMaturityModel('SD02 Series') &&
+    !isMobile"></app-report-list-sd02Series>
+    
+    <!-- SD02 Owner -->
+    <app-report-list-sd02Owner *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('SD02 Owner')"></app-report-list-sd02Owner>
+
+    <!-- CIE -->
+    <div *ngIf="!!assessSvc.assessment &&
+        assessSvc.usesMaturityModel('CIE') &&
+        !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
+      <h4>Cyber-Informed Engineering (CIE)</h4>
       <div>
-        <button tabindex="0" (click)="clickReportLink('vadrReport')" class="btn btn-link btn-link-dark text-left">
-          VADR Report
+        <button (click)="clickReportLink('cieNotApplicable')" tabindex="0"
+          class="btn btn-link btn-link-dark text-left">
+          Export Not Applicable Questions Tear Out Sheets
         </button>
       </div>
       <div>
-        <button tabindex="0" (click)="clickReportLink('vadrDeficiencyReport')"
+        <button (click)="clickReportLink('ciePrincipleOnly')" tabindex="0"
           class="btn btn-link btn-link-dark text-left">
-          VADR Deficiency Report
+          Export Principle-Only CIE-CSET Report
         </button>
       </div>
       <div>
-        <button tabindex="0" (click)="clickReportLink('vadrOpenEndedReport')"
+        <button (click)="clickReportLink('ciePrinciplePhase')" tabindex="0"
           class="btn btn-link btn-link-dark text-left">
-          VADR Open Ended Questions Report
+          Export Principle-Phase CIE-CSET Report
+        </button>
+      </div>
+      <div>
+        <button (click)="clickReportLink('cieAllQuestions')" tabindex="0"
+          class="btn btn-link btn-link-dark text-left">
+          Export All CIE-CSET Report
         </button>
       </div>
     </div>
@@ -399,7 +340,7 @@
         </div>
 
       </div>
-    </div>
+    
   </div>
 
   <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"

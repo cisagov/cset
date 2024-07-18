@@ -151,6 +151,7 @@ export class MyAssessmentsComponent implements OnInit {
         break;
       case 'CF':
         this.isCF = true;
+        this.navTreeSvc.clearNoMatterWhat();
         break;
       default:
         this.isCSET = true;
@@ -158,8 +159,11 @@ export class MyAssessmentsComponent implements OnInit {
 
     if (localStorage.getItem("returnPath")) { }
     else {
-      this.navTreeSvc.clearTree(this.navSvc.getMagic());
+      this.navTreeSvc.clearTree(this.navSvc.getMagic());      
     }
+    // if(this.isCF){
+    //   this.navTreeSvc.clearNoMatterWhat();
+    // }
 
     this.ncuaSvc.assessmentsToMerge = [];
     this.cieSvc.assessmentsToMerge = [];

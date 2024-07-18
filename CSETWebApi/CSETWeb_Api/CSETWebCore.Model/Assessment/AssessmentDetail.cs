@@ -35,6 +35,11 @@ namespace CSETWebCore.Model.Assessment
         public string DiagramMarkup { get; set; }
         public string DiagramImage { get; set; }
 
+
+        public int? SectorId { get; set; }
+        public int? IndustryId { get; set; }
+
+
         // Selected features of the assessment
         public bool UseStandard { get; set; }
         public bool UseDiagram { get; set; }
@@ -50,6 +55,8 @@ namespace CSETWebCore.Model.Assessment
 
         public string Workflow { get; set; }
         public Guid? GalleryItemGuid { get; set; }
+
+        public Guid AssessmentGuid { get; set; }
 
         /// <summary>
         /// Created to be flexible to able to 'flag' an assessment for a special behavior

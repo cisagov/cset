@@ -233,6 +233,7 @@ function createWindow() {
               protocol: 'file:',
               query: {
                 apiUrl: config.api.protocol + '://' + config.api.host + ':' + assignedApiPort,
+                libraryUrl: config.api.protocol + '://' + config.api.host + ':' + assignedApiPort
               },
               slashes: true
             })
@@ -247,7 +248,9 @@ function createWindow() {
         pathname: path.join(__dirname, 'dist/index.html'),
         protocol: 'file:',
         query: {
-          apiUrl: config.api.protocol + '://' + config.api.host + ':' + config.api.port
+          apiUrl: config.api.protocol + '://' + config.api.host + ':' + config.api.port,
+          libraryUrl: config.api.protocol + '://' + config.api.host + ':' + config.api.port
+
         },
         slashes: true
       })

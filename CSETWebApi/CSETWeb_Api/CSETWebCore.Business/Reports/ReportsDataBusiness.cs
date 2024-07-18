@@ -86,13 +86,25 @@ namespace CSETWebCore.Business.Reports
         /// Returns an unfiltered list of MatRelevantAnswers for the current assessment.
         /// </summary>
         /// <returns></returns>
-        public List<MatRelevantAnswers> GetQuestionsList()
+        public List<MatRelevantAnswers> GetQuestionsList(int? modelId = null)
         {
-            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
-            if (myModel == null)
+            int targetModelId = 0;
+
+            if (modelId == null)
             {
-                return new List<MatRelevantAnswers>();
+                var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+                if (myModel == null)
+                {
+                    return new List<MatRelevantAnswers>();
+                }
+
+                targetModelId = myModel.model_id;
             }
+            else
+            {
+                targetModelId = (int)modelId;
+            }
+            
 
             var lang = _tokenManager.GetCurrentLanguage();
 
@@ -102,7 +114,7 @@ namespace CSETWebCore.Business.Reports
                         join m in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_Level)
                             on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
                         where a.Assessment_Id == _assessmentId
-                            && m.Maturity_Model_Id == myModel.model_id
+                            && m.Maturity_Model_Id == targetModelId
                             && a.Question_Type == "Maturity"
                             && !this.OutOfScopeQuestions.Contains(m.Mat_Question_Id)
                         orderby m.Grouping_Id, m.Maturity_Level_Id, m.Mat_Question_Id ascending
@@ -137,14 +149,14 @@ namespace CSETWebCore.Business.Reports
 
 
             // if a maturity level is defined, only report on questions at or below that level
-            int? selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == myModel.Assessment_Id
+            int? selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == _assessmentId
                 && x.Level_Name == Constants.Constants.MaturityLevel).Select(x => int.Parse(x.Standard_Specific_Sal_Level)).FirstOrDefault();
 
             NullOutNavigationPropeties(responseList);
 
             // RRA should be always be defaulted to its maximum available level (3)
             // since the user can't configure it
-            if (myModel.model_id == 5)
+            if (targetModelId == 5)
             {
                 selectedLevel = 3;
             }
@@ -163,9 +175,19 @@ namespace CSETWebCore.Business.Reports
         /// Returns a list of MatRelevantAnswers that are considered deficient for the assessment.
         /// </summary>
         /// <returns></returns>
-        public List<MatRelevantAnswers> GetMaturityDeficiencies()
+        public List<MatRelevantAnswers> GetMaturityDeficiencies(int? modelId = null)
         {
             var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+
+            var targetModel = myModel.model;
+
+
+            // if a model was explicitly requested, do that one
+            if (modelId != null)
+            {
+                targetModel = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == modelId).FirstOrDefault();
+            }
+
             bool ignoreParentQuestions = false;
 
             // default answer values that are considered 'deficient'
@@ -173,48 +195,56 @@ namespace CSETWebCore.Business.Reports
 
 
             // CMMC considers unanswered as deficient
-            if (myModel.model.Model_Name.ToUpper() == "CMMC" ||
-                myModel.model.Model_Name.ToUpper() == "CMMC2")
+            if (targetModel.Model_Name.ToUpper() == "CMMC" ||
+                targetModel.Model_Name.ToUpper() == "CMMC2")
             {
                 deficientAnswerValues = new List<string>() { "N", "U" };
             }
 
             // EDM also considers unanswered and incomplete as deficient
-            if (myModel.model.Model_Name.ToUpper() == "EDM")
+            if (targetModel.Model_Name.ToUpper() == "EDM")
             {
                 ignoreParentQuestions = true;
                 deficientAnswerValues = new List<string>() { "N", "U", "I" };
             }
 
-            if (myModel.model.Model_Name.ToUpper() == "CRR")
+            if (targetModel.Model_Name.ToUpper() == "CRR")
             {
                 ignoreParentQuestions = true;
                 deficientAnswerValues = new List<string>() { "N", "U", "I" };
             }
 
             // IMR considers unanswered and incomplete as deficient
-            if (myModel.model.Model_Name.ToUpper() == "IMR")
+            if (targetModel.Model_Name.ToUpper() == "IMR")
             {
                 deficientAnswerValues = new List<string>() { "N", "U", "I" };
             }
 
             // RRA also considers unanswered and incomplete as deficient
-            if (myModel.model.Model_Name.ToUpper() == "RRA")
+            if (targetModel.Model_Name.ToUpper() == "RRA")
             {
                 deficientAnswerValues = new List<string>() { "N", "U" };
             }
 
             // VADR considers unanswered as deficient
-            if (myModel.model.Model_Name.ToUpper() == "VADR")
-            {
-                deficientAnswerValues = new List<string>() { "N", "U" };
-            }
-            if (myModel.model.Model_Name.ToUpper() == "CPG")
+            if (targetModel.Model_Name.ToUpper() == "VADR")
             {
                 deficientAnswerValues = new List<string>() { "N", "U" };
             }
 
-            var responseList = GetQuestionsList().Where(x => deficientAnswerValues.Contains(x.ANSWER.Answer_Text)).ToList();
+            // CPG
+            if (targetModel.Model_Name.ToUpper() == "CPG")
+            {
+                deficientAnswerValues = new List<string>() { "N", "U" };
+            }
+
+            // SSG - CHEMICAL can only be requested explicitly
+            if (targetModel.Maturity_Model_Id == 18)
+            {
+                deficientAnswerValues = new List<string>() { "N", "U" };
+            }
+
+            var responseList = GetQuestionsList(targetModel.Maturity_Model_Id).Where(x => deficientAnswerValues.Contains(x.ANSWER.Answer_Text)).ToList();
 
 
             // We don't consider parent questions that have children to be unanswered for certain maturity models

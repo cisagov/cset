@@ -23,7 +23,9 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../../../services/config.service';
+import { AssessmentService } from '../../../../services/assessment.service';
 import { CpgService } from '../../../../services/cpg.service';
+import { SsgService } from '../../../../services/ssg.service';
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
@@ -35,8 +37,12 @@ export class CpgSummaryComponent implements OnInit {
 
   answerDistribByDomain: any[];
 
+  isSsgApplicable = false;
+
   constructor(
+    public assessSvc: AssessmentService,
     public cpgSvc: CpgService,
+    public ssgSvc: SsgService,
     public configSvc: ConfigService,
     public tSvc: TranslocoService
   ) { }
@@ -60,6 +66,8 @@ export class CpgSummaryComponent implements OnInit {
       });
 
       this.answerDistribByDomain = resp;
+
+      this.isSsgApplicable = this.ssgSvc.doesSsgApply();
     });
   }
 }
