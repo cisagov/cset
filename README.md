@@ -16,13 +16,13 @@ How Do I Use CSET?
 
 
 ## Download
-[Download the latest CSET release](https://cset-download.inl.gov/)
+[CSET Releases](https://github.com/cisagov/cset/releases/)
 
-[Older Versions of CSET For Windows](https://github.com/cisagov/cset/releases/)
+Local installers ("standalone") are available as well as binaries for creating enterprise installations.
 
 
 ## Documentation
-See the [**CSET documentation**](docs/README.md).
+See the [**CSET documentation**](install-and-troubleshooting-guides/README.md).
 
 
 ## License
@@ -35,7 +35,16 @@ See [License.txt](License.txt), and [NOTICE.txt](NOTICE.txt)
 
 Contact information of authors: cset@hq.dhs.gov
 
-Idaho National Laboratory, P.O. Box 1625, MS 3870, Idaho Falls, ID 83415
+Idaho National Laboratory:
+P.O. Box 1625, MS 3870, Idaho Falls, ID 83415
+
+CISA - NGL Stop 0630
+Cybersecurity and Infrastructure Security Agency:
+
+1110 N. Glebe Road
+Arlington, VA 20598-0630
+
+[CISAgov Youtube channel](https://www.youtube.com/@CISAgov)
 
 Includes software licensed under LGPL
 

@@ -141,11 +141,20 @@ export class PageVisibilityService {
         show = show && !this.standardAny(c);
       }
 
+
       // Look for a maturity target level greater than X
       if (c.startsWith('TARGET-LEVEL-GT:')) {
         let target = c.substring(c.indexOf(':') + 1);
         show = show && this.assessSvc.assessment.maturityModel.maturityTargetLevel > Number.parseInt(target);
       }
+
+
+      // Determine if a 'Sector-Specific Goal' question set is applicable
+      if (c.startsWith('SECTOR-ANY(')) {
+        show = show && this.sectorAny(c);
+      }
+
+
 
       if (c == ('SHOW-FEEDBACK')) {
         show = show && this.configSvc.behaviors.showFeedback;
@@ -266,8 +275,6 @@ export class PageVisibilityService {
 
   /**
    *
-   * @param rule
-   * @returns
    */
   maturityAny(rule: string): boolean {
     let targets = this.getTargets(rule);
@@ -280,10 +287,8 @@ export class PageVisibilityService {
   }
 
   /**
- *
- * @param rule
- * @returns
- */
+   *
+   */
   standardAny(rule: string): boolean {
     let targets = this.getTargets(rule);
     let has = false;
@@ -295,9 +300,20 @@ export class PageVisibilityService {
   }
 
   /**
+   * Returns true if the assessment's sectorId in in the specified list
+   */
+  sectorAny(rule: string): boolean {
+    let targets = this.getTargets(rule);
+    let has = false;
+    targets.forEach((t: string) => {
+      has = has || this.assessSvc.assessment?.sectorId == +t;
+    });
+    return has;
+  }
+
+  /**
    * Parses the value(s) following the first colon or open paren
    * and returns a list of them.
-   * @param c
    */
   getTargets(c: string): string[] {
     let pC = c.indexOf(':');

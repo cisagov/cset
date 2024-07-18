@@ -42,6 +42,10 @@ export interface AssessmentDetail {
     creditUnion?: string;
     assets?: string;
 
+    // a few demographics to track
+    sectorId?: number;
+    industryId?: number;
+
     useStandard?: boolean;
     useMaturity?: boolean;
     useDiagram?: boolean;

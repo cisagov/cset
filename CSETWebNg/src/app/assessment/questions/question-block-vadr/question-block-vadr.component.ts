@@ -47,8 +47,8 @@ export class QuestionBlockVadrComponent implements OnInit {
   answerOptions = [];
 
   openendedtext = "Open Ended question";
-  altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
-  altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
+  altTextPlaceholder = "alt cset";
+  altTextPlaceholder_ACET = "alt acet";
   openEndedQuestion = false;
   showQuestionIds = false;
   showYNQuestions = false;
