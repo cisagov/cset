@@ -1,12 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
 import { ConfigService } from './config.service';
-import { environment } from '../../environments/environment';
-// import { AppVersion } from '../models/app-version';
-import { data } from 'jquery';
-import { version } from 'os';
 
 
 const headers = {
