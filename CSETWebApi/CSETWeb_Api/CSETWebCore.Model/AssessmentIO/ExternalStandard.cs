@@ -17,6 +17,9 @@ namespace CSETWebCore.Model.AssessmentIO
 
     public class ExternalStandard
     {
+
+        public List<string> CustomStandards { get; set; }
+
         [Required]
         [DataMember]
         public string name { get; set; }
@@ -36,5 +39,8 @@ namespace CSETWebCore.Model.AssessmentIO
 
         [DataMember]
         public string summary { get; set; }
+
+        
+
     }
 }
