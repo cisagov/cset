@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Ionic.Zip;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -118,16 +119,22 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                     foreach (var standard in model.CustomStandards)
                     {
-                        var sets = context.SETS.Where(s => s.Set_Name.Contains(standard)).ToList();
+                        
+                        var sets = context.SETS.Where(s => s.Short_Name.Contains(standard)).ToList();
+                        if (sets.Count == 0)
+                        {
+                            throw new Exception("Custom module not found");
+                        }
                         SETS set = null;
                         //StreamReader setReader = new StreamReader(zip.GetEntry(standard + ".json").Open());
+                        ms.Position = 0;
                         StreamReader setReader = new StreamReader(ms);
                         var setJson = setReader.ReadToEnd();
                         var setModel = JsonConvert.DeserializeObject<ExternalStandard>(setJson);
-                        var originalSetName = setModel.shortName;
+                        var originalSetName = standard;
                         foreach (var testSet in sets)
                         {
-                            setModel.shortName = testSet.Short_Name;
+                            originalSetName = testSet.Short_Name;
                             var testSetJson = JsonConvert.SerializeObject(testSet.ToExternalStandard(_context), Newtonsoft.Json.Formatting.Indented);
                             if (testSetJson == setJson)
                             {
@@ -136,18 +143,18 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                             }
                             else
                             {
-                                setModel.shortName = originalSetName;
+                                setModel.name = originalSetName;
                             }
                         }
 
                         if (set == null)
                         {
-                            int incr = 1;
-                            while (sets.Any(s => s.Short_Name == setModel.shortName))
-                            {
-                                setModel.shortName = originalSetName + " " + incr;
-                                incr++;
-                            }
+                            //int incr = 1;
+                            //while (sets.Any(s => s.Short_Name == originalSetName))
+                            //{
+                            //    setModel.name = originalSetName + " " + incr;
+                            //    incr++;
+                            //}
                             var setResult = await setModel.ToSet(_context);
                             if (setResult.IsSuccess)
                             {
