@@ -45,7 +45,8 @@ namespace CSETWebCore.Helpers
             var result = new ConverterResult<SETS>(logger);
             SETS_CATEGORY category;
             int? categoryOrder = 0;
-            var setname = Regex.Replace(externalStandard.shortName, @"\W", "_");
+            var setname = Regex.Replace(externalStandard.name, @"\W", "_");
+            
             try
             {
                 var documentImporter = new DocumentImporter(_context);
