@@ -524,7 +524,7 @@ namespace CSETWebCore.Api.Controllers
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[usp_getStandardSummaryOverall]")
+                _context.LoadStoredProc("[usp_getMaturitySummaryOverall]")
                     .WithSqlParam("assessment_id", a.Assessment_Id)
                     .ExecuteStoredProc((handler) =>
                     {
