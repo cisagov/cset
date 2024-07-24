@@ -234,7 +234,7 @@ export class AggregationService {
   }
 
   getMaturityMissedQuestions() {
-    return this.http.post(this.apiUrl + 'getmissedquestions', {});
+    return this.http.post(this.apiUrl + 'getmaturitymissedquestions', {});
   }
 
   getMaturityBestToWorst() {
