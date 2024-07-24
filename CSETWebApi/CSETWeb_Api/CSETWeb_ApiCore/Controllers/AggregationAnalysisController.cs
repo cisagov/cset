@@ -722,8 +722,80 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(response);
         }
+
+
+        /// <summary>
+        /// Returns answer breakdown for all associated maturity assessments.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/aggregation/analysis/getmaturitybesttoworst")]
+        public IActionResult GetMaturityBestToWorst()
+        {
+            var aggregationID = _tokenManager.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return Ok();
+            }
+
+            Dictionary<string, List<GetComparisonBestToWorst>> dict = new Dictionary<string, List<GetComparisonBestToWorst>>();
+
+            var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
+                .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
+                .ToList();
+
+            var response = new List<BestToWorstCategory>();
+
+            foreach (var a in assessmentList)
+            {
+                _context.LoadStoredProc("[GetMaturityComparisonBestToWorst]")
+                        .WithSqlParam("assessment_id", a.Assessment_Id)
+                        .ExecuteStoredProc((handler) =>
+                        {
+                            var result = handler.ReadToList<GetComparisonBestToWorst>();
+                            foreach (var r in result)
+                            {
+                                r.AssessmentName = a.Alias;
+
+                                // tweak - make sure that rounding didn't end up with more than 100%
+                                var realAnswerPct = r.YesValue + r.NoValue + r.NaValue + r.AlternateValue;
+                                if (realAnswerPct + r.UnansweredValue > 100f)
+                                {
+                                    r.UnansweredValue = 100f - realAnswerPct;
+                                }
+
+
+                                if (!dict.ContainsKey(r.Name))
+                                {
+                                    dict[r.Name] = new List<GetComparisonBestToWorst>();
+                                }
+                                dict[r.Name].Add(r);
+                            }
+                        });
+            }
+
+            // repackage the data 
+            var keys = dict.Keys.ToList();
+            keys.Sort();
+            foreach (string k in keys)
+            {
+                var category = new BestToWorstCategory()
+                {
+                    Category = k,
+                    Assessments = dict[k]
+                };
+
+                // sort best to worst
+                category.Assessments.Sort((a, b) => (a.YesValue + a.AlternateValue).CompareTo(b.YesValue + b.AlternateValue));
+                category.Assessments.Reverse();
+                response.Add(category);
+            }
+
+            return Ok(response);
+        }
     }
 }
+
 
 public class AggBody
 {

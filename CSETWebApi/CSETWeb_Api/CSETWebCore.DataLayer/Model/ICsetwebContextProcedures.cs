@@ -40,7 +40,7 @@ namespace CSETWebCore.DataLayer.Model
         Task<List<GetChildrenAnswersResult>> GetChildrenAnswersAsync(int? Parent_Id, int? Assess_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetCombinedOverallsResult>> GetCombinedOverallsAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetComparisonAreasFileResult>> GetComparisonAreasFileAsync(int? assessment_id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<GetComparisonBestToWorstResult>> GetComparisonBestToWorstAsync(int? assessment_id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<GetComparisonBestToWorstResult>> GetMaturityComparisonBestToWorstAsync(int? assessment_id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetComparisonFileOverallsResult>> GetComparisonFileOverallsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetComparisonFilePercentageResult>> GetComparisonFilePercentageAsync(int? Assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<GetComparisonFileSummaryResult>> GetComparisonFileSummaryAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
