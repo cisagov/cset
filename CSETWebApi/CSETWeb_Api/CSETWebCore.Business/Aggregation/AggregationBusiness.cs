@@ -520,6 +520,46 @@ namespace CSETWebCore.Business.Aggregation
 
 
         /// <summary>
+        /// Returns a list of questions or requirements that are answered "N" for no
+        /// or "U" for unanswered in every assessment in the comparison.  
+        /// 
+        /// Note that if the comparison has assessments in both
+        /// Questions and Requirements mode, there will be no common "N" answers.
+        /// </summary>
+        /// <param name="aggregationId"></param>
+        public List<MissedQuestion> GetCommonlyMissedMaturityQuestions(int aggregationId)
+        {
+            var resp = new List<MissedQuestion>();
+
+            // build lists of question IDs, then use LINQ to do the intersection
+            var questionsAnsweredNo = new List<List<int>>();
+            var requirementsAnsweredNo = new List<List<int>>();
+
+            var assessmentIds = _context.AGGREGATION_ASSESSMENT
+                .Where(x => x.Aggregation_Id == aggregationId).ToList().Select(x => x.Assessment_Id);
+
+
+            foreach (int assessmentId in assessmentIds)
+            {
+                var isNoOrUnanswered = _context.Answer_Maturity
+                    .Where(x => x.Assessment_Id == assessmentId && (x.Answer_Text == "N" || x.Answer_Text == "U")).ToList();
+
+                questionsAnsweredNo.Add(isNoOrUnanswered
+                    .Select(x => x.Question_Or_Requirement_Id).ToList());
+                requirementsAnsweredNo.Add(isNoOrUnanswered
+                    .Select(x => x.Question_Or_Requirement_Id).ToList());
+
+            }
+
+            // Now that the lists are built, analyze for common "N" answers
+            resp.AddRange(BuildQList(questionsAnsweredNo));
+            resp.AddRange(BuildRList(requirementsAnsweredNo));
+
+            return resp;
+        }
+
+
+        /// <summary>
         /// Build a list of Questions with common "N" answers.
         /// </summary>
         /// <param name="isNoOrUnanswered"></param>
