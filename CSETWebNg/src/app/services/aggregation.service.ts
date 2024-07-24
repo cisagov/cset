@@ -238,7 +238,7 @@ export class AggregationService {
   }
 
   getMaturityBestToWorst() {
-    return this.http.post(this.apiUrl + 'analysis/getbesttoworst', '');
+    return this.http.post(this.apiUrl + 'analysis/getmaturitybesttoworst', '');
   }
 
 
