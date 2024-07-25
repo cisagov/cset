@@ -72,6 +72,16 @@ namespace CSETWebCore.Model.Nested
         public string DisplayNumber { get; set; }
         public string QuestionText { get; set; }
 
+
+
+        // CPG element
+        public string SecurityPractice {  get; set; }
+        public string Outcome { get; set; }
+        public string Scope { get; set; }
+        public string RecommendedAction { get; set; }
+
+
+
         public string AnswerText { get; set; }
         public string AnswerMemo { get; set; }
         public string AltAnswerText { get; set; }

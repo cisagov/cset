@@ -22,14 +22,14 @@
 -------------------------->
 <ng-container *transloco="let t">
     <div *ngFor="let d of model?.domains">
-        <div class="cpg-domain-bar page-break" [style.color]="textColor(d.groupingId)"
+        <div class="cpg-domain-bar page-break" [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
             [style.background-color]="backgroundColor(d.groupingId)">
             {{d.title}}
         </div>
 
         <table *ngFor="let q of d.questions" class="cpg-table">
             <tr>
-                <th style="width: 45%" [style.color]="textColor(d.groupingId)"
+                <th style="width: 45%" [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
                     [style.background-color]="backgroundColor(d.groupingId)">
                     <div class="d-flex flex-row justify-content-between">
                         <div class="d-flex flex-row">
@@ -41,17 +41,17 @@
                             </div>
                         </div>
                         <div class="text-right ml-4 font-weight-normal">
-                            <span *ngFor="let c of q.csf; let l = last" class="text-nowrap">
+                            <span *ngFor="let c of q.csfMappings; let l = last" class="text-nowrap">
                                 {{c}}{{ l ? '' : ', '}}
                             </span>
                         </div>
                     </div>
                 </th>
-                <th style="width: 25%" [style.color]="textColor(d.groupingId)"
+                <th style="width: 25%" [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
                     [style.background-color]="backgroundColor(d.groupingId)">
                     {{t('reports.core.cpg.report.current assessment') | uppercase}}
                 </th>
-                <th style="width: 30%" [style.color]="textColor(d.groupingId)"
+                <th style="width: 30%" [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
                     [style.background-color]="backgroundColor(d.groupingId)">
                     {{t('reports.core.cpg.report.notes') | uppercase}}
                 </th>
@@ -65,7 +65,7 @@
                         <div class="sub-header-1">{{t('reports.core.cpg.report.ttp or risk addressed')}}</div>
                         <ul *ngIf="q.ttp.length > 0">
                             <li *ngFor="let t of q.ttp">
-                                {{t}}
+                                {{t.description}}
                             </li>
                         </ul>
 

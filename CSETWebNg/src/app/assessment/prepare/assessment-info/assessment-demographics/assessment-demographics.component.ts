@@ -201,10 +201,11 @@ export class AssessmentDemographicsComponent implements OnInit {
         }
     }
 
-    populateIndustryOptions(sectorId: number) {
-        if (!sectorId) {
+    populateIndustryOptions(sectorId?: any) {
+        if (!sectorId || isNaN(Number(sectorId))) {
             return;
         }
+
         this.demoSvc.getIndustry(sectorId).subscribe(
             (data: Industry[]) => {
                 this.industryList = data;

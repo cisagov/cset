@@ -416,7 +416,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     var set = _context.SETS
                         .Include(s => s.Set_Category)
                         .Where(s => s.Set_Name == standard.Set_Name).FirstOrDefault();
-                    if (set == null || !set.Is_Custom)
+                    if (set == null)
                     {
                         continue;
                     }
@@ -472,7 +472,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                         return t;
                     })).ToList();
 
-                    model.CustomStandards.Add(setname);
+                    model.CustomStandards.Add(extStandard.shortName);
+       
+
 
 
 

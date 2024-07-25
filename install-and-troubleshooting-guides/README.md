@@ -22,7 +22,7 @@ Following is a brief explanation of the main differences between the two configu
 ### Standalone or "local installation"
 ![standalone configuration](img/standalone_config.png)
 - The configuration that is most often run among the CSET user base.  
-- The installer can be downloaded from [cset-download.inl.gov](https://cset-download.inl.gov)
+- The installer can be downloaded from [cset releases](https://github.com/cisagov/cset/releases/)
 - The user interface, server and database components are all installed on the target computer.
 - Because the database instance is local to the target machine, the data is not visible or shared with any entity.  The user must deliberately export an assessment to a file to share it.
 - Does not require a login/password.  CSET recognizes that the installation is “local” and authenticates the user with their Windows account credentials.  

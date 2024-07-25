@@ -30,6 +30,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { of as observableOf, BehaviorSubject } from "rxjs";
 import { TranslocoService } from '@ngneat/transloco';
 import { CieService } from '../cie.service';
+import { SsgService } from '../ssg.service';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,7 @@ export class NavTreeService {
   
 
   dataSource: MatTreeNestedDataSource<NavTreeNode> = new MatTreeNestedDataSource<NavTreeNode>();
-  dataChange: BehaviorSubject<NavTreeNode[]> = new BehaviorSubject<NavTreeNode[]>([]);
+  dataChange$ = new BehaviorSubject<NavTreeNode[]>([]);
   tocControl: NestedTreeControl<NavTreeNode>;
 
   workflow: Document
@@ -55,12 +56,13 @@ export class NavTreeService {
     private assessSvc: AssessmentService,
     private pageVisibliltySvc: PageVisibilityService,
     private tSvc: TranslocoService,
+    private ssgSvc: SsgService,
     private cieSvc: CieService
   ) {
     // set up the mat tree control and its data source
     this.tocControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
     this.dataSource = new MatTreeNestedDataSource<NavTreeNode>();
-    this.dataChange.subscribe(data => {
+    this.dataChange$.subscribe(data => {
       this.dataSource.data = data;
       this.tocControl.dataNodes = data;
       this.tocControl.expandAll();
@@ -123,11 +125,17 @@ export class NavTreeService {
       if (!!workflowNode.attributes['displaytext'] || !!workflowNode.attributes['d']) {
 
         let displaytext = workflowNode.attributes['displaytext']?.value;
-        let d = workflowNode.attributes['d']?.value;
-
+        
         // localize the 'd' attribute
+        let d = workflowNode.attributes['d']?.value;
         if (!!d) {
           displaytext = this.tSvc.translate(`titles.${d}`);
+        }
+        
+        // plug in the applicable SSG description
+        let ssg = workflowNode.attributes['ssg']?.value ?? false;
+        if (!!ssg) {
+          displaytext = this.tSvc.translate(`titles.${d}.${this.ssgSvc.ssgSimpleSectorLabel()}`);
         }
 
         const navNode: NavTreeNode = {
@@ -401,4 +409,6 @@ export class NavTreeService {
     }
     else if (node != null) this.tocControl.expand(node);
   }
+
+  
 }

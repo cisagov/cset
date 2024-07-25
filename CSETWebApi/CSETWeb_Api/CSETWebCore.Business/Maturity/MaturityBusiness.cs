@@ -10,11 +10,9 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
-using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Edm;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
-using CSETWebCore.Model.Sal;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
@@ -22,8 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using CSETWebCore.Model.Mvra;
-using CSETWebCore.Business.Acet;
-using CSETWebCore.DataLayer.Manual;
+
 
 
 namespace CSETWebCore.Business.Maturity
@@ -42,8 +39,13 @@ namespace CSETWebCore.Business.Maturity
 
         private AdditionalSupplemental _addlSuppl;
 
-        public readonly List<string> ModelsWithTargetLevel = new List<string>() { "ACET", "CMMC", "CMMC2" };
+        public readonly List<string> ModelsWithTargetLevel = ["ACET", "CMMC", "CMMC2"];
 
+
+
+        /// <summary>
+        /// CTOR
+        /// </summary>
         public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
         {
             _context = context;
@@ -189,7 +191,6 @@ namespace CSETWebCore.Business.Maturity
 
         public List<GroupScores> Get_LevelScoresByGroup(int assessmentId, int mat_model_id)
         {
-
             var list = _context.usp_countsForLevelsByGroupMaturityModel(assessmentId, mat_model_id);
 
             //while the answer text is not null 
@@ -220,8 +221,8 @@ namespace CSETWebCore.Business.Maturity
                         }
                         break;
                 }
-
             }
+
             List<GroupScores> groupScores = new List<GroupScores>();
 
             foreach (var keyPair in levels)
@@ -233,6 +234,7 @@ namespace CSETWebCore.Business.Maturity
                     Maturity_Level_Name = "We'll get there"
                 });
             }
+
             return groupScores;
         }
 
@@ -623,10 +625,10 @@ namespace CSETWebCore.Business.Maturity
 
 
 
- 
 
 
-        public AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, string installationMode, int maturityModelId = 3)
+
+        public AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, int maturityModelId = 3)
         {
             //if the available maturity model is not selected and the application is CSET
             //the default is EDM
@@ -748,6 +750,7 @@ namespace CSETWebCore.Business.Maturity
             return levelScore;
         }
 
+
         private int GetFunctionCredit(List<DomainScore> domains)
         {
             var total = domains.Count();
@@ -762,6 +765,7 @@ namespace CSETWebCore.Business.Maturity
             return 0;
         }
 
+
         private string GetDomainRating(List<LevelScore> levels)
         {
             var total = levels.Sum(x => x.TotalTiers);
@@ -775,6 +779,7 @@ namespace CSETWebCore.Business.Maturity
             }
             return "Fail";
         }
+
 
         private LevelScore GetLevelScore(List<CapabilityScore> scores, string level)
         {
@@ -820,10 +825,10 @@ namespace CSETWebCore.Business.Maturity
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public virtual MaturityResponse GetMaturityQuestions(int assessmentId, bool fill, int groupingId, string installationMode, string lang)
+        public virtual MaturityResponse GetMaturityQuestions(int assessmentId, bool fill, int groupingId, string lang)
         {
             var response = new MaturityResponse();
-            return GetMaturityQuestions(assessmentId, installationMode, fill, groupingId, response, lang);
+            return GetMaturityQuestions(assessmentId, fill, groupingId, response, null, lang);
         }
 
 
@@ -831,33 +836,43 @@ namespace CSETWebCore.Business.Maturity
         /// Assembles a response consisting of maturity questions for the assessment.
         /// </summary>
         /// <returns></returns>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId, MaturityResponse response, string lang)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, bool fill, int groupingId, MaturityResponse response, int? modelId, string lang)
         {
             if (fill)
             {
                 _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
             }
 
-            var myModel = ProcessModelDefaults(assessmentId, installationMode);
+            var defaultModel = ProcessModelDefaults(assessmentId);
+
+            var targetModelId = defaultModel.model_id;
 
 
-            var myModelDefinition = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == myModel.model_id).FirstOrDefault();
+            // If the model ID was specified by the caller, use that instead of the assessment's model
+            if (modelId != null)
+            {
+                targetModelId = (int)modelId;
+            }
 
-            if (myModelDefinition == null)
+
+
+            var targetModel = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == targetModelId).FirstOrDefault();
+
+            if (targetModel == null)
             {
                 return response;
             }
 
 
-            response.ModelId = myModelDefinition.Maturity_Model_Id;
-            response.ModelName = myModelDefinition.Model_Name;
+            response.ModelId = targetModel.Maturity_Model_Id;
+            response.ModelName = targetModel.Model_Name;
 
-            response.QuestionsAlias = myModelDefinition.Questions_Alias ?? "Questions";
+            response.QuestionsAlias = targetModel.Questions_Alias ?? "Questions";
 
 
-            if (myModelDefinition.Answer_Options != null)
+            if (targetModel.Answer_Options != null)
             {
-                response.AnswerOptions = myModelDefinition.Answer_Options.Split(',').ToList();
+                response.AnswerOptions = targetModel.Answer_Options.Split(',').ToList();
                 response.AnswerOptions.ForEach(x => x = x.Trim());
             }
 
@@ -865,8 +880,8 @@ namespace CSETWebCore.Business.Maturity
             response.MaturityTargetLevel = GetMaturityTargetLevel(assessmentId);
 
             // get the levels and their display names for this model
-            response.Levels = GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel);
-
+            response.Levels = GetMaturityLevelsForModel(targetModelId, response.MaturityTargetLevel);
+            
 
 
             // Get all maturity questions for the model regardless of level.
@@ -875,9 +890,9 @@ namespace CSETWebCore.Business.Maturity
                 .Include(x => x.Maturity_Level)
                 .Include(x => x.MATURITY_QUESTION_PROPS)
                 .Where(q =>
-                myModel.model_id == q.Maturity_Model_Id);
+                targetModelId == q.Maturity_Model_Id);
 
-            if (groupingId != 0 && myModel.model_id != 17)
+            if (groupingId != 0 && targetModelId != 17)
             {
                 questionQuery = questionQuery.Where(x => x.Question_Text.StartsWith("A"));
             }
@@ -928,7 +943,7 @@ namespace CSETWebCore.Business.Maturity
             // Get all subgroupings for this maturity model
             var allGroupings = _context.MATURITY_GROUPINGS
                 .Include(x => x.Type)
-                .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
+                .Where(x => x.Maturity_Model_Id == targetModel.Maturity_Model_Id).ToList();
 
 
             // overlay group properties for language
@@ -964,7 +979,7 @@ namespace CSETWebCore.Business.Maturity
             response.Groupings = tempModel.SubGroupings;
 
             // Add any glossary terms
-            response.Glossary = this.GetGlossaryEntries(myModel.model_id);
+            response.Glossary = this.GetGlossaryEntries(targetModel.Maturity_Model_Id);
 
             return response;
         }
@@ -1018,39 +1033,10 @@ namespace CSETWebCore.Business.Maturity
                 {
                     FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
 
-                    var qa = new QuestionAnswer()
-                    {
-                        DisplayNumber = myQ.Question_Title,
-                        QuestionId = myQ.Mat_Question_Id,
-                        ParentQuestionId = myQ.Parent_Question_Id,
-                        Sequence = myQ.Sequence,
-                        ShortName = myQ.Short_Name,
-                        QuestionType = "Maturity",
-                        QuestionText = myQ.Question_Text,
 
-                        SecurityPractice = myQ.Security_Practice,
-                        Outcome = myQ.Outcome,
-                        Scope = myQ.Scope,
-                        RecommendedAction = myQ.Recommend_Action,
-                        RiskAddressed = myQ.Risk_Addressed,
-                        Services = myQ.Services,
-
-                        Answer = answer?.a.Answer_Text,
-                        AltAnswerText = answer?.a.Alternate_Justification,
-                        FreeResponseAnswer = answer?.a.Free_Response_Answer,
-
-                        Comment = answer?.a.Comment,
-                        Feedback = answer?.a.FeedBack,
-                        MarkForReview = answer?.a.Mark_For_Review ?? false,
-                        Reviewed = answer?.a.Reviewed ?? false,
-
-                        Is_Maturity = true,
-                        MaturityModelId = sg.Maturity_Model_Id,
-                        MaturityLevel = myQ.Maturity_Level.Level,
-                        MaturityLevelName = myQ.Maturity_Level.Level_Name,
-                        IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
-                        SetName = string.Empty
-                    };
+                    var qa = QuestionAnswerBuilder.BuildQuestionAnswer(myQ, answer);
+                    qa.MaturityModelId = sg.Maturity_Model_Id;
+                    qa.IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id);
 
 
                     // Include CSF mappings
@@ -1083,7 +1069,9 @@ namespace CSETWebCore.Business.Maturity
                     newGrouping.Questions.Add(qa);
                 }
 
+
                 newGrouping.Questions.Sort((a, b) => a.Sequence.CompareTo(b.Sequence));
+
 
                 // Recurse down to build subgroupings
                 BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers, lang);
@@ -1206,7 +1194,7 @@ namespace CSETWebCore.Business.Maturity
             return dbAnswer.Answer_Id;
         }
 
-    
+
         /// <summary>
         /// Get edm scoring
         /// </summary>
@@ -1311,259 +1299,8 @@ namespace CSETWebCore.Business.Maturity
             return glossaryTerms.ToList();
         }
 
- 
-        /// <summary>
-        /// Get the string value for the overall IRP mapping
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public string GetOverallIrp(int assessmentId)
-        {
-            var calc = GetIrpCalculation(assessmentId);
-            int overall = calc.Override > 0 ? calc.Override : calc.SumRiskLevel;
-            return overall == 1 ? Constants.Constants.LeastIrp :
-                overall == 2 ? Constants.Constants.MinimalIrp :
-                overall == 3 ? Constants.Constants.ModerateIrp :
-                overall == 4 ? Constants.Constants.SignificantIrp :
-                overall == 5 ? Constants.Constants.MostIrp : string.Empty;
-        }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public int GetOverallIrpNumber(int assessmentId)
-        {
-            var calc = GetIrpCalculation(assessmentId);
-            int overall = calc.Override > 0 ? calc.Override : calc.SumRiskLevel;
-            return overall;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public int GetOverallIseIrpNumber(int assessmentId)
-        {
-            var calc = GetIseIrpCalculation(assessmentId);
-            int overall = calc.Override > 0 ? calc.Override : calc.SumRiskLevel;
-            return overall;
-        }
-
-
-        /// <summary>
-        /// Get all IRP calculations for display
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public Model.Acet.ACETDashboard GetIrpCalculation(int assessmentId)
-        {
-            Model.Acet.ACETDashboard result = new Model.Acet.ACETDashboard();
-
-
-            // now just properties on an Assessment
-            ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
-            if (assessment == null) { return null; }
-            result.CreditUnionName = assessment.CreditUnionName;
-            result.Charter = assessment.Charter;
-            result.Assets = assessment.Assets;
-
-            result.Hours = _adminTabBusiness.GetTabData(assessmentId).GrandTotal;
-
-            //IRP Section
-            result.Override = assessment.IRPTotalOverride ?? 0;
-            result.OverrideReason = assessment.IRPTotalOverrideReason;
-            foreach (IRP_HEADER header in _context.IRP_HEADER)
-            {
-                IRPSummary summary = new IRPSummary();
-                summary.HeaderText = header.Header;
-
-                ASSESSMENT_IRP_HEADER headerInfo = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(h => h.IRP_HEADER.IRP_Header_Id == header.IRP_Header_Id && h.ASSESSMENT.Assessment_Id == assessmentId);
-                if (headerInfo != null)
-                {
-                    summary.RiskLevelId = headerInfo.HEADER_RISK_LEVEL_ID ?? 0;
-                    summary.RiskLevel = headerInfo.RISK_LEVEL.Value;
-                    summary.Comment = headerInfo.COMMENT;
-                }
-
-                List<DataLayer.Model.IRP> irps = _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToList();
-                Dictionary<int, ASSESSMENT_IRP> dictionaryIRPS = _context.ASSESSMENT_IRP.Where(x => x.Assessment_Id == assessmentId).ToDictionary(x => x.IRP_Id, x => x);
-                foreach (DataLayer.Model.IRP irp in irps)
-                {
-                    ASSESSMENT_IRP answer = null;
-                    dictionaryIRPS.TryGetValue(irp.IRP_ID, out answer);
-                    //ASSESSMENT_IRP answer = irp.ASSESSMENT_IRP.FirstOrDefault(i => i.Assessment_.Assessment_Id == assessmentId);
-                    if (answer != null && answer.Response != 0)
-                    {
-                        summary.RiskCount[answer.Response.Value - 1]++;
-                        summary.RiskSum++;
-                        result.SumRisk[answer.Response.Value - 1]++;
-                        result.SumRiskTotal++;
-                    }
-                }
-
-                result.Irps.Add(summary);
-            }
-
-            //go back through the IRPs and calculate the Risk Level for each section
-            foreach (IRPSummary irp in result.Irps)
-            {
-                int MaxRisk = 0;
-                irp.RiskLevel = 0;
-                for (int i = 0; i < irp.RiskCount.Length; i++)
-                {
-                    if (irp.RiskCount[i] >= MaxRisk && irp.RiskCount[i] > 0)
-                    {
-                        MaxRisk = irp.RiskCount[i];
-                        irp.RiskLevel = i + 1;
-                    }
-                }
-            }
-
-            _context.SaveChanges();
-
-            result.SumRiskLevel = 1;
-            int maxRisk = 0;
-            for (int i = 0; i < result.SumRisk.Length; i++)
-            {
-                if (result.SumRisk[i] >= maxRisk && result.SumRisk[i] > 0)
-                {
-                    result.SumRiskLevel = i + 1;
-                    maxRisk = result.SumRisk[i];
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Get all IRP calculations for display
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public Model.Acet.ACETDashboard GetIseIrpCalculation(int assessmentId)
-        {
-            Model.Acet.ACETDashboard result = new Model.Acet.ACETDashboard();
-
-
-            // now just properties on an Assessment
-            ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
-            if (assessment == null) { return null; }
-            result.CreditUnionName = assessment.CreditUnionName;
-            result.Charter = assessment.Charter;
-            result.Assets = assessment.Assets;
-
-            result.Hours = _adminTabBusiness.GetTabData(assessmentId).GrandTotal;
-
-            //IRP Section
-            result.Override = assessment.IRPTotalOverride ?? 0;
-            result.OverrideReason = assessment.IRPTotalOverrideReason;
-
-            var scuepIRPLevel = 1;
-            var coreIRPLevel = 2;
-
-            if (result.Override == 0)
-            {
-                result.Override = long.Parse(result.Assets) > 50000000 ? coreIRPLevel : scuepIRPLevel;
-            }
-
-            foreach (IRP_HEADER header in _context.IRP_HEADER)
-            {
-                IRPSummary summary = new IRPSummary();
-                summary.HeaderText = header.Header;
-
-                ASSESSMENT_IRP_HEADER headerInfo = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(h => h.IRP_HEADER.IRP_Header_Id == header.IRP_Header_Id && h.ASSESSMENT.Assessment_Id == assessmentId);
-                if (headerInfo != null)
-                {
-                    summary.RiskLevelId = headerInfo.HEADER_RISK_LEVEL_ID ?? 0;
-                    summary.RiskLevel = headerInfo.RISK_LEVEL.Value;
-                    summary.Comment = headerInfo.COMMENT;
-                }
-
-                List<DataLayer.Model.IRP> irps = _context.IRP.Where(i => i.Header_Id == header.IRP_Header_Id).ToList();
-                Dictionary<int, ASSESSMENT_IRP> dictionaryIRPS = _context.ASSESSMENT_IRP.Where(x => x.Assessment_Id == assessmentId).ToDictionary(x => x.IRP_Id, x => x);
-                foreach (DataLayer.Model.IRP irp in irps)
-                {
-                    ASSESSMENT_IRP answer = null;
-                    dictionaryIRPS.TryGetValue(irp.IRP_ID, out answer);
-                    //ASSESSMENT_IRP answer = irp.ASSESSMENT_IRP.FirstOrDefault(i => i.Assessment_.Assessment_Id == assessmentId);
-                    if (answer != null && answer.Response != 0)
-                    {
-                        summary.RiskCount[answer.Response.Value - 1]++;
-                        summary.RiskSum++;
-                        result.SumRisk[answer.Response.Value - 1]++;
-                        result.SumRiskTotal++;
-                    }
-                }
-
-                result.Irps.Add(summary);
-            }
-
-            //go back through the IRPs and calculate the Risk Level for each section
-            foreach (IRPSummary irp in result.Irps)
-            {
-                int MaxRisk = 0;
-                irp.RiskLevel = 0;
-                for (int i = 0; i < irp.RiskCount.Length; i++)
-                {
-                    if (irp.RiskCount[i] >= MaxRisk && irp.RiskCount[i] > 0)
-                    {
-                        MaxRisk = irp.RiskCount[i];
-                        irp.RiskLevel = i + 1;
-                    }
-                }
-            }
-
-            _context.SaveChanges();
-
-            result.SumRiskLevel = 1;
-            int maxRisk = 0;
-            for (int i = 0; i < result.SumRisk.Length; i++)
-            {
-                if (result.SumRisk[i] >= maxRisk && result.SumRisk[i] > 0)
-                {
-                    result.SumRiskLevel = i + 1;
-                    maxRisk = result.SumRisk[i];
-                }
-            }
-
-            return result;
-        }
-
-        public void UpdateACETDashboardSummary(int assessmentId, Model.Acet.ACETDashboard summary)
-        {
-            if (assessmentId == 0 || summary == null) { return; }
-
-            ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
-            if (assessment != null)
-            {
-                assessment.CreditUnionName = summary.CreditUnionName;
-                assessment.Charter = summary.Charter;
-                assessment.Assets = summary.Assets;
-
-                assessment.IRPTotalOverride = summary.Override;
-                assessment.IRPTotalOverrideReason = summary.OverrideReason;
-            }
-
-            foreach (IRPSummary irp in summary.Irps)
-            {
-                ASSESSMENT_IRP_HEADER dbSummary = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(s => s.ASSESSMENT_ID == assessment.Assessment_Id && s.HEADER_RISK_LEVEL_ID == irp.RiskLevelId);
-                if (dbSummary != null)
-                {
-                    dbSummary.RISK_LEVEL = irp.RiskLevel;
-                    dbSummary.COMMENT = irp.Comment;
-                } // the else should never happen
-                else
-                {
-                    return;
-                }
-            }
-
-            _context.SaveChanges();
-        }
+       
 
         /// <summary>
         /// Set default values for target level where applicable
@@ -1596,14 +1333,27 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
-        /// 
+        /// This method gets the CPG model.
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <param name="includeSupplemental"></param>
         /// <returns></returns>
         public Model.Maturity.CPG.ContentModel GetMaturityStructure(int assessmentId, bool includeSupplemental, string lang)
         {
-            var ss = new MaturityStructure(assessmentId, _context, includeSupplemental, lang);
+            var ss = new CpgStructure(assessmentId, _context, includeSupplemental, lang, null);
+            return ss.Top;
+        }
+
+
+        /// <summary>
+        /// This method gets a specified SSG model, but in the CPG structure needed for reports.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <param name="includeSupplemental"></param>
+        /// <returns></returns>
+        public Model.Maturity.CPG.ContentModel GetMaturityStructure(int assessmentId, bool includeSupplemental, string lang, int modelId)
+        {
+            var ss = new CpgStructure(assessmentId, _context, includeSupplemental, lang, modelId);
             return ss.Top;
         }
 

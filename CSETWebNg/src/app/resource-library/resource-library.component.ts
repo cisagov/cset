@@ -141,7 +141,7 @@ export class ResourceLibraryComponent implements OnInit, AfterViewInit {
       this.filterDepthMatch(node, filterLowerCaseTrimmed);
     });
 
-    this.navTreeSvc.dataChange.next(nodes);
+    this.navTreeSvc.dataChange$.next(nodes);
   }
 
   filterDepthMatch(node: any, filterLowerCaseTrimmed: string) {
