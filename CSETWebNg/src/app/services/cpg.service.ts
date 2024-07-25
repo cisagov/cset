@@ -45,8 +45,13 @@ export class CpgService {
    * Calls the MaturityStructure endpoint.  Specifying a domain abbreviation will limit
    * the response to a specific domain.
    */
-  getStructure() {
-    var url = this.configSvc.apiUrl + 'maturitystructure/cpg';
+  getStructure(modelId?: number) {
+    var url = this.configSvc.apiUrl + 'maturity/structure/cpg';
+
+    // if a particular model is called for...
+    if (!!modelId) {
+      url = this.configSvc.apiUrl + 'maturity/structure/cpg/bonus?modelId=' + modelId;
+    }
 
     return this.http.get(url, headers);
   }

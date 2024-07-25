@@ -101,7 +101,7 @@ export class NavigationService implements OnDestroy, OnInit {
     private questionsSvc: QuestionsService    
   ) {
     this.setWorkflow('omni');
-    this.assessSvc.assessmentStateChanged.subscribe((reloadState) => {
+    this.assessSvc.assessmentStateChanged$.subscribe((reloadState) => {
       switch (reloadState) {
         case 123:
           // remembers state of ToC dropdown for CIE
@@ -122,6 +122,10 @@ export class NavigationService implements OnDestroy, OnInit {
           this.navDirect('phase-prepare');
           
           break;
+        case 126:
+          // refresh tree only
+          this.buildTree();
+          break;
       }
     });
   }
@@ -134,8 +138,9 @@ export class NavigationService implements OnDestroy, OnInit {
 
     }
   }
+
   ngOnDestroy() {
-    this.assessSvc.assessmentStateChanged.unsubscribe()
+    this.assessSvc.assessmentStateChanged$.unsubscribe()
   }
 
   /**

@@ -31,6 +31,103 @@ namespace CSETWebCore.DataLayer.Model
         {
             return Procedures;
         }
+
+        protected void OnModelCreatingGeneratedProcedures(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Acet_GetActionItemsForReportResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<AcetAnswerDistributionResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<analytics_Compute_MaturityAllResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<analytics_compute_single_averages_maturityResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<analytics_compute_single_averages_standardResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<analytics_Compute_standard_allResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<analytics_selectedStandardListResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<CheckHeadingResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<clean_out_requirements_modeResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<DeleteUserResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<final_data_movesResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<Get_Assess_Detail_Filter_DataResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<Get_Cie_Merge_ConflictsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<Get_Merge_ConflictsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<Get_RecommendationsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetAnswerDistribGroupingsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetAnswerDistribMaturityResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetAreasDataResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetAreasOverallResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetChildrenAnswersResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetCombinedOverallsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetComparisonAreasFileResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetComparisonBestToWorstResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetComparisonFileOverallsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetComparisonFilePercentageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetComparisonFileSummaryResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetCompatibilityCountsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetMaturityDetailsCalculationsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetMaturityGroupingsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetPercentageOverallResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<GetRelevantAnswersResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<InScopeQuestionsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<InScopeRequirementsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<IseAnswerDistributionResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<RelevantAnswersResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<requirement_final_movesResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<SearchAllTablesResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<SP_SearchTablesResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<spEXECsp_RECOMPILEResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_AggregationCustomQuestionnaireLoadResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_Answer_Components_DefaultResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_Assessments_Completion_For_Access_KeyResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_Assessments_Completion_For_UserResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_Assessments_For_UserResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_countsForLevelsByGroupMaturityModelResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_financial_attributesResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_GenerateSPRSScoreResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getAnswerComponentOverridesResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_GetAssessmentPieResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getComponentsRankedCategoriesResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_GetComponentsRankedCategoriesPageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getComponentsResultsByCategoryResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_GetComponentsResultsByCategoryPageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getComponentsSummaryResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_GetComponentsSummaryPageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getComponentTypesResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_GetComponentTypesPageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getCSETQuestionsForCRRMResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getExplodedComponentResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getFinancialQuestionsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getFirstPageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getGenericModelSummaryByGoalResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getMedianOverallResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getMinMaxAverageForSectorIndustryResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getOverallRankedCategoriesResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_GetOverallRankedCategoriesPageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_GetQuestionsWithFeedBackResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getRankedCategoriesResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_GetRankedCategoriesPageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_GetRankedQuestionsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getRankedStandardCategoriesResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_GetRawCountsForEachAssessment_StandardsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getRRASummaryResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getRRASummaryByGoalResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getRRASummaryByGoalOverallResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getRRASummaryOverallResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getRRASummaryPageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getStandardsRankedCategoriesResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_GetStandardsRankedCategoriesPageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getStandardsResultsByCategoryResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_GetStandardsResultsByCategoryPageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getStandardsSummaryResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_GetStandardsSummaryPageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getStandardSummaryOverallResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_GetTop5AreasResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getVADRSummaryResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getVADRSummaryByGoalResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getVADRSummaryByGoalOverallResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getVADRSummaryOverallResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getVADRSummaryPageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_MaturityDetailsCalculationsResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_StatementsReviewedResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_StatementsReviewedTabTotalsResult>().HasNoKey().ToView(null);
+        }
     }
 
     public partial class CsetwebContextProcedures : ICsetwebContextProcedures
@@ -573,6 +670,86 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<Get_Assess_Detail_Filter_DataResult>("EXEC @returnValue = [dbo].[Get_Assess_Detail_Filter_Data] @model", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<Get_Cie_Merge_ConflictsResult>> Get_Cie_Merge_ConflictsAsync(int? id1, int? id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "id1",
+                    Value = id1 ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "id2",
+                    Value = id2 ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "id3",
+                    Value = id3 ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "id4",
+                    Value = id4 ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "id5",
+                    Value = id5 ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "id6",
+                    Value = id6 ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "id7",
+                    Value = id7 ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "id8",
+                    Value = id8 ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "id9",
+                    Value = id9 ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "id10",
+                    Value = id10 ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<Get_Cie_Merge_ConflictsResult>("EXEC @returnValue = [dbo].[Get_Cie_Merge_Conflicts] @id1, @id2, @id3, @id4, @id5, @id6, @id7, @id8, @id9, @id10", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
@@ -1434,6 +1611,26 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<SP_SearchTablesResult>("EXEC @returnValue = [dbo].[SP_SearchTables] @Tablenames, @SearchStr, @GenerateSQLOnly", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<spEXECsp_RECOMPILEResult>> spEXECsp_RECOMPILEAsync(OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<spEXECsp_RECOMPILEResult>("EXEC @returnValue = [dbo].[spEXECsp_RECOMPILE]", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 

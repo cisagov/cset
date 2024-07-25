@@ -505,6 +505,18 @@ namespace CSETWebCore.Business.Assessment
                 }
 
 
+                // Some demographics
+                var d1 = new Demographic.DemographicBusiness(_context, _assessmentUtil);
+                var d1Sector = d1.GetDemographics(assessmentId).SectorId;
+                assessment.SectorId = d1Sector;
+
+                var d2 = new Demographic.DemographicExtBusiness(_context);
+                var d2Sector  = (int?)d2.GetX(assessmentId, "SECTOR");
+                if (d2Sector != null)
+                {
+                    assessment.SectorId = d2Sector;
+                }
+
 
                 bool defaultAcet = (app_code == "ACET");
                 assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;

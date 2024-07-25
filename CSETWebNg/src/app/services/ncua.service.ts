@@ -33,12 +33,10 @@ import { ACETService } from './acet.service';
 import { IRPService } from './irp.service';
 import { MeritCheckComponent } from '../dialogs/ise-merit/merit-check.component';
 import { Answer } from '../models/questions.model';
-import { environment } from '../../../src/environments/environment';
 import { AuthenticationService } from './authentication.service';
 import { DateAdapter } from '@angular/material/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { ReportService } from './report.service';
-import { DateTime } from 'luxon';
 import { VersionService } from './version.service';
 
 let headers = {

@@ -175,6 +175,13 @@ namespace CSETWebCore.Helpers
                     if (_includeText)
                     {
                         question.QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> ");
+
+                        // CPG elements
+                        question.SecurityPractice = myQ.Security_Practice;
+                        question.Outcome = myQ.Outcome;
+                        question.Scope = myQ.Scope;
+                        question.RecommendedAction = myQ.Recommend_Action;
+
                         question.SupplementalInfo = myQ.Supplemental_Info;
                         question.ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text;
 
