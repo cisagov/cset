@@ -1,0 +1,45 @@
+<!---------------------- 
+
+   Copyright 2024 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="d-flex flex-row col-12">
+  <div class="col-4 pl-0 pr-0">
+    <ul style="padding-inline-start: 0" class="pr-5">
+      <li *ngFor="let cat of categories" class="cursor-pointer list-unstyled">
+        <div (click)="selectCategory(cat)" [class.cat-selected]="cat === currentCategory" class="p-1 pl-2 pr-2 w-100">
+          {{ cat.category }}
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="chart d-flex flex-column flex-00a col-8">
+    <div class="d-flex flex-wrap flex-00a sticky-sal">
+      <div class="mt-2 text-center w-100">
+        <h5>
+          {{ currentCategory?.category }}
+        </h5>
+      </div>
+      <div style="height: 30rem; width: 100%">
+        <canvas id="canvasAnswerBreakdown">{{ chartAnswerBreakdown }}</canvas>
+      </div>
+    </div>
+  </div>
+</div>

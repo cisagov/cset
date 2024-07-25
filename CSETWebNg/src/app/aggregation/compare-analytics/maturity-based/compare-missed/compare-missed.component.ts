@@ -22,15 +22,15 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { AggregationService } from '../../../services/aggregation.service';
+import { AggregationService } from '../../../../services/aggregation.service';
 
 @Component({
-  selector: 'app-compare-missed',
+  selector: 'app-compare-maturity-missed',
   templateUrl: './compare-missed.component.html',
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class CompareMissedComponent implements OnInit {
+export class CompareMaturityMissedComponent implements OnInit {
 
   missedQuestions: [] = null;
 
@@ -41,7 +41,7 @@ export class CompareMissedComponent implements OnInit {
   ngOnInit() {
     const aggregationId = this.aggregationSvc.id();
 
-    this.aggregationSvc.getMissedQuestions().subscribe((resp: any) => {
+    this.aggregationSvc.getMaturityMissedQuestions().subscribe((resp: any) => {
       this.missedQuestions = resp;
     });
   }

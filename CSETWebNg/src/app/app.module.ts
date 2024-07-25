@@ -251,10 +251,13 @@ import { AliasAssessmentsComponent } from './aggregation/alias-assessments/alias
 import { AggregationDetailComponent } from './aggregation/aggregation-detail/aggregation-detail.component';
 import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
-import { CompareSummaryComponent } from './aggregation/compare-analytics/compare-summary/compare-summary.component';
-import { CompareMissedComponent } from './aggregation/compare-analytics/compare-missed/compare-missed.component';
-import { CompareIndividualComponent } from './aggregation/compare-analytics/compare-individual/compare-individual.component';
-import { CompareBestworstComponent } from './aggregation/compare-analytics/compare-bestworst/compare-bestworst.component';
+import { CompareSummaryComponent } from './aggregation/compare-analytics/standards-based/compare-summary/compare-summary.component';
+import { CompareMissedComponent } from './aggregation/compare-analytics/standards-based/compare-missed/compare-missed.component';
+import { CompareIndividualComponent } from './aggregation/compare-analytics/standards-based/compare-individual/compare-individual.component';
+import { CompareBestworstComponent } from './aggregation/compare-analytics/standards-based/compare-bestworst/compare-bestworst.component';
+import { CompareMaturityMissedComponent } from './aggregation/compare-analytics/maturity-based/compare-missed/compare-missed.component';
+import { CompareMaturityIndividualComponent } from './aggregation/compare-analytics/maturity-based/compare-individual/compare-individual.component';
+import { CompareMaturityBestworstComponent } from './aggregation/compare-analytics/maturity-based/compare-bestworst/compare-bestworst.component';
 import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
 import { ChartService } from './services/chart.service';
 import { ChartColors } from './services/chart.service';
@@ -909,6 +912,9 @@ import { ReportListSD02OwnerComponent } from './assessment/results/reports/repor
     CompareMissedComponent,
     CompareIndividualComponent,
     CompareBestworstComponent,
+    CompareMaturityMissedComponent,
+    CompareMaturityIndividualComponent,
+    CompareMaturityBestworstComponent,
     ComponentOverrideComponent,
     ExcelExportComponent,
     LayoutBlankComponent,
@@ -1304,16 +1310,16 @@ import { ReportListSD02OwnerComponent } from './assessment/results/reports/repor
     ReportListCrrComponent,
     ReportListEdmComponent,
     ReportListRraComponent,
-    ReportListCpgComponent, 
-    ReportListMvraComponent, 
-    ReportListCmmcComponent, 
-    ReportListC2M2Component, 
-    ReportListDiagramComponent, 
-    ReportListACETComponent, 
-    ReportListVADRComponent, 
-    ReportListISEComponent, 
-    ReportListHYDROComponent, 
-    ReportListSD02SeriesComponent, 
+    ReportListCpgComponent,
+    ReportListMvraComponent,
+    ReportListCmmcComponent,
+    ReportListC2M2Component,
+    ReportListDiagramComponent,
+    ReportListACETComponent,
+    ReportListVADRComponent,
+    ReportListISEComponent,
+    ReportListHYDROComponent,
+    ReportListSD02SeriesComponent,
     ReportListSD02OwnerComponent
   ],
   providers: [
