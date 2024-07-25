@@ -22,8 +22,8 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { AggregationService } from '../../../services/aggregation.service';
-import { ChartService } from '../../../services/chart.service';
+import { AggregationService } from '../../../../services/aggregation.service';
+import { ChartService } from '../../../../services/chart.service';
 import Chart from 'chart.js/auto';
 
 @Component({

@@ -22,31 +22,21 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { AggregationService } from '../../../services/aggregation.service';
-import { ChartService } from '../../../services/chart.service';
-import { ColorService } from '../../../services/color.service';
+import { AggregationService } from '../../../../services/aggregation.service';
+import { ChartService } from '../../../../services/chart.service';
+import { ColorService } from '../../../../services/color.service';
 
 @Component({
-  selector: 'app-compare-summary',
-  templateUrl: './compare-summary.component.html',
+  selector: 'app-compare-maturity-individual',
+  templateUrl: './compare-individual.component.html',
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class CompareSummaryComponent implements OnInit {
+export class CompareMaturityIndividualComponent implements OnInit {
 
-  chartOverallAverage: any;
-  chartStandardsPie: any;
-  chartComponentsPie: any;
-  chartCategoryAverage: any;
-  catAvgHeight: number;
-
+  answerCounts: any[] = null;
   chartsMaturityCompliance: any[];
 
-  assessmentColors: Map<string, string>;
-
-  /**
-   *
-   */
   constructor(
     public aggregationSvc: AggregationService,
     public chartSvc: ChartService,
@@ -54,68 +44,16 @@ export class CompareSummaryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.assessmentColors = new Map<string, string>();
     this.populateCharts();
   }
 
   populateCharts() {
-    const aggregationId = this.aggregationSvc.id();
-    var aggId: number = +localStorage.getItem("aggregationId");
-    // Overall Average
-    this.aggregationSvc.getOverallAverageSummary(aggId).subscribe((x: any) => {
+    const aggId: number = +localStorage.getItem("aggregationId");
 
-      // apply visual attributes
-      x.datasets.forEach(ds => {
-        ds.backgroundColor = '#007BFF';
-      });
-
-      this.chartOverallAverage = this.chartSvc.buildHorizBarChart('canvasOverallAverage', x, false, true);
-    });
-
-
-
-    // Standards Answers
-    this.aggregationSvc.getStandardsAnswers().subscribe((x: any) => {
-      if (x.data.every(item => item === 0)) {
-        x.data = [100];
-        x.labels = ['No Standards Selected'];
-      }
-
-      this.chartStandardsPie = this.chartSvc.buildDoughnutChart('canvasStandardsPie', x);
-    });
-
-
-
-    // Components Answers
-    this.aggregationSvc.getComponentsAnswers().subscribe((x: any) => {
-      if (x.data.every(item => item === 0)) {
-        x.data = [100];
-        x.labels = ['No Assessment Diagrams'];
-      }
-
-      this.chartComponentsPie = this.chartSvc.buildDoughnutChart('canvasComponentsPie', x);
-    });
-
-
-
-    // Category Averages
-    this.aggregationSvc.getCategoryAverages(aggId).subscribe((x: any) => {
-
-      // apply visual attributes
-      x.datasets.forEach(ds => {
-        ds.backgroundColor = '#28A745';
-      });
-
-      if (!x.options) {
-        x.options = {};
-      }
-      x.options.maintainAspectRatio = false;
-
-      this.chartCategoryAverage = this.chartSvc.buildHorizBarChart('canvasCategoryAverage', x, false, true);
-
-      if (this.chartCategoryAverage.canvas) {
-        (<HTMLElement>this.chartCategoryAverage.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
-      }
+    // Assessment Answer Summary - tabular data
+    this.aggregationSvc.getMaturityAnswerTotals(aggId).subscribe((x: any) => {
+      // 
+      this.answerCounts = x;
     });
 
 
@@ -141,9 +79,6 @@ export class CompareSummaryComponent implements OnInit {
     });
   }
 
-  /**
-   *
-   */
   buildMaturityChart(c, showLegend) {
     c.datasets.forEach(ds => {
       ds.backgroundColor = this.colorSvc.getColorForAssessment(ds.label);
