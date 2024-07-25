@@ -168,6 +168,14 @@
                 style="width: 15%; margin-top: 1.50rem; margin-left: auto; margin-right: 0"
                 [disabled]="(this.mergeRadioSelections.length !== this.mergeConflicts.length) || (this.attemptingToMerge === true)"
                 (click)="createMergedAssessment()">Merge Analyses</button>
+            <ng-container *ngIf="this.attemptingToMerge === true">
+                <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
+                    <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+                        <div class="spinner-size-50"></div>
+                        <p style="padding-left: 20px;">Merging in progress, please wait...</p>
+                    </div>
+                </div>
+            </ng-container>
         </ng-container>
 
         <ng-container *ngIf="this.mergeConflicts.length === 0">

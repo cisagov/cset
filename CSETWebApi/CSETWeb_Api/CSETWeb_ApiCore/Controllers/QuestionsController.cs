@@ -28,7 +28,7 @@ using System.Linq;
 using CSETWebCore.Business.Malcolm;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using CSETWebCore.Helpers;
-
+using CSETWebCore.Business.Contact;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -507,7 +507,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="obs"></param>
         [HttpPost]
         [Route("api/AnswerSaveObservation")]
-        public IActionResult SaveObservation([FromBody] Observation obs, [FromQuery] bool cancel = false)
+        public IActionResult SaveObservation([FromBody] Observation obs, [FromQuery] bool cancel = false, [FromQuery] bool merge = false)
         {
             int assessmentId = _token.AssessmentForUser();
             var fm = new ObservationsManager(_context, assessmentId);
@@ -519,7 +519,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            var id = fm.UpdateObservation(obs);
+            var id = fm.UpdateObservation(obs, merge);
 
             return Ok(id);
         }
@@ -536,14 +536,13 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             var fm = new ObservationsManager(_context, assessmentId);
 
-
             if (obs.IsObservationEmpty(cancel))
             {
                 fm.DeleteObservation(obs);
                 return Ok();
             }
 
-            var id = fm.UpdateObservation(obs);
+            var id = fm.UpdateObservation(obs, false);
 
             return Ok(id);
         }

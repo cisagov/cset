@@ -164,6 +164,7 @@ import { KeyboardShortcutsComponent } from './dialogs/keyboard-shortcuts/keyboar
 import { LicenseComponent } from './dialogs/license/license.component';
 import { OkayComponent } from './dialogs/okay/okay.component';
 import { QuestionFiltersComponent } from './dialogs/question-filters/question-filters.component';
+import { QuestionFiltersReportsComponent } from './dialogs/question-filters-reports/question-filters-reports.component';
 import { TermsOfUseComponent } from './dialogs/terms-of-use/terms-of-use.component';
 import { AccessibilityStatementComponent } from './dialogs/accessibility-statement/accessibility-statement.component';
 import { UploadExportComponent } from './dialogs/upload-export/upload-export.component';
@@ -661,6 +662,7 @@ import { AnalyticsComponent } from './assessment/results/analytics/analytics.com
 import { AnalyticsloginComponent } from './assessment/results/analysis/analytics-login/analytics-login.component';
 import { AnalyticsService } from './services/analytics.service';
 import { UploadDemographicsComponent } from './dialogs/import demographics/import-demographics.component';
+import { CieMfrReportComponent } from './reports/cie/cie-mfr-report/cie-mfr-report.component';
 import { ReportListComponent } from './assessment/results/reports/report-list/report-list.component';
 import { ReportListImrComponent } from './assessment/results/reports/report-list/report-list-imr/report-list-imr.component';
 import { ReportListCisComponent } from './assessment/results/reports/report-list/report-list-cis/report-list-cis.component';
@@ -861,6 +863,7 @@ import { ReportListSD02OwnerComponent } from './assessment/results/reports/repor
     TermsOfUseComponent,
     AccessibilityStatementComponent,
     QuestionFiltersComponent,
+    QuestionFiltersReportsComponent,
     AssessmentDocumentsComponent,
     InlineParameterComponent,
     GlobalParametersComponent,
@@ -1284,6 +1287,9 @@ import { ReportListSD02OwnerComponent } from './assessment/results/reports/repor
     CiePrincipleOnlyComponent,
     CiePrinciplePhaseComponent,
     CieNotApplicableComponent,
+    CieMfrReportComponent,
+    AboutCieComponent, 
+    AnalyticsComponent, 
     SdOwnerDeficiencyComponent,
     SdOwnerCommentsMfrComponent,
     AboutCieComponent,
