@@ -32,6 +32,12 @@ import { ObservationsService } from '../../../services/observations.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { CieService } from '../../../services/cie.service';
+import { FileUploadClientService } from '../../../services/file-client.service';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { QuestionFiltersReportsComponent } from '../../../dialogs/question-filters-reports/question-filters-reports.component';
+import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
+
 @Component({
   selector: 'app-cie-all-questions',
   templateUrl: './cie-all-questions.component.html',
@@ -44,9 +50,13 @@ export class CieAllQuestionsComponent {
   hasComments: any[] = [];
   // showSubcats: Map<String, boolean> = new Map<String, boolean>();
   expandedOptions: Map<String, boolean> = new Map<String, boolean>();
+  principleTitleList: string[] = [];
+  phaseTitleList: string[] = [];
 
   examLevel: string = '';
   loading: boolean = true;
+
+  filterDialogRef: MatDialogRef<QuestionFiltersReportsComponent>;
 
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
@@ -57,30 +67,35 @@ export class CieAllQuestionsComponent {
     private titleService: Title,
     public cieSvc: CieService,
     public configSvc: ConfigService,
-    public observationSvc: ObservationsService
+    public observationSvc: ObservationsService,
+    public fileSvc: FileUploadClientService,
+    public authSvc: AuthenticationService,
+    private dialog: MatDialog,
+    private filterSvc: QuestionFilterService
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Export All CIE-CSET - Report");
+    this.titleService.setTitle("Export All CIE - Report");
 
     this.cieSvc.getCieAllQuestions().subscribe(
       (r: any) => {
         this.response = r;
-
         // goes through domains
         for (let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
           let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
           // goes through subcategories
           for (let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
-            this.expandedOptions.set(domain?.title + '_' + subcat?.title, false);
-
+            this.expandedOptions.set('Principle_' + domain?.title, false);
+            this.principleTitleList.push('Principle_' + domain?.title);
+            this.phaseTitleList.push('Phase_' + domain?.title);
             // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
             // goes through questions
             for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
 
-                this.expandedOptions.set(domain?.title + '_' + subcat?.title, false);
+                this.expandedOptions.set('Phase_' + domain?.title + '_' + subcat?.title, false);
+                this.phaseTitleList.push('Phase_' + domain?.title + '_' + subcat?.title);
                 // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
             }
           }
@@ -137,5 +152,69 @@ export class CieAllQuestionsComponent {
       combinedClass += 'bottom-half-border';
     }
     return combinedClass;
+  }
+
+  /**
+   *
+   */
+  download(doc: any) {
+    // get short-term JWT from API
+    this.authSvc.getShortLivedToken().subscribe((response: any) => {
+      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
+      window.location.href = url;
+    });
+  }
+
+  /**
+   *
+   */
+  downloadFile(document) {
+    this.fileSvc.downloadFile(document.document_Id).subscribe((data: Response) => {
+      // this.downloadFileData(data),
+    },
+      error => console.log(error)
+    );
+  }
+
+  /**
+   * Controls the mass expansion/collapse of all subcategories on the screen.
+   * @param mode
+   */
+  expandAll(mode: boolean, principleOrPhase: string) {
+    if (principleOrPhase == 'Principle') {
+      for(let i = 0; i < this.principleTitleList.length; i++ ) {
+        this.expandedOptions.set(this.principleTitleList[i], mode);
+      }
+    }
+    if (principleOrPhase == 'Phase') {
+      for(let i = 0; i < this.phaseTitleList.length; i++ ) {
+        this.expandedOptions.set(this.phaseTitleList[i], mode);
+      }
+    }
+  }
+
+  /**
+   * Re-evaluates the visibility of all questions/subcategories/categories
+   * based on the current filter settings.
+   * Also re-draws the sidenav category tree, skipping categories
+   * that are not currently visible.
+   */
+  refreshQuestionVisibility(matLevel: number) {
+    this.filterSvc.evaluateFiltersForReportCategories(this.response?.matAnsweredQuestions[0], matLevel);
+  }
+
+  /**
+   *
+   */
+  showFilterDialog(matLevel: number) {
+    this.filterDialogRef = this.dialog.open(QuestionFiltersReportsComponent);
+    this.filterDialogRef.componentInstance.filterChanged.asObservable().subscribe(() => {
+      this.refreshQuestionVisibility(matLevel);
+    });
+    this.filterDialogRef
+      .afterClosed()
+      .subscribe(() => {
+        this.refreshQuestionVisibility(matLevel);
+      });
   }
 }

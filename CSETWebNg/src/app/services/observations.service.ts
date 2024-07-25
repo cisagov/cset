@@ -81,11 +81,14 @@ export class ObservationsService {
   /**
    * saves the given observation
    */
-  saveObservation(observation: Observation, cancel?: boolean) {
+  saveObservation(observation: Observation, cancel?: boolean, merge?: boolean) {
     if (cancel == null) {
       cancel = false;
     }
-    return this.http.post(this.configSvc.apiUrl + 'AnswerSaveObservation?cancel=' + cancel, observation, headers);
+    if (merge == null) {
+      merge = false;
+    }
+    return this.http.post(this.configSvc.apiUrl + 'AnswerSaveObservation?cancel=' + cancel + '&merge=' + merge, observation, headers);
   }
 
   deleteObservation(observationId: number): any {

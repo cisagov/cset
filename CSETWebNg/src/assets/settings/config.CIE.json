@@ -3,7 +3,7 @@
     "installationMode":"CIE",
     "helpContactEmail": "cie@inl.gov",
     "behaviors": {
-        "defaultTitle":"CSET-CIE",
+        "defaultTitle":"CIE",
         "showModuleBuilder": true,
         "showAssessmentDocuments": true,
         "showAggregation": true,
@@ -19,7 +19,7 @@
         "showFeedback": true,
         "showBusinessAgencyName": true,
         "showCriticalService": true,
-        "additionalUserGuides": ["CSET"],
+        "additionalUserGuides": [],
         "showCisaAssessorWorkflowSwitch": false,
         "replaceAssessmentWithAnalysis": true
     }

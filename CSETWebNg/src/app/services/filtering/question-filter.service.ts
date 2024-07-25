@@ -285,4 +285,142 @@ export class QuestionFilterService {
       d.visible = (!!d.categories.find(c => c.visible));
     });
   }
+
+  // cie filter for reports
+  /**
+   * This is an overload of evaluateFilters, which takes a list
+   * of Domains.  This version wraps the category list in
+   * a dummy Domain and calls evaluateFilters.
+   * 
+   * Made specifically for CIE, but can be modified to work with other maturities
+   * @param categories 
+   */
+  public evaluateFiltersForReportCategories(categories: any[], matLevel: number) {
+    var dummyDomain: Domain = {
+      categories: [],
+      displayText: '',
+      domainName: '',
+      domainText: '',
+      isDomain: true,
+      setName: '',
+      setShortName: '',
+      visible: true
+    };
+    dummyDomain.categories = categories;
+
+    var dummyDomainList = [];
+    dummyDomainList.push(dummyDomain);
+
+    return this.evaluateReportFilters(dummyDomainList, matLevel);
+  }
+
+
+  /**
+   * Sets the Visible property on all Questions, Subcategories and Categories
+   * based on the current filter settings.
+   * 
+   * Made specifically for CIE, but can be modified to work with other maturities
+   * @param cats
+   */
+  public evaluateReportFilters(domains: any[], matLevel: number) {
+    if (!domains) {
+      return;
+    }
+
+    const filterStringLowerCase = this.filterSearchString.toLowerCase();
+    console.log(domains)
+
+    if (matLevel == 5) {
+      domains.forEach(d => {
+        d.categories.assessmentFactors.forEach(af => { // categories / principles
+          af.questions.forEach(q => {
+            // start with false, then set true if possible
+            q.visible = false;
+  
+            // If search string is specified, any questions that don't contain the string
+            // are not shown.  No need to check anything else.
+            if (this.filterSearchString.length > 0
+              && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
+              return;
+            }
+  
+            // because CIE is free-response based, 'U' just means "not NA"
+            // 'U' with 'freeResponseAnswer' gives whether it's an 'N' (Unanswered) or 'Y' (Answered))
+            if (q.answerText == 'U' 
+              && (q.freeResponseText && q.freeResponseText.length > 0) 
+              && this.showFilters.includes('Y')) {
+              q.visible = true;
+            }
+  
+            if ((q.answerText == null || q.answerText == 'U') 
+              && (!q.freeResponseText || q.freeResponseText.length == 0) 
+              && this.showFilters.includes('N')) {
+              q.visible = true;
+            }
+  
+            // if answer is 'NA', the free-response part is optional
+            if (q.answerText == 'NA' && this.showFilters.includes(q.answerText)) {
+              q.visible = true;
+            }
+          });
+            // evaluate category heading visibility
+          af.areQuestionsDeficient = (af.questions.find(q => q.visible) == null ? true : false);
+        });
+
+        /** evaluate domain heading principle question visibility.
+        * Put into 'areFactorQuestionsDeficient' to allow both principle 
+        * and principle-phase tables to have seperate filters
+        */ 
+        d.categories.areFactorQuestionsDeficient = (d.categories.assessmentFactors.find(af => !af.areQuestionsDeficient) == null ? true : false);
+      });
+    }
+
+    else {
+      domains.forEach(d => {
+        d.categories.assessmentFactors.forEach(af => { // categories / principles
+          af.components.forEach(c => { // subCategories / phases
+            c.questions.forEach(q => {
+              // start with false, then set true if possible
+              q.visible = false;
+  
+              // If search string is specified, any questions that don't contain the string
+              // are not shown.  No need to check anything else.
+              if (this.filterSearchString.length > 0
+                && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
+                return;
+              }
+  
+              // because CIE is free-response based, 'U' just means "not NA"
+              // 'U' with 'freeResponseAnswer' gives whether it's an 'N' (Unanswered) or 'Y' (Answered))
+              if (q.answerText == 'U' && (q.freeResponseText && q.freeResponseText.length > 0) 
+                && this.showFilters.includes('Y')) {
+                q.visible = true;
+              }
+  
+              if ((q.answerText == null || q.answerText == 'U') 
+                && (!q.freeResponseText || q.freeResponseText.length == 0) 
+                && this.showFilters.includes('N')) {
+                q.visible = true;
+              }
+  
+              // if answer is 'NA', the free-response part is optional
+              if (q.answerText == 'NA' && this.showFilters.includes(q.answerText)) {
+                q.visible = true;
+              }
+            });
+  
+            // evaluate subcat visiblity
+            c.isDeficient = (c.questions.find(q => q.visible) == null ? true : false);
+          });
+  
+          // evaluate category heading visibility
+          af.isDeficient = (af.components.find(c => !c.isDeficient) == null ? true : false);
+        });
+  
+        // evaluate domain heading principle-phase question visibility
+        d.categories.isDeficient = (d.categories.assessmentFactors.find(c => !c.isDeficient) == null ? true : false);
+      });
+    }
+  }
+  //
 }
