@@ -13,7 +13,7 @@ The enterprise installation can be automated through the use of a provided Power
 
 2. Search for PowerShell from the Windows Start menu. Right-click on Windows Powershell then click "Run as administrator."
 
-![](img/figES1.png)
+![](img/figES1.PNG)
 
 3. Navigate to the extracted CSET binaries folder. In this example, the folder is located on the user desktop. The PowerShell command to navigate to the desktop directory would be: <br/>
  ```cd C:\users\%USER%\Desktop\CSETv%VERSION%_Enterprise_Binaries```.
