@@ -672,7 +672,6 @@ import { ReportListCisComponent } from './assessment/results/reports/report-list
 import { ReportListCmmc2Component } from './assessment/results/reports/report-list/report-list-cmmc2/report-list-cmmc2.component';
 import { ReportListCrrComponent } from './assessment/results/reports/report-list/report-list-crr/report-list-crr.component';
 import { ReportListEdmComponent } from './assessment/results/reports/report-list/report-list-edm/report-list-edm.component';
-import { ReportListRraComponent } from './assessment/results/reports/report-list/reports-rra/report-list-rra.component';
 import { ReportListCpgComponent } from './assessment/results/reports/report-list/reports-list-cpg/report-list-cpg.component';
 import { ReportListMvraComponent } from './assessment/results/reports/report-list/report-list-mvra/report-list-mvra.component';
 import { ReportListCmmcComponent } from './assessment/results/reports/report-list/report-list-cmmc/report-list-cmmc.component';
@@ -684,6 +683,7 @@ import { ReportListISEComponent } from './assessment/results/reports/report-list
 import { ReportListHYDROComponent } from './assessment/results/reports/report-list/report-list-hydro/report-list-hydro.component';
 import { ReportListSD02SeriesComponent } from './assessment/results/reports/report-list/report-list-sd02Series/report-list-sd02Series.component';
 import { ReportListSD02OwnerComponent } from './assessment/results/reports/report-list/report-list-sd02Owner/report-list-sd02Owner.component';
+import { ReportListCommonComponent } from './assessment/results/reports/report-list/report-list-common.component';
 
 
 @NgModule({
@@ -1309,7 +1309,6 @@ import { ReportListSD02OwnerComponent } from './assessment/results/reports/repor
     ReportListComponent,
     ReportListCrrComponent,
     ReportListEdmComponent,
-    ReportListRraComponent,
     ReportListCpgComponent,
     ReportListMvraComponent,
     ReportListCmmcComponent,
@@ -1320,7 +1319,8 @@ import { ReportListSD02OwnerComponent } from './assessment/results/reports/repor
     ReportListISEComponent,
     ReportListHYDROComponent,
     ReportListSD02SeriesComponent,
-    ReportListSD02OwnerComponent
+    ReportListSD02OwnerComponent, 
+    ReportListCommonComponent
   ],
   providers: [
     TranslocoService,

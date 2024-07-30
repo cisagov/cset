@@ -1,0 +1,35 @@
+[
+  {
+    "title": "RRA",
+    "reportList": [
+      {
+        "linkUrl": "rrareport"
+      },
+      {
+        "linkUrl": "rraDeficiencyReport"
+      },
+      {
+        "linkUrl": "commentsmfr"
+      }
+    ]
+  },
+  {
+    "title": "EDM",
+    "reportList": [
+      {
+        "linkUrl": "edm",
+        "securityPicker": true
+      },
+      {
+        "linkUrl": "edm",
+        "print": true
+      },
+      {
+        "linkUrl": "edmDeficiencyReport"
+      },
+      {
+        "linkUrl": "edmCommentsmarked"
+      }
+    ]
+  }
+]
