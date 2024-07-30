@@ -9,7 +9,9 @@ various resources to assist in this process.
 The enterprise installation can be automated through the use of a provided PowerShell script named ```setup_enterprise.ps1``` 
 (as of CSET release v11.0.1.2). This script is located in the root of the enterprise binaries zip folder.
 
-1. Extract the CSET enterprise binaries to a desired location on your computer.
+1. Download and extract the CSET enterprise binaries from the archive to a desired location on your computer.
+
+![](img/figES0.PNG)
 
 2. Search for PowerShell from the Windows Start menu. Right-click on Windows Powershell then click "Run as administrator."
 
