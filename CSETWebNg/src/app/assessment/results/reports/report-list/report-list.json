@@ -31,5 +31,25 @@
         "linkUrl": "edmCommentsmarked"
       }
     ]
+  },
+  {
+    "title": "CMMC",
+    "reportList": [
+      {
+        "linkUrl": "executivecmmc"
+      },
+      {
+        "linkUrl": "sitesummarycmmc"
+      },
+      {
+        "linkUrl": "cmmcDeficiencyReport"
+      },
+      {
+        "linkUrl": "cmmcCommentsMarked"
+      },
+      {
+        "linkUrl": "cmmcAltJustifications"
+      }
+    ]
   }
 ]

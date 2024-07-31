@@ -64,13 +64,12 @@
     <app-report-list-diagram *ngIf="!!assessSvc.assessment && (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile"></app-report-list-diagram>
 
     <!-- CMMC -->
-    <app-report-list-cmmc *ngIf="!!assessSvc.assessment &&
+    <app-report-list-common *ngIf="!!assessSvc.assessment &&
     assessSvc.usesMaturityModel('CMMC') &&
-    !isMobile"></app-report-list-cmmc>
+    !isMobile" sectionId="CMMC"></app-report-list-common>
 
     <!-- EDM -->
-    <app-report-list-edm *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
-      [confidentiality]="confidentiality"></app-report-list-edm>
+    <app-report-list-common *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')" sectionId="EDM"></app-report-list-common>
 
 
     <!-- CRR -->
