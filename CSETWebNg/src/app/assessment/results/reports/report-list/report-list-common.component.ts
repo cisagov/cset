@@ -24,7 +24,6 @@ export class ReportListCommonComponent implements OnChanges{
     }
   
     getReportList(sectionId: string): any[] {
-      // Find the object with the matching title
       const result = this.jsonData.find(item => item.title === sectionId);
       // Check if the result exists and return the reportList or an empty array if not found
       return result ? result.reportList : [];
