@@ -667,19 +667,6 @@ import { AnalyticsService } from './services/analytics.service';
 import { UploadDemographicsComponent } from './dialogs/import demographics/import-demographics.component';
 import { CieMfrReportComponent } from './reports/cie/cie-mfr-report/cie-mfr-report.component';
 import { ReportListComponent } from './assessment/results/reports/report-list/report-list.component';
-import { ReportListImrComponent } from './assessment/results/reports/report-list/report-list-imr/report-list-imr.component';
-import { ReportListCisComponent } from './assessment/results/reports/report-list/report-list-cis/report-list-cis.component';
-import { ReportListCmmc2Component } from './assessment/results/reports/report-list/report-list-cmmc2/report-list-cmmc2.component';
-import { ReportListCrrComponent } from './assessment/results/reports/report-list/report-list-crr/report-list-crr.component';
-import { ReportListMvraComponent } from './assessment/results/reports/report-list/report-list-mvra/report-list-mvra.component';
-import { ReportListDiagramComponent } from './assessment/results/reports/report-list/report-list-diagram/report-list-diagram.component';
-import { ReportListC2M2Component } from './assessment/results/reports/report-list/report-list-c2m2/report-list-c2m2.component';
-import { ReportListACETComponent } from './assessment/results/reports/report-list/report-list-acet/report-list-acet.component';
-import { ReportListVADRComponent } from './assessment/results/reports/report-list/report-list-vadr/report-list-vadr.component';
-import { ReportListISEComponent } from './assessment/results/reports/report-list/report-list-ise/report-list-ise.component';
-import { ReportListHYDROComponent } from './assessment/results/reports/report-list/report-list-hydro/report-list-hydro.component';
-import { ReportListSD02SeriesComponent } from './assessment/results/reports/report-list/report-list-sd02Series/report-list-sd02Series.component';
-import { ReportListSD02OwnerComponent } from './assessment/results/reports/report-list/report-list-sd02Owner/report-list-sd02Owner.component';
 import { ReportListCommonComponent } from './assessment/results/reports/report-list/report-list-common.component';
 
 
@@ -1300,20 +1287,7 @@ import { ReportListCommonComponent } from './assessment/results/reports/report-l
     ReferencesSectionComponent,
     CisaWorkflowWarningsComponent,
     AnalyticsloginComponent,
-    ReportListImrComponent,
-    ReportListCisComponent,
-    ReportListCmmc2Component,
-    ReportListComponent,
-    ReportListCrrComponent,
-    ReportListMvraComponent,
-    ReportListC2M2Component,
-    ReportListDiagramComponent,
-    ReportListACETComponent,
-    ReportListVADRComponent,
-    ReportListISEComponent,
-    ReportListHYDROComponent,
-    ReportListSD02SeriesComponent,
-    ReportListSD02OwnerComponent, 
+    ReportListComponent, 
     ReportListCommonComponent
   ],
   providers: [
