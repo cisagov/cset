@@ -51,5 +51,16 @@
         "linkUrl": "cmmcAltJustifications"
       }
     ]
+  },
+  {
+    "title": "CPG",
+    "reportList": [
+      {
+        "linkUrl": "cpgReport"
+      },
+      {
+        "linkUrl": "cpgDeficiency"
+      }
+    ]
   }
 ]

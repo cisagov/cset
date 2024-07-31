@@ -671,7 +671,6 @@ import { ReportListImrComponent } from './assessment/results/reports/report-list
 import { ReportListCisComponent } from './assessment/results/reports/report-list/report-list-cis/report-list-cis.component';
 import { ReportListCmmc2Component } from './assessment/results/reports/report-list/report-list-cmmc2/report-list-cmmc2.component';
 import { ReportListCrrComponent } from './assessment/results/reports/report-list/report-list-crr/report-list-crr.component';
-import { ReportListCpgComponent } from './assessment/results/reports/report-list/reports-list-cpg/report-list-cpg.component';
 import { ReportListMvraComponent } from './assessment/results/reports/report-list/report-list-mvra/report-list-mvra.component';
 import { ReportListDiagramComponent } from './assessment/results/reports/report-list/report-list-diagram/report-list-diagram.component';
 import { ReportListC2M2Component } from './assessment/results/reports/report-list/report-list-c2m2/report-list-c2m2.component';
@@ -1306,7 +1305,6 @@ import { ReportListCommonComponent } from './assessment/results/reports/report-l
     ReportListCmmc2Component,
     ReportListComponent,
     ReportListCrrComponent,
-    ReportListCpgComponent,
     ReportListMvraComponent,
     ReportListC2M2Component,
     ReportListDiagramComponent,

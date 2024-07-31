@@ -121,7 +121,7 @@
     </app-report-list-mvra>
 
     <!-- CPG -->
-    <app-report-list-cpg *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile"></app-report-list-cpg>
+    <app-report-list-common *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile" sectionId="CPG"></app-report-list-common>
     
     <!-- C2M2 -->
     <app-report-list-c2m2 *ngIf="!!assessSvc.assessment &&
