@@ -1,33 +1,33 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 
 @Component({
   selector: 'app-report-list-common',
   templateUrl: './report-list-common.component.html'
 })
-export class ReportListCommonComponent implements OnInit {
 
-@Input()
-sectionId: string;
-
-@Input()
-confidentiality: boolean;
-
-jsonData: any;
-
-reportList: [];
+export class ReportListCommonComponent implements OnChanges{
+    @Input() sectionId: string;
+  
+    jsonData: any;
+    reportList: any[] = [];
+  
     constructor() {
-        this.jsonData = require('./report-list.json');
-        this.reportList = this.getReportList(this.sectionId)
+      // Load JSON data 
+      this.jsonData = require('./report-list.json');
     }
-
-  ngOnInit(): void {
-  }
-
-  getReportList(sectionId: string){
-    // Find the object with the matching title
-  const result = this.jsonData.find(item => item.sectionId === sectionId);
-  // Check if the result exists and return the reportList or an empty array if not found
-  return result ? result.reportList : [];
-  }
+  
+    ngOnChanges(changes: SimpleChanges): void {
+      if (changes['sectionId']) {
+        this.reportList = this.getReportList(this.sectionId);
+      }
+    }
+  
+    getReportList(sectionId: string): any[] {
+      // Find the object with the matching title
+      const result = this.jsonData.find(item => item.title === sectionId);
+      console.log(result);
+      // Check if the result exists and return the reportList or an empty array if not found
+      return result ? result.reportList : [];
+    }
 }
