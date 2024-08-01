@@ -7,8 +7,11 @@ CSET is a free software tool that guides users through a step-by-step process to
 CSET provides the following:
  
 •	A framework for analyzing cybersecurity vulnerabilities associated with an organization’s overall industrial control system (ICS) and information technology (IT) architecture.
+
 •	A consistent and technically sound methodology to identify, analyze, and communicate to security professionals the various vulnerabilities and consequences that may be exploited by cyber means.
+
 •	The means for the user to document a process for identifying cybersecurity vulnerabilities.
+
 •	Suggested methods to evaluate options for improvement based on existing standards and recommended practices.
 
 View the [CSET Overview](https://www.youtube.com/watch?v=B3xAh4iSRO0) and [CSET Detailed Video](https://www.youtube.com/watch?v=ELbvQTl4xmU) to learn more about CSET and how to use the software.
@@ -81,7 +84,7 @@ Other Items of Note:
 • For all platforms, it is recommended the user upgrade to the latest Windows Service Pack and install critical updates 
 available from the Windows Update web site to ensure the best compatibility and security.
 
-### Questions and Feedback
+## Questions and Feedback
 
 If you have questions about using CSET, please contact CSET_PMO@cisa.dhs.gov. 
 
