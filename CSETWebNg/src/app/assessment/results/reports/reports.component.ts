@@ -81,6 +81,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   cisaAssessorWorkflowFieldValidation: CisaWorkflowFieldValidationResponse;
   isCfEntry: boolean = false;
 
+  currentSectionId: string | null = null;
+
+
   /**
    *
    */
@@ -189,6 +192,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.cisaAssessorWorkflow = resp);
+
+    this.updateSectionId();
   }
 
   /**
@@ -335,6 +340,50 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     // , {width: '800px', height: "500px"}
     this.dialogRef = this.dialog.open(CieDocumentsComponent);
     this.dialogRef.afterClosed().subscribe();
+  }
+
+  updateSectionId(): void {
+    if (!!this.assessSvc.assessment) {
+      if (this.assessSvc.assessment.useStandard || this.assessSvc.assessment.useDiagram) {
+        if (!this.isMobile) {
+          this.currentSectionId = 'DIAGRAM';
+        }
+      } else if (this.assessSvc.usesMaturityModel('CMMC') && !this.isMobile) {
+        this.currentSectionId = 'CMMC';
+      } else if (this.assessSvc.usesMaturityModel('EDM')) {
+        this.currentSectionId = 'EDM';
+      } else if (this.assessSvc.usesMaturityModel('CRR')) {
+        this.currentSectionId = 'CRR';
+      } else if (this.assessSvc.usesMaturityModel('IMR')) {
+        this.currentSectionId = 'IMR';
+      } else if (this.assessSvc.usesMaturityModel('CIS')) {
+        this.currentSectionId = 'CIS';
+      } else if (this.assessSvc.usesMaturityModel('CMMC2')) {
+        this.currentSectionId = 'CMMC2';
+      } else if (this.assessSvc.usesMaturityModel('RRA') && !this.isMobile) {
+          this.currentSectionId = 'RRA';
+      } else if (this.assessSvc.usesMaturityModel('ACET') && !this.isMobile) {
+          this.currentSectionId = 'ACET';
+      } else if (this.assessSvc.usesMaturityModel('MVRA') && !this.isMobile) {
+          this.currentSectionId = 'MVRA';
+      } else if (this.assessSvc.usesMaturityModel('CPG') && !this.isMobile) {
+          this.currentSectionId = 'CPG';
+      } else if (this.assessSvc.usesMaturityModel('VADR') && !this.isMobile) {
+        this.currentSectionId = 'VADR';
+      } else if (this.assessSvc.usesMaturityModel('C2M2') && !this.isMobile) {
+        this.currentSectionId = 'C2M2';
+      } else if (this.assessSvc.usesMaturityModel('SD02 Series') && !this.  isMobile) {
+        this.currentSectionId = 'SD02 Series';
+      } else if (this.assessSvc.usesMaturityModel('SD02 Owner') && !this.isMobile) {
+        this.currentSectionId = 'SD02 Owner';
+      } else if (this.assessSvc.usesMaturityModel('HYDRO') && !this.isMobile) {
+        this.currentSectionId = 'HYDRO';
+      } else {
+        this.currentSectionId = null; // No valid section ID
+      }
+    } else {
+      this.currentSectionId = null; // No assessment
+    }
   }
 
 }
