@@ -168,6 +168,10 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'analysis/getanswertotals?aggregationID=' + aggId, '');
   }
 
+  getMaturityAnswerTotals(aggId) {
+    return this.http.post(this.apiUrl + 'analysis/getmaturityanswertotals?aggregationID=' + aggId, '');
+  }
+
 
 
   ////////////////////////////////  Trend  //////////////////////////////////
@@ -229,7 +233,13 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'analysis/getbesttoworst', '');
   }
 
+  getMaturityMissedQuestions() {
+    return this.http.post(this.apiUrl + 'getmaturitymissedquestions', {});
+  }
 
+  getMaturityBestToWorst() {
+    return this.http.post(this.apiUrl + 'analysis/getmaturitybesttoworst', '');
+  }
 
 
   //////////////////////////////// Merge //////////////////////////////////////

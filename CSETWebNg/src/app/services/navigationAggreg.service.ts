@@ -35,6 +35,7 @@ import { AggregationService } from './aggregation.service';
   providedIn: 'root'
 })
 export class NavigationAggregService {
+  compareType: string = "standards-based";
 
   pages = [
     {
@@ -49,8 +50,8 @@ export class NavigationAggregService {
       pageId: 'alias-assessments', path: 'alias-assessments/{:id}'
     },
     {
-      pageId: 'compare-analytics', path: 'compare-analytics/{:id}',
-      condition: () => this.aggregationSvc.mode === 'COMPARE'
+      pageId: 'compare-analytics', path: 'compare-analytics/{:id}/{:type}',
+      condition: () => this.aggregationSvc.mode === 'COMPARE',
     },
     {
       pageId: 'trend-analytics', path: 'trend-analytics/{:id}',
@@ -65,8 +66,8 @@ export class NavigationAggregService {
   constructor(
     private aggregationSvc: AggregationService,
     private router: Router
-  ) { }
-
+  ) {
+  }
 
   /**
    *
@@ -119,11 +120,14 @@ export class NavigationAggregService {
       newPageIndex = newPageIndex + 1;
       showPage = this.shouldIShow(this.pages[newPageIndex].condition);
     }
-
-    const newPath = this.pages[newPageIndex].path.replace('{:id}', this.aggregationSvc.id().toString());
-    this.router.navigate([newPath]);
+    this.aggregationSvc.getAssessments().subscribe({
+      next: (data: any) => {
+        this.compareType = data.assessments[0].useMaturity ? "maturity-based" : "standards-based";
+        const newPath = this.pages[newPageIndex].path.replace('{:id}', this.aggregationSvc.id().toString()).replace('{:type}', this.compareType);
+        this.router.navigate([newPath]);
+      }
+    });
   }
-
 
   /**
    * If there is no condition, show.  Otherwise evaluate the condition.
