@@ -42,7 +42,7 @@
 
 
   <!-- Observation Tear Out Sheets -->
-  <div class="d-flex flex-column justify-content-start align-items-start mb-4">
+  <div *ngIf="!assessSvc.usesMaturityModel('ISE')" class="d-flex flex-column justify-content-start align-items-start mb-4">
     <div class="mb-3 p-3 w-100" [class.gray-box]="true">
          <div class="d-flex flex-row" style="align-items: end">
               <div>
@@ -100,8 +100,6 @@
     </app-report-list-common>
 
     <!-- ISE -->
-    <app-ise-warnings *ngIf="assessSvc.isISE() && !isMobile" [iseHasBeenSubmitted]="iseHasBeenSubmitted"
-    [disableIseReportLinks]="disableIseReportLinks"></app-ise-warnings>
     <app-report-list-common *ngIf="assessSvc.isISE() && !isMobile" sectionId="ISE">
     </app-report-list-common>
     <div>
