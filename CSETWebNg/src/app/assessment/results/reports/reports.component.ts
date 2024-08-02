@@ -152,17 +152,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
     // call the API for a ruling on whether all questions have been answered
     this.disableAcetReportLinks = false;
-    this.disableIseReportLinks = false;
-    if (this.configSvc.installationMode === 'ACET') {
-      if (this.assessSvc.isISE()) {
-        this.checkIseDisabledStatus();
-
-        this.getAssessmentObservations();
-      } else {
-        this.checkAcetDisabledStatus();
-      }
-    }
-
+  
     if (this.configSvc.installationMode === 'IOD') {
       this.reportSvc.validateCisaAssessorFields().subscribe((result: CisaWorkflowFieldValidationResponse) => {
         this.cisaAssessorWorkflowFieldValidation = result;
@@ -267,55 +257,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  /**
-   * If all ACET ISE statements are not answered, set the 'disable' flag
-   * to true.
-   */
-  checkIseDisabledStatus() {
-    this.disableIseReportLinks = true;
-    if (!this.assessSvc.isISE()) {
-      return;
-    }
-    this.acetSvc.getIseAnswerCompletionRate().subscribe((percentAnswered: number) => {
-      if (percentAnswered == 100) {
-        this.disableIseReportLinks = false;
-      }
-    });
-  }
-
-  /**
-   * Gets all ISE Observations/Issues,
-   * then stores them in an array if the exam levels match (SCUEP alone, CORE/CORE+ together)
-   */
-  getAssessmentObservations() {
-    this.ncuaSvc.unassignedIssueTitles = [];
-    this.observationsSvc.getAssessmentObservations().subscribe(
-      (r: any) => {
-        this.observations = r;
-        let title = '';
-
-        for (let i = 0; i < this.observations?.length; i++) {
-          // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
-          if (
-            this.ncuaSvc.translateExamLevel(this.observations[i]?.question?.maturity_Level_Id).substring(0, 4) ==
-            this.ncuaSvc.getExamLevel().substring(0, 4)
-          ) {
-            if (this.observations[i]?.finding?.type == null || this.observations[i]?.finding?.type == '') {
-              title = this.observations[i]?.category?.title + ', ' + this.observations[i]?.question?.question_Title;
-              this.ncuaSvc.unassignedIssueTitles.push(title);
-            }
-          }
-        }
-        if (this.ncuaSvc.unassignedIssueTitles?.length == 0) {
-          this.ncuaSvc.unassignedIssues = false;
-        } else {
-          this.ncuaSvc.unassignedIssues = true;
-        }
-      },
-      (error) => console.log('Observations Error: ' + (<Error>error).message)
-    );
-  }
-
   onSelectSecurity(val) {
     this.confidentiality = val;
   }
@@ -371,7 +312,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       return true;
     }
 
-    if (this.disableIseReportLinks) {
+    if (this.reportSvc.disableIseReportLinks) {
       return true;
     }
     return false;
