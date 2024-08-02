@@ -114,16 +114,20 @@
     "title": "ISE",
     "reportList": [
       {
-        "linkUrl": "isemerit"
+        "linkUrl": "isemerit",
+        "disabled": false
       },
       {
-        "linkUrl": "iseexamination"
+        "linkUrl": "iseexamination",
+        "disabled": false
       },
       {
-        "linkUrl": "iseansweredquestions"
+        "linkUrl": "iseansweredquestions",
+        "disabled": false
       },
       {
-        "linkUrl": "iseexaminer"
+        "linkUrl": "iseexaminer",
+        "disabled": false
       }
     ]
   },
