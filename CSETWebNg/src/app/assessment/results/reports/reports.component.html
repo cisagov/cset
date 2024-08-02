@@ -42,7 +42,7 @@
 
 
   <!-- Observation Tear Out Sheets -->
-  <div class="d-flex flex-column justify-content-start align-items-start mb-4">
+  <div *ngIf="!assessSvc.usesMaturityModel('ISE')" class="d-flex flex-column justify-content-start align-items-start mb-4">
     <div class="mb-3 p-3 w-100" [class.gray-box]="true">
          <div class="d-flex flex-row" style="align-items: end">
               <div>
@@ -61,50 +61,47 @@
   <div [class.div-shield]="disableEntirePage">
 
     <!-- DIAGRAM -->
-    <app-report-list-diagram *ngIf="!!assessSvc.assessment && (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile"></app-report-list-diagram>
+    <app-report-list-common *ngIf="!!assessSvc.assessment && (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile" sectionId="DIAGRAM"></app-report-list-common>
 
     <!-- CMMC -->
-    <app-report-list-cmmc *ngIf="!!assessSvc.assessment &&
+    <app-report-list-common *ngIf="!!assessSvc.assessment &&
     assessSvc.usesMaturityModel('CMMC') &&
-    !isMobile"></app-report-list-cmmc>
+    !isMobile" sectionId="CMMC"></app-report-list-common>
 
     <!-- EDM -->
-    <app-report-list-edm *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
-      [confidentiality]="confidentiality"></app-report-list-edm>
+    <app-report-list-common *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')" sectionId="EDM"></app-report-list-common>
 
 
     <!-- CRR -->
-    <app-report-list-crr *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CRR')"
-      [confidentiality]="confidentiality"></app-report-list-crr>
+    <app-report-list-common *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CRR')"
+      [confidentiality]="confidentiality" sectionId="CRR"></app-report-list-common>
 
 
     <!-- IMR -->
-    <app-report-list-imr *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('IMR')"
-      [confidentiality]="confidentiality"></app-report-list-imr>
+    <app-report-list-common *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('IMR')"
+      [confidentiality]="confidentiality" sectionId="IMR"></app-report-list-common>
 
 
     <!-- CIS -->
-    <app-report-list-cis *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CIS')"></app-report-list-cis>
+    <app-report-list-common *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CIS')" sectionId="CIS"></app-report-list-common>
 
 
     <!-- CMMC2 -->
-    <app-report-list-cmmc2 *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC2')"></app-report-list-cmmc2>
+    <app-report-list-common *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC2')" sectionId="CMMC2"></app-report-list-common>
 
     <!-- RRA -->
-    <app-report-list-rra *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('RRA') && !isMobile">
-    </app-report-list-rra>
+    <app-report-list-common *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('RRA') && !isMobile" sectionId="RRA">
+    </app-report-list-common>
 
     <!-- ACET -->
-    <app-report-list-acet *ngIf="!!assessSvc.assessment &&
+    <app-report-list-common *ngIf="!!assessSvc.assessment &&
     assessSvc.usesMaturityModel('ACET') &&
-    !isMobile">
-    </app-report-list-acet>
+    !isMobile" sectionId="ACET">
+    </app-report-list-common>
 
     <!-- ISE -->
-    <app-ise-warnings *ngIf="assessSvc.isISE() && !isMobile" [iseHasBeenSubmitted]="iseHasBeenSubmitted"
-    [disableIseReportLinks]="disableIseReportLinks"></app-ise-warnings>
-    <app-report-list-ise *ngIf="assessSvc.isISE() && !isMobile">
-    </app-report-list-ise>
+    <app-report-list-common *ngIf="assessSvc.isISE() && !isMobile" sectionId="ISE">
+    </app-report-list-common>
     <div>
       <div *ngIf="this.ncuaSvc.submitInProgress" class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px"></div>
@@ -112,27 +109,27 @@
 
 
     <!-- VADR -->
-    <app-report-list-vadr *ngIf="!!assessSvc.assessment &&
+    <app-report-list-common *ngIf="!!assessSvc.assessment &&
     assessSvc.usesMaturityModel('VADR') &&
-    !isMobile">
-    </app-report-list-vadr>
+    !isMobile" sectionId="VADR">
+    </app-report-list-common>
     
     <!-- MVRA -->
-    <app-report-list-mvra *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('MVRA') && !isMobile">
-    </app-report-list-mvra>
+    <app-report-list-common *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('MVRA') && !isMobile" sectionId="MVRA">
+    </app-report-list-common>
 
     <!-- CPG -->
-    <app-report-list-cpg *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile"></app-report-list-cpg>
+    <app-report-list-common *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile" sectionId="CPG"></app-report-list-common>
     
     <!-- C2M2 -->
-    <app-report-list-c2m2 *ngIf="!!assessSvc.assessment &&
+    <app-report-list-common *ngIf="!!assessSvc.assessment &&
     assessSvc.usesMaturityModel('C2M2') &&
-    !isMobile"></app-report-list-c2m2>
+    !isMobile" sectionId="C2M2"></app-report-list-common>
 
     <!-- HYDRO -->
-    <app-report-list-hydro *ngIf="!!assessSvc.assessment &&
+    <app-report-list-common *ngIf="!!assessSvc.assessment &&
     assessSvc.usesMaturityModel('HYDRO') &&
-    !isMobile"></app-report-list-hydro>
+    !isMobile" sectionId="HYDRO"></app-report-list-common>
     <!-- below is commented out until the VaR scores are collected/calculated -->
       <!-- <div>
         <button tabindex="0" (click)="clickReportLink('hydroReport')" class="btn btn-link btn-link-dark text-left">
@@ -141,12 +138,12 @@
       </div> -->
 
     <!-- SD02 Series -->
-    <app-report-list-sd02Series *ngIf="!!assessSvc.assessment &&
+    <app-report-list-common *ngIf="!!assessSvc.assessment &&
     assessSvc.usesMaturityModel('SD02 Series') &&
-    !isMobile"></app-report-list-sd02Series>
+    !isMobile" sectionId="SD02 Series"></app-report-list-common>
     
     <!-- SD02 Owner -->
-    <app-report-list-sd02Owner *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('SD02 Owner')"></app-report-list-sd02Owner>
+    <app-report-list-common *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('SD02 Owner')" sectionId="SD02 Owner"></app-report-list-common>
 
     <!-- CIE -->
     <div *ngIf="!!assessSvc.assessment &&

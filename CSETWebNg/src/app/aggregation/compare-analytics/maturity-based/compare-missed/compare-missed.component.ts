@@ -22,47 +22,28 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { AggregationService } from '../../services/aggregation.service';
-import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { NavigationAggregService } from '../../services/navigationAggreg.service';
-import { ConfigService } from '../../services/config.service';
+import { AggregationService } from '../../../../services/aggregation.service';
 
 @Component({
-  selector: 'app-compare-analytics',
-  templateUrl: './compare-analytics.component.html',
-  host: { class: 'd-flex flex-column flex-11a trend-table-width' }
+  selector: 'app-compare-maturity-missed',
+  templateUrl: './compare-missed.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' }
 })
-export class CompareAnalyticsComponent implements OnInit {
-  type: string;
-  tab: string;
+export class CompareMaturityMissedComponent implements OnInit {
+
+  missedQuestions: [] = null;
 
   constructor(
-    public aggregationSvc: AggregationService,
-    public route: ActivatedRoute,
-    public dialog: MatDialog,
-    public navAggSvc: NavigationAggregService,
-    public configSvc: ConfigService,
+    public aggregationSvc: AggregationService
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.type = params['type'];
-    }
-    );
-    this.tab = this.type === 'maturity-based' ? 'INDIVIDUAL' : 'SUMMARY';
+    const aggregationId = this.aggregationSvc.id();
+
+    this.aggregationSvc.getMaturityMissedQuestions().subscribe((resp: any) => {
+      this.missedQuestions = resp;
+    });
   }
 
-  /**
-   * Change the current tab based on user selection.
-   * @param clickedTab
-   */
-  changeState(clickedTab: string) {
-    this.tab = clickedTab;
-  }
-
-  generateReport(reportType: string) {
-    const url = '/index.html?returnPath=report/' + reportType;
-    window.open(url, "_blank");
-  }
 }

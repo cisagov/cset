@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Intrinsics.Arm;
+using System.Text.RegularExpressions;
 using static Lucene.Net.Util.Fst.Util;
 
 
@@ -1013,6 +1014,43 @@ namespace CSETWebCore.Business.Reports
                     var c = _overlay.GetPropertyValue("STANDARD_CATEGORY", a.Standard_Category.ToLower(), lang);
                     var s = _overlay.GetPropertyValue("STANDARD_CATEGORY", a.Standard_Sub_Category.ToLower(), lang);
 
+                    // Check for custom parameters
+                    var customParameter = (from pa in _context.PARAMETER_ASSESSMENT
+                                  join pr in _context.PARAMETER_REQUIREMENTS
+                                  on pa.Parameter_ID equals pr.Parameter_Id
+                                  join p in _context.PARAMETERS
+                                  on pa.Parameter_ID equals p.Parameter_ID
+                                  where pr.Requirement_Id == a.Requirement_Id
+                                  select new
+                                  {
+                                      pa.Parameter_Value_Assessment,
+                                      pa.Assessment_ID,
+                                      p.Parameter_Name
+                                  }).Distinct().ToList();
+
+                    var QuestionRequirementText = r?.RequirementText ?? a.Requirement_Text;
+
+                    // Replace parameter in requirement text if custom parameter is found 
+                    if (customParameter != null)
+                    {
+                        // Replace text or escape quickly if parameter is not found in original text
+                        foreach (var param in customParameter)
+                        {
+                            if (QuestionRequirementText.Contains(param.Parameter_Name))
+                            {
+                                var newText = Regex.Replace(r?.RequirementText ?? a.Requirement_Text, param.Parameter_Name.Replace("[", "\\[").Replace("]", "\\]"), param.Parameter_Value_Assessment);
+
+                                if (r?.RequirementText != null)
+                                {
+                                    r.RequirementText = newText;
+                                }
+                                else
+                                {
+                                    a.Requirement_Text = newText;
+                                }
+                            }
+                        }
+                    }
 
                     control = new BasicReportData.RequirementControl()
                     {
@@ -1024,6 +1062,8 @@ namespace CSETWebCore.Business.Reports
                         SubCategory = s ?? a.Standard_Sub_Category,
                         Control_Questions = questions
                     };
+
+
 
                     controls.Add(control);
                 }

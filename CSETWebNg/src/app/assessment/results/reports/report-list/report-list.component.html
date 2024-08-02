@@ -1,11 +1,14 @@
 <div class="d-flex flex-column justify-content-start align-items-start mb-4" *transloco="let t">
      <h4>{{sectionTitle}}</h4>
 
-     <div *ngFor="let rl of list; let i = index" class="mb-3 p-3 w-100" [class.gray-box]="translateDesc(sectionId, i).length > 0">
+     <app-ise-warnings *ngIf="assessSvc.isISE()" [iseHasBeenSubmitted]="reportSvc.iseHasBeenSubmitted"
+          [disableIseReportLinks]="reportSvc.disableIseReportLinks"></app-ise-warnings>
+    
+          <div *ngFor="let rl of list; let i = index" class="mb-3 p-3 w-100" [class.gray-box]="translateDesc(sectionId, i).length > 0">
           <div class="d-flex flex-row" style="align-items: end">
                <div>
                     <button tabindex="0" (click)="reportSvc.clickReportLink(rl.linkUrl, rl.print ?? false)"
-                         class="btn btn-link btn-link-dark px-0 pt-0">
+                         [disabled]="rl.disabled" class="btn btn-link btn-link-dark px-0 pt-0">
                          {{ t('reports.launch.' + sectionId.toLowerCase() + '.' + (i+1) + '.title') }}
                     </button>
                </div>
