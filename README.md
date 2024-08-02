@@ -1,29 +1,31 @@
 
 # What is CSET?
-The Cybersecurity Evaluation Tool (CSET) is a free software tool that helps users identify vulnerabilities 
-in an organization's enterprise and industrial control cyber systems. CSET uses a hybrid risk and 
-standards-based approach to evaluate the cybersecurity of a system and provide recommendations for improvement. 
+The Cybersecurity Infrastructure Security Agency (CISA) and the Idaho National Laboratory (INL) develop the Cyber Security Evaluation Tool (CSET®) for asset owners with the primary objective of reducing the risk to the nation’s critical infrastructure. Control systems are defined as electronic devices that control physical processes and as such, are a crucial element in the protection of our nation’s infrastructure.
+ 
+CSET is a free software tool that guides users through a step-by-step process to collect facility-specific information addressing topics such as hardware, software, administrative policies, and user obligations. It then compares that information to relevant security standards and regulations, assesses overall compliance, and provides appropriate recommendations for improving cybersecurity posture. The tool pulls its recommendations from a collection of the best available cybersecurity standards, guidelines, and practices. Where appropriate, recommendations are linked to a set of actions that can be applied to enhance cybersecurity controls.
+ 
+CSET provides the following:
+ 
+•	A framework for analyzing cybersecurity vulnerabilities associated with an organization’s overall industrial control system (ICS) and information technology (IT) architecture.
 
-CSET runs in Windows on a laptop or desktop computer.  
-It can also be configured to run in a client-server architecture. 
+•	A consistent and technically sound methodology to identify, analyze, and communicate to security professionals the various vulnerabilities and consequences that may be exploited by cyber means.
 
+•	The means for the user to document a process for identifying cybersecurity vulnerabilities.
 
-What is CSET?
-[CSET Overview](https://www.youtube.com/watch?v=B3xAh4iSRO0)
+•	Suggested methods to evaluate options for improvement based on existing standards and recommended practices.
 
-How Do I Use CSET?
-[CSET Detailed Video](https://www.youtube.com/watch?v=ELbvQTl4xmU)
-
+View the [CSET Overview](https://www.youtube.com/watch?v=B3xAh4iSRO0) and [CSET Detailed Video](https://www.youtube.com/watch?v=ELbvQTl4xmU) to learn more about CSET and how to use the software.
 
 ## Download
 [CSET Releases](https://github.com/cisagov/cset/releases/)
 
 Local installers ("standalone") are available as well as binaries for creating enterprise installations.
 
+## How to Install and Run CSET/Enterprise
 
-## Documentation
-See the [**CSET documentation**](install-and-troubleshooting-guides/README.md).
+CSET operates on Windows laptops or desktop computers and can also be configured for a client-server architecture.
 
+For more information, see the [CSET Installation Options](install-and-troubleshooting-guides/README.md).
 
 ## License
 
@@ -33,7 +35,7 @@ Copyright 2018 Battelle Energy Alliance, LLC
 
 See [License.txt](License.txt), and [NOTICE.txt](NOTICE.txt)
 
-Contact information of authors: cset@hq.dhs.gov
+Contact information of authors: cset_PMO@cisa.dhs.gov
 
 Idaho National Laboratory:
 P.O. Box 1625, MS 3870, Idaho Falls, ID 83415
@@ -82,6 +84,13 @@ Other Items of Note:
 • For all platforms, it is recommended the user upgrade to the latest Windows Service Pack and install critical updates 
 available from the Windows Update web site to ensure the best compatibility and security.
 
+## Questions and Feedback
+
+If you have questions about using CSET, please contact CSET_PMO@cisa.dhs.gov. 
+
+For additional information about CISA, see https://www.cisa.gov/.
+
+To ask questions or request help, propose a feature or module, or report a bug, security vulnerability or unexpected behavior, add a new issue here: https://github.com/cisagov/cset/issues
 
 
 
