@@ -95,6 +95,7 @@ export class NCUAService {
 
   ISE_StateLed: boolean = false;
   iseHasBeenSubmitted: boolean = false;
+  issuesForSubmission: any;
 
   questions: any = null;
   iseIrps: any = null;
@@ -439,9 +440,9 @@ export class NCUAService {
     return this.assessmentSvc.assessment?.maturityModel?.modelName === 'ISE';
   }
 
-  submitToMerit(findings: any) {
+  submitToMerit() {
     this.submitInProgress = true;
-    this.questionResponseBuilder(findings);
+    this.questionResponseBuilder(this.issuesForSubmission);
     this.iseIrpResponseBuilder();
   }
 

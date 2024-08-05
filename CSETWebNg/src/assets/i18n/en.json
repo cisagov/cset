@@ -598,12 +598,10 @@
       "dialog title": "Statement Filters",
       "show answered as": "Show statements answered <em><b>{{optionText}}</b></em>",
       "show unanswered": "Show unanswered statements",
-      "show with comments": "Show statements with comments",
+      "show with comments": "Show statements with notes",
       "show with feedback": "Show statements with feedback",
-      "show with notes": "Show statements with notes",
       "show marked for review": "Show statements marked for review",
-      "show with observations": "Show statements with observations",
-      "show with issues": "Show statements with issues",
+      "show with observations": "Show statements with issues",
       "include above target": "Include statements above maturity target level",
       "show open ended": "Show answered open-ended statements"
     },
@@ -834,7 +832,7 @@
         },
         "3": {
           "title": "ISE Answered Statements",
-          "desc": "This report includes answered statements."
+          "desc": "This report includes all the statements within your exam level and your answers."
         },
         "4": {
           "title": "ISE Examiner Notes",
