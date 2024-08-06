@@ -16,7 +16,7 @@ services:
       - "1433:1433"
     volumes:
       - mssql_data:/var/opt/mssql
-      - ./backups:/var/opt/mssql/backup
+      - ./backup:/var/opt/mssql/backup
 
 volumes:
   mssql_data:
