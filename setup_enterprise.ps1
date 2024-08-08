@@ -51,8 +51,8 @@ Copy-Item -Path database\CSETWeb12130_log.ldf -Destination C:\CSETDatabase\CSETW
 $plainTextPassword = [Net.NetworkCredential]::new('', $password).Password
 
 # Add CSET app pools (leaving managedRuntimeVersion blank results in "No Managed Code")
-& ${Env:windir}\system32\inetsrv\appcmd add apppool /name:"CSETAPI" /managedPipelineMode:"Integrated" /managedRuntimeVersion:"" /processModel.identityType:"SpecificUser" /processModel.userName:"${env:userdomain}\CSETUser" /processModel.password:$plainTextPassword
-& ${Env:windir}\system32\inetsrv\appcmd add apppool /name:"CSETUI" /managedPipelineMode:"Integrated" /managedRuntimeVersion:"" /processModel.identityType:"SpecificUser" /processModel.userName:"${env:userdomain}\CSETUser" /processModel.password:$plainTextPassword
+& ${Env:windir}\system32\inetsrv\appcmd add apppool /name:"CSETAPI" /managedPipelineMode:"Integrated" /managedRuntimeVersion:"" /processModel.identityType:"SpecificUser" /processModel.userName:"${env:computername}\CSETUser" /processModel.password:$plainTextPassword
+& ${Env:windir}\system32\inetsrv\appcmd add apppool /name:"CSETUI" /managedPipelineMode:"Integrated" /managedRuntimeVersion:"" /processModel.identityType:"SpecificUser" /processModel.userName:"${env:computername}\CSETUser" /processModel.password:$plainTextPassword
 
 # Create CSETAPI and CSETUI sites and add them to CSET app pool
 & ${Env:windir}\system32\inetsrv\appcmd add site /name:"CSETAPI" /physicalPath:"C:\inetpub\wwwroot\CSETAPI" /bindings:"http/*:5001:"
@@ -79,9 +79,9 @@ $serverescaped = $server.replace("\", "\\")
 (Get-Content C:\inetpub\wwwroot\CSETUI\assets\settings\config.json -Raw).replace('"port": "5000"', '"port": "5001"') | Set-Content C:\inetpub\wwwroot\CSETUI\assets\settings\config.json -NoNewLine
 
 sqlcmd -E -S $server -d "MASTER" -Q "CREATE DATABASE CSETWeb ON (FILENAME = 'C:\CSETDatabase\CSETWeb.mdf'), (FILENAME = 'C:\CSETDatabase\CSETWeb_log.ldf') FOR ATTACH;"
-sqlcmd -E -S $server -d "CSETWeb" -Q "CREATE LOGIN [${env:userdomain}\CSETUser] FROM WINDOWS WITH DEFAULT_DATABASE = CSETWeb; CREATE USER [${env:userdomain}\CSETUser] FOR LOGIN [${env:userdomain}\CSETUser] WITH DEFAULT_SCHEMA = [dbo];"
-sqlcmd -E -S $server -d "CSETWeb" -Q "ALTER ROLE [db_owner] ADD MEMBER [${env:userdomain}\CSETUser];"
-sqlcmd -E -S $server -d "CSETWeb" -Q "GRANT EXECUTE ON SCHEMA :: [dbo] to [${env:userdomain}\CSETUser];"
+sqlcmd -E -S $server -d "CSETWeb" -Q "CREATE LOGIN [${env:computername}\CSETUser] FROM WINDOWS WITH DEFAULT_DATABASE = CSETWeb; CREATE USER [${env:computername}\CSETUser] FOR LOGIN [${env:computername}\CSETUser] WITH DEFAULT_SCHEMA = [dbo];"
+sqlcmd -E -S $server -d "CSETWeb" -Q "ALTER ROLE [db_owner] ADD MEMBER [${env:computername}\CSETUser];"
+sqlcmd -E -S $server -d "CSETWeb" -Q "GRANT EXECUTE ON SCHEMA :: [dbo] to [${env:computername}\CSETUser];"
 
 # Restarting websites
 & ${Env:windir}\system32\inetsrv\appcmd start apppool "CSETAPI"
