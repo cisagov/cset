@@ -196,7 +196,7 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
             var reqReferences = reqs.Select(s => new
             {
                 s.Requirement_Id,
-                Resources = s.REQUIREMENT_REFERENCES.Select(t =>
+                Resources = s.REQUIREMENT_REFERENCES.Where(x => !x.Source).Select(t =>
                   new ExternalResource
                   {
                       destination = t.Destination_String,
@@ -209,7 +209,7 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
             var reqSource = reqs.Select(s => new
             {
                 s.Requirement_Id,
-                Resource = s.REQUIREMENT_SOURCE_FILES.Select(t =>
+                Resource = s.REQUIREMENT_REFERENCES.Where(x => x.Source).Select(t =>
                                   new ExternalResource
                                   {
                                       destination = t.Destination_String,
