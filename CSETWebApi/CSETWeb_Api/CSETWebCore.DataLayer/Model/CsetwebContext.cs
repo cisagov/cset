@@ -431,8 +431,6 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
 
-    public virtual DbSet<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
-
     public virtual DbSet<RapidAssessmentControls> RapidAssessmentControls { get; set; }
 
     public virtual DbSet<SAL_DETERMINATION_TYPES> SAL_DETERMINATION_TYPES { get; set; }
@@ -2448,15 +2446,6 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_SETS).HasConstraintName("FK_REQUIREMENT_SETS_NEW_REQUIREMENT");
 
             entity.HasOne(d => d.Set_NameNavigation).WithMany(p => p.REQUIREMENT_SETS).HasConstraintName("FK_QUESTION_SETS_SETS");
-        });
-
-        modelBuilder.Entity<REQUIREMENT_SOURCE_FILES>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("A collection of REQUIREMENT_SOURCE_FILES records"));
-
-            entity.HasOne(d => d.Gen_File).WithMany(p => p.REQUIREMENT_SOURCE_FILES).HasConstraintName("FK_REQUIREMENT_SOURCE_FILES_GEN_FILE");
-
-            entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_SOURCE_FILES).HasConstraintName("FK_REQUIREMENT_SOURCE_FILES_NEW_REQUIREMENT");
         });
 
         modelBuilder.Entity<SAL_DETERMINATION_TYPES>(entity =>
