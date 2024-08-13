@@ -3,8 +3,9 @@
 
      <app-ise-warnings *ngIf="assessSvc.isISE()" [iseHasBeenSubmitted]="reportSvc.iseHasBeenSubmitted"
           [disableIseReportLinks]="reportSvc.disableIseReportLinks"></app-ise-warnings>
-    
-          <div *ngFor="let rl of list; let i = index" class="mb-3 p-3 w-100" [class.gray-box]="translateDesc(sectionId, i).length > 0">
+
+     <div *ngFor="let rl of list; let i = index" class="mb-3 p-3 w-100"
+          [class.gray-box]="translateDesc(sectionId, i).length > 0">
           <div class="d-flex flex-row" style="align-items: end">
                <div>
                     <button tabindex="0" (click)="reportSvc.clickReportLink(rl.linkUrl, rl.print ?? false)"
@@ -14,11 +15,11 @@
                </div>
                <div class="ml-4" *ngIf="rl.securityPicker">
                     <label class="mb-1" for="securityId">Confidentiality</label>
-                    <select class="form-control" [(ngModel)]="confidentiality" id="securityId" name="securityId" tabindex="0"
-                         (change)="onSelectSecurity($event.target.value)">
+                    <select class="form-control" [(ngModel)]="confidentiality" id="securityId" name="securityId"
+                         tabindex="0" (change)="onSelectSecurity($event.target.value)">
                          <option *ngFor="let s of reportSvc.confidentialityLevels" [value]="s.confidentialTypeKey">
                               {{ s.confidentialTypeKey }}
-                         </option> 
+                         </option>
                     </select>
                </div>
           </div>
