@@ -21,6 +21,7 @@ using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using LogicExtensions;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -65,6 +66,17 @@ namespace CSETWebCore.Api.Controllers
             return Ok(resp);
         }
 
+        /// <summary>
+        /// Returns contacts for the specified assessmentIds
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/contactsById")]
+        public IActionResult GetContactsForAssessmentById(int id1, int id2, int id3, int id4, int id5, int id6, int id7, int id8, int id9, int id10)
+        {
+            var contacts = _contact.GetContactsByAssessmentId(id1, id2, id3, id4, id5, id6, id7, id8, id9, id10);
+            return Ok(contacts);
+        }
 
         /// <summary>
         /// Returns the ContactDetail for the current user on the specified Assessment.
@@ -101,7 +113,36 @@ namespace CSETWebCore.Api.Controllers
             newContact.PrimaryEmail = newContact.PrimaryEmail ?? "";
 
             List<ContactDetail> details = new List<ContactDetail>(1);
-            details.Add(_contact.CreateAndAddContactToAssessment(newContact));
+            details.Add(_contact.CreateAndAddContactToAssessment(newContact, false));
+
+            ContactsListResponse resp = new ContactsListResponse
+            {
+                ContactList = details,
+                CurrentUserRole = _contact.GetUserRoleOnAssessment((int)_token.GetCurrentUserId(), assessmentId) ?? 0
+            };
+            return Ok(resp);
+        }
+
+        /// <summary>
+        /// Persists a single ContactDetail to the database during a merge.
+        /// </summary>
+        /// <param name="newContact"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/contacts/addnewmergecontact")]
+        public IActionResult CreateAndAddContactToAssessmentDuringMerge([FromBody] ContactCreateParameters newContact)
+        {
+            int assessmentId = _token.AssessmentForUser();
+            string app_code = _token.Payload(Constants.Constants.Token_Scope);
+
+            // Make sure the user is an admin on this assessment
+            _token.AuthorizeAdminRole();
+
+            newContact.AssessmentId = assessmentId;
+            newContact.PrimaryEmail = newContact.PrimaryEmail ?? "";
+
+            List<ContactDetail> details = new List<ContactDetail>(1);
+            details.Add(_contact.CreateAndAddContactToAssessment(newContact, true));
 
             ContactsListResponse resp = new ContactsListResponse
             {
@@ -621,13 +662,42 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
 
             var ac = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == currentUserId && x.Assessment_Id == assessmentId).FirstOrDefault();
+
             if (ac == null)
             {
                 // no contact record - just do nothing
                 return Ok();
             }
 
-            return Ok(ac.Last_Q_Answered);
+            var parentGroup = new MATURITY_GROUPINGS();
+
+            // if the group has a parent, find it to append
+            if (ac.Last_Q_Answered != null)
+            {
+                string group = "";
+                group = ac.Last_Q_Answered.Split(',').ToList().Find(x => x.StartsWith("MG:")).Replace("MG:", "");
+
+                if (group != null)
+                {
+                    int groupInt = group.ToInt32();
+                    int? parentGroupId = _context.MATURITY_GROUPINGS.Where(x => x.Grouping_Id == groupInt).Select(x => x.Parent_Id).FirstOrDefault();
+                    if (parentGroupId != null)
+                    {
+                        parentGroup = _context.MATURITY_GROUPINGS.Where(x => x.Grouping_Id == parentGroupId).FirstOrDefault();
+                    }
+                }
+            }
+
+
+            string lastQAnswered = ac.Last_Q_Answered;
+
+            // checking if this is the overall holder group (useless info) or a domain (useful)
+            if (parentGroup != null && parentGroup.Parent_Id != null)
+            {
+                lastQAnswered += ",PG:" + parentGroup.Grouping_Id;
+            }
+
+            return Ok(lastQAnswered);
         }
     }
 }

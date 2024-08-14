@@ -14,6 +14,7 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Aggregation;
+using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Reports;
@@ -21,6 +22,7 @@ using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.CisaAssessorWorkflow;
 using CSETWebCore.Model.Demographic;
+using CSETWebCore.Model.Reports;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -43,11 +45,13 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IGalleryEditor _galleryEditor;
         private TranslationOverlay _overlay;
+        private readonly IDocumentBusiness _documentBusiness;
 
 
         public ReportsController(CSETContext context, IReportsDataBusiness report, ITokenManager token,
             IAggregationBusiness aggregation, IQuestionBusiness question, IQuestionRequirementManager questionRequirement,
-            IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IGalleryEditor galleryEditor)
+            IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IGalleryEditor galleryEditor,
+            IDocumentBusiness documentBusiness)
         {
             _context = context;
             _report = report;
@@ -59,6 +63,7 @@ namespace CSETWebCore.Api.Controllers
             _adminTabBusiness = adminTabBusiness;
             _galleryEditor = galleryEditor;
             _overlay = new TranslationOverlay();
+            _documentBusiness = documentBusiness;
         }
 
 
@@ -832,6 +837,57 @@ namespace CSETWebCore.Api.Controllers
             return Ok(data);
         }
 
+
+        /// <summary>
+        /// Returns a collection of all documents attached to any question in the Assessment.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cieAssessmentDocuments")]
+        public IActionResult CieAssessmentDocuments()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            _report.SetReportsAssessmentId(assessmentId);
+            _documentBusiness.SetUserAssessmentId(assessmentId);
+
+            var data = new DocumentsReport();
+            data.information = _report.GetInformation();
+            //data.documents = _report.GetCieDocumentsForAssessment();
+
+            return Ok(data);
+        }
+
+
+        [HttpGet]
+        [Route("api/reports/getCieAllQuestionsWithDocuments")]
+        public IActionResult GetCieAllQuestionsWithDocuments()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _report.SetReportsAssessmentId(assessmentId);
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+            MaturityBasicReportData data = new MaturityBasicReportData();
+
+            data.MatAnsweredQuestions = _report.GetCieDocumentsForAssessment();
+            data.Information = _report.GetInformation();
+            return Ok(data);
+        }
+
+
+        [HttpGet]
+        [Route("api/reports/getCieAllMfrQuestionsWithDocuments")]
+        public IActionResult GetCieAllMfrQuestionsWithDocuments()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _report.SetReportsAssessmentId(assessmentId);
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+            MaturityBasicReportData data = new MaturityBasicReportData();
+
+            data.MatAnsweredQuestions = _report.GetCieMfrQuestionList();
+            data.Information = _report.GetInformation();
+            return Ok(data);
+        }
         //[HttpGet]
         //[Route("api/reports/getCieNaQuestions")]
         //public IActionResult getCieNaQuestions()

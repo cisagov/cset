@@ -40,6 +40,7 @@ import { CompletionService } from '../../../../services/completion.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { CieService } from '../../../../services/cie.service';
 
 
 @Component({
@@ -52,7 +53,8 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
   statementLevel: string = '';
 
   maturityLevels: any[];
-  groupings: QuestionGrouping[] = null;
+  phases: QuestionGrouping[] = null;
+  principle: QuestionGrouping = null;
   modelName: string = '';
   questionsAlias: string = '';
 
@@ -86,7 +88,8 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
     public completionSvc: CompletionService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cieSvc: CieService
   ) {
     // listen for NavigationEnd to know when the page changed
     this._routerSub = this.router.events.pipe(
@@ -103,6 +106,9 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
     if (this.assessSvc.applicationMode != 'F' && this.assessSvc.applicationMode != 'P') {
       this.setMode('F');
     }
+    this.assessSvc.getAssessmentContacts().then((response: any) => {
+      this.cieSvc.contactInitials = response.contactList[0].firstName;
+    });
     // this.loadQuestions();
   }
 
@@ -110,6 +116,32 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
    *
    */
   ngAfterViewInit() {
+    const scrollTarget = this.navSvc.resumeQuestionsTarget;
+    this.navSvc.resumeQuestionsTarget = null;
+    if (!scrollTarget) {
+      return;
+    }
+
+    var mg = scrollTarget.split(',').find(x => x.startsWith('MG:'))?.replace('MG:', '');
+    var mq = scrollTarget.split(',').find(x => x.startsWith('MQ:'))?.replace('MQ:', '');
+    // set to Principle scope
+    if (+mg <= 2632) {
+      this.setMode('P');
+    }
+    //set to Principle-Phase scope
+    else {
+      this.setMode('F');
+    }
+
+    // probes to see when question element is visible and able to be scrolled to
+    const intervalId = setInterval(() => {
+      let mqElement = document.getElementById('question-'+mq);
+      if (mqElement != null) {
+        this.scrollToResumeQuestionsTarget(mg, mqElement);
+        clearInterval(intervalId);
+        return;
+      }
+    }, 1000);
   }
 
   
@@ -131,7 +163,7 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
   loadQuestions() {
     this.sectionId = +this.route.snapshot.params['sec'];
     const magic = this.navSvc.getMagic();
-    this.groupings = null;
+    this.phases = null;
     this.maturitySvc.getQuestionsList(false, this.sectionId.valueOf()).subscribe(
       (response: MaturityQuestionResponse) => {
         this.completionSvc.setQuestionArray(response);
@@ -142,7 +174,9 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
         // the recommended maturity level(s) based on IRP
         this.maturityLevels = response.levels;
         this.pageTitle = response.groupings[0].subGroupings[this.sectionIndex].title;
-        this.groupings = response.groupings[0].subGroupings[this.sectionIndex].subGroupings;
+        this.principle = response.groupings[0].subGroupings[this.sectionIndex];
+        this.phases = response.groupings[0].subGroupings[this.sectionIndex].subGroupings;
+
         if (this.assessSvc.applicationMode) {
           this.section = response.groupings[0].subGroupings[this.sectionIndex];
         }
@@ -151,7 +185,7 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
         this.filterSvc.answerOptions = response.answerOptions;
         this.filterSvc.maturityModelId = response.modelId;
 
-        
+       
       },
       error => {
         console.log(
@@ -170,7 +204,7 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
      * @param mode
      */
   expandAll(mode: boolean) {
-    this.groupings.forEach((g: QuestionGrouping) => {
+    this.phases.forEach((g: QuestionGrouping) => {
       this.recurseExpansion(g, mode);
     });
   }
@@ -219,12 +253,41 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
    */
   setMode(mode: string) {
     this.assessSvc.applicationMode = mode;
-    this.questionsSvc.setMode(mode).subscribe(() => {
-      // this.loadQuestions();
-      // this.navSvc.buildTree();
-    });
+    this.questionsSvc.setMode(mode).subscribe(() => {});
     localStorage.setItem("questionSet", mode == 'P' ? "Principle" : "Principle-Phase");
   }
+
+  
+  
+  /**
+   * If a "resume questions" target is defined, attempt to scroll to it
+   */
+  scrollToResumeQuestionsTarget(mg: string, scrollTarget: HTMLElement) {
+    var groupToExpand = this.findGroupingById(+mg, [this.principle]);
+    if (!!groupToExpand) {
+      groupToExpand.expanded = true;
+    }
+
+    setTimeout(() => {
+      scrollTarget.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }, 500);
+  }
+
+  /**
+   * Recurse grouping tree, looking for the ID
+   */
+  findGroupingById(id: number, groupings: any[]) {
+    var grp = groupings.find(x => x.groupingID == id);
+    if (!!grp) {
+      return grp;
+    }
+    for (var i = 0; i < groupings.length; i++) {
+      return this.findGroupingById(id, groupings[i].subGroupings);
+    }
+  }
+
+
 
 }
 

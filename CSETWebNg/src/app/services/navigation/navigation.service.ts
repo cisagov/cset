@@ -29,6 +29,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MaturityService } from '../maturity.service';
 import { PageVisibilityService } from '../navigation/page-visibility.service';
 import { NavTreeService } from './nav-tree.service';
+import { CieService } from '../cie.service';
+import { QuestionsService } from '../questions.service';
 
 
 export interface NavTreeNode {
@@ -95,12 +97,17 @@ export class NavigationService implements OnDestroy, OnInit {
     private http: HttpClient,
     private maturitySvc: MaturityService,
     private pageVisibliltySvc: PageVisibilityService,
-    private navTreeSvc: NavTreeService
+    private navTreeSvc: NavTreeService,
+    private questionsSvc: QuestionsService    
   ) {
     this.setWorkflow('omni');
     this.assessSvc.assessmentStateChanged$.subscribe((reloadState) => {
       switch (reloadState) {
         case 123:
+          // remembers state of ToC dropdown for CIE
+          if (this.assessSvc.usesMaturityModel('CIE')) {
+            this.navTreeSvc.applyCieToCStates();
+          }
           break;
         case 124:
           this.buildTree();
@@ -108,8 +115,12 @@ export class NavigationService implements OnDestroy, OnInit {
           //this.navDirect('dashboard');
           break;
         case 125:
+          if (this.assessSvc.usesMaturityModel('CIE')) {
+            this.navTreeSvc.applyCieToCStates();
+          }
           this.buildTree();
           this.navDirect('phase-prepare');
+          
           break;
         case 126:
           // refresh tree only
@@ -119,7 +130,14 @@ export class NavigationService implements OnDestroy, OnInit {
     });
   }
 
-  ngOnInit(): void {  }
+  ngOnInit(): void {
+    // remembers state of ToC dropdown for CIE
+    if (this.assessSvc.usesMaturityModel('CIE')) {
+      this.navTreeSvc.applyCieToCStates();
+      this.buildTree();
+
+    }
+  }
 
   ngOnDestroy() {
     this.assessSvc.assessmentStateChanged$.unsubscribe()
@@ -199,6 +217,9 @@ export class NavigationService implements OnDestroy, OnInit {
         this.assessSvc.initCyberFlorida(assessmentId);
       }
       else {
+        if (this.assessSvc.usesMaturityModel('CIE')) {
+          this.navTreeSvc.applyCieToCStates();
+        }
         this.navDirect('phase-prepare');
       }
     });
@@ -206,6 +227,9 @@ export class NavigationService implements OnDestroy, OnInit {
 
   beginNewAssessmentGallery(item: any) {
     this.assessSvc.newAssessmentGallery(item).then(() => {
+      if (this.assessSvc.usesMaturityModel('CIE')) {
+        this.navTreeSvc.applyCieToCStates();
+      }
       this.navDirect('phase-prepare');
     });
   }
@@ -487,6 +511,28 @@ export class NavigationService implements OnDestroy, OnInit {
       var g = x.split(',').find(x => x.startsWith('MG:'))?.replace('MG:', '');
       let e = this.workflow.getElementById('maturity-questions-nested-' + g);
       if (!!e) {
+        this.navDirect(e.id);
+        return;
+      }
+
+      // is there a specific nav node for the grouping? (CIE nested)
+      // get the parent grouping if it exists
+      var pg = x.split(',').find(x => x.startsWith('PG:'))?.replace('PG:', '');
+      if (pg != null) {
+        e = this.workflow.getElementById('maturity-questions-cie-' + pg);
+      } else {
+        e = this.workflow.getElementById('maturity-questions-cie-' + g);
+      }
+
+      if (!!e) {
+        // set to Principle scope
+        if (+g <= 2632) {
+          this.questionsSvc.setMode('P')
+        }
+        //set to Principle-Phase scope
+        else {
+          this.questionsSvc.setMode('F')
+        }
         this.navDirect(e.id);
         return;
       }

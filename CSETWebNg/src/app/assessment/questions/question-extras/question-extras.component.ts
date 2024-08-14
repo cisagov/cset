@@ -40,6 +40,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
 import { LayoutService } from '../../../services/layout.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { CieService } from '../../../services/cie.service';
 
 
 
@@ -94,6 +95,7 @@ export class QuestionExtrasComponent implements OnInit {
     public assessSvc: AssessmentService,
     public layoutSvc: LayoutService,
     private tSvc: TranslocoService,
+    private cieSvc: CieService,
     private resourceLibSvc: ResourceLibraryService
   ) {
   }
@@ -101,6 +103,11 @@ export class QuestionExtrasComponent implements OnInit {
 
   ngOnInit() {
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
+
+    if (this.assessSvc.usesMaturityModel('CIE')) {
+      this.cieSvc.feedbackMap.set(this.myQuestion.questionId, this.myQuestion.feedback);
+      this.cieSvc.commentMap.set(this.myQuestion.questionId, this.myQuestion.comment);
+    }
 
     if (!!this.myOptions) {
       if (this.myOptions.eagerSupplemental) {
@@ -179,7 +186,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras.listTabs[0];
 
 
-        // Component detail toggle 
+        // Component detail toggle
         if (this.toggleComponent == true) {
           this.toggleExtras('COMPONENT')
           this.toggleComponent = false;
@@ -202,7 +209,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Translates the level to the user's language.  
+   * Translates the level to the user's language.
    * Returns empty string if no level is present.
    */
   salLevel(level: string) {
@@ -218,7 +225,13 @@ export class QuestionExtrasComponent implements OnInit {
    */
   saveComment(e) {
     this.defaultEmptyAnswer();
-    this.answer.comment = e.target.value;
+    if (this.assessSvc.usesMaturityModel('CIE')) {
+      this.myQuestion.comment = this.cieSvc.applyContactAndEndTag(e.target.value, '\n- - End of Comment - -\n');
+      this.cieSvc.commentMap.set(this.myQuestion.questionId, this.myQuestion.comment);
+    }
+    else {
+      this.answer.comment = e.target.value;
+    }
     this.saveAnswer();
   }
 
@@ -236,7 +249,14 @@ export class QuestionExtrasComponent implements OnInit {
   */
   saveFeedback(e) {
     this.defaultEmptyAnswer();
-    this.answer.feedback = e.target.value;
+    if (this.assessSvc.usesMaturityModel('CIE')) {
+      this.myQuestion.feedback = this.cieSvc.applyContactAndEndTag(e.target.value, '\n- - End of Feedback - -\n');
+      this.cieSvc.feedbackMap.set(this.myQuestion.questionId, this.myQuestion.feedback);
+    }
+    else {
+      this.myQuestion.feedback = e.target.value;
+    }
+
     this.saveAnswer();
   }
 
@@ -263,6 +283,7 @@ export class QuestionExtrasComponent implements OnInit {
         questionNumber: this.myQuestion.displayNumber,
         answerText: this.myQuestion.answer,
         altAnswerText: this.myQuestion.altAnswerText,
+        freeResponseAnswer: this.myQuestion.freeResponseAnswer,
         comment: '',
         feedback: '',
         markForReview: false,
@@ -607,7 +628,7 @@ export class QuestionExtrasComponent implements OnInit {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
       const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.open(url, "_blank");
+      window.location.href = url;
     });
   }
 
@@ -626,8 +647,8 @@ export class QuestionExtrasComponent implements OnInit {
    */
   supplementalExists() {
     return (
-      !!this.tab?.requirementsData?.supplementalInfo 
-      || !!this.myQuestion.scope 
+      !!this.tab?.requirementsData?.supplementalInfo
+      || !!this.myQuestion.scope
       || !!this.myQuestion.recommendedAction
       || !!this.myQuestion.services);
   }
@@ -799,6 +820,22 @@ formatDocumentUrl(document: ReferenceDocLink, bookmark: any) {
   seperateGuidanceFromApproach() {
     const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName);
     return behavior?.independentSuppGuidance;
+  }
+
+  /**
+   * For CIE, where feedback can be merged with other assessments
+   * @param q
+   * @returns
+   */
+  getFeedback(q: Question) {
+    if (this.cieSvc.feedbackMap.get(q.questionId) == null && q.feedback == null) {
+      return '';
+    }
+    else if (this.cieSvc.feedbackMap.get(q.questionId) == null && q.feedback != null) {
+      this.cieSvc.feedbackMap.set(q.questionId, this.cieSvc.applyContactAndEndTag(q.feedback, '\n- - End of Feedback - -\n'));
+    }
+
+    return this.cieSvc.feedbackMap.get(q.questionId);
   }
 
 }

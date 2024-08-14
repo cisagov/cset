@@ -148,7 +148,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -186,7 +186,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -218,7 +218,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -256,7 +256,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -288,7 +288,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -321,7 +321,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -366,7 +366,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -392,7 +392,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 parameterreturnValue,
             };
@@ -412,7 +412,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -446,7 +446,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -473,7 +473,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -507,7 +507,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -533,7 +533,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -560,7 +560,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -586,7 +586,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -612,7 +612,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -638,7 +638,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 parameterreturnValue,
             };
@@ -658,7 +658,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -765,7 +765,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -845,7 +845,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -891,7 +891,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -917,7 +917,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -951,7 +951,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -979,7 +979,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1012,7 +1012,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1045,7 +1045,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1077,7 +1077,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1103,7 +1103,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1136,7 +1136,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1160,6 +1160,40 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
+
+        public virtual async Task<List<GetComparisonBestToWorstResult>> GetMaturityComparisonBestToWorstAsync(int? assessment_id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new[]
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                new SqlParameter
+                {
+                    ParameterName = "applicationMode",
+                    Size = 200,
+                    Value = applicationMode ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<GetComparisonBestToWorstResult>("EXEC @returnValue = [dbo].[GetMaturityComparisonBestToWorst] @assessment_id, @applicationMode", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<List<GetComparisonFileOverallsResult>> GetComparisonFileOverallsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
@@ -1169,7 +1203,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1195,7 +1229,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1221,7 +1255,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1247,7 +1281,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1273,7 +1307,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1299,7 +1333,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1325,7 +1359,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1351,7 +1385,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1377,7 +1411,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1403,7 +1437,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1429,7 +1463,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1476,7 +1510,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1513,7 +1547,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1539,7 +1573,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 parameterreturnValue,
             };
@@ -1559,7 +1593,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1586,7 +1620,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1646,7 +1680,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1680,7 +1714,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1706,7 +1740,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1733,7 +1767,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1759,7 +1793,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1785,7 +1819,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1811,7 +1845,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1845,7 +1879,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1872,7 +1906,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1904,7 +1938,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1930,7 +1964,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1956,7 +1990,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -1982,7 +2016,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2008,7 +2042,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2034,7 +2068,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2060,7 +2094,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2086,7 +2120,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2112,7 +2146,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2138,7 +2172,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2164,7 +2198,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2190,7 +2224,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2216,7 +2250,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2243,7 +2277,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2269,7 +2303,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2295,7 +2329,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2321,7 +2355,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2353,7 +2387,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 parameterreturnValue,
             };
@@ -2373,7 +2407,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2405,7 +2439,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2431,7 +2465,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2457,7 +2491,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2483,7 +2517,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2509,7 +2543,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2535,7 +2569,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2561,7 +2595,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2587,7 +2621,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 parameterreturnValue,
             };
@@ -2607,7 +2641,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2633,7 +2667,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2659,7 +2693,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2685,7 +2719,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2711,7 +2745,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2737,7 +2771,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2763,7 +2797,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2789,7 +2823,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2815,7 +2849,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2841,7 +2875,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2867,7 +2901,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2893,7 +2927,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2910,6 +2944,33 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
+
+        public virtual async Task<List<usp_getStandardSummaryOverallResult>> usp_getMaturitySummaryOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new[]
+            {
+                new SqlParameter
+                {
+                    ParameterName = "assessment_id",
+                    Value = assessment_id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_getStandardSummaryOverallResult>("EXEC @returnValue = [dbo].[usp_getMaturitySummaryOverall] @assessment_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<List<usp_GetTop5AreasResult>> usp_GetTop5AreasAsync(int? Aggregation_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
@@ -2919,7 +2980,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2945,7 +3006,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2971,7 +3032,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -2997,7 +3058,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -3023,7 +3084,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -3049,7 +3110,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -3075,7 +3136,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -3101,7 +3162,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -3127,7 +3188,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {
@@ -3153,7 +3214,7 @@ namespace CSETWebCore.DataLayer.Model
                 SqlDbType = System.Data.SqlDbType.Int,
             };
 
-            var sqlParameters = new []
+            var sqlParameters = new[]
             {
                 new SqlParameter
                 {

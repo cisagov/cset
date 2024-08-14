@@ -95,13 +95,17 @@ export class ObservationsComponent implements OnInit {
    * 
    */
   refreshContacts(): void {
-    this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.questionType)
+    this.observation.answer_Id = this.answerId;
+    this.observation.question_Id = this.questionId;
+    this.observationsSvc.saveObservation(this.observation).subscribe(() => {
+      this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.questionType)
       .subscribe((response: Observation) => {
         this.observation = response;
         this.contactsModel = _.map(_.filter(this.observation.observation_Contacts,
           { 'selected': true }),
           'Assessment_Contact_Id');
-      });
+      });    });
+    
   }
 
   /**

@@ -1028,9 +1028,19 @@ namespace CSETWebCore.Business.Assessment
                 var answerFindingPair = results.Select(x => new { x.a, x.f }).Distinct();
 
                 List<FINDING> observationList = new List<FINDING>();
+
                 foreach (var pair in answerFindingPair)
                 {
                     observationList.Add(pair.f);
+                }
+
+                foreach (var obs in observationList)
+                {
+                    var findingContact = _context.FINDING_CONTACT.Where(x => x.Finding_Id == obs.Finding_Id).ToList();
+                    if (findingContact != null)
+                    {
+                        obs.FINDING_CONTACT = findingContact;
+                    }
                 }
 
                 observationsPerAssessment.Add(new MergeObservation(assessId, observationList));
