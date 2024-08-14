@@ -145,8 +145,9 @@ export class QuestionsService {
       return this.autoLoadSuppCheckboxState;
     }
 
-    // CPG - auto load supplemental
-    if (modelId == 11) {
+    // check the model's configuration
+    const modelConfiguration = this.configSvc.config.moduleBehaviors.find(x => x.modelId == modelId);
+    if (modelConfiguration.autoLoadSupplemental ?? false) {
       return true;
     }
 
