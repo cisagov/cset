@@ -30,7 +30,6 @@ import { NCUAService } from '../../services/ncua.service';
 import { GroupingDescriptionComponent } from '../../assessment/questions/grouping-description/grouping-description.component';
 import { ObservationsService } from '../../services/observations.service';
 import { AssessmentService } from '../../services/assessment.service';
-import { environment } from '../../../environments/environment';
 import { VersionService } from '../../services/version.service';
 
 

@@ -1,0 +1,66 @@
+<!----------------------
+
+   Copyright 2024 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="chart d-flex flex-column flex-00a">
+  <h3>Assessment Answer Summary</h3>
+  <table class="assessment-summary">
+    <tr>
+      <th class="text-left p-2">Assessment Alias</th>
+      <th class="text-right p-2 pl-3">Total</th>
+      <th class="text-right p-2 pl-3">Yes</th>
+      <th class="text-right p-2 pl-3">No</th>
+      <th class="text-right p-2 pl-3">NA</th>
+      <th class="text-right p-2 pl-3">Alt</th>
+      <th class="text-right p-2 pl-3">Unanswered</th>
+    </tr>
+    <tr *ngFor="let a of answerCounts">
+      <td class="text-left p-2">{{ a.alias }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.total }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.y }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.n }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.na }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.a }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.u }}</td>
+    </tr>
+  </table>
+</div>
+<div *ngIf="answerCounts == null">
+  <div class="spinner-container" style="margin: 2em auto">
+    <div style="max-width: 50px; max-height: 50px;"></div>
+  </div>
+</div>
+
+<div class="chart d-flex flex-column flex-00a mb-5">
+  <h3>
+    Domain-Level Compliance
+  </h3>
+  <div *ngIf="!chartsMaturityCompliance">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
+  <div *ngFor="let i of chartsMaturityCompliance" class="my-4">
+    <h5>{{i.chartName}}</h5>
+    <canvas id="{{ 'canvasMaturityBars-' + i.chartName }}"
+      style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ i }}</canvas>
+  </div>
+</div>

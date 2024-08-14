@@ -1494,10 +1494,10 @@ namespace CSETWebCore.Business.ModuleBuilder
         {
             // Get all "source" documents
             List<ReferenceDoc> sourceList = new List<ReferenceDoc>();
-            var sources = _context.REQUIREMENT_SOURCE_FILES
+            var sources = _context.REQUIREMENT_REFERENCES
                 .Include(x => x.Gen_File)
-                .Where(x => x.Requirement_Id == reqID).ToList();
-            foreach (REQUIREMENT_SOURCE_FILES reff in sources)
+                .Where(x => x.Requirement_Id == reqID && x.Source).ToList();
+            foreach (REQUIREMENT_REFERENCES reff in sources)
             {
                 sourceList.Add(new ReferenceDoc
                 {
@@ -1520,7 +1520,7 @@ namespace CSETWebCore.Business.ModuleBuilder
             List<ReferenceDoc> resourceList = new List<ReferenceDoc>();
             var resources = _context.REQUIREMENT_REFERENCES
                 .Include(x => x.Gen_File)
-                .Where(x => x.Requirement_Id == reqID).ToList();
+                .Where(x => x.Requirement_Id == reqID && !x.Source).ToList();
             foreach (REQUIREMENT_REFERENCES reff in resources)
             {
                 resourceList.Add(new ReferenceDoc
@@ -1783,21 +1783,22 @@ namespace CSETWebCore.Business.ModuleBuilder
 
             if (isSourceRef)
             {
-                var reqref = _context.REQUIREMENT_SOURCE_FILES
-                        .Where(x => x.Requirement_Id == requirementId && x.Gen_File_Id == docId && x.Section_Ref == bookmark).FirstOrDefault();
+                var reqref = _context.REQUIREMENT_REFERENCES
+                        .Where(x => x.Requirement_Id == requirementId && x.Source && x.Gen_File_Id == docId && x.Section_Ref == bookmark).FirstOrDefault();
 
                 if (add)
                 {
                     if (reqref == null)
                     {
                         // Create a new one
-                        reqref = new REQUIREMENT_SOURCE_FILES
+                        reqref = new REQUIREMENT_REFERENCES()
                         {
                             Gen_File_Id = docId,
                             Requirement_Id = requirementId,
-                            Section_Ref = bookmark.TrimStart('#')
+                            Section_Ref = bookmark.TrimStart('#'), 
+                            Source = true
                         };
-                        _context.REQUIREMENT_SOURCE_FILES.Add(reqref);
+                        _context.REQUIREMENT_REFERENCES.Add(reqref);
                         _context.SaveChanges();
                     }
                 }
@@ -1806,7 +1807,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     // Delete reference
                     if (reqref != null)
                     {
-                        _context.REQUIREMENT_SOURCE_FILES.Remove(reqref);
+                        _context.REQUIREMENT_REFERENCES.Remove(reqref);
                         _context.SaveChanges();
                     }
                 }
@@ -1814,7 +1815,7 @@ namespace CSETWebCore.Business.ModuleBuilder
             else
             {
                 var reqref = _context.REQUIREMENT_REFERENCES
-                        .Where(x => x.Requirement_Id == requirementId && x.Gen_File_Id == docId && x.Section_Ref == bookmark).FirstOrDefault();
+                        .Where(x => x.Requirement_Id == requirementId && !x.Source && x.Gen_File_Id == docId && x.Section_Ref == bookmark).FirstOrDefault();
 
                 if (add)
                 {
@@ -1825,7 +1826,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                         {
                             Gen_File_Id = docId,
                             Requirement_Id = requirementId,
-                            Section_Ref = bookmark.TrimStart('#')
+                            Section_Ref = bookmark.TrimStart('#'),
+                            Source = false
                         };
                         _context.REQUIREMENT_REFERENCES.Add(reqref);
                         _context.SaveChanges();

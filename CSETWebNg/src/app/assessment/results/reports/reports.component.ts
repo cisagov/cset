@@ -40,6 +40,8 @@ import { ObservationsService } from '../../../services/observations.service';
 import { CisaWorkflowFieldValidationResponse } from '../../../models/demographics-iod.model';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConversionService } from '../../../services/conversion.service';
+import { AssessmentDocumentsComponent } from '../../../dialogs/assessment-documents/assessment-documents.component';
+import { CieDocumentsComponent } from '../../../dialogs/cie-documents/cie-documents.component';
 
 @Component({
   selector: 'app-reports',
@@ -78,6 +80,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
   cisaAssessorWorkflowFieldValidation: CisaWorkflowFieldValidationResponse;
   isCfEntry: boolean = false;
+
+  currentSectionId: string | null = null;
+
 
   /**
    *
@@ -147,17 +152,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
     // call the API for a ruling on whether all questions have been answered
     this.disableAcetReportLinks = false;
-    this.disableIseReportLinks = false;
-    if (this.configSvc.installationMode === 'ACET') {
-      if (this.assessSvc.isISE()) {
-        this.checkIseDisabledStatus();
-
-        this.getAssessmentObservations();
-      } else {
-        this.checkAcetDisabledStatus();
-      }
-    }
-
+  
     if (this.configSvc.installationMode === 'IOD') {
       this.reportSvc.validateCisaAssessorFields().subscribe((result: CisaWorkflowFieldValidationResponse) => {
         this.cisaAssessorWorkflowFieldValidation = result;
@@ -197,6 +192,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.cisaAssessorWorkflow = resp);
+
+    this.updateSectionId();
   }
 
   /**
@@ -260,55 +257,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  /**
-   * If all ACET ISE statements are not answered, set the 'disable' flag
-   * to true.
-   */
-  checkIseDisabledStatus() {
-    this.disableIseReportLinks = true;
-    if (!this.assessSvc.isISE()) {
-      return;
-    }
-    this.acetSvc.getIseAnswerCompletionRate().subscribe((percentAnswered: number) => {
-      if (percentAnswered == 100) {
-        this.disableIseReportLinks = false;
-      }
-    });
-  }
-
-  /**
-   * Gets all ISE Observations/Issues,
-   * then stores them in an array if the exam levels match (SCUEP alone, CORE/CORE+ together)
-   */
-  getAssessmentObservations() {
-    this.ncuaSvc.unassignedIssueTitles = [];
-    this.observationsSvc.getAssessmentObservations().subscribe(
-      (r: any) => {
-        this.observations = r;
-        let title = '';
-
-        for (let i = 0; i < this.observations?.length; i++) {
-          // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
-          if (
-            this.ncuaSvc.translateExamLevel(this.observations[i]?.question?.maturity_Level_Id).substring(0, 4) ==
-            this.ncuaSvc.getExamLevel().substring(0, 4)
-          ) {
-            if (this.observations[i]?.finding?.type == null || this.observations[i]?.finding?.type == '') {
-              title = this.observations[i]?.category?.title + ', ' + this.observations[i]?.question?.question_Title;
-              this.ncuaSvc.unassignedIssueTitles.push(title);
-            }
-          }
-        }
-        if (this.ncuaSvc.unassignedIssueTitles?.length == 0) {
-          this.ncuaSvc.unassignedIssues = false;
-        } else {
-          this.ncuaSvc.unassignedIssues = true;
-        }
-      },
-      (error) => console.log('Observations Error: ' + (<Error>error).message)
-    );
-  }
-
   onSelectSecurity(val) {
     this.confidentiality = val;
   }
@@ -364,7 +312,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       return true;
     }
 
-    if (this.disableIseReportLinks) {
+    if (this.reportSvc.disableIseReportLinks) {
       return true;
     }
     return false;
@@ -382,6 +330,59 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         // If not disabled & already submitted, default here
         return "background-color: #3B68AA; color: white;";
       }
+    }
+  }
+
+  showAssessDocs() {
+    if (this.dialog.openDialogs[0]) {
+      return;
+    }
+    // , {width: '800px', height: "500px"}
+    this.dialogRef = this.dialog.open(CieDocumentsComponent);
+    this.dialogRef.afterClosed().subscribe();
+  }
+
+  updateSectionId(): void {
+    if (!!this.assessSvc.assessment) {
+      if (this.assessSvc.assessment.useStandard || this.assessSvc.assessment.useDiagram) {
+        if (!this.isMobile) {
+          this.currentSectionId = 'DIAGRAM';
+        }
+      } else if (this.assessSvc.usesMaturityModel('CMMC') && !this.isMobile) {
+        this.currentSectionId = 'CMMC';
+      } else if (this.assessSvc.usesMaturityModel('EDM')) {
+        this.currentSectionId = 'EDM';
+      } else if (this.assessSvc.usesMaturityModel('CRR')) {
+        this.currentSectionId = 'CRR';
+      } else if (this.assessSvc.usesMaturityModel('IMR')) {
+        this.currentSectionId = 'IMR';
+      } else if (this.assessSvc.usesMaturityModel('CIS')) {
+        this.currentSectionId = 'CIS';
+      } else if (this.assessSvc.usesMaturityModel('CMMC2')) {
+        this.currentSectionId = 'CMMC2';
+      } else if (this.assessSvc.usesMaturityModel('RRA') && !this.isMobile) {
+          this.currentSectionId = 'RRA';
+      } else if (this.assessSvc.usesMaturityModel('ACET') && !this.isMobile) {
+          this.currentSectionId = 'ACET';
+      } else if (this.assessSvc.usesMaturityModel('MVRA') && !this.isMobile) {
+          this.currentSectionId = 'MVRA';
+      } else if (this.assessSvc.usesMaturityModel('CPG') && !this.isMobile) {
+          this.currentSectionId = 'CPG';
+      } else if (this.assessSvc.usesMaturityModel('VADR') && !this.isMobile) {
+        this.currentSectionId = 'VADR';
+      } else if (this.assessSvc.usesMaturityModel('C2M2') && !this.isMobile) {
+        this.currentSectionId = 'C2M2';
+      } else if (this.assessSvc.usesMaturityModel('SD02 Series') && !this.  isMobile) {
+        this.currentSectionId = 'SD02 Series';
+      } else if (this.assessSvc.usesMaturityModel('SD02 Owner') && !this.isMobile) {
+        this.currentSectionId = 'SD02 Owner';
+      } else if (this.assessSvc.usesMaturityModel('HYDRO') && !this.isMobile) {
+        this.currentSectionId = 'HYDRO';
+      } else {
+        this.currentSectionId = null; // No valid section ID
+      }
+    } else {
+      this.currentSectionId = null; // No assessment
     }
   }
 

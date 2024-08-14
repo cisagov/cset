@@ -100,6 +100,12 @@ export class ImportAssessmentService {
           // pass the percentage into the progress-stream
           progress.next(percentDone);
         } else if (event instanceof HttpResponseBase) {
+          if (event.status == 404) {
+            let errObj = {
+              message: "File import failed. Custom module not found",
+            };
+            progress.error(errObj);
+          }
           if (event.status == 423) {
             let errObj = {
               message: "File requires a password",
@@ -116,6 +122,7 @@ export class ImportAssessmentService {
             };
             progress.error(errObj);
           }
+          
           // Close the progress-stream if we get an answer form the API
           // The upload is complete
           else progress.complete();

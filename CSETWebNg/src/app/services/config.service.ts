@@ -344,7 +344,7 @@ export class ConfigService {
             link.href = 'assets/icons/favicon_cie.ico?app=cie1';
 
             var title = this.document.querySelector('title');
-            title.innerText = 'CSET-CIE';
+            title.innerText = 'CIE';
           }
           break;
       case 'CF':

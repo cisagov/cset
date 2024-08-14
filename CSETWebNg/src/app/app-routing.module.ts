@@ -230,6 +230,7 @@ import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-
 import { SdOwnerDeficiencyComponent } from './reports/sd-owner/sd-owner-deficiency/sd-owner-deficiency.component';
 import { SdOwnerCommentsMfrComponent } from './reports/sd-owner/sd-owner-comments/sd-owner-comments-mfr.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
+import { CieMfrReportComponent } from './reports/cie/cie-mfr-report/cie-mfr-report.component';
 import { TutorialCpgComponent } from './assessment/prepare/maturity/tutorial-cpg/tutorial-cpg.component';
 import { TutorialMvraComponent } from './assessment/prepare/maturity/tutorial-mvra/tutorial-mvra.component';
 
@@ -286,7 +287,7 @@ const appRoutes: Routes = [
       },
       { path: 'alias-assessments/:id', component: AliasAssessmentsComponent },
       { path: 'aggregation-detail/:id', component: AggregationDetailComponent },
-      { path: 'compare-analytics/:id', component: CompareAnalyticsComponent },
+      { path: 'compare-analytics/:id/:type', component: CompareAnalyticsComponent },
       { path: 'trend-analytics/:id', component: TrendAnalyticsComponent },
 
       { path: 'importModule', component: ImportComponent },
@@ -369,24 +370,27 @@ const appRoutes: Routes = [
               { path: 'tutorial-imr', component: TutorialImrComponent },
               { path: 'tutorial-rra', component: TutorialRraComponent },
               { path: 'tutorial-cis', component: TutorialCisComponent },
-              { path: 'tutorial-cpg', component: TutorialCpgComponent},
-              { path: 'tutorial-mvra', component: TutorialMvraComponent},
-              { path: 'tutorial-cie', component: TutorialCieComponent,
+              { path: 'tutorial-cpg', component: TutorialCpgComponent },
+              { path: 'tutorial-mvra', component: TutorialMvraComponent },
+              {
+                path: 'tutorial-cie', component: TutorialCieComponent,
                 children: [
-                { path: 'quick-facts-cie', component: QuickFactsCieComponent },
-                { path: 'overview-cie', component: OverviewCieComponent },
-                { path: 'background-cie', component: BackgroundCieComponent },
-                { path: 'principles-cie', component: PrinciplesCieComponent },
-                { path: 'lifecycle-cie', component: LifecycleCieComponent },
+                  { path: 'quick-facts-cie', component: QuickFactsCieComponent },
+                  { path: 'overview-cie', component: OverviewCieComponent },
+                  { path: 'background-cie', component: BackgroundCieComponent },
+                  { path: 'principles-cie', component: PrinciplesCieComponent },
+                  { path: 'lifecycle-cie', component: LifecycleCieComponent },
                 ]
               },
-              { path: 'cie-example', 
-                component: CieExampleComponent, 
+              {
+                path: 'cie-example',
+                component: CieExampleComponent,
                 canActivate: [AssessGuard],
                 canActivateChild: [AssessGuard],
                 children: [
                   { path: 'cie-background', component: CieBackgroundComponent },
-                  { path: 'cie-analysis', 
+                  {
+                    path: 'cie-analysis',
                     component: CieAnalysisComponent,
                     canActivate: [AssessGuard],
                     canActivateChild: [AssessGuard],
@@ -399,7 +403,6 @@ const appRoutes: Routes = [
                 ]
               },
               { path: 'config-cis', component: ConfigCisComponent },
-              { path: 'how-to-use-cie', component: HowToUseCieComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
@@ -425,12 +428,13 @@ const appRoutes: Routes = [
               { path: '**', redirectTo: 'info1' }
             ]
           },
-
           { path: 'questions', component: QuestionsComponent },
           { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
           { path: 'maturity-questions-ise', component: MaturityQuestionsIseComponent },
+          { path: 'instructions-cie', component: HowToUseCieComponent },
+
           { path: 'maturity-questions-cie/:sec', component: MaturityQuestionsCieComponent },
           { path: 'question-block-cie/:sec', component: QuestionBlockCieComponent },
           { path: 'principle-summary/:pri', component: PrincipleSummaryComponent },
@@ -556,6 +560,7 @@ const appRoutes: Routes = [
       { path: 'ciePrincipleOnly', component: CiePrincipleOnlyComponent },
       { path: 'ciePrinciplePhase', component: CiePrinciplePhaseComponent },
       { path: 'cieNotApplicable', component: CieNotApplicableComponent },
+      { path: 'cieMfrReport', component: CieMfrReportComponent },
       { path: 'crrreport', component: CrrReportComponent },
       { path: 'crrDeficiencyReport', component: CrrDeficiencyComponent },
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },

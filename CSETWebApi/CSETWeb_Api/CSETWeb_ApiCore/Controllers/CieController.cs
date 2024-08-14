@@ -34,9 +34,10 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/saveNewDocumentsForMerge")]
-        public IActionResult SaveNewDocumentsForMerge([FromBody] List<DocumentWithAnswerId> documents)
+        public IActionResult SaveNewDocumentsForMerge([FromBody] DocumentsForMerge documents)
         {
-            _documentBusiness.CopyFilesForMerge(documents);
+            List<DocumentWithAnswerId> documentWithAnswerIds = documents.DocumentWithAnswerId;
+            _documentBusiness.CopyFilesForMerge(documentWithAnswerIds);
             return Ok();
         }
     }

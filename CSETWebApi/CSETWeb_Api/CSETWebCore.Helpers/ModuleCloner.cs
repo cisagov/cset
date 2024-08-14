@@ -167,18 +167,18 @@ namespace CSETWebCore.Helpers
             // classification was made.  
 
 
-            // Clone REQUIREMENT_SOURCE_FILES
-            var queryRSF = from rsf in _context.REQUIREMENT_SOURCE_FILES
+            // Clone REQUIREMENT_REFERENCES
+            var queryRSF = from rsf in _context.REQUIREMENT_REFERENCES
                            join rs in _context.REQUIREMENT_SETS on rsf.Requirement_Id equals rs.Requirement_Id
-                           where rs.Set_Name == this.origSetName
+                           where rs.Set_Name == this.origSetName && rsf.Source
                            select rsf;
 
             var listRSF = queryRSF.ToList();
             foreach (var rsf in listRSF)
             {
-                var newRSF = (REQUIREMENT_SOURCE_FILES)_context.Entry(rsf).CurrentValues.ToObject();
+                var newRSF = (REQUIREMENT_REFERENCES)_context.Entry(rsf).CurrentValues.ToObject();
                 newRSF.Requirement_Id = requirementIdMap[newRSF.Requirement_Id];
-                _context.REQUIREMENT_SOURCE_FILES.Add(newRSF);
+                _context.REQUIREMENT_REFERENCES.Add(newRSF);
             }
 
 

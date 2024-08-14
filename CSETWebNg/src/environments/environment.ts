@@ -28,13 +28,5 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
-  appUrl: 'http://localhost:4200/',
-  apiUrl: 'https://localhost:5001/api/',
-  docUrl: 'https://localhost:5001/Documents/',
-  csetGithubApiUrl: 'https://api.github.com/repos/cisagov/cset/releases/latest',
-  visibleVersion: '12.2.3.0',
-  version: '12.2.3.0',
-  helpContactEmail: 'cset@cisa.dhs.gov',
-  helpContactPhone: ''
+  production: false
 };

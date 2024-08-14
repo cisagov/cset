@@ -1,0 +1,318 @@
+<!----------------------
+   Copyright 2024 Battelle Energy Alliance, LLC
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div *transloco="let t" class="report-body mb-5">
+
+    <div class="flex-container">
+        <div class="column mt-3">
+            <p class="report-title">
+                MARKED FOR REVIEW
+            </p>
+            <p class="report-title">
+                CIE REPORT
+            </p>
+        </div>
+        
+        <div class="cover-page-bottom mb-4">
+            <div>
+                <img height="150" src="assets/images/CIE/CIE_Logo_Blue_Standard.png" alt="full-cie">
+            </div>
+            <div style="
+                            text-align: right;
+                            font-weight: normal;
+                            font-size: 18px;
+                            flex-direction: column;
+                            line-height: 150%;
+                            padding-right: 2em;
+                        ">
+
+                <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
+                <div class="title-page-content">{{response?.information?.assessment_Date |
+                    localizeDate}}
+                </div>
+                <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="loading; else mainContent" class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+
+    <ng-template #mainContent>
+        <div class="page-break"></div>
+        <div class="ml-3 mr-3 form">
+            <div class="d-flex flex-row" style="justify-content: space-between">
+                <div style="align-self: flex-end;">
+                    <div class="h2 report-text-blue">Demographics</div>
+                </div>
+            </div>
+
+            <table class="table-site-info">
+                <tr>
+                    <td>Assessment Name:</td>
+                    <td>{{response?.information?.assessment_Name}}</td>
+                </tr>
+                <tr>
+                    <td>Assessment Date:</td>
+                    <td>{{response?.information?.assessment_Date | localizeDate}}</td>
+                </tr>
+                <tr>
+                    <td>City or Site Name:</td>
+                    <td>{{response?.information?.city_Or_Site_Name}}</td>
+                </tr>
+                <tr>
+                    <td>State, Province or Region:</td>
+                    <td>{{response?.information?.state_Province_Or_Region}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="d-flex flex-row" style="justify-content: space-between">
+            <div style="align-self: flex-end;">
+                <div class="h2 report-text-blue">Principle Scope</div>
+            </div>
+
+            <div class="d-flex align-items-start flex-11a">
+                <button class="btn background-1 cie-questions-header-collapse-button-radius" 
+                    (click)="expandAll(false, 'Principle')"
+                    [matTooltip]="t('buttons.collapse all')" [aria-label]="t('buttons.collapse all')">
+                    <i class="fas fa-compress-alt" style="color: white;"></i>
+                </button>
+                <button class="btn background-1 cie-questions-header-collapse-button-radius cie-questions-header-expand-button-radius" 
+                    (click)="expandAll(true, 'Principle')" 
+                    [matTooltip]="t('buttons.expand all')" [aria-label]="t('buttons.expand all')">
+                    <i class="fas fa-expand-alt" style="color: white;"></i>
+                </button>
+                <!-- the below missing ".component[0]" in the "(click)"is intentional -->
+                <button class="btn background-1 cie-questions-header-expand-button-radius"
+                    (click)="showFilterDialog(response?.matAnsweredQuestions[0].assessmentFactors[0]
+                        .questions[0].maturityLevel)" 
+                    [matTooltip]="t('buttons.filter')" [aria-label]="t('buttons.filter')">
+                    <img class="Filter" src="assets/images/icons/filter.svg">
+                </button>
+            </div>
+        </div>
+        
+        <div *ngIf="principleFound; else emptyPrinciple">
+            
+            <table class="table-responsive td-align-top td-padding-half-rem">
+                <tr class="report-text-blue">
+                    <td style="width: 12.5%"></td>
+                    <td style="width: 75%">Question</td>
+                    <td></td>
+                    <td style="width: 12.5%">Answered?</td>
+                </tr>
+                <ng-container *ngFor="let d of response?.matAnsweredQuestions">
+                    <ng-container *ngIf="!d.areFactorQuestionsDeficient">
+
+                        <ng-container *ngFor="let f of d.assessmentFactors">
+                            <ng-container *ngIf="!f.areQuestionsDeficient">
+
+                                <tr class="rkw-domain">
+                                    <td colspan="4" class="background-1 h4 color-white" style="width: 100%">{{f.title}} - Principle
+                                        <label class="btn form-check-label" style="float: right;color: white">{{
+                                            this.expandedOptions.get('Principle_' + f.title) ? '-' : '+' }}
+                                            <input class="hide" name="nameExample" type="checkbox"
+                                                (click)="toggleExpansion('Principle_' + f.title)">
+                                        </label>
+                                    </td>
+                                </tr>
+                                
+                                <ng-container *ngFor="let q of f.questions">
+                                    <!-- the [class] check sees if it is a parent or a child -->
+                                    <tr *ngIf="q.title != 'Question K' && q.visible && shouldExpand('Principle_' + f.title) && q.maturityLevel == '5'">
+                                        <td class="font-weight-bold text-nowrap">{{q.title}}</td>
+                                        <td class="pr-5" colspan="2" [innerHTML]="q.questionText"></td>
+                                        <td class="pr-5" [innerHTML]="(q.answerText == 'U' ? (q.freeResponseText != null ? 'Yes' : 'No') : 'NA')"></td>
+                                    </tr>
+                                    <tr *ngIf="q.title != 'Question K' && q.visible && shouldExpand('Principle_' + f.title) && q.maturityLevel == '5' && q.freeResponseText != null">
+                                        <td></td>
+                                        <td class="pr-5" colspan="2" style="white-space: pre-wrap;" [innerHTML]="q.freeResponseText"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr *ngIf="q.title != 'Question K' && q.visible && shouldExpand('Principle_' + f.title) && q.maturityLevel == '5' && q.documents != null">
+                                        <td></td>
+                                        <td class="pr-5" colspan="2">
+                                            Documents:
+                                            <ul *ngFor="let doc of q.documents">
+                                                <li> 
+                                                    <button (click)="download(doc)" class="btn btn-link" style="color: #285464; 
+                                                        background-color:transparent;" tabindex="0">  
+                                                        {{doc.title + ' | ' + doc.fileName}}                                         
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="d.areFactorQuestionsDeficient">
+                        <tr>
+                            <td></td>
+                            <td colspan="2">No questions were answered with current filter options.</td>
+                            <td></td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+            </table>
+        </div>
+
+        <ng-template #emptyPrinciple>
+            There are no Marked For Review Questions.
+        </ng-template>
+
+        <div class="page-break"></div>
+
+        <div class="d-flex flex-row" style="justify-content: space-between">
+            <div style="align-self: flex-end;">
+                <div class="h2 report-text-blue">Principle-Phase Scope</div>
+            </div>
+
+            <div class="d-flex align-items-start flex-11a">
+                <button class="btn background-1 cie-questions-header-collapse-button-radius" 
+                    (click)="expandAll(false, 'Phase')"
+                    [matTooltip]="t('buttons.collapse all')" [aria-label]="t('buttons.collapse all')">
+                    <i class="fas fa-compress-alt" style="color: white;"></i>
+                </button>
+                <button class="btn background-1 cie-questions-header-collapse-button-radius cie-questions-header-expand-button-radius" 
+                    (click)="expandAll(true, 'Phase')" 
+                    [matTooltip]="t('buttons.expand all')" [aria-label]="t('buttons.expand all')">
+                    <i class="fas fa-expand-alt" style="color: white;"></i>
+                </button>
+                <button class="btn background-1 cie-questions-header-expand-button-radius"
+                    (click)="showFilterDialog(response?.matAnsweredQuestions[0].assessmentFactors[0]
+                        .components[0].questions[0].maturityLevel)" 
+                    [matTooltip]="t('buttons.filter')" [aria-label]="t('buttons.filter')">
+                    <img class="Filter" src="assets/images/icons/filter.svg">
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="phaseFound; else emptyPhase">
+
+            <table class="table-responsive td-align-top td-padding-half-rem">
+                <tr class="report-text-blue">
+                    <td style="width: 12.5%"></td>
+                    <td style="width: 75%">Question</td>
+                    <td></td>
+                    <td style="width: 12.5%">Answered?</td>
+                </tr>
+                <ng-container *ngFor="let d of response?.matAnsweredQuestions">
+                    <ng-container *ngIf="!d.isDeficient">
+                        <ng-container *ngFor="let f of d.assessmentFactors">
+                            <ng-container *ngIf="!f.isDeficient">
+
+                                <tr class="rkw-domain">
+                                    <td colspan="4" class="background-1 h4 color-white" style="width: 100%">{{f.title}} - Principle
+                                        <label class="btn form-check-label" style="float: right; color:white">{{
+                                            this.expandedOptions.get('Phase_' + f.title) ? '-' : '+' }}
+                                            <input class="hide" name="nameExample" type="checkbox"
+                                                (click)="toggleExpansion('Phase_' + f.title)">
+                                        </label>
+                                    </td>
+                                </tr>
+                                <ng-container *ngFor="let c of f.components">
+                                    <ng-container *ngIf="!c.isDeficient">
+                                        <tr *ngIf="shouldExpand('Phase_' + f.title)">
+                                            <td colspan="4" class="background-2 pl-4 font-weight-bold">{{c.title}} - Phase
+                                                <label class="btn form-check-label" style="float: right">{{
+                                                    this.expandedOptions.get('Phase_' + f.title + '_' + c.title) ? '-' : '+' }}
+                                                    <input class="hide" name="nameExample" type="checkbox"
+                                                        (click)="toggleExpansion('Phase_' + f.title + '_' + c.title)">
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <ng-container *ngFor="let q of c.questions">
+                                            <!-- the [class] check sees if it is a parent or a child -->
+                                            <ng-container *ngIf="c.title == 'Controlling Processes' && q.title != 'Question K' && shouldExpand('Phase_' + f.title) && shouldExpand('Phase_' + f.title + '_' + c.title) && q.maturityLevel != '5'">
+                                                <tr class="background-3 font-weight-bold">
+                                                    <td *ngIf="q.maturityLevel == '2' && q.title == 'Question 1'" colspan="4" style="font-size: large;" class="pr-5">
+                                                        Project Management
+                                                    </td>
+                                                    <td *ngIf="q.maturityLevel == '3' && q.title == 'Question 1'" colspan="4" style="font-size: large;" class="pr-5">
+                                                        Change/Configuration Management
+                                                    </td>
+                                                    <td *ngIf="q.maturityLevel == '4' && q.title == 'Question 1'" colspan="4" style="font-size: large;" class="pr-5">
+                                                        Risk Management
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                            <tr *ngIf="q.title != 'Question K' && q.visible && shouldExpand('Phase_' + f.title) && shouldExpand('Phase_' + f.title + '_' + c.title) && q.maturityLevel != '5'" 
+                                                [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''"
+                                                >
+                                                <td class="font-weight-bold text-nowrap">{{q.title}}</td>
+                                                <td class="pr-5" colspan="2" [innerHTML]="q.questionText"></td>
+                                                <td class="pr-5" [innerHTML]="(q.answerText == 'U' ? (q.freeResponseText != null ? 'Yes' : 'No') : 'NA')"></td>
+                                            </tr>
+                                            <tr *ngIf="q.title != 'Question K' && q.visible && shouldExpand('Phase_' + f.title + '_' + c.title) && shouldExpand('Phase_' + f.title) && q.maturityLevel != '5' && q.freeResponseText != null"
+                                                [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''">
+                                                <td></td>
+                                                <td class="pr-5" colspan="2" style="white-space: pre-wrap;" [innerHTML]="q.freeResponseText"></td>
+                                                <td></td>
+                                            </tr>
+                                            <!--  -->
+                                            <tr *ngIf="q.title != 'Question K' && q.visible && shouldExpand('Phase_' + f.title + '_' + c.title) && shouldExpand('Phase_' + f.title) && q.maturityLevel != '5' && q.documents != null"
+                                                [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''">
+                                                <td></td>
+                                                <td class="pr-5" colspan="2" style="white-space: pre-wrap;">
+                                                    Documents:
+                                                    <ul *ngFor="let doc of q.documents">
+                                                        <li> 
+                                                            <button (click)="download(doc)"
+                                                                class="btn btn-link" style="color: #285464;;
+                                                                background-color:transparent;" tabindex="0">  
+                                                                {{doc.title + ' | ' + doc.fileName}}                                         
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <!-- <button (click)="download(doc)" class="fs-base-6 cset-icons-export-up c-primary cursor-pointer btn-link"
+                                                        matTooltip="Download document"></button> -->
+                                                </td>
+                                            </tr>
+                                            <!--  -->
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="d.isDeficient">
+                        <tr>
+                            <td></td>
+                            <td colspan="2">No questions were answered with current filter options.</td>
+                            <td></td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+            </table>
+        </div>
+        <ng-template #emptyPhase>
+            There are no Marked For Review Questions.
+        </ng-template>
+    </ng-template>
+</div>

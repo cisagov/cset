@@ -152,10 +152,42 @@ namespace CSETWebCore.Business.Observations
         /// Updates an Observation in its FINDING database record
         /// </summary>
         /// <param name="observation"></param>
-        public int UpdateObservation(Observation observation)
+        public int UpdateObservation(Observation observation, bool merge)
         {
             ObservationData fm = new ObservationData(observation, _context);
             int id = fm.Save();
+
+            if (merge == true)
+            {
+                var contactList = new List<FINDING_CONTACT>();
+                if (observation.Observation_Contacts != null)
+                {
+                    foreach (var contact in observation.Observation_Contacts)
+                    {
+                        var previousContact = _context.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == contact.Assessment_Contact_Id).FirstOrDefault();
+                        var userId = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Contact_Id == contact.Assessment_Contact_Id).Select(x => x.UserId).FirstOrDefault();
+                        var newContactId = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == userId && x.Assessment_Id == _assessmentId).Select(x => x.Assessment_Contact_Id).FirstOrDefault();
+
+
+                        FINDING_CONTACT newContact = new FINDING_CONTACT()
+                        {
+                            Finding_Id = id,
+                            Assessment_Contact_Id = newContactId
+                        };
+                        contactList.Add(newContact);
+                    }
+
+                    _context.FINDING_CONTACT.AddRange(contactList);
+                    _context.SaveChanges();
+
+                }
+
+            }
+            // IF MERGE
+            // IF fm._webObservation.ObservationContacts > 0 AND SELECT Finding_Contact (Where x.Finding_Id == id)
+            // _context.add(fm._webObservation.ObservationContact) <-- Maybe add a new function here inside the business and not manager? Idk.
+            // _context.save()
+            // 
             return id;
         }
 
