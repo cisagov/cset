@@ -33,7 +33,7 @@ namespace CSETWebCore.Helpers
 
         /// <summary>
         /// Populates sourceDocList and additionalDocList with any connections from 
-        /// REQUIREMENT_SOURCE_FILES and REQUIREMENT_REFERENCES, respectively.
+        /// REQUIREMENT_REFERENCES, respectively.
         /// </summary>
         /// <param name="requirementId"></param>
         /// <param name="controlContext"></param>
@@ -42,9 +42,9 @@ namespace CSETWebCore.Helpers
             out List<ReferenceDocLink> additionalDocList)
         {
             // Source Documents  
-            var q1 = _context.REQUIREMENT_SOURCE_FILES
+            var q1 = _context.REQUIREMENT_REFERENCES
                 .Include(x => x.Gen_File)
-                .Where(s => s.Requirement_Id == requirementId)
+                .Where(s => s.Requirement_Id == requirementId && s.Source)
                 .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Destination_String = s.Destination_String, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
 
             sourceDocList = SortList(q1);
@@ -53,7 +53,7 @@ namespace CSETWebCore.Helpers
             // Additional Resource Documents
             var q2 = _context.REQUIREMENT_REFERENCES
                 .Include(x => x.Gen_File)
-                .Where(s => s.Requirement_Id == requirementId)
+                .Where(s => s.Requirement_Id == requirementId && !s.Source)
                 .OrderBy(s => s.Sequence)
                 .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Destination_String = s.Destination_String, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
 
