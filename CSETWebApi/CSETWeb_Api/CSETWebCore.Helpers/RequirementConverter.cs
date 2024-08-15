@@ -149,7 +149,7 @@ namespace CSETWebCore.Helpers
                 }
             }
 
-            var reqSource = new REQUIREMENT_SOURCE_FILES();
+            var reqSource = new REQUIREMENT_REFERENCES();
 
             try
             {
@@ -159,13 +159,14 @@ namespace CSETWebCore.Helpers
                     reqSource.Page_Number = externalRequirement.source.pageNumber;
                     reqSource.Destination_String = externalRequirement.source.destination;
                     reqSource.Section_Ref = String.IsNullOrEmpty(externalRequirement.source.sectionReference) ? "" : externalRequirement.source.sectionReference;
+                    reqSource.Source = true;
                     if (reqSource.Gen_File_Id == 0)
                     {
                         result.LogError(String.Format("Source {0} has not been loaded into CSET.  Please add the file and try again.", externalRequirement.source?.fileName, externalRequirement.identifier, externalRequirement.text));
                     }
                     else
                     {
-                        newRequirement.REQUIREMENT_SOURCE_FILES.Add(reqSource);
+                        newRequirement.REQUIREMENT_REFERENCES.Add(reqSource);
                     }
                 }
             }
