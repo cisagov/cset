@@ -107,7 +107,7 @@ namespace CSETWebCore.Business.Reports
             {
                 targetModelId = (int)modelId;
             }
-            
+
 
             var lang = _tokenManager.GetCurrentLanguage();
 
@@ -1016,17 +1016,17 @@ namespace CSETWebCore.Business.Reports
 
                     // Check for custom parameters
                     var customParameter = (from pa in _context.PARAMETER_ASSESSMENT
-                                  join pr in _context.PARAMETER_REQUIREMENTS
-                                  on pa.Parameter_ID equals pr.Parameter_Id
-                                  join p in _context.PARAMETERS
-                                  on pa.Parameter_ID equals p.Parameter_ID
-                                  where pr.Requirement_Id == a.Requirement_Id
-                                  select new
-                                  {
-                                      pa.Parameter_Value_Assessment,
-                                      pa.Assessment_ID,
-                                      p.Parameter_Name
-                                  }).Distinct().ToList();
+                                           join pr in _context.PARAMETER_REQUIREMENTS
+                                           on pa.Parameter_ID equals pr.Parameter_Id
+                                           join p in _context.PARAMETERS
+                                           on pa.Parameter_ID equals p.Parameter_ID
+                                           where pr.Requirement_Id == a.Requirement_Id
+                                           select new
+                                           {
+                                               pa.Parameter_Value_Assessment,
+                                               pa.Assessment_ID,
+                                               p.Parameter_Name
+                                           }).Distinct().ToList();
 
                     var QuestionRequirementText = r?.RequirementText ?? a.Requirement_Text;
 
@@ -1098,9 +1098,9 @@ namespace CSETWebCore.Business.Reports
         /// </summary>
         /// <returns></returns>
         public List<BasicReportData.RequirementControl> GetControlsDiagram(string applicationMode)
-            
+
         {
-            
+
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
             _questionRequirement.InitializeManager(_assessmentId);
 
@@ -1111,9 +1111,9 @@ namespace CSETWebCore.Business.Reports
             List<ControlRow> controlRows = new List<ControlRow>();
 
             var qQ = (from rs in _context.Answer_Components_Default
-                        orderby rs.Question_Group_Heading
-                        where rs.Assessment_Id == _assessmentId
-                        select new { rs } ).ToList();
+                      orderby rs.Question_Group_Heading
+                      where rs.Assessment_Id == _assessmentId
+                      select new { rs }).ToList();
 
             foreach (var q in qQ)
             {
@@ -1132,7 +1132,7 @@ namespace CSETWebCore.Business.Reports
                     Standard_Level = q.rs.SAL
                 });
             }
-           
+
             //get all the questions for this control 
             //determine the percent implemented.                 
             int prev_requirement_id = 0;
@@ -1898,7 +1898,7 @@ namespace CSETWebCore.Business.Reports
             identifier = f.mq.Question_Title;
             questionText = f.mq.Question_Text;
             int groupId = f.mq.Grouping_Id ?? 0;
-            
+
             var groupRow = _context.MATURITY_GROUPINGS.Where(x => x.Grouping_Id == groupId).FirstOrDefault();
             int principleNumber = 0;
             int phaseNumber = 0;
@@ -2112,12 +2112,11 @@ namespace CSETWebCore.Business.Reports
         {
 
             var data = (from g in _context.GEN_FILE
-                        join a in _context.MATURITY_SOURCE_FILES
+                        join a in _context.MATURITY_REFERENCES
                             on g.Gen_File_Id equals a.Gen_File_Id
                         join q in _context.MATURITY_QUESTIONS
                              on a.Mat_Question_Id equals q.Mat_Question_Id
-
-                        where q.Maturity_Model_Id == 10
+                        where q.Maturity_Model_Id == 10 && a.Source
                         select new { a, q, g }).ToList();
 
             List<SourceFiles> result = new List<SourceFiles>();
@@ -2168,7 +2167,7 @@ namespace CSETWebCore.Business.Reports
 
             // Get all MATURITY answers for the assessment
             //IQueryable<FullAnswer> answers = new IQueryable<FullAnswer>();
-                
+
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Maturity")
                           from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                           select new FullAnswer() { a = a, b = b };
@@ -2248,7 +2247,7 @@ namespace CSETWebCore.Business.Reports
                         Questions = new List<MaturityAnsweredQuestions>()
                     };
 
-                    
+
                     if (assesmentFactor.Questions.Count > 0)
                     {
                         foreach (var question in assesmentFactor.Questions)
