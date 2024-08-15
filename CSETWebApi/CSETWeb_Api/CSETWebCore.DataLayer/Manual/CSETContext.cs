@@ -114,23 +114,9 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasKey(e => new { e.Assessment_Id, e.Grouping_ID });
             });
 
-            modelBuilder.Entity<MATURITY_SOURCE_FILES>(entity =>
-            {
-                entity.HasKey(e => new { e.Mat_Question_Id, e.Gen_File_Id, e.Section_Ref });
-
-                entity.Property(e => e.Section_Ref).IsUnicode(false);
-
-                entity.Property(e => e.Destination_String).IsUnicode(false);
-
-                entity.HasOne(d => d.Mat_Question)
-                    .WithMany(p => p.MATURITY_SOURCE_FILES)
-                    .HasForeignKey(d => d.Mat_Question_Id)
-                    .HasConstraintName("FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS");
-            });
-
             modelBuilder.Entity<MATURITY_REFERENCES>(entity =>
             {
-                entity.HasKey(e => new { e.Mat_Question_Id, e.Gen_File_Id, e.Section_Ref });
+                entity.HasKey(e => new { e.Mat_Question_Id, e.Gen_File_Id, e.Section_Ref, e.Source });
 
                 entity.Property(e => e.Section_Ref).IsUnicode(false);
 
