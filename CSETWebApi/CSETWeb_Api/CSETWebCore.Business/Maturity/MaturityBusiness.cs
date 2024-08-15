@@ -436,10 +436,10 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public Dictionary<int, string> GetSourceFiles()
         {
-            List<Tuple<int, string>> sourceFiles = (from a in _context.MATURITY_SOURCE_FILES
+            List<Tuple<int, string>> sourceFiles = (from a in _context.MATURITY_REFERENCES
                                                     join q in _context.MATURITY_QUESTIONS on a.Mat_Question_Id equals q.Mat_Question_Id
                                                     join g in _context.GEN_FILE on a.Gen_File_Id equals g.Gen_File_Id
-                                                    where q.Maturity_Model_Id == 7
+                                                    where q.Maturity_Model_Id == 7 && a.Source
                                                     select new Tuple<int, string>(a.Mat_Question_Id, g.Short_Name + " " + a.Section_Ref))
                                                    .ToList();
 
@@ -881,7 +881,7 @@ namespace CSETWebCore.Business.Maturity
 
             // get the levels and their display names for this model
             response.Levels = GetMaturityLevelsForModel(targetModelId, response.MaturityTargetLevel);
-            
+
 
 
             // Get all maturity questions for the model regardless of level.
@@ -1300,7 +1300,7 @@ namespace CSETWebCore.Business.Maturity
         }
 
 
-       
+
 
         /// <summary>
         /// Set default values for target level where applicable
