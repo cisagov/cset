@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model;
 /// <summary>
 /// A collection of REQUIREMENT_REFERENCES records
 /// </summary>
-[PrimaryKey("Requirement_Id", "Gen_File_Id", "Section_Ref")]
+[PrimaryKey("Requirement_Id", "Gen_File_Id", "Section_Ref", "Source")]
 public partial class REQUIREMENT_REFERENCES
 {
     [Key]
@@ -38,4 +38,7 @@ public partial class REQUIREMENT_REFERENCES
     [ForeignKey("Requirement_Id")]
     [InverseProperty("REQUIREMENT_REFERENCES")]
     public virtual NEW_REQUIREMENT Requirement { get; set; }
+
+    [Key]
+    public bool Source { get; set; }
 }
