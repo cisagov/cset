@@ -329,8 +329,6 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; }
 
-    public virtual DbSet<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
-
     public virtual DbSet<MATURITY_SUB_MODELS> MATURITY_SUB_MODELS { get; set; }
 
     public virtual DbSet<MATURITY_SUB_MODEL_QUESTIONS> MATURITY_SUB_MODEL_QUESTIONS { get; set; }
@@ -1890,15 +1888,6 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of MATURITY_REFERENCE_TEXT records"));
 
             entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_REFERENCE_TEXT).HasConstraintName("FK_MATURITY_REFERENCE_TEXT_MATURITY_QUESTIONS");
-        });
-
-        modelBuilder.Entity<MATURITY_SOURCE_FILES>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("A collection of MATURITY_SOURCE_FILES records"));
-
-            entity.HasOne(d => d.Gen_File).WithMany(p => p.MATURITY_SOURCE_FILES).HasConstraintName("FK_MATURITY_SOURCE_FILES_GEN_FILE");
-
-            entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_SOURCE_FILES).HasConstraintName("FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS");
         });
 
         modelBuilder.Entity<MATURITY_SUB_MODEL_QUESTIONS>(entity =>
