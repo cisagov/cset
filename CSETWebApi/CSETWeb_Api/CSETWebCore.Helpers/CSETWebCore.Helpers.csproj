@@ -19,7 +19,6 @@
     <PackageReference Include="NJsonSchema" Version="11.0.2" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.12" />
     <PackageReference Include="Npoi.Mapper" Version="6.2.1" />
-    <PackageReference Include="NSoupCore" Version="1.0.0" />
     <PackageReference Include="System.Security.Principal.Windows" Version="5.0.0" />
   </ItemGroup>
 
