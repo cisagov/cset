@@ -25,6 +25,8 @@ public partial class MATURITY_REFERENCES
     public string Section_Ref { get; set; }
 
     public int? Page_Number { get; set; }
+    
+    public bool Source { get; set; }
 
     [StringLength(2000)]
     public string Destination_String { get; set; }
