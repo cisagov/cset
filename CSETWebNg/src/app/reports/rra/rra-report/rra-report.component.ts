@@ -21,8 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { ReportAnalysisService } from '../../../services/report-analysis.service';
+import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular/core';
 import { ReportService } from '../../../services/report.service';
 import { Title } from '@angular/platform-browser';
 import { CmmcStyleService } from '../../../services/cmmc-style.service';
@@ -64,6 +63,8 @@ export class RraReportComponent implements OnInit {
   questionReferenceTable = [];
 
   xAxisTicks = [0, 25, 50, 75, 100];
+  view: any[] = [800, 350];
+  animation: boolean = false;
 
   // Charts for Components
   componentCount = 0;
@@ -86,7 +87,6 @@ export class RraReportComponent implements OnInit {
 
   constructor(
     public reportSvc: ReportService,
-    private analysisSvc: ReportAnalysisService,
     private titleService: Title,
     public cmmcStyleSvc: CmmcStyleService,
     public rraDataSvc: RraDataService,
@@ -261,5 +261,15 @@ export class RraReportComponent implements OnInit {
     */
   formatPercent(x: any) {
     return x + '%';
+  }
+
+  @HostListener('window:beforeprint')
+  beforePrint() {
+    this.view = [1300, 600];
+  }
+
+  @HostListener('window:afterprint')
+  afterPrint() {
+    this.view = null;
   }
 }

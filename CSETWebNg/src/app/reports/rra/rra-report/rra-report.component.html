@@ -21,7 +21,6 @@
   SOFTWARE.
 -------------------------->
 <div class="report-body mb-5" *transloco="let t">
-
     <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
@@ -85,7 +84,7 @@
                     </div>
 
                     <div style="max-height: 20rem;">
-                        <ngx-charts-bar-horizontal [results]="complianceGraph1" [yAxis]="'true'" [xAxis]="'true'"
+                        <ngx-charts-bar-horizontal [animations]="animation" [view]="view" [results]="complianceGraph1" [yAxis]="'true'" [xAxis]="'true'"
                             [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks"
                             [xScaleMax]="100" [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1">
                             <ng-template #tooltipTemplate let-model="model">
@@ -95,13 +94,13 @@
                             </ng-template>
                         </ngx-charts-bar-horizontal>
                     </div>
-                    <div class="mb-5"></div>
-                    <p>
-                        {{t('reports.core.rra.report.scores calculated as yes')}}
-                    </p>
                 </div>
             </div>
         </div>
+        <div class="mb-5"></div>
+        <p>
+            {{t('reports.core.rra.report.scores calculated as yes')}}
+        </p>
     </div>
 
 
@@ -128,8 +127,8 @@
             <p>
                 {{t('reports.core.rra.report.suggested text')}}
             </p>
-            <div style="height: 30rem">
-                <ngx-charts-bar-horizontal [results]="topRankedGoals" [yAxis]="'true'" [xAxis]="'true'"
+            <div style="height: 30rem;">
+                <ngx-charts-bar-horizontal [animations]="animation" [view]="view" [results]="topRankedGoals" [yAxis]="'true'" [xAxis]="'true'"
                     [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
                     [xAxisTickFormatting]="formatPercent" [scheme]="colorSchemeRed">
                     <ng-template #tooltipTemplate let-model="model">
@@ -150,7 +149,7 @@
         </h1>
 
         <div style="width: 100%; max-height: 20rem" class="d-block">
-            <ngx-charts-bar-horizontal-stacked [results]="answerDistribByGoal" [yAxis]="'true'" [xAxis]="'true'"
+            <ngx-charts-bar-horizontal-stacked [animations]="animation" [view]="view" [results]="answerDistribByGoal" [yAxis]="'true'" [xAxis]="'true'"
                 [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [legend]="'true'" [legendTitle]="t('legend')"
                 [legendPosition]="'below'" [xAxisTickFormatting]="formatPercent" [scheme]="answerDistribColorScheme">
                 <ng-template #tooltipTemplate let-model="model">
