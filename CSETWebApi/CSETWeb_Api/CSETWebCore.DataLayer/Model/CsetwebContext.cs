@@ -329,8 +329,6 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; }
 
-    public virtual DbSet<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
-
     public virtual DbSet<MATURITY_SUB_MODELS> MATURITY_SUB_MODELS { get; set; }
 
     public virtual DbSet<MATURITY_SUB_MODEL_QUESTIONS> MATURITY_SUB_MODEL_QUESTIONS { get; set; }
@@ -430,8 +428,6 @@ public partial class CsetwebContext : DbContext
     public virtual DbSet<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXT { get; set; }
 
     public virtual DbSet<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
-
-    public virtual DbSet<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
 
     public virtual DbSet<RapidAssessmentControls> RapidAssessmentControls { get; set; }
 
@@ -1894,15 +1890,6 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_REFERENCE_TEXT).HasConstraintName("FK_MATURITY_REFERENCE_TEXT_MATURITY_QUESTIONS");
         });
 
-        modelBuilder.Entity<MATURITY_SOURCE_FILES>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("A collection of MATURITY_SOURCE_FILES records"));
-
-            entity.HasOne(d => d.Gen_File).WithMany(p => p.MATURITY_SOURCE_FILES).HasConstraintName("FK_MATURITY_SOURCE_FILES_GEN_FILE");
-
-            entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_SOURCE_FILES).HasConstraintName("FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS");
-        });
-
         modelBuilder.Entity<MATURITY_SUB_MODEL_QUESTIONS>(entity =>
         {
             entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_SUB_MODEL_QUESTIONS).HasConstraintName("FK_MATURITY_SUB_MODEL_QUESTIONS_MATURITY_QUESTIONS");
@@ -2448,15 +2435,6 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_SETS).HasConstraintName("FK_REQUIREMENT_SETS_NEW_REQUIREMENT");
 
             entity.HasOne(d => d.Set_NameNavigation).WithMany(p => p.REQUIREMENT_SETS).HasConstraintName("FK_QUESTION_SETS_SETS");
-        });
-
-        modelBuilder.Entity<REQUIREMENT_SOURCE_FILES>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("A collection of REQUIREMENT_SOURCE_FILES records"));
-
-            entity.HasOne(d => d.Gen_File).WithMany(p => p.REQUIREMENT_SOURCE_FILES).HasConstraintName("FK_REQUIREMENT_SOURCE_FILES_GEN_FILE");
-
-            entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_SOURCE_FILES).HasConstraintName("FK_REQUIREMENT_SOURCE_FILES_NEW_REQUIREMENT");
         });
 
         modelBuilder.Entity<SAL_DETERMINATION_TYPES>(entity =>
