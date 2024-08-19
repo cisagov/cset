@@ -1,4 +1,4 @@
-﻿//////////////////////////////// 
+//////////////////////////////// 
 // 
 //   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
@@ -594,7 +594,10 @@ namespace CSETWebCore.Api.Controllers
                 int? modelId = null;
                 if (model != null)
                 {
-                    modelId = int.Parse(model);
+                    if (int.TryParse(maturity, out int value))
+                    {
+                        modelId = int.Parse(maturity);
+                    }
                 }
 
                 var data = new MaturityBasicReportData
