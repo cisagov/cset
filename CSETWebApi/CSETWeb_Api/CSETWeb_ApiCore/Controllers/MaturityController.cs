@@ -594,7 +594,10 @@ namespace CSETWebCore.Api.Controllers
                 int? modelId = null;
                 if (maturity != null)
                 {
-                    modelId = int.Parse(maturity);
+                    if (int.TryParse(maturity, out int value))
+                    {
+                        modelId = int.Parse(maturity);
+                    }
                 }
 
                 var data = new MaturityBasicReportData
