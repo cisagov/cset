@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RraDataService } from '../../../../services/rra-data.service';
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -34,6 +34,8 @@ export class RraAnswerDistributionComponent implements OnInit {
   answerDistribByLevel = [];
   xAxisTicks = [0, 25, 50, 75, 100];
   answerDistribColorScheme = { domain: ['#28A745', '#DC3545', '#c3c3c3'] };
+  view: any[] = [800, 350];
+  animation: boolean = false;
 
   constructor(
     public rraDataSvc: RraDataService,
@@ -80,5 +82,15 @@ export class RraAnswerDistributionComponent implements OnInit {
 
   formatPercent(x: any) {
     return x + '%';
+  }
+
+  @HostListener('window:beforeprint')
+  beforePrint() {
+    this.view = [1300, 600];
+  }
+
+  @HostListener('window:afterprint')
+  afterPrint() {
+    this.view = null;
   }
 }
