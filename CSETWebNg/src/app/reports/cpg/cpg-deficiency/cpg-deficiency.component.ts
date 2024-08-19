@@ -38,6 +38,8 @@ import { TranslocoService } from '@ngneat/transloco';
 })
 export class CpgDeficiencyComponent implements OnInit {
 
+  cpgModelId = 11;
+
   loading = false;
 
   /**
@@ -96,7 +98,7 @@ export class CpgDeficiencyComponent implements OnInit {
     });
 
     // get the deficient answers for the CPG model
-    this.maturitySvc.getMaturityDeficiency(11).subscribe((resp: any) => {
+    this.maturitySvc.getMaturityDeficiency(this.cpgModelId).subscribe((resp: any) => {
       this.info = resp.information;
       this.def = resp.deficienciesList;
 
