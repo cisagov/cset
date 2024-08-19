@@ -50,7 +50,7 @@
     <form>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label class="mb-1" for="sector">{{t('sector')}}<span *ngIf="showAsterisk"> *</span></label>
+                <label class="mb-1" for="sector">{{t('sector')}}</label>
                 <select class="form-control" id="sector" name="sector" tabindex="0"
                     (change)="onSelectSector($event.target.value)" [(ngModel)]="demographicData.sectorId">
                     <option [ngValue]="null">-- {{ t('select sector') }} --</option>
@@ -58,7 +58,7 @@
                 </select>
             </div>
             <div class="form-group col-md-6">
-                <label class="mb-1" for="industry">{{t('industry')}}<span *ngIf="showAsterisk"> *</span></label>
+                <label class="mb-1" for="industry">{{t('industry')}}</label>
                 <select class="form-control" id="industry" name="industry" tabindex="0"
                     [(ngModel)]="demographicData.industryId" (change)="update($event)">
                     <option [ngValue]="null">-- {{ t('select industry') }} --</option>
@@ -69,7 +69,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="assetValue">{{t('asset gross value')}}<span *ngIf="showAsterisk"> *</span></label>
+            <label for="assetValue">{{t('asset gross value')}}</label>
             <select #assetValueSelect class="form-control" id="assetValue" tabindex="0" name="assetValue"
                 (change)="update($event)" [(ngModel)]="demographicData.assetValue">
                 <option [ngValue]="null">-- {{t('select gross value')}} --</option>
@@ -79,8 +79,7 @@
         </div>
 
         <div class="form-group">
-            <label for="size">{{t('expected effort')}}<span *ngIf="showAsterisk">
-                    *</span></label>
+            <label for="size">{{t('expected effort')}}</label>
             <select class="form-control" id="size" tabindex="0" name="size" (change)="update($event)"
                 [(ngModel)]="demographicData.size">
                 <option [ngValue]="null">-- {{t('select effort')}} --</option>
@@ -88,19 +87,19 @@
             </select>
         </div>
         <div class="form-group" *ngIf="showOrganizationName()">
-            <label for="edmOrganizationName">{{t('org name')}}<span *ngIf="showAsterisk"> *</span></label>
+            <label for="edmOrganizationName">{{t('org name')}}</label>
             <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150"
                 name="edmOrganizationName" id="edmOrganizationName" [(ngModel)]="demographicData.organizationName"
                 #edmOrganizationName="ngModel" placeholder="{{t('org name')}}" (blur)="update($event)">
         </div>
         <div class="form-group" *ngIf="showBusinessAgencyName()">
-            <label for="edmAgency">{{t('business unit agency')}}<span *ngIf="showAsterisk"> *</span></label>
+            <label for="edmAgency">{{t('business unit agency')}}</label>
             <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150" name="edmAgency"
                 id="edmAgency" [(ngModel)]="demographicData.agency" #edmAgancy="ngModel"
                 placeholder="{{t('business unit agency')}}" (blur)="update($event)">
         </div>
         <div class="form-group">
-            <label for="edmOrganizationType">{{t('org type')}}<span *ngIf="showAsterisk"> *</span></label>
+            <label for="edmOrganizationType">{{t('org type')}}</label>
             <select *ngIf="isSLTT" class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
                 (change)="update($event)" [(ngModel)]="demographicData.organizationType">
                 <option [ngValue]="null">-- {{t('select type')}} --</option>
