@@ -583,7 +583,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/maturity/deficiency")]
-        public IActionResult GetDeficiencyList([FromQuery] string maturity)
+        public IActionResult GetDeficiencyList([FromQuery] string model)
         {
             try
             {
@@ -592,9 +592,9 @@ namespace CSETWebCore.Api.Controllers
 
 
                 int? modelId = null;
-                if (maturity != null)
+                if (model != null)
                 {
-                    modelId = int.Parse(maturity);
+                    modelId = int.Parse(model);
                 }
 
                 var data = new MaturityBasicReportData
