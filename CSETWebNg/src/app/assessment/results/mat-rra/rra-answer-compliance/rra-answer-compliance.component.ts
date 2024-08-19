@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RraDataService } from '../../../../services/rra-data.service';
 import { TranslocoService } from '@ngneat/transloco';
 @Component({
@@ -36,6 +36,8 @@ export class RraAnswerComplianceComponent implements OnInit {
 
   colorScheme1 = { domain: ['#007BFF'] };
   xAxisTicks = [0, 25, 50, 75, 100];
+  view: any[] = [800, 350];
+  animation: boolean = false;
 
   constructor(
     public rraDataSvc: RraDataService, 
@@ -110,4 +112,13 @@ export class RraAnswerComplianceComponent implements OnInit {
     return x + '%';
   }
 
+  @HostListener('window:beforeprint')
+  beforePrint() {
+    this.view = [1300, 600];
+  }
+
+  @HostListener('window:afterprint')
+  afterPrint() {
+    this.view = null;
+  }
 }
