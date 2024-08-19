@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Color, ColorHelper, ScaleType } from '@swimlane/ngx-charts';
 import { RraDataService } from '../../../../services/rra-data.service';
 import { TranslocoService } from '@ngneat/transloco';
@@ -38,6 +38,7 @@ export class RraSummaryComponent implements OnInit {
   single: any[] = [];
 
   view: any[] = [300, 300];
+  animation: boolean = false;
 
   gradient: boolean = false;
   showLegend: boolean = true;
@@ -117,5 +118,15 @@ export class RraSummaryComponent implements OnInit {
   buildLegend() {
     this.legend = this.single.map((d: any) => Math.round(d.value) + "% " + d.name)
     this.legendColors = new ColorHelper(this.colorScheme, ScaleType.Ordinal, this.single.map((d: any) => d.name), this.colorScheme);
+  }
+
+  @HostListener('window:beforeprint')
+  beforePrint() {
+    this.view = [500, 500];
+  }
+
+  @HostListener('window:afterprint')
+  afterPrint() {
+    this.view = null;
   }
 }
