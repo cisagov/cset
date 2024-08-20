@@ -857,8 +857,10 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetCommentsMarked()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            _reports.SetReportsAssessmentId(assessmentId);
+            string lang = _tokenManager.GetCurrentLanguage();
 
+
+            _reports.SetReportsAssessmentId(assessmentId);
 
 
             // if this is a CIS assessment, don't include questions that
@@ -877,6 +879,18 @@ namespace CSETWebCore.Api.Controllers
                 MarkedForReviewList = _reports.GetMarkedForReviewList(),
                 Information = _reports.GetInformation()
             };
+
+
+            // If the assessment is a CPG and the asset's sector warrants SSG questions, include them
+            var ssgModelId = new CpgBusiness(_context, lang).DetermineSsgModel(assessmentId);
+            if (ssgModelId != null)
+            {
+                var ssgComments = _reports.GetCommentsList(ssgModelId);
+                data.Comments.AddRange(ssgComments);
+
+                var ssgMarked = _reports.GetMarkedForReviewList(ssgModelId);
+                data.MarkedForReviewList.AddRange(ssgMarked);
+            }
 
 
             data.Comments.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));

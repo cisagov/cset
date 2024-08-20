@@ -18,8 +18,8 @@ namespace CSETWebCore.Interfaces.Reports
         void SetReportsAssessmentId(int assessmentId);
 
         List<MatRelevantAnswers> GetMaturityDeficiencies(int? modelId = null);
-        List<MatRelevantAnswers> GetCommentsList();
-        List<MatRelevantAnswers> GetMarkedForReviewList();
+        List<MatRelevantAnswers> GetCommentsList(int? modelId = null);
+        List<MatRelevantAnswers> GetMarkedForReviewList(int? modelId = null);
         List<MatRelevantAnswers> GetAlternatesList();
         List<MatRelevantAnswers> GetQuestionsList(int? modelId = null);
         List<MatAnsweredQuestionDomain> GetAnsweredQuestionList();
