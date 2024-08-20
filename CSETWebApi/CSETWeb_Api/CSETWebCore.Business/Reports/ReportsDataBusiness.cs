@@ -53,9 +53,6 @@ namespace CSETWebCore.Business.Reports
         private TranslationOverlay _overlay;
 
 
-        private List<MatRelevantAnswers> _questionList;
-
-
 
         /// <summary>
         /// Constructor.
@@ -82,8 +79,6 @@ namespace CSETWebCore.Business.Reports
         public void SetReportsAssessmentId(int assessmentId)
         {
             _assessmentId = assessmentId;
-
-            _questionList = GetQuestionsList();
         }
 
 
@@ -280,12 +275,19 @@ namespace CSETWebCore.Business.Reports
         /// Returns a list of MatRelevantAnswers that contain comments.
         /// </summary>
         /// <returns></returns>
-        public List<MatRelevantAnswers> GetCommentsList()
+        public List<MatRelevantAnswers> GetCommentsList(int? modelId = null)
         {
-            // include any applicable sector-specific questions
-            _questionList.AddRange(this.GetApplicableSsgQuestions());
+            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
-            var responseList = _questionList.Where(x => !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
+            var targetModel = myModel.model;
+
+            // if a model was explicitly requested, do that one
+            if (modelId != null)
+            {
+                targetModel = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == modelId).FirstOrDefault();
+            }
+
+            var responseList = GetQuestionsList(targetModel.Maturity_Model_Id).Where(x => !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
 
             return responseList;
         }
@@ -296,12 +298,19 @@ namespace CSETWebCore.Business.Reports
         /// </summary>
         /// <param name="maturity"></param>
         /// <returns></returns>
-        public List<MatRelevantAnswers> GetMarkedForReviewList()
+        public List<MatRelevantAnswers> GetMarkedForReviewList(int? modelId = null)
         {
-            // include any applicable sector-specific questions
-            _questionList.AddRange(this.GetApplicableSsgQuestions());
+            var myModel = _context.AVAILABLE_MATURITY_MODELS.Include(x => x.model).Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
 
-            var responseList = _questionList.Where(x => x.ANSWER.Mark_For_Review ?? false).ToList();
+            var targetModel = myModel.model;
+
+            // if a model was explicitly requested, do that one
+            if (modelId != null)
+            {
+                targetModel = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == modelId).FirstOrDefault();
+            }
+
+            var responseList = GetQuestionsList(targetModel.Maturity_Model_Id).Where(x => x.ANSWER.Mark_For_Review ?? false).ToList();
 
             return responseList;
         }
@@ -313,29 +322,8 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<MatRelevantAnswers> GetAlternatesList()
         {
-            var responseList = _questionList.Where(x => (x.ANSWER.Answer_Text == "A")).ToList();
+            var responseList = GetQuestionsList().Where(x => (x.ANSWER.Answer_Text == "A")).ToList();
             return responseList;
-        }
-
-
-        /// <summary>
-        /// Determines if this is a CPG assessment that should include some additional 
-        /// sector-specific questions.  If that is the case, those questions are returned.
-        /// </summary>
-        /// <returns></returns>
-        private List<MatRelevantAnswers> GetApplicableSsgQuestions()
-        {
-            var lang = _tokenManager.GetCurrentLanguage();
-            CpgBusiness cpgBiz = new CpgBusiness(_context, lang);
-            var ssgModel = cpgBiz.DetermineSsgModel(this._assessmentId);
-
-            if (ssgModel != null)
-            {
-                var ssgQuestions = GetQuestionsList(ssgModel);
-                return ssgQuestions;
-            }
-
-            return new List<MatRelevantAnswers>();
         }
 
 
