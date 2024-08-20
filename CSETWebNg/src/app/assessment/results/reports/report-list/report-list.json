@@ -252,5 +252,22 @@
         "linkUrl": "acetcompensatingcontrols"
       }
     ]
+  },
+  {
+    "title": "STANDARD",
+    "reportList": [
+      {
+        "linkUrl": "executive"
+      },
+      {
+        "linkUrl": "sitesummary"
+      },
+      {
+        "linkUrl": "securityplan"
+      },
+      {
+        "linkUrl": "detail"
+      }
+    ]
   }
 ]
