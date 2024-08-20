@@ -21,15 +21,32 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SsgService } from '../../../../services/ssg.service';
 
 @Component({
   selector: 'app-cpg-practices',
   templateUrl: './cpg-practices.component.html',
   styleUrls: ['./cpg-practices.component.scss']
 })
-export class CpgPracticesComponent {
+export class CpgPracticesComponent implements OnInit {
 
-  constructor() { }
+  isSsgApplicable = false;
+  ssgBonusModel: number = null;
 
+  /**
+   * 
+   */
+  constructor(
+    public ssgSvc: SsgService
+  ) {  }
+  
+
+  /**
+   * 
+   */
+  ngOnInit(): void {
+    this.ssgBonusModel = this.ssgSvc.ssgBonusModel();
+    this.isSsgApplicable = !!this.ssgBonusModel;
+  }
 }

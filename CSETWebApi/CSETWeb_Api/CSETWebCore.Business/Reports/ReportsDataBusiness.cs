@@ -50,10 +50,10 @@ namespace CSETWebCore.Business.Reports
 
         public List<int> OutOfScopeQuestions = new List<int>();
 
-        private TranslationOverlay _overlay;        //private string _lang = "en";
+        private TranslationOverlay _overlay;
 
-        //public string Lang { get => _lang; set => _lang = value; }
 
+        private List<MatRelevantAnswers> _questionList;
 
 
 
@@ -82,11 +82,15 @@ namespace CSETWebCore.Business.Reports
         public void SetReportsAssessmentId(int assessmentId)
         {
             _assessmentId = assessmentId;
+
+            _questionList = GetQuestionsList();
         }
 
 
         /// <summary>
         /// Returns an unfiltered list of MatRelevantAnswers for the current assessment.
+        /// The optional modelId parameter is used to get a specific model's questions.  If not
+        /// supplied, the default model's questions are retrieved.
         /// </summary>
         /// <returns></returns>
         public List<MatRelevantAnswers> GetQuestionsList(int? modelId = null)
@@ -278,7 +282,10 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<MatRelevantAnswers> GetCommentsList()
         {
-            var responseList = GetQuestionsList().Where(x => !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
+            // include any applicable sector-specific questions
+            _questionList.AddRange(this.GetApplicableSsgQuestions());
+
+            var responseList = _questionList.Where(x => !string.IsNullOrWhiteSpace(x.ANSWER.Comment)).ToList();
 
             return responseList;
         }
@@ -291,8 +298,11 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<MatRelevantAnswers> GetMarkedForReviewList()
         {
-            var questionList = GetQuestionsList();
-            var responseList = questionList.Where(x => x.ANSWER.Mark_For_Review ?? false).ToList();
+            // include any applicable sector-specific questions
+            _questionList.AddRange(this.GetApplicableSsgQuestions());
+
+            var responseList = _questionList.Where(x => x.ANSWER.Mark_For_Review ?? false).ToList();
+
             return responseList;
         }
 
@@ -303,8 +313,29 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<MatRelevantAnswers> GetAlternatesList()
         {
-            var responseList = GetQuestionsList().Where(x => (x.ANSWER.Answer_Text == "A")).ToList();
+            var responseList = _questionList.Where(x => (x.ANSWER.Answer_Text == "A")).ToList();
             return responseList;
+        }
+
+
+        /// <summary>
+        /// Determines if this is a CPG assessment that should include some additional 
+        /// sector-specific questions.  If that is the case, those questions are returned.
+        /// </summary>
+        /// <returns></returns>
+        private List<MatRelevantAnswers> GetApplicableSsgQuestions()
+        {
+            var lang = _tokenManager.GetCurrentLanguage();
+            CpgBusiness cpgBiz = new CpgBusiness(_context, lang);
+            var ssgModel = cpgBiz.DetermineSsgModel(this._assessmentId);
+
+            if (ssgModel != null)
+            {
+                var ssgQuestions = GetQuestionsList(ssgModel);
+                return ssgQuestions;
+            }
+
+            return new List<MatRelevantAnswers>();
         }
 
 

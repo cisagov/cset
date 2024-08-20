@@ -90,9 +90,12 @@ export class CommentsMfrComponent implements OnInit {
     });
   }
 
-  getQuestion(q) {
-    return q;
-    // return q.split(/(?<=^\S+)\s/)[1];
+  /**
+   * Typically the question will have either question_Text or security_Practice.
+   */
+  getQuestionText(q) {
+    const text = ((q.question_Text ?? '') + ' ' + (q.security_Practice ?? '')).trim();
+    return this.reportSvc.scrubGlossaryMarkup(text);
   }
 
   translateNoCommentsOrMFR(questionsAlias: string, lookupKey: string) {
