@@ -344,11 +344,12 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
   updateSectionId(): void {
     if (!!this.assessSvc.assessment) {
-      if (this.assessSvc.assessment.useStandard || this.assessSvc.assessment.useDiagram) {
-        if (!this.isMobile) {
+      // Network diagram and standard assessments use the same assessment list. sectionId will be passed as DIAGRAM
+      if (this.assessSvc.assessment.useStandard && !this.isMobile) {
+          this.currentSectionId = 'STANDARD';
+      } else if (this.assessSvc.assessment.useDiagram && !this.isMobile) {
           this.currentSectionId = 'DIAGRAM';
-        }
-      } else if (this.assessSvc.usesMaturityModel('CMMC') && !this.isMobile) {
+      } else if (this.assessSvc.usesMaturityModel('CMMC') ) {
         this.currentSectionId = 'CMMC';
       } else if (this.assessSvc.usesMaturityModel('EDM')) {
         this.currentSectionId = 'EDM';
