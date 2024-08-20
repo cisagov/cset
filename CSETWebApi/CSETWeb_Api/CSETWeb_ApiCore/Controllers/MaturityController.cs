@@ -588,23 +588,36 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
+                var lang = _tokenManager.GetCurrentLanguage();
+
                 _reports.SetReportsAssessmentId(assessmentId);
 
 
                 int? modelId = null;
                 if (model != null)
                 {
-                    if (int.TryParse(maturity, out int value))
+                    if (int.TryParse(model, out int value))
                     {
-                        modelId = int.Parse(maturity);
+                        modelId = value;
                     }
                 }
+
 
                 var data = new MaturityBasicReportData
                 {
                     DeficienciesList = _reports.GetMaturityDeficiencies(modelId),
                     Information = _reports.GetInformation()
                 };
+
+
+
+                // If the assessment is a CPG and the asset's sector warrants SSG questions, include them
+                var ssgModelId = new CpgBusiness(_context, lang).DetermineSsgModel(assessmentId);
+                if (ssgModelId != null)
+                {
+                    var ssgDeficiencies = _reports.GetMaturityDeficiencies(ssgModelId);
+                    data.DeficienciesList.AddRange(ssgDeficiencies);
+                }
 
 
                 // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
@@ -633,6 +646,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
         }
+
 
         [HttpGet]
         [Route("api/getMaturityDeficiencyListSd")]
@@ -709,6 +723,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(new { no = filteredGroupingsS, unanswered = filteredGroupingsU });
         }
+
 
         [HttpGet]
         [Route("api/getMaturityDeficiencyListSdOwner")]
@@ -1007,6 +1022,5 @@ namespace CSETWebCore.Api.Controllers
             //var scoring = maturity.GetMvraScoring(model);
             return Ok(model);
         }
-
     }
 }
