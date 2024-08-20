@@ -59,10 +59,6 @@ export class CpgDeficiencyComponent implements OnInit {
   // deficient answers in the principal model
   def: any;
 
-  // deficient SSG answers
-  ssgIncluded = false;
-  ssg: any;
-
   /**
    * 
    */
@@ -81,33 +77,26 @@ export class CpgDeficiencyComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
+    this.loading = true;
+
     this.titleSvc.setTitle(this.tSvc.translate('reports.core.cpg.deficiency.cpg deficiency') + " - " + this.configSvc.behaviors.defaultTitle);
 
     // make sure that the assessSvc has the assessment loaded so that we can determine any SSG model applicable
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessSvc.assessment = assessmentDetail;
-      var ssgModelId = this.ssgSvc.ssgBonusModel();
-  
-      // get any deficient answers for the SSG model
-      if (!!ssgModelId) {
-        this.ssgIncluded = true;
-        this.maturitySvc.getMaturityDeficiency(ssgModelId).subscribe((resp: any) => {
-          this.ssg = resp.deficienciesList;
-        });
-      }
     });
 
     // get the deficient answers for the CPG model
     this.maturitySvc.getMaturityDeficiency(this.cpgModelId).subscribe((resp: any) => {
       this.info = resp.information;
-      this.def = resp.deficienciesList;
-
       this.assessmentName = this.info.assessment_Name;
       this.assessmentDate = this.info.assessment_Date;
       this.assessorName = this.info.assessor_Name;
       this.facilityName = this.info.facility_Name;
+      
+      this.def = resp.deficienciesList;
 
-      this.loading = true;
+      this.loading = false;
     });
   }
 }
