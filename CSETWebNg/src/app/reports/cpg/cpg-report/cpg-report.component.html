@@ -41,7 +41,7 @@
         <p>
             {{t('reports.core.cpg.report.p.1')}}
             <ng-container *ngIf="isSsgApplicable">
-                {{t('reports.core.cpg.report.p.ssg')}}
+                {{t('reports.core.cpg.report.ssg.includes ssg')}}
             </ng-container>
         </p>
 
@@ -68,8 +68,8 @@
     </div>
 
     <div class="page-break" *ngIf="isSsgApplicable">
-        <h1>{{t('reports.core.cpg.report.ssg security practice checklist')}}</h1>
-        <p class="mb-0"> {{t('reports.core.cpg.report.p.4')}}</p>
+        <h1>{{t('reports.core.cpg.report.ssg.ssg security practice checklist')}}</h1>
+        <p class="mb-0"> {{t('reports.core.cpg.report.ssg.1')}}</p>
         <app-cpg-practice-table [ssgModelId]="ssgBonusModel"></app-cpg-practice-table>
     </div>
 

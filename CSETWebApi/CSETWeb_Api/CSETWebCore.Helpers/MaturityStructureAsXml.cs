@@ -115,8 +115,24 @@ namespace CSETWebCore.Helpers
 
             // Get all subgroupings for this maturity model
             var allGroupings = _context.MATURITY_GROUPINGS
-                .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == model.model_id).ToList();
+
+
+            // manually populate grouping data.  Using a .Include() in the previous query was not working consistently
+            var allGroupingTypes = _context.MATURITY_GROUPING_TYPES.ToList();
+
+            foreach (var item in allGroupings)
+            {
+                if (item.Type == null)
+                {
+                    item.Type = new MATURITY_GROUPING_TYPES()
+                    {
+                        Type_Id = item.Type_Id,
+                        Grouping_Type_Name = allGroupingTypes.Where(x => x.Type_Id == item.Type_Id).FirstOrDefault()?.Grouping_Type_Name
+                    };
+                }
+            }
+
 
             // Get all remarks
             var allRemarks = _context.MATURITY_DOMAIN_REMARKS
