@@ -199,14 +199,24 @@ export class ResourceLibraryComponent implements OnInit, AfterViewInit {
         });
   }
 
+  /**
+   * A couple of different objects can call this to see if
+   * the object represents procurement language or a catalog
+   * of recommendations entry.  This function is flexible
+   * in considering the 'pathDoc' or 'docId' property.
+   */
   isProcurementOrCatalog(result: any) {
-    let path = result.PathDoc;
-    if (!path)
+    let path = result.pathDoc || result.docId;
+
+    if (!path) {
       return false;
+    }
+
     if (path.indexOf('procurement:') === 0
       || path.indexOf('catalog:') === 0) {
       return true;
     }
+
     return false;
   }
 
@@ -222,17 +232,16 @@ export class ResourceLibraryComponent implements OnInit, AfterViewInit {
 
     if (parms.indexOf('procurement:') === 0) {
       docType = 'proc';
-      id = parms.substr(parms.indexOf(":") + 1);
+      id = parms.substring(parms.indexOf(":") + 1);
     }
 
     if (parms.indexOf('catalog:') === 0) {
       docType = 'cat';
-      id = parms.substr(parms.indexOf(":") + 1);
+      id = parms.substring(parms.indexOf(":") + 1);
     }
 
     this.http.get(
-      this.libraryUrl + 'flowdoc?type=' + docType + '&id=' + id,
-      headers)
+      this.libraryUrl + 'flowdoc?type=' + docType + '&id=' + id, { responseType: 'text' })
       .subscribe(
         (docHtml: string) => {
           this.dialog.open(OkayComponent, { data: { messageText: docHtml } });
