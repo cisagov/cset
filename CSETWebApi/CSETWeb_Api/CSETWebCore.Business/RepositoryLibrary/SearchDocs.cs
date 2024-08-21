@@ -144,7 +144,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
                 if (resourceTypeEnum == ResourceTypeEnum.Resource_Doc)
                     resDoc = resourceLibrary.ResourceModelDictionary[docId];
                 else if (resourceTypeEnum == ResourceTypeEnum.Procurement_Language)
-                    resDoc = resourceLibrary.GetProcurmentLanguageNode(docId);
+                    resDoc = resourceLibrary.GetProcurementLanguageNode(docId);
                 else if (resourceTypeEnum == ResourceTypeEnum.Catalog_Recommendation)
                     resDoc = resourceLibrary.GetCatalogRecommendationsNode(docId);
                 return resDoc;
