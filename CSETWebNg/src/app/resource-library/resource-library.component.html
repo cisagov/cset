@@ -41,7 +41,8 @@
   </ul>
 
   <div class="bgc-gray-50 d-flex flex-11a w-100">
-    <!-- Tree -->
+
+    <!-- Tree (Browse) -->
     <div class="d-flex flex-column justify-content-start flex-11a w-100 p-4 pr-5" *ngIf="selectedPane === 'browse'">
       <span class="c-gray-900 rl-title d-flex justify-content-start align-items-baseline flex-00a">
         <h3>Resource Library</h3>
@@ -78,20 +79,27 @@
       </div>
 
       <div class="row flex-column" *ngIf="!isLoading">
-
-
         <mat-tree #tree class="ml-4 oy-auto bgc-trans example-tree" style="margin-bottom:1rem;"
           [dataSource]="navTreeSvc?.dataSource" [treeControl]="navTreeSvc?.tocControl">
           <mat-tree-node *matTreeNodeDef="let node; when: !navTreeSvc?.hasNestedChild"
             [style.display]="(node.visible == null ? true : node.visible) ? 'flex' : 'none!important'"
             class="flex-column align-items-start mb-3">
-            <a href="{{node?.value ? docUrl + node.docId : ''}}" target="_blank" rel="noopener noreferrer"
-              *ngIf="node?.docId" class="mt-2 p-0">
+
+            <a *ngIf="!isProcurementOrCatalog(node)" class="mt-2 p-0" href="{{node?.value ? docUrl + node.docId : ''}}" 
+              target="_blank" rel="noopener noreferrer">
               <h5><span class="btn-link mb-3">
                   {{node?.label}}
                 </span>
               </h5>
             </a>
+
+            <div *ngIf="isProcurementOrCatalog(node)" class="btn btn-link mt-2 p-0" (click)="displayDocumentContent(node?.docId)">
+              <h5><span class="btn-link mb-3">
+                  {{node?.label}}
+                </span>
+              </h5>
+            </div>
+
             <p class="mb-3" style="font-size: 1rem;">{{node?.headingText}}</p>
           </mat-tree-node>
 
@@ -119,6 +127,7 @@
         </mat-tree>
       </div>
     </div>
+
     <!-- Search -->
     <div class="d-flex flex-column justify-content-start flex-11a w-100 p-4 pr-5" *ngIf="selectedPane === 'search'">
       <span class="c-gray-900 rl-title d-flex justify-content-start align-items-baseline flex-00a">
@@ -153,7 +162,7 @@
 
           <div class="mb-2" *ngIf="isProcurementOrCatalog(result)">
             <span *ngIf="result.headingTitle" class="btn-link fs-base-2 cursor-pointer"
-              (click)="displayDocumentContent(result.id)">{{result.headingTitle}}</span>
+              (click)="displayDocumentContent(result.pathDoc)">{{result.headingTitle}}</span>
           </div>
 
           <a *ngIf="!isProcurementOrCatalog(result)" target="_blank" rel="noopener noreferrer"
