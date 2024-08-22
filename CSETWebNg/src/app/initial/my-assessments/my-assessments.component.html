@@ -237,13 +237,14 @@
                         <td *ngIf="isCF">{{assessment.isEntryString}}</td>
                         
                         <td>{{assessment.type}}</td>
-                        <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.lastModifiedDate | localizeDate}}</td>
-                        <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate, 'med')}}</td>
                         <td *ngIf="showColumn('ise-submitted')">
                             <ng-container *ngIf="assessment.iseSubmitted">
                                 {{ systemTimeTranslator(assessment.submittedDate, 'short') }}
                             </ng-container>
                         </td>
+                        <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.lastModifiedDate | localizeDate}}</td>
+                        <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate, 'med')}}</td>
+                        
                         <td *ngIf="showColumn('primary-assessor')">{{assessment.firstName}} {{assessment.lastName}}</td>
                         <td>
                             <div *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">

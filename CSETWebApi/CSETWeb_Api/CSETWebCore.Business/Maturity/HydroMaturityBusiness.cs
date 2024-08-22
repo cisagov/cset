@@ -63,7 +63,7 @@ namespace CSETWebCore.Business.Maturity
             List<HydroActionsByDomain> actionsByDomains = new List<HydroActionsByDomain>();
             List<HydroActionQuestion> actionQuestions = new List<HydroActionQuestion>();
 
-            if (result.IsNullOrEmpty())
+            if (!result.Any())
             {
                 return actionsByDomains;
             }
@@ -143,7 +143,7 @@ namespace CSETWebCore.Business.Maturity
 
             List<HydroActionQuestion> actionQuestions = new List<HydroActionQuestion>();
 
-            if (result.IsNullOrEmpty())
+            if (!result.Any())
             {
                 return actionQuestions;
             }
