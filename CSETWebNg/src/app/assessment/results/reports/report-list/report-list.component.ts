@@ -25,7 +25,6 @@ export class ReportListComponent implements OnInit {
   @Input()
   list: any[];
 
-  disableIseReportLinks: boolean = false;
   /**
    * 
    */

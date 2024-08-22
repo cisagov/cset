@@ -40,7 +40,6 @@ import { ObservationsService } from '../../../services/observations.service';
 import { CisaWorkflowFieldValidationResponse } from '../../../models/demographics-iod.model';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConversionService } from '../../../services/conversion.service';
-import { AssessmentDocumentsComponent } from '../../../dialogs/assessment-documents/assessment-documents.component';
 import { CieDocumentsComponent } from '../../../dialogs/cie-documents/cie-documents.component';
 
 @Component({
@@ -324,7 +323,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       return "background-color: gray; color: white;";
     } else {
       // If not disabled and also not submitted yet
-      if (!this.iseHasBeenSubmitted && !this.ncuaSvc.iseHasBeenSubmitted) {
+      if (!this.reportSvc.disableIseReportLinks && !this.ncuaSvc.iseHasBeenSubmitted) {
         return "background-color: orange; color: white;";
       } else {
         // If not disabled & already submitted, default here
@@ -404,13 +403,6 @@ export class PrintSnackComponent implements OnInit {
   printInstructions: string;
 
   ngOnInit() {
-    const isRunningInElectron = localStorage.getItem('isRunningInElectron') === 'true';
-    if (isRunningInElectron) {
-      this.printInstructions =
-        'reports.printing instructions electron';
-    } else {
-      this.printInstructions =
-        'reports.printing instructions non-electron';
-    }
+    this.printInstructions = "reports.printing instructions";
   }
 }

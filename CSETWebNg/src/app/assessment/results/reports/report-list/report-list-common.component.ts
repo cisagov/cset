@@ -51,6 +51,7 @@ export class ReportListCommonComponent implements OnChanges {
         this.observationsSvc.getAssessmentObservations().subscribe(
           (observations: any) => {
             let title = '';
+            this.ncuaSvc.issuesForSubmission = observations;
             this.ncuaSvc.unassignedIssueTitles = [];
             for (let i = 0; i < observations?.length; i++) {
               // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
