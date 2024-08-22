@@ -901,8 +901,7 @@
     "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated {date}.",
     "reports run prior message": "Any reports run prior to that update may not reflect the current state of the assessment.",
     "printing report instructions button": "Printing Reports Instructions",
-    "printing instructions electron": "To print or save any of these reports as PDF, click the report which will open in a new window. In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print. To export a copy of your assessment to another location (.csetw), click the logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
-    "printing instructions non-electron": "To print or save any of these reports as PDF, click the report which will open in a new window. In the top left corner of the report window, click the \"File\" button in the menu bar and select \"Print\" (CTRL + P). To export a copy of your assessment to another location (.csetw), click the logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
+    "printing instructions": "Click the hyperlinked name of the report. To print the report, select the Print option. To create a PDF, select PDF as the desired printer.",
     "site information": "Site Information",
     "executive summary": "Executive Summary",
     "network diagram": "Network Diagram",
@@ -1207,7 +1206,7 @@
           "ssg": {
             "ssg security practice checklist": "Sector-Specific Goal Security Practices",
             "includes ssg": "Sector-Specific Goal answers are included in these results.",
-            "1": "This table lists all applicable SSG security practices and how they have been answered."            
+            "1": "This table lists all applicable SSG security practices and how they have been answered."
           },
           "current assessment": "Current Assessment",
           "notes": "Notes",
