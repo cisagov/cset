@@ -143,10 +143,10 @@ export class NCUAService {
     ,9919
     ,9920
     ,9921
-    ,9922
-    ,9923
-    ,9924
-    ,9925
+    // ,9922
+    // ,9923
+    // ,9924
+    // ,9925
     ,10926
     ,10927
     ,10928
@@ -553,8 +553,18 @@ export class NCUAService {
               },
               "children": []
             };
+
+            // this makes sure the questions with out-of-order IDs stay in the intended order
+            let questions = subcat?.questions?.sort(
+              (a, b) => {
+                if (a.title.length == b.title.length) {
+                  return a.title > b.title ? 1 : ((b.title > a.title ? -1 : 0));
+                }
+                return a.title.length > b.title.length ? 1 : ((b.title.length > a.title.length ? -1 : 0));
+            });
+
             // goes through questions
-            for (let k = 0; k < subcat?.questions?.length; k++) {
+            for (let k = 0; k < questions.length; k++) {
               let question = subcat?.questions[k];
               if (childResponses.examLevel === '') {
                 childResponses.examLevel = question.maturityLevel;
