@@ -255,6 +255,14 @@
                     </div>
                 </div>
 
+                <div *ngIf="!!myQuestion.implementationGuides" class="mb-3">
+                    <div class="sub-header-1">
+                        {{t('extras.implementation guidance')}}
+                    </div>
+                    <div [innerHTML]="myQuestion.implementationGuides" class="ml-3">
+                    </div>
+                </div>
+
                 <div *ngIf="!!myQuestion.services" class="mb-3">
                     <div class="sub-header-1">
                         {{t('extras.free services')}}

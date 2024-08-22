@@ -68,6 +68,8 @@ public partial class MATURITY_QUESTIONS
 
     public string Outcome { get; set; }
 
+    public string Implementation_Guides { get; set; }
+
     [StringLength(300)]
     public string Security_Practice { get; set; }
 
