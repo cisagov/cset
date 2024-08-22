@@ -74,10 +74,15 @@ export class QuestionFiltersComponent implements OnInit {
    */
   ngOnInit(): any {
     if (this.configSvc.installationMode === 'ACET') {
-      this.skin = "ncua";
+      this.skin = "acet";
       if (this.assessSvc.isISE()) {
+        this.skin = "ise";
         this.observations = "issues";
         this.comments = "notes";
+      }
+      else {
+        this.observations = "observations";
+        this.comments = "comments";
       }
     }
     this.refreshAnswerOptions();

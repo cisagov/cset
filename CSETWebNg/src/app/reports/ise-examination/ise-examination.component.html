@@ -53,8 +53,8 @@
                         localizeDate}}
                     </div>
                     <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
-                    <button class="btn form-check-label btn-copy" [matTooltip]="'Print to PDF'"
-                        matTooltipPosition="below" (click)="print()">Print to PDF
+                    <button class="btn form-check-label btn-copy" title="Print to PDF"
+                        (click)="print()">Print to PDF
                     </button>
                 </div>
             </div>
@@ -400,7 +400,7 @@
                     line-height: 150%;
                 ">
 
-                <button class="btn form-check-label btn-copy" [matTooltip]="'Print to PDF'" matTooltipPosition="below"
+                <button class="btn form-check-label btn-copy" title="Print to PDF"
                     (click)="print()">Print to PDF
                 </button>
             </div>

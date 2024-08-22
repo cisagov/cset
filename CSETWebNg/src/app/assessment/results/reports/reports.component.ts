@@ -323,7 +323,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       return "background-color: gray; color: white;";
     } else {
       // If not disabled and also not submitted yet
-      if (!this.iseHasBeenSubmitted && !this.ncuaSvc.iseHasBeenSubmitted) {
+      if (!this.reportSvc.disableIseReportLinks && !this.ncuaSvc.iseHasBeenSubmitted) {
         return "background-color: orange; color: white;";
       } else {
         // If not disabled & already submitted, default here

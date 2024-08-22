@@ -221,7 +221,7 @@ function createWindow() {
       return assignedApiPort;
     }).then(assignedApiPort => {
       // Keep attempting to connect to API, every 2 seconds, then load application
-      retryApiConnection(120, 2000, assignedApiPort, error => {
+      retryApiConnection(240, 2000, assignedApiPort, error => {
         if (error) {
           log.error(error);
           mainWindow.loadFile(path.join(__dirname, '/dist/assets/app-startup-error.html'));
@@ -404,7 +404,11 @@ app.on('ready', () => {
   log.catchErrors();
 
   if (mainWindow === null) {
-    createWindow();
+    try {
+      createWindow();
+    } catch {
+      app.quit();
+    }
   }
 });
 
