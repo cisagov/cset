@@ -218,6 +218,7 @@ namespace CSETWebCore.Helpers
                         question.Scope = myQ.Scope;
                         question.RecommendedAction = myQ.Recommend_Action;
                         question.Services = myQ.Services;
+                        question.ImplementationGuides = myQ.Implementation_Guides;
                         question.RiskAddressed = myQ.Risk_Addressed;
 
                         // Include CSF mappings
