@@ -436,7 +436,7 @@ namespace CSETWebCore.Api.Controllers
 
             _diagram.UpdateComponentType(assessmentId, guid, type);
 
-            if (!label.IsNullOrEmpty())
+            if (!String.IsNullOrEmpty(label))
             {
                 _diagram.UpdateComponentLabel(assessmentId, guid, label);
             }

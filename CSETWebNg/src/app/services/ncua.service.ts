@@ -38,6 +38,7 @@ import { DateAdapter } from '@angular/material/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { ReportService } from './report.service';
 import { VersionService } from './version.service';
+import { forEach } from 'lodash';
 
 let headers = {
   headers: new HttpHeaders()
@@ -95,11 +96,14 @@ export class NCUAService {
 
   ISE_StateLed: boolean = false;
   iseHasBeenSubmitted: boolean = false;
+  issuesForSubmission: any;
 
   questions: any = null;
   iseIrps: any = null;
   information: any = null;
   version: any;
+
+  // below fields are commented out on client request, they'll be reintroduced soon
   jsonString: any = {
     "metaData": {
       "assessmentName": '',
@@ -108,13 +112,13 @@ export class NCUAService {
       "examiner": '',
       "effectiveDate": '',
       "creationDate": '',
-      "stateLed": false,
+      // "stateLed": false,
       "examLevel": '',
-      "region": 0,
-      "assets": 0,
+      // "region": 0,
+      // "assets": 0,
       "guid": '',
-      "acet_version": '',
-      "db_version": ''
+      // "acet_version": '',
+      // "db_version": ''
     },
     "issuesTotal": {
       "dors": 0,
@@ -128,6 +132,47 @@ export class NCUAService {
   examLevel: string = '';
   submitInProgress: boolean = false;
 
+  // Used to manually take out the questions NCUA doesn't want in the JSON file. 
+  // They said they'll revert this soon and we won't have to hardcode like this, but who knows.
+  unwantedQuestionIds: number[] = [
+    7746
+    ,7754
+    ,7755
+    ,7771
+    ,9918
+    ,9919
+    ,9920
+    ,9921
+    // ,9922
+    // ,9923
+    // ,9924
+    // ,9925
+    ,10926
+    ,10927
+    ,10928
+    ,10929
+    ,10930
+  ];
+
+  dummyQuestionMap: Map<number, any[]> = new Map([
+    [7718, [{"examLevel": "CORE+", "title": "Stmt 3.13", "response": 2}]]
+    ,[7730, [{"examLevel": "CORE+", "title": "Stmt 4.17", "response": 2}]]
+    ,[7735, [{"examLevel": "CORE+", "title": "Stmt 5.12", "response": 2}]]
+    ,[7790, [{"examLevel": "CORE+", "title": "Stmt 11.14", "response": 2}]]
+    ,[7802, [{"examLevel": "CORE+", "title": "Stmt 12.15", "response": 2}]]
+    ,[7821, [{"examLevel": "CORE+", "title": "Stmt 13.21", "response": 2}
+          , {"examLevel": "CORE+", "title": "Stmt 13.22", "response": 2}]]
+    ,[7850, [{"examLevel": "CORE+", "title": "Stmt 16.15", "response": 2}]]
+    ,[7889, [{"examLevel": "CORE+", "title": "Stmt 19.15", "response": 2}]]
+
+  ]);
+
+  // CORE+ 3.13, CORE+ 4.17, CORE+ 5.12, 11.14, 12.15, 13.21, 13.22, 16.15, 19.15, 
+  // were removed, need to add a dummy record to the new file
+
+
+  // CORE+ 7.13, 8.17, 8.18, 9.21
+  // were added, so these need to be hidden from the file
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
@@ -439,9 +484,9 @@ export class NCUAService {
     return this.assessmentSvc.assessment?.maturityModel?.modelName === 'ISE';
   }
 
-  submitToMerit(findings: any) {
+  submitToMerit() {
     this.submitInProgress = true;
-    this.questionResponseBuilder(findings);
+    this.questionResponseBuilder(this.issuesForSubmission);
     this.iseIrpResponseBuilder();
   }
 
@@ -508,31 +553,58 @@ export class NCUAService {
               },
               "children": []
             };
+
+            // this makes sure the questions with out-of-order IDs stay in the intended order
+            let questions = subcat?.questions?.sort(
+              (a, b) => {
+                if (a.title.length == b.title.length) {
+                  return a.title > b.title ? 1 : ((b.title > a.title ? -1 : 0));
+                }
+                return a.title.length > b.title.length ? 1 : ((b.title.length > a.title.length ? -1 : 0));
+            });
+
             // goes through questions
-            for (let k = 0; k < subcat?.questions?.length; k++) {
+            for (let k = 0; k < questions.length; k++) {
               let question = subcat?.questions[k];
               if (childResponses.examLevel === '') {
                 childResponses.examLevel = question.maturityLevel;
               }
               if (k != 0) { //don't want parent questions being included with children
-                if (this.examLevel === 'SCUEP' && question.maturityLevel !== 'SCUEP') {
-                  question.answerText = 'U';
-                }
-
-                else if (this.examLevel === 'CORE' || this.examLevel === 'CORE+') {
-                  if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
-                    this.examLevel = 'CORE+';
-                  }
-                  else if (question.maturityLevel === 'SCUEP') {
+                if (!this.unwantedQuestionIds.includes(question.matQuestionId)) {
+                  if (this.examLevel === 'SCUEP' && question.maturityLevel !== 'SCUEP') {
                     question.answerText = 'U';
                   }
+  
+                  else if (this.examLevel === 'CORE' || this.examLevel === 'CORE+') {
+                    if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
+                      this.examLevel = 'CORE+';
+                    }
+                    else if (question.maturityLevel === 'SCUEP') {
+                      question.answerText = 'U';
+                    }
+                  }
+  
+                  childResponses.children.push({
+                    "examLevel": question.maturityLevel, 
+                    "title": question.title,
+                    "response": this.answerTextToNumber(question.answerText)
+                  });
                 }
 
-                childResponses.children.push({
-                  "examLevel": question.maturityLevel, "title": question.title,
-                  "response": this.answerTextToNumber(question.answerText)
-                });
-              } else { //if it's a parent question, deal with possible issues
+                // adding in dummy questions to keep the schema the same for the client (they know, we will remove soon)
+                if (k == subcat?.questions?.length - 1 && this.dummyQuestionMap.has(question.matQuestionId)) {
+                  let dummyQuestions = this.dummyQuestionMap.get(question.matQuestionId);
+
+                  for (let dummy of dummyQuestions) {
+                    childResponses.children.push({
+                      "examLevel": dummy.examLevel, 
+                      "title": dummy.title,
+                      "response": dummy.response
+                    });
+                  }
+                }
+                
+              } else { //if it's a parent question, deal with possible issues (their term for 'findings')
                 for (let m = 0; m < findings?.length; m++) {
                   if (findings[m]?.question?.mat_Question_Id == question.matQuestionId
                     && this.translateExamLevel(findings[m]?.question?.maturity_Level_Id) == this.examLevel.substring(0, 4)
@@ -604,6 +676,7 @@ export class NCUAService {
   }
 
   metaDataBuilder() {
+    // below fields are commented out on client request, they'll be reintroduced soon
     let metaDataInfo = {
       "assessmentName": this.information.assessment_Name,
       "creditUnionName": this.information.credit_Union_Name,
@@ -611,23 +684,18 @@ export class NCUAService {
       "examiner": this.information.assessor_Name.trim(),
       "effectiveDate":  this.reportSvc.applyJwtOffset(this.information.assessment_Effective_Date, 'date'), //DateTime.fromISO(this.information.assessment_Effective_Date),
       "creationDate": this.reportSvc.applyJwtOffset(this.information.assessment_Creation_Date, 'datetime'),
-      "stateLed": this.assessmentSvc.assessment.isE_StateLed,
+      // "stateLed": this.assessmentSvc.assessment.isE_StateLed,
       "examLevel": this.examLevel,
-      "region": this.assessmentSvc.assessment.regionCode,
-      "assets": this.assessmentSvc.assessment.assets,
+      // "region": this.assessmentSvc.assessment.regionCode,
+      // "assets": this.assessmentSvc.assessment.assets,
       "guid": this.questions.assessmentGuid,
-      "acet_version": this.version,
-      "db_version": this.questions.csetVersion
+      // "acet_version": this.version,
+      // "db_version": this.questions.csetVersion
     };
 
     this.jsonString.metaData = metaDataInfo;
 
-    //let indexOfComma = metaDataInfo.assessmentName.indexOf(',');
-    // let filename = metaDataInfo.examiner + ' ' + metaDataInfo.assessmentName.substring(0, indexOfComma) + 
-    //               ' ' + metaDataInfo.creationDate;
-
     this.saveToJsonFile(JSON.stringify(this.jsonString), this.jsonString.metaData.guid);
-
   }
 
   saveToJsonFile(data: string, guid: string) {
