@@ -181,6 +181,7 @@ namespace CSETWebCore.Helpers
                         question.Outcome = myQ.Outcome;
                         question.Scope = myQ.Scope;
                         question.RecommendedAction = myQ.Recommend_Action;
+                        question.ImplementationGuides = myQ.Implementation_Guides;
 
                         question.SupplementalInfo = myQ.Supplemental_Info;
                         question.ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text;

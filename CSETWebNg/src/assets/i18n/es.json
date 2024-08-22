@@ -1018,6 +1018,7 @@
         "scope": "Ámbito",
         "recommended action": "Acción recomendada",
         "free services": "Servicios gratuitas y referencias",
+        "implementation guidance": "Guía de implementación",
         "component type": "Tipo de componente",
         "override component answer": "Sobreescribir Respuesta",
         "override": "Sobreescribir",

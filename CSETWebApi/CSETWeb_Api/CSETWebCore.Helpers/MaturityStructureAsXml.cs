@@ -210,6 +210,7 @@ namespace CSETWebCore.Helpers
                         xQuestion.SetAttributeValue("scope", myQ.Scope);
                         xQuestion.SetAttributeValue("recommendedaction", myQ.Recommend_Action);
                         xQuestion.SetAttributeValue("services", myQ.Services);
+                        xQuestion.SetAttributeValue("implementationguides", myQ.Implementation_Guides);
                         xQuestion.SetAttributeValue("riskaddressed", myQ.Risk_Addressed);
 
                         // Include CSF mappings

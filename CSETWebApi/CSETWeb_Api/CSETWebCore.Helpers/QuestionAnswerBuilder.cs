@@ -31,6 +31,7 @@ namespace CSETWebCore.Helpers
                 RecommendedAction = myQ.Recommend_Action,
                 RiskAddressed = myQ.Risk_Addressed,
                 Services = myQ.Services,
+                ImplementationGuides = myQ.Implementation_Guides,
 
                 Answer = answer?.a.Answer_Text,
                 AltAnswerText = answer?.a.Alternate_Justification,
@@ -75,6 +76,7 @@ namespace CSETWebCore.Helpers
                 RecommendedAction = myQ.Recommend_Action,
                 RiskAddressed = myQ.Risk_Addressed,
                 Services = myQ.Services,
+                ImplementationGuides = myQ.Implementation_Guides,
 
                 Answer = answer?.a.Answer_Text,
 
