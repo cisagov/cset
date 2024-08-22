@@ -534,7 +534,7 @@
         "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el {date}.",
         "reports run prior message": " Los informes generados antes de esa actualización pueden no reflejar el estado actual de la evaluación.",
         "printing report instructions button": "Instrucciones para imprimir informes",
-        "printing instructions": "Para imprimir o guardar cualquiera de estos informes como PDF, haga clic en el informe que se abrirá en una nueva ventana. En la esquina superior derecha de la página web, haga clic en el botón de los tres puntos ... y vaya a Imprimir.",
+        "printing instructions": "Haga clic en el nombre del informe con hipervínculo. Para imprimir el informe, seleccione la opción Imprimir. Para crear un PDF, seleccione PDF como la impresora deseada.",
         "site information": "Información del sitio",
         "executive summary": "Resumen ejecutivo",
         "network diagram": "Diagrama de red",
