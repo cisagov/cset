@@ -930,6 +930,7 @@ namespace CSETWebCore.Business.Maturity
                     q.Recommend_Action = o.RecommendAction;
                     q.Risk_Addressed = o.RiskAddressed;
                     q.Services = o.Services;
+                    q.Implementation_Guides = o.Implementation_Guides;
                 }
             }
 

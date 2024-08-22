@@ -62,6 +62,7 @@ namespace CSETWebCore.Model.Question
         public string RecommendAction { get; set; }
         public string RiskAddressed { get; set; }
         public string Services { get; set; }
+        public string Implementation_Guides { get; set; }
 
     }
 }

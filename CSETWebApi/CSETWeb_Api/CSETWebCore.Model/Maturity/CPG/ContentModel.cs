@@ -46,6 +46,7 @@ namespace CSETWebCore.Model.Maturity.CPG
 		public string ReferenceText { get; set; }
         public string SecurityPractice { get; set; }
         public string Outcome { get; set; }
+        public string ImplementationGuides { get; set; }
 
         public string Cost { get; set; }
         public string Impact { get; set; }

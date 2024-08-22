@@ -129,6 +129,8 @@ namespace CSETWebCore.Model.Question
         /// </summary>
         public string Services { get; set; }
 
+        public string ImplementationGuides { get; set; }
+
         public bool Is_Maturity { get; set; }
         public bool Is_Component { get; set; }
         public Guid ComponentGuid { get; set; }

@@ -79,6 +79,7 @@ namespace CSETWebCore.Model.Nested
         public string Outcome { get; set; }
         public string Scope { get; set; }
         public string RecommendedAction { get; set; }
+        public string ImplementationGuides { get; set; }
 
 
 
