@@ -1039,7 +1039,8 @@ namespace CSETWebCore.Business.Reports
                                            on pa.Parameter_ID equals pr.Parameter_Id
                                            join p in _context.PARAMETERS
                                            on pa.Parameter_ID equals p.Parameter_ID
-                                           where pr.Requirement_Id == a.Requirement_Id
+                                           where pr.Requirement_Id == a.Requirement_Id 
+                                           where pa.Assessment_ID == _assessmentId
                                            select new
                                            {
                                                pa.Parameter_Value_Assessment,
