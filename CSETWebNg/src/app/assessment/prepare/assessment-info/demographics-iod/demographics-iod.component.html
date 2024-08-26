@@ -29,7 +29,7 @@
   <div class="form-group mb-4">
     <label for="orgType">Organization Type</label>
     <select [ngClass]="{ 'alert-danger' : !demographicData.organizationType }" class="form-control" id="orgType"
-      tabindex="0" name="orgType" (change)="newUpdate('ORG-TYPE', $event, 'int')" [(ngModel)]="demographicData.organizationType">
+      tabindex="0" name="orgType" (change)="onChangeOrgType($event)" [ngModel]="demographicData.organizationType">
       <option [ngValue]="null">-- Select Type --</option>
       <option *ngFor="let t of demographicData.listOrgTypes" [value]="t.optionValue">
         {{ t.optionText }}
@@ -79,10 +79,10 @@
 
   <!-- #1 -->
   <div class="form-group mb-4">
-    <label for="numberEmployeesTotal" *ngIf="demographicData.organizationType === 1">
+    <label for="numberEmployeesTotal" *ngIf="demographicData.organizationType == 1">
       Number of employees in the organization?
     </label>
-    <label for="numberEmployees" *ngIf="demographicData.organizationType !== 1">
+    <label for="numberEmployees" *ngIf="demographicData.organizationType != 1">
       Number of employees in the government agency?
     </label>
     <select [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesTotal }" class="form-control"
@@ -97,13 +97,13 @@
 
   <!-- #2 -->
   <div class="form-group mb-4">
-    <ng-container *ngIf="demographicData.organizationType === 1">
+    <ng-container *ngIf="demographicData.organizationType == 1">
       <label for="numberEmployeesUnit"> Number of employees in the business unit? </label>
       <div class="font-italic my-2">
         Please select N/A if the business unit and the overall organization are the same.
       </div>
     </ng-container>
-    <ng-container *ngIf="demographicData.organizationType !== 1">
+    <ng-container *ngIf="demographicData.organizationType != 1">
       <label for="numberEmployeesUnit"> Number of employees in the department? </label>
       <div class="font-italic my-2">Please select N/A if the department and the overall organization are the same.</div>
     </ng-container>
@@ -120,10 +120,10 @@
 
   <!-- #3 -->
   <div class="form-group mb-4">
-    <ng-container *ngIf="demographicData.organizationType === 1">
+    <ng-container *ngIf="demographicData.organizationType == 1">
       <label for="totalAnnualRevenue"> What is the total annual revenue for your organization? </label>
     </ng-container>
-    <ng-container *ngIf="demographicData.organizationType !== 1">
+    <ng-container *ngIf="demographicData.organizationType != 1">
       <label for="totalAnnualRevenue">
         What is the total annual funding for your governmental organization or agency?
       </label>
