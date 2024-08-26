@@ -149,11 +149,11 @@ export class QuestionsService {
     const modelConfiguration = this.configSvc.config.moduleBehaviors.find(x => x.modelId == model.modelId);
     if (modelConfiguration == null) {
       let modelConfigurationByName = this.configSvc.config.moduleBehaviors.find(x => x.modelName == model.modelName);
-      if (modelConfigurationByName.autoLoadSupplemental ?? false) {
+      if (modelConfigurationByName != null ? (modelConfigurationByName.autoLoadSupplemental ?? false) : false) {
         return true;
       }
     }
-    
+
     else if (modelConfiguration.autoLoadSupplemental ?? false) {
       return true;
     }
