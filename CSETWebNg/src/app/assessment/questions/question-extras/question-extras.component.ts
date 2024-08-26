@@ -639,7 +639,7 @@ export class QuestionExtrasComponent implements OnInit {
   // }
 
   autoLoadSupplemental() {
-    return this.questionsSvc.autoLoadSupplemental(this.assessSvc.assessment.maturityModel?.modelId);
+    return this.questionsSvc.autoLoadSupplemental(this.assessSvc.assessment.maturityModel);
   }
 
   /**
