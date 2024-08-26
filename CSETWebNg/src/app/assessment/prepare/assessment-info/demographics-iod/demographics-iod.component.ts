@@ -46,7 +46,7 @@ export class DemographicsIodComponent implements OnInit {
    *
    */
   ngOnInit() {
-    this.populateDemographicsModel()
+    this.populateDemographicsModel()    
   }
 
   populateDemographicsModel() {
@@ -76,6 +76,11 @@ export class DemographicsIodComponent implements OnInit {
       this.assessSvc.assessment.sectorId = this.demographicData.sector;
       this.assessSvc.assessmentStateChanged$.next(126);
     }
+  }
+
+  onChangeOrgType(evt: any){
+    this.demographicData.organizationType = parseInt(evt.target.value)
+    this.newUpdate('ORG-TYPE', evt, 'int')
   }
 
   changeUsesStandard(val: boolean) {
@@ -131,4 +136,5 @@ export class DemographicsIodComponent implements OnInit {
 
     this.demoSvc.updateIndividualDemographics(name, val, type)
   }
+  
 } 
