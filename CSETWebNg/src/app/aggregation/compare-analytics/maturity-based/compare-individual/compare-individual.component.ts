@@ -25,6 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../../../services/aggregation.service';
 import { ChartService } from '../../../../services/chart.service';
 import { ColorService } from '../../../../services/color.service';
+import { QuestionsService } from '../../../../services/questions.service';
 
 @Component({
   selector: 'app-compare-maturity-individual',
@@ -35,10 +36,12 @@ import { ColorService } from '../../../../services/color.service';
 export class CompareMaturityIndividualComponent implements OnInit {
 
   answerCounts: any[] = null;
+  answerLabels: string[] = [];
   chartsMaturityCompliance: any[];
 
   constructor(
     public aggregationSvc: AggregationService,
+    public questionSvc: QuestionsService,
     public chartSvc: ChartService,
     public colorSvc: ColorService
   ) { }
@@ -47,6 +50,9 @@ export class CompareMaturityIndividualComponent implements OnInit {
     this.populateCharts();
   }
 
+  /**
+   * 
+   */
   populateCharts() {
     const aggId: number = +localStorage.getItem("aggregationId");
 
@@ -54,6 +60,13 @@ export class CompareMaturityIndividualComponent implements OnInit {
     this.aggregationSvc.getMaturityAnswerTotals(aggId).subscribe((x: any) => {
       // 
       this.answerCounts = x;
+
+      // build a list of answer options for the table columns
+      this.answerLabels = [];
+      x[0].answerCounts.forEach(opt => {
+        const label = this.questionSvc.answerDisplayLabel(x[0].modelId, opt.answer_Text);
+        this.answerLabels.push(label);
+      });
     });
 
 
@@ -79,6 +92,9 @@ export class CompareMaturityIndividualComponent implements OnInit {
     });
   }
 
+  /**
+   * 
+   */
   buildMaturityChart(c, showLegend) {
     c.datasets.forEach(ds => {
       ds.backgroundColor = this.colorSvc.getColorForAssessment(ds.label);

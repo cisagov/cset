@@ -22,24 +22,17 @@
 -------------------------->
 <div class="chart d-flex flex-column flex-00a">
   <h3>Assessment Answer Summary</h3>
+
   <table class="assessment-summary">
     <tr>
       <th class="text-left p-2">Assessment Alias</th>
       <th class="text-right p-2 pl-3">Total</th>
-      <th class="text-right p-2 pl-3">Yes</th>
-      <th class="text-right p-2 pl-3">No</th>
-      <th class="text-right p-2 pl-3">NA</th>
-      <th class="text-right p-2 pl-3">Alt</th>
-      <th class="text-right p-2 pl-3">Unanswered</th>
+      <th *ngFor="let al of answerLabels" class="text-right p2 pl-3">{{ al }}</th>
     </tr>
-    <tr *ngFor="let a of answerCounts">
-      <td class="text-left p-2">{{ a.alias }}</td>
-      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.total }}</td>
-      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.y }}</td>
-      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.n }}</td>
-      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.na }}</td>
-      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.a }}</td>
-      <td class="text-right p-2 pl-3" style="width: 10%">{{ a.u }}</td>
+    <tr *ngFor="let assess of answerCounts">
+      <td class="text-left p-2">{{ assess.alias }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%">{{ assess.answerCounts[0].total }}</td>
+      <td class="text-right p-2 pl-3" style="width: 10%" *ngFor="let ac of assess.answerCounts">{{ ac.qc }}</td>
     </tr>
   </table>
 </div>

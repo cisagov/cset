@@ -169,7 +169,7 @@ export class AggregationService {
   }
 
   getMaturityAnswerTotals(aggId) {
-    return this.http.post(this.apiUrl + 'analysis/getmaturityanswertotals?aggregationID=' + aggId, '');
+    return this.http.post(this.apiUrl + 'analysis/maturity/answertotals?aggregationID=' + aggId, '');
   }
 
 

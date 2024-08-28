@@ -16,6 +16,7 @@ using CSETWebCore.Model.Analysis;
 using Microsoft.EntityFrameworkCore;
 using Snickler.EFCore;
 
+
 namespace CSETWebCore.Api.Controllers
 {
     [ApiController]
@@ -509,45 +510,66 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// Returns answer breakdown for all associated maturity-based assessments.
+        /// Returns an answer breakdown for all associated maturity-based assessments in the
+        /// aggregation.  This logic is flexible for models that have their own answer option lists.
+        /// In other words, no "Y", "N", "A" assumption is made.
         /// </summary>
+        /// <param name="aggregationID"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/aggregation/analysis/getmaturityanswertotals")]
-        public IActionResult GetMaturityAnswerTotals(int aggregationID)
+        [Route("api/aggregation/analysis/maturity/answertotals")]
+        public IActionResult GetMaturityAnswerTotalsFlexible(int aggregationID)
         {
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
-            List<AnswerCounts> response = new List<AnswerCounts>();
+            List<AnswerCountsGeneric> response = new List<AnswerCountsGeneric>();
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[usp_getMaturitySummaryOverall]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
-                    {
-                        var results = (List<usp_getStandardSummaryOverall>)handler.ReadToList<usp_getStandardSummaryOverall>();
+                var mm = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == a.Assessment.Assessment_Id)
+                    .Include(x => x.model)
+                    .FirstOrDefault();
 
-                        var ansCount = new AnswerCounts()
-                        {
-                            AssessmentId = a.Assessment_Id,
-                            Alias = a.Alias,
-                            Total = results.Max(x => x.Total),
-                            Y = results.Where(x => x.Answer_Text == "Y").FirstOrDefault().qc,
-                            N = results.Where(x => x.Answer_Text == "N").FirstOrDefault().qc,
-                            A = results.Where(x => x.Answer_Text == "A").FirstOrDefault().qc,
-                            NA = results.Where(x => x.Answer_Text == "NA").FirstOrDefault().qc,
-                            U = results.Where(x => x.Answer_Text == "U").FirstOrDefault().qc
-                        };
 
-                        response.Add(ansCount);
-                    });
+                // create a list of applicable answer options
+                var answerOrder = mm.model.Answer_Options.Split(',').ToList();
+                answerOrder.Add("U");
+
+
+                _context.LoadStoredProc("[usp_GetMaturityAnswerTotals]")
+                   .WithSqlParam("assessment_id", a.Assessment_Id)
+                   .ExecuteStoredProc((handler) =>
+                   {
+                       var results = (List<AnswerCountsAndPercentages>)handler.ReadToList<AnswerCountsAndPercentages>();
+
+
+                       var acg = new AnswerCountsGeneric();
+                       acg.AssessmentId = a.Assessment_Id;
+                       acg.ModelId = mm.model_id;
+                       acg.Alias = a.Alias;
+
+                       foreach (var item in answerOrder)
+                       {
+                           var dbResult = results.Where(x => x.Answer_Text == item).FirstOrDefault();
+
+                           acg.AnswerCounts.Add(new AnswerCountsAndPercentages()
+                           {
+                               Answer_Text = item,
+                               QC = dbResult?.QC ?? 0,
+                               Total = dbResult?.Total ?? 0,
+                               Percent = dbResult?.Percent ?? 0
+                           });
+                       }
+
+                       response.Add(acg);
+                   });
             }
 
             return Ok(response);
         }
+
 
 
         /// <summary>
