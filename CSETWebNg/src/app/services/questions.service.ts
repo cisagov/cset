@@ -134,7 +134,7 @@ export class QuestionsService {
   /**
    * Analyzes the current 'auto load supplemental' preference and the maturity model
    */
-  autoLoadSupplemental(modelId?: number) {
+  autoLoadSupplemental(modelId?: any) {
     // first see if it should be forced on by configuration
     if (this.configSvc.config.supplementalAutoloadInitialValue) {
       return true;
@@ -146,8 +146,11 @@ export class QuestionsService {
     }
 
     // check the model's configuration
-    const modelConfiguration = this.configSvc.config.moduleBehaviors.find(x => x.modelId == modelId);
-    if (modelConfiguration.autoLoadSupplemental ?? false) {
+    let modelConfiguration = 
+    this.configSvc.config.moduleBehaviors.find(x => x.modelId == modelId) || 
+    this.configSvc.config.moduleBehaviors.find(x => x.moduleName == modelId);
+
+    if (modelConfiguration?.autoLoadSupplemental ?? false) {
       return true;
     }
 
@@ -393,12 +396,10 @@ export class QuestionsService {
     if (!!model && String(model).trim().length > 0) {
       
       // first try to find the model configuration using its model name
-      let modelConfiguration = this.configSvc.config.moduleBehaviors.find(x => x.moduleName == model);
-      
-      // if that didn't work, use model ID instead
-      if (!modelConfiguration) {
-        modelConfiguration = this.configSvc.config.moduleBehaviors.find(x => x.modelId == model);
-      }
+      let modelConfiguration = 
+      this.configSvc.config.moduleBehaviors.find(x => x.modelId == model) || 
+      this.configSvc.config.moduleBehaviors.find(x => x.moduleName == model);
+
 
       if (!!modelConfiguration) {
         // first look for a skin-specific answer option
