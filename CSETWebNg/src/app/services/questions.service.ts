@@ -134,22 +134,31 @@ export class QuestionsService {
   /**
    * Analyzes the current 'auto load supplemental' preference and the maturity model
    */
-  autoLoadSupplemental(modelId?: number) {
+  autoLoadSupplemental(model?: any) {
     // first see if it should be forced on by configuration
     if (this.configSvc.config.supplementalAutoloadInitialValue) {
       return true;
     }
 
     // standards (modelid is null) - check the checkbox state
-    if (!modelId) {
+    if (!model) {
       return this.autoLoadSuppCheckboxState;
     }
 
     // check the model's configuration
-    const modelConfiguration = this.configSvc.config.moduleBehaviors.find(x => x.modelId == modelId);
-    if (modelConfiguration.autoLoadSupplemental ?? false) {
+    const modelConfiguration = this.configSvc.config.moduleBehaviors.find(x => x.modelId == model.modelId);
+    if (modelConfiguration != null && (modelConfiguration.autoLoadSupplemental ?? false)) {
       return true;
     }
+
+    else {
+      let modelConfigurationByModelName = this.configSvc.config.moduleBehaviors.find(x => x.moduleName == model.moduleName);
+      if (modelConfigurationByModelName != null && (modelConfiguration.autoLoadSupplemental ?? false)) {
+        return true;
+      }
+    }
+
+    
 
     return false;
   }
