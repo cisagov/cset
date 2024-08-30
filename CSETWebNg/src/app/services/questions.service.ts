@@ -147,7 +147,14 @@ export class QuestionsService {
 
     // check the model's configuration
     const modelConfiguration = this.configSvc.config.moduleBehaviors.find(x => x.modelId == model.modelId);
-    if (modelConfiguration != null && (modelConfiguration.autoLoadSupplemental ?? false)) {
+    if (modelConfiguration == null) {
+      let modelConfigurationByName = this.configSvc.config.moduleBehaviors.find(x => x.modelName == model.modelName);
+      if (modelConfigurationByName != null ? (modelConfigurationByName.autoLoadSupplemental ?? false) : false) {
+        return true;
+      }
+    }
+
+    else if (modelConfiguration.autoLoadSupplemental ?? false) {
       return true;
     }
 
