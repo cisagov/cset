@@ -27,7 +27,7 @@ let appName;
 switch (installationMode) {
   case 'ACET':
     clientCode = 'NCUA';
-    appName = 'ACET';
+    appName = 'TOOLBOX';
     break;
   case 'TSA':
     clientCode = 'TSA';
@@ -334,7 +334,7 @@ function createWindow() {
       overrideBrowserWindowOptions: {
         parent: mainWindow,
         icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-        title: details.frameName === 'csetweb-ng' || '_blank' ? `${installationMode}` : details.frameName
+        title: details.frameName === 'csetweb-ng' || '_blank' ? `${appName}` : details.frameName
       }
     };
   })
