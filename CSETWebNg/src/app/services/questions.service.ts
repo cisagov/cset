@@ -158,6 +158,15 @@ export class QuestionsService {
       return true;
     }
 
+    else {
+      let modelConfigurationByModelName = this.configSvc.config.moduleBehaviors.find(x => x.moduleName == model.moduleName);
+      if (modelConfigurationByModelName != null && (modelConfiguration.autoLoadSupplemental ?? false)) {
+        return true;
+      }
+    }
+
+    
+
     return false;
   }
 
