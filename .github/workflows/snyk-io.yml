@@ -26,8 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Upgrade npm
-        run: npm install -g npm
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         env:
