@@ -9,11 +9,11 @@ using Microsoft.Data.SqlClient;
 using System.IO;
 namespace UpgradeLibrary.Upgrade
 {
-    internal class ConvertDatabase12261 : ConvertSqlDatabase
+    internal class ConvertDatabase12262 : ConvertSqlDatabase
     {
-        public ConvertDatabase12261(string path) : base(path)
+        public ConvertDatabase12262(string path) : base(path)
         {
-            myVersion = new Version("12.2.6.1");
+            myVersion = new Version("12.2.6.2");
         }
 
         /// <summary>
@@ -24,12 +24,11 @@ namespace UpgradeLibrary.Upgrade
         {
             try
             {
-                RunFile(Path.Combine(this.applicationPath, "VersionUpgrader", "SQL", "12260_to_12261.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
             catch (Exception e)
             {
-                throw new DatabaseUpgradeException("Error in upgrading database version 12.2.6.0 to 12.2.6.1: " + e.Message);
+                throw new DatabaseUpgradeException("Error in upgrading database version 12.2.6.1 to 12.2.6.1: " + e.Message);
             }
         }
     }
