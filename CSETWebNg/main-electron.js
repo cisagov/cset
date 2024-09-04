@@ -74,7 +74,7 @@ function createWindow() {
     height: 800,
     webPreferences: { nodeIntegration: true, webSecurity: false },
     icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-    title: appName
+    title: appName === 'ACET' ? 'TOOLBOX' : appName
   });
 
   // Default Electron application menu is immutable; have to create new one and modify from there
@@ -334,7 +334,7 @@ function createWindow() {
       overrideBrowserWindowOptions: {
         parent: mainWindow,
         icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-        title: details.frameName === 'csetweb-ng' || '_blank' ? `${appName}` : details.frameName
+        title: details.frameName === 'csetweb-ng' || '_blank' ? `${appName === 'ACET' ? 'TOOLBOX' : appName}` : details.frameName
       }
     };
   })
