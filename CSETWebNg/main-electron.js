@@ -208,7 +208,7 @@ function createWindow() {
     rootDir = path.dirname(app.getPath('exe'));
   }
 
-  log.info('Root Directory of ' + appName + ' Electron app: ' + rootDir);
+  log.info('Root Directory of ' + appName === 'ACET' ? 'TOOLBOX' : appName + ' Electron app: ' + rootDir);
 
   if (app.isPackaged) {
 
