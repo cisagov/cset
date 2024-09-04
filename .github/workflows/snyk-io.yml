@@ -18,8 +18,10 @@ jobs:
         uses: snyk/actions/dotnet@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        # with:
-        #   args: --severity-threshold=high
+        with:
+          args: |
+            --severity-threshold=high \
+            --all-projects
   node:
     runs-on: ubuntu-latest
     steps:
@@ -28,5 +30,7 @@ jobs:
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        # with:
-        #   args: --severity-threshold=high
+        with:
+          args: |
+            --severity-threshold=high \
+            --all-projects
