@@ -6,7 +6,7 @@ on:
     branches: [develop]
 
 jobs:
-  dotnetsecurity:
+  dotnet:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -18,9 +18,9 @@ jobs:
         uses: snyk/actions/dotnet@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --severity-threshold=high
-  nodesecurity:
+        # with:
+        #   args: --severity-threshold=high
+  node:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -28,5 +28,5 @@ jobs:
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --severity-threshold=high
+        # with:
+        #   args: --severity-threshold=high
