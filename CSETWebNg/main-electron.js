@@ -27,7 +27,7 @@ let appName;
 switch (installationMode) {
   case 'ACET':
     clientCode = 'NCUA';
-    appName = 'TOOLBOX';
+    appName = 'ACET';
     break;
   case 'TSA':
     clientCode = 'TSA';
