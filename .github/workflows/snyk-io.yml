@@ -1,0 +1,32 @@
+name: Check for severe vulnerabilities using Snyk
+
+on:
+  pull_request:
+  push:
+    branches: [develop]
+
+jobs:
+  dotnetsecurity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+      - name: Restore dependencies
+        run: dotnet restore ./CSETWebApi/CSETWeb_Api/CSETWeb_Api.sln
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/dotnet@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+  nodesecurity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
