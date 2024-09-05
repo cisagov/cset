@@ -219,7 +219,8 @@ namespace CSETWebCore.Business.Aggregation
                     AssessmentName = dbAA.Assessment.INFORMATION.Assessment_Name,
                     AssessmentDate = dbAA.Assessment.Assessment_Date,
                     useMaturity = dbAA.Assessment.UseMaturity,
-                    useStandard = dbAA.Assessment.UseStandard
+                    useStandard = dbAA.Assessment.UseStandard,
+                    useDiagram = dbAA.Assessment.UseDiagram
                 };
 
                 l.Add(aa);
@@ -244,7 +245,6 @@ namespace CSETWebCore.Business.Aggregation
 
             return resp;
         }
-
 
         /// <summary>
         /// Looks for the lowest letter that has not yet been used as an alias in 
