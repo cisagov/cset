@@ -38,6 +38,7 @@ export class CompareMaturityIndividualComponent implements OnInit {
   answerCounts: any[] = null;
   answerLabels: string[] = [];
   chartsMaturityCompliance: any[];
+  
 
   constructor(
     public aggregationSvc: AggregationService,
@@ -47,6 +48,7 @@ export class CompareMaturityIndividualComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.colorSvc.reset();
     this.populateCharts();
   }
 
@@ -71,7 +73,7 @@ export class CompareMaturityIndividualComponent implements OnInit {
 
 
     // Maturity Compliance By Model/Domain
-    this.aggregationSvc.getAggregationMaturity(aggId).subscribe((resp: any) => {
+    this.aggregationSvc.getAggregationCompliance(aggId).subscribe((resp: any) => {
       let showLegend = true;
 
       if (!resp.length) {

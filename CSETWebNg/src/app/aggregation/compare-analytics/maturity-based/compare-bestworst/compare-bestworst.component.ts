@@ -25,6 +25,8 @@ import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../../../services/aggregation.service';
 import { ChartService } from '../../../../services/chart.service';
 import Chart from 'chart.js/auto';
+import { ColorService } from '../../../../services/color.service';
+import { QuestionsService } from '../../../../services/questions.service';
 
 @Component({
   selector: 'app-compare-maturity-bestworst',
@@ -34,14 +36,16 @@ import Chart from 'chart.js/auto';
 })
 export class CompareMaturityBestworstComponent implements OnInit {
 
-  categories: any;
+  resp: any;
 
-  currentCategory: any;
+  currentGrouping: any;
   chartAnswerBreakdown: Chart;
 
   constructor(
     public aggregationSvc: AggregationService,
-    public chartSvc: ChartService
+    public chartSvc: ChartService,
+    public colorSvc: ColorService,
+    public questionsSvc: QuestionsService
   ) { }
 
   ngOnInit() {
@@ -49,46 +53,58 @@ export class CompareMaturityBestworstComponent implements OnInit {
   }
 
   loadPage() {
-    this.loadCategoryList();
+    this.loadGroupingList();
   }
 
-  loadCategoryList() {
+  /**
+   * 
+   */
+  loadGroupingList() {
     this.aggregationSvc.getMaturityBestToWorst().subscribe((x: any) => {
-      this.categories = x;
-      this.selectCategory(this.categories[0]);
+      this.resp = x;
+
+      this.selectGrouping(this.resp.groupings[0]);
     });
   }
 
-  public selectCategory(cat: any) {
-    this.currentCategory = cat;
+  /**
+   * When the user clicks one of the groupings in the left panel
+   * this code loads up a chart comparing the answer distributions
+   * for that grouping among the participating assessments.
+   */
+  public selectGrouping(g: any) {
+    this.currentGrouping = g;
 
     // create chart data skeleton
     const chartConfig = {
       labels: [],
-      datasets: [
-        { label: 'Yes', data: [], backgroundColor: "#28A745" },
-        { label: 'No', data: [], backgroundColor: "#DC3545" },
-        { label: 'Not Applicable', data: [], backgroundColor: "#007BFF" },
-        { label: 'Alternate', data: [], backgroundColor: "#FFC107" },
-        { label: 'Unanswered', data: [], backgroundColor: "#CCCCCC" }
-      ]
+      datasets: []
     };
 
-    // populate chart data object 
-    cat.assessments.forEach(a => {
-      chartConfig.labels.push(a.assessmentName);
+    this.resp.answerOptions.forEach(o => {
 
-      const ds = chartConfig.datasets;
-      ds.find(x => x.label === 'Yes').data.push(a.yesValue);
-      ds.find(x => x.label === 'No').data.push(a.noValue);
-      ds.find(x => x.label === 'Not Applicable').data.push(a.naValue);
-      ds.find(x => x.label === 'Alternate').data.push(a.alternateValue);
-      ds.find(x => x.label === 'Unanswered').data.push(a.unansweredValue);
+      // get the answer label and segment color for this answer option
+      const label = this.questionsSvc.answerDisplayLabel(this.resp.modelId, o);
+      const segmentColor = this.questionsSvc.findAnsDefinition(this.resp.modelId, o).chartSegmentColor;
+
+      const dataset = { label: label, backgroundColor: segmentColor, data: [] }
+      chartConfig.datasets.push(dataset);
+
+      // grab each answer option's percentage from each assessment
+      g.assessments.forEach(a => {
+        if (!chartConfig.labels.some(x => x == a.alias)) {
+          chartConfig.labels.push(a.alias);
+        }
+
+        dataset.data.push(a.percentages.find(p => p.answerText == o)?.percent ?? 0.0);
+      });
     });
+
 
     if (this.chartAnswerBreakdown) {
       this.chartAnswerBreakdown.destroy();
     }
+
     this.chartAnswerBreakdown = this.chartSvc.buildStackedHorizBarChart('canvasAnswerBreakdown', chartConfig);
   }
 }
