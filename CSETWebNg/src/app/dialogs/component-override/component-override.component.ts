@@ -26,6 +26,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
 import { Answer } from '../../models/questions.model';
 import { QuestionsService } from '../../services/questions.service';
+import { Utilities } from '../../services/utilities.service';
 
 @Component({
   selector: 'component-override',
@@ -44,8 +45,11 @@ export class ComponentOverrideComponent {
   /**
    * Constructor.
    */
-  constructor(private dialog: MatDialogRef<ComponentOverrideComponent>,
-    public configSvc: ConfigService, public questionsSvc: QuestionsService,
+  constructor(
+    private dialog: MatDialogRef<ComponentOverrideComponent>,
+    public configSvc: ConfigService, 
+    public questionsSvc: QuestionsService,
+    public utilitiesSvc: Utilities,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     dialog.beforeClosed().subscribe(() => dialog.close(this.questionChanged));
     this.questionsSvc.getOverrideQuestions(data.myQuestion.questionId,
