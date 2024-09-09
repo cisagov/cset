@@ -19,6 +19,8 @@ namespace CSETWebCore.Model.Aggregation
         public bool useMaturity { get; set; }
 
         public bool useStandard { get; set; }
+        
+        public bool useDiagram { get; set; }
 
         public List<SelectedStandards> SelectedStandards { get; set; }
 

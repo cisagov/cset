@@ -683,7 +683,7 @@ export class NCUAService {
       "charter": this.information.charter,
       "examiner": this.information.assessor_Name.trim(),
       "effectiveDate":  this.reportSvc.applyJwtOffset(this.information.assessment_Effective_Date, 'date'), //DateTime.fromISO(this.information.assessment_Effective_Date),
-      "creationDate": this.reportSvc.applyJwtOffset(this.information.assessment_Creation_Date, 'datetime'),
+      "creationDate": this.reportSvc.applyJwtOffset(this.information.assessment_Creation_Date, 'datetime').replace(',',''),
       // "stateLed": this.assessmentSvc.assessment.isE_StateLed,
       "examLevel": this.examLevel,
       // "region": this.assessmentSvc.assessment.regionCode,
