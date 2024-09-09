@@ -46,7 +46,16 @@
   <h3>
     Domain-Level Compliance
   </h3>
-  <div *ngIf="!chartsMaturityCompliance">
+  <p class="text-left">
+    The chart below indicates normalized (percentages) compliance scores for the
+    assessments being compared.
+    Questions that are answered as "implemented" count towards the scores represented.
+  </p>
+  <p class="text-left">
+    Answer distributions are viewable on the 'Best To Worst' tab.
+  </p>
+
+  <div *ngIf="!chartsMaturityCompliance || chartsMaturityCompliance.length == 0">
     <div class="spinner-container" style="margin: 2em auto">
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
@@ -56,4 +65,5 @@
     <canvas id="{{ 'canvasMaturityBars-' + i.chartName }}"
       style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ i }}</canvas>
   </div>
+
 </div>

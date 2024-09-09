@@ -216,7 +216,7 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'analysis/categoryaverages?aggregationID=' + aggId, {});
   }
 
-  getAggregationMaturity(aggId) {
+  getAggregationCompliance(aggId) {
     return this.http.get(this.apiUrl + 'analysis/maturity/compliance?aggregationId=' + aggId, {});
   }
 
@@ -237,8 +237,11 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'getmaturitymissedquestions', {});
   }
 
+  /**
+   * Get the maturity "best to worst" model 
+   */
   getMaturityBestToWorst() {
-    return this.http.post(this.apiUrl + 'analysis/getmaturitybesttoworst', '');
+    return this.http.post(this.apiUrl + 'analysis/maturity/besttoworst', '');
   }
 
 

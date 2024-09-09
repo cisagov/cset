@@ -39,7 +39,7 @@ namespace CSETWebCore.Business.Aggregation
         /// </summary>
         /// <param name="aggId"></param>
         /// <returns></returns>
-        public List<BarChartX> GetMaturityModels(int aggId)
+        public List<BarChartX> GetMaturityModelComplianceChart(int aggId)
         {
             var chartList = new List<BarChartX>();
 
@@ -214,6 +214,7 @@ namespace CSETWebCore.Business.Aggregation
         }
     }
 
+
     /// <summary>
     /// 
     /// </summary>
@@ -226,6 +227,7 @@ namespace CSETWebCore.Business.Aggregation
             Models = new List<Model>();
         }
     }
+
 
     public class Model
     {
@@ -241,6 +243,7 @@ namespace CSETWebCore.Business.Aggregation
         }
     }
 
+
     public class RollupLevel
     {
         public string CategoryTitle { get; set; }
@@ -252,14 +255,11 @@ namespace CSETWebCore.Business.Aggregation
         }
     }
 
+
     public class Assessment
     {
         public int AssessmentId { get; set; }
         public string Alias { get; set; }
         public double RollupScore { get; set; }
     }
-
-
-
-
 }

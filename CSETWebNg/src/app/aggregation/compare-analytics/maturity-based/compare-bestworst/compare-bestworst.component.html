@@ -23,9 +23,9 @@
 <div class="d-flex flex-row col-12">
   <div class="col-4 pl-0 pr-0">
     <ul style="padding-inline-start: 0" class="pr-5">
-      <li *ngFor="let cat of categories" class="cursor-pointer list-unstyled">
-        <div (click)="selectCategory(cat)" [class.cat-selected]="cat === currentCategory" class="p-1 pl-2 pr-2 w-100">
-          {{ cat.category }}
+      <li *ngFor="let g of resp?.groupings" class="cursor-pointer list-unstyled">
+        <div (click)="selectGrouping(g)" [class.cat-selected]="g === currentGrouping" class="p-1 pl-2 pr-2 w-100">
+          {{ g.title }}
         </div>
       </li>
     </ul>
@@ -34,7 +34,7 @@
     <div class="d-flex flex-wrap flex-00a sticky-sal">
       <div class="mt-2 text-center w-100">
         <h5>
-          {{ currentCategory?.category }}
+          {{ currentGrouping?.title }}
         </h5>
       </div>
       <div style="height: 30rem; width: 100%">

@@ -35,7 +35,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetComplianceByModelAndDomain([FromQuery] int aggregationId)
         {
             var amb = new AggregationMaturityBusiness(_context);
-            var resp = amb.GetMaturityModels(aggregationId);
+            var resp = amb.GetMaturityModelComplianceChart(aggregationId);
 
             return Ok(resp);
         }
