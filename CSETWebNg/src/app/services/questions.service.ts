@@ -141,7 +141,7 @@ export class QuestionsService {
     }
 
     // standards (modelid is null) - check the checkbox state
-    if (!modelId) {
+    if (!model) {
       return this.autoLoadSuppCheckboxState;
     }
 
@@ -153,6 +153,15 @@ export class QuestionsService {
     if (modelConfiguration?.autoLoadSupplemental ?? false) {
       return true;
     }
+
+    else {
+      let modelConfigurationByModelName = this.configSvc.config.moduleBehaviors.find(x => x.moduleName == model.moduleName);
+      if (modelConfigurationByModelName != null && (modelConfiguration.autoLoadSupplemental ?? false)) {
+        return true;
+      }
+    }
+
+    
 
     return false;
   }

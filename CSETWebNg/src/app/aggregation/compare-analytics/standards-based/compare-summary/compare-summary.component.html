@@ -45,9 +45,11 @@
   </div>
   <canvas id="canvasStandardsPie" style="min-width: 400px; max-width: 400px; margin: 0 auto;">{{ chartStandardsPie
     }}</canvas>
+    <div> Percentages may not add up to 100% when comparing assessments due to averaging answers. </div>
 </div>
 
-<div class="chart d-flex flex-column flex-00a mb-5">
+
+<div *ngIf="showComponents; else notCompatible" class="chart d-flex flex-column flex-00a mb-5">
   <h3>
     Components Answers
   </h3>
@@ -59,6 +61,9 @@
   <canvas id="canvasComponentsPie" style="min-width: 400px; max-width: 400px; margin: 0 auto;">{{ chartComponentsPie
     }}</canvas>
 </div>
+<ng-template #notCompatible class="chart d-flex flex-column flex-00a mb-5" > 
+  <h4 style="text-align: center; padding:10%">Comparison visuals are available only when both assessments include network diagrams.</h4>  
+</ng-template>
 
 <div class="chart d-flex flex-column flex-00a mb-5" style="min-height: 200px">
   <h3>
