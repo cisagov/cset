@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Injectable } from '@angular/core';
 import { HttpResponseBase, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import * as sanitizeHtml from 'sanitize-html';
 
 @Injectable()
 export class Utilities {
@@ -667,24 +668,29 @@ export class Utilities {
      * 
      */
     public removeHtmlTags(input: string): string {
-
-        // convert <br> tag to space to avoid words smashed together in output
+        // // convert <br> tag to space to avoid words smashed together in output
         input = input.replace(/<br[^>]*>/g, ' ');
 
-        const div = document.createElement('div');
-        div.innerHTML = input;
-        input = div.textContent || div.innerText;
+        const clean = sanitizeHtml(input, {
+            allowedTags: [],
+            allowedAttributes: {}
+        });
 
 
-        // Remove script tags first to prevent potential XSS attacks
-        input = input.replace(/<script[^>]*?>.*?<\/script>/gi, '');
+        // const div = document.createElement('div');
+        // div.innerHTML = input;
+        // input = div.textContent || div.innerText;
 
-        // Remove style tags to avoid unwanted formatting
-        input = input.replace(/<style[^>]*?>.*?<\/style>/gi, '');
 
-        // Remove all other HTML tags and attributes
-        input = input.replace(/<[^>]*>/g, '');
+        // // Remove script tags first to prevent potential XSS attacks
+        // input = input.replace(/<script[^>]*?>.*?<\/script>/gi, '');
 
-        return input;
+        // // Remove style tags to avoid unwanted formatting
+        // input = input.replace(/<style[^>]*?>.*?<\/style>/gi, '');
+
+        // // Remove all other HTML tags and attributes
+        // input = input.replace(/<[^>]*>/g, '');
+
+        return clean;
     }
 }
