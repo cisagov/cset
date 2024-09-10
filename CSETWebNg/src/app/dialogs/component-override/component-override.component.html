@@ -51,7 +51,7 @@
             <th colspan="2">Specific Component Name</th>
           </tr>
           <tr *ngFor="let q of questions; let i = index">
-            <td>{{ utilitiesSvc.removeHtmlTags(q.componentName, true) }}</td>
+            <td>{{ utilitiesSvc.removeHtmlTags(q.componentName) }}</td>
             <td>
               <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons" style="float:right;">
                 <label *ngIf="showThisOption('Y')" class="btn btn-yes form-check-label"
