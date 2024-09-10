@@ -55,7 +55,7 @@ export class ComponentQuestionListComponent implements OnInit, OnChanges {
    */
   ngOnChanges(): void {
     this.data.forEach(x => {
-      x.componentName = this.utilitiesSvc.removeHtmlTags(x.componentName, true);
+      x.componentName = this.utilitiesSvc.removeHtmlTags(x.componentName);
     });
   }
 }

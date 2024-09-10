@@ -666,7 +666,16 @@ export class Utilities {
     /**
      * 
      */
-    public removeHtmlTags(input: string, replaceWithSpace: boolean): string {
+    public removeHtmlTags(input: string): string {
+
+        // convert <br> tag to space to avoid words smashed together in output
+        input = input.replace(/<br[^>]*>/g, ' ');
+
+        const div = document.createElement('div');
+        div.innerHTML = input;
+        input = div.textContent || div.innerText;
+
+
         // Remove script tags first to prevent potential XSS attacks
         input = input.replace(/<script[^>]*?>.*?<\/script>/gi, '');
 
@@ -674,7 +683,7 @@ export class Utilities {
         input = input.replace(/<style[^>]*?>.*?<\/style>/gi, '');
 
         // Remove all other HTML tags and attributes
-        input = input.replace(/<[^>]*>/g, replaceWithSpace ? ' ' : '');
+        input = input.replace(/<[^>]*>/g, '');
 
         return input;
     }
