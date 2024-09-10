@@ -676,21 +676,6 @@ export class Utilities {
             allowedAttributes: {}
         });
 
-
-        // const div = document.createElement('div');
-        // div.innerHTML = input;
-        // input = div.textContent || div.innerText;
-
-
-        // // Remove script tags first to prevent potential XSS attacks
-        // input = input.replace(/<script[^>]*?>.*?<\/script>/gi, '');
-
-        // // Remove style tags to avoid unwanted formatting
-        // input = input.replace(/<style[^>]*?>.*?<\/style>/gi, '');
-
-        // // Remove all other HTML tags and attributes
-        // input = input.replace(/<[^>]*>/g, '');
-
         return clean;
     }
 }

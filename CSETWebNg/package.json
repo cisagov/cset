@@ -85,6 +85,7 @@
     "request": "^2.88.2",
     "rxjs": "^6.6.3",
     "rxjs-compat": "^6.6.3",
+    "sanitize-html": "^2.13.0",
     "sass": "^1.32.8",
     "screenfull": "^5.1.0",
     "snyk": "^1.464.0",
