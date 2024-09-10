@@ -667,9 +667,15 @@ export class Utilities {
      * 
      */
     public removeHtmlTags(input: string, replaceWithSpace: boolean): string {
+        // Remove script tags first to prevent potential XSS attacks
+        input = input.replace(/<script[^>]*?>.*?<\/script>/gi, '');
+
+        // Remove style tags to avoid unwanted formatting
+        input = input.replace(/<style[^>]*?>.*?<\/style>/gi, '');
+
         // Remove all other HTML tags and attributes
         input = input.replace(/<[^>]*>/g, replaceWithSpace ? ' ' : '');
-      
+
         return input;
-      }
+    }
 }
