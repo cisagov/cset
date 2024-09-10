@@ -1316,10 +1316,10 @@ namespace CSETWebCore.Business.Reports
                     QuestionId = q.Question_Id,
                     LayerName = q.LayerName,
                     SAL = q.SAL,
-                    Zone = q.ZoneName
+                    Zone = q.ZoneName,
+                    IsOverride = (q.Answer_Id != null)
                 });
             }
-
 
             return l;
         }

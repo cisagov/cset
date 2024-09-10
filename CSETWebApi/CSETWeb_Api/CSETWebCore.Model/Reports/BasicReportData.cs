@@ -161,6 +161,7 @@ namespace CSETWebCore.Business.Reports
         public string Zone { get; set; }
         public string SAL { get; set; }
         public string LayerName { get; set; }
+        public bool IsOverride { get; set; }
     }
 
     public class RankedQuestions
