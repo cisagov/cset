@@ -1206,7 +1206,7 @@
         "version": "Versión",
         "build date": "Fecha de Compilación",
         "contact": "Contacto",
-        "learn more": "Para obtener más información sobre vulnerabilidades cibernéticas, capacitación, estándares y referencias, visite el <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">sitio web de gestión de vulnerabilidades de CISA</a> o póngase en contacto con <a class=\"wrap-text\" href=\"mailto:cset@cisa.gov\" class=\"mailto\">cset@cisa.gov</a>.",
+        "learn more": "Para obtener más información sobre vulnerabilidades cibernéticas, capacitación, estándares y referencias, visite el <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">sitio web de gestión de vulnerabilidades de CISA</a> o póngase en contacto con <a class=\"wrap-text\" href=\"mailto:cset_pmo@cisa.dhs.gov\" class=\"mailto\">cset_pmo@cisa.dhs.gov</a>.",
         "encourage reporting": "CISA (Agencia de Seguridad de la Infraestructura y Ciberseguridad) lo alienta a informar sobre actividades cibernéticas sospechosas, incidentes y vulnerabilidades que afectan los sistemas de control de infraestructura crítica.",
         "cset training resources": "Recursos de capacitación CSET",
         "training available": "La capacitación CSET está disponible a través de los siguientes recursos",
