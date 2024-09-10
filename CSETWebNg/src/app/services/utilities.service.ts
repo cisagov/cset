@@ -662,4 +662,14 @@ export class Utilities {
         }
         return result;
     }
+
+    /**
+     * 
+     */
+    public removeHtmlTags(input: string, replaceWithSpace: boolean): string {
+        // Remove all other HTML tags and attributes
+        input = input.replace(/<[^>]*>/g, replaceWithSpace ? ' ' : '');
+      
+        return input;
+      }
 }
