@@ -21,15 +21,17 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { QuestionsService } from '../../services/questions.service';
+import { Utilities } from '../../services/utilities.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-component-question-list',
   templateUrl: './component-question-list.component.html',
   styleUrls: ['../reports.scss']
 })
-export class ComponentQuestionListComponent implements OnInit {
+export class ComponentQuestionListComponent implements OnInit, OnChanges {
 
   @Input()
   data: any[];
@@ -38,13 +40,22 @@ export class ComponentQuestionListComponent implements OnInit {
    * 
    */
   constructor(
-    public questionsSvc: QuestionsService
+    public questionsSvc: QuestionsService,
+    public utilitiesSvc: Utilities,
+    public tSvc: TranslocoService
   ) { }
 
   /**
    * 
    */
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
+  /**
+   * 
+   */
+  ngOnChanges(): void {
+    this.data.forEach(x => {
+      x.componentName = this.utilitiesSvc.removeHtmlTags(x.componentName);
+    });
+  }
 }
