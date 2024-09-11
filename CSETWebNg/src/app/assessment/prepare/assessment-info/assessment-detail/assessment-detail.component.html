@@ -70,7 +70,7 @@
 
         <div *ngIf="isAwwa">
             <p>
-                Results from the <a href="https://awwa.org/cyber" target="_blank">AWWA Cybersecurity Assessment Tool</a>
+                Results from the <a href="{{awwaSvc.url}}" target="_blank">AWWA Cybersecurity Assessment Tool</a>
                 can be imported into this assessment.
             </p>
             <button class="btn btn-primary" (click)="showAwwaDialog()">Import AWWA Tool Results</button>
