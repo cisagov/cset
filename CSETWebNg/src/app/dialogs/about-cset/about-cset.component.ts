@@ -55,6 +55,5 @@ export class AboutCsetComponent implements OnInit {
     if (this.configSvc.config.debug.showBuildTime ?? false) {
       this.linkerTime = localStorage.getItem('cset.linkerDate');
     }
-    console.log(this.configSvc.dhsEmail);
   }
 }
