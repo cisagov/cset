@@ -305,6 +305,23 @@ export class ConfigService {
     return this.http.post(this.apiUrl + 'EnableProtectedFeature/setCisaAssessorWorkflow', cisaAssessorWorkflowEnabled);
   }
 
+  /**
+   * Returns the module configuration object from configuration.  
+   * Either the modelId or moduleName can be sent as a key.
+   * Returns null if it can't be found.
+   */
+  getModuleConfig(id: any) {
+    // check the model's configuration
+    let modelConfiguration =
+      this.config.moduleBehaviors.find(x => x.modelId == +id) ||
+      this.config.moduleBehaviors.find(x => x.moduleName == id);
+    
+    return modelConfiguration;
+  }
+
+  /**
+   * 
+   */
   switchConfigsForMode(installationMode) {
     switch (installationMode) {
       case 'ACET':
@@ -337,16 +354,16 @@ export class ConfigService {
           title.innerText = 'CSET-TSA';
         }
         break;
-        case 'CIE':
-          {
-            // change favicon and title
-            const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-            link.href = 'assets/icons/favicon_cie.ico?app=cie1';
+      case 'CIE':
+        {
+          // change favicon and title
+          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
+          link.href = 'assets/icons/favicon_cie.ico?app=cie1';
 
-            var title = this.document.querySelector('title');
-            title.innerText = 'CIE';
-          }
-          break;
+          var title = this.document.querySelector('title');
+          title.innerText = 'CIE';
+        }
+        break;
       case 'CF':
         {
           // change favicon and title
