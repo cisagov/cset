@@ -2786,7 +2786,6 @@ public partial class CsetwebContext : DbContext
         });
         modelBuilder.HasSequence<int>("MaturityNodeSequence");
 
-        OnModelCreatingGeneratedFunctions(modelBuilder);
         OnModelCreatingPartial(modelBuilder);
     }
 
