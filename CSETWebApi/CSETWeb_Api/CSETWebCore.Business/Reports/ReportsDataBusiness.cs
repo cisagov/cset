@@ -112,6 +112,12 @@ namespace CSETWebCore.Business.Reports
 
             _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
 
+            // flesh out model-specific questions 
+            if (modelId != null)
+            {
+                _context.FillEmptyMaturityQuestionsForModel(_assessmentId, (int)modelId);
+            }
+
             var query = from a in _context.ANSWER
                         join m in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_Level)
                             on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
@@ -175,6 +181,8 @@ namespace CSETWebCore.Business.Reports
 
         /// <summary>
         /// Returns a list of MatRelevantAnswers that are considered deficient for the assessment.
+        /// 
+        /// TODO:  Move the hard-coded deficient values to some kind of JSON file or config.
         /// </summary>
         /// <returns></returns>
         public List<MatRelevantAnswers> GetMaturityDeficiencies(int? modelId = null)
