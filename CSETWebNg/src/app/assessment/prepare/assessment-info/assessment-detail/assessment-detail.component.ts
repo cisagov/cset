@@ -29,6 +29,7 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { AwwaStandardComponent } from '../../standards/awwa-standard/awwa-standard.component';
+import { AwwaService } from '../../../../services/awwa.service';
 
 
 @Component({
@@ -52,6 +53,7 @@ export class AssessmentDetailComponent implements OnInit {
   constructor(
     private assessSvc: AssessmentService,
     public navSvc: NavigationService,
+    public awwaSvc: AwwaService,
     public configSvc: ConfigService,
     public datePipe: DatePipe,
     public dialog: MatDialog
