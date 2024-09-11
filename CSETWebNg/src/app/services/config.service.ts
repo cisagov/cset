@@ -54,6 +54,7 @@ export class ConfigService {
    * host/api/library
    */
   libraryUrl: string;
+  dhsEmail: string;
 
 
   onlineUrl: string;
@@ -156,6 +157,10 @@ export class ConfigService {
     return this.http.get(this.apiUrl + 'HasLocalDocuments');
   }
 
+  getDhsEmail() {
+    return this.http.get(this.apiUrl + 'Email/dhsemail', { responseType: 'text' });
+  }
+
   /**
    *
    */
@@ -209,6 +214,9 @@ export class ConfigService {
     this.checkOnlineStatusFromConfig();
     this.populateLabelValues();
     this.initialized = true;
+    this.getDhsEmail().subscribe((resp: string) => {
+      this.dhsEmail = resp;
+    })
   }
 
   checkOnlineStatusFromConfig() {
