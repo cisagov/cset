@@ -8,7 +8,7 @@
         "showAggregation": true,
         "showAnalytics": false,
         "showAnalyticsAtTheEnd": false,
-        "showMenuLanguagePicker": true,
+        "showMenuLanguagePicker": false,
         "showAnalyticsColumnOnLanding": false,
         "splashPageHTML": "dist/assets/splashACET.html",
         "showFacilityName": false,
