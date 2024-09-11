@@ -1590,7 +1590,7 @@
     "version": "Version",
     "build date": "Build Date",
     "contact": "Contact",
-    "learn more": "To learn more about cyber vulnerabilities, training, standards, and references, visit the <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">CISA Vulnerability Management website</a> or contact <a class=\"wrap-text\" href=\"mailto:cset_pmo@cisa.dhs.gov\" class=\"mailto\">cset_pmo@cisa.dhs.gov</a>.",
+    "learn more": "To learn more about cyber vulnerabilities, training, standards, and references, visit the <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">CISA Vulnerability Management website</a> or contact <a class=\"wrap-text\" href=\"mailto:{{dhsEmail}}\" class=\"mailto\">{{dhsEmail}}</a>.",
     "encourage reporting": "CISA — Cybersecurity and Infrastructure Security Agency — encourages you to report suspicious cyber activity, incidents, and vulnerabilities affecting critical infrastructure control systems.",
     "cset training resources": "Training Resources",
     "training available": "training is available through the following resources",
