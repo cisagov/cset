@@ -24,6 +24,10 @@ BEGIN TRANSACTION
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
+IF OBJECT_ID('[dbo].[usp_GetMaturityAnswerTotals]') IS NOT NULL
+BEGIN
+DROP PROCEDURE [dbo].[usp_GetMaturityAnswerTotals]
+END
 PRINT N'Creating [dbo].[usp_GetMaturityAnswerTotals]'
 GO
 

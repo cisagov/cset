@@ -13,7 +13,7 @@ namespace UpgradeLibrary.Upgrade
     {
         public ConvertDatabase12261(string path) : base(path)
         {
-            myVersion = new Version("12.2.6.0");
+            myVersion = new Version("12.2.6.1");
         }
 
         /// <summary>

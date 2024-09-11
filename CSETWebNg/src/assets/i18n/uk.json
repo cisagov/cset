@@ -1119,7 +1119,7 @@
     "version": "Версія",
     "build date": "Дата збірки",
     "contact": "контакт",
-    "learn more": "Щоб дізнатися більше про кіберуразливості, навчання, стандарти та посилання, відвідайте <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">Веб-сайт керування вразливостями CISA</a> або зв’яжіться з <a class=\"wrap-text\" href=\"mailto:vulnerability@cisa.gov\" class=\"mailto\">vulnerability@cisa.gov</a>.",
+    "learn more": "Щоб дізнатися більше про кіберуразливості, навчання, стандарти та посилання, відвідайте <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">Веб-сайт керування вразливостями CISA</a> або зв’яжіться з <a class=\"wrap-text\" href=\"mailto:{{dhsEmail}}\" class=\"mailto\">{{dhsEmail}}</a>.",
     "encourage reporting": "CISA — Агентство з кібербезпеки та безпеки інфраструктури — заохочує вас повідомляти про підозрілу кіберактивність, інциденти та вразливі місця, що впливають на системи контролю критичної інфраструктури.",
     "cset training resources": "Навчальні ресурси CSET",
     "training available": "Навчання CSET доступне через такі ресурси",

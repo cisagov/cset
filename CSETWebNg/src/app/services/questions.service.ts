@@ -140,30 +140,16 @@ export class QuestionsService {
       return true;
     }
 
+    // find the configuration for the model
+    const moduleConfig = this.configSvc.getModuleConfig(model);
+
+
     // standards (modelid is null) - check the checkbox state
-    if (!model) {
+    if (!moduleConfig) {
       return this.autoLoadSuppCheckboxState;
     }
 
-    // check the model's configuration
-    let modelConfiguration = 
-    this.configSvc.config.moduleBehaviors.find(x => x.modelId == modelId) || 
-    this.configSvc.config.moduleBehaviors.find(x => x.moduleName == modelId);
-
-    if (modelConfiguration?.autoLoadSupplemental ?? false) {
-      return true;
-    }
-
-    else {
-      let modelConfigurationByModelName = this.configSvc.config.moduleBehaviors.find(x => x.moduleName == model.moduleName);
-      if (modelConfigurationByModelName != null && (modelConfiguration.autoLoadSupplemental ?? false)) {
-        return true;
-      }
-    }
-
-    
-
-    return false;
+    return moduleConfig.autoLoadSupplemental ?? false;
   }
 
   /**

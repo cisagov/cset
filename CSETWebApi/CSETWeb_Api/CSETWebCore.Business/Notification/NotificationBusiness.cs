@@ -264,6 +264,7 @@ namespace CSETWebCore.Business.Notification
             mail.Body = mail.Body.Replace("{{email-footer-CF}}", footerCF);
 
             string footer = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter.html");
+            footer = footer.Replace("{{DHSEmail}}", _configuration.GetValue<string>("Email:DHSEmail"));
             mail.Body = mail.Body.Replace("{{email-footer}}", footer);
 
             SmtpClient client = new SmtpClient

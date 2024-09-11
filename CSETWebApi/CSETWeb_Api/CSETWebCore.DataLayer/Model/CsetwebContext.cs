@@ -275,8 +275,6 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
 
-    public virtual DbSet<INTERNATIONALIZATION_VALUES> INTERNATIONALIZATION_VALUES { get; set; }
-
     public virtual DbSet<IRP> IRP { get; set; }
 
     public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
@@ -2788,7 +2786,6 @@ public partial class CsetwebContext : DbContext
         });
         modelBuilder.HasSequence<int>("MaturityNodeSequence");
 
-        OnModelCreatingGeneratedProcedures(modelBuilder);
         OnModelCreatingPartial(modelBuilder);
     }
 
