@@ -351,7 +351,7 @@ export class ConfigService {
           link.href = 'assets/icons/favicon_acet.ico?app=acet1';
 
           var title = this.document.querySelector('title');
-          title.innerText = 'ACET';
+          title.innerText = 'TOOLBOX';
         }
         break;
       case 'TSA':
