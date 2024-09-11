@@ -54,6 +54,7 @@ export class ConfigService {
    * host/api/library
    */
   libraryUrl: string;
+  dhsEmail: string;
 
 
   onlineUrl: string;
@@ -156,6 +157,10 @@ export class ConfigService {
     return this.http.get(this.apiUrl + 'HasLocalDocuments');
   }
 
+  getDhsEmail() {
+    return this.http.get(this.apiUrl + 'Email/dhsemail', { responseType: 'text' });
+  }
+
   /**
    *
    */
@@ -186,7 +191,12 @@ export class ConfigService {
     this.helpContactEmail = this.config.helpContactEmail;
     this.helpContactPhone = this.config.helpContactPhone;
     this.csetGithubApiUrl = this.config.csetGithubApiUrl;
-
+    this.getDhsEmail().subscribe((resp: string) => {
+      this.dhsEmail = resp;
+      if (!this.helpContactEmail) {
+        this.helpContactEmail = resp;
+      }
+    });
     // configure the reference document URL if the "library" property is defined
     // or if passed in as query param and stored as local storage variable. Local storage should
     // take precedence over the config file, since Electron uses it to dynamically set the port.
