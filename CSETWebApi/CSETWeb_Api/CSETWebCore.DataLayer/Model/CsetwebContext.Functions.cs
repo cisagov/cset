@@ -21,26 +21,5 @@ namespace CSETWebCore.DataLayer.Model
         {
             throw new NotSupportedException("This method can only be called from Entity Framework Core queries");
         }
-
-        [DbFunction("func_AM", "dbo")]
-        public IQueryable<func_AMResult> func_AM(int? assessmentId)
-        {
-            return FromExpression(() => func_AM(assessmentId));
-        }
-
-        [DbFunction("func_MQ", "dbo")]
-        public IQueryable<func_MQResult> func_MQ(int? assessmentId)
-        {
-            return FromExpression(() => func_MQ(assessmentId));
-        }
-
-
-
-        protected void OnModelCreatingGeneratedFunctions(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<func_AMResult>().HasNoKey();
-            modelBuilder.Entity<func_MQResult>().HasNoKey();
-            modelBuilder.Entity<SplitResult>().HasNoKey();
-        }
     }
 }
