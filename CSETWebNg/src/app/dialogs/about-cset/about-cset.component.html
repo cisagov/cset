@@ -52,7 +52,7 @@
           </h6>
         </div>
         <h3 class="mt-4">{{t('about.contact')}}</h3>
-        <p class="mb-3 wrap-text" [innerHTML]="t('about.learn more') | safe">
+        <p class="mb-3 wrap-text" [innerHTML]="t('about.learn more', {'dhsEmail': this.configSvc.dhsEmail}) | safe">
         </p>
         <p class="wrap-text" [innerHTML]="t('about.encourage reporting')"></p>
       </article>
