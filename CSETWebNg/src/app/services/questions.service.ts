@@ -141,7 +141,7 @@ export class QuestionsService {
     }
 
     // find the configuration for the model
-    const moduleConfig = this.configSvc.getModuleConfig(model);
+    const moduleConfig = this.configSvc.getModuleConfig(modelId);
 
 
     // standards (modelid is null) - check the checkbox state

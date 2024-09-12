@@ -12,9 +12,14 @@ using System.Xml.Linq;
 using CSETWebCore.Model.Charting;
 using CSETWebCore.Model.Aggregation;
 using System;
+using CSETWebCore.Business.Maturity.Configuration;
 
 namespace CSETWebCore.Business.Aggregation
 {
+    /// <summary>
+    /// This class is used for aggregating maturity-based assessments.
+    /// For standards-based aggregation, see AggregationBusiness.
+    /// </summary>
     public class AggregationMaturityBusiness
     {
         private readonly CSETContext _context;
@@ -211,6 +216,101 @@ namespace CSETWebCore.Business.Aggregation
             }
 
             return questions;
+        }
+
+
+        /// <summary>
+        /// Returns a list of questions or requirements that are answered "N" for no
+        /// or "U" for unanswered in every assessment in the comparison.  
+        /// 
+        /// Note that if the comparison has assessments in both
+        /// Questions and Requirements mode, there will be no common "N" answers.
+        /// </summary>
+        /// <param name="aggregationId"></param>
+        public List<MissedQuestion> GetCommonlyMissedQuestions(int aggregationId)
+        {
+            var resp = new List<MissedQuestion>();
+
+            // build lists of question IDs, then use LINQ to do the intersection
+            var questionsAnsweredNo = new List<List<int>>();
+
+
+            var assessmentIds = _context.AGGREGATION_ASSESSMENT
+                .Where(x => x.Aggregation_Id == aggregationId).ToList().Select(x => x.Assessment_Id);
+
+
+            foreach (int assessmentId in assessmentIds)
+            {
+                // get the maturity model in play
+                var model = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+
+                // default deficient answer list
+                var deficientAnswers = new List<string>() { "N", "U" };
+                
+                // get the model configuration for the true deficient answers
+                var modelProperties = new ModelProfile().GetModelProperties(model.model_id);
+                if (modelProperties != null)
+                {
+                    deficientAnswers = modelProperties.DeficientAnswers;
+                }
+
+
+                var isNoOrUnanswered = _context.Answer_Maturity
+                    .Where(x => x.Assessment_Id == assessmentId && deficientAnswers.Contains(x.Answer_Text)).ToList();
+
+                questionsAnsweredNo.Add(isNoOrUnanswered.Select(x => x.Question_Or_Requirement_Id).ToList());
+            }
+
+
+            // Now that the lists are built, analyze for common "N" answers
+            resp.AddRange(BuildQList(questionsAnsweredNo));
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// Build a list of Questions with common "N" answers.
+        /// </summary>
+        /// <param name="isNoOrUnanswered"></param>
+        /// <param name="db"></param>
+        /// <returns></returns>
+        public List<MissedQuestion> BuildQList(List<List<int>> isNoOrUnanswered)
+        {
+            var resp = new List<MissedQuestion>();
+
+            if (isNoOrUnanswered.Count == 0)
+            {
+                return resp;
+            }
+
+            var intersectionQ = isNoOrUnanswered
+            .Skip(1)
+            .Aggregate(
+                new HashSet<int>(isNoOrUnanswered.First()),
+                (h, e) => { h.IntersectWith(e); return h; }
+            );
+
+
+            var query = from mq in _context.MATURITY_QUESTIONS
+                         where intersectionQ.Contains(mq.Mat_Question_Id)
+                         orderby mq.Sequence
+                         select new { mq };
+
+            foreach (var q in query.ToList())
+            {
+                resp.Add(new MissedQuestion()
+                {
+                    QuestionId = q.mq.Mat_Question_Id,
+                    QuestionText = q.mq.Question_Text,
+                    QuestionTitle = q.mq.Question_Title,
+                    SecurityPractice = q.mq.Security_Practice,
+                    Outcome = q.mq.Outcome
+                });
+            }
+
+            return resp;
         }
     }
 

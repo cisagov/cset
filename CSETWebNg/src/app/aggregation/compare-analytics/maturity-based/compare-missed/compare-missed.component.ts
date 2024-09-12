@@ -39,10 +39,17 @@ export class CompareMaturityMissedComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const aggregationId = this.aggregationSvc.id();
-
     this.aggregationSvc.getMaturityMissedQuestions().subscribe((resp: any) => {
       this.missedQuestions = resp;
+
+      this.missedQuestions.forEach((q: any) => {
+        q.displayText = q.questionText;
+
+        if (!!q.securityPractice) {
+          q.displayText = q.securityPractice;
+        }
+      });
+
     });
   }
 
