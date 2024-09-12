@@ -222,7 +222,7 @@ export class AggregationService {
 
 
   getMissedQuestions() {
-    return this.http.post(this.apiUrl + 'getmissedquestions', {});
+    return this.http.post(this.apiUrl + 'missedquestions', {});
   }
 
   getSalComparison() {
@@ -233,8 +233,11 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'analysis/getbesttoworst', '');
   }
 
+  /**
+   * Gets a list of questions that were missed in all assessments
+   */
   getMaturityMissedQuestions() {
-    return this.http.post(this.apiUrl + 'getmaturitymissedquestions', {});
+    return this.http.post(this.apiUrl + 'maturity/missedquestions', {});
   }
 
   /**
