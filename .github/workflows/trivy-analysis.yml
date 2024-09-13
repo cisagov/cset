@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Run vulnerability scanner
         uses: aquasecurity/trivy-action@0.24.0
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Run vulnerability scanner
         uses: aquasecurity/trivy-action@0.24.0
@@ -40,7 +40,7 @@ jobs:
           format: "sarif"
           output: "trivy-nodejs-results.sarif"
           scan-type: "fs"
-          scan-ref: "./CSETWebNg"
+          scan-ref: "./"
           severity: "CRITICAL,HIGH"
 
       - name: Upload scan results to Security tab
