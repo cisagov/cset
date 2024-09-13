@@ -12,11 +12,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run Trivy vulnerability scanner in fs mode
+      - name: Run vulnerability scanner
         uses: aquasecurity/trivy-action@0.24.0
         with:
           scan-type: "fs"
           scan-ref: "./CSETWebApi"
+          severity: "CRITICAL,HIGH"
   nodejs:
     name: Node.js Analysis
     runs-on: ubuntu-latest
@@ -24,8 +25,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run Trivy vulnerability scanner in fs mode
+      - name: Run vulnerability scanner
         uses: aquasecurity/trivy-action@0.24.0
         with:
           scan-type: "fs"
           scan-ref: "./CSETWebNg"
+          format: "sarif"
+          output: "trivy-nodejs-results.sarif"
+          severity: "CRITICAL,HIGH"
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: "trivy-nodejs-results.sarif"
