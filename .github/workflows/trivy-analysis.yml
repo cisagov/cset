@@ -1,4 +1,4 @@
-name: Trivy Analysis
+name: Trivy Scanner
 on:
   push:
     branches:
@@ -6,7 +6,7 @@ on:
   pull_request:
 jobs:
   dotnet:
-    name: Build
+    name: .NET Analysis
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -18,7 +18,7 @@ jobs:
           scan-type: "fs"
           scan-ref: "./CSETWebApi"
   nodejs:
-    name: Build
+    name: Node.js Analysis
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
