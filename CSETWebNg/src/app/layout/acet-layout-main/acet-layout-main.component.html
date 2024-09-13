@@ -23,13 +23,13 @@
 <div class="bgc-page d-flex flex-column flex-11a w-100">
   <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
     <div class="sticky-navbar">
-      <div class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
+      <div class="row no-gutters local-install mt-0 ps-0 d-flex justify-content-center align-items-center flex-00a"
         *ngIf="auth.isLocal && devMode">
         <span class="col-sm-12">Local Installation</span>
       </div>
 
     <!-- Navbar -->
-    <nav class="row px-4 no-gutters navbar navbar-expand-md ncua-header"
+    <nav class="px-4 no-gutters navbar navbar-expand-md ncua-header"
       *ngIf="auth.userToken() && auth.userToken() !== 'null'">
       <!-- Brand (ACET) -->
       <span
@@ -42,7 +42,7 @@
       </span>
 
       <!-- Navbar Toggler Button (only renders when screen is narrow enough) -->
-      <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ml-auto" [matMenuTriggerFor]="topMenus" #topMenusTrigger="matMenuTrigger"
+      <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ms-auto" [matMenuTriggerFor]="topMenus" #topMenusTrigger="matMenuTrigger"
         *ngIf="auth.userToken() && auth.userToken() !== 'null'" tabindex="0">
         <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
       </button>
@@ -72,7 +72,7 @@
     *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
     <ngb-panel id="footerPanel">
       <ng-template ngbPanelTitle>
-        <button id="footerExpanderButton" class="cset-footer-expand-button fs-base mr-2"
+        <button id="footerExpanderButton" class="cset-footer-expand-button fs-base me-2"
           [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterOpen(), 'cset-icons-chevron-up flex-00a': !isFooterOpen()}"></button>
       </ng-template>
       <ng-template ngbPanelContent>
@@ -87,14 +87,14 @@
           <div class="d-flex flex-column justify-content-center flex-00a">
             <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
               <a target="_blank" tabindex="0" href="https://www.ncua.gov/support-services">Services</a>
-              <span class="mr-2 ml-2"></span>
+              <span class="me-2 ms-2"></span>
               <a target="_blank" tabindex="0" href="https://www.ncua.gov/consumers">Consumers</a>
-              <span class="mr-2 ml-2"></span>
+              <span class="me-2 ms-2"></span>
               <a target="_blank" tabindex="0" href="https://www.ncua.gov/analysis">Credit Union Analysis</a>
-              <span class="mr-2 ml-2"></span>
+              <span class="me-2 ms-2"></span>
               <a target="_blank" tabindex="0" href="https://www.ncua.gov/regulation-supervision">Regulation &
                 Supervision</a>
-              <span class="mr-2 ml-2"></span>
+              <span class="me-2 ms-2"></span>
               <a target="_blank" tabindex="0" href="https://www.ncua.gov/about-ncua">About NCUA</a>
             </div>
 
@@ -108,27 +108,27 @@
           <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
             <a target="_blank" tabindex="0" href="https://www.ncua.gov/about-ncua/inspector-general">Office of Inspector
               General</a>
-            <span class="mr-1 ml-1">|</span>
+            <span class="me-1 ms-1">|</span>
             <a target="_blank" tabindex="0" href="https://www.ncua.gov/freedom-information-act-requests">FOIA</a>
-            <span class="mr-1 ml-1">|</span>
+            <span class="me-1 ms-1">|</span>
             <a target="_blank" tabindex="0" href="https://www.ncua.gov/no-fear-act">No Fear Act</a>
-            <span class="mr-1 ml-1">|</span>
+            <span class="me-1 ms-1">|</span>
             <a target="_blank" tabindex="0"
               href="https://www.ncua.gov/about-ncua/inspector-general/whistleblower-protection">Whistleblower
               Protection</a>
-            <span class="mr-1 ml-1">|</span>
+            <span class="me-1 ms-1">|</span>
             <a target="_blank" tabindex="0" href="https://usa.gov">USA.gov</a>
-            <span class="mr-1 ml-1">|</span>
+            <span class="me-1 ms-1">|</span>
             <a target="_blank" tabindex="0" href="https://www.ncua.gov/about-ncua/open-government">Open Government</a>
-            <span class="mr-1 ml-1">|</span>
+            <span class="me-1 ms-1">|</span>
             <a target="_blank" tabindex="0"
               href="https://www.ncua.gov/about-ncua/open-government/plain-writing-act-2010">Plain
               Writing</a>
-            <span class="mr-1 ml-1">|</span>
+            <span class="me-1 ms-1">|</span>
             <a target="_blank" tabindex="0" href="https://www.ncua.gov/privacy">Privacy</a>
-            <span class="mr-1 ml-1">|</span>
+            <span class="me-1 ms-1">|</span>
             <a target="_blank" tabindex="0" href="https://www.ncua.gov/accessibility-statement">Accessibility</a>
-            <span class="mr-1 ml-1">|</span>
+            <span class="me-1 ms-1">|</span>
             <a target="_blank" tabindex="0" href="https://www.ncua.gov/contact-us">Contact Us</a>
           </div>
         </div>

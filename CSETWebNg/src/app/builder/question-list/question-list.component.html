@@ -33,7 +33,7 @@
           {{questionResponse?.setFullName}}
         </h4>
       </button>
-      <p class="font-italic">{{questionResponse?.setDescription}}</p>
+      <p class="fst-italic">{{questionResponse?.setDescription}}</p>
     </div>
 
     <button class="btn btn-primary" (click)="setBuilderSvc.navAddQuestion()">
@@ -68,7 +68,7 @@
             {{subcat.subHeading}}
           </div>
           <div *ngIf="!subcat.subHeading && subcat.isSubHeadingEditable && headingBeingEdited != subcat">
-            <button class="btn bgc-trans font-italic fs-small" (click)="startHeadingEdit(subcat)">
+            <button class="btn bgc-trans fst-italic fs-small" (click)="startHeadingEdit(subcat)">
               Click to add subcategory question <span class="cset-icons-pencil fs-small"></span>
             </button>
           </div>
