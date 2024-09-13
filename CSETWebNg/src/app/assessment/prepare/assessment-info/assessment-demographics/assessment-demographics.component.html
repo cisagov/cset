@@ -30,7 +30,7 @@
                     <button class="icon-link-button-text-dark" tabindex="0" id="demographic-import"
                         class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                         matTooltip="{{t('buttons.import demographics')}}" (click)="uploader.click()">
-                        <span class="mr-2 fs-base cset-icons-import"></span>
+                        <span class="me-2 fs-base cset-icons-import"></span>
                         <input #uploader hidden type="file" tabindex="0" class="hidden-input" id="importFile" multiple
                             accept=".json" (change)="importClick($event)">
                         <span class="icon-link-button-text-dark">{{t('buttons.import')}}</span>
@@ -40,7 +40,7 @@
                     <button tabindex="0" id="demographic-export"
                         class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                         (click)="exportClick()" matTooltip="{{t('buttons.export demographics')}}">
-                        <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+                        <span class="cset-icons-export-up fs-base-2 me-2"></span>
                         <span class="icon-link-button-text-dark">{{t('buttons.export')}}</span>
                     </button>
                 </th>
@@ -48,17 +48,17 @@
         </div>
     </div>
     <form>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label class="mb-1" for="sector">{{t('sector')}}</label>
+        <div class="row">
+            <div class="col">
+                <label class="form-label" for="sector">{{t('sector')}}</label>
                 <select class="form-control" id="sector" name="sector" tabindex="0"
                     (change)="onSelectSector($event.target.value)" [(ngModel)]="demographicData.sectorId">
                     <option [ngValue]="null">-- {{ t('select sector') }} --</option>
                     <option *ngFor="let sector of sectorsList" [value]="sector.sectorId">{{sector.sectorName}}</option>
                 </select>
             </div>
-            <div class="form-group col-md-6">
-                <label class="mb-1" for="industry">{{t('industry')}}</label>
+            <div class="col">
+                <label class="form-label" for="industry">{{t('industry')}}</label>
                 <select class="form-control" id="industry" name="industry" tabindex="0"
                     [(ngModel)]="demographicData.industryId" (change)="update($event)">
                     <option [ngValue]="null">-- {{ t('select industry') }} --</option>
@@ -68,8 +68,8 @@
                 </select>
             </div>
         </div>
-        <div class="form-group">
-            <label for="assetValue">{{t('asset gross value')}}</label>
+        <div>
+            <label class="form-label" for="assetValue">{{t('asset gross value')}}</label>
             <select #assetValueSelect class="form-control" id="assetValue" tabindex="0" name="assetValue"
                 (change)="update($event)" [(ngModel)]="demographicData.assetValue">
                 <option [ngValue]="null">-- {{t('select gross value')}} --</option>
@@ -78,28 +78,28 @@
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="size">{{t('expected effort')}}</label>
+        <div>
+            <label class="form-label" for="size">{{t('expected effort')}}</label>
             <select class="form-control" id="size" tabindex="0" name="size" (change)="update($event)"
                 [(ngModel)]="demographicData.size">
                 <option [ngValue]="null">-- {{t('select effort')}} --</option>
                 <option *ngFor="let s of sizeList" [value]="s.demographicId">{{s.description}}</option>
             </select>
         </div>
-        <div class="form-group" *ngIf="showOrganizationName()">
-            <label for="edmOrganizationName">{{t('org name')}}</label>
+        <div *ngIf="showOrganizationName()">
+            <label class="form-label" for="edmOrganizationName">{{t('org name')}}</label>
             <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150"
                 name="edmOrganizationName" id="edmOrganizationName" [(ngModel)]="demographicData.organizationName"
                 #edmOrganizationName="ngModel" placeholder="{{t('org name')}}" (blur)="update($event)">
         </div>
-        <div class="form-group" *ngIf="showBusinessAgencyName()">
-            <label for="edmAgency">{{t('business unit agency')}}</label>
+        <div *ngIf="showBusinessAgencyName()">
+            <label class="form-label" for="edmAgency">{{t('business unit agency')}}</label>
             <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150" name="edmAgency"
                 id="edmAgency" [(ngModel)]="demographicData.agency" #edmAgancy="ngModel"
                 placeholder="{{t('business unit agency')}}" (blur)="update($event)">
         </div>
-        <div class="form-group">
-            <label for="edmOrganizationType">{{t('org type')}}</label>
+        <div>
+            <label class="form-label" for="edmOrganizationType">{{t('org type')}}</label>
             <select *ngIf="isSLTT" class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
                 (change)="update($event)" [(ngModel)]="demographicData.organizationType">
                 <option [ngValue]="null">-- {{t('select type')}} --</option>
@@ -114,8 +114,8 @@
                 </ng-container>
             </select>
         </div>
-        <div class="form-group" *ngIf="true">
-            <label class="mb-1" for="orgPointOfContact">{{t('org poc')}}</label>
+        <div *ngIf="true">
+            <label class="form-label" for="orgPointOfContact">{{t('org poc')}}</label>
             <select class="form-control" id="orgPointOfContact" tabindex="0" name="orgPointOfContact"
                 (change)="update($event)" [(ngModel)]="demographicData.orgPointOfContact">
                 <option [ngValue]="null">-- {{t('select contact')}} --</option>
@@ -123,8 +123,8 @@
                     {{contact.lastName}}</option>
             </select>
         </div>
-        <div class="form-group" *ngIf="showFacilitator()">
-            <label class="mb-1" for="edmFacilitator">{{t('contact.facilitator')}}</label>
+        <div *ngIf="showFacilitator()">
+            <label class="form-label" for="edmFacilitator">{{t('contact.facilitator')}}</label>
             <select class="form-control" id="edmFacilitator" tabindex="0" name="edmFacilitator"
                 (change)="update($event)" [(ngModel)]="demographicData.facilitator">
                 <option [ngValue]="null">-- {{t('select facilitator')}} --</option>
@@ -132,15 +132,15 @@
                     {{contact.lastName}}</option>
             </select>
         </div>
-        <div class="form-row" *ngIf="showCriticalService()">
-            <div class="form-group col-md-6">
-                <label class="mb-1" for="criticalService">{{t('critical service name')}}</label>
+        <div class="row" *ngIf="showCriticalService()">
+            <div class="col">
+                <label class="form-label" for="criticalService">{{t('critical service name')}}</label>
                 <textarea appAutoSize class="form-control" autocomplete="off" tabindex="0" maxlength="100"
                     name="criticalService" id="criticalService" [(ngModel)]="demographicData.criticalService"
                     placeholder="{{t('critical service name')}}" (blur)="update($event)"></textarea>
             </div>
-            <div class="form-group col-md-6">
-                <label class="mb-1" for="critSvcPointOfContact">{{t('crit svc poc')}}</label>
+            <div class="col">
+                <label class="form-label" for="critSvcPointOfContact">{{t('crit svc poc')}}</label>
                 <select class="form-control" id="critSvcPointOfContact" tabindex="0" name="critSvcPointOfContact"
                     (change)="update($event)" [(ngModel)]="demographicData.pointOfContact">
                     <option [ngValue]="null">-- {{t('select contact')}} --</option>
@@ -155,7 +155,7 @@
                     <input type="checkbox" id="edmIsScoped" name="edmIsScoped" tabindex="0" class="checkbox-custom mt-1"
                         (change)="update($event)" [(ngModel)]="demographicData.isScoped"
                         [checked]="demographicData.isScoped">
-                    <label for="edmIsScoped" class="checkbox-custom-label">
+                    <label class="form-label" for="edmIsScoped" class="checkbox-custom-label">
                         Suppliers are scoped to include other enterprise business units
                     </label>
                 </div>
