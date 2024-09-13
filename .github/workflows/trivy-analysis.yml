@@ -18,17 +18,17 @@ jobs:
       - name: Run vulnerability scanner
         uses: aquasecurity/trivy-action@0.24.0
         with:
-          format: "sarif"
-          output: "trivy-dotnet-results.sarif"
+          # format: "sarif"
+          # output: "trivy-dotnet-results.sarif"
           scan-type: "fs"
-          scan-ref: "."
+          scan-ref: "./CSETWebApi"
           severity: "CRITICAL,HIGH"
 
-      - name: Upload scan results to Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          category: ".NET"
-          sarif_file: "trivy-dotnet-results.sarif"
+      # - name: Upload scan results to Security tab
+      #   uses: github/codeql-action/upload-sarif@v3
+      #   with:
+      #     category: ".NET"
+      #     sarif_file: "trivy-dotnet-results.sarif"
 
   # nodejs:
   #   name: Node.js Analysis
