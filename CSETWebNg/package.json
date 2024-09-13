@@ -53,7 +53,7 @@
     "angular2-hotkeys": "^13.1.0",
     "ansi-styles": "^6.1.1",
     "array.prototype.fill": "^1.0.2",
-    "bootstrap": "^4.6.0",
+    "bootstrap": "^5.0.0",
     "chart.js": "^4.4.3",
     "core-js": "^3.9.0",
     "datalist-polyfill": "^1.24.4",
