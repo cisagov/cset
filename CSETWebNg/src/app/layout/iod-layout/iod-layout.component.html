@@ -24,21 +24,21 @@
   <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
     <div class="sticky-navbar">
 
-      <div class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
+      <div class="row no-gutters local-install mt-0 ps-0 d-flex justify-content-center align-items-center flex-00a"
         *ngIf="auth.isLocal && devMode">
         <span class="col-sm-12">Local Installation</span>
       </div>
 
-      <div class="row no-gutters pcii-header mt-0 pl-3 d-flex flex-00a"
+      <div class="row no-gutters pcii-header mt-0 ps-3 d-flex flex-00a"
         *ngIf="assessSvc.isPcii()">
         <span class="col-12">Warning: Data contained in this assessment is Protected Critical Infrastructure
           Information <a href="https://www.cisa.gov/resources-tools/programs/protected-critical-infrastructure-information-pcii-program"
-            target="_blank" class="ml-2">Click here to learn more</a>
+            target="_blank" class="ms-2">Click here to learn more</a>
           </span>
       </div>
 
       <!-- Navbar -->
-      <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md"
+      <nav class="px-4 no-gutters navbar cset-header navbar-expand-md"
         *ngIf="layoutSvc.isNavHeaderShown(this.router.url)">
         <!-- Brand (BASE) -->
         <span
@@ -51,7 +51,7 @@
         </span>
 
         <!-- Navbar Toggler Button (only renders when screen is narrow enough) -->
-        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ml-auto" [matMenuTriggerFor]="topMenus" #topMenusTrigger="matMenuTrigger" tabindex="0">
+        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ms-auto" [matMenuTriggerFor]="topMenus" #topMenusTrigger="matMenuTrigger" tabindex="0">
           <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
         </button>
 
@@ -90,20 +90,20 @@
                     <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                       (click)="showDisclaimer()">INL
                       Privacy & Accessibility</a>
-                    <span class="mr-2 ml-2">|</span>
+                    <span class="me-2 ms-2">|</span>
                     <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                       href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
-                    <span class="mr-2 ml-2">|</span>
+                    <span class="me-2 ms-2">|</span>
                   </ng-container>
                   <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                     href="https://www.us-cert.gov/ics/Frequently-Asked-Questions">FAQ</a>
-                  <span class="mr-2 ml-2">|</span>
+                  <span class="me-2 ms-2">|</span>
                   <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                     href="http://www.us-cert.gov/tlp/">Traffic Light Protocol</a>
-                  <span class="mr-2 ml-2">|</span>
+                  <span class="me-2 ms-2">|</span>
                   <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                     href="http://www.us-cert.gov/privacy/">Privacy &amp; Use</a>
-                  <span class="mr-2 ml-2">|</span>
+                  <span class="me-2 ms-2">|</span>
                   <a target="_blank" rel="noopener noreferrer"
                     href="http://www.us-cert.gov/accessibility/">Accessibility</a>
                 </div>

@@ -23,13 +23,13 @@
 <div class="bgc-page d-flex flex-column flex-11a w-100" *transloco="let t">
   <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
     <div class="sticky-navbar">
-      <div class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
+      <div class="row no-gutters local-install mt-0 ps-0 d-flex justify-content-center align-items-center flex-00a"
         *ngIf="auth.isLocal && devMode">
         <span class="col-sm-12">{{t('local installation')}}</span>
       </div>
 
       <!-- Navbar -->
-      <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md"
+      <nav class="px-4 no-gutters navbar cset-header navbar-expand-md"
         *ngIf="layoutSvc.isNavHeaderShown(this.router.url)">
         <!-- *ngIf="auth.userToken() && auth.userToken() !== 'null'">   -->
         <!-- Brand (BASE) -->
@@ -43,7 +43,7 @@
         </span>
 
         <!-- Navbar Toggler Button (only renders when screen is narrow enough) -->
-        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ml-auto" [matMenuTriggerFor]="topMenus"
+        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ms-auto" [matMenuTriggerFor]="topMenus"
           #topMenusTrigger="matMenuTrigger" tabindex="0">
           <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
         </button>
@@ -86,20 +86,20 @@
                   <ng-container *ngIf="isRunningAnonymous()">
                     <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                       (click)="showDisclaimer()">INL Privacy & Accessibility</a>
-                    <span class="mr-2 ml-2">|</span>
+                    <span class="me-2 ms-2">|</span>
                     <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                       href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
-                    <span class="mr-2 ml-2">|</span>
+                    <span class="me-2 ms-2">|</span>
                   </ng-container>
                   <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                     href="https://www.us-cert.gov/ics/Frequently-Asked-Questions">{{t('footer.faq')}}</a>
-                  <span class="mr-2 ml-2">|</span>
+                  <span class="me-2 ms-2">|</span>
                   <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                     href="http://www.us-cert.gov/tlp/">{{t('footer.traffic light protocol')}}</a>
-                  <span class="mr-2 ml-2">|</span>
+                  <span class="me-2 ms-2">|</span>
                   <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                     href="http://www.us-cert.gov/privacy/">{{t('footer.privacy and use')}}</a>
-                  <span class="mr-2 ml-2">|</span>
+                  <span class="me-2 ms-2">|</span>
                   <a target="_blank" rel="noopener noreferrer"
                     href="http://www.us-cert.gov/accessibility/">{{t('footer.accessibility')}}</a>
                 </div>
