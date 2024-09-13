@@ -24,6 +24,7 @@ jobs:
       - name: Upload scan results to Security tab
         uses: github/codeql-action/upload-sarif@v2
         with:
+          category: ".NET"
           sarif_file: "trivy-dotnet-results.sarif"
 
   nodejs:
@@ -45,4 +46,5 @@ jobs:
       - name: Upload scan results to Security tab
         uses: github/codeql-action/upload-sarif@v2
         with:
+          category: "Node.js"
           sarif_file: "trivy-nodejs-results.sarif"
