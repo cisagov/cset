@@ -18,13 +18,13 @@ jobs:
       - name: Run vulnerability scanner
         uses: aquasecurity/trivy-action@0.24.0
         with:
-          format: "sarif"
-          output: "trivy-results.sarif"
+          #   format: "sarif"
+          #   output: "trivy-results.sarif"
           scan-type: "fs"
           severity: "CRITICAL,HIGH"
 
-      - name: Upload scan results to Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
-        with:
-          sarif_file: "trivy-results.sarif"
+      # - name: Upload scan results to Security tab
+      #   uses: github/codeql-action/upload-sarif@v3
+      #   if: always()
+      #   with:
+      #     sarif_file: "trivy-results.sarif"
