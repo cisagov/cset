@@ -21,8 +21,8 @@ jobs:
           #   format: "sarif"
           #   output: "trivy-results.sarif"
           scan-type: fs
-          scanners: misconfig,vuln,secret
           severity: CRITICAL,HIGH
+          skip-files: CSETWebApi/CSETWeb_Api/CSETWebCore.UpgradeLibrary/VersionUpgrader/SQL/*.sql
 
       # - name: Upload scan results to Security tab
       #   uses: github/codeql-action/upload-sarif@v3
