@@ -20,7 +20,7 @@ jobs:
           dotnet-version: "8.0.x"
 
       - name: dotnet backend
-        run: dotnet build ./CSETWebApi/CSETWeb_API/CSETWeb_ApiCore
+        run: dotnet build CSETWebApi/CSETWeb_Api/CSETWeb_Api.sln
 
       - name: Run vulnerability scanner
         uses: aquasecurity/trivy-action@0.24.0
