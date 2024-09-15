@@ -8,8 +8,8 @@ on:
     - cron: "0 21 * * 0"
 
 jobs:
-  scan:
-    name: Analyze Code
+  dotnet:
+    name: .NET Analysis
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -26,8 +26,9 @@ jobs:
         uses: aquasecurity/trivy-action@0.24.0
         with:
           #   format: "sarif"
-          #   output: "trivy-results.sarif"
+          #   output: "trivy-dotnet-results.sarif"
           scan-type: fs
+          scan-ref: CSETWebApi/
           severity: CRITICAL,HIGH
           skip-files: |
             CSETWebApi/CSETWeb_Api/**/*.sql
@@ -37,4 +38,5 @@ jobs:
       #   uses: github/codeql-action/upload-sarif@v3
       #   if: always()
       #   with:
-      #     sarif_file: "trivy-results.sarif"
+      #     category: ".NET"
+      #     sarif_file: "trivy-dotnet-results.sarif"
