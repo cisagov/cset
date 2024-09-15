@@ -1,4 +1,5 @@
 name: Trivy Scanner
+
 on:
   pull_request:
   push:
@@ -71,6 +72,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          pattern: *.sarif
+          merge-multiple: true
 
       - name: Merge results
         run: |
