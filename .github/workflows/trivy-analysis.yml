@@ -25,18 +25,40 @@ jobs:
       - name: Run vulnerability scanner
         uses: aquasecurity/trivy-action@0.24.0
         with:
-          #   format: "sarif"
-          #   output: "trivy-dotnet-results.sarif"
+          format: "sarif"
+          output: "trivy-dotnet-results.sarif"
           scan-type: fs
-          scan-ref: CSETWebApi/
+          scan-ref: ./CSETWebApi
           severity: CRITICAL,HIGH
           skip-files: |
             CSETWebApi/CSETWeb_Api/**/*.sql
             CSETWebApi/CSETWeb_Api/**/*.xml
 
-      # - name: Upload scan results to Security tab
-      #   uses: github/codeql-action/upload-sarif@v3
-      #   if: always()
-      #   with:
-      #     category: ".NET"
-      #     sarif_file: "trivy-dotnet-results.sarif"
+      - name: Upload scan results to Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          category: ".NET"
+          sarif_file: "trivy-dotnet-results.sarif"
+
+  nodejs:
+    name: Node.js Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run vulnerability scanner
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          format: "sarif"
+          output: "trivy-nodejs-results.sarif"
+          scan-type: fs
+          scan-ref: ./CSETWebNg
+          severity: CRITICAL,HIGH
+
+      - name: Upload scan results to Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          category: "Node.js"
+          sarif_file: "trivy-nodejs-results.sarif"
