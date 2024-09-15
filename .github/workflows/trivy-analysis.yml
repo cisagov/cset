@@ -18,7 +18,9 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "8.0.x"
-      - run: dotnet build CSETWebApi/CSETWeb_API/CSETWeb_ApiCore
+
+      - name: dotnet backend
+        run: dotnet build ./CSETWebApi/CSETWeb_API/CSETWeb_ApiCore
 
       - name: Run vulnerability scanner
         uses: aquasecurity/trivy-action@0.24.0
