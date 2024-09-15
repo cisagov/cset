@@ -8,8 +8,8 @@ on:
     - cron: "0 21 * * 0"
 
 jobs:
-  nodejs:
-    name: Node.js Analysis
+  scan:
+    name: Analyze Code
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -19,37 +19,12 @@ jobs:
         uses: aquasecurity/trivy-action@0.24.0
         with:
           format: "sarif"
-          output: "trivy-nodejs-results.sarif"
+          output: "trivy-results.sarif"
           scan-type: "fs"
-          scan-ref: "./CSETWebNg"
           severity: "CRITICAL,HIGH"
 
       - name: Upload scan results to Security tab
         uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
-          category: "Node.js"
-          sarif_file: "trivy-nodejs-results.sarif"
-
-  dotnet:
-    name: .NET Analysis
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run vulnerability scanner
-        uses: aquasecurity/trivy-action@0.24.0
-        with:
-          format: "sarif"
-          output: "trivy-dotnet-results.sarif"
-          scan-type: "repo"
-          scan-ref: "./CSETWebApi"
-          severity: "CRITICAL,HIGH"
-
-      - name: Upload scan results to Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
-        with:
-          category: ".NET"
-          sarif_file: "trivy-dotnet-results.sarif"
+          sarif_file: "trivy-results.sarif"
