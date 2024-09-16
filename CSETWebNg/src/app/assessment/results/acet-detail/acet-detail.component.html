@@ -39,12 +39,12 @@
 
         <div class="d-table mb-4" style="min-width: 50%;">
             <div class="d-table-row">
-                <div class="d-table-cell pr-3 label-cell">IRP:</div>
+                <div class="d-table-cell pe-3 label-cell">IRP:</div>
                 <!-- <div class="d-table-cell">{{ t('irp.' + overallIrp) }}</div> -->
                 <div *ngIf="overallIrp" class="d-table-cell">{{ t('irp.' + overallIrp.toLowerCase()) }}</div>
             </div>
             <div class="d-table-row">
-                <div class="d-table-cell pr-3 label-cell">{{ t('acet.target maturity range') }}:</div>
+                <div class="d-table-cell pe-3 label-cell">{{ t('acet.target maturity range') }}:</div>
                 <!-- <div class="d-table-cell">{{matRangeString}}</div> -->
                 <div *ngIf="matRangeStartString" class="d-table-cell">{{ t('level.' + matRangeStartString) + ' - ' +
                     t('level.' + matRangeEndString) }}</div>
@@ -164,7 +164,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="ml-3 mr-3 form">
+                                                    <div class="ms-3 me-3 form">
                                                         <table class="label-value mx-auto">
                                                             <tbody>
                                                                 <tr class="item-row">

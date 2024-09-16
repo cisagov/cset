@@ -31,7 +31,7 @@
             <app-logo-rra></app-logo-rra>
         </div>
 
-        <div class="mb-4 mr-4 ml-4 p-3 bgc-black c-white"
+        <div class="mb-4 me-4 ms-4 p-3 bgc-black c-white"
             [ngClass]="{'login-margin' : (configSvc.installationMode === 'ACET') }">
             <div *ngIf="configSvc.installationMode === 'CSET' || configSvc.installationMode === ''">
                 {{t('change password.enter email cset')}}
@@ -118,7 +118,7 @@
         </div>
         <div class="mx-4 alert alert-danger" *ngIf="errorMsg">{{warning}}</div>
 
-        <div class="mt-4 mb-4 mr-4 ml-4 d-flex flex-column justify-content-start align-items-center flex-00a">
+        <div class="mt-4 mb-4 me-4 ms-4 d-flex flex-column justify-content-start align-items-center flex-00a">
             <div class="c-gray-600 mb-4">
                 <app-cset-origin *ngIf="showOrigin">
                 </app-cset-origin>

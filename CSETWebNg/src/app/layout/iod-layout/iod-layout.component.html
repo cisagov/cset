@@ -24,12 +24,12 @@
   <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
     <div class="sticky-navbar">
 
-      <div class="row no-gutters local-install mt-0 ps-0 d-flex justify-content-center align-items-center flex-00a"
+      <div class="no-gutters local-install mt-0 ps-0 d-flex justify-content-center align-items-center flex-00a"
         *ngIf="auth.isLocal && devMode">
         <span class="col-sm-12">Local Installation</span>
       </div>
 
-      <div class="row no-gutters pcii-header mt-0 ps-3 d-flex flex-00a"
+      <div class="no-gutters pcii-header mt-0 ps-3 d-flex flex-00a"
         *ngIf="assessSvc.isPcii()">
         <span class="col-12">Warning: Data contained in this assessment is Protected Critical Infrastructure
           Information <a href="https://www.cisa.gov/resources-tools/programs/protected-critical-infrastructure-information-pcii-program"
@@ -66,14 +66,14 @@
     </div>
 
     <!-- Body -->
-    <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
+    <div class="no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
       <div class="p-0 d-flex col-xl-12 bgc-gray-50">
         <router-outlet></router-outlet>
       </div>
     </div>
 
     <!-- Footer -->
-    <div ngbAccordion type="primary" class="footer row no-gutters sticky-footer"
+    <div ngbAccordion type="primary"  class="footer no-gutters sticky-footer"
     *ngIf="layoutSvc.isFooterShown(this.router.url)">
     <div ngbAccordionItem id="footerPanel" [collapsed]="footerClosed">
       <h4 ngbAccordionHeader>

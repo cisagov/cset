@@ -25,7 +25,7 @@
     <span>AWWA Cybersecurity Tool</span>
   </div>
 
-  <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
+  <mat-dialog-content class="p-3 pb-0 pe-0 oy-auto d-flex flex-column flex-11a">
     <div *ngIf="importStatus === 1">
       <div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}</div>
       <div class="mb-3">
@@ -40,7 +40,7 @@
             <input id="awwaUpload" type="file" accept=".csv,.xls,.xlsx" (change)="fileSelectAwwa($event)"
               class="d-none" />
           </td>
-          <td class="pl-3 py-2">
+          <td class="ps-3 py-2">
             I'm ready to upload an AWWA Cyber Tool sheet.
           </td>
         </tr>
@@ -50,7 +50,7 @@
               No
             </button>
           </td>
-          <td class="pl-3 py-2">
+          <td class="ps-3 py-2">
             Clicking 'No' will take you to the AWWA site to complete the AWWA Cyber Tool sheet.
             <a href='{{awwaSvc.url}}' tabindex="0" target='_bank'>{{awwaSvc.url}}</a>
           </td>
@@ -61,7 +61,7 @@
               Continue Anyway
             </button>
           </td>
-          <td class="pl-3 py-2">
+          <td class="ps-3 py-2">
             This option will ask all questions related to the AWWA tool.
           </td>
         </tr>

@@ -21,18 +21,18 @@
   SOFTWARE.
 -------------------------->
 <div class="p-0 d-flex flex-column justify-content-start flex-11a">
-    <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
+    <div class="bgc-trans mt-4 mx-4 pe-4 d-flex flex-column flex-00a ">
 
         <!-- Logo and Name -->
         <div *ngIf="skin === 'CSET'" class="my-4 d-flex align-items-end flex-00a flex-nowrap">
             <app-logo-cset logoHeight="60"></app-logo-cset>
-            <span class="align-bottom ml-3 fst-italic"
+            <span class="align-bottom ms-3 fst-italic"
                 style="font-size: 37px; margin-bottom: -.5rem; color: #666">Online</span>
         </div>
 
         <div *ngIf="skin === 'TSA'" class="d-flex align-items-end flex-00a">
             <app-logo-tsa mode="white" logoHeight="60"></app-logo-tsa>
-            <span class="align-bottom ml-3 fst-italic"
+            <span class="align-bottom ms-3 fst-italic"
                 style="font-size: 30px; margin-top: 8px; color: #666">Online</span>
         </div>
 
@@ -46,14 +46,14 @@
             </div>
 
             <div class="mb-3 d-flex flex-row">
-                <div class="mr-3 container">
+                <div class="me-3 container">
                     <label>
                         If you have used <em>{{ title1[skin] }}</em> before and already have an Access Key, enter it
                         here and
                         click Login.
                     </label>
                     <div class="input-group mb-2">
-                        <input class="form-control mr-2" [(ngModel)]="loginAccessKey" (keyup.enter)="login()"
+                        <input class="form-control me-2" [(ngModel)]="loginAccessKey" (keyup.enter)="login()"
                             placeholder="Enter Access Key">
                         <button (click)="login()" class="input-group-append btn btn-primary mt-0">Login</button>
                     </div>
@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="container">
-                    <label class="mr-3">
+                    <label class="me-3">
                         If it is your first time using <em>{{ title1[skin] }}</em> click this button to generate a new
                         Access
                         Key.

@@ -38,7 +38,7 @@
             <select class="form-control mb-3" tabindex="0" [(ngModel)]="selectedStandard">
                 <option *ngFor="let s of standards" [value]="s.setName">{{s.fullName}}</option>
             </select>
-            <button class="btn btn-primary text-nowrap ml-3" (click)="launchStandardReport()"
+            <button class="btn btn-primary text-nowrap ms-3" (click)="launchStandardReport()"
                 [disabled]="!selectedStandard">Launch Report</button>
         </div>
 
@@ -48,7 +48,7 @@
                 <option *ngFor="let m of models" [value]="m.modelId">{{m.modelTitle}}</option>
             </select>
 
-            <button class="btn btn-primary text-nowrap ml-3" (click)="launchModelReport()"
+            <button class="btn btn-primary text-nowrap ms-3" (click)="launchModelReport()"
                 [disabled]="!selectedModel">Launch Report</button>
         </div>
 

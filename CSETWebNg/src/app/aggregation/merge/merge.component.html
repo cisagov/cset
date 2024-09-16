@@ -46,7 +46,7 @@
           </div>
 
           <div class="question-row" *ngFor="let q of cat.questions">
-            <div style="width: 100%;" class="d-flex flex-row pr-2">
+            <div style="width: 100%;" class="d-flex flex-row pe-2">
               <div [style.word-break]="applyWordBreak(q)" [innerHTML]="assessmentSvc.formatLinebreaks(q.questionText)"
                 (click)="questionTextClicked(q, $event)">
               </div>
