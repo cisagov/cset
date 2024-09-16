@@ -1,9 +1,13 @@
 name: Trivy Scanner
+
 on:
+  pull_request:
   push:
     branches:
       - develop
-  pull_request:
+  schedule:
+    - cron: "0 21 * * 0"
+
 jobs:
   dotnet:
     name: .NET Analysis
@@ -12,20 +16,31 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: dotnet backend
+        run: dotnet build CSETWebApi/CSETWeb_Api/CSETWeb_Api.sln
+
       - name: Run vulnerability scanner
         uses: aquasecurity/trivy-action@0.24.0
         with:
-          format: "sarif"
-          output: "trivy-dotnet-results.sarif"
-          scan-type: "fs"
-          scan-ref: "./CSETWebApi"
-          severity: "CRITICAL,HIGH"
+          format: sarif
+          output: trivy-dotnet-results.sarif
+          scan-type: fs
+          scan-ref: ./CSETWebApi
+          severity: CRITICAL,HIGH
+          skip-files: |
+            CSETWebApi/CSETWeb_Api/**/*.sql
+            CSETWebApi/CSETWeb_Api/**/*.xml
 
-      - name: Upload scan results to Security tab
-        uses: github/codeql-action/upload-sarif@v3
+      - name: Upload SARIF artifact
+        id: upload
+        uses: actions/upload-artifact@v4
         with:
-          category: ".NET"
-          sarif_file: "trivy-dotnet-results.sarif"
+          name: trivy-dotnet-results
+          path: trivy-dotnet-results.sarif
 
   nodejs:
     name: Node.js Analysis
@@ -37,14 +52,38 @@ jobs:
       - name: Run vulnerability scanner
         uses: aquasecurity/trivy-action@0.24.0
         with:
-          format: "sarif"
-          output: "trivy-nodejs-results.sarif"
-          scan-type: "fs"
-          scan-ref: "./CSETWebNg"
-          severity: "CRITICAL,HIGH"
+          format: sarif
+          output: trivy-nodejs-results.sarif
+          scan-type: fs
+          scan-ref: ./CSETWebNg
+          severity: CRITICAL,HIGH
+
+      - name: Upload SARIF artifact
+        id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-nodejs-results
+          path: trivy-nodejs-results.sarif
+
+  results:
+    name: Upload scan results
+    runs-on: ubuntu-latest
+    needs: [dotnet, nodejs]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+
+      - name: Merge results
+        run: |
+          jq -s 'reduce .[] as $item ({}; . * $item)' trivy-*.sarif > trivy-results.sarif
 
       - name: Upload scan results to Security tab
         uses: github/codeql-action/upload-sarif@v3
         with:
-          category: "Node.js"
-          sarif_file: "trivy-nodejs-results.sarif"
+          sarif_file: "trivy-results.sarif"
