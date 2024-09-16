@@ -100,7 +100,7 @@
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^16.0.0",
-    "@angular-devkit/build-angular": "^16.1.4",
+    "@angular-devkit/build-angular": "^16.2.15",
     "@angular-eslint/builder": "^16.1.0",
     "@angular-eslint/eslint-plugin": "^16.1.0",
     "@angular-eslint/eslint-plugin-template": "16.1.0",
@@ -131,7 +131,6 @@
     "karma-jasmine": "^4.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "prettier": "^2.8.8",
-    "protractor": "^7.0.0",
     "rxjs-tslint": "^0.1.6",
     "style-loader": "^3.3.2",
     "ts-node": "^10.9.2",
