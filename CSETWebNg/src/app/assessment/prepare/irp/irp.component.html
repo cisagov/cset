@@ -42,7 +42,7 @@
         <div *ngFor="let irp of iHeader.irpList" class="mb-4">
             <div *ngIf="(irp.risk_Type === 'IRP')">
                 <div class="lead mb-3">{{ irp.item_Number }}. {{ irp.description }}</div>
-                <label class="ml-1 font-weight-bold">{{ t('irp.risk levels') }}</label>
+                <label class="ms-1 font-weight-bold">{{ t('irp.risk levels') }}</label>
                 <div class="mb-4">
                     <div (click)="setResponse(irp, 1);" (keyup.enter)="setResponse(irp, 1);" tabindex="0"
                         class="irp-risk cursor-pointer" [ngClass]="{'irp-selected': irp.response==1}">

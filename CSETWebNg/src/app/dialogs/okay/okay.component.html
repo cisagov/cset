@@ -22,11 +22,11 @@
 -------------------------->
 <div class="ok-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a" *ngIf="hasHeader">
-    <span class="mr-3 fs-base-6 {{iconClass}}"></span>
+    <span class="me-3 fs-base-6 {{iconClass}}"></span>
     <span>{{dialogTitle}}</span>
   </div>
-  <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
-    <div class="pr-3" *ngIf="data.messageText" [innerHTML]="data.messageText | safe">
+  <mat-dialog-content class="p-3 pb-0 pe-0 oy-auto d-flex flex-column flex-11a">
+    <div class="pe-3" *ngIf="data.messageText" [innerHTML]="data.messageText | safe">
     </div>
   </mat-dialog-content>
   <mat-dialog-actions class="p-3 pt-3 mb-0 d-flex justify-content-between flex-00a">

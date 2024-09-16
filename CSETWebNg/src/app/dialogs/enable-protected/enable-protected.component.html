@@ -22,10 +22,10 @@
 -------------------------->
 <div class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span class="cset-icons-key-shield fs-base-6 mr-3"></span>
+    <span class="cset-icons-key-shield fs-base-6 me-3"></span>
     <span>Protected Features</span>
   </div>
-  <mat-dialog-content class="pb-0 p-3 pr-0 oy-auto d-flex flex-column flex-11a">
+  <mat-dialog-content class="pb-0 p-3 pe-0 oy-auto d-flex flex-column flex-11a">
     <table class="mt-2 mb-4 mx-2" *ngIf="modulesList?.length > 0">
       <tr>
         <th style="width: 25%">Module Name</th>
@@ -58,7 +58,7 @@
     <div *ngIf="showCisaAssessorWorkflowSwitch()"
       class="form-group d-flex align-items-center justify-content-between mt-4 mx-2">
       <label for="csaToggle" class="font-weight-bold">CISA Assessor Workflow </label>
-      <div id="csaToggle" class="btn-group btn-group-toggle w-50 ml-2" data-toggle="buttons">
+      <div id="csaToggle" class="btn-group btn-group-toggle w-50 ms-2" data-toggle="buttons">
         <label class="btn btn-level btn-rounded form-check-label" [class.active]="cisaWorkflowEnabled"
           (change)="toggleCisaAssessorWorkflow()">
           <input class="form-check-input" name="csaModeYes" id="csaModeYes" type="radio" autocomplete="off" tabindex="0"

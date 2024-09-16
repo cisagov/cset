@@ -35,22 +35,22 @@
                     <span [class.display-hidden]="!myGrouping.hasReviewItems"
                         class="d-flex justify-content-center align-items-center flex-00a"
                         matTooltip="{{ t('tooltip.category requires review') }}">
-                        <span class="mr-1 cset-icons-flag-dark fs-small"></span>
+                        <span class="me-1 cset-icons-flag-dark fs-small"></span>
                         <span class="mb-1 fs-small">{{ t('requires review') }}</span>
                     </span>
-                    <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
+                    <app-progress [value]="percentAnswered" class="me-2 ms-2"></app-progress>
                     <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.expanded"></i>
                 </div>
 
                 <div class="d-flex flex-column justify-content-end align-items-end flex-00a" *ngIf="layoutSvc.hp">
                     <div>
-                        <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
+                        <app-progress [value]="percentAnswered" class="me-2 ms-2"></app-progress>
                         <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.expanded"></i>
                     </div>
                     <span [class.display-hidden]="!myGrouping.hasReviewItems"
                         class="d-flex justify-content-center align-items-center flex-00a"
                         matTooltip="{{ t('tooltip.category requires review') }}">
-                        <span class="mr-1 cset-icons-flag-dark fs-small"></span>
+                        <span class="me-1 cset-icons-flag-dark fs-small"></span>
                     </span>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                     <div class="w-100 d-flex flex-row">
                         <div class="number-and-text mt-2">
                             <!-- Display level  and name for parent question-->
-                            <div [class.ml-5.mb-2]="openEndedQuestion && !!q.parentQuestionId"
+                            <div [class.ms-5.mb-2]="openEndedQuestion && !!q.parentQuestionId"
                                 style="font-weight: bold;margin-top: 0.5rem; margin-right: 2rem; white-space: nowrap;">
                                 {{ q.displayNumber }}
                             </div>
@@ -121,7 +121,7 @@
 
 
                                 <!-- Mark For Review Flag  -->
-                                <label class="mr-0 ml-2 btn form-check-label btn-mfr"
+                                <label class="me-0 ms-2 btn form-check-label btn-mfr"
                                     [class.answer-selected]="q.markForReview === true"
                                     matTooltip="This control requires further review.">
                                     <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);"
@@ -142,10 +142,10 @@
                         </div>
                     </div>
 
-                    <div [class.pl-5]="openEndedQuestion && !!q.parentQuestionId"
-                        class="w-100 d-flex flex-row ml-5 pl-2">
+                    <div [class.ps-5]="openEndedQuestion && !!q.parentQuestionId"
+                        class="w-100 d-flex flex-row ms-5 ps-2">
                         <app-question-extras *ngIf="!q.isParentQuestion || q.parentQuestionId !==null" #extrasComponent
-                            [myQuestion]="q" class="w-100 mb-3 text-left ml-3 pl-5 text-nowrap"
+                            [myQuestion]="q" class="w-100 mb-3 text-left ms-3 ps-5 text-nowrap"
                             (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
                         </app-question-extras>
                     </div>
@@ -163,12 +163,12 @@
                     <div class="w-100 mt-3">
                         <div>
                             <!-- Display level  and name for parent question-->
-                            <div [class.ml-3.mb-2]="openEndedQuestion && !!q.parentQuestionId"
+                            <div [class.ms-3.mb-2]="openEndedQuestion && !!q.parentQuestionId"
                                 class="font-weight-bold text-nowrap div1">
                                 {{ q.displayNumber }}
                             </div>
 
-                            <div [class.ml-3.mb-2]="openEndedQuestion && !!q.parentQuestionId" class="w-100 div2">
+                            <div [class.ms-3.mb-2]="openEndedQuestion && !!q.parentQuestionId" class="w-100 div2">
                                 <div *ngIf="!!q.shortName" class="mb-1 fst-italic font-weight-bold"
                                     style="color: #666; font-size: .8rem; white-space: normal;">
                                     <p>{{ q.shortName }}</p>
@@ -189,7 +189,7 @@
                         <div *ngIf="showYNQuestions && !q.parentQuestionId">
 
                             <!-- build the list of answer options -->
-                            <div class="btn-group btn-group-toggle answer-group ml-0 mt-2" data-toggle="buttons">
+                            <div class="btn-group btn-group-toggle answer-group ms-0 mt-2" data-toggle="buttons">
                                 <label *ngFor="let option of answerOptions" class="btn form-check-label"
                                     [class]="questionsSvc.answerOptionCss(maturityModelName, option)"
                                     [class.answer-selected]="q.answer === option"
@@ -202,7 +202,7 @@
 
 
                                 <!-- Mark For Review Flag  -->
-                                <label class="mr-0 ml-2 btn form-check-label btn-mfr"
+                                <label class="me-0 ms-2 btn form-check-label btn-mfr"
                                     [class.answer-selected]="q.markForReview === true"
                                     matTooltip="This control requires further review.">
                                     <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);"
@@ -222,7 +222,7 @@
                         </div>
                     </div>
 
-                    <div [class.ml-3]="openEndedQuestion && !!q.parentQuestionId" class="w-100__ d-flex__ flex-row__">
+                    <div [class.ms-3]="openEndedQuestion && !!q.parentQuestionId" class="w-100__ d-flex__ flex-row__">
                         <app-question-extras *ngIf="!q.isParentQuestion || q.parentQuestionId !==null" #extrasComponent
                             [myQuestion]="q" class="w-100 mb-3 text-left" (changeExtras)="refreshReviewIndicator()"
                             (changeComponents)="refreshComponentOverrides()">
