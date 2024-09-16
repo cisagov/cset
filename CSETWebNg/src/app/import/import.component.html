@@ -21,10 +21,10 @@
   SOFTWARE.
 -------------------------->
 <div class="bgc-gray50 d-flex flex-11a w-100">
-    <div class="p-4 pb-0 pr-0 d-flex flex-column flex-11a w-100">
+    <div class="p-4 pb-0 pe-0 d-flex flex-column flex-11a w-100">
         <h3 class="mb-4">Import New Module (Question/Requirements Set)</h3>
-        <div class="pr-4 oy-auto d-flex flex-11a w-100 h-0">
-            <div class="p-0 mr-4 col-md-4 d-flex flex-column flex-11a w-100" style="overflow:auto;">
+        <div class="pe-4 oy-auto d-flex flex-11a w-100 h-0">
+            <div class="p-0 me-4 col-md-4 d-flex flex-column flex-11a w-100" style="overflow:auto;">
                 <h4>Export</h4>
                 <ul class="list-group">
                     <ng-container *ngFor="let set of sets">
@@ -34,7 +34,7 @@
                                 <div class="d-flex mt-2">
                                     <span class="flex-11a mb-1">
                                         <button (click)="clickXMLLink(set.setName)"
-                                            class="btn btn-secondary mr-1">XML</button>
+                                            class="btn btn-secondary me-1">XML</button>
                                         <button (click)="clickJSONLink(set.setName)"
                                             class="btn btn-secondary">JSON</button>
                                     </span>
@@ -106,7 +106,7 @@
                             <h4>Drop code file here</h4>
                         </div>
                         <h4 class="d-flex" style="align-items:center">Module Code
-                            <div class="btn-group ml-3 mr-3 flex-11a" role="group" aria-label="...">
+                            <div class="btn-group ms-3 me-3 flex-11a" role="group" aria-label="...">
                                 <button (click)="switchToJson()" type="button" class="btn btn-secondary"
                                     [ngClass]="{'active': this.lang=='json'}">JSON</button>
                                 <button (click)="switchToXml()" type="button" class="btn btn-secondary"
@@ -119,7 +119,7 @@
                                 | <a style="font-size:12px;font-weight:normal;" role="button"
                                     (click)="getJsonSchema()">JSON</a>
                             </span>
-                            <button class="btn btn-secondary flex-01a ml-3" type="button" (click)="this.fullScreen()">
+                            <button class="btn btn-secondary flex-01a ms-3" type="button" (click)="this.fullScreen()">
                                 <span
                                     [ngClass]="{'cset-icons-resize-small':getFullScreen(), 'cset-icons-resize-full':!getFullScreen()}"></span>
                             </button>
@@ -189,10 +189,10 @@
                                     <ng-container *ngFor="let item of uploader.queue; index as i">
                                         <tr [ngClass]="{'danger': item.isError, 'success': item.isSuccess }">
                                             <td style="vertical-align:middle">
-                                                <span class="cset-icons-check-circle text-success pr-1"
+                                                <span class="cset-icons-check-circle text-success pe-1"
                                                     title="The file was uploaded successfully"
                                                     *ngIf="item.isSuccess"></span>
-                                                <span class="cset-icons-exclamation-triangle text-danger pr-1"
+                                                <span class="cset-icons-exclamation-triangle text-danger pe-1"
                                                     title="There was an error uploading the file.  Please try again."
                                                     *ngIf="item.isError"></span>
                                                 <strong>{{ item?.file?.name }}</strong>
@@ -228,13 +228,13 @@
                     </div>
                     <div style="margin: .5em 0">
                         <button [attr.disabled]="state=='Processing'||!importNgForm.valid?true:null" type="submit"
-                            class="btn btn-success btn-s mr-2" *ngIf="state!='Succeeded'"
-                            [ngClass]="{'p-0': state=='Processing', 'pr-2':state=='Processing'}"
+                            class="btn btn-success btn-s me-2" *ngIf="state!='Succeeded'"
+                            [ngClass]="{'p-0': state=='Processing', 'pe-2':state=='Processing'}"
                             style="display:inline-flex;align-items:center">
                             <span class="spinner-container" style="display:inline-block" *ngIf="state=='Processing'">
                                 <div class="spinner" style="max-width: 20px; max-height: 20px;"></div>
                             </span>
-                            <span class="cset-icons-import mr-1" *ngIf="state!='Processing'"></span>
+                            <span class="cset-icons-import me-1" *ngIf="state!='Processing'"></span>
                             <span *ngIf="state=='Failed'">Retry Import</span>
                             <span *ngIf="state=='Processing'">Processing</span>
                             <span *ngIf="state=='Ready'">Import</span>
@@ -243,7 +243,7 @@
                           <button class="btn btn-primary"
                               (click)="clearForm()">Import another module
                           </button>
-                          <div style="margin-bottom: 0" class="alert alert-warning ml-3">
+                          <div style="margin-bottom: 0" class="alert alert-warning ms-3">
                             Warning: This will clear the code editor
                           </div>
                         </div>

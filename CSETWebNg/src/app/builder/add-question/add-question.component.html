@@ -56,7 +56,7 @@
 
       <h5>Categorization</h5>
       <div class="d-flex flex-row">
-        <div class="form-group mr-2">
+        <div class="form-group me-2">
           <label>Question Group Heading
             <select class="form-control" id="category" name="category" [(ngModel)]="selectedGHId">
               <option value="0">--Select Heading--</option>
@@ -126,9 +126,9 @@
         </div>
         <div>
           <button type="submit"
-            class="btn btn-primary search-btn ml-2 d-flex justify-content-start align-items-center flex-00a"
+            class="btn btn-primary search-btn ms-2 d-flex justify-content-start align-items-center flex-00a"
             matTooltip="Search questions" (click)="search()">
-            <mat-icon class="mr-1">search</mat-icon>Search
+            <mat-icon class="me-1">search</mat-icon>Search
           </button>
         </div>
       </div>
@@ -155,7 +155,7 @@
 
         <div *ngFor="let q of searchHits; let i = index">
           <div class="d-flex flex-row justify-content-between">
-            <div class="ml-2 mr-3 w-100">
+            <div class="ms-2 me-3 w-100">
               <div [innerHTML]="q.questionText" class="mt-2 mb-4">
               </div>
               <div>
@@ -204,11 +204,11 @@
     </div>
 
     <div class="d-flex flex-row mt-3 mb-3">
-      <button *ngIf="!!(setBuilderSvc.activeRequirement)" class="btn btn-link mr-3"
+      <button *ngIf="!!(setBuilderSvc.activeRequirement)" class="btn btn-link me-3"
         (click)="setBuilderSvc.navRequirementDetail(setBuilderSvc.activeRequirement.requirementID)">
         &laquo; Back to Requirement
       </button>
-      <button *ngIf="!(setBuilderSvc.activeRequirement)" class="btn btn-link mr-3"
+      <button *ngIf="!(setBuilderSvc.activeRequirement)" class="btn btn-link me-3"
         (click)="setBuilderSvc.navQuestionList()" style="margin-right:auto">
         &laquo; Back to Question List
       </button>

@@ -72,7 +72,7 @@
         </p>
 
         <div class="d-flex flex-row">
-            <select class="form-control mr-1" #import>
+            <select class="form-control me-1" #import>
                 <option value="">-- Select Survey to Import --</option>
                 <option *ngFor="let c of importSourceCandidates" [value]="c.id">
                     {{c.assessmentName}} [{{c.assessmentDate | localizeDate}}]

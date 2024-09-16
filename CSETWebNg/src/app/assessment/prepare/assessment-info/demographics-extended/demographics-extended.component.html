@@ -40,7 +40,7 @@
             <label>
                 Sector
                 <button (click)="launchSectorHelp()" style="background-color: transparent; border: none">
-                    <span class="cset-icons-question-circle-outline fs-base-4 mr-2 align-middle"></span>
+                    <span class="cset-icons-question-circle-outline fs-base-4 me-2 align-middle"></span>
                 </button>
             </label>
             <select class="form-control" id="sector" name="sector" tabindex="0" [(ngModel)]="demographicData.sectorId"
@@ -76,7 +76,7 @@
             <a href="https://www.flsenate.gov/Committees/billsummaries/2022/html/2864" target="_blank">Florida House
                 Bill 7055</a>?
         </p>
-        <div class="d-flex flex-column ml-3">
+        <div class="d-flex flex-column ms-3">
             <input class="radio-custom" style="visibility: visible" name="HB7055No" id="HB7055No" type="radio"
                 autocomplete="off" tabindex="1" (click)="setHb7055('N')" [checked]="demographicData.hb7055 == 'N'">
             <label class="radio-custom-label" for="HB7055No">No</label>
@@ -84,7 +84,7 @@
                 autocomplete="off" tabindex="0" (click)="setHb7055('Y')" [checked]="demographicData.hb7055 == 'Y'">
             <label class="radio-custom-label" for="HB7055Yes">Yes</label>
         </div>
-        <div *ngIf="demographicData.hb7055 == 'Y'" class="ml-5 mt-3">
+        <div *ngIf="demographicData.hb7055 == 'Y'" class="ms-5 mt-3">
             <p>
                 Are you intending to apply for the State of Florida Local Cybersecurity Grant Program? The full
                 assessments completes the requirements for house bill 7055?
@@ -113,12 +113,12 @@
             (IT) or Operational Technology (OT) systems?
         </p>
 
-        <div class="d-flex flex-column ml-3">
+        <div class="d-flex flex-column ms-3">
             <input class="radio-custom" style="visibility: visible" name="primaryType" id="primaryIT" type="radio"
                 autocomplete="off" tabindex="0" (click)="setInfrastructureItOt('IT')"
                 [checked]="demographicData.infrastructureItOt == 'IT'">
             <label class="radio-custom-label" for="primaryIT">
-                <strong class="mr-4">Information Technology (IT)</strong>
+                <strong class="me-4">Information Technology (IT)</strong>
                 <div>
                     <div>
                         Any equipment or interconnected system or
@@ -126,7 +126,7 @@
                         management,
                         movement, control, display, switching, interchange, transmission, or reception of data or
                         information.
-                        <div class="fst-italic mt-2 ml-4 mb-4">
+                        <div class="fst-italic mt-2 ms-4 mb-4">
                             Examples include the internet, mobile phones, business operations support, computers,
                             content management and performance software, and software and support for office automation
                             systems such as email, word processing and spreadsheets.
@@ -138,13 +138,13 @@
                 autocomplete="off" tabindex="0" (click)="setInfrastructureItOt('OT')"
                 [checked]="demographicData.infrastructureItOt == 'OT'">
             <label class="radio-custom-label" for="primaryOT">
-                <strong class="mr-4">Operational Technology (OT)</strong>
+                <strong class="me-4">Operational Technology (OT)</strong>
                 <div>
                     Programmable systems or devices that interact
                     with the physical environment (or manage devices that interact with the physical environment). These
                     systems/devices detect or cause a direct change through the monitoring and/or control of devices,
                     processes, and events.
-                    <div class="fst-italic mt-2 ml-4">
+                    <div class="fst-italic mt-2 ms-4">
                         Examples include industrial control systems, plant floor controls, hospital diagnostic and
                         monitoring systems, transportation control systems, building management systems, fire control
                         systems, and physical access control mechanisms.
@@ -166,7 +166,7 @@
     </p>
 
     <div class="mb-4 d-flex flex-row" style="align-items: center">
-        <h5 class="mb-0 mr-5">Statewide</h5>
+        <h5 class="mb-0 me-5">Statewide</h5>
         <button class="btn btn-link" (click)="selectAllCounties(true)">Select All</button>
         <button class="btn btn-link" (click)="selectAllCounties(false)">Select None</button>
     </div>
@@ -326,7 +326,7 @@
             no-cost analysis, interested participants must fully complete their CSET risk assessment.
         </p>
         <p class="fst-italic">Are you interested in being considered for this free assessment follow-on service?</p>
-        <div class="d-flex flex-column ml-3">
+        <div class="d-flex flex-column ms-3">
             <input class="radio-custom" style="visibility: visible" name="FreeAssessYes" id="FreeAssessYes" type="radio"
                 autocomplete="off" tabindex="0" (click)="setCyberRisk('Y')"
                 [checked]="demographicData.cyberRiskService == 'Y'">

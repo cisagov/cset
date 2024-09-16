@@ -145,7 +145,7 @@
     <div class="page-break" *ngIf="reportSvc.isInstallation('ACET')">
         <h1>Maturity Detail</h1>
 
-        <div *ngFor="let domain of matDetails" class="pl-3 pr-3 mb-5 w-100 domain-section card">
+        <div *ngFor="let domain of matDetails" class="ps-3 pe-3 mb-5 w-100 domain-section card">
             <h2>{{domain.domainName}}</h2>
 
             <div *ngFor="let factor of domain.assessments" class="factor-section">
@@ -168,7 +168,7 @@
                         </div>
                     </div>
 
-                    <div class="row m-0 ml-5">
+                    <div class="row m-0 ms-5">
                         <div class="w-20pct text-center">
                             Baseline
                             <br />

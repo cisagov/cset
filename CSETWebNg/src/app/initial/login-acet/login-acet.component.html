@@ -24,7 +24,7 @@
   [ngClass]="{'login-background':mode == 'LOGIN'}">
   <div class="p-0 d-flex flex-column flex-10a w-100 login-margin">
 
-    <div class="mr-4 ml-4 p-3 bgc-secondary c-white" *ngIf="mode !== 'LOGIN'">
+    <div class="me-4 ms-4 p-3 bgc-secondary c-white" *ngIf="mode !== 'LOGIN'">
       <div *ngIf="mode === 'LOCAL'">
         ACET is running locally. No login is required.
       </div>
@@ -36,7 +36,7 @@
 
     <div *ngIf="mode === 'LOCAL'">
       <form name="form" (ngSubmit)="refreshWindow()" #f="ngForm" novalidate>
-        <div class="d-flex flex-nowrap pl-3 pr-3">
+        <div class="d-flex flex-nowrap ps-3 pe-3">
           <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">Continue</button>
           <div class="spinner-container" *ngIf="loading">
             <div style="max-width: 30px; max-height: 30px;"></div>
@@ -45,14 +45,14 @@
       </form>
     </div>
 
-    <div class="mr-4 ml-4 p-3 bgc-validation c-white" *ngIf="mode === 'LOGIN' && isRunningInElectron">
+    <div class="me-4 ms-4 p-3 bgc-validation c-white" *ngIf="mode === 'LOGIN' && isRunningInElectron">
       An error was encountered while running ACET.
     </div>
 
     <!-- If we reach the login page while running in electron, we can assume there was an error getting
       the standalone status from the API; prompt for exiting the application -->
     <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
-      <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
+      <form name="form" (ngSubmit)="exit()" #f="ngForm" class="me-4 ms-2 p-3" novalidate>
         <div class="d-flex flex-nowrap">
           <button type="submit" class="btn btn-primary btn-lg">Exit</button>
         </div>
