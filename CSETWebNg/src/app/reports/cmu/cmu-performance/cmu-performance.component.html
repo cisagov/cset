@@ -78,7 +78,7 @@
         <div class="col-10" style="width: 85%; padding: 0 0 0 0.75rem;">
             <div *ngFor="let goal of domain.groupings; let j = index" class="row goalrow" style="margin-right: 0.05rem"
                 [style.border-bottom]="j + 1 != domain.groupings.length ? '0.5px solid black' : '0px'">
-                <div class="col-6 p-0 pr-3 text-1">
+                <div class="col-6 p-0 pe-3 text-1">
                     <div class="goalrow-text">
                         <b>{{ goal.title.split('-')[0] }} -</b>
                         {{ stringSplitter(goal.title) }}

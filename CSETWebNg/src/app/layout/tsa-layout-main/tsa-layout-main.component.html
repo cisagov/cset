@@ -23,7 +23,7 @@
 <div class="bgc-page d-flex flex-column flex-11a w-100">
   <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
     <div class="sticky-navbar">
-      <div class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
+      <div class="no-gutters local-install mt-0 ps-0 d-flex justify-content-center align-items-center flex-00a"
         *ngIf="auth.isLocal && devMode">
         <span class="col-sm-12">Local Installation</span>
       </div>
@@ -42,7 +42,7 @@
         </span>
 
         <!-- Navbar Toggler Button (only renders when screen is narrow enough) -->
-        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ml-auto" [matMenuTriggerFor]="topMenus" #topMenusTrigger="matMenuTrigger"
+        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ms-auto" [matMenuTriggerFor]="topMenus" #topMenusTrigger="matMenuTrigger"
           *ngIf="auth.userToken() && auth.userToken() !== 'null'" tabindex="0">
           <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
         </button>
@@ -56,14 +56,14 @@
     </div>
 
     <!-- Body -->
-    <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
+    <div class="no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
       <div class="p-0 d-flex col-xl-12 bgc-gray-50">
         <router-outlet></router-outlet>
       </div>
     </div>
 
     <!-- Footer -->
-    <div ngbAccordion type="primary" class="footer row no-gutters sticky-footer"
+    <div ngbAccordion type="primary" class="footer no-gutters sticky-footer"
       *ngIf="layoutSvc.isFooterShown(this.router.url)">
       <div ngbAccordionItem id="footerPanel" [collapsed]="footerClosed">
         <h4 ngbAccordionHeader>
@@ -79,17 +79,17 @@
                   <ng-container *ngIf="isRunningAnonymous()">
                     <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                       (click)="showDisclaimer()">INL Privacy & Accessibility</a>
-                    <span class="mr-2 ml-2">|</span>
+                    <span class="me-2 ms-2">|</span>
                     <a target="_blank" rel="noopener noreferrer"
                       href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
-                    <span class="mr-2 ml-2">|</span>
+                    <span class="me-2 ms-2">|</span>
                   </ng-container>
                   <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                     href="https://www.tsa.gov/travel/frequently-asked-questions">FAQ</a>
-                  <span class="mr-2 ml-2">|</span>
+                  <span class="me-2 ms-2">|</span>
                   <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                     href="https://www.tsa.gov/privacy-policy">Privacy &amp; Use</a>
-                  <span class="mr-2 ml-2">|</span>
+                  <span class="me-2 ms-2">|</span>
                   <a target="_blank" rel="noopener noreferrer"
                     href="https://www.tsa.gov/accessibility">Accessibility</a>
                 </div>

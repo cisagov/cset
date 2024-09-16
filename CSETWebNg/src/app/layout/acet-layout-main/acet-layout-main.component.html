@@ -23,7 +23,7 @@
 <div class="bgc-page d-flex flex-column flex-11a w-100">
   <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
     <div class="sticky-navbar">
-      <div class="row no-gutters local-install mt-0 ps-0 d-flex justify-content-center align-items-center flex-00a"
+      <div class="no-gutters local-install mt-0 ps-0 d-flex justify-content-center align-items-center flex-00a"
         *ngIf="auth.isLocal && devMode">
         <span class="col-sm-12">Local Installation</span>
       </div>
@@ -58,7 +58,7 @@
   </div>
 
     <!-- Body -->
-    <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
+    <div class="no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
       <!-- [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'c' : 'col-md-12 col-lg-8'" -->
       <div class="p-0 d-flex col-xl-12 bgc-gray-50">
         <router-outlet></router-outlet>
@@ -68,7 +68,7 @@
     <!-- Footer -->
     <!-- Commenting out. Removing per client request during demo, but they might change their minds. 11/21/2022
 
-  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters ncua-header sticky-footer"
+  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer no-gutters ncua-header sticky-footer"
     *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
     <ngb-panel id="footerPanel">
       <ng-template ngbPanelTitle>

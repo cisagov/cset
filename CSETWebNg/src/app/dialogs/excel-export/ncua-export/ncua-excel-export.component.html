@@ -22,7 +22,7 @@
 -------------------------->
 
 <div mat-dialog-title class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span style="color: white;" class="mr-2 cset-icons-export-excel"></span>
+    <span style="color: white;" class="me-2 cset-icons-export-excel"></span>
     <span style="color: white;">Excel Export</span>
 </div>
 <mat-dialog-content>
@@ -39,10 +39,10 @@
     </div>
 </mat-dialog-content>
 
-<mat-dialog-actions class="pl-4 p-1" style="margin-bottom:15px;">
-    <button class="btn btn-secondary mr-4" (click)="close()">Cancel</button>
+<mat-dialog-actions class="ps-4 p-1" style="margin-bottom:15px;">
+    <button class="btn btn-secondary me-4" (click)="close()">Cancel</button>
 
-    <button [matTooltip]="getAcetTooltip()" class="btn btn-primary mr-1" [disabled]="this.acetCount == 0"
+    <button [matTooltip]="getAcetTooltip()" class="btn btn-primary me-1" [disabled]="this.acetCount == 0"
         (click)="exportAcetToExcel()">Export ACET Assessments</button>
 
     <button [matTooltip]="getIseTooltip()" class="btn btn-primary" [disabled]="this.iseCount == 0"

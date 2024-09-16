@@ -22,13 +22,13 @@
 -------------------------->
 <div *transloco="let t" class="edit-user-dialog d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span class="cset-icons-profile fs-base-6 mr-3"></span>
+    <span class="cset-icons-profile fs-base-6 me-3"></span>
     <span>{{t('user profile.dialog title')}}</span>
   </div>
 
-  <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
+  <mat-dialog-content class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
     <form name="form" #userForm="ngForm" (ngSubmit)="save(userForm)">
-      <div class="pr-3">
+      <div class="pe-3">
 
         <div class="form-group" [ngClass]="{ 'has-error': !firstName.valid }">
           <label required for="firstName">{{t('user profile.first name')}}</label>

@@ -97,17 +97,12 @@
   </div>
 
   <!-- #2 -->
-  <div>
-    <ng-container *ngIf="demographicData.organizationType == 1">
-      <label for="numberEmployeesUnit" class="form-label"> Number of employees in the business unit? </label>
-      <div class="fst-italic my-2">
-        Please select N/A if the business unit and the overall organization are the same.
-      </div>
-    </ng-container>
-    <ng-container *ngIf="demographicData.organizationType != 1">
-      <label for="numberEmployeesUnit" class="form-label"> Number of employees in the department? </label>
-      <div class="fst-italic my-2">Please select N/A if the department and the overall organization are the same.</div>
-    </ng-container>
+  <div class="mb-3">
+    <label for="numberEmployeesUnit" *ngIf="demographicData.organizationType == 1" class="form-label"> Number of
+      employees in the business unit? </label>
+    <label for="numberEmployeesUnit" *ngIf="demographicData.organizationType != 1" class="form-label"> Number of
+      employees in the department? </label>
+
     <select [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesUnit }" class="form-select"
       id="numberEmployeesUnit" tabindex="0" name="numberEmployeesUnit" [(ngModel)]="demographicData.numberEmployeesUnit"
       (change)="newUpdate('NUM-EMP-UNIT', $event, 'int')">
@@ -117,6 +112,12 @@
         {{ i.optionText }}
       </option>
     </select>
+
+    <div *ngIf="demographicData.organizationType == 1" class="fst-italic my-2">Please select N/A if the department and
+      the overall organization are the same.</div>
+    <div *ngIf="demographicData.organizationType == 1" class="fst-italic my-2">
+      Please select N/A if the business unit and the overall organization are the same.
+    </div>
   </div>
 
   <!-- #3 -->
@@ -168,7 +169,7 @@
       </label>
     </div>
 
-    <div *ngIf="demographicData.usesStandard ?? false" class="ml-5">
+    <div *ngIf="demographicData.usesStandard ?? false" class="ms-5">
       <div class="fst-italic my-2">
         Please select the two most important resources or bodies of practice used. If the name of the resource is not
         listed please enter it directly into each box as applicable.
@@ -214,7 +215,7 @@
       </label>
     </div>
 
-    <div *ngIf="demographicData.requiredToComply" class="ml-5">
+    <div *ngIf="demographicData.requiredToComply" class="ms-5">
       <p class="fst-italic">
         Please select the two primary regulation types. If known, please enter the name of each regulation in the spaces
         provided.
@@ -259,7 +260,7 @@
     <label for="assetValue" class="form-label">
       Please indicate the group(s) that your organization shares with or obtains cybersecurity-related information from.
     </label>
-    <div class="ml-5">
+    <div class="ms-5">
       <div class="fst-italic my-2">Check all that apply.</div>
       <div class="mb-3">
         <ng-container *ngFor="let org of demographicData.listShareOrgs">
@@ -285,7 +286,7 @@
       Please select the two most significant barriers or concerns limiting your organization's participation in
       cybersecurity information sharing groups or initiatives.
     </label>
-    <div class="ml-5">
+    <div class="ms-5">
       <div class="fst-italic my-2">
         If the name of the barrier is not listed please enter it directly into each box as applicable.
       </div>

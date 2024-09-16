@@ -90,22 +90,22 @@
                     </tr>
                     <ng-container *ngFor="let f of d.assessmentFactors">
                         <tr>
-                            <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.title}} - Assessment Factor
+                            <td colspan="5" class="background-2 font-weight-bold ps-4">{{f.title}} - Assessment Factor
                             </td>
                         </tr>
                         <ng-container *ngFor="let c of f.components">
                             <ng-container *ngIf="this.showSubcats.get(c.title)">
                                 <tr>
-                                    <td colspan="5" class="background-3 pl-5">{{c.title}} - Component</td>
+                                    <td colspan="5" class="background-3 ps-5">{{c.title}} - Component</td>
                                 </tr>
                                 <ng-container *ngFor="let q of c.questions">
                                     <tr *ngIf="this.requiredQuestion(q) || this.ncuaSvc.isParentQuestion(q.title)">
                                         <td class="font-weight-bold text-nowrap">{{q.title}}</td>
-                                        <td class="pr-3" [innerHTML]="q.questionText"></td>
-                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title)" class="pr-3">{{
+                                        <td class="pe-3" [innerHTML]="q.questionText"></td>
+                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title)" class="pe-3">{{
                                             questionsSvc.answerButtonLabel('ISE', q.answerText) }}</td>
-                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="pr-3"> </td>
-                                        <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
+                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="pe-3"> </td>
+                                        <td class="pe-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                                     </tr>
                                 </ng-container>
                             </ng-container>
