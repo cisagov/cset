@@ -52,7 +52,7 @@
         </div>
         <div class="form-group col-md-6" *ngIf="showStateName()">
           <label class="mb-1" for="stateProvRegion">{{t('state province region')}}</label>
-          <select maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion"
+          <select maxlength="100" class="form-select" id="stateProvRegion" name="stateProvRegion"
               [(ngModel)]="assessment.stateProvRegion" (change)="update($event)" tabindex="0">
               <option [ngValue]="null">-- Select State/Province/Region --</option>
               <option *ngFor="let stateOrProvince of statesAndProvincesOptions" [value]="stateOrProvince.displayName">

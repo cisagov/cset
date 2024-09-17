@@ -121,7 +121,7 @@
                                         [class.answer-selected]="q.answer === option"
                                         [matTooltip]="this.displayTooltip(maturityModelId, option)"
                                         [disabled]="option === 'N' && autoGenerateInProgress">
-                                        <input name="q_{{q.questionId}}" id="radio-button" class="form-check-input"
+                                        <input name="q_{{q.questionId}}" id="radio-button" class="btn-check"
                                             type="radio" autocomplete="off" (click)="storeAnswer(q, option)"
                                             [checked]="q.answer === option">
                                         {{ questionsSvc.answerButtonLabel(maturityModelName, option) }}

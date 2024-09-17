@@ -74,7 +74,7 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label class="mb-1 fw-600" for="securityQuestion1">{{t('user profile.security question 1')}}</label>
-              <select class="form-control" id="securityQuestion1" name="securityQuestion1"
+              <select class="form-select" id="securityQuestion1" name="securityQuestion1"
                 [(ngModel)]="model.securityQuestion1">
                 <option *ngFor="let question of securityQuestions"
                   [attr.selected]="question.securityQuestion === model.securityQuestion1">
