@@ -62,7 +62,7 @@
     "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
     "fuse.js": "^6.6.2",
-    "gutenberg-css": "^0.6.1",
+    "gutenberg-css": "^0.7.0",
     "handlebars": "^4.7.7",
     "html-to-pdfmake": "^2.4.19",
     "intersection-observer": "^0.12.0",
