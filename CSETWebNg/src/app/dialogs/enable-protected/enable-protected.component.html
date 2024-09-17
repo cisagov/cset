@@ -57,17 +57,17 @@
 
     <div *ngIf="showCisaAssessorWorkflowSwitch()"
       class="form-group d-flex align-items-center justify-content-between mt-4 mx-2">
-      <label for="csaToggle" class="font-weight-bold">CISA Assessor Workflow </label>
+      <label for="csaToggle" class="font-weight-bold">CISA Assessor Workflow</label>
       <div id="csaToggle" class="btn-group btn-group-toggle w-50 ms-2" data-toggle="buttons">
         <label class="btn btn-level btn-rounded form-check-label" [class.active]="cisaWorkflowEnabled"
           (change)="toggleCisaAssessorWorkflow()">
-          <input class="form-check-input" name="csaModeYes" id="csaModeYes" type="radio" autocomplete="off" tabindex="0"
+          <input class="btn-check" name="csaModeYes" id="csaModeYes" type="radio" autocomplete="off" tabindex="0"
             [checked]="cisaWorkflowEnabled" />
           On
         </label>
         <label class="btn btn-level btn-rounded form-check-label" [class.active]="!cisaWorkflowEnabled"
           (change)="toggleCisaAssessorWorkflow()">
-          <input class="form-check-input" name="csaModeNo" id="csaModeNo" type="radio" autocomplete="off" tabindex="0"
+          <input class="btn-check" name="csaModeNo" id="csaModeNo" type="radio" autocomplete="off" tabindex="0"
             [checked]="!cisaWorkflowEnabled" />
           Off
         </label>
