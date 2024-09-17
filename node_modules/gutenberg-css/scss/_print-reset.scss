@@ -1,0 +1,250 @@
+//
+// Global
+//
+* {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+// Remove shadow and background
+*,
+*:before,
+*:after,
+p:first-letter,
+div:first-letter,
+blockquote:first-letter,
+li:first-letter,
+p:first-line,
+div:first-line,
+blockquote:first-line,
+li:first-line {
+	background: transparent !important;
+	box-shadow: none !important;
+	text-shadow: none !important;
+}
+
+html {
+	font-size: $base-font-size;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	background: $background-color !important;
+	color: $body-color !important;
+	font-family: $base-font-family;
+	font-size: 1rem;
+	line-height: $line-height;
+	// max-width: 21cm;
+	margin: 0 auto;
+	text-rendering: optimizeLegibility;
+}
+
+p,
+blockquote,
+table,
+ul,
+ol,
+dl {
+	margin-bottom: $spacing;
+	margin-top: 0;
+}
+
+p,
+ul,
+ol {
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+//
+// Headers
+//
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: $links-color;
+	font-family: $headers-font-family;
+	line-height: 1.2;
+	margin-bottom: $spacing * 0.5;
+	margin-top: 0;
+}
+
+h1 {
+	font-size: $font-size-h1;
+}
+
+h2 {
+	font-size: $font-size-h2;
+}
+
+h3 {
+	font-size: $font-size-h3;
+}
+
+h4 {
+	font-size: $font-size-h4;
+}
+
+h5 {
+	font-size: $font-size-h5;
+}
+
+h6 {
+	font-size: $font-size-h6;
+}
+
+//
+// Links
+//
+a {
+	&,
+	&:visited {
+		color: $links-color;
+		text-decoration: underline;
+		word-wrap: break-word;
+	}
+}
+
+//
+// Table
+//
+table {
+	border-collapse: collapse;
+}
+
+thead {
+	display: table-header-group;
+}
+
+table,
+th,
+td {
+	border-bottom: 1px solid $table-color;
+}
+
+td,
+th {
+	padding: $base-font-size * 0.5 $base-font-size;
+	page-break-inside: avoid
+}
+
+//
+// Code, Pre
+//
+code,
+pre,
+kbd {
+	border: 1px solid $code-color;
+	font-family: $font-family-monospace;
+	font-size: 85%;
+}
+
+code,
+kbd {
+	padding: 3px;
+}
+
+pre {
+	margin-bottom: $spacing;
+	padding: 10px 12px;
+
+	code,
+	kbd {
+		border: 0;
+	}
+}
+
+//
+// Placeholder
+//
+// see https://stackoverflow.com/a/16493412/1066915
+// WebKit browsers
+::-webkit-input-placeholder {
+	color: transparent;
+}
+// Mozilla Firefox 4 to 18
+:-moz-placeholder {
+	color: transparent;
+}
+// Mozilla Firefox 19+
+::-moz-placeholder {
+	color: transparent;
+}
+// Internet Explorer 10+
+:-ms-input-placeholder {
+	color: transparent;
+}
+
+//
+// Others
+//
+blockquote {
+	border: 0;
+	border-left: 5px solid $blockquote-color;
+	margin-left: 1px;
+	padding: 12px $spacing;
+
+	[dir='rtl'] & {
+		border-left: 0;
+		border-right: 5px solid $blockquote-color;
+		margin-left: 0;
+		margin-right: 1px;
+	}
+
+	&:first-child {
+		margin-top: 0;
+	}
+
+	p,
+	ul,
+	ol {
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	footer {
+		display: block;
+		font-size: 80%;
+	}
+}
+
+img {
+	border: 0;
+	display: block;
+	max-width: 100% !important;
+	vertical-align: middle;
+}
+
+hr {
+	border: 0;
+	border-bottom: 2px solid $hr-color;
+	height: 0;
+	margin: $spacing * 1.5 0;
+	padding: 0;
+}
+
+dt {
+	font-weight: bold;
+}
+
+dd {
+	margin: 0;
+	margin-bottom: $spacing * 0.5;
+}
+
+abbr,
+acronym {
+	&[title] {
+		border: 0;
+		text-decoration: none;
+	}
+}
