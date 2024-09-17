@@ -129,13 +129,14 @@
           <th style="width: 15%" class="text-center">I</th>
           <th style="width: 15%" class="text-center">A</th>
         </tr>
-        <tr *ngFor="let model of topModel?.models">
+        <tr *ngFor="let model of topModel?.models; let i = index">
           <td>
-            <input type="checkbox" [attr.csetid]="'checkbox' + model.type_Value" id="{{model.nIST_Number}}" tabindex="0"
-              value="{{model.type_Value}}" (change)="checkBoxChanged($event, model)" [checked]="model.selected">
+            <input type="checkbox" [attr.csetid]="'checkbox' + model.type_Value" [id]="'cb_model' + i" tabindex="0"
+              value="{{model.type_Value}}" (change)="checkBoxChanged($event, model)" [checked]="model.selected" class="checkbox-custom">
+              <label [for]="'cb_model' + i" class="checkbox-custom-label"></label>
           </td>
           <td>
-            <label for="{{model.nIST_Number}}">
+            <label [for]="'cb_model' + i">
               {{model.type_Value}} : {{model.nIST_Number}}</label>
           </td>
           <td class="text-center">
