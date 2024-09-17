@@ -113,24 +113,23 @@
       </option>
     </select>
 
-    <div *ngIf="demographicData.organizationType == 1" class="fst-italic my-2">Please select N/A if the department and
-      the overall organization are the same.</div>
-    <div *ngIf="demographicData.organizationType == 1" class="fst-italic my-2">
+    <div *ngIf="demographicData.organizationType == 1" class="fst-italic mb-2">
       Please select N/A if the business unit and the overall organization are the same.
+    </div>
+    <div *ngIf="demographicData.organizationType != 1" class="fst-italic mb-2">
+      Please select N/A if the department and the overall organization are the same.
     </div>
   </div>
 
   <!-- #3 -->
-  <div>
-    <ng-container *ngIf="demographicData.organizationType == 1">
-      <label for="totalAnnualRevenue" class="form-label"> What is the total annual revenue for your organization?
-      </label>
-    </ng-container>
-    <ng-container *ngIf="demographicData.organizationType != 1">
-      <label for="totalAnnualRevenue" class="form-label">
-        What is the total annual funding for your governmental organization or agency?
-      </label>
-    </ng-container>
+  <div class="mb-4">
+    <label for="totalAnnualRevenue" *ngIf="demographicData.organizationType == 1" class="form-label"> What is the total
+      annual revenue for your organization?
+    </label>
+    <label for="totalAnnualRevenue" *ngIf="demographicData.organizationType != 1" class="form-label">
+      What is the total annual funding for your governmental organization or agency?
+    </label>
+
     <select [ngClass]="{ 'alert-danger' : !demographicData.annualRevenue }" class="form-select" id="totalAnnualRevenue"
       tabindex="0" name="totalAnnualRevenue" [(ngModel)]="demographicData.annualRevenue"
       (change)="newUpdate('ANN-REVENUE', $event, 'int')">
@@ -223,7 +222,7 @@
 
       <div>
         <div class="mb-3">
-          <div>Regulation Type 1:</div>
+          <label class="form-label">Regulation Type 1:</label>
           <ng-container *ngFor="let reg of demographicData.listRegulationTypes">
             <input class="radio-custom" name="regtype1" [id]="'regtype1-' + reg.optionValue" type="radio"
               autocomplete="off" tabindex="0" (click)="changeRegType1(reg, $event)"
@@ -232,13 +231,13 @@
           </ng-container>
         </div>
 
-        Regulation 1:
+        <label class="form-label">Regulation 1:</label>
         <input class="form-control" type="text" name="reg1Other" [(ngModel)]="demographicData.reg1Other"
           (blur)="newUpdate('REG-1-OTHER', $event, 'string')" />
       </div>
 
       <div>
-        <div>Regulation Type 2:</div>
+        <label class="form-label">Regulation Type 2:</label>
         <div class="mb-3">
           <ng-container *ngFor="let reg of demographicData.listRegulationTypes">
             <input class="radio-custom" name="regtype2" [id]="'regtype2-' + reg.optionValue" type="radio"
@@ -248,7 +247,7 @@
           </ng-container>
         </div>
 
-        Regulation 2:
+        <label class="form-label">Regulation 2:</label>
         <input class="form-control" type="text" name="reg2Other" [(ngModel)]="demographicData.reg2Other"
           (blur)="newUpdate('REG-2-OTHER', $event, 'string')" />
       </div>
