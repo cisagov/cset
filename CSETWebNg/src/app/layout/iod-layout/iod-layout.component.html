@@ -29,12 +29,12 @@
         <span class="col-sm-12">Local Installation</span>
       </div>
 
-      <div class="no-gutters pcii-header mt-0 ps-3 d-flex flex-00a"
-        *ngIf="assessSvc.isPcii()">
+      <div class="no-gutters pcii-header mt-0 ps-3 d-flex flex-00a" *ngIf="assessSvc.isPcii()">
         <span class="col-12">Warning: Data contained in this assessment is Protected Critical Infrastructure
-          Information <a href="https://www.cisa.gov/resources-tools/programs/protected-critical-infrastructure-information-pcii-program"
+          Information <a
+            href="https://www.cisa.gov/resources-tools/programs/protected-critical-infrastructure-information-pcii-program"
             target="_blank" class="ms-2">Click here to learn more</a>
-          </span>
+        </span>
       </div>
 
       <!-- Navbar -->
@@ -51,19 +51,21 @@
         </span>
 
         <!-- Navbar Toggler Button (only renders when screen is narrow enough) -->
-        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ms-auto" [matMenuTriggerFor]="topMenus" #topMenusTrigger="matMenuTrigger" tabindex="0">
+        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ms-auto" [matMenuTriggerFor]="topMenus"
+          #topMenusTrigger="matMenuTrigger" tabindex="0">
           <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
         </button>
 
         <!-- Menus contained in the navbar-toggler submenu -->
         <mat-menu #topMenus="matMenu" class="menu-panel px-3 py-2">
-            <app-top-menus (click)="$event.stopPropagation()"></app-top-menus>
+          <app-top-menus (click)="$event.stopPropagation()"></app-top-menus>
         </mat-menu>
 
         <!-- Menus on full size navbar (collapses when screen width gets narrow) -->
         <app-top-menus class="mt-1 collapse navbar-collapse"></app-top-menus>
       </nav>
     </div>
+
 
     <!-- Body -->
     <div class="no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
@@ -72,18 +74,21 @@
       </div>
     </div>
 
-    <!-- Footer -->
-    <div ngbAccordion type="primary"  class="footer no-gutters sticky-footer"
-    *ngIf="layoutSvc.isFooterShown(this.router.url)">
-    <div ngbAccordionItem id="footerPanel" [collapsed]="footerClosed">
-      <h4 ngbAccordionHeader>
 
-          <button ngbAccordionButton id="footerExpanderButton" class="cset-footer-expand-button" (click)="isFooterOpen()"
-            [ngClass]="{'cset-icons-chevron-down flex-11a': !footerClosed, 'cset-icons-chevron-up flex-00a': footerClosed}"></button>
+    <!-- Footer -->
+    <div class="accordion" id="accordionFooter">
+      <div class="text-center">
+        <h4 class="accordion-header pb-1" id="headingOne">
+          <button id="footerExpanderButton" class="cset-footer-expand-button"
+            style="font-size: 1rem; align-items: center" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseOne" aria-controls="collapseOne" (click)="toggleFooter()"
+            [ngClass]="{'cset-icons-chevron-down': !footerClosed, 'cset-icons-chevron-up': footerClosed}"></button>
         </h4>
-        <div ngbAccordionCollapse>
-          <div ngbAccordionBody>
-            <ng-template>
+        
+        <div id="collapseOne" class="accordion-collapse collapse" [class.show]="!footerClosed"
+          aria-labelledby="headingOne" data-bs-parent="#accordionFooter">
+          <div class="accordion-body p-0">
+            <div class="footer-section-2 p-2">
               <div class="footer-section-2 p-2">
                 <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
                   <ng-container *ngIf="isRunningAnonymous()">
@@ -114,13 +119,13 @@
                     Security</a>
                 </div>
               </div>
-            </ng-template>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="bgc-white dhs-seal-background"
-    *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
+    <div class="bgc-white dhs-seal-background"
+      *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
+  </div>
 </div>

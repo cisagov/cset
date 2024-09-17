@@ -42,18 +42,19 @@
         </span>
 
         <!-- Navbar Toggler Button (only renders when screen is narrow enough) -->
-        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ms-auto" [matMenuTriggerFor]="topMenus" #topMenusTrigger="matMenuTrigger"
-          *ngIf="auth.userToken() && auth.userToken() !== 'null'" tabindex="0">
+        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ms-auto" [matMenuTriggerFor]="topMenus"
+          #topMenusTrigger="matMenuTrigger" *ngIf="auth.userToken() && auth.userToken() !== 'null'" tabindex="0">
           <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
         </button>
         <!-- Menus contained in the navbar-toggler submenu -->
         <mat-menu #topMenus="matMenu" class="menu-panel px-3 py-2">
-            <app-top-menus (click)="$event.stopPropagation()"></app-top-menus>
+          <app-top-menus (click)="$event.stopPropagation()"></app-top-menus>
         </mat-menu>
         <!-- Menus on full size navbar (collapses when screen width gets narrow) -->
         <app-top-menus class="mt-1 collapse navbar-collapse"></app-top-menus>
       </nav>
     </div>
+
 
     <!-- Body -->
     <div class="no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
@@ -62,47 +63,48 @@
       </div>
     </div>
 
-    <!-- Footer -->
-    <div ngbAccordion type="primary" class="footer no-gutters sticky-footer"
-      *ngIf="layoutSvc.isFooterShown(this.router.url)">
-      <div ngbAccordionItem id="footerPanel" [collapsed]="footerClosed">
-        <h4 ngbAccordionHeader>
 
-            <button ngbAccordionButton id="footerExpanderButton" class="cset-footer-expand-button" (click)="isFooterOpen()"
-              [ngClass]="{'cset-icons-chevron-down flex-11a': !footerClosed, 'cset-icons-chevron-up flex-00a': footerClosed}"></button>
+    <!-- Footer -->
+    <div class="accordion" id="accordionFooter">
+      <div class="text-center">
+        <h4 class="accordion-header pb-1" id="headingOne">
+          <button id="footerExpanderButton" class="cset-footer-expand-button"
+            style="font-size: 1rem; align-items: center" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseOne" aria-controls="collapseOne" (click)="toggleFooter()"
+            [ngClass]="{'cset-icons-chevron-down': !footerClosed, 'cset-icons-chevron-up': footerClosed}"></button>
         </h4>
-        <div ngbAccordionCollapse>
-          <div ngbAccordionBody>
-            <ng-template>
-              <div class="footer-section-2 p-2">
-                <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-                  <ng-container *ngIf="isRunningAnonymous()">
-                    <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                      (click)="showDisclaimer()">INL Privacy & Accessibility</a>
-                    <span class="me-2 ms-2">|</span>
-                    <a target="_blank" rel="noopener noreferrer"
-                      href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
-                    <span class="me-2 ms-2">|</span>
-                  </ng-container>
-                  <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                    href="https://www.tsa.gov/travel/frequently-asked-questions">FAQ</a>
-                  <span class="me-2 ms-2">|</span>
-                  <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                    href="https://www.tsa.gov/privacy-policy">Privacy &amp; Use</a>
+        
+        <div id="collapseOne" class="accordion-collapse collapse" [class.show]="!footerClosed"
+          aria-labelledby="headingOne" data-bs-parent="#accordionFooter">
+          <div class="accordion-body p-0">
+            <div class="footer-section-2 p-2">
+              <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+                <ng-container *ngIf="isRunningAnonymous()">
+                  <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer" (click)="showDisclaimer()">INL
+                    Privacy & Accessibility</a>
                   <span class="me-2 ms-2">|</span>
                   <a target="_blank" rel="noopener noreferrer"
-                    href="https://www.tsa.gov/accessibility">Accessibility</a>
-                </div>
-                <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-                  <a target="_blank" rel="noopener noreferrer" href="https://www.tsa.gov">TSA</a>
-                  <span style="padding: 2px">is part of the</span>
-                  <a target="_blank" rel="noopener noreferrer" href="http://www.dhs.gov">Department of Homeland
-                    Security</a>
-                </div>
+                    href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
+                  <span class="me-2 ms-2">|</span>
+                </ng-container>
+                <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                  href="https://www.tsa.gov/travel/frequently-asked-questions">FAQ</a>
+                <span class="me-2 ms-2">|</span>
+                <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                  href="https://www.tsa.gov/privacy-policy">Privacy &amp; Use</a>
+                <span class="me-2 ms-2">|</span>
+                <a target="_blank" rel="noopener noreferrer" href="https://www.tsa.gov/accessibility">Accessibility</a>
               </div>
-            </ng-template>
+              <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+                <a target="_blank" rel="noopener noreferrer" href="https://www.tsa.gov">TSA</a>
+                <span style="padding: 2px">is part of the</span>
+                <a target="_blank" rel="noopener noreferrer" href="http://www.dhs.gov">Department of Homeland
+                  Security</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
