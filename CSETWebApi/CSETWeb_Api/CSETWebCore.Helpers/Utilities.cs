@@ -7,6 +7,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Http;
@@ -95,6 +96,26 @@ namespace CSETWebCore.Helpers
 
             var h = new Uri(referrer, UriKind.RelativeOrAbsolute);
             return h.GetLeftPart(UriPartial.Authority);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string RemoveHtmlTags(string input, bool replaceWithSpace)
+        {
+            // Remove script tags first to prevent potential XSS attacks
+            input = Regex.Replace(input, "<script[^>]*?>.*?</script>", string.Empty, RegexOptions.IgnoreCase);
+
+            // Remove style tags to avoid unwanted formatting
+            input = Regex.Replace(input, "<style[^>]*?>.*?</style>", string.Empty, RegexOptions.IgnoreCase);
+
+            // Remove all other HTML tags and attributes
+            input = Regex.Replace(input, "<[^>]*>", (replaceWithSpace ? " " : string.Empty), RegexOptions.IgnoreCase);
+
+            return input;
         }
 
 

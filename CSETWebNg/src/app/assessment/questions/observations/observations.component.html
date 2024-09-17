@@ -22,7 +22,7 @@
 -------------------------->
 <div *transloco="let t" class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span class="mr-3 fs-base-6 cset-icons-light-bulb"></span>
+    <span class="me-3 fs-base-6 cset-icons-light-bulb"></span>
     <span>{{ t('observation.observation details') }}</span>
   </div>
 
@@ -82,7 +82,7 @@
         <button class="btn-link fs-smaller" (click)="clearMulti()">{{ t('observation.clear selections') }}</button>
       </div>
 
-      <div class="pl-3">
+      <div class="ps-3">
         <div *ngFor="let contact of observation.observation_Contacts" class="py-1">
           <input class="checkbox-custom d-none" type="checkbox" id="{{contact.assessment_Contact_Id}}"
             (change)="updateContact(contact)" [(ngModel)]="contact.selected">

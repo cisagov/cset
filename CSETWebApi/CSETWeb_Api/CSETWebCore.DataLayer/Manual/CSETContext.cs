@@ -6,9 +6,12 @@
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.Linq;
 using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Snickler.EFCore;
@@ -111,23 +114,9 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasKey(e => new { e.Assessment_Id, e.Grouping_ID });
             });
 
-            modelBuilder.Entity<MATURITY_SOURCE_FILES>(entity =>
-            {
-                entity.HasKey(e => new { e.Mat_Question_Id, e.Gen_File_Id, e.Section_Ref });
-
-                entity.Property(e => e.Section_Ref).IsUnicode(false);
-
-                entity.Property(e => e.Destination_String).IsUnicode(false);
-
-                entity.HasOne(d => d.Mat_Question)
-                    .WithMany(p => p.MATURITY_SOURCE_FILES)
-                    .HasForeignKey(d => d.Mat_Question_Id)
-                    .HasConstraintName("FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS");
-            });
-
             modelBuilder.Entity<MATURITY_REFERENCES>(entity =>
             {
-                entity.HasKey(e => new { e.Mat_Question_Id, e.Gen_File_Id, e.Section_Ref });
+                entity.HasKey(e => new { e.Mat_Question_Id, e.Gen_File_Id, e.Section_Ref, e.Source });
 
                 entity.Property(e => e.Section_Ref).IsUnicode(false);
 
@@ -510,6 +499,30 @@ namespace CSETWebCore.DataLayer.Model
             int myrval = 0;
             this.LoadStoredProc("FillEmptyMaturityQuestionsForAnalysis")
                      .WithSqlParam("Assessment_Id", assessment_Id)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToValue<int>() ?? 0;
+                     });
+            return myrval;
+        }
+
+
+        /// <summary>
+        /// Insert empty questions for Maturity model questions for a specified model.
+        /// This is designed for use with SSG questions.
+        /// </summary>
+        /// <param name="assessment_Id"></param>
+        /// <returns></returns>
+        public virtual int FillEmptyMaturityQuestionsForModel(Nullable<int> assessmentId, int modelId)
+        {
+            if (!assessmentId.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            int myrval = 0;
+            this.LoadStoredProc("FillEmptyMaturityQuestionsForModel")
+                     .WithSqlParam("Assessment_Id", assessmentId)
+                     .WithSqlParam("Model_Id", modelId)
 
                      .ExecuteStoredProc((handler) =>
                      {
@@ -945,11 +958,33 @@ namespace CSETWebCore.DataLayer.Model
             return myrval;
         }
 
-        public virtual IList<GetAnswerDistribGroupingsResult> GetAnswerDistribGroupings(int assessmentId)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <param name="modelId"></param>
+        /// <returns></returns>
+        public virtual IList<GetAnswerDistribGroupingsResult> GetAnswerDistribGroupings(int assessmentId, int? modelId = null)
         {
+            // use the supplied modelId or if null, the proc will default to the principal model of the assessment
+            object m = modelId;
+            if (modelId == null)
+            {
+                m = DBNull.Value;
+            }
+
+
+            var parms = new IDbDataParameter[]
+            {
+                 new SqlParameter("@assessmentId", assessmentId),
+                 new SqlParameter("@modelId", m),
+            };
+
+
             IList<GetAnswerDistribGroupingsResult> myrval = null;
             this.LoadStoredProc("GetAnswerDistribGroupings")
-                .WithSqlParam("@assessmentId", assessmentId)
+                .WithSqlParams(parms)
                 .ExecuteStoredProc((handler) =>
                 {
                     myrval = handler.ReadToList<GetAnswerDistribGroupingsResult>();

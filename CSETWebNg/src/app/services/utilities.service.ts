@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Injectable } from '@angular/core';
 import { HttpResponseBase, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import * as sanitizeHtml from 'sanitize-html';
 
 @Injectable()
 export class Utilities {
@@ -661,5 +662,20 @@ export class Utilities {
                 charactersLength));
         }
         return result;
+    }
+
+    /**
+     * 
+     */
+    public removeHtmlTags(input: string): string {
+        // // convert <br> tag to space to avoid words smashed together in output
+        input = input.replace(/<br[^>]*>/g, ' ');
+
+        const clean = sanitizeHtml(input, {
+            allowedTags: [],
+            allowedAttributes: {}
+        });
+
+        return clean;
     }
 }

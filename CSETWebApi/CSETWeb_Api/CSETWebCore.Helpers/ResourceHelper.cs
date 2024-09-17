@@ -123,5 +123,27 @@ namespace CSETWebCore.Helpers
 
             return null;
         }
+
+
+
+        /// <summary>
+        /// Gets the bytes of a resource that is not embedded, but is "Copy Always" or "Copy if Newer"
+        /// </summary>
+        /// <param name="resourceName"></param>
+        /// <returns></returns>
+        public byte[] GetCopiedResourceAsBytes(string resourceName)
+        {
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, resourceName);
+            if (File.Exists(path))
+            {
+                var fs = File.OpenRead(path);
+                
+                byte[] byteArray = new byte[fs.Length];
+                fs.Read(byteArray, 0, (int)fs.Length);
+                return byteArray;
+            }
+
+            return null;
+        }
     }
 }

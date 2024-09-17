@@ -25,7 +25,7 @@
     <div class="domain-group-heading">
         Principle {{sectionIndex + 1}} {{pageTitle}} Questions
     </div>
-    <div class="d-flex flex-row flex-wrap sticky-sal justify-content-between align-items-start flex-11a pb-3">
+    <div class="d-flex flex-row flex-wrap sticky-sal justify-content-between align-items-start flex-11a">
 
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <label class="btn btn-app-mode form-check-label"
@@ -65,13 +65,13 @@
     <div *ngIf="assessSvc.applicationMode == 'F'" 
         class="d-flex flex-row flex-wrap align-items-start flex-11a mb-4" style="justify-content: space-between;">
         <!-- <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filterMenu.showing only filtered')}}</div> -->
-        <div *ngIf="!groupings" class="w-100">
+        <div *ngIf="!phases" class="w-100">
             <div class="spinner-container" style="margin: 2em auto">
                 <div style="max-width: 50px; max-height: 50px;"></div>
             </div>
         </div>
         
-        <div *ngFor="let g of groupings" class="w-100">
+        <div *ngFor="let g of phases" class="w-100">
             <app-question-block-cie [myGrouping]="g"></app-question-block-cie>
         </div>
     </div>
@@ -82,7 +82,7 @@
         <!-- <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filterMenu.showing only filtered')}}</div> -->
         <!-- <h4>Principle {{this.sectionIndex + 1}} Questions</h4> -->
 
-        <div *ngIf="!groupings" class="w-100">
+        <div *ngIf="!principle" class="w-100">
             <div class="spinner-container" style="margin: 2em auto">
                 <div style="max-width: 50px; max-height: 50px;"></div>
             </div>

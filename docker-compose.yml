@@ -1,11 +1,9 @@
 ---
-version: "3.8"
-
 services:
   sqlserver:
     container_name: cset-mssql
     hostname: mssql
-    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    image: "mcr.microsoft.com/mssql/server:2022-CU13-ubuntu-22.04"
     restart: unless-stopped
     environment:
       - ACCEPT_EULA=Y
@@ -18,8 +16,7 @@ services:
       - "1433:1433"
     volumes:
       - mssql_data:/var/opt/mssql
-      - ./backups:/var/opt/mssql/backup
+      - ./backup:/var/opt/mssql/backup
 
 volumes:
   mssql_data:
-

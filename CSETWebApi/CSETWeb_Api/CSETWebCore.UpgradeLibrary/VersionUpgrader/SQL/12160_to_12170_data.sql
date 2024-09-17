@@ -7398,6 +7398,7 @@ UPDATE [dbo].[REQUIREMENT_SOURCE_FILES] SET [Destination_String]=N'' WHERE [Requ
 UPDATE [dbo].[REQUIREMENT_SOURCE_FILES] SET [Destination_String]=N'' WHERE [Requirement_Id] = 10958 AND [Gen_File_Id] = 2602 AND [Section_Ref] = N'MA-3'
 UPDATE [dbo].[REQUIREMENT_SOURCE_FILES] SET [Destination_String]=N'' WHERE [Requirement_Id] = 10959 AND [Gen_File_Id] = 2602 AND [Section_Ref] = N'MA-3'
 UPDATE [dbo].[REQUIREMENT_SOURCE_FILES] SET [Destination_String]=N'' WHERE [Requirement_Id] = 10960 AND [Gen_File_Id] = 2602 AND [Section_Ref] = N'MA-4'
+GO
 UPDATE [dbo].[REQUIREMENT_SOURCE_FILES] SET [Destination_String]=N'' WHERE [Requirement_Id] = 10960 AND [Gen_File_Id] = 2689 AND [Section_Ref] = N'MA-4'
 UPDATE [dbo].[REQUIREMENT_SOURCE_FILES] SET [Destination_String]=N'' WHERE [Requirement_Id] = 10961 AND [Gen_File_Id] = 2602 AND [Section_Ref] = N'MA-4'
 UPDATE [dbo].[REQUIREMENT_SOURCE_FILES] SET [Destination_String]=N'' WHERE [Requirement_Id] = 10961 AND [Gen_File_Id] = 2689 AND [Section_Ref] = N'MA-4'
@@ -36034,6 +36035,7 @@ UPDATE [dbo].[REQUIREMENT_REFERENCES] SET [Destination_String]=N'' WHERE [Requir
 UPDATE [dbo].[REQUIREMENT_REFERENCES] SET [Destination_String]=N'' WHERE [Requirement_Id] = 7530 AND [Gen_File_Id] = 2172 AND [Section_Ref] = N'AC-2_R3'
 UPDATE [dbo].[REQUIREMENT_REFERENCES] SET [Destination_String]=N'' WHERE [Requirement_Id] = 7530 AND [Gen_File_Id] = 2172 AND [Section_Ref] = N'AC-20_R3'
 UPDATE [dbo].[REQUIREMENT_REFERENCES] SET [Destination_String]=N'' WHERE [Requirement_Id] = 7530 AND [Gen_File_Id] = 2172 AND [Section_Ref] = N'AC-3_R3'
+GO
 UPDATE [dbo].[REQUIREMENT_REFERENCES] SET [Destination_String]=N'' WHERE [Requirement_Id] = 7530 AND [Gen_File_Id] = 2172 AND [Section_Ref] = N'AC-4_R3'
 UPDATE [dbo].[REQUIREMENT_REFERENCES] SET [Destination_String]=N'' WHERE [Requirement_Id] = 7530 AND [Gen_File_Id] = 2172 AND [Section_Ref] = N'AC-5_R3'
 UPDATE [dbo].[REQUIREMENT_REFERENCES] SET [Destination_String]=N'' WHERE [Requirement_Id] = 7530 AND [Gen_File_Id] = 2172 AND [Section_Ref] = N'AC-6_R3'
@@ -67502,6 +67504,7 @@ UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Exam
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Review audit findings to confirm whether the existing cybersecurity strategy has ensured compliance with internal and external requirements</li> <li><b>Ex2:</b> Review the performance oversight of those in cybersecurity-related roles to determine whether policy changes are necessary</li> <li><b>Ex3:</b> Review strategy in light of cybersecurity incidents</li></ul>' WHERE [Requirement_Id] = 36507
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Review key performance indicators (KPIs) to ensure that organization-wide policies and procedures achieve objectives</li> <li><b>Ex2:</b> Review key risk indicators (KRIs) to identify risks the organization faces, including likelihood and potential impact</li> <li><b>Ex3:</b> Collect and communicate metrics on cybersecurity risk management with senior leadership</li></ul>' WHERE [Requirement_Id] = 36508
 PRINT(N'Operation applied to 107 rows out of 107')
+GO
 
 PRINT(N'Update row in [dbo].[GEN_FILE]')
 UPDATE [dbo].[GEN_FILE] SET [File_Name]=N'CSF 2.0 Implementation Examples.pdf', [Summary]=N'Implementation Examples for the NIST Cybersecurity Framework (CSF) 2.0. It complements and is based on the Core from the NIST CSF 2.0.' WHERE [Gen_File_Id] = 691
@@ -76673,6 +76676,7 @@ INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Se
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES (N'VH', 60704, NULL)
 INSERT INTO [dbo].[NEW_QUESTION_LEVELS] ([Universal_Sal_Level], [New_Question_Set_Id], [IgnoreMe]) VALUES (N'VH', 60705, NULL)
 PRINT(N'Operation applied to 424 rows out of 424')
+GO
 
 PRINT(N'Add constraints to [dbo].[NEW_QUESTION_LEVELS]')
 ALTER TABLE [dbo].[NEW_QUESTION_LEVELS] WITH CHECK CHECK CONSTRAINT [FK_NEW_QUESTION_LEVELS_NEW_QUESTION_SETS]

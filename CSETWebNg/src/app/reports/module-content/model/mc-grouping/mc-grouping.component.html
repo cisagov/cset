@@ -26,13 +26,13 @@
     <div *ngIf="g.description?.length > 0" class="alert alert-dark" [innerHTML]="g.description">
     </div>
 
-    <div class="ml-3">
+    <div class="ms-3">
 
         <app-mc-grouping *ngFor="let sg of g.groupings" [g]="sg"></app-mc-grouping>
     </div>
 
 
-    <div class="ml-3">
+    <div class="ms-3">
         <app-mc-question *ngFor="let q of g.questions" [q]="q"></app-mc-question>
     </div>
 </div>

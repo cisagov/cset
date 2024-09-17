@@ -118,9 +118,9 @@ export class CisService {
 
 
   /// The service can emit the score that is given to it
-  cisScore: BehaviorSubject<number> = new BehaviorSubject(0);
+  cisScore$: BehaviorSubject<number> = new BehaviorSubject(0);
   changeScore(s: number) {
-    this.cisScore.next(s);
+    this.cisScore$.next(s);
   }
 
   /**

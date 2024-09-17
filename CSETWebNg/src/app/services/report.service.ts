@@ -29,6 +29,10 @@ import { AuthenticationService } from './authentication.service';
 import { JwtParser } from '../helpers/jwt-parser';
 import { DateTime } from 'luxon';
 import { ConfigurableFocusTrap } from '@angular/cdk/a11y';
+import { AssessmentService } from './assessment.service';
+// import { NCUAService } from './ncua.service';
+import { ACETService } from './acet.service';
+import { ObservationsService } from './observations.service';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -42,11 +46,15 @@ export class ReportService {
   confidentialityLevels: any[];
   confidentiality = '';
 
+  disableIseReportLinks: boolean = false;
+
   /**
    *
    */
-  constructor(private http: HttpClient, private configSvc: ConfigService, private tSvc: TranslocoService
-    , private authSvc: AuthenticationService) {
+  constructor(private http: HttpClient, 
+    private configSvc: ConfigService, private tSvc: TranslocoService,
+    private authSvc: AuthenticationService
+  ) {
     if (!this.initialized) {
       this.apiUrl = this.configSvc.apiUrl;
       this.initialized = true;

@@ -23,10 +23,8 @@
 ////////////////////////////////
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { environment } from '../../../environments/environment';
 import { ConfigService } from '../../services/config.service';
 import { VersionService } from '../../services/version.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-about-cset',

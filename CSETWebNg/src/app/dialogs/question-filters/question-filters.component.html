@@ -22,12 +22,12 @@
 -------------------------->
 <div *transloco="let t; read: 'filter-menu'" class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span class="mr-3 fs-base-6 cset-icons-filter" aria-label="{{ 'buttons.filter' | transloco }}"></span>
+    <span class="me-3 fs-base-6 cset-icons-filter" aria-label="{{ 'buttons.filter' | transloco }}"></span>
     <span>{{ t(skin + '.dialog title') }}</span>
   </div>
 
-  <mat-dialog-content class="pt-3 pl-3 pr-0 oy-auto d-flex flex-column flex-11a">
-    <div class="question-filters pr-3 form-check">
+  <mat-dialog-content class="pt-3 ps-3 pe-0 oy-auto d-flex flex-column flex-11a">
+    <div class="question-filters pe-3 form-check">
       <div>
         <input placeholder="{{ t('search') }}" class="form-control" [value]="filterSvc.filterSearchString"
           (keyup)="updateFilterString($event)" />
@@ -57,35 +57,35 @@
           
         </label>
       </div>
-      <div>
+      <div *ngIf="!isInstallation('CIE')">
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('U')" id="cbShowU" name="cbShowU"
           (click)="updateFilters($event, 'U')">
         <label for="cbShowU" class="checkbox-custom-label d-block">
           {{ t(skin + '.show unanswered') }}
         </label>
       </div>
-      <div>
+      <div *ngIf="!isInstallation('CIE')">
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('C')" id="cbShowComments"
           name="cbShowComments" (click)="updateFilters($event, 'C')">
         <label for="cbShowComments" class="checkbox-custom-label d-block">
           {{ t(skin + '.show with comments') }}
         </label>
       </div>
-      <div *ngIf="!isInstallation('ACET')">
+      <div *ngIf="!isInstallation('ACET') && !isInstallation('CIE')">
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('FB')" id="cbShowFeedback"
           name="cbShowFeedback" (click)="updateFilters($event, 'FB')">
         <label for="cbShowFeedback" class="checkbox-custom-label d-block">
           {{ t(skin + '.show with feedback') }}
         </label>
       </div>
-      <div>
+      <div *ngIf="!isInstallation('CIE')">
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('M')" id="cbShowMarked"
           name="cbShowMarked" (click)="updateFilters($event, 'M')">
         <label for="cbShowMarked" class="checkbox-custom-label d-block">
           {{ t(skin + '.show marked for review') }}
         </label>
       </div>
-      <div>
+      <div *ngIf="!isInstallation('CIE')">
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('O')" id="cbShowObservations"
           name="cbShowObservations" (click)="updateFilters($event, 'O')">
         <label for="cbShowObservations" class="checkbox-custom-label d-block">

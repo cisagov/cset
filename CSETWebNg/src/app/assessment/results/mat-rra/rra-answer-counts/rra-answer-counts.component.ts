@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RraDataService } from '../../../../services/rra-data.service';
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -36,6 +36,8 @@ export class RraAnswerCountsComponent implements OnInit {
   maxLevel = 0;
   answerCountsByLevel = [];
   answerDistribColorScheme = { domain: ['#28A745', '#DC3545', '#c3c3c3'] };
+  view: any[] = [800, 350];
+  animation: boolean = false;
 
   constructor(
     public rraDataSvc: RraDataService, 
@@ -98,6 +100,16 @@ export class RraAnswerCountsComponent implements OnInit {
       }
     })
     this.maxLevel = mLength;
+  }
+
+  @HostListener('window:beforeprint')
+  beforePrint() {
+    this.view = [1300, 600];
+  }
+
+  @HostListener('window:afterprint')
+  afterPrint() {
+    this.view = null;
   }
 
 }

@@ -137,7 +137,7 @@
     <div class="page-break" *ngIf="reportSvc.isInstallation('ACET')">
         <h1>{{t('reports.core.site detail report.maturity detail')}}</h1>
 
-        <div *ngFor="let domain of matDetails" class="pl-3 pr-3 mb-5 w-100 domain-section card">
+        <div *ngFor="let domain of matDetails" class="ps-3 pe-3 mb-5 w-100 domain-section card">
             <h2>{{domain.DomainName}}</h2>
 
             <div *ngFor="let factor of domain.assessments" class="factor-section">
@@ -160,7 +160,7 @@
                         </div>
                     </div>
 
-                    <div class="row m-0 ml-5">
+                    <div class="row m-0 ms-5">
                         <div class="w-20pct text-center">
                             Baseline
                             <br />
@@ -215,7 +215,7 @@
             <tr *ngFor="let comp of Components">
                 <td>{{comp.component}}
                     <div>
-                        <span *ngIf="comp.HasSpecifyField" class="font-italic">{{comp.otherSpecifyValue}}</span>
+                        <span *ngIf="comp.HasSpecifyField" class="fst-italic">{{comp.otherSpecifyValue}}</span>
                     </div>
                 </td>
                 <td class="text-right">{{comp.DocumentationHours}}</td>
@@ -272,7 +272,7 @@
         <div class="mt-3 mb-4">
             <app-inherent-risk-profile [acetDashboard]="acetDashboard"></app-inherent-risk-profile>
 
-            <div class="ml-3">
+            <div class="ms-3">
                 <div>Overall Risk Level is <span class="blue-text font-weight-bold">
                         {{ acetSvc.interpretRiskLevel(acetDashboard?.SumRiskLevel) }}
                     </span>

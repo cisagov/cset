@@ -62,8 +62,6 @@
             <node displaytext="CIE Analysis Matrix" id="cie-analysis-matrix" path="assessment/{:id}/prepare/cie-example/cie-analysis-matrix" />
         </node>
 
-        <node d="cie tutorial.how to use" id="how-to-use-cie" path="assessment/{:id}/prepare/how-to-use-cie" visible="MATURITY:17"/>
-
         <!-- Critical Service -->
         <node d="critical service information" id="csi" path="assessment/{:id}/prepare/csi" visible="INSTALL-MODE-NONE(IOD) MATURITY:8" />
         <node d="critical service information" id="csi2" path="assessment/{:id}/prepare/csi" visible="INSTALL-MODE:IOD" />
@@ -91,6 +89,8 @@
     <!--  -->
     <!-- Assessment Phase -->
     <node displaytext="Analysis" id="phase-assessment" visible="MATURITY:17">
+        <node d="cie tutorial.how to use" id="instructions-cie" path="assessment/{:id}/instructions-cie" visible="MATURITY:17"/>
+
         <!-- CIE questions displayed in tree structure -->
         <node displaytext="Principles" id="maturity-questions-nested-2620" visible="MATURITY:17">
             <node displaytext="Principle 1">
@@ -154,6 +154,11 @@
 
         <!-- The scenario that will normally show -->
         <node d="maturity questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" visible="OPTION:MATURITY MATURITY-NONE(1,10,8,9,14,13,17)" />
+
+        <!-- Bonus model (SSG) -->
+        <node d="ssg" ssg="true" id="maturity-questions-bonus" path="assessment/{:id}/maturity-questions/bonus" visible="MATURITY-ANY(11) SECTOR-ANY(1,19)" />
+
+
 
         <!-- ACET or ISE in non-ACET skin shows the normal maturity-questions -->
         <node d="maturity questions" id="maturity-questions-ncua" path="assessment/{:id}/maturity-questions" visible="INSTALL-MODE-NOT:ACET OPTION:MATURITY MATURITY-ANY(1,10)" />

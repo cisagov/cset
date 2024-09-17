@@ -164,6 +164,7 @@ import { KeyboardShortcutsComponent } from './dialogs/keyboard-shortcuts/keyboar
 import { LicenseComponent } from './dialogs/license/license.component';
 import { OkayComponent } from './dialogs/okay/okay.component';
 import { QuestionFiltersComponent } from './dialogs/question-filters/question-filters.component';
+import { QuestionFiltersReportsComponent } from './dialogs/question-filters-reports/question-filters-reports.component';
 import { TermsOfUseComponent } from './dialogs/terms-of-use/terms-of-use.component';
 import { AccessibilityStatementComponent } from './dialogs/accessibility-statement/accessibility-statement.component';
 import { UploadExportComponent } from './dialogs/upload-export/upload-export.component';
@@ -250,10 +251,13 @@ import { AliasAssessmentsComponent } from './aggregation/alias-assessments/alias
 import { AggregationDetailComponent } from './aggregation/aggregation-detail/aggregation-detail.component';
 import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
-import { CompareSummaryComponent } from './aggregation/compare-analytics/compare-summary/compare-summary.component';
-import { CompareMissedComponent } from './aggregation/compare-analytics/compare-missed/compare-missed.component';
-import { CompareIndividualComponent } from './aggregation/compare-analytics/compare-individual/compare-individual.component';
-import { CompareBestworstComponent } from './aggregation/compare-analytics/compare-bestworst/compare-bestworst.component';
+import { CompareSummaryComponent } from './aggregation/compare-analytics/standards-based/compare-summary/compare-summary.component';
+import { CompareMissedComponent } from './aggregation/compare-analytics/standards-based/compare-missed/compare-missed.component';
+import { CompareIndividualComponent } from './aggregation/compare-analytics/standards-based/compare-individual/compare-individual.component';
+import { CompareBestworstComponent } from './aggregation/compare-analytics/standards-based/compare-bestworst/compare-bestworst.component';
+import { CompareMaturityMissedComponent } from './aggregation/compare-analytics/maturity-based/compare-missed/compare-missed.component';
+import { CompareMaturityIndividualComponent } from './aggregation/compare-analytics/maturity-based/compare-individual/compare-individual.component';
+import { CompareMaturityBestworstComponent } from './aggregation/compare-analytics/maturity-based/compare-bestworst/compare-bestworst.component';
 import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
 import { ChartService } from './services/chart.service';
 import { ChartColors } from './services/chart.service';
@@ -661,15 +665,9 @@ import { AnalyticsComponent } from './assessment/results/analytics/analytics.com
 import { AnalyticsloginComponent } from './assessment/results/analysis/analytics-login/analytics-login.component';
 import { AnalyticsService } from './services/analytics.service';
 import { UploadDemographicsComponent } from './dialogs/import demographics/import-demographics.component';
+import { CieMfrReportComponent } from './reports/cie/cie-mfr-report/cie-mfr-report.component';
 import { ReportListComponent } from './assessment/results/reports/report-list/report-list.component';
-import { ReportListImrComponent } from './assessment/results/reports/report-list/report-list-imr/report-list-imr.component';
-import { ReportListCisComponent } from './assessment/results/reports/report-list/report-list-cis/report-list-cis.component';
-import { ReportListCmmc2Component } from './assessment/results/reports/report-list/report-list-cmmc2/report-list-cmmc2.component';
-import { ReportListCrrComponent } from './assessment/results/reports/report-list/report-list-crr/report-list-crr.component';
-import { ReportListEdmComponent } from './assessment/results/reports/report-list/report-list-edm/report-list-edm.component';
-import { ReportListRraComponent } from './assessment/results/reports/report-list/reports-rra/report-list-rra.component';
-import { ReportListCpgComponent } from './assessment/results/reports/report-list/reports-list-cpg/report-list-cpg.component';
-import { ReportListMvraComponent } from './assessment/results/reports/report-list/report-list-mvra/report-list-mvra.component';
+import { ReportListCommonComponent } from './assessment/results/reports/report-list/report-list-common.component';
 
 
 @NgModule({
@@ -852,6 +850,7 @@ import { ReportListMvraComponent } from './assessment/results/reports/report-lis
     TermsOfUseComponent,
     AccessibilityStatementComponent,
     QuestionFiltersComponent,
+    QuestionFiltersReportsComponent,
     AssessmentDocumentsComponent,
     InlineParameterComponent,
     GlobalParametersComponent,
@@ -897,6 +896,9 @@ import { ReportListMvraComponent } from './assessment/results/reports/report-lis
     CompareMissedComponent,
     CompareIndividualComponent,
     CompareBestworstComponent,
+    CompareMaturityMissedComponent,
+    CompareMaturityIndividualComponent,
+    CompareMaturityBestworstComponent,
     ComponentOverrideComponent,
     ExcelExportComponent,
     LayoutBlankComponent,
@@ -1275,6 +1277,9 @@ import { ReportListMvraComponent } from './assessment/results/reports/report-lis
     CiePrincipleOnlyComponent,
     CiePrinciplePhaseComponent,
     CieNotApplicableComponent,
+    CieMfrReportComponent,
+    AboutCieComponent, 
+    AnalyticsComponent, 
     SdOwnerDeficiencyComponent,
     SdOwnerCommentsMfrComponent,
     AboutCieComponent,
@@ -1282,15 +1287,8 @@ import { ReportListMvraComponent } from './assessment/results/reports/report-lis
     ReferencesSectionComponent,
     CisaWorkflowWarningsComponent,
     AnalyticsloginComponent,
-    ReportListImrComponent,
-    ReportListCisComponent,
-    ReportListCmmc2Component,
-    ReportListComponent,
-    ReportListCrrComponent,
-    ReportListEdmComponent,
-    ReportListRraComponent,
-    ReportListCpgComponent, 
-    ReportListMvraComponent
+    ReportListComponent, 
+    ReportListCommonComponent
   ],
   providers: [
     TranslocoService,

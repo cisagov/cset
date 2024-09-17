@@ -26,6 +26,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Malcolm;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using CSETWebCore.Helpers;
+using CSETWebCore.Business.Contact;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -113,7 +116,7 @@ namespace CSETWebCore.Api.Controllers
             }
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
             QuestionResponse resp = manager.GetResponse();
-            
+
             return Ok(resp);
         }
 
@@ -220,6 +223,8 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/AnswerQuestion")]
         public IActionResult StoreAnswer([FromBody] Answer answer)
         {
+            int assessmentId = _token.AssessmentForUser();
+
             var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
             if (answer == null)
@@ -239,8 +244,12 @@ namespace CSETWebCore.Api.Controllers
                     answer.QuestionType = "Question";
             }
 
-            int assessmentId = _token.AssessmentForUser();
-            string applicationMode = GetApplicationMode(assessmentId);
+
+            // Save the last answered question
+            var lah = new LastAnsweredHelper(_context);
+            lah.Save(assessmentId, _token.GetCurrentUserId(), answer);
+
+
 
             if (answer.Is_Component)
             {
@@ -256,13 +265,15 @@ namespace CSETWebCore.Api.Controllers
 
             if (answer.Is_Maturity)
             {
-                //var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
                 return Ok(mb.StoreAnswer(assessmentId, answer));
             }
 
             var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
             return Ok(qb.StoreAnswer(answer));
         }
+
+
+
 
 
         /// <summary>
@@ -283,6 +294,8 @@ namespace CSETWebCore.Api.Controllers
 
             var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
 
+            var lah = new LastAnsweredHelper(_context);
+
             foreach (var answer in answers)
             {
                 if (String.IsNullOrWhiteSpace(answer.QuestionType))
@@ -299,6 +312,9 @@ namespace CSETWebCore.Api.Controllers
 
                 if (answer.Is_Maturity)
                 {
+                    // save the last answered question
+                    lah.Save(assessmentId, _token.GetCurrentUserId(), answer);
+
                     cisBiz.StoreAnswer(answer);
                 }
             }
@@ -325,14 +341,20 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult StoreAllAnswers([FromBody] List<Answer> answers)
         {
             int assessmentId = _token.AssessmentForUser();
+            int? userId = _token.GetCurrentUserId();
 
             if (answers == null || answers.Count == 0)
             {
                 return Ok(0);
             }
 
+            var lah = new LastAnsweredHelper(_context);
+
             foreach (var answer in answers)
             {
+                // save the last answered question
+                lah.Save(assessmentId, userId, answer);
+
                 var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
                 mb.StoreAnswer(assessmentId, answer);
             }
@@ -485,7 +507,7 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="obs"></param>
         [HttpPost]
         [Route("api/AnswerSaveObservation")]
-        public IActionResult SaveObservation([FromBody] Observation obs, [FromQuery] bool cancel = false)
+        public IActionResult SaveObservation([FromBody] Observation obs, [FromQuery] bool cancel = false, [FromQuery] bool merge = false)
         {
             int assessmentId = _token.AssessmentForUser();
             var fm = new ObservationsManager(_context, assessmentId);
@@ -497,7 +519,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            var id = fm.UpdateObservation(obs);
+            var id = fm.UpdateObservation(obs, merge);
 
             return Ok(id);
         }
@@ -514,14 +536,13 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             var fm = new ObservationsManager(_context, assessmentId);
 
-
             if (obs.IsObservationEmpty(cancel))
             {
                 fm.DeleteObservation(obs);
                 return Ok();
             }
 
-            var id = fm.UpdateObservation(obs);
+            var id = fm.UpdateObservation(obs, false);
 
             return Ok(id);
         }

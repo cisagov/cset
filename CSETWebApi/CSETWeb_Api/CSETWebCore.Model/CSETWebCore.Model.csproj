@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.5" />
-    <PackageReference Include="NJsonSchema" Version="11.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
+    <PackageReference Include="NJsonSchema" Version="11.0.2" />
     <PackageReference Include="Npoi.Mapper" Version="6.2.1" />
     <PackageReference Include="Snickler.EFCore" Version="3.0.0" />
   </ItemGroup>
@@ -19,9 +19,5 @@
 
   <ItemGroup>
     <None Remove="Dashboard\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Cie\" />
   </ItemGroup>
 </Project>

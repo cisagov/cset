@@ -43,7 +43,7 @@ switch (installationMode) {
     break;
   case 'CIE':
     clientCode = 'CIE';
-    appName = 'CSET-CIE';
+    appName = 'CIE';
     break;
   default:
     clientCode = 'DHS';
@@ -74,7 +74,7 @@ function createWindow() {
     height: 800,
     webPreferences: { nodeIntegration: true, webSecurity: false },
     icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-    title: appName
+    title: appName === 'ACET' ? 'TOOLBOX' : appName
   });
 
   // Default Electron application menu is immutable; have to create new one and modify from there
@@ -208,7 +208,7 @@ function createWindow() {
     rootDir = path.dirname(app.getPath('exe'));
   }
 
-  log.info('Root Directory of ' + appName + ' Electron app: ' + rootDir);
+  log.info('Root Directory of ' + appName === 'ACET' ? 'TOOLBOX' : appName + ' Electron app: ' + rootDir);
 
   if (app.isPackaged) {
 
@@ -221,7 +221,7 @@ function createWindow() {
       return assignedApiPort;
     }).then(assignedApiPort => {
       // Keep attempting to connect to API, every 2 seconds, then load application
-      retryApiConnection(120, 2000, assignedApiPort, error => {
+      retryApiConnection(240, 2000, assignedApiPort, error => {
         if (error) {
           log.error(error);
           mainWindow.loadFile(path.join(__dirname, '/dist/assets/app-startup-error.html'));
@@ -233,6 +233,7 @@ function createWindow() {
               protocol: 'file:',
               query: {
                 apiUrl: config.api.protocol + '://' + config.api.host + ':' + assignedApiPort,
+                libraryUrl: config.api.protocol + '://' + config.api.host + ':' + assignedApiPort
               },
               slashes: true
             })
@@ -247,7 +248,9 @@ function createWindow() {
         pathname: path.join(__dirname, 'dist/index.html'),
         protocol: 'file:',
         query: {
-          apiUrl: config.api.protocol + '://' + config.api.host + ':' + config.api.port
+          apiUrl: config.api.protocol + '://' + config.api.host + ':' + config.api.port,
+          libraryUrl: config.api.protocol + '://' + config.api.host + ':' + config.api.port
+
         },
         slashes: true
       })
@@ -331,7 +334,7 @@ function createWindow() {
       overrideBrowserWindowOptions: {
         parent: mainWindow,
         icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-        title: details.frameName === 'csetweb-ng' || '_blank' ? `${installationMode}` : details.frameName
+        title: details.frameName === 'csetweb-ng' || '_blank' ? `${appName === 'ACET' ? 'TOOLBOX' : appName}` : details.frameName
       }
     };
   })
@@ -401,7 +404,11 @@ app.on('ready', () => {
   log.catchErrors();
 
   if (mainWindow === null) {
-    createWindow();
+    try {
+      createWindow();
+    } catch {
+      app.quit();
+    }
   }
 });
 

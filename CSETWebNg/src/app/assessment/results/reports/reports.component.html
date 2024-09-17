@@ -42,7 +42,7 @@
 
 
   <!-- Observation Tear Out Sheets -->
-  <div class="d-flex flex-column justify-content-start align-items-start mb-4">
+  <div *ngIf="!assessSvc.usesMaturityModel('ISE')" class="d-flex flex-column justify-content-start align-items-start mb-4">
     <div class="mb-3 p-3 w-100" [class.gray-box]="true">
          <div class="d-flex flex-row" style="align-items: end">
               <div>
@@ -56,307 +56,87 @@
           {{t('observations tear-out sheets.summary')}}
          </div>
     </div>
-</div>
-
+  </div>
 
   <div [class.div-shield]="disableEntirePage">
-    <div *ngIf="!!assessSvc.assessment && (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) && !isMobile" 
-      class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>{{t('standards and diagram')}}</h4>
-      <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{t('executive summary')}}
-      </button>
 
-      <button (click)="clickReportLink('sitesummary')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{t('site summary report')}}
-      </button>
-
-      <button (click)="clickReportLink('securityplan')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{t('site cybersecurity plan')}}
-      </button>
-
-      <button (click)="clickReportLink('detail')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{t('site detail report')}}
-      </button>
-    </div>
-
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('CMMC') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>Capability Maturity Model Certification (CMMC) 1.0</h4>
-
-      <button (click)="clickReportLink('executivecmmc')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        CMMC Executive Summary
-      </button>
-
-      <button (click)="clickReportLink('sitesummarycmmc')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        CMMC Site Summary Report
-      </button>
-
-      <button tabindex="0" (click)="clickReportLink('cmmcDeficiencyReport')"
-        class="btn btn-link btn-link-dark text-left">
-        CMMC Deficiency Report
-      </button>
-
-      <button tabindex="0" (click)="clickReportLink('cmmcCommentsMarked')" class="btn btn-link btn-link-dark text-left">
-        CMMC Comments and Marked for Review
-      </button>
-
-      <button tabindex="0" (click)="clickReportLink('cmmcAltJustifications')"
-        class="btn btn-link btn-link-dark text-left">
-        CMMC Alternate Justifications
-      </button>
-    </div>
+  <!-- All reports component -->
+  <app-report-list-common *ngIf="currentSectionId" [sectionId]="currentSectionId"></app-report-list-common>
 
 
+  <!-- ISE -->
+  <app-report-list-common *ngIf="assessSvc.isISE() && !isMobile" sectionId="ISE">
+  </app-report-list-common>
+  <div>
+    <div *ngIf="this.ncuaSvc.submitInProgress" class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px"></div>
+  </div>
+  <!-- ISE Merit Buttons -->
+  <div *ngIf="assessSvc.isISE()" class="my-5">
+
+    <button class="btn me-2" style="background-color: #3b68aa; color: white;" (click)="navSvc.navBack('reports')"
+      tabindex="0" aria-label="Back">
+      Back
+    </button>
+
+    <button class="btn" *ngIf="!ncuaSvc.ISE_StateLed" aria-label="Submit" tabindex="0"
+      [style]="getSubmitButtonStyle()" (click)="ncuaSvc.submitToMerit(observations);"
+      [disabled]="disableSubmitButton()">
+      Submit
+    </button>
+
+  </div>
 
 
-    <!-- EDM -->
-    <app-report-list-edm *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM')"
-      [confidentiality]="confidentiality"></app-report-list-edm>
-
-
-    <!-- CRR -->
-    <app-report-list-crr *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CRR')"
-      [confidentiality]="confidentiality"></app-report-list-crr>
-
-
-    <!-- IMR -->
-    <app-report-list-imr *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('IMR')"
-      [confidentiality]="confidentiality"></app-report-list-imr>
-
-
-    <!-- CIS -->
-    <app-report-list-cis *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CIS')"></app-report-list-cis>
-
-
-    <!-- CMMC2 -->
-    <app-report-list-cmmc2 *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CMMC2')"></app-report-list-cmmc2>
-
-    <!-- RRA -->
-    <app-report-list-rra *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('RRA') && !isMobile">
-    </app-report-list-rra>
-
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('ACET') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>{{ t('acet.acet reports') }}</h4>
-      <!-- commenting out this warning for now because NCUA people wanted reports always available -->
-      <!-- <div *ngIf="disableAcetReportLinks" class="
-        alert-warning
-        mt-2
-        mb-2
-        d-flex
-        flex-row
-        justify-content-center
-        align-items-center
-        flex-11a
-        ng-star-inserted
-      ">
-        <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
-        <span class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-          Some reports are disabled until all statements have been answered.
-        </span>
+    <!-- HYDRO -->
+    <!-- below is commented out until the VaR scores are collected/calculated -->
+      <!-- <div>
+        <button tabindex="0" (click)="clickReportLink('hydroReport')" class="btn btn-link btn-link-dark text-left">
+          HYDRO Report
+        </button>
       </div> -->
-      <button (click)="clickReportLink('acetexecutive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{ t('acet.executive summary.executive summary') }}
-      </button>
-      <button (click)="clickReportLink('acetgaps')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{ t('acet.gap report.gap report') }}
-      </button>
-      <button (click)="clickReportLink('acetcommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{ t('acet.comments and mfr.comments report') }}
-      </button>
-      <button (click)="clickReportLink('acetansweredquestions')" tabindex="0"
-        class="btn btn-link btn-link-dark text-left">
-        {{ t('acet.answered statements.answered statements report') }}
-      </button>
-      <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0"
-        class="btn btn-link btn-link-dark text-left">
-        {{ t('acet.compensating controls.compensating controls report') }}
-      </button>
-    </div>
-
-    <div *ngIf="assessSvc.isISE() && !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>ISE Reports</h4>
-
-      <app-ise-warnings [iseHasBeenSubmitted]="iseHasBeenSubmitted"
-        [disableIseReportLinks]="disableIseReportLinks"></app-ise-warnings>
-
-      <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableSubmitButton()">
-        ISE MERIT SCOPE REPORT (copy paste to Execution Result)
-      </button>
-
-      <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableSubmitButton()">
-        ISE EXAMINATION REPORT (attach as Document in Scope Task)
-      </button>
-
-      <button (click)="clickReportLink('iseansweredquestions')" tabindex="0"
-        class="btn btn-link btn-link-dark text-left">
-        ISE Answered Statements
-      </button>
-
-      <button (click)="clickReportLink('iseexaminer')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        ISE Examiner Notes
-      </button>
-
-      <div *ngIf="this.ncuaSvc.submitInProgress" class="spinner-container" style="margin: 2em auto">
-        <div style="max-width: 50px; max-height: 50px"></div>
-      </div>
-    </div>
 
 
-
-    <div *ngIf="
-        !!assessSvc.assessment &&
-        assessSvc.usesMaturityModel('VADR') &&
-        !isMobile
-      " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>Validated Architecture Design Review (VADR)</h4>
+    <!-- CIE -->
+    <div *ngIf="!!assessSvc.assessment &&
+        assessSvc.usesMaturityModel('CIE') &&
+        !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
+      <h4>Cyber-Informed Engineering (CIE)</h4>
       <div>
-        <button tabindex="0" (click)="clickReportLink('vadrReport')" class="btn btn-link btn-link-dark text-left">
-          VADR Report
-        </button>
-      </div>
-      <div>
-        <button tabindex="0" (click)="clickReportLink('vadrDeficiencyReport')"
+        <button (click)="clickReportLink('cieAllQuestions')" tabindex="0"
           class="btn btn-link btn-link-dark text-left">
-          VADR Deficiency Report
+          Export All Questions CIE Report
         </button>
       </div>
       <div>
-        <button tabindex="0" (click)="clickReportLink('vadrOpenEndedReport')"
+        <button (click)="clickReportLink('ciePrincipleOnly')" tabindex="0"
           class="btn btn-link btn-link-dark text-left">
-          VADR Open Ended Questions Report
+          Export Principle-Only CIE Report
+        </button>
+      </div>
+      <div>
+        <button (click)="clickReportLink('ciePrinciplePhase')" tabindex="0"
+          class="btn btn-link btn-link-dark text-left">
+          Export Principle-Phase CIE Report
+        </button>
+      </div>
+      <div>
+        <button (click)="clickReportLink('cieNotApplicable')" tabindex="0"
+          class="btn btn-link btn-link-dark text-left">
+          Export Not Applicable Questions CIE Report
+        </button>
+      </div>
+      <div>
+        <button (click)="clickReportLink('cieMfrReport')" tabindex="0"
+          class="btn btn-link btn-link-dark text-left">
+          Export Marked for Review CIE Report
         </button>
       </div>
     </div>
 
 
-    <div>
-      <!-- MVRA -->
-      <app-report-list-mvra *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('MVRA') && !isMobile">
-      </app-report-list-mvra>
-
-      <!-- CPG -->
-      <app-report-list-cpg *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile"></app-report-list-cpg>
-      
-
-
-      <div *ngIf="
-          !!assessSvc.assessment &&
-          assessSvc.usesMaturityModel('C2M2') &&
-          !isMobile
-        " class="d-flex flex-column justify-content-start align-items-start mb-4">
-        <h4>Cybersecurity Capability Maturity Model (C2M2)</h4>
-
-        <div>
-          <button tabindex="0" (click)="clickReportLink('c2m2Report')" class="btn btn-link btn-link-dark text-left">
-            C2M2 Report
-          </button>
-        </div>
-      </div>
-
-
-      <div *ngIf="
-          !!assessSvc.assessment &&
-          assessSvc.usesMaturityModel('HYDRO') &&
-          !isMobile
-        " class="d-flex flex-column justify-content-start align-items-start mb-4">
-        <h4>Hydropower Cybersecurity Valuation Framework (HYDRO)</h4>
-
-        <!-- below is commented out until the VaR scores are collected/calculated -->
-        <!-- <div>
-          <button tabindex="0" (click)="clickReportLink('hydroReport')" class="btn btn-link btn-link-dark text-left">
-            HYDRO Report
-          </button>
-        </div> -->
-        <div>
-          <button tabindex="0" (click)="clickReportLink('hydroActionItemsReport')"
-            class="btn btn-link btn-link-dark text-left">
-            Action Items Report
-          </button>
-        </div>
-      </div>
-
-
-      <div *ngIf="
-          !!assessSvc.assessment &&
-          assessSvc.usesMaturityModel('SD02 Series') &&
-          !isMobile
-        " class="d-flex flex-column justify-content-start align-items-start mb-4">
-        <h4>Pipeline Security Directive (SD02 Series)</h4>
-
-        <div>
-          <button tabindex="0" (click)="clickReportLink('sd-answer-summary')"
-            class="btn btn-link btn-link-dark text-left">
-            Answer Summary
-          </button>
-        </div>
-        <div>
-          <button tabindex="0" (click)="clickReportLink('sd-deficiency')" class="btn btn-link btn-link-dark text-left">
-            Deficiency Report
-          </button>
-        </div>
-        <div>
-          <button tabindex="0" (click)="clickReportLink('commentsmfr')" class="btn btn-link btn-link-dark text-left">
-            Comments and Marked for Review
-          </button>
-        </div>
-      </div>
-
-      <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('SD02 Owner')" class="d-flex flex-column justify-content-start align-items-start mb-4">
-        <div *ngIf="!isMobile">
-          <h4>SD02 Owner Reports</h4>
-          <div>
-            <button (click)="clickReportLink('sdo-gap-report')" tabindex="0" class="btn btn-link btn-link-dark text-left">Deficiency Report</button>
-          </div>
-          <div>
-            <button (click)="clickReportLink('sdo-comments-and-mfr')" tabindex="0" class="btn btn-link btn-link-dark text-left">Comments and Marked for Review</button>
-          </div>
-        </div>
-        <div *ngIf="isMobile"></div>
-      </div>
-
-      <div *ngIf="!!assessSvc.assessment &&
-          assessSvc.usesMaturityModel('CIE') &&
-          !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
-        <h4>Cyber-Informed Engineering (CIE)</h4>
-        <div>
-          <button (click)="clickReportLink('cieNotApplicable')" tabindex="0"
-            class="btn btn-link btn-link-dark text-left">
-            Export Not Applicable Questions Tear Out Sheets
-          </button>
-        </div>
-        <div>
-          <button (click)="clickReportLink('ciePrincipleOnly')" tabindex="0"
-            class="btn btn-link btn-link-dark text-left">
-            Export Principle-Only CIE-CSET Report
-          </button>
-        </div>
-        <div>
-          <button (click)="clickReportLink('ciePrinciplePhase')" tabindex="0"
-            class="btn btn-link btn-link-dark text-left">
-            Export Principle-Phase CIE-CSET Report
-          </button>
-        </div>
-        <div>
-          <button (click)="clickReportLink('cieAllQuestions')" tabindex="0"
-            class="btn btn-link btn-link-dark text-left">
-            Export All CIE-CSET Report
-          </button>
-        </div>
-      </div>
-
-
       <div>
-        <div class="ml-2" *ngIf="isConfigChainEqual">
+        <div class="ms-2" *ngIf="isConfigChainEqual">
           <button tabindex="0" (click)="clickReportLink('appkeyreport')" class="btn btn-link btn-link-dark text-left"
             matTooltip="Used to associate identifiable information with an Anonymous Key" matTooltipPosition="right">
             Anonymous Key Report
@@ -366,40 +146,24 @@
 
         <div class="mt-5 d-flex flex-row" *ngIf="this.configSvc.behaviors.showExportOnReports">
           <button tabindex="0"
-            class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a mr-2"
+            class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a me-2"
             (click)="clickExport()" matTooltip="{{ 'tooltip.export assessment' | transloco }} ({{
               exportExtension
             }}).">
-            <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+            <span class="cset-icons-export-up fs-base-2 me-2"></span>
             <span>{{assessSvc.usesMaturityModel('CIE') ? 'CSET FILE' : ''}} {{ 'buttons.export' | transloco }}</span>
           </button>
 
           <button *ngIf="configSvc.cisaAssessorWorkflow" tabindex="0"
             class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
             (click)="clickExport(true)" matTooltip="{{ 'tooltip.export assessment json' | transloco }}">
-            <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+            <span class="cset-icons-export-up fs-base-2 me-2"></span>
             <span>{{ 'buttons.export json' | transloco }}</span>
           </button>
         </div>
 
-        <!-- ISE Merit Buttons -->
-        <div *ngIf="assessSvc.isISE()" class="my-5">
-
-          <button class="btn mr-2" style="background-color: #3b68aa; color: white;" (click)="navSvc.navBack('reports')"
-            tabindex="0" aria-label="Back">
-            Back
-          </button>
-
-          <button class="btn" *ngIf="!ncuaSvc.ISE_StateLed" aria-label="Submit" tabindex="0"
-            [style]="getSubmitButtonStyle()" (click)="ncuaSvc.submitToMerit(observations);"
-            [disabled]="disableSubmitButton()">
-            Submit
-          </button>
-
-        </div>
-
       </div>
-    </div>
+    
   </div>
 
   <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"

@@ -36,22 +36,22 @@
           <span [class.display-hidden]="!mySubCategory.hasReviewItems"
             class="d-flex justify-content-center align-items-center flex-00a"
             matTooltip="{{ t('tooltip.category requires review') }}">
-            <span class="mr-1 cset-icons-flag-dark fs-small"></span>
+            <span class="me-1 cset-icons-flag-dark fs-small"></span>
             <span class="mb-1 fs-small">{{ t('requires review') }}</span>
           </span>
-          <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
+          <app-progress [value]="percentAnswered" class="me-2 ms-2"></app-progress>
           <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="mySubCategory.expanded"></i>
         </div>
 
         <div class="d-flex flex-column justify-content-end align-items-end flex-00a" *ngIf="layoutSvc.hp">
           <div>
-            <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
+            <app-progress [value]="percentAnswered" class="me-2 ms-2"></app-progress>
             <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="mySubCategory.expanded"></i>
           </div>
           <span [class.display-hidden]="!mySubCategory.hasReviewItems"
             class="d-flex justify-content-center align-items-center flex-00a"
             matTooltip="{{ t('tooltip.category requires review') }}">
-            <span class="mr-1 cset-icons-flag-dark fs-small"></span>
+            <span class="me-1 cset-icons-flag-dark fs-small"></span>
           </span>
         </div>
       </div>
@@ -64,27 +64,27 @@
         </div>
         <div [class.display-none]="filterSvc.isFilterEngaged()">
           <!-- this is the header answer block -->
-          <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
+          <div class="btn-group answer-group" role="group">
             <label *ngIf="showThisOption('Y')" class="btn btn-yes form-check-label"
               [class.answer-selected]="mySubCategory.subCategoryAnswer === 'Y'">
-              <input name="subcat_{{ mySubCategory.subCategoryId }}" class="form-check-input" type="radio"
+              <input name="subcat_{{ mySubCategory.subCategoryId }}" class="btn-check" type="radio"
                 autocomplete="off" (click)="setBlockAnswer('Y')" tabindex="0"
                 [checked]="mySubCategory.subCategoryAnswer === 'Y'">{{questionsSvc.answerButtonLabel('', 'Y')}}
             </label>
             <label *ngIf="showThisOption('N')" class="btn btn-no form-check-label"
               [class.answer-selected]="mySubCategory.subCategoryAnswer === 'N'">
-              <input name="subcat_{{ mySubCategory.subCategoryId }}" class="form-check-input" type="radio"
+              <input name="subcat_{{ mySubCategory.subCategoryId }}" class="btn-check" type="radio"
                 autocomplete="off" (click)="setBlockAnswer('N')" tabindex="0"
                 [checked]="mySubCategory.subCategoryAnswer === 'N'">{{questionsSvc.answerButtonLabel('', 'N')}}
             </label>
             <label *ngIf="showThisOption('NA')" class="btn btn-na form-check-label"
               [class.answer-selected]="mySubCategory.subCategoryAnswer === 'NA'">
-              <input name="subcat_{{ mySubCategory.subCategoryId }}" class="form-check-input" type="radio"
+              <input name="subcat_{{ mySubCategory.subCategoryId }}" class="btn-check" type="radio"
                 autocomplete="off" (click)="setBlockAnswer('NA')" tabindex="0"
                 [checked]="mySubCategory.subCategoryAnswer === 'NA'">{{questionsSvc.answerButtonLabel('', 'NA')}}
             </label>
             <label *ngIf="showThisOption('A')" class="btn btn-na form-check-label" style="visibility: hidden;">
-              <input name="subcat_{{ mySubCategory.subCategoryId }}" class="form-check-input" type="radio" tabindex="0"
+              <input name="subcat_{{ mySubCategory.subCategoryId }}" class="btn-check" type="radio" tabindex="0"
                 autocomplete="off">XX
             </label>
           </div>
@@ -95,7 +95,7 @@
 
     <!-- this houses all of the questions -->
     <div class="subcat-question-list px-3 pt-0 pb-3" [class.display-none]="!mySubCategory.expanded">
-      <div class="question-row d-flex flex-column" *ngFor="let q of mySubCategory.questions"
+      <div class="question-row d-flex flex-column" *ngFor="let q of mySubCategory.questions" id="qq{{q.questionId}}"
         [class.display-none]="!q.visible">
 
         <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
@@ -111,19 +111,19 @@
 
 
           <div>
-            <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
+            <div class="btn-group answer-group" role="group">
               <label *ngFor="let option of answerOptions" class="btn form-check-label"
                 [class]="questionsSvc.answerOptionCss('', option)" [class.answer-selected]="q.answer === option"
                 [matTooltip]="questionsSvc.answerButtonTooltip(maturityModelId, option)">
-                <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
+                <input name="q_{{q.questionId}}" class="btn-check" type="radio" autocomplete="off"
                   (click)="storeAnswer(q, option)" [checked]="q.answer === option">
                 {{questionsSvc.answerButtonLabel(maturityModelName, option)}}
               </label>
 
               <!-- Mark For Review Flag  -->
-              <label class="mr-0 ml-2 btn form-check-label btn-mfr" [class.answer-selected]="q.markForReview === true"
+              <label class="me-0 ms-2 btn btn-mfr" [class.answer-selected]="q.markForReview === true"
                 [matTooltip]="('tooltip.mfr-flag' | transloco)">
-                <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
+                <input name="q_{{q.questionId}}_F" type="checkbox" class="btn-check" (click)="saveMFR(q);" tabindex="0"
                   checked="{{q.markForReview === true}}">
                 <span class="cset-icons-flag-dark fs-base"></span>
               </label>
@@ -158,17 +158,17 @@
           </div>
 
           <div>
-            <div class="btn-group btn-group-toggle answer-group ml-0" data-toggle="buttons">
+            <div class="btn-group btn-group-toggle answer-group ms-0" data-toggle="buttons">
               <label *ngFor="let option of answerOptions" class="btn form-check-label align-items-center"
                 [class]="questionsSvc.answerOptionCss('', option)" [class.answer-selected]="q.answer === option"
                 [matTooltip]="questionsSvc.answerButtonTooltip(maturityModelId, option)">
-                <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
+                <input name="q_{{q.questionId}}" class="btn-check" type="radio" autocomplete="off"
                   (click)="storeAnswer(q, option)" [checked]="q.answer === option">
                 {{questionsSvc.answerButtonLabel(maturityModelName, option)}}
               </label>
 
               <!-- Mark For Review Flag  -->
-              <label class="mr-0 ml-2 btn form-check-label btn-mfr align-items-center"
+              <label class="me-0 ms-2 btn form-check-label btn-mfr align-items-center"
                 [class.answer-selected]="q.markForReview === true" [matTooltip]="('tooltip.mfr-flag' | transloco)">
                 <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
                   checked="{{q.markForReview === true}}">

@@ -23,12 +23,6 @@
 ////////////////////////////////
 export const environment = {
   production: true,
-  appUrl: '',
-  apiUrl: '',
-  docUrl: '',
-  csetGithubApiUrl: '',
-  visibleVersion: '12.2.1.0',
-  version: '12.2.1.0',
-  helpContactEmail: '',
-  helpContactPhone: ''
+  visibleVersion: '12.2.4.0',
+  version: '12.2.4.0'
 };

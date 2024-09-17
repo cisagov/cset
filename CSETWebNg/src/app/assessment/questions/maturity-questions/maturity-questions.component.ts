@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
@@ -39,12 +39,15 @@ import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { CompletionService } from '../../../services/completion.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { DemographicService } from '../../../services/demographic.service';
+import { DemographicIodService } from '../../../services/demographic-iod.service';
+import { SsgService } from '../../../services/ssg.service';
 
 @Component({
   selector: 'app-maturity-questions',
   templateUrl: './maturity-questions.component.html'
 })
-export class MaturityQuestionsComponent implements OnInit {
+export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   groupings: QuestionGrouping[] = [];
   pageTitle: string = '';
@@ -57,7 +60,7 @@ export class MaturityQuestionsComponent implements OnInit {
   loaded = false;
 
   grouping: QuestionGrouping | null;
-  groupingId: Number;
+  groupingId: string; // this is a string to be able to support 'bonus'
   title: string;
 
   msgUnansweredEqualsNo = '';
@@ -68,11 +71,14 @@ export class MaturityQuestionsComponent implements OnInit {
 
   constructor(
     public assessSvc: AssessmentService,
+    public demoSvc: DemographicService,
+    public demoIodSvc: DemographicIodService,
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
     public completionSvc: CompletionService,
     public cisSvc: CisService,
+    public ssgSvc: SsgService,
     public maturityFilteringSvc: MaturityFilteringService,
     public filterSvc: QuestionFilterService,
     public glossarySvc: GlossaryService,
@@ -88,7 +94,7 @@ export class MaturityQuestionsComponent implements OnInit {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((e: any) => {
       if (e.urlAfterRedirects.includes('/maturity-questions/')) {
-        this.groupingId = +this.route.snapshot.params['grp'];
+        this.groupingId = this.route.snapshot.params['grp'];
         this.loadGrouping(+this.groupingId);
       }
     });
@@ -122,15 +128,21 @@ export class MaturityQuestionsComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.scrollToResumeQuestionsTarget();
+    }, 500);
+  }
+
   /**
    *
    */
   load() {
     // determine whether displaying a grouping or all questions for the model
     this.grouping = null;
-    this.groupingId = +this.route.snapshot.params['grp'];
+    this.groupingId = this.route.snapshot.params['grp'];
 
-    if (!this.groupingId) {
+    if (!this.groupingId || this.groupingId.toLowerCase() == 'bonus') {
       this.loadQuestions();
     } else {
       this.loadGrouping(+this.groupingId);
@@ -159,20 +171,37 @@ export class MaturityQuestionsComponent implements OnInit {
 
     const magic = this.navSvc.getMagic();
     this.groupings = null;
-    this.maturitySvc.getQuestionsList(false).subscribe(
+
+
+    // determine which endpoint to call to get the question list
+    var obsGetQ = this.maturitySvc.getQuestionsList(false);
+
+
+    if (this.groupingId?.toLowerCase() == 'bonus') {
+      const bonusModelId = this.ssgSvc.ssgBonusModel()
+      obsGetQ = this.maturitySvc.getBonusQuestionList(bonusModelId);
+    }
+
+    obsGetQ.subscribe(
       (response: MaturityQuestionResponse) => {
         this.modelId = response.modelId;
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
         this.groupings = response.groupings;
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
-
+        
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;
         this.filterSvc.maturityModelId = response.modelId;
         this.filterSvc.maturityModelName = response.modelName;
 
-        this.pageTitle = this.tSvc.translate('titles.' + this.questionsAlias.toLowerCase().trim()) + ' - ' + this.modelName;
+        if (this.groupingId?.toLowerCase() == 'bonus') {
+          this.pageTitle = this.tSvc.translate(`titles.ssg.${this.ssgSvc.ssgSimpleSectorLabel()}`);
+        } else {
+          this.pageTitle = this.tSvc.translate('titles.' + this.questionsAlias.toLowerCase().trim()) + ' - ' + this.modelName;
+        }
+
+
         this.glossarySvc.glossaryEntries = response.glossary;
 
         // set the message with the current "no" answer value
@@ -257,6 +286,47 @@ export class MaturityQuestionsComponent implements OnInit {
     g.subGroupings.forEach((sg: QuestionGrouping) => {
       this.recurseExpansion(sg, mode);
     });
+  }
+
+  /**
+   * If a "resume questions" target is defined, attempt to scroll to it.
+   */
+  scrollToResumeQuestionsTarget() {
+    // scroll to the target question if we have one
+    const scrollTarget = this.navSvc.resumeQuestionsTarget;
+    this.navSvc.resumeQuestionsTarget = null;
+    if (!scrollTarget) {
+      return;
+    }
+
+    var mg = scrollTarget.split(',').find(x => x.startsWith('MG:'))?.replace('MG:', '');
+    let mq = scrollTarget.split(',').find(x => x.startsWith('MQ:'))?.replace('MQ:', '');
+
+    // expand the question's group
+    var groupToExpand = this.findGroupingById(Number(mg), this.groupings);
+    if (!!groupToExpand) {
+      groupToExpand.expanded = true;
+    }
+
+    // scroll to the question
+    let qqElement = document.getElementById(`mq${mq}`);
+    setTimeout(() => {
+      qqElement.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }, 1000);
+  }
+
+  /**
+   * Recurse grouping tree, looking for the ID
+   */
+  findGroupingById(id: number, groupings: any[]) {
+    var grp = groupings.find(x => x.groupingID == id);
+    if (!!grp) {
+      return grp;
+    }
+    for (var i = 0; i < groupings.length; i++) {
+      return this.findGroupingById(id, groupings[i].subGroupings);
+    }
   }
 
   /**

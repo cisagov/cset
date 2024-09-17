@@ -25,7 +25,7 @@
         <h3>{{ t('titles.acet dashboard') }}</h3>
         <div class="d-table mb-4" style="min-width: 50%;">
             <div class="d-table-row">
-                <div class="d-table-cell pr-3 label-cell">{{ t('acet.credit union name') }}:</div>
+                <div class="d-table-cell pe-3 label-cell">{{ t('acet.credit union name') }}:</div>
                 <div class="d-table-cell">{{ acetDashboard?.creditUnionName }}</div>
             </div>
             <div class="d-table-row mb-3">
@@ -43,7 +43,7 @@
 
             <div class="d-table w-100">
                 <div class="d-table-row">
-                    <div class="d-table-cell pb-3 pl-3">
+                    <div class="d-table-cell pb-3 ps-3">
                         {{ t('irp.overall risk level is') }}
                         <span class="blue-text font-weight-bold">
                             {{ overrideLabel.includes('-') ? overrideLabel.substring(0, 4) +
@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div class="d-table-row">
-                    <div class="d-table-cell pl-3 align-top">
+                    <div class="d-table-cell ps-3 align-top">
                         {{ t('irp.override risk level is') }}
                         <span class="blue-text font-weight-bold">
                             {{ overriddenLabel.includes('-') ? overriddenLabel.substring(0, 4) +
@@ -65,7 +65,7 @@
                 </div>
                 <div class="d-table-row"
                     *ngIf="!!acetDashboard?.override && acetDashboard?.override != '' && acetDashboard?.override !== 0">
-                    <div class="d-table-cell pl-3 align-top">
+                    <div class="d-table-cell ps-3 align-top">
                         {{ t('irp.override reason') }}: <span>{{acetDashboard.overrideReason}}</span>
                     </div>
                 </div>

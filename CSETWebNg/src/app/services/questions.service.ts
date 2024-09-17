@@ -134,23 +134,22 @@ export class QuestionsService {
   /**
    * Analyzes the current 'auto load supplemental' preference and the maturity model
    */
-  autoLoadSupplemental(modelId?: number) {
+  autoLoadSupplemental(model?: any) {
     // first see if it should be forced on by configuration
     if (this.configSvc.config.supplementalAutoloadInitialValue) {
       return true;
     }
 
+    // find the configuration for the model
+    const moduleConfig = this.configSvc.getModuleConfig(model);
+
+
     // standards (modelid is null) - check the checkbox state
-    if (!modelId) {
+    if (!moduleConfig) {
       return this.autoLoadSuppCheckboxState;
     }
 
-    // CPG - auto load supplemental
-    if (modelId == 11) {
-      return true;
-    }
-
-    return false;
+    return moduleConfig.autoLoadSupplemental ?? false;
   }
 
   /**
@@ -344,7 +343,6 @@ export class QuestionsService {
     return '';
   }
 
-
   /**
    * Finds the button definition and return its CSS
    */
@@ -381,8 +379,7 @@ export class QuestionsService {
    * Finds the answer in the default object or the model-specific object.
    * Standards questions screen pass '0' for the modelId.
    */
-  findAnsDefinition(modelName: string, answerCode: string) {
-
+  findAnsDefinition(model: string, answerCode: string) {
     let ansDef = null;
 
     // assume unanswered if null or undefined
@@ -391,19 +388,25 @@ export class QuestionsService {
     }
 
     // look for model-specific answer options
-    if (!!modelName && modelName.length > 0 && modelName.trim().length > 0) {
-      let model = this.configSvc.config.moduleBehaviors.find(x => x.moduleName == modelName);
+    if (!!model && String(model).trim().length > 0) {
+      
+      // first try to find the model configuration using its model name
+      let modelConfiguration = this.configSvc.config.moduleBehaviors.find(x => x.moduleName == model);
+      
+      // if that didn't work, use model ID instead
+      if (!modelConfiguration) {
+        modelConfiguration = this.configSvc.config.moduleBehaviors.find(x => x.modelId == model);
+      }
 
-      if (!!model) {
-
+      if (!!modelConfiguration) {
         // first look for a skin-specific answer option
-        ansDef = model.answerOptions?.find(o => o.code == answerCode && o.skin == this.configSvc.installationMode);
+        ansDef = modelConfiguration.answerOptions?.find(o => o.code == answerCode && o.skin == this.configSvc.installationMode);
         if (ansDef) {
           return ansDef;
         }
 
         // or the general version of the answer option for the model
-        ansDef = model.answerOptions?.find(o => o.code == answerCode && !o.skin);
+        ansDef = modelConfiguration.answerOptions?.find(o => o.code == answerCode && !o.skin);
         if (ansDef) {
           return ansDef;
         }
@@ -422,11 +425,13 @@ export class QuestionsService {
       buttonCss: "btn-yes"
     };
   }
+
+  /**
+   * 
+   */
   processNavigationDisable(answer: Answer) {
     //have a list of all the 20 necessary id's
     //then when the list is complete enable the navigation
     this.assessmentSvc.updateAnswer(answer);
   }
 }
-
-

@@ -145,19 +145,20 @@ namespace CSETWebCore.Business.Question
                 if ((dbQ.Symbol_Name != symbolType)
                     || (dbQ.ComponentName != componentName))
                 {
+                    componentName = Helpers.Utilities.RemoveHtmlTags(dbQ.ComponentName, true);
+
                     qg = new QuestionGroup()
                     {
                         GroupHeadingText = dbQ.Question_Group_Heading,
                         GroupHeadingId = dbQ.GroupHeadingId,
                         StandardShortName = listname,
                         Symbol_Name = dbQ.Symbol_Name,
-                        ComponentName = dbQ.ComponentName,
+                        ComponentName = componentName,
                         IsOverride = true
 
                     };
                     groupList.Add(qg);
                     symbolType = dbQ.Symbol_Name;
-                    componentName = dbQ.ComponentName;
 
                     curGroupHeading = qg.GroupHeadingText;
                     // start numbering again in new group
