@@ -136,7 +136,7 @@
         </tr>
         <tr>
           <td class="pe-2">
-            <select id="newSourceDoc" name="newSourceDoc" class="form-control" [(ngModel)]="newSourceDocId">
+            <select id="newSourceDoc" name="newSourceDoc" class="form-select" [(ngModel)]="newSourceDocId">
               <option value=""></option>
               <option *ngFor="let o of refDocOptions" [value]="o.id">{{ o.title }}</option>
             </select>
@@ -174,7 +174,7 @@
         </tr>
         <tr>
           <td class="pe-2">
-            <select id="newAdditionalDoc" name="newAdditionalDoc" class="form-control" [(ngModel)]="newAdditionalDocId">
+            <select id="newAdditionalDoc" name="newAdditionalDoc" class="form-select" [(ngModel)]="newAdditionalDocId">
               <option value=""></option>
               <option *ngFor="let o of refDocOptions" [value]="o.id">{{ o.title }}</option>
             </select>

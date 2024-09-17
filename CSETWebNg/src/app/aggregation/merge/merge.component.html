@@ -69,22 +69,22 @@
               <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
                 <label class="btn btn-yes form-check-label" [class.answer-selected]="q.defaultAnswer === 'Y'"
                   (click)="storeAnswer(q, 'Y')">
-                  <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
+                  <input name="q_{{q.questionId}}" class="btn-check" type="radio" autocomplete="off"
                     [checked]="q.defaultAnswer === 'Y'">Yes
                 </label>
                 <label class="btn btn-no form-check-label" [class.answer-selected]="q.defaultAnswer === 'N'"
                   (click)="storeAnswer(q, 'N')">
-                  <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
+                  <input name="q_{{q.questionId}}" class="btn-check" type="radio" autocomplete="off"
                     [checked]="q.defaultAnswer === 'N'">No
                 </label>
                 <label class="btn btn-na form-check-label" [class.answer-selected]="q.defaultAnswer === 'NA'"
                   (click)="storeAnswer(q, 'NA')">
-                  <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
+                  <input name="q_{{q.questionId}}" class="btn-check" type="radio" autocomplete="off"
                     [checked]="q.defaultAnswer === 'NA'">NA
                 </label>
                 <label class="btn btn-alt form-check-label" [class.answer-selected]="q.defaultAnswer === 'A'"
                   (click)="storeAnswer(q, 'A')">
-                  <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
+                  <input name="q_{{q.questionId}}" class="btn-check" type="radio" autocomplete="off"
                     [checked]="q.defaultAnswer === 'A'">Alt
                 </label>
               </div>

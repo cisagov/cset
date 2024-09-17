@@ -67,14 +67,14 @@
     <h2>Import CIE Answers</h2>
     <p>Import all answers from a previous CIE Analysis. All answers, comments, and artifacts currently in the Analysis will be overwritten.</p>
     <div class="d-flex flex-row">
-        <!-- <select class="form-control" (change)="changeBaseline($event)" [(ngModel)]="baselineAssessmentId">
+        <!-- <select class="form-select" (change)="changeBaseline($event)" [(ngModel)]="baselineAssessmentId">
             <option [ngValue]="null">-- No Baseline Assessment --</option>
             <option *ngFor="let c of baselineCandidates" [value]="c.id">
                 {{c.assessmentName}} [{{c.assessmentDate | localizeDate}}]
             </option>
         </select> -->
 
-        <select class="form-control me-1" (change)="changeBaseline($event)" [(ngModel)]="baselineAssessmentId">
+        <select class="form-select me-1" (change)="changeBaseline($event)" [(ngModel)]="baselineAssessmentId">
             <option [ngValue]="null">-- Select Analysis to Import --</option>
             <option *ngFor="let c of importSourceCandidates" [ngValue]="c.id">
                 {{c.assessmentName}} [{{c.assessmentDate | localizeDate}}]

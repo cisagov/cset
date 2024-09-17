@@ -66,7 +66,7 @@
             <label>{{ attr.attributeName }}</label>
         </div>
         <div class="col-sm-3 p-2">
-            <select class="form-control" [(ngModel)]="attr.attributeValue" (change)="saveAttribute(attr);">
+            <select class="form-select" [(ngModel)]="attr.attributeValue" (change)="saveAttribute(attr);">
                 <option value=""></option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>

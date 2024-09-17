@@ -59,7 +59,7 @@
             <div class="form-group col-12 text-wrap mt-2">
               <p><strong>Filter by </strong> </p>
               <label class="mb-1" for="sector">Sector</label>
-              <select class="form-control" id="sector" name="sector" tabindex="0"
+              <select class="form-select" id="sector" name="sector" tabindex="0"
                 (change)="onSelectSector($event.target.value)" [(ngModel)]="demographicData.sectorId">
                 <option [ngValue]="null">-- Select All Sector --</option>
                 <option *ngFor="let sector of sectorsList" [value]="sector.sectorId">{{sector.sectorName}}
@@ -68,7 +68,7 @@
             </div>
             <div class="form-group col-12">
               <label class="mb-1" for="industry">Industry</label>
-              <select class="form-control" id="industry" name="industry" tabindex="0"
+              <select class="form-select" id="industry" name="industry" tabindex="0"
                 [(ngModel)]="demographicData.industryId" (change)="update($event)">
                 <option [ngValue]="null">-- Select Industry --</option>
                 <option *ngFor="let industry of industryList" [value]="industry.industryId">
@@ -77,7 +77,7 @@
             </div>
             <div class="form-group col-12">
               <label for="edmOrganizationType">Organization Type</label>
-              <select class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
+              <select class="form-select" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
                 (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
                 <option [ngValue]="null">-- Select Type --</option>
                 <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option>

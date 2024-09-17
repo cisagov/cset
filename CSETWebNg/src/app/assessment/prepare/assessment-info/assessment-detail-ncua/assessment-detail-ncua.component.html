@@ -171,7 +171,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label class="mb-1" for="region">Region</label>
-                        <select (change)="update($event)" class="form-control" id="region" name="region" tabindex="0"
+                        <select (change)="update($event)" class="form-select" id="region" name="region" tabindex="0"
                             [(ngModel)]="assessment.regionCode">
                             <option [ngValue]="1">{{ncuaSvc.regionCodeTranslator(1)}}</option>
                             <option [ngValue]="2">{{ncuaSvc.regionCodeTranslator(2)}}</option>
@@ -198,7 +198,7 @@
                     </div>
                     <div class="col-md-6">
                         <label class="mb-1" for="examOverride">Exam Level Override</label>
-                        <select class="form-control" name="examOverride" [(ngModel)]="examOverride"
+                        <select class="form-select" name="examOverride" [(ngModel)]="examOverride"
                             (change)="updateOverride($event.target.value)"
                             [disabled]="this.acetDashboard === undefined || this.ncuaSvc.proposedExamLevel == 'CORE'">
                             <option>No Override</option>

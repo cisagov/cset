@@ -35,7 +35,7 @@
 
         <h5>Select a Standard</h5>
         <div class="d-flex flex-row">
-            <select class="form-control mb-3" tabindex="0" [(ngModel)]="selectedStandard">
+            <select class="form-select mb-3" tabindex="0" [(ngModel)]="selectedStandard">
                 <option *ngFor="let s of standards" [value]="s.setName">{{s.fullName}}</option>
             </select>
             <button class="btn btn-primary text-nowrap ms-3" (click)="launchStandardReport()"
@@ -44,7 +44,7 @@
 
         <h5>Select a Model</h5>
         <div class="d-flex flex-row">
-            <select class="form-control mb-3" tabindex="0" [(ngModel)]="selectedModel">
+            <select class="form-select mb-3" tabindex="0" [(ngModel)]="selectedModel">
                 <option *ngFor="let m of models" [value]="m.modelId">{{m.modelTitle}}</option>
             </select>
 

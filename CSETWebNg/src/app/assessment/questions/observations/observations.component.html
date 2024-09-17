@@ -37,7 +37,7 @@
 
       <div class="form-group">
         <label for="importance" class="form-label">{{ t('observation.importance') }}</label>
-        <select id="importance" name="importance" class="form-control" [(ngModel)]="observation.importance_Id"
+        <select id="importance" name="importance" class="form-select" [(ngModel)]="observation.importance_Id"
           (change)="updateImportance($event.target.value)">
           <option *ngFor="let import of importances" [value]="import?.importance_Id">{{ t('observation.importance ' +
             import?.value.toLowerCase()) }}</option>
