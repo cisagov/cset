@@ -146,7 +146,7 @@
         </span>
 
         <span class="btn-group-toggle">
-            <label *ngIf="showMfr" class="mr-0 ml-2 btn form-check-label btn-mfr"
+            <label *ngIf="showMfr" class="me-0 ms-2 btn form-check-label btn-mfr"
                 [class.answer-selected]="myQuestion.markForReview === true"
                 matTooltip="This control requires further review.">
                 <input name="q_{{myQuestion.questionId}}_F" type="checkbox"
@@ -238,20 +238,7 @@
             </div>
 
             <div *ngIf=" !!extras && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
-
-                <div *ngIf="!!tab?.requirementsData?.supplementalInfo"
-                    [innerHTML]="tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html'">
-                </div>
-
-                <div *ngIf="!seperateGuidanceFromApproach()">
-                    <hr
-                        *ngIf="!!tab?.requirementsData?.supplementalInfo && !!tab?.requirementsData?.examinationApproach">
-                    <div
-                        [innerHTML]="tab?.requirementsData?.examinationApproach ? (tab?.requirementsData?.examinationApproach | linebreak | safe: 'html') : ''">
-                    </div>
-                </div>
-
-                <!-- "pieces" -->
+                <!-- CPG "pieces" -->
 
                 <div *ngIf="!!myQuestion.scope" class="mb-3">
                     <div class="sub-header-1">{{t('extras.scope')}}</div>
@@ -268,6 +255,14 @@
                     </div>
                 </div>
 
+                <div *ngIf="!!myQuestion.implementationGuides" class="mb-3">
+                    <div class="sub-header-1">
+                        {{t('extras.implementation guidance')}}
+                    </div>
+                    <div [innerHTML]="myQuestion.implementationGuides" class="ms-3">
+                    </div>
+                </div>
+
                 <div *ngIf="!!myQuestion.services" class="mb-3">
                     <div class="sub-header-1">
                         {{t('extras.free services')}}
@@ -276,6 +271,22 @@
                     </div>
                 </div>
 
+
+                <!-- Supplemental Info -->
+                <div *ngIf="!!tab?.requirementsData?.supplementalInfo"
+                    [innerHTML]="tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html'">
+                </div>
+
+                
+                <div *ngIf="!seperateGuidanceFromApproach()">
+                    <hr
+                        *ngIf="!!tab?.requirementsData?.supplementalInfo && !!tab?.requirementsData?.examinationApproach">
+                    <div
+                        [innerHTML]="tab?.requirementsData?.examinationApproach ? (tab?.requirementsData?.examinationApproach | linebreak | safe: 'html') : ''">
+                    </div>
+                </div>
+
+
                 <div *ngIf="!supplementalExists()">
                     {{msgNoSupplemental}}
                 </div>
@@ -283,17 +294,25 @@
         </ng-template>
 
         <div *ngIf=" !!extras && mode === 'CMNT'">
-            <div class="form-group">
+            <div *ngIf="!assessSvc.usesMaturityModel('CIE'); else cieComment" class="form-group">
                 <textarea appAutoSize [(ngModel)]="myQuestion.comment" (change)="saveComment($event)"
                     style="min-height: 72px; width: 100%" class="form-control"></textarea>
             </div>
+            <ng-template #cieComment class="form-group">
+                <textarea appAutoSize [value]="cieSvc.commentMap.get(myQuestion.questionId) != null ? cieSvc.commentMap.get(myQuestion.questionId) : ''" 
+                (change)="saveComment($event)" maxlength="2048" style="min-height: 72px; width: 100%" class="form-control"></textarea>
+            </ng-template>
         </div>
 
         <div *ngIf=" !!extras && mode === 'FDBK'">
-            <div class="form-group">
+            <div *ngIf="!assessSvc.usesMaturityModel('CIE'); else cieFeedback" class="form-group">
                 <textarea appAutoSize [(ngModel)]="myQuestion.feedback" (change)="saveFeedback($event)" maxlength="2048"
                     style="min-height: 72px; width: 100%" class="form-control"></textarea>
             </div>
+            <ng-template #cieFeedback class="form-group">
+                <textarea appAutoSize [value]="cieSvc.feedbackMap.get(myQuestion.questionId) != null ? cieSvc.feedbackMap.get(myQuestion.questionId) : ''" 
+                (change)="saveFeedback($event)" maxlength="2048" style="min-height: 72px; width: 100%" class="form-control"></textarea>
+            </ng-template>
         </div>
 
         <div *ngIf=" !!extras && mode === 'DOCS'">
@@ -407,13 +426,13 @@
                         <td>
                             <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
                                 (click)="addEditObservation(obs.observation_Id)">
-                                <span class="mr-1 cset-icons-pencil"></span>
+                                <span class="me-1 cset-icons-pencil"></span>
                             </button>
                         </td>
                         <td>
                             <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
                                 (click)="deleteObservation(obs)">
-                                <span class="mr-1 cset-icons-trash-can"></span>
+                                <span class="me-1 cset-icons-trash-can"></span>
                             </button>
                         </td>
                     </tr>

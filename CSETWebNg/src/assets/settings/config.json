@@ -167,6 +167,40 @@
     },
     {
       "moduleName": "CPG",
+      "modelId": "11",
+      "autoLoadSupplemental": true,
+      "showMaturityLevelBadge": false,
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes"
+        },
+        {
+          "code": "I",
+          "buttonLabelKey": "Prog-CPG",
+          "buttonCss": "btn-na"
+        },
+        {
+          "code": "S",
+          "buttonLabelKey": "Scoped-CPG",
+          "buttonCss": "btn-alt"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no"
+        }
+      ]
+    },
+    {
+      "moduleName": "SSG Chemical",
+      "modelId": "18",
+      "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {
         "showDetails": false,
@@ -266,6 +300,31 @@
         "showObservations": false,
         "showReferences": false
       }
+    },
+    {
+      "moduleName": "CIE",
+      "questionIcons": {
+        "showDetails": false,
+        "showGuidance": false,
+        "showReferences": false
+      },
+      "answerOptions": [
+        {
+          "code": "NA",
+          "buttonLabelKey": "NA",
+          "buttonCss": "btn-na"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "No",
+          "buttonCss": "btn-no"
+        },
+        {
+          "code": "Y",
+          "buttonLabelKey": "Yes",
+          "buttonCss": "btn-yes"
+        }
+      ]
     },
     {
       "moduleName": "MVRA",

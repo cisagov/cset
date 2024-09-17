@@ -68,6 +68,8 @@ public partial class MATURITY_QUESTIONS
 
     public string Outcome { get; set; }
 
+    public string Implementation_Guides { get; set; }
+
     [StringLength(300)]
     public string Security_Practice { get; set; }
 
@@ -95,9 +97,6 @@ public partial class MATURITY_QUESTIONS
 
     [InverseProperty("Mat_Question")]
     public virtual ICollection<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; } = new List<MATURITY_REFERENCE_TEXT>();
-
-    [InverseProperty("Mat_Question")]
-    public virtual ICollection<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; } = new List<MATURITY_SOURCE_FILES>();
 
     [InverseProperty("Mat_Question")]
     public virtual ICollection<MATURITY_SUB_MODEL_QUESTIONS> MATURITY_SUB_MODEL_QUESTIONS { get; set; } = new List<MATURITY_SUB_MODEL_QUESTIONS>();

@@ -24,7 +24,7 @@ namespace CSETWebCore.Interfaces.Maturity
         void ClearMaturityModel(int assessmentId);
 
         object GetEdmPercentScores(int assessmentId);
-        MaturityResponse GetMaturityQuestions(int assessmentId, bool fill, int groupingId, string installationMode, string lang);
+        MaturityResponse GetMaturityQuestions(int assessmentId, bool fill, int groupingId, string lang);
 
         void BuildSubGroupings(MaturityGrouping g, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
@@ -38,10 +38,6 @@ namespace CSETWebCore.Interfaces.Maturity
         List<GlossaryEntry> GetGlossaryEntries(int modelId);
         List<GlossaryEntry> GetGlossaryEntries(string modelName);
 
-        string GetOverallIrp(int assessmentId);
-        int GetOverallIrpNumber(int assessmentId);
-        Model.Acet.ACETDashboard GetIrpCalculation(int assessmentId);
-        void UpdateACETDashboardSummary(int assessmentId, Model.Acet.ACETDashboard summary);
         void PersistSelectedMaturityModel(int assessmentId, string modelName);
         void PersistMaturityLevel(int assessmentId, int level);
     }

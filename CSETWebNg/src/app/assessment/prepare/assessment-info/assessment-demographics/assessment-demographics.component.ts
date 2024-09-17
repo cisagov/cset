@@ -83,7 +83,6 @@ export class AssessmentDemographicsComponent implements OnInit {
     demographicData: Demographic = {};
     orgTypes: any[];
 
-    showAsterisk = false;
     assetValueTemp: number; 
 
     constructor(
@@ -125,11 +124,6 @@ export class AssessmentDemographicsComponent implements OnInit {
         }
         this.refreshContacts();
         this.getOrganizationTypes();
-
-        this.showAsterisk = this.showAsterisks();
-        
-      
-
     }
 
     // Functionality to import demographic information, excluding contacts, organization point of contact, facilitator, critical service point of contact 
@@ -201,10 +195,11 @@ export class AssessmentDemographicsComponent implements OnInit {
         }
     }
 
-    populateIndustryOptions(sectorId: number) {
-        if (!sectorId) {
+    populateIndustryOptions(sectorId?: any) {
+        if (!sectorId || isNaN(Number(sectorId))) {
             return;
         }
+
         this.demoSvc.getIndustry(sectorId).subscribe(
             (data: Industry[]) => {
                 this.industryList = data;
@@ -249,10 +244,5 @@ export class AssessmentDemographicsComponent implements OnInit {
 
     showFacilitator() {
         return this.configSvc.behaviors.showFacilitatorDropDown;
-    }
-
-
-    showAsterisks(): boolean {
-        return this.assessSvc.assessment?.maturityModel?.modelName == 'CPG';
     }
 }

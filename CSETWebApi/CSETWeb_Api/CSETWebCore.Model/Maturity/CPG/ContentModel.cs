@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSETWebCore.Model.Question;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,13 +46,14 @@ namespace CSETWebCore.Model.Maturity.CPG
 		public string ReferenceText { get; set; }
         public string SecurityPractice { get; set; }
         public string Outcome { get; set; }
+        public string ImplementationGuides { get; set; }
 
         public string Cost { get; set; }
         public string Impact { get; set; }
         public string Complexity { get; set; }
 
-        public List<string> CSF { get; set; } = new List<string>();
-        public List<string> TTP { get; set; } = new List<string>();
+        public List<string> CsfMappings { get; set; } = [];
+        public List<TTPReference> TTP { get; set; } = [];
 
         // may need to beef up CSF and TTP with more detail
 

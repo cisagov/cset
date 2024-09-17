@@ -1396,11 +1396,6 @@ INSERT INTO [dbo].[TTP] ([TTP_Code], [URL], [Description]) VALUES (N'T1577', N'h
 INSERT INTO [dbo].[TTP] ([TTP_Code], [URL], [Description]) VALUES (N'T1624', N'https://attack.mitre.org/techniques/T1624/', N'Persistence (Mobile T1624 – Event Triggered Execution)')
 PRINT(N'Operation applied to 4 rows out of 4')
 
-PRINT(N'Add row to [dbo].[CUSTOM_STANDARD_BASE_STANDARD]')
-SET IDENTITY_INSERT [dbo].[CUSTOM_STANDARD_BASE_STANDARD] ON
-INSERT INTO [dbo].[CUSTOM_STANDARD_BASE_STANDARD] ([Custom_Standard_Base_Standard_Id], [Custom_Questionaire_Name], [Base_Standard]) VALUES (2021, N'WMATA', N'SP800-82 V3')
-SET IDENTITY_INSERT [dbo].[CUSTOM_STANDARD_BASE_STANDARD] OFF
-
 PRINT(N'Add rows to [dbo].[MATURITY_QUESTIONS]')
 SET IDENTITY_INSERT [dbo].[MATURITY_QUESTIONS] ON
 INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice]) VALUES (8500, N'CHEM.1', N'', NULL, NULL, NULL, 1, 1, 18, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N'IT and OT assets (including physical access control systems that are connected to networks).', N'Implement a System Lifecycle management process for applications and assets in use throughout facility networks.  Existing applications or assets, which are no longer supported by the manufacturer should be prioritzed for retirement and replacement.  ', NULL, NULL, N'Incorporate System Lifecycle considerations into the facility system engineering process.', N'System Lifecycle Management')

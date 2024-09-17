@@ -28,7 +28,7 @@
 
         <div *ngIf="!layoutSvc.hp" class="d-table w-100">
             <div class="d-table-row">
-                <div class="d-table-cell pl-3 pb-3">
+                <div class="d-table-cell ps-3 pb-3">
                     <!-- below is .substring(4) to allow Transloco to remain DRY (ex. "1 - Least" turns into "Least") -->
                     {{ t('override risk level is') }}
                     <span class="blue-text font-weight-bold">
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="d-table-row">
-                <div class="d-table-cell pl-3 align-top">
+                <div class="d-table-cell ps-3 align-top">
                     {{ t('override risk level') }}
                 </div>
                 <div class="d-table-cell align-top pb-3">
@@ -54,7 +54,7 @@
             </div>
             <div class="d-table-row"
                 *ngIf="!!acetDashboard?.override && acetDashboard?.override != '' && acetDashboard?.override !== 0">
-                <div class="d-table-cell pl-3 align-top">
+                <div class="d-table-cell ps-3 align-top">
                     {{ t('override reason') }}
                 </div>
                 <div class="d-table-cell align-top">
@@ -65,7 +65,7 @@
             </div>
         </div>
 
-        <div *ngIf="layoutSvc.hp" class="ml-3 w-100">
+        <div *ngIf="layoutSvc.hp" class="ms-3 w-100">
             <div class="pb-3">
                 {{ t('override risk level is') }} &quot;<span class="blue-text font-weight-bold">{{
                     t(overrideLabel).toLowerCase() }}&quot;</span>

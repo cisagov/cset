@@ -47,9 +47,11 @@
     <div class="row">
       <div class="col-12">
         <table class="assessment-summary">
-          <th colspan="2">Specific Component Name</th>
+          <tr>
+            <th colspan="2">Specific Component Name</th>
+          </tr>
           <tr *ngFor="let q of questions; let i = index">
-            <td>{{q.componentName}}</td>
+            <td>{{ utilitiesSvc.removeHtmlTags(q.componentName) }}</td>
             <td>
               <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons" style="float:right;">
                 <label *ngIf="showThisOption('Y')" class="btn btn-yes form-check-label"
@@ -84,7 +86,7 @@
       </div>
     </div>
   </mat-dialog-content>
-  <mat-dialog-actions class="pl-4 p-1" style="margin-bottom:15px;">
+  <mat-dialog-actions class="ps-4 p-1" style="margin-bottom:15px;">
     <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
   </mat-dialog-actions>
 </div>

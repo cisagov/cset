@@ -54,11 +54,12 @@ export class ConfigService {
    * host/api/library
    */
   libraryUrl: string;
+  dhsEmail: string;
 
 
   onlineUrl: string;
   analyticsUrl: string = "http://localhost:5278/";
-  
+
   csetGithubApiUrl: string;
   helpContactEmail: string;
   helpContactPhone: string;
@@ -156,6 +157,10 @@ export class ConfigService {
     return this.http.get(this.apiUrl + 'HasLocalDocuments');
   }
 
+  getDhsEmail() {
+    return this.http.get(this.apiUrl + 'Email/dhsemail', { responseType: 'text' });
+  }
+
   /**
    *
    */
@@ -172,34 +177,41 @@ export class ConfigService {
 
 
     const localStorageApiUrl = localStorage.getItem('apiUrl');
+    const localStorageLibraryUrl = localStorage.getItem('libraryUrl');
     if (!!localStorageApiUrl) {
       this.apiUrl = localStorageApiUrl + '/' + this.config.api.apiIdentifier + '/';
       this.docUrl = localStorageApiUrl + '/' + this.config.api.documentsIdentifier + '/';
-      this.libraryUrl = localStorageApiUrl + '/library/';
-      this.refDocUrl = this.libraryUrl + 'doc/';
     } else {
       this.apiUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/';
       this.docUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.documentsIdentifier + '/';
-      this.libraryUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/library/';
-      this.refDocUrl = this.libraryUrl + 'doc/';
     }
-
 
     this.appUrl = appProtocol + this.config.app.host + appPort;
     this.analyticsUrl = "http://localhost:5278/";
     this.helpContactEmail = this.config.helpContactEmail;
     this.helpContactPhone = this.config.helpContactPhone;
     this.csetGithubApiUrl = this.config.csetGithubApiUrl;
+    this.getDhsEmail().subscribe((resp: string) => {
+      this.dhsEmail = resp;
+      if (!this.helpContactEmail) {
+        this.helpContactEmail = resp;
+      }
+    });
+    // configure the reference document URL if the "library" property is defined
+    // or if passed in as query param and stored as local storage variable. Local storage should
+    // take precedence over the config file, since Electron uses it to dynamically set the port.
+    const rl = this.config.library;
+    if (!!localStorageLibraryUrl) {
+      this.libraryUrl = localStorageLibraryUrl + '/' + this.config.api.apiIdentifier + '/library/';
+    } else if (!!rl) {
+      const rlProtocol = rl.protocol + '://';
+      const rlPort = !!rl.port ? ':' + rl.port : '';
+      this.libraryUrl = rlProtocol + rl.host + rlPort + '/' + (rl.apiIdentifier ?? 'api') + '/library/'
+    } else {
+      this.libraryUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/library/';
+    }
 
-     // configure the reference document URL if the "library" property is defined
-     const rl = this.config.library;
-     if (!!rl) {
-       const rlProtocol = rl.protocol + '://';
-       const rlPort = !!rl.port ? ':' + rl.port : '';
-       this.libraryUrl = rlProtocol + rl.host + rlPort + '/' + (rl.apiIdentifier ?? 'api') + '/library/'
-       this.refDocUrl = this.libraryUrl + 'doc/';
-     }
- 
+    this.refDocUrl = this.libraryUrl + 'doc/';
 
     this.galleryLayout = this.config.galleryLayout?.toString() || 'CSET';
     this.mobileEnvironment = this.config.mobileEnvironment;
@@ -303,6 +315,23 @@ export class ConfigService {
     return this.http.post(this.apiUrl + 'EnableProtectedFeature/setCisaAssessorWorkflow', cisaAssessorWorkflowEnabled);
   }
 
+  /**
+   * Returns the module configuration object from configuration.  
+   * Either the modelId or moduleName can be sent as a key.
+   * Returns null if it can't be found.
+   */
+  getModuleConfig(id: any) {
+    // check the model's configuration
+    let modelConfiguration =
+      this.config.moduleBehaviors.find(x => x.modelId == +id) ||
+      this.config.moduleBehaviors.find(x => x.moduleName == id);
+    
+    return modelConfiguration;
+  }
+
+  /**
+   * 
+   */
   switchConfigsForMode(installationMode) {
     switch (installationMode) {
       case 'ACET':
@@ -322,7 +351,7 @@ export class ConfigService {
           link.href = 'assets/icons/favicon_acet.ico?app=acet1';
 
           var title = this.document.querySelector('title');
-          title.innerText = 'ACET';
+          title.innerText = 'TOOLBOX';
         }
         break;
       case 'TSA':
@@ -335,16 +364,16 @@ export class ConfigService {
           title.innerText = 'CSET-TSA';
         }
         break;
-        case 'CIE':
-          {
-            // change favicon and title
-            const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-            link.href = 'assets/icons/favicon_cie.ico?app=cie1';
-  
-            var title = this.document.querySelector('title');
-            title.innerText = 'CSET-CIE';
-          }
-          break;
+      case 'CIE':
+        {
+          // change favicon and title
+          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
+          link.href = 'assets/icons/favicon_cie.ico?app=cie1';
+
+          var title = this.document.querySelector('title');
+          title.innerText = 'CIE';
+        }
+        break;
       case 'CF':
         {
           // change favicon and title

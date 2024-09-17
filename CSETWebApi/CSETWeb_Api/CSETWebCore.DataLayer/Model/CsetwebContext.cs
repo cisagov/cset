@@ -275,8 +275,6 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
 
-    public virtual DbSet<INTERNATIONALIZATION_VALUES> INTERNATIONALIZATION_VALUES { get; set; }
-
     public virtual DbSet<IRP> IRP { get; set; }
 
     public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
@@ -292,6 +290,8 @@ public partial class CsetwebContext : DbContext
     public virtual DbSet<LEVEL_BACKUP_ACET_QUESTIONS> LEVEL_BACKUP_ACET_QUESTIONS { get; set; }
 
     public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
+
+    public virtual DbSet<LU_WEIGHTS> LU_WEIGHTS { get; set; }
 
     public virtual DbSet<MALCOLM_ANSWERS> MALCOLM_ANSWERS { get; set; }
 
@@ -327,8 +327,6 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; }
 
-    public virtual DbSet<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
-
     public virtual DbSet<MATURITY_SUB_MODELS> MATURITY_SUB_MODELS { get; set; }
 
     public virtual DbSet<MATURITY_SUB_MODEL_QUESTIONS> MATURITY_SUB_MODEL_QUESTIONS { get; set; }
@@ -344,6 +342,8 @@ public partial class CsetwebContext : DbContext
     public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
 
     public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
+
+    public virtual DbSet<NCSF_MIGRATION> NCSF_MIGRATION { get; set; }
 
     public virtual DbSet<NERC_RISK_RANKING> NERC_RISK_RANKING { get; set; }
 
@@ -426,8 +426,6 @@ public partial class CsetwebContext : DbContext
     public virtual DbSet<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXT { get; set; }
 
     public virtual DbSet<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
-
-    public virtual DbSet<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
 
     public virtual DbSet<RapidAssessmentControls> RapidAssessmentControls { get; set; }
 
@@ -515,13 +513,9 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<ACCESS_KEY_ASSESSMENT>(entity =>
         {
-            entity.HasOne(d => d.AccessKeyNavigation).WithMany(p => p.ACCESS_KEY_ASSESSMENT)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ACCESS_KEY");
+            entity.HasOne(d => d.AccessKeyNavigation).WithMany(p => p.ACCESS_KEY_ASSESSMENT).HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ACCESS_KEY");
 
-            entity.HasOne(d => d.Assessment).WithMany(p => p.ACCESS_KEY_ASSESSMENT)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ASSESSMENTS");
+            entity.HasOne(d => d.Assessment).WithMany(p => p.ACCESS_KEY_ASSESSMENT).HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ASSESSMENTS");
         });
 
         modelBuilder.Entity<ADDRESS>(entity =>
@@ -575,10 +569,10 @@ public partial class CsetwebContext : DbContext
                 .HasComment("The Answer Text is used to");
             entity.Property(e => e.Comment).HasComment("The Comment is used to");
             entity.Property(e => e.Component_Guid).HasComment("The Component Guid is used to");
-            entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end,(0)))", false);
-            entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end,(0)))", false);
-            entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end,(0)))", false);
-            entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end,(0)))", false);
+            entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end))", false);
+            entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end))", false);
+            entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end))", false);
+            entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end))", false);
             entity.Property(e => e.Mark_For_Review).HasComment("The Mark For Review is used to");
             entity.Property(e => e.Question_Number).HasComment("The Question Number is used to");
             entity.Property(e => e.Question_Or_Requirement_Id).HasComment("The Question Or Requirement Id is used to");
@@ -1762,6 +1756,11 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Level_Name).HasComment("The Level Name is used to");
         });
 
+        modelBuilder.Entity<LU_WEIGHTS>(entity =>
+        {
+            entity.HasKey(e => e.DisplayID).HasName("PK__LU_WEIGH__76EAD95D2B2B4749");
+        });
+
         modelBuilder.Entity<MALCOLM_ANSWERS>(entity =>
         {
             entity.HasOne(d => d.Assessment).WithMany(p => p.MALCOLM_ANSWERS).HasConstraintName("FK_MALCOLM_ANSWERS_ASSESSMENTS");
@@ -1879,9 +1878,7 @@ public partial class CsetwebContext : DbContext
 
             entity.HasOne(d => d.Gen_File).WithMany(p => p.MATURITY_REFERENCES).HasConstraintName("FK_MATURITY_REFERENCES_GEN_FILE");
 
-            entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_REFERENCES)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_MATURITY_REFERENCES_MATURITY_QUESTIONS");
+            entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_REFERENCES).HasConstraintName("FK_MATURITY_REFERENCES_MATURITY_QUESTIONS");
         });
 
         modelBuilder.Entity<MATURITY_REFERENCE_TEXT>(entity =>
@@ -1889,15 +1886,6 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of MATURITY_REFERENCE_TEXT records"));
 
             entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_REFERENCE_TEXT).HasConstraintName("FK_MATURITY_REFERENCE_TEXT_MATURITY_QUESTIONS");
-        });
-
-        modelBuilder.Entity<MATURITY_SOURCE_FILES>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("A collection of MATURITY_SOURCE_FILES records"));
-
-            entity.HasOne(d => d.Gen_File).WithMany(p => p.MATURITY_SOURCE_FILES).HasConstraintName("FK_MATURITY_SOURCE_FILES_GEN_FILE");
-
-            entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_SOURCE_FILES).HasConstraintName("FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS");
         });
 
         modelBuilder.Entity<MATURITY_SUB_MODEL_QUESTIONS>(entity =>
@@ -2445,15 +2433,6 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_SETS).HasConstraintName("FK_REQUIREMENT_SETS_NEW_REQUIREMENT");
 
             entity.HasOne(d => d.Set_NameNavigation).WithMany(p => p.REQUIREMENT_SETS).HasConstraintName("FK_QUESTION_SETS_SETS");
-        });
-
-        modelBuilder.Entity<REQUIREMENT_SOURCE_FILES>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("A collection of REQUIREMENT_SOURCE_FILES records"));
-
-            entity.HasOne(d => d.Gen_File).WithMany(p => p.REQUIREMENT_SOURCE_FILES).HasConstraintName("FK_REQUIREMENT_SOURCE_FILES_GEN_FILE");
-
-            entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_SOURCE_FILES).HasConstraintName("FK_REQUIREMENT_SOURCE_FILES_NEW_REQUIREMENT");
         });
 
         modelBuilder.Entity<SAL_DETERMINATION_TYPES>(entity =>

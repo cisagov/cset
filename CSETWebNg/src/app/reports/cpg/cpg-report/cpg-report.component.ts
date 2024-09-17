@@ -26,7 +26,7 @@ import { Title } from '@angular/platform-browser';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { CpgService } from '../../../services/cpg.service';
-import { RraDataService } from '../../../services/rra-data.service';
+import { SsgService } from '../../../services/ssg.service';
 import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
@@ -46,14 +46,18 @@ export class CpgReportComponent implements OnInit {
 
   answerDistribByDomain: any;
 
+  isSsgApplicable = false;
+  ssgBonusModel: number = null;
+
+
   /**
    * 
    */
   constructor(
-    public rraDataSvc: RraDataService,
     public titleSvc: Title,
     private assessSvc: AssessmentService,
     public cpgSvc: CpgService,
+    public ssgSvc: SsgService,
     public configSvc: ConfigService,
     public tSvc: TranslocoService
   ) { }
@@ -62,7 +66,6 @@ export class CpgReportComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-
     this.translationTabTitle = this.tSvc.selectTranslate('reports.core.cpg.report.cpg report')
       .subscribe(value =>
         this.titleSvc.setTitle(this.tSvc.translate('reports.core.cpg.report.cpg report') + ' - ' + this.configSvc.behaviors.defaultTitle));
@@ -72,6 +75,10 @@ export class CpgReportComponent implements OnInit {
       this.assessmentDate = assessmentDetail.assessmentDate;
       this.assessorName = assessmentDetail.creatorName;
       this.facilityName = assessmentDetail.facilityName;
+
+      this.assessSvc.assessment = assessmentDetail;
+      this.isSsgApplicable = this.ssgSvc.doesSsgApply();
+      this.ssgBonusModel = this.ssgSvc.ssgBonusModel();
     });
 
     this.cpgSvc.getAnswerDistrib().subscribe((resp: any) => {

@@ -58,16 +58,16 @@
   "invalid email format": "Invalid email format",
   "account already exists": "An account already exists for the email address",
   "emails do not match": "Emails do not match",
-  "email not allowed": "The specified email is not allowed by this CSET installation",
+  "email not allowed": "The specified email is not allowed by this installation",
   "unknown error": "Unknown error",
   "user inactive": "User is inactive",
   "control priorities intro1": "Information on ranking can be found in the <a href=\"",
   "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">User Guide</a>.",
   "local installation": "Local Installation",
-  "new version": "A new version of CSET is available.",
+  "new version": "A new version is available.",
   "your version": "Your version:",
   "version available": "Available version:",
-  "link version": "Click here to view or download CSET releases.",
+  "link version": "Click here to view or download releases.",
   "legend": "Legend",
   "img suffix": "_en",
   "publisher": {
@@ -78,6 +78,14 @@
       "org short name": "CISA",
       "show ip rights assertion": true,
       "ip dist": "the CSET Program Office"
+    },
+    "cie": {
+      "app long name": "Cyber Informed Engineering",
+      "app short name": "CIE",
+      "org long name": "Department of Energy",
+      "org short name": "DOE",
+      "show ip rights assertion": false,
+      "ip dist": "the CIE Program Office"
     },
     "iod": {
       "app long name": "Cyber Security Evaluation Tool",
@@ -95,22 +103,22 @@
       "show ip rights assertion": false
     },
     "tsa": {
-      "app long name": "Cyber Security Evaluation Tool",
-      "app short name": "CSET",
+      "app long name": "TSA Assessment Tool",
+      "app short name": "TSA",
       "org long name": "Transportation Security Administration",
       "org short name": "TSA",
       "show ip rights assertion": false
     },
     "cf": {
-      "app long name": "Cyber Security Evaluation Tool",
-      "app short name": "CSET",
+      "app long name": "Cyber Florida Assessment Tool",
+      "app short name": "CF",
       "org long name": "Cyber Florida",
       "org short name": "CF",
       "show ip rights assertion": false
     },
     "renew": {
-      "app long name": "Cyber Security Evaluation Tool",
-      "app short name": "CSET Renewables",
+      "app long name": "INL Renewables",
+      "app short name": "Renewables",
       "org long name": "Idaho National Laboratory",
       "org short name": "INL",
       "show ip rights assertion": false
@@ -250,7 +258,7 @@
       "background": "CIE Background",
       "principles": "CIE Principles",
       "lifecycle": "Engineering Lifecycle",
-      "how to use": "How To Use Tutorial"
+      "how to use": "Instructions"
     },
     "cis config": "CIS Configuration",
     "acet dashboard": "ACET Dashboard",
@@ -280,7 +288,11 @@
     "additional resources": "Additional Resources",
     "goal": "Goal",
     "cset icons": "CSET Icons",
-    "answer buttons": "Answer Buttons"
+    "answer buttons": "Answer Buttons",
+    "ssg": {
+      "chemical": "Chemical Sector Goals",
+      "other": "Other Sector Goals"
+    }
   },
   "buttons": {
     "ok": "OK",
@@ -464,7 +476,8 @@
     "unanswered equals no": "Unanswered questions are calculated as a '{{no-ans}}' response.",
     "cpg answer key": "CPG Answer Key",
     "security practice": "Security Practice",
-    "outcome": "Outcome"
+    "outcome": "Outcome",
+    "instructions ssg": "Sector-Specific Goals (SSGs) display based on the sector selected on the Assessment Information page. Appended to the CPGs, these goals are designed to address additional concerns unique to your industry. SSGs will not impact CPG results and will display separately in the results and reports."
   },
   "tooltip": {
     "view detail": "View Detail",
@@ -581,16 +594,25 @@
       "include above target": "Include questions above maturity target level",
       "show open ended": "Show answered open-ended questions"
     },
-    "ncua": {
+    "ise": {
+      "dialog title": "Statement Filters",
+      "show answered as": "Show statements answered <em><b>{{optionText}}</b></em>",
+      "show unanswered": "Show unanswered statements",
+      "show with comments": "Show statements with notes",
+      "show with feedback": "Show statements with feedback",
+      "show marked for review": "Show statements marked for review",
+      "show with observations": "Show statements with issues",
+      "include above target": "Include statements above maturity target level",
+      "show open ended": "Show answered open-ended statements"
+    },
+    "acet": {
       "dialog title": "Statement Filters",
       "show answered as": "Show statements answered <em><b>{{optionText}}</b></em>",
       "show unanswered": "Show unanswered statements",
       "show with comments": "Show statements with comments",
       "show with feedback": "Show statements with feedback",
-      "show with notes": "Show statements with notes",
       "show marked for review": "Show statements marked for review",
       "show with observations": "Show statements with observations",
-      "show with issues": "Show statements with issues",
       "include above target": "Include statements above maturity target level",
       "show open ended": "Show answered open-ended statements"
     },
@@ -674,6 +696,29 @@
           "desc": "This document consolidates all practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
         }
       },
+      "cmmc": {
+        "sectionTitle": "Capability Maturity Model Certification (CMMC) 1.0",
+        "1": {
+          "title": "CMMC Executive Summary",
+          "desc": "The report includes the executive summary, the assessment target level, and a set of charts that highlight compliance by level, compliance by domain, and the compliance score breakdown."
+        },
+        "2": {
+          "title": "CMMC Site Summary Report",
+          "desc": "The report includes the same information as the Executive Summary as well as site information, an explanation of CMMC processes and practices, a list of all requirements and their corresponding answers, and a list of all deficiencies."
+        },
+        "3": {
+          "title": "CMMC Deficiency Report",
+          "desc": "The report contains a list of all CMMC practices that were marked as “No” or unanswered during the assessment process. This report serves to identify potential deficiencies or gaps in the contractor’s cybersecurity practices."
+        },
+        "4": {
+          "title": "CMMC Comments and Marked for Review",
+          "desc": "This document consolidates all practices that have received comments and have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
+        },
+        "5": {
+          "title": "CMMC Alternate Justifications",
+          "desc": "The report lists the statements that have been answered as 'Alternate' and provides the justifications for alternate answers."
+        }
+      },
       "cmmc2": {
         "sectionTitle": "Capability Maturity Model Certification (CMMC) 2.0",
         "1": {
@@ -713,6 +758,10 @@
         "2": {
           "title": "CPG Deficiency",
           "desc": "The report contains a list of all security practices that were marked as “Not Implemented” or unanswered during the assessment process. This report serves to identify deficiencies or gaps in the organization’s cybersecurity practices and provides suggested areas for improvement."
+        },
+        "3": {
+          "title": "Comments and Marked for Review",
+          "desc": "This document consolidates all practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
         }
       },
       "mvra": {
@@ -721,13 +770,147 @@
           "title": "MVRA Report",
           "desc": "This report includes charts and tables that summarize the responses gathered throughout the assessment process, enabling organizations to analyze and assess their cybersecurity capabilities effectively. The report presents the organization’s performance by domain, sub-domain, and tier."
         }
+      },
+      "c2m2": {
+        "sectionTitle": "Cybersecurity Capability Maturity Model (C2M2)",
+        "1": {
+          "title": "C2M2 Report",
+          "desc": "This report includes a detailed description of the model architecture, a series of charts and tables that summarize the responses gathered throughout the assessment process, self-evaluation notes, and a list of all partially implemented and not implemented practices. This report enables organizations to analyze and assess their cybersecurity capabilities effectively and identify areas for improvement."
+        }
+      },
+      "diagram": {
+        "sectionTitle": "Network Diagram",
+        "1": {
+          "title": "Executive Summary",
+          "desc": "This report includes the high-level assessment description, the executive summary, the Security Assurance Level (SAL), and a set of charts that highlight overall compliance and compliance by component type."
+        },
+        "2": {
+          "title": "Site Summary Report",
+          "desc": "This report includes the same information as the Executive Summary as well as site information, the network diagram, component compliance by subject area, findings and recommendations from basic network analysis, the document library, comments, alternate justifications for responses, and questions marked for review."
+        },
+        "3": {
+          "title": "Site Cybersecurity Plan",
+          "desc": "This template is intended to be used as a tool for the development of a security plan. The template assists in identifying the controls in place and those needing further implementation based upon the answers provided in the assessment. The purpose of the security plan is to provide an overview of the security requirements of the system and describe the controls in place or planned, for meeting those requirements. "
+        },
+        "4": {
+          "title": "Site Detail Report",
+          "desc": "This report includes the same information as the Site Summary Report as well as a list of all network component questions and their corresponding answers."
+        }
+      },
+      "acet": {
+        "sectionTitle": "ACET Reports",
+        "1": {
+          "title": "ACET Executive Summary",
+          "desc": "This report includes site information, maturity details for each domain and sub-domain, the inherent risk profile, and the overall cybersecurity maturity level of each domain."
+        },
+        "2": {
+          "title": "ACET Gap Report",
+          "desc": "This report includes a list of all statements that were marked as “No” during the assessment process. This report serves to identify potential deficiencies or gaps in the organization’s cybersecurity practices."
+        },
+        "3": {
+          "title": "ACET Comments and Marked for Review",
+          "desc": "This document consolidates all statements that have received comments and have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
+        },
+        "4": {
+          "title": "ACET Answered Statements",
+          "desc": "This report contains a list of all statements within the organization’s maturity level, which includes their answer to each statement and whether a comment was added to the statement."
+        },
+        "5": {
+          "title": "ACET Compensating Controls",
+          "desc": "This report includes a list of all statements that were marked as “Alt” during the assessment process and includes any justifications or comments that were provided."
+        }
+      },
+      "vadr": {
+        "sectionTitle": "Validated Architecture Design Review (VADR)",
+        "1": {
+          "title": "VADR Report",
+          "desc": "This report contains a series of charts and tables that summarize the organization’s performance overall and by goal. The report also includes suggested areas for improvement and a list of all practices with their corresponding references."
+        },
+        "2": {
+          "title": "VADR Deficiency Report",
+          "desc": "This report contains a list of all security practices that were marked as “No” or unanswered during the assessment process. This report serves to identify deficiencies or gaps in the organization’s cybersecurity practices and provides suggested areas for improvement."
+        },
+        "3": {
+          "title": "VADR Open Ended Questions Report",
+          "desc": "This report contains a list of all open ended questions within the assessment. Users can filter the report to show all questions or only show questions that have received answers."
+        }
+      },
+      "ise": {
+        "sectionTitle": "ISE Reports",
+        "1": {
+          "title": "ISE MERIT SCOPE REPORT (copy paste to Execution Result)",
+          "desc": "This report includes copy instructions, work performed, results of review and issues."
+        },
+        "2": {
+          "title": "ISE EXAMINATION REPORT (attach as Document in Scope Task)",
+          "desc": "This report includes results of review, statement overview, statement summary, and issues."
+        },
+        "3": {
+          "title": "ISE Answered Statements",
+          "desc": "This report includes all the statements within your exam level and your answers."
+        },
+        "4": {
+          "title": "ISE Examiner Notes",
+          "desc": "This report includes examiner notes."
+        }
+      },
+      "hydro": {
+        "sectionTitle": "Hydropower Cybersecurity Valuation Framework (HYDRO)",
+        "1": {
+          "title": "Action Items Report",
+          "desc": "This report includes action items by implementation status."
+        }
+      },
+      "sd02 series": {
+        "sectionTitle": "Pipeline Security Directive (SD02 Series)",
+        "1": {
+          "title": "Answer Summary",
+          "desc": "This report indicates how each question of the Security Directive Pipeline was answered."
+        },
+        "2": {
+          "title": "Deficiency Report",
+          "desc": "This report serves to identify deficiencies or gaps to help prioritize areas to concentrate on."
+        },
+        "3": {
+          "title": "Comments and Marked for Review",
+          "desc": "This document consolidates all practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
+        }
+      },
+      "sd02 owner": {
+        "sectionTitle": "SD02 Owner Reports",
+        "1": {
+          "title": "Deficiency Report",
+          "desc": "This report serves to identify deficiencies or gaps to help prioritize areas to concentrate on."
+        },
+        "2": {
+          "title": "Comments and Marked for Review",
+          "desc": "This document consolidates all practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
+        }
+      },
+      "standard": {
+        "sectionTitle": "Standard Reports",
+        "1": {
+          "title": "Executive Summary",
+          "desc": "This report includes the high-level assessment description, the executive summary, the Security Assurance Level (SAL), and a set of charts that highlight overall compliance and compliance by component type."
+        },
+        "2": {
+          "title": "Site Summary Report",
+          "desc": "This report includes the same information as the Executive Summary as well as site information, the network diagram, component compliance by subject area, findings and recommendations from basic network analysis, the document library, comments, alternate justifications for responses, and questions marked for review."
+        },
+        "3": {
+          "title": "Site Cybersecurity Plan",
+          "desc": "This template is intended to be used as a tool for the development of a security plan. The template assists in identifying the controls in place and those needing further implementation based upon the answers provided in the assessment. The purpose of the security plan is to provide an overview of the security requirements of the system and describe the controls in place or planned, for meeting those requirements. "
+        },
+        "4": {
+          "title": "Site Detail Report",
+          "desc": "This report includes the same information as the Site Summary Report as well as a list of all network component questions and their corresponding answers."
+        }
       }
     },
     "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated {date}.",
     "reports run prior message": "Any reports run prior to that update may not reflect the current state of the assessment.",
     "printing report instructions button": "Printing Reports Instructions",
-    "printing instructions electron": "To print or save any of these reports as PDF, click the report which will open in a new window. In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print. To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
-    "printing instructions non-electron": "To print or save any of these reports as PDF, click the report which will open in a new window. In the top left corner of the report window, click the \"File\" button in the menu bar and select \"Print\" (CTRL + P). To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
+    "printing instructions": "Click the hyperlinked name of the report. To print the report, select the Print option. To create a PDF, select PDF as the desired printer.",
     "site information": "Site Information",
     "executive summary": "Executive Summary",
     "network diagram": "Network Diagram",
@@ -776,7 +959,7 @@
       "no observations message": "The assessment does not contain any observations that are assigned to an individual.",
       "question identifier": "Question Identifier",
       "question text": "Question Text",
-      "summary": "This document contains a list of all observations identified and recorded during the assessment. For more information, view the Observations Tear Out Sheets page in the CSET User Guide."
+      "summary": "This document contains a list of all observations identified and recorded during the assessment. For more information, view the Observations Tear Out Sheets page in the User Guide."
     },
     "core": {
       "dashboard": {
@@ -853,7 +1036,7 @@
         "signature example text 2": "Date",
         "introduction": "Introduction",
         "template instructions": "Template instructions and directives are given in italicized 10 point font and should be replaced appropriately.",
-        "template instructions text 1": "This security plan template is intended to be used as a tool for the development of a security plan. This template will assist you in identifying the controls in place and those needing further implementation based upon the answers provided in the accompanying Cybersecurity Evaluation Tool (CSET) assessment. The basic process for this plan development would be to first determine risk, second select the countermeasures necessary to mitigate the risk to an acceptable level, and finally follow through to ensure that the countermeasures are implemented to the expected level.",
+        "template instructions text 1": "This security plan template is intended to be used as a tool for the development of a security plan. This template will assist you in identifying the controls in place and those needing further implementation based upon the answers provided in the accompanying assessment. The basic process for this plan development would be to first determine risk, second select the countermeasures necessary to mitigate the risk to an acceptable level, and finally follow through to ensure that the countermeasures are implemented to the expected level.",
         "template instructions text 2": "The purpose of the security plan is to provide an overview of the security requirements of the system and describe the controls in place or planned, for meeting those requirements. The site cybersecurity plan also delineates responsibilities and expected behavior of all individuals who access the system. The security plan should be viewed as documentation of the structured process of planning adequate, cost effective security protection for a system. It should reflect input from various managers with responsibilities concerning the system, including information owners, the system operator, and the system security manager. Additional information may be included in the basic plan and the structure and format organized according to agency needs, so long as the major sections described in this document are adequately covered and readily identifiable.",
         "template instructions text 3": "The System Owner is responsible for ensuring that the security plan is prepared and for implementing the plan and monitoring its effectiveness. Security plans should reflect input from various individuals with responsibilities concerning the system, including functional “end users,” Information Owners, the System Administrator, and the System Security Manager",
         "template bullets": "This template may also include:",
@@ -928,7 +1111,7 @@
         "consequence bullet text 4": "Estimate the potential cost in terms of economic impact to both the site and surrounding communities. (Consider any losses to community structures and any costs associated with displacement.)",
         "consequence bullet text 5": "Estimate the potential cost of environmental cleanup to the site and surrounding communities. (Consider the cost for cleanup, fines, litigation, long term monitoring, etc.)",
         "threat": "Threat",
-        "threat text": "The threat portion of the equation can be deduced from the recommended implementation priorities list. The priorities are based on incident data collected by the ICS-CERT watch floor and subject matter experts as of the time of publication of CSET. Top priorities are controls that mitigate the most actively exploited vulnerabilities with the most significant consequences.",
+        "threat text": "The threat portion of the equation can be deduced from the recommended implementation priorities list. The priorities are based on incident data collected by the ICS-CERT watch floor and subject matter experts as of the time of publication. Top priorities are controls that mitigate the most actively exploited vulnerabilities with the most significant consequences.",
         "cost benefit analysis": "Cost Benefit Analysis",
         "cost benefit text": "The cost of implementing controls with respect to the additional security provided is the final step in selecting the controls to implement.",
         "basic model": "Basic Model",
@@ -947,7 +1130,7 @@
         "plan controls text": "This section lists all the controls which constitute the security plan and implementation status.   To enable easier reading of the controls list a table key is included at the start of this section. In this section the terms Control and Requirement are used interchangeably to indicate the mitigation effort as defined in the given standard.",
         "table key header": "Table Key and Field Descriptions:",
         "requirement title": "Requirement Title",
-        "cset question requirement category": "CSET Question/Requirement Category",
+        "cset question requirement category": "Question/Requirement Category",
         "control level": "Control Level",
         "implementation status": "Implementation Status",
         "short standard name": "Short Standard Name (Optional, may not be included in the table)",
@@ -956,8 +1139,8 @@
         "affected components": "Affected Components  (Optional, may not be included in the table)",
         "related questions": "Related Questions and Answers",
         "requirement title text": "Is the control title as it is generally defined in the standard document from which this control is derived",
-        "cset question category": "CSET Question Category",
-        "cset question category text": "Shows the CSET question category from the global questions list.  Questions from multiple standards have been consolidated together in the CSET tool and assigned a common category.",
+        "cset question category": "Question Category",
+        "cset question category text": "Shows the question category from the global questions list.  Questions from multiple standards have been consolidated together in the tool and assigned a common category.",
         "control level text": "Mapped to one of Low, Moderate, High, or Very High.  A value of none indicates that the level was not defined for the given information type in the standard.",
         "implementation status text": "Shows the percentage complete as the number of yes and alternate answers / total related questions for this control. The percentage implemented will not necessarily be reflective of the amount of work required to implement the control but is merely an indicator of how many of the questions related to the control have been addressed so far.",
         "short standard name text": "An indicator of which standard this control is derived from.",
@@ -1029,6 +1212,11 @@
             "a": "The CPG Performance Summary chart provides a high-level overview of how well an organization meets the goals within each security practice category. It presents the distribution percentage of each response type per category. Additionally, the data is displayed in a table below the chart for further examination.",
             "b": "The Security Practice Checklist contains a comprehensive overview of the assessment results, including the TTPs or risks addressed and recommended actions. Additionally, the checklist incorporates criteria such as “Impact,” “Cost,” and “Complexity” for each goal. These criteria can help organizations evaluate the importance and effects of each practice and prioritize them for implementation."
           },
+          "ssg": {
+            "ssg security practice checklist": "Sector-Specific Goal Security Practices",
+            "includes ssg": "Sector-Specific Goal answers are included in these results.",
+            "1": "This table lists all applicable SSG security practices and how they have been answered."
+          },
           "current assessment": "Current Assessment",
           "notes": "Notes",
           "ttp or risk addressed": "TTP or Risk Addressed",
@@ -1043,6 +1231,7 @@
           "report title": "DEFICIENCY REPORT CYBERSECURITY PERFORMANCE GOALS (CPG)",
           "cpg deficiency": "CPG Deficiency",
           "deficiencies": "Deficiencies",
+          "ssg deficiencies": "Sector-Specific Deficiencies",
           "p": {
             "1": "This deficiency report lists the practices that are \"Not Implemented\" or unanswered.",
             "2": "This is often referred to as the GAP Report. This report intends to list the gaps, assist users of the report in identifying gaps, prioritizing work, and beginning to make a plan to address the gaps by implementing the controls necessary to come into compliance with the associated practice.",
@@ -1107,9 +1296,9 @@
         "cmfr": {
           "report title": "Comments & Marked for Review",
           "comment": "Comment",
-          "marked for review": "Marked for Review",
-          "with comments": "with Comments",
+          "marked for review": "Questions Marked for Review",
           "no marked for review": "There are no {{questionsAliasLower}} marked for review",
+          "with comments": "Questions with Comments",
           "no comments": "There are no {{questionsAliasLower}} with comments",
           "other remarks": "Other Remarks"
         }
@@ -1153,7 +1342,7 @@
         "answered statements report title 2": "REPORT",
         "answered statements": "Answered Statements",
         "report desc 1": "This report includes all the statements within your maturity level, your answers, and whether there is a comment attached to the statement.",
-        "report desc 2": "The statement set is determined by your maturity level.",
+        "report desc 2": "The answered statement set will only show statements at or below your maturity level.",
         "maturity level key": "Maturity Level Key",
         "answers": "Answers",
         "comments": "Comments"
@@ -1196,9 +1385,9 @@
   },
   "feedback": {
     "page title": "Feedback",
-    "text 1": "Feedback is a mechanism for submitting changes or suggestions for a question asked in CSET. Feedback is entered by clicking the",
+    "text 1": "Feedback is a mechanism for submitting changes or suggestions for a question. Feedback is entered by clicking the",
     "text 2": "icon below the question.",
-    "text 3": "Please ensure that the feedback you provide does not include any proprietary or assessment related information. These comments should be considered part of a public community discussion with regard to the questions, requirements, CSET feature requests or bug notifications.",
+    "text 3": "Please ensure that the feedback you provide does not include any proprietary or assessment related information. These comments should be considered part of a public community discussion with regard to the questions, requirements, feature requests or bug notifications.",
     "copy paste": "Copy text to clipboard and paste into an email. Send the email to {{address}}.",
     "no feedback exists": "There is no feedback for any question in this assessment."
   },
@@ -1212,6 +1401,7 @@
     "scope": "Scope",
     "recommended action": "Recommended Action",
     "free services": "Free Services and References",
+    "implementation guidance": "Implementation Guidance",
     "component type": "Component Type",
     "override component answer": "Override Component Answer",
     "override": "Override",
@@ -1239,12 +1429,13 @@
       "module builder": "Module Builder",
       "module content report": "Module Content Report",
       "trend": "Trend",
-      "compare": "Compare"
+      "compare": "Compare",
+      "resume questions": "Resume Questions"
     },
     "resource library": "Resource Library",
     "help": {
       "help": "Help",
-      "cset user guide": "CSET User Guide",
+      "cset user guide": "User Guide",
       "about": "About",
       "keyboard shortcuts": "Keyboard Shortcuts",
       "legal": {
@@ -1385,12 +1576,12 @@
     "answer security question": "Please answer the security question and click Reset Password to receive an email with a temporary password.",
     "changed dialog title": "Password Changed",
     "changed message": "Your password has been changed successfully",
-    "enter email cset": "Enter the email address associated with your CSET account",
+    "enter email cset": "Enter the email address associated with your login account",
     "enter email rra": "Enter the email address associated with your RRA account",
     "enter email acet": "Enter the email address associated with your ACET account",
-    "enter email tsa": "Enter the email address associated with your CSET TSA account",
-    "enter email renew": "Enter the email address associated with your CSET Renewables account",
-    "enter email cf": "Enter the email address associated with your Cyber Florida CSET account",
+    "enter email tsa": "Enter the email address associated with your TSA account",
+    "enter email renew": "Enter the email address associated with your Renewables account",
+    "enter email cf": "Enter the email address associated with your Cyber Florida account",
     "ransomware explanation": "Ransomware is an ever-evolving form of malware designed to encrypt files on a device, rendering any files and the systems that rely on them unusable. Malicious actors then demand ransom in exchange for decryption. These resources are designed to help individuals and organizations prevent attacks that can severely impact business processes and leave organizations without the data they need to operate and deliver mission-critical services."
   },
   "about": {
@@ -1399,10 +1590,10 @@
     "version": "Version",
     "build date": "Build Date",
     "contact": "Contact",
-    "learn more": "To learn more about cyber vulnerabilities, training, standards, and references, visit the <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">CISA Vulnerability Management website</a> or contact <a class=\"wrap-text\" href=\"mailto:vulnerability@cisa.gov\" class=\"mailto\">vulnerability@cisa.gov</a>.",
+    "learn more": "To learn more about cyber vulnerabilities, training, standards, and references, visit the <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">CISA Vulnerability Management website</a> or contact <a class=\"wrap-text\" href=\"mailto:{{dhsEmail}}\" class=\"mailto\">{{dhsEmail}}</a>.",
     "encourage reporting": "CISA — Cybersecurity and Infrastructure Security Agency — encourages you to report suspicious cyber activity, incidents, and vulnerabilities affecting critical infrastructure control systems.",
-    "cset training resources": "CSET Training Resources",
-    "training available": "CSET training is available through the following resources",
+    "cset training resources": "Training Resources",
+    "training available": "training is available through the following resources",
     "video tutorials": "Video Tutorials",
     "cisa training program": "CISA Cybersecurity Training Program",
     "training description": "The training program events consist of Web-Based Training courses, 'regional' training courses and workshops at venues in various locations, in addition to the 5-day training event held in Idaho Falls, Idaho.",
@@ -1436,11 +1627,11 @@
     "keyboard shortcuts": "Keyboard Shortcuts"
   },
   "errors": {
-    "import unsuported file 1": "Error: Unsupported file. Only CSET Web files can be imported for enterprise installations.",
+    "import unsuported file 1": "Error: Unsupported file. Only .csetw files can be imported for enterprise installations.",
     "import unsuported file 2": "For more information, see the import section of the user guide"
   },
   "welcome page": {
-    "internet explorer": "Internet Explorer has been detected as your current browser. \nSome functionality of CSET is not fully supported by Internet Explorer. \nUsing another browser such as Chrome, Firefox or Edge is strongly recommended to improve your experience.",
+    "internet explorer": "Internet Explorer has been detected as your current browser. \nInternet Explorer is not supported. \nUsing another browser such as Chrome, Firefox or Edge is strongly recommended to improve your experience.",
     "welcome to acet": "Welcome to The Toolbox",
     "welcome to": "Welcome to {{appTitle}}",
     "to get started": "To get started, select from one of the options below:",
@@ -1465,9 +1656,9 @@
     "bad user": "The user does not exist or is not active",
     "no questions defined": "You have no security questions defined for your account. Please consider adding security questions the next time you are logged in.",
     "password expired": "Password is expired. Click 'Reset Password'",
-    "running locally": "CSET is running locally. No login is required.",
-    "error encountered": "An error was encountered while running CSET",
-    "enter name and email": "Enter your name and email address to register a new CSET account"
+    "running locally": "The application is running locally. No login is required.",
+    "error encountered": "An error was encountered while running the application",
+    "enter name and email": "Enter your name and email address to register a new account"
   },
   "footer": {
     "faq": "FAQ",
@@ -1482,7 +1673,7 @@
     "practice identifier": "Practice Identifier",
     "security practice": "Security Practice",
     "outcome": "Outcome",
-    "additional resources": "Additional information on how to complete a CSET assessment is available in the CSET User Guide. To access the user guide, select the option from the Help dropdown menu in the CSET tool bar.",
+    "additional resources": "Additional information on how to complete an assessment is available in the User Guide. To access the user guide, select the option from the Help dropdown menu in the tool bar.",
     "please visit": "Please visit",
     "for more information": "for more information.",
     "critical service": "Critical Service",

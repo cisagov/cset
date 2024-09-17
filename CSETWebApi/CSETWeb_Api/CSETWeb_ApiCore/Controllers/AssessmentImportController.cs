@@ -138,6 +138,11 @@ namespace CSETWebCore.Api.Controllers
                     returnMessage = (hint == null) ? "Invalid Password" : "Invalid Password - " + hint.FileName;
                     return StatusCode(406, returnMessage);
                 }
+                else if (e.Message == "Custom module not found")
+                {
+                    returnMessage = "Custom module not found";
+                    return StatusCode(404, returnMessage);
+                }
                 else
                 {
                     return BadRequest(e);

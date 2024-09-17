@@ -1,0 +1,276 @@
+[
+  {
+    "title": "RRA",
+    "reportList": [
+      {
+        "linkUrl": "rrareport"
+      },
+      {
+        "linkUrl": "rraDeficiencyReport"
+      },
+      {
+        "linkUrl": "commentsmfr"
+      }
+    ]
+  },
+  {
+    "title": "EDM",
+    "reportList": [
+      {
+        "linkUrl": "edm",
+        "securityPicker": true
+      },
+      {
+        "linkUrl": "edm",
+        "print": true
+      },
+      {
+        "linkUrl": "edmDeficiencyReport"
+      },
+      {
+        "linkUrl": "edmCommentsmarked"
+      }
+    ]
+  },
+  {
+    "title": "CMMC",
+    "reportList": [
+      {
+        "linkUrl": "executivecmmc"
+      },
+      {
+        "linkUrl": "sitesummarycmmc"
+      },
+      {
+        "linkUrl": "cmmcDeficiencyReport"
+      },
+      {
+        "linkUrl": "cmmcCommentsMarked"
+      },
+      {
+        "linkUrl": "cmmcAltJustifications"
+      }
+    ]
+  },
+  {
+    "title": "CPG",
+    "reportList": [
+      {
+        "linkUrl": "cpgReport"
+      },
+      {
+        "linkUrl": "cpgDeficiency"
+      },
+      {
+        "linkUrl": "commentsmfr"
+      }
+    ]
+  },
+  {
+    "title": "VADR",
+    "reportList": [
+      {
+        "linkUrl": "vadrReport"
+      },
+      {
+        "linkUrl": "vadrDeficiencyReport"
+      },
+      {
+        "linkUrl": "vadrOpenEndedReport"
+      }
+    ]
+  },
+  {
+    "title": "SD02 Series",
+    "reportList": [
+      {
+        "linkUrl": "sd-answer-summary"
+      },
+      {
+        "linkUrl": "sd-deficiency"
+      },
+      {
+        "linkUrl": "commentsmfr"
+      }
+    ]
+  },
+  {
+    "title": "SD02 Owner",
+    "reportList": [
+      {
+        "linkUrl": "sdo-gap-report"
+      },
+      {
+        "linkUrl": "sdo-comments-and-mfr"
+      }
+    ]
+  },
+  {
+    "title": "MVRA",
+    "reportList": [
+      {
+        "linkUrl": "mvraReport"
+      }
+    ]
+  },
+  {
+    "title": "ISE",
+    "reportList": [
+      {
+        "linkUrl": "isemerit",
+        "disabled": false
+      },
+      {
+        "linkUrl": "iseexamination",
+        "disabled": false
+      },
+      {
+        "linkUrl": "iseansweredquestions",
+        "disabled": false
+      },
+      {
+        "linkUrl": "iseexaminer",
+        "disabled": false
+      }
+    ]
+  },
+  {
+    "title": "IMR",
+    "reportList": [
+      {
+        "linkUrl": "imrreport",
+        "securityPicker": true
+      },
+      {
+        "linkUrl": "genDeficiencyReport?m=IMR"
+      },
+      {
+        "linkUrl": "commentsmfr"
+      }
+    ]
+  },
+  {
+    "title": "HYDRO",
+    "reportList": [
+      {
+        "linkUrl": "hydroActionItemsReport"
+      }
+    ]
+  },
+  {
+    "title": "DIAGRAM",
+    "reportList": [
+      {
+        "linkUrl": "executive"
+      },
+      {
+        "linkUrl": "sitesummary"
+      },
+      {
+        "linkUrl": "securityplan"
+      },
+      {
+        "linkUrl": "detail"
+      }
+    ]
+  },
+  {
+    "title": "CRR",
+    "reportList": [
+      {
+        "linkUrl": "crrreport",
+        "securityPicker": true
+      },
+      {
+        "linkUrl": "crrDeficiencyReport"
+      },
+      {
+        "linkUrl": "crrCommentsMarked"
+      }
+    ]
+  },
+  {
+    "title": "CMMC2",
+    "reportList": [
+      {
+        "linkUrl": "executivecmmc2"
+      },
+      {
+        "linkUrl": "cmmc2DeficiencyReport"
+      },
+      {
+        "linkUrl": "cmmc2CommentsMarked"
+      }
+    ]
+  },
+  {
+    "title": "CIS",
+    "reportList": [
+      {
+        "linkTitle": "Survey Report",
+        "linkUrl": "cisSurveyReport",
+        "linkDescription": "The report contains a list of all survey questions and their corresponding answers."
+      },
+      {
+        "linkTitle": "Section Scoring Report",
+        "linkUrl": "cisSectionScoringReport",
+        "linkDescription": "The report compiles all the sub-domain charts, each displaying a score based on how the associated questions were answered. If a baseline survey was selected on the Critical Service Information page, the corresponding baseline score for each sub-domain will also be displayed."
+      },
+      {
+        "linkTitle": "Deficiency Report",
+        "linkUrl": "cisRankedDeficiencyReport",
+        "linkDescription": "To run the Deficiency Report, a baseline survey must be selected on the Critical Service Information page. The report displays a chart indicating whether the organization’s cybersecurity infrastructure practices have remained unchanged, worsened, or improved compared to the baseline for each sub-domain."
+      },
+      {
+        "linkTitle": "Comments and Marked for Review",
+        "linkUrl": "cisCommentsmarked",
+        "linkDescription": " This document consolidates all practices that have received comments or have been flagged for review during the survey process. It provides an overview of areas where further attention or clarification may be needed."
+      }
+    ]
+  },
+  {
+    "title": "C2M2",
+    "reportList": [
+      {
+        "linkUrl": "c2m2Report"
+      }
+    ]
+  },
+  {
+    "title": "ACET",
+    "reportList": [
+      {
+        "linkUrl": "acetexecutive"
+      },
+      {
+        "linkUrl": "acetgaps"
+      },
+      {
+        "linkUrl": "acetcommentsmarked"
+      },
+      {
+        "linkUrl": "acetansweredquestions"
+      },
+      {
+        "linkUrl": "acetcompensatingcontrols"
+      }
+    ]
+  },
+  {
+    "title": "STANDARD",
+    "reportList": [
+      {
+        "linkUrl": "executive"
+      },
+      {
+        "linkUrl": "sitesummary"
+      },
+      {
+        "linkUrl": "securityplan"
+      },
+      {
+        "linkUrl": "detail"
+      }
+    ]
+  }
+]

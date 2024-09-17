@@ -47,6 +47,7 @@ export class AssessmentDocumentsComponent implements OnInit {
   ngOnInit() {
     this.assessSvc.getAssessmentDocuments().subscribe((response: any) => {
       this.documents = response;
+      console.log(this.documents)
     });
   }
 

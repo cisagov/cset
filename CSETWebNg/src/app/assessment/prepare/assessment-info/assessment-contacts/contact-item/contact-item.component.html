@@ -24,7 +24,7 @@
 <div *transloco="let t" class="d-flex align-items-center flex-11a">
   <!-- Display Mode -->
   <ng-template #contact_display [ngIf]="editMode">
-    <div *ngIf="!layoutSvc.hp" class="d-flex my-2 pr-2 br-standard align-items-center"
+    <div *ngIf="!layoutSvc.hp" class="d-flex my-2 pe-2 br-standard align-items-center"
       [ngClass]="!showControls() ? 'bgc-primary-50 c-gray-900 b-primary-200' : 'b-light'"
       style="width: 100%; height: 125px; overflow: hidden;">
       <div class="p-3 d-flex flex-column justify-content-center align-items-start" style="flex: 0 0 25%">
@@ -74,7 +74,7 @@
         </button>
       </span>
 
-      <span class="pr-3 fw-600" *ngIf="!showControls()">{{ t('contact.assessment owner') }}</span>
+      <span class="pe-3 fw-600" *ngIf="!showControls()">{{ t('contact.assessment owner') }}</span>
     </div>
 
 
@@ -134,7 +134,7 @@
         <div class="d-flex flex-column flex-11a">
           <div class="d-flex flex-wrap flex-11a">
 
-            <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
+            <div class="form-group me-0 me-sm-2 d-flex flex-column flex-11a">
               <label class="mb-1" for="fName">{{ t('contact.first name') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="fName" id="fName"
                 [(ngModel)]="contact.firstName" #fName="ngModel" [placeholder]="t('contact.first name')"
@@ -153,7 +153,7 @@
             </div>
           </div>
           <div class="d-flex flex-wrap flex-11a">
-            <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
+            <div class="form-group me-0 me-sm-2 d-flex flex-column flex-11a">
               <label class="mb-1" for="title">{{ t('contact.title') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="title" id="title"
                 [(ngModel)]="contact.title" #title="ngModel" [placeholder]="t('contact.title')"
@@ -168,7 +168,7 @@
             </div>
           </div>
           <div class="d-flex flex-wrap flex-11a">
-            <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
+            <div class="form-group me-0 me-sm-2 d-flex flex-column flex-11a">
               <label class="mb-1" for="title">{{ t('contact.organization') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="Organization"
                 id="organization" [(ngModel)]="contact.organizationName" #organization="ngModel"
@@ -183,7 +183,7 @@
             </div>
           </div>
           <div class="d-flex flex-wrap flex-11a">
-            <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
+            <div class="form-group me-0 me-sm-2 d-flex flex-column flex-11a">
               <label class="mb-1" for="title">{{ t('contact.cell phone') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="cellPhone" id="cellPhone"
                 [(ngModel)]="contact.cellPhone" #cellPhone="ngModel" [placeholder]="t('contact.cell phone')"
@@ -246,7 +246,6 @@
           <div class="d-flex justify-content-between align-items-center flex-00a">
             <button type="submit" class="m-0  p-2 btn btn-primary d-flex align-items-center flex-00a"
               (click)="scrollToTop()">
-              <!-- <span class="mr-2 cset-icons-floppy-disk fs-base-2"></span> -->
               {{ t('buttons.save') }}
             </button>
             <button type="button" class="m-0 p-2 btn btn-secondary d-flex align-items-center flex-00a"

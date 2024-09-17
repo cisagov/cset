@@ -217,6 +217,7 @@ namespace CSETWebCore.DatabaseManager
                 _logger.Error(e.Message);
                 // Attach clean database here if something goes wrong with database upgrade
                 ForceCloseAndDetach(sourceLocalDbInfo.MasterConnectionString, DatabaseCode);
+                ForceCloseAndDetach(targetLocalDbInfo.MasterConnectionString, DatabaseCode);
                 AttachCleanDatabase(destDBFile, destLogFile, targetLocalDbInfo);
             }
 
@@ -532,7 +533,7 @@ namespace CSETWebCore.DatabaseManager
         {
             get
             {
-                if (ApplicationCode.Equals("CSET"))
+                if (ApplicationCode.Equals("CSET") || ApplicationCode.Equals("CIE"))
                 {
                     return ApplicationCode + "Web";
                 }

@@ -32,6 +32,10 @@ namespace CSETWebCore.Business.RepositoryLibrary
         private string xpsDirectory;
         private string xlsxDirectory;
 
+
+        /// <summary>
+        /// CTOR
+        /// </summary>
         public ResourceLibraryRepository(CSETContext dbContext, ICSETGlobalProperties globalProperties)
         {
             this.dbContext = dbContext;
@@ -42,6 +46,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
 
             CreateResourceLibraryData();
         }
+
 
         public List<SimpleNode> GetTreeNodes()
         {
@@ -94,6 +99,9 @@ namespace CSETWebCore.Business.RepositoryLibrary
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void CreateResourceLibraryData()
         {
             try
@@ -173,6 +181,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
                 }
 
 
+                // Special node: Procurement Language
                 ResourceNode procTopicModel = new NoneNode("Cyber Security Procurement Language");
                 TopNodes.Add(procTopicModel);
 
@@ -205,6 +214,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
                 }
 
 
+                // Special node: Catalog of Recommendations
                 ResourceNode recCatTopicModel = new NoneNode("Catalog of Recommendations");
                 TopNodes.Add(recCatTopicModel);
 
@@ -243,20 +253,24 @@ namespace CSETWebCore.Business.RepositoryLibrary
             }
         }
 
-        private PROCUREMENTLANGUAGEDATA GetProcurmentLanguage(int id)
+
+        private PROCUREMENTLANGUAGEDATA GetProcurementLanguage(int id)
         {
             return TinyMapper.Map<PROCUREMENTLANGUAGEDATA>(dbContext.PROCUREMENT_LANGUAGE_DATA.First(data => data.Procurement_Id == id));
         }
 
-        public ProcurementLanguageTopicNode GetProcurmentLanguageNode(int id)
+
+        public ProcurementLanguageTopicNode GetProcurementLanguageNode(int id)
         {
-            return new ProcurementLanguageTopicNode(GetProcurmentLanguage(id));
+            return new ProcurementLanguageTopicNode(GetProcurementLanguage(id));
         }
+
 
         private CATALOGRECOMMENDATIONSDATA GetCatalogRecommendations(int id)
         {
             return TinyMapper.Map<CATALOGRECOMMENDATIONSDATA>(dbContext.CATALOG_RECOMMENDATIONS_DATA.First(data => data.Data_Id == id));
         }
+
 
         public CatalogRecommendationsTopicNode GetCatalogRecommendationsNode(int id)
         {
@@ -269,9 +283,10 @@ namespace CSETWebCore.Business.RepositoryLibrary
             return GetCatalogRecommendations(id).Flow_Document;
         }
 
+
         public string GetProcurementFlowText(int id)
         {
-            return GetProcurmentLanguage(id).Flow_Document;
+            return GetProcurementLanguage(id).Flow_Document;
         }
     }
 }

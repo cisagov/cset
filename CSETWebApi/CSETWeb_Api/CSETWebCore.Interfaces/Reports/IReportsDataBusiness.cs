@@ -17,11 +17,11 @@ namespace CSETWebCore.Interfaces.Reports
     {
         void SetReportsAssessmentId(int assessmentId);
 
-        List<MatRelevantAnswers> GetMaturityDeficiencies();
-        List<MatRelevantAnswers> GetCommentsList();
-        List<MatRelevantAnswers> GetMarkedForReviewList();
+        List<MatRelevantAnswers> GetMaturityDeficiencies(int? modelId = null);
+        List<MatRelevantAnswers> GetCommentsList(int? modelId = null);
+        List<MatRelevantAnswers> GetMarkedForReviewList(int? modelId = null);
         List<MatRelevantAnswers> GetAlternatesList();
-        List<MatRelevantAnswers> GetQuestionsList();
+        List<MatRelevantAnswers> GetQuestionsList(int? modelId = null);
         List<MatAnsweredQuestionDomain> GetAnsweredQuestionList();
         List<MatAnsweredQuestionDomain> GetIseAnsweredQuestionList();
         BasicReportData.INFORMATION GetIseInformation();
@@ -62,6 +62,7 @@ namespace CSETWebCore.Interfaces.Reports
         IEnumerable<CONFIDENTIAL_TYPE> GetConfidentialTypes();
         List<BasicReportData.RequirementControl> GetControlsDiagram(string applicationMode);
         List<MatAnsweredQuestionDomain> GetCieQuestionList(int matLevel, bool filterForNa = false);
-
+        List<MatAnsweredQuestionDomain> GetCieDocumentsForAssessment();
+        List<MatAnsweredQuestionDomain> GetCieMfrQuestionList();
     }
 }

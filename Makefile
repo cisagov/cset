@@ -30,5 +30,6 @@ launch-db:
 load-db:
 	docker exec -i cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123" -i /var/opt/mssql/backup/restoredb.sql
 
+# target: remove-db - Remove the database, container and its data
 remove-db:
 	docker compose down -v

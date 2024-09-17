@@ -43,8 +43,124 @@
     <p>
       <strong>The Implementation Guide provides a deep discussion of each principle, and the questions and considerations an engineering team must address to embody the principle in their resulting system. </strong> Those questions and considerations are presented for each phase in the system lifecycle.
     </p>
-    <img src="assets/images/CIE/01_PrinciplesTable_p9.svg" alt="CIE Principles Table">
+    <!-- <img src="assets/images/CIE/01_PrinciplesTable_p9.svg" alt="CIE Principles Table"> -->
 
+    <div class="d-flex">
+      <div class="col-1 table-header" style="padding: 4px;"></div>
+      <div class="col-5 table-header" style="padding: 4px;"><strong>PRINCIPLE</strong></div>
+      <div class="col-6 table-header" style="padding: 4px;"><strong>KEY QUESTION</strong></div>
+    </div>
+    
+    <hr class="page-line">
+
+    <div class="d-flex">
+      <div class="col-1 table-header" style="padding: 4px;">1</div>
+      <div class="col-5" style="padding: 4px;"><strong>Consequence-Focused Design</strong></div>
+      <div class="col-6" style="padding: 4px;">
+        <p>
+          How do I understand what critical functions my system must ensure and the undesired consequences it must prevent?
+        </p>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="col-1 table-header" style="padding: 4px;">2</div>
+      <div class="col-5" style="padding: 4px;"><strong>Engineered Controls</strong></div>
+      <div class="col-6" style="padding: 4px;">
+        <p>
+          How do I select and implement controls to reduce avenues for attack or the damage that could result?
+        </p>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="col-1 table-header" style="padding: 4px;">3</div>
+      <div class="col-5" style="padding: 4px;"><strong>Secure Information Architecture</strong></div>
+      <div class="col-6" style="padding: 4px;">
+        <p>
+          How do I prevent undesired manipulation of important data?
+        </p>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="col-1 table-header" style="padding: 4px;">4</div>
+      <div class="col-5" style="padding: 4px;"><strong>Design Simplification</strong></div>
+      <div class="col-6" style="padding: 4px;">
+        <p>
+          How do I determine what features of my system are not absolutely necessary to achieve the critical functions?
+        </p>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="col-1 table-header" style="padding: 4px;">5</div>
+      <div class="col-5" style="padding: 4px;"><strong>Layered Defenses</strong></div>
+      <div class="col-6" style="padding: 4px;">
+        <p>
+          How do I create the best compilation of system defenses?
+        </p>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="col-1 table-header" style="padding: 4px;">6</div>
+      <div class="col-5" style="padding: 4px;"><strong>Active Defenses</strong></div>
+      <div class="col-6" style="padding: 4px;">
+        <p>
+          How do I proactively prepare to defend my system from any threat?
+        </p>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="col-1 table-header" style="padding: 4px;">7</div>
+      <div class="col-5" style="padding: 4px;"><strong>Interdependency Evaluation</strong></div>
+      <div class="col-6" style="padding: 4px;">
+        <p>
+          How do I understand where my system can impact others or be impacted by others?
+        </p>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="col-1 table-header" style="padding: 4px;">8</div>
+      <div class="col-5" style="padding: 4px;"><strong>Digital Asset Awareness</strong></div>
+      <div class="col-6" style="padding: 4px;">
+        <p>
+          How do I understand where digital assets are used, what functions they are capable of, and our assumptions about how they work?
+        </p>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="col-1 table-header" style="padding: 4px;">9</div>
+      <div class="col-5" style="padding: 4px;"><strong>Cyber-Secure Supply Chain Controls</strong></div>
+      <div class="col-6" style="padding: 4px;">
+        <p>
+          How do I ensure my providers deliver the security the system needs?
+        </p>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="col-1 table-header" style="padding: 4px;">10</div>
+      <div class="col-5" style="padding: 4px;"><strong>Planned Resilience</strong></div>
+      <div class="col-6" style="padding: 4px;">
+        <p>
+          How do I turn “what ifs” into “even ifs”?
+        </p>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="col-1 table-header" style="padding: 4px;">11</div>
+      <div class="col-5" style="padding: 4px;"><strong>Engineering Information Control</strong></div>
+      <div class="col-6" style="padding: 4px;">
+        <p>
+          How do I manage knowledge about my system? How do I keep it out of the wrong hands?
+        </p>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="col-1 table-header" style="padding: 4px;">12</div>
+      <div class="col-5" style="padding: 4px;"><strong>Organizational Culture</strong></div>
+      <div class="col-6" style="padding: 4px;">
+        <p>
+          How do I ensure that everyone’s behavior and decisions align with our security goals?
+        </p>
+      </div>
+    </div>
   </div>
   
   <app-nav-back-next [page]="'principles-cie'"></app-nav-back-next>

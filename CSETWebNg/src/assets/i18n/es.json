@@ -264,7 +264,10 @@
         "performance summary": "Resumen de desempeño",
         "security practice checklist": "Lista de prácticas de seguridad",
         "goal performance": "Desempeño de metas",
-        "assessment tiers": "Niveles de evaluación"
+        "assessment tiers": "Niveles de evaluación",
+        "ssg": {
+            "chemical": "Metas del sector químico"
+        }
     },
     "buttons": {
         "ok": "Aceptar",
@@ -389,7 +392,8 @@
     "questions": {
         "instructions 1": "Seleccione la respuesta aplicable para cada una de las siguientes preguntas.",
         "unanswered equals no": "Las preguntas sin respuesta se calculan como una respuesta '{{no-ans}}.'",
-        "cpg answer key": "Clave de Respuestas CPG"
+        "cpg answer key": "Clave de Respuestas CPG",
+        "instructions ssg": "Las metas específicas del sector (SSG) se muestran según el sector seleccionado en los datos de la evaluación. Estos objetivos, adjuntos a las CPG, están diseñados para abordar inquietudes adicionales exclusivas de su industria. Los SSG no afectarán los resultados de las CPG y se mostrarán por separado en los resultados y los informes."
     },
     "tooltip": {
         "view detail": "Ver detalle",
@@ -530,8 +534,7 @@
         "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el {date}.",
         "reports run prior message": " Los informes generados antes de esa actualización pueden no reflejar el estado actual de la evaluación.",
         "printing report instructions button": "Instrucciones para imprimir informes",
-        "printing instructions electron": "Para imprimir o guardar cualquiera de estos informes como PDF, haga clic en el informe que se abrirá en una nueva ventana. En la esquina superior derecha de la página web, haga clic en el botón de los tres puntos ... y vaya a Imprimir.",
-        "printing instructions non-electron": "Para imprimir o guardar cualquiera de estos informes como PDF, haga clic en el informe que se abrirá en una nueva ventana. En la esquina superior izquierda de la ventana del informe, haga clic en el botón \"Archivo\" en la barra de menú y seleccione \"Imprimir\" (CTRL + P). Para exportar una copia de su evaluación a otra ubicación (.csetw), haga clic en el logotipo de CSET en la esquina superior izquierda de la página. En \"Mis Evaluaciones\", verá su evaluación y un botón de Exportar en el lado derecho de la página.",
+        "printing instructions": "Haga clic en el nombre del informe con hipervínculo. Para imprimir el informe, seleccione la opción Imprimir. Para crear un PDF, seleccione PDF como la impresora deseada.",
         "site information": "Información del sitio",
         "executive summary": "Resumen ejecutivo",
         "network diagram": "Diagrama de red",
@@ -1014,6 +1017,7 @@
         "scope": "Ámbito",
         "recommended action": "Acción recomendada",
         "free services": "Servicios gratuitas y referencias",
+        "implementation guidance": "Guía de implementación",
         "component type": "Tipo de componente",
         "override component answer": "Sobreescribir Respuesta",
         "override": "Sobreescribir",
@@ -1041,7 +1045,8 @@
             "module builder": "Constructor de módulos",
             "module content report": "Informe de contenido del módulo",
             "trend": "Tendencia",
-            "compare": "Comparar"
+            "compare": "Comparar",
+            "resume questions": "Reanudar preguntas"
         },
         "resource library": "Biblioteca de recursos",
         "help": {
@@ -1201,7 +1206,7 @@
         "version": "Versión",
         "build date": "Fecha de Compilación",
         "contact": "Contacto",
-        "learn more": "Para obtener más información sobre vulnerabilidades cibernéticas, capacitación, estándares y referencias, visite el <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">sitio web de gestión de vulnerabilidades de CISA</a> o póngase en contacto con <a class=\"wrap-text\" href=\"mailto:vulnerability@cisa.gov\" class=\"mailto\">vulnerability@cisa.gov</a>.",
+        "learn more": "Para obtener más información sobre vulnerabilidades cibernéticas, capacitación, estándares y referencias, visite el <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">sitio web de gestión de vulnerabilidades de CISA</a> o póngase en contacto con <a class=\"wrap-text\" href=\"mailto:{{dhsEmail}}\" class=\"mailto\">{{dhsEmail}}</a>.",
         "encourage reporting": "CISA (Agencia de Seguridad de la Infraestructura y Ciberseguridad) lo alienta a informar sobre actividades cibernéticas sospechosas, incidentes y vulnerabilidades que afectan los sistemas de control de infraestructura crítica.",
         "cset training resources": "Recursos de capacitación CSET",
         "training available": "La capacitación CSET está disponible a través de los siguientes recursos",

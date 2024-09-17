@@ -147,10 +147,13 @@ export class MyAssessmentsComponent implements OnInit {
         this.ncuaSvc.reset();
         break;
       case 'TSA':
+        // ACET files shouldn't be imported into the TSA version
+        this.importExtensions = this.importExtensions.replace(', .acet', '');
         this.isTSA = true;
         break;
       case 'CF':
         this.isCF = true;
+        this.navTreeSvc.clearNoMatterWhat();
         break;
       default:
         this.isCSET = true;
@@ -158,8 +161,11 @@ export class MyAssessmentsComponent implements OnInit {
 
     if (localStorage.getItem("returnPath")) { }
     else {
-      this.navTreeSvc.clearTree(this.navSvc.getMagic());
+      this.navTreeSvc.clearTree(this.navSvc.getMagic());      
     }
+    // if(this.isCF){
+    //   this.navTreeSvc.clearNoMatterWhat();
+    // }
 
     this.ncuaSvc.assessmentsToMerge = [];
     this.cieSvc.assessmentsToMerge = [];

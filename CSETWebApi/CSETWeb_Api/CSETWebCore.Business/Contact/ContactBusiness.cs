@@ -87,6 +87,50 @@ namespace CSETWebCore.Business.Contact
 
         }
 
+        /// <summary>
+        /// Returns a list of ContactDetail instances for the assessments specified
+        /// </summary>
+        /// <returns></returns>
+        public List<ContactDetail> GetContactsByAssessmentId(int id1, int id2, int id3 = 0, int id4 = 0, int id5 = 0, int id6 = 0, int id7 = 0, int id8 = 0, int id9 = 0, int id10 = 0)
+        {
+            List<ContactDetail> list = new List<ContactDetail>();
+
+            var query = (from cc in _context.ASSESSMENT_CONTACTS
+                         where cc.Assessment_Id == id1 || cc.Assessment_Id == id2 || cc.Assessment_Id == id3 ||
+                               cc.Assessment_Id == id4 || cc.Assessment_Id == id5 || cc.Assessment_Id == id6 ||
+                               cc.Assessment_Id == id5 || cc.Assessment_Id == id6 || cc.Assessment_Id == id7 ||
+                               cc.Assessment_Id == id8 || cc.Assessment_Id == id9 || cc.Assessment_Id == id10
+                         select new { cc });
+
+            foreach (var q in query.ToList())
+            {
+                ContactDetail c = new ContactDetail
+                {
+                    FirstName = q.cc.FirstName,
+                    LastName = q.cc.LastName,
+                    PrimaryEmail = q.cc.PrimaryEmail,
+                    AssessmentId = q.cc.Assessment_Id,
+                    AssessmentRoleId = q.cc.AssessmentRoleId,
+                    Invited = q.cc.Invited,
+                    UserId = q.cc.UserId ?? null,
+                    AssessmentContactId = q.cc.Assessment_Contact_Id,
+                    Title = q.cc.Title,
+                    Phone = q.cc.Phone,
+                    CellPhone = q.cc.Cell_Phone,
+                    ReportsTo = q.cc.Reports_To,
+                    OrganizationName = q.cc.Organization_Name,
+                    SiteName = q.cc.Site_Name,
+                    EmergencyCommunicationsProtocol = q.cc.Emergency_Communications_Protocol,
+                    IsSiteParticipant = q.cc.Is_Site_Participant,
+                    IsPrimaryPoc = q.cc.Is_Primary_POC,
+                };
+
+                list.Add(c);
+            }
+
+            return list;
+
+        }
 
         /// <summary>
         /// Returns a list of contacts that meet the specified search criteria.
@@ -218,15 +262,23 @@ namespace CSETWebCore.Business.Contact
         /// Creates a new Contact if needed.  If a Contact already exists for the email, no 
         /// changes are made to the Contact row.
         /// </summary>
-        public ContactDetail CreateAndAddContactToAssessment(ContactCreateParameters newContact)
+        public ContactDetail CreateAndAddContactToAssessment(ContactCreateParameters newContact, bool isMerge)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             string appName = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             ASSESSMENT_CONTACTS existingContact = null;
 
-            // See if the Contact already exists
-            existingContact = _context.ASSESSMENT_CONTACTS.FirstOrDefault(x => x.UserId == newContact.UserId && x.Assessment_Id == assessmentId);
+            if (!isMerge)
+            {
+                // See if the Contact already exists
+                existingContact = _context.ASSESSMENT_CONTACTS.FirstOrDefault(x => x.UserId == newContact.UserId && x.Assessment_Id == assessmentId);
+            } else
+            {
+                // If this is a merge, we need to check for existing contacts via different values
+                existingContact = _context.ASSESSMENT_CONTACTS.FirstOrDefault(x => x.Assessment_Id == newContact.AssessmentId && x.PrimaryEmail == newContact.PrimaryEmail && x.FirstName == newContact.FirstName);
+            }
+
             if (existingContact == null)
             {
                 // Create Contact

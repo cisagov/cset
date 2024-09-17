@@ -16,6 +16,8 @@ namespace CSETWebCore.Business.RepositoryLibrary
         public CatalogRecommendationsTopicNode(CATALOGRECOMMENDATIONSDATA recommTopicData)
             : base(recommTopicData)
         {
+            TinyMapper.Bind<CATALOGRECOMMENDATIONSDATA, CATALOGRECOMMENDATIONSDATA>();
+
             this.Data = TinyMapper.Map<CATALOGRECOMMENDATIONSDATA>(recommTopicData);
 
             this.HeadingTitle = this.Data.Topic_Name;

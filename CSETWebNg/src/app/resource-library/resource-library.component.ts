@@ -21,7 +21,7 @@
 //
 ////////////////////////////////
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, isDevMode } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Title } from "@angular/platform-browser";
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -31,6 +31,7 @@ import { OkayComponent } from '../dialogs/okay/okay.component';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { NavigationService } from '../services/navigation/navigation.service';
 import { NavTreeService } from '../services/navigation/nav-tree.service';
+import { AuthenticationService } from '../services/authentication.service';
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
   params: new HttpParams()
@@ -60,7 +61,7 @@ interface LibrarySearchResponse {
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class ResourceLibraryComponent implements OnInit {
+export class ResourceLibraryComponent implements OnInit, AfterViewInit {
   results: LibrarySearchResponse[];
   searchTerm: string;
   searchString: string;
@@ -76,12 +77,15 @@ export class ResourceLibraryComponent implements OnInit {
   children?: LibrarySearchResponse[];
   filter: string = '';
   setFilterDebounced = new Subject<string>();
+  @ViewChild('tabs') tabsElementRef: ElementRef;
+  devMode: boolean = isDevMode();
 
   constructor(private configSvc: ConfigService,
     private http: HttpClient,
     public navSvc: NavigationService,
     public navTreeSvc: NavTreeService,
     public dialog: MatDialog,
+    private authSvc: AuthenticationService,
     public titleSvc: Title) {
   }
 
@@ -112,6 +116,17 @@ export class ResourceLibraryComponent implements OnInit {
     );
   }
 
+  ngAfterViewInit(): void {
+    if (!!this.tabsElementRef) {
+      const tabsEl = this.tabsElementRef.nativeElement;
+      tabsEl.classList.add('sticky-tabs');
+      if (this.authSvc.isLocal && this.devMode) {
+        tabsEl.style.top = '81px';
+      } else {
+        tabsEl.style.top = '62px';
+      }
+    }
+  }
 
   setFilter(filter: string) {
     this.filter = filter ?? '';
@@ -126,7 +141,7 @@ export class ResourceLibraryComponent implements OnInit {
       this.filterDepthMatch(node, filterLowerCaseTrimmed);
     });
 
-    this.navTreeSvc.dataChange.next(nodes);
+    this.navTreeSvc.dataChange$.next(nodes);
   }
 
   filterDepthMatch(node: any, filterLowerCaseTrimmed: string) {
@@ -184,14 +199,24 @@ export class ResourceLibraryComponent implements OnInit {
         });
   }
 
+  /**
+   * A couple of different objects can call this to see if
+   * the object represents procurement language or a catalog
+   * of recommendations entry.  This function is flexible
+   * in considering the 'pathDoc' or 'docId' property.
+   */
   isProcurementOrCatalog(result: any) {
-    let path = result.PathDoc;
-    if (!path)
+    let path = result.pathDoc || result.docId;
+
+    if (!path) {
       return false;
+    }
+
     if (path.indexOf('procurement:') === 0
       || path.indexOf('catalog:') === 0) {
       return true;
     }
+
     return false;
   }
 
@@ -207,17 +232,16 @@ export class ResourceLibraryComponent implements OnInit {
 
     if (parms.indexOf('procurement:') === 0) {
       docType = 'proc';
-      id = parms.substr(parms.indexOf(":") + 1);
+      id = parms.substring(parms.indexOf(":") + 1);
     }
 
     if (parms.indexOf('catalog:') === 0) {
       docType = 'cat';
-      id = parms.substr(parms.indexOf(":") + 1);
+      id = parms.substring(parms.indexOf(":") + 1);
     }
 
     this.http.get(
-      this.libraryUrl + 'flowdoc?type=' + docType + '&id=' + id,
-      headers)
+      this.libraryUrl + 'flowdoc?type=' + docType + '&id=' + id, { responseType: 'text' })
       .subscribe(
         (docHtml: string) => {
           this.dialog.open(OkayComponent, { data: { messageText: docHtml } });

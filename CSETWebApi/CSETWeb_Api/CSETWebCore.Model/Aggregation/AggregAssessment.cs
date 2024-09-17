@@ -15,6 +15,13 @@ namespace CSETWebCore.Model.Aggregation
         public string AssessmentName { get; set; }
         public DateTime AssessmentDate { get; set; }
         public string Alias { get; set; }
+
+        public bool useMaturity { get; set; }
+
+        public bool useStandard { get; set; }
+        
+        public bool useDiagram { get; set; }
+
         public List<SelectedStandards> SelectedStandards { get; set; }
 
         public AggregAssessment()

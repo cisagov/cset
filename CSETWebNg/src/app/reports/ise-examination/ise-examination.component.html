@@ -53,8 +53,8 @@
                         localizeDate}}
                     </div>
                     <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
-                    <button class="btn form-check-label btn-copy" [matTooltip]="'Print to PDF'"
-                        matTooltipPosition="below" (click)="print()">Print to PDF
+                    <button class="btn form-check-label btn-copy" title="Print to PDF"
+                        (click)="print()">Print to PDF
                     </button>
                 </div>
             </div>
@@ -66,7 +66,7 @@
 
         <ng-template #mainContent>
             <!-- <div class="page-break"> -->
-            <div class="ml-3 mr-3 form">
+            <div class="ms-3 me-3 form">
                 <div class="d-flex flex-row" style="justify-content: space-between">
                     <div style="align-self: flex-end;">
                         <div class="h2 report-text-blue">Demographics</div>
@@ -181,13 +181,13 @@
                     </tr>
                     <ng-container *ngFor="let f of d.assessmentFactors">
                         <tr>
-                            <td colspan="5" class="background-1 color-white font-weight-bold pl-4">{{f.title}} -
+                            <td colspan="5" class="background-1 color-white font-weight-bold ps-4">{{f.title}} -
                                 Assessment Factor</td>
                         </tr>
                         <ng-container *ngFor="let c of f.components">
                             <ng-container *ngIf="this.showSubcats.get(c.title)">
                                 <tr>
-                                    <td colspan="5" class="background-2 pl-5">{{c.title}} - Component
+                                    <td colspan="5" class="background-2 ps-5">{{c.title}} - Component
                                         <label class="btn form-check-label" style="float: right">{{
                                             this.expandedOptions.get(c.title) ? '-' : '+' }}
                                             <input class="hide" name="nameExample" type=checkbox
@@ -203,17 +203,17 @@
                                         <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
                                             class="font-weight-bold text-nowrap">{{q.title}}</td>
 
-                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pr-3"
+                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3"
                                             [innerHTML]="q.questionText"></td>
                                         <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
-                                            class="pr-3" [innerHTML]="q.questionText"></td>
+                                            class="pe-3" [innerHTML]="q.questionText"></td>
 
-                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pr-3">
+                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3">
                                         </td>
                                         <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
-                                            class="pr-3">{{ questionsSvc.answerButtonLabel('ISE', q.answerText) }}</td>
+                                            class="pe-3">{{ questionsSvc.answerButtonLabel('ISE', q.answerText) }}</td>
 
-                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pr-3">
+                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3">
                                             {{acetSvc.getAbbrev(q.maturityLevel)}}
                                         </td>
                                         <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3">
@@ -224,7 +224,7 @@
                                             </label>
                                         </td>
                                         <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
-                                            class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
+                                            class="pe-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                                     </tr>
                                 </ng-container>
                             </ng-container>
@@ -248,16 +248,16 @@
                             <div *ngIf="this.ncuaSvc.isParentQuestion(q.title)">
                                 <div>
                                     <span class="font-weight-bold">Title: </span>
-                                    <span class="pr-3">{{ q.title }}</span>
+                                    <span class="pe-3">{{ q.title }}</span>
                                 </div>
                                 <div>
                                     <span class="font-weight-bold">Statement Text: </span>
-                                    <span class="pr-3">{{ q.questionText }}</span>
+                                    <span class="pe-3">{{ q.questionText }}</span>
                                 </div>
                                 <div>
                                     <span class="font-weight-bold">Statement Summary: </span>
                                     <br>
-                                    <span class="pr-3" style="white-space: pre-wrap;"
+                                    <span class="pe-3" style="white-space: pre-wrap;"
                                         [innerHTML]="q.comments === 'Yes' ? q.comment : '[ No Statement Summary given. ]'"></span>
                                 </div>
 
@@ -271,7 +271,7 @@
 
             <div class="page-break"></div>
 
-            <div class="ml-3 mr-3">
+            <div class="ms-3 me-3">
                 <div class="d-flex flex-row" style="justify-content: space-between">
                     <div style="align-self: flex-end;">
                         <div class="h2 report-text-blue">Issues</div>
@@ -400,7 +400,7 @@
                     line-height: 150%;
                 ">
 
-                <button class="btn form-check-label btn-copy" [matTooltip]="'Print to PDF'" matTooltipPosition="below"
+                <button class="btn form-check-label btn-copy" title="Print to PDF"
                     (click)="print()">Print to PDF
                 </button>
             </div>

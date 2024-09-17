@@ -16,7 +16,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using NSoup;
+using HtmlAgilityPack;
 using System.IO;
 
 
@@ -264,6 +264,7 @@ namespace CSETWebCore.Business.Notification
             mail.Body = mail.Body.Replace("{{email-footer-CF}}", footerCF);
 
             string footer = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter.html");
+            footer = footer.Replace("{{DHSEmail}}", _configuration.GetValue<string>("Email:DHSEmail"));
             mail.Body = mail.Body.Replace("{{email-footer}}", footer);
 
             SmtpClient client = new SmtpClient
@@ -337,14 +338,19 @@ namespace CSETWebCore.Business.Notification
         /// <returns></returns>
         private void RemoveCsetAppLink(ref string html)
         {
-            var doc = NSoup.Parse.Parser.Parse(html, "");
-            var appLinks = doc.Select(".cset-app-link").ToList();
-            appLinks.ForEach(l =>
-            {
-                l.Parent.RemoveChild(l);
-            });
+            var doc = new HtmlDocument();
+            doc.LoadHtml(html);
 
-            html = doc.ToString();
+            var appLinks = doc.DocumentNode.SelectNodes("//*[contains(@class, 'cset-app-link')]");
+            if (appLinks != null)
+            {
+                foreach (var link in appLinks)
+                {
+                    link.ParentNode.RemoveChild(link);
+                }
+            }
+
+            html = doc.DocumentNode.OuterHtml;
         }
     }
 }

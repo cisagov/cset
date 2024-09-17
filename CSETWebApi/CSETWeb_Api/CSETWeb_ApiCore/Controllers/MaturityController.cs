@@ -1,10 +1,9 @@
-﻿//////////////////////////////// 
+//////////////////////////////// 
 // 
 //   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Acet;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
@@ -12,19 +11,14 @@ using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Maturity;
+using CSETWebCore.Model.Nested;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using System.Xml.XPath;
-using Newtonsoft.Json;
-using CSETWebCore.Api.Interfaces;
-using NLog;
-using CSETWebCore.Model.Nested;
-using DocumentFormat.OpenXml.Office2013.Excel;
-using J2N.Numerics;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -73,6 +67,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId));
         }
 
+
         /// <summary>
         /// Set selected maturity models for the assessment.
         /// </summary>
@@ -84,6 +79,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetDomainRemarks(assessmentId));
         }
+
 
         /// <summary>
         /// Set selected maturity models for the assessment.
@@ -97,6 +93,7 @@ namespace CSETWebCore.Api.Controllers
             new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).SetDomainRemarks(assessmentId, remarks);
             return Ok();
         }
+
 
         /// <summary>
         /// Return the current maturity level for an assessment.
@@ -130,7 +127,7 @@ namespace CSETWebCore.Api.Controllers
         /// 
         /// </summary>
         [HttpGet]
-        [Route("api/MaturityQuestions")]
+        [Route("api/maturity/questions")]
         public IActionResult GetQuestions(bool fill, int groupingId = 0)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
@@ -139,11 +136,30 @@ namespace CSETWebCore.Api.Controllers
 
             if (installationMode == "ACET")
             {
-                return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, fill, groupingId, installationMode, lang));
+                return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, fill, groupingId, lang));
             }
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, fill, groupingId, installationMode, lang));
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, fill, groupingId, lang));
         }
+
+
+        /// <summary>
+        /// Returns a "bonus" maturity model.  This is the generic term being used
+        /// for the Sector-Specific Goal (SSG) models that are appended to a CPG assessment.
+        /// </summary>
+        [HttpGet]
+        [Route("api/maturity/questions/bonus")]
+        public IActionResult GetBonusModelQuestions([FromQuery] int m)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            string lang = _tokenManager.GetCurrentLanguage();
+
+            MaturityResponse resp = new();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(
+                assessmentId, false, 0, resp, m, lang));
+        }
+
 
         [HttpGet]
         [Route("api/maturity/targetlevel")]
@@ -154,6 +170,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetTargetLevel(assessmentId));
         }
 
+
         [HttpGet]
         [Route("api/MaturityModel/GetLevelScoresByGroup")]
         public IActionResult GetLevelScoresByGroup(int mat_model_id)
@@ -162,6 +179,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness)
                 .Get_LevelScoresByGroup(assessmentId, mat_model_id));
         }
+
 
         /// <summary>        
         /// </summary>
@@ -251,6 +269,7 @@ namespace CSETWebCore.Api.Controllers
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var x = biz.GetMaturityStructureForModel(modelId, assessmentId);
+
             return Ok(x.Model);
         }
 
@@ -263,6 +282,7 @@ namespace CSETWebCore.Api.Controllers
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var x = biz.GetGroupingTitles(modelId, lang);
+
             return Ok(x);
         }
 
@@ -279,6 +299,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var biz = new NestedStructure(assessmentId, sectionId, _context);
+
             return Ok(biz.MyModel);
         }
 
@@ -373,8 +394,8 @@ namespace CSETWebCore.Api.Controllers
             resp.Description_Extended = grouping.Description_Extended;
 
             return Ok(resp);
-
         }
+
 
         /// <summary>
         /// Returns list of CIE assessments accessible to the current user.
@@ -389,8 +410,10 @@ namespace CSETWebCore.Api.Controllers
 
             var biz = new CieQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             var x = biz.GetMyCieAssessments(assessmentId, userId);
+
             return Ok(x);
         }
+
 
         /// <summary>
         /// Returns list of CIS assessments accessible to the current user.
@@ -405,6 +428,7 @@ namespace CSETWebCore.Api.Controllers
 
             var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             var x = biz.GetMyCisAssessments(assessmentId, userId);
+
             return Ok(x);
         }
 
@@ -436,6 +460,7 @@ namespace CSETWebCore.Api.Controllers
             var assessmentId = _tokenManager.AssessmentForUser();
             var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             var chartData = cisBiz.GetDeficiencyChartData();
+
             return Ok(chartData);
         }
 
@@ -447,6 +472,7 @@ namespace CSETWebCore.Api.Controllers
             var assessmentId = _tokenManager.AssessmentForUser();
             var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             var chartData = cisBiz.GetSectionScoringCharts();
+
             return Ok(chartData);
         }
 
@@ -462,6 +488,7 @@ namespace CSETWebCore.Api.Controllers
             var assessmentId = _tokenManager.AssessmentForUser();
             var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             biz.ImportCisAnswers(request.Dest, request.Source);
+
             return Ok();
         }
 
@@ -478,6 +505,7 @@ namespace CSETWebCore.Api.Controllers
 
             var cisBiz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             var integrityCheckOptions = cisBiz.GetIntegrityCheckOptions();
+
             return Ok(integrityCheckOptions);
         }
 
@@ -544,27 +572,52 @@ namespace CSETWebCore.Api.Controllers
         // --------------------------------------
 
 
-        
+
 
         /// <summary>
-        /// get maturity definiciency list
+        /// Get maturity definiciency list.  
+        /// If the maturity query parm is null, gets the main model for the assessment.
+        /// If the parm is specified, gets that model's deficient answers for the assessment.  This is used for SSG bonus models.
         /// </summary>
         /// <param name="maturity"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/getMaturityDeficiencyList")]
-        public IActionResult GetDeficiencyList()
+        [Route("api/maturity/deficiency")]
+        public IActionResult GetDeficiencyList([FromQuery] string model)
         {
             try
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
+                var lang = _tokenManager.GetCurrentLanguage();
+
                 _reports.SetReportsAssessmentId(assessmentId);
+
+
+                int? modelId = null;
+                if (model != null)
+                {
+                    if (int.TryParse(model, out int value))
+                    {
+                        modelId = value;
+                    }
+                }
+
 
                 var data = new MaturityBasicReportData
                 {
-                    DeficienciesList = _reports.GetMaturityDeficiencies(),
+                    DeficienciesList = _reports.GetMaturityDeficiencies(modelId),
                     Information = _reports.GetInformation()
                 };
+
+
+
+                // If the assessment is a CPG and the asset's sector warrants SSG questions, include them
+                var ssgModelId = new CpgBusiness(_context, lang).DetermineSsgModel(assessmentId);
+                if (ssgModelId != null)
+                {
+                    var ssgDeficiencies = _reports.GetMaturityDeficiencies(ssgModelId);
+                    data.DeficienciesList.AddRange(ssgDeficiencies);
+                }
 
 
                 // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
@@ -593,6 +646,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
         }
+
 
         [HttpGet]
         [Route("api/getMaturityDeficiencyListSd")]
@@ -669,6 +723,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(new { no = filteredGroupingsS, unanswered = filteredGroupingsU });
         }
+
 
         [HttpGet]
         [Route("api/getMaturityDeficiencyListSdOwner")]
@@ -802,8 +857,10 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetCommentsMarked()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            _reports.SetReportsAssessmentId(assessmentId);
+            string lang = _tokenManager.GetCurrentLanguage();
 
+
+            _reports.SetReportsAssessmentId(assessmentId);
 
 
             // if this is a CIS assessment, don't include questions that
@@ -822,6 +879,18 @@ namespace CSETWebCore.Api.Controllers
                 MarkedForReviewList = _reports.GetMarkedForReviewList(),
                 Information = _reports.GetInformation()
             };
+
+
+            // If the assessment is a CPG and the asset's sector warrants SSG questions, include them
+            var ssgModelId = new CpgBusiness(_context, lang).DetermineSsgModel(assessmentId);
+            if (ssgModelId != null)
+            {
+                var ssgComments = _reports.GetCommentsList(ssgModelId);
+                data.Comments.AddRange(ssgComments);
+
+                var ssgMarked = _reports.GetMarkedForReviewList(ssgModelId);
+                data.MarkedForReviewList.AddRange(ssgMarked);
+            }
 
 
             data.Comments.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
@@ -967,6 +1036,5 @@ namespace CSETWebCore.Api.Controllers
             //var scoring = maturity.GetMvraScoring(model);
             return Ok(model);
         }
-
     }
 }

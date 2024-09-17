@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ReportService } from '../../../../services/report.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { AssessmentService } from '../../../../services/assessment.service';
+import { NCUAService } from '../../../../services/ncua.service';
+import { ObservationsService } from '../../../../services/observations.service';
+import { ACETService } from '../../../../services/acet.service';
 
 @Component({
   selector: 'app-report-list',
@@ -21,13 +25,16 @@ export class ReportListComponent implements OnInit {
   @Input()
   list: any[];
 
-
   /**
    * 
    */
   constructor(
     public reportSvc: ReportService,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService,
+    public assessSvc: AssessmentService,
+    public ncuaSvc: NCUAService,
+    public observationsSvc: ObservationsService,
+    public acetSvc: ACETService
   ) { }
 
   ngOnInit(): void {
