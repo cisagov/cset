@@ -112,7 +112,7 @@
     "@types/file-saver": "^2.0.3",
     "@types/jasmine": "^4.3.1",
     "@types/jasminewd2": "^2.0.6",
-    "@types/jquery": "^3.5.5",
+    "@types/jquery": "^3.5.30",
     "@types/luxon": "^3.4.2",
     "@types/node": "^18.0.0",
     "@types/sanitize-html": "^2.13.0",
