@@ -72,8 +72,12 @@ export class DiagramComponentsComponent implements OnInit {
    *
    */
   getComponents() {
-    this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
-      this.diagramComponentList = x;
+    this.diagramSvc.getDiagramComponents().subscribe((x: any[]) => {
+
+      // remove 'Connector' entries from the inventory list to reduce clutter and confusion
+      const z = x.filter(y => y.assetType != 'Connector');
+
+      this.diagramComponentList = z;
       this.componentsChange.emit(this.diagramComponentList);
     });
   }
