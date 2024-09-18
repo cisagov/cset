@@ -48,7 +48,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { MatExpansionModule } from '@angular/material/expansion';
 // import { MatSliderModule } from '@angular/material/slider';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { ClipboardModule } from '@angular/cdk/clipboard';
@@ -751,7 +750,6 @@ import { ReportListCommonComponent } from './assessment/results/reports/report-l
     // MatListModule,
     // MatMenuModule,
     // MatTabsModule,
-    FlexLayoutModule,
     ReactiveFormsModule,
     NgxSliderModule,
     // TextareaAutosizeModule,
