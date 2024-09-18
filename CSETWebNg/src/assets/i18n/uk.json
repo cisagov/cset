@@ -960,7 +960,9 @@
     "no reference documents available": "відсутні довідкові документи",
     "document": "Документ",
     "link": "посилання ",
-    "launches external": "Веде на зовнішню веб-сторінку"
+    "launches external": "Веде на зовнішню веб-сторінку",
+    "feedback placeholder": "Необов'язково: Введіть будь-які відгуки, щоб допомогти покращити питання",
+    "comment placeholder": "Введіть будь-які коментарі до цього питання"
   },
   "menu": {
     "tools": {
