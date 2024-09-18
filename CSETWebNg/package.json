@@ -27,7 +27,6 @@
     "@angular/compiler": "^16.1.6",
     "@angular/core": "^16.1.6",
     "@angular/elements": "^16.1.6",
-    "@angular/flex-layout": "^15.0.0-beta.42",
     "@angular/forms": "^16.1.6",
     "@angular/material": "^15.2.9",
     "@angular/platform-browser": "^16.1.6",
