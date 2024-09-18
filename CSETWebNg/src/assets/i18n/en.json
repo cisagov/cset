@@ -1416,7 +1416,9 @@
     "no reference documents available": "no reference documents available",
     "document": "document",
     "link": "link",
-    "launches external": "launches external site"
+    "launches external": "launches external site",
+    "feedback placeholder": "Optional: Enter any feedback to help improve the question",
+    "comment placeholder": "Enter any comments for this question"
   },
   "menu": {
     "tools": {

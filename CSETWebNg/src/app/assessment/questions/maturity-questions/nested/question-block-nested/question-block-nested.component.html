@@ -60,7 +60,7 @@
         <div *ngIf="q.questionType == 'min-hr-day'">
             <input type="text" class="form-control me-2" style="width: 6rem; display: inline" maxlength="5" #tsNumber
                 digitsOnly [value]="getMhdNum(q.answerMemo)" (change)="changeMinHrDay(tsNumber, tsUnit, q)">
-            <select class="form-control d-inline" style="width: 30%;" #tsUnit [value]="getMhdUnit(q.answerMemo)"
+            <select class="form-select d-inline" style="width: 30%;" #tsUnit [value]="getMhdUnit(q.answerMemo)"
                 (change)="changeMinHrDay(tsNumber, tsUnit, q)">
                 <option value="">-- Select Unit --</option>
                 <option value="min">minutes</option>

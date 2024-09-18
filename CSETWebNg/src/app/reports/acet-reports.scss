@@ -480,12 +480,12 @@ textarea.form-control {
   display: block;
   padding-left: 1.25rem;
 }
-.form-check-input {
+.btn-check {
   position: absolute;
   margin-top: 0.3rem;
   margin-left: -1.25rem;
 }
-.form-check-input:disabled ~ .form-check-label {
+.btn-check:disabled ~ .form-check-label {
   color: #6c757c;
 }
 .form-check-label {
@@ -497,7 +497,7 @@ textarea.form-control {
   padding-left: 0;
   margin-right: 0.75rem;
 }
-.form-check-inline .form-check-input {
+.form-check-inline .btn-check {
   position: static;
   margin-top: 0;
   margin-right: 0.3125rem;

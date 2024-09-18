@@ -2053,13 +2053,13 @@ textarea.form-control {
   padding-left: 1.25rem;
 }
 
-.form-check-input {
+.btn-check {
   position: absolute;
   margin-top: 0.3rem;
   margin-left: -1.25rem;
 }
 
-.form-check-input:disabled~.form-check-label {
+.btn-check:disabled~.form-check-label {
   color: #6c757c;
 }
 
@@ -2074,7 +2074,7 @@ textarea.form-control {
   margin-right: 0.75rem;
 }
 
-.form-check-inline .form-check-input {
+.form-check-inline .btn-check {
   position: static;
   margin-top: 0;
   margin-right: 0.3125rem;
@@ -2137,15 +2137,15 @@ textarea.form-control {
   display: block;
 }
 
-.form-check-input.is-valid~.form-check-label,
-.was-validated .form-check-input:valid~.form-check-label {
+.btn-check.is-valid~.form-check-label,
+.was-validated .btn-check:valid~.form-check-label {
   color: #28a745;
 }
 
-.form-check-input.is-valid~.valid-feedback,
-.form-check-input.is-valid~.valid-tooltip,
-.was-validated .form-check-input:valid~.valid-feedback,
-.was-validated .form-check-input:valid~.valid-tooltip {
+.btn-check.is-valid~.valid-feedback,
+.btn-check.is-valid~.valid-tooltip,
+.was-validated .btn-check:valid~.valid-feedback,
+.was-validated .btn-check:valid~.valid-tooltip {
   display: block;
 }
 
@@ -2254,15 +2254,15 @@ textarea.form-control {
   display: block;
 }
 
-.form-check-input.is-invalid~.form-check-label,
-.was-validated .form-check-input:invalid~.form-check-label {
+.btn-check.is-invalid~.form-check-label,
+.was-validated .btn-check:invalid~.form-check-label {
   color: #dc3545;
 }
 
-.form-check-input.is-invalid~.invalid-feedback,
-.form-check-input.is-invalid~.invalid-tooltip,
-.was-validated .form-check-input:invalid~.invalid-feedback,
-.was-validated .form-check-input:invalid~.invalid-tooltip {
+.btn-check.is-invalid~.invalid-feedback,
+.btn-check.is-invalid~.invalid-tooltip,
+.was-validated .btn-check:invalid~.invalid-feedback,
+.was-validated .btn-check:invalid~.invalid-tooltip {
   display: block;
 }
 
@@ -2364,7 +2364,7 @@ textarea.form-control {
     padding-left: 0;
   }
 
-  .form-inline .form-check-input {
+  .form-inline .btn-check {
     position: relative;
     margin-top: 0;
     margin-right: 0.25rem;
