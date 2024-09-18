@@ -44,7 +44,7 @@
     "@ngneat/transloco": "^3.1.0",
     "@ngstack/code-editor": "^5.1.0",
     "@popperjs/core": "^2.11.8",
-    "@snyk/dep-graph": "^1.29.0",
+    "@snyk/dep-graph": "^2.9.0",
     "@snyk/java-call-graph-builder": "^1.23.2",
     "@swimlane/ngx-charts": "^20.0.0",
     "@types/lodash": "^4.17.7",
