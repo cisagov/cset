@@ -179,30 +179,28 @@
       </label>
 
       <div>
-        <div>
-          Most important:
-          <select [ngClass]="{ 'alert-danger' : !iodDemographics.disruptedSector1 }" class="form-select mb-3"
-            name="disruptedSector1" tabindex="0" [(ngModel)]="iodDemographics.disruptedSector1"
-            (change)="updateDemographicsIod()">
-            <option [ngValue]="null">-- Select --</option>
-            <option *ngFor="let i of iodDemographics.listSectors" [ngValue]="i.optionValue"
-              [selected]="i.optionValue === iodDemographics.disruptedSector1">
-              {{ i.optionText }}
-            </option>
-          </select>
-        </div>
-        <div>
-          Second most important:
-          <select [ngClass]="{ 'alert-danger' : !iodDemographics.disruptedSector2 }" class="form-select mb-3"
-            name="disruptedSector2" tabindex="0" [(ngModel)]="iodDemographics.disruptedSector2"
-            (change)="updateDemographicsIod()">
-            <option [ngValue]="null">-- Select --</option>
-            <option *ngFor="let i of iodDemographics.listSectors" [ngValue]="i.optionValue"
-              [selected]="i.optionValue === iodDemographics.disruptedSector2">
-              {{ i.optionText }}
-            </option>
-          </select>
-        </div>
+        <label class="form-label">Most important</label>
+        <select [ngClass]="{ 'alert-danger' : !iodDemographics.disruptedSector1 }" class="form-select mb-3"
+          name="disruptedSector1" tabindex="0" [(ngModel)]="iodDemographics.disruptedSector1"
+          (change)="updateDemographicsIod()">
+          <option [ngValue]="null">-- Select --</option>
+          <option *ngFor="let i of iodDemographics.listSectors" [ngValue]="i.optionValue"
+            [selected]="i.optionValue === iodDemographics.disruptedSector1">
+            {{ i.optionText }}
+          </option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Second most important</label>
+        <select [ngClass]="{ 'alert-danger' : !iodDemographics.disruptedSector2 }" class="form-select mb-3"
+          name="disruptedSector2" tabindex="0" [(ngModel)]="iodDemographics.disruptedSector2"
+          (change)="updateDemographicsIod()">
+          <option [ngValue]="null">-- Select --</option>
+          <option *ngFor="let i of iodDemographics.listSectors" [ngValue]="i.optionValue"
+            [selected]="i.optionValue === iodDemographics.disruptedSector2">
+            {{ i.optionText }}
+          </option>
+        </select>
       </div>
     </div>
 
