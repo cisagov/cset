@@ -79,6 +79,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
   cisaAssessorWorkflowFieldValidation: CisaWorkflowFieldValidationResponse;
   isCfEntry: boolean = false;
+  isCfMid: boolean = false;
 
   currentSectionId: string | null = null;
 
@@ -188,6 +189,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       this.convertSvc.isEntryCfAssessment().subscribe((resp: boolean) => {
         this.isCfEntry = resp;
       });
+      if (this.assessSvc.assessment?.maturityModel?.modelName == 'CPG') {
+        this.isCfMid = true;
+      }
     }
 
     this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.cisaAssessorWorkflow = resp);

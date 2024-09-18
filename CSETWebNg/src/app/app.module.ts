@@ -668,6 +668,7 @@ import { UploadDemographicsComponent } from './dialogs/import demographics/impor
 import { CieMfrReportComponent } from './reports/cie/cie-mfr-report/cie-mfr-report.component';
 import { ReportListComponent } from './assessment/results/reports/report-list/report-list.component';
 import { ReportListCommonComponent } from './assessment/results/reports/report-list/report-list-common.component';
+import { QuestionBlockCfComponent } from './assessment/questions/question-block-cf/question-block-cf.component';
 
 
 @NgModule({
@@ -1288,7 +1289,8 @@ import { ReportListCommonComponent } from './assessment/results/reports/report-l
     CisaWorkflowWarningsComponent,
     AnalyticsloginComponent,
     ReportListComponent, 
-    ReportListCommonComponent
+    ReportListCommonComponent, 
+    QuestionBlockCfComponent
   ],
   providers: [
     TranslocoService,

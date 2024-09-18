@@ -275,8 +275,6 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
 
-    public virtual DbSet<INTERNATIONALIZATION_VALUES> INTERNATIONALIZATION_VALUES { get; set; }
-
     public virtual DbSet<IRP> IRP { get; set; }
 
     public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
@@ -342,6 +340,8 @@ public partial class CsetwebContext : DbContext
     public virtual DbSet<NAVIGATION_STATE> NAVIGATION_STATE { get; set; }
 
     public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
+
+    public virtual DbSet<NCSF_CONVERSION_MAPPINGS> NCSF_CONVERSION_MAPPINGS { get; set; }
 
     public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
 
@@ -1946,6 +1946,11 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.NCSF_Function).WithMany(p => p.NCSF_CATEGORY).HasConstraintName("FK_NCSF_Category_NCSF_FUNCTIONS");
         });
 
+        modelBuilder.Entity<NCSF_CONVERSION_MAPPINGS>(entity =>
+        {
+            entity.HasKey(e => e.Conversion_Id).HasName("PK_NCSF_ASSESSMENT_UPGRADE");
+        });
+
         modelBuilder.Entity<NCSF_FUNCTIONS>(entity =>
         {
             entity.ToTable(tb => tb.HasComment("A collection of NCSF_FUNCTIONS records"));
@@ -2788,7 +2793,7 @@ public partial class CsetwebContext : DbContext
         });
         modelBuilder.HasSequence<int>("MaturityNodeSequence");
 
-        OnModelCreatingGeneratedProcedures(modelBuilder);
+        OnModelCreatingGeneratedFunctions(modelBuilder);
         OnModelCreatingPartial(modelBuilder);
     }
 

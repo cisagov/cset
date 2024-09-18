@@ -10,6 +10,7 @@ using CSETWebCore.Business.Demographic;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System;
 
 namespace CSETWebCore.Business.Contact
 {
@@ -29,6 +30,17 @@ namespace CSETWebCore.Business.Contact
         /// </summary>
         private readonly string CF_SetName = "NCSF_V2";
 
+        /// <summary>
+        /// The model id for CPG
+        /// </summary>
+        private readonly int CPG_Model_Id = 11;
+
+        /// <summary>
+        /// The model id for RRA
+        /// </summary>
+        private readonly int RRA_Model_Id = 5;
+
+        private readonly string Mid_Gallery_Guid = "FF43E99B-D6DD-409F-A07F-22F7AA55B9F3";
 
         /// <summary>
         /// Constructor.
@@ -64,6 +76,30 @@ namespace CSETWebCore.Business.Contact
 
             return false;
         }
+
+
+        /// <summary>
+        /// Returns true if the assessment is CPG
+        /// Normally, both conditions will be true for a Cyber Florida entry assessment.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public bool IsMidCF(int assessmentId)
+        {
+            var cfRraRecord = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x =>
+                x.Assessment_Id == assessmentId && x.DataItemName == "MATURITY-SUBMODEL" && x.StringValue == "RRA CF");
+
+            var availStandard = _context.AVAILABLE_STANDARDS
+                .Where(x => x.Assessment_Id == assessmentId && CF_CSF_SetNames.Contains(x.Set_Name) && x.Selected).FirstOrDefault();
+
+            if (cfRraRecord != null || availStandard != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
         public List<CFEntry> IsEntryCF(List<int> assessmentIds)
         {
@@ -121,6 +157,292 @@ namespace CSETWebCore.Business.Contact
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(assessmentId);
+        }
+
+        /// <summary>
+        /// Converts a Cyber Florida "entry" assessment to a mid-level
+        /// assessment with CPG only.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public void ConvertEntryToMid(int assessmentId)
+        {
+            // Delete the "CF RRA" submodel record.  This will have the effect of looking
+            // at the entire RRA model.
+            var cfRraRecord = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x =>
+                x.Assessment_Id == assessmentId && x.DataItemName == "MATURITY-SUBMODEL" && x.StringValue == "RRA CF");
+            if (cfRraRecord != null)
+            {
+                _context.DETAILS_DEMOGRAPHICS.Remove(cfRraRecord);
+            }
+
+
+            // remove the AVAILABLE_STANDARDS record and the RRA record in the AVAILABLE_MATURITY_MODELS table
+            // add a CPG record in the AVAILABLE_MATURITY_MODELS table
+            var availStandard = _context.AVAILABLE_STANDARDS
+                .Where(x => x.Assessment_Id == assessmentId && x.Set_Name == CF_CSF_SetName && x.Selected).FirstOrDefault();
+            var availMaturity = _context.AVAILABLE_MATURITY_MODELS
+                .Where(x => x.Assessment_Id == assessmentId && x.model_id == RRA_Model_Id && x.Selected).FirstOrDefault();
+
+            if (availStandard != null)
+            {
+                _context.AVAILABLE_STANDARDS.Remove(availStandard);
+                //availMaturity.Selected = false;
+                _context.AVAILABLE_MATURITY_MODELS.Remove(availMaturity);
+
+                var newAvailMaturity = new AVAILABLE_MATURITY_MODELS()
+                {
+                    Assessment_Id = assessmentId,
+                    Selected = true,
+                    model_id = CPG_Model_Id
+                };
+
+                _context.AVAILABLE_MATURITY_MODELS.Add(newAvailMaturity);
+            }
+
+            CreateAnswerRecordsFromCFToCPG(assessmentId);
+
+
+            // add details_demographics flagging the assessment as a "used to be a CyberFlorida entry assessment"
+            var biz = new DemographicBusiness(_context, _assessmentUtil);
+            biz.SaveDD(assessmentId, "FORMER-CF-ENTRY", "true", null);
+
+            // changing gallery guid to mid-level
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            assessment.GalleryItemGuid = Guid.Parse(Mid_Gallery_Guid);
+
+            _context.SaveChanges();
+
+            _assessmentUtil.TouchAssessment(assessmentId);
+        }
+
+        /// <summary>
+        /// Creates new answer records for CPG based off answers from "entry" level Florida_NCSF_V2
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public void CreateAnswerRecordsFromCFToCPG(int assessmentId)
+        {
+            // get the titles 
+            var convertableTitles = _context.NCSF_CONVERSION_MAPPINGS.Where(x => !string.IsNullOrEmpty(x.Entry_Level_Titles)).ToList();
+
+            // seperates the entry column into its own list
+            var entryTitles = convertableTitles.Select(x => x.Entry_Level_Titles).ToList();
+
+            if (convertableTitles != null)
+            {
+                var entryIds = _context.NEW_REQUIREMENT.Where(x => entryTitles.Contains(x.Requirement_Title) && x.Original_Set_Name == CF_CSF_SetName).Select(x => x.Requirement_Id).ToList();
+
+                var entryAnswers = _context.ANSWER.Where(x => entryIds.Contains(x.Question_Or_Requirement_Id) && x.Assessment_Id == assessmentId).ToList();
+                if (entryAnswers != null)
+                {
+                    var addedIds = new List<int>();
+                    var newMidAnswers = new List<ANSWER>();
+                    for (int i = 0; i < entryAnswers.Count; i++)
+                    {
+                        if (entryAnswers[i].Answer_Text != "U")
+                        {
+                            var cpgQuestionTitles = convertableTitles[i].Mid_Level_Titles.Split(",");
+                            foreach (var questionTitle in cpgQuestionTitles)
+                            {
+                                var newAnswer = new ANSWER()
+                                {
+                                    Assessment_Id = assessmentId,
+                                    Question_Or_Requirement_Id = _context.MATURITY_QUESTIONS
+                                    .Where(x => x.Maturity_Model_Id == CPG_Model_Id && x.Question_Title == questionTitle)
+                                    .Select(x => x.Mat_Question_Id).FirstOrDefault(),
+                                    Mark_For_Review = entryAnswers[i].Mark_For_Review,
+                                    Comment = entryAnswers[i].Comment,
+                                    Alternate_Justification = entryAnswers[i].Alternate_Justification,
+                                    Answer_Text = entryAnswers[i].Answer_Text == "Y" ? "S" : "N", // "S" for "Scoped", "N" for "Not Implemented"
+                                    Reviewed = entryAnswers[i].Reviewed,
+                                    FeedBack = entryAnswers[i].FeedBack,
+                                    Question_Type = "Maturity",
+                                    Is_Requirement = false,
+                                    Is_Component = false,
+                                    Is_Maturity = true
+                                };
+
+
+                                // prevents doubling-up of ANSWER records if questions can be controlled by multiple sources
+                                if (addedIds.Contains(newAnswer.Question_Or_Requirement_Id))
+                                {
+                                    var answerRecord = newMidAnswers.Find(x => x.Question_Or_Requirement_Id == newAnswer.Question_Or_Requirement_Id);
+                                    if (answerRecord.Answer_Text != newAnswer.Answer_Text)
+                                    {
+                                        answerRecord.Answer_Text = "N";
+                                    }
+                                }
+                                else
+                                {
+                                    newMidAnswers.Add(newAnswer);
+                                    addedIds.Add(newAnswer.Question_Or_Requirement_Id);
+                                }
+
+                            }
+                        }
+                    }
+
+                    _context.ANSWER.AddRange(newMidAnswers);
+                    _context.SaveChanges();
+                }
+            }
+
+
+        }
+
+        public void ConvertMidToFull(int assessmentId)
+        {
+
+            // remove the CPG AVAILABLE_MATURITY_MODELS record and
+            // add the CF and RRA records back in
+            var availMaturity = _context.AVAILABLE_MATURITY_MODELS
+                .Where(x => x.Assessment_Id == assessmentId && x.model_id == CPG_Model_Id && x.Selected).FirstOrDefault();
+
+            if (availMaturity != null)
+            {
+                _context.AVAILABLE_MATURITY_MODELS.Remove(availMaturity);
+
+                var newAvailMaturity = new AVAILABLE_MATURITY_MODELS()
+                {
+                    Assessment_Id = assessmentId,
+                    Selected = true,
+                    model_id = RRA_Model_Id
+                };
+
+                _context.AVAILABLE_MATURITY_MODELS.Add(newAvailMaturity);
+                _context.AVAILABLE_STANDARDS.Add(new AVAILABLE_STANDARDS()
+                {
+                    Assessment_Id = assessmentId,
+                    Selected = true,
+                    Set_Name = CF_SetName
+                });
+            }
+
+            CreateAnswerRecordsFromCPGToCF(assessmentId);
+
+
+            // add details_demographics flagging the assessment as a "used to be a CyberFlorida entry assessment"
+            var biz = new DemographicBusiness(_context, _assessmentUtil);
+            biz.SaveDD(assessmentId, "FORMER-CF-MID", "true", null);
+
+            // changing gallery guid to mid-level
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            assessment.GalleryItemGuid = Guid.Parse(Mid_Gallery_Guid);
+
+            _context.SaveChanges();
+
+            _assessmentUtil.TouchAssessment(assessmentId);
+        }
+
+
+        /// <summary>
+        /// Creates new answer records for CF based off answers from "entry" level Florida_NCSF_V2 and "mid" level CPG
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public void CreateAnswerRecordsFromCPGToCF(int assessmentId)
+        {
+            // get the titles 
+            var convertableTitles = _context.NCSF_CONVERSION_MAPPINGS.Where(x => !string.IsNullOrEmpty(x.Mid_Level_Titles)).ToList();
+
+            // seperates the entry column into its own list
+            var midTitles = convertableTitles.Select(x => x.Mid_Level_Titles).ToList();
+
+            if (convertableTitles != null)
+            {
+                var midIds = _context.MATURITY_QUESTIONS.Where(x => midTitles.Contains(x.Question_Title) && x.Maturity_Model_Id == CPG_Model_Id).Select(x => x.Mat_Question_Id).ToList();
+
+                var midAnswers = _context.ANSWER.Where(x => midIds.Contains(x.Question_Or_Requirement_Id) && x.Assessment_Id == assessmentId).ToList();
+                if (midAnswers != null)
+                {
+                    var addedIds = new List<int>();
+                    var newFullAnswers = new List<ANSWER>();
+                    for (int i = 0; i < midAnswers.Count; i++)
+                    {
+                        if (midAnswers[i].Answer_Text != "U")
+                        {
+                            var fullQuestionTitles = convertableTitles[i].Full_Level_Titles.Split(",");
+                            foreach (var questionTitle in fullQuestionTitles)
+                            {
+                                var id = _context.NEW_REQUIREMENT
+                                    .Where(x => (x.Original_Set_Name == CF_CSF_SetName || x.Original_Set_Name == CF_SetName) && x.Requirement_Title == questionTitle)
+                                    .Select(x => x.Requirement_Id).FirstOrDefault();
+
+                                // if the id is null (i.e. a parent question or grouping), skip it
+                                if (id == 0)
+                                {
+                                    continue;
+                                }
+
+                                var newAnswer = new ANSWER()
+                                {
+                                    Assessment_Id = assessmentId,
+                                    Question_Or_Requirement_Id = id,
+                                    Mark_For_Review = midAnswers[i].Mark_For_Review,
+                                    Comment = midAnswers[i].Comment,
+                                    Alternate_Justification = midAnswers[i].Alternate_Justification,
+                                    Answer_Text = cpgToCfAnswer(midAnswers[i].Answer_Text),
+                                    Reviewed = midAnswers[i].Reviewed,
+                                    FeedBack = midAnswers[i].FeedBack,
+                                    Question_Type = "Maturity",
+                                    Is_Requirement = false,
+                                    Is_Component = false,
+                                    Is_Maturity = true
+                                };
+
+                                // prevents doubling-up of ANSWER records if question already has a record from the entry version of the assessment
+                                var entryAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Or_Requirement_Id == newAnswer.Question_Or_Requirement_Id).FirstOrDefault();
+                                if (entryAnswer != null)
+                                {
+                                    entryAnswer.Answer_Text = newAnswer.Answer_Text;
+                                }
+                                // prevents doubling-up of ANSWER records if questions can be controlled by multiple sources
+                                else if (addedIds.Contains(newAnswer.Question_Or_Requirement_Id))
+                                {
+                                    var answerRecord = newFullAnswers.Find(x => x.Question_Or_Requirement_Id == newAnswer.Question_Or_Requirement_Id);
+                                    if (answerRecord.Answer_Text != newAnswer.Answer_Text)
+                                    {
+                                        answerRecord.Answer_Text = "N";
+                                    }
+                                }
+                                // if no duplications, add the answer to the to-be-added list
+                                else
+                                {
+                                    newFullAnswers.Add(newAnswer);
+                                    addedIds.Add(newAnswer.Question_Or_Requirement_Id);
+                                }
+                            }
+                        }
+                    }
+
+                    _context.ANSWER.AddRange(newFullAnswers);
+                    _context.SaveChanges();
+                }
+            }
+
+
+        }
+
+
+        public string cpgToCfAnswer(string answerText)
+        {
+            switch (answerText) {
+                case "Y":
+                    // 6 for "Tested and Verified"
+                    return "6";
+                case "I":
+                    // 5 for "Implementation in Process"
+                    return "5";
+                case "S":
+                    // 3 for "Documented Policy"
+                    return "3";
+                case "N":
+                    // 1 for "Not Performed"
+                    return "1";
+                default:
+                    return "1";
+            }
         }
     }
 }

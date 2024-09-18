@@ -64,10 +64,16 @@ export class ConversionService {
   }
 
   /**
-    * Converts a Cyber Florida "entry" assessment to a full assessment
-    * with 
+    * Converts a Cyber Florida "entry" assessment to a "mid" assessment
     */
-  convertCfSub() {
-    return this.http.get(this.apiUrl + 'convert/cf');
+  convertCfToMid() {
+    return this.http.get(this.apiUrl + 'convert/entryToMid');
+  }
+
+  /**
+    * Converts a Cyber Florida "mid" assessment to a full assessment
+    */
+  convertMidToFull() {
+    return this.http.get(this.apiUrl + 'convert/midToFull');
   }
 }

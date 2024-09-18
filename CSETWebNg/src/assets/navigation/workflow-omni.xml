@@ -149,7 +149,8 @@
 
     <!-- Assessment Phase -->
     <node d="assessment" id="phase-assessment" visible="CF-DEMOGRAPHICS-COMPLETE MATURITY-NOT:17">
-        <node d="standard questions" id="standard-questions" path="assessment/{:id}/questions" visible="OPTION:STANDARD" />
+        <node d="standard questions" id="standard-questions" path="assessment/{:id}/questions" visible="OPTION:STANDARD MATURITY-NOT:11" />
+        <!-- <node d="standard questions" id="standard-questions-cf" path="assessment/{:id}/questions-full-cf" visible="OPTION:STANDARD STANDARD-ANY('NCSF_V2')" /> -->
 
 
         <!-- The scenario that will normally show -->

@@ -62,7 +62,7 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
   scrollComplete = false;
 
   msgUnansweredEqualsNo = '';
-
+  value: 1;
 
   /**
    *

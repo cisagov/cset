@@ -233,6 +233,7 @@ import { AnalyticsComponent } from './assessment/results/analytics/analytics.com
 import { CieMfrReportComponent } from './reports/cie/cie-mfr-report/cie-mfr-report.component';
 import { TutorialCpgComponent } from './assessment/prepare/maturity/tutorial-cpg/tutorial-cpg.component';
 import { TutorialMvraComponent } from './assessment/prepare/maturity/tutorial-mvra/tutorial-mvra.component';
+import { QuestionBlockCfComponent } from './assessment/questions/question-block-cf/question-block-cf.component';
 
 const appRoutes: Routes = [
 
@@ -429,6 +430,7 @@ const appRoutes: Routes = [
             ]
           },
           { path: 'questions', component: QuestionsComponent },
+          { path: 'questions-full-cf', component: QuestionBlockCfComponent},
           { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },

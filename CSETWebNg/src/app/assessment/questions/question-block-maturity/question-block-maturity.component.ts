@@ -64,7 +64,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   maturityModelId: number;
   maturityModelName: string;
 
-
+  value: 1;
   /**
    * Constructor.
    * @param configSvc
