@@ -58,7 +58,7 @@
       <div class="d-flex flex-row">
         <div class="form-group me-2">
           <label>Question Group Heading
-            <select class="form-control" id="category" name="category" [(ngModel)]="selectedGHId">
+            <select class="form-select" id="category" name="category" [(ngModel)]="selectedGHId">
               <option value="0">--Select Heading--</option>
               <option *ngFor="let groupheading of groupheadings" [value]="groupheading.id">{{groupheading.text}}
               </option>

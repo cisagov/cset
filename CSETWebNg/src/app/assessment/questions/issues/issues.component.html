@@ -46,7 +46,7 @@
           <label for="issueType" class="form-label font-weight-bold">Issue Type</label>
           <span style="color: red;">*</span><span style="color: red; font-size: 10px;" *ngIf="this.showRequiredHelper">
             (required)</span>
-          <select name="issueType" id="issueType" class="form-control" [(ngModel)]="observation.type" required>
+          <select name="issueType" id="issueType" class="form-select" [(ngModel)]="observation.type" required>
             <option value="Examiner Finding">Examiner Finding</option>
             <option value="DOR">DOR</option>
             <option value="Supplemental Fact">Supplemental Fact</option>

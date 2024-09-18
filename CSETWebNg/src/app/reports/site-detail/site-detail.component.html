@@ -321,19 +321,23 @@
             Document Library
         </h1>
 
-        <table class="cset-table-3">
-            <tr>
-                <th>{{t('extras.title')}}</th>
-                <th>{{t('extras.file name')}}</th>
-            </tr>
-            <tr *ngFor="let doc of response?.documentLibraryTable">
-                <td>{{doc.documentTitle}}</td>
-                <td>{{doc.fileName}}</td>
-            </tr>
-            <tr *ngIf="response?.documentLibraryTable.length === 0">
-                <td></td>
-                <td>{{t('extras.no documents to display')}}</td>
-            </tr>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{t('extras.title')}}</th>
+                    <th>{{t('extras.file name')}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let doc of response?.documentLibraryTable">
+                    <td>{{doc.documentTitle}}</td>
+                    <td>{{doc.fileName}}</td>
+                </tr>
+                <tr *ngIf="response?.documentLibraryTable.length === 0">
+                    <td></td>
+                    <td>{{t('extras.no documents to display')}}</td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
@@ -351,7 +355,7 @@
         <p>
             {{t('reports.core.site detail report.summary of ranked questions desc')}}
         </p>
-        
+
 
         <table *ngFor="let rq of response?.rankedQuestionsTable" class="cset-table-3">
             <tr>

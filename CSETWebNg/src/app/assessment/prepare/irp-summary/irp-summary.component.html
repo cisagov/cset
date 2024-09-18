@@ -41,7 +41,7 @@
                     {{ t('override risk level') }}
                 </div>
                 <div class="d-table-cell align-top pb-3">
-                    <select [(ngModel)]="acetDashboard.override" class="form-control override-select"
+                    <select [(ngModel)]="acetDashboard.override" class="form-select override-select"
                         (change)="changeInfoIrp();">
                         <option [ngValue]="0">{{ t('no override') }}</option>
                         <option [ngValue]="1">1 - {{ t('least') }}</option>
@@ -75,7 +75,7 @@
                 {{ t('override risk level') }}
             </div>
             <div class="mb-3">
-                <select [(ngModel)]="acetDashboard.override" class="form-control override-select"
+                <select [(ngModel)]="acetDashboard.override" class="form-select override-select"
                     (change)="changeInfoIrp();">
                     <option [ngValue]="0">{{ t('no override') }}</option>
                     <option [ngValue]="1">1 - {{ t('least') }}</option>

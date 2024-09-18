@@ -35,28 +35,27 @@
     <p>
         Select the critical infrastructure sector and subsector that best reflects your primary business/operations.
     </p>
-    <div class="form-row">
+    <div class="row">
         <div class="form-group col-md-6">
-            <label>
+            <label class="form-label">
                 Sector
                 <button (click)="launchSectorHelp()" style="background-color: transparent; border: none">
                     <span class="cset-icons-question-circle-outline fs-base-4 me-2 align-middle"></span>
                 </button>
             </label>
-            <select class="form-control" id="sector" name="sector" tabindex="0" [(ngModel)]="demographicData.sectorId"
+            <select class="form-select" id="sector" name="sector" tabindex="0" [(ngModel)]="demographicData.sectorId"
                 (change)="getSubsectors($event.target.value, true)">
                 <option [ngValue]="null">-- Select Sector --</option>
                 <option *ngFor="let sector of sectorList" [value]="sector.sectorId">
                     {{sector.sectorName}}
                 </option>
             </select>
-
         </div>
         <div class="form-group col-md-6" style="display: flex; flex-direction: column; justify-content: space-between">
-            <label>
+            <label class="form-label">
                 Subsector
             </label>
-            <select class="form-control" id="subsector" name="subsector" tabindex="0"
+            <select class="form-select" id="subsector" name="subsector" tabindex="0"
                 [(ngModel)]="demographicData.subSectorId" (change)="update($event.target.value)">
                 <option [ngValue]="null">-- Select Subsector --</option>
                 <option *ngFor="let subsector of subSectorList" [value]="subsector.subSectorId">
@@ -223,7 +222,7 @@
             How many total employees <u>directly support</u>
             business/operations in the geographic areas selected?
         </p>
-        <select class="form-control" id="employees" name="employees" tabindex="0"
+        <select class="form-select" id="employees" name="employees" tabindex="0"
             [(ngModel)]="demographicData.employees" (change)="update($event.target.value)">
             <option [ngValue]="null">-- Select Employees --</option>
             <option *ngFor="let e of employeeRanges" [value]="e.value">
@@ -238,7 +237,7 @@
             How many customers does your business/operations <u>directly support</u>
             (service/host) in the geographic areas selected?
         </p>
-        <select class="form-control" id="customers" name="customers" tabindex="0"
+        <select class="form-select" id="customers" name="customers" tabindex="0"
             [(ngModel)]="demographicData.customersSupported" (change)="update($event.target.value)">
             <option [ngValue]="null">-- Select Customers --</option>
             <option *ngFor="let c of customerRanges" [value]="c.value">
@@ -258,7 +257,7 @@
             What would be the initial <u>geographic impact</u> (Municipality/County/State) of your decreased
             business/operations as the result of a significant/major disruption to your critical cyber services?
         </p>
-        <select class="form-control" id="geoScope" name="geoScope" tabindex="0"
+        <select class="form-select" id="geoScope" name="geoScope" tabindex="0"
             [(ngModel)]="demographicData.geographicScope" (change)="update($event.target.value)">
             <option [ngValue]="null">-- Select Scope --</option>
             <option *ngFor="let s of geoScopeList" [value]="s.value">
@@ -273,7 +272,7 @@
             Is there a Chief Information Officer (CIO) or equivalent responsible for the critical cyber services
             supporting your business/operations?
         </p>
-        <select class="form-control" id="cio" name="cio" tabindex="0" [(ngModel)]="demographicData.cioExists"
+        <select class="form-select" id="cio" name="cio" tabindex="0" [(ngModel)]="demographicData.cioExists"
             (change)="update($event)">
             <option [ngValue]="null">-- Select --</option>
             <option *ngFor="let i of cioList" [value]="i.value">
@@ -288,7 +287,7 @@
             Is there a Chief Information Security Officer (CISO) or equivalent responsible for the critical cyber
             services supporting your business/operations?
         </p>
-        <select class="form-control" id="ciso" name="ciso" tabindex="0" [(ngModel)]="demographicData.cisoExists"
+        <select class="form-select" id="ciso" name="ciso" tabindex="0" [(ngModel)]="demographicData.cisoExists"
             (change)="update($event)">
             <option [ngValue]="null">-- Select --</option>
             <option *ngFor="let i of cisoList" [value]="i.value">
@@ -303,7 +302,7 @@
             Does your organization have a formalized cybersecurity training program/function that provides employees
             with more advanced information/skills than basic cyber awareness-level training?
         </p>
-        <select class="form-control" id="training" name="training" tabindex="0"
+        <select class="form-select" id="training" name="training" tabindex="0"
             [(ngModel)]="demographicData.cyberTrainingProgramExists" (change)="update($event)">
             <option [ngValue]="null">-- Select --</option>
             <option *ngFor="let i of trainingList" [value]="i.value">

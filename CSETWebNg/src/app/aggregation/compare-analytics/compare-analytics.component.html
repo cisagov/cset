@@ -27,25 +27,25 @@
     <div class="btn-group-toggle mt-3" data-toggle="buttons">
       <label *ngIf="this.type === 'standards-based'" class="btn btn-sal-select btn-rounded form-check-label"
         [class.active]="tab === 'SUMMARY'" (click)="changeState('SUMMARY')">
-        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+        <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
           [checked]="tab === 'SUMMARY'">Overall Summary
       </label>
 
       <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'INDIVIDUAL'"
         (click)="changeState('INDIVIDUAL')">
-        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+        <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
           [checked]="tab === 'INDIVIDUAL'">Individual Assessment Comparison
       </label>
 
       <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'MISSED'"
         (click)="changeState('MISSED')">
-        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+        <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
           [checked]="tab === 'MISSED'">Commonly Missed Questions
       </label>
 
       <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'BESTWORST'"
         (click)="changeState('BESTWORST')">
-        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+        <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
           [checked]="tab === 'BESTWORST'">Best to Worst
       </label>
 
