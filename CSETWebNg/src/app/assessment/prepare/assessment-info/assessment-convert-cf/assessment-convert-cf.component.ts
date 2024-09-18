@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ConversionService } from '../../../../services/conversion.service';
 import { OkayComponent } from '../../../../dialogs/okay/okay.component';
@@ -14,7 +14,7 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 export class AssessmentConvertCfComponent implements OnInit {
 
   dialogRef: MatDialogRef<OkayComponent>;
-
+  @Input() isEntry: boolean;
 
   /**
    * CTOR
@@ -51,14 +51,36 @@ export class AssessmentConvertCfComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
-        this.convertSvc.convertCfSub().subscribe(resp => {
-          this.assessSvc.loadAssessment(this.assessSvc.assessment.id);
-
-          const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
-          dlgOkay.componentInstance.hasHeader = true;
-          this.navSvc.navDirect('standard-questions');
-        });
+        if (this.isEntry) {
+          this.convertSvc.convertCfToMid().subscribe(resp => {
+            this.assessSvc.loadAssessment(this.assessSvc.assessment.id);
+  
+            const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
+            dlgOkay.componentInstance.hasHeader = true;
+            dlgOkay.afterClosed().subscribe(() => {
+              this.navSvc.buildTree();
+              this.navSvc.navDirect('tutorial-cpg');
+            });
+            // this.navSvc.navDirect('standard-questions');
+            
+          });
+        }
+        else {
+          this.convertSvc.convertMidToFull().subscribe(resp => {
+            this.assessSvc.loadAssessment(this.assessSvc.assessment.id);
+  
+            const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
+            dlgOkay.componentInstance.hasHeader = true;
+            dlgOkay.afterClosed().subscribe(() => {
+              this.navSvc.buildTree();
+              this.navSvc.navDirect('standard-questions');
+            });
+            // this.navSvc.navDirect('standard-questions');
+            
+          });
+        }
       }
+      
     });
   }
 }

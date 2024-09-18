@@ -32,12 +32,24 @@
   {{ (!c.domainName && !!c.standardShortName) ? ' - ' + c.standardShortName : '' }}
 </div>
 
-<!-- Subcategory -->
-<div *ngFor="let sg of c.subCategories" [ngClass]="addDomainPad(c.displayText)" style="margin-bottom: 1em;"
-  [class.display-none]="!sg.visible">
+<div *ngIf="c.standardShortName == 'CSF 2.0'; else normal">
 
-  <!-- Questions within subcategory -->
-  <app-question-block #questionBlock [mySubCategory]="sg" (changeComponents)="updateComponentsOverride()">
-  </app-question-block>
+  <div *ngFor="let sg of c.subCategories" [ngClass]="addDomainPad(c.displayText)" style="margin-bottom: 1em;"
+    >
 
+    <!-- Questions within subcategory -->
+    <app-question-block-cf #questionBlock [mySubCategory]="sg" (changeComponents)="updateComponentsOverride()">
+    </app-question-block-cf>
+  </div>
 </div>
+<!-- Subcategory -->
+<ng-template #normal>
+  <div *ngFor="let sg of c.subCategories" [ngClass]="addDomainPad(c.displayText)" style="margin-bottom: 1em;"
+    [class.display-none]="!sg.visible">
+
+    <!-- Questions within subcategory -->
+    <app-question-block #questionBlock [mySubCategory]="sg" (changeComponents)="updateComponentsOverride()">
+    </app-question-block>
+
+  </div>
+</ng-template>

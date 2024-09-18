@@ -79,6 +79,42 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+
+        /// <summary>
+        /// Converts a Cyber Florida "entry" assessment to a "mid-level" assessment.
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/convert/entryToMid")]
+        public IActionResult ConvertEntryToMid()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var biz = new ConversionBusiness(_context, _assessmentUtil);
+            biz.ConvertEntryToMid(assessmentId);
+
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// Converts a Cyber Florida "mid" assessment to a full assessment.
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/convert/midToFull")]
+        public IActionResult ConvertMidToFull()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var biz = new ConversionBusiness(_context, _assessmentUtil);
+            biz.ConvertMidToFull(assessmentId);
+
+            return Ok();
+        }
+
         [HttpGet]
         [Route("api/cf/isComplete")]
         public IActionResult IsCFComplete()

@@ -2,5 +2,10 @@
     <div class="mb-3">
         {{t('cyber-florida.upgrade message')}}
     </div>
-    <button class="btn btn-primary" (click)="convert()">{{t('cyber-florida.upgrade button')}}</button>
+    <button *ngIf="isEntry" class="btn btn-primary" (click)="convert()">
+        {{t('cyber-florida.upgrade to mid button')}}
+    </button>
+    <button *ngIf="!isEntry" class="btn btn-primary" (click)="convert()">
+        {{t('cyber-florida.upgrade to full button')}}
+    </button>
 </div>

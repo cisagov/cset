@@ -1,0 +1,166 @@
+<!----------------------
+
+   Copyright 2024 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<ng-container *transloco="let t">
+    <div class="question-group">
+
+        <div class="subcat-header" [class.flat-bottom]="mySubCategory.expanded">
+            <div class="sub-head-1" (click)="mySubCategory.expanded = !mySubCategory.expanded"
+                (keydown.Spacebar)="mySubCategory.expanded = !mySubCategory.expanded"
+                (keydown.Enter)="mySubCategory.expanded = !mySubCategory.expanded"
+                [attr.aria-expanded]="mySubCategory.expanded" tabindex="0">
+                <div class="sub-head-2">
+                    <span *ngIf="mySubCategory.subCategoryHeadingText != ''">{{ mySubCategory.subCategoryHeadingText
+                        }}</span>
+                    <span *ngIf="showQuestionIds" class="debug-highlight">{{mySubCategory.subCategoryId}}</span>
+                </div>
+                <div class="d-flex justify-content-end align-items-center flex-00a" *ngIf="!layoutSvc.hp">
+                    <span [class.display-hidden]="!mySubCategory.hasReviewItems"
+                        class="d-flex justify-content-center align-items-center flex-00a"
+                        matTooltip="{{ t('tooltip.category requires review') }}">
+                        <span class="mr-1 cset-icons-flag-dark fs-small"></span>
+                        <span class="mb-1 fs-small">{{ t('requires review') }}</span>
+                    </span>
+                    <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
+                    <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="mySubCategory.expanded"></i>
+                </div>
+
+                <div class="d-flex flex-column justify-content-end align-items-end flex-00a" *ngIf="layoutSvc.hp">
+                    <div>
+                        <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
+                        <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="mySubCategory.expanded"></i>
+                    </div>
+                    <span [class.display-hidden]="!mySubCategory.hasReviewItems"
+                        class="d-flex justify-content-center align-items-center flex-00a"
+                        matTooltip="{{ t('tooltip.category requires review') }}">
+                        <span class="mr-1 cset-icons-flag-dark fs-small"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="header-question" *ngIf="mySubCategory.headerQuestionText !== null
+                    && mySubCategory.headerQuestionText.length > 0
+                    && mySubCategory.questions.length > 1" [class.display-none]="!mySubCategory.expanded">
+
+                <div class="mb-2">
+                    {{ mySubCategory.headerQuestionText }}
+                </div>
+                <!-- <div [class.display-none]="filterSvc.isFilterEngaged()"> -->
+                    <!-- this is the header answer block -->
+                    <!-- <mat-slider
+                class="example-margin"
+                [disabled]="disabled"
+                [max]="8"
+                [min]="1"
+                [step]="1"
+                [discrete]="true"
+                [showTickMarks]="true">
+            <input matSliderThumb [(ngModel)]="value" #slider>
+            </mat-slider> -->
+                <!-- </div> -->
+            </div>
+        </div>
+
+
+        <!-- this houses all of the questions -->
+        <div class="subcat-question-list px-3 pt-0 pb-3" [class.display-none]="!mySubCategory.expanded">
+            <div class="question-row d-flex flex-column" *ngFor="let q of mySubCategory.questions"
+                id="qq{{q.questionId}}" >
+
+                <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
+                    <div class="number-and-text">
+                        <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.displayNumber }}
+                        </div>
+                        <div style="width: 100%;">
+                            <div [style.word-break]="applyWordBreak(q)" [innerHTML]="applyTokensToText(q)"
+                                (click)="questionTextClicked(q, $event)">
+                            </div>
+                            <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
+                        </div>
+                    </div>
+
+
+                    <div class="d-flex flex-column" style="width: 250px">
+                        <mat-slider class="slider" [disabled]="disabled" [max]="8" [min]="1" [step]="1"
+                            [discrete]="false" [showTickMarks]="true" (change)="storeAnswer(q, slider.value)">
+                            <input matSliderThumb [(ngModel)]="+q.answer" #slider>
+                        </mat-slider>
+                        <div style="font-weight: bold; font-size: large;">
+                            {{ t('answer-options.labels.' + (q.answer ?? '1') + '-cf') }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-100" *ngIf="layoutSvc.hp">
+                    <!-- Handheld Portrait -->
+                    <div class="">
+                        <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.displayNumber }}
+                        </div>
+                        <div class="w-100 mb-3">
+                            <div [style.word-break]="applyWordBreak(q)" [innerHTML]="applyTokensToText(q)"
+                                (click)="questionTextClicked(q, $event)">
+                            </div>
+                            <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="btn-group btn-group-toggle answer-group ml-0" data-toggle="buttons">
+                            <label *ngFor="let option of answerOptions" class="btn form-check-label align-items-center"
+                                [class]="questionsSvc.answerOptionCss('', option)"
+                                [class.answer-selected]="q.answer === option"
+                                [matTooltip]="questionsSvc.answerButtonTooltip(maturityModelId, option)">
+                                <input name="q_{{q.questionId}}" class="form-check-input" type="radio"
+                                    autocomplete="off" (click)="storeAnswer(q, option)" [checked]="q.answer === option">
+                                {{questionsSvc.answerButtonLabel(maturityModelName, option)}}
+                            </label>
+
+                            <!-- Mark For Review Flag  -->
+                            <label class="mr-0 ml-2 btn form-check-label btn-mfr align-items-center"
+                                [class.answer-selected]="q.markForReview === true"
+                                [matTooltip]="('tooltip.mfr-flag' | transloco)">
+                                <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
+                                    checked="{{q.markForReview === true}}">
+                                <span class="cset-icons-flag-dark fs-base"></span>
+                            </label>
+                        </div>
+
+                        <div *ngIf="q.answer === 'A'">
+                            <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
+                                style="width: 100%; min-height: 80px;"
+                                [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
+                                [(ngModel)]="q.altAnswerText" (ngModelChange)="storeAltText(q)" tabindex="0"></textarea>
+                            <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg"
+                                aria-label="description required">* Description required</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="d-flex flex-row">
+                    <app-question-extras #extrasComponent [myQuestion]="q" (changeExtras)="refreshReviewIndicator()"
+                        class="w-100 mb-3" (changeComponents)="refreshComponentOverrides()">
+                    </app-question-extras>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
