@@ -35,9 +35,9 @@
     <p>
         Select the critical infrastructure sector and subsector that best reflects your primary business/operations.
     </p>
-    <div class="form-row">
+    <div class="row">
         <div class="form-group col-md-6">
-            <label>
+            <label class="form-label">
                 Sector
                 <button (click)="launchSectorHelp()" style="background-color: transparent; border: none">
                     <span class="cset-icons-question-circle-outline fs-base-4 me-2 align-middle"></span>
@@ -50,10 +50,9 @@
                     {{sector.sectorName}}
                 </option>
             </select>
-
         </div>
         <div class="form-group col-md-6" style="display: flex; flex-direction: column; justify-content: space-between">
-            <label>
+            <label class="form-label">
                 Subsector
             </label>
             <select class="form-select" id="subsector" name="subsector" tabindex="0"

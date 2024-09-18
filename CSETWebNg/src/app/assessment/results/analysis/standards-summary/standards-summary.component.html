@@ -33,18 +33,24 @@
   </div>
   <div class="data" [hidden]="!initialized">
     <table class="table" [class.fs-smaller]="layoutSvc.hp">
-      <th *ngIf="dataSets?.length > 1">{{t('reports.standard')}}</th>
-      <th>{{t('reports.answer')}}</th>
-      <th class="align-right">{{t('reports.number')}}</th>
-      <th class="align-right">{{t('reports.total')}}</th>
-      <th class="align-right">{{t('reports.percent')}}</th>
-      <tr *ngFor="let row of dataRows; let i = index">
-        <td *ngIf="dataSets?.length > 1">{{row.short_Name}}</td>
-        <td width=50%>{{row.answer_Full_Name}}</td>
-        <td class="align-right">{{row.qc}}</td>
-        <td class="align-right">{{row.total}}</td>
-        <td class="align-right">{{row.percent}}%</td>
-      </tr>
+      <thead>
+        <tr>
+          <th *ngIf="dataSets?.length > 1">{{t('reports.standard')}}</th>
+          <th>{{t('reports.answer')}}</th>
+          <th class="align-right">{{t('reports.number')}}</th>
+          <th class="align-right">{{t('reports.total')}}</th>
+          <th class="align-right">{{t('reports.percent')}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of dataRows; let i = index">
+          <td *ngIf="dataSets?.length > 1">{{row.short_Name}}</td>
+          <td width=50%>{{row.answer_Full_Name}}</td>
+          <td class="align-right">{{row.qc}}</td>
+          <td class="align-right">{{row.total}}</td>
+          <td class="align-right">{{row.percent}}%</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 

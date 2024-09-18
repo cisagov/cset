@@ -109,7 +109,7 @@
                             <!-- build the list of answer options -->
                             <div class="btn-group btn-group-toggle answer-group" style="margin-top:0.5rem;"
                                 data-toggle="buttons">
-                                <label *ngFor="let option of answerOptions" class="btn form-check-label"
+                                <label *ngFor="let option of answerOptions" class="btn"
                                     [class]="questionsSvc.answerOptionCss(maturityModelName, option)"
                                     [class.answer-selected]="q.answer === option"
                                     [matTooltip]="questionsSvc.answerDisplayLabel(maturityModelName, option)">
@@ -121,10 +121,10 @@
 
 
                                 <!-- Mark For Review Flag  -->
-                                <label class="me-0 ms-2 btn form-check-label btn-mfr"
+                                <label class="me-0 ms-2 btn btm-check btn-mfr"
                                     [class.answer-selected]="q.markForReview === true"
                                     matTooltip="This control requires further review.">
-                                    <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);"
+                                    <input name="q_{{q.questionId}}_F" type="checkbox" class="btn-check" (click)="saveMFR(q);"
                                         tabindex="0" checked="{{q.markForReview === true}}">
                                     <span class="cset-icons-flag-dark fs-base"></span>
                                 </label>
@@ -190,7 +190,7 @@
 
                             <!-- build the list of answer options -->
                             <div class="btn-group btn-group-toggle answer-group ms-0 mt-2" data-toggle="buttons">
-                                <label *ngFor="let option of answerOptions" class="btn form-check-label"
+                                <label *ngFor="let option of answerOptions" class="btn"
                                     [class]="questionsSvc.answerOptionCss(maturityModelName, option)"
                                     [class.answer-selected]="q.answer === option"
                                     [matTooltip]="questionsSvc.answerDisplayLabel(maturityModelName, option)">
@@ -202,10 +202,10 @@
 
 
                                 <!-- Mark For Review Flag  -->
-                                <label class="me-0 ms-2 btn form-check-label btn-mfr"
+                                <label class="me-0 ms-2 btn btn-mfr"
                                     [class.answer-selected]="q.markForReview === true"
                                     matTooltip="This control requires further review.">
-                                    <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);"
+                                    <input name="q_{{q.questionId}}_F" type="checkbox" class="btn-check" (click)="saveMFR(q);"
                                         tabindex="0" checked="{{q.markForReview === true}}">
                                     <span class="cset-icons-flag-dark fs-base"></span>
                                 </label>

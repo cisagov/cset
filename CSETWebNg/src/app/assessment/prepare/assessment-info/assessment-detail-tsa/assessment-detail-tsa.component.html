@@ -23,11 +23,10 @@
 <ng-container *transloco="let t">
   <h4>{{t('organization details')}}</h4>
   <form #f="ngForm">
-      <div class="form-row">
+      <div class="row">
           <p *ngIf="showAssessmentNameDisclaimer()">{{t('no pii in name')}}</p>
           <div class="form-group col-md-6">
-
-              <label class="mb-1" for="name">{{t('assessment name')}}</label>
+              <label class="form-label" for="name">{{t('assessment name')}}</label>
               <input type="text" maxlength="100" [disabled]="configSvc.installationMode === 'ACET'"
                   class="form-control" id="name" name="name" required focusOnInit="true"
                   [(ngModel)]="assessment.assessmentName" (ngModelChange)="assessment.assessmentName"
@@ -37,21 +36,21 @@
               </div>
           </div>
           <div class="form-group col-md-6">
-              <label class="mb-1" for="date">{{t('assessment date')}}</label>
+              <label class="form-label" for="date">{{t('assessment date')}}</label>
               <input matInput MatDatepickerInput class="form-control" id="date" name="date"
                   [(ngModel)]="assessment.assessmentDate" [matDatepicker]="picker" (focus)="picker.open()"
                   (blur)="update($event)" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
               <mat-datepicker #picker></mat-datepicker>
           </div>
       </div>
-      <div class="form-row">
+      <div class="row">
         <div class="form-group col-md-6" *ngIf="showFacilityName()">
-            <label class="mb-1" for="facility">{{t('facility name')}}</label>
+            <label class="form-label" for="facility">{{t('facility name')}}</label>
             <input type="text" maxlength="100" class="form-control" id="facility" name="facility"
                 [(ngModel)]="assessment.facilityName" (change)="update($event)" tabindex="0">
         </div>
         <div class="form-group col-md-6" *ngIf="showStateName()">
-          <label class="mb-1" for="stateProvRegion">{{t('state province region')}}</label>
+          <label class="form-label" for="stateProvRegion">{{t('state province region')}}</label>
           <select maxlength="100" class="form-select" id="stateProvRegion" name="stateProvRegion"
               [(ngModel)]="assessment.stateProvRegion" (change)="update($event)" tabindex="0">
               <option [ngValue]="null">-- Select State/Province/Region --</option>
@@ -61,14 +60,14 @@
            </select>
       </div>
       </div>
-      <div class="form-row">
+      <div class="row">
           <div class="form-group col-md-6" *ngIf="showCityName()">
-              <label class="mb-1" for="citySite">{{t('city or site name')}}</label>
+              <label class="form-label" for="citySite">{{t('city or site name')}}</label>
               <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite"
                   [(ngModel)]="assessment.cityOrSiteName" (change)="update($event)" tabindex="0">
           </div>
           <div class="form-group col-md-6" *ngIf="showPostalCode()">
-            <label class="mb-1" for="postalCode">{{t('postal code')}}</label>
+            <label class="form-label" for="postalCode">{{t('postal code')}}</label>
             <input type="text" maxlength="12" class="form-control" id="postalCode" name="postalCode"
                 [(ngModel)]="assessment.postalCode" (change)="update($event)" tabindex="0">
         </div>

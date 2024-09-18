@@ -1032,7 +1032,9 @@
         "no reference documents available": "no hay documentos de referencia disponibles",
         "document": "documento",
         "link": "enlace",
-        "launches external": "lanza sitio externo"
+        "launches external": "lanza sitio externo",
+        "feedback placeholder": "Opcional: Ingrese cualquier comentario para mejorar la pregunta",
+        "comment placeholder": "Ingrese cualquier comentario para indicar el estado de esta pregunta"
     },
     "menu": {
         "tools": {

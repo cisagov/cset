@@ -172,11 +172,11 @@
             <div *ngIf=" !!extras && !!tab && mode == 'COMPONENT'" class="detail">
                 <table>
                     <tr>
-                        <th>{{t('extras.component type')}}</th>
+                        <th class="pe-3">{{t('extras.component type')}}</th>
                         <th>{{t('extras.override component answer')}}</th>
                     </tr>
                     <tr *ngFor="let componentType of tab?.componentTypes">
-                        <td>{{componentType.symbol_Name}}</td>
+                        <td class="pe-3">{{componentType.symbol_Name}}</td>
                         <td>
                             <div class="text-right">
                                 <button *ngIf="componentType.enabled; else noOverride"
@@ -296,7 +296,7 @@
         <div *ngIf=" !!extras && mode === 'CMNT'">
             <div *ngIf="!assessSvc.usesMaturityModel('CIE'); else cieComment" class="form-group">
                 <textarea appAutoSize [(ngModel)]="myQuestion.comment" (change)="saveComment($event)"
-                    style="min-height: 72px; width: 100%" class="form-control"></textarea>
+                    style="min-height: 72px; width: 100%" class="form-control" placeholder="{{t('extras.comment placeholder')}}"></textarea>
             </div>
             <ng-template #cieComment class="form-group">
                 <textarea appAutoSize [value]="cieSvc.commentMap.get(myQuestion.questionId) != null ? cieSvc.commentMap.get(myQuestion.questionId) : ''" 
@@ -307,7 +307,7 @@
         <div *ngIf=" !!extras && mode === 'FDBK'">
             <div *ngIf="!assessSvc.usesMaturityModel('CIE'); else cieFeedback" class="form-group">
                 <textarea appAutoSize [(ngModel)]="myQuestion.feedback" (change)="saveFeedback($event)" maxlength="2048"
-                    style="min-height: 72px; width: 100%" class="form-control"></textarea>
+                    style="min-height: 72px; width: 100%" class="form-control" placeholder="{{t('extras.feedback placeholder')}}"></textarea>
             </div>
             <ng-template #cieFeedback class="form-group">
                 <textarea appAutoSize [value]="cieSvc.feedbackMap.get(myQuestion.questionId) != null ? cieSvc.feedbackMap.get(myQuestion.questionId) : ''" 

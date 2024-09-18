@@ -22,9 +22,9 @@
 -------------------------->
 <!-- <h4>Demographics</h4> -->
 <form>
-    <div class="form-row">
+    <div class="row">
         <div class="form-group col-md-6">
-            <label class="mb-1" for="sector">Sector</label>
+            <label class="form-label" for="sector">Sector</label>
             <select class="form-select" id="sector" name="sector" tabindex="0"
                 (change)="onSelectSector($event.target.value)" [(ngModel)]="demographicData.sectorId">
                 <option [ngValue]="null">-- Select Sector --</option>
@@ -32,7 +32,7 @@
             </select>
         </div>
         <div class="form-group col-md-6">
-            <label class="mb-1" for="industry">Industry</label>
+            <label class="form-label" for="industry">Industry</label>
             <select class="form-select" id="industry" name="industry" tabindex="0"
                 [(ngModel)]="demographicData.industryId" (change)="update($event)">
                 <option [ngValue]="null">-- Select Industry --</option>
@@ -43,7 +43,7 @@
     </div>
 
     <div class="form-group">
-        <label for="edmOrganizationType">Organization Type</label>
+        <label for="edmOrganizationType" class="form-label">Organization Type</label>
         <select *ngIf="isSLTT" class="form-select" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
             (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
             <option [ngValue]="null">-- Select Type --</option>
