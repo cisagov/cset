@@ -13,9 +13,9 @@
                          {{ t('reports.launch.' + sectionId.toLowerCase() + '.' + (i+1) + '.title') }}
                     </button>
                </div>
-               <div class="ml-4" *ngIf="rl.securityPicker">
+               <div class="ms-4" *ngIf="rl.securityPicker">
                     <label class="mb-1" for="securityId">Confidentiality</label>
-                    <select class="form-control" [(ngModel)]="confidentiality" id="securityId" name="securityId"
+                    <select class="form-select" [(ngModel)]="confidentiality" id="securityId" name="securityId"
                          tabindex="0" (change)="onSelectSecurity($event.target.value)">
                          <option *ngFor="let s of reportSvc.confidentialityLevels" [value]="s.confidentialTypeKey">
                               {{ s.confidentialTypeKey }}

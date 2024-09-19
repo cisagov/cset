@@ -30,7 +30,7 @@
     <td>{{parseShapeType(shape)}}</td>
     <td>{{shape.layerName}}</td>
     <td>
-      <select class="form-control" (change)="changeShapeToComponent($event, shape)">
+      <select class="form-select" (change)="changeShapeToComponent($event, shape)">
         <option *ngFor="let o of this.symbols" [value]="o.abbreviation">
           {{o.symbol_Name}}
         </option>

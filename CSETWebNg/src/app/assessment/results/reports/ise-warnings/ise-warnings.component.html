@@ -30,10 +30,10 @@
             <span class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
                 <!-- below are commented out in case clients change their minds -->
 <!-- 
-                <div class="mt-2 mr-4">Some reports are disabled until all items are resolved.</div>
+                <div class="mt-2 me-4">Some reports are disabled until all items are resolved.</div>
                 <br />
 
-                <div class="mt-2 mr-4" *ngIf="!isAssessmentPageFilled()">
+                <div class="mt-2 me-4" *ngIf="!isAssessmentPageFilled()">
                     The following required fields are missing from the "Demographics" page:
                     <ul class="list-type">
                         <span *ngFor="let field of missingFields; let i = index">
@@ -42,12 +42,12 @@
                     </ul>
                 </div> -->
 
-                <div class="mt-2 mr-4" *ngIf="disableIseReportLinks">
+                <div class="mt-2 me-4" *ngIf="disableIseReportLinks">
                     There are unanswered statements. Some domains will be incomplete.
                     <br /><br />
                 </div>
 <!-- 
-                <div class="mt-2 mr-4" *ngIf="ncuaSvc.unassignedIssues">
+                <div class="mt-2 me-4" *ngIf="ncuaSvc.unassignedIssues">
                     Some reports are disabled until all Issues have
                     an "Issue Type" assigned.<br /><br />
 
@@ -72,10 +72,10 @@
             <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
             <span class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
 
-                <div class="mt-2 mr-4">"Submit" button and some reports are disabled until all items are resolved.</div>
+                <div class="mt-2 me-4">"Submit" button and some reports are disabled until all items are resolved.</div>
                 <br />
 
-                <div class="mt-2 mr-4" *ngIf="!isAssessmentPageFilled()">
+                <div class="mt-2 me-4" *ngIf="!isAssessmentPageFilled()">
                     The following required fields are missing from the "Demographics" page:
                     <ul class="list-type">
                         <span *ngFor="let field of missingFields; let i = index">
@@ -84,12 +84,12 @@
                     </ul>
                 </div>
 
-                <div class="mt-2 mr-4" *ngIf="disableIseReportLinks">
+                <div class="mt-2 me-4" *ngIf="disableIseReportLinks">
                     There are unanswered examination statements that need to be answered.
                     <br /><br />
                 </div>
 
-                <div class="mt-2 mr-4" *ngIf="ncuaSvc.unassignedIssues">
+                <div class="mt-2 me-4" *ngIf="ncuaSvc.unassignedIssues">
                     All Issues require an "Issue Type" to be assigned. Assign an "Issue Type" <br />
                     to the following issues which were generated on the "Statements" page:
                     <ul class="list-type">

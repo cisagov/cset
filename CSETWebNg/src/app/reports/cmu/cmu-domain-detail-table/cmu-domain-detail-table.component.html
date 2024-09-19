@@ -48,7 +48,7 @@
         </td>
     </tr>
     <tr *ngFor="let q of goal.questions">
-        <td colspan="2" [innerHTML]="q?.questionText" [class.pl-5]="!!q?.parentQuestionId">
+        <td colspan="2" [innerHTML]="q?.questionText" [class.ps-5]="!!q?.parentQuestionId">
         </td>
         <td *ngIf="q?.isParentQuestion != 'true'" [class]="answerCellClass(q?.answerText)">
             <div class="text-center" style="width: 7rem">

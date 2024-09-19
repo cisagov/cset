@@ -97,10 +97,12 @@ export class QuestionExtrasComponent implements OnInit {
     private tSvc: TranslocoService,
     private cieSvc: CieService,
     private resourceLibSvc: ResourceLibraryService
-  ) {
-  }
+  ) { }
 
 
+  /**
+   * 
+   */
   ngOnInit() {
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
 
@@ -139,7 +141,6 @@ export class QuestionExtrasComponent implements OnInit {
    */
   toggleExtras(clickedMode: string) {
     if (this.expanded && clickedMode === this.mode) {
-
       // hide
       this.expanded = false;
       this.mode = '';
@@ -152,6 +153,9 @@ export class QuestionExtrasComponent implements OnInit {
     this.show();
   }
 
+  /**
+   * 
+   */
   scrollToExtras() {
     setTimeout(() => {
       if (this.questionExtrasDiv.nativeElement.getBoundingClientRect().bottom > window.innerHeight) {
@@ -161,19 +165,17 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   *
+   * Gets all of the extra content for the question from the API.
    */
   show() {
     // we already have content - don't make another server call
     if (this.tab != null) {
-      //this.scrollToExtras();
       return;
     }
 
-
     // Call the API for content
-    this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType).subscribe(
-      (details) => {
+    this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType)
+      .subscribe((details) => {
         this.extras = details;
         if (details.is_Component === true) {
           this.myQuestion.is_Component = true;
@@ -184,13 +186,6 @@ export class QuestionExtrasComponent implements OnInit {
 
         // populate my details with the first "non-null" tab
         this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras.listTabs[0];
-
-
-        // Component detail toggle
-        if (this.toggleComponent == true) {
-          this.toggleExtras('COMPONENT')
-          this.toggleComponent = false;
-        }
 
         // add questionIDs to related questions for debug if configured to do so
         if (this.showQuestionIds) {
@@ -799,7 +794,7 @@ export class QuestionExtrasComponent implements OnInit {
    * @param document
    * @returns
    */
-formatDocumentUrl(document: ReferenceDocLink, bookmark: any) {
+  formatDocumentUrl(document: ReferenceDocLink, bookmark: any) {
     return this.resourceLibSvc.formatDocumentUrl(document, bookmark);
   }
 

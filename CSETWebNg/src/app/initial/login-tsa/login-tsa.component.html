@@ -33,7 +33,7 @@
       </div>
       <div *ngIf="configSvc.isRunningAnonymous" class="d-flex flex-row align-items-end mt-5 mb-4">
         <app-logo-tsa mode="white" logoHeight="60"></app-logo-tsa>
-        <span class="align-bottom ml-3 font-italic" style="font-size: 30px; margin-top: 8px; color: #666">Online</span>
+        <span class="align-bottom ms-3 fst-italic" style="font-size: 30px; margin-top: 8px; color: #666">Online</span>
       </div>
 
 
@@ -123,7 +123,7 @@
             <div *ngIf="mode === 'LOCAL'">
               <p class="c-white">CSET TSA is running locally. No login is required.</p>
               <form name="form" (ngSubmit)="refreshWindow()" #f="ngForm" novalidate>
-                <div class="d-flex flex-nowrap pl-3 pr-3 ml-2 mt-2 justify-content-center">
+                <div class="d-flex flex-nowrap ps-3 pe-3 ms-2 mt-2 justify-content-center">
                   <button type="submit" [disabled]="loading" class="btn btn-secondary btn-lg">Continue</button>
                   <div class="spinner-container" *ngIf="loading">
                     <div style="max-width: 30px; max-height: 30px;"></div>
@@ -136,7 +136,7 @@
             the standalone status from the API; prompt for exiting the application -->
             <div *ngIf="mode === 'LOGIN' && isRunningInElectron" class="text-center">
               <p class="c-white p-2">An error was encountered while running CSET TSA.</p>
-              <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
+              <form name="form" (ngSubmit)="exit()" #f="ngForm" class="me-4 ms-2 p-3" novalidate>
                 <div class="d-flex flex-nowrap justify-content-center">
                   <button type="submit" class="btn btn-secondary btn-lg">Exit</button>
                 </div>
@@ -202,7 +202,7 @@
                   <div *ngIf="mode === 'LOCAL'">
                     <p class="c-white">CSET TSA is running locally. No login is required.</p>
                     <form name="form" (ngSubmit)="refreshWindow()" #f="ngForm" novalidate>
-                      <div class="d-flex flex-nowrap pl-3 pr-3 ml-2 mt-2 justify-content-center">
+                      <div class="d-flex flex-nowrap ps-3 pe-3 ms-2 mt-2 justify-content-center">
                         <button type="submit" [disabled]="loading" class="btn btn-secondary btn-lg">Continue</button>
                         <div class="spinner-container" *ngIf="loading">
                           <div style="max-width: 30px; max-height: 30px;"></div>
@@ -212,7 +212,7 @@
                   </div>
                   <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
                     <p class="c-white p-2">An error was encountered while running CSET TSA.</p>
-                    <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3 " novalidate>
+                    <form name="form" (ngSubmit)="exit()" #f="ngForm" class="me-4 ms-2 p-3 " novalidate>
                       <div class="d-flex flex-nowrap justify-content-center">
                         <button type="submit" class="btn btn-secondary btn-lg">Exit</button>
                       </div>

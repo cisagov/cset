@@ -102,9 +102,9 @@
                                 <td *ngIf="!isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
                                     class="font-weight-bold text-nowrap">{{q.title}}</td>
 
-                                <td *ngIf="isParentQuestion(q.title)" class="background-3 pr-3"> </td>
+                                <td *ngIf="isParentQuestion(q.title)" class="background-3 pe-3"> </td>
                                 <td *ngIf="!isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
-                                    class="pr-3">{{ answerToNumber(q.answerText) }}</td>
+                                    class="pe-3">{{ answerToNumber(q.answerText) }}</td>
 
                                 <td *ngIf="isParentQuestion(q.title)" class="background-3">
                                     <label class="btn form-check-label" style="float: right">{{
@@ -127,43 +127,43 @@
             <ng-container *ngFor="let d of response?.matAnsweredQuestions">
                 <tr>
                     <td class=" font-weight-bold text-nowrap">Profile 1</td>
-                    <td class=" pr-3">5</td>
+                    <td class=" pe-3">5</td>
                 </tr>
                 <tr>
                     <td class=" font-weight-bold text-nowrap">Profile 2</td>
-                    <td class=" pr-3">2</td>
+                    <td class=" pe-3">2</td>
                 </tr>
                 <tr>
                     <td class=" font-weight-bold text-nowrap">Profile 3</td>
-                    <td class=" pr-3">3</td>
+                    <td class=" pe-3">3</td>
                 </tr>
                 <tr>
                     <td class=" font-weight-bold text-nowrap">Profile 4</td>
-                    <td class=" pr-3">2</td>
+                    <td class=" pe-3">2</td>
                 </tr>
                 <tr>
                     <td class=" font-weight-bold text-nowrap">Profile 5</td>
-                    <td class=" pr-3">1</td>
+                    <td class=" pe-3">1</td>
                 </tr>
                 <tr>
                     <td class=" font-weight-bold text-nowrap">Profile 6</td>
-                    <td class=" pr-3">3</td>
+                    <td class=" pe-3">3</td>
                 </tr>
                 <tr>
                     <td class=" font-weight-bold text-nowrap">Profile 7</td>
-                    <td class=" pr-3">2</td>
+                    <td class=" pe-3">2</td>
                 </tr>
                 <tr>
                     <td class=" font-weight-bold text-nowrap">Profile 8</td>
-                    <td class=" pr-3">1</td>
+                    <td class=" pe-3">1</td>
                 </tr>
                 <tr>
                     <td class=" font-weight-bold text-nowrap">Profile 9</td>
-                    <td class=" pr-3">4</td>
+                    <td class=" pe-3">4</td>
                 </tr>
                 <tr>
                     <td class=" font-weight-bold text-nowrap">Profile 10</td>
-                    <td class=" pr-3">5</td>
+                    <td class=" pe-3">5</td>
                 </tr>
             </ng-container>
         </table>

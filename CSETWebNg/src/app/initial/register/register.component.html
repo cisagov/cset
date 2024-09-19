@@ -69,7 +69,7 @@
         <th>{{t('user profile.security answer')}}</th>
         <tr>
           <td>
-            <select class="form-control" tabindex="0" id="securityQuestion1" name="securityQustion1"
+            <select class="form-select" tabindex="0" id="securityQuestion1" name="securityQustion1"
               [(ngModel)]="model.securityQuestion1">
               <option *ngFor="let question of SecurityQuestions">{{question.securityQuestion}}</option>
             </select>
