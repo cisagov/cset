@@ -28,7 +28,7 @@ import { PageVisibilityService } from './page-visibility.service';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { of as observableOf, BehaviorSubject } from "rxjs";
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { CieService } from '../cie.service';
 import { SsgService } from '../ssg.service';
 

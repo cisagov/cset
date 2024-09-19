@@ -38,7 +38,7 @@ import { AuthenticationService } from '../../../services/authentication.service'
 import { NCUAService } from '../../../services/ncua.service';
 import { ObservationsService } from '../../../services/observations.service';
 import { CisaWorkflowFieldValidationResponse } from '../../../models/demographics-iod.model';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ConversionService } from '../../../services/conversion.service';
 import { CieDocumentsComponent } from '../../../dialogs/cie-documents/cie-documents.component';
 

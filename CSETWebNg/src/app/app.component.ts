@@ -44,7 +44,7 @@ import { AggregationService } from './services/aggregation.service';
 import { LocalStoreManager } from './services/storage.service';
 import { NavigationService } from './services/navigation/navigation.service';
 import { FooterService } from './services/footer.service';
-import { translate } from '@ngneat/transloco';
+import { translate } from '@jsverse/transloco';
 
 
 declare var $: any;

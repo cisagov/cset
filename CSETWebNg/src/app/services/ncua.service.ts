@@ -35,10 +35,9 @@ import { MeritCheckComponent } from '../dialogs/ise-merit/merit-check.component'
 import { Answer } from '../models/questions.model';
 import { AuthenticationService } from './authentication.service';
 import { DateAdapter } from '@angular/material/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ReportService } from './report.service';
 import { VersionService } from './version.service';
-import { forEach } from 'lodash';
 
 let headers = {
   headers: new HttpHeaders()

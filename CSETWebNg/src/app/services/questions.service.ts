@@ -29,7 +29,7 @@ import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './filtering/question-filter.service';
 import { BehaviorSubject } from 'rxjs';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 const headers = {
   headers: new HttpHeaders()
