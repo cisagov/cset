@@ -87,13 +87,17 @@ export class DiagramComponentsComponent implements OnInit {
    * can build SELECT controls for Asset Type.
    */
   getSymbols() {
-    this.diagramSvc.getSymbols().subscribe((g: any) => {
+    this.diagramSvc.getSymbols().subscribe((g: any[]) => {
       this.symbols = [];
+
       g.forEach(gg => {
         gg.symbols.forEach(s => {
           this.symbols.push(s);
         });
       });
+
+      // don't include 'Connector' in symbol select for inventory
+      this.symbols = this.symbols.filter(s => s.symbol_Name != 'Connector');
 
       this.symbols.sort((a, b) => a.symbol_Name.localeCompare(b.symbol_Name));
     });
