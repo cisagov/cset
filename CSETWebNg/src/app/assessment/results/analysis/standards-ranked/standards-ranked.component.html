@@ -22,7 +22,7 @@
 -------------------------->
 <div class="white-panel d-flex flex-column justify-content-start flex-11a" *transloco="let t">
   <h3>{{t('titles.ranked categories')}}</h3>
-  <p class="font-italic" [class.d-none]="showChart">
+  <p class="fst-italic" [class.d-none]="showChart">
     {{t('reports.core.no ranking')}}
   </p>
   <div [class.d-none]="!showChart">
@@ -37,18 +37,24 @@
     </div>
     <div class="data" [hidden]="!initialized">
       <table class="table" [class.fs-smaller]="layoutSvc.hp" style="table-layout: fixed">
-        <th style="width: 50%">{{t('reports.category')}}</th>
-        <th>{{t('reports.rank')}}</th>
-        <th class="align-right">{{t('reports.failed')}}</th>
-        <th class="align-right">{{t('reports.total')}}</th>
-        <th class="align-right">{{t('reports.percent')}}</th>
-        <tr *ngFor="let row of dataRows">
-          <td>{{row.title}}</td>
-          <td>{{row.rank}}</td>
-          <td class="align-right">{{row.failed}}</td>
-          <td class="align-right">{{row.total}}</td>
-          <td class="align-right">{{row.percent}}%</td>
-        </tr>
+        <thead>
+          <tr>
+            <th style="width: 50%">{{t('reports.category')}}</th>
+            <th>{{t('reports.rank')}}</th>
+            <th class="align-right">{{t('reports.failed')}}</th>
+            <th class="align-right">{{t('reports.total')}}</th>
+            <th class="align-right">{{t('reports.percent')}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of dataRows">
+            <td>{{row.title}}</td>
+            <td>{{row.rank}}</td>
+            <td class="align-right">{{row.failed}}</td>
+            <td class="align-right">{{row.total}}</td>
+            <td class="align-right">{{row.percent}}%</td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>

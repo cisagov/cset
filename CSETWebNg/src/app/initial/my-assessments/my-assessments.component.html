@@ -22,7 +22,7 @@
 -------------------------->
 <ng-container *transloco="let t">
     <div class="p-0 d-flex flex-column justify-content-start flex-11a">
-        <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
+        <div class="bgc-trans mt-4 mx-4 pe-4 d-flex flex-column flex-00a ">
 
             <div *ngIf="browserIsIE" class="alert alert-danger text-left">
                 {{ t('welcome page.internet explorer') }}
@@ -30,13 +30,13 @@
 
             <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
                 <h3 class="mt-0" *ngIf="sortedAssessments?.length > 0">{{ t('my assessments') }}</h3>
-                <div class="mt-3 mb-4 d-flex flex-column justify-content-between flex-00a">                    
+                <div class="mt-3 mb-4 d-flex flex-column justify-content-between flex-00a">
                     <div class="d-flex justify-content-between flex-00a">
                         <div class="d-flex flex-row">
                             <label *ngIf="authSvc.isLocal && configSvc.showImportButton()" tabindex="0"
                                 class="m-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-00a"
                                 matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
-                                <span class="mr-2 fs-base cset-icons-import"></span>
+                                <span class="me-2 fs-base cset-icons-import"></span>
                                 <label for="importFile" class="m-0">{{t('buttons.import')}}</label>
                                 <input type="file" tabindex="0" class="display-none" id="importFile" multiple
                                     accept="{{ importExtensions }},.cset" (change)="importAssessmentFile($event)">
@@ -45,7 +45,7 @@
                             <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
                                 class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
                                 matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
-                                <span class="mr-2 fs-base cset-icons-import"></span>
+                                <span class="me-2 fs-base cset-icons-import"></span>
                                 <label for="importFile" class="m-0">{{t('buttons.import')}}</label>
                                 <input type="file" tabindex="0" class="display-none" id="importFile" multiple
                                     accept="{{ importExtensions }}" (change)="importAssessmentFile($event)">
@@ -55,32 +55,32 @@
                                 class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
                                 (click)="exportAllAssessments()" matTooltip="{{ t('tooltip.export all') }}"
                                 [disabled]="exportAllInProgress">
-                                <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+                                <span class="cset-icons-export-up fs-base-2 me-2"></span>
                                 <span class="icon-link-button-text-dark">{{t('export all')}}</span>
                             </button>
 
                             <!-- If they have the ncua switch we need to account for whether they want to export ACET's or ISE's -->
                             <div *ngIf="this.ncuaSvc.switchStatus == false">
                                 <label *ngIf="configSvc.installationMode === 'ACET'"
-                                    class="m-0 ml-2 btn btn-secondary d-flex justify-content-end flex-00a"
+                                    class="m-0 ms-2 btn btn-secondary d-flex justify-content-end flex-00a"
                                     matTooltip="{{ t('tooltip.export to excel') }}" (click)="exportToExcelAllAcet()"
                                     tabindex="0">
-                                    <span class="cset-icons-export-excel fs-base mr-2"></span>
+                                    <span class="cset-icons-export-excel fs-base me-2"></span>
                                     <label for="importFile" class="m-0">{{t('buttons.export all to excel')}}</label>
                                 </label>
                             </div>
                             <div *ngIf="this.ncuaSvc.switchStatus == true">
                                 <label *ngIf="configSvc.installationMode === 'ACET'"
-                                    class="m-0 ml-2 btn btn-secondary d-flex justify-content-end flex-00a"
+                                    class="m-0 ms-2 btn btn-secondary d-flex justify-content-end flex-00a"
                                     matTooltip="{{ t('tooltip.export to excel') }}" (click)="openExportDecisionDialog()"
                                     tabindex="0">
-                                    <span class="cset-icons-export-excel fs-base mr-2"></span>
+                                    <span class="cset-icons-export-excel fs-base me-2"></span>
                                     <label class="m-0">{{t('buttons.export all to excel')}}</label>
                                 </label>
                             </div>
 
                             <label *ngIf="this.ncuaSvc.switchStatus"
-                                class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
+                                class="m-0 ms-2 btn btn-secondary d-flex align-items-center flex-00a"
                                 (click)="this.ncuaSvc.prepExaminationMerge()" tabindex="0">
                                 <span class="fs-base"></span>
                                 <label for="mergeExamination" class="m-0">
@@ -90,7 +90,7 @@
                                 </label>
                             </label>
                             <label *ngIf="configSvc.installationMode == 'CIE'"
-                                class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
+                                class="m-0 ms-2 btn btn-secondary d-flex align-items-center flex-00a"
                                 (click)="cieSvc.prepExaminationMerge()" tabindex="0">
                                 <span class="fs-base"></span>
                                 <label for="mergeExamination" class="m-0">
@@ -101,20 +101,18 @@
                             </label>
                         </div>
 
-
                         <!-- Don't show the encryption for ACET/ISE. They don't want it. -->
                         <div *ngIf="!this.ncuaSvc.switchStatus">
-                            <div *ngIf="this.configSvc.installationMode != 'ACET'">
-                                <mat-checkbox color="primary" [(ngModel)]="preventEncrypt"
-                                    (change)="updateEncryptPreference()" [disabled]="disabledEncrypt"
-                                    matTooltip="{{ t('tooltip.prevent encryption') }}"
-                                    style="margin-left: auto; margin-right: 0; border: 2px solid gray">
-                                    <label style="margin-top: 15px; padding-right: 10px;">{{t('prevent
-                                        encryption')}}</label>
-                                </mat-checkbox>
+                            <div *ngIf="this.configSvc.installationMode != 'ACET'" style="border: 1px solid gray;"
+                                class="p-2">
+                                <input type="checkbox" id="prevent_encrypt" name="prevent_encrypt"
+                                    class="checkbox-custom" [(ngModel)]="preventEncrypt"
+                                    (change)="updateEncryptPreference()"
+                                    matTooltip="{{ t('tooltip.prevent encryption') }}">
+                                <label for="prevent_encrypt" class="checkbox-custom-label"
+                                    style="margin: 0 5px;">{{t('prevent encryption')}}</label>
                             </div>
                         </div>
-
 
                     </div>
                     <div *ngIf="unsupportedImportFile"
@@ -140,13 +138,13 @@
                     <div class="flex-row d-flex flex-00a">
                         <div class="d-flex flex-wrap justify-content-between flex-11a">
                             <button
-                                class="m-0 p-3 mr-sm-2 mr-md-3 mr-lg-4 btn btn-primary d-flex align-items-center flex-11a lp-btn-mw-lg"
+                                class="m-0 p-3 me-sm-2 me-md-3 me-lg-4 btn btn-primary d-flex align-items-center flex-11a lp-btn-mw-lg"
                                 (click)="clickNewAssessmentButton()"
                                 matTooltip="{{ t('welcome page.new assessment tooltip') }}">
                                 <span *ngIf="configSvc.installationMode !=='ACET'"
-                                    class="mr-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
+                                    class="me-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
                                 <span *ngIf="configSvc.installationMode === 'ACET'"
-                                    class="mr-3 landing-icon landing-icon-sm cset2-icons-acet-shield"></span>
+                                    class="me-3 landing-icon landing-icon-sm cset2-icons-acet-shield"></span>
                                 <span class="landing-button-text landing-button-text-sm">{{ t('welcome page.new
                                     assessment') }}</span>
                             </button>
@@ -154,7 +152,7 @@
                             <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
                                 class="mt-3 mt-sm-3 mt-md-0 p-3 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
                                 matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
-                                <span class="mr-3 landing-icon landing-icon-sm cset-icons-import"></span>
+                                <span class="me-3 landing-icon landing-icon-sm cset-icons-import"></span>
                                 <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
                                     {{ t('welcome page.import assessment') }}
                                 </label>
@@ -164,7 +162,7 @@
                             <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
                                 class="p-3 m-0 mt-3 mt-sm-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
                                 matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
-                                <span class="mr-3 landing-icon landing-icon-sm cset-icons-import"></span>
+                                <span class="me-3 landing-icon landing-icon-sm cset-icons-import"></span>
                                 <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
                                     {{ t('welcome page.import assessment') }}
                                 </label>
@@ -235,7 +233,7 @@
                             'TSA' }}
                         </td>
                         <td *ngIf="isCF">{{assessment.isEntryString}}</td>
-                        
+
                         <td>{{assessment.type}}</td>
                         <td *ngIf="showColumn('ise-submitted')">
                             <ng-container *ngIf="assessment.iseSubmitted">
@@ -243,11 +241,13 @@
                             </ng-container>
                         </td>
                         <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.lastModifiedDate | localizeDate}}</td>
-                        <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate, 'med')}}</td>
-                        
+                        <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate,
+                            'med')}}</td>
+
                         <td *ngIf="showColumn('primary-assessor')">{{assessment.firstName}} {{assessment.lastName}}</td>
                         <td>
-                            <div *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">
+                            <div
+                                *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">
                                 <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
                                     {{ { c: assessment.completedQuestionsCount, t:
                                     assessment.totalAvailableQuestionsCount, qa: this.assessment.questionAlias, l:
@@ -267,7 +267,7 @@
                                 class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                                 (click)="removeAssessment(assessment, i)"
                                 matTooltip="{{ t('tooltip.remove assessment') }}">
-                                <span class="cset-icons-trash-x fs-base-2 mr-2"></span>
+                                <span class="cset-icons-trash-x fs-base-2 me-2"></span>
                                 <span class="icon-link-button-text-dark">{{t('buttons.remove')}}</span>
                             </button>
                         </td>
@@ -276,7 +276,7 @@
                                 class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                                 (click)="clickDownloadLink(assessment.assessmentId)"
                                 matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
-                                <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+                                <span class="cset-icons-export-up fs-base-2 me-2"></span>
                                 <span class="icon-link-button-text-dark">{{t('buttons.export')}}</span>
                             </button>
                         </td>
@@ -285,7 +285,7 @@
                                 class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                                 (click)="clickDownloadLink(assessment.assessmentId, true)"
                                 matTooltip="{{ t('tooltip.export assessment json') }}">
-                                <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+                                <span class="cset-icons-export-up fs-base-2 me-2"></span>
                                 <span class="icon-link-button-text-dark">{{t('buttons.export json')}}</span>
                             </button>
                         </td>
@@ -294,7 +294,7 @@
                                 class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                                 (click)="this.analyticsSvc.loadAssessment(assessment.assessmentId)"
                                 matTooltip="{{ t('tooltip.analytics') }}">
-                                <span class="cset-icons-bar-chart-vertical fs-base-2 mr-2"></span>
+                                <span class="cset-icons-bar-chart-vertical fs-base-2 me-2"></span>
                                 <span class="icon-link-button-text-dark">{{t('buttons.analytics')}}</span>
                             </button>
                         </td>
@@ -318,7 +318,7 @@
                             </button>
                         </td>
                         <td>{{systemTimeTranslator(assessment.lastModifiedDate, 'med')}}</td>
-                        <td class="text-nowrap pl-1">
+                        <td class="text-nowrap ps-1">
                             <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
                                 (click)="removeAssessment(assessment, i)"
                                 matTooltip="{{ t('tooltip.remove assessment') }}">

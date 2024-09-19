@@ -30,7 +30,7 @@
           <label [attr.csetid]="'OverallSAL' + level.value" class="btn btn-level btn-rounded form-check-label"
             [class.active]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level"
             (click)="saveLevel(level.value,'std')">
-            <input class="form-check-input" tabindex="0" type="radio" autocomplete="off" name="sal_main"
+            <input class="btn-check" tabindex="0" type="radio" autocomplete="off" name="sal_main"
               [checked]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level"> {{t('titles.sal.level.' +
             level.value.toLowerCase())}}
           </label>
@@ -48,7 +48,7 @@
           <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
             <label [attr.csetid]="'Confidentiality' + level.value" class="btn btn-level btn-rounded form-check-label"
               [class.active]="level.value === this.salsSvc.selectedSAL?.cLevel" (click)="saveLevel(level.value,'C')">
-              <input class="form-check-input" type="radio" autocomplete="off" name="sal_confidentiality"
+              <input class="btn-check" type="radio" autocomplete="off" name="sal_confidentiality"
                 [checked]="level.value === this.salsSvc.selectedSAL?.cLevel"> {{t('titles.sal.level.' +
               level.value.toLowerCase())}}
             </label>
@@ -67,7 +67,7 @@
           <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
             <label [attr.csetid]="'Integrity' + level.value" class="btn btn-level btn-rounded form-check-label"
               [class.active]="level.value === this.salsSvc.selectedSAL?.iLevel" (click)="saveLevel(level.value,'I')">
-              <input class="form-check-input" type="radio" tabindex="0" autocomplete="off" name="sal_integrity"
+              <input class="btn-check" type="radio" tabindex="0" autocomplete="off" name="sal_integrity"
                 [checked]="level.value === this.salsSvc.selectedSAL?.iLevel"> {{t('titles.sal.level.' +
               level.value.toLowerCase())}}
             </label>
@@ -86,7 +86,7 @@
           <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
             <label [attr.csetid]="'Availability' + level.value" class="btn btn-level btn-rounded form-check-label"
               [class.active]="level.value === this.salsSvc.selectedSAL?.aLevel" (click)="saveLevel(level.value,'A')">
-              <input class="form-check-input" type="radio" tabindex="0" autocomplete="off" name="sal_availability"
+              <input class="btn-check" type="radio" tabindex="0" autocomplete="off" name="sal_availability"
                 [checked]="level.value === this.salsSvc.selectedSAL?.aLevel"> {{t('titles.sal.level.' +
               level.value.toLowerCase())}}
             </label>
@@ -103,16 +103,16 @@
       <div class="fips-reference">
         <a href="{{configSvc.docUrl}}ApplicationDocuments/FIPS199Language.html" tabindex="0" rel="noopener noreferrer"
           target="_blank">
-          <i class="icon icon-openbookicon vmiddle mr-1"></i>FIPS 199 SAL Selection Guidance</a>
+          <i class="icon icon-openbookicon vmiddle me-1"></i>FIPS 199 SAL Selection Guidance</a>
       </div>
       <p>{{t('titles.sal.nist.fips other guides')}}</p>
       <div class="fips-reference">
         <a href="{{configSvc.apiUrl}}library/doc/511" tabindex="0" rel="noopener noreferrer" target="_blank">
-          <i class="icon icon-openbookicon vmiddle mr-1"></i>FIPS 199</a>
+          <i class="icon icon-openbookicon vmiddle me-1"></i>FIPS 199</a>
         <a href="{{configSvc.apiUrl}}library/doc/2081" tabindex="0" rel="noopener noreferrer" target="_blank">
-          <i class="icon icon-openbookicon vmiddle mr-1"></i>NIST SP800-60 Vol I</a>
+          <i class="icon icon-openbookicon vmiddle me-1"></i>NIST SP800-60 Vol I</a>
         <a href="{{configSvc.apiUrl}}library/doc/2116" tabindex="0" rel="noopener noreferrer" target="_blank">
-          <i class="icon icon-openbookicon vmiddle mr-1"></i>NIST SP800-60 Vol II</a>
+          <i class="icon icon-openbookicon vmiddle me-1"></i>NIST SP800-60 Vol II</a>
       </div>
     </div>
   </div>
@@ -121,7 +121,7 @@
     <h4>{{t('titles.sal.nist.selected information types')}}</h4>
     <div>
       <p>{{t('titles.sal.nist.check applicable')}}</p>
-      <table class="nist-sal-info-types table" style="table-layout: fixed">
+      <table class="nist-sal-info-types" style="table-layout: fixed">
         <tr>
           <th style="width:5%"></th>
           <th style="width: 50%">{{t('type')}}</th>
@@ -129,13 +129,14 @@
           <th style="width: 15%" class="text-center">I</th>
           <th style="width: 15%" class="text-center">A</th>
         </tr>
-        <tr *ngFor="let model of topModel?.models">
+        <tr *ngFor="let model of topModel?.models; let i = index">
           <td>
-            <input type="checkbox" [attr.csetid]="'checkbox' + model.type_Value" id="{{model.nIST_Number}}" tabindex="0"
-              value="{{model.type_Value}}" (change)="checkBoxChanged($event, model)" [checked]="model.selected">
+            <input type="checkbox" [attr.csetid]="'checkbox' + model.type_Value" [id]="'cb_model' + i" tabindex="0"
+              value="{{model.type_Value}}" (change)="checkBoxChanged($event, model)" [checked]="model.selected" class="checkbox-custom">
+              <label [for]="'cb_model' + i" class="checkbox-custom-label"></label>
           </td>
           <td>
-            <label for="{{model.nIST_Number}}">
+            <label [for]="'cb_model' + i">
               {{model.type_Value}} : {{model.nIST_Number}}</label>
           </td>
           <td class="text-center">
@@ -179,13 +180,13 @@
             <div class="btn-group btn-group-toggle" style="white-space: nowrap" data-toggle="buttons">
               <label [attr.csetid]="question.question_Text + 'Yes'" class="btn btn-level btn-rounded form-check-label"
                 [class.active]="question.question_Answer === 'Yes'" (click)="saveQuestionChanged(question,'Yes')">
-                <input class="form-check-input" type="radio" autocomplete="off"
+                <input class="btn-check" type="radio" autocomplete="off"
                   name="options{{question.question_Number}}"
                   [checked]="question.question_Answer === 'Yes'">{{t('answer-options.labels.yes')}}
               </label>
               <label [attr.csetid]="question.question_Text + 'No'" class="btn btn-level btn-rounded form-check-label"
                 [class.active]="question.question_Answer === 'No'" (click)="saveQuestionChanged(question,'No')">
-                <input class="form-check-input" type="radio" autocomplete="off"
+                <input class="btn-check" type="radio" autocomplete="off"
                   name="options{{question.question_Number}}"
                   [checked]="question.question_Answer === 'No'">{{t('answer-options.labels.no')}}
               </label>

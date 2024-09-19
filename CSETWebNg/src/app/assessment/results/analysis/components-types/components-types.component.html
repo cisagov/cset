@@ -23,44 +23,50 @@
 <div class="assess-component d-flex flex-column justify-content-start flex-11a">
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
     <div *ngIf="dataSet != 0; else elseBlock">
-    <div id="chart" class="mb-4">
-      <h3>Answers By Component Type</h3>
-      <canvas id="canvasComponentTypes">{{chart}}</canvas>
-    </div>
-    <div *ngIf="!initialized">
-      <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-        <div style="max-width: 50px; max-height: 50px;"></div>
+      <div id="chart" class="mb-4">
+        <h3>Answers By Component Type</h3>
+        <canvas id="canvasComponentTypes">{{chart}}</canvas>
       </div>
-    </div>
-    <div class="data" [hidden]="!initialized">
-      <table class="table">
-        <th class="align-left">Component</th>
-        <th class="align-right">{{questionsSvc.answerDisplayLabel('', 'Y')}}</th>
-        <th class="align-right">{{questionsSvc.answerDisplayLabel('', 'N')}}</th>
-        <th class="align-right">{{questionsSvc.answerDisplayLabel('', 'NA')}}</th>
-        <th class="align-right">{{questionsSvc.answerDisplayLabel('', 'A')}}</th>
-        <th class="align-right">{{questionsSvc.answerDisplayLabel('', 'U')}}</th>
-        <th class="align-right">Total</th>
-        <tr class="align-right" *ngFor="let row of dataRows">
-          <td class="align-left" style="width: 50%">{{row.title}}</td>
-          <td class="align-right">{{row.yes}}%</td>
-          <td class="align-right">{{row.no}}%</td>
-          <td class="align-right">{{row.na}}%</td>
-          <td class="align-right">{{row.alt}}%</td>
-          <td class="align-right">{{row.unanswered}}%</td>
-          <td class="align-right">{{row.total}}</td>
-        </tr>
-      </table>
-    </div>
+      <div *ngIf="!initialized">
+        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+          <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+      </div>
+      <div class="data" [hidden]="!initialized">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="align-left">Component</th>
+              <th class="align-right">{{questionsSvc.answerDisplayLabel('', 'Y')}}</th>
+              <th class="align-right">{{questionsSvc.answerDisplayLabel('', 'N')}}</th>
+              <th class="align-right">{{questionsSvc.answerDisplayLabel('', 'NA')}}</th>
+              <th class="align-right">{{questionsSvc.answerDisplayLabel('', 'A')}}</th>
+              <th class="align-right">{{questionsSvc.answerDisplayLabel('', 'U')}}</th>
+              <th class="align-right">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="align-right" *ngFor="let row of dataRows">
+              <td class="align-left" style="width: 50%">{{row.title}}</td>
+              <td class="align-right">{{row.yes}}%</td>
+              <td class="align-right">{{row.no}}%</td>
+              <td class="align-right">{{row.na}}%</td>
+              <td class="align-right">{{row.alt}}%</td>
+              <td class="align-right">{{row.unanswered}}%</td>
+              <td class="align-right">{{row.total}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <ng-template #elseBlock>
       <h3>Answers By Component Type</h3>
       <div class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
-      <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
-      <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
-        There are no results to display. This may be caused by a network diagram
-        that contains no network components.
-      </span>
+        <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
+        <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
+          There are no results to display. This may be caused by a network diagram
+          that contains no network components.
+        </span>
       </div>
     </ng-template>
     <app-nav-back-next [page]="'components-types'"></app-nav-back-next>

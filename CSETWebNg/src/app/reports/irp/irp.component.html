@@ -23,7 +23,7 @@
 <div *transloco="let t; read: 'irp'" class="mt-3 mb-4">
     <app-inherent-risk-profile [acetDashboard]="acetDashboard"></app-inherent-risk-profile>
 
-    <div class="ml-3">
+    <div class="ms-3">
         <div>{{ t('overall risk level is') }} <span class="blue-text font-weight-bold">
                 {{ acetSvc.interpretRiskLevel(acetDashboard?.sumRiskLevel).substring(0, 4) +
                 t(acetSvc.interpretRiskLevel(acetDashboard?.sumRiskLevel).substring(4).toLowerCase()) }}

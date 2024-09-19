@@ -55,11 +55,8 @@ export class CieLayoutMainComponent {
     this.router.navigate(['/home']);
   }
 
-  isFooterOpen() {
-    if (!this.footerClosed) {
-      return this.footerClosed = true;
-    }
-    return this.footerClosed = false;
+  toggleFooter() {
+    this.footerClosed = !this.footerClosed;
   }
 
   isRunningAnonymous() {
