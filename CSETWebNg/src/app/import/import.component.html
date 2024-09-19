@@ -164,7 +164,8 @@
                             </li>
                         </ul>
                     </div>
-                    <h4>Supporting Documents</h4>
+                    <!-- Hiding import document section until it is working properly  -->
+                    <!-- <h4>Supporting Documents</h4>
                     <div class="mb-2">Any additional documents that are referenced by your module need to be added
                         below by dropping the file onto the drop area.</div>
                     <div *ngIf="isDocError" class="text-danger">An error occurred while processing documents. Please
@@ -225,8 +226,8 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div style="margin: .5em 0">
+                    </div> -->
+                    <!-- <div style="margin: .5em 0">
                         <button [attr.disabled]="state=='Processing'||!importNgForm.valid?true:null" type="submit"
                             class="btn btn-success btn-s me-2" *ngIf="state!='Succeeded'"
                             [ngClass]="{'p-0': state=='Processing', 'pe-2':state=='Processing'}"
@@ -247,7 +248,7 @@
                             Warning: This will clear the code editor
                           </div>
                         </div>
-                    </div>
+                    </div> -->
                 </form>
             </div>
         </div>
