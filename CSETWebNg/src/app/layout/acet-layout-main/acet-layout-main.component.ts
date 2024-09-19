@@ -24,7 +24,7 @@
 import { Component, ViewChild, ViewEncapsulation, isDevMode } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { AggregationService } from '../../services/aggregation.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -47,7 +47,7 @@ export class AcetLayoutMainComponent {
   isFooterVisible: boolean = false;
   devMode: boolean = isDevMode();
 
-  @ViewChild('acc') accordion: NgbAccordion;
+  @ViewChild('acc') accordion: NgbAccordionModule;
 
   constructor(
     public auth: AuthenticationService,
