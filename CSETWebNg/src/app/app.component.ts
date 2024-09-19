@@ -39,7 +39,6 @@ import { CreateUser } from './models/user.model';
 import { AssessmentService } from './services/assessment.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ConfigService } from './services/config.service';
-import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
 import { AggregationService } from './services/aggregation.service';
 import { LocalStoreManager } from './services/storage.service';
@@ -62,7 +61,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
 
-  @ViewChild('acc') accordion: NgbAccordionModule;
+  @ViewChild('acc') accordion: any;
 
   constructor(
     public auth: AuthenticationService,
