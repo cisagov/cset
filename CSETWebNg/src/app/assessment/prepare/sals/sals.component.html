@@ -71,19 +71,19 @@
         {{t('titles.sal.choose methodology')}}
       </div>
       <div class="btn-group-toggle" data-toggle="buttons">
-        <label csetid="SimpleSalLevelSelector" class="btn btn-sal-select btn-rounded form-check-label"
+        <label csetid="SimpleSalLevelSelector" class="btn btn-sal-select btn-rounded"
           [class.active]="selectedMethodology === 'Simple'" (click)="changeMethodology('Simple')">
           <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
             [checked]="selectedMethodology === 'Simple'">{{t('titles.sal.simple')}}
         </label>
 
-        <label csetid="GeneralRiskSalLevelSelector" class="btn btn-sal-select btn-rounded form-check-label"
+        <label csetid="GeneralRiskSalLevelSelector" class="btn btn-sal-select btn-rounded"
           [class.active]="selectedMethodology === 'GENERAL'" (click)="changeMethodology('GENERAL')">
           <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
             [checked]="selectedMethodology === 'GENERAL'">{{t('titles.sal.general risk based')}}
         </label>
 
-        <label csetid="NistSalLevelSelector" class="btn btn-sal-select btn-rounded form-check-label"
+        <label csetid="NistSalLevelSelector" class="btn btn-sal-select btn-rounded"
           [class.active]="selectedMethodology === 'NIST'" (click)="changeMethodology('NIST')">
           <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
             [checked]="selectedMethodology === 'NIST'">{{t('titles.sal.nist 60 fips 199')}}
