@@ -25,7 +25,7 @@
         <h4>{{t('titles.sal.overall sal')}}</h4>
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
-                <label [attr.csetid]="'OverallSAL' + level.value" class="btn btn-level btn-rounded form-check-label"
+                <label [attr.csetid]="'OverallSAL' + level.value" class="btn btn-level btn-rounded"
                     [class.active]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level"
                     (click)="saveLevel(level.value,'std')">
                     <input class="btn-check" tabindex="0" type="radio" autocomplete="off" name="sal_main"
