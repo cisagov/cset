@@ -24,7 +24,7 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Color, ColorHelper, ScaleType } from '@swimlane/ngx-charts';
 import { RraDataService } from '../../../../services/rra-data.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-rra-summary',

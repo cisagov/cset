@@ -618,7 +618,7 @@ import { CmuAppendixCoverComponent } from './reports/cmu/cmu-appendix-cover/cmu-
 import { OtherRemarksComponent } from './assessment/questions/other-remarks/other-remarks.component';
 import { CmuOtherRemarksComponent } from './reports/cmu/cmu-other-remarks/cmu-other-remarks.component';
 import { TranslocoRootModule } from './transloco-root.module';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { UserLanguageComponent } from './dialogs/user-language/user-language.component';
 import { MalcolmUploadErrorComponent } from './dialogs/malcolm/malcolm-upload-error.component';
 import { FooterService } from './services/footer.service';
