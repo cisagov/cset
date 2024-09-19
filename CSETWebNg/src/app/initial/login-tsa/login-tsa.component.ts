@@ -24,7 +24,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { EjectionComponent } from '../../dialogs/ejection/ejection.component';
 import { AssessmentService } from '../../services/assessment.service';
@@ -58,7 +58,7 @@ export class LoginTsaComponent implements OnInit {
   browserIsIE: boolean = false;
   showLoginBox: boolean = true;
 
-  @ViewChild('acc') accordion: NgbAccordion;
+  @ViewChild('acc') accordion: NgbAccordionModule;
 
   /**
    * Constructor
