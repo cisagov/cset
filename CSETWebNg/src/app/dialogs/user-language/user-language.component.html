@@ -33,7 +33,7 @@
                 <p>
                     {{ t('note language change') }}
                 </p>
-                <label class="mb-1 fw-600" for="selectLang">{{t('user language')}}</label>
+                <label class="fw-600 form-label" for="selectLang">{{t('user language')}}</label>
                 <select class="form-select" id="langSelection" name="langSelection" [(ngModel)]="langSelection">
                     <option *ngFor="let o of languageOptions" [value]="o.value">{{o.name}}</option>
                 </select>
