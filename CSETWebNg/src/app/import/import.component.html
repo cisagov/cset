@@ -57,8 +57,7 @@
                         for processing. This may take several minutes</div>
                     <div class="alert alert-danger" role="alert" *ngIf="state=='Failed'">The module failed to import
                         because an error occurred in processing.</div>
-                    <div class="alert alert-warning" role="alert" *ngIf="importNgForm.invalid">You must correct all
-                        errors before submitting the module for processing.</div>
+                    <div class="alert alert-warning" role="alert" *ngIf="importNgForm.invalid">You need to resolve all errors before the module can be imported.</div>
 
                 </div>
                 <form #importNgForm='ngForm' class="d-flex flex-column flex-11a" (submit)="submitForm()">
@@ -151,7 +150,7 @@
                         *ngIf="state!='Processing'&&monaco&&monaco.editor&&monaco.editor.getModelMarkers({}).length">
                         <div class="panel-heading">
                             <h4 class="panel-title px-2 py-1" style="color:white">
-                                Validation messages
+                                Error messages
                             </h4>
                         </div>
                         <ul class="panel-body m-0" style="max-height:150px;overflow:auto;">
@@ -164,68 +163,7 @@
                             </li>
                         </ul>
                     </div>
-                    <h4>Supporting Documents</h4>
-                    <div class="mb-2">Any additional documents that are referenced by your module need to be added
-                        below by dropping the file onto the drop area.</div>
-                    <div *ngIf="isDocError" class="text-danger">An error occurred while processing documents. Please
-                        review the files below and try again</div>
-                    <div ng2FileDrop class="pb-2" style=" position:relative;min-height:100px;"
-                        (fileOver)="fileOverBase($event)">
-                        <div *ngIf="!uploader?.queue?.length||hasBaseDropZoneOver"
-                            [ngClass]="{'nv-file-over': hasBaseDropZoneOver }" class="well my-drop-zone">
-                            Drop reference files here
-                        </div>
-                        <div *ngIf="uploader?.queue?.length">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th width="50%">Name</th>
-                                        <th>Title</th>
-                                        <th>Short Name</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <ng-container *ngFor="let item of uploader.queue; index as i">
-                                        <tr [ngClass]="{'danger': item.isError, 'success': item.isSuccess }">
-                                            <td style="vertical-align:middle">
-                                                <span class="cset-icons-check-circle text-success pe-1"
-                                                    title="The file was uploaded successfully"
-                                                    *ngIf="item.isSuccess"></span>
-                                                <span class="cset-icons-exclamation-triangle text-danger pe-1"
-                                                    title="There was an error uploading the file.  Please try again."
-                                                    *ngIf="item.isError"></span>
-                                                <strong>{{ item?.file?.name }}</strong>
-                                                <div class="progress" style="margin-bottom: 0;"
-                                                    *ngIf="item.isUploading">
-                                                    <div class="progress-bar" role="progressbar"
-                                                        [ngStyle]="{ 'width': item.progress + '%' }"></div>
-                                                </div>
-                                            </td>
-                                            <td [ngClass]="{'has-error': name.invalid && (name.dirty || name.touched)}">
-                                                <input type="text" class="form-control" name="name{{i}}"
-                                                    [readOnly]="(item.isReady || item.isUploading || item.isSuccess)"
-                                                    #name="ngModel" style="vertical-align:middle"
-                                                    [(ngModel)]="this.items[item.file.name].name" required /></td>
-                                            <td
-                                                [ngClass]="{'has-error': shortName.invalid && (shortName.dirty || shortName.touched)}">
-                                                <input type="text" class="form-control" name="shortName{{i}}"
-                                                    [readOnly]="(item.isReady || item.isUploading || item.isSuccess)"
-                                                    style="vertical-align:middle" #shortName="ngModel"
-                                                    [(ngModel)]="this.items[item.file.name].shortName" required /></td>
-
-                                            <td nowrap style="vertical-align:middle">
-                                                <button type="button" class="btn btn-danger btn-sm"
-                                                    (click)="item.remove()" *ngIf="!item.isUploading">
-                                                    <span class="cset-icons-close-x"></span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </ng-container>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    
                     <div style="margin: .5em 0">
                         <button [attr.disabled]="state=='Processing'||!importNgForm.valid?true:null" type="submit"
                             class="btn btn-success btn-s me-2" *ngIf="state!='Succeeded'"
