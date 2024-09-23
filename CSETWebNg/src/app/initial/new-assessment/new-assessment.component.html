@@ -36,6 +36,9 @@
                     <div class="card-body gallery-card-body cursor-pointer"
                         style="min-height:150px; max-height:150px; z-index:1"
                         (click)="navSvc.beginNewAssessmentGallery(c)">
+                        <div class="img-container">
+                            <img class="img-cropped-calc" [src]="getImageSrc(c.icon_File_Name_Small)">
+                        </div>
                         <h6 class="card-title" ellipsis [ellipsis-content]="c.title"
                             style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
                        
