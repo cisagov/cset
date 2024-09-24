@@ -35,7 +35,7 @@ import { AcetFilteringService } from '../../../services/filtering/maturity-filte
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { CompletionService } from '../../../services/completion.service';
 import { ACETService } from '../../../services/acet.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({

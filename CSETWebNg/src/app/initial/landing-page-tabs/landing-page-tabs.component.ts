@@ -28,7 +28,7 @@ import { filter } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ChangePasswordComponent } from "../../dialogs/change-password/change-password.component";
 import { AlertComponent } from '../../dialogs/alert/alert.component';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({

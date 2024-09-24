@@ -25,7 +25,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ConfigService } from '../../../services/config.service';
 import { ReferenceDocLink } from '../../../models/question-extras.model';
 import { ResourceLibraryService } from '../../../services/resource-library.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 /**
  * Displays references for a question in a more concise way than

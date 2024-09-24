@@ -26,7 +26,7 @@ import { Injectable } from '@angular/core';
 import { NistSpecialFactor } from '../assessment/prepare/sals/sal-nist/nist-sal.models';
 import { Sal } from '../models/sal.model';
 import { ConfigService } from './config.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 const headers = {
   headers: new HttpHeaders()
