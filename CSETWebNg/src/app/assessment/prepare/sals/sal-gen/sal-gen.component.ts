@@ -27,7 +27,7 @@ import { GeneralSalDescriptionsWeights } from '../../../../models/sal.model';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { Sal } from '../../../../models/sal.model';
 import { SalService } from '../../../../services/sal.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 

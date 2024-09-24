@@ -27,7 +27,7 @@ import { ConfigService } from './config.service';
 import { AdminSaveData, AttributePair } from '../models/admin-save.model';
 import { AcetDashboard } from '../models/acet-dashboard.model';
 import { AssessmentService } from './assessment.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 const headers = {
     headers: new HttpHeaders()

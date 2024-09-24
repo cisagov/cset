@@ -48,7 +48,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { MatExpansionModule } from '@angular/material/expansion';
 // import { MatSliderModule } from '@angular/material/slider';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { ClipboardModule } from '@angular/cdk/clipboard';
@@ -98,7 +97,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { OverlayModule } from '@angular/cdk/overlay';
 
-import { NgxSliderModule } from 'ngx-slider-v2';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
@@ -619,7 +618,7 @@ import { CmuAppendixCoverComponent } from './reports/cmu/cmu-appendix-cover/cmu-
 import { OtherRemarksComponent } from './assessment/questions/other-remarks/other-remarks.component';
 import { CmuOtherRemarksComponent } from './reports/cmu/cmu-other-remarks/cmu-other-remarks.component';
 import { TranslocoRootModule } from './transloco-root.module';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { UserLanguageComponent } from './dialogs/user-language/user-language.component';
 import { MalcolmUploadErrorComponent } from './dialogs/malcolm/malcolm-upload-error.component';
 import { FooterService } from './services/footer.service';
@@ -751,7 +750,6 @@ import { ReportListCommonComponent } from './assessment/results/reports/report-l
     // MatListModule,
     // MatMenuModule,
     // MatTabsModule,
-    FlexLayoutModule,
     ReactiveFormsModule,
     NgxSliderModule,
     // TextareaAutosizeModule,

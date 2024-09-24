@@ -27,7 +27,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ACETService } from '../../../services/acet.service';
 import { AcetDashboard } from '../../../models/acet-dashboard.model';
 import { NavigationService } from '../../../services/navigation/navigation.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
     selector: 'app-acet-dashboard',

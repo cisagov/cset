@@ -29,7 +29,7 @@ import { AcetFilteringService } from '../../../services/filtering/maturity-filte
 import { NCUAService } from '../../../services/ncua.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ACETService } from '../../../services/acet.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 /**
