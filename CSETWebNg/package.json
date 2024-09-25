@@ -58,7 +58,7 @@
         "lodash": "^4.17.21",
         "luxon": "^3.5.0",
         "material-design-icons": "^3.0.1",
-        "monaco-editor": "^0.51.0",
+        "monaco-editor": "^0.52.0",
         "ng2-currency-mask": "^13.0.3",
         "ng2-file-upload": "^6.0.0",
         "ngx-csv": "^0.3.2",
