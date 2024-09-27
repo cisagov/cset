@@ -2,6 +2,8 @@
 
     <!-- Prepare Phase -->
     <node d="prepare" id="phase-prepare">
+        <!-- tutorial page on explaining the CyberFlorida conversion process on converted assessments -->
+        <node d="conversion tutorial" id="tutorial-conversion" path="assessment/{:id}/prepare/tutorial-conversion" visible="INSTALL-MODE:CF STANDARD-NOT:Florida_NCSF_V2" />
 
         <!-- maturity model tutorials -->
         <node d="cmmc tutorial" id="tutorial-cmmc" path="assessment/{:id}/prepare/tutorial-cmmc" visible="MATURITY:2" />
@@ -234,9 +236,9 @@
             <node id="maturity-questions-nested-2586" displaytext="Critical Operations">
                 <node id="maturity-questions-nested-2587" path="assessment/{:id}/maturity-questions-nested/2587" displaytext="1. Plant Auxillary System" />
                 <node id="maturity-questions-nested-2588" path="assessment/{:id}/maturity-questions-nested/2588" displaytext="2. Maintenance" />
-                <node id="maturity-questions-nested-2589" path="assessment/{:id}/maturity-questions-nested/2589" displaytext="3. Generic Control Catalog" />
-                <node id="maturity-questions-nested-2590" path="assessment/{:id}/maturity-questions-nested/2590" displaytext="4. Plant Operational System" />
-                <node id="maturity-questions-nested-2591" path="assessment/{:id}/maturity-questions-nested/2591" displaytext="5. Safety" />
+                <node id="maturity-questions-nested-2589" path="assessment/{:id}/maturity-questions-nested/2589" displaytext="3. Safety" />
+                <node id="maturity-questions-nested-2590" path="assessment/{:id}/maturity-questions-nested/2590" displaytext="4. Generic Control Catalog" />
+                <node id="maturity-questions-nested-2591" path="assessment/{:id}/maturity-questions-nested/2591" displaytext="5. Plant Operational System" />
             </node>
             <node id="maturity-questions-nested-2592" displaytext="Dependencies">
                 <node id="maturity-questions-nested-2593" path="assessment/{:id}/maturity-questions-nested/2593" displaytext="1. Dependencies" />

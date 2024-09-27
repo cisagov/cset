@@ -385,17 +385,29 @@ namespace CSETWebCore.Business.Contact
                                     Answer_Text = cpgToCfAnswer(midAnswers[i].Answer_Text),
                                     Reviewed = midAnswers[i].Reviewed,
                                     FeedBack = midAnswers[i].FeedBack,
-                                    Question_Type = "Maturity",
-                                    Is_Requirement = false,
+                                    Question_Type = "Requirement",
+                                    Is_Requirement = true,
                                     Is_Component = false,
-                                    Is_Maturity = true
+                                    Is_Maturity = false
                                 };
 
                                 // prevents doubling-up of ANSWER records if question already has a record from the entry version of the assessment
                                 var entryAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Or_Requirement_Id == newAnswer.Question_Or_Requirement_Id).FirstOrDefault();
                                 if (entryAnswer != null)
                                 {
-                                    entryAnswer.Answer_Text = newAnswer.Answer_Text;
+                                    if (entryAnswer.Answer_Text == "Y" && entryAnswer.Is_Requirement == true)
+                                    {
+                                        entryAnswer.Answer_Text = "3";
+                                    }
+                                    else if (entryAnswer.Answer_Text == "N")
+                                    {
+                                        entryAnswer.Answer_Text = "1";
+                                    }
+                                    else
+                                    {
+                                        // someyhow a CPG snuck in and was Implemented
+                                        entryAnswer.Answer_Text = "7";
+                                    }
                                 }
                                 // prevents doubling-up of ANSWER records if questions can be controlled by multiple sources
                                 else if (addedIds.Contains(newAnswer.Question_Or_Requirement_Id))
@@ -403,7 +415,27 @@ namespace CSETWebCore.Business.Contact
                                     var answerRecord = newFullAnswers.Find(x => x.Question_Or_Requirement_Id == newAnswer.Question_Or_Requirement_Id);
                                     if (answerRecord.Answer_Text != newAnswer.Answer_Text)
                                     {
-                                        answerRecord.Answer_Text = "N";
+                                        var leastLevel = "1";
+                                        
+                                        if (Int32.TryParse(cpgToCfAnswer(answerRecord.Answer_Text), out int prevAnsInt) 
+                                        && Int32.TryParse(cpgToCfAnswer(newAnswer.Answer_Text), out int newAnsInt))
+                                        {
+                                            leastLevel = Int32.Min(prevAnsInt, newAnsInt).ToString();
+                                        }
+                                        else if (Int32.TryParse(cpgToCfAnswer(answerRecord.Answer_Text), out prevAnsInt))
+                                        {
+                                            leastLevel = prevAnsInt.ToString();
+                                        }
+                                        else if (Int32.TryParse(cpgToCfAnswer(newAnswer.Answer_Text), out newAnsInt))
+                                        {
+                                            leastLevel = newAnsInt.ToString();
+                                        }
+
+                                        answerRecord.Answer_Text = leastLevel;
+                                    }
+                                    else
+                                    {
+                                        // answerRecord.Answer_Text = "1";
                                     }
                                 }
                                 // if no duplications, add the answer to the to-be-added list
@@ -412,6 +444,11 @@ namespace CSETWebCore.Business.Contact
                                     newFullAnswers.Add(newAnswer);
                                     addedIds.Add(newAnswer.Question_Or_Requirement_Id);
                                 }
+
+                                //if (entryAnswer != null && entryAnswer.Answer_Text == "Y")
+                                //{
+                                //    entryAnswer.Answer_Text = "3";
+                                //}
                             }
                         }
                     }
@@ -429,11 +466,11 @@ namespace CSETWebCore.Business.Contact
         {
             switch (answerText) {
                 case "Y":
-                    // 6 for "Tested and Verified"
-                    return "6";
+                    // 7 for "Tested and Verified"
+                    return "7";
                 case "I":
-                    // 5 for "Implementation in Process"
-                    return "5";
+                    // 6 for "Implementation in Process"
+                    return "6";
                 case "S":
                     // 3 for "Documented Policy"
                     return "3";

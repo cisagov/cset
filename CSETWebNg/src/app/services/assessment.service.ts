@@ -690,6 +690,9 @@ export class AssessmentService {
 
   isCyberFloridaComplete(): boolean {
     if (this.configSvc.installationMode == "CF") {
+      if (this.assessment.maturityModel.modelName == "CPG") {
+        // return this.
+      }
       return this.floridaSvc.isAssessmentComplete();
     }
     else

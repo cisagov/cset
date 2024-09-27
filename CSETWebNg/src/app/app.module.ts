@@ -669,6 +669,7 @@ import { CieMfrReportComponent } from './reports/cie/cie-mfr-report/cie-mfr-repo
 import { ReportListComponent } from './assessment/results/reports/report-list/report-list.component';
 import { ReportListCommonComponent } from './assessment/results/reports/report-list/report-list-common.component';
 import { QuestionBlockCfComponent } from './assessment/questions/question-block-cf/question-block-cf.component';
+import { ConversionComponent } from './assessment/prepare/conversion/conversion.component';
 
 
 @NgModule({
@@ -1290,7 +1291,8 @@ import { QuestionBlockCfComponent } from './assessment/questions/question-block-
     AnalyticsloginComponent,
     ReportListComponent, 
     ReportListCommonComponent, 
-    QuestionBlockCfComponent
+    QuestionBlockCfComponent, 
+    ConversionComponent
   ],
   providers: [
     TranslocoService,
