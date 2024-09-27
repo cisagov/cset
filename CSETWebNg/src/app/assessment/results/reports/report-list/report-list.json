@@ -257,6 +257,26 @@
     ]
   },
   {
+    "title": "MOPhysical",
+    "reportList": [
+      {
+        "linkUrl": "physicalsummary"
+      },
+      {
+        "linkUrl": "executive"
+      },
+      {
+        "linkUrl": "sitesummary"
+      },
+      {
+        "linkUrl": "securityplan"
+      },
+      {
+        "linkUrl": "detail"
+      }
+    ]
+  },
+  {
     "title": "STANDARD",
     "reportList": [
       {

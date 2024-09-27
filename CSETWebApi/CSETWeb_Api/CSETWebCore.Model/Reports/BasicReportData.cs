@@ -41,7 +41,7 @@ namespace CSETWebCore.Business.Reports
         public List<ComponentQuestion> ComponentQuestions { get; set; }
         public List<List<DiagramZones>> Zones { get; set; }
         public List<CieQuestionAnswerPairing> QuestionAnswerPairings { get; set; }
-
+        public List<PhysicalQuestions> QuestionsWithSupplementals { get; set; }
 
         public class INFORMATION
         {
@@ -172,6 +172,12 @@ namespace CSETWebCore.Business.Reports
         public string Question { get; set; }
         public string Answer { get; set; }
 
+    }
+
+    public class PhysicalQuestions : RankedQuestions
+    {
+        public string Supplemental { get; set; }
+        public string Comment { get; set; }
     }
 
     public class QuestionsWithComments
