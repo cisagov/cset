@@ -344,7 +344,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   updateSectionId(): void {
     if (!!this.assessSvc.assessment) {
       // Network diagram and standard assessments use the same assessment list. sectionId will be passed as DIAGRAM
-      if (this.assessSvc.assessment.useStandard && !this.isMobile) {
+      if (this.assessSvc.usesStandard('MOPhysical')) {
+        this.currentSectionId = 'MOPhysical';
+      } else if (this.assessSvc.assessment.useStandard && !this.isMobile) {
           this.currentSectionId = 'STANDARD';
       } else if (this.assessSvc.assessment.useDiagram && !this.isMobile) {
           this.currentSectionId = 'DIAGRAM';
