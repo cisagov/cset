@@ -273,7 +273,7 @@ export class MyAssessmentsComponent implements OnInit {
                     let assessment = assessments.find(x => x.assessmentId === element.assessmentId);
                     if (assessment) {
                       assessment.isEntry = element.isEntry;
-                      assessment.isEntryString = element.isEntry ? 'Entry' : 'Full';                        
+                      assessment.isEntryString = element.isEntry ? 'Entry' : (assessment.selectedMaturityModel == 'CPG' ? 'Mid' : 'Full');                        
                       if(assessment.isEntry)
                         assessment.totalAvailableQuestionsCount = 20;
                     }

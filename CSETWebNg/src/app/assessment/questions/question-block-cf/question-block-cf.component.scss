@@ -1,3 +1,11 @@
 .slider {
-    width: 250px;
+    accent-color:red;
+}
+
+::ng-deep .mat-accent .mat-slider-track-fill {
+    background-color: red !important;
+}
+::ng-deep .mat-slider-thumb-label {
+    background-color: red !important;
+
 }

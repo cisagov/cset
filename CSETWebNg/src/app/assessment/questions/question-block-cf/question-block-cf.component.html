@@ -84,30 +84,54 @@
         <div class="subcat-question-list px-3 pt-0 pb-3" [class.display-none]="!mySubCategory.expanded">
             <div class="question-row d-flex flex-column" *ngFor="let q of mySubCategory.questions"
                 id="qq{{q.questionId}}" >
-
-                <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
-                    <div class="number-and-text">
-                        <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.displayNumber }}
-                        </div>
-                        <div style="width: 100%;">
-                            <div [style.word-break]="applyWordBreak(q)" [innerHTML]="applyTokensToText(q)"
-                                (click)="questionTextClicked(q, $event)">
+                <div class="d-flex flex-row">
+                    <div style="margin-right: 8px;">
+                        <div class="d-flex flex-row" style="width: 600px" *ngIf="!layoutSvc.hp">
+                            <div class="number-and-text">
+                                <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.displayNumber }}
+                                </div>
+                                <div style="width: 100%;">
+                                    <div [style.word-break]="applyWordBreak(q)" [innerHTML]="applyTokensToText(q)"
+                                        (click)="questionTextClicked(q, $event)">
+                                    </div>
+                                    <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
+                                </div>
                             </div>
-                            <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
+
+
+                            
+                        </div>
+                        <div class="d-flex flex-column">
+                            <mat-slider class="slider" style="width: 600px;" [disabled]="disabled" [max]="8" [min]="1" [step]="1"
+                                [discrete]="false" [showTickMarks]="true" (change)="storeAnswer(q, slider.value)">
+                                <input matSliderThumb [(ngModel)]="+q.answer" #slider>
+                            </mat-slider>
+                            <div class="d-flex flex-row">
+                                <div>
+                                    <div>1</div>
+                                    <div>Not Performed</div>
+                                </div>
+                                <div class="d-flex flex-column" style="margin-left:auto">
+                                    <div style="margin-left:auto">7</div>
+                                    <div>Optomized</div>
+                                </div>
+                            </div>
+                            
+                            <!-- <div style="font-weight: bold;">
+                                {{ t('answer-options.labels.' + (q.answer ?? '1') + '-cf') }}
+                            </div> -->
                         </div>
                     </div>
-
-
-                    <div class="d-flex flex-column" style="width: 250px">
-                        <mat-slider class="slider" [disabled]="disabled" [max]="8" [min]="1" [step]="1"
-                            [discrete]="false" [showTickMarks]="true" (change)="storeAnswer(q, slider.value)">
-                            <input matSliderThumb [(ngModel)]="+q.answer" #slider>
-                        </mat-slider>
-                        <div style="font-weight: bold; font-size: large;">
+                    <div style="height: 200px; margin-left: 8px">
+                        <p style="font-weight: bold;">
                             {{ t('answer-options.labels.' + (q.answer ?? '1') + '-cf') }}
-                        </div>
+                        </p>
+                        <p>
+                            {{ t('answer-options.labels.' + (q.answer ?? '1') + '-cf-description') }}
+                        </p>
                     </div>
                 </div>
+                
 
                 <div class="w-100" *ngIf="layoutSvc.hp">
                     <!-- Handheld Portrait -->

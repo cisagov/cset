@@ -234,6 +234,7 @@ import { CieMfrReportComponent } from './reports/cie/cie-mfr-report/cie-mfr-repo
 import { TutorialCpgComponent } from './assessment/prepare/maturity/tutorial-cpg/tutorial-cpg.component';
 import { TutorialMvraComponent } from './assessment/prepare/maturity/tutorial-mvra/tutorial-mvra.component';
 import { QuestionBlockCfComponent } from './assessment/questions/question-block-cf/question-block-cf.component';
+import { ConversionComponent } from './assessment/prepare/conversion/conversion.component';
 
 const appRoutes: Routes = [
 
@@ -364,6 +365,7 @@ const appRoutes: Routes = [
               { path: 'assessment-detail-cie', component: AssessmentDetailCieComponent },
               { path: 'assessment-info-cie', component: AssessmentInfoCieComponent },
               { path: 'assessment-config-cie', component: AssessmentConfigCieComponent },
+              { path: 'tutorial-conversion', component: ConversionComponent },
               { path: 'tutorial-cmmc', component: TutorialCmmcComponent },
               { path: 'tutorial-cmmc2', component: TutorialCmmc2Component },
               { path: 'tutorial-edm', component: TutorialEdmComponent },
