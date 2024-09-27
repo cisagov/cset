@@ -541,6 +541,22 @@ namespace CSETWebCore.Api.Controllers
             data.QuestionsWithAltJust = _report.GetQuestionsWithAlternateJustification();
             return Ok(data);
         }
+        [HttpGet]
+        [Route("api/reports/physicalsummary")]
+        public IActionResult GetPhysicalSummary()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            _report.SetReportsAssessmentId(assessmentId);
+            BasicReportData data = new BasicReportData();
+            data.information = _report.GetInformation();
+            data.QuestionsWithSupplementals = _report.GetQuestionsWithSupplementals();
+            data.RankedQuestionsTable = _report.GetRankedQuestions();
+            data.QuestionsWithComments = _report.GetQuestionsWithComments();
+            data.QuestionsMarkedForReview = _report.GetQuestionsMarkedForReview();
+            data.QuestionsWithAltJust = _report.GetQuestionsWithAlternateJustification();
+            return Ok(data);
+        }
 
 
         [HttpGet]

@@ -236,7 +236,7 @@ namespace CSETWebCore.Model.Question
         //{
         //    oldQuestionValues.SubLabelNumber = SubLabelNumber;
         //    oldQuestionValues.Question = Question;
-        //    oldQuestionValues.Comments = Comments;
+        //    oldQuestionValues.Comment = Comment;
         //    oldQuestionValues.References = References;
         //    oldQuestionValues.IsSelect = IsSelect;
         //    oldQuestionValues.SupplementalInfo = SupplementalInfo;
@@ -246,7 +246,7 @@ namespace CSETWebCore.Model.Question
         //{
         //    this.SubLabelNumber = oldQuestionValues.SubLabelNumber;
         //    this.Question = oldQuestionValues.Question;
-        //    this.Comments = oldQuestionValues.Comments;
+        //    this.Comment = oldQuestionValues.Comment;
         //    this.References = oldQuestionValues.References;
         //    this.IsSelect = oldQuestionValues.IsSelect;
 
