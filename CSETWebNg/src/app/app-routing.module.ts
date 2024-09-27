@@ -93,6 +93,7 @@ import { SecurityplanComponent } from './reports/securityplan/securityplan.compo
 import { TrendReportComponent } from './reports/trendreport/trendreport.component';
 import { CompareReportComponent } from './reports/comparereport/comparereport.component';
 import { SiteSummaryComponent } from './reports/site-summary/site-summary.component';
+import { PhysicalSummaryComponent} from './reports/physical-summary/physical-summary.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
@@ -530,6 +531,7 @@ const appRoutes: Routes = [
       { path: 'executive', component: ExecutiveSummaryComponent },
       { path: 'securityplan', component: SecurityplanComponent },
       { path: 'sitesummary', component: SiteSummaryComponent },
+      { path: 'physicalsummary', component: PhysicalSummaryComponent },
       { path: 'trendreport', component: TrendReportComponent },
       { path: 'comparereport', component: CompareReportComponent },
       { path: 'executivecmmc', component: ExecutiveCMMCComponent },
