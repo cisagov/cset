@@ -19,6 +19,7 @@ using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Model.Auth;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using NLog;
 
 namespace CSETWebCore.Helpers
 {
@@ -104,15 +105,17 @@ namespace CSETWebCore.Helpers
             }
             catch (ApplicationException app)
             {
+                LogManager.GetCurrentClassLogger().Error($"account already exists: ${Newtonsoft.Json.JsonConvert.SerializeObject(app)}");
                 throw new Exception("This account already exists. Please request a new password using the Forgot Password link if you have forgotten your password.", app);
             }
             catch (DbUpdateException due)
             {
+                LogManager.GetCurrentClassLogger().Error($"account already exists: ${Newtonsoft.Json.JsonConvert.SerializeObject(due)}");
                 throw new Exception("This account already exists. Please request a new password using the Forgot Password link if you have forgotten your password.", due);
             }
             catch (Exception exc)
             {
-                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+                LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                 return false;
             }
@@ -231,7 +234,7 @@ namespace CSETWebCore.Helpers
             }
             catch (Exception exc)
             {
-                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+                LogManager.GetCurrentClassLogger().Error($"... {exc}");
 
                 return false;
             }
