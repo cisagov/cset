@@ -33,6 +33,7 @@ import { ConfigService } from "../../../../../services/config.service";
 import { EmailService } from "../../../../../services/email.service";
 import { LayoutService } from "../../../../../services/layout.service";
 import { TranslocoService } from "@ngneat/transloco";
+import { DemographicIodService } from "../../../../../services/demographic-iod.service";
 
 @Component({
   selector: "app-contact-item",
@@ -66,6 +67,7 @@ export class ContactItemComponent implements OnInit {
   results: EditableUser[];
   roles: Role[];
   editMode: boolean;
+  creatorId: any; 
 
 
   constructor(
@@ -75,7 +77,8 @@ export class ContactItemComponent implements OnInit {
     private assessSvc: AssessmentService,
     private dialog: MatDialog,
     public layoutSvc: LayoutService,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService, 
+    public demoSvc: DemographicIodService
   ) {
     this.editMode = true;
   }
@@ -96,6 +99,7 @@ export class ContactItemComponent implements OnInit {
     if (this.contact.evaluateCanEdit) {
       this.editMode = this.contact.evaluateCanEdit();
     }
+    this.assessmentCreator()
   }
 
   isEmailValid() {
@@ -266,5 +270,11 @@ export class ContactItemComponent implements OnInit {
    */
   scrollToTop() {
     this.topScroll?.nativeElement.scrollIntoView({ behavior: 'smooth', alignToTop: true });
+  }
+  // Check if assessment was created by current user 
+  assessmentCreator(){
+    this.assessSvc.getCreator().then((response: any) => {
+      this.creatorId = response
+    })
   }
 }

@@ -53,8 +53,8 @@
       </div>
       <span class="d-flex align-items-center m-3 fw-600" style="text-align: center;"
         *ngIf="contact.isSiteParticipant">Participated<br />in Site Visit</span>
-      <span class="d-flex align-items-center m-3 fw-600" style="text-align: center;"
-        *ngIf="contact.isPrimaryPoc">Primary<br />Point of Contact</span>
+      <span class="d-flex align-items-center m-3 fw-600" style="text-align: center;">
+        </span>
 
       <span *ngIf="showControls()" class="d-flex align-items-center flex-00a">
         <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
@@ -74,7 +74,15 @@
         </button>
       </span>
 
-      <span class="pe-3 fw-600" *ngIf="!showControls()">{{ t('contact.assessment owner') }}</span>
+      <span class="pe-3 fw-600" *ngIf="!showControls()">
+        <ul>
+          <ol *ngIf="contact.isPrimaryPoc">Primary<br />Point of Contact</ol>
+          <ol> <div *ngIf="creatorId == contact.userId; else Editor"> Assessment Creator </div>
+            <ng-template #Editor> Assessment Editor </ng-template>
+          </ol>
+        </ul>
+       
+      </span>
     </div>
 
 
