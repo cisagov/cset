@@ -496,7 +496,6 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
-                int? userId = _tokenManager.GetCurrentUserId();
                 var creatorId = this._assessmentBusiness.GetAssessmentCreator((assessmentId));
 
                 return Ok(creatorId);
