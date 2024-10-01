@@ -18,6 +18,7 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using System.IO;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 
 namespace CSETWebCore.Business.Notification
@@ -134,6 +135,13 @@ namespace CSETWebCore.Business.Notification
         /// <param name="password"></param>
         public void SendPasswordEmail(string email, string firstName, string lastName, string password, string appName)
         {
+            // make sure we default to a known app name
+            if (!_appDisplayName.ContainsKey(appName))
+            {
+                appName = "CSET";
+            }
+
+
             string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", @"passwordCreationTemplate_{{scope}}.html"), appName);
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
             bodyHtml = bodyHtml.Replace("{{name}}", firstName + " " + lastName);
@@ -148,7 +156,7 @@ namespace CSETWebCore.Business.Notification
 
 
             MailMessage message = new MailMessage();
-            message.Subject = "New " + _appDisplayName[appName] + " account creation";
+            message.Subject = $"New {_appDisplayName[appName]} account creation";
             message.Body = bodyHtml;
             message.To.Add(new MailAddress(email));
             message.From = new MailAddress(
@@ -171,6 +179,12 @@ namespace CSETWebCore.Business.Notification
         /// <param name="password"></param>
         public void SendInviteePassword(string email, string firstName, string lastName, string password, string appName)
         {
+            // make sure we default to a known app name
+            if (!_appDisplayName.ContainsKey(appName))
+            {
+                appName = "CSET";
+            }
+
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
             string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", @"invitedPasswordCreationTemplate_{{scope}}.html"), appName);
             bodyHtml = bodyHtml.Replace("{{name}}", firstName + " " + lastName);
@@ -185,7 +199,7 @@ namespace CSETWebCore.Business.Notification
 
 
             MailMessage message = new MailMessage();
-            message.Subject = "You are invited to " + _appDisplayName[appName];
+            message.Subject = $"You are invited to {_appDisplayName[appName]}";
             message.Body = bodyHtml;
             message.To.Add(new MailAddress(email));
             message.From = new MailAddress(
@@ -209,7 +223,14 @@ namespace CSETWebCore.Business.Notification
         /// <param name="subject"></param>
         public void SendPasswordResetEmail(string email, string firstName, string lastName, string password, string subject, string appName)
         {
+            // make sure we default to a known app name
+            if (!_appDisplayName.ContainsKey(appName))
+            {
+                appName = "CSET";
+            }
+
             SetScope(appName);
+
             string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", @"passwordResetTemplate_{{scope}}.html"), appName);
             string name = (firstName + " " + lastName).Trim();
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
@@ -306,6 +327,13 @@ namespace CSETWebCore.Business.Notification
         {
             SetScope();
 
+            // make sure we default to a known app name
+            var appName = "CSET";
+            if (_appDisplayName.ContainsKey(_scope))
+            {
+                appName = _appDisplayName[_scope];
+            }
+
             // only send the email if configured to do so (unpublished app setting)
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
             bool allowed = false;
@@ -319,7 +347,7 @@ namespace CSETWebCore.Business.Notification
             }
 
             MailMessage m = new MailMessage();
-            m.Subject = _appDisplayName[_scope] + " Test Message";
+            m.Subject = $"{appName} Test Message";
             m.Body = string.Format("Testing email server {0} on port {1}",
                 emailConfig.FirstOrDefault(x => x.Key == "Email:SmtpHost").Value,
                 emailConfig.FirstOrDefault(x => x.Key == "Email:SmtpPort").Value);

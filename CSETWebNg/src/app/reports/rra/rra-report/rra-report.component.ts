@@ -29,7 +29,7 @@ import { BehaviorSubject } from 'rxjs';
 import { RraDataService } from '../../../services/rra-data.service';
 import Chart from 'chart.js/auto';
 import { ConfigService } from '../../../services/config.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'rra-report',

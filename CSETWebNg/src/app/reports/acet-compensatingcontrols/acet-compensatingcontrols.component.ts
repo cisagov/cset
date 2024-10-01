@@ -27,7 +27,7 @@ import { ReportService } from '../../services/report.service';
 import { QuestionsService } from './../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-acet-compensatingcontrols',

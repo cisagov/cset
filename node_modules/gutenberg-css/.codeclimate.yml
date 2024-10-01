@@ -1,8 +1,0 @@
-engines:
- scss-lint:
-    enabled: true
-ratings:
-  paths:
-  - "scss/**.scss"
-exclude_paths:
-  - "dist/"

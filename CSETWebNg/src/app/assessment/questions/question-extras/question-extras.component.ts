@@ -39,7 +39,7 @@ import { Observation } from '../observations/observations.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
 import { LayoutService } from '../../../services/layout.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { CieService } from '../../../services/cie.service';
 
 
