@@ -80,6 +80,8 @@ export class AssessmentService {
    */
   public isBrandNew = false;
 
+  public assessmentCreator: any; 
+
   /**
    *
    */
@@ -233,6 +235,16 @@ export class AssessmentService {
       .toPromise()
       .then((response: AssessmentContactsResponse) => {
         this.userRoleId = response.currentUserRole;
+        return response;
+      });
+  }
+
+   getCreator(){
+    return this.http
+      .get(this.apiUrl + 'assessmentcreator')
+      .toPromise()
+      .then((response: any) => {
+        this.assessmentCreator = response;
         return response;
       });
   }
