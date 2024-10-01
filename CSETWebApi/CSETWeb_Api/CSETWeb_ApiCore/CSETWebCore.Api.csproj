@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <AssemblyVersion>12.2.6.2</AssemblyVersion>
+    <AssemblyVersion>12.2.6.3</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'CSETWeb_ApiCore' " />
