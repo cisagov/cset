@@ -26,7 +26,7 @@ import { HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import Chart from 'chart.js/auto';
 import { ChartService } from './chart.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Injectable({
   providedIn: 'root'

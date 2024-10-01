@@ -32,7 +32,7 @@ import { AuthenticationService } from "../../../../../services/authentication.se
 import { ConfigService } from "../../../../../services/config.service";
 import { EmailService } from "../../../../../services/email.service";
 import { LayoutService } from "../../../../../services/layout.service";
-import { TranslocoService } from "@ngneat/transloco";
+import { TranslocoService } from "@jsverse/transloco";
 import { DemographicIodService } from "../../../../../services/demographic-iod.service";
 
 @Component({

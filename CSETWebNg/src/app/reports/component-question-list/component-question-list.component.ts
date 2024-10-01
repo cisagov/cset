@@ -24,7 +24,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { QuestionsService } from '../../services/questions.service';
 import { Utilities } from '../../services/utilities.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-component-question-list',

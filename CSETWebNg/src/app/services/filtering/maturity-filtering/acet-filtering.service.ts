@@ -27,7 +27,7 @@ import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { ACETDomain } from '../../../models/questions.model';
 import { Injectable, Output, EventEmitter } from "@angular/core";
 import { AssessmentService } from "../../assessment.service";
-import { TranslocoService } from "@ngneat/transloco";
+import { TranslocoService } from "@jsverse/transloco";
 
 
 
