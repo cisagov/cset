@@ -23,7 +23,7 @@
 <div class="p-4 pb-0 d-flex flex-column flex-00a" *transloco="let t">
   <form name="form" (ngSubmit)="signup()" #fReg="ngForm">
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && !firstName.valid }">
-      <label required for="firstName">{{t('user profile.first name')}}</label>
+      <label required for="firstName" class="form-label">{{t('user profile.first name')}}</label>
       <input type="text" tabindex="0" maxlength="150" class="form-control" id="firstName" name="firstName"
         [(ngModel)]="model.firstName" #firstName="ngModel" required />
       <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert alert-danger">First Name is
@@ -31,7 +31,7 @@
     </div>
 
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && !lastName.valid }">
-      <label required for="lastName">{{t('user profile.last name')}}</label>
+      <label required for="lastName" class="form-label">{{t('user profile.last name')}}</label>
       <input type="text" tabindex="0" maxlength="150" class="form-control" id="lastName" name="lastName"
         [(ngModel)]="model.lastName" #lastName="ngModel" required />
       <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">Last Name is
@@ -40,7 +40,7 @@
 
     <div class="form-group"
       [ngClass]="{ 'has-error': fReg.submitted && (email?.errors?.notValidEmail || email?.errors?.required) }">
-      <label required for="email">{{t('user profile.email')}}</label>
+      <label required for="email" class="form-label">{{t('user profile.email')}}</label>
       <input type="email" tabindex="0" maxlength="150" class="form-control" name="email"
         [(ngModel)]="model.primaryEmail" #email="ngModel" required email />
       <div *ngIf="email.invalid && (email.dirty)">
@@ -51,47 +51,56 @@
 
     <div class="form-group"
       [ngClass]="{ 'has-error': fReg.submitted && (confirmEmail?.errors?.required || confirmEmail?.errors?.notValidEmail || confirmEmail?.errors?.notValidEmail) }">
-      <label required for="confirmEmail">{{t('user profile.confirm email')}}</label>
+      <label required for="confirmEmail" class="form-label">{{t('user profile.confirm email')}}</label>
       <input type="email" tabindex="0" class="form-control" name="confirmEmail" [(ngModel)]="model.confirmEmail"
         required #confirmEmail="ngModel" appConfirmEqualValidator="email" email />
       <div *ngIf="confirmEmail.invalid && confirmEmail.touched">
-        <div *ngIf="confirmEmail?.errors?.required" class="alert alert-danger">{{t('user profile.email required')}}</div>
-        <div *ngIf="confirmEmail?.errors?.notValidEmail" class="alert alert-danger">{{t('user profile.not valid email')}}</div>
-        <div *ngIf="confirmEmail?.errors?.notEqual" class="alert alert-danger">{{t('user profile.emails do not match')}}</div>
+        <div *ngIf="confirmEmail?.errors?.required" class="alert alert-danger">{{t('user profile.email required')}}
+        </div>
+        <div *ngIf="confirmEmail?.errors?.notValidEmail" class="alert alert-danger">{{t('user profile.not valid
+          email')}}</div>
+        <div *ngIf="confirmEmail?.errors?.notEqual" class="alert alert-danger">{{t('user profile.emails do not match')}}
+        </div>
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group mb-4">
       <div class="form-text mt-4 mb-3">{{t('user profile.security questions text')}}
       </div>
       <table class="paddingBetweenCols">
-        <th>{{t('user profile.security question')}}</th>
-        <th>{{t('user profile.security answer')}}</th>
-        <tr>
-          <td>
-            <select class="form-control" tabindex="0" id="securityQuestion1" name="securityQustion1"
-              [(ngModel)]="model.securityQuestion1">
-              <option *ngFor="let question of SecurityQuestions">{{question.securityQuestion}}</option>
-            </select>
-          </td>
-          <td>
-            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer1"
-              name="SecurityAnswer1" [(ngModel)]="model.securityAnswer1"
-              placeholder="{{'user profile.answer' | transloco}}">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityQuestion2"
-              placeholder="{{'user profile.your own question' | transloco}}" name="SecurityQuestion2"
-              [(ngModel)]="model.securityQuestion2">
-          </td>
-          <td>
-            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer2"
-              placeholder="{{'user profile.answer' | transloco}}" name="SecurityAnswer2"
-              [(ngModel)]="model.securityAnswer2">
-          </td>
-        </tr>
+        <thead>
+          <tr>
+            <th>{{t('user profile.security question')}}</th>
+            <th>{{t('user profile.security answer')}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <select class="form-select" tabindex="0" id="securityQuestion1" name="securityQustion1"
+                [(ngModel)]="model.securityQuestion1">
+                <option *ngFor="let question of SecurityQuestions">{{question.securityQuestion}}</option>
+              </select>
+            </td>
+            <td>
+              <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer1"
+                name="SecurityAnswer1" [(ngModel)]="model.securityAnswer1"
+                placeholder="{{'user profile.answer' | transloco}}">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityQuestion2"
+                placeholder="{{'user profile.your own question' | transloco}}" name="SecurityQuestion2"
+                [(ngModel)]="model.securityQuestion2">
+            </td>
+            <td>
+              <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer2"
+                placeholder="{{'user profile.answer' | transloco}}" name="SecurityAnswer2"
+                [(ngModel)]="model.securityAnswer2">
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
 

@@ -24,6 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FileUploadClientService } from '../../../../services/file-client.service';
+import { AwwaService } from '../../../../services/awwa.service';
 
 @Component({
   selector: 'app-awwa-standard',
@@ -39,7 +40,8 @@ export class AwwaStandardComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AwwaStandardComponent>,
-    public fileSvc: FileUploadClientService
+    public fileSvc: FileUploadClientService,
+    public awwaSvc: AwwaService
   ) { }
 
   ngOnInit() {
@@ -50,7 +52,7 @@ export class AwwaStandardComponent implements OnInit {
    */
   openAwwaSite() {
     this.dialogRef.close();
-    window.open('http://www.awwa.org/cyber');
+    window.open(this.awwaSvc.url);
   }
 
   /**

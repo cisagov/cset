@@ -28,7 +28,7 @@ import { IRPService } from '../../../services/irp.service';
 import { IRPResponse, IRP } from '../../../models/irp.model';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { ACETService } from '../../../services/acet.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
     selector: 'app-irp',

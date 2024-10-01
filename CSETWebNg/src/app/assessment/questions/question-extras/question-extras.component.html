@@ -140,13 +140,13 @@
         </button>
         <span *ngIf="displayIcon('REVIEWED')" class="btn-group btn-group-toggle">
             <label class="btn btn-level form-check-label" [class.active]="myQuestion?.reviewed">
-                <input class="form-check-input" type="checkbox" data-toggle="toggle" (click)="storeReviewed($event)"
+                <input class="btn-check" type="checkbox" data-toggle="toggle" (click)="storeReviewed($event)"
                     [checked]="myQuestion?.reviewed" />{{ 'buttons.reviewed' | transloco }}
             </label>
         </span>
 
         <span class="btn-group-toggle">
-            <label *ngIf="showMfr" class="mr-0 ml-2 btn form-check-label btn-mfr"
+            <label *ngIf="showMfr" class="me-0 ms-2 btn form-check-label btn-mfr"
                 [class.answer-selected]="myQuestion.markForReview === true"
                 matTooltip="This control requires further review.">
                 <input name="q_{{myQuestion.questionId}}_F" type="checkbox"
@@ -172,11 +172,11 @@
             <div *ngIf=" !!extras && !!tab && mode == 'COMPONENT'" class="detail">
                 <table>
                     <tr>
-                        <th>{{t('extras.component type')}}</th>
+                        <th class="pe-3">{{t('extras.component type')}}</th>
                         <th>{{t('extras.override component answer')}}</th>
                     </tr>
                     <tr *ngFor="let componentType of tab?.componentTypes">
-                        <td>{{componentType.symbol_Name}}</td>
+                        <td class="pe-3">{{componentType.symbol_Name}}</td>
                         <td>
                             <div class="text-right">
                                 <button *ngIf="componentType.enabled; else noOverride"
@@ -259,7 +259,7 @@
                     <div class="sub-header-1">
                         {{t('extras.implementation guidance')}}
                     </div>
-                    <div [innerHTML]="myQuestion.implementationGuides" class="ml-3">
+                    <div [innerHTML]="myQuestion.implementationGuides" class="ms-3">
                     </div>
                 </div>
 
@@ -296,7 +296,7 @@
         <div *ngIf=" !!extras && mode === 'CMNT'">
             <div *ngIf="!assessSvc.usesMaturityModel('CIE'); else cieComment" class="form-group">
                 <textarea appAutoSize [(ngModel)]="myQuestion.comment" (change)="saveComment($event)"
-                    style="min-height: 72px; width: 100%" class="form-control"></textarea>
+                    style="min-height: 72px; width: 100%" class="form-control" placeholder="{{t('extras.comment placeholder')}}"></textarea>
             </div>
             <ng-template #cieComment class="form-group">
                 <textarea appAutoSize [value]="cieSvc.commentMap.get(myQuestion.questionId) != null ? cieSvc.commentMap.get(myQuestion.questionId) : ''" 
@@ -307,7 +307,7 @@
         <div *ngIf=" !!extras && mode === 'FDBK'">
             <div *ngIf="!assessSvc.usesMaturityModel('CIE'); else cieFeedback" class="form-group">
                 <textarea appAutoSize [(ngModel)]="myQuestion.feedback" (change)="saveFeedback($event)" maxlength="2048"
-                    style="min-height: 72px; width: 100%" class="form-control"></textarea>
+                    style="min-height: 72px; width: 100%" class="form-control" placeholder="{{t('extras.feedback placeholder')}}"></textarea>
             </div>
             <ng-template #cieFeedback class="form-group">
                 <textarea appAutoSize [value]="cieSvc.feedbackMap.get(myQuestion.questionId) != null ? cieSvc.feedbackMap.get(myQuestion.questionId) : ''" 
@@ -426,13 +426,13 @@
                         <td>
                             <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
                                 (click)="addEditObservation(obs.observation_Id)">
-                                <span class="mr-1 cset-icons-pencil"></span>
+                                <span class="me-1 cset-icons-pencil"></span>
                             </button>
                         </td>
                         <td>
                             <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
                                 (click)="deleteObservation(obs)">
-                                <span class="mr-1 cset-icons-trash-can"></span>
+                                <span class="me-1 cset-icons-trash-can"></span>
                             </button>
                         </td>
                     </tr>

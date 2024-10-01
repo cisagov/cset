@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CharterMismatchComponent } from '../dialogs/charter-mistmatch/charter-mismatch.component';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { DateAdapter } from '@angular/material/core';
 import { ACETService } from './acet.service';
 import { AssessmentService } from './assessment.service';
@@ -12,8 +12,6 @@ import { AcetFilteringService } from './filtering/maturity-filtering/acet-filter
 import { IRPService } from './irp.service';
 import { MaturityService } from './maturity.service';
 import { ReportService } from './report.service';
-import { Question } from '../models/questions.model';
-import { List } from 'lodash';
 import { QuestionFilterService } from './filtering/question-filter.service';
 import { QuestionFiltersReportsComponent } from '../dialogs/question-filters-reports/question-filters-reports.component';
 

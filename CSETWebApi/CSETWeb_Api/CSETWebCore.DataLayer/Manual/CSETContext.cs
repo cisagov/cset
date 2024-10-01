@@ -509,6 +509,30 @@ namespace CSETWebCore.DataLayer.Model
 
 
         /// <summary>
+        /// Insert empty questions for Maturity model questions for a specified model.
+        /// This is designed for use with SSG questions.
+        /// </summary>
+        /// <param name="assessment_Id"></param>
+        /// <returns></returns>
+        public virtual int FillEmptyMaturityQuestionsForModel(Nullable<int> assessmentId, int modelId)
+        {
+            if (!assessmentId.HasValue)
+                throw new ApplicationException("parameters may not be null");
+
+            int myrval = 0;
+            this.LoadStoredProc("FillEmptyMaturityQuestionsForModel")
+                     .WithSqlParam("Assessment_Id", assessmentId)
+                     .WithSqlParam("Model_Id", modelId)
+
+                     .ExecuteStoredProc((handler) =>
+                     {
+                         myrval = handler.ReadToValue<int>() ?? 0;
+                     });
+            return myrval;
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="assessment_Id"></param>

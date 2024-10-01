@@ -24,9 +24,9 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
-  AssessmentContactsResponse,
-  AssessmentDetail,
-  MaturityModel
+    AssessmentContactsResponse,
+    AssessmentDetail,
+    MaturityModel
 } from '../models/assessment-info.model';
 import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
@@ -35,7 +35,7 @@ import { DemographicExtendedService } from './demographic-extended.service';
 import { CyberFloridaService } from './cyberflorida.service';
 import { Answer } from '../models/questions.model';
 import { BehaviorSubject } from 'rxjs';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ConversionService } from './conversion.service';
 
 
@@ -79,6 +79,8 @@ export class AssessmentService {
    * things that should only be done on the very first load of an assessment.
    */
   public isBrandNew = false;
+
+  public assessmentCreator: any; 
 
   /**
    *
@@ -233,6 +235,16 @@ export class AssessmentService {
       .toPromise()
       .then((response: AssessmentContactsResponse) => {
         this.userRoleId = response.currentUserRole;
+        return response;
+      });
+  }
+
+   getCreator(){
+    return this.http
+      .get(this.apiUrl + 'assessmentcreator')
+      .toPromise()
+      .then((response: any) => {
+        this.assessmentCreator = response;
         return response;
       });
   }

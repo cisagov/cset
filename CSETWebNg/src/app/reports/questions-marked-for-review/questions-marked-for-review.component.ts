@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, Input } from '@angular/core';
 import { QuestionsService } from '../../services/questions.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-questions-marked-for-review',

@@ -112,6 +112,12 @@ namespace CSETWebCore.Business.Reports
 
             _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
 
+            // flesh out model-specific questions 
+            if (modelId != null)
+            {
+                _context.FillEmptyMaturityQuestionsForModel(_assessmentId, (int)modelId);
+            }
+
             var query = from a in _context.ANSWER
                         join m in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_Level)
                             on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
@@ -175,6 +181,8 @@ namespace CSETWebCore.Business.Reports
 
         /// <summary>
         /// Returns a list of MatRelevantAnswers that are considered deficient for the assessment.
+        /// 
+        /// TODO:  Move the hard-coded deficient values to some kind of JSON file or config.
         /// </summary>
         /// <returns></returns>
         public List<MatRelevantAnswers> GetMaturityDeficiencies(int? modelId = null)
@@ -1316,10 +1324,10 @@ namespace CSETWebCore.Business.Reports
                     QuestionId = q.Question_Id,
                     LayerName = q.LayerName,
                     SAL = q.SAL,
-                    Zone = q.ZoneName
+                    Zone = q.ZoneName,
+                    IsOverride = (q.Answer_Id != null)
                 });
             }
-
 
             return l;
         }
@@ -1543,6 +1551,54 @@ namespace CSETWebCore.Business.Reports
                     Level = q.Level,
                     Question = q.QuestionText,
                     Rank = q.Rank ?? 0
+                });
+            }
+
+            return list;
+        }
+
+        public List<PhysicalQuestions> GetQuestionsWithSupplementals()
+        {         
+            var lang = _tokenManager.GetCurrentLanguage();
+
+            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
+
+            List<PhysicalQuestions> list = new List<PhysicalQuestions>();
+            List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
+
+
+            var supplementalLookups = (from a in _context.NEW_REQUIREMENT
+                        join b in _context.REQUIREMENT_SETS on a.Requirement_Id equals b.Requirement_Id
+                        where b.Set_Name == "MOPhysical"
+                        select a).ToDictionary(x=> x.Requirement_Id, x=> x); 
+
+            foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
+            {
+                if (q.RequirementId != null)
+                {
+                    var reqOverlay = _overlay.GetRequirement((int)q.RequirementId, lang);
+                    if (reqOverlay != null)
+                    {
+                        q.QuestionText = reqOverlay.RequirementText;
+                    }
+                    
+                }
+
+
+                q.QuestionText = rm.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
+
+                q.Category = _overlay.GetPropertyValue("STANDARD_CATEGORY", q.Category.ToLower(), lang) ?? q.Category;
+                var comment = _context.Answer_Requirements.Where(x => x.Question_Or_Requirement_Id == q.QuestionOrRequirementID).FirstOrDefault()?.Comment;
+                var supplemental = supplementalLookups[q.RequirementId??0].Supplemental_Info;
+                list.Add(new PhysicalQuestions()
+                {
+                    Answer = q.AnswerText,
+                    CategoryAndNumber = q.Category + " #" + q.QuestionRef,
+                    Level = q.Level,
+                    Question = q.QuestionText,
+                    Rank = q.Rank ?? 0,
+                    Supplemental = supplemental,
+                    Comment = comment
                 });
             }
 
@@ -2783,7 +2839,6 @@ namespace CSETWebCore.Business.Reports
 
             return maturityDomains;
         }
-        //
     }
 }
 

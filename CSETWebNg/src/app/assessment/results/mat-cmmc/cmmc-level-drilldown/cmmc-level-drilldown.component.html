@@ -35,7 +35,7 @@
         </div>
         <div *ngIf="initialized && !dataError" class="mb-5">
             <div class="d-flex" [class.flex-row]="!layoutSvc.hp" [class.flex-column]="layoutSvc.hp">
-                <div class="d-flex align-items-center justify-content-center" [class.mr-5]="!layoutSvc.hp"
+                <div class="d-flex align-items-center justify-content-center" [class.me-5]="!layoutSvc.hp"
                     [class.mb-3]="layoutSvc.hp">
                     <div style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold; background-color: #1f5284; color: #fff;"
                         [class.p-2]="layoutSvc.hp">
@@ -57,7 +57,7 @@
             <h5 *ngIf="isWithinModelLevel(l)" [innerHTML]="levelDescriptions[l.modelLevel]"></h5>
             <div *ngIf="isWithinModelLevel(l)" class="d-flex mb-4" [class.flex-row]="!layoutSvc.hp"
                 [class.flex-column]="layoutSvc.hp">
-                <div class="d-flex align-items-center justify-content-center" [class.mr-5]="!layoutSvc.hp"
+                <div class="d-flex align-items-center justify-content-center" [class.me-5]="!layoutSvc.hp"
                     [class.mb-3]="layoutSvc.hp">
                     <div style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold; background-color: #1f5284; color: #fff;"
                         [class.p-2]="layoutSvc.hp">

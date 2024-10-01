@@ -29,14 +29,18 @@
       <p>All identified network analysis problems.</p>
 
       <table class="table" *ngIf="!!warnings && warnings.length > 0">
-        <tr>
-          <th class="align-right">ID</th>
-          <th>{{t('titles.network warnings')}}</th>
-        </tr>
-        <tr *ngFor="let w of warnings">
-          <td class="align-right">{{w.id}}</td>
-          <td class="warning-text" [innerHtml]="fixWarningNewlines(w.warningText)"></td>
-        </tr>
+        <thead>
+          <tr>
+            <th class="align-right pe-4">ID</th>
+            <th>{{t('titles.network warnings')}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let w of warnings">
+            <td class="align-right pe-4">{{w.id}}</td>
+            <td class="warning-text" [innerHtml]="fixWarningNewlines(w.warningText)"></td>
+          </tr>
+        </tbody>
       </table>
 
       <div class="mt-4 mb-4" *ngIf="!!warnings && warnings.length === 0">

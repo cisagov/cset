@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, HostListener, OnInit } from '@angular/core';
 import { RraDataService } from '../../../../services/rra-data.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 @Component({
   selector: 'app-rra-answer-compliance',
   templateUrl: './rra-answer-compliance.component.html',
