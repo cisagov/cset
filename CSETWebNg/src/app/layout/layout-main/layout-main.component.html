@@ -71,71 +71,67 @@
     </div>
 
     <!-- Footer -->
-    <div class="accordion sticky-footer" id="accordionFooter">
-      <div class="text-center">
-        <h4 class="accordion-header pb-1" id="headingOne">
-          <button id="footerExpanderButton" class="cset-footer-expand-button"
-            style="font-size: 1rem; align-items: center" type="button" data-bs-toggle="collapse"
-            data-bs-target="#collapseOne" aria-controls="collapseOne" (click)="toggleFooter()"
-            [ngClass]="{'cset-icons-chevron-down': !footerClosed, 'cset-icons-chevron-up': footerClosed}"></button>
-        </h4>
-        
-        <div id="collapseOne" class="accordion-collapse collapse" [class.show]="!footerClosed"
-          aria-labelledby="headingOne" data-bs-parent="#accordionFooter">
-          <div class="accordion-body p-0">
-            <div class="footer-section-2 p-2">
-              <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-                <ng-container *ngIf="isRunningAnonymous()">
-                  <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer" (click)="showDisclaimer()">INL
-                    Privacy & Accessibility</a>
-                  <span class="me-2 ms-2">|</span>
-                  <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                    href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
-                  <span class="me-2 ms-2">|</span>
-                </ng-container>
-                <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                  href="https://www.us-cert.gov/ics/Frequently-Asked-Questions">{{t('footer.faq')}}</a>
-                <span class="me-2 ms-2">|</span>
-                <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                  href="http://www.us-cert.gov/tlp/">{{t('footer.traffic light protocol')}}</a>
-                <span class="me-2 ms-2">|</span>
-                <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                  href="http://www.us-cert.gov/privacy/">{{t('footer.privacy and use')}}</a>
-                <span class="me-2 ms-2">|</span>
-                <a target="_blank" rel="noopener noreferrer"
-                  href="http://www.us-cert.gov/accessibility/">{{t('footer.accessibility')}}</a>
-              </div>
-              <div class="d-flex flex-row flex-wrap justify-content-center align-items-baseline flex-11a"
-                [innerHTML]="t('footer.cisa is part of dhs') | safe">
-              </div>
-            </div>
+    <div class="accordion sticky-footer text-center" id="accordionFooter">
+
+      <h4 class="accordion-header" id="headingOne">
+        <button id="footerExpanderButton" class="cset-footer-expand-button" style="font-size: 1rem; align-items: center"
+          type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+          aria-controls="collapseOne" (click)="toggleFooter()"
+          [ngClass]="{'cset-icons-chevron-down': !footerClosed, 'cset-icons-chevron-up': footerClosed}"></button>
+      </h4>
+
+      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionFooter">
+        <div class="accordion-body footer-section-2 p-0">
+          <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+            <ng-container *ngIf="isRunningAnonymous()">
+              <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer" (click)="showDisclaimer()">INL
+                Privacy & Accessibility</a>
+              <span class="me-2 ms-2">|</span>
+              <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
+              <span class="me-2 ms-2">|</span>
+            </ng-container>
+            <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+              href="https://www.us-cert.gov/ics/Frequently-Asked-Questions">{{t('footer.faq')}}</a>
+            <span class="me-2 ms-2">|</span>
+            <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+              href="http://www.us-cert.gov/tlp/">{{t('footer.traffic light protocol')}}</a>
+            <span class="me-2 ms-2">|</span>
+            <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+              href="http://www.us-cert.gov/privacy/">{{t('footer.privacy and use')}}</a>
+            <span class="me-2 ms-2">|</span>
+            <a target="_blank" rel="noopener noreferrer"
+              href="http://www.us-cert.gov/accessibility/">{{t('footer.accessibility')}}</a>
+          </div>
+          <div class="d-flex flex-row flex-wrap justify-content-center align-items-baseline flex-11a"
+            [innerHTML]="t('footer.cisa is part of dhs') | safe">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bgc-white dhs-seal-background"
+      *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content localversionModal">
+          <div class="modal-header">
+            <h4 class="modal-title">{{t('new version')}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span
+                aria-hidden="true">&times;</span></button>
+          </div>
+
+          <div class="modal-body">
+            <p>{{t('your version')}} {{this.localVersion}}
+              <br>{{t('version available')}} {{this.actualVersion}}
+            </p>
+          </div>
+
+          <div class="modal-footer">
+            <a href="https://github.com/cisagov/cset/releases" target="_blank" class="text-dark">{{t('link
+              version')}}</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="bgc-white dhs-seal-background"
-    *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
-  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content localversionModal">
-        <div class="modal-header">
-          <h4 class="modal-title">{{t('new version')}}</h4>
-          <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span
-              aria-hidden="true">&times;</span></button>
-        </div>
-
-        <div class="modal-body">
-          <p>{{t('your version')}} {{this.localVersion}}
-            <br>{{t('version available')}} {{this.actualVersion}}
-          </p>
-        </div>
-
-        <div class="modal-footer">
-          <a href="https://github.com/cisagov/cset/releases" target="_blank" class="text-dark">{{t('link version')}}</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
