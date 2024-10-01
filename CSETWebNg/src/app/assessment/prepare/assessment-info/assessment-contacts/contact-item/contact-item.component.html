@@ -28,7 +28,7 @@
       [ngClass]="!showControls() ? 'bgc-primary-50 c-gray-900 b-primary-200' : 'b-light'"
       style="width: 100%; height: 125px; overflow: hidden;">
       <div class="p-3 d-flex flex-column justify-content-center align-items-start" style="flex: 0 0 25%">
-        <span class="m-0 fs-base-1 fw-600">{{contact.firstName}} {{contact.lastName}}</span>
+        <span class="m-0 text-center fs-base-1 fw-600">{{contact.firstName}} {{contact.lastName}}</span>
         <span class="fs-small fw-400 fst-italic" *ngIf="contact.assessmentRoleId === 2">
           ({{getRoleName(contact.assessmentRoleId)}})
         </span>
@@ -53,8 +53,8 @@
       </div>
       <span class="d-flex align-items-center m-3 fw-600" style="text-align: center;"
         *ngIf="contact.isSiteParticipant">Participated<br />in Site Visit</span>
-      <span class="d-flex align-items-center m-3 fw-600" style="text-align: center;"
-        *ngIf="contact.isPrimaryPoc">Primary<br />Point of Contact</span>
+      <span class="d-flex align-items-center m-3 fw-600" style="text-align: center;">
+        </span>
 
       <span *ngIf="showControls()" class="d-flex align-items-center flex-00a">
         <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
@@ -74,7 +74,15 @@
         </button>
       </span>
 
-      <span class="pe-3 fw-600" *ngIf="!showControls()">{{ t('contact.assessment owner') }}</span>
+      <span class="pe-4 text-center fw-300" *ngIf="!showControls()">
+        <ul>
+          <ol *ngIf="contact.isPrimaryPoc">Primary Point of Contact</ol>
+          <ol> <div *ngIf="creatorId == contact.userId; else Editor"> Assessment Creator </div>
+            <ng-template #Editor> Assessment Editor </ng-template>
+          </ol>
+        </ul>
+       
+      </span>
     </div>
 
 
