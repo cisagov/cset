@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ReportService } from '../../../../services/report.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { NCUAService } from '../../../../services/ncua.service';
 import { ObservationsService } from '../../../../services/observations.service';

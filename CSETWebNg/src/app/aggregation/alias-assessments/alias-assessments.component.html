@@ -21,7 +21,7 @@
   SOFTWARE. 
 -------------------------->
 <div class="wp-0 d-flex flex-column justify-content-start flex-11a trend-table-width">
-  <div class="bgc-trans mt-4 ml-4 pr-4 d-flex flex-column flex-00a max-1200">
+  <div class="bgc-trans mt-4 ms-4 pe-4 d-flex flex-column flex-00a max-1200">
     <h3>{{ this.aggregationSvc?.modeDisplay(false) }} Details</h3>
     <div class="w-100">
       <div class="form-group">
@@ -45,7 +45,7 @@
     </div>
 
     <div class="mt-3 mb-3">
-      <button class="btn btn-primary" (click)="openSelectionDialog()"><i class="far fa-check-square mr-2"></i>Select
+      <button class="btn btn-primary" (click)="openSelectionDialog()"><i class="far fa-check-square me-2"></i>Select
         Assessments</button>
     </div>
   </div>
@@ -67,7 +67,7 @@
           </th>
         </tr>
         <tr *ngFor="let assess of aliasData.assessments">
-          <td class="pr-3">
+          <td class="pe-3">
             <input type="text" [(ngModel)]="assess.alias" class="form-control" maxlength="15"
               (change)="changeAlias(assess)" />
           </td>

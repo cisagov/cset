@@ -29,7 +29,7 @@ import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
 import { ACETService } from '../../services/acet.service';
 import { AssessmentService } from '../../services/assessment.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({

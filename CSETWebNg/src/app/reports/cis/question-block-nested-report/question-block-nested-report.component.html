@@ -34,7 +34,7 @@
                 <div class="form-control w-100 h-5" [innerHTML]="q.answerMemo"></div>
                 <div *ngIf="cisSvc.hasBaseline() && q.baselineAnswerMemo?.length > 0" class="d-flex flex-row mt-1 mb-2">
                     <div class="form-control w-100 h-5" [innerHTML]="q.baselineAnswerMemo"></div>
-                    <i class="fa fa-star ml-1"></i>
+                    <i class="fa fa-star ms-1"></i>
                 </div>
             </div>
 
@@ -42,7 +42,7 @@
                 <div class="form-control w-100" [innerHTML]="q.answerMemo"></div>
                 <div *ngIf="cisSvc.hasBaseline() && q.baselineAnswerMemo?.length > 0" class="d-flex flex-row mt-1 mb-2">
                     <div class="form-control w-100" [innerHTML]="q.baselineAnswerMemo"></div>
-                    <i class="fa fa-star ml-1"></i>
+                    <i class="fa fa-star ms-1"></i>
                 </div>
             </div>
 
@@ -52,14 +52,14 @@
                 <div *ngIf="cisSvc.hasBaseline() && q.baselineAnswerMemo?.length > 0" class="d-flex flex-row mt-1 mb-2">
                     <div class="form-control" maxlength="5" #tsNumber
                         [innerHTML]="getTimespanDisplay(q.baselineAnswerMemo)"></div>
-                    <i class="fa fa-star ml-1"></i>
+                    <i class="fa fa-star ms-1"></i>
                 </div>
             </div>
         </div>
 
         <app-option-block-nested-report [q]="q" [opts]="q.options"></app-option-block-nested-report>
 
-        <div *ngIf="q.followups?.length > 0" class="pl-4 pt-4">
+        <div *ngIf="q.followups?.length > 0" class="ps-4 pt-4">
             <app-question-block-nested-report #questionBlock
                 [questions]="q.followups"></app-question-block-nested-report>
         </div>

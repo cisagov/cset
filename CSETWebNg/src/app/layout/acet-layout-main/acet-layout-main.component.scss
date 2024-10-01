@@ -1036,7 +1036,7 @@ table.td-align-top td {
   color: $active-text-color;
 }
 
-.form-check-input:focus {
+.btn-check:focus {
   background-color: $primary-color;
   color: $active-text-color;
 }
@@ -2369,8 +2369,8 @@ ul.related-questions li {
   background-color: $secondary-color;
 }
 
-mat-sidenav {
-  background-color: $secondary-color; //$primary-350;
+mat-sidenav.mat-sidenav {
+  background-color: $secondary-color;
   color: $white;
   width: 300px;
 }

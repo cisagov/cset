@@ -239,7 +239,7 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
         x.label +
         "' class='mt-2'> Model name: " +
         x.label +
-        "<tr><td><div><p class='ml-3'>" + this.answerStandard + "</p></div><canvas id='canvas" +
+        "<tr><td><div><p class='ms-3'>" + this.answerStandard + "</p></div><canvas id='canvas" +
         x.label +
         "'></canvas></td></tr></div>"
       );

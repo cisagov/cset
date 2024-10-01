@@ -61,7 +61,7 @@
 
     <div class="chart d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useStandard">
       <h3>{{t('titles.ranked categories')}}</h3>
-      <p class="font-italic" [class.d-none]="showTopCategChart">
+      <p class="fst-italic" [class.d-none]="showTopCategChart">
         {{t('reports.core.no ranking')}}
       </p>
       <div [class.d-none]="!showTopCategChart">

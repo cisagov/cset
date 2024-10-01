@@ -27,7 +27,7 @@ import { ReportService } from '../../services/report.service';
 import { ACETService } from '../../services/acet.service';
 import { MatDetailResponse, MaturityDomain, MaturityComponent, MaturityAssessment } from '../../models/mat-detail.model';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 

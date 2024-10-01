@@ -25,6 +25,7 @@ using CSETWebCore.Model.Auth;
 using CSETWebCore.Api.Models;
 using NLog;
 using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -219,31 +220,38 @@ namespace CSETWebCore.Api.Controllers
             {
                 if (!ModelState.IsValid)
                 {
+                    LogManager.GetCurrentClassLogger().Error($"Invalid Model State: {JsonConvert.SerializeObject(ModelState)}");
                     return BadRequest("Invalid Model State");
                 }
 
                 if (String.IsNullOrWhiteSpace(user.PrimaryEmail))
                 {
+                    LogManager.GetCurrentClassLogger().Error("missing email");
                     return BadRequest("missing email");
                 }
 
                 if (!emailvalidator.IsMatch(user.PrimaryEmail))
                 {
+                    LogManager.GetCurrentClassLogger().Error($"invalid email format: ${JsonConvert.SerializeObject(user)}");
                     return BadRequest("invalid email format");
                 }
 
                 if (!emailvalidator.IsMatch(user.ConfirmEmail.Trim()))
                 {
+                    LogManager.GetCurrentClassLogger().Error($"invalid email format: ${JsonConvert.SerializeObject(user)}");
                     return BadRequest("invalid email format");
                 }
 
                 if (user.PrimaryEmail != user.ConfirmEmail)
                 {
+
+                    LogManager.GetCurrentClassLogger().Error($"emails do not match: ${JsonConvert.SerializeObject(user)}");
                     return BadRequest("emails do not match");
                 }
 
                 if (_userBusiness.GetUserDetail(user.PrimaryEmail) != null)
                 {
+                    LogManager.GetCurrentClassLogger().Error($"account already exists: ${JsonConvert.SerializeObject(user)}");
                     return BadRequest("account already exists");
                 }
 
@@ -251,6 +259,7 @@ namespace CSETWebCore.Api.Controllers
                 var securityManager = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
                 if (!securityManager.EmailIsAllowed(user.PrimaryEmail, _webHost))
                 {
+                    LogManager.GetCurrentClassLogger().Error($"email not allowed: ${JsonConvert.SerializeObject(user)}");
                     return BadRequest("email not allowed");
                 }
 
@@ -261,7 +270,7 @@ namespace CSETWebCore.Api.Controllers
 
                 if (beta)
                 {
-                    LogManager.GetCurrentClassLogger().Info("CreateUser - CSET is set to 'online beta' mode - no email sent to new user");
+                    LogManager.GetCurrentClassLogger().Error("CreateUser - CSET is set to 'online beta' mode - no email sent to new user");
 
                     // create the user but DO NOT send the temp password email (test/beta)
                     var rval = resetter.CreateUser(user, false);
@@ -280,10 +289,12 @@ namespace CSETWebCore.Api.Controllers
                     }
                 }
 
+                LogManager.GetCurrentClassLogger().Error($"Unknown error: {user}");
                 return BadRequest("Unknown error");
             }
             catch (Exception e)
             {
+                LogManager.GetCurrentClassLogger().Error($"... {e}");
                 return BadRequest(e);
             }
         }
@@ -304,11 +315,13 @@ namespace CSETWebCore.Api.Controllers
 
                 if (!emailvalidator.IsMatch(answer.PrimaryEmail))
                 {
+                    LogManager.GetCurrentClassLogger().Error("reset password - emails don't match");
                     return BadRequest();
                 }
 
                 if (!_userBusiness.GetUserDetail(answer.PrimaryEmail).IsActive)
                 {
+                    LogManager.GetCurrentClassLogger().Error("reset password - user inactive");
                     return BadRequest("user inactive");
                 }
 

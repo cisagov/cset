@@ -40,7 +40,7 @@
 </div>
 
 <div *ngIf="!(this.ncuaSvc.switchStatus)">
-    <div class="d-flex justify-content-between pl-4"
+    <div class="d-flex justify-content-between ps-4"
         *ngIf="feature.code == 'maturity' && (configSvc.installationMode === 'ACET') && assessSvc.assessment?.useMaturity">
         <div>
             <input type="checkbox" tabindex="0" id="acet-only" name="acet-only" class="mt-1"

@@ -22,12 +22,12 @@
 -------------------------->
 <div *transloco="let t; read: 'filter-menu'" class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span class="mr-3 fs-base-6 cset-icons-filter" aria-label="{{ 'buttons.filter' | transloco }}"></span>
+    <span class="me-3 fs-base-6 cset-icons-filter" aria-label="{{ 'buttons.filter' | transloco }}"></span>
     <span>{{ t(skin + '.dialog title') }}</span>
   </div>
 
-  <mat-dialog-content class="pt-3 pl-3 pr-0 oy-auto d-flex flex-column flex-11a">
-    <div class="question-filters pr-3 form-check">
+  <mat-dialog-content class="pt-3 ps-3 pe-0 oy-auto d-flex flex-column flex-11a">
+    <div class="question-filters pe-3 form-check">
       <div>
         <input placeholder="{{ t('search') }}" class="form-control" [value]="filterSvc.filterSearchString"
           (keyup)="updateFilterString($event)" />

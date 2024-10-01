@@ -38,7 +38,7 @@ import { AuthenticationService } from '../../../services/authentication.service'
 import { NCUAService } from '../../../services/ncua.service';
 import { ObservationsService } from '../../../services/observations.service';
 import { CisaWorkflowFieldValidationResponse } from '../../../models/demographics-iod.model';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ConversionService } from '../../../services/conversion.service';
 import { CieDocumentsComponent } from '../../../dialogs/cie-documents/cie-documents.component';
 
@@ -344,7 +344,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   updateSectionId(): void {
     if (!!this.assessSvc.assessment) {
       // Network diagram and standard assessments use the same assessment list. sectionId will be passed as DIAGRAM
-      if (this.assessSvc.assessment.useStandard && !this.isMobile) {
+      if (this.assessSvc.usesStandard('MOPhysical')) {
+        this.currentSectionId = 'MOPhysical';
+      } else if (this.assessSvc.assessment.useStandard && !this.isMobile) {
           this.currentSectionId = 'STANDARD';
       } else if (this.assessSvc.assessment.useDiagram && !this.isMobile) {
           this.currentSectionId = 'DIAGRAM';

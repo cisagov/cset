@@ -38,17 +38,22 @@
       {{ds.label}}
     </h4>
     <table class="table" [class.fs-smaller]="layoutSvc.hp" style="table-layout: fixed">
-      <th style="width: 50%">{{t('reports.category')}}</th>
-      <th class="align-right">{{t('reports.passed')}}</th>
-      <th class="align-right">{{t('reports.total')}}</th>
-      <th class="align-right">{{t('reports.percent')}}</th>
-      <tr *ngFor="let row of ds.dataRows">
-        <td>{{row.title}}</td>
-        <td class="align-right">{{row.failed}}</td>
-        <td class="align-right">{{row.total}}</td>
-        <td class="align-right">{{row.percent | number: '1.0-0'}}%</td>
-
-      </tr>
+      <thead>
+        <tr>
+          <th style="width: 50%">{{t('reports.category')}}</th>
+          <th class="align-right">{{t('reports.passed')}}</th>
+          <th class="align-right">{{t('reports.total')}}</th>
+          <th class="align-right">{{t('reports.percent')}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of ds.dataRows">
+          <td>{{row.title}}</td>
+          <td class="align-right">{{row.failed}}</td>
+          <td class="align-right">{{row.total}}</td>
+          <td class="align-right">{{row.percent | number: '1.0-0'}}%</td>  
+        </tr>
+      </tbody>
     </table>
   </div>
 

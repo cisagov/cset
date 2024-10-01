@@ -22,19 +22,19 @@
 -------------------------->
 <div class="d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span class="cset-icons-books-stack-1 fs-base-6 mr-3"></span>
+    <span class="cset-icons-books-stack-1 fs-base-6 me-3"></span>
     <span>Assessment Documents</span>
   </div>
 
-  <mat-dialog-content class="p-3 pb-0 pr-0 mt-2 oy-auto d-flex flex-column flex-11a">
-    <div class="pr-3">
+  <mat-dialog-content class="p-3 pb-0 pe-0 mt-2 oy-auto d-flex flex-column flex-11a">
+    <div class="pe-3">
       <div *ngIf="documents === null" class="spinner-container" style="margin: .5em auto">
         <div style="max-width: 30px; max-height: 30px;"></div>
       </div>
       <div *ngIf="documents?.length === 0" class="d-flex flex-11a">
         This assessment has no documents.
       </div>
-      <div *ngIf="documents?.length > 0" class="pr-3 d-flex flex-11a">
+      <div *ngIf="documents?.length > 0" class="pe-3 d-flex flex-11a">
         <table class="assessment-documents">
           <tr>
             <th style="width:50%;">Document Title</th>

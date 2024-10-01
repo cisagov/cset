@@ -100,10 +100,10 @@
         </h2>
         <div *ngFor="let q of onlyOpenQuestionData.questions">
 
-          <div class="row" [class.mt-3]="!q.parentQuestionId" [class.ml-3.mb-2]="!!q.parentQuestionId"
+          <div class="row" [class.mt-3]="!q.parentQuestionId" [class.ms-3.mb-2]="!!q.parentQuestionId"
             [class.border-bottom]="!!q.parentQuestionId">
             <!-- [class.d-none]="q.parentQuestionId==null && !q.isParentQuestion"> -->
-            <div class="col-sm-2 ml-4">
+            <div class="col-sm-2 ms-4">
               {{q.displayNumber}}
             </div>
             <div class="col-sm-8">
@@ -112,7 +112,7 @@
                 <p class="m-2" *ngIf="!q.parentQuestionId ">Your Answer: <span *ngIf="q.answer=='Y'">Yes</span>
                   <span *ngIf="q.answer=='N'">No</span>
                   <span *ngIf="q.answer=='U'">Unanswered</span>
-                  <span *ngIf="!q.parentQuestionId && q.answer=='A'"> Alternate <p class="overflow-auto pl-0 col-12">
+                  <span *ngIf="!q.parentQuestionId && q.answer=='A'"> Alternate <p class="overflow-auto ps-0 col-12">
                       {{q.altAnswerText}}</p></span>
                 </p>
 
@@ -120,7 +120,7 @@
               </div>
               <div class="mt-3" [class.d-none]="!q.parentQuestionId">
                 <h6>Your Answer:</h6>
-                <p class="overflow-auto pl-0 col-12"><span *ngIf="q.freeResponseAnswer">{{q.freeResponseAnswer}}</span>
+                <p class="overflow-auto ps-0 col-12"><span *ngIf="q.freeResponseAnswer">{{q.freeResponseAnswer}}</span>
                   <span *ngIf="!q.freeResponseAnswer">Unanswered</span> </p>
               </div>
             </div>
@@ -134,10 +134,10 @@
         <h2 class="m-3 subcat-header">{{data2.title}}</h2>
         <div *ngFor="let q of data2.myArray">
 
-          <div class="row" [class.mt-3]="!q.parentQuestionId" [class.ml-3.mb-2]="!!q.parentQuestionId"
+          <div class="row" [class.mt-3]="!q.parentQuestionId" [class.ms-3.mb-2]="!!q.parentQuestionId"
             [class.border-bottom]="!!q.parentQuestionId"
             [class.d-none]="q.parentQuestionId==null && !q.isParentQuestion">
-            <div class="col-sm-2 ml-4">
+            <div class="col-sm-2 ms-4">
               {{q.displayNumber}}
             </div>
             <div class="col-sm-8">
@@ -147,14 +147,14 @@
                 <p class="m-2" *ngIf="!q.parentQuestionId ">Your Answer: <span *ngIf="q.answer=='Y'">Yes</span>
                   <span *ngIf="q.answer=='N'">No</span>
                   <span *ngIf="q.answer=='U'">Unanswered</span>
-                  <span *ngIf="!q.parentQuestionId && q.answer=='A'"> Alternate <p class="overflow-auto pl-0 col-12"
+                  <span *ngIf="!q.parentQuestionId && q.answer=='A'"> Alternate <p class="overflow-auto ps-0 col-12"
                       [class.d-none]="!q.altAnswerText">{{q.altAnswerText}}</p></span>
                 </p>
 
               </div>
               <div class="mt-3" [class.d-none]="!q.parentQuestionId">
                 <h6>Your Answer:</h6>
-                <p class="overflow-auto pl-0 col-12">{{q.freeResponseAnswer}}</p>
+                <p class="overflow-auto ps-0 col-12">{{q.freeResponseAnswer}}</p>
               </div>
             </div>
           </div>
@@ -167,8 +167,8 @@
         <h2 class="m-3 subcat-header">{{data2.title}}</h2>
         <div *ngFor="let q of data2.myArray">
 
-          <div class="row"[class.mt-3]="!q.parentQuestionId" [class.ml-3.mb-2]="!!q.parentQuestionId" [class.border-bottom]="!!q.parentQuestionId"   [class.d-none]="q.parentQuestionId==null && !q.isParentQuestion">
-            <div class="col-sm-2 ml-4">
+          <div class="row"[class.mt-3]="!q.parentQuestionId" [class.ms-3.mb-2]="!!q.parentQuestionId" [class.border-bottom]="!!q.parentQuestionId"   [class.d-none]="q.parentQuestionId==null && !q.isParentQuestion">
+            <div class="col-sm-2 ms-4">
              {{q.displayNumber}}
            </div>
            <div class="col-sm-8" >
@@ -189,8 +189,8 @@
         <h2 class="m-3 subcat-header"  *ngIf="onlyOpenQuestionData.questions.length>=1">{{onlyOpenQuestionData.title}}</h2>
         <div *ngFor="let q of onlyOpenQuestionData.questions">
 
-          <div class="row"[class.mt-3]="!q.parentQuestionId" [class.ml-3.mb-2]="!!q.parentQuestionId" [class.border-bottom]="!!q.parentQuestionId"   [class.d-none]="q.parentQuestionId==null && !q.isParentQuestion">
-            <div class="col-sm-2 ml-4">
+          <div class="row"[class.mt-3]="!q.parentQuestionId" [class.ms-3.mb-2]="!!q.parentQuestionId" [class.border-bottom]="!!q.parentQuestionId"   [class.d-none]="q.parentQuestionId==null && !q.isParentQuestion">
+            <div class="col-sm-2 ms-4">
              {{q.displayNumber}}
            </div>
            <div class="col-sm-8" >

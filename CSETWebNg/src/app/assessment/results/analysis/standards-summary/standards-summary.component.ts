@@ -28,7 +28,7 @@ import { ChartService } from '../../../../services/chart.service';
 import { ConfigService } from '../../../../services/config.service';
 import { LayoutService } from '../../../../services/layout.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-standards-summary',

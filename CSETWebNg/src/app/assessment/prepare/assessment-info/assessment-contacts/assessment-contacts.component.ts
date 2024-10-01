@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, EventEmitter, OnInit, Output, ViewChildren } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
-import { TranslocoService } from "@ngneat/transloco";
+import { TranslocoService } from "@jsverse/transloco";
 import { AlertComponent } from "../../../../dialogs/alert/alert.component";
 import { ConfirmComponent } from "../../../../dialogs/confirm/confirm.component";
 import { EmailComponent } from "../../../../dialogs/email/email.component";
@@ -84,7 +84,7 @@ export class AssessmentContactsComponent implements OnInit {
   }
 
   changeOccurred() {
-    this.triggerChange.next();
+    this.triggerChange.next("Initialized");
   }
 
   moveUser() {

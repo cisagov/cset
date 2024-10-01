@@ -72,7 +72,7 @@
         </p>
 
         <div class="d-flex flex-row">
-            <select class="form-control mr-1" #import>
+            <select class="form-select me-1" #import>
                 <option value="">-- Select Survey to Import --</option>
                 <option *ngFor="let c of importSourceCandidates" [value]="c.id">
                     {{c.assessmentName}} [{{c.assessmentDate | localizeDate}}]
@@ -96,7 +96,7 @@
         <p>To remove a baseline survey, select the top option, "No Baseline Assessment."</p>
 
         <div>
-            <select class="form-control" (change)="changeBaseline($event)" [(ngModel)]="baselineAssessmentId">
+            <select class="form-select" (change)="changeBaseline($event)" [(ngModel)]="baselineAssessmentId">
                 <option [ngValue]="null">-- No Baseline Assessment --</option>
                 <option *ngFor="let c of baselineCandidates" [value]="c.id">
                     {{c.assessmentName}} [{{c.assessmentDate | localizeDate}}]
