@@ -71,7 +71,7 @@
         "screenfull": "^5.2.0",
         "style-loader": "^3.3.4",
         "swiper": "^8.4.7",
-        "typescript": "5.2",
+        "typescript": "5.4",
         "zone.js": "^0.14.1"
     },
     "devDependencies": {
