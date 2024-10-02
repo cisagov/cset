@@ -23,12 +23,15 @@
             "allowedCommonJsDependencies": [
               "jquery",
               "lodash",
+              "rfdc",
               "rxjs/Subscription",
               "rxjs/observable/forkJoin",
               "rxjs/operators/startWith",
               "rxjs/operators/debounce",
               "rxjs/operators",
               "rxjs/Subject",
+              "sanitize-html",
+              "style-loader",
               "file-saver",
               "chart.js",
               "mousetrap"
