@@ -175,14 +175,14 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "csetweb-ng:build"
+            "buildTarget": "csetweb-ng:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "csetweb-ng:build:production"
+              "buildTarget": "csetweb-ng:build:production"
             },
             "development": {
-              "browserTarget": "csetweb-ng:build:development"
+              "buildTarget": "csetweb-ng:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -190,7 +190,7 @@
         "extract-i18n": {
           "builder": "@angular-builders/custom-webpack:extract-i18n",
           "options": {
-            "browserTarget": "csetweb-ng:build"
+            "buildTarget": "csetweb-ng:build"
           }
         },
         "test": {
