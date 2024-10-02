@@ -72,6 +72,7 @@ export class LayoutMainComponent  implements OnInit {
   ngOnInit() {
     this.versionSvc.getLatestVersion();
   }
+
   /**
    * Indicates if the user is currently within the Module Builder pages.
    */
@@ -100,9 +101,11 @@ export class LayoutMainComponent  implements OnInit {
   showDisclaimer() {
     this.dialog.open(OnlineDisclaimerComponent, { data: { publicDomainName: this.configSvc.publicDomainName } });
   }
+  
   showNotifications(): void {
     this.display = "block";
   }
+
   onCloseHandled() {
     this.display = "none";
     this.displayNotifications="none"
