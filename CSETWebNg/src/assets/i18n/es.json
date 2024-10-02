@@ -87,6 +87,12 @@
         "advisory 3": "<span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> evaluaciones no pueden ser completadas de manera efectiva por una sola persona. Es esencial contar con un equipo multifuncional compuesto por representantes de las áreas de operaciones, mantenimiento, tecnología de la información, negocio y seguridad. Los representantes deben ser expertos en la materia con un conocimiento significativo en sus respectivas áreas. Ningún individuo tiene la amplitud de responsabilidad o conocimiento para responder eficazmente a todas las preguntas.",
         "advisory 4": "<p>Los datos e informes generados por la herramienta deben gestionarse de forma segura y marcarse, almacenarse y distribuirse de manera adecuada a su confidencialidad.</p>"
     },
+    "connection": {
+        "no server connection": "No hay conexión al servidor",
+        "details": "Detalles",
+        "details 1": "El servidor no se puede alcanzar. Póngase en contacto con un administrador del sistema para verificar que la URL del servidor esté configurada correctamente y que la API de CSET esté ejecutándose.",
+        "details 2": "URL del servidor"
+    },
     "contact": {
         "contacts": "Contactos",
         "contact": "Contacto",

@@ -34,6 +34,7 @@ import { TranslocoService } from '@jsverse/transloco';
 })
 export class AlertComponent {
 
+  public showHeader = true;
   public iconClass: string;
 
   /**
@@ -57,6 +58,8 @@ export class AlertComponent {
     if (!!data.iconClass) {
       this.iconClass = data.iconClass;
     }
+
+    this.showHeader = data.showHeader ?? true;
   }
 
   /**
