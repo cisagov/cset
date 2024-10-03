@@ -67,45 +67,41 @@
 
 
     <!-- Footer -->
-    <div class="accordion sticky-footer" id="accordionFooter">
-      <div class="text-center">
-        <h4 class="accordion-header pb-1" id="headingOne">
-          <button id="footerExpanderButton" class="cset-footer-expand-button"
-            style="font-size: 1rem; align-items: center" type="button" data-bs-toggle="collapse"
-            data-bs-target="#collapseOne" aria-controls="collapseOne" (click)="toggleFooter()"
-            [ngClass]="{'cset-icons-chevron-down': !footerClosed, 'cset-icons-chevron-up': footerClosed}"></button>
-        </h4>
-        
-        <div id="collapseOne" class="accordion-collapse collapse" [class.show]="!footerClosed"
-          aria-labelledby="headingOne" data-bs-parent="#accordionFooter">
-          <div class="accordion-body p-0">
-            <div class="footer-section-2 p-2">
-              <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-                <ng-container *ngIf="isRunningAnonymous()">
-                  <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer" (click)="showDisclaimer()">INL
-                    Privacy & Accessibility</a>
-                  <span class="me-2 ms-2">|</span>
-                  <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                    href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
-                  <span class="me-2 ms-2">|</span>
-                </ng-container>
-                <!-- <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+    <div class="accordion sticky-footer text-center" id="accordionFooter">
+      <h4 class="accordion-header" id="headingOne">
+        <button id="footerExpanderButton" class="cset-footer-expand-button" style="font-size: 1rem; align-items: center"
+          type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseOne"
+          (click)="toggleFooter()"
+          [ngClass]="{'cset-icons-chevron-down': !footerClosed, 'cset-icons-chevron-up': footerClosed}"></button>
+      </h4>
+
+      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+        data-bs-parent="#accordionFooter">
+        <div class="footer-section-2 p-0">
+          <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+            <ng-container *ngIf="isRunningAnonymous()">
+              <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer" (click)="showDisclaimer()">INL
+                Privacy & Accessibility</a>
+              <span class="me-2 ms-2">|</span>
+              <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
+              <span class="me-2 ms-2">|</span>
+            </ng-container>
+            <!-- <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                     href="https://www.us-cert.gov/ics/Frequently-Asked-Questions">{{t('footer.faq')}}</a> -->
-                <!-- <span class="me-2 ms-2">|</span> -->
-                <!-- <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+            <!-- <span class="me-2 ms-2">|</span> -->
+            <!-- <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                     href="http://www.us-cert.gov/tlp/">{{t('footer.traffic light protocol')}}</a> -->
-                <span class="me-2 ms-2">|</span>
-                <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                  href="https://www.energy.gov/cio/privacy-program">{{t('footer.privacy and use')}}</a>
-                <span class="me-2 ms-2">|</span>
-                <a target="_blank" rel="noopener noreferrer"
-                  href="https://www.energy.gov/cio/accessibility-standard-statement">{{t('footer.accessibility')}}</a>
-                <span class="me-2 ms-2">|</span>
-              </div>
-              <div class="d-flex flex-row flex-wrap justify-content-center align-items-baseline flex-11a"
-                [innerHTML]="t('footer.cie website') | safe">
-              </div>
-            </div>
+            <span class="me-2 ms-2">|</span>
+            <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+              href="https://www.energy.gov/cio/privacy-program">{{t('footer.privacy and use')}}</a>
+            <span class="me-2 ms-2">|</span>
+            <a target="_blank" rel="noopener noreferrer"
+              href="https://www.energy.gov/cio/accessibility-standard-statement">{{t('footer.accessibility')}}</a>
+            <span class="me-2 ms-2">|</span>
+          </div>
+          <div class="d-flex flex-row flex-wrap justify-content-center align-items-baseline flex-11a"
+            [innerHTML]="t('footer.cie website') | safe">
           </div>
         </div>
       </div>
