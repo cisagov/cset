@@ -36,6 +36,12 @@ export class ConfigService {
   apiUrl: string;
 
   /**
+   * The server URL (without the 'API' segment).
+   * Used for indicating the configured URL in case the API is down.
+   */
+  serverUrl: string;
+
+  /**
    * The full URL of the UI
    */
   appUrl: string;
@@ -180,9 +186,11 @@ export class ConfigService {
     const localStorageLibraryUrl = localStorage.getItem('libraryUrl');
     if (!!localStorageApiUrl) {
       this.apiUrl = localStorageApiUrl + '/' + this.config.api.apiIdentifier + '/';
+      this.serverUrl = localStorageApiUrl + '/';
       this.docUrl = localStorageApiUrl + '/' + this.config.api.documentsIdentifier + '/';
     } else {
       this.apiUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/';
+      this.serverUrl = apiProtocol + this.config.api.host + apiPort + '/';
       this.docUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.documentsIdentifier + '/';
     }
 
@@ -313,6 +321,10 @@ export class ConfigService {
   setCisaAssessorWorkflow(cisaAssessorWorkflowEnabled: boolean) {
     this.cisaAssessorWorkflow = cisaAssessorWorkflowEnabled;
     return this.http.post(this.apiUrl + 'EnableProtectedFeature/setCisaAssessorWorkflow', cisaAssessorWorkflowEnabled);
+  }
+
+  getCsetVersion() {
+    return this.http.get(this.apiUrl + 'version');
   }
 
   /**
