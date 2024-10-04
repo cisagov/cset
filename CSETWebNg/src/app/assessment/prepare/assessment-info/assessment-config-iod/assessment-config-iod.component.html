@@ -77,7 +77,7 @@
             </label>
             <label class="btn btn-level btn-rounded form-check-label" [class.active]="!assessment.is_PCII">
               <input class="btn-check" name="standardNo" id="standardNo" type="radio" autocomplete="off"
-                (change)="changeIsPCII(false)" tabindex="0" [(ngModel)]="!assessment.is_PCII" />
+                (change)="changeIsPCII(false)" tabindex="0" [ngModel]="!assessment.is_PCII" (ngModelChange)="assessment.is_PCII = $event" />
               No
             </label>
           </div>
