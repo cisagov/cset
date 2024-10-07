@@ -63,6 +63,9 @@ export class ContactItemComponent implements OnInit {
 
   @ViewChild('topScrollAnchor') topScroll;
 
+  showTooltip = false;
+  tooltipPosition = { x: 0, y: 0 };
+
   emailDialog: MatDialogRef<EmailComponent>;
   results: EditableUser[];
   roles: Role[];
@@ -276,5 +279,10 @@ export class ContactItemComponent implements OnInit {
     this.assessSvc.getCreator().then((response: any) => {
       this.creatorId = response
     })
+  }
+
+  updatePosition(event: MouseEvent) {
+    this.tooltipPosition.x = event.clientX + 10; // Add some offset
+    this.tooltipPosition.y = event.clientY + 10;
   }
 }
