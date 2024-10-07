@@ -252,7 +252,7 @@ a {
 
 .checkbox-custom:focus+.checkbox-custom-label,
 .radio-custom:focus+.radio-custom-label {
-  // outline: 3px solid #8bb4f8; /* focus style */
+  // outline: 3px solid #8bb4f8; __<<ngM2ThemingMigrationEscapedComment3>>__
   box-shadow: 0 0 3pt 2pt #8bb4f8;
 }
 
