@@ -1,0 +1,14 @@
+<div class="contact-tooltip" *transloco="let t">
+  <h5>Additional Details</h5>
+  <div *ngIf="POC"> <strong>{{t('contact.primary point of contact')}}</strong></div>
+  <div *ngIf="phone" ><strong> {{t('contact.office phone')}}:</strong> {{ phone }}</div>
+  <div *ngIf="cell"><strong> {{t('contact.cell phone')}}:</strong> {{cell}}</div>
+  <div *ngIf="title"><strong>{{t('contact.title')}}:</strong> {{ title }}</div>
+  <div *ngIf="organizationName"><strong>{{t('contact.organization')}}:</strong> {{ organizationName }}</div>
+  <div *ngIf="siteName"><strong>{{t('contact.site name')}}:</strong> {{ siteName }}</div>
+  <div *ngIf="ecp"><strong>{{t('contact.emergency communications protocol')}}:</strong> {{ecp}} </div>
+  <!-- Fallback message -->
+<div *ngIf="!POC && !phone && !cell && !title && !organizationName && !siteName && !ecp">
+  None available 
+</div>
+</div>
