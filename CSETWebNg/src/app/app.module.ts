@@ -668,6 +668,7 @@ import { CieMfrReportComponent } from './reports/cie/cie-mfr-report/cie-mfr-repo
 import { ReportListComponent } from './assessment/results/reports/report-list/report-list.component';
 import { ReportListCommonComponent } from './assessment/results/reports/report-list/report-list-common.component';
 import { PhysicalSummaryComponent } from './reports/physical-summary/physical-summary.component';
+import { ContactTooltipComponent } from './assessment/prepare/assessment-info/assessment-contacts/contact-tooltip/contact-tooltip.component';
 import { NoServerConnectionComponent } from './initial/no-server-connection/no-server-connection.component';
 
 
@@ -1289,7 +1290,8 @@ import { NoServerConnectionComponent } from './initial/no-server-connection/no-s
     CisaWorkflowWarningsComponent,
     AnalyticsloginComponent,
     ReportListComponent, 
-    ReportListCommonComponent,
+    ReportListCommonComponent, 
+    ContactTooltipComponent,
     NoServerConnectionComponent
   ],
   providers: [
