@@ -79,8 +79,8 @@
       </span>
 
       <span class="pe-4 align-items-center fw-300" *ngIf="!showControls()">
-        <div *ngIf="creatorId == contact.userId; else Editor"> Assessment Creator </div>
-        <ng-template #Editor> Assessment Editor </ng-template>
+        <div *ngIf="creatorId == contact.userId; else Editor">{{t('contact.creator')}}</div>
+        <ng-template #Editor>{{t('contact.editor')}}</ng-template>
       </span>
     </div>
 
