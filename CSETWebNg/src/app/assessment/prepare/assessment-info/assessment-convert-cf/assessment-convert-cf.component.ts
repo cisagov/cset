@@ -6,6 +6,7 @@ import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
+import { GalleryService } from '../../../../services/gallery.service';
 
 @Component({
   selector: 'app-assessment-convert-cf',
@@ -24,7 +25,8 @@ export class AssessmentConvertCfComponent implements OnInit {
     public tSvc: TranslocoService,
     private convertSvc: ConversionService,
     public dialog: MatDialog,
-    private navSvc: NavigationService
+    private navSvc: NavigationService,
+    private gallerySvc: GalleryService
   ) { }
 
   /**
@@ -59,7 +61,7 @@ export class AssessmentConvertCfComponent implements OnInit {
             dlgOkay.componentInstance.hasHeader = true;
             dlgOkay.afterClosed().subscribe(() => {
               this.navSvc.buildTree();
-              this.navSvc.navDirect('tutorial-cpg');
+              this.navSvc.navDirect('tutorial-conversion');
             });
             // this.navSvc.navDirect('standard-questions');
             
@@ -73,7 +75,12 @@ export class AssessmentConvertCfComponent implements OnInit {
             dlgOkay.componentInstance.hasHeader = true;
             dlgOkay.afterClosed().subscribe(() => {
               this.navSvc.buildTree();
-              this.navSvc.navDirect('standard-questions');
+              this.gallerySvc.getGalleryItems('CF').subscribe(
+                (result: any) => {
+                  result[0]
+              });
+              //this.navSvc.beginNewAssessmentGallery();
+              this.navSvc.navDirect('tutorial-conversion');
             });
             // this.navSvc.navDirect('standard-questions');
             

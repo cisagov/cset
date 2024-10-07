@@ -102,7 +102,7 @@
                             
                         </div>
                         <div class="d-flex flex-column">
-                            <mat-slider class="slider" style="width: 600px;" [disabled]="disabled" [max]="8" [min]="1" [step]="1"
+                            <mat-slider class="slider" [color]="warning" style="width: 600px;" [disabled]="disabled" [max]="8" [min]="1" [step]="1"
                                 [discrete]="false" [showTickMarks]="true" (change)="storeAnswer(q, slider.value)">
                                 <input matSliderThumb [(ngModel)]="+q.answer" #slider>
                             </mat-slider>

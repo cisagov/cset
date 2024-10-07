@@ -347,8 +347,10 @@ export class DemographicsExtendedComponent implements OnInit {
   setHb7055(value: string) {
     this.demographicData.hb7055 = value;
     if (value !== 'Y') {
-      this.radioNo.value = '';
+      this.demographicData.hb7055Grant = 'U';
       this.demographicData.hb7055Party = '';
+      // this.radioNo.value = 'N';
+      this.demographicData.hb7055 = 'N';
     }
     this.updateDemographics();
   }
@@ -366,7 +368,7 @@ export class DemographicsExtendedComponent implements OnInit {
   sethb7055Grant(value: string) {
     this.demographicData.hb7055Grant = value;
     if (value != 'Y') {
-      this.demographicData.hb7055Grant = '';      
+      this.demographicData.hb7055Grant = 'N';      
     }    
     this.updateDemographics();
 

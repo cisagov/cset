@@ -26,13 +26,15 @@
         src="assets/images/CF/conversion-flow-diagram.png"/> -->
     <div>
         <p>
-            This assessment has been converted to a {{ assessSvc.assessment.useStandard ? 'full' : 'mid-Level' }} assessment. 
-            Previous answers factor into pr
+            This assessment has been converted to a {{ assessSvc.assessment.maturityModel?.modelName == 'CPG' ? 'mid-Level' : 'full' }} assessment. 
+            Answers from the Entry-Level factor into the Mid-Level pre-filled answers. 
+            Answers from the Mid-Level factor into the Full pre-filled answers.
         </p>
         <p>
-
+            Below is a diagram for how the answers from one level impact the next:
         </p>
-        <img src="assets/images/CF/conversion-flow-diagram.png"/>
+        <img class="w-100" src="assets/images/CF/conversion-flow-diagram.png"/>
     </div>
+    <app-nav-back-next [page]="'tutorial-conversion'"></app-nav-back-next>
 
 </div>

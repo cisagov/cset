@@ -84,6 +84,9 @@ export class QuestionBlockCfComponent implements OnInit {
       });
     }
 
+    // this.mySubCategory.questions.forEach((q: Question) => {
+    //   q.
+    // });
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
 

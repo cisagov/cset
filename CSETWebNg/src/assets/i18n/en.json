@@ -472,8 +472,9 @@
       "6-cf": "5 - Implementation in Progress",
       "7-cf": "6 - Tested and Verified",
       "8-cf": "7 - Optimized",
-      "Y-cf": "3 - Documented Policy",
+      "Y-cf": "2 - Informally Performed",
       "N-cf": "1 - Not Performed",
+      "U-cf": "1 - Not Performed",
       "1-cf-description": "Activities, processes, and technologies are not in place to achieve the referenced objective.",
       "2-cf-description": "Activities and processes may be substantially performed and technologies may be available to achieve this objective, but they are undocumented and/or not formally approved by management.",
       "3-cf-description": "Your organization has a formal policy in place.",
@@ -482,8 +483,9 @@
       "6-cf-description": "Your organization has formally documented policies, standards, and procedures and is in the process of implementation.",
       "7-cf-description": "Your organization has formally documented policies, standards, and procedures. Implementation is tested and verified.",
       "8-cf-description": "Your organization has formally documented policies, standards, and procedures. Implementation is tested, verified, and reviewed regularly to ensure continued effectiveness.",
-      "Y-cf-description": "Your organization has a formal policy in place.",
-      "N-cf-description": "Activities, processes, and technologies are not in place to achieve the referenced objective."
+      "Y-cf-description": "Activities and processes may be substantially performed and technologies may be available to achieve this objective, but they are undocumented and/or not formally approved by management.",
+      "N-cf-description": "Activities, processes, and technologies are not in place to achieve the referenced objective.",
+      "U-cf-description": "Activities, processes, and technologies are not in place to achieve the referenced objective."
     },
     "placeholders": {
       "alt acet": "Description, explanation and/or justification for compensating control",

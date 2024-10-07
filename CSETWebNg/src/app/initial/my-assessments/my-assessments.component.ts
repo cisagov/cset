@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { FileUploadClientService } from "../../services/file-client.service";
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Sort } from "@angular/material/sort";
 import { Router } from "@angular/router";
@@ -50,6 +50,7 @@ import { DateAdapter } from '@angular/material/core';
 import { HydroService } from "../../services/hydro.service";
 import { CieService } from "../../services/cie.service";
 import { ConversionService } from "../../services/conversion.service";
+import { GalleryService } from "../../services/gallery.service";
 
 
 interface UserAssessment {
@@ -81,7 +82,7 @@ interface UserAssessment {
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class MyAssessmentsComponent implements OnInit {
+export class MyAssessmentsComponent implements OnInit, AfterViewInit {
   comparer: Comparer = new Comparer();
   sortedAssessments: UserAssessment[] = [];
   unsupportedImportFile: boolean = false;
@@ -128,7 +129,8 @@ export class MyAssessmentsComponent implements OnInit {
     public reportSvc: ReportService,
     private hydroSvc: HydroService,
     public cieSvc: CieService,
-    public conversionSvc: ConversionService
+    public conversionSvc: ConversionService,
+    public gallerySvc: GalleryService
   ) { }
 
   ngOnInit() {
@@ -173,6 +175,16 @@ export class MyAssessmentsComponent implements OnInit {
     this.assessSvc.getEncryptPreference().subscribe((result: boolean) => this.preventEncrypt = result);
 
     this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.cisaAssessorWorkflow = resp);
+  }
+
+  ngAfterViewInit() {
+    // immediatly start the entry-level assessment if CF and no assessments
+    if (this.isCF && (this.sortedAssessments == null || this.sortedAssessments.length == 0)) {
+      // this.gallerySvc.getGalleryItems('CF').subscribe(
+      //   (response: any) => {
+      //     this.navSvc.beginNewAssessmentGallery(response.rows[0].galleryItems[0]);
+      // });
+    }
   }
 
   /**
@@ -267,6 +279,12 @@ export class MyAssessmentsComponent implements OnInit {
                 (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);              
             });
             if(this.isCF){
+              if (assessments == null || assessments.length == 0) {
+                this.gallerySvc.getGalleryItems('CF').subscribe(
+                  (response: any) => {
+                    this.navSvc.beginNewAssessmentGallery(response.rows[0].galleryItems[0]);
+                });
+              }
               this.conversionSvc.isEntryCfAssessments(assessmentiDs).subscribe(
                 (result: any) => {
                   result.forEach((element: any) => {
