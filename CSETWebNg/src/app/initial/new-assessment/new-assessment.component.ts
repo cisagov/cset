@@ -55,7 +55,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
   hoverIndex = -1;
   config: SwiperOptions = {
-    slidesPerView: 1,
+    slidesPerView: "auto",
     spaceBetween: 7,
     slidesPerGroup: 1,
     //loop:true,
@@ -79,7 +79,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     },
     on: {
       resize: () => {
-        this.checkNavigation();
+        //this.checkNavigation();
       }
     }
   };
@@ -100,31 +100,15 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.pageTitle = this.tSvc.translate('to start an assessment').replace('{icon}', '<i class="fa-solid fa-circle-info" style="font-size: 1.3rem;"></i>');
     this.gallerySvc.refreshCards();
-    this.checkNavigation();
+    //this.checkNavigation();
   }
 
   ngAfterViewInit(): void {
-    this.checkNavigation();
+    //this.checkNavigation();
   }
 
   checkNavigation() {
-    let swiperPrev = document.getElementsByClassName('swiper-button-prev');
-    let swiperNext = document.getElementsByClassName('swiper-button-next');
-    if (window.innerWidth < 620) {
-      if (swiperPrev != null && swiperNext != null) {
-        for (var i = 0; i < swiperPrev.length; i++) {
-          swiperPrev[i].setAttribute('style', 'display:none');
-          swiperNext[i].setAttribute('style', 'display:none');
-        }
-      }
-    } else {
-      if (swiperPrev != null && swiperNext != null) {
-        for (var i = 0; i < swiperPrev.length; i++) {
-          swiperPrev[i].removeAttribute('style');
-          swiperNext[i].removeAttribute('style');
-        }
-      }
-    }
+    
   }
 
   onHover(i: number) {
