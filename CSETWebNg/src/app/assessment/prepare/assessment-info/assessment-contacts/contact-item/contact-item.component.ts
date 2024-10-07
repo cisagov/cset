@@ -103,7 +103,6 @@ export class ContactItemComponent implements OnInit {
       this.editMode = this.contact.evaluateCanEdit();
     }
     this.assessmentCreator()
-    console.log(this.contact)
   }
 
   isEmailValid() {
