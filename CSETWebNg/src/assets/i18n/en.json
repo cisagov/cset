@@ -367,7 +367,11 @@
     "change": "Change",
     "remove": "Remove",
     "not authorized message": "You are not authorized to make changes to the contacts on this assessment.",
-    "contact an administrator message": "Please contact an administrator for this assessment to make changes, or to gain administrative access."
+    "contact an administrator message": "Please contact an administrator for this assessment to make changes, or to gain administrative access.", 
+    "details": "Additional Details", 
+    "no details": "None available", 
+    "creator": "Assessment Creator", 
+    "editor": "Assessment Editor"
   },
   "acet": {
     "empty my assessments page footer text": "The Automated Cybersecurity Evaluation Toolbox (ACET®) is a National Credit Union Administration (NCUA) product that assists organizations in protecting their key national cyber assets. It was developed under the direction of the National Credit Union Administration by cybersecurity experts. This tool provides users with a systematic and repeatable approach for assessing the security posture of their cyber systems and networks. It includes both high-level and detailed questions related to all industrial control and IT systems.",

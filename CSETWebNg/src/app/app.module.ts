@@ -76,9 +76,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import {
-    MAT_DATE_LOCALE,
-    MatNativeDateModule,
-    MatRippleModule
+  MAT_DATE_LOCALE,
+  MatNativeDateModule,
+  MatRippleModule
 } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -668,6 +668,7 @@ import { CieMfrReportComponent } from './reports/cie/cie-mfr-report/cie-mfr-repo
 import { ReportListComponent } from './assessment/results/reports/report-list/report-list.component';
 import { ReportListCommonComponent } from './assessment/results/reports/report-list/report-list-common.component';
 import { PhysicalSummaryComponent } from './reports/physical-summary/physical-summary.component';
+import { ContactTooltipComponent } from './assessment/prepare/assessment-info/assessment-contacts/contact-tooltip/contact-tooltip.component';
 import { NoServerConnectionComponent } from './initial/no-server-connection/no-server-connection.component';
 
 
@@ -1190,6 +1191,7 @@ import { NoServerConnectionComponent } from './initial/no-server-connection/no-s
         AnalyticsloginComponent,
         ReportListComponent,
         ReportListCommonComponent,
+        ContactTooltipComponent,
         NoServerConnectionComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
