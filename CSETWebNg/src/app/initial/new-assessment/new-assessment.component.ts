@@ -55,7 +55,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
   hoverIndex = -1;
   config: SwiperOptions = {
-    slidesPerView: 1,
+    slidesPerView: "auto",
     spaceBetween: 7,
     slidesPerGroup: 1,
     //loop:true,
