@@ -1520,6 +1520,59 @@ namespace CSETWebCore.Business.Reports
         }
 
 
+        /// <summary>
+        /// Returns a list of questions that have been reviewed.
+        /// </summary>
+        /// <returns></returns>
+        public List<QuestionsMarkedForReview> GetQuestionsReviewed()
+        {
+
+            var results = new List<QuestionsMarkedForReview>();
+
+            // get any "marked for review" or commented answers that currently apply
+            var relevantAnswers = new RelevantAnswers().GetAnswersForAssessment(_assessmentId, _context)
+                .Where(ans => ans.Reviewed)
+                .ToList();
+
+            if (relevantAnswers.Count == 0)
+            {
+                return results;
+            }
+
+            bool requirementMode = relevantAnswers[0].Is_Requirement;
+
+            // include Question or Requirement contextual information
+            if (requirementMode)
+            {
+                var query = from ans in relevantAnswers
+                            join req in _context.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
+                            select new QuestionsMarkedForReview()
+                            {
+                                Answer = ans.Answer_Text,
+                                CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
+                                Question = req.Requirement_Text
+                            };
+
+                return query.ToList();
+            }
+            else
+            {
+                var query = from ans in relevantAnswers
+                            join q in _context.NEW_QUESTION on ans.Question_Or_Requirement_ID equals q.Question_Id
+                            join h in _context.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
+                            orderby h.Question_Group_Heading
+                            select new QuestionsMarkedForReview()
+                            {
+                                Answer = ans.Answer_Text,
+                                CategoryAndNumber = h.Question_Group_Heading + " #" + ans.Question_Number,
+                                Question = q.Simple_Question
+                            };
+
+                return query.ToList();
+            }
+        }
+
+
         public List<RankedQuestions> GetRankedQuestions()
         {
             var lang = _tokenManager.GetCurrentLanguage();
@@ -2839,6 +2892,11 @@ namespace CSETWebCore.Business.Reports
 
             return maturityDomains;
         }
+
+        //public TempDataAttribute GetStandardAnsweredQuestionsList()
+        //{
+
+        //}
     }
 }
 
