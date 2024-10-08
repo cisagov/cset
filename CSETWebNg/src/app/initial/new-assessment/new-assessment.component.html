@@ -31,11 +31,14 @@
             <ng-template swiperSlide *ngFor="let c of row.galleryItems; let i = index">
                 <div [attr.id]="'c'+c.gallery_Item_Guid" class="card gallery-card" tabindex="0"
                     (focus)="onHover(c.gallery_Item_Guid)" (mouseover)="onHover(c.gallery_Item_Guid)"
-                    (mouseleave)="onHoverOut(-1, c.gallery_Item_Guid)">
+                    (mouseleave)="onHoverOut(-1, c.gallery_Item_Guid)" style="max-width: 275px;">
                     
                     <div class="card-body gallery-card-body cursor-pointer"
                         style="min-height:150px; max-height:150px; z-index:1"
                         (click)="navSvc.beginNewAssessmentGallery(c)">
+                        <div class="img-container">
+                            <img class="img-cropped-calc" [src]="getImageSrc(c.icon_File_Name_Small)">
+                        </div>
                         <h6 class="card-title" ellipsis [ellipsis-content]="c.title"
                             style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
                        

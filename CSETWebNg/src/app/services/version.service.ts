@@ -20,7 +20,6 @@ export class VersionService {
   githubVersion = []
   public localVersion: string;
   showVersionNotification = false;
-  private apiURLCset = this.configSvc.apiUrl;
   installedVersion: any;
 
   constructor(
@@ -31,24 +30,29 @@ export class VersionService {
     this.getLatestVersion();
   }
 
+  /**
+   * Compares the latest GitHub version with the CSET version being run to see if
+   * we are running the latest.
+   */
   getLatestVersion() {
     this.getGithubLatestRelease().subscribe(data => {
-      this.actualVersion = data.tag_name.substring(1)
-      this.githubVersion = data.tag_name.substring(1).split('.').map(x => parseInt(x, 10))
+      this.actualVersion = data.tag_name.substring(1);
+      this.githubVersion = data.tag_name.substring(1).split('.').map(x => parseInt(x, 10));
       if (data) {
         this.getInstalledVersion().subscribe(version => {
-          this.localVersion = version.majorVersion.toString() + '.' + version.minorVersion.toString() + '.' + version.patch.toString() + '.' + version.build.toString();
+          this.localVersion = version.majorVersion.toString() + '.' + version.minorVersion.toString() + '.' + version.build.toString() + '.' + version.revision.toString();
           this.localVersionSubject.next(this.localVersion);
+
           if (version.majorVersion < this.githubVersion[0] ||
             (version.majorVersion === this.githubVersion[0] && version.minorVersion < this.githubVersion[1]) ||
-            (version.majorVersion === this.githubVersion[0] && version.minorVersion === this.githubVersion[1] && version.patch < this.githubVersion[2]) ||
-            (version.majorVersion === this.githubVersion[0] && version.minorVersion === this.githubVersion[1] && version.patch === this.githubVersion[2] && version.build < this.githubVersion[3])) {
+            (version.majorVersion === this.githubVersion[0] && version.minorVersion === this.githubVersion[1] && version.build < this.githubVersion[2]) ||
+            (version.majorVersion === this.githubVersion[0] && version.minorVersion === this.githubVersion[1] && version.build === this.githubVersion[2] && version.revision < this.githubVersion[3])) {
             this.showVersionNotification = true;
           }
           else {
             this.showVersionNotification = false;
           }
-        })
+        });
       }
     })
     error => {
@@ -59,7 +63,8 @@ export class VersionService {
   getGithubLatestRelease(): Observable<any> {
     return this.http.get<any>(this.configSvc.csetGithubApiUrl)
   }
+
   getInstalledVersion(): Observable<any> {
-    return this.http.get<any>(this.apiURLCset + 'version/getVersionNumber')
+    return this.http.get<any>(this.configSvc.apiUrl + 'version')
   }
 }

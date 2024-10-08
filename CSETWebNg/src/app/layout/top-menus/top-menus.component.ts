@@ -50,7 +50,7 @@ import { GalleryService } from '../../services/gallery.service';
 import { SetBuilderService } from './../../services/set-builder.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { UserLanguageComponent } from '../../dialogs/user-language/user-language.component';
-import { translate } from '@ngneat/transloco';
+import { translate } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-top-menus',

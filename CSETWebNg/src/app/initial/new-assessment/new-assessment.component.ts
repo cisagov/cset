@@ -32,7 +32,7 @@ import { GalleryService } from '../../services/gallery.service';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import { ConfigService } from '../../services/config.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 SwiperCore.use([Navigation, Pagination, Virtual]);
 @Component({
@@ -55,7 +55,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
   hoverIndex = -1;
   config: SwiperOptions = {
-    slidesPerView: 1,
+    slidesPerView: "auto",
     spaceBetween: 7,
     slidesPerGroup: 1,
     //loop:true,

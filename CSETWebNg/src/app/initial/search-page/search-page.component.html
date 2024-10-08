@@ -25,22 +25,23 @@
   <div *ngIf="rows.length == 0">
     {{t('no search results')}}
   </div>
-  <div *ngFor="let row of rows" class="m-4" style="height: 250px;">
+  <div *ngFor="let row of rows" class="m-4" style="height: 281px;">
     <swiper class="gallery-slider" [config]="config" (slideChange)="onSlideChange()" #swiper>
       <ng-template swiperSlide *ngFor="let c of row; let i = index">
 
         <div class="card gallery-card" (mouseover)="onHover(c.item.gallery_Item_Guid)"
           (mouseleave)="onHoverOut(-1, c.item.gallery_Item_Guid)">
-          <div class="card-image-parent">
-            <img class="card-image-child" [src]="getImageSrc(c.item.icon_File_Name_Small)">
+          
+          <div class="card-body gallery-card-body cursor-pointer"
+          style="min-height:150px; max-height:150px; z-index:1"
+          (click)="navSvc.beginNewAssessmentGallery(c.item)">
+          <div class="img-container">
+              <img class="img-cropped-calc" [src]="getImageSrc(c.item.icon_File_Name_Small)">
           </div>
-          <div class="card-body gallery-card-body cursor-pointer" style="min-height:180px; max-height:200px; z-index:1"
-            (click)="navSvc.beginNewAssessmentGallery(c.item)">
-            <h6 class="card-title" ellipsis [ellipsis-content]="c.item.title"
+          <h6 class="card-title" ellipsis [ellipsis-content]="c.item.title"
               style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
-            <p class="card-text" ellipsis [ellipsis-content]="c.item.plainText"
-              style="max-height:80px; min-height:80px;"></p>
-          </div>
+         
+      </div>
           <div class="card-footer gallery-card-footer" style="text-align:right;"
             [hidden]="c.item.gallery_Item_Guid!=hoverIndex">
             <button class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c.item)"

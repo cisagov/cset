@@ -23,12 +23,15 @@
             "allowedCommonJsDependencies": [
               "jquery",
               "lodash",
+              "rfdc",
               "rxjs/Subscription",
               "rxjs/observable/forkJoin",
               "rxjs/operators/startWith",
               "rxjs/operators/debounce",
               "rxjs/operators",
               "rxjs/Subject",
+              "sanitize-html",
+              "style-loader",
               "file-saver",
               "chart.js",
               "mousetrap"
@@ -86,7 +89,14 @@
           },
           "configurations": {
             "development": {
-              "optimization": true,
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
               "sourceMap": true,
               "namedChunks": true,
               "extractLicenses": true,
@@ -112,7 +122,14 @@
                   "maximumWarning": "400kb"
                 }
               ],
-              "optimization": true,
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
@@ -134,7 +151,14 @@
                   "maximumWarning": "6kb"
                 }
               ],
-              "optimization": true,
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
@@ -154,14 +178,14 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "csetweb-ng:build"
+            "buildTarget": "csetweb-ng:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "csetweb-ng:build:production"
+              "buildTarget": "csetweb-ng:build:production"
             },
             "development": {
-              "browserTarget": "csetweb-ng:build:development"
+              "buildTarget": "csetweb-ng:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -169,7 +193,7 @@
         "extract-i18n": {
           "builder": "@angular-builders/custom-webpack:extract-i18n",
           "options": {
-            "browserTarget": "csetweb-ng:build"
+            "buildTarget": "csetweb-ng:build"
           }
         },
         "test": {
@@ -240,5 +264,5 @@
     ],
     "cache": {
       "enabled": false
+    }
   }
-}

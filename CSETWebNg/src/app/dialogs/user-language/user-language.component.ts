@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { EditUserComponent } from '../edit-user/edit-user.component';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../../services/config.service';
 import { DateAdapter } from '@angular/material/core';
 

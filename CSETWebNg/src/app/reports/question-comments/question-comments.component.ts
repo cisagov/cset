@@ -24,7 +24,7 @@
 import { Component, Input } from '@angular/core';
 import { QuestionsService } from '../../services/questions.service';
 import { ReportService } from '../../services/report.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-question-comments',

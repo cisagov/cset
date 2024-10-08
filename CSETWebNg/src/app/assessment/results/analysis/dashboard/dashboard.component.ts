@@ -27,7 +27,7 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { AnalysisService } from './../../../../services/analysis.service';
 import { ConfigService } from '../../../../services/config.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 declare var $: any;
 
 @Component({

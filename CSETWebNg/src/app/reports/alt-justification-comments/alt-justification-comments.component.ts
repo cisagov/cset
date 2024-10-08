@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, Input } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-alt-justification-comments',

@@ -241,10 +241,28 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
 
   onHover(i: number) {
     this.hoverIndex = i;
+    if (i > 0) {
+      var el = document.getElementById('c' + i.toString()).parentElement;
+
+      var bounding = el.getBoundingClientRect();
+
+      let cardDimension = { x: bounding.x, y: bounding.y, w: bounding.width, h: bounding.height };
+      let viewport = { x: 0, y: 0, w: window.innerWidth, h: window.innerHeight };
+      let cardSize = cardDimension.w * cardDimension.h;
+      let xOverlap = Math.max(0, Math.min(cardDimension.x + cardDimension.w, viewport.x + viewport.w) - Math.max(cardDimension.x, viewport.x))
+      //let yOverlap = Math.max(0, Math.min(cardDimension.y + cardDimension.y, viewport.y + viewport.h) - Math.max(cardDimension.y, viewport.y))
+      let offScreen = cardDimension.w - xOverlap;
+      if (offScreen > 5) {
+        el.style.right = (cardDimension.w).toString() + 'px';
+      }
+    }
   }
 
   onHoverOut(i: number, cardId: number) {
     this.hoverIndex = i;
+
+    var el = document.getElementById('c' + cardId.toString()).parentElement;
+    el.style.removeProperty('right');
   }
 
   getImageSrc(src: string) {

@@ -37,7 +37,7 @@ import { CisService } from '../../../services/cis.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { ACETService } from '../../../services/acet.service';
 import { CompletionService } from '../../../services/completion.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-maturity-questions-ise',

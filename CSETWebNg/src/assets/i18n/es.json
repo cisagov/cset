@@ -87,6 +87,12 @@
         "advisory 3": "<span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> evaluaciones no pueden ser completadas de manera efectiva por una sola persona. Es esencial contar con un equipo multifuncional compuesto por representantes de las áreas de operaciones, mantenimiento, tecnología de la información, negocio y seguridad. Los representantes deben ser expertos en la materia con un conocimiento significativo en sus respectivas áreas. Ningún individuo tiene la amplitud de responsabilidad o conocimiento para responder eficazmente a todas las preguntas.",
         "advisory 4": "<p>Los datos e informes generados por la herramienta deben gestionarse de forma segura y marcarse, almacenarse y distribuirse de manera adecuada a su confidencialidad.</p>"
     },
+    "connection": {
+        "no server connection": "No hay conexión al servidor",
+        "details": "Detalles",
+        "details 1": "El servidor no se puede alcanzar. Póngase en contacto con un administrador del sistema para verificar que la URL del servidor esté configurada correctamente y que la API de CSET esté ejecutándose.",
+        "details 2": "URL del servidor"
+    },
     "contact": {
         "contacts": "Contactos",
         "contact": "Contacto",
@@ -114,7 +120,11 @@
         "change": "Cambiar",
         "remove": "Eliminar",
         "not authorized message": "No está autorizado/a para realizar cambios en los contactos de esta evaluación.",
-        "contact an administrator message": "Por favor, contacte a un administrador de esta evaluación para realizar cambios o para obtener acceso administrativo."
+        "contact an administrator message": "Por favor, contacte a un administrador de esta evaluación para realizar cambios o para obtener acceso administrativo.", 
+        "details": "Detalles adicionales", 
+        "no details": "Ninguna disponible", 
+        "creator": "Creador de evaluaciones", 
+        "editor": "Editor de evaluación"
     },
     "acet": {
         "empty my assessments page footer text": "La Caja de herramientas de evaluación de ciberseguridad automatizada (ACET®) es un producto de la Administración Nacional de Cooperativas de Crédito (NCUA) que ayuda a las organizaciones a proteger sus activos cibernéticos nacionales clave. Fue desarrollado bajo la dirección de la Administración Nacional de Cooperativas de Crédito por expertos en ciberseguridad. Esta herramienta proporciona a los usuarios un enfoque sistemático y repetible para evaluar la situación de seguridad de sus sistemas y redes cibernéticos. Incluye preguntas detalladas y de alto nivel relacionadas con todos los sistemas de TI y control industrial.",

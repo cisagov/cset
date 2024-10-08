@@ -5,7 +5,7 @@ namespace CSETWebCore.Interfaces.Version
 {
     public interface IVersionBusiness
     {
-        CsetVersionResponse getversionNumber();
+        CsetVersion GetVersionNumber();
     }
 }
 

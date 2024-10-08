@@ -38,7 +38,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { CompletionService } from '../../../services/completion.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { DemographicService } from '../../../services/demographic.service';
 import { DemographicIodService } from '../../../services/demographic-iod.service';
 import { SsgService } from '../../../services/ssg.service';

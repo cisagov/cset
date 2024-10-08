@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Pipe, PipeTransform } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { DateTime } from 'luxon';
 import { JwtParser } from './jwt-parser';
 import { AuthenticationService } from '../services/authentication.service';

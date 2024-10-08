@@ -252,7 +252,7 @@ a {
 
 .checkbox-custom:focus+.checkbox-custom-label,
 .radio-custom:focus+.radio-custom-label {
-  // outline: 3px solid #8bb4f8; /* focus style */
+  // outline: 3px solid #8bb4f8; __<<ngM2ThemingMigrationEscapedComment3>>__
   box-shadow: 0 0 3pt 2pt #8bb4f8;
 }
 
@@ -2350,8 +2350,8 @@ ul.related-questions li {
   background-color: $secondary-color;
 }
 
-mat-sidenav {
-  background-color: $secondary-color; //$primary-350;
+mat-sidenav.mat-sidenav {
+  background-color: $secondary-color;
   color: $white;
   width: 300px;
 }
@@ -3802,6 +3802,7 @@ h6.dropdown-header {
 }
 
 ///////////// Gallery //////////////////////
+///////////// Gallery //////////////////////
 .new-assessment-dialog-responsive {
   width: 60% !important;
   height: 40% !important;
@@ -3819,12 +3820,17 @@ h6.dropdown-header {
 .swiper-button-prev,
 .swiper-button-next {
   z-index: 100 !important;
-  height: 65px !important;
-  top: 94px !important;
-  background-color: rgba(0, 0, 0, 0.3) !important;
+  height: 80% !important;
+  top: 32px !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
   padding: 0px 20px !important;
-  margin: 0 5px;
   border-radius: 5px;
+}
+.swiper-button-prev {
+  margin-left: 5px;
+}
+.swiper-button-next {
+  margin-right: 5px;
 }
 
 .swiper-button-prev {
@@ -3847,12 +3853,12 @@ h6.dropdown-header {
 }
 
 .gallery-card-body {
-  padding: 1rem 1rem 0 1rem !important;
+  padding: 0 !important;
 }
 
 .gallery-card-body h6 {
   margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
+  padding: 1rem 1rem 0 1rem !important;
 }
 
 .gallery-card-body-buttons {
@@ -3869,7 +3875,7 @@ h6.dropdown-header {
 
 @media screen and (max-width:500px) {
 
-  .swiper-slide-disabled-for-now{
+  .swiper-slide-disabled-for-now {
     transition: 300ms all;
     min-width: 230px;
 
@@ -3900,7 +3906,7 @@ h6.dropdown-header {
 }
 
 @media screen and (min-width:500px) {
-  .swiper-slide-disabled-for-now{
+  .swiper-slide-disabled-for-now {
     transition: 300ms all;
     min-width: 230px;
 
@@ -3938,26 +3944,45 @@ h6.dropdown-header {
 
 .gallery-card {
   border-radius: 5px !important;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(230, 230, 230, 1) 70%, rgba(230, 230, 230, 1) 100%);
-  border: 1px solid rgba(54, 113, 144, .30);
+  background: #fff;
+  border: 1px solid rgba(54, 113, 144, .20);
   ;
 }
 
 .gallery-card:hover {
-  border: 1px solid rgba(54, 113, 144, .40);
-  background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(183, 204, 215, .30) 60%, rgba(54, 113, 144, .30) 100%) !important;
+  border: 1px solid #ffc107;
+}
+
+.img-cropped-calc {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity:20%;
+}
+
+.gallery-card:hover .img-cropped-calc {
+  opacity:70% !important;
 }
 
 .gallery-card-footer {
-  background-color: $secondary-color;
-  padding: 8px 10px !important;
-  border-radius: 0 0 5px 5px !important;
+  background-color: #ffc107 !important;
+  
+}
+
+.card-footer{
+  background-color: #fff;
+  border: none;
+  min-height:50px;
+  max-height:50px;
+  padding: .5rem .75rem;
 }
 
 .gallery-btn-play {
-  color: $secondary-color  !important;
+  color: #ffc107  !important;
 }
 
 .gallery-btn-info:hover {
-  color: $secondary-color  !important;
+  color: #ffc107  !important;
 }

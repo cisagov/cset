@@ -370,7 +370,7 @@ export class LocalStoreManager {
 
   private onInit() {
     setTimeout(() => {
-      this.initEvent.next();
+      this.initEvent.next("Initialization complete");
       this.initEvent.complete();
     });
   }

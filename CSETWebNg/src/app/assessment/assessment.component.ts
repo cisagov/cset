@@ -23,18 +23,18 @@
 ////////////////////////////////
 
 import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output, HostListener,
-  ApplicationRef
+    Component,
+    EventEmitter,
+    OnInit,
+    Output, HostListener,
+    ApplicationRef
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
 import { LayoutService } from '../services/layout.service';
 import { NavTreeService } from '../services/navigation/nav-tree.service';
 import { NavigationService } from '../services/navigation/navigation.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../services/config.service';
 
 @Component({
