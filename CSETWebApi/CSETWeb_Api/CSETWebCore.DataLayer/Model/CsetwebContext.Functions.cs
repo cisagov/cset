@@ -21,5 +21,9 @@ namespace CSETWebCore.DataLayer.Model
         {
             throw new NotSupportedException("This method can only be called from Entity Framework Core queries");
         }
+
+        protected void OnModelCreatingGeneratedFunctions(ModelBuilder modelBuilder)
+        {
+        }
     }
 }
