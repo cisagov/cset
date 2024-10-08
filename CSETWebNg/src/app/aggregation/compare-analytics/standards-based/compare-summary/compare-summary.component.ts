@@ -63,7 +63,7 @@ export class CompareSummaryComponent implements OnInit {
      
   }
 
-  populateCharts() {
+  async populateCharts() {
     const aggId: number = +localStorage.getItem("aggregationId");
 
     // Overall Average
@@ -76,7 +76,7 @@ export class CompareSummaryComponent implements OnInit {
       this.chartOverallAverage = this.chartSvc.buildHorizBarChart('canvasOverallAverage', x, false, true);
     });
 
-
+    
 
     // Standards Answers
     this.aggregationSvc.getStandardsAnswers().subscribe((x: any) => {
@@ -88,6 +88,8 @@ export class CompareSummaryComponent implements OnInit {
       this.chartStandardsPie = this.chartSvc.buildDoughnutChart('canvasStandardsPie', x);
     });
 
+    // Waiting a second for standards donut chart to complete before grabbing component chart.
+    await new Promise(f => setTimeout(f, 1000));
 
 
     // Components Answers
@@ -156,4 +158,5 @@ export class CompareSummaryComponent implements OnInit {
   })
   
 }
+
 }
