@@ -49,7 +49,7 @@
         "chart.js": "^4.4.4",
         "document-register-element": "^1.14.10",
         "electron": "^32.1.1",
-        "electron-log": "^4.4.8",
+        "electron-log": "^5.2.0",
         "file-saver": "^2.0.5",
         "font-awesome": "^4.7.0",
         "fuse.js": "^7.0.0",
