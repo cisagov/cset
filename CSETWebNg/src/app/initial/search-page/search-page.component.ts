@@ -189,7 +189,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   }
 
   checkNavigation() {
-    let swiperPrev = document.getElementsByClassName('swiper-button-prev');
+    /*let swiperPrev = document.getElementsByClassName('swiper-button-prev');
     let swiperNext = document.getElementsByClassName('swiper-button-next');
     if (window.innerWidth < 620) {
 
@@ -206,7 +206,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
           swiperNext[i].removeAttribute('style');
         }
       }
-    }
+    }*/
   }
 
   showButtons(show: boolean) {
