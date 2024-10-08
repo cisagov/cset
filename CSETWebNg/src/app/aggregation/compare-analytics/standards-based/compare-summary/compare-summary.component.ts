@@ -88,6 +88,7 @@ export class CompareSummaryComponent implements OnInit {
       this.chartStandardsPie = this.chartSvc.buildDoughnutChart('canvasStandardsPie', x);
     });
 
+    // Waiting a second for standards donut chart to complete before grabbing component chart.
     await new Promise(f => setTimeout(f, 1000));
 
 
