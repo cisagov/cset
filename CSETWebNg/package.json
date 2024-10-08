@@ -52,7 +52,7 @@
         "electron-log": "^4.4.8",
         "file-saver": "^2.0.5",
         "font-awesome": "^4.7.0",
-        "fuse.js": "^6.6.2",
+        "fuse.js": "^7.0.0",
         "html-to-pdfmake": "^2.5.13",
         "intersection-observer": "^0.12.2",
         "jquery": "^3.7.1",
