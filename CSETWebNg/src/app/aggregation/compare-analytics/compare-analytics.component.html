@@ -54,9 +54,9 @@
       <div class="mt-0 me-0 d-flex flex-column justify-content-start flex-11a">
         <div *ngIf="this.type === 'maturity-based'; else standardsBased" [ngSwitch]="tab"
           class="d-flex flex-column justify-content-start flex-00a">
-          <app-compare-maturity-individual *ngSwitchCase="'INDIVIDUAL'"></app-compare-maturity-individual>
-          <app-compare-maturity-missed *ngSwitchCase="'MISSED'"></app-compare-maturity-missed>
-          <app-compare-maturity-bestworst *ngSwitchCase="'BESTWORST'"></app-compare-maturity-bestworst>
+          <app-compare-individual-maturity *ngSwitchCase="'INDIVIDUAL'"></app-compare-individual-maturity>
+          <app-compare-missed-maturity *ngSwitchCase="'MISSED'"></app-compare-missed-maturity>
+          <app-compare-bestworst-maturity *ngSwitchCase="'BESTWORST'"></app-compare-bestworst-maturity>
         </div>
         <ng-template #standardsBased [ngSwitch]="tab">
           <app-compare-summary *ngSwitchCase="'SUMMARY'"></app-compare-summary>

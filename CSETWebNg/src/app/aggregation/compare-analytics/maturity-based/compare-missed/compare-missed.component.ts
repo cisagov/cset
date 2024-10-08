@@ -25,7 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../../../services/aggregation.service';
 
 @Component({
-  selector: 'app-compare-maturity-missed',
+  selector: 'app-compare-missed-maturity',
   templateUrl: './compare-missed.component.html',
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
@@ -52,5 +52,4 @@ export class CompareMaturityMissedComponent implements OnInit {
 
     });
   }
-
 }

@@ -29,7 +29,7 @@ import { ColorService } from '../../../../services/color.service';
 import { QuestionsService } from '../../../../services/questions.service';
 
 @Component({
-  selector: 'app-compare-maturity-bestworst',
+  selector: 'app-compare-bestworst-maturity',
   templateUrl: './compare-bestworst.component.html',
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
