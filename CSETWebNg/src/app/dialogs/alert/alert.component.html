@@ -21,7 +21,7 @@
   SOFTWARE. 
 -------------------------->
 <div class="alert-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+  <div *ngIf="showHeader" class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span [ngClass]="iconClass" class="fs-base-6 me-3"></span>
     <span>{{ data.title | titlecase }}</span>
   </div>

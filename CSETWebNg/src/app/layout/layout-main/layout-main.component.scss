@@ -245,7 +245,7 @@ a {
 
 .checkbox-custom:focus+.checkbox-custom-label,
 .radio-custom:focus+.radio-custom-label {
-  // outline: 3px solid #8bb4f8; /* focus style */
+  // outline: 3px solid #8bb4f8; __<<ngM2ThemingMigrationEscapedComment3>>__
   box-shadow: 0 0 3pt 2pt #8bb4f8;
 }
 
@@ -2398,8 +2398,8 @@ ul.related-questions li {
   background-color: $secondary-color;
 }
 
-mat-sidenav {
-  background-color: $secondary-color; //$primary-350;
+mat-sidenav.mat-sidenav {
+  background-color: $secondary-color;
   color: $white;
   width: 300px;
 }
@@ -3884,12 +3884,12 @@ h6.dropdown-header {
 }
 
 .gallery-card-body {
-  padding: 1rem 1rem 0 1rem !important;
+  padding: 0 !important;
 }
 
 .gallery-card-body h6 {
   margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
+  padding: 1rem 1rem 0 1rem !important;
 }
 
 .gallery-card-body-buttons {
@@ -3982,7 +3982,19 @@ h6.dropdown-header {
 
 .gallery-card:hover {
   border: 1px solid #ffc107;
-  
+}
+
+.img-cropped-calc {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity:20%;
+}
+
+.gallery-card:hover .img-cropped-calc {
+  opacity:70% !important;
 }
 
 .gallery-card-footer {

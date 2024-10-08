@@ -29,7 +29,7 @@ import { QuestionsService } from '../../../services/questions.service';
 import { ReportAnalysisService } from '../../../services/report-analysis.service';
 import { ReportService } from '../../../services/report.service';
 import { RraDataService } from '../../../services/rra-data.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-rra-deficiency',

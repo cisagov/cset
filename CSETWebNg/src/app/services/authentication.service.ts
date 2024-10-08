@@ -32,7 +32,7 @@ import { JwtParser } from '../helpers/jwt-parser';
 import { ChangePassword } from '../models/reset-pass.model';
 import { CreateUser } from './../models/user.model';
 import { ConfigService } from './config.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 export interface LoginResponse {
   token: string;

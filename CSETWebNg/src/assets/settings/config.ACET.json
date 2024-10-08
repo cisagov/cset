@@ -2,7 +2,7 @@
     "installationMode": "ACET",
     "galleryLayout": "ACET",
     "behaviors": {
-        "defaultTitle": "TOOLBOX",
+        "defaultTitle": "ACET",
         "showModuleBuilder": true,
         "showAssessmentDocuments": false,
         "showAggregation": true,

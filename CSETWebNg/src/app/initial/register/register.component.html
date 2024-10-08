@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="p-4 pb-0 d-flex flex-column flex-00a" *transloco="let t">
+<div class="mb-4 d-flex flex-column flex-00a" *transloco="let t">
   <form name="form" (ngSubmit)="signup()" #fReg="ngForm">
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && !firstName.valid }">
       <label required for="firstName" class="form-label">{{t('user profile.first name')}}</label>

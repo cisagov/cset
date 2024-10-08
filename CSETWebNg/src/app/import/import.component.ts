@@ -88,9 +88,7 @@ export class ImportComponent implements OnInit, OnDestroy {
     schemas: []
   };
 
-  public fileOverBase(e: any): void {
-    this.fileOverStateObservable.next(e);
-  }
+ 
 
   public fileOverModuleBase(e: any): void {
     this.fileOverModuleStateObservable.next(e);
@@ -98,10 +96,6 @@ export class ImportComponent implements OnInit, OnDestroy {
 
   public onModelChange(event) {
     this.moduleCode = event;
-  }
-
-  public fileOverAnother(e: any): void {
-    this.hasAnotherDropZoneOver = e;
   }
 
   public onModuleFileChanged(event) {
