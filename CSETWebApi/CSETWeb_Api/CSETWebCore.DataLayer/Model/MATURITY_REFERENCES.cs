@@ -11,7 +11,7 @@ namespace CSETWebCore.DataLayer.Model;
 /// <summary>
 /// A collection of MATURITY_REFERENCES records
 /// </summary>
-[PrimaryKey("Mat_Question_Id", "Gen_File_Id", "Section_Ref")]
+[PrimaryKey("Mat_Question_Id", "Gen_File_Id", "Section_Ref", "Source")]
 public partial class MATURITY_REFERENCES
 {
     [Key]
@@ -25,13 +25,14 @@ public partial class MATURITY_REFERENCES
     public string Section_Ref { get; set; }
 
     public int? Page_Number { get; set; }
-    
-    public bool Source { get; set; }
 
     [StringLength(2000)]
     public string Destination_String { get; set; }
 
     public int? Sequence { get; set; }
+
+    [Key]
+    public bool Source { get; set; }
 
     [ForeignKey("Gen_File_Id")]
     [InverseProperty("MATURITY_REFERENCES")]
