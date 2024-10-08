@@ -20,19 +20,19 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="text-left">
+<div class="text-start">
   <div class="mb-3">
     This table lists questions or requirements that were answered 'No' in all the compared assessments.
   </div>
 
-  <table class="assessment-summary td-p-1 td-text-left mb-5">
+  <table class="assessment-summary td-text-left mb-5">
     <tr>
-      <th class="pe-5">Title</th>
-      <th>Question</th>
+      <th class="px-2">Title</th>
+      <th class="px-2">Question</th>
     </tr>
     <tr *ngFor="let q of missedQuestions">
-      <td class="pe-5">{{ q.questionTitle }}</td>
-      <td>{{ q.displayText }}</td>
+      <td class="px-2">{{ q.questionTitle }}</td>
+      <td class="px-2">{{ q.displayText }}</td>
     </tr>
   </table>
 

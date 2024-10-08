@@ -28,7 +28,7 @@ import { ColorService } from '../../../../services/color.service';
 import { QuestionsService } from '../../../../services/questions.service';
 
 @Component({
-  selector: 'app-compare-maturity-individual',
+  selector: 'app-compare-individual-maturity',
   templateUrl: './compare-individual.component.html',
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
