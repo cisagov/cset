@@ -108,7 +108,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   }
 
   checkNavigation() {
-    let swiperPrev = document.getElementsByClassName('swiper-button-prev');
+    /*let swiperPrev = document.getElementsByClassName('swiper-button-prev');
     let swiperNext = document.getElementsByClassName('swiper-button-next');
     if (window.innerWidth < 620) {
       if (swiperPrev != null && swiperNext != null) {
@@ -124,7 +124,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
           swiperNext[i].removeAttribute('style');
         }
       }
-    }
+    }*/
   }
 
   onHover(i: number) {
