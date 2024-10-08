@@ -47,6 +47,7 @@ namespace CSETWebCore.Interfaces.Reports
         List<QuestionsWithAltJust> GetQuestionsWithAlternateJustification();
         List<QuestionsWithComments> GetQuestionsWithComments();
         List<QuestionsMarkedForReview> GetQuestionsMarkedForReview();
+        List<QuestionsMarkedForReview> GetQuestionsReviewed();
         List<RankedQuestions> GetRankedQuestions();
         List<DocumentLibraryTable> GetDocumentLibrary();
         BasicReportData.OverallSALTable GetNistSals();

@@ -670,6 +670,10 @@ import { ReportListCommonComponent } from './assessment/results/reports/report-l
 import { PhysicalSummaryComponent } from './reports/physical-summary/physical-summary.component';
 import { ContactTooltipComponent } from './assessment/prepare/assessment-info/assessment-contacts/contact-tooltip/contact-tooltip.component';
 import { NoServerConnectionComponent } from './initial/no-server-connection/no-server-connection.component';
+import { McetAnsweredquestionsComponent } from './reports/mcet-answeredquestions/mcet-answeredquestions.component';
+import { McetCommentsmarkedComponent } from './reports/mcet-commentsmarked/mcet-commentsmarked.component';
+import { McetReviewedComponent } from './reports/mcet-reviewed/mcet-reviewed.component';
+import { QuestionsReviewedComponent } from './reports/questions-reviewed/questions-reviewed.component';
 
 
 @NgModule({ declarations: [
@@ -1192,7 +1196,11 @@ import { NoServerConnectionComponent } from './initial/no-server-connection/no-s
         ReportListComponent,
         ReportListCommonComponent,
         ContactTooltipComponent,
-        NoServerConnectionComponent
+        NoServerConnectionComponent,
+        McetAnsweredquestionsComponent,
+        McetCommentsmarkedComponent,
+        McetReviewedComponent,
+        QuestionsReviewedComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
