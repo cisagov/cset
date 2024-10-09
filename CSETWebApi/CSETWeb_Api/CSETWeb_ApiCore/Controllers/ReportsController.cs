@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -902,6 +903,63 @@ namespace CSETWebCore.Api.Controllers
 
             data.MatAnsweredQuestions = _report.GetCieMfrQuestionList();
             data.Information = _report.GetInformation();
+            return Ok(data);
+        }
+
+
+        [HttpGet]
+        [Route("api/reports/getStandardAnsweredQuestions")]
+        public async Task<IActionResult> GetStandardAnsweredQuestions()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            _report.SetReportsAssessmentId(assessmentId);
+            BasicReportData data = new BasicReportData();
+            data.information = _report.GetInformation();
+
+            data.StandardsQuestions = await _report.GetStandardQuestionAnswers(assessmentId);
+
+            // only need answered questions for each standard (yes this should be a stored proc, but I don't have time)
+            //foreach(var standard in data.StandardsQuestions)
+            //{
+            //    standard.Questions = standard.Questions.Where(x => x.Answer != "U").ToList();
+            //}
+
+            // only need answered questions (yes this should be a stored proc, but I don't have time)
+            //data.ComponentQuestions = data.ComponentQuestions.Where(x => x.Answer != "U").ToList();
+
+            return Ok(data);
+        }
+
+
+        [HttpGet]
+        [Route("api/reports/getStandardCommentsAndMfr")]
+        public IActionResult GetStandardCommentsAndMfr()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            _report.SetReportsAssessmentId(assessmentId);
+            BasicReportData data = new BasicReportData();
+            data.information = _report.GetInformation();
+
+            data.QuestionsWithComments = _report.GetQuestionsWithComments();
+            data.QuestionsMarkedForReview = _report.GetQuestionsMarkedForReview();
+            return Ok(data);
+        }
+
+
+        [HttpGet]
+        [Route("api/reports/getReviewedQuestions")]
+        public IActionResult GetReviewedQuestions()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            _report.SetReportsAssessmentId(assessmentId);
+            BasicReportData data = new BasicReportData();
+            data.information = _report.GetInformation();
+
+            data.QuestionsWithComments = _report.GetQuestionsWithComments();
+            data.QuestionsMarkedForReview = _report.GetQuestionsReviewed();
             return Ok(data);
         }
         //[HttpGet]

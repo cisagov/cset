@@ -245,7 +245,18 @@ export class ReportService {
       return t.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS);
     }
   }
+  
+  getStandardAnsweredQuestions() {
+    return this.http.get(this.configSvc.apiUrl + 'reports/getStandardAnsweredQuestions');
+  }
 
+  getStandardCommentsAndMfr() {
+    return this.http.get(this.configSvc.apiUrl + 'reports/getStandardCommentsAndMfr');
+  }
+
+  getReviewedQuestions() {
+    return this.http.get(this.configSvc.apiUrl + 'reports/getReviewedQuestions');
+  }
   /**
    * Switches that define what to show on Module Content Reports
    */

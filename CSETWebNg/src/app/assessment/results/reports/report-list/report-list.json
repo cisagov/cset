@@ -290,6 +290,15 @@
       },
       {
         "linkUrl": "detail"
+      },
+      {
+        "linkUrl": "mcetAnsweredQuestions"
+      },
+      {
+        "linkUrl": "mcetMfrAndComments"
+      },
+      {
+        "linkUrl": "mcetReviewedQuestions"
       }
     ]
   }
