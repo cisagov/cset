@@ -33,6 +33,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using static Lucene.Net.Util.Fst.Util;
 
 
@@ -1288,6 +1289,41 @@ namespace CSETWebCore.Business.Reports
                 }
                 lastshortname = a.ShortName;
                 qlist.Add(a);
+            }
+
+            return list;
+        }
+
+
+        public async Task<List<StandardQuestions>> GetStandardQuestionAnswers(int assessId)
+        {
+            CsetwebContextProcedures context = new CsetwebContextProcedures(_context);
+
+            var dblist = await context.usp_GetQuestionsAsync(assessId);
+
+            List<StandardQuestions> list = new List<StandardQuestions>();
+            string lastshortname = "";
+            List<SimpleStandardQuestions> qlist = new List<SimpleStandardQuestions>();
+            foreach (var a in dblist.ToList())
+            {
+                if (a.ShortName != lastshortname)
+                {
+                    qlist = new List<SimpleStandardQuestions>();
+                    list.Add(new StandardQuestions()
+                    {
+                        Questions = qlist,
+                        StandardShortName = a.ShortName
+                    });
+                }
+                lastshortname = a.ShortName;
+                qlist.Add(new SimpleStandardQuestions()
+                {
+                    ShortName = a.ShortName,
+                    Question = a.QuestionText,
+                    QuestionId = a.QuestionOrRequirementID,
+                    Answer = a.AnswerText,
+                    CategoryAndNumber = a.CategoryAndNumber
+                });
             }
 
             return list;
