@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -908,7 +909,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/getStandardAnsweredQuestions")]
-        public IActionResult GetStandardAnsweredQuestions()
+        public async Task<IActionResult> GetStandardAnsweredQuestions()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -916,8 +917,7 @@ namespace CSETWebCore.Api.Controllers
             BasicReportData data = new BasicReportData();
             data.information = _report.GetInformation();
 
-            data.StandardsQuestions = _report.GetQuestionsForEachStandard();
-            data.ComponentQuestions = _report.GetComponentQuestions();
+            data.StandardsQuestions = await _report.GetStandardQuestionAnswers(assessmentId);
 
             // only need answered questions for each standard (yes this should be a stored proc, but I don't have time)
             //foreach(var standard in data.StandardsQuestions)
