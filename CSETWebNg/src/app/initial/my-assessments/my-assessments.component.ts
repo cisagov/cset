@@ -388,14 +388,19 @@ export class MyAssessmentsComponent implements OnInit {
             url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
           }
 
-          if (result.password != null && result.password != "") {
+          if (result.scrubData){
+            url = url + "&scrubData=" + result.scrubData;
+          }
+
+          if (result.encryptionData.password != null && result.encryptionData.password != "") {
             url = url + "&password=" + result.password;
           }
 
-          if (result.hint != null && result.hint != "") {
+          if (result.encryptionData.hint != null && result.encryptionData.hint != "") {
             url = url + "&passwordHint=" + result.hint;
           }
 
+          
           //if electron
           window.location.href = url;
 

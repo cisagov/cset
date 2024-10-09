@@ -37,20 +37,21 @@ export class ExportPasswordComponent {
 
   dialogTitle: string = "Encrypt Assessment";
 
-  encryptionData = {
+  data = {
+  scrubData: false,
+  encryptionData: {
     password: "",
     hint: "",
-  };
+  }};
 
   password = "";
   passwordHint = "";
   showPassword = false;
 
   confirm(): void {
-    this.encryptionData.password = this.password;
-    this.encryptionData.hint = this.passwordHint;
-
-    this.dialogRef.close(this.encryptionData);
+    this.data.encryptionData.password = this.password;
+    this.data.encryptionData.hint = this.passwordHint;
+    this.dialogRef.close(this.data);
   }
 
   cancel() {
@@ -59,6 +60,11 @@ export class ExportPasswordComponent {
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
+  }
+
+  onScrubDataChange(event: Event) {
+    const checkbox = event.target as HTMLInputElement;
+    this.data.scrubData = checkbox.checked;
   }
 
 }
