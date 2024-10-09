@@ -21,19 +21,19 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
-import { ConfigService } from '../../services/config.service';
-import { QuestionsService } from '../../services/questions.service';
+import { Title } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
+import { QuestionsService } from '../../services/questions.service';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
-  selector: 'app-mcet-commentsmarked',
-  templateUrl: './mcet-commentsmarked.component.html',
+  selector: 'app-all-answeredquestions',
+  templateUrl: './all-answeredquestions.component.html',
   styleUrls: ['../reports.scss', '../acet-reports.scss']
 })
-export class McetCommentsmarkedComponent {
+export class AllAnsweredquestionsComponent implements OnInit {
 
   response: any;
 
@@ -47,11 +47,13 @@ export class McetCommentsmarkedComponent {
 
   ngOnInit() {
 
-    this.reportSvc.getStandardCommentsAndMfr().subscribe(
-      (r: any) => {
-        console.log(r)
+    this.reportSvc.getStandardAnsweredQuestions().subscribe(
+      (r: any) => {        
         this.response = r;
-        this.titleService.setTitle(this.tSvc.translate('reports.mcet.cmfr.report title'));
+        r.standardsQuestions.forEach(element => {
+          element.question = "<pre>"+element.question+"</pre>";
+        });
+        this.titleService.setTitle(this.tSvc.translate('reports.all.answered statements.tab title'));
       }
     );
   }

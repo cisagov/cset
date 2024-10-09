@@ -98,18 +98,13 @@
       <div class="question-row d-flex flex-column" *ngFor="let q of mySubCategory.questions" id="qq{{q.questionId}}"
         [class.display-none]="!q.visible">
 
+
+        
+
         <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
           <div class="number-and-text">
             <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.displayNumber }}</div>
-            <div style="width: 100%;">
-              <div [style.word-break]="applyWordBreak(q)" [innerHTML]="applyTokensToText(q)"
-                (click)="questionTextClicked(q, $event)">
-              </div>
-              <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
-            </div>
           </div>
-
-
           <div>
             <div class="btn-group answer-group" role="group">
               <label *ngFor="let option of answerOptions" class="btn form-check-label"
@@ -144,6 +139,14 @@
 
           </div>
         </div>
+        <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
+          <div style="width: 100%;list-style-type: none;">
+            <div [style.word-break]="applyWordBreak(q)" [innerHTML]="applyTokensToText(q)"
+              (click)="questionTextClicked(q, $event)">
+            </div>
+            <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
+          </div>
+      </div>
 
         <div class="w-100" *ngIf="layoutSvc.hp">
           <!-- Handheld Portrait -->

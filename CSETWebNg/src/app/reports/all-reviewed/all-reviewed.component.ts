@@ -29,11 +29,11 @@ import { QuestionsService } from '../../services/questions.service';
 import { ReportService } from '../../services/report.service';
 
 @Component({
-  selector: 'app-mcet-reviewed',
-  templateUrl: './mcet-reviewed.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+  selector: 'app-all-reviewed',
+  templateUrl: './all-reviewed.component.html',
+  styleUrls: ['../reports.scss','../acet-reports.scss']
 })
-export class McetReviewedComponent {
+export class AllReviewedComponent {
   response: any;
 
   constructor(
@@ -50,7 +50,7 @@ export class McetReviewedComponent {
       (r: any) => {
         console.log(r)
         this.response = r;
-        this.titleService.setTitle(this.tSvc.translate('reports.mcet.reviewed questions.report title'));
+        this.titleService.setTitle(this.tSvc.translate('reports.all.reviewed questions.report title'));
       }
     );
   }

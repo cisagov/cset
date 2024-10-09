@@ -234,9 +234,9 @@ import { AnalyticsComponent } from './assessment/results/analytics/analytics.com
 import { CieMfrReportComponent } from './reports/cie/cie-mfr-report/cie-mfr-report.component';
 import { TutorialCpgComponent } from './assessment/prepare/maturity/tutorial-cpg/tutorial-cpg.component';
 import { TutorialMvraComponent } from './assessment/prepare/maturity/tutorial-mvra/tutorial-mvra.component';
-import { McetAnsweredquestionsComponent } from './reports/mcet-answeredquestions/mcet-answeredquestions.component';
-import { McetCommentsmarkedComponent } from './reports/mcet-commentsmarked/mcet-commentsmarked.component';
-import { McetReviewedComponent } from './reports/mcet-reviewed/mcet-reviewed.component';
+import { AllAnsweredquestionsComponent } from './reports/all-answeredquestions/all-answeredquestions.component';
+import { AllCommentsmarkedComponent } from './reports/all-commentsmarked/all-commentsmarked.component';
+import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.component';
 
 const appRoutes: Routes = [
 
@@ -591,9 +591,9 @@ const appRoutes: Routes = [
       { path: 'sdo-gap-report', component: SdOwnerDeficiencyComponent },
       { path: 'sdo-comments-and-mfr', component: SdOwnerCommentsMfrComponent },
       { path: 'appkeyreport', component: KeyReportComponent },
-      { path: 'mcetAnsweredQuestions', component: McetAnsweredquestionsComponent },
-      { path: 'mcetMfrAndComments', component: McetCommentsmarkedComponent},
-      { path: 'mcetReviewedQuestions', component: McetReviewedComponent}
+      { path: 'allAnsweredQuestions', component: AllAnsweredquestionsComponent },
+      { path: 'allMfrAndComments', component: AllCommentsmarkedComponent},
+      { path: 'allReviewedQuestions', component: AllReviewedComponent}
 
       
     ]
