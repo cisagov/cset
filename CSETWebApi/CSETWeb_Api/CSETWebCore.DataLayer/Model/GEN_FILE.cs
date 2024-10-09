@@ -118,10 +118,10 @@ public partial class GEN_FILE
 
     [InverseProperty("Gen_File")]
     public virtual ICollection<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; } = new List<MATURITY_REFERENCES>();
-    
+
     [InverseProperty("Gen_File")]
     public virtual ICollection<REQUIREMENT_REFERENCES> REQUIREMENT_REFERENCES { get; set; } = new List<REQUIREMENT_REFERENCES>();
-    
+
     [InverseProperty("Gen_File")]
     public virtual ICollection<SET_FILES> SET_FILES { get; set; } = new List<SET_FILES>();
 }

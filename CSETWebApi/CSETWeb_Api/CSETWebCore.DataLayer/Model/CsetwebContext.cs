@@ -569,10 +569,10 @@ public partial class CsetwebContext : DbContext
                 .HasComment("The Answer Text is used to");
             entity.Property(e => e.Comment).HasComment("The Comment is used to");
             entity.Property(e => e.Component_Guid).HasComment("The Component Guid is used to");
-            entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end))", false);
-            entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end))", false);
-            entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end))", false);
-            entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end))", false);
+            entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end,(0)))", false);
+            entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end,(0)))", false);
+            entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end,(0)))", false);
+            entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end,(0)))", false);
             entity.Property(e => e.Mark_For_Review).HasComment("The Mark For Review is used to");
             entity.Property(e => e.Question_Number).HasComment("The Question Number is used to");
             entity.Property(e => e.Question_Or_Requirement_Id).HasComment("The Question Or Requirement Id is used to");
@@ -2786,6 +2786,7 @@ public partial class CsetwebContext : DbContext
         });
         modelBuilder.HasSequence<int>("MaturityNodeSequence");
 
+        OnModelCreatingGeneratedFunctions(modelBuilder);
         OnModelCreatingPartial(modelBuilder);
     }
 
