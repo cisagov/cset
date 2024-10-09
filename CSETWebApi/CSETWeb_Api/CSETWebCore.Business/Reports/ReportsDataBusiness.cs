@@ -1298,7 +1298,7 @@ namespace CSETWebCore.Business.Reports
         public async Task<List<StandardQuestions>> GetStandardQuestionAnswers(int assessId)
         {
             CsetwebContextProcedures context = new CsetwebContextProcedures(_context);
-
+            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
             var dblist = await context.usp_GetQuestionsAsync(assessId);
 
             List<StandardQuestions> list = new List<StandardQuestions>();
@@ -1315,11 +1315,12 @@ namespace CSETWebCore.Business.Reports
                         StandardShortName = a.ShortName
                     });
                 }
-                lastshortname = a.ShortName;
+                lastshortname = a.ShortName;                
                 qlist.Add(new SimpleStandardQuestions()
                 {
                     ShortName = a.ShortName,
-                    Question = a.QuestionText,
+
+                    Question = rm.ResolveParameters(a.QuestionOrRequirementID, a.AnswerID, a.QuestionText),
                     QuestionId = a.QuestionOrRequirementID,
                     Answer = a.AnswerText,
                     CategoryAndNumber = a.CategoryAndNumber

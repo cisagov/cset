@@ -31,7 +31,7 @@ import { ReportService } from '../../services/report.service';
 @Component({
   selector: 'app-all-commentsmarked',
   templateUrl: './all-commentsmarked.component.html',
-  styleUrls: ['../reports.scss','../acet-reports.scss']
+  styleUrls: ['../reports.scss','./all-commentsmarked.component.scss']
 })
 export class AllCommentsmarkedComponent {
 

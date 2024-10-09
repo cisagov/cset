@@ -31,7 +31,7 @@ import { ReportService } from '../../services/report.service';
 @Component({
   selector: 'app-all-reviewed',
   templateUrl: './all-reviewed.component.html',
-  styleUrls: ['../reports.scss','../acet-reports.scss']
+  styleUrls: ['../reports.scss','./all-reviewed.component.scss']
 })
 export class AllReviewedComponent {
   response: any;
