@@ -24,7 +24,7 @@
     <div class="p-0 d-flex flex-column justify-content-start flex-11a">
         <div class="bgc-trans mt-4 mx-4 pe-4 d-flex flex-column flex-00a ">
 
-            <div *ngIf="browserIsIE" class="alert alert-danger text-left">
+            <div *ngIf="browserIsIE" class="alert alert-danger text-start">
                 {{ t('welcome page.internet explorer') }}
             </div>
 
@@ -222,7 +222,7 @@
                     <tr *ngFor="let assessment of sortedAssessments;  let i = index">
                         <td>
                             <button tabindex="0"
-                                class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
+                                class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
                                 (click)="this.navSvc.beginAssessment(assessment.assessmentId)">
                                 {{assessment.assessmentName}}
                             </button>
@@ -312,7 +312,7 @@
                     <tr *ngFor="let assessment of sortedAssessments;  let i = index">
                         <td>
                             <button tabindex="0"
-                                class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
+                                class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
                                 (click)="this.navSvc.beginAssessment(assessment.assessmentId)">
                                 {{assessment.assessmentName}}
                             </button>
@@ -347,7 +347,7 @@
                 <tr *ngFor="let assessment of sortedAssessments;  let i = index">
                     <td>
                         <button tabindex="0"
-                            class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
+                            class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
                             (click)="this.navSvc.beginAssessment(assessment.assessmentId)">
                             {{assessment.assessmentName}}
                         </button>
@@ -405,7 +405,7 @@
                 <tr *ngFor="let assessment of sortedAssessments;  let i = index">
                     <td>
                         <button tabindex="0"
-                            class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
+                            class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
                             (click)="this.navSvc.beginAssessment(assessment.assessmentId)">
                             {{assessment.assessmentName}}
                         </button>

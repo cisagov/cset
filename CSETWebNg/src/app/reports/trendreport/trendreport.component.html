@@ -91,22 +91,22 @@
 
       <table class="cset-table table-bordered assessment-summary">
         <tr>
-          <th class="text-left p-2">Assessment Alias</th>
-          <th class="text-right p-2 ps-3">Total</th>
-          <th class="text-right p-2 ps-3">Yes</th>
-          <th class="text-right p-2 ps-3">No</th>
-          <th class="text-right p-2 ps-3">NA</th>
-          <th class="text-right p-2 ps-3">Alt</th>
-          <th class="text-right p-2 ps-3">Unanswered</th>
+          <th class="text-start p-2">Assessment Alias</th>
+          <th class="text-end p-2 ps-3">Total</th>
+          <th class="text-end p-2 ps-3">Yes</th>
+          <th class="text-end p-2 ps-3">No</th>
+          <th class="text-end p-2 ps-3">NA</th>
+          <th class="text-end p-2 ps-3">Alt</th>
+          <th class="text-end p-2 ps-3">Unanswered</th>
         </tr>
         <tr *ngFor="let a of answerCounts">
-          <td class="text-left p-2">{{ a.alias }}</td>
-          <td class="text-right p-2 ps-3" style="width: 10%">{{ a.total }}</td>
-          <td class="text-right p-2 ps-3" style="width: 10%">{{ a.y }}</td>
-          <td class="text-right p-2 ps-3" style="width: 10%">{{ a.n }}</td>
-          <td class="text-right p-2 ps-3" style="width: 10%">{{ a.na }}</td>
-          <td class="text-right p-2 ps-3" style="width: 10%">{{ a.a }}</td>
-          <td class="text-right p-2 ps-3" style="width: 10%">{{ a.u }}</td>
+          <td class="text-start p-2">{{ a.alias }}</td>
+          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.total }}</td>
+          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.y }}</td>
+          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.n }}</td>
+          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.na }}</td>
+          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.a }}</td>
+          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.u }}</td>
         </tr>
       </table>
     </div>

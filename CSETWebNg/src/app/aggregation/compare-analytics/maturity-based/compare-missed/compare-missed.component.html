@@ -25,14 +25,14 @@
     This table lists questions or requirements that were answered 'No' in all the compared assessments.
   </div>
 
-  <table class="assessment-summary td-text-left mb-5">
+  <table class="assessment-summary td-text-start mb-5">
     <tr>
-      <th class="px-2">Title</th>
+      <th class="ps-2 pe-4">Title</th>
       <th class="px-2">Question</th>
     </tr>
     <tr *ngFor="let q of missedQuestions">
-      <td class="px-2">{{ q.questionTitle }}</td>
-      <td class="px-2">{{ q.displayText }}</td>
+      <td class="ps-2 pe-4">{{ q.questionTitle }}</td>
+      <td class="px-2" [innerHTML]="q.displayText"></td>
     </tr>
   </table>
 
@@ -42,6 +42,7 @@
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
+
   <div *ngIf="missedQuestions?.length === 0" class="mb-5 alert-warning p-3 font-weight-bold text-center">
     There are no questions that were answered 'No' on all the compared assessments.
   </div>

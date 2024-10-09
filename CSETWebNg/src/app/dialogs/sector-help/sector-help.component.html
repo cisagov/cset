@@ -30,7 +30,7 @@
         <mat-dialog-content class="p-0 pe-3 d-flex flex-row">
             <div class="p-2" style="border-right: 1px double rgba(0, 0, 0, .1); overflow-y: auto; width: 30%">
                 <button *ngFor="let s of sectors" (click)="scrollTo(s.sectorId)"
-                    class="btn btn-link d-block text-left">{{s.sectorName}}</button>
+                    class="btn btn-link d-block text-start">{{s.sectorName}}</button>
             </div>
             <div class="p-3" style="overflow-y: auto; width: 70%">
                 <ng-container *ngFor="let h of sectors">
