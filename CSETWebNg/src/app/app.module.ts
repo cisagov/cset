@@ -670,9 +670,9 @@ import { ReportListCommonComponent } from './assessment/results/reports/report-l
 import { PhysicalSummaryComponent } from './reports/physical-summary/physical-summary.component';
 import { ContactTooltipComponent } from './assessment/prepare/assessment-info/assessment-contacts/contact-tooltip/contact-tooltip.component';
 import { NoServerConnectionComponent } from './initial/no-server-connection/no-server-connection.component';
-import { McetAnsweredquestionsComponent } from './reports/mcet-answeredquestions/mcet-answeredquestions.component';
-import { McetCommentsmarkedComponent } from './reports/mcet-commentsmarked/mcet-commentsmarked.component';
-import { McetReviewedComponent } from './reports/mcet-reviewed/mcet-reviewed.component';
+import { AllAnsweredquestionsComponent } from './reports/all-answeredquestions/all-answeredquestions.component';
+import { AllCommentsmarkedComponent } from './reports/all-commentsmarked/all-commentsmarked.component';
+import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.component';
 import { QuestionsReviewedComponent } from './reports/questions-reviewed/questions-reviewed.component';
 
 
@@ -1197,9 +1197,9 @@ import { QuestionsReviewedComponent } from './reports/questions-reviewed/questio
         ReportListCommonComponent,
         ContactTooltipComponent,
         NoServerConnectionComponent,
-        McetAnsweredquestionsComponent,
-        McetCommentsmarkedComponent,
-        McetReviewedComponent,
+        AllAnsweredquestionsComponent,
+        AllCommentsmarkedComponent,
+        AllReviewedComponent,
         QuestionsReviewedComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,

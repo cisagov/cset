@@ -292,13 +292,13 @@
         "linkUrl": "detail"
       },
       {
-        "linkUrl": "mcetAnsweredQuestions"
+        "linkUrl": "allAnsweredQuestions"
       },
       {
-        "linkUrl": "mcetMfrAndComments"
+        "linkUrl": "allMfrAndComments"
       },
       {
-        "linkUrl": "mcetReviewedQuestions"
+        "linkUrl": "allReviewedQuestions"
       }
     ]
   }
