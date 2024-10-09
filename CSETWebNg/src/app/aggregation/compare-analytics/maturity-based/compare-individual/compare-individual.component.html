@@ -25,12 +25,12 @@
 
   <table class="assessment-summary">
     <tr>
-      <th class="text-left p-2">Assessment Alias</th>
+      <th class="text-start p-2">Assessment Alias</th>
       <th class="text-end p-2 ps-3">Total</th>
       <th *ngFor="let al of answerLabels" class="text-end p2 ps-3">{{ al }}</th>
     </tr>
     <tr *ngFor="let assess of answerCounts">
-      <td class="text-left p-2">{{ assess.alias }}</td>
+      <td class="text-start p-2">{{ assess.alias }}</td>
       <td class="text-end p-2 ps-3" style="width: 10%">{{ assess.answerCounts[0].total }}</td>
       <td class="text-end p-2 ps-3" style="width: 10%" *ngFor="let ac of assess.answerCounts">{{ ac.qc }}</td>
     </tr>
@@ -46,12 +46,12 @@
   <h3>
     Domain-Level Compliance
   </h3>
-  <p class="text-left">
+  <p class="text-start">
     The chart below indicates normalized (percentages) compliance scores for the
     assessments being compared.
-    Questions that are answered as "implemented" count towards the scores represented.
+    Questions that are answered as "Implemented" count towards the scores represented.
   </p>
-  <p class="text-left">
+  <p class="text-start">
     Answer distributions are viewable on the 'Best To Worst' tab.
   </p>
 

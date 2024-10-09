@@ -91,7 +91,7 @@
     <!-- HYDRO -->
     <!-- below is commented out until the VaR scores are collected/calculated -->
       <!-- <div>
-        <button tabindex="0" (click)="clickReportLink('hydroReport')" class="btn btn-link btn-link-dark text-left">
+        <button tabindex="0" (click)="clickReportLink('hydroReport')" class="btn btn-link btn-link-dark text-start">
           HYDRO Report
         </button>
       </div> -->
@@ -104,31 +104,31 @@
       <h4>Cyber-Informed Engineering (CIE)</h4>
       <div>
         <button (click)="clickReportLink('cieAllQuestions')" tabindex="0"
-          class="btn btn-link btn-link-dark text-left">
+          class="btn btn-link btn-link-dark text-start">
           Export All Questions CIE Report
         </button>
       </div>
       <div>
         <button (click)="clickReportLink('ciePrincipleOnly')" tabindex="0"
-          class="btn btn-link btn-link-dark text-left">
+          class="btn btn-link btn-link-dark text-start">
           Export Principle-Only CIE Report
         </button>
       </div>
       <div>
         <button (click)="clickReportLink('ciePrinciplePhase')" tabindex="0"
-          class="btn btn-link btn-link-dark text-left">
+          class="btn btn-link btn-link-dark text-start">
           Export Principle-Phase CIE Report
         </button>
       </div>
       <div>
         <button (click)="clickReportLink('cieNotApplicable')" tabindex="0"
-          class="btn btn-link btn-link-dark text-left">
+          class="btn btn-link btn-link-dark text-start">
           Export Not Applicable Questions CIE Report
         </button>
       </div>
       <div>
         <button (click)="clickReportLink('cieMfrReport')" tabindex="0"
-          class="btn btn-link btn-link-dark text-left">
+          class="btn btn-link btn-link-dark text-start">
           Export Marked for Review CIE Report
         </button>
       </div>
@@ -137,7 +137,7 @@
 
       <div>
         <div class="ms-2" *ngIf="isConfigChainEqual">
-          <button tabindex="0" (click)="clickReportLink('appkeyreport')" class="btn btn-link btn-link-dark text-left"
+          <button tabindex="0" (click)="clickReportLink('appkeyreport')" class="btn btn-link btn-link-dark text-start"
             matTooltip="Used to associate identifiable information with an Anonymous Key" matTooltipPosition="right">
             Anonymous Key Report
           </button>

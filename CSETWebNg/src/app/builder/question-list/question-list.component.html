@@ -28,7 +28,7 @@
       Question Listing
     </h3>
     <div class="card p-3 mb-3">
-      <button class="btn btn-link text-left ps-0" style="white-space: normal;" (click)="setBuilderSvc.navSetDetail()">
+      <button class="btn btn-link text-start ps-0" style="white-space: normal;" (click)="setBuilderSvc.navSetDetail()">
         <h4>
           {{questionResponse?.setFullName}}
         </h4>
@@ -74,7 +74,7 @@
           </div>
           <div *ngIf="headingBeingEdited === subcat" class="w-100">
             <textarea appAutoSize #editH [(ngModel)]="subcat.subHeading" (keydown.esc)="abandonHeadingEdit(subcat)"
-              (blur)="endHeadingEdit(subcat)" class="form-control w-100 text-left"></textarea>
+              (blur)="endHeadingEdit(subcat)" class="form-control w-100 text-start"></textarea>
           </div>
         </div>
 
@@ -100,7 +100,7 @@
                 </div>
                 <textarea appAutoSize id="Q_{{q.questionID}}" #editQ [(ngModel)]="q.questionText"
                   (keydown.esc)="abandonQuestionEdit(q)" (blur)="endQuestionEdit(q)"
-                  class="form-control w-100 text-left" [class.b-validate]="editedQuestionInUse"></textarea>
+                  class="form-control w-100 text-start" [class.b-validate]="editedQuestionInUse"></textarea>
               </div>
             </div>
             <span class="d-flex align-items-end justify-content-between flex-00a">
