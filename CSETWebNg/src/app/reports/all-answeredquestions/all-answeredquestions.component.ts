@@ -31,7 +31,7 @@ import { ConfigService } from '../../services/config.service';
 @Component({
   selector: 'app-all-answeredquestions',
   templateUrl: './all-answeredquestions.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+  styleUrls: ['../reports.scss', './all-answeredquestions.component.scss']
 })
 export class AllAnsweredquestionsComponent implements OnInit {
 
@@ -50,9 +50,9 @@ export class AllAnsweredquestionsComponent implements OnInit {
     this.reportSvc.getStandardAnsweredQuestions().subscribe(
       (r: any) => {        
         this.response = r;
-        r.standardsQuestions.forEach(element => {
-          element.question = "<pre>"+element.question+"</pre>";
-        });
+        // r.standardsQuestions.forEach(element => {
+        //   element.question = "<pre>"+element.question+"</pre>";
+        // });
         this.titleService.setTitle(this.tSvc.translate('reports.all.answered statements.tab title'));
       }
     );
