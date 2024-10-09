@@ -91,7 +91,7 @@ public partial class NEW_REQUIREMENT
 
     [InverseProperty("Requirement")]
     public virtual ICollection<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; } = new List<REQUIREMENT_SETS>();
-    
+
     [ForeignKey("Standard_Category")]
     [InverseProperty("NEW_REQUIREMENT")]
     public virtual STANDARD_CATEGORY Standard_CategoryNavigation { get; set; }
