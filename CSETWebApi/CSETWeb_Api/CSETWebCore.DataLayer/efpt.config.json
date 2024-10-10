@@ -619,6 +619,30 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[NCSF_CONVERSION_MAPPINGS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NCSF_CONVERSION_MAPPINGS_ENTRY]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NCSF_CONVERSION_MAPPINGS_FULL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NCSF_CONVERSION_MAPPINGS_MID]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NCSF_ENTRY_TO_MID]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NCSF_FULL_TO_MID]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[NCSF_FUNCTIONS]",
          "ObjectType": 0
       },

@@ -219,74 +219,69 @@ namespace CSETWebCore.Business.Contact
 
         /// <summary>
         /// Creates new answer records for CPG based off answers from "entry" level Florida_NCSF_V2
+        /// This is the basic to mid conversion.
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
         public void CreateAnswerRecordsFromCFToCPG(int assessmentId)
         {
             // get the titles 
-            var convertableTitles = _context.NCSF_CONVERSION_MAPPINGS.Where(x => !string.IsNullOrEmpty(x.Entry_Level_Titles)).ToList();
+
+            var convertableTitles = (from a in _context.NCSF_ENTRY_TO_MID
+                                     join b in _context.NCSF_CONVERSION_MAPPINGS_ENTRY on a.Entry_Level_Titles equals b.Entry_Level_Titles
+                                     join c in _context.NCSF_CONVERSION_MAPPINGS_MID on a.Mid_Level_Titles equals c.Mid_Level_Titles
+                                     join ans in _context.ANSWER on b.Requirement_Id equals ans.Question_Or_Requirement_Id
+                                     where ans.Assessment_Id == assessmentId
+                                     select new { b.Requirement_Id, c.Question_Id, ans }).ToList();
 
             // seperates the entry column into its own list
-            var entryTitles = convertableTitles.Select(x => x.Entry_Level_Titles).ToList();
+            
 
             if (convertableTitles != null)
             {
-                var entryIds = _context.NEW_REQUIREMENT.Where(x => entryTitles.Contains(x.Requirement_Title) && x.Original_Set_Name == CF_CSF_SetName).Select(x => x.Requirement_Id).ToList();
-
-                var entryAnswers = _context.ANSWER.Where(x => entryIds.Contains(x.Question_Or_Requirement_Id) && x.Assessment_Id == assessmentId).ToList();
-                if (entryAnswers != null)
+                var addedIds = new List<int>();
+                var newMidAnswers = new List<ANSWER>();
+                foreach (var entryAnswer in convertableTitles)
                 {
-                    var addedIds = new List<int>();
-                    var newMidAnswers = new List<ANSWER>();
-                    for (int i = 0; i < entryAnswers.Count; i++)
-                    {
-                        if (entryAnswers[i].Answer_Text != "U")
+                    if (entryAnswer.ans.Answer_Text != "U")
+                    {  
+                        var newAnswer = new ANSWER()
                         {
-                            var cpgQuestionTitles = convertableTitles[i].Mid_Level_Titles.Split(",");
-                            foreach (var questionTitle in cpgQuestionTitles)
+                            Assessment_Id = assessmentId,
+                            Question_Or_Requirement_Id = entryAnswer.Question_Id,
+                            Mark_For_Review = entryAnswer.ans.Mark_For_Review,
+                            Comment = entryAnswer.ans.Comment,
+                            Alternate_Justification = entryAnswer.ans.Alternate_Justification,
+                            Answer_Text = entryAnswer.ans.Answer_Text == "Y" ? "S" : "N", // "S" for "Scoped", "N" for "Not Implemented"
+                            Reviewed = entryAnswer.ans.Reviewed,
+                            FeedBack = entryAnswer.ans.FeedBack,
+                            Question_Type = "Maturity",
+                            Is_Requirement = false,
+                            Is_Component = false,
+                            Is_Maturity = true
+                        };
+
+
+                        // prevents doubling-up of ANSWER records if questions can be controlled by multiple sources
+                        if (addedIds.Contains(newAnswer.Question_Or_Requirement_Id))
+                        {
+                            var answerRecord = newMidAnswers.Find(x => x.Question_Or_Requirement_Id == newAnswer.Question_Or_Requirement_Id);
+                            if (answerRecord.Answer_Text != newAnswer.Answer_Text)
                             {
-                                var newAnswer = new ANSWER()
-                                {
-                                    Assessment_Id = assessmentId,
-                                    Question_Or_Requirement_Id = _context.MATURITY_QUESTIONS
-                                    .Where(x => x.Maturity_Model_Id == CPG_Model_Id && x.Question_Title == questionTitle)
-                                    .Select(x => x.Mat_Question_Id).FirstOrDefault(),
-                                    Mark_For_Review = entryAnswers[i].Mark_For_Review,
-                                    Comment = entryAnswers[i].Comment,
-                                    Alternate_Justification = entryAnswers[i].Alternate_Justification,
-                                    Answer_Text = entryAnswers[i].Answer_Text == "Y" ? "S" : "N", // "S" for "Scoped", "N" for "Not Implemented"
-                                    Reviewed = entryAnswers[i].Reviewed,
-                                    FeedBack = entryAnswers[i].FeedBack,
-                                    Question_Type = "Maturity",
-                                    Is_Requirement = false,
-                                    Is_Component = false,
-                                    Is_Maturity = true
-                                };
-
-
-                                // prevents doubling-up of ANSWER records if questions can be controlled by multiple sources
-                                if (addedIds.Contains(newAnswer.Question_Or_Requirement_Id))
-                                {
-                                    var answerRecord = newMidAnswers.Find(x => x.Question_Or_Requirement_Id == newAnswer.Question_Or_Requirement_Id);
-                                    if (answerRecord.Answer_Text != newAnswer.Answer_Text)
-                                    {
-                                        answerRecord.Answer_Text = "N";
-                                    }
-                                }
-                                else
-                                {
-                                    newMidAnswers.Add(newAnswer);
-                                    addedIds.Add(newAnswer.Question_Or_Requirement_Id);
-                                }
-
+                                answerRecord.Answer_Text = "N";
                             }
                         }
+                        else
+                        {
+                            newMidAnswers.Add(newAnswer);
+                            addedIds.Add(newAnswer.Question_Or_Requirement_Id);
+                        }
                     }
-
-                    _context.ANSWER.AddRange(newMidAnswers);
-                    _context.SaveChanges();
                 }
+
+                _context.ANSWER.AddRange(newMidAnswers);
+                _context.SaveChanges();
+                
             }
 
 
