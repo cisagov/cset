@@ -346,11 +346,19 @@ namespace CSETWebCore.Business.Contact
         {
             // get the titles 
             var convertableTitles = _context.NCSF_CONVERSION_MAPPINGS.Where(x => !string.IsNullOrEmpty(x.Mid_Level_Titles)).ToList();
+            var entryIds = new List<int>();
+            var fullIds = new List<int>();
 
             // seperates the columns into their own lists
-            var entryTitlesUnparsed = convertableTitles.OrderBy(x => x.Conversion_Id).Select(x => x.Entry_Level_Titles).ToList();
+            var entryTitlesUnparsed = convertableTitles.Where(x => !String.IsNullOrEmpty(x.Entry_Level_Titles)).OrderBy(x => x.Conversion_Id).Select(x => x.Entry_Level_Titles).ToList();
             var midTitlesUnparsed = convertableTitles.OrderBy(x => x.Conversion_Id).Select(x => x.Mid_Level_Titles).ToList();
             var fullTitlesUnparsed = convertableTitles.OrderBy(x => x.Conversion_Id).Select(x => x.Full_Level_Titles).ToList();
+
+            foreach (var entryTitle in entryTitlesUnparsed)
+            {
+                entryIds.Add(_context.NEW_REQUIREMENT.Where(x => (x.Original_Set_Name == CF_CSF_SetName || x.Original_Set_Name == CF_SetName) 
+                    && x.Requirement_Title == entryTitle).Select(x => x.Requirement_Id).FirstOrDefault());
+            }
 
             // need the "entry" level answers for the couple entry questions that don't get fed into by CPGs when brought back into the full
 
@@ -380,6 +388,7 @@ namespace CSETWebCore.Business.Contact
                             int fullQId = _context.NEW_REQUIREMENT.Where(x => (x.Original_Set_Name == CF_CSF_SetName || x.Original_Set_Name == CF_SetName) && x.Requirement_Title == fullTitle).Select(x => x.Requirement_Id).FirstOrDefault();
                             if (fullQId > 0)
                             {
+                                fullIds.Add(fullQId);
                                 var alreadyInDb = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Or_Requirement_Id == fullQId).FirstOrDefault();
                                 if (alreadyInDb != null)
                                 {
@@ -435,12 +444,14 @@ namespace CSETWebCore.Business.Contact
                 List<ANSWER> temp = newFullAnswerDict.Select(x => x.Value).ToList();
 
                 // if a "Y" from the "Entry" level, but has no CPG feeding into the "Full" level, make it a 2 (per Ollie)
-                var answerList = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Answer_Text == "Y").ToList();
-                if (answerList != null)
+                var answerList = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && entryIds.Contains(x.Question_Or_Requirement_Id) 
+                    && !fullIds.Contains(x.Question_Or_Requirement_Id)).ToList();
+               
+                foreach (var answer in answerList)
                 {
-                    foreach (var answer in answerList)
+                    if (answer.Answer_Text == "Y")
                     {
-                        answer.Answer_Text = "Y";
+                        answer.Answer_Text = "2";
                     }
                 }
                 
