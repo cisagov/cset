@@ -1,17 +1,55 @@
-.slider {
-    accent-color:red;
-}
-
-::ng-deep .mat-accent .mat-slider-track-fill {
-    background-color: red !important;
-}
-::ng-deep .mat-slider-thumb-label {
-    background-color: red !important;
-
-}
-
-// .mat-mdc-slider.mat-warning { 
-//     --mdc-slider-handle-color: green; 
-//     --mdc-slider-focus-handle-color: green; 
-//     --mdc-slider-active-track-color: green;
+// .slider {
+//     accent-color:red;
 // }
+
+// ::ng-deep .mat-accent .mat-slider-track-fill {
+//     background-color: red !important;
+// }
+// ::ng-deep .mat-slider-thumb-label {
+//     background-color: red !important;
+
+// }
+
+// green
+// .mat-mdc-slider.mat-primary {
+//     --mdc-slider-handle-color: #006847;
+//     --mdc-slider-focus-handle-color: #006847;
+//     --mdc-slider-hover-handle-color: #006847;
+//     --mdc-slider-active-track-color: #006847;
+//     --mdc-slider-inactive-track-color: #2125297e;
+//     --mdc-slider-with-tick-marks-active-container-color: white;
+//     --mdc-slider-with-tick-marks-inactive-container-color: black;
+//     --mat-mdc-slider-ripple-color: #006847;
+//     --mat-mdc-slider-hover-ripple-color: rgba(0, 104, 71, 0.05);
+//     --mat-mdc-slider-focus-ripple-color: rgba(0, 104, 71, 0.2);
+//     --mdc-slider-active-track-height: 8px;
+//     --mdc-slider-inactive-track-height: 8px;
+// }
+
+// black
+.mat-mdc-slider.mat-primary {
+    --mdc-slider-handle-color: #15161e;
+    --mdc-slider-focus-handle-color: #15161e;
+    --mdc-slider-hover-handle-color: #15161e;
+    --mdc-slider-active-track-color: #15161e;
+    --mdc-slider-inactive-track-color: #2125297e;
+    --mdc-slider-with-tick-marks-active-container-color: white;
+    --mdc-slider-with-tick-marks-inactive-container-color: black;
+    --mat-mdc-slider-ripple-color: #15161e;
+    --mat-mdc-slider-hover-ripple-color: rgba(21, 22, 30, 0.05);
+    --mat-mdc-slider-focus-ripple-color: rgba(33, 37, 41, 0.2);
+    --mdc-slider-active-track-height: 8px;
+    --mdc-slider-inactive-track-height: 8px;
+}
+
+::ng-deep .mdc-slider__tick-mark--active {
+    width: 8px !important;
+    height: 8px !important;
+    color: white;
+}
+
+::ng-deep .mdc-slider__tick-mark--inactive {
+    width: 8px !important;
+    height: 8px !important;
+    color: black;
+}
