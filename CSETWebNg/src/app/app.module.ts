@@ -671,6 +671,10 @@ import { ReportListCommonComponent } from './assessment/results/reports/report-l
 import { PhysicalSummaryComponent } from './reports/physical-summary/physical-summary.component';
 import { ContactTooltipComponent } from './assessment/prepare/assessment-info/assessment-contacts/contact-tooltip/contact-tooltip.component';
 import { NoServerConnectionComponent } from './initial/no-server-connection/no-server-connection.component';
+import { AllAnsweredquestionsComponent } from './reports/all-answeredquestions/all-answeredquestions.component';
+import { AllCommentsmarkedComponent } from './reports/all-commentsmarked/all-commentsmarked.component';
+import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.component';
+import { QuestionsReviewedComponent } from './reports/questions-reviewed/questions-reviewed.component';
 
 
 @NgModule({ declarations: [
@@ -1194,7 +1198,11 @@ import { NoServerConnectionComponent } from './initial/no-server-connection/no-s
         ReportListComponent,
         ReportListCommonComponent,
         ContactTooltipComponent,
-        NoServerConnectionComponent
+        NoServerConnectionComponent,
+        AllAnsweredquestionsComponent,
+        AllCommentsmarkedComponent,
+        AllReviewedComponent,
+        QuestionsReviewedComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,

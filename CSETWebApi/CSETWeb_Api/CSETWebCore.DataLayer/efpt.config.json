@@ -2,7 +2,6 @@
    "CodeGenerationMode": 4,
    "ContextClassName": "CsetwebContext",
    "ContextNamespace": null,
-   "DefaultDacpacSchema": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
    "ModelNamespace": null,
@@ -488,10 +487,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[INTERNATIONALIZATION_VALUES]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[IRP]",
          "ObjectType": 0
       },
@@ -593,10 +588,6 @@
       },
       {
          "Name": "[dbo].[MATURITY_REFERENCES]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[MATURITY_SOURCE_FILES]",
          "ObjectType": 0
       },
       {
@@ -801,10 +792,6 @@
       },
       {
          "Name": "[dbo].[REQUIREMENT_SETS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[REQUIREMENT_SOURCE_FILES]",
          "ObjectType": 0
       },
       {
@@ -1060,7 +1047,15 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[FillAll]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[FillEmptyMaturityQuestionsForAnalysis]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[FillEmptyMaturityQuestionsForModel]",
          "ObjectType": 1
       },
       {
@@ -1089,6 +1084,10 @@
       },
       {
          "Name": "[dbo].[Get_Recommendations]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetAnswerCountsForGroupings]",
          "ObjectType": 1
       },
       {
@@ -1141,6 +1140,10 @@
       },
       {
          "Name": "[dbo].[GetCompatibilityCounts]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetMaturityComparisonBestToWorst]",
          "ObjectType": 1
       },
       {
@@ -1300,6 +1303,14 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[usp_GetMaturityAnswerTotals]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_getMaturitySummaryOverall]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[usp_getMedianOverall]",
          "ObjectType": 1
       },
@@ -1313,6 +1324,10 @@
       },
       {
          "Name": "[dbo].[usp_GetOverallRankedCategoriesPage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_GetQuestions]",
          "ObjectType": 1
       },
       {
@@ -1434,22 +1449,11 @@
       {
          "Name": "[dbo].[convert_sal]",
          "ObjectType": 2
-      },
-      {
-         "Name": "[dbo].[func_AM]",
-         "ObjectType": 2
-      },
-      {
-         "Name": "[dbo].[func_MQ]",
-         "ObjectType": 2
-      },
-      {
-         "Name": "[dbo].[Split]",
-         "ObjectType": 2
       }
    ],
-   "UiHint": "(localdb)\\inllocaldb2022.CSETWeb",
+   "UiHint": null,
    "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDateOnlyTimeOnly": false,
@@ -1466,6 +1470,7 @@
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
    "UseSchemaFolders": false,
    "UseSchemaNamespaces": false,
    "UseSpatial": false,
