@@ -23,43 +23,49 @@
 <div class="assess-component d-flex flex-column justify-content-start flex-11a">
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
     <div *ngIf="componentCount != 0; else elseBlock">
-    <div id="chart" class="mb-3">
-      <h3>Ranked Components By Category</h3>
-      <canvas id="canvasComponentRank">{{canvasComponentRank}}</canvas>
-    </div>
-    <div *ngIf="!initialized">
-      <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-        <div style="max-width: 50px; max-height: 50px;"></div>
+      <div id="chart" class="mb-3">
+        <h3>Ranked Components By Category</h3>
+        <canvas id="canvasComponentRank">{{canvasComponentRank}}</canvas>
+      </div>
+      <div *ngIf="!initialized">
+        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+          <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+      </div>
+      <div class="data" [hidden]="!initialized">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="align-left">Category</th>
+              <th class="align-right">Rank</th>
+              <th class="align-right">Failed</th>
+              <th class="align-right">Total</th>
+              <th class="align-right">Percent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of dataRows">
+              <td class="align-left" style="width: 50%">{{row.title}}</td>
+              <td class="align-right">{{row.rank}}</td>
+              <td class="align-right">{{row.failed}}</td>
+              <td class="align-right">{{row.total}}</td>
+              <td class="align-right">{{row.percent}}%</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <div class="data" [hidden]="!initialized">
-      <table class="table">
-        <th class="align-left">Category</th>
-        <th class="align-right">Rank</th>
-        <th class="align-right">Failed</th>
-        <th class="align-right">Total</th>
-        <th class="align-right">Percent</th>
-        <tr *ngFor="let row of dataRows">
-          <td class="align-left" style="width: 50%">{{row.title}}</td>
-          <td class="align-right">{{row.rank}}</td>
-          <td class="align-right">{{row.failed}}</td>
-          <td class="align-right">{{row.total}}</td>
-          <td class="align-right">{{row.percent}}%</td>
-        </tr>
-      </table>
-    </div>
-  </div>
-  <ng-template #elseBlock>
-    <h3>Ranked Components By Category</h3>
-    <div class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
-    <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
-    <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
-      There are no results to display. This may be caused by a network diagram
-      that contains no network components.
-    </span>
-    </div>
-  </ng-template>
-  <app-nav-back-next [page]="'components-ranked'"></app-nav-back-next>
+    <ng-template #elseBlock>
+      <h3>Ranked Components By Category</h3>
+      <div class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+        <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
+        <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
+          There are no results to display. This may be caused by a network diagram
+          that contains no network components.
+        </span>
+      </div>
+    </ng-template>
+    <app-nav-back-next [page]="'components-ranked'"></app-nav-back-next>
 
   </div>
 </div>

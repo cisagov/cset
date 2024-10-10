@@ -72,6 +72,7 @@ export class LayoutMainComponent  implements OnInit {
   ngOnInit() {
     this.versionSvc.getLatestVersion();
   }
+
   /**
    * Indicates if the user is currently within the Module Builder pages.
    */
@@ -89,11 +90,8 @@ export class LayoutMainComponent  implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  isFooterOpen() {
-    if (!this.footerClosed) {
-      return this.footerClosed = true;
-    }
-    return this.footerClosed = false;
+  toggleFooter() {
+    this.footerClosed = !this.footerClosed;
   }
 
   isRunningAnonymous() {
@@ -103,9 +101,11 @@ export class LayoutMainComponent  implements OnInit {
   showDisclaimer() {
     this.dialog.open(OnlineDisclaimerComponent, { data: { publicDomainName: this.configSvc.publicDomainName } });
   }
+  
   showNotifications(): void {
     this.display = "block";
   }
+
   onCloseHandled() {
     this.display = "none";
     this.displayNotifications="none"

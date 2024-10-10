@@ -29,7 +29,7 @@ import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './filtering/question-filter.service';
 import { BehaviorSubject } from 'rxjs';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 const headers = {
   headers: new HttpHeaders()
@@ -134,40 +134,22 @@ export class QuestionsService {
   /**
    * Analyzes the current 'auto load supplemental' preference and the maturity model
    */
-  autoLoadSupplemental(model?: any) {
+  autoLoadSupplemental(modelId?: any) {
     // first see if it should be forced on by configuration
     if (this.configSvc.config.supplementalAutoloadInitialValue) {
       return true;
     }
 
+    // find the configuration for the model
+    const moduleConfig = this.configSvc.getModuleConfig(modelId);
+
+
     // standards (modelid is null) - check the checkbox state
-    if (!model) {
+    if (!moduleConfig) {
       return this.autoLoadSuppCheckboxState;
     }
 
-    // check the model's configuration
-    const modelConfiguration = this.configSvc.config.moduleBehaviors.find(x => x.modelId == model.modelId);
-    if (modelConfiguration == null) {
-      let modelConfigurationByName = this.configSvc.config.moduleBehaviors.find(x => x.modelName == model.modelName);
-      if (modelConfigurationByName != null ? (modelConfigurationByName.autoLoadSupplemental ?? false) : false) {
-        return true;
-      }
-    }
-
-    else if (modelConfiguration.autoLoadSupplemental ?? false) {
-      return true;
-    }
-
-    else {
-      let modelConfigurationByModelName = this.configSvc.config.moduleBehaviors.find(x => x.moduleName == model.moduleName);
-      if (modelConfigurationByModelName != null && (modelConfiguration.autoLoadSupplemental ?? false)) {
-        return true;
-      }
-    }
-
-    
-
-    return false;
+    return moduleConfig.autoLoadSupplemental ?? false;
   }
 
   /**
@@ -409,12 +391,10 @@ export class QuestionsService {
     if (!!model && String(model).trim().length > 0) {
       
       // first try to find the model configuration using its model name
-      let modelConfiguration = this.configSvc.config.moduleBehaviors.find(x => x.moduleName == model);
-      
-      // if that didn't work, use model ID instead
-      if (!modelConfiguration) {
-        modelConfiguration = this.configSvc.config.moduleBehaviors.find(x => x.modelId == model);
-      }
+      let modelConfiguration = 
+      this.configSvc.config.moduleBehaviors.find(x => x.modelId == model) || 
+      this.configSvc.config.moduleBehaviors.find(x => x.moduleName == model);
+
 
       if (!!modelConfiguration) {
         // first look for a skin-specific answer option

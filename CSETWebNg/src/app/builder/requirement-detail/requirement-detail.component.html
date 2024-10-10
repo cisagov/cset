@@ -28,7 +28,7 @@
       Requirement Detail
     </h3>
 
-    <div class="form-row ml-0 mr-0">
+    <div class="form-row ms-0 me-0">
       <div class="form-group p-0 col-md-6">
         <label>Category</label>
         <div class="font-weight-bold">
@@ -116,11 +116,11 @@
       </div>
       <table class="builder-requirement-docs">
         <tr>
-          <th class="pr-4">{{t('extras.source documents')}}</th>
+          <th class="pe-4">{{t('extras.source documents')}}</th>
           <th>Bookmark</th>
         </tr>
         <tr *ngFor="let ref of r.sourceDocs">
-          <td class="pr-4">
+          <td class="pe-4">
             {{ref.title}}
           </td>
           <td>
@@ -130,13 +130,13 @@
             <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
               (click)="addDeleteReference(r.requirementID, ref.id, true, ref.sectionRef, false)"
               matTooltip="Delete reference">
-              <span class="cset-icons-trash-can fs-base-2 mr-2"></span>
+              <span class="cset-icons-trash-can fs-base-2 me-2"></span>
             </button>
           </td>
         </tr>
         <tr>
-          <td class="pr-2">
-            <select id="newSourceDoc" name="newSourceDoc" class="form-control" [(ngModel)]="newSourceDocId">
+          <td class="pe-2">
+            <select id="newSourceDoc" name="newSourceDoc" class="form-select" [(ngModel)]="newSourceDocId">
               <option value=""></option>
               <option *ngFor="let o of refDocOptions" [value]="o.id">{{ o.title }}</option>
             </select>
@@ -149,16 +149,16 @@
             <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
               (click)="addDeleteReference(r.requirementID, newSourceDocId, true, newSourceSectionRef, true)"
               matTooltip="Add reference">
-              <span class="cset-icons-plus fs-base-2 mr-2"></span>
+              <span class="cset-icons-plus fs-base-2 me-2"></span>
             </button>
           </td>
         </tr>
         <tr>
-          <th class="pt-2 pr-4">{{t('extras.additional documents')}}</th>
+          <th class="pt-2 pe-4">{{t('extras.additional documents')}}</th>
           <th class="pt-2">Bookmark</th>
         </tr>
         <tr *ngFor="let ref of r.additionalDocs">
-          <td class="pr-4">
+          <td class="pe-4">
             {{ref.title}}
           </td>
           <td>
@@ -168,13 +168,13 @@
             <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
               (click)="addDeleteReference(r.requirementID, ref.id, false, ref.sectionRef, false)"
               matTooltip="Delete reference">
-              <span class="cset-icons-trash-can fs-base-2 mr-2"></span>
+              <span class="cset-icons-trash-can fs-base-2 me-2"></span>
             </button>
           </td>
         </tr>
         <tr>
-          <td class="pr-2">
-            <select id="newAdditionalDoc" name="newAdditionalDoc" class="form-control" [(ngModel)]="newAdditionalDocId">
+          <td class="pe-2">
+            <select id="newAdditionalDoc" name="newAdditionalDoc" class="form-select" [(ngModel)]="newAdditionalDocId">
               <option value=""></option>
               <option *ngFor="let o of refDocOptions" [value]="o.id">{{ o.title }}</option>
             </select>
@@ -188,7 +188,7 @@
             <button class="icon-button btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
               (click)="addDeleteReference(r.requirementID, newAdditionalDocId, false, newAdditionalSectionRef, true)"
               matTooltip="Add reference">
-              <span class="cset-icons-plus fs-base-2 mr-2"></span>
+              <span class="cset-icons-plus fs-base-2 me-2"></span>
             </button>
           </td>
         </tr>
@@ -203,7 +203,7 @@
       </p>
 
       <button id="addQuestion" (click)="addQuestion()" class="btn btn-primary">
-        <span class="cset-icons-plus fs-base mr-2"></span>
+        <span class="cset-icons-plus fs-base me-2"></span>
         Add Question
       </button>
 
@@ -213,7 +213,7 @@
           {{ q.title }}
         </div>
         <div class="d-flex flex-row justify-content-between flex-11a w-100 align-items-start">
-          <div class="d-flex flex-column mb-3 mr-3 w-100">
+          <div class="d-flex flex-column mb-3 me-3 w-100">
             <div *ngIf="questionBeingEdited !== q" [innerHTML]="formatLinebreaks(q.questionText)">
             </div>
             <div class="alert alert-danger" *ngIf="duplicateTextQuestion === q">
@@ -225,13 +225,13 @@
                 Changing the meaning of the question text may have an undesired effect.
               </div>
               <textarea appAutoSize maxlength="7338" id="Q_{{q.questionID}}" #editQ [(ngModel)]="q.questionText"
-                (keydown.esc)="abandonQuestionEdit(q)" (blur)="endQuestionEdit(q)" class="form-control w-100 text-left"
+                (keydown.esc)="abandonQuestionEdit(q)" (blur)="endQuestionEdit(q)" class="form-control w-100 text-start"
                 [class.b-validate]="editedQuestionInUse"></textarea>
             </div>
           </div>
           <span class="d-flex align-items-end justify-content-between flex-00a">
             <button *ngIf="q.isCustom" type="button" (click)="startQuestionEdit(q)"
-              class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a mr-2">
+              class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a me-2">
               <span class="cset-icons-pencil fs-base-2"></span>
               <span class="d-none d-md-flex fs-smaller">Change</span>
             </button>

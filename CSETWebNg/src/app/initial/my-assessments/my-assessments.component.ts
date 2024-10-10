@@ -45,7 +45,7 @@ import { Comparer } from "../../helpers/comparer";
 import { ExportPasswordComponent } from '../../dialogs/assessment-encryption/export-password/export-password.component';
 import { DateTime } from "luxon";
 import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
-import { TranslocoService } from "@ngneat/transloco";
+import { TranslocoService } from "@jsverse/transloco";
 import { DateAdapter } from '@angular/material/core';
 import { HydroService } from "../../services/hydro.service";
 import { CieService } from "../../services/cie.service";

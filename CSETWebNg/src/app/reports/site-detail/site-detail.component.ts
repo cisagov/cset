@@ -32,7 +32,7 @@ import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin
 import { ACETService } from '../../services/acet.service';
 import Chart from 'chart.js/auto';
 import { AssessmentService } from '../../services/assessment.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'site-detail',

@@ -961,6 +961,17 @@ namespace CSETWebCore.Business.Assessment
             return "";
         }
 
+        /// <summary>
+        /// Gets the userID that created the current assessment  
+        /// </summary>
+        /// <returns>userID</returns>
+        public int? GetAssessmentCreator(int assessmentId)
+        {
+            var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
+            return assessment?.AssessmentCreatorId;
+        }
+        
+
 
         /// <summary>
         /// Persists OTHER-REMARKS.

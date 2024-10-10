@@ -26,17 +26,17 @@
   <div *ngIf="componentsExist">
     <div class="d-flex justify-content-between mb-3 mt-4">
       <button class="btn btn-primary" (click)="getExport()">
-        <i class="cset-icons-export-excel mr-2"></i>
+        <i class="cset-icons-export-excel me-2"></i>
         Export to Excel</button>
 
       <button *ngIf="showCsafUploadButton()" class="btn btn-primary" (click)="openFileBrowserForCsafUpload()"
         matTooltip="Select CSAF JSON files to upload.">
-        <i class="cset-icons-import mr-2"></i>
+        <i class="cset-icons-import me-2"></i>
         Update Vulnerabilities Database</button>
       <input id="csafUpload" type="file" accept=".json" multiple (change)="fileSelect($event)" class="display-none">
     </div>
     <div class="row stretch mb-3">
-      <div class="col-12">
+      <div class="col-12 mb-5">
         <mat-tab-group style="overflow: auto" class="mb-3">
           <mat-tab *ngIf="showVulnerabilitiesTab()" label="Vulnerabilities">
             <app-diagram-vulnerabilities (componentsChange)="onChange($event)"></app-diagram-vulnerabilities>

@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
@@ -34,6 +34,7 @@ import { TranslocoService } from '@ngneat/transloco';
 })
 export class AlertComponent {
 
+  public showHeader = true;
   public iconClass: string;
 
   /**
@@ -57,6 +58,8 @@ export class AlertComponent {
     if (!!data.iconClass) {
       this.iconClass = data.iconClass;
     }
+
+    this.showHeader = data.showHeader ?? true;
   }
 
   /**

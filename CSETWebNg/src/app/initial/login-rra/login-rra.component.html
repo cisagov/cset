@@ -28,7 +28,7 @@
       <app-logo-rra></app-logo-rra>
     </div>
 
-    <div class="mr-4 ml-4 p-3 bgc-black c-white">
+    <div class="me-4 ms-4 p-3 bgc-black c-white">
       <div *ngIf="mode === 'LOCAL'">
         RRA is running locally. No login is required.
       </div>
@@ -42,7 +42,7 @@
 
     <div *ngIf="mode === 'LOCAL'">
       <form name="form" (ngSubmit)="continueStandAlone()" #f="ngForm" novalidate>
-        <div class="d-flex flex-nowrap pl-3 pr-3">
+        <div class="d-flex flex-nowrap ps-3 pe-3">
           <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">Continue</button>
           <div class="spinner-container" *ngIf="loading">
             <div style="max-width: 30px; max-height: 30px;"></div>
@@ -121,7 +121,7 @@
 
       <img class="mt-4" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
 
-      <div *ngIf="browserIsIE" class="alert alert-danger text-left w-100 mt-3">
+      <div *ngIf="browserIsIE" class="alert alert-danger text-start w-100 mt-3">
         Internet Explorer has been detected as your current browser.
         Some functionality of RRA is not fully supported by Internet Explorer.
         Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve

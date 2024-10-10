@@ -38,6 +38,8 @@ namespace CSETWebCore.Interfaces.Assessment
         IList<string> GetNames(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10);
 
         string GetOtherRemarks(int assessmentId);
+
+        int? GetAssessmentCreator(int assessmentId);
         void SaveOtherRemarks(int assessmentId, string remark);
         void clearFirstTime(int userid, int assessmentId);
 

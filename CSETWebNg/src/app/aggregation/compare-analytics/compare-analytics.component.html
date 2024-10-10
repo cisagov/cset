@@ -27,36 +27,36 @@
     <div class="btn-group-toggle mt-3" data-toggle="buttons">
       <label *ngIf="this.type === 'standards-based'" class="btn btn-sal-select btn-rounded form-check-label"
         [class.active]="tab === 'SUMMARY'" (click)="changeState('SUMMARY')">
-        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+        <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
           [checked]="tab === 'SUMMARY'">Overall Summary
       </label>
 
       <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'INDIVIDUAL'"
         (click)="changeState('INDIVIDUAL')">
-        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+        <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
           [checked]="tab === 'INDIVIDUAL'">Individual Assessment Comparison
       </label>
 
       <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'MISSED'"
         (click)="changeState('MISSED')">
-        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+        <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
           [checked]="tab === 'MISSED'">Commonly Missed Questions
       </label>
 
       <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'BESTWORST'"
         (click)="changeState('BESTWORST')">
-        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+        <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
           [checked]="tab === 'BESTWORST'">Best to Worst
       </label>
 
-      <hr class="w-100 hr-sal mt-1" />
+      <hr class="w-100 hr-sal mt-1 mb-5" />
 
-      <div class="mt-0 mr-0 d-flex flex-column justify-content-start flex-11a">
+      <div class="mt-0 me-0 d-flex flex-column justify-content-start flex-11a">
         <div *ngIf="this.type === 'maturity-based'; else standardsBased" [ngSwitch]="tab"
           class="d-flex flex-column justify-content-start flex-00a">
-          <app-compare-maturity-individual *ngSwitchCase="'INDIVIDUAL'"></app-compare-maturity-individual>
-          <app-compare-maturity-missed *ngSwitchCase="'MISSED'"></app-compare-maturity-missed>
-          <app-compare-maturity-bestworst *ngSwitchCase="'BESTWORST'"></app-compare-maturity-bestworst>
+          <app-compare-individual-maturity *ngSwitchCase="'INDIVIDUAL'"></app-compare-individual-maturity>
+          <app-compare-missed-maturity *ngSwitchCase="'MISSED'"></app-compare-missed-maturity>
+          <app-compare-bestworst-maturity *ngSwitchCase="'BESTWORST'"></app-compare-bestworst-maturity>
         </div>
         <ng-template #standardsBased [ngSwitch]="tab">
           <app-compare-summary *ngSwitchCase="'SUMMARY'"></app-compare-summary>
@@ -69,7 +69,8 @@
 
     <div class="mt-3 d-flex justify-content-between flex-00a">
       <button class="btn btn-primary" (click)="navAggSvc.navBack('compare-analytics')">Back</button>
-      <button class="btn btn-primary" (click)="generateReport('comparereport')">Generate Compare Report</button>
+      <button *ngIf="this.type != 'maturity-based'" class="btn btn-primary" (click)="generateReport('compare-report')">Generate Compare Report</button>
+      <button *ngIf="this.type === 'maturity-based'" class="btn btn-primary" (click)="generateReport('compare-report-m')">Generate Compare Report</button>
     </div>
   </div>
 </div>

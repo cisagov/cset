@@ -59,7 +59,7 @@
 
     <ng-template #mainContent>
         <div class="page-break"></div>
-        <div class="ml-3 mr-3 form">
+        <div class="ms-3 me-3 form">
             <div class="d-flex flex-row" style="justify-content: space-between">
                 <div style="align-self: flex-end;">
                     <div class="h2 report-text-blue">Demographics</div>
@@ -138,18 +138,18 @@
                             <ng-container *ngFor="let q of f.questions">
                                 <tr *ngIf="q.title != 'Question K' && q.visible && shouldExpand('Principle_' + f.title) && q.maturityLevel == '5'">
                                     <td class="font-weight-bold text-nowrap">{{q.title}}</td>
-                                    <td class="pr-5" colspan="2" [innerHTML]="q.questionText"></td>
-                                    <td class="pr-5" [innerHTML]="(q.answerText == 'U' ? (q.freeResponseText != null ? 'Yes' : 'No') : 'NA')"></td>
+                                    <td class="pe-5" colspan="2" [innerHTML]="q.questionText"></td>
+                                    <td class="pe-5" [innerHTML]="(q.answerText == 'U' ? (q.freeResponseText != null ? 'Yes' : 'No') : 'NA')"></td>
                                 </tr>
                                 <tr *ngIf="q.title != 'Question K' && q.visible && shouldExpand('Principle_' + f.title) && q.maturityLevel == '5' && q.freeResponseText != null"
                                     >
                                     <td></td>
-                                    <td class="pr-5" colspan="3" style="white-space: pre-wrap;" [innerHTML]="'Explanation: \n' + q.freeResponseText"></td>
+                                    <td class="pe-5" colspan="3" style="white-space: pre-wrap;" [innerHTML]="'Explanation: \n' + q.freeResponseText"></td>
                                 </tr>
                                 <tr *ngIf="q.title != 'Question K' && q.visible && shouldExpand('Principle_' + f.title)
                                     && q.maturityLevel == '5' && q.documents != null">
                                     <td></td>
-                                    <td class="pr-5" colspan="3" style="white-space: pre-wrap;">
+                                    <td class="pe-5" colspan="3" style="white-space: pre-wrap;">
                                         Documents:
                                         <ul *ngFor="let doc of q.documents">
                                             <li> 
@@ -228,7 +228,7 @@
                                 <ng-container *ngIf="!c.isDeficient">
                                     <!-- <tr *ngIf="shouldExpand('Phase_' + f.title) && !c.isDeficient"> -->
                                     <tr *ngIf="shouldExpand('Phase_' + f.title) && !c.isDeficient">
-                                        <td colspan="4" class="background-2 pl-4 font-weight-bold">{{c.title}} - Phase
+                                        <td colspan="4" class="background-2 ps-4 font-weight-bold">{{c.title}} - Phase
                                             <label class="btn form-check-label" style="float: right">{{
                                                 this.expandedOptions.get('Phase_' + f.title + '_' + c.title) ? '-' : '+' }}
                                                 <input class="hide" name="nameExample" type="checkbox"
@@ -239,13 +239,13 @@
                                     <ng-container *ngFor="let q of c.questions">
                                         <ng-container *ngIf="c.title == 'Controlling Processes' && q.title != 'Question K' && shouldExpand('Phase_' + f.title) && shouldExpand('Phase_' + f.title + '_' + c.title) && q.maturityLevel != '5'">
                                             <tr class="background-3 font-weight-bold">
-                                                <td *ngIf="q.maturityLevel == '2' && q.title == 'Question 1'" colspan="4" style="font-size: large;" class="pr-5">
+                                                <td *ngIf="q.maturityLevel == '2' && q.title == 'Question 1'" colspan="4" style="font-size: large;" class="pe-5">
                                                     Project Management
                                                 </td>
-                                                <td *ngIf="q.maturityLevel == '3' && q.title == 'Question 1'" colspan="4" style="font-size: large;" class="pr-5">
+                                                <td *ngIf="q.maturityLevel == '3' && q.title == 'Question 1'" colspan="4" style="font-size: large;" class="pe-5">
                                                     Change/Configuration Management
                                                 </td>
-                                                <td *ngIf="q.maturityLevel == '4' && q.title == 'Question 1'" colspan="4" style="font-size: large;" class="pr-5">
+                                                <td *ngIf="q.maturityLevel == '4' && q.title == 'Question 1'" colspan="4" style="font-size: large;" class="pe-5">
                                                     Risk Management
                                                 </td>
                                             </tr>
@@ -255,20 +255,20 @@
                                             [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''"
                                             >
                                             <td class="font-weight-bold text-nowrap">{{q.title}}</td>
-                                            <td class="pr-5" colspan="2" [innerHTML]="q.questionText"></td>
-                                            <td class="pr-5" [innerHTML]="(q.answerText == 'U' ? (q.freeResponseText != null ? 'Yes' : 'No') : 'NA')"></td>
+                                            <td class="pe-5" colspan="2" [innerHTML]="q.questionText"></td>
+                                            <td class="pe-5" [innerHTML]="(q.answerText == 'U' ? (q.freeResponseText != null ? 'Yes' : 'No') : 'NA')"></td>
                                         </tr>
                                         <tr *ngIf="q.title != 'Question K' && shouldExpand('Phase_' + f.title + '_' + c.title) && shouldExpand('Phase_' + f.title) && q.maturityLevel != '5' && q.freeResponseText != null && q.visible"
                                             [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''">
                                             <td></td>
-                                            <td class="pr-5" colspan="3" style="white-space: pre-wrap;" [innerHTML]="'Explanation: \n' + q.freeResponseText"></td>
+                                            <td class="pe-5" colspan="3" style="white-space: pre-wrap;" [innerHTML]="'Explanation: \n' + q.freeResponseText"></td>
                                         </tr>
 
                                         <tr *ngIf="q.title != 'Question K' && shouldExpand('Phase_' + f.title + '_' + c.title) && shouldExpand('Phase_' + f.title) 
                                             && q.maturityLevel != '5' && q.documents != null && q.visible"
                                             [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''">
                                             <td></td>
-                                            <td class="pr-5" colspan="3" style="white-space: pre-wrap;">
+                                            <td class="pe-5" colspan="3" style="white-space: pre-wrap;">
                                                 Documents:
                                                 <ul *ngFor="let doc of q.documents">
                                                     <li> 

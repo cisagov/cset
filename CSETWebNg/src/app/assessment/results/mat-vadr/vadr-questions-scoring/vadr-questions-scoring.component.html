@@ -20,27 +20,27 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<table class="cset-table" class="table table-striped">
+<table class="cset-table table-striped">
   <thead>
     <tr>
       <th>Goal</th>
-      <th class="text-right" style="width: 7%">Yes</th>
-      <th class="text-right" style="width: 7%">No</th>
-      <th class="text-right" style="width: 7%">Alt</th>
-      <th class="text-right" style="width: 7%">Unanswered</th>
-      <th class="text-right" style="width: 7%">Total Practices</th>
-      <th class="text-right" style="width: 7%">Percent Complete</th>
+      <th class="text-end" style="width: 7%">Yes</th>
+      <th class="text-end" style="width: 7%">No</th>
+      <th class="text-end" style="width: 7%">Alt</th>
+      <th class="text-end" style="width: 7%">Unanswered</th>
+      <th class="text-end" style="width: 7%">Total Practices</th>
+      <th class="text-end" style="width: 7%">Percent Complete</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let g of goalTable">
       <td>{{g.name}}</td>
-      <td class="text-right">{{g.yes}}</td>
-      <td class="text-right">{{g.no}}</td>
-      <td class="text-right">{{g.alt}}</td>
-      <td class="text-right">{{g.unanswered}}</td>
-      <td class="text-right">{{g.total}}</td>
-      <td class="text-right">{{g.percent}}%</td>
+      <td class="text-end">{{g.yes}}</td>
+      <td class="text-end">{{g.no}}</td>
+      <td class="text-end">{{g.alt}}</td>
+      <td class="text-end">{{g.unanswered}}</td>
+      <td class="text-end">{{g.total}}</td>
+      <td class="text-end">{{g.percent}}%</td>
     </tr>
   </tbody>
 </table>

@@ -41,7 +41,7 @@
         <div class="card-body text-wrap">
           <div *ngIf="isMaturity" class="mb-4">
             <h6> {{"Comparing Maturity Model " + maturityModelName}}</h6>
-            <input #s type="checkbox" class="checkbox-custom mr-2" id="{{maturityModelName}}"
+            <input #s type="checkbox" class="checkbox-custom me-2" id="{{maturityModelName}}"
               name="{{maturityModelName}}" value="{{maturityModelName}}" checked>
             <label [for]="maturityModelName" class="checkbox-custom-label">{{maturityModelName}}</label>
           </div>
@@ -49,7 +49,7 @@
             <div *ngIf="isStandard" class="col-12 mt-2" id="chart" class="mb-3">
               <h6>Choose the standards you would like to compare </h6>
               <div *ngFor="let s of standards" class="checkboxes">
-                <input #s type="checkbox" class="checkbox-custom mr-2" id="{{s.full_Name}}" name="{{s.full_Name}}"
+                <input #s type="checkbox" class="checkbox-custom me-2" id="{{s.full_Name}}" name="{{s.full_Name}}"
                   (change)="onChange($event)" value="{{s.short_Name}}"><label [for]="s.full_Name"
                   class="checkbox-custom-label">{{s.full_Name}}</label>
               </div>
@@ -59,7 +59,7 @@
             <div class="form-group col-12 text-wrap mt-2">
               <p><strong>Filter by </strong> </p>
               <label class="mb-1" for="sector">Sector</label>
-              <select class="form-control" id="sector" name="sector" tabindex="0"
+              <select class="form-select" id="sector" name="sector" tabindex="0"
                 (change)="onSelectSector($event.target.value)" [(ngModel)]="demographicData.sectorId">
                 <option [ngValue]="null">-- Select All Sector --</option>
                 <option *ngFor="let sector of sectorsList" [value]="sector.sectorId">{{sector.sectorName}}
@@ -68,7 +68,7 @@
             </div>
             <div class="form-group col-12">
               <label class="mb-1" for="industry">Industry</label>
-              <select class="form-control" id="industry" name="industry" tabindex="0"
+              <select class="form-select" id="industry" name="industry" tabindex="0"
                 [(ngModel)]="demographicData.industryId" (change)="update($event)">
                 <option [ngValue]="null">-- Select Industry --</option>
                 <option *ngFor="let industry of industryList" [value]="industry.industryId">
@@ -77,13 +77,13 @@
             </div>
             <div class="form-group col-12">
               <label for="edmOrganizationType">Organization Type</label>
-              <select class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
+              <select class="form-select" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
                 (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
                 <option [ngValue]="null">-- Select Type --</option>
                 <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option>
               </select>
             </div>
-            <div class="col-12 text-right">
+            <div class="col-12 text-end">
               <!-- <button  mat-raised-button class="btnApply" (click)="searchbySectorIndustry()" [disabled]="btnSearch">Apply</button> -->
             </div>
           </div>

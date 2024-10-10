@@ -1,0 +1,92 @@
+<!----------------------
+   Copyright 2024 Battelle Energy Alliance, LLC
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="report-body mb-5" *transloco="let t; read: 'reports.all.answered statements'" >
+
+    <div class="flex-container">
+        <div class="column mt-3">
+            <p class="report-title">
+                {{ t('answered statements report title 1') }}
+            </p>
+            <p class="report-title">
+                {{ t('answered statements report title 2') }}
+            </p>
+        </div>
+        <div class="column">
+            <p style="text-align:center;">
+                <img width="471" height="529" alt="cset" src="assets/images/DetailFiles/image002.jpg">
+            </p>
+        </div>
+
+        <div class="cover-page-bottom">
+            <app-logo-for-reports></app-logo-for-reports>
+            <app-info-block [response]="response" />
+        </div>
+    </div>
+    
+    <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
+        <app-report-disclaimer></app-report-disclaimer>
+    </div>
+
+    <div class="page-break">
+        <app-report-advisory></app-report-advisory>
+    </div>
+
+
+    <div class="page-break" *ngFor="let standard of response?.standardsQuestions">
+        <h1>
+            Question Details: {{standard.standardShortName}}
+        </h1>
+
+        <table class="cset-table-3">
+            <tr *ngFor="let q of standard.questions">
+                <td class="tint2" style="width: 20%">{{q.categoryAndNumber}}</td>
+                <td [innerHTML]="q.question"></td>
+                <td class="tint2" style="width: 20%">{{questionsSvc.answerDisplayLabel('', q.answer)}}</td>
+            </tr>
+        </table>
+    </div>
+
+
+
+    <div class="page-break" *ngIf="response?.questions?.length > 0">
+        <h1>
+            Component Question Details
+        </h1>
+
+        <table class="cset-table-3" *ngFor="let q of response?.questions">
+            <tr>
+                <th colspan="4">Component: {{q.componentName}} - {{q.componentType}}</th>
+            </tr>
+            <tr>
+                <td class="tint2">Question:</td>
+                <td colspan="2" class="tint2" style="width: 80% !important;list-style-type: none;" [innerHTML]="q.question"></td>
+                <td class="tint2" style="width: 20% !important">{{questionsSvc.answerDisplayLabel('', q.answer)}}</td>
+            </tr>
+            <tr>
+                <td class="tint2">Zone:</td>
+                <td class="w-50">{{q.Zone}}</td>
+                <td class="tint2">SAL:</td>
+                <td>{{configSvc.salLabels[q.SAL]}}</td>
+            </tr>
+        </table>
+    </div>
+
+</div>

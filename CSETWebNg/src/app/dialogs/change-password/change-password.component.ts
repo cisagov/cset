@@ -27,7 +27,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ChangePassword } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../../services/config.service';
 
 @Component({

@@ -33,14 +33,14 @@
                     [style.background-color]="backgroundColor(d.groupingId)">
                     <div class="d-flex flex-row justify-content-between">
                         <div class="d-flex flex-row">
-                            <div class="mr-2 font-weight-bold">
+                            <div class="me-2 font-weight-bold">
                                 {{q.displayNumber}}
                             </div>
                             <div class="font-weight-normal">
                                 <span [innerHTML]="q.securityPractice"></span>
                             </div>
                         </div>
-                        <div class="text-right ml-4 font-weight-normal">
+                        <div class="text-end ms-4 font-weight-normal">
                             <span *ngFor="let c of q.csfMappings; let l = last" class="text-nowrap">
                                 {{c}}{{ l ? '' : ', '}}
                             </span>

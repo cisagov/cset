@@ -24,15 +24,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { AuthenticationService } from './authentication.service';
 import { JwtParser } from '../helpers/jwt-parser';
 import { DateTime } from 'luxon';
-import { ConfigurableFocusTrap } from '@angular/cdk/a11y';
-import { AssessmentService } from './assessment.service';
 // import { NCUAService } from './ncua.service';
-import { ACETService } from './acet.service';
-import { ObservationsService } from './observations.service';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -249,7 +245,18 @@ export class ReportService {
       return t.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS);
     }
   }
+  
+  getStandardAnsweredQuestions() {
+    return this.http.get(this.configSvc.apiUrl + 'reports/getStandardAnsweredQuestions');
+  }
 
+  getStandardCommentsAndMfr() {
+    return this.http.get(this.configSvc.apiUrl + 'reports/getStandardCommentsAndMfr');
+  }
+
+  getReviewedQuestions() {
+    return this.http.get(this.configSvc.apiUrl + 'reports/getReviewedQuestions');
+  }
   /**
    * Switches that define what to show on Module Content Reports
    */

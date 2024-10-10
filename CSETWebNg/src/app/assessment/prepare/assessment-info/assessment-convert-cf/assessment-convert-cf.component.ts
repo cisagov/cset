@@ -4,7 +4,7 @@ import { ConversionService } from '../../../../services/conversion.service';
 import { OkayComponent } from '../../../../dialogs/okay/okay.component';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { GalleryService } from '../../../../services/gallery.service';
 

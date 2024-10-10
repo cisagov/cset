@@ -63,7 +63,7 @@
 
     <ng-template #mainContent>
         <!-- <div class="page-break"> -->
-        <div class="ml-3 mr-3 form">
+        <div class="ms-3 me-3 form">
             <div class="d-flex flex-row" style="justify-content: space-between">
                 <div style="align-self: flex-end;">
                     <div class="h2 report-text-blue">Demographics</div>
@@ -121,20 +121,20 @@
             <div *ngFor="let q of this.hasComments">
                 <div>
                     <span class="font-weight-bold">Title: </span>
-                    <span class="pr-3">{{ q.title }}</span>
+                    <span class="pe-3">{{ q.title }}</span>
                 </div>
                 <div>
                     <span class="font-weight-bold">Statement Text: </span>
-                    <span class="pr-3">{{ q.questionText }}</span>
+                    <span class="pe-3">{{ q.questionText }}</span>
                 </div>
                 <div>
                     <span class="font-weight-bold">Response: </span>
-                    <span class="pr-3">{{ !this.ncuaSvc.isParentQuestion(q.title) ?
+                    <span class="pe-3">{{ !this.ncuaSvc.isParentQuestion(q.title) ?
                         questionsSvc.answerButtonLabel('ISE', q.answerText) : ' ' }}</span>
                 </div>
                 <div>
                     <div class="font-weight-bold">Notes: </div>
-                    <span class="pr-3" style="white-space: pre-wrap;" [innerHTML]="q.comment"></span>
+                    <span class="pe-3" style="white-space: pre-wrap;" [innerHTML]="q.comment"></span>
                 </div>
 
                 <hr class="page-line">

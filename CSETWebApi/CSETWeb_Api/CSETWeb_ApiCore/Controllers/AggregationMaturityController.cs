@@ -7,8 +7,7 @@
 using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.Business.Aggregation;
 using CSETWebCore.DataLayer.Model;
-using System.Linq;
-using System.Collections.Generic;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -16,10 +15,13 @@ namespace CSETWebCore.Api.Controllers
     {
         private CSETContext _context;
 
+
+        /// <summary>
+        /// CTOR
+        /// </summary>
         public AggregationMaturityController(CSETContext context)
         {
             _context = context;
-
         }
 
 
@@ -35,7 +37,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetComplianceByModelAndDomain([FromQuery] int aggregationId)
         {
             var amb = new AggregationMaturityBusiness(_context);
-            var resp = amb.GetMaturityModels(aggregationId);
+            var resp = amb.GetMaturityModelComplianceChart(aggregationId);
 
             return Ok(resp);
         }

@@ -23,7 +23,7 @@
 <div *transloco="let t" class="assess-component d-flex flex-column justify-content-start flex-11a w-100">
 
   <!-- Tabs -->
-  <div class="mt-0 pl-0 d-flex flex-column justify-content-start flex-00a">
+  <div class="mt-0 ps-0 d-flex flex-column justify-content-start flex-00a">
     <div class="d-flex justify-content-start flex-11a">
       <ul class="nav d-flex justify-content-start flex-00a bgc-secondary questions-tab-border">
         <li class="d-flex align-items-center flex-00a" [ngClass]="{'nav-tab':expandNav, 'nav-tab-collapsed':!expandNav}"
@@ -42,7 +42,7 @@
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-prepare')" tabindex="0">
             <span class="tab-icon cset-icons-clipboard-pencil" id="prepareIcon"></span>
-            <span class="nav-tab-text ml-2">{{t('titles.prepare')}}</span>
+            <span class="nav-tab-text ms-2">{{t('titles.prepare')}}</span>
           </button>
         </li>
         <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('questions')"
@@ -50,7 +50,7 @@
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-assessment')" tabindex="0">
             <span class="tab-icon cset-icons-question-mark" id="questionsIcon"></span>
-            <span class="nav-tab-text ml-2">{{assessmentAlias}}</span>
+            <span class="nav-tab-text ms-2">{{assessmentAlias}}</span>
           </button>
         </li>
         <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('results')"
@@ -58,7 +58,7 @@
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-results')" tabindex="0">
             <span class="tab-icon cset-icons-results"></span>
-            <span class="nav-tab-text ml-2">{{t('titles.results')}}</span>
+            <span class="nav-tab-text ms-2">{{t('titles.results')}}</span>
           </button>
         </li>
       </ul>
@@ -75,7 +75,7 @@
 
         <mat-tree [dataSource]="navTreeSvc?.dataSource" [treeControl]="navTreeSvc?.tocControl" class="mb-5">
 
-          <mat-tree-node *matTreeNodeDef="let node" [hidden]="!node.visible" class="ml-1"
+          <mat-tree-node *matTreeNodeDef="let node" [hidden]="!node.visible" class="ms-1"
             [class.current-node]="node?.isCurrent" [id]="node?.value">
             <!--isNodeDisabled(node?.disabled) ||-->
             <button (click)="selectNavItem(node?.value)" [disabled]="!(node?.enabled)" tabindex="0"
@@ -92,7 +92,7 @@
                 <mat-icon style="position: relative; top: -.1rem;">
                   {{navTreeSvc?.tocControl?.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                 </mat-icon>
-                <div class="text-wrap text-left u-hover">
+                <div class="text-wrap text-start u-hover">
                   {{node?.label}}
                 </div>
               </div>

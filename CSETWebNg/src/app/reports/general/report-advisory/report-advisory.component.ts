@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component } from '@angular/core';
 import { ConfigService } from '../../../services/config.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-report-advisory',

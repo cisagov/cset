@@ -90,9 +90,11 @@ import { ExecutiveSummaryComponent } from './reports/executive-summary/executive
 import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
 import { SitesummaryCMMCComponent } from './reports/cmmc/sitesummary-cmmc/sitesummary-cmmc.component';
 import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
-import { TrendReportComponent } from './reports/trendreport/trendreport.component';
-import { CompareReportComponent } from './reports/comparereport/comparereport.component';
+import { TrendReportComponent } from './reports/trend-report/trend-report.component';
+import { CompareReportComponent } from './reports/compare-report/compare-report.component';
+import { CompareReportMComponent } from './reports/compare-report-m/compare-report-m.component';
 import { SiteSummaryComponent } from './reports/site-summary/site-summary.component';
+import { PhysicalSummaryComponent} from './reports/physical-summary/physical-summary.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
@@ -235,6 +237,9 @@ import { TutorialCpgComponent } from './assessment/prepare/maturity/tutorial-cpg
 import { TutorialMvraComponent } from './assessment/prepare/maturity/tutorial-mvra/tutorial-mvra.component';
 import { QuestionBlockCfComponent } from './assessment/questions/question-block-cf/question-block-cf.component';
 import { ConversionComponent } from './assessment/prepare/conversion/conversion.component';
+import { AllAnsweredquestionsComponent } from './reports/all-answeredquestions/all-answeredquestions.component';
+import { AllCommentsmarkedComponent } from './reports/all-commentsmarked/all-commentsmarked.component';
+import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.component';
 
 const appRoutes: Routes = [
 
@@ -480,7 +485,6 @@ const appRoutes: Routes = [
               { path: 'components-results', component: ComponentsResultsComponent },
               { path: 'components-types', component: ComponentsTypesComponent },
               { path: 'components-warnings', component: ComponentsWarningsComponent },
-
               { path: 'summary-results', component: SummaryResultsComponent },
               { path: 'relationship-formation', component: RelationshipFormationComponent },
               { path: 'relationship-management', component: RelationshipManagementComponent },
@@ -534,8 +538,10 @@ const appRoutes: Routes = [
       { path: 'executive', component: ExecutiveSummaryComponent },
       { path: 'securityplan', component: SecurityplanComponent },
       { path: 'sitesummary', component: SiteSummaryComponent },
-      { path: 'trendreport', component: TrendReportComponent },
-      { path: 'comparereport', component: CompareReportComponent },
+      { path: 'physicalsummary', component: PhysicalSummaryComponent },
+      { path: 'trend-report', component: TrendReportComponent },
+      { path: 'compare-report', component: CompareReportComponent },
+      { path: 'compare-report-m', component: CompareReportMComponent },
       { path: 'executivecmmc', component: ExecutiveCMMCComponent },
       { path: 'sitesummarycmmc', component: SitesummaryCMMCComponent },
       { path: 'cmmcDeficiencyReport', component: CmmcDeficiencyComponent },
@@ -590,7 +596,10 @@ const appRoutes: Routes = [
       { path: 'sd-deficiency', component: TsaSdComponent },
       { path: 'sdo-gap-report', component: SdOwnerDeficiencyComponent },
       { path: 'sdo-comments-and-mfr', component: SdOwnerCommentsMfrComponent },
-      { path: 'appkeyreport', component: KeyReportComponent }
+      { path: 'appkeyreport', component: KeyReportComponent },
+      { path: 'allAnsweredQuestions', component: AllAnsweredquestionsComponent },
+      { path: 'allMfrAndComments', component: AllCommentsmarkedComponent},
+      { path: 'allReviewedQuestions', component: AllReviewedComponent}      
     ]
   },
   { path: '**', redirectTo: 'home' }

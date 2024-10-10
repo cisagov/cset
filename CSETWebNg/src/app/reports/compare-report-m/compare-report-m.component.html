@@ -1,0 +1,126 @@
+<!----------------------
+
+   Copyright 2024 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="report-body mb-5" *transloco="let t">
+
+  <div class="flex-container">
+    <div class="column mt-3">
+      <p class="report-title">
+        MULTIPLE ASSESSMENT COMPARISON REPORT
+      </p>
+    </div>
+
+    <div class="column">
+      <p style="text-align: center">
+        <img width="471" height="529" alt="cset" src="assets/images/ExecutiveFiles/image002.jpg">
+      </p>
+    </div>
+
+    <div class="cover-page-bottom">
+      <app-logo-for-reports />
+      <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
+        <div>{{response?.information.assessment_Name}}</div>
+        <div>{{response?.information.assessment_Date | localizeDate}}</div>
+        <div>{{response?.information.assessor_Name}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
+    <app-report-disclaimer></app-report-disclaimer>
+  </div>
+
+  <div class="page-break">
+    <app-report-advisory></app-report-advisory>
+  </div>
+
+
+
+  <div class="page-break">
+    <div class="mb-5">
+      <h1>Assessment Answer Summary</h1>
+
+      <table class="table table-bordered table-td-p2">
+        <tr>
+          <th class="text-start">Assessment Alias</th>
+          <th class="text-end ps-3">Total</th>
+          <th *ngFor="let al of answerLabels" class="text-end ps-3">{{ al }}</th>
+        </tr>
+        <tr *ngFor="let assess of answerCounts">
+          <td class="text-start">{{ assess.alias }}</td>
+          <td class="text-end ps-3" style="width: 10%">{{ assess.answerCounts[0].total }}</td>
+          <td class="text-end ps-3" style="width: 10%" *ngFor="let ac of assess.answerCounts">{{ ac.qc }}</td>
+        </tr>
+      </table>
+
+      <div *ngIf="answerCounts == null">
+        <div class="spinner-container" style="margin: 2em auto">
+          <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="chart d-flex flex-column flex-00a mb-5">
+      <h1>
+        Domain-Level Compliance
+      </h1>
+
+      <p class="text-start">
+        The chart below indicates normalized (percentages) compliance scores for the
+        assessments being compared.
+        Questions that are answered as "Implemented" count towards the scores represented.
+      </p>
+
+      <div *ngIf="!chartsMaturityCompliance || chartsMaturityCompliance.length == 0">
+        <div class="spinner-container" style="margin: 2em auto">
+          <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+      </div>
+
+      <div *ngFor="let i of chartsMaturityCompliance" class="my-4">
+        <h5>{{i.chartName}}</h5>
+        <canvas id="{{ 'canvasMaturityBars-' + i.chartName }}"
+          style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ i }}</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-break mb-5">
+    <h1>Document Library</h1>
+
+    <table class="table table-bordered table-td-p2">
+      <tr>
+        <th>{{t('extras.title')}}</th>
+        <th>{{t('extras.file name')}}</th>
+      </tr>
+      <tr *ngFor="let doc of response?.documentLibraryTable">
+        <td>{{doc.documentTitle}}</td>
+        <td>{{doc.fileName}}</td>
+      </tr>
+      <tr *ngIf="(response?.documentLibraryTable?.length ?? 0) === 0">
+        <td></td>
+        <td>{{t('extras.no documents to display')}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

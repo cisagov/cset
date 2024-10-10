@@ -25,11 +25,11 @@
 
     <!-- CSET Logo and Name -->
     <div class="m-4 d-flex justify-content-start flex-00a">
-      <app-logo-cset logoHeight="50"></app-logo-cset> <span class="c-primary ml-3"
+      <app-logo-cset logoHeight="50"></app-logo-cset> <span class="c-primary ms-3"
         style="padding-top: .3rem; font-size: 40px;">Renewables</span>
     </div>
 
-    <div [ngClass]="isRunningInElectron ? 'bgc-validation' : 'bgc-secondary'" class="mr-4 ml-4 p-3 c-white mb-lg-4">
+    <div [ngClass]="isRunningInElectron ? 'bgc-validation' : 'bgc-secondary'" class="me-4 ms-4 p-3 c-white mb-lg-4">
       <div *ngIf="mode === 'LOCAL'">
         CSET is running locally. No login is required.
       </div>
@@ -46,7 +46,7 @@
 
     <div *ngIf="mode === 'LOCAL'">
       <form name="form" (ngSubmit)="refreshWindow()" #f="ngForm" novalidate>
-        <div class="d-flex flex-nowrap pl-3 pr-3 ml-2 mt-2">
+        <div class="d-flex flex-nowrap ps-3 pe-3 ms-2 mt-2">
           <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">Continue</button>
           <div class="spinner-container" *ngIf="loading">
             <div style="max-width: 30px; max-height: 30px;"></div>
@@ -58,7 +58,7 @@
     <!-- If we reach the login page while running in electron, we can assume there was an error getting
       the standalone status from the API; prompt for exiting the application -->
     <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
-      <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
+      <form name="form" (ngSubmit)="exit()" #f="ngForm" class="me-4 ms-2 p-3" novalidate>
         <div class="d-flex flex-nowrap">
           <button type="submit" class="btn btn-primary btn-lg">Exit</button>
         </div>
@@ -68,13 +68,13 @@
     <div class="d-flex flex-column mx-lg-auto">
       <div class="m-4 d-flex flex-column flex-lg-row justify-content-center flex-00a"
         *ngIf="(mode === 'LOGIN' || mode === 'REGISTERED') && !isRunningInElectron">
-        <div class="float-left ml-3">
-          <img class="mr-4" src="./assets/images/RENEW/inl_cyber_shield.png" width="auto" height="400px"
+        <div class="float-left ms-3">
+          <img class="me-4" src="./assets/images/RENEW/inl_cyber_shield.png" width="auto" height="400px"
             alt="INL Cyber SHIELD">
         </div>
         <div>
           <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
-            class="d-flex flex-column justify-content-between flex-00a mt-3 mt-lg-0 ml-3">
+            class="d-flex flex-column justify-content-between flex-00a mt-3 mt-lg-0 ms-3">
             <div *ngIf="incorrect">
               <div class="alert alert-danger">Incorrect Username or Password</div>
             </div>
@@ -101,7 +101,7 @@
             <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required
             </div>
             <div class="mt-2 d-flex justify-content-between flex-00a">
-              <div class="d-flex flex-nowrap flex-00a mr-3">
+              <div class="d-flex flex-nowrap flex-00a me-3">
                 <button type="submit" [disabled]="loading" class="btn btn-primary">Login</button>
                 <div class="spinner-container" *ngIf="loading">
                   <div style="max-width: 30px; max-height: 30px;"></div>
@@ -127,7 +127,7 @@
     </div>
 
     <div class="my-4 mx-4 d-flex flex-column justify-content-start align-items-center flex-11a">
-      <div *ngIf="browserIsIE" class="alert alert-danger text-left w-100 mt-3">
+      <div *ngIf="browserIsIE" class="alert alert-danger text-start w-100 mt-3">
         Internet Explorer has been detected as your current browser.
         Some functionality of CSET is not fully supported by Internet Explorer.
         Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve

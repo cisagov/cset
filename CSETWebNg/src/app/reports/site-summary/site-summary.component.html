@@ -145,7 +145,7 @@
     <div class="page-break" *ngIf="reportSvc.isInstallation('ACET')">
         <h1>Maturity Detail</h1>
 
-        <div *ngFor="let domain of matDetails" class="pl-3 pr-3 mb-5 w-100 domain-section card">
+        <div *ngFor="let domain of matDetails" class="ps-3 pe-3 mb-5 w-100 domain-section card">
             <h2>{{domain.domainName}}</h2>
 
             <div *ngFor="let factor of domain.assessments" class="factor-section">
@@ -168,7 +168,7 @@
                         </div>
                     </div>
 
-                    <div class="row m-0 ml-5">
+                    <div class="row m-0 ms-5">
                         <div class="w-20pct text-center">
                             Baseline
                             <br />
@@ -216,30 +216,30 @@
         <table class="cset-table td-align-top">
             <tr>
                 <th class="col-4">Component</th>
-                <th class="text-right">Documentation Hours</th>
-                <th class="text-right">Interview Process Hours</th>
-                <th class="text-right">Statements Reviewed</th>
+                <th class="text-end">Documentation Hours</th>
+                <th class="text-end">Interview Process Hours</th>
+                <th class="text-end">Statements Reviewed</th>
             </tr>
             <tr *ngFor="let comp of Components">
                 <td>{{comp.component}}
                     <div>
-                        <span *ngIf="comp.hasSpecifyField" class="font-italic">{{comp.otherSpecifyValue}}</span>
+                        <span *ngIf="comp.hasSpecifyField" class="fst-italic">{{comp.otherSpecifyValue}}</span>
                     </div>
                 </td>
-                <td class="text-right">{{comp.documentationHours}}</td>
-                <td class="text-right">{{comp.interviewHours}}</td>
-                <td class="text-right">{{comp.statementsReviewed}}</td>
+                <td class="text-end">{{comp.documentationHours}}</td>
+                <td class="text-end">{{comp.interviewHours}}</td>
+                <td class="text-end">{{comp.statementsReviewed}}</td>
             </tr>
             <tr class="total-row">
                 <td>Total Review Hours</td>
-                <td class="text-right">{{ documentationTotal }}</td>
-                <td class="text-right">{{ interviewTotal }}</td>
-                <td class="text-right"></td>
+                <td class="text-end">{{ documentationTotal }}</td>
+                <td class="text-end">{{ interviewTotal }}</td>
+                <td class="text-end"></td>
             </tr>
             <tr class="total-row">
                 <td>Grand Totals</td>
-                <td class="text-right" colspan="2">{{ grandTotal }}</td>
-                <td class="text-right">{{ reviewedStatementTotal }}</td>
+                <td class="text-end" colspan="2">{{ grandTotal }}</td>
+                <td class="text-end">{{ reviewedStatementTotal }}</td>
             </tr>
         </table>
 
