@@ -103,8 +103,8 @@
       "show ip rights assertion": false
     },
     "tsa": {
-      "app long name": "TSA Assessment Tool",
-      "app short name": "TSA",
+      "app long name": "TSA Cyber Security Evaluation Tool",
+      "app short name": "CSET-TSA",
       "org long name": "Transportation Security Administration",
       "org short name": "TSA",
       "show ip rights assertion": false
@@ -367,10 +367,10 @@
     "change": "Change",
     "remove": "Remove",
     "not authorized message": "You are not authorized to make changes to the contacts on this assessment.",
-    "contact an administrator message": "Please contact an administrator for this assessment to make changes, or to gain administrative access.", 
-    "details": "Additional Details", 
-    "no details": "None available", 
-    "creator": "Assessment Creator", 
+    "contact an administrator message": "Please contact an administrator for this assessment to make changes, or to gain administrative access.",
+    "details": "Additional Details",
+    "no details": "None available",
+    "creator": "Assessment Creator",
     "editor": "Assessment Editor"
   },
   "acet": {
