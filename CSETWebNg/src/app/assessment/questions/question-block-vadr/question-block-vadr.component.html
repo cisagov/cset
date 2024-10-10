@@ -145,7 +145,7 @@
                     <div [class.ps-5]="openEndedQuestion && !!q.parentQuestionId"
                         class="w-100 d-flex flex-row ms-5 ps-2">
                         <app-question-extras *ngIf="!q.isParentQuestion || q.parentQuestionId !==null" #extrasComponent
-                            [myQuestion]="q" class="w-100 mb-3 text-left ms-3 ps-5 text-nowrap"
+                            [myQuestion]="q" class="w-100 mb-3 text-start ms-3 ps-5 text-nowrap"
                             (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
                         </app-question-extras>
                     </div>
@@ -224,7 +224,7 @@
 
                     <div [class.ms-3]="openEndedQuestion && !!q.parentQuestionId" class="w-100__ d-flex__ flex-row__">
                         <app-question-extras *ngIf="!q.isParentQuestion || q.parentQuestionId !==null" #extrasComponent
-                            [myQuestion]="q" class="w-100 mb-3 text-left" (changeExtras)="refreshReviewIndicator()"
+                            [myQuestion]="q" class="w-100 mb-3 text-start" (changeExtras)="refreshReviewIndicator()"
                             (changeComponents)="refreshComponentOverrides()">
                         </app-question-extras>
                     </div>

@@ -225,7 +225,7 @@
                 Changing the meaning of the question text may have an undesired effect.
               </div>
               <textarea appAutoSize maxlength="7338" id="Q_{{q.questionID}}" #editQ [(ngModel)]="q.questionText"
-                (keydown.esc)="abandonQuestionEdit(q)" (blur)="endQuestionEdit(q)" class="form-control w-100 text-left"
+                (keydown.esc)="abandonQuestionEdit(q)" (blur)="endQuestionEdit(q)" class="form-control w-100 text-start"
                 [class.b-validate]="editedQuestionInUse"></textarea>
             </div>
           </div>

@@ -172,7 +172,6 @@ export class ChartService {
       myOptions.scale = { min: 0, max: 100 };
     }
 
-
     return new Chart(canvasId, {
       type: 'bar',
       data: {

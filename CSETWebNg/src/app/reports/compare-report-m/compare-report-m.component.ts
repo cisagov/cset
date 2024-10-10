@@ -22,37 +22,44 @@
 //
 ////////////////////////////////
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
-import { ReportService } from '../../../app/services/report.service';
+import { ReportService } from '../../services/report.service';
 import { Title } from '@angular/platform-browser';
-import { AggregationService } from '../../../app/services/aggregation.service';
-import { ChartService, ChartColors } from '../../../app/services/chart.service';
+import { AggregationService } from '../../services/aggregation.service';
+import { ChartService, ChartColors } from '../../services/chart.service';
 import { MaturityService } from '../../services/maturity.service';
 import Chart from 'chart.js/auto';
 import { ConfigService } from '../../services/config.service';
 import { ColorService } from '../../services/color.service';
+import { QuestionsService } from '../../services/questions.service';
 
 
 @Component({
-  selector: 'comparereport',
-  templateUrl: './comparereport.component.html',
+  selector: 'compare-report-m',
+  templateUrl: './compare-report-m.component.html',
   styleUrls: ['../reports.scss']
 })
 
-export class CompareReportComponent implements OnInit, AfterViewChecked {
+export class CompareReportMComponent implements OnInit, AfterViewChecked {
   response: any;
 
   chartOverallAverage: Chart;
   aggSvc: AggregationService;
-  answerCounts: any[] = null;
   chartCategoryAverage: Chart;
   chartCategoryPercent: Chart;
   pageInitialized = false;
   isCmmc: boolean = false;
 
+  answerCounts: any[] = null;
+  answerLabels: string[] = [];
+
+  chartsMaturityCompliance: any[];
+
+
   constructor(
     public reportSvc: ReportService,
     private titleService: Title,
     public aggregationSvc: AggregationService,
+    public questionSvc: QuestionsService,
     public chartSvc: ChartService,
     public colorSvc: ColorService,
     public maturitySvc: MaturityService,
@@ -64,7 +71,7 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     this.titleService.setTitle("Compare Report - " + this.configSvc.behaviors.defaultTitle);
     var aggId: number = +localStorage.getItem("aggregationId");
     this.isCmmc = this.maturitySvc.maturityModelIsCMMC();
-    this.reportSvc.getAggReport('comparereport', aggId).subscribe(
+    this.reportSvc.getAggReport('compare-report', aggId).subscribe(
       (r: any) => {
         this.response = r;
       },
@@ -91,28 +98,39 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     });
 
     // Assessment Answer Summary - tabular data
-    this.aggregationSvc.getAnswerTotals(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getMaturityAnswerTotals(aggId).subscribe((x: any) => {
+      // 
       this.answerCounts = x;
+
+      // build a list of answer options for the table columns
+      this.answerLabels = [];
+      x[0].answerCounts.forEach(opt => {
+        const label = this.questionSvc.answerDisplayLabel(x[0].modelId, opt.answer_Text);
+        this.answerLabels.push(label);
+      });
     });
 
-    // Category Averages
-    this.aggregationSvc.getCategoryAverages(aggId).subscribe((x: any) => {
 
-      // Makes the Category Average chart a nice green color instead of grey
-      x.datasets.forEach(ds => {
-        ds.backgroundColor = '#008a00';
-        ds.borderColor = '#008a00';
-      });
+    // Maturity Compliance By Model/Domain
+    this.aggregationSvc.getAggregationCompliance(aggId).subscribe((resp: any) => {
+      let showLegend = true;
 
-      if (!x.options) {
-        x.options = {};
+      if (!resp.length) {
+        showLegend = false;
+        resp = [{
+          chartName: '',
+          labels: ['No Maturity Models Selected'],
+          datasets: [{ data: 0 }],
+          chart: null
+        }];
       }
 
-      x.options.maintainAspectRatio = false;
-      this.chartCategoryAverage = this.chartSvc.buildHorizBarChart('canvasCategoryAverage', x, false, true);
-      (<HTMLElement>this.chartCategoryAverage.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
-    });
+      this.chartsMaturityCompliance = resp;
 
+      resp.forEach(x => {
+        this.buildMaturityChart(x, showLegend);
+      });
+    });
     // Category Percentage Comparison
     this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
       this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
@@ -121,6 +139,18 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
   }
 
 
+  /**
+   * 
+   */
+  buildMaturityChart(c, showLegend) {
+    c.datasets.forEach(ds => {
+      ds.backgroundColor = this.colorSvc.getColorForAssessment(ds.label);
+    });
+
+    setTimeout(() => {
+      c.chart = this.chartSvc.buildHorizBarChart('canvasMaturityBars-' + c.chartName, c, showLegend, true)
+    }, 1000);
+  }
   ngAfterViewChecked() {
   }
 
