@@ -2,7 +2,7 @@ const { app, BrowserWindow, Menu, MenuItem, shell, session, dialog } = require('
 const path = require('path');
 const url = require('url');
 const child = require('child_process').execFile;
-const request = require('request');
+const http = require('http');
 const log = require('electron-log');
 const tcpPortUsed = require('tcp-port-used');
 const findTextPrompt = require('./src/custom-modules/electron-prompt/lib/index');
@@ -464,12 +464,12 @@ let retryApiConnection = (() => {
   let count = 0;
 
   return (max, timeout, port, next) => {
-    request.get(
+    http.get(
       {
         url: 'http://localhost:' + port + '/api/IsRunning'
       },
-      (error, response) => {
-        if (error || response.statusCode !== 200) {
+      (response) => {
+        if (response.statusCode !== 200) {
           if (count++ < max - 1) {
             return setTimeout(() => {
               retryApiConnection(max, timeout, port, next);
@@ -479,7 +479,7 @@ let retryApiConnection = (() => {
           }
         }
 
-        log.info('Successful connection to API established. Loading ' + installationMode.toUpperCase() + ' main window...');
+        log.info('Successful connection to API established. Loading ' + appName + ' main window...');
         next(null);
       });
   }
