@@ -38,7 +38,7 @@
         {{data.componentType.symbol_Name}}
       </span>
     </div>
-    <div class="form-group">
+    <div class="form-group mb-4">
       <span style="font-weight: bold">Question: </span>
       <span>
         {{data.myQuestion.questionText}}
@@ -47,29 +47,31 @@
     <div class="row">
       <div class="col-12">
         <table class="assessment-summary">
-          <th colspan="2">Specific Component Name</th>
+          <tr>
+            <th colspan="2">Specific Component Name</th>
+          </tr>
           <tr *ngFor="let q of questions; let i = index">
-            <td>{{q.componentName}}</td>
+            <td>{{ utilitiesSvc.removeHtmlTags(q.componentName) }}</td>
             <td>
               <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons" style="float:right;">
                 <label *ngIf="showThisOption('Y')" class="btn btn-yes form-check-label"
                   [class.answer-selected]="q.answer_Text === 'Y'">
-                  <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
+                  <input name="q_{{q.question_Id}}" class="btn-check" type="radio" autocomplete="off"
                     (click)="storeAnswer(q, 'Y')" [checked]="q.answer_Text === 'Y'">Yes
                 </label>
                 <label *ngIf="showThisOption('N')" class="btn btn-no form-check-label"
                   [class.answer-selected]="q.answer_Text === 'N'">
-                  <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
+                  <input name="q_{{q.question_Id}}" class="btn-check" type="radio" autocomplete="off"
                     (click)="storeAnswer(q, 'N')" [checked]="q.answer_Text === 'N'">No
                 </label>
                 <label *ngIf="showThisOption('NA')" class="btn btn-na form-check-label"
                   [class.answer-selected]="q.answer_Text === 'NA'">
-                  <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
+                  <input name="q_{{q.question_Id}}" class="btn-check" type="radio" autocomplete="off"
                     (click)="storeAnswer(q, 'NA')" [checked]="q.answer_Text === 'NA'">NA
                 </label>
                 <label *ngIf="showThisOption('A')" class="btn btn-alt form-check-label"
                   [class.answer-selected]="q.answer_Text === 'A'">
-                  <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
+                  <input name="q_{{q.question_Id}}" class="btn-check" type="radio" autocomplete="off"
                     (click)="storeAnswer(q, 'A')" [checked]="q.answer_Text === 'A'">Alt
                 </label>
               </div>
@@ -84,7 +86,7 @@
       </div>
     </div>
   </mat-dialog-content>
-  <mat-dialog-actions class="pl-4 p-1" style="margin-bottom:15px;">
+  <mat-dialog-actions class="ps-4 p-1" style="margin-bottom:15px;">
     <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
   </mat-dialog-actions>
 </div>

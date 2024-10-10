@@ -33,7 +33,7 @@ import { MaturityService } from '../../services/maturity.service';
 import { QuestionsService } from '../../services/questions.service';
 import Chart from 'chart.js/auto';
 import { AssessmentService } from '../../services/assessment.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'site-summary',

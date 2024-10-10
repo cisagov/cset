@@ -1,0 +1,166 @@
+<!----------------------
+
+   Copyright 2024 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="report-body mb-5" *transloco="let t">
+
+  <div class="flex-container">
+    <div class="column mt-3">
+      <p class="report-title">
+        MULTIPLE ASSESSMENT COMPARISON REPORT
+      </p>
+    </div>
+
+    <div class="column">
+      <p style="text-align: center">
+        <img width="471" height="529" alt="cset" src="assets/images/ExecutiveFiles/image002.jpg">
+      </p>
+    </div>
+
+    <div class="cover-page-bottom">
+      <app-logo-for-reports />
+      <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
+        <div> {{response?.information.assessment_Name}} </div>
+        <div> {{response?.information.assessment_Date | localizeDate}} </div>
+        <div> {{response?.information.assessor_Name}} </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
+    <app-report-disclaimer></app-report-disclaimer>
+  </div>
+
+  <div class="page-break">
+    <app-report-advisory></app-report-advisory>
+  </div>
+
+  <div class="page-break">
+    <h1>Summary Percent Compliance</h1>
+    <div style="margin: 0 auto 2em auto; display: block;">
+      <div *ngIf="chartOverallAverage == null">
+        <div class="spinner-container" style="margin: 2em auto">
+          <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+      </div>
+      <canvas id="canvasOverallAverage"> {{ chartOverallAverage }} </canvas>
+    </div>
+  </div>
+
+  <div class="page-break">
+    <h1 *ngIf="!isCmmc">Security Assurance Level (SAL)</h1>
+    <p *ngIf="!isCmmc">Care should be taken when comparing sites with different overall Security Assurance Levels (SAL).
+      As sites with a high SAL may have a lower overall security score from a percentage perspective but
+      may be more secure overall because they are working to a higher level. When comparing different
+      sites it may be worthwhile to compare the total number of questions and total number of yes/no answers
+      in addition to the overall percentage scores.
+    </p>
+
+    <div class="d-flex flex-column flex-00a">
+      <h2>Comparison of Security Assurance Levels</h2>
+      <p>Confidentiality, integrity, and availability are only adjustable using the NIST FIPS 199 SAL determination
+        wizard. The SAL level used to calculate questions and percentages is the overall security assurance level.</p>
+
+      <table class="table table-bordered table-td-p2">
+        <tr>
+          <th class="ps-3" style="width: 20%">Alias</th>
+          <th class="ps-3" style="width: 20%">Overall</th>
+          <th class="ps-3" style="width: 20%">Confidentiality</th>
+          <th class="ps-3" style="width: 20%">Integrity</th>
+          <th class="ps-3" style="width: 20%">Availability</th>
+        </tr>
+        <tr *ngFor="let a of response?.salList">
+          <td class="ps-3">{{a.alias}}</td>
+          <td class="ps-3">{{a.osv}}</td>
+          <td class="ps-3">{{a.q_CV}}</td>
+          <td class="ps-3">{{a.q_IV}}</td>
+          <td class="ps-3">{{a.q_AV}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <h1>Assessment Answer Summary</h1>
+    <div class="chart d-flex flex-column flex-00a">
+      <table class="table table-bordered table-td-p2">
+        <tr>
+          <th class="text-start p-2">Assessment Alias</th>
+          <th class="text-end ps-3">Total</th>
+          <th class="text-end ps-3">Yes</th>
+          <th class="text-end ps-3">No</th>
+          <th class="text-end ps-3">NA</th>
+          <th class="text-end ps-3">Alt</th>
+          <th class="text-end ps-3">Unanswered</th>
+        </tr>
+        <tr *ngFor="let a of answerCounts">
+          <td class="text-start">{{ a.alias }}</td>
+          <td class="text-end ps-3" style="width: 10%">{{ a.total }}</td>
+          <td class="text-end ps-3" style="width: 10%">{{ a.y }}</td>
+          <td class="text-end ps-3" style="width: 10%">{{ a.n }}</td>
+          <td class="text-end ps-3" style="width: 10%">{{ a.na }}</td>
+          <td class="text-end ps-3" style="width: 10%">{{ a.a }}</td>
+          <td class="text-end ps-3" style="width: 10%">{{ a.u }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div *ngIf="answerCounts == null">
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-break">
+    <h1>Category Average for All Assessments</h1>
+    <div class="chart d-flex flex-column flex-00a mb-5">
+      <div *ngIf="chartCategoryAverage == null">
+        <div class="spinner-container" style="margin: 2em auto">
+          <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+      </div>
+      <canvas id="canvasCategoryAverage"> {{ chartCategoryAverage }} </canvas>
+    </div>
+  </div>
+
+  <div class="page-break">
+    <h1>Individual Category Comparisons</h1>
+    <div><canvas id="canvasCategoryPercent"> {{ chartCategoryPercent }} </canvas></div>
+  </div>
+
+  <div class="page-break mb-5">
+    <h1>Document Library</h1>
+
+    <table class="table table-bordered table-td-p2">
+      <tr>
+        <th>{{t('extras.title')}}</th>
+        <th>{{t('extras.file name')}}</th>
+      </tr>
+      <tr *ngFor="let doc of response?.documentLibraryTable">
+        <td>{{doc.documentTitle}}</td>
+        <td>{{doc.fileName}}</td>
+      </tr>
+      <tr *ngIf="(response?.documentLibraryTable?.length ?? 0) === 0">
+        <td></td>
+        <td>{{t('extras.no documents to display')}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

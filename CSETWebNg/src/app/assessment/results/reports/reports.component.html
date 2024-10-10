@@ -74,7 +74,7 @@
   <!-- ISE Merit Buttons -->
   <div *ngIf="assessSvc.isISE()" class="my-5">
 
-    <button class="btn mr-2" style="background-color: #3b68aa; color: white;" (click)="navSvc.navBack('reports')"
+    <button class="btn me-2" style="background-color: #3b68aa; color: white;" (click)="navSvc.navBack('reports')"
       tabindex="0" aria-label="Back">
       Back
     </button>
@@ -91,7 +91,7 @@
     <!-- HYDRO -->
     <!-- below is commented out until the VaR scores are collected/calculated -->
       <!-- <div>
-        <button tabindex="0" (click)="clickReportLink('hydroReport')" class="btn btn-link btn-link-dark text-left">
+        <button tabindex="0" (click)="clickReportLink('hydroReport')" class="btn btn-link btn-link-dark text-start">
           HYDRO Report
         </button>
       </div> -->
@@ -104,31 +104,31 @@
       <h4>Cyber-Informed Engineering (CIE)</h4>
       <div>
         <button (click)="clickReportLink('cieAllQuestions')" tabindex="0"
-          class="btn btn-link btn-link-dark text-left">
+          class="btn btn-link btn-link-dark text-start">
           Export All Questions CIE Report
         </button>
       </div>
       <div>
         <button (click)="clickReportLink('ciePrincipleOnly')" tabindex="0"
-          class="btn btn-link btn-link-dark text-left">
+          class="btn btn-link btn-link-dark text-start">
           Export Principle-Only CIE Report
         </button>
       </div>
       <div>
         <button (click)="clickReportLink('ciePrinciplePhase')" tabindex="0"
-          class="btn btn-link btn-link-dark text-left">
+          class="btn btn-link btn-link-dark text-start">
           Export Principle-Phase CIE Report
         </button>
       </div>
       <div>
         <button (click)="clickReportLink('cieNotApplicable')" tabindex="0"
-          class="btn btn-link btn-link-dark text-left">
+          class="btn btn-link btn-link-dark text-start">
           Export Not Applicable Questions CIE Report
         </button>
       </div>
       <div>
         <button (click)="clickReportLink('cieMfrReport')" tabindex="0"
-          class="btn btn-link btn-link-dark text-left">
+          class="btn btn-link btn-link-dark text-start">
           Export Marked for Review CIE Report
         </button>
       </div>
@@ -136,8 +136,8 @@
 
 
       <div>
-        <div class="ml-2" *ngIf="isConfigChainEqual">
-          <button tabindex="0" (click)="clickReportLink('appkeyreport')" class="btn btn-link btn-link-dark text-left"
+        <div class="ms-2" *ngIf="isConfigChainEqual">
+          <button tabindex="0" (click)="clickReportLink('appkeyreport')" class="btn btn-link btn-link-dark text-start"
             matTooltip="Used to associate identifiable information with an Anonymous Key" matTooltipPosition="right">
             Anonymous Key Report
           </button>
@@ -146,18 +146,18 @@
 
         <div class="mt-5 d-flex flex-row" *ngIf="this.configSvc.behaviors.showExportOnReports">
           <button tabindex="0"
-            class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a mr-2"
+            class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a me-2"
             (click)="clickExport()" matTooltip="{{ 'tooltip.export assessment' | transloco }} ({{
               exportExtension
             }}).">
-            <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+            <span class="cset-icons-export-up fs-base-2 me-2"></span>
             <span>{{assessSvc.usesMaturityModel('CIE') ? 'CSET FILE' : ''}} {{ 'buttons.export' | transloco }}</span>
           </button>
 
           <button *ngIf="configSvc.cisaAssessorWorkflow" tabindex="0"
             class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
             (click)="clickExport(true)" matTooltip="{{ 'tooltip.export assessment json' | transloco }}">
-            <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+            <span class="cset-icons-export-up fs-base-2 me-2"></span>
             <span>{{ 'buttons.export json' | transloco }}</span>
           </button>
         </div>

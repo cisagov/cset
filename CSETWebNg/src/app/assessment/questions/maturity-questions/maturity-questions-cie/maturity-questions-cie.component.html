@@ -31,14 +31,14 @@
             <label class="btn btn-app-mode form-check-label"
                 [class.active]="assessSvc.applicationMode == 'P'" (click)="setMode('P')"
                 matTooltip="Principle Scope">
-                <input name="app_mode" class="form-check-input" type="radio" autocomplete="off"
+                <input name="app_mode" class="btn-check" type="radio" autocomplete="off"
                 [checked]="assessSvc.applicationMode == 'P'">
                 Principle Scope
             </label>
             <label class="btn btn-app-mode form-check-label"
                 [class.active]="assessSvc.applicationMode == 'F'" (click)="setMode('F')"
                 matTooltip="Principle-Phase Scope">
-                <input name="app_mode" class="form-check-input" type="radio" autocomplete="off"
+                <input name="app_mode" class="btn-check" type="radio" autocomplete="off"
                 [checked]="assessSvc.applicationMode == 'F'">
                 Principle-Phase Scope
             </label>

@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Acet;
 using CSETWebCore.Business.Maturity;
+using CSETWebCore.Business.Maturity.Configuration;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Manual;
@@ -33,6 +34,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using static Lucene.Net.Util.Fst.Util;
 
 
@@ -112,6 +114,12 @@ namespace CSETWebCore.Business.Reports
 
             _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
 
+            // flesh out model-specific questions 
+            if (modelId != null)
+            {
+                _context.FillEmptyMaturityQuestionsForModel(_assessmentId, (int)modelId);
+            }
+
             var query = from a in _context.ANSWER
                         join m in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_Level)
                             on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
@@ -190,61 +198,21 @@ namespace CSETWebCore.Business.Reports
                 targetModel = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == modelId).FirstOrDefault();
             }
 
+
             bool ignoreParentQuestions = false;
 
-            // default answer values that are considered 'deficient'
+            // default answer values that are considered 'deficient' (in case we can't find a model config profile)
             List<string> deficientAnswerValues = new List<string>() { "N", "U" };
 
 
-            // CMMC considers unanswered as deficient
-            if (targetModel.Model_Name.ToUpper() == "CMMC" ||
-                targetModel.Model_Name.ToUpper() == "CMMC2")
+            // try to get a configuration for the actual model
+            var modelProperties = new ModelProfile().GetModelProperties(targetModel.Maturity_Model_Id);
+            if (modelProperties != null)
             {
-                deficientAnswerValues = new List<string>() { "N", "U" };
+                deficientAnswerValues = modelProperties.DeficientAnswers;
+                ignoreParentQuestions = modelProperties.IgnoreParentQuestions;
             }
 
-            // EDM also considers unanswered and incomplete as deficient
-            if (targetModel.Model_Name.ToUpper() == "EDM")
-            {
-                ignoreParentQuestions = true;
-                deficientAnswerValues = new List<string>() { "N", "U", "I" };
-            }
-
-            if (targetModel.Model_Name.ToUpper() == "CRR")
-            {
-                ignoreParentQuestions = true;
-                deficientAnswerValues = new List<string>() { "N", "U", "I" };
-            }
-
-            // IMR considers unanswered and incomplete as deficient
-            if (targetModel.Model_Name.ToUpper() == "IMR")
-            {
-                deficientAnswerValues = new List<string>() { "N", "U", "I" };
-            }
-
-            // RRA also considers unanswered and incomplete as deficient
-            if (targetModel.Model_Name.ToUpper() == "RRA")
-            {
-                deficientAnswerValues = new List<string>() { "N", "U" };
-            }
-
-            // VADR considers unanswered as deficient
-            if (targetModel.Model_Name.ToUpper() == "VADR")
-            {
-                deficientAnswerValues = new List<string>() { "N", "U" };
-            }
-
-            // CPG
-            if (targetModel.Model_Name.ToUpper() == "CPG")
-            {
-                deficientAnswerValues = new List<string>() { "N", "U" };
-            }
-
-            // SSG - CHEMICAL can only be requested explicitly
-            if (targetModel.Maturity_Model_Id == 18)
-            {
-                deficientAnswerValues = new List<string>() { "N", "U" };
-            }
 
             var responseList = GetQuestionsList(targetModel.Maturity_Model_Id).Where(x => deficientAnswerValues.Contains(x.ANSWER.Answer_Text)).ToList();
 
@@ -264,7 +232,6 @@ namespace CSETWebCore.Business.Reports
                 var whitelist = _context.MATURITY_SUB_MODEL_QUESTIONS.Where(x => x.Sub_Model_Name == maturitySubmodel.StringValue).Select(q => q.Mat_Question_Id).ToList();
                 responseList = responseList.Where(x => whitelist.Contains(x.Mat.Mat_Question_Id)).ToList();
             }
-
 
             return responseList;
         }
@@ -1286,6 +1253,42 @@ namespace CSETWebCore.Business.Reports
         }
 
 
+        public async Task<List<StandardQuestions>> GetStandardQuestionAnswers(int assessId)
+        {
+            CsetwebContextProcedures context = new CsetwebContextProcedures(_context);
+            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
+            var dblist = await context.usp_GetQuestionsAsync(assessId);
+
+            List<StandardQuestions> list = new List<StandardQuestions>();
+            string lastshortname = "";
+            List<SimpleStandardQuestions> qlist = new List<SimpleStandardQuestions>();
+            foreach (var a in dblist.ToList())
+            {
+                if (a.ShortName != lastshortname)
+                {
+                    qlist = new List<SimpleStandardQuestions>();
+                    list.Add(new StandardQuestions()
+                    {
+                        Questions = qlist,
+                        StandardShortName = a.ShortName
+                    });
+                }
+                lastshortname = a.ShortName;                
+                qlist.Add(new SimpleStandardQuestions()
+                {
+                    ShortName = a.ShortName,
+
+                    Question = rm.ResolveParameters(a.QuestionOrRequirementID, a.AnswerID, a.QuestionText),
+                    QuestionId = a.QuestionOrRequirementID,
+                    Answer = a.AnswerText,
+                    CategoryAndNumber = a.CategoryAndNumber
+                });
+            }
+
+            return list;
+        }
+
+
         /// <summary>
         /// Returns a list of questions generated by components in the network.
         /// The questions correspond to the SAL level of each component's Zone level.
@@ -1316,10 +1319,10 @@ namespace CSETWebCore.Business.Reports
                     QuestionId = q.Question_Id,
                     LayerName = q.LayerName,
                     SAL = q.SAL,
-                    Zone = q.ZoneName
+                    Zone = q.ZoneName,
+                    IsOverride = (q.Answer_Id != null)
                 });
             }
-
 
             return l;
         }
@@ -1512,6 +1515,59 @@ namespace CSETWebCore.Business.Reports
         }
 
 
+        /// <summary>
+        /// Returns a list of questions that have been reviewed.
+        /// </summary>
+        /// <returns></returns>
+        public List<QuestionsMarkedForReview> GetQuestionsReviewed()
+        {
+
+            var results = new List<QuestionsMarkedForReview>();
+
+            // get any "marked for review" or commented answers that currently apply
+            var relevantAnswers = new RelevantAnswers().GetAnswersForAssessment(_assessmentId, _context)
+                .Where(ans => ans.Reviewed)
+                .ToList();
+
+            if (relevantAnswers.Count == 0)
+            {
+                return results;
+            }
+
+            bool requirementMode = relevantAnswers[0].Is_Requirement;
+
+            // include Question or Requirement contextual information
+            if (requirementMode)
+            {
+                var query = from ans in relevantAnswers
+                            join req in _context.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
+                            select new QuestionsMarkedForReview()
+                            {
+                                Answer = ans.Answer_Text,
+                                CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
+                                Question = req.Requirement_Text
+                            };
+
+                return query.ToList();
+            }
+            else
+            {
+                var query = from ans in relevantAnswers
+                            join q in _context.NEW_QUESTION on ans.Question_Or_Requirement_ID equals q.Question_Id
+                            join h in _context.vQUESTION_HEADINGS on q.Heading_Pair_Id equals h.Heading_Pair_Id
+                            orderby h.Question_Group_Heading
+                            select new QuestionsMarkedForReview()
+                            {
+                                Answer = ans.Answer_Text,
+                                CategoryAndNumber = h.Question_Group_Heading + " #" + ans.Question_Number,
+                                Question = q.Simple_Question
+                            };
+
+                return query.ToList();
+            }
+        }
+
+
         public List<RankedQuestions> GetRankedQuestions()
         {
             var lang = _tokenManager.GetCurrentLanguage();
@@ -1543,6 +1599,54 @@ namespace CSETWebCore.Business.Reports
                     Level = q.Level,
                     Question = q.QuestionText,
                     Rank = q.Rank ?? 0
+                });
+            }
+
+            return list;
+        }
+
+        public List<PhysicalQuestions> GetQuestionsWithSupplementals()
+        {         
+            var lang = _tokenManager.GetCurrentLanguage();
+
+            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
+
+            List<PhysicalQuestions> list = new List<PhysicalQuestions>();
+            List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
+
+
+            var supplementalLookups = (from a in _context.NEW_REQUIREMENT
+                        join b in _context.REQUIREMENT_SETS on a.Requirement_Id equals b.Requirement_Id
+                        where b.Set_Name == "MOPhysical"
+                        select a).ToDictionary(x=> x.Requirement_Id, x=> x); 
+
+            foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
+            {
+                if (q.RequirementId != null)
+                {
+                    var reqOverlay = _overlay.GetRequirement((int)q.RequirementId, lang);
+                    if (reqOverlay != null)
+                    {
+                        q.QuestionText = reqOverlay.RequirementText;
+                    }
+                    
+                }
+
+
+                q.QuestionText = rm.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
+
+                q.Category = _overlay.GetPropertyValue("STANDARD_CATEGORY", q.Category.ToLower(), lang) ?? q.Category;
+                var comment = _context.Answer_Requirements.Where(x => x.Question_Or_Requirement_Id == q.QuestionOrRequirementID).FirstOrDefault()?.Comment;
+                var supplemental = supplementalLookups[q.RequirementId??0].Supplemental_Info;
+                list.Add(new PhysicalQuestions()
+                {
+                    Answer = q.AnswerText,
+                    CategoryAndNumber = q.Category + " #" + q.QuestionRef,
+                    Level = q.Level,
+                    Question = q.QuestionText,
+                    Rank = q.Rank ?? 0,
+                    Supplemental = supplemental,
+                    Comment = comment
                 });
             }
 
@@ -2783,7 +2887,11 @@ namespace CSETWebCore.Business.Reports
 
             return maturityDomains;
         }
-        //
+
+        //public TempDataAttribute GetStandardAnsweredQuestionsList()
+        //{
+
+        //}
     }
 }
 

@@ -27,7 +27,7 @@ import { ReportService } from '../../services/report.service';
 import { ACETService } from '../../services/acet.service';
 import { ConfigService } from '../../services/config.service';
 import { QuestionsService } from '../../services/questions.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { MaturityService } from '../../services/maturity.service';
 
 

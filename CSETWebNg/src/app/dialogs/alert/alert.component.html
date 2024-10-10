@@ -21,13 +21,13 @@
   SOFTWARE. 
 -------------------------->
 <div class="alert-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span [ngClass]="iconClass" class="fs-base-6 mr-3"></span>
+  <div *ngIf="showHeader" class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span [ngClass]="iconClass" class="fs-base-6 me-3"></span>
     <span>{{ data.title | titlecase }}</span>
   </div>
 
-  <div class="p-3 pb-0 pr-0 mt-2 oy-auto d-flex flex-column flex-11a">
-    <mat-dialog-content class="p-0 pr-3">
+  <div class="p-3 pb-0 pe-0 mt-2 oy-auto d-flex flex-column flex-11a">
+    <mat-dialog-content class="p-0 pe-3">
       <div [innerHTML]="data.messageText | safe">
       </div>
     </mat-dialog-content>

@@ -28,7 +28,7 @@ import { QuestionsService } from './../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-acet-commentsmarked',

@@ -22,20 +22,20 @@
 -------------------------->
 <div *transloco="let t" id="white-panel"
   class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
-  <div class="p-0 d-flex flex-column flex-10a mx-auto col-lg-8 col-md-8 col-sm-10">
+  <div class="p-4 d-flex flex-column flex-10a mx-auto col-lg-8 col-md-8 col-sm-10">
 
     <!-- CSET Logo and Name -->
-    <div *ngIf="!configSvc.isRunningAnonymous" class="m-4 d-flex justify-content-start flex-00a">
+    <div *ngIf="!configSvc.isRunningAnonymous" class="my-4 d-flex justify-content-start flex-00a">
       <app-logo-cset logoHeight="50"></app-logo-cset>
     </div>
 
-    <div *ngIf="configSvc.isRunningAnonymous" class="ml-4 my-4 d-flex align-items-end flex-00a flex-nowrap">
+    <div *ngIf="configSvc.isRunningAnonymous" class="my-4 d-flex align-items-end flex-00a flex-nowrap">
       <app-logo-cset logoHeight="50"></app-logo-cset>
-      <span class="align-bottom ml-3 font-italic"
+      <span class="align-bottom ms-3 fst-italic"
         style="font-size: 37px; line-height: normal; margin-bottom: -.5rem; color: #666">Online</span>
     </div>
 
-    <div [ngClass]="isRunningInElectron ? 'bgc-validation' : 'bgc-secondary'" class="mr-4 ml-4 p-3 c-white">
+    <div [ngClass]="isRunningInElectron ? 'bgc-validation' : 'bgc-secondary'" class="mb-4 p-3 c-white">
       <div *ngIf="mode === 'LOCAL'">
         {{t('login.running locally')}}
       </div>
@@ -50,9 +50,11 @@
       </div>
     </div>
 
+    <app-no-server-connection class="mb-4"></app-no-server-connection>
+
     <div *ngIf="mode === 'LOCAL'">
       <form name="form" (ngSubmit)="refreshWindow()" #f="ngForm" novalidate>
-        <div class="d-flex flex-nowrap pl-3 pr-3 ml-2 mt-2">
+        <div class="d-flex flex-nowrap ps-3 pe-3 ms-2 mt-2">
           <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">{{t('buttons.continue')}}</button>
           <div class="spinner-container" *ngIf="loading">
             <div style="max-width: 30px; max-height: 30px;"></div>
@@ -64,14 +66,14 @@
     <!-- If we reach the login page while running in electron, we can assume there was an error getting
       the standalone status from the API; prompt for exiting the application -->
     <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
-      <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
+      <form name="form" (ngSubmit)="exit()" #f="ngForm" class="p-3" novalidate>
         <div class="d-flex flex-nowrap">
           <button type="submit" class="btn btn-primary btn-lg">{{t('buttons.exit')}}</button>
         </div>
       </form>
     </div>
 
-    <div class="m-4 d-flex flex-column justify-content-between flex-00a"
+    <div class="d-flex flex-column justify-content-between flex-00a"
       *ngIf="(mode === 'LOGIN' || mode === 'REGISTERED') && !isRunningInElectron">
       <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
         class="d-flex flex-column justify-content-center flex-00a">
@@ -81,22 +83,25 @@
         <div *ngIf="passwordExpired">
           <div class="alert alert-danger">{{t('login.password expired')}}</div>
         </div>
-        <input type="email" class="form-control" name="email" placeholder="{{'login.placeholder email' | transloco}}" [(ngModel)]="model.email"
-          #email="ngModel" required email focusOnInit="true" />
-        <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">{{t('login.valid email required')}}</div>
+        <input type="email" class="form-control" name="email" placeholder="{{'login.placeholder email' | transloco}}"
+          [(ngModel)]="model.email" #email="ngModel" required email focusOnInit="true" />
+        <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">{{t('login.valid email required')}}
+        </div>
         <div class="input-container">
           <input [type]="showPassword ? 'text' : 'password'" tabindex="0" class="form-control mt-2" name="password"
-            placeholder="{{'login.placeholder password' | transloco}}" [(ngModel)]="model.password" #password="ngModel" required />
-          <div *ngIf="!showPassword" class="input-icon" (click)="togglePasswordVisibility()" matTooltip="{{'change password.show password' | transloco }}"
-            [matTooltipPosition]="'right'">
+            placeholder="{{'login.placeholder password' | transloco}}" [(ngModel)]="model.password" #password="ngModel"
+            required />
+          <div *ngIf="!showPassword" class="input-icon" (click)="togglePasswordVisibility()"
+            matTooltip="{{'change password.show password' | transloco }}" [matTooltipPosition]="'right'">
             <i class="fas fa-eye"></i>
           </div>
-          <div *ngIf="showPassword" class="input-icon" (click)="togglePasswordVisibility()" matTooltip="{{'change password.hide password' | transloco }}"
-            [matTooltipPosition]="'right'">
+          <div *ngIf="showPassword" class="input-icon" (click)="togglePasswordVisibility()"
+            matTooltip="{{'change password.hide password' | transloco }}" [matTooltipPosition]="'right'">
             <i class="fas fa-eye-slash"></i>
           </div>
         </div>
-        <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">{{t('login.valid password required')}}</div>
+        <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">{{t('login.valid password
+          required')}}</div>
         <div class="mt-2 d-flex justify-content-between flex-00a">
           <div class="d-flex flex-nowrap flex-00a">
             <button type="submit" [disabled]="loading" class="btn btn-primary">{{t('buttons.login')}}</button>
@@ -105,7 +110,8 @@
             </div>
           </div>
           <div class="d-flex flex-column flex-00a">
-            <a class="btn-link-dark" [routerLink]="['/home','reset-pass']" tabindex="0">{{t('login.reset password')}}</a>
+            <a class="btn-link-dark" [routerLink]="['/home','reset-pass']" tabindex="0">{{t('login.reset
+              password')}}</a>
             <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')" tabindex="0">
               {{t('login.register new acct')}}
             </a>
@@ -118,7 +124,7 @@
       <app-register (modeChanged)="setMode($event)" class="d-flex flex-column flex-00a"></app-register>
     </div>
 
-    <div class="mt-4 mb-4 mr-4 ml-4 d-flex flex-column justify-content-start align-items-center flex-11a">
+    <div class="my-4 d-flex flex-column justify-content-start align-items-center flex-11a">
       <p class="c-gray-600 mb-4 w-100">
         <app-cset-origin></app-cset-origin>
       </p>
@@ -133,7 +139,7 @@
         </div>
       </div>
 
-      <div *ngIf="browserIsIE" class="alert alert-danger text-left w-100 mt-3">
+      <div *ngIf="browserIsIE" class="alert alert-danger text-start w-100 mt-3">
         Internet Explorer has been detected as your current browser.
         Some functionality of CSET is not fully supported by Internet Explorer.
         Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve

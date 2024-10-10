@@ -29,7 +29,7 @@ import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 import { AssessmentService } from '../../services/assessment.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-commentsmfr',

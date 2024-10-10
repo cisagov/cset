@@ -28,7 +28,7 @@ import { MaturityDomain, MaturityAssessment, MaturityComponent } from '../../../
 import { ACETService } from '../../../services/acet.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { LayoutService } from '../../../services/layout.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({

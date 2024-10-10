@@ -82,7 +82,7 @@
                         <table class="m-0 border-0">
                             <tr *ngFor="let subCat of cat.subCats; let i = index" style="padding: 1rem; border: none;"
                                 [ngClass]="i + 1 != cat.subCats.length ? 'bb-1' : ''">
-                                <td class="pr-3 py-1 border-0 align-top text-1" style="width: 210px;">
+                                <td class="pe-3 py-1 border-0 align-top text-1" style="width: 210px;">
                                     <b>{{ subCat.subCat.Subcategory.title }}:</b> {{ subCat.subCat.Subcategory.desc }}
                                 </td>
                                 <td class="references py-1 border-0" style="width: 280px;">

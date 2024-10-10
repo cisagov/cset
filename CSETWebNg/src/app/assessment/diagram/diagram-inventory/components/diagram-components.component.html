@@ -40,7 +40,7 @@
     <tr *ngFor="let component of diagramComponentList;">
       <td [innerHTML]="component.label"></td>
       <td>
-        <select class="form-control" (change)="changeAssetType($event, component.componentGuid, component.label)"
+        <select class="form-select" (change)="changeAssetType($event, component.componentGuid, component.label)"
           [compGuid]="component.componentGuid">
           <option *ngFor="let o of this.symbols" [value]="o.abbreviation"
             [selected]="component.assetType == o.symbol_Name">

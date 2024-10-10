@@ -43,7 +43,7 @@
         <table role="presentation" class="w-100">
             <ng-template ngFor let-s [ngForOf]="def">
                 <tr>
-                    <td class="deficiencies-list-item" style="font-weight: bold; width: 50px;">{{s.mat.question_Title}}
+                    <td class="deficiencies-list-item pe-3" style="font-weight: bold; width: 50px;">{{s.mat.question_Title}}
                     </td>
                     <td class="deficiencies-list-comment">{{s.mat.security_Practice}}</td>
                     <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
@@ -51,7 +51,7 @@
                             {{questionsSvc.answerDisplayLabel(11, s.answer.answer_Text)}}
                         </div>
                     </td>
-                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
+                    <td class="deficiencies-list-flag"><img class="MarkedFlag ms-2" *ngIf="s.answer.mark_For_Review"
                             src="assets/images/icons/MarkedFlag.png"></td>
                 </tr>
 

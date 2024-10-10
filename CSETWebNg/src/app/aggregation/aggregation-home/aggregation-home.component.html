@@ -51,14 +51,14 @@
       <button *ngIf="this.aggregationSvc?.mode === 'TREND'"
         class="m-0 btn btn-primary d-flex align-items-center flex-00a" (click)="newAggregation()"
         matTooltip="Create a new trend">
-        <span class="mr-2 fs-base cset2-icons-trend"></span>
+        <span class="me-2 fs-base cset2-icons-trend"></span>
         <span>New Trend</span>
       </button>
 
       <button *ngIf="this.aggregationSvc?.mode === 'COMPARE'"
         class="m-0 btn btn-primary d-flex align-items-center flex-00a" (click)="newAggregation()"
         matTooltip="Create a new comparison">
-        <span class="mr-2 fs-base cset2-icons-compare"></span>
+        <span class="me-2 fs-base cset2-icons-compare"></span>
         <span>New Comparison</span>
       </button>
 
@@ -84,7 +84,7 @@
         <tr *ngFor="let agg of aggregations; let i = index">
           <td>
             <button
-              class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
+              class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
               (click)="this.aggregationSvc.loadAggregation(agg.aggregationId)">
               {{agg.aggregationName}}
             </button>
@@ -94,7 +94,7 @@
             <button
               class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
               (click)="removeAggregation(agg, i)" matTooltip="Permanently remove this trend.">
-              <span class="cset-icons-trash-x fs-base-2 mr-2"></span>
+              <span class="cset-icons-trash-x fs-base-2 me-2"></span>
               <span class="icon-link-button-text-dark">Remove</span>
             </button>
           </td>

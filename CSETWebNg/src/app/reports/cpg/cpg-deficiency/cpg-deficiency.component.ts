@@ -29,7 +29,7 @@ import { CpgService } from '../../../services/cpg.service';
 import { SsgService } from '../../../services/ssg.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-cpg-deficiency',
@@ -42,13 +42,6 @@ export class CpgDeficiencyComponent implements OnInit {
 
   loading = false;
 
-  /**
-   * Sorry for hardcoding the cpgPracticeTag,
-   * but the purpose is to get the hardcoded HTML out of the question text,
-   * so look at this if wonky stuff is happening with question text stuff
-  */
-  cpgPracticeTag: string = '<p class="cpg-practice">';
-
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
@@ -56,8 +49,12 @@ export class CpgDeficiencyComponent implements OnInit {
 
   info: any;
 
-  // deficient answers in the principal model
+  // deficient answers in the principal model (CPG)
   def: any;
+
+  // deficient SSG answers
+  ssgIncluded = false;
+  ssg: any;
 
   /**
    * 
@@ -84,6 +81,16 @@ export class CpgDeficiencyComponent implements OnInit {
     // make sure that the assessSvc has the assessment loaded so that we can determine any SSG model applicable
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessSvc.assessment = assessmentDetail;
+
+      var ssgModelId = this.ssgSvc.ssgBonusModel();
+  
+      // get any deficient answers for the SSG model
+      if (!!ssgModelId) {
+        this.ssgIncluded = true;
+        this.maturitySvc.getMaturityDeficiency(ssgModelId).subscribe((resp: any) => {
+          this.ssg = resp.deficienciesList;
+        });
+      }
     });
 
     // get the deficient answers for the CPG model
@@ -93,7 +100,7 @@ export class CpgDeficiencyComponent implements OnInit {
       this.assessmentDate = this.info.assessment_Date;
       this.assessorName = this.info.assessor_Name;
       this.facilityName = this.info.facility_Name;
-      
+
       this.def = resp.deficienciesList;
 
       this.loading = false;

@@ -29,7 +29,7 @@ import { SalService } from '../../../../services/sal.service';
 import { ConfigService } from '../../../../services/config.service';
 import { Sal } from '../../../../models/sal.model';
 import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-sal-nist',

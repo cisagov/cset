@@ -23,18 +23,18 @@
 
 <div *transloco="let t" class="edit-user-dialog d-flex flex-column justify-content-center flex-11a">
     <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-        <span class="fas fa-language fs-base-6 mr-3"></span>
+        <span class="fas fa-language fs-base-6 me-3"></span>
         <span>{{t('user language')}}</span>
     </div>
 
-    <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
+    <mat-dialog-content class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
         <form name="form" #userForm="ngForm">
             <div class="p-3">
                 <p>
                     {{ t('note language change') }}
                 </p>
-                <label class="mb-1 fw-600" for="selectLang">{{t('user language')}}</label>
-                <select class="form-control" id="langSelection" name="langSelection" [(ngModel)]="langSelection">
+                <label class="fw-600 form-label" for="selectLang">{{t('user language')}}</label>
+                <select class="form-select" id="langSelection" name="langSelection" [(ngModel)]="langSelection">
                     <option *ngFor="let o of languageOptions" [value]="o.value">{{o.name}}</option>
                 </select>
 

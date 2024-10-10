@@ -28,16 +28,16 @@
       Question Listing
     </h3>
     <div class="card p-3 mb-3">
-      <button class="btn btn-link text-left pl-0" style="white-space: normal;" (click)="setBuilderSvc.navSetDetail()">
+      <button class="btn btn-link text-start ps-0" style="white-space: normal;" (click)="setBuilderSvc.navSetDetail()">
         <h4>
           {{questionResponse?.setFullName}}
         </h4>
       </button>
-      <p class="font-italic">{{questionResponse?.setDescription}}</p>
+      <p class="fst-italic">{{questionResponse?.setDescription}}</p>
     </div>
 
     <button class="btn btn-primary" (click)="setBuilderSvc.navAddQuestion()">
-      <span class="cset-icons-plus fs-base mr-2"></span>
+      <span class="cset-icons-plus fs-base me-2"></span>
       Add Question
     </button>
 
@@ -68,13 +68,13 @@
             {{subcat.subHeading}}
           </div>
           <div *ngIf="!subcat.subHeading && subcat.isSubHeadingEditable && headingBeingEdited != subcat">
-            <button class="btn bgc-trans font-italic fs-small" (click)="startHeadingEdit(subcat)">
+            <button class="btn bgc-trans fst-italic fs-small" (click)="startHeadingEdit(subcat)">
               Click to add subcategory question <span class="cset-icons-pencil fs-small"></span>
             </button>
           </div>
           <div *ngIf="headingBeingEdited === subcat" class="w-100">
             <textarea appAutoSize #editH [(ngModel)]="subcat.subHeading" (keydown.esc)="abandonHeadingEdit(subcat)"
-              (blur)="endHeadingEdit(subcat)" class="form-control w-100 text-left"></textarea>
+              (blur)="endHeadingEdit(subcat)" class="form-control w-100 text-start"></textarea>
           </div>
         </div>
 
@@ -85,9 +85,9 @@
             {{ q.title }}
           </div>
           <div class="d-flex flex-row justify-content-between flex-11a w-100 align-items-start">
-            <div class="d-flex flex-column mb-3 mr-3 w-100">
+            <div class="d-flex flex-column mb-3 me-3 w-100">
               <div *ngIf="questionBeingEdited !== q" class="d-flex flex-row align-items-start">
-                <div class="font-weight-bold mr-2">{{q.displayNumber}}</div>
+                <div class="font-weight-bold me-2">{{q.displayNumber}}</div>
                 <div [innerHTML]="setBuilderSvc.formatLinebreaks(q.questionText)"></div>
               </div>
               <div class="alert alert-danger" *ngIf="duplicateTextQuestion === q">
@@ -100,12 +100,12 @@
                 </div>
                 <textarea appAutoSize id="Q_{{q.questionID}}" #editQ [(ngModel)]="q.questionText"
                   (keydown.esc)="abandonQuestionEdit(q)" (blur)="endQuestionEdit(q)"
-                  class="form-control w-100 text-left" [class.b-validate]="editedQuestionInUse"></textarea>
+                  class="form-control w-100 text-start" [class.b-validate]="editedQuestionInUse"></textarea>
               </div>
             </div>
             <span class="d-flex align-items-end justify-content-between flex-00a">
               <button *ngIf="q.isCustom" type="button" (click)="startQuestionEdit(q)"
-                class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a mr-2">
+                class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a me-2">
                 <span class="cset-icons-pencil fs-base-2"></span>
                 <span class="d-none d-md-flex fs-smaller">Edit</span>
               </button>

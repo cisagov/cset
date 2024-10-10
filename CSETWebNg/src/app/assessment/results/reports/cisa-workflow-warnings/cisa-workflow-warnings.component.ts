@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
+import { Component, Input } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
 
 /**
  * A warning block that displays when the user is in CISA Assessor Workflow mode and 

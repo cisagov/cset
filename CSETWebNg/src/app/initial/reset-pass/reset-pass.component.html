@@ -21,17 +21,17 @@
   SOFTWARE.
 -------------------------->
 <div id="white-panel" *transloco="let t" class="p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
-    <div class="p-0 d-flex flex-column flex-00a mx-auto col-lg-8 col-md-8 col-sm-10">
+    <div class="px-4 pt-4 d-flex flex-column flex-00a mx-auto col-lg-8 col-md-8 col-sm-10">
 
         <!-- CSET Logo and Name -->
-        <div *ngIf="showCsetLogo()" class="m-4 d-flex justify-content-start flex-00a">
+        <div *ngIf="showCsetLogo()" class="mb-4 d-flex justify-content-start flex-00a">
             <app-logo-cset></app-logo-cset>
         </div>
-        <div *ngIf="showRraLogo()" class="m-4">
+        <div *ngIf="showRraLogo()" clas="mb-4">
             <app-logo-rra></app-logo-rra>
         </div>
 
-        <div class="mb-4 mr-4 ml-4 p-3 bgc-black c-white"
+        <div class="mb-4 p-3 bgc-black c-white"
             [ngClass]="{'login-margin' : (configSvc.installationMode === 'ACET') }">
             <div *ngIf="configSvc.installationMode === 'CSET' || configSvc.installationMode === ''">
                 {{t('change password.enter email cset')}}
@@ -53,7 +53,9 @@
             </div>
         </div>
 
-        <div class="px-4">
+        <app-no-server-connection class="mb-4"></app-no-server-connection>
+
+        <div>
             <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate
                 class="d-flex flex-column justify-content-between flex-00a">
                 <div class="mb-3" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
@@ -80,7 +82,7 @@
                 </div>
             </form>
         </div>
-        <div class="mx-4 mb-4" *ngIf="questionsLoaded">
+        <div class="mb-4" *ngIf="questionsLoaded">
             <form name="form" (ngSubmit)="f.form.valid && resetPassword()" #f="ngForm" novalidate>
                 <hr />
                 <div class="mb-3">
@@ -103,7 +105,7 @@
             </form>
         </div>
 
-        <div *ngIf="emailSent" class="px-4 pb-4">
+        <div *ngIf="emailSent" class="pb-4">
             <div class="mb-3">
                 <p *ngIf="warning.length > 0" class="alert alert-danger">{{warning}}</p>
                 <p class="alert alert-info">
@@ -111,14 +113,14 @@
                 </p>
             </div>
             <p>
-                {{t('change password.login with temp 1')}} 
-                <a [routerLink]="['/home','login']">{{t('change password.login with temp link')}}</a> 
+                {{t('change password.login with temp 1')}}
+                <a [routerLink]="['/home','login']">{{t('change password.login with temp link')}}</a>
                 {{t('change password.login with temp 2')}}
             </p>
         </div>
         <div class="mx-4 alert alert-danger" *ngIf="errorMsg">{{warning}}</div>
 
-        <div class="mt-4 mb-4 mr-4 ml-4 d-flex flex-column justify-content-start align-items-center flex-00a">
+        <div class="mt-4 mb-4 d-flex flex-column justify-content-start align-items-center flex-00a">
             <div class="c-gray-600 mb-4">
                 <app-cset-origin *ngIf="showOrigin">
                 </app-cset-origin>

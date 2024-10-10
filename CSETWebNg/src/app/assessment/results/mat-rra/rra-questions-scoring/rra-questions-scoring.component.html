@@ -24,18 +24,18 @@
 <table class="table" *transloco="let t">
     <tr>
         <th></th>
-        <th class="text-right">{{t('answer-options.button-labels.yes')}}</th>
-        <th class="text-right">{{t('answer-options.button-labels.no')}}</th>
-        <th class="text-right">{{t('answer-options.button-labels.unanswered')}}</th>
-        <th class="text-right">{{t('reports.core.rra.report.total practices')}}</th>
-        <th class="text-right">{{t('reports.core.rra.report.percent complete')}}</th>
+        <th class="text-end">{{t('answer-options.button-labels.yes')}}</th>
+        <th class="text-end">{{t('answer-options.button-labels.no')}}</th>
+        <th class="text-end">{{t('answer-options.button-labels.unanswered')}}</th>
+        <th class="text-end">{{t('reports.core.rra.report.total practices')}}</th>
+        <th class="text-end">{{t('reports.core.rra.report.percent complete')}}</th>
     </tr>
     <tr *ngFor="let g of goalTable">
         <td>{{g.name}}</td>
-        <td class="text-right">{{g.yes}}</td>
-        <td class="text-right">{{g.no}}</td>
-        <td class="text-right">{{g.unanswered}}</td>
-        <td class="text-right">{{g.total}}</td>
-        <td class="text-right">{{g.percent}}%</td>
+        <td class="text-end">{{g.yes}}</td>
+        <td class="text-end">{{g.no}}</td>
+        <td class="text-end">{{g.unanswered}}</td>
+        <td class="text-end">{{g.total}}</td>
+        <td class="text-end">{{g.percent}}%</td>
     </tr>
 </table>

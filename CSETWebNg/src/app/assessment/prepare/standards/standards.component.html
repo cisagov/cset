@@ -24,20 +24,20 @@
   <h3 class="wrap-text">Cybersecurity Standards Selection</h3>
 
   <div class="d-flex flex-row align-items-start flex-00a">
-    <div class="mr-2 d-flex flex-column">
+    <div class="me-2 d-flex flex-column">
       <p class="m-0 mb-3">
         Select a standard from the list below to define the questions you will answer during the assessment. Standards
         in bold text are recommended based on your demographic information.
       </p>
       <div>
-        <button class="btn btn-link p-0 m-0 text-left" tabindex="0" (click)="doBasicAssessment()"
+        <button class="btn btn-link p-0 m-0 text-start" tabindex="0" (click)="doBasicAssessment()"
           matTooltip="Start an assessment with a basic standard selected">I want to do a basic assessment
           instead</button>
       </div>
     </div>
 
     <div class="d-flex" [ngClass]="{'flex-row': !layoutSvc.hp, 'flex-column': layoutSvc.hp }">
-      <div class="quick-info-container p-2" [class.mr-2]="!layoutSvc.hp" [class.mb-2]="layoutSvc.hp">
+      <div class="quick-info-container p-2" [class.me-2]="!layoutSvc.hp" [class.mb-2]="layoutSvc.hp">
         <div class="text-nowrap text-center">Requirements</div>
         <div class="bgc-gray-50 c-gray-900 standards-stats mt-1">{{
           standards?.requirementCount }}</div>

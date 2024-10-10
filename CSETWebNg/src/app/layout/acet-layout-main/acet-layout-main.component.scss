@@ -244,7 +244,7 @@ a {
 
 .checkbox-custom:focus+.checkbox-custom-label,
 .radio-custom:focus+.radio-custom-label {
-  // outline: 3px solid #8bb4f8; /* focus style */
+  // outline: 3px solid #8bb4f8; __<<ngM2ThemingMigrationEscapedComment3>>__
   box-shadow: 0 0 3pt 2pt #8bb4f8;
 }
 
@@ -635,6 +635,10 @@ table.assessment-summary th {
   color: $gray-50;
   font-weight: 500;
   padding: .5rem;
+}
+
+.table.table-td-p2 th, .table.table-td-p2 td {
+  padding: .5rem !important;
 }
 
 table.paddingBetweenCols td,
@@ -1028,6 +1032,7 @@ table.td-align-top td {
 
 .btn-app-mode.active {
   background-color: $secondary-color;
+  border-color: $secondary-color;
   color: $gray-100;
 }
 
@@ -1036,7 +1041,7 @@ table.td-align-top td {
   color: $active-text-color;
 }
 
-.form-check-input:focus {
+.btn-check:focus {
   background-color: $primary-color;
   color: $active-text-color;
 }
@@ -2369,8 +2374,8 @@ ul.related-questions li {
   background-color: $secondary-color;
 }
 
-mat-sidenav {
-  background-color: $secondary-color; //$primary-350;
+mat-sidenav.mat-sidenav {
+  background-color: $secondary-color;
   color: $white;
   width: 300px;
 }
@@ -3086,7 +3091,7 @@ hr.ranked-questions {
   overflow-x: hidden !important;
 }
 
-.text-left {
+.text-start {
   text-align: left !important;
 }
 
@@ -3135,8 +3140,8 @@ table.td-p-2 td {
   padding: 0.5rem !important;
 }
 
-table.td-text-left th,
-table.td-text-left td {
+table.td-text-start th,
+table.td-text-start td {
   text-align: left !important;
 }
 
