@@ -178,13 +178,13 @@
                     <tr *ngFor="let componentType of tab?.componentTypes">
                         <td class="pe-3">{{componentType.symbol_Name}}</td>
                         <td>
-                            <div class="text-right">
+                            <div class="text-end">
                                 <button *ngIf="componentType.enabled; else noOverride"
                                     class="btn btn-link btn-link-dark" style="padding: 0; margin: 0;"
                                     (click)="this.showOverrideDialog(componentType)">{{t('extras.override')}}</button>
                             </div>
                             <ng-template #noOverride>
-                                <div class="text-right">{{t('extras.none')}}</div>
+                                <div class="text-end">{{t('extras.none')}}</div>
                             </ng-template>
                         </td>
                     </tr>

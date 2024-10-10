@@ -67,8 +67,6 @@ export class SdOwnerCommentsMfrComponent {
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
         this.response = r;
-        console.log("this.response");
-        console.log(this.response);
 
         // until we define a singular version in the maturity model database table, just remove (hopefully) the last 's'
         this.questionAliasSingular = this.response?.information.questionsAlias.slice(0, -1);

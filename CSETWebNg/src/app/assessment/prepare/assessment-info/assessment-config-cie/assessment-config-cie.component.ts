@@ -37,7 +37,6 @@ export class AssessmentConfigCieComponent {
       this.getAssessmentDetail();
       // call API for CIS assessments other than the current one
       this.maturitySvc.getMyCieAssessments().subscribe((resp: any) => {
-        console.log(resp)
         resp.myCisAssessments.sort((a, b) => {
           return new Date(a.assessmentDate) > new Date(b.assessmentDate) ? 1 : -1;
         });

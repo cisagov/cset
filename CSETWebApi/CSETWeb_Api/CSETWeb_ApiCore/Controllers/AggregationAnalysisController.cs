@@ -16,6 +16,7 @@ using CSETWebCore.Model.Analysis;
 using Microsoft.EntityFrameworkCore;
 using Snickler.EFCore;
 
+
 namespace CSETWebCore.Api.Controllers
 {
     [ApiController]
@@ -509,45 +510,66 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// Returns answer breakdown for all associated maturity-based assessments.
+        /// Returns an answer breakdown for all associated maturity-based assessments in the
+        /// aggregation.  This logic is flexible for models that have their own answer option lists.
+        /// In other words, no "Y", "N", "A" assumption is made.
         /// </summary>
+        /// <param name="aggregationID"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/aggregation/analysis/getmaturityanswertotals")]
-        public IActionResult GetMaturityAnswerTotals(int aggregationID)
+        [Route("api/aggregation/analysis/maturity/answertotals")]
+        public IActionResult GetMaturityAnswerTotalsFlexible(int aggregationID)
         {
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
-            List<AnswerCounts> response = new List<AnswerCounts>();
+            List<AnswerCountsGeneric> response = new List<AnswerCountsGeneric>();
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[usp_getMaturitySummaryOverall]")
-                    .WithSqlParam("assessment_id", a.Assessment_Id)
-                    .ExecuteStoredProc((handler) =>
-                    {
-                        var results = (List<usp_getStandardSummaryOverall>)handler.ReadToList<usp_getStandardSummaryOverall>();
+                var mm = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == a.Assessment.Assessment_Id)
+                    .Include(x => x.model)
+                    .FirstOrDefault();
 
-                        var ansCount = new AnswerCounts()
-                        {
-                            AssessmentId = a.Assessment_Id,
-                            Alias = a.Alias,
-                            Total = results.Max(x => x.Total),
-                            Y = results.Where(x => x.Answer_Text == "Y").FirstOrDefault().qc,
-                            N = results.Where(x => x.Answer_Text == "N").FirstOrDefault().qc,
-                            A = results.Where(x => x.Answer_Text == "A").FirstOrDefault().qc,
-                            NA = results.Where(x => x.Answer_Text == "NA").FirstOrDefault().qc,
-                            U = results.Where(x => x.Answer_Text == "U").FirstOrDefault().qc
-                        };
 
-                        response.Add(ansCount);
-                    });
+                // create a list of applicable answer options
+                var answerOrder = mm.model.Answer_Options.Split(',').ToList();
+                answerOrder.Add("U");
+
+
+                _context.LoadStoredProc("[usp_GetMaturityAnswerTotals]")
+                   .WithSqlParam("assessment_id", a.Assessment_Id)
+                   .ExecuteStoredProc((handler) =>
+                   {
+                       var results = (List<AnswerCountsAndPercentages>)handler.ReadToList<AnswerCountsAndPercentages>();
+
+
+                       var acg = new AnswerCountsGeneric();
+                       acg.AssessmentId = a.Assessment_Id;
+                       acg.ModelId = mm.model_id;
+                       acg.Alias = a.Alias;
+
+                       foreach (var item in answerOrder)
+                       {
+                           var dbResult = results.Where(x => x.Answer_Text == item).FirstOrDefault();
+
+                           acg.AnswerCounts.Add(new AnswerCountsAndPercentages()
+                           {
+                               Answer_Text = item,
+                               QC = dbResult?.QC ?? 0,
+                               Total = dbResult?.Total ?? 0,
+                               Percent = dbResult?.Percent ?? 0
+                           });
+                       }
+
+                       response.Add(acg);
+                   });
             }
 
             return Ok(response);
         }
+
 
 
         /// <summary>
@@ -729,75 +751,145 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/aggregation/analysis/getmaturitybesttoworst")]
+        [Route("api/aggregation/analysis/maturity/besttoworst")]
         public IActionResult GetMaturityBestToWorst()
         {
             var aggregationID = _tokenManager.PayloadInt("aggreg");
+
             if (aggregationID == null)
             {
                 return Ok();
             }
 
-            Dictionary<string, List<GetComparisonBestToWorst>> dict = new Dictionary<string, List<GetComparisonBestToWorst>>();
+
+            BestToWorst response = new BestToWorst();
+
 
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment).OrderBy(x => x.Assessment.Assessment_Date)
                 .ToList();
 
-            var response = new List<BestToWorstCategory>();
+
+            // get the answer options for the maturity model so that we can enforce their display order
+            var modelId = _context.AVAILABLE_MATURITY_MODELS.FirstOrDefault(x => x.Assessment_Id == assessmentList[0].Assessment_Id).model_id;
+            response.ModelId = modelId;
+
+            var model = _context.MATURITY_MODELS.FirstOrDefault(x => x.Maturity_Model_Id == modelId);
+            var answerOptions = model.Answer_Options.Split(',').ToList();
+            if (!answerOptions.Contains("U"))
+            {
+                answerOptions.Add("U");
+            }
+            response.AnswerOptions.AddRange(answerOptions);
+
 
             foreach (var a in assessmentList)
             {
-                _context.LoadStoredProc("[GetMaturityComparisonBestToWorst]")
-                        .WithSqlParam("assessment_id", a.Assessment_Id)
+                _context.LoadStoredProc("[GetAnswerCountsForGroupings]")
+                        .WithSqlParam("assessmentid", a.Assessment_Id)
                         .ExecuteStoredProc((handler) =>
                         {
-                            var result = handler.ReadToList<GetComparisonBestToWorst>();
+                            var result = handler.ReadToList<Proc_AnswerCounts>();
+
                             foreach (var r in result)
                             {
-                                r.AssessmentName = a.Alias;
+                                var groupingTotal = result.Where(x => x.Grouping_Id == r.Grouping_Id).Select(x => x.AnsCount).ToList().Sum();
 
-                                // tweak - make sure that rounding didn't end up with more than 100%
-                                var realAnswerPct = r.YesValue + r.NoValue + r.NaValue + r.AlternateValue;
-                                if (realAnswerPct + r.UnansweredValue > 100f)
+
+                                var percent = 0.0;
+                                if (groupingTotal > 0)
                                 {
-                                    r.UnansweredValue = 100f - realAnswerPct;
+                                    percent = ((double)r.AnsCount / (double)groupingTotal) * 100.0;
                                 }
 
 
-                                if (!dict.ContainsKey(r.Name))
+
+                                // Create a home for the grouping, if it doesn't exist yet
+                                var g = response.Groupings.FirstOrDefault(x => x.GroupingId == r.Grouping_Id);
+                                if (g == null)
                                 {
-                                    dict[r.Name] = new List<GetComparisonBestToWorst>();
+                                    g = new Grouping() { GroupingId = r.Grouping_Id, Title = r.Title };
+                                    response.Groupings.Add(g);
                                 }
-                                dict[r.Name].Add(r);
+
+
+                                var aa = g.Assessments.FirstOrDefault(x => x.AssessmentId == a.Assessment_Id);
+                                if (aa == null)
+                                {
+                                    aa = new AssessmentAlias() { Alias = a.Alias, AssessmentId = a.Assessment_Id };
+                                    g.Assessments.Add(aa);
+                                }
+
+                                // Add a new answer percentage object and keep the list sorted by answer order
+                                var ap = new AnswerPercentage()
+                                {
+                                    AnswerText = r.Answer_Text,
+                                    AnswerIndex = answerOptions.IndexOf(r.Answer_Text),
+                                    Percent = percent
+                                };
+                                aa.Percentages.Add(ap);
+
+                                aa.Percentages.Sort((x, y) => x.AnswerIndex.CompareTo(y.AnswerIndex));
                             }
                         });
-            }
-
-            // repackage the data 
-            var keys = dict.Keys.ToList();
-            keys.Sort();
-            foreach (string k in keys)
-            {
-                var category = new BestToWorstCategory()
-                {
-                    Category = k,
-                    Assessments = dict[k]
-                };
-
-                // sort best to worst
-                category.Assessments.Sort((a, b) => (a.YesValue + a.AlternateValue).CompareTo(b.YesValue + b.AlternateValue));
-                category.Assessments.Reverse();
-                response.Add(category);
             }
 
             return Ok(response);
         }
     }
-}
 
 
-public class AggBody
-{
-    public int AggregationID { get; set; }
+
+
+
+    /// <summary>
+    /// The model that reflects the result from the stored proc 
+    /// that brings back answer counts for each grouping.
+    /// </summary>
+    public class Proc_AnswerCounts
+    {
+        public string Title { get; set; }
+        public int Grouping_Id { get; set; }
+        public int? ParentId { get; set; }
+        public string Answer_Text { get; set; }
+        public int AnsCount { get; set; }
+    }
+
+
+    public class BestToWorst
+    {
+        public List<Grouping> Groupings { get; set; } = [];
+        public List<string> AnswerOptions { get; set; } = [];
+        public int ModelId { get; set; }
+    }
+
+
+    public class Grouping
+    {
+        public string Title { get; set; }
+        public int GroupingId { get; set; }
+        public List<AssessmentAlias> Assessments { get; set; } = [];
+    }
+
+
+    public class AssessmentAlias
+    {
+        public int AssessmentId { get; set; }
+        public string Alias { get; set; }
+        public List<AnswerPercentage> Percentages { get; set; } = [];
+    }
+
+
+    public class AnswerPercentage
+    {
+        public string AnswerText { get; set; }
+        public int AnswerIndex { get; set; }
+        public double Percent { get; set; }
+    }
+
+
+    public class AggBody
+    {
+        public int AggregationID { get; set; }
+    }
 }

@@ -15,6 +15,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Aggregation
 {
+    /// <summary>
+    /// This class is used for aggregating standards-based assessments.
+    /// For maturity-based aggregation, see AggregationMaturityBusiness.
+    /// </summary>
     public class AggregationBusiness : IAggregationBusiness
     {
         private readonly CSETContext _context;
@@ -242,9 +246,9 @@ namespace CSETWebCore.Business.Aggregation
             resp.Aggregation.QuestionsCompatibility = CalcCompatibility("Q", resp.Assessments.Select(x => x.AssessmentId).ToList());
             resp.Aggregation.RequirementsCompatibility = CalcCompatibility("R", resp.Assessments.Select(x => x.AssessmentId).ToList());
 
-
             return resp;
         }
+
 
         /// <summary>
         /// Looks for the lowest letter that has not yet been used as an alias in 
@@ -279,7 +283,6 @@ namespace CSETWebCore.Business.Aggregation
         /// <param name="selected"></param>
         public CSETWebCore.Model.Aggregation.Aggregation SaveAssessmentSelection(int aggregationId, int assessmentId, bool selected)
         {
-
             var aa = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId && x.Assessment_Id == assessmentId).FirstOrDefault();
 
             if (selected)

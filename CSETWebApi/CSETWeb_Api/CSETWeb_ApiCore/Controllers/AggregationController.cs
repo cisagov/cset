@@ -148,7 +148,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         [HttpPost]
-        [Route("api/aggregation/getmissedquestions")]
+        [Route("api/aggregation/missedquestions")]
         public IActionResult GetCommonlyMissedQuestions()
         {
             var aggregationID = _token.PayloadInt("aggreg");
@@ -163,18 +163,21 @@ namespace CSETWebCore.Api.Controllers
 
 
         [HttpPost]
-        [Route("api/aggregation/getmaturitymissedquestions")]
+        [Route("api/aggregation/maturity/missedquestions")]
         public IActionResult GetCommonlyMissedMaturityQuestions()
         {
             var aggregationID = _token.PayloadInt("aggreg");
             if (aggregationID == null)
             {
-                return Ok(new List<MissedQuestion>());
+                return Ok(new MissedQuestionResponse());
             }
 
-            var manager = new AggregationBusiness(_context);
-            return Ok(manager.GetCommonlyMissedMaturityQuestions((int)aggregationID));
+            var manager = new AggregationMaturityBusiness(_context);
+            return Ok(manager.GetCommonlyMissedQuestions((int)aggregationID));
         }
+
+
+
 
         //////////////////////////////////////////
         /// Merge

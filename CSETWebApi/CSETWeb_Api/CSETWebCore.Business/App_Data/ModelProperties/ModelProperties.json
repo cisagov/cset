@@ -1,0 +1,52 @@
+{
+  "Purpose": "This file provides a place to define (maturity) model behaviors and features.  It is an embedded resource, so it gets compiled into the assembly.",
+  "Models": [
+    {
+      "ModelId": 2,
+      "ModelName": "CMMC",
+      "DeficientAnswers": [ "N", "U" ]
+    },
+    {
+      "ModelId": 6,
+      "ModelName": "CMMC2",
+      "DeficientAnswers": [ "N", "U" ]
+    },
+    {
+      "ModelId": 3,
+      "ModelName": "EDM",
+      "DeficientAnswers": [ "N", "U", "I" ],
+      "IgnoreParentQuestions": true
+    },
+    {
+      "ModelId": 4,
+      "ModelName": "CRR",
+      "DeficientAnswers": [ "N", "U", "I" ],
+      "IgnoreParentQuestions": true
+    },
+    {
+      "ModelId": 15,
+      "ModelName": "IMR",
+      "DeficientAnswers": [ "N", "U", "I" ]
+    },
+    {
+      "ModelId": 5,
+      "ModelName": "RRA",
+      "DeficientAnswers": [ "N", "U" ]
+    },
+    {
+      "ModelId": 7,
+      "ModelName": "VADR",
+      "DeficientAnswers": [ "N", "U" ]
+    },
+    {
+      "ModelId": 11,
+      "ModelName": "CPG",
+      "DeficientAnswers": [ "N", "U" ]
+    },
+    {
+      "ModelId": 18,
+      "ModelName": "SSG - Chemical",
+      "DeficientAnswers": [ "N", "U" ]
+    }
+  ]
+}

@@ -25,9 +25,9 @@
     <table class="cset-table td-align-top">
         <tr>
             <th class="col-4">Component</th>
-            <th class="text-right">Documentation Hours</th>
-            <th class="text-right">Interview Process Hours</th>
-            <th class="text-right">Statements Reviewed</th>
+            <th class="text-end">Documentation Hours</th>
+            <th class="text-end">Interview Process Hours</th>
+            <th class="text-end">Statements Reviewed</th>
         </tr>
         <tr *ngFor="let comp of components">
             <td>{{comp.component}}
@@ -36,28 +36,28 @@
                         [(ngModel)]="comp.otherSpecifyValue" (change)="saveData(comp, 'other')"></textarea>
                 </div>
             </td>
-            <td><input class="form-control text-right float-right w-5rem" type="number" max="1000" min="-10" step="0.1"
+            <td><input class="form-control text-end float-right w-5rem" type="number" max="1000" min="-10" step="0.1"
                     [maxlength]="6" [(ngModel)]="comp.documentationHours" (change)="saveData(comp, 'doc')">
                 <div *ngIf="test(comp.documentationHours)" class="alert-danger">{{error}}</div>
             </td>
-            <td><input class="form-control text-right float-right w-5rem" type="number" max="1000" min="-10" step="0.1"
+            <td><input class="form-control text-end float-right w-5rem" type="number" max="1000" min="-10" step="0.1"
                     [maxlength]="6" [(ngModel)]="comp.interviewHours" (change)="saveData(comp, 'int')">
                 <div *ngIf="test(comp.interviewHours)" class="alert-danger">{{error}}</div>
             </td>
-            <td class="text-right">
+            <td class="text-end">
                 <div [hidden]="hideStatementsReviewed(comp.component)">{{comp.statementsReviewed}}</div>
             </td>
         </tr>
         <tr class="total-row">
             <td>Total Review Hours</td>
-            <td class="text-right pe-4">{{ documentationTotal }}</td>
-            <td class="text-right pe-4">{{ interviewTotal }}</td>
-            <td class="text-right"></td>
+            <td class="text-end pe-4">{{ documentationTotal }}</td>
+            <td class="text-end pe-4">{{ interviewTotal }}</td>
+            <td class="text-end"></td>
         </tr>
         <tr class="total-row">
             <td>Grand Totals</td>
-            <td class="text-right pe-4" colspan="2">{{ grandTotal }}</td>
-            <td class="text-right pe-3">{{ reviewedStatementTotal }}</td>
+            <td class="text-end pe-4" colspan="2">{{ grandTotal }}</td>
+            <td class="text-end pe-3">{{ reviewedStatementTotal }}</td>
         </tr>
     </table>
 
