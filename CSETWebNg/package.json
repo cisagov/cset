@@ -1,6 +1,6 @@
 {
     "name": "csetweb-ng",
-    "version": "12.2.6",
+    "version": "12.3.0",
     "license": "MIT",
     "main": "main-electron.js",
     "private": true,
@@ -21,7 +21,7 @@
         "@angular-eslint/schematics": "^18.3.1",
         "@angular-slider/ngx-slider": "^18.0.0",
         "@angular/animations": "^18.2.7",
-        "@angular/cdk": "^18.2.7",
+        "@angular/cdk": "^18.2.8",
         "@angular/cli": "^18.2.7",
         "@angular/common": "^18.2.7",
         "@angular/compiler": "^18.2.7",
