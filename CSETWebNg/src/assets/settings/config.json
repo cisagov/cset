@@ -144,11 +144,28 @@
     },
     {
       "moduleName": "RRA",
+      "modelId": "5",
       "questionIcons": {
         "showDetails": false,
         "guidanceIcon": "G",
         "showReviewed": false
-      }
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "yes",
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "no",
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "consideredMissed": true
+        }
+      ]
     },
     {
       "moduleName": "CIS",
@@ -178,22 +195,28 @@
         {
           "code": "Y",
           "buttonLabelKey": "Imp-CPG",
-          "buttonCss": "btn-yes"
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
         },
         {
           "code": "I",
           "buttonLabelKey": "Prog-CPG",
-          "buttonCss": "btn-na"
+          "buttonCss": "btn-na",
+          "chartSegmentColor": "#0a4b6e"
         },
         {
           "code": "S",
           "buttonLabelKey": "Scoped-CPG",
-          "buttonCss": "btn-alt"
+          "buttonCss": "btn-alt",
+          "chartSegmentColor": "#b17300"
         },
         {
           "code": "N",
           "buttonLabelKey": "Not-CPG",
-          "buttonCss": "btn-no"
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "consideredMissed": true
         }
       ]
     },

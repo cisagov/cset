@@ -169,7 +169,7 @@ export class AggregationService {
   }
 
   getMaturityAnswerTotals(aggId) {
-    return this.http.post(this.apiUrl + 'analysis/getmaturityanswertotals?aggregationID=' + aggId, '');
+    return this.http.post(this.apiUrl + 'analysis/maturity/answertotals?aggregationID=' + aggId, '');
   }
 
 
@@ -216,13 +216,13 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'analysis/categoryaverages?aggregationID=' + aggId, {});
   }
 
-  getAggregationMaturity(aggId) {
+  getAggregationCompliance(aggId) {
     return this.http.get(this.apiUrl + 'analysis/maturity/compliance?aggregationId=' + aggId, {});
   }
 
 
   getMissedQuestions() {
-    return this.http.post(this.apiUrl + 'getmissedquestions', {});
+    return this.http.post(this.apiUrl + 'missedquestions', {});
   }
 
   getSalComparison() {
@@ -233,12 +233,18 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'analysis/getbesttoworst', '');
   }
 
+  /**
+   * Gets a list of questions that were missed in all assessments
+   */
   getMaturityMissedQuestions() {
-    return this.http.post(this.apiUrl + 'getmaturitymissedquestions', {});
+    return this.http.post(this.apiUrl + 'maturity/missedquestions', {});
   }
 
+  /**
+   * Get the maturity "best to worst" model 
+   */
   getMaturityBestToWorst() {
-    return this.http.post(this.apiUrl + 'analysis/getmaturitybesttoworst', '');
+    return this.http.post(this.apiUrl + 'analysis/maturity/besttoworst', '');
   }
 
 

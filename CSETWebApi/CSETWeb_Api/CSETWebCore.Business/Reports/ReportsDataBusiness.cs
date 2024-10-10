@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Acet;
 using CSETWebCore.Business.Maturity;
+using CSETWebCore.Business.Maturity.Configuration;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Manual;
@@ -182,8 +183,6 @@ namespace CSETWebCore.Business.Reports
 
         /// <summary>
         /// Returns a list of MatRelevantAnswers that are considered deficient for the assessment.
-        /// 
-        /// TODO:  Move the hard-coded deficient values to some kind of JSON file or config.
         /// </summary>
         /// <returns></returns>
         public List<MatRelevantAnswers> GetMaturityDeficiencies(int? modelId = null)
@@ -199,61 +198,21 @@ namespace CSETWebCore.Business.Reports
                 targetModel = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == modelId).FirstOrDefault();
             }
 
+
             bool ignoreParentQuestions = false;
 
-            // default answer values that are considered 'deficient'
+            // default answer values that are considered 'deficient' (in case we can't find a model config profile)
             List<string> deficientAnswerValues = new List<string>() { "N", "U" };
 
 
-            // CMMC considers unanswered as deficient
-            if (targetModel.Model_Name.ToUpper() == "CMMC" ||
-                targetModel.Model_Name.ToUpper() == "CMMC2")
+            // try to get a configuration for the actual model
+            var modelProperties = new ModelProfile().GetModelProperties(targetModel.Maturity_Model_Id);
+            if (modelProperties != null)
             {
-                deficientAnswerValues = new List<string>() { "N", "U" };
+                deficientAnswerValues = modelProperties.DeficientAnswers;
+                ignoreParentQuestions = modelProperties.IgnoreParentQuestions;
             }
 
-            // EDM also considers unanswered and incomplete as deficient
-            if (targetModel.Model_Name.ToUpper() == "EDM")
-            {
-                ignoreParentQuestions = true;
-                deficientAnswerValues = new List<string>() { "N", "U", "I" };
-            }
-
-            if (targetModel.Model_Name.ToUpper() == "CRR")
-            {
-                ignoreParentQuestions = true;
-                deficientAnswerValues = new List<string>() { "N", "U", "I" };
-            }
-
-            // IMR considers unanswered and incomplete as deficient
-            if (targetModel.Model_Name.ToUpper() == "IMR")
-            {
-                deficientAnswerValues = new List<string>() { "N", "U", "I" };
-            }
-
-            // RRA also considers unanswered and incomplete as deficient
-            if (targetModel.Model_Name.ToUpper() == "RRA")
-            {
-                deficientAnswerValues = new List<string>() { "N", "U" };
-            }
-
-            // VADR considers unanswered as deficient
-            if (targetModel.Model_Name.ToUpper() == "VADR")
-            {
-                deficientAnswerValues = new List<string>() { "N", "U" };
-            }
-
-            // CPG
-            if (targetModel.Model_Name.ToUpper() == "CPG")
-            {
-                deficientAnswerValues = new List<string>() { "N", "U" };
-            }
-
-            // SSG - CHEMICAL can only be requested explicitly
-            if (targetModel.Maturity_Model_Id == 18)
-            {
-                deficientAnswerValues = new List<string>() { "N", "U" };
-            }
 
             var responseList = GetQuestionsList(targetModel.Maturity_Model_Id).Where(x => deficientAnswerValues.Contains(x.ANSWER.Answer_Text)).ToList();
 
@@ -273,7 +232,6 @@ namespace CSETWebCore.Business.Reports
                 var whitelist = _context.MATURITY_SUB_MODEL_QUESTIONS.Where(x => x.Sub_Model_Name == maturitySubmodel.StringValue).Select(q => q.Mat_Question_Id).ToList();
                 responseList = responseList.Where(x => whitelist.Contains(x.Mat.Mat_Question_Id)).ToList();
             }
-
 
             return responseList;
         }

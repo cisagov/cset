@@ -31,6 +31,7 @@ a.navbar-brand {
 -------------------------------------------------- */
 * {
   scroll-margin-top: 60px;
+  font-family: Arial, sans-serif;
 }
 
 .report-body-crr {
@@ -67,10 +68,10 @@ h4 {
   color: #005288;
 }
 
-p {
-  font-family: Arial;
-  font-size: 14pt;
-}
+// p {
+//   font-family: Arial;
+//   font-size: 14pt;
+// }
 
 .small {
   font-size: 0.875rem;
@@ -103,11 +104,11 @@ p {
 /*
   Cover Sheet
 */
-.coversheet-text * {
-  padding: 0 5rem;
-  font-family: 'Franklin Gothic', Arial;
-  font-weight: bolder;
-}
+// .coversheet-text * {
+//   padding: 0 5rem;
+//   font-family: 'Franklin Gothic', Arial;
+//   font-weight: bolder;
+// }
 
 /*
   CISA Self Assessment Page

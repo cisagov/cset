@@ -84,7 +84,7 @@
         <tr *ngFor="let agg of aggregations; let i = index">
           <td>
             <button
-              class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
+              class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
               (click)="this.aggregationSvc.loadAggregation(agg.aggregationId)">
               {{agg.aggregationName}}
             </button>
