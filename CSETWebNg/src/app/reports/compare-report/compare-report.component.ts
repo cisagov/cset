@@ -22,85 +22,72 @@
 //
 ////////////////////////////////
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
-import { ReportService } from '../../../app/services/report.service';
+import { ReportService } from '../../services/report.service';
 import { Title } from '@angular/platform-browser';
-import { AggregationService } from '../../../app/services/aggregation.service';
-import { ChartService } from '../../../app/services/chart.service';
+import { AggregationService } from '../../services/aggregation.service';
+import { ChartService, ChartColors } from '../../services/chart.service';
+import { MaturityService } from '../../services/maturity.service';
 import Chart from 'chart.js/auto';
 import { ConfigService } from '../../services/config.service';
+import { ColorService } from '../../services/color.service';
 
 
 @Component({
-  selector: 'trendreport',
-  templateUrl: './trendreport.component.html',
+  selector: 'compare-report',
+  templateUrl: './compare-report.component.html',
   styleUrls: ['../reports.scss']
 })
 
-export class TrendReportComponent implements OnInit, AfterViewChecked {
+export class CompareReportComponent implements OnInit, AfterViewChecked {
   response: any;
 
-  // Charts for Components
-  chartOverallCompl: Chart;
-  chartTop5: Chart;
-  chartBottom5: Chart;
-  chartCategoryPercent: Chart;
-
-  componentCount = 0;
-  chartComponentSummary: Chart;
-  chartComponentsTypes: Chart;
-  warningCount = 0;
-
+  chartOverallAverage: Chart;
+  aggSvc: AggregationService;
   answerCounts: any[] = null;
-
-  numberOfStandards = -1;
-
+  chartCategoryAverage: Chart;
+  chartCategoryPercent: Chart;
   pageInitialized = false;
-
-  // FIPS SAL answers
-  nistSalC = '';
-  nistSalI = '';
-  nistSalA = '';
-
-  // ACET data
-  DocumentationTotal: number;
+  isCmmc: boolean = false;
 
   constructor(
     public reportSvc: ReportService,
     private titleService: Title,
     public aggregationSvc: AggregationService,
     public chartSvc: ChartService,
+    public colorSvc: ColorService,
+    public maturitySvc: MaturityService,
     public configSvc: ConfigService
   ) { }
 
 
   ngOnInit() {
-    this.titleService.setTitle("Trend Report - " + this.configSvc.behaviors.defaultTitle);
+    this.titleService.setTitle("Compare Report - " + this.configSvc.behaviors.defaultTitle);
     var aggId: number = +localStorage.getItem("aggregationId");
-    this.reportSvc.getAggReport('trendreport', aggId).subscribe(
+    this.isCmmc = this.maturitySvc.maturityModelIsCMMC();
+    this.reportSvc.getAggReport('compare-report', aggId).subscribe(
       (r: any) => {
         this.response = r;
-
-        // Break out any CIA special factors now - can't do a find in the template
-        let v: any = this.response.nistTypes.find(x => x.cia_Type === 'Confidentiality');
-        if (!!v) {
-          this.nistSalC = v.justification;
-        }
-        v = this.response.nistTypes.find(x => x.cia_Type === 'Integrity');
-        if (!!v) {
-          this.nistSalI = v.justification;
-        }
-        v = this.response.nistTypes.find(x => x.cia_Type === 'Availability');
-        if (!!v) {
-          this.nistSalA = v.justification;
-        }
       },
-      error => console.log('Trend report load Error: ' + (<Error>error).message)
+
+      error => console.log('Compare report load Error: ' + (<Error>error).message)
     );
 
-    // Populate charts
-    // Overall Compliance
-    this.aggregationSvc.getOverallComplianceScores(aggId).subscribe((x: any) => {
-      this.chartOverallCompl = this.chartSvc.buildLineChart('canvasOverallCompliance', x);
+    this.populateCharts(aggId);
+  }
+
+
+  populateCharts(aggId: number) {
+
+    // Overall Average
+    this.aggregationSvc.getOverallAverageSummary(aggId).subscribe((x: any) => {
+
+      // Makes the Compliance Summary chart a light blue color instead of grey
+      const chartColors = new ChartColors();
+      x.datasets.forEach((ds: any) => {
+        ds.backgroundColor = chartColors.getNextBluesBarColor();
+        ds.borderColor = ds.backgroundColor;
+      });
+      this.chartOverallAverage = this.chartSvc.buildHorizBarChart('canvasOverallAverage', x, false, true);
     });
 
     // Assessment Answer Summary - tabular data
@@ -108,14 +95,22 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
       this.answerCounts = x;
     });
 
-    // Top 5
-    this.aggregationSvc.getTrendTop5(aggId).subscribe((x: any) => {
-      this.chartTop5 = this.chartSvc.buildLineChart('canvasTop5', x);
-    });
+    // Category Averages
+    this.aggregationSvc.getCategoryAverages(aggId).subscribe((x: any) => {
 
-    // Bottom 5
-    this.aggregationSvc.getTrendBottom5(aggId).subscribe((x: any) => {
-      this.chartBottom5 = this.chartSvc.buildLineChart('canvasBottom5', x);
+      // Makes the Category Average chart a nice green color instead of grey
+      x.datasets.forEach(ds => {
+        ds.backgroundColor = '#008a00';
+        ds.borderColor = '#008a00';
+      });
+
+      if (!x.options) {
+        x.options = {};
+      }
+
+      x.options.maintainAspectRatio = false;
+      this.chartCategoryAverage = this.chartSvc.buildHorizBarChart('canvasCategoryAverage', x, false, true);
+      (<HTMLElement>this.chartCategoryAverage.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });
 
     // Category Percentage Comparison
@@ -125,7 +120,8 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  ngAfterViewChecked() {
 
+  ngAfterViewChecked() {
   }
+
 }

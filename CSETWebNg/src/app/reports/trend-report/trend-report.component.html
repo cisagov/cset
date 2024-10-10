@@ -39,12 +39,8 @@
       <app-logo-for-reports></app-logo-for-reports>
       <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
         <div>{{response?.information.assessment_Name}}</div>
-        <div>
-          {{response?.information.assessment_Date | localizeDate}}
-        </div>
-        <div>
-          {{response?.information.assessor_Name}}
-        </div>
+        <div>{{response?.information.assessment_Date | localizeDate}}</div>
+        <div>{{response?.information.assessor_Name}}</div>
       </div>
     </div>
   </div>
@@ -62,7 +58,7 @@
     <p>Confidentiality, integrity, and availability are only adjustable using the NIST FIPS 199 SAL determination
       wizard. The SAL level used to calculate questions and percentages is the overall security assurance level.</p>
 
-    <table class="cset-table">
+    <table class="table table-bordered table-td-p2">
       <tr>
         <th style="width: 20%">Alias</th>
         <th style="width: 20%">Overall</th>
@@ -89,24 +85,24 @@
     <h1>Assessment Answer Summary</h1>
     <div class="chart d-flex flex-column flex-00a">
 
-      <table class="cset-table table-bordered assessment-summary">
+      <table class="table table-bordered table-td-p2">
         <tr>
-          <th class="text-left p-2">Assessment Alias</th>
-          <th class="text-right p-2 ps-3">Total</th>
-          <th class="text-right p-2 ps-3">Yes</th>
-          <th class="text-right p-2 ps-3">No</th>
-          <th class="text-right p-2 ps-3">NA</th>
-          <th class="text-right p-2 ps-3">Alt</th>
-          <th class="text-right p-2 ps-3">Unanswered</th>
+          <th class="text-start p-2">Assessment Alias</th>
+          <th class="text-end p-2 ps-3">Total</th>
+          <th class="text-end p-2 ps-3">Yes</th>
+          <th class="text-end p-2 ps-3">No</th>
+          <th class="text-end p-2 ps-3">NA</th>
+          <th class="text-end p-2 ps-3">Alt</th>
+          <th class="text-end p-2 ps-3">Unanswered</th>
         </tr>
         <tr *ngFor="let a of answerCounts">
-          <td class="text-left p-2">{{ a.alias }}</td>
-          <td class="text-right p-2 ps-3" style="width: 10%">{{ a.total }}</td>
-          <td class="text-right p-2 ps-3" style="width: 10%">{{ a.y }}</td>
-          <td class="text-right p-2 ps-3" style="width: 10%">{{ a.n }}</td>
-          <td class="text-right p-2 ps-3" style="width: 10%">{{ a.na }}</td>
-          <td class="text-right p-2 ps-3" style="width: 10%">{{ a.a }}</td>
-          <td class="text-right p-2 ps-3" style="width: 10%">{{ a.u }}</td>
+          <td class="text-start p-2">{{ a.alias }}</td>
+          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.total }}</td>
+          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.y }}</td>
+          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.n }}</td>
+          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.na }}</td>
+          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.a }}</td>
+          <td class="text-end p-2 ps-3" style="width: 10%">{{ a.u }}</td>
         </tr>
       </table>
     </div>
@@ -142,7 +138,7 @@
   <div class="page-break mb-5">
     <h1>Document Library</h1>
 
-    <table class="cset-table-3">
+    <table class="table table-bordered table-td-p2">
       <tr>
         <th>{{t('extras.title')}}</th>
         <th>{{t('extras.file name')}}</th>

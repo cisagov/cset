@@ -277,8 +277,9 @@ import { SiteSummaryComponent } from './reports/site-summary/site-summary.compon
 import { ReportService } from './services/report.service';
 import { ReportAnalysisService } from './services/report-analysis.service';
 import { LocalStoreManager } from './services/storage.service';
-import { TrendReportComponent } from './reports/trendreport/trendreport.component';
-import { CompareReportComponent } from './reports/comparereport/comparereport.component';
+import { TrendReportComponent } from './reports/trend-report/trend-report.component';
+import { CompareReportComponent } from './reports/compare-report/compare-report.component';
+import { CompareReportMComponent } from './reports/compare-report-m/compare-report-m.component';
 import { AwwaStandardComponent } from './assessment/prepare/standards/awwa-standard/awwa-standard.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
@@ -821,6 +822,7 @@ import { QuestionsReviewedComponent } from './reports/questions-reviewed/questio
         TrendReportComponent,
         TrendCompareCompatibilityComponent,
         CompareReportComponent,
+        CompareReportMComponent,
         Assessment2InfoComponent,
         ModelSelectComponent,
         AssessmentConfigComponent,

@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../../../services/aggregation.service';
 import { ChartService } from '../../../../services/chart.service';
 import { ColorService } from '../../../../services/color.service';
+import { QuestionsService } from '../../../../services/questions.service';
 
 @Component({
-  selector: 'app-compare-maturity-individual',
+  selector: 'app-compare-individual-maturity',
   templateUrl: './compare-individual.component.html',
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
@@ -35,18 +36,25 @@ import { ColorService } from '../../../../services/color.service';
 export class CompareMaturityIndividualComponent implements OnInit {
 
   answerCounts: any[] = null;
+  answerLabels: string[] = [];
   chartsMaturityCompliance: any[];
+  
 
   constructor(
     public aggregationSvc: AggregationService,
+    public questionSvc: QuestionsService,
     public chartSvc: ChartService,
     public colorSvc: ColorService
   ) { }
 
   ngOnInit() {
+    this.colorSvc.reset();
     this.populateCharts();
   }
 
+  /**
+   * 
+   */
   populateCharts() {
     const aggId: number = +localStorage.getItem("aggregationId");
 
@@ -54,11 +62,18 @@ export class CompareMaturityIndividualComponent implements OnInit {
     this.aggregationSvc.getMaturityAnswerTotals(aggId).subscribe((x: any) => {
       // 
       this.answerCounts = x;
+
+      // build a list of answer options for the table columns
+      this.answerLabels = [];
+      x[0].answerCounts.forEach(opt => {
+        const label = this.questionSvc.answerDisplayLabel(x[0].modelId, opt.answer_Text);
+        this.answerLabels.push(label);
+      });
     });
 
 
     // Maturity Compliance By Model/Domain
-    this.aggregationSvc.getAggregationMaturity(aggId).subscribe((resp: any) => {
+    this.aggregationSvc.getAggregationCompliance(aggId).subscribe((resp: any) => {
       let showLegend = true;
 
       if (!resp.length) {
@@ -79,6 +94,9 @@ export class CompareMaturityIndividualComponent implements OnInit {
     });
   }
 
+  /**
+   * 
+   */
   buildMaturityChart(c, showLegend) {
     c.datasets.forEach(ds => {
       ds.backgroundColor = this.colorSvc.getColorForAssessment(ds.label);

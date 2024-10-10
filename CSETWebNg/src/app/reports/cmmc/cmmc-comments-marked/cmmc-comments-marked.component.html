@@ -47,7 +47,7 @@
   <div class="page-break"></div>
 
   <div class="row justify-content-center">
-    <div class="col-10 border rounded-3 text-left" style="background-color: #f2f2f2;">
+    <div class="col-10 border rounded-3 text-start" style="background-color: #f2f2f2;">
       <div style="padding: 5rem 1rem">
         <p>
           This report lists the practices that have been commented on or have been marked for review.
@@ -77,7 +77,7 @@
       </div>
 
       <div *ngIf="!model?.reportData.comments.length && !loading" class="row">
-        <div class="col text-left">
+        <div class="col text-start">
           There are no practices with comments
         </div>
       </div>
@@ -91,26 +91,26 @@
           <div class="col m-2 p-3" [ngClass]="matAnswer.isFollowedByChild ? '' : 'border-bottom'"
             style="page-break-inside: avoid; page-break-before: auto; page-break-after: auto;">
             <div class="row mat-section m-0 p-0">
-              <div class="col-3 text-left">
+              <div class="col-3 text-start">
                 <h3 *ngIf="matAnswer.mat.parent_Question_Id == null" class="small d-inline">Practice {{
                   matAnswer.mat.question_Title }}</h3>
               </div>
-              <div class="col-6 text-left">
+              <div class="col-6 text-start">
                 <p>
                   {{ matAnswer.mat.question_Text }}
                 </p>
               </div>
-              <div class="col-2 text-left">
+              <div class="col-2 text-start">
                 <p *ngIf="!matAnswer.isParentWithChildren">
                   {{ getFullAnswerText(matAnswer.answer.answer_Text) }}
                 </p>
               </div>
-              <div *ngIf="matAnswer.answer.mark_For_Review === true" class="col text-right">
+              <div *ngIf="matAnswer.answer.mark_For_Review === true" class="col text-end">
                 <img src="assets/images/icons/MarkedFlag.png" class="marked-flag">
               </div>
             </div>
             <div *ngIf="matAnswer.showAlt" class="row m-0 p-0 pb-3">
-              <div class="col-3 text-left">
+              <div class="col-3 text-start">
                 <h4 class="small">Justification:</h4>
               </div>
               <div class="col-9 text-start">
@@ -118,10 +118,10 @@
               </div>
             </div>
             <div *ngIf="!matAnswer.mat.parent_Question_Id" class="row m-0 p-0">
-              <div class="col-3 text-left">
+              <div class="col-3 text-start">
                 <h4 class="small">Comment:</h4>
               </div>
-              <div class="col-9 text-left">
+              <div class="col-9 text-start">
                 <p>{{ matAnswer.answer.comment }}</p>
               </div>
             </div>
@@ -149,7 +149,7 @@
       </div>
 
       <div *ngIf="!model?.reportData.markedForReviewList.length && !loading" class="row">
-        <div class="col text-left">
+        <div class="col text-start">
           There are no practices marked for review
         </div>
       </div>
@@ -163,21 +163,21 @@
           <div class="col m-2 p-3" [ngClass]="matAnswer.isFollowedByChild ? '' : 'border-bottom'"
             style="page-break-inside: avoid; page-break-before: auto; page-break-after: auto;">
             <div class="row mat-section m-0 p-0">
-              <div class="col-3 text-left">
+              <div class="col-3 text-start">
                 <h3 *ngIf="matAnswer.mat.parent_Question_Id == null" class="small d-inline">Practice {{
                   matAnswer.mat.question_Title }}</h3>
               </div>
-              <div class="col-6 text-left">
+              <div class="col-6 text-start">
                 <p>
                   {{ matAnswer.mat.question_Text }}
                 </p>
               </div>
-              <div class="col-2 text-left">
+              <div class="col-2 text-start">
                 <p *ngIf="!matAnswer.isParentWithChildren">
                   {{ getFullAnswerText(matAnswer.answer.answer_Text) }}
                 </p>
               </div>
-              <div *ngIf="matAnswer.answer.mark_For_Review === true" class="col text-right">
+              <div *ngIf="matAnswer.answer.mark_For_Review === true" class="col text-end">
                 <img src="assets/images/icons/MarkedFlag.png" class="marked-flag">
               </div>
             </div>
@@ -190,10 +190,10 @@
               </div>
             </div>
             <div *ngIf="!matAnswer.mat.parent_Question_Id" class="row m-0 p-0">
-              <div class="col-3 text-left">
+              <div class="col-3 text-start">
                 <h4 class="small">Comment:</h4>
               </div>
-              <div class="col-9 text-left">
+              <div class="col-9 text-start">
                 <p>{{ matAnswer.answer.comment }}</p>
               </div>
             </div>
