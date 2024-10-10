@@ -12,8 +12,8 @@
         "lint": "ng lint",
         "preinstall": "npx npm-force-resolutions",
         "start:electron": "ng build --configuration production --source-map=false --base-href ./ && electron .",
-        "build:electron": "electron-packager . \"CSET\" --out=electron-builds --asar --arch=x64 --prune --overwrite --icon=src/favicon_cset.ico --win32metadata.CompanyName=\"CISA\" --ignore=\"(node_modules/.cache*|node_modules/@angular*|node_modules/@angular-devkit*|node_modules/@angular-slider*|.vscode*|.angular*)\"",
-        "version:electron": "electron-packager --version"
+        "build:electron": "@electron/packager . \"CSET\" --out=electron-builds --asar --arch=x64 --prune --overwrite --icon=src/favicon_cset.ico --win32metadata.CompanyName=\"CISA\" --ignore=\"(node_modules/.cache*|node_modules/@angular*|node_modules/@angular-devkit*|node_modules/@angular-slider*|.vscode*|.angular*)\"",
+        "version:electron": "@electron/packager --version"
     },
     "dependencies": {
         "@angular-devkit/build-webpack": "^0.1802.8",
@@ -48,7 +48,6 @@
         "bootstrap": "^5.3.2",
         "chart.js": "^4.4.4",
         "document-register-element": "^1.14.10",
-        "electron": "^32.2.0",
         "electron-log": "^5.2.0",
         "file-saver": "^2.0.5",
         "font-awesome": "^4.7.0",
@@ -75,6 +74,8 @@
         "zone.js": "^0.14.10"
     },
     "devDependencies": {
-        "@angular-builders/custom-webpack": "^18.0.0"
+        "@angular-builders/custom-webpack": "^18.0.0",
+        "electron": "^32.2.0",
+        "@electron/packager": "^18.3.5"
     }
 }
