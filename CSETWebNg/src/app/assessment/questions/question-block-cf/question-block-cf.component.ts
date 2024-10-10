@@ -1,19 +1,16 @@
 import { AfterViewChecked, AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { TranslocoService } from '@ngneat/transloco';
-import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
-import { Answer, Category, Question, QuestionResponse, SubCategory, SubCategoryAnswers } from '../../../models/questions.model';
-import { ACETService } from '../../../services/acet.service';
+import { Answer, Question, SubCategory, SubCategoryAnswers } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { CompletionService } from '../../../services/completion.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
-import { NavigationService } from '../../../services/navigation/navigation.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { InlineParameterComponent } from '../../../dialogs/inline-parameter/inline-parameter.component';
 import { ConversionService } from '../../../services/conversion.service';
 import { LayoutService } from '../../../services/layout.service';
 import { MalcolmService } from '../../../services/malcolm.service';
+import { TranslocoService } from "@jsverse/transloco";
 
 @Component({
   selector: 'app-question-block-cf',

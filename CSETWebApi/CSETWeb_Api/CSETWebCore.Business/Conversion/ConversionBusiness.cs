@@ -382,7 +382,7 @@ namespace CSETWebCore.Business.Contact
                         string midTitle = midTitles[j];
                         int cpgQId = _context.MATURITY_QUESTIONS.Where(x => x.Maturity_Model_Id == CPG_Model_Id && x.Question_Title == midTitle).Select(x => x.Mat_Question_Id).FirstOrDefault();
                         ANSWER cpgAns = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Or_Requirement_Id == cpgQId).FirstOrDefault();
-
+                        if(cpgAns!=null)
                         foreach (string fullTitle in fullTitles)
                         {
                             int fullQId = _context.NEW_REQUIREMENT.Where(x => (x.Original_Set_Name == CF_CSF_SetName || x.Original_Set_Name == CF_SetName) && x.Requirement_Title == fullTitle).Select(x => x.Requirement_Id).FirstOrDefault();
