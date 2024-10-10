@@ -169,7 +169,7 @@ namespace CSETWebCore.Api.Controllers
             var aggregationID = _token.PayloadInt("aggreg");
             if (aggregationID == null)
             {
-                return Ok(new List<MissedQuestion>());
+                return Ok(new MissedQuestionResponse());
             }
 
             var manager = new AggregationMaturityBusiness(_context);

@@ -651,6 +651,10 @@ table.assessment-summary th {
   padding: .5rem;
 }
 
+.table.table-td-p2 th, .table.table-td-p2 td {
+  padding: .5rem !important;
+}
+
 table.paddingBetweenCols td,
 table.paddingBetweenCols th {
   padding: 0 15px 10px;
@@ -1026,6 +1030,7 @@ table.td-align-top td {
 
 .btn-app-mode.active {
   background-color: $secondary-color;
+  border-color: $secondary-color;
   color: $gray-100;
 }
 

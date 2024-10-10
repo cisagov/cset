@@ -23,7 +23,7 @@
 <div class="chart d-flex flex-column flex-00a">
   <h3>Assessment Answer Summary</h3>
 
-  <table class="assessment-summary">
+  <table class="table table-bordered table-td-p2">
     <tr>
       <th class="text-start p-2">Assessment Alias</th>
       <th class="text-end p-2 ps-3">Total</th>
@@ -36,6 +36,7 @@
     </tr>
   </table>
 </div>
+
 <div *ngIf="answerCounts == null">
   <div class="spinner-container" style="margin: 2em auto">
     <div style="max-width: 50px; max-height: 50px;"></div>

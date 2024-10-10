@@ -81,6 +81,10 @@ table.assessment-summary th {
     color: $white;
 }
 
+.table.table-td-p2 th, .table.table-td-p2 td {
+    padding: .5rem !important;
+  }
+
 .bgc-black {
     background-color: $black;
 }

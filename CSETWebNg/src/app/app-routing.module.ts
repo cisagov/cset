@@ -90,8 +90,9 @@ import { ExecutiveSummaryComponent } from './reports/executive-summary/executive
 import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
 import { SitesummaryCMMCComponent } from './reports/cmmc/sitesummary-cmmc/sitesummary-cmmc.component';
 import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
-import { TrendReportComponent } from './reports/trendreport/trendreport.component';
-import { CompareReportComponent } from './reports/comparereport/comparereport.component';
+import { TrendReportComponent } from './reports/trend-report/trend-report.component';
+import { CompareReportComponent } from './reports/compare-report/compare-report.component';
+import { CompareReportMComponent } from './reports/compare-report-m/compare-report-m.component';
 import { SiteSummaryComponent } from './reports/site-summary/site-summary.component';
 import { PhysicalSummaryComponent} from './reports/physical-summary/physical-summary.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
@@ -532,8 +533,9 @@ const appRoutes: Routes = [
       { path: 'securityplan', component: SecurityplanComponent },
       { path: 'sitesummary', component: SiteSummaryComponent },
       { path: 'physicalsummary', component: PhysicalSummaryComponent },
-      { path: 'trendreport', component: TrendReportComponent },
-      { path: 'comparereport', component: CompareReportComponent },
+      { path: 'trend-report', component: TrendReportComponent },
+      { path: 'compare-report', component: CompareReportComponent },
+      { path: 'compare-report-m', component: CompareReportMComponent },
       { path: 'executivecmmc', component: ExecutiveCMMCComponent },
       { path: 'sitesummarycmmc', component: SitesummaryCMMCComponent },
       { path: 'cmmcDeficiencyReport', component: CmmcDeficiencyComponent },
