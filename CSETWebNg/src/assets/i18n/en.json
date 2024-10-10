@@ -937,6 +937,18 @@
         "4": {
           "title": "Site Detail Report",
           "desc": "This report includes the same information as the Site Summary Report as well as a list of all network component questions and their corresponding answers."
+        },
+        "5": {
+          "title": "Answered Questions Report",
+          "desc": "This report indicates how each question was answered."
+        },
+        "6": {
+          "title": "Comments and Marked for Review",
+          "desc": "This document consolidates all practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
+        },
+        "7": {
+          "title": "Reviewed Questions",
+          "desc": "This document consolidates all practices that have been marked as reviewed during the assessment process."
         }
       }
     },
@@ -1241,6 +1253,10 @@
         "questions marked for review": "Questions Marked for Review",
         "no questions": "There are no questions marked for review."
       },
+      "reviewed questions": {
+        "reviewed questions": "Reviewed Questions",
+        "no questions": "There are no reviewed questions."
+      },
       "cpg": {
         "report title": "Cybersecurity Performance Goals (CPG)",
         "report": {
@@ -1400,6 +1416,38 @@
         "compensating comment": "Compensating Comment",
         "no compensating comment": "No compensating comment or explanation was provided.",
         "no compensating controls": "There are no compensating controls to display"
+      }
+    },
+    "all": {
+      "answered statements": {
+        "tab title": "Answered Questions Report",
+        "answered statements report": "Answered Questions",
+        "answered statements report title 1": "ANSWERED QUESTIONS",
+        "answered statements report title 2": "REPORT",
+        "answered statements": "Answered Questions",
+        "report desc 1": "This report includes all the statements within your maturity level, your answers, and whether there is a comment attached to the statement.",
+        "report desc 2": "The answered statement set will only show statements at or below your maturity level.",
+        "maturity level key": "Maturity Level Key",
+        "answers": "Answers",
+        "comments": "Comments"
+      },
+      "cmfr": {
+          "report title": "Comments & Marked for Review",
+          "comments report title 1": "COMMENTS REVIEW",
+          "comments report title 2": "REPORT",
+          "comment": "Comment",
+          "marked for review": "Questions Marked for Review",
+          "no marked for review": "There are no questions marked for review",
+          "with comments": "Questions with Comments",
+          "no comments": "There are no questions with comments",
+          "other remarks": "Other Remarks"
+      },
+      "reviewed questions": {
+        "report title": "Reviewed Questions",
+        "reviewed report title 1": "REVIEWED QUESTIONS",
+        "reviewed report title 2": "REPORT",
+        "reviewed questions": "Reviewed Questions",
+        "no questions": "There are no reviewed questions"
       }
     }
   },

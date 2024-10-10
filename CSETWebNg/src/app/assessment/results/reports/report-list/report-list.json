@@ -290,6 +290,15 @@
       },
       {
         "linkUrl": "detail"
+      },
+      {
+        "linkUrl": "allAnsweredQuestions"
+      },
+      {
+        "linkUrl": "allMfrAndComments"
+      },
+      {
+        "linkUrl": "allReviewedQuestions"
       }
     ]
   }
