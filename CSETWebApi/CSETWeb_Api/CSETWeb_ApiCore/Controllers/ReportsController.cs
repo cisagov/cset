@@ -590,7 +590,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/reports/trendreport")]
+        [Route("api/reports/trend-report")]
         public IActionResult GetTrendReport(int aggregationID)
         {
             AggregationReportData response = new AggregationReportData();
@@ -650,7 +650,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/reports/comparereport")]
+        [Route("api/reports/compare-report")]
         public IActionResult GetCompareReport(int aggregationID)
         {
             AggregationReportData response = new AggregationReportData();

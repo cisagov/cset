@@ -53,7 +53,7 @@ export class CiePrincipleOnlyComponent {
     this.cieSvc.getCiePrincipleQuestions().subscribe(
       (r: any) => {
         this.response = r;
-        console.log(this.response)
+
         // goes through domains
         for (let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
           let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];

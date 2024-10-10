@@ -144,11 +144,28 @@
     },
     {
       "moduleName": "RRA",
+      "modelId": "5",
       "questionIcons": {
         "showDetails": false,
         "guidanceIcon": "G",
         "showReviewed": false
-      }
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "yes",
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "no",
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "consideredMissed": true
+        }
+      ]
     },
     {
       "moduleName": "CIS",
@@ -179,7 +196,8 @@
           "code": "Y",
           "buttonLabelKey": "Imp-CPG",
           "buttonCss": "btn-yes",
-          "chartSegmentColor": "#006000"
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
         },
         {
           "code": "I",
@@ -197,7 +215,8 @@
           "code": "N",
           "buttonLabelKey": "Not-CPG",
           "buttonCss": "btn-no",
-          "chartSegmentColor": "#990000"
+          "chartSegmentColor": "#990000",
+          "consideredMissed": true
         }
       ]
     },

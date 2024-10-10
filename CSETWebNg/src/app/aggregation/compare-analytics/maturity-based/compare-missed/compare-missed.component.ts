@@ -40,8 +40,9 @@ export class CompareMaturityMissedComponent implements OnInit {
 
   ngOnInit() {
     this.aggregationSvc.getMaturityMissedQuestions().subscribe((resp: any) => {
-      this.missedQuestions = resp;
+      this.missedQuestions = resp.missedQuestions;
 
+      // determine the appropriate text to be displayed  
       this.missedQuestions.forEach((q: any) => {
         q.displayText = q.questionText;
 

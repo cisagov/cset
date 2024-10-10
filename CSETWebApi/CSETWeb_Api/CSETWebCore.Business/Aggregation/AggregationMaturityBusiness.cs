@@ -227,9 +227,9 @@ namespace CSETWebCore.Business.Aggregation
         /// Questions and Requirements mode, there will be no common "N" answers.
         /// </summary>
         /// <param name="aggregationId"></param>
-        public List<MissedQuestion> GetCommonlyMissedQuestions(int aggregationId)
+        public MissedQuestionResponse GetCommonlyMissedQuestions(int aggregationId)
         {
-            var resp = new List<MissedQuestion>();
+            var resp = new MissedQuestionResponse();
 
             // build lists of question IDs, then use LINQ to do the intersection
             var questionsAnsweredNo = new List<List<int>>();
@@ -246,7 +246,10 @@ namespace CSETWebCore.Business.Aggregation
 
 
                 // default deficient answer list
+                // TODO:  each model could define which of its answer options are considered "missed"
                 var deficientAnswers = new List<string>() { "N", "U" };
+
+                resp.BadAnswers.AddRange(deficientAnswers);
                 
                 // get the model configuration for the true deficient answers
                 var modelProperties = new ModelProfile().GetModelProperties(model.model_id);
@@ -264,7 +267,7 @@ namespace CSETWebCore.Business.Aggregation
 
 
             // Now that the lists are built, analyze for common "N" answers
-            resp.AddRange(BuildQList(questionsAnsweredNo));
+            resp.MissedQuestions.AddRange(BuildQList(questionsAnsweredNo));
 
             return resp;
         }
