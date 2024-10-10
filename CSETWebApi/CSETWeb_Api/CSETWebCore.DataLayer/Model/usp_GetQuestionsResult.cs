@@ -5,9 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class SplitResult
+    public partial class usp_GetQuestionsResult
     {
-        public string Value { get; set; }
-        public long Id { get; set; }
     }
 }

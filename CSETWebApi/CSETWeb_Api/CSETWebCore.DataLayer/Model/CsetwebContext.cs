@@ -343,6 +343,16 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<NCSF_CONVERSION_MAPPINGS> NCSF_CONVERSION_MAPPINGS { get; set; }
 
+    public virtual DbSet<NCSF_CONVERSION_MAPPINGS_ENTRY> NCSF_CONVERSION_MAPPINGS_ENTRY { get; set; }
+
+    public virtual DbSet<NCSF_CONVERSION_MAPPINGS_FULL> NCSF_CONVERSION_MAPPINGS_FULL { get; set; }
+
+    public virtual DbSet<NCSF_CONVERSION_MAPPINGS_MID> NCSF_CONVERSION_MAPPINGS_MID { get; set; }
+
+    public virtual DbSet<NCSF_ENTRY_TO_MID> NCSF_ENTRY_TO_MID { get; set; }
+
+    public virtual DbSet<NCSF_FULL_TO_MID> NCSF_FULL_TO_MID { get; set; }
+
     public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
 
     public virtual DbSet<NCSF_MIGRATION> NCSF_MIGRATION { get; set; }
@@ -1949,6 +1959,20 @@ public partial class CsetwebContext : DbContext
         modelBuilder.Entity<NCSF_CONVERSION_MAPPINGS>(entity =>
         {
             entity.HasKey(e => e.Conversion_Id).HasName("PK_NCSF_ASSESSMENT_UPGRADE");
+        });
+
+        modelBuilder.Entity<NCSF_ENTRY_TO_MID>(entity =>
+        {
+            entity.HasOne(d => d.Entry_Level_TitlesNavigation).WithMany(p => p.NCSF_ENTRY_TO_MID).HasConstraintName("FK_NCSF_ENTRY_TO_MID_NCSF_CONVERSION_MAPPINGS_ENTRY");
+
+            entity.HasOne(d => d.Mid_Level_TitlesNavigation).WithMany(p => p.NCSF_ENTRY_TO_MID).HasConstraintName("FK_NCSF_ENTRY_TO_MID_NCSF_CONVERSION_MAPPINGS_MID");
+        });
+
+        modelBuilder.Entity<NCSF_FULL_TO_MID>(entity =>
+        {
+            entity.HasOne(d => d.Full_Level_TitlesNavigation).WithMany(p => p.NCSF_FULL_TO_MID).HasConstraintName("FK_NCSF_FULL_TO_MID_NCSF_CONVERSION_MAPPINGS_FULL");
+
+            entity.HasOne(d => d.Mid_Level_TitlesNavigation).WithMany(p => p.NCSF_FULL_TO_MID).HasConstraintName("FK_NCSF_FULL_TO_MID_NCSF_CONVERSION_MAPPINGS_MID");
         });
 
         modelBuilder.Entity<NCSF_FUNCTIONS>(entity =>
