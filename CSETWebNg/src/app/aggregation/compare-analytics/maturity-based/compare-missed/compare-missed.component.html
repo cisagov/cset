@@ -20,15 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="text-start">
+<div class="text-start" *transloco="let t">
   <div class="mb-3">
-    This table lists questions or requirements that were answered 'No' in all the compared assessments.
+    {{t('aggregation.compare.lists questions answered no')}}
   </div>
 
   <table class="table table-bordered table-td-p2 mb-5">
     <tr>
-      <th class="ps-2 pe-4">Title</th>
-      <th class="px-2">Question</th>
+      <th class="ps-2 pe-4">{{t('aggregation.compare.title')}}</th>
+      <th class="px-2">{{t('aggregation.compare.question')}}</th>
     </tr>
     <tr *ngFor="let q of missedQuestions">
       <td class="ps-2 pe-4">{{ q.questionTitle }}</td>
@@ -44,6 +44,6 @@
   </div>
 
   <div *ngIf="missedQuestions?.length === 0" class="mb-5 alert-warning p-3 font-weight-bold text-center">
-    There are no questions that were answered 'No' on all the compared assessments.
+    {{t('aggregation.compare.no missed questions')}}
   </div>
 </div>

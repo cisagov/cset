@@ -27,8 +27,6 @@ export class NoServerConnectionComponent implements OnInit {
    */
   ngOnInit() {
     // ping API
-    console.log('init');
-
     this.configSvc.getCsetVersion().subscribe(() => {
       this.apiIsVisible = true;
     }, error => {
