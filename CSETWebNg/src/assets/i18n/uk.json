@@ -1229,7 +1229,9 @@
       "subcategory": "Підкатегорія",
       "question": "Питання",
       "no missed questions": "Немає питань, на які було відповідено 'Ні' у всіх порівнюваних оцінках.",
-      "generate compare report": "Створити звіт про порівняння"
+      "generate compare report": "Створити звіт про порівняння",
+      "report title": "Звіт про порівняння декількох оцінок",
+      "document library": "Бібліотека документів"
     }
   },
   "tutorials": {

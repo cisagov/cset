@@ -1790,7 +1790,9 @@
       "subcategory": "Subcategory",
       "question": "Question",
       "no missed questions": "There are no questions that were answered 'No' on all the compared assessments.",
-      "generate compare report": "Generate Compare Report"
+      "generate compare report": "Generate Compare Report",
+      "report title": "Multiple Assessment Comparison Report",
+      "document library": "Document Library"
     }
   },
   "tutorials": {
