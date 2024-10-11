@@ -232,7 +232,7 @@ namespace CSETWebCore.Business.Contact
                                      join c in _context.NCSF_CONVERSION_MAPPINGS_MID on a.Mid_Level_Titles equals c.Mid_Level_Titles
                                      join ans in _context.ANSWER on b.Requirement_Id equals ans.Question_Or_Requirement_Id
                                      where ans.Assessment_Id == assessmentId
-                                     select new { b.Requirement_Id, c.Question_Id, ans }).ToList();
+                                     select new { b.Requirement_Id, c.Mat_Question_Id, ans }).ToList();
 
             // seperates the entry column into its own list
             
@@ -248,7 +248,7 @@ namespace CSETWebCore.Business.Contact
                         var newAnswer = new ANSWER()
                         {
                             Assessment_Id = assessmentId,
-                            Question_Or_Requirement_Id = entryAnswer.Question_Id,
+                            Question_Or_Requirement_Id = entryAnswer.Mat_Question_Id,
                             Mark_For_Review = entryAnswer.ans.Mark_For_Review,
                             Comment = entryAnswer.ans.Comment,
                             Alternate_Justification = entryAnswer.ans.Alternate_Justification,
