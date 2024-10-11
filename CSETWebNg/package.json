@@ -12,8 +12,8 @@
         "lint": "ng lint",
         "preinstall": "npx npm-force-resolutions",
         "start:electron": "ng build --configuration production --source-map=false --base-href ./ && electron .",
-        "build:electron": "@electron/packager . \"CSET\" --out=electron-builds --asar --arch=x64 --prune --overwrite --icon=src/favicon_cset.ico --win32metadata.CompanyName=\"CISA\" --ignore=\"(node_modules/.cache*|node_modules/@angular*|node_modules/@angular-devkit*|node_modules/@angular-slider*|.vscode*|.angular*)\"",
-        "version:electron": "@electron/packager --version"
+        "build:electron": "npm exec @electron/packager . \"CSET\" --out=electron-builds --asar --arch=x64 --prune --overwrite --icon=src/favicon_cset.ico --win32metadata.CompanyName=\"CISA\" --ignore=\"(node_modules/.cache*|node_modules/@angular*|node_modules/@angular-devkit*|node_modules/@angular-slider*|.vscode*|.angular*)\"",
+        "version:electron": "npm exec @electron/packager --version"
     },
     "dependencies": {
         "@angular-devkit/build-webpack": "^0.1802.8",
