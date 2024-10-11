@@ -21,21 +21,29 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
-  selector: 'app-export-password',
-  templateUrl: './export-password.component.html',
-  styleUrls: ['./export-password.component.scss']
+  selector: 'app-export-assessment',
+  templateUrl: './export-assessment.component.html',
+  styleUrls: ['./export-assessment.component.scss']
 })
-export class ExportPasswordComponent {
+export class ExportAssessmentComponent {
+  preventEncrypt: any;
+  
 
-  constructor(public dialogRef: MatDialogRef<ExportPasswordComponent>) {
+  constructor(
+    public assessSvc: AssessmentService,
+    public dialogRef: MatDialogRef<ExportAssessmentComponent>,
+    @Inject(MAT_DIALOG_DATA) public input: any,
+  ) 
+  {
     dialogRef.disableClose = true;
   }
 
-  dialogTitle: string = "Encrypt Assessment";
+  dialogTitle: string = "Export Assessment Options";
 
   data = {
   scrubData: false,

@@ -634,7 +634,8 @@
     "please confirm": "Please Confirm",
     "remove contact": "Are you sure you want to remove {{firstName}} {{lastName}} from this assessment?",
     "remove assessment": "Are you sure you want to remove {{assessmentName}}?",
-    "confirm create new assessment": "Are you sure you want to create a new assessment?"
+    "confirm create new assessment": "Are you sure you want to create a new assessment?", 
+    "export assessment title": "Export Assessment Options"
   },
   "reports": {
     "launch": {

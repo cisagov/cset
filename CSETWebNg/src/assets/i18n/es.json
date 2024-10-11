@@ -538,7 +538,8 @@
         "please confirm": "Confirme, por favor",
         "remove contact": "¿Estás seguro de que quieres eliminar a {{firstName}} {{lastName}} de esta evaluación?",
         "remove assessment": "¿Estás seguro de que quieres eliminar {{assessmentName}}?",
-        "confirm create new assessment": "¿Está seguro de que desea crear una nueva evaluación?"
+        "confirm create new assessment": "¿Está seguro de que desea crear una nueva evaluación?", 
+        "export assessment title": "Opciones de evaluación de exportación"
     },
     "reports": {
         "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el {date}.",

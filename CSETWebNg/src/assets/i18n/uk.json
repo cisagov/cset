@@ -487,7 +487,8 @@
     "please confirm": "Підтвердження",
     "remove contact": "Ви впевнені, що хочете видалити {{firstName}} {{lastName}} з цього оцінювання?",
     "remove assessment": "Ви впевнені, що хочете видалити {{assessmentName}}?",
-    "confirm create new assessment": "Ви впевнені, що хочете створити нове оцінювання?"
+    "confirm create new assessment": "Ви впевнені, що хочете створити нове оцінювання?", 
+    "export assessment title": "Параметри експортної оцінки"
   },
   "reports": {
     "launch": {
