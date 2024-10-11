@@ -635,7 +635,10 @@
     "remove contact": "Are you sure you want to remove {{firstName}} {{lastName}} from this assessment?",
     "remove assessment": "Are you sure you want to remove {{assessmentName}}?",
     "confirm create new assessment": "Are you sure you want to create a new assessment?", 
-    "export assessment title": "Export Assessment Options"
+    "export assessment title": "Export Assessment Options", 
+    "scrub pcii": "Select to remove PCII fields from export", 
+    "encrypt 1": "To encrypt your assessment, please enter a password.", 
+    "encrypt 2": "If you proceed without entering a password, no encryption will be used."
   },
   "reports": {
     "launch": {
