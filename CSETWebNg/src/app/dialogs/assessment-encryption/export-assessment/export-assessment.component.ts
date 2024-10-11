@@ -21,36 +21,45 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
-  selector: 'app-export-password',
-  templateUrl: './export-password.component.html',
-  styleUrls: ['./export-password.component.scss']
+  selector: 'app-export-assessment',
+  templateUrl: './export-assessment.component.html',
+  styleUrls: ['./export-assessment.component.scss']
 })
-export class ExportPasswordComponent {
+export class ExportAssessmentComponent {
+  preventEncrypt: any;
+  
 
-  constructor(public dialogRef: MatDialogRef<ExportPasswordComponent>) {
+  constructor(
+    public assessSvc: AssessmentService,
+    public dialogRef: MatDialogRef<ExportAssessmentComponent>,
+    @Inject(MAT_DIALOG_DATA) public input: any,
+  ) 
+  {
     dialogRef.disableClose = true;
   }
 
-  dialogTitle: string = "Encrypt Assessment";
+  dialogTitle: string = "Export Assessment Options";
 
-  encryptionData = {
+  data = {
+  scrubData: false,
+  encryptionData: {
     password: "",
     hint: "",
-  };
+  }};
 
   password = "";
   passwordHint = "";
   showPassword = false;
 
   confirm(): void {
-    this.encryptionData.password = this.password;
-    this.encryptionData.hint = this.passwordHint;
-
-    this.dialogRef.close(this.encryptionData);
+    this.data.encryptionData.password = this.password;
+    this.data.encryptionData.hint = this.passwordHint;
+    this.dialogRef.close(this.data);
   }
 
   cancel() {
@@ -59,6 +68,11 @@ export class ExportPasswordComponent {
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
+  }
+
+  onScrubDataChange(event: Event) {
+    const checkbox = event.target as HTMLInputElement;
+    this.data.scrubData = checkbox.checked;
   }
 
 }

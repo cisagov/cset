@@ -576,7 +576,7 @@ import { InfoBlockComponent } from './reports/info-block/info-block.component';
 import { SiteInformationComponent } from './reports/site-information/site-information.component';
 import { AboutRenewComponent } from './dialogs/about-renew/about-renew.component';
 import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-cyber-shield.component';
-import { ExportPasswordComponent } from './dialogs/assessment-encryption/export-password/export-password.component';
+import { ExportAssessmentComponent } from './dialogs/assessment-encryption/export-assessment/export-assessment.component';
 import { ImportPasswordComponent } from './dialogs/assessment-encryption/import-password/import-password.component';
 import { HydroDeficiencyComponent } from './assessment/results/hydro/hydro-deficiency/hydro-deficiency.component';
 import { HydroDonutComponent } from './assessment/results/hydro/hydro-donut/hydro-donut.component';
@@ -1111,7 +1111,7 @@ import { QuestionsReviewedComponent } from './reports/questions-reviewed/questio
         SiteInformationComponent,
         AboutRenewComponent,
         LogoCyberShieldComponent,
-        ExportPasswordComponent,
+        ExportAssessmentComponent,
         ImportPasswordComponent,
         HydroDeficiencyComponent,
         HydroDonutComponent,
