@@ -232,7 +232,8 @@
         "high": "High",
         "h": "High",
         "very high": "Very High",
-        "vh": "Very High"
+        "vh": "Very High",
+        "none": "None"
       }
     },
     "network diagram": "Network Diagram",
@@ -1432,15 +1433,15 @@
         "comments": "Comments"
       },
       "cmfr": {
-          "report title": "Comments & Marked for Review",
-          "comments report title 1": "COMMENTS REVIEW",
-          "comments report title 2": "REPORT",
-          "comment": "Comment",
-          "marked for review": "Questions Marked for Review",
-          "no marked for review": "There are no questions marked for review",
-          "with comments": "Questions with Comments",
-          "no comments": "There are no questions with comments",
-          "other remarks": "Other Remarks"
+        "report title": "Comments & Marked for Review",
+        "comments report title 1": "COMMENTS REVIEW",
+        "comments report title 2": "REPORT",
+        "comment": "Comment",
+        "marked for review": "Questions Marked for Review",
+        "no marked for review": "There are no questions marked for review",
+        "with comments": "Questions with Comments",
+        "no comments": "There are no questions with comments",
+        "other remarks": "Other Remarks"
       },
       "reviewed questions": {
         "report title": "Reviewed Questions",
@@ -1760,6 +1761,37 @@
     "traffic light protocol": "Traffic Light Protocol",
     "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> is part of the <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Department of Homeland Security</a>",
     "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Website</a>"
+  },
+  "aggregation": {
+    "assessment alias": "Assessment Alias",
+    "total": "Total",
+    "compare": {
+      "compare assessments": "Compare Assessments",
+      "overall summary": "Overall Summary",
+      "overall average summary": "Overall Average Summary",
+      "overall comparison": "Overall Comparison",
+      "sal comparison": "Overall Comparison of Security Assurance Levels",
+      "category percent comparisons": "Category Percent Comparisons",
+      "standards answers": "Standards Answers",
+      "components answers": "Components Answers",
+      "both need diagrams": "Comparison visuals are available only when both assessments include network diagrams.",
+      "category avg all assessments": "Category Average for All Assessments",
+      "percentages may not equal 100": "Percentages may not add up to 100% when comparing assessments due to averaging answers.",
+      "individual assessment comparison": "Individual Assessment Comparison",
+      "commonly missed questions": "Commonly Missed Questions",
+      "best to worst": "Best to Worst",
+      "assessment answer summary": "Assessment Answer Summary",
+      "domain level compliance": "Domain-Level Compliance",
+      "compliance 1": "The chart below indicates normalized (percentages) compliance scores for the assessments being compared. Questions that are answered as 'Implemented' count towards the scores represented.",
+      "compliance 2": "Answer distributions are viewable on the 'Best To Worst' tab.",
+      "lists questions answered no": "This table lists questions or requirements that were answered 'No' in all the compared assessments.",
+      "title": "Title",
+      "category": "Category",
+      "subcategory": "Subcategory",
+      "question": "Question",
+      "no missed questions": "There are no questions that were answered 'No' on all the compared assessments.",
+      "generate compare report": "Generate Compare Report"
+    }
   },
   "tutorials": {
     "function": "Function",
