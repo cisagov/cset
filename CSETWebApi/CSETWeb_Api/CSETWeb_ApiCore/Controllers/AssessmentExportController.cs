@@ -68,7 +68,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/assessment/export/json")]
-        public IActionResult ExportAssessmentAsJson([FromQuery] string token, [FromQuery] string password = "", [FromQuery] string passwordHint = "")
+        public IActionResult ExportAssessmentAsJson([FromQuery] string token, [FromQuery] bool? scrubData, [FromQuery] string password = "", [FromQuery] string passwordHint = "")
         {
             try
             {
@@ -78,7 +78,9 @@ namespace CSETWebCore.Api.Controllers
 
                 string ext = ".json";
 
-                AssessmentExportFile result = new AssessmentExportManager(_context).ExportAssessment(assessmentId, ext, password, passwordHint, true);
+               
+
+                AssessmentExportFile result = new AssessmentExportManager(_context).ExportAssessment(assessmentId, ext, password, passwordHint, true, scrubData: true);
 
                 return File(result.FileContents, "application/octet-stream", result.FileName);
             }
