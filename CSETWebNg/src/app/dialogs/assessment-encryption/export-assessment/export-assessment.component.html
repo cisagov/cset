@@ -23,14 +23,18 @@
 <div *transloco="let t" class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="me-3 fs-base-6 cset-icons-exclamation-triangle" aria-label="charter-warning"></span>
-    <span>{{ dialogTitle }}</span>
+    <span>{{t('dialogs.export assessment title')}}</span>
   </div>
 
   <mat-dialog-content class="pt-3 ps-3 pe-3 d-flex flex-column flex-11a">
+    
+    <div *ngIf="!input.encryption && !input.jsonOnly">
     <p>To encrypt your assessment, please enter a password.</p>
     <p>If you proceed without entering a password, no encryption will be used.</p>
-
+    </div>
+    
     <div class="input-container ms-1 me-1">
+      <div *ngIf="!input.encryption && !input.jsonOnly">
       <input [type]="showPassword ? 'text' : 'password'" tabindex="0" class="form-control mt-2" name="password"
         placeholder="Password" [(ngModel)]="password" />
       <div *ngIf="!showPassword" class="input-icon" (click)="togglePasswordVisibility()" matTooltip="Show password">
@@ -42,12 +46,15 @@
 
       <input type="text" tabindex="0" class="form-control mt-4" name="passwordHint"
         placeholder="Password Hint (Optional)" [(ngModel)]="passwordHint" />
-        <div class="mt-4">
-          <span>
-            <input type="checkbox" name="PCII" class="p-2" [(ngModel)]="scrubData" (change)="onScrubDataChange($event)"/>
-            Select to scrub PCII information from export
-          </span>
       </div>
+    
+      <div *ngIf="input.jsonOnly"class="mt-2">
+        <span>
+          <input type="checkbox" name="PCII" class="p-2" [(ngModel)]="scrubData" (change)="onScrubDataChange($event)"/>
+          Select to remove PCII fields from export
+        </span>
+      </div>
+
     </div>
   </mat-dialog-content>
 
