@@ -14,7 +14,7 @@ public partial class NCSF_CONVERSION_MAPPINGS_MID
     [StringLength(50)]
     public string Mid_Level_Titles { get; set; }
 
-    public int Question_Id { get; set; }
+    public int Mat_Question_Id { get; set; }
 
     [InverseProperty("Mid_Level_TitlesNavigation")]
     public virtual ICollection<NCSF_ENTRY_TO_MID> NCSF_ENTRY_TO_MID { get; set; } = new List<NCSF_ENTRY_TO_MID>();
