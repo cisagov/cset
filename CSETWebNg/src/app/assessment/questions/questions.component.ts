@@ -384,4 +384,8 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
   usesRAC() {
     return this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard('RAC');
   }
+
+  fullCF() {
+    return this.assessSvc.assessment.standards[0] == 'NCSF_V2' ? 'd-flex flex-row white-panel' : 'white-panel';
+  }
 }
