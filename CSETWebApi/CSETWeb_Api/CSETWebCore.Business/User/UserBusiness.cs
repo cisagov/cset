@@ -334,5 +334,16 @@ namespace CSETWebCore.Business.User
 
             return password;
         }
+
+
+        /// <summary>
+        /// Returns a formatted "full name" for a user.
+        /// </summary>
+        /// <param name="u"></param>
+        /// <returns></returns>
+        public static string FullName(USERS u)
+        {
+            return $"{u.FirstName} {u.LastName}".Trim();
+        }
     }
 }
