@@ -55,20 +55,20 @@ namespace CSETWebCore.CryptoBuffer
 
 		public DecryptionBuffer(byte[] password, byte[] salt, SymmetricCryptoAlgorithm cryptoAlgorithm = SymmetricCryptoAlgorithm.AES_256_CBC, PaddingMode paddingMode = PaddingMode.PKCS7)
 		{
-			Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, salt, 7);
+			Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, salt, 100, HashAlgorithmName.SHA256);
 			Initialize(key, cryptoAlgorithm, paddingMode);
 		}
 
 		public DecryptionBuffer(string password, byte[] salt, SymmetricCryptoAlgorithm cryptoAlgorithm = SymmetricCryptoAlgorithm.AES_256_CBC, PaddingMode paddingMode = PaddingMode.PKCS7)
 		{
-			Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, salt, 7);
+			Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, salt, 100, HashAlgorithmName.SHA256);
 			Initialize(key, cryptoAlgorithm, paddingMode);
 		}
 
 		public DecryptionBuffer(string password, string salt, SymmetricCryptoAlgorithm cryptoAlgorithm = SymmetricCryptoAlgorithm.AES_256_CBC, PaddingMode paddingMode = PaddingMode.PKCS7)
 		{
 			byte[] saltValueBytes = CryptoCommon.GetBytes(salt);
-			Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, saltValueBytes, 7);
+			Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, saltValueBytes, 100, HashAlgorithmName.SHA256);
 			Initialize(key, cryptoAlgorithm, paddingMode);
 		}
 
@@ -106,9 +106,9 @@ namespace CSETWebCore.CryptoBuffer
 			}
 			Rfc2898DeriveBytes key;
 			if (_keyBytes != null)
-				key = new Rfc2898DeriveBytes(_keyBytes, salt, 7);
+				key = new Rfc2898DeriveBytes(_keyBytes, salt, 100, HashAlgorithmName.SHA256);
 			else
-				key = new Rfc2898DeriveBytes(_keyStr, salt, 7);
+				key = new Rfc2898DeriveBytes(_keyStr, salt, 100, HashAlgorithmName.SHA256);
 			_keyStr = null;
 			_keyBytes = null;
 
