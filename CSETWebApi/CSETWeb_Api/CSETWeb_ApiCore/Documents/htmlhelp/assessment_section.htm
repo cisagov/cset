@@ -36,8 +36,7 @@
         });
     //]]>
     </script>
-    <link rel="stylesheet" href="css/csethelp.css" type="text/css" media="all" />
-            </head>
+                </head>
 <body class="b-body">
 <script type="text/javascript">
 //<![CDATA[
@@ -62,8 +61,6 @@
 //]]>
 </script>
         <div class="b-pageContent
-        m-pageContent__withoutLeft
-        m-pageContent__withoutRight
 " id="pageContent">
             <table id="noscriptWarning" style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
                 <tr style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
@@ -87,7 +84,8 @@
                     <table id="internal_wrapper"><!-- internal_wrapper -->
                         <tr>
 
-                    <td class="b-pageContent__side m-pageContent__side__left" id="pageContentLeft"></td>
+                    <td class="b-pageContent__side m-pageContent__side__left" id="pageContentLeft"><div class="p">&#160;</div>
+</td>
                     <td class="b-pageContent__side m-pageContent__side__middle" id="pageContentMiddle">
                         <script type="text/javascript">
                         //<![CDATA[
@@ -219,7 +217,9 @@
             <tr>
                 <td id="headerSide__nav" class="b-article__headerSide m-article__headerSide__nav">
                     <div id="headerSide__nav__breadCrumbs" class="b-breadCrumbs">
-                        <ul class="b-breadCrumbs__items"><li class="b-breadCrumbs__item"><a href="main_cset_window_sections.htm" class="b-breadCrumbs__link">Main CSET Window Sections</a></li>
+                        <ul class="b-breadCrumbs__items"><li class="b-breadCrumbs__item"><a href="new_assessment.htm" class="b-breadCrumbs__link">New Assessment</a></li>
+
+<li class="b-breadCrumbs__item"><a href="assessment_navigation.htm" class="b-breadCrumbs__link">Assessment Navigation</a></li>
 
 <li class="b-breadCrumbs__item">Assessment Section</li>
 </ul>                    </div>
@@ -227,8 +227,8 @@
                 <td id="headerSide__buttons" class="b-article__headerSide m-article__headerSide__buttons">
                     <div class="b-controlButtons">
                         <ul class="b-controlButtons__items">
-                            <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="network_analysis_rules.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
-                            <li class="b-controlButtons__item m-controlButtons__item__next"><a href="questions_screen.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
+                            <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="diagram_inventory.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
+                            <li class="b-controlButtons__item m-controlButtons__item__next"><a href="assessment_screen.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
                                 <li class="b-controlButtons__item m-controlButtons__item__print"><a href="assessment_section_print.htm" class="b-controlButtons__link"><span class="b-interfaceIcon m-interfaceIcon__print"></span>Print version</a></li>
                         </ul>
                     </div>
@@ -258,7 +258,7 @@
                             .addClass("b-article__headerSide m-article__headerSide__buttons")
                             .append(
                                 $("<div></div>").addClass("b-controlButtons")
-                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"network_analysis_rules.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"questions_screen.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n        <li class=\"b-controlButtons__item m-controlButtons__item__print\"><a href=\"assessment_section_print.htm\" class=\"b-controlButtons__link\"><span class=\"b-interfaceIcon m-interfaceIcon__print\"></span>Print version</a></li>\n"))
+                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"diagram_inventory.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"assessment_screen.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n        <li class=\"b-controlButtons__item m-controlButtons__item__print\"><a href=\"assessment_section_print.htm\" class=\"b-controlButtons__link\"><span class=\"b-interfaceIcon m-interfaceIcon__print\"></span>Print version</a></li>\n"))
                             )
                         )
                     )
@@ -278,7 +278,8 @@
                         </div><!-- /workZone -->
 
                     </td><!-- /pageContentMiddle -->
-                    <td class="b-pageContent__side m-pageContent__side__right" id="pageContentRight"></td>
+                    <td class="b-pageContent__side m-pageContent__side__right" id="pageContentRight"><div class="p">&#160;</div>
+</td>
                         </tr>
                     </table> <!-- /internal_wrapper -->
                     </td>
@@ -308,7 +309,22 @@
     //]]>
     </script>
                 <div class="description_on_page"><div class="p h1"><div class="ic"><h1>Assessment Section</h1></div></div>
-<div class="p">The assessment section is where the user answers questions related to the selected Standards or Profile and Security Assurance Level. The following sections will describe the Assessment process in detail.</div>
+<div class="p">&#160;</div>
+<div class="p">Users can select the <a class="local_link" href="assessment_navigation.htm#id_1"><span class="de_2B94C39861">Assessment tab</span></a> or select a sub-page under the <a class="local_link" href="assessment_navigation.htm#id_4"><span class="de_2B94C39861">Assessment header</span></a> within the side navigation to view the Assessment section.</div>
+<div class="p">&#160;</div>
+<div class="p de_38B3956165">
+<a class="anchor" id="wndid_top"></a>
+<map name="controlmape60796d2_8fd0_43e2_a76e_73b0c3cce4d6" id="controlmape60796d2_8fd0_43e2_a76e_73b0c3cce4d6">
+<area shape="rect" alt="" href="#id_1" coords="194,8,411,77" data-coord-left="194" data-coord-top="8" data-coord-right="411" data-coord-bottom="77"  />
+<area shape="rect" alt="" href="#id_1" coords="149,27,181,59" data-coord-left="149" data-coord-top="27" data-coord-right="181" data-coord-bottom="59"  />
+</map><img usemap="#controlmape60796d2_8fd0_43e2_a76e_73b0c3cce4d6"  alt="Assessment Section" style="border: solid 0px #000000;  " width="430" height="91" class="de_wndimg de_780D01ADE8" src="drex_assessment_section_screen.png" data-full-src="drex_assessment_section_screen.png" data-full-width="430" data-full-height="91" /></div>
+<div class="p"><div class="de_ctrl"><table><tr><td><a class="anchor" id="id_1"></a><div class="p"><a class="anchor" href="#wndid_top"><img  alt="1" style="border: solid 0px #000000;  float: left; " width="40" height="40" class="de_ctrlbullet de_780D01ADE8" src="drex_bullet_1.png"/></a><div class="ic"><h2>Assessment Menu</h2></div></div>
+<div class="p de_0711D341CE"><img  alt="1. Assessment Menu" style="border: solid 0px #000000;  " width="217" height="69" class="de_ctrlimg de_780D01ADE8" src="drex_assessment_section_control_1.png" data-full-src="drex_assessment_section_control_1.png" data-full-width="217" data-full-height="69" /></div>
+<ul class="de_list"><li class="list-element list-counter-953" style="color:#000000;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-953;">
+<div class="p de_DED146C894"><div class="list-marker" style="color:#000000;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div>The Assessment header typically includes a sub-page(s) of questions, requirements, or practices in which users can select answers.</div>
+</li><li class="list-element list-counter-954" style="color:#000000;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-954;">
+<div class="p de_1A360002F4"><div class="list-marker" style="color:#000000;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div>See <a class="local_link" href="assessment_screen.htm"><span class="de_2B94C39861">Assessment Screen</span></a> for more information.</div>
+</li></ul></td></tr><tr class="topLinkRow" style="border-style:none"><td style="border-style:none; text-align: right;"><div style="text-align: right; font-size:8pt"><a href="#top">Top</a></div></td></tr></table></div></div>
 </div>                	<div class="menu_on_page">
 		<h2>The contents of Assessment Section</h2>
 		<div class="m-workZone_seeAlso_itemContent">
@@ -317,7 +333,14 @@
 			<span class="b-tree__i_article_inner"></span>
 		</span>
 	</span>
-	<span class="b-tree__itemText"><a class="b-breadCrumbs__link" href="questions_screen.htm">Assessment Screen</a></span>
+	<span class="b-tree__itemText"><a class="b-breadCrumbs__link" href="assessment_screen.htm">Assessment Screen</a></span>
+</div><div class="m-workZone_seeAlso_itemContent">
+	<span class="b-tree__spacer">
+		<span class="b-tree__i_article">
+			<span class="b-tree__i_article_inner"></span>
+		</span>
+	</span>
+	<span class="b-tree__itemText"><a class="b-breadCrumbs__link" href="diagram_component_questions.htm">Diagram Component Questions</a></span>
 </div>	</div>
                     			
                 			                <h6 class="b-article__generatorCopyright">
