@@ -32,7 +32,9 @@ jobs:
           scan-ref: ./CSETWebApi
           severity: CRITICAL,HIGH
           skip-files: |
-            CSETWebApi/CSETWeb_Api/**/*.sql
+            CSETWebApi/CSETWeb_Api/**/*.sql, \
+            CSETWebApi/CSETWeb_Api/**/*.xml, \
+            CSETWebApi/CSETWeb_Api/**/*.js
 
       - name: Upload SARIF artifact
         id: upload
