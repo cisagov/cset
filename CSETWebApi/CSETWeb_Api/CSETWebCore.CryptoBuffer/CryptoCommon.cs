@@ -22,20 +22,20 @@ namespace CSETWebCore.CryptoBuffer
 			switch (parts[0])
 			{
 				case "AES":
-					symmetricAlg = new AesCryptoServiceProvider();
+					symmetricAlg = Aes.Create();
 					break;
 				case "Rijndael":
-					symmetricAlg = new RijndaelManaged();
+					symmetricAlg = Aes.Create();
 					symmetricAlg.BlockSize = int.Parse(parts[3]); // Rijndael is the only one that can set a different block size
 					break;
 				case "RC2":
-					symmetricAlg = new RC2CryptoServiceProvider();
+					symmetricAlg = RC2.Create();
 					break;
 				case "DES":
-					symmetricAlg = new DESCryptoServiceProvider();
+					symmetricAlg = DES.Create();
 					break;
 				case "TripleDES":
-					symmetricAlg = new TripleDESCryptoServiceProvider();
+					symmetricAlg = TripleDES.Create();
 					break;
 				default:
 					throw new Exception("Invalid SymmetricAlgorithm");
