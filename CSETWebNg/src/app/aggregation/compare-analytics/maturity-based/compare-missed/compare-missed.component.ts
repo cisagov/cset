@@ -34,15 +34,21 @@ export class CompareMaturityMissedComponent implements OnInit {
 
   missedQuestions: [] = null;
 
+  /**
+   * 
+   */
   constructor(
     public aggregationSvc: AggregationService
   ) { }
 
+  /**
+   * 
+   */
   ngOnInit() {
     this.aggregationSvc.getMaturityMissedQuestions().subscribe((resp: any) => {
       this.missedQuestions = resp.missedQuestions;
 
-      // determine the appropriate text to be displayed  
+      // determine the appropriate text to be displayed for the questions
       this.missedQuestions.forEach((q: any) => {
         q.displayText = q.questionText;
 
@@ -50,7 +56,6 @@ export class CompareMaturityMissedComponent implements OnInit {
           q.displayText = q.securityPractice;
         }
       });
-
     });
   }
 }

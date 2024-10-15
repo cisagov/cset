@@ -45,7 +45,7 @@ namespace CSETWebCore.Api.Controllers
             // Get the current userid to set as the Assessment creator and first attached user
             var currentUserId = _token.GetCurrentUserId();
 
-            var manager = new AggregationBusiness(_context);
+            var manager = new AggregationBusiness(_context, _token);
             return Ok(manager.GetAggregations(mode, (int)currentUserId));
         }
 
@@ -54,7 +54,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/aggregation/create")]
         public IActionResult CreateAggregation([FromQuery] string mode)
         {
-            var manager = new AggregationBusiness(_context);
+            var manager = new AggregationBusiness(_context, _token);
             return Ok(manager.CreateAggregation(mode));
         }
 
@@ -69,7 +69,7 @@ namespace CSETWebCore.Api.Controllers
                 return null;
             }
 
-            var manager = new AggregationBusiness(_context);
+            var manager = new AggregationBusiness(_context, _token);
             return Ok(manager.GetAggregation((int)aggregationID));
         }
 
@@ -84,7 +84,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            var manager = new AggregationBusiness(_context);
+            var manager = new AggregationBusiness(_context, _token);
             manager.SaveAggregationInformation(aggregation.AggregationId, aggregation);
             return Ok();
         }
@@ -94,7 +94,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/aggregation/delete")]
         public IActionResult DeleteAggregation([FromQuery] int aggregationId)
         {
-            var manager = new AggregationBusiness(_context);
+            var manager = new AggregationBusiness(_context, _token);
             manager.DeleteAggregation(aggregationId);
             return Ok();
         }
@@ -110,7 +110,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            var manager = new AggregationBusiness(_context);
+            var manager = new AggregationBusiness(_context, _token);
             return Ok(manager.GetAssessmentsForAggregation((int)aggregationID));
         }
 
@@ -125,7 +125,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            var aggreg = new AggregationBusiness(_context);
+            var aggreg = new AggregationBusiness(_context, _token);
             return Ok(aggreg.SaveAssessmentSelection((int)aggregationID, request.AssessmentId, request.Selected));
         }
 
@@ -140,7 +140,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            var aggreg = new AggregationBusiness(_context);
+            var aggreg = new AggregationBusiness(_context, _token);
             var newAlias = aggreg.SaveAssessmentAlias((int)aggregationID, req.aliasAssessment.AssessmentId, req.aliasAssessment.Alias, req.assessmentList);
 
             return Ok(newAlias);
@@ -157,7 +157,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok(new List<MissedQuestion>());
             }
 
-            var manager = new AggregationBusiness(_context);
+            var manager = new AggregationBusiness(_context, _token);
             return Ok(manager.GetCommonlyMissedQuestions((int)aggregationID));
         }
 
@@ -187,7 +187,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/aggregation/getanswers")]
         public IActionResult GetAnswers()
         {
-            var aggreg = new AggregationBusiness(_context);
+            var aggreg = new AggregationBusiness(_context, _token);
             // return aggreg.GetAnswers(new List<int>() { 4, 5 });
 
             return Ok();
@@ -201,7 +201,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/aggregation/setmergeanswer")]
         public IActionResult SetMergeAnswer([FromQuery] int answerId, [FromQuery] string answerText)
         {
-            var aggreg = new AggregationBusiness(_context);
+            var aggreg = new AggregationBusiness(_context, _token);
             // aggreg.SetMergeAnswer(answerId, answerText);
 
             return Ok();

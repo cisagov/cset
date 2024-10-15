@@ -14,11 +14,9 @@ using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Standards;
-using SixLabors.ImageSharp.ColorSpaces;
 
 namespace CSETWebCore.Api.Controllers
 {

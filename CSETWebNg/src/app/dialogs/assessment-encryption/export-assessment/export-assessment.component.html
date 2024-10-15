@@ -1,0 +1,66 @@
+<!----------------------
+
+   Copyright 2024 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div *transloco="let t" class="d-flex flex-column justify-content-center flex-11a">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span class="me-3 fs-base-6 cset-icons-exclamation-triangle" aria-label="charter-warning"></span>
+    <span>{{t('dialogs.export assessment title')}}</span>
+  </div>
+
+  <mat-dialog-content class="pt-3 ps-3 pe-3 d-flex flex-column flex-11a">
+    
+    <div *ngIf="!input.encryption && !input.jsonOnly">
+    <p>{{t('dialogs.encrypt 1')}}</p>
+    <p>{{t('dialogs.encrypt 2')}}</p>
+    </div>
+    
+    <div class="input-container ms-1 me-1">
+      <div *ngIf="!input.encryption && !input.jsonOnly">
+      <input [type]="showPassword ? 'text' : 'password'" tabindex="0" class="form-control mt-2" name="password"
+        placeholder="Password" [(ngModel)]="password" />
+      <div *ngIf="!showPassword" class="input-icon" (click)="togglePasswordVisibility()" matTooltip="Show password">
+        <i class="fas fa-eye"></i>
+      </div>
+      <div *ngIf="showPassword" class="input-icon" (click)="togglePasswordVisibility()" matTooltip="Hide password">
+        <i class="fas fa-eye-slash"></i>
+      </div>
+
+      <input type="text" tabindex="0" class="form-control mt-4" name="passwordHint"
+        placeholder="Password Hint (Optional)" [(ngModel)]="passwordHint" />
+      </div>
+    
+      <div *ngIf="input.jsonOnly"class="mt-2">
+        <span>
+          <input type="checkbox" name="PCII" class="p-2" [(ngModel)]="scrubData" (change)="onScrubDataChange($event)"/>
+          {{t('dialogs.scrub pcii')}}
+        </span>
+      </div>
+
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">
+    <button class="m-0 btn btn-secondary" (click)="cancel()">{{ t('buttons.cancel') }}</button>
+    <button class="btn btn-secondary" (click)="confirm()">{{ t('buttons.continue') }}</button>
+  </mat-dialog-actions>
+
+</div>

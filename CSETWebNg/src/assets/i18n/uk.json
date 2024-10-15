@@ -284,10 +284,10 @@
     "change": "Змінити",
     "remove": "Видалити",
     "not authorized message": "Ви не маєте права вносити зміни до контактів у цьому оцінюванні.",
-    "contact an administrator message": "Будь ласка, зв’яжіться з адміністратором для цього оцінювання, щоб внести зміни або отримати адміністративний доступ.", 
-    "details": "Додаткова інформація", 
-    "no details": "Немає доступних", 
-    "creator": "Творець оцінок", 
+    "contact an administrator message": "Будь ласка, зв’яжіться з адміністратором для цього оцінювання, щоб внести зміни або отримати адміністративний доступ.",
+    "details": "Додаткова інформація",
+    "no details": "Немає доступних",
+    "creator": "Творець оцінок",
     "editor": "Редактор оцінювання"
   },
   "answer-options": {
@@ -487,7 +487,11 @@
     "please confirm": "Підтвердження",
     "remove contact": "Ви впевнені, що хочете видалити {{firstName}} {{lastName}} з цього оцінювання?",
     "remove assessment": "Ви впевнені, що хочете видалити {{assessmentName}}?",
-    "confirm create new assessment": "Ви впевнені, що хочете створити нове оцінювання?"
+    "confirm create new assessment": "Ви впевнені, що хочете створити нове оцінювання?", 
+    "export assessment title": "Параметри експортної оцінки", 
+    "scrub pcii": "Виберіть, щоб видалити поля PCII з експорту", 
+    "encrypt 1": "Щоб зашифрувати свою оцінку, введіть пароль.", 
+    "encrypt 2": "Якщо ви продовжите без введення пароля, шифрування не використовуватиметься."
   },
   "reports": {
     "launch": {
@@ -1200,6 +1204,39 @@
     "traffic light protocol": "Протокол Світлофору",
     "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> є частиною <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Департамент державної безпеки Сполучених Штатів</a>",
     "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Веб-сайт</a>"
+  },
+  "aggregation": {
+    "assessment alias": "Аліас оцінки",
+    "total": "Загальна кількість",
+    "compare": {
+      "compare assessments": "Порівняння оцінок",
+      "overall summary": "Загальна підсумкова",
+      "overall average summary": "Загальна середня підсумкова",
+      "overall comparison": "Загальне порівняння",
+      "sal comparison": "Загальне порівняння рівнів забезпечення безпеки",
+      "category percent comparisons": "Відсоткове порівняння категорій",
+      "standards answers": "Відповіді на стандарти",
+      "components answers": "Відповіді на компоненти",
+      "both need diagrams": "Візуалізація порівняння доступна лише тоді, коли обидві оцінки включають діаграми мережі.",
+      "category avg all assessments": "Середнє значення категорії для всіх оцінок",
+      "percentages may not equal 100": "Відсотки можуть не дорівнювати 100%, якщо порівнювати оцінки через усереднення відповідей.",
+      "individual assessment comparison": "Індивідуальне порівняння оцінок",
+      "commonly missed questions": "Зазвичай пропущені питання",
+      "best to worst": "Найкраще до найгіршого",
+      "assessment answer summary": "Підсумок відповіді на оцінку",
+      "domain level compliance": "Відповідність на рівні домену",
+      "compliance 1": "Наведена нижче діаграма показує нормалізовані (відсотки) бали відповідності для порівнюваних оцінок. Питання, на які відповідається як 'Реалізовано', враховуються при розрахунку представлених балів.",
+      "compliance 2": "Розподіл відповідей можна переглянути на вкладці 'Найкраще до найгіршого'.",
+      "lists questions answered no": "Ця таблиця перелічує питання або вимоги, на які було відповідено 'Ні' у всіх порівнюваних оцінках.",
+      "title": "Назва",
+      "category": "Категорія",
+      "subcategory": "Підкатегорія",
+      "question": "Питання",
+      "no missed questions": "Немає питань, на які було відповідено 'Ні' у всіх порівнюваних оцінках.",
+      "generate compare report": "Створити звіт про порівняння",
+      "report title": "Звіт про порівняння декількох оцінок",
+      "document library": "Бібліотека документів"
+    }
   },
   "tutorials": {
     "function": "функція",
