@@ -33,7 +33,6 @@ namespace CSETWebCore.Business.Assessment
         private readonly IContactBusiness _contactBusiness;
         private readonly ISalBusiness _salBusiness;
         private readonly IMaturityBusiness _maturityBusiness;
-        private readonly IACETMaturityBusiness _acetMaturityBusiness;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IStandardsBusiness _standardsBusiness;
         private readonly IDiagramManager _diagramManager;
@@ -511,7 +510,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.SectorId = d1Sector;
 
                 var d2 = new Demographic.DemographicExtBusiness(_context);
-                var d2Sector  = (int?)d2.GetX(assessmentId, "SECTOR");
+                var d2Sector = (int?)d2.GetX(assessmentId, "SECTOR");
                 if (d2Sector != null)
                 {
                     assessment.SectorId = d2Sector;
@@ -668,7 +667,7 @@ namespace CSETWebCore.Business.Assessment
                 {
                     dbAssessment.Assessment_GUID = assessment.AssessmentGuid;
                 }
-                else 
+                else
                 {
                     dbAssessment.Assessment_GUID = Guid.NewGuid();
                 }
@@ -970,7 +969,7 @@ namespace CSETWebCore.Business.Assessment
             var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
             return assessment?.AssessmentCreatorId;
         }
-        
+
 
 
         /// <summary>
@@ -1081,7 +1080,7 @@ namespace CSETWebCore.Business.Assessment
             {
                 var results = (from a in _context.ANSWER
                                join da in _context.DOCUMENT_ANSWERS on a.Answer_Id equals da.Answer_Id
-                               join f in _context.DOCUMENT_FILE on da.Document_Id  equals f.Document_Id
+                               join f in _context.DOCUMENT_FILE on da.Document_Id equals f.Document_Id
                                where a.Assessment_Id == assessId
                                select new { a, da, f }).ToList();
 
@@ -1096,7 +1095,7 @@ namespace CSETWebCore.Business.Assessment
                     document.Title = pair.f.Title;
                     document.Answer_Id = pair.da.Answer_Id;
                     document.Question_Id = pair.a.Question_Or_Requirement_Id;
-                    
+
                     documentList.Add(document);
                 }
 

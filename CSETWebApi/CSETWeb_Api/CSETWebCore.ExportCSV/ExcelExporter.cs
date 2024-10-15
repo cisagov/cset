@@ -18,7 +18,6 @@ namespace CSETWebCore.ExportCSV
     {
         private CSETContext _context;
         private readonly IDataHandling _dataHandling;
-        private readonly IMaturityBusiness _maturity;
         private readonly IACETMaturityBusiness _acetMaturity;
         private readonly IACETDashboardBusiness _acet;
         private readonly IHttpContextAccessor _http;
