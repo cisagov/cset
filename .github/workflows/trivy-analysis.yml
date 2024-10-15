@@ -26,17 +26,19 @@ jobs:
       - name: Run vulnerability scanner
         uses: aquasecurity/trivy-action@0.27.0
         with:
+          format: sarif
+          output: trivy-dotnet-results.sarif
           scan-type: fs
           scan-ref: ./CSETWebApi
           scanners: vuln
           severity: CRITICAL,HIGH
 
-      # - name: Upload SARIF artifact
-      #   id: upload
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: trivy-dotnet-results
-      #     path: trivy-dotnet-results.sarif
+      - name: Upload SARIF artifact
+        id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-dotnet-results
+          path: trivy-dotnet-results.sarif
 
   nodejs:
     name: Node.js Analysis
