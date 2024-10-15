@@ -544,10 +544,10 @@ function checkPort(port, host) {
 
   function onErrorCb(err) {
     if (err.code !== 'ECONNREFUSED') {
-        deferred.reject(err);
+      deferred.reject(err);
     } else {
-        inUse = false;
-        deferred.resolve(inUse);
+      inUse = false;
+      deferred.resolve(inUse);
     }
     cleanUp();
   }
