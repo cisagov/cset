@@ -4,8 +4,9 @@ const url = require('url');
 const child = require('child_process').execFile;
 const http = require('http');
 const log = require('electron-log');
-const tcpPortUsed = require('tcp-port-used');
-const findTextPrompt = require('./src/custom-modules/electron-prompt/lib/index');
+const net = require('net');
+const util = require('util');
+const findTextPrompt = require('electron-find-on-page');
 const gotTheLock = app.requestSingleInstanceLock();
 const merge = require('lodash').merge;
 
@@ -448,7 +449,7 @@ function launchAPI(exeDir, fileName, port, window) {
 
 // Increment port number until a non listening port is found
 function assignPort(port, offLimitPort, host) {
-  return tcpPortUsed.check(port, host).then(status => {
+  return checkPort(port, host).then(status => {
     if (status === true || port === offLimitPort) {
       log.info('Port', port, 'on', host, 'is already in use. Incrementing port...');
       return assignPort(port + 1, offLimitPort, host);
@@ -460,27 +461,135 @@ function assignPort(port, offLimitPort, host) {
   });
 }
 
+/**
+ * Checks if a TCP port is in use by creating the socket and binding it to the
+ * target port. Once bound, successfully, it's assume the port is available.
+ * After the socket is closed or in error, the promise is resolved.
+ * Note: you have to be super user to correctly test system ports (0-1023).
+ * @param {Number|Object} port The port you are curious to see if available. If an object, must have the parameters as properties.
+ * @param {String} [host] May be a DNS name or IP address. Default '127.0.0.1'
+ * @return {Object} A deferred Q promise.
+ **/
+function checkPort(port, host) {
+
+  function getDeferred() {
+    var resolve, reject, promise = new Promise(function(res, rej) {
+      resolve = res;
+      reject = rej;
+    });
+
+    return {
+      resolve: resolve,
+      reject: reject,
+      promise: promise
+    };
+  }
+
+  /**
+   * Creates an options object from all the possible arguments
+   * @private
+   * @param {Number} port a valid TCP port number
+   * @param {String} host The DNS name or IP address.
+   * @param {Boolean} status The desired in use status to wait for: false === not in use, true === in use
+   * @param {Number} retryTimeMs the retry interval in milliseconds - defaultis is 200ms
+   * @param {Number} timeOutMs the amount of time to wait until port is free default is 1000ms
+   * @return {Object} An options object with all the above parameters as properties.
+   */
+  function makeOptionsObj(port, host, inUse, retryTimeMs, timeOutMs) {
+    var opts = {};
+    opts.port = port;
+    opts.host = host;
+    opts.inUse = inUse;
+    opts.retryTimeMs = retryTimeMs;
+    opts.timeOutMs = timeOutMs;
+    return opts;
+  }
+
+  var deferred = getDeferred();
+  var inUse = true;
+  var client;
+
+  var opts;
+  if (typeof opts !== 'object') {
+    opts = makeOptionsObj(port, host);
+  } else {
+    opts = port;
+  }
+
+  // check is port is valid
+  if (typeof opts.port !== 'number' || isNaN(opts.port) || opts.port < 0 || opts.port > 65535) {
+    deferred.reject(new Error('invalid port: '+util.inspect(opts.port)));
+    return deferred.promise;
+  }
+
+  // check for host
+  if (opts.host == null) {
+    opts.host = '127.0.0.1';
+  }
+
+  function cleanUp() {
+    if (client) {
+      client.removeAllListeners('connect');
+      client.removeAllListeners('error');
+      client.end();
+      client.destroy();
+      client.unref();
+    }
+  }
+
+  function onConnectCb() {
+    deferred.resolve(inUse);
+    cleanUp();
+  }
+
+  function onErrorCb(err) {
+    if (err.code !== 'ECONNREFUSED') {
+        deferred.reject(err);
+    } else {
+        inUse = false;
+        deferred.resolve(inUse);
+    }
+    cleanUp();
+  }
+
+  client = new net.Socket();
+  client.once('connect', onConnectCb);
+  client.once('error', onErrorCb);
+  client.connect({port: opts.port, host: opts.host}, function() {});
+
+  return deferred.promise;
+}
+
 let retryApiConnection = (() => {
   let count = 0;
 
   return (max, timeout, port, next) => {
-    http.get(
+
+    function checkMaxCountAndRecurse(maxTries, timeoutBetweenRequests, destPort, callback) {
+      if (count++ < max - 1) {
+        return setTimeout(() => {
+          retryApiConnection(maxTries, timeoutBetweenRequests, destPort, callback);
+        }, timeout);
+      } else {
+        return next(new Error('Max API connection retries reached'));
+      }
+    }
+
+    let req = http.get(config.api.protocol + '://' + config.api.host + ':' + port + '/api/IsRunning',
       {
-        url: 'http://localhost:' + port + '/api/IsRunning'
+        timeout: 2000
       },
       (response) => {
         if (response.statusCode !== 200) {
-          if (count++ < max - 1) {
-            return setTimeout(() => {
-              retryApiConnection(max, timeout, port, next);
-            }, timeout);
-          } else {
-            return next(new Error('Max API connection retries reached'));
-          }
+          return checkMaxCountAndRecurse(max, timeout, port, next);
         }
 
         log.info('Successful connection to API established. Loading ' + appName + ' main window...');
         next(null);
+      });
+
+      req.on('error', (error) => {
+        return checkMaxCountAndRecurse(max, timeout, port, next);
       });
   }
 })();
