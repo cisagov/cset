@@ -45,14 +45,14 @@ a:visited ,*/
 .b-breadCrumbs__link:visited,
 .b-controlButtons__link,
 .b-controlButtons__link:visited {
-    color: #546e7a;
-    border-bottom-color: #a7b4ba;
+    color: #367190;
+    border-bottom-color: #367190;
 }
 
 tr.topLinkRow a,
 tr.topLinkRow a:visited {
-	color: #546e7a !important;
-	border-bottom-color: #a7b4ba !important;
+	color: #367190 !important;
+	border-bottom-color: #367190 !important;
 	font-size: 8pt !important;
 }
 
@@ -63,8 +63,8 @@ h6.b-article__generatorCopyright {
 
 .b-breadCrumbs__link:hover,
 .b-controlButtons__link:hover {
-    color: #b0bec5;
-    border-bottom-color: #d5dcdf;
+    color: #052637;
+    border-bottom-color: #1d4b63;
 }
 
 .b-article__generatorCopyrightLink:link,
@@ -90,7 +90,7 @@ h6.b-article__generatorCopyright {
     text-align: center;
     cursor: default;
 
-    background-color: rgb(84,110,122);
+    background-color: rgb(5,38,55);
 
     font-size: 14px;
     font-family: Arial;
@@ -224,12 +224,12 @@ html {
 
 .m-pageContent__side__left {
     vertical-align: top;
-    width: 1px;
+    width: 100px;
 }
 
 .m-pageContent__side__right {
     vertical-align: top;
-    width: 1px;
+    width: 100px;
 }
 
 .m-pageContent__side__right {
@@ -272,7 +272,7 @@ html {
 }
 .b-workZone {
     width: 100%;
-    background: #fafafa;
+    background: #367190;
     overflow: hidden;
 }
 
@@ -357,8 +357,8 @@ html[dir="rtl"] .m-workZone_seeAlso_itemContent {
 
 /*@import url( 'article.css');*/
 .b-article {
-    background-color: #fafafa;
-    color: #263238;
+    background-color: #367190;
+    color: #fafafa;
     padding: 0;
 
     position: relative;
@@ -776,9 +776,9 @@ html[dir="rtl"] .b-search__labelPlaceholder {
     margin: 0;
     outline: none;
     min-height: 14px;
-    color: #263238;
-    background-color: #fafafa;
-    border: 1px solid #263238;
+    color: #fafafa;
+    background-color: #367190;
+    border: 1px solid #fafafa;
 }
 
 .m-search__tabs .b-search__inputText {
@@ -830,8 +830,8 @@ html[dir="rtl"] .m-search__tabs .m-search__side__submit {
 
 /*@import url( 'tree.css');*/
 .b-tree {
-    color: #263238;
-    background-color: #fafafa;
+    color: #fafafa;
+    background-color: #367190;
 
     position: relative;
 
@@ -934,7 +934,7 @@ span.m-tree__itemText__selected {
     text-decoration: none;
 
     border-bottom: none;
-    color:#263238 !important;
+    color:#fafafa !important;
 
     height: 1.6em;
 
@@ -959,13 +959,13 @@ html[dir="rtl"] .b-tree__itemLink {
 
 
 .m-tree__itemContent__selected {
-    background-color: rgb(84,110,122);
+    background-color: rgb(5,38,55);
     color: #ffffff;
 }
 
 .b-tree__itemContent:hover {
-    background-color: rgb(176,190,197);
-    color: #263238;
+    background-color: rgb(152,193,216);
+    color: #fafafa;
 }
 
 .m-tree__itemContent__selected,
@@ -974,16 +974,16 @@ html[dir="rtl"] .b-tree__itemLink {
 }
 
 .m-tree__item__throughSelected {
-    border-left: 1px solid #263238;
+    border-left: 1px solid #fafafa;
 }
 
 html[dir="rtl"] .m-tree__item__throughSelected {
     border-left: none;
-    border-right: 1px solid #263238;
+    border-right: 1px solid #fafafa;
 }
 
 .m-tree__item__throughSelectedRoot {
-    background-color: #26323816;
+    background-color: #fafafa16;
 }
 
 .b-tree__itemText {
@@ -1662,8 +1662,8 @@ html[dir="rtl"] .b-tabs__selectorItem {
 
 .m-tabs__selectorItem__selected .b-tabs__selectorContent,
 .b-tabs__wrapperItems {
-    background-color: #fafafa;
-    color: #263238;
+    background-color: #367190;
+    color: #fafafa;
 }
 
 .m-tabs__selectorItem__selected .b-tabs__selectorContent {
@@ -1676,7 +1676,7 @@ html[dir="rtl"] .b-tabs__selectorItem {
     position: relative;
     font-size: 0.8em;
     padding: 0.5em 1.5em 0.5em 2.0em;
-    color: #263238;
+    color: #fafafa;
     cursor: default;
     white-space: pre;
 }
@@ -1698,12 +1698,12 @@ html[dir="rtl"] .b-tabs__selectorContent {
 }
 
 .m-tabs__selectorItem__selected .b-tabs__selectorContent {
-    border-bottom: 2px #546e7a solid;
+    border-bottom: 2px #fafafa solid;
 }
 
 .m-tabs__selectorItem__hovered .b-tabs__selectorContent {
-    background-color: #b0bec5;
-    color: #263238;
+    background-color: #052637;
+    color: #fafafa;
     cursor: pointer;
 }
 
@@ -1785,19 +1785,19 @@ html[dir="rtl"] .b-tabs__wrapperItemInner div.b-tree.vscroll {
 .b-tabs__wrapperItemInner .os-scrollbar-horizontal,
 .b-tabs__wrapperItemInner .os-scrollbar-vertical,
 .b-tabs__wrapperItemInner .os-scrollbar-corner {
-    background-color: #fafafa !important;
+    background-color: #367190 !important;
 }
 
 .b-tabs__wrapperItemInner .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle {
-    background-color: #263238 !important;
+    background-color: #fafafa !important;
 }
 
 .b-tabs__wrapperItemInner .os-scrollbar:hover > .os-scrollbar-track > .os-scrollbar-handle {
-    background-color: rgb(84,110,122) !important;
+    background-color: rgb(5,38,55) !important;
 }
 
 .b-tabs__wrapperItemInner .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle.active {
-    background-color: rgb(84,110,122) !important;
+    background-color: rgb(5,38,55) !important;
 }
 
 .m-pageView__state__frame .b-tabs__wrapperItemInner {
