@@ -10,10 +10,10 @@
         "build": "ng build --configuration production",
         "test": "ng test",
         "lint": "ng lint",
-        "preinstall": "npx npm-force-resolutions",
         "start:electron": "ng build --configuration production --source-map=false --base-href ./ && electron .",
-        "build:electron": "npm exec @electron/packager . \"CSET\" --out=electron-builds --asar --arch=x64 --prune --overwrite --icon=src/favicon_cset.ico --win32metadata.CompanyName=\"CISA\" --ignore=\"(node_modules/.cache*|node_modules/@angular*|node_modules/@angular-devkit*|node_modules/@angular-slider*|.vscode*|.angular*)\"",
-        "version:electron": "npm exec @electron/packager --version"
+        "build:electron": "npm run setup:electron-build-files && npx @electron/packager temp-electron \"CSET\" --out=electron-builds --arch=x64 --prune --overwrite --icon=src/favicon_tsa.ico --win32metadata.CompanyName=\"CISA\" && shx rm -rf temp-electron",
+        "version:electron": "npx @electron/packager --version",
+        "setup:electron-build-files": "shx rm -rf temp-electron && shx mkdir -p temp-electron/node_modules && shx cp -r {package.json,main-electron.js,License.txt,NOTICE.txt,dist} temp-electron && shx cp -r node_modules/{electron-log,electron-find-on-page} temp-electron/node_modules"
     },
     "dependencies": {
         "@angular-devkit/build-webpack": "^0.1802.8",
@@ -48,6 +48,7 @@
         "bootstrap": "^5.3.2",
         "chart.js": "^4.4.4",
         "document-register-element": "^1.14.10",
+        "electron-find-on-page": "^1.0.1",
         "electron-log": "^5.2.0",
         "file-saver": "^2.0.5",
         "font-awesome": "^4.7.0",
@@ -75,7 +76,8 @@
     },
     "devDependencies": {
         "@angular-builders/custom-webpack": "^18.0.0",
+        "@electron/packager": "^18.3.5",
         "electron": "^32.2.0",
-        "@electron/packager": "^18.3.5"
+        "shx": "^0.3.4"
     }
 }
