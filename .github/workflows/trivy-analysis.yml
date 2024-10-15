@@ -30,12 +30,8 @@ jobs:
           output: trivy-dotnet-results.sarif
           scan-type: fs
           scan-ref: ./CSETWebApi
+          scanners: vuln
           severity: CRITICAL,HIGH
-          skip-files: |
-            CSETWeb_Api/**/*.sql, \
-            CSETWeb_Api/**/*.xml, \
-            CSETWeb_Api/**/*.js, \
-            CSETWeb_Api/**/*.min.js
 
       - name: Upload SARIF artifact
         id: upload
