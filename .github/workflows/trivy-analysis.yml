@@ -34,7 +34,8 @@ jobs:
           skip-files: |
             CSETWebApi/CSETWeb_Api/**/*.sql, \
             CSETWebApi/CSETWeb_Api/**/*.xml, \
-            CSETWebApi/CSETWeb_Api/**/*.js
+            CSETWebApi/CSETWeb_Api/**/*.js \
+            CSETWebApi/CSETWeb_Api/**/*.min.js
 
       - name: Upload SARIF artifact
         id: upload
