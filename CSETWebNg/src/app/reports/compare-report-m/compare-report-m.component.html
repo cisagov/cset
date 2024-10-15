@@ -25,7 +25,7 @@
   <div class="flex-container">
     <div class="column mt-3">
       <p class="report-title">
-        MULTIPLE ASSESSMENT COMPARISON REPORT
+        {{t('aggregation.compare.report title') | uppercase}}
       </p>
     </div>
 
@@ -57,12 +57,12 @@
 
   <div class="page-break">
     <div class="mb-5">
-      <h1>Assessment Answer Summary</h1>
+      <h1>{{t('aggregation.compare.assessment answer summary')}}</h1>
 
       <table class="table table-bordered table-td-p2">
         <tr>
-          <th class="text-start">Assessment Alias</th>
-          <th class="text-end ps-3">Total</th>
+          <th class="text-start">{{t('aggregation.assessment alias')}}</th>
+          <th class="text-end ps-3">{{t('aggregation.total')}}</th>
           <th *ngFor="let al of answerLabels" class="text-end ps-3">{{ al }}</th>
         </tr>
         <tr *ngFor="let assess of answerCounts">
@@ -82,13 +82,11 @@
 
     <div class="chart d-flex flex-column flex-00a mb-5">
       <h1>
-        Domain-Level Compliance
+        {{t('aggregation.compare.domain level compliance')}}
       </h1>
 
       <p class="text-start">
-        The chart below indicates normalized (percentages) compliance scores for the
-        assessments being compared.
-        Questions that are answered as "Implemented" count towards the scores represented.
+        {{t('aggregation.compare.compliance 1')}}
       </p>
 
       <div *ngIf="!chartsMaturityCompliance || chartsMaturityCompliance.length == 0">
@@ -106,7 +104,7 @@
   </div>
 
   <div class="page-break mb-5">
-    <h1>Document Library</h1>
+    <h1>{{t('aggregation.compare.document library')}}</h1>
 
     <table class="table table-bordered table-td-p2">
       <tr>

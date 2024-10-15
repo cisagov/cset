@@ -20,51 +20,53 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="chart d-flex flex-column flex-00a">
-  <h3>Assessment Answer Summary</h3>
+<div *transloco="let t">
 
-  <table class="table table-bordered table-td-p2">
-    <tr>
-      <th class="text-start p-2">Assessment Alias</th>
-      <th class="text-end p-2 ps-3">Total</th>
-      <th *ngFor="let al of answerLabels" class="text-end p2 ps-3">{{ al }}</th>
-    </tr>
-    <tr *ngFor="let assess of answerCounts">
-      <td class="text-start p-2">{{ assess.alias }}</td>
-      <td class="text-end p-2 ps-3" style="width: 10%">{{ assess.answerCounts[0].total }}</td>
-      <td class="text-end p-2 ps-3" style="width: 10%" *ngFor="let ac of assess.answerCounts">{{ ac.qc }}</td>
-    </tr>
-  </table>
-</div>
+  <div class="chart d-flex flex-column flex-00a">
+    <h3>{{t('aggregation.compare.assessment answer summary')}}</h3>
 
-<div *ngIf="answerCounts == null">
-  <div class="spinner-container" style="margin: 2em auto">
-    <div style="max-width: 50px; max-height: 50px;"></div>
-  </div>
-</div>
+    <table class="table table-bordered table-td-p2">
+      <tr>
+        <th class="text-start p-2">{{t('aggregation.assessment alias')}}</th>
+        <th class="text-end p-2 ps-3">{{t('aggregation.total')}}</th>
+        <th *ngFor="let al of answerLabels" class="text-end p2 ps-3">{{ al }}</th>
+      </tr>
+      <tr *ngFor="let assess of answerCounts">
+        <td class="text-start p-2">{{ assess.alias }}</td>
+        <td class="text-end p-2 ps-3" style="width: 10%">{{ assess.answerCounts[0].total }}</td>
+        <td class="text-end p-2 ps-3" style="width: 10%" *ngFor="let ac of assess.answerCounts">{{ ac.qc }}</td>
+      </tr>
+    </table>
 
-<div class="chart d-flex flex-column flex-00a mb-5">
-  <h3>
-    Domain-Level Compliance
-  </h3>
-  <p class="text-start">
-    The chart below indicates normalized (percentages) compliance scores for the
-    assessments being compared.
-    Questions that are answered as "Implemented" count towards the scores represented.
-  </p>
-  <p class="text-start">
-    Answer distributions are viewable on the 'Best To Worst' tab.
-  </p>
-
-  <div *ngIf="!chartsMaturityCompliance || chartsMaturityCompliance.length == 0">
-    <div class="spinner-container" style="margin: 2em auto">
-      <div style="max-width: 50px; max-height: 50px;"></div>
+    <div *ngIf="answerCounts == null">
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
     </div>
   </div>
-  <div *ngFor="let i of chartsMaturityCompliance" class="my-4">
-    <h5>{{i.chartName}}</h5>
-    <canvas id="{{ 'canvasMaturityBars-' + i.chartName }}"
-      style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ i }}</canvas>
-  </div>
 
+
+  <div class="chart d-flex flex-column flex-00a mb-5">
+    <h3>
+      {{t('aggregation.compare.domain level compliance')}}
+    </h3>
+    <p class="text-start">
+      {{t('aggregation.compare.compliance 1')}}
+    </p>
+    <p class="text-start">
+      {{t('aggregation.compare.compliance 2')}}
+    </p>
+
+    <div *ngIf="!chartsMaturityCompliance || chartsMaturityCompliance.length == 0">
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+    </div>
+    <div *ngFor="let i of chartsMaturityCompliance" class="my-4">
+      <h5>{{i.chartName}}</h5>
+      <canvas id="{{ 'canvasMaturityBars-' + i.chartName }}"
+        style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ i }}</canvas>
+    </div>
+
+  </div>
 </div>

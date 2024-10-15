@@ -20,87 +20,93 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="chart d-flex flex-column flex-00a">
-  <h3>Assessment Answer Summary</h3>
-  <table class="table table-bordered table-td-p2">
-    <tr>
-      <th class="text-start p-2">Assessment Alias</th>
-      <th class="text-end p-2 ps-3">Total</th>
-      <th class="text-end p-2 ps-3">Yes</th>
-      <th class="text-end p-2 ps-3">No</th>
-      <th class="text-end p-2 ps-3">NA</th>
-      <th class="text-end p-2 ps-3">Alt</th>
-      <th class="text-end p-2 ps-3">Unanswered</th>
-    </tr>
-    <tr *ngFor="let a of answerCounts">
-      <td class="text-start p-2">{{ a.alias }}</td>
-      <td class="text-end p-2 ps-3" style="width: 10%">{{ a.total }}</td>
-      <td class="text-end p-2 ps-3" style="width: 10%">{{ a.y }}</td>
-      <td class="text-end p-2 ps-3" style="width: 10%">{{ a.n }}</td>
-      <td class="text-end p-2 ps-3" style="width: 10%">{{ a.na }}</td>
-      <td class="text-end p-2 ps-3" style="width: 10%">{{ a.a }}</td>
-      <td class="text-end p-2 ps-3" style="width: 10%">{{ a.u }}</td>
-    </tr>
-  </table>
-</div>
-<div *ngIf="answerCounts == null">
-  <div class="spinner-container" style="margin: 2em auto">
-    <div style="max-width: 50px; max-height: 50px;"></div>
+<div *transloco="let t">
+  <div class="chart d-flex flex-column flex-00a">
+    <h3>{{t('aggregation.compare.assessment answer summary')}}</h3>
+    <table class="table table-bordered table-td-p2">
+      <tr>
+        <th class="text-start p-2">{{t('aggregation.compare.assessment alias')}}</th>
+        <th class="text-end p-2 ps-3">{{t('aggregation.compare.total')}}</th>
+        <th class="text-end p-2 ps-3">{{t('answer-options.labels.y')}}</th>
+        <th class="text-end p-2 ps-3">{{t('answer-options.labels.n')}}</th>
+        <th class="text-end p-2 ps-3">{{t('answer-options.labels.na')}}</th>
+        <th class="text-end p-2 ps-3">{{t('answer-options.labels.alt')}}</th>
+        <th class="text-end p-2 ps-3">{{t('answer-options.labels.u')}}</th>
+      </tr>
+      <tr *ngFor="let a of answerCounts">
+        <td class="text-start p-2">{{ a.alias }}</td>
+        <td class="text-end p-2 ps-3" style="width: 10%">{{ a.total }}</td>
+        <td class="text-end p-2 ps-3" style="width: 10%">{{ a.y }}</td>
+        <td class="text-end p-2 ps-3" style="width: 10%">{{ a.n }}</td>
+        <td class="text-end p-2 ps-3" style="width: 10%">{{ a.na }}</td>
+        <td class="text-end p-2 ps-3" style="width: 10%">{{ a.a }}</td>
+        <td class="text-end p-2 ps-3" style="width: 10%">{{ a.u }}</td>
+      </tr>
+    </table>
   </div>
-</div>
-
-<div class="chart d-flex flex-column flex-00a">
-  <h3>Overall Comparison</h3>
-  <div *ngIf="chartOverallComparison == null">
-    <div class="spinner-container" style="margin: 2em auto">
-      <div style="max-width: 50px; max-height: 50px;"></div>
-    </div>
-  </div>
-  <canvas id="canvasOverallComparison" style="max-height: 50rem;">{{ chartOverallComparison }}</canvas>
-</div>
-
-<div class=" chart d-flex flex-column flex-00a">
-  <h3>Comparison of Security Assurance Levels</h3>
-  <div *ngIf="sals == null">
+  <div *ngIf="answerCounts == null">
     <div class="spinner-container" style="margin: 2em auto">
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
 
-  <div class="d-table">
-    <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell border-bottom">{{ a.alias }}</div>
-    </div>
-    <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Very High'">Very
-        High</div>
-    </div>
-    <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'High'">High
+  <div class="chart d-flex flex-column flex-00a">
+    <h3>{{t('aggregation.compare.overall comparison')}}</h3>
+    <div *ngIf="chartOverallComparison == null">
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
       </div>
     </div>
-    <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Moderate'">
-        Moderate</div>
+    <canvas id="canvasOverallComparison" style="max-height: 50rem;">{{ chartOverallComparison }}</canvas>
+  </div>
+
+  <div class=" chart d-flex flex-column flex-00a">
+    <h3>{{t('aggregation.compare.sal comparison')}}</h3>
+    <div *ngIf="sals == null">
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
     </div>
-    <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Low'">Low</div>
-    </div>
-    <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'None'">None
+
+    <div class="d-table">
+      <div class="d-table-row">
+        <div *ngFor="let a of sals" class="d-table-cell border-bottom">{{ a.alias }}</div>
+      </div>
+      <div class="d-table-row">
+        <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Very High'">
+          {{t('titles.sal.level.vh')}}</div>
+      </div>
+      <div class="d-table-row">
+        <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'High'">
+          {{t('titles.sal.level.h')}}
+        </div>
+      </div>
+      <div class="d-table-row">
+        <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Moderate'">
+          {{t('titles.sal.level.m')}}</div>
+      </div>
+      <div class="d-table-row">
+        <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Low'">
+          {{t('titles.sal.level.l')}}
+        </div>
+      </div>
+      <div class="d-table-row">
+        <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'None'">
+          {{t('titles.sal.level.none')}}
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="chart d-flex flex-column flex-00a">
-  <h3>Category Percent Comparisons</h3>
-  <div *ngIf="chartCategoryPercent == null">
-    <div class="spinner-container" style="margin: 2em auto">
-      <div style="max-width: 50px; max-height: 50px;"></div>
+  <div class="chart d-flex flex-column flex-00a">
+    <h3>{{t('aggregation.compare.category percent comparisons')}}</h3>
+    <div *ngIf="chartCategoryPercent == null">
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
     </div>
-  </div>
-  <div class="chart-container" style="position: relative; width: 100%">
-    <canvas id="canvasCategoryPercent">{{ chartCategoryPercent }}</canvas>
+    <div class="chart-container" style="position: relative; width: 100%">
+      <canvas id="canvasCategoryPercent">{{ chartCategoryPercent }}</canvas>
+    </div>
   </div>
 </div>
