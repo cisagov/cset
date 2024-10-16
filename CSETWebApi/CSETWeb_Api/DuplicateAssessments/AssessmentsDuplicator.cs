@@ -11,8 +11,10 @@ namespace DuplicateAssessments
 {
     internal class AssessmentsDuplicator
     {
-        private static CSETContext _context = null;
-        public static IConfigurationRoot Configuration { get; set; }
+        private static CSETContext? _context = null;
+
+        public static IConfigurationRoot? Configuration { get; set; }
+
 
         /// <summary>
         /// A tool that utilizes the api's of CSETWebCore to duplicate assessments.
@@ -38,15 +40,17 @@ namespace DuplicateAssessments
             await duper.RunAssessmentsDuplicator();
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public async Task RunAssessmentsDuplicator()
         {
-           
-
             AssessmentExportManager exportManager = new AssessmentExportManager(_context);
 
-            Guid[] guidsToExport = _context.ASSESSMENTS                
+            Guid[] guidsToExport = _context?.ASSESSMENTS
                 //.Where(x=> x.Assessment_Id ==571)
-                .Select(a => a.Assessment_GUID).ToArray();
+                .Select(a => a.Assessment_GUID).ToArray() ?? Array.Empty<Guid>();
             //comment out the below line to no longer debug
             //guidsToExport = new Guid[] { new Guid("F2776CC4-0FBA-4C15-A845-305FC4A70082") };
             MemoryStream assessmentsExportArchive = exportManager.BulkExportAssessments(guidsToExport, "dup");
@@ -57,11 +61,8 @@ namespace DuplicateAssessments
 
             assessmentsExportArchive.Seek(0, SeekOrigin.Begin);
 
-            ImportManager importManager = new ImportManager(tokenManager, assessmentUtil,utilities, _context);
+            ImportManager importManager = new ImportManager(tokenManager, assessmentUtil, utilities, _context);
             await importManager.BulkImportAssessments(assessmentsExportArchive, false);
         }
-
     }
-
-    
 }

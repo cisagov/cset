@@ -18,7 +18,7 @@ namespace DuplicateAssessments
 {
     public class MockTokenManager : ITokenManager
     {
-        private string _tokenString;
+        private string? _tokenString;
         private string testToken;
 
         public MockTokenManager(string testToken, CSETContext context)
@@ -28,16 +28,15 @@ namespace DuplicateAssessments
             this._localInstallationHelper = new MockLocalInstallationHelper();
             Init(testToken);
         }
-        private const string _bearerToken = "Bearer ";
-        private JwtSecurityToken _token = null;
-        
 
-        private IHttpContextAccessor _httpContext;
+        private const string _bearerToken = "Bearer ";
+        private JwtSecurityToken? _token = null;
+        
         
         private readonly ILocalInstallationHelper _localInstallationHelper;
 
         private CSETContext _context;
-        private static string _secret = null;
+        private static string? _secret = null;
         private static object _myLockObject = new object();
 
 
@@ -95,8 +94,13 @@ namespace DuplicateAssessments
         /// To see a list of claims we build into the token, see TransactionSecurity.GenerateToken()
         /// </summary>
         /// <returns></returns>
-        public string Payload(string claim)
+        public string? Payload(string claim)
         {
+            if (_token == null)
+            {
+                return null;
+            }
+
             return ReadTokenPayload(_token, claim);
         }
 
@@ -109,10 +113,20 @@ namespace DuplicateAssessments
         /// <returns></returns>
         public int? PayloadInt(string claim)
         {
+            if (_token == null)
+            {
+                return null;
+            }   
+
             var val = ReadTokenPayload(_token, claim);
+
             int result;
             bool b = int.TryParse(val, out result);
-            if (b) return result;
+            if (b)
+            {
+                return result;
+            }
+
             return null;
         }
 
@@ -129,7 +143,7 @@ namespace DuplicateAssessments
             string id = "";
             if (userId != null)
             {
-                id = userId.ToString();
+                id = userId?.ToString() ?? string.Empty;
             }
 
             if (accessKey != null)
@@ -202,7 +216,7 @@ namespace DuplicateAssessments
         /// <returns></returns>
         public bool IsTokenValid(string tokenString)
         {
-            JwtSecurityToken token = null;
+            JwtSecurityToken? token = null;
             bool isLocal = _localInstallationHelper.IsLocalInstallation();
             try
             {
@@ -274,7 +288,7 @@ namespace DuplicateAssessments
         /// <summary>
         /// Extracts a claim from the token payload
         /// </summary>
-        public string ReadTokenPayload(JwtSecurityToken token, string claim)
+        public string? ReadTokenPayload(JwtSecurityToken token, string claim)
         {
             if (token == null)
             {
@@ -286,7 +300,7 @@ namespace DuplicateAssessments
                 return null;
             }
 
-            string value = token?.Payload[claim]?.ToString();
+            string? value = token?.Payload[claim]?.ToString();
             return value;
         }
 
@@ -404,8 +418,8 @@ namespace DuplicateAssessments
 
 
                 // This is the first run of CSET -- generate a new secret and installation identifier
-                string newSecret = null;
-                string newInstallID = null;
+                string? newSecret = null;
+                string? newInstallID = null;
 
                 var byteArray = new byte[(int)Math.Ceiling(130 / 2.0)];
                 RandomNumberGenerator.Fill(byteArray);
@@ -437,7 +451,7 @@ namespace DuplicateAssessments
         }
 
 
-        public string GetAccessKey()
+        public string? GetAccessKey()
         {
             var ak = Payload(Constants.Token_AccessKey);
             return ak;
@@ -453,7 +467,7 @@ namespace DuplicateAssessments
         {
             Init();
             int? userId = PayloadInt(Constants.Token_UserId);
-            string accessKey = Payload(Constants.Token_AccessKey);
+            string? accessKey = Payload(Constants.Token_AccessKey);
             int? assessmentId = PayloadInt(Constants.Token_AssessmentId);
 
             return AssessmentForUser(userId, accessKey, assessmentId);
@@ -464,7 +478,7 @@ namespace DuplicateAssessments
         {
             SetToken(tokenString);
             int? userId = PayloadInt(Constants.Token_UserId);
-            string accessKey = Payload(Constants.Token_AccessKey);
+            string? accessKey = Payload(Constants.Token_AccessKey);
             int? assessmentId = PayloadInt(Constants.Token_AssessmentId);
 
             return AssessmentForUser(userId, accessKey, assessmentId);
@@ -480,23 +494,27 @@ namespace DuplicateAssessments
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="assessmentId"></param>
-        public int AssessmentForUser(int? userId, string accessKey, int? assessmentId)
+        public int AssessmentForUser(int? userId, string? accessKey, int? assessmentId)
         {
             if (assessmentId == null)
             {
                 Throw401();
             }
 
-            int hitsAC = _context.ASSESSMENT_CONTACTS.Count(ac => ac.UserId == userId && ac.Assessment_Id == assessmentId);
+            // use a non-nullable int for the assessmentId.  If the assessmentId is null, use a -1 to force an error.
+            int a = assessmentId ?? -1;
+
+
+            int hitsAC = _context.ASSESSMENT_CONTACTS.Count(ac => ac.UserId == userId && ac.Assessment_Id == a);
             if (hitsAC > 0)
             {
-                return (int)assessmentId;
+                return a;
             }
 
-            int hitsAK = _context.ACCESS_KEY_ASSESSMENT.Count(aka => aka.AccessKey == accessKey && aka.Assessment_Id == assessmentId);
+            int hitsAK = _context.ACCESS_KEY_ASSESSMENT.Count(aka => aka.AccessKey == accessKey && aka.Assessment_Id == a);
             if (hitsAK > 0)
             {
-                return (int)assessmentId;
+                return a;
             }
 
             Throw401();

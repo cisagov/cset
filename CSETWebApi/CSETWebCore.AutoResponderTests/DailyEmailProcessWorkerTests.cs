@@ -18,7 +18,7 @@ namespace CSETWebCore.AutoResponder.Tests
     [TestClass()]
     public class DailyEmailProcessWorkerTests
     {
-        private CSETContext context;
+        private CSETContext? context;
 
         [TestInitialize()]
         public void Initialize()
