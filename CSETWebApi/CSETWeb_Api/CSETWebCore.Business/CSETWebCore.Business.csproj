@@ -132,7 +132,7 @@
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.14" />
     <PackageReference Include="Npoi.Mapper" Version="6.2.1" />
     <PackageReference Include="System.Data.OleDb" Version="8.0.1" />
-    <PackageReference Include="System.Drawing.Common" Version="4.7.2" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.10" />
     <PackageReference Include="TinyMapper" Version="3.0.3" />
   </ItemGroup>
 
