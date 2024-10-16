@@ -21,7 +21,7 @@ namespace CSETWebCore.Business.GalleryParser.Tests
     [TestClass()]
     public class GalleryEditorTests
     {
-        private CSETContext context;
+        private CSETContext? context;
 
         [TestInitialize()]
         public void Initialize()
