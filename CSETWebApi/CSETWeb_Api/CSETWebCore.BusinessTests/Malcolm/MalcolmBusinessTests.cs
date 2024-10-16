@@ -19,7 +19,7 @@ namespace CSETWebCore.Business.Malcolm.Tests
             {
                 string jsonString = File.ReadAllText(file);
                 var malcolmData = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
-                datalist.Add(malcolmData);
+                datalist.Add(malcolmData ?? new MalcolmData());
             }
 
             MalcolmBusiness tst = new MalcolmBusiness(new DataLayer.Model.CSETContext());
@@ -46,7 +46,7 @@ namespace CSETWebCore.Business.Malcolm.Tests
                 }
             }
             Assert.IsTrue(AllNodes.Count == nodesList.Count);
-            TempNode parent = null;
+            TempNode? parent = null;
             foreach (String item  in assertFile)
             {
                 /**
@@ -58,7 +58,7 @@ namespace CSETWebCore.Business.Malcolm.Tests
                  */
                 if (item.StartsWith("            "))
                 {
-                    Assert.IsTrue(parent.ChildrenKeys.Contains(item.Trim()));
+                    Assert.IsTrue(parent?.ChildrenKeys.Contains(item.Trim()));
                     Assert.IsTrue(nodesList.ContainsKey(item.Trim()));
                 }
                 else
@@ -80,7 +80,7 @@ namespace CSETWebCore.Business.Malcolm.Tests
             {
                 string jsonString = File.ReadAllText(file);
                 var malcolmData = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
-                datalist.Add(malcolmData);
+                datalist.Add(malcolmData ?? new MalcolmData());
             }
             MalcolmBusiness tst = new MalcolmBusiness(new DataLayer.Model.CSETContext());
             
