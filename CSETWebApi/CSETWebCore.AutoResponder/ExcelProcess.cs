@@ -1,4 +1,5 @@
 ﻿using CSETWebCore.DataLayer.Model;
+using NLog;
 using System.Runtime.InteropServices;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -43,6 +44,7 @@ namespace CSETWebCore.AutoResponder
             return clist.ToList();
         }
 
+
         private string CreateACopyOfTheFile()
         {
             string excelFile = @"Survey contacts.xlsx";
@@ -57,9 +59,9 @@ namespace CSETWebCore.AutoResponder
 
         private void BuildContactsSheet(string excelFile, List<ContactData> data, string password)
         {
-            Excel.Application excel = null;
-            Excel.Workbook workbook = null;
-            Excel.Worksheet worksheet = null;
+            Excel.Application? excel = null;
+            Excel.Workbook? workbook = null;
+            Excel.Worksheet? worksheet = null;
             try
             {
                 excel = new Excel.Application { Visible = false, DisplayAlerts = false };
@@ -84,6 +86,7 @@ namespace CSETWebCore.AutoResponder
             catch (Exception ex) // Or System.Runtime.InteropServices.COMException
             {
                 // Handle it or log or do nothing
+                LogManager.GetCurrentClassLogger().Error(ex);
             }
             finally
             {
@@ -101,9 +104,9 @@ namespace CSETWebCore.AutoResponder
         {
         }
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string OrganizationName { get; set; }
-        public string Email { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? OrganizationName { get; set; }
+        public string? Email { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export.Tests
     [TestClass()]
     public class AssessmentExportManagerTests
     {
-        private CSETContext context;
+        private CSETContext? context;
 
         [TestInitialize()]
         public void Initialize()
