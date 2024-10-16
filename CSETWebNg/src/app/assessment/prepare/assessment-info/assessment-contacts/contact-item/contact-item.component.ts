@@ -34,6 +34,8 @@ import { EmailService } from "../../../../../services/email.service";
 import { LayoutService } from "../../../../../services/layout.service";
 import { TranslocoService } from "@jsverse/transloco";
 import { DemographicIodService } from "../../../../../services/demographic-iod.service";
+import { AssessmentContactsResponse } from "../../../../../models/assessment-info.model";
+import { RolesChangedComponent } from "../../../../../dialogs/roles-changed/roles-changed.component";
 
 @Component({
   selector: "app-contact-item",
@@ -60,6 +62,8 @@ export class ContactItemComponent implements OnInit {
   abandonEditEvent = new EventEmitter<boolean>();
   @Output()
   edit = new EventEmitter<EditableUser>();
+  @Output()
+  rolesChangedEvent = new EventEmitter<boolean>();
 
   @ViewChild('topScrollAnchor') topScroll;
 
@@ -70,7 +74,7 @@ export class ContactItemComponent implements OnInit {
   results: EditableUser[];
   roles: Role[];
   editMode: boolean;
-  creatorId: any; 
+  creatorId: any;
 
 
   constructor(
@@ -80,7 +84,7 @@ export class ContactItemComponent implements OnInit {
     private assessSvc: AssessmentService,
     private dialog: MatDialog,
     public layoutSvc: LayoutService,
-    public tSvc: TranslocoService, 
+    public tSvc: TranslocoService,
     public demoSvc: DemographicIodService
   ) {
     this.editMode = true;
@@ -184,19 +188,33 @@ export class ContactItemComponent implements OnInit {
   }
 
   saveContact() {
-    if (this.contact.isNew) {
-      if (this.existsDuplicateEmail(this.contact.primaryEmail)) {
-        return;
-      }
+    this.assessSvc
+      .getAssessmentContacts()
+      .then((data: AssessmentContactsResponse) => {
+        if (data.currentUserRole == 2) {
+          if (this.contact.isNew) {
+            if (this.existsDuplicateEmail(this.contact.primaryEmail)) {
+              return;
+            }
 
-      this.create.emit(this.contact);
+            this.create.emit(this.contact);
 
-      this.contact.isNew = false;
-      this.editMode = true;
-    } else {
-      this.finishEdit();
-    }
-    return true;
+            this.contact.isNew = false;
+            this.editMode = true;
+          } else {
+            this.finishEdit();
+          }
+          return true;
+        } else {
+          this.scrollToTop();
+          this.abandonEdit();
+          let rolesChangeDialog = this.dialog.open(RolesChangedComponent)
+          rolesChangeDialog.afterClosed().subscribe(() => {
+          })
+            this.ngOnInit();
+            this.rolesChangedEvent.emit();
+        }
+      })
   }
 
   removeContact() {
@@ -275,7 +293,7 @@ export class ContactItemComponent implements OnInit {
     this.topScroll?.nativeElement.scrollIntoView({ behavior: 'smooth', alignToTop: true });
   }
   // Check if assessment was created by current user 
-  assessmentCreator(){
+  assessmentCreator() {
     this.assessSvc.getCreator().then((response: any) => {
       this.creatorId = response
     })
