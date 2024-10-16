@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System;
 using Npoi.Mapper;
+using DocumentFormat.OpenXml.Office2013.Excel;
 
 namespace CSETWebCore.Business.Contact
 {
@@ -340,258 +341,135 @@ namespace CSETWebCore.Business.Contact
         public void CreateAnswerRecordsFromCPGToCF(int assessmentId)
         {
             // get the titles 
-            var convertableTitles = _context.NCSF_CONVERSION_MAPPINGS.Where(x => !string.IsNullOrEmpty(x.Mid_Level_Titles)).ToList();
-            var entryIds = new List<int>();
-            var fullIds = new List<int>();
+            var convertableTitles = (from a in _context.NCSF_FULL_TO_MID
+                                     join b in _context.NCSF_CONVERSION_MAPPINGS_MID on a.Mid_Level_Titles equals b.Mid_Level_Titles
+                                     join c in _context.NCSF_CONVERSION_MAPPINGS_FULL on a.Full_Level_Titles equals c.Full_Level_Titles
+                                     join ans in _context.ANSWER on b.Mat_Question_Id equals ans.Question_Or_Requirement_Id
+                                     where ans.Assessment_Id == assessmentId
+                                     orderby b.Mat_Question_Id
+                                     select new { b.Mat_Question_Id, c.Requirement_Id, ans }).ToList();
 
-            // seperates the columns into their own lists
-            var entryTitlesUnparsed = convertableTitles.Where(x => !String.IsNullOrEmpty(x.Entry_Level_Titles)).OrderBy(x => x.Conversion_Id).Select(x => x.Entry_Level_Titles).ToList();
-            var midTitlesUnparsed = convertableTitles.OrderBy(x => x.Conversion_Id).Select(x => x.Mid_Level_Titles).ToList();
-            var fullTitlesUnparsed = convertableTitles.OrderBy(x => x.Conversion_Id).Select(x => x.Full_Level_Titles).ToList();
-
-            foreach (var entryTitle in entryTitlesUnparsed)
-            {
-                entryIds.Add(_context.NEW_REQUIREMENT.Where(x => (x.Original_Set_Name == CF_CSF_SetName || x.Original_Set_Name == CF_SetName) 
-                    && x.Requirement_Title == entryTitle).Select(x => x.Requirement_Id).FirstOrDefault());
-            }
-
+            
             // need the "entry" level answers for the couple entry questions that don't get fed into by CPGs when brought back into the full
 
             var newFullAnswerDict = new Dictionary<int, ANSWER>();
-
-            var alreadyInDbList = new List<int>();
+            var addedToDictList = new List<int>();
 
             if (convertableTitles != null)
             {
-                for (int i = 0; i < midTitlesUnparsed.Count; i++)
+                var entryAnsList = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Is_Requirement == true && x.Answer_Text != "U").ToList();
+                
+                foreach (var entryAnswer in entryAnsList)
                 {
+                    entryAnswer.Answer_Text = entryToCfAnswer(entryAnswer.Answer_Text);
+                }
 
-                    string csvMidTitles = midTitlesUnparsed[i];
-                    var midTitles = csvMidTitles.Split(',');
-
-                    string csvFullTitles = fullTitlesUnparsed[i];
-                    var fullTitles = csvFullTitles.Split(',');
-
-                    for (int j = 0; j < midTitles.Length; j++)
+                foreach (var titleRow in convertableTitles)
+                {
+                    
+                    if (titleRow.ans != null)
                     {
-                        string midTitle = midTitles[j];
-                        int cpgQId = _context.MATURITY_QUESTIONS.Where(x => x.Maturity_Model_Id == CPG_Model_Id && x.Question_Title == midTitle).Select(x => x.Mat_Question_Id).FirstOrDefault();
-                        ANSWER cpgAns = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Or_Requirement_Id == cpgQId).FirstOrDefault();
-                        if(cpgAns!=null)
-                        foreach (string fullTitle in fullTitles)
+                        ANSWER ansToAdd = new ANSWER()
                         {
-                            int fullQId = _context.NEW_REQUIREMENT.Where(x => (x.Original_Set_Name == CF_CSF_SetName || x.Original_Set_Name == CF_SetName) && x.Requirement_Title == fullTitle).Select(x => x.Requirement_Id).FirstOrDefault();
-                            if (fullQId > 0)
+                            Assessment_Id = assessmentId,
+                            Question_Or_Requirement_Id = titleRow.Requirement_Id,
+                            Mark_For_Review = titleRow.ans.Mark_For_Review,
+                            Comment = titleRow.ans.Comment,
+                            Alternate_Justification = titleRow.ans.Alternate_Justification,
+                            Answer_Text = cpgToCfAnswer(titleRow.ans.Answer_Text),
+                            Reviewed = titleRow.ans.Reviewed,
+                            FeedBack = titleRow.ans.FeedBack,
+                            Question_Type = "Requirement",
+                            Is_Requirement = true,
+                            Is_Component = false,
+                            Is_Maturity = false
+                        };
+
+                        // if we've already added this to the dict, take a closer look to determine the correct Answer_Text
+                        if (newFullAnswerDict.TryGetValue(titleRow.Requirement_Id, out ANSWER existingAnswer))
+                        {
+                            // if the list doesn't have the ID, assume it's from the entry level
+                            // and needs it's answer text overwritten by the CPG answer
+                            //if (addedToDictList.Contains(titleRow.Requirement_Id))
+                            //{
+                                // compare the existing answer text to this new one and take the smallest value
+                                if (Int32.TryParse(existingAnswer.Answer_Text, out int alreadyInDict) &&
+                                    Int32.TryParse(ansToAdd.Answer_Text, out int incomingCpgAns))
+                                {
+                                    ansToAdd.Answer_Text = Int32.Min(alreadyInDict, incomingCpgAns).ToString();
+                                }
+
+                                // if incoming answer can't be parsed to an int and the existing can, keep the existing
+                                else if (!Int32.TryParse(ansToAdd.Answer_Text, out incomingCpgAns))
+                                {
+                                    ansToAdd = existingAnswer;
+                                }
+                            //}
+
+                            newFullAnswerDict[titleRow.Requirement_Id] = ansToAdd;
+                            addedToDictList.Add(titleRow.Requirement_Id);
+                        }
+                        else
+                        {
+                            var existingRecord = entryAnsList.Find(x => x.Question_Or_Requirement_Id == titleRow.Requirement_Id);
+                            if (existingRecord != null)
                             {
-                                fullIds.Add(fullQId);
-                                var alreadyInDb = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Or_Requirement_Id == fullQId).FirstOrDefault();
-                                if (alreadyInDb != null)
-                                {
-                                    // if we haven't looked at this yet, add it to the "looked-at" list 
-                                    if (!alreadyInDbList.Contains(fullQId))
-                                    {
-                                        alreadyInDbList.Add(fullQId);
-                                        alreadyInDb.Answer_Text = cpgToCfAnswer(cpgAns.Answer_Text);
-                                    }
-                                    // compare the existing answer text to this new one and take the smallest value
-                                    if (Int32.TryParse(alreadyInDb.Answer_Text, out int alreadyInDbVal) &&
-                                        Int32.TryParse(cpgToCfAnswer(cpgAns.Answer_Text), out int cpgAnsVal))
-                                    {
-                                        alreadyInDb.Answer_Text = Int32.Min(alreadyInDbVal, cpgAnsVal).ToString();
-                                    }
-                                }
-                                else
-                                {
-                                    ANSWER newAns = new ANSWER()
-                                    {
-                                        Assessment_Id = assessmentId,
-                                        Question_Or_Requirement_Id = fullQId,
-                                        Mark_For_Review = cpgAns.Mark_For_Review,
-                                        Comment = cpgAns.Comment,
-                                        Alternate_Justification = cpgAns.Alternate_Justification,
-                                        Answer_Text = cpgToCfAnswer(cpgAns.Answer_Text),
-                                        Reviewed = cpgAns.Reviewed,
-                                        FeedBack = cpgAns.FeedBack,
-                                        Question_Type = "Requirement",
-                                        Is_Requirement = true,
-                                        Is_Component = false,
-                                        Is_Maturity = false
-                                    };
+                                // the answer record already exists in the DB (from the entry level), so update the record
+                                existingRecord.Answer_Text = ansToAdd.Answer_Text;
 
-                                    if (!newFullAnswerDict.TryAdd(fullQId, newAns))
-                                    {
-                                        // compare the existing answer text to this new one and take the smallest value
-                                        ANSWER existingAns = newFullAnswerDict[fullQId];
+                                // remove the record because it has been transitioned to a Full level answer
+                                //entryAnsList.Remove(existingRecord);
+                            }
+                            else
+                            {
+                                // new answer record not in the DB, so we can add this to the DB at the end
+                                newFullAnswerDict.TryAdd(titleRow.Requirement_Id, ansToAdd);
+                            }
 
-                                        if (Int32.TryParse(existingAns.Answer_Text, out int existingAnsVal) &&
-                                            Int32.TryParse(newAns.Answer_Text, out int newAnsVal))
-                                        {
-                                            newAns.Answer_Text = Int32.Min(existingAnsVal, newAnsVal).ToString();
-                                            newFullAnswerDict[fullQId] = newAns;
-                                        }
-                                    }
-                                }
-                                
+                        }
+
+                        
+                    }
+                    // the below else should never run, but just in case
+                    else
+                    {
+                        ANSWER newAns = new ANSWER()
+                        {
+                            Assessment_Id = assessmentId,
+                            Question_Or_Requirement_Id = titleRow.Requirement_Id,
+                            Mark_For_Review = titleRow.ans.Mark_For_Review,
+                            Comment = titleRow.ans.Comment,
+                            Alternate_Justification = titleRow.ans.Alternate_Justification,
+                            Answer_Text = titleRow.ans.Answer_Text,
+                            Reviewed = titleRow.ans.Reviewed,
+                            FeedBack = titleRow.ans.FeedBack,
+                            Question_Type = "Requirement",
+                            Is_Requirement = true,
+                            Is_Component = false,
+                            Is_Maturity = false
+                        };
+
+                        if (!newFullAnswerDict.TryAdd(titleRow.Requirement_Id, newAns))
+                        {
+                            // compare the existing answer text to this new one and take the smallest value
+                            ANSWER existingAns = newFullAnswerDict[titleRow.Requirement_Id];
+
+                            if (Int32.TryParse(existingAns.Answer_Text, out int existingAnsVal) &&
+                                Int32.TryParse(newAns.Answer_Text, out int newAnsVal))
+                            {
+                                newAns.Answer_Text = Int32.Min(existingAnsVal, newAnsVal).ToString();
+                                newFullAnswerDict[titleRow.Requirement_Id] = newAns;
                             }
                         }
                     }
+                            
                 }
                 List<ANSWER> temp = newFullAnswerDict.Select(x => x.Value).ToList();
-
-                // if a "Y" from the "Entry" level, but has no CPG feeding into the "Full" level, make it a 2 (per Ollie)
-                var answerList = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && entryIds.Contains(x.Question_Or_Requirement_Id) 
-                    && !fullIds.Contains(x.Question_Or_Requirement_Id)).ToList();
-               
-                foreach (var answer in answerList)
-                {
-                    if (answer.Answer_Text == "Y")
-                    {
-                        answer.Answer_Text = "2";
-                    }
-                }
-                
-
-                //alreadyInDbList.ForEach(x => 
-                //    {
-                //        if (x.Answer_Text == "Y")
-                //        {
-                //            x.Answer_Text = "2";
-                //        }
-                //    }
-                //);
 
                 _context.ANSWER.AddRange(temp);
                 _context.SaveChanges();
             }
-            //if (convertableTitles != null)
-            //{
-            //    // var midIds = _context.MATURITY_QUESTIONS.Where(x => midTitles.Contains(x.Question_Title) && x.Maturity_Model_Id == CPG_Model_Id).Select(x => x.Mat_Question_Id).ToList();
-            //    var midWholeQuestion = _context.MATURITY_QUESTIONS.Where(x => midTitles.Contains(x.Question_Title) && x.Maturity_Model_Id == CPG_Model_Id).ToList();
-            //    var midIds = midWholeQuestion.Select(x => x.Mat_Question_Id).ToList();
-
-
-            //    var midAnswers = _context.ANSWER.Where(x => midIds.Contains(x.Question_Or_Requirement_Id) && x.Assessment_Id == assessmentId).ToList();
-
-
-
-                //if (midIds != null)
-                //{
-                //    var addedIds = new List<int>();
-                //    var newFullAnswers = new List<ANSWER>();
-                //    for (int i = 0; i < midIds.Count; i++)
-                //    {
-                //        if (midAnswers[i].Answer_Text != "U")
-                //        {
-                //            var fullQuestionTitles = convertableTitles.Where(x => x.) [i].Full_Level_Titles.Split(",");
-                //            foreach (var questionTitle in fullQuestionTitles)
-                //            {
-                //                var id = _context.NEW_REQUIREMENT
-                //                    .Where(x => (x.Original_Set_Name == CF_CSF_SetName || x.Original_Set_Name == CF_SetName) && x.Requirement_Title == questionTitle)
-                //                    .Select(x => x.Requirement_Id).FirstOrDefault();
-
-                //                // if the id is null (i.e. a parent question or grouping), skip it
-                //                if (id == 0)
-                //                {
-                //                    continue;
-                //                }
-
-                //                var newAnswer = new ANSWER()
-                //                {
-                //                    Assessment_Id = assessmentId,
-                //                    Question_Or_Requirement_Id = id,
-                //                    Mark_For_Review = midAnswers[i].Mark_For_Review,
-                //                    Comment = midAnswers[i].Comment,
-                //                    Alternate_Justification = midAnswers[i].Alternate_Justification,
-                //                    Answer_Text = cpgToCfAnswer(midAnswers[i].Answer_Text),
-                //                    Reviewed = midAnswers[i].Reviewed,
-                //                    FeedBack = midAnswers[i].FeedBack,
-                //                    Question_Type = "Requirement",
-                //                    Is_Requirement = true,
-                //                    Is_Component = false,
-                //                    Is_Maturity = false
-                //                };
-                //                var leastLevel = "7";
-
-                //                // prevents doubling-up of ANSWER records if question already has a record from the entry version of the assessment
-                //                var entryAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Or_Requirement_Id == newAnswer.Question_Or_Requirement_Id).FirstOrDefault();
-                //                if (entryAnswer != null)
-                //                {
-                //                    if (entryAnswer.Answer_Text == "Y" && entryAnswer.Is_Requirement == true)
-                //                    {
-                //                        leastLevel = "3";
-                //                        //entryAnswer.Answer_Text = "3";
-                //                    }
-                //                    else if (entryAnswer.Answer_Text == "N")
-                //                    {
-                //                        leastLevel = "1";
-                //                        //entryAnswer.Answer_Text = "1";
-                //                    }
-                //                    else
-                //                    {
-                //                        // somehow a CPG snuck in and was answered "Implemented"
-                //                        leastLevel = "7";
-                //                        //entryAnswer.Answer_Text = "7";
-                //                    }
-                //                    entryAnswer.Answer_Text = leastLevel;
-                //                }
-                //                // prevents doubling-up of ANSWER records if questions can be controlled by multiple sources
-                //                else if (addedIds.Contains(newAnswer.Question_Or_Requirement_Id))
-                //                {
-                //                    var answerRecord = newFullAnswers.Find(x => x.Question_Or_Requirement_Id == newAnswer.Question_Or_Requirement_Id);
-                //                    if (answerRecord.Answer_Text != newAnswer.Answer_Text)
-                //                    {
-                //                        Int32.TryParse(cpgToCfAnswer(answerRecord.Answer_Text), out int leastAnsInt);
-                //                        if (leastAnsInt == null || leastAnsInt == 0)
-                //                        {
-                //                            leastAnsInt = 7;
-                //                        }
-
-                //                        if (Int32.TryParse(cpgToCfAnswer(answerRecord.Answer_Text), out int prevAnsInt) 
-                //                        && Int32.TryParse(cpgToCfAnswer(newAnswer.Answer_Text), out int newAnsInt))
-                //                        {
-                //                            leastLevel = Int32.Min(leastAnsInt, Int32.Min(prevAnsInt, newAnsInt)).ToString();
-                //                        }
-                //                        else if (Int32.TryParse(cpgToCfAnswer(answerRecord.Answer_Text), out prevAnsInt))
-                //                        {
-                //                            leastLevel = Int32.Min(leastAnsInt, prevAnsInt).ToString();
-                //                        }
-                //                        else if (Int32.TryParse(cpgToCfAnswer(newAnswer.Answer_Text), out newAnsInt))
-                //                        {
-                //                            leastLevel = Int32.Min(leastAnsInt, newAnsInt).ToString();
-                //                        }
-
-                //                        answerRecord.Answer_Text = leastLevel;
-                //                    }
-                //                    else
-                //                    {
-                //                        // answerRecord.Answer_Text = "1";
-                //                    }
-                //                }
-                //                // if no duplications, add the answer to the to-be-added list
-                //                else
-                //                {
-                //                    newFullAnswers.Add(newAnswer);
-                //                    addedIds.Add(newAnswer.Question_Or_Requirement_Id);
-                //                }
-                //                if (entryAnswer != null)
-                //                {
-                //                    entryAnswer.Answer_Text = leastLevel;
-                //                }
-
-                //                if (entryAnswer != null && entryAnswer.Answer_Text == "Y")
-                //                {
-                //                    entryAnswer.Answer_Text = "3";
-                //                }
-                //            }
-                //        }
-                //    }
-
-                //    _context.ANSWER.AddRange(newFullAnswers);
-                //    _context.SaveChanges();
-                //}
-            //}
-
-
+            
         }
 
         public string cpgToCfAnswer(string answerText)
@@ -606,6 +484,22 @@ namespace CSETWebCore.Business.Contact
                 case "S":
                     // 3 for "Documented Policy"
                     return "3";
+                case "N":
+                    // 1 for "Not Performed"
+                    return "1";
+                default:
+                    return "1";
+            }
+        }
+
+
+        public string entryToCfAnswer(string answerText)
+        {
+            switch (answerText)
+            {
+                case "Y":
+                    // 2 for "Informally Performed" (didn't go through the CPG process, so can't infer anymore than a 2)
+                    return "2";
                 case "N":
                     // 1 for "Not Performed"
                     return "1";

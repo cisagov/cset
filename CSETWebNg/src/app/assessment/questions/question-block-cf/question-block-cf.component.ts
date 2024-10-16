@@ -75,6 +75,13 @@ export class QuestionBlockCfComponent implements OnInit {
     this.answerOptions = this.questionsSvc.questions?.answerOptions;
     this.refreshReviewIndicator();
     // this.refreshPercentAnswered();
+    
+    this.mySubCategory.questions.forEach(q => {
+      if (q.answer == null) {
+        q.answer = '1';
+      }
+    });
+
     if (this.configSvc.behaviors.showMalcolmAnswerComparison) {
       this.malcolmSvc.getMalcolmAnswers().subscribe((r: any) => {    
         this.malcolmInfo = r;
