@@ -176,7 +176,7 @@
         <div class="btn-group btn-group-toggle">
             <label *ngFor="let r of regionList" class="btn btn-geo btn-rounded mx-1" [class.active]="r.selected">
                 <input type="checkbox" [id]="'geo-toggle-' + r.regionName" [name]="'geo-toggle-' + r.regionName"
-                    [checked]="r.selected" (click)="toggleRegion(r)" data-toggle="toggle" />{{r.regionName}}</label>
+                    style="display: none" [checked]="r.selected" (click)="toggleRegion(r)" data-toggle="toggle" />{{r.regionName}}</label>
         </div>
     </div>
 
@@ -189,7 +189,7 @@
         <div class="btn-group-toggle d-flex" style="justify-content: space-between; flex-flow: row wrap">
             <label *ngFor="let c of countyList" class="btn btn-geo btn-rounded m-1" [class.active]="c.selected">
                 <input type="checkbox" [id]="'county-toggle-' + c.name" [name]="'county-toggle-' + c.name"
-                    [checked]="c.selected" (click)="toggleCounty(c)" data-toggle="toggle" />{{c.name}}</label>
+                style="display: none" [checked]="c.selected" (click)="toggleCounty(c)" data-toggle="toggle" />{{c.name}}</label>
         </div>
     </div>
 
@@ -206,7 +206,7 @@
         <div class="btn-group-toggle d-flex" style="justify-content: space-between; flex-flow: row wrap">
             <label *ngFor="let m of visibleMetroList" class="btn btn-geo btn-rounded m-1" [class.active]="m.selected">
                 <input type="checkbox" [id]="'metro-toggle-' + m.name" [name]="'metro-toggle-' + m.name"
-                    [checked]="m.selected" (click)="toggleMetro(m)" data-toggle="toggle" />{{m.name}}</label>
+                    style="display: none" [checked]="m.selected" (click)="toggleMetro(m)" data-toggle="toggle" />{{m.name}}</label>
         </div>
     </div>
 </div>
