@@ -40,10 +40,10 @@ export class RraAnswerCountsComponent implements OnInit {
   animation: boolean = false;
 
   constructor(
-    public rraDataSvc: RraDataService, 
+    public rraDataSvc: RraDataService,
     public tSvc: TranslocoService
-    
-    ) { }
+
+  ) { }
 
   ngOnInit(): void {
     this.rraDataSvc.getRRADetail().subscribe((r: any) => {
@@ -53,11 +53,11 @@ export class RraAnswerCountsComponent implements OnInit {
 
   createAnswerCountsByLevel(r: any) {
     let levelList = [];
-  
+
     r.rraSummary.forEach(element => {
       let level = levelList.find(x => x.name == element.level_Name);
-     
-      if (!level) {     
+
+      if (!level) {
         level = {
           name: element.level_Name, series: [
             { name: 'Yes', value: 0 },
@@ -66,25 +66,25 @@ export class RraAnswerCountsComponent implements OnInit {
           ]
         };
         levelList.push(level);
-      
+
       }
 
       var p = level.series.find(x => x.name == element.answer_Full_Name);
       p.value = element.qc;
-     
+
 
     });
 
     this.answerCountsByLevel = levelList;
     this.findMaxLength();
 
-    for (let i of this.answerCountsByLevel){
-      for (let j of i.series){
-        j.name = this.tSvc.translate('answer-options.button-labels.'+ j.name.toLowerCase())
+    for (let i of this.answerCountsByLevel) {
+      for (let j of i.series) {
+        j.name = this.tSvc.translate('answer-options.button-labels.' + j.name.toLowerCase())
       }
     }
-    for (let i of this.answerCountsByLevel){
-     i.name = this.tSvc.translate('level.'+ i.name.toLowerCase())
+    for (let i of this.answerCountsByLevel) {
+      i.name = this.tSvc.translate('level.' + i.name.toLowerCase())
     }
   }
 
@@ -104,7 +104,7 @@ export class RraAnswerCountsComponent implements OnInit {
 
   @HostListener('window:beforeprint')
   beforePrint() {
-    this.view = [1300, 600];
+    this.view = [800, 300];
   }
 
   @HostListener('window:afterprint')
