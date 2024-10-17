@@ -16,7 +16,7 @@
         "version:electron": "electron-packager --version"
     },
     "dependencies": {
-        "@angular-devkit/build-webpack": "^0.1802.8",
+        "@angular-devkit/build-webpack": "^0.1802.9",
         "@angular-devkit/schematics": "^18.2.7",
         "@angular-eslint/schematics": "^18.3.1",
         "@angular-slider/ngx-slider": "^18.0.0",
