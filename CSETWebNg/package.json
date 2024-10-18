@@ -68,7 +68,7 @@
         "pdfmake": "^0.2.14",
         "rxjs": "^7.8.1",
         "sanitize-html": "^2.13.0",
-        "sass": "^1.80.1",
+        "sass": "^1.80.2",
         "screenfull": "^5.2.0",
         "style-loader": "^4.0.0",
         "swiper": "^8.4.7",
