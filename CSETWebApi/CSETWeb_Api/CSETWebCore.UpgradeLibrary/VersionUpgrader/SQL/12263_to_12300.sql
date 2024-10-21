@@ -61,7 +61,7 @@ GO
 CREATE TABLE [dbo].[NCSF_CONVERSION_MAPPINGS_MID]
 (
 [Mid_Level_Titles] [nvarchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-[Question_Id] [int] NOT NULL
+[Mat_Question_Id] [int] NOT NULL
 )
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
@@ -403,6 +403,15 @@ BEGIN
 				FOR answer_text IN ( [Y],[I],[S],[N],[U] )
 			) AS pvt
 END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Altering [dbo].[Nlogs]'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+ALTER TABLE [dbo].[Nlogs] ADD
+[User] [nvarchar] (100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

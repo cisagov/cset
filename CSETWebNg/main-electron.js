@@ -202,12 +202,7 @@ function createWindow() {
   Menu.setApplicationMenu(newMenu);
 
   mainWindow.loadFile(path.join(__dirname, config.behaviors.splashPageHTML));
-
-  let rootDir = app.getAppPath();
-
-  if (path.basename(rootDir) == 'app.asar') {
-    rootDir = path.dirname(app.getPath('exe'));
-  }
+  let rootDir = path.dirname(app.getPath('exe'));
 
   log.info('Root Directory of ' + appName + ' Electron app: ' + rootDir);
 
@@ -243,7 +238,6 @@ function createWindow() {
       });
     });
   } else {
-    // launchAPI(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/debug/net7.0', 'CSETWebCore.Api.exe', config.api.port, mainWindow);
     mainWindow.loadURL(
       url.format({
         pathname: path.join(__dirname, 'dist/index.html'),
