@@ -542,7 +542,11 @@
         "export assessment title": "Opciones de evaluación de exportación", 
         "scrub pcii": "Seleccione para eliminar los campos PCII de la exportación", 
         "encrypt 1": "Para cifrar su evaluación, ingrese una contraseña.", 
-        "encrypt 2": "Si continúa sin ingresar una contraseña, no se utilizará ningún cifrado."
+        "encrypt 2": "Si continúa sin ingresar una contraseña, no se utilizará ningún cifrado.", 
+        "access denied": "Acceso denegado", 
+        "access denied 1": "Su sesión expiró, se produjo un error de conexión o ya no está autorizado a acceder a esa evaluación.", 
+        "access denied 2": "Por favor inicia sesión nuevamente.", 
+        "access denied 3": "Otro usuario ha cambiado su función en esta evaluación."
     },
     "reports": {
         "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el {date}.",

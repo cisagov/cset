@@ -675,6 +675,7 @@ import { AllAnsweredquestionsComponent } from './reports/all-answeredquestions/a
 import { AllCommentsmarkedComponent } from './reports/all-commentsmarked/all-commentsmarked.component';
 import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.component';
 import { QuestionsReviewedComponent } from './reports/questions-reviewed/questions-reviewed.component';
+import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.component';
 
 
 @NgModule({ declarations: [
@@ -1202,7 +1203,8 @@ import { QuestionsReviewedComponent } from './reports/questions-reviewed/questio
         AllAnsweredquestionsComponent,
         AllCommentsmarkedComponent,
         AllReviewedComponent,
-        QuestionsReviewedComponent
+        QuestionsReviewedComponent, 
+        RolesChangedComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,

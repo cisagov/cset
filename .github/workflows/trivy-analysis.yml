@@ -24,7 +24,7 @@ jobs:
         run: dotnet build CSETWebApi/CSETWeb_Api/CSETWeb_Api.sln
 
       - name: Run vulnerability scanner
-        uses: aquasecurity/trivy-action@0.27.0
+        uses: aquasecurity/trivy-action@0.28.0
         with:
           format: sarif
           output: trivy-dotnet-results.sarif
@@ -48,7 +48,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run vulnerability scanner
-        uses: aquasecurity/trivy-action@0.27.0
+        uses: aquasecurity/trivy-action@0.28.0
         with:
           format: sarif
           output: trivy-nodejs-results.sarif
