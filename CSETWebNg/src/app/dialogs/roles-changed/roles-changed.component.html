@@ -20,26 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div *transloco="let t; read: 'contact'">
-  <div *ngIf="contacts">
-    <h4>{{ t('contacts') }}</h4>
-    <div class="list-group">
-      <app-contact-item [contact]="contact" [contactsList]="contacts" *ngFor="let contact of contacts; let i = index"
-        (startEditEvent)="startEdit()" (abandonEditEvent)="abandonEdit()" (edit)="editContact(contact)"
-        (create)="saveNewContact(contact)" (remove)="removeContact(contact, i)" (rolesChangedEvent)="refreshContacts()">
-      </app-contact-item>
-      <span class="mt-2 btn-group" *ngIf="showControls()">
-        <button class="btn btn-group d-flex align-items-center flex-00a" (click)="newContact()" [disabled]="adding==1">
-          <span class="cset-icons-plus fs-base me-2"></span>
-          <span>{{ t('add contact') }}</span>
-        </button>
-        <button *ngIf="false" class="btn btn-group cset-icons-envelope" (click)="openEmailDialog()">{{ t('email
-          contacts') }}</button>
-      </span>
-      <div *ngIf="!showControls()" class="text-info small">
-        <p>{{ t('not authorized message') }}</p>
-        <p>{{ t('contact an administrator message') }}</p>
-      </div>
-    </div>
+<div class="d-flex flex-column justify-content-center flex-11a" *transloco="let t">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span class="cset-icons-exclamation-triangle fs-base-6 me-3"></span>
+    <span>{{t('dialogs.access denied')}}</span>
   </div>
+  <mat-dialog-content class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
+    <p class="pe-3">{{t('dialogs.access denied 3')}}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions class="p-3 pt-0 mb-0">
+    <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
+  </mat-dialog-actions>
 </div>

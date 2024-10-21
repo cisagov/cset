@@ -639,7 +639,11 @@
     "export assessment title": "Export Assessment Options", 
     "scrub pcii": "Select to remove PCII fields from export", 
     "encrypt 1": "To encrypt your assessment, please enter a password.", 
-    "encrypt 2": "If you proceed without entering a password, no encryption will be used."
+    "encrypt 2": "If you proceed without entering a password, no encryption will be used.",
+    "access denied": "Access Denied", 
+    "access denied 1": "Your session has expired, a connection error has occurred, or you are no longer authorized to access that assessment.", 
+    "access denied 2": "Please log in again.", 
+    "access denied 3": "Your role on this assessment has been changed by another user."
   },
   "reports": {
     "launch": {
