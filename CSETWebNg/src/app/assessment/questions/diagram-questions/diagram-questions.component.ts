@@ -68,6 +68,13 @@ export class DiagramQuestionsComponent implements OnInit {
 
   ngOnInit() {
     this.loadQuestions();
+    this.questionsSvc.questionOverrideSubject.subscribe((x) => {
+      if (x) {
+        this.loadQuestions();
+      } else {
+        this.questionsSvc.questionOverrideSubject.next(false);
+      }
+    });
   }
 
   /**

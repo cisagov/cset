@@ -47,7 +47,7 @@ export class ComponentOverrideComponent {
    */
   constructor(
     private dialog: MatDialogRef<ComponentOverrideComponent>,
-    public configSvc: ConfigService, 
+    public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
     public utilitiesSvc: Utilities,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -108,6 +108,7 @@ export class ComponentOverrideComponent {
 
     this.questionsSvc.storeAnswer(answer).subscribe();
     this.questionChanged = true;
+    this.questionsSvc.questionOverrideSubject.next(true);
   }
 
 
