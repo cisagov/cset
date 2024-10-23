@@ -108,7 +108,7 @@ export class ComponentOverrideComponent {
 
     this.questionsSvc.storeAnswer(answer).subscribe();
     this.questionChanged = true;
-    window.location.reload();
+    this.questionsSvc.questionOverrideSubject.next(true);
   }
 
 
