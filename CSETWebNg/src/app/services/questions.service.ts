@@ -40,7 +40,7 @@ const headers = {
 @Injectable()
 export class QuestionsService {
 
-
+  public questionOverrideSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   /**
    * The TOC might make the API trip to get the questions.  If so,
@@ -389,11 +389,11 @@ export class QuestionsService {
 
     // look for model-specific answer options
     if (!!model && String(model).trim().length > 0) {
-      
+
       // first try to find the model configuration using its model name
-      let modelConfiguration = 
-      this.configSvc.config.moduleBehaviors.find(x => x.modelId == model) || 
-      this.configSvc.config.moduleBehaviors.find(x => x.moduleName == model);
+      let modelConfiguration =
+        this.configSvc.config.moduleBehaviors.find(x => x.modelId == model) ||
+        this.configSvc.config.moduleBehaviors.find(x => x.moduleName == model);
 
 
       if (!!modelConfiguration) {
