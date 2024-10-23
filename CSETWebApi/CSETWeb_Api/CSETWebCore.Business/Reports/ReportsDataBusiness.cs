@@ -1899,12 +1899,12 @@ namespace CSETWebCore.Business.Reports
                 obs.ResolutionDate = f.b.Resolution_Date;
                 obs.Importance = f.Value;
 
+
                 // get the question identifier and text
                 GetQuestionTitleAndText(f, standardQuestions, componentQuestions, f.c.Answer_Id,
                     out string qid, out string qtxt);
 
-                var temp = _maturityBusiness.GetMaturityModel(_assessmentId).ModelTitle;
-                if (_maturityBusiness.GetMaturityModel(_assessmentId).ModelName == "CIE")
+                if (_maturityBusiness.GetMaturityModel(_assessmentId)?.ModelName == "CIE")
                 {
                     GetQuestionTitleAndTextForCie(f, standardQuestions, componentQuestions, f.c.Answer_Id,
                         out qid, out qtxt);
@@ -1912,6 +1912,7 @@ namespace CSETWebCore.Business.Reports
 
                 obs.QuestionIdentifier = qid;
                 obs.QuestionText = qtxt;
+
 
 
                 var othersList = (from a in f.b.FINDING_CONTACT
@@ -2887,13 +2888,5 @@ namespace CSETWebCore.Business.Reports
 
             return maturityDomains;
         }
-
-        //public TempDataAttribute GetStandardAnsweredQuestionsList()
-        //{
-
-        //}
     }
 }
-
-
-
