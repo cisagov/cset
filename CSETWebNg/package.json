@@ -30,7 +30,7 @@
         "@angular/forms": "^18.2.7",
         "@angular/material": "^18.2.9",
         "@angular/platform-browser": "^18.2.7",
-        "@angular/platform-browser-dynamic": "^18.2.7",
+        "@angular/platform-browser-dynamic": "^18.2.9",
         "@angular/platform-server": "^18.2.7",
         "@angular/router": "^18.2.7",
         "@cloudfactorydk/ng2-tooltip-directive": "^18.0.0",
