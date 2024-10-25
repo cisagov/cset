@@ -277,6 +277,20 @@
     ]
   },
   {
+    "title": "NCSF_V2",
+    "reportList": [
+      {
+        "linkUrl": "cfAnsweredQuestions"
+      },
+      {
+        "linkUrl": "cfMfr"
+      },
+      {
+        "linkUrl": "cfSummary"
+      }
+    ]
+  },
+  {
     "title": "STANDARD",
     "reportList": [
       {

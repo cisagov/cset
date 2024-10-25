@@ -63,6 +63,20 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
+        /// Indicates if the assessment is a Cyber Florida "mid" assessment.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/convert/cf/mid")]
+        public IActionResult IsMidCF()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            var biz = new ConversionBusiness(_context, _assessmentUtil);
+            return Ok(biz.IsMidCF(assessmentId));
+        }
+
+
+        /// <summary>
         /// Converts a Cyber Florida "entry" assessment to a full assessment.
         /// </summary>
         /// <param name="login"></param>
@@ -122,6 +136,24 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             var biz = new CFBusiness(_context, _assessmentUtil);
             return Ok(biz.getInitialAnswers(assessmentId));
+        }
+
+        [HttpGet]
+        [Route("api/cf/isMidComplete")]
+        public IActionResult IsCFMidComplete()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            var biz = new CFBusiness(_context, _assessmentUtil);
+            return Ok(biz.getMidInitialAnswers(assessmentId));
+        }
+
+        [HttpGet]
+        [Route("api/cf/getAnswerBreakdownForBarChart")]
+        public IActionResult GetAnswerBreakdownForBarChart()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            var biz = new CFBusiness(_context, _assessmentUtil);
+            return Ok(biz.getBarChartInfo(assessmentId));
         }
     }
 }

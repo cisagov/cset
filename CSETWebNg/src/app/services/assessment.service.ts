@@ -37,6 +37,7 @@ import { Answer } from '../models/questions.model';
 import { BehaviorSubject } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 import { ConversionService } from './conversion.service';
+import { CompletionService } from './completion.service';
 
 
 export interface Role {
@@ -92,7 +93,8 @@ export class AssessmentService {
     private extDemoSvc: DemographicExtendedService,
     private floridaSvc: CyberFloridaService,
     private tSvc: TranslocoService,
-    private convSvc: ConversionService
+    private convSvc: ConversionService,
+    private completionSvc: CompletionService
   ) {
     if (!this.initialized) {
       this.apiUrl = this.configSvc.apiUrl;
@@ -702,8 +704,9 @@ export class AssessmentService {
 
   isCyberFloridaComplete(): boolean {
     if (this.configSvc.installationMode == "CF") {
-      if (this.assessment.maturityModel.modelName == "CPG") {
-        // return this.
+      if (this.assessment?.maturityModel != null && this.assessment?.maturityModel?.modelName == "CPG") {
+        //this.completionSvc.countAnswers();
+        return this.floridaSvc.isMidAssessmentComplete();
       }
       return this.floridaSvc.isAssessmentComplete();
     }
@@ -712,19 +715,47 @@ export class AssessmentService {
   }
 
   initCyberFlorida(assessmentId: number) {
-    this.floridaSvc.getInitialState().then(() => {
-      this.assessmentStateChanged$.next(125);
+    if (this.assessment.maturityModel?.modelName == 'CPG') {
+      this.floridaSvc.getMidInitialState().then(() => {
+        this.assessmentStateChanged$.next(125);
+      }
+      );
     }
-    );
+    else {
+      this.floridaSvc.getInitialState().then(() => {
+        this.assessmentStateChanged$.next(125);
+      }
+      );
+    }
   }
 
   updateAnswer(answer: Answer) {
-    this.floridaSvc.updateCompleteStatus(answer);
+    if (this.assessment.maturityModel?.modelName == 'CPG') {
+      this.floridaSvc.updateMidCompleteStatus(answer);
+    }
+    else {
+      this.floridaSvc.updateCompleteStatus(answer);
+    }
+
     if (this.isCyberFloridaComplete()) {
+
       this.convSvc.isEntryCfAssessment().subscribe((data) => {
         if (data)
           this.assessmentStateChanged$.next(124);
       });
+
+      this.convSvc.isMidCfAssessment().subscribe((data) => {
+        // console.log('in isMidComp')
+        // console.log(data)
+
+        if (data) {
+          
+          this.assessmentStateChanged$.next(124);
+        }
+      });
+    }
+    else {
+      this.assessmentStateChanged$.next(126);
     }
   }
 

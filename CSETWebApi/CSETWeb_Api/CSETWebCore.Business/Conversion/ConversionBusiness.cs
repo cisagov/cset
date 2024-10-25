@@ -88,13 +88,10 @@ namespace CSETWebCore.Business.Contact
         /// <returns></returns>
         public bool IsMidCF(int assessmentId)
         {
-            var cfRraRecord = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x =>
-                x.Assessment_Id == assessmentId && x.DataItemName == "MATURITY-SUBMODEL" && x.StringValue == "RRA CF");
+            var availMaturity = _context.AVAILABLE_MATURITY_MODELS
+                .Where(x => x.Assessment_Id == assessmentId && CPG_Model_Id == x.model_id && x.Selected).FirstOrDefault();
 
-            var availStandard = _context.AVAILABLE_STANDARDS
-                .Where(x => x.Assessment_Id == assessmentId && CF_CSF_SetNames.Contains(x.Set_Name) && x.Selected).FirstOrDefault();
-
-            if (cfRraRecord != null || availStandard != null)
+            if (availMaturity != null)
             {
                 return true;
             }
@@ -212,6 +209,7 @@ namespace CSETWebCore.Business.Contact
             // changing gallery guid to mid-level
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             assessment.GalleryItemGuid = Guid.Parse(Mid_Gallery_Guid);
+            assessment.UseStandard = false;
 
             _context.SaveChanges();
 
@@ -326,6 +324,7 @@ namespace CSETWebCore.Business.Contact
             // changing gallery guid to mid-level
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             assessment.GalleryItemGuid = Guid.Parse(Mid_Gallery_Guid);
+            assessment.UseStandard = true;
 
             _context.SaveChanges();
 

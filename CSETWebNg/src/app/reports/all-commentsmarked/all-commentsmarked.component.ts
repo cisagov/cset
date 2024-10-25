@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../../services/config.service';
@@ -33,7 +33,7 @@ import { ReportService } from '../../services/report.service';
   templateUrl: './all-commentsmarked.component.html',
   styleUrls: ['../reports.scss','./all-commentsmarked.component.scss']
 })
-export class AllCommentsmarkedComponent {
+export class AllCommentsmarkedComponent implements OnInit{
 
   response: any;
 
@@ -49,7 +49,6 @@ export class AllCommentsmarkedComponent {
 
     this.reportSvc.getStandardCommentsAndMfr().subscribe(
       (r: any) => {
-        console.log(r)
         this.response = r;
         this.titleService.setTitle(this.tSvc.translate('reports.all.cmfr.report title'));
       }

@@ -30,7 +30,6 @@ export class ReportListCommonComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['sectionId']) {
       this.reportList = this.getReportList(this.sectionId);
-
       if (this.assessSvc.isISE()) {
         this.reportList = this.iseCheckAndSetDisabled(this.reportList);
       }
