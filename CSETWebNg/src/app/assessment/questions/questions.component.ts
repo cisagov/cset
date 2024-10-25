@@ -116,6 +116,7 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
 
   }
   ngOnInit(): void {
+    console.log(this.assessSvc.assessment)
     this.configSvc.checkOnlineStatusFromConfig();
   }
 
@@ -383,5 +384,9 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
 
   usesRAC() {
     return this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard('RAC');
+  }
+
+  fullCF() {
+    return this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard('NCSF_V2') ? 'd-flex flex-row white-panel' : 'white-panel';
   }
 }

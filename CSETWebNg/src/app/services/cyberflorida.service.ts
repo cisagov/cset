@@ -60,12 +60,57 @@ export class CyberFloridaService {
       { id: 1939, answer: null }
     ];
     this.needArrays = [this.needArray, this.needArray2];
+
+    this.needArrayCpg = [
+      { id: 9889, answer: null },
+      { id: 9896, answer: null },
+      { id: 9897, answer: null },
+      { id: 9900, answer: null },
+      { id: 9901, answer: null },
+      { id: 9906, answer: null },
+      { id: 9908, answer: null },
+      { id: 9909, answer: null },
+      { id: 9907, answer: null },
+      { id: 9898, answer: null },
+      { id: 9889, answer: null },
+      { id: 9899, answer: null },
+      { id: 9894, answer: null },
+      { id: 9895, answer: null },
+      { id: 9916, answer: null },
+      { id: 9881, answer: null },
+      { id: 9883, answer: null },
+      { id: 9885, answer: null },
+      { id: 9886, answer: null },
+      { id: 9884, answer: null },
+      { id: 9914, answer: null },
+      { id: 9880, answer: null },
+      { id: 9882, answer: null },
+      { id: 9888, answer: null },
+      { id: 9891, answer: null },
+      { id: 9913, answer: null },
+      { id: 9887, answer: null },
+      { id: 9912, answer: null },
+      { id: 9911, answer: null },
+      { id: 9892, answer: null },
+      { id: 9893, answer: null },
+      { id: 9890, answer: null },
+      { id: 9904, answer: null },
+      { id: 9905, answer: null },
+      { id: 9915, answer: null },
+      { id: 9902, answer: null },
+      { id: 9903, answer: null },
+      { id: 9910, answer: null },
+      { id: 9917, answer: null },
+
+    ]
   }
 
 
   needArray: { id: number; answer: any; }[];
   needArray2: { id: number; answer: any; }[];
   needArrays: { id: number; answer: any; }[][];
+
+  needArrayCpg: { id: number; answer: any; }[];
 
   private apiUrl: string;
 
@@ -85,13 +130,28 @@ export class CyberFloridaService {
         if (value.answer == null) {
           isComplete = isComplete && false;
         }
-        else if(value.answer.answerText=='U'){
+        else if(value.answer.answerText=='U' || value.answer.answerText=='0' || value.answer.answerText=='NA' || value.answer.answerText=='A'){
           isComplete = isComplete && false;
         }
       });
       if(isComplete)
         return isComplete;
     });
+    return isComplete;
+  }
+
+  isMidAssessmentComplete(): boolean {    
+    let isComplete = true;
+    this.needArrayCpg.forEach(function (value) {
+      if (value.answer == null) {
+        isComplete = false;
+      }
+      else if(value.answer.answerText=='U'){
+        isComplete = false;
+      }
+    });
+    console.log(isComplete)
+
     return isComplete;
   }
 
@@ -104,7 +164,17 @@ export class CyberFloridaService {
           value.answer = answer;
         }                    
       });
-  });
+    });
+  }
+
+  updateMidCompleteStatus(answer: Answer) {  
+    //have a list of all the 38 necessary id's
+    //then when the list is complete enable the navigation
+    this.needArrayCpg.forEach(function (value) {        
+      if(value.id == answer.questionId){
+        value.answer = answer;
+      }                    
+    });
   }
 
   getInitialState(){
@@ -112,17 +182,40 @@ export class CyberFloridaService {
     return new Promise((resolve, reject)=> {
       this.http.get(this.apiUrl + 'cf/isComplete').toPromise()
       .then((data: any[])=>{    
-            data.forEach(element => {
-              for(let a in element){            
-                this.updateCompleteStatus(element[a]);
-              }  
-            });      
-            
-            resolve('initial state pulled');
+          data.forEach(element => {
+            for(let a in element){            
+              this.updateCompleteStatus(element[a]);
+            }  
+          });      
+          
+          resolve('initial state pulled');
         }
       );
     }
     )
     
+  }
+
+  getMidInitialState(){
+    this.clearState();
+    return new Promise((resolve, reject)=> {
+      this.http.get(this.apiUrl + 'cf/isMidComplete').toPromise()
+      .then((data: any[])=>{    
+          data.forEach(element => {
+            // for(let a in element){            
+              this.updateMidCompleteStatus(element);
+            // }  
+          });      
+          
+          resolve('initial state pulled');
+        }
+      );
+    }
+    )
+    
+  }
+
+  getBarChartInfo(){
+    return this.http.get(this.apiUrl + 'cf/getAnswerBreakdownForBarChart');
   }
 }

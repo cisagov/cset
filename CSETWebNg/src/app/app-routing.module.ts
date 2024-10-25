@@ -240,6 +240,9 @@ import { ConversionComponent } from './assessment/prepare/conversion/conversion.
 import { AllAnsweredquestionsComponent } from './reports/all-answeredquestions/all-answeredquestions.component';
 import { AllCommentsmarkedComponent } from './reports/all-commentsmarked/all-commentsmarked.component';
 import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.component';
+import { CfAnsweredQuestionsComponent } from './reports/cf-answeredquestions/cf-answeredquestions.component';
+import { CfCommentsMarkedForReviewComponent } from './reports/cf-commentsmarked/cf-commentsmarked.component';
+import { CfReviewedComponent } from './reports/cf-reviewed/cf-reviewed.component';
 
 const appRoutes: Routes = [
 
@@ -599,7 +602,10 @@ const appRoutes: Routes = [
       { path: 'appkeyreport', component: KeyReportComponent },
       { path: 'allAnsweredQuestions', component: AllAnsweredquestionsComponent },
       { path: 'allMfrAndComments', component: AllCommentsmarkedComponent},
-      { path: 'allReviewedQuestions', component: AllReviewedComponent}      
+      { path: 'allReviewedQuestions', component: AllReviewedComponent},
+      { path: 'cfAnsweredQuestions', component: CfAnsweredQuestionsComponent},
+      { path: 'cfMfr', component: CfCommentsMarkedForReviewComponent},
+      { path: 'cfSummary', component: CfReviewedComponent}
     ]
   },
   { path: '**', redirectTo: 'home' }

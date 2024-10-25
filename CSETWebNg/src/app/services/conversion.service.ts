@@ -59,6 +59,14 @@ export class ConversionService {
   isEntryCfAssessment() {
     return this.http.get(this.apiUrl + 'convert/cf/entry');
   }
+
+  /**
+   * 
+   */
+  isMidCfAssessment() {
+    return this.http.get(this.apiUrl + 'convert/cf/mid');
+  }
+
   isEntryCfAssessments(assessmentIds: number[]) {
     return this.http.post(this.apiUrl + 'convert/cf/entrys', assessmentIds);
   }

@@ -75,10 +75,10 @@ export class QuestionBlockCfComponent implements OnInit {
     this.answerOptions = this.questionsSvc.questions?.answerOptions;
     this.refreshReviewIndicator();
     // this.refreshPercentAnswered();
-    
+
     this.mySubCategory.questions.forEach(q => {
       if (q.answer == null) {
-        q.answer = '1';
+        q.answer = '0';
       }
     });
 

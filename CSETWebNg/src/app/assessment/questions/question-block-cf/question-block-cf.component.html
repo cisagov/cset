@@ -97,23 +97,31 @@
                                     <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
                                 </div>
                             </div>
-
-
-                            
                         </div>
                         <div class="d-flex flex-column">
-                            <mat-slider class="slider" [color]="warning" style="width: 600px;" [disabled]="disabled" [max]="8" [min]="1" [step]="1"
+                            <mat-slider class="slider" [color]="warning" style="width: 600px;" [disabled]="disabled" [max]="8" [min]="0" [step]="1"
                                 [discrete]="false" [showTickMarks]="true" (change)="storeAnswer(q, slider.value)">
                                 <input matSliderThumb [(ngModel)]="q.answer" #slider>
                             </mat-slider>
+                            <div class="d-flex flex-row" style="margin-left: 8px; margin-right: 4px; justify-content: space-between;">
+                                <div>0</div>
+                                <div>1</div>
+                                <div>2</div>
+                                <div>3</div>
+                                <div>4</div>
+                                <div>5</div>
+                                <div>5</div>
+                                <div>6</div>
+                                <div>7</div>
+                            </div>
                             <div class="d-flex flex-row">
-                                <div>
-                                    <div>1</div>
-                                    <div>Not Performed</div>
-                                </div>
+                                    <div>
+                                        Not<br>Mapped
+                                    </div>
+                                    <!-- <div></div> -->
                                 <div class="d-flex flex-column" style="margin-left:auto">
-                                    <div style="margin-left:auto">7</div>
-                                    <div>Optomized</div>
+                                    <!-- <div style="margin-left:auto">7</div> -->
+                                    <div>Optimized</div>
                                 </div>
                             </div>
                             

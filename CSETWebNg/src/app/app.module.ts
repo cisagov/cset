@@ -654,6 +654,9 @@ import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.compon
 import { QuestionsReviewedComponent } from './reports/questions-reviewed/questions-reviewed.component';
 import { QuestionBlockCfComponent } from './assessment/questions/question-block-cf/question-block-cf.component';
 import { ConversionComponent } from './assessment/prepare/conversion/conversion.component';
+import { CfAnsweredQuestionsComponent } from './reports/cf-answeredquestions/cf-answeredquestions.component';
+import { CfCommentsMarkedForReviewComponent } from './reports/cf-commentsmarked/cf-commentsmarked.component';
+import { CfReviewedComponent } from './reports/cf-reviewed/cf-reviewed.component';
 
 
 @NgModule({ declarations: [
@@ -1183,7 +1186,10 @@ import { ConversionComponent } from './assessment/prepare/conversion/conversion.
         AllReviewedComponent,
         QuestionsReviewedComponent,
         QuestionBlockCfComponent,
-        ConversionComponent
+        ConversionComponent,
+        CfAnsweredQuestionsComponent,
+        CfCommentsMarkedForReviewComponent,
+        CfReviewedComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
