@@ -341,7 +341,9 @@
             "fi-c2m2": "FI",
             "li-c2m2": "LI",
             "pi-c2m2": "PI",
-            "ni-c2m2": "NI"
+            "ni-c2m2": "NI",
+            "yes-cmmc": "Cump",
+            "no-cmmc": "No"
         },
         "button-tooltips": {
             "yes": "Sí",
@@ -363,7 +365,9 @@
             "fi-c2m2": "[ES] Fully Implemented - Complete",
             "li-c2m2": "[ES] Largely Implemented - Complete, but with a recognized opportunity for improvement",
             "pi-c2m2": "[ES] Partially Implemented - Incomplete; there are multiple opportunities for improvement",
-            "ni-c2m2": "[ES] Not Implemented - Absent; the practice is not performed by the organization"
+            "ni-c2m2": "[ES] Not Implemented - Absent; the practice is not performed by the organization",
+            "yes-cmmc": "Cumplido",
+            "no-cmmc": "No cumplido"
         },
         "labels": {
             "yes": "Sí",
@@ -538,14 +542,14 @@
         "please confirm": "Confirme, por favor",
         "remove contact": "¿Estás seguro de que quieres eliminar a {{firstName}} {{lastName}} de esta evaluación?",
         "remove assessment": "¿Estás seguro de que quieres eliminar {{assessmentName}}?",
-        "confirm create new assessment": "¿Está seguro de que desea crear una nueva evaluación?", 
-        "export assessment title": "Opciones de evaluación de exportación", 
-        "scrub pcii": "Seleccione para eliminar los campos PCII de la exportación", 
-        "encrypt 1": "Para cifrar su evaluación, ingrese una contraseña.", 
-        "encrypt 2": "Si continúa sin ingresar una contraseña, no se utilizará ningún cifrado.", 
-        "access denied": "Acceso denegado", 
-        "access denied 1": "Su sesión expiró, se produjo un error de conexión o ya no está autorizado a acceder a esa evaluación.", 
-        "access denied 2": "Por favor inicia sesión nuevamente.", 
+        "confirm create new assessment": "¿Está seguro de que desea crear una nueva evaluación?",
+        "export assessment title": "Opciones de evaluación de exportación",
+        "scrub pcii": "Seleccione para eliminar los campos PCII de la exportación",
+        "encrypt 1": "Para cifrar su evaluación, ingrese una contraseña.",
+        "encrypt 2": "Si continúa sin ingresar una contraseña, no se utilizará ningún cifrado.",
+        "access denied": "Acceso denegado",
+        "access denied 1": "Su sesión expiró, se produjo un error de conexión o ya no está autorizado a acceder a esa evaluación.",
+        "access denied 2": "Por favor inicia sesión nuevamente.",
         "access denied 3": "Otro usuario ha cambiado su función en esta evaluación."
     },
     "reports": {
