@@ -52,23 +52,28 @@ $button1-focus: #2d3236;
 $link1: $blue2;
 $text1: #222;
 
-.cset-header, .mat-mdc-menu-panel.menu-panel {
+.cset-header,
+.mat-mdc-menu-panel.menu-panel {
     background-color: $gray1;
 }
 
-.navbar .navbar-brand, .navbar .navbar-brand:hover {
+.navbar .navbar-brand,
+.navbar .navbar-brand:hover {
     padding: 0rem;
     margin-top: -4px;
     padding-top: 3px;
     padding-left: 2px;
     padding-right: 1rem;
-  }
+}
 
-  .navbar .navbar-brand:hover {
+.navbar .navbar-brand:hover {
     background-color: $header-bg-hover;
-  }
+}
 
-div.bgc-secondary, .nav-tabs, .nav-tab, .nav-tab-collapsed {
+div.bgc-secondary,
+.nav-tabs,
+.nav-tab,
+.nav-tab-collapsed {
     background-color: $red2;
 }
 
@@ -83,7 +88,12 @@ table.assessment-summary th {
 
 .table.table-td-p2 th, .table.table-td-p2 td {
     padding: .5rem !important;
-  }
+}
+
+// force transparent
+.table>:not(caption)>*>* {
+    background-color: transparent !important;
+}
 
 .bgc-black {
     background-color: $black;
@@ -96,7 +106,8 @@ table.assessment-summary th {
   TODO(mdc-migration): The following rule targets internal classes of dialog that may no longer apply for the MDC version.
 
 */
-.mat-drawer, .mat-dialog-header {
+.mat-drawer,
+.mat-dialog-header {
     background-color: $drawer-bg;
 }
 
@@ -105,11 +116,12 @@ table.assessment-summary th {
     color: $gold1;
 }
 
-.side-nav-container .current-node > button {
+.side-nav-container .current-node>button {
     border-color: $gold1;
 }
 
-.mat-drawer .btn-link, .mat-drawer .btn-link:focus {
+.mat-drawer .btn-link,
+.mat-drawer .btn-link:focus {
     color: $gold1;
 }
 
@@ -138,7 +150,8 @@ table.assessment-summary th {
     color: $white;
 }
 
-table.cset-table th, table.cset-table-4 th {
+table.cset-table th,
+table.cset-table-4 th {
     background-color: $table-header-bg !important;
 }
 
@@ -155,7 +168,8 @@ table.cset-table th, table.cset-table-4 th {
 }
 
 /* buttons */
-.btn-primary, .btn-secondary:hover {
+.btn-primary,
+.btn-secondary:hover {
     background-color: $black;
     border-color: $black;
     color: $blue1;
@@ -163,15 +177,18 @@ table.cset-table th, table.cset-table-4 th {
 }
 
 .btn-primary:not(:disabled):not(.disabled):active,
-.btn-primary:not(:disabled):not(.disabled):focus
-{
+.btn-primary:not(:disabled):not(.disabled):focus {
     background-color: $button1-focus;
 }
 
-.btn-link, .btn-link-dark {
+.btn-link,
+.btn-link-dark {
     color: $link1;
 }
 
-.btn-link, a:not([href]).btn-link, .btn-link-dark, a:not([href]).btn-link-dark {
+.btn-link,
+a:not([href]).btn-link,
+.btn-link-dark,
+a:not([href]).btn-link-dark {
     color: $link1;
 }
