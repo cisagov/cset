@@ -75,7 +75,7 @@ function createWindow() {
     height: 800,
     webPreferences: { nodeIntegration: true, webSecurity: false },
     icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
-    title: appName ===  appName
+    title: appName
   });
 
   // Default Electron application menu is immutable; have to create new one and modify from there
