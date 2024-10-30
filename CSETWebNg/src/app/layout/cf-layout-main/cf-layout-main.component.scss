@@ -654,6 +654,11 @@ table.assessment-summary th {
   padding: .5rem !important;
 }
 
+// force transparent
+.table>:not(caption)>*>* {
+  background-color: transparent !important;
+}
+
 /*
 @media only screen and (max-width: 1200px) {
   table.assessment-summary td > button > span {

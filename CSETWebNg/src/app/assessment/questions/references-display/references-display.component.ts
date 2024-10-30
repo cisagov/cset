@@ -78,7 +78,7 @@ export class ReferencesDisplayComponent implements OnInit {
         listDoc = {
           fileId: ref.fileId,
           fileName: ref.fileName?.trim(),
-          title: ref.title.trim(),
+          title: ref.title?.trim(),
           url: ref.url?.trim(),
           isUploaded: ref.isUploaded,
           bookmarks: []
