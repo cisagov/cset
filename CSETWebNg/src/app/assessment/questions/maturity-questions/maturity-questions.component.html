@@ -78,31 +78,6 @@
       </p>
     </ng-container>
 
-    <div class="mb-4" *ngIf="this.assessSvc.assessment?.maturityModel?.modelId == 11">
-      <strong>{{t('questions.cpg answer key')}}</strong>
-      <ul style="list-style-type: none;">
-        <li><span
-            style="background-color:#006000; width: 20px; height: 20px; display: inline-block; vertical-align: middle"></span>
-          {{t('answer-options.button-tooltips.imp-cpg')}}
-        </li>
-        <li>
-          <span
-            style="background-color:#0a4b6e; width: 20px; height: 20px; display: inline-block; vertical-align: middle"></span>
-          {{t('answer-options.button-tooltips.prog-cpg')}}
-        </li>
-        <li>
-          <span
-            style="background-color:#b17300; width: 20px; height: 20px; display: inline-block; vertical-align: middle"></span>
-          {{t('answer-options.button-tooltips.scoped-cpg')}}
-        </li>
-        <li>
-          <span
-            style="background-color:#990000; width: 20px; height: 20px; display: inline-block; vertical-align: middle"></span>
-          {{t('answer-options.button-tooltips.not-cpg')}}
-        </li>
-      </ul>
-    </div>
-
     <div *ngIf="!groupings" class="w-100">
       <div class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
