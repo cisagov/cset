@@ -543,6 +543,12 @@ table.assessment-summary th {
   padding: .5rem !important;
 }
 
+// force transparent
+.table>:not(caption)>*>* {
+  background-color: transparent !important;
+}
+
+
 table.paddingBetweenCols td,
 table.paddingBetweenCols th {
   padding: 0 15px 10px;
