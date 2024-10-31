@@ -6,11 +6,13 @@
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Model.Nested;
 using CSETWebCore.Model.Question;
 using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -113,6 +115,46 @@ namespace CSETWebCore.Api.Controllers
 
             return list;
         }
+
+
+        public List<Model.Nested.Grouping> getGroupingScores(int assessmentId)
+        {
+            //var groupings = from function in _context.NCSF_FUNCTIONS
+            //                join subcatInfo in _context.NCSF_CATEGORY on function.NCSF_Function_ID equals subcatInfo.NCSF_Function_Id
+            //                join subcat in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on subcatInfo.Question_Group_Heading_Id equals subcat.Question_Group_Heading_Id
+            //                join q in _context.NEW_QUESTION on subcat.Heading_Pair_Id equals q.Heading_Pair_Id
+            //                join ans in _context.ANSWER on q.Question_Id equals ans.Question_Or_Requirement_Id
+            //                where ans.Assessment_Id == assessmentId
+            //                select new { function, ans };
+
+            _context.FillEmptyQuestionsForAnalysis(assessmentId);
+
+            for (int i = 1; i < _context.NCSF_CATEGORY.Count() + 1; i++)
+            {
+                var groupings = from subcatInfo in _context.NCSF_CATEGORY 
+                                join subcat in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on subcatInfo.Question_Group_Heading_Id equals subcat.Question_Group_Heading_Id
+                                join q in _context.NEW_QUESTION on subcat.Heading_Pair_Id equals q.Heading_Pair_Id
+                                join ans in _context.ANSWER on q.Question_Id equals ans.Question_Or_Requirement_Id
+                                where ans.Assessment_Id == assessmentId where subcat.Set_Name == "NCSF_V2"
+                                select new { subcat, q, ans };
+
+                int runningAnswerTotal = 0;
+                foreach (var pair in groupings.ToList())
+                {
+                    if (Int32.TryParse(pair.ans.Answer_Text, out int ansInt))
+                    {
+                        runningAnswerTotal += ansInt;
+                    }
+                    
+                }
+
+                decimal score = decimal.Divide(runningAnswerTotal, groupings.Count());
+            }
+            
+
+            return new List<Model.Nested.Grouping>() { };
+        }
+
 
         public string convertAnsToScale(string ansText)
         {

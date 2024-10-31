@@ -155,5 +155,14 @@ namespace CSETWebCore.Api.Controllers
             var biz = new CFBusiness(_context, _assessmentUtil);
             return Ok(biz.getBarChartInfo(assessmentId));
         }
+
+        [HttpGet]
+        [Route("api/cf/getScoreBreakdown")]
+        public IActionResult GetScoreBreakdown()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            var biz = new CFBusiness(_context, _assessmentUtil);
+            return Ok(biz.getGroupingScores(assessmentId));
+        }
     }
 }
