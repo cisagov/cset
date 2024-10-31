@@ -18,10 +18,15 @@ export class TranslocoHttpLoader implements TranslocoLoader {
     provideTransloco({
       config: {
         availableLangs: ['en', 'es', 'uk'],
+        fallbackLang: 'en',
         defaultLang: 'en',
         // Remove this option if your application doesn't support changing language in runtime.
         reRenderOnLangChange: true,
         prodMode: !isDevMode(),
+        missingHandler: {
+          // It will use the first language set in the `fallbackLang` property
+          useFallbackTranslation: true,
+        }
       },
       loader: TranslocoHttpLoader,
     }),
