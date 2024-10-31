@@ -62,6 +62,7 @@ export interface QuestionDetailsContentViewModel {
   listTabs: QuestionInformationTabData[];
   observations: Observation[];
   documents: QuestionDocument[];
+  is_Component: boolean;
 }
 
 export interface QuestionInformationTabData {
