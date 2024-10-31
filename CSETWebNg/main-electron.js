@@ -113,7 +113,7 @@ function createWindow() {
                 .webContents.printToPDF({ pageSize: 'Letter' })
                 .then((data) => {
                   const saveDialogOptions = {
-                    title: 'Save as PDF',
+                    title: `${appName} - Save as PDF`,
                     filters: [
                       {
                         name: 'PDF',
@@ -125,11 +125,13 @@ function createWindow() {
 
                   let filepath = dialog.showSaveDialogSync(saveDialogOptions);
 
-                  fs.writeFile(filepath, data, (error) => {
-                    if (error) {
-                      log.error(error);
-                    }
-                  });
+                  if (filepath) {
+                    fs.writeFile(filepath, data, (error) => {
+                      if (error) {
+                        log.error(error);
+                      }
+                    });
+                  }
                 })
                 .catch((error) => {
                   log.error(error);
@@ -320,7 +322,8 @@ function createWindow() {
         width: 1000,
         height: 800,
         webPreferences: { nodeIntegration: true },
-        icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico')
+        icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
+        title: details.frameName.includes('web-ng') || details.frameName === '_blank' ? `${appName}` : details.frameName
       });
 
       const newPath = details.url.substring(details.url.indexOf('index.html'));
@@ -344,7 +347,8 @@ function createWindow() {
       let childWindow = new BrowserWindow({
         parent: mainWindow,
         webPreferences: { nodeIntegration: true },
-        icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico')
+        icon: path.join(__dirname, 'dist/favicon_' + installationMode.toLowerCase() + '.ico'),
+        title: details.frameName.includes('web-ng') || details.frameName === '_blank' ? `${appName}` : details.frameName
       });
 
       childWindow.loadURL(details.url);
@@ -356,7 +360,11 @@ function createWindow() {
           return { action: 'deny' };
         } else {
           childWindow.loadURL(newUrl);
-          return { action: 'deny' };
+          return { action: 'deny' ,
+            overrideBrowserWindowOptions: {
+              title: details.frameName.includes('web-ng') || details.frameName === '_blank' ? `${appName}` : details.frameName
+            }
+          };
         }
       });
 
@@ -367,6 +375,7 @@ function createWindow() {
       shell.openExternal(details.url);
       return { action: 'deny' };
     }
+
     return {
       action: 'allow',
       overrideBrowserWindowOptions: {
