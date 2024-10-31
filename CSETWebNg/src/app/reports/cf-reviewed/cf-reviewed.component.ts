@@ -23,9 +23,9 @@ export class CfReviewedComponent implements OnInit {
   gradient = false;
   showLegend = false;
   showXAxisLabel = true;
-  xAxisLabel = 'Answer';
+  xAxisLabel = 'Selected';
   showYAxisLabel = true;
-  yAxisLabel = 'Selected';
+  yAxisLabel = 'Answer';
 
   colorScheme = {
     domain: ['#706c6c', '#706c6c', '#706c6c', '#706c6c', '#706c6c', '#383444', '#383444', '#383444', '#383444']
@@ -39,12 +39,18 @@ export class CfReviewedComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService
   ) {}
-
+  
   ngOnInit() {
     this.cfSvc.getBarChartInfo().subscribe(
       (r: any) => {
         console.log(r)
         this.single = r;
+    });
+
+    this.cfSvc.getScoreBreakdown().subscribe(
+      (r: any) => {
+        console.log(r)
+        this.multi = r;
     });
   }
 }

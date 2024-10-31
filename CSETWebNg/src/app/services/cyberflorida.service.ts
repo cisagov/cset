@@ -122,7 +122,7 @@ export class CyberFloridaService {
     this.apiUrl = this.configSvc.apiUrl;
   }
 
-  isAssessmentComplete(): boolean {    
+  isAssessmentComplete(entryLevel: boolean): boolean {    
     let isComplete = true;
     this.needArrays.forEach((needArray) => {  
       isComplete = true;    
@@ -130,8 +130,15 @@ export class CyberFloridaService {
         if (value.answer == null) {
           isComplete = isComplete && false;
         }
-        else if(value.answer.answerText=='U' || value.answer.answerText=='0' || value.answer.answerText=='NA' || value.answer.answerText=='A'){
-          isComplete = isComplete && false;
+        else if (entryLevel) {
+          if (value.answer.answerText=='U'){
+            isComplete = isComplete && false;
+          }
+        } 
+        else {
+          if (value.answer.answerText=='U' || value.answer.answerText=='0' || value.answer.answerText=='NA' || value.answer.answerText=='A'){
+            isComplete = isComplete && false;
+          }
         }
       });
       if(isComplete)
@@ -217,5 +224,9 @@ export class CyberFloridaService {
 
   getBarChartInfo(){
     return this.http.get(this.apiUrl + 'cf/getAnswerBreakdownForBarChart');
+  }
+
+  getScoreBreakdown(){
+    return this.http.get(this.apiUrl + 'cf/getScoreBreakdown');
   }
 }

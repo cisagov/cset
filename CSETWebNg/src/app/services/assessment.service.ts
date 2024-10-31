@@ -704,18 +704,19 @@ export class AssessmentService {
 
   isCyberFloridaComplete(): boolean {
     if (this.configSvc.installationMode == "CF") {
-      if (this.assessment?.maturityModel != null && this.assessment?.maturityModel?.modelName == "CPG") {
+      if (this.usesMaturityModel('CPG')) {
         //this.completionSvc.countAnswers();
         return this.floridaSvc.isMidAssessmentComplete();
       }
-      return this.floridaSvc.isAssessmentComplete();
+
+      return this.floridaSvc.isAssessmentComplete(this.usesStandard('Florida_NCSF_V2'));
     }
     else
       return true;
   }
 
   initCyberFlorida(assessmentId: number) {
-    if (this.assessment.maturityModel?.modelName == 'CPG') {
+    if (this.usesMaturityModel('CPG')) {
       this.floridaSvc.getMidInitialState().then(() => {
         this.assessmentStateChanged$.next(125);
       }
@@ -730,7 +731,7 @@ export class AssessmentService {
   }
 
   updateAnswer(answer: Answer) {
-    if (this.assessment.maturityModel?.modelName == 'CPG') {
+    if (this.usesMaturityModel('CPG')) {
       this.floridaSvc.updateMidCompleteStatus(answer);
     }
     else {
