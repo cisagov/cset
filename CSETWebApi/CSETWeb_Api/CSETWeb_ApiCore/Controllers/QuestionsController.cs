@@ -29,6 +29,7 @@ using CSETWebCore.Business.Malcolm;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using CSETWebCore.Helpers;
 using CSETWebCore.Business.Contact;
+using NLog;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -79,26 +80,34 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/QuestionList")]
         public IActionResult GetList([FromQuery] string group)
         {
-            if (group == null)
+            try
             {
-                group = "*";
+                if (group == null)
+                {
+                    group = "*";
+                }
+
+                int assessmentId = _token.AssessmentForUser();
+                string applicationMode = GetApplicationMode(assessmentId);
+
+
+                if (applicationMode.ToLower().StartsWith("questions"))
+                {
+                    var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
+                    QuestionResponse resp = qb.GetQuestionList(group);
+                    return Ok(resp);
+                }
+                else
+                {
+                    var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
+                    QuestionResponse resp = rb.GetRequirementsList();
+                    return Ok(resp);
+                }
             }
-
-            int assessmentId = _token.AssessmentForUser();
-            string applicationMode = GetApplicationMode(assessmentId);
-
-
-            if (applicationMode.ToLower().StartsWith("questions"))
+            catch (Exception exc)
             {
-                var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-                QuestionResponse resp = qb.GetQuestionList(group);
-                return Ok(resp);
-            }
-            else
-            {
-                var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
-                QuestionResponse resp = rb.GetRequirementsList();
-                return Ok(resp);
+                LogManager.GetCurrentClassLogger().Error(exc);
+                return BadRequest(exc.Message);
             }
         }
 

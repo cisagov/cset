@@ -96,6 +96,7 @@ export class QuestionsService {
    * Retrieves the list of questions.
    */
   getQuestionsList() {
+    console.log('getQuestionsList');
     return this.http.get(this.configSvc.apiUrl + 'questionlist', headers);
   }
 

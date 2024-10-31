@@ -123,22 +123,6 @@ label[required]::after {
   color: $validation-color;
 }
 
-.dhs-seal-background {
-  background-image: url("/assets/images/CISA_Logo_1831px.png");
-  background-repeat: no-repeat;
-  background-position: center bottom;
-  background-size: contain;
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  z-index: -1;
-  bottom: 80px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  opacity: 0.1;
-}
-
 .bg-semi-trans {
   background-color: rgba(255, 255, 255, 0.6);
 }
@@ -366,6 +350,11 @@ table.assessment-summary th {
 
 .table.table-td-p2 th, .table.table-td-p2 td {
   padding: .5rem !important;
+}
+
+// force transparent
+.table>:not(caption)>*>* {
+  background-color: transparent !important;
 }
 
 table.paddingBetweenCols td,
