@@ -193,6 +193,7 @@
       "moduleName": "CPG",
       "modelId": "11",
       "displayNameKey": "modules.cpg.display-name",
+      "showDomainHeaders": false,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {
