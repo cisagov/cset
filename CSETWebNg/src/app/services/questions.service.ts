@@ -96,7 +96,6 @@ export class QuestionsService {
    * Retrieves the list of questions.
    */
   getQuestionsList() {
-    console.log('getQuestionsList');
     return this.http.get(this.configSvc.apiUrl + 'questionlist', headers);
   }
 
@@ -142,15 +141,15 @@ export class QuestionsService {
     }
 
     // find the configuration for the model
-    const moduleConfig = this.configSvc.getModuleConfig(modelId);
+    const moduleBehavior = this.configSvc.getModuleBehavior(modelId);
 
 
     // standards (modelid is null) - check the checkbox state
-    if (!moduleConfig) {
+    if (!moduleBehavior) {
       return this.autoLoadSuppCheckboxState;
     }
 
-    return moduleConfig.autoLoadSupplemental ?? false;
+    return moduleBehavior.autoLoadSupplemental ?? false;
   }
 
   /**
@@ -392,10 +391,7 @@ export class QuestionsService {
     if (!!model && String(model).trim().length > 0) {
 
       // first try to find the model configuration using its model name
-      let modelConfiguration =
-        this.configSvc.config.moduleBehaviors.find(x => x.modelId == model) ||
-        this.configSvc.config.moduleBehaviors.find(x => x.moduleName == model);
-
+      let modelConfiguration = this.configSvc.getModuleBehavior(model); 
 
       if (!!modelConfiguration) {
         // first look for a skin-specific answer option

@@ -118,6 +118,7 @@
   "moduleBehaviors": [
     {
       "moduleName": "EDM",
+      "modelId": "3",
       "questionIcons": {
         "showDetails": false,
         "guidanceIcon": "G",
@@ -126,6 +127,7 @@
     },
     {
       "moduleName": "CRR",
+      "modelId": "4",
       "questionIcons": {
         "showDetails": false,
         "guidanceIcon": "G",
@@ -134,6 +136,7 @@
     },
     {
       "moduleName": "IMR",
+      "modelId": "15",
       "showMaturityLevelBadge": false,
       "showCriticalServiceDemog": false,
       "questionIcons": {
@@ -145,6 +148,8 @@
     {
       "moduleName": "RRA",
       "modelId": "5",
+      "displayNameKey": "modules.rra.display-name",
+      "showDomainHeaders": false,
       "questionIcons": {
         "showDetails": false,
         "guidanceIcon": "G",
@@ -169,6 +174,7 @@
     },
     {
       "moduleName": "CIS",
+      "modelId": "8",
       "questionIcons": {
         "showDetails": false,
         "showObservations": false,
@@ -178,6 +184,7 @@
     },
     {
       "moduleName": "SD02 Series",
+      "modelId": "14",
       "questionIcons": {
         "showDetails": false
       }
@@ -185,6 +192,7 @@
     {
       "moduleName": "CPG",
       "modelId": "11",
+      "displayNameKey": "modules.cpg.display-name",
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {
@@ -254,6 +262,7 @@
     },
     {
       "moduleName": "C2M2",
+      "modelId": "12",
       "questionIcons": {
         "showReviewed": false
       },
@@ -282,7 +291,9 @@
     },
     {
       "moduleName": "ACET",
+      "modelId": "1",
       "independentSuppGuidance": true,
+      "showDomainHeaders": true,
       "answerOptions": [
         {
           "skin": "ACET",
@@ -295,6 +306,8 @@
     },
     {
       "moduleName": "ISE",
+      "modelId": 10,
+      "showDomainHeaders": false,
       "questionIcons": {
         "showObservations": false
       },
@@ -317,6 +330,7 @@
     },
     {
       "moduleName": "HYDRO",
+      "modelId": "13",
       "questionIcons": {
         "showDetails": false,
         "showGuidance": false,
@@ -326,6 +340,7 @@
     },
     {
       "moduleName": "CIE",
+      "modelId": "17",
       "questionIcons": {
         "showDetails": false,
         "showGuidance": false,
@@ -351,6 +366,7 @@
     },
     {
       "moduleName": "MVRA",
+      "modelId": "9",
       "answerOptions": [
         {
           "code": "Y",
