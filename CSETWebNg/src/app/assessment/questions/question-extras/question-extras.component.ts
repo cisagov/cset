@@ -177,11 +177,6 @@ export class QuestionExtrasComponent implements OnInit {
     this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType)
       .subscribe((details) => {
         this.extras = details;
-        if (details.is_Component === true) {
-          this.myQuestion.is_Component = true;
-          this.toggleComponent = true;
-        }
-
         this.extras.questionId = this.myQuestion.questionId;
 
         // populate my details with the first "non-null" tab
@@ -201,6 +196,11 @@ export class QuestionExtrasComponent implements OnInit {
           }
         }
       });
+     
+      if (this.extras.is_Component === true) {
+        this.myQuestion.is_Component = true;
+        this.toggleComponent = true;
+      }
   }
 
   /**
