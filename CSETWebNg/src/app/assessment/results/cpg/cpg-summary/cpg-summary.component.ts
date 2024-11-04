@@ -52,7 +52,7 @@ export class CpgSummaryComponent implements OnInit {
    */
   ngOnInit(): void {
     this.cpgSvc.getAnswerDistrib().subscribe((resp: any) => {
-      const cpgAnswerOptions = this.configSvc.config.moduleBehaviors.find(b => b.moduleName == 'CPG').answerOptions;
+      const cpgAnswerOptions = this.configSvc.getModuleBehavior('CPG').answerOptions;
 
       resp.forEach(r => {
         r.series.forEach(element => {

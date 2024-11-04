@@ -232,7 +232,7 @@ export class AssessmentDemographicsComponent implements OnInit {
     }
 
     showCriticalService() {
-        const moduleBehavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment?.maturityModel?.modelName);
+        const moduleBehavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment?.maturityModel?.modelName);
         return (this.configSvc.behaviors.showCriticalService ?? true)
             && (moduleBehavior?.showCriticalServiceDemog ?? true);
     }

@@ -487,14 +487,14 @@
     "please confirm": "Підтвердження",
     "remove contact": "Ви впевнені, що хочете видалити {{firstName}} {{lastName}} з цього оцінювання?",
     "remove assessment": "Ви впевнені, що хочете видалити {{assessmentName}}?",
-    "confirm create new assessment": "Ви впевнені, що хочете створити нове оцінювання?", 
-    "export assessment title": "Параметри експортної оцінки", 
-    "scrub pcii": "Виберіть, щоб видалити поля PCII з експорту", 
-    "encrypt 1": "Щоб зашифрувати свою оцінку, введіть пароль.", 
-    "encrypt 2": "Якщо ви продовжите без введення пароля, шифрування не використовуватиметься.", 
-    "access denied": "Доступ заборонено", 
-    "access denied 1": "Ваш сеанс закінчився, сталася помилка підключення або ви більше не маєте доступу до цього оцінювання.", 
-    "access denied 2": "Будь ласка, увійдіть знову.", 
+    "confirm create new assessment": "Ви впевнені, що хочете створити нове оцінювання?",
+    "export assessment title": "Параметри експортної оцінки",
+    "scrub pcii": "Виберіть, щоб видалити поля PCII з експорту",
+    "encrypt 1": "Щоб зашифрувати свою оцінку, введіть пароль.",
+    "encrypt 2": "Якщо ви продовжите без введення пароля, шифрування не використовуватиметься.",
+    "access denied": "Доступ заборонено",
+    "access denied 1": "Ваш сеанс закінчився, сталася помилка підключення або ви більше не маєте доступу до цього оцінювання.",
+    "access denied 2": "Будь ласка, увійдіть знову.",
     "access denied 3": "Вашу роль у цьому оцінюванні змінив інший користувач."
   },
   "reports": {
@@ -1208,6 +1208,17 @@
     "traffic light protocol": "Протокол Світлофору",
     "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> є частиною <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Департамент державної безпеки Сполучених Штатів</a>",
     "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Веб-сайт</a>"
+  },
+  "modules": {
+    "cpg": {
+      "display-name": "Cyber Performance Goals (CPG)"
+    },
+    "cmmc2f": {
+      "display-name": "Cybersecurity Maturity Model Certification (CMMC) 2.0"
+    },
+    "rra": {
+      "display-name": "Ransomware Readiness Assessment (RRA)"
+    }
   },
   "aggregation": {
     "assessment alias": "Аліас оцінки",

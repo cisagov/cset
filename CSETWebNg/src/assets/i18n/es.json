@@ -538,14 +538,14 @@
         "please confirm": "Confirme, por favor",
         "remove contact": "¿Estás seguro de que quieres eliminar a {{firstName}} {{lastName}} de esta evaluación?",
         "remove assessment": "¿Estás seguro de que quieres eliminar {{assessmentName}}?",
-        "confirm create new assessment": "¿Está seguro de que desea crear una nueva evaluación?", 
-        "export assessment title": "Opciones de evaluación de exportación", 
-        "scrub pcii": "Seleccione para eliminar los campos PCII de la exportación", 
-        "encrypt 1": "Para cifrar su evaluación, ingrese una contraseña.", 
-        "encrypt 2": "Si continúa sin ingresar una contraseña, no se utilizará ningún cifrado.", 
-        "access denied": "Acceso denegado", 
-        "access denied 1": "Su sesión expiró, se produjo un error de conexión o ya no está autorizado a acceder a esa evaluación.", 
-        "access denied 2": "Por favor inicia sesión nuevamente.", 
+        "confirm create new assessment": "¿Está seguro de que desea crear una nueva evaluación?",
+        "export assessment title": "Opciones de evaluación de exportación",
+        "scrub pcii": "Seleccione para eliminar los campos PCII de la exportación",
+        "encrypt 1": "Para cifrar su evaluación, ingrese una contraseña.",
+        "encrypt 2": "Si continúa sin ingresar una contraseña, no se utilizará ningún cifrado.",
+        "access denied": "Acceso denegado",
+        "access denied 1": "Su sesión expiró, se produjo un error de conexión o ya no está autorizado a acceder a esa evaluación.",
+        "access denied 2": "Por favor inicia sesión nuevamente.",
         "access denied 3": "Otro usuario ha cambiado su función en esta evaluación."
     },
     "reports": {
@@ -1303,6 +1303,17 @@
         "traffic light protocol": "Protocolo de Semáforo (TLP)",
         "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> es parte del <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Departamento de Seguridad Nacional</a>",
         "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Sitio Web</a>"
+    },
+    "modules": {
+        "cpg": {
+            "display-name": "Cyber Performance Goals (CPG)"
+        },
+        "cmmc2f": {
+            "display-name": "Cybersecurity Maturity Model Certification (CMMC) 2.0"
+        },
+        "rra": {
+            "display-name": "Ransomware Readiness Assessment (RRA)"
+        }
     },
     "aggregation": {
         "assessment alias": "Alias de evaluación",
