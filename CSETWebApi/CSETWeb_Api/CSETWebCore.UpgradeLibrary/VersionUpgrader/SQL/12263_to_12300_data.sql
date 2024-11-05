@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 10/10/2024 4:05:30 PM
+Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 10/31/2024 11:31:43 AM
 
 */
 		
@@ -25,26 +25,12 @@ SET TRANSACTION ISOLATION LEVEL Serializable
 GO
 BEGIN TRANSACTION
 
-PRINT(N'Drop constraints from [dbo].[REQUIREMENT_QUESTIONS_SETS]')
-ALTER TABLE [dbo].[REQUIREMENT_QUESTIONS_SETS] NOCHECK CONSTRAINT [FK_REQUIREMENT_QUESTIONS_SETS_NEW_QUESTION]
-ALTER TABLE [dbo].[REQUIREMENT_QUESTIONS_SETS] NOCHECK CONSTRAINT [FK_REQUIREMENT_QUESTIONS_SETS_NEW_REQUIREMENT]
-ALTER TABLE [dbo].[REQUIREMENT_QUESTIONS_SETS] NOCHECK CONSTRAINT [FK_REQUIREMENT_QUESTIONS_SETS_SETS]
+PRINT(N'Disable DML triggers on [dbo].[MATURITY_GROUPINGS]')
+ALTER TABLE [dbo].[MATURITY_GROUPINGS] DISABLE TRIGGER [trg_update_maturity_groupings]
 
-PRINT(N'Drop constraints from [dbo].[PARAMETER_REQUIREMENTS]')
-ALTER TABLE [dbo].[PARAMETER_REQUIREMENTS] NOCHECK CONSTRAINT [FK_Parameter_Requirements_NEW_REQUIREMENT]
-ALTER TABLE [dbo].[PARAMETER_REQUIREMENTS] NOCHECK CONSTRAINT [FK_Parameter_Requirements_Parameters]
-
-PRINT(N'Drop constraints from [dbo].[NEW_QUESTION_LEVELS]')
-ALTER TABLE [dbo].[NEW_QUESTION_LEVELS] NOCHECK CONSTRAINT [FK_NEW_QUESTION_LEVELS_NEW_QUESTION_SETS]
-ALTER TABLE [dbo].[NEW_QUESTION_LEVELS] NOCHECK CONSTRAINT [FK_NEW_QUESTION_LEVELS_UNIVERSAL_SAL_LEVEL]
-
-PRINT(N'Drop constraints from [dbo].[NCSF_FULL_TO_MID]')
-ALTER TABLE [dbo].[NCSF_FULL_TO_MID] NOCHECK CONSTRAINT [FK_NCSF_FULL_TO_MID_NCSF_CONVERSION_MAPPINGS_FULL]
-ALTER TABLE [dbo].[NCSF_FULL_TO_MID] NOCHECK CONSTRAINT [FK_NCSF_FULL_TO_MID_NCSF_CONVERSION_MAPPINGS_MID]
-
-PRINT(N'Drop constraints from [dbo].[NCSF_ENTRY_TO_MID]')
-ALTER TABLE [dbo].[NCSF_ENTRY_TO_MID] NOCHECK CONSTRAINT [FK_NCSF_ENTRY_TO_MID_NCSF_CONVERSION_MAPPINGS_ENTRY]
-ALTER TABLE [dbo].[NCSF_ENTRY_TO_MID] NOCHECK CONSTRAINT [FK_NCSF_ENTRY_TO_MID_NCSF_CONVERSION_MAPPINGS_MID]
+PRINT(N'Drop constraints from [dbo].[MATURITY_REFERENCES]')
+ALTER TABLE [dbo].[MATURITY_REFERENCES] NOCHECK CONSTRAINT [FK_MATURITY_REFERENCES_GEN_FILE]
+ALTER TABLE [dbo].[MATURITY_REFERENCES] NOCHECK CONSTRAINT [FK_MATURITY_REFERENCES_MATURITY_QUESTIONS]
 
 PRINT(N'Drop constraints from [dbo].[MATURITY_QUESTIONS]')
 ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK__MATURITY___Matur__5B638405]
@@ -70,14 +56,42 @@ ALTER TABLE [dbo].[MATURITY_QUESTION_PROPS] NOCHECK CONSTRAINT [FK_MATURITY_QUES
 PRINT(N'Drop constraint FK_MATURITY_REFERENCE_TEXT_MATURITY_QUESTIONS from [dbo].[MATURITY_REFERENCE_TEXT]')
 ALTER TABLE [dbo].[MATURITY_REFERENCE_TEXT] NOCHECK CONSTRAINT [FK_MATURITY_REFERENCE_TEXT_MATURITY_QUESTIONS]
 
-PRINT(N'Drop constraint FK_MATURITY_REFERENCES_MATURITY_QUESTIONS from [dbo].[MATURITY_REFERENCES]')
-ALTER TABLE [dbo].[MATURITY_REFERENCES] NOCHECK CONSTRAINT [FK_MATURITY_REFERENCES_MATURITY_QUESTIONS]
-
 PRINT(N'Drop constraint FK_MATURITY_SUB_MODEL_QUESTIONS_MATURITY_QUESTIONS from [dbo].[MATURITY_SUB_MODEL_QUESTIONS]')
 ALTER TABLE [dbo].[MATURITY_SUB_MODEL_QUESTIONS] NOCHECK CONSTRAINT [FK_MATURITY_SUB_MODEL_QUESTIONS_MATURITY_QUESTIONS]
 
 PRINT(N'Drop constraint FK_TTP_MAT_QUESTION_MATURITY_QUESTIONS from [dbo].[TTP_MAT_QUESTION]')
 ALTER TABLE [dbo].[TTP_MAT_QUESTION] NOCHECK CONSTRAINT [FK_TTP_MAT_QUESTION_MATURITY_QUESTIONS]
+
+PRINT(N'Drop constraints from [dbo].[REQUIREMENT_QUESTIONS_SETS]')
+ALTER TABLE [dbo].[REQUIREMENT_QUESTIONS_SETS] NOCHECK CONSTRAINT [FK_REQUIREMENT_QUESTIONS_SETS_NEW_QUESTION]
+ALTER TABLE [dbo].[REQUIREMENT_QUESTIONS_SETS] NOCHECK CONSTRAINT [FK_REQUIREMENT_QUESTIONS_SETS_NEW_REQUIREMENT]
+ALTER TABLE [dbo].[REQUIREMENT_QUESTIONS_SETS] NOCHECK CONSTRAINT [FK_REQUIREMENT_QUESTIONS_SETS_SETS]
+
+PRINT(N'Drop constraints from [dbo].[PARAMETER_REQUIREMENTS]')
+ALTER TABLE [dbo].[PARAMETER_REQUIREMENTS] NOCHECK CONSTRAINT [FK_Parameter_Requirements_NEW_REQUIREMENT]
+ALTER TABLE [dbo].[PARAMETER_REQUIREMENTS] NOCHECK CONSTRAINT [FK_Parameter_Requirements_Parameters]
+
+PRINT(N'Drop constraints from [dbo].[NEW_QUESTION_LEVELS]')
+ALTER TABLE [dbo].[NEW_QUESTION_LEVELS] NOCHECK CONSTRAINT [FK_NEW_QUESTION_LEVELS_NEW_QUESTION_SETS]
+ALTER TABLE [dbo].[NEW_QUESTION_LEVELS] NOCHECK CONSTRAINT [FK_NEW_QUESTION_LEVELS_UNIVERSAL_SAL_LEVEL]
+
+PRINT(N'Drop constraints from [dbo].[NCSF_FULL_TO_MID]')
+ALTER TABLE [dbo].[NCSF_FULL_TO_MID] NOCHECK CONSTRAINT [FK_NCSF_FULL_TO_MID_NCSF_CONVERSION_MAPPINGS_FULL]
+ALTER TABLE [dbo].[NCSF_FULL_TO_MID] NOCHECK CONSTRAINT [FK_NCSF_FULL_TO_MID_NCSF_CONVERSION_MAPPINGS_MID]
+
+PRINT(N'Drop constraints from [dbo].[NCSF_ENTRY_TO_MID]')
+ALTER TABLE [dbo].[NCSF_ENTRY_TO_MID] NOCHECK CONSTRAINT [FK_NCSF_ENTRY_TO_MID_NCSF_CONVERSION_MAPPINGS_ENTRY]
+ALTER TABLE [dbo].[NCSF_ENTRY_TO_MID] NOCHECK CONSTRAINT [FK_NCSF_ENTRY_TO_MID_NCSF_CONVERSION_MAPPINGS_MID]
+
+PRINT(N'Drop constraints from [dbo].[MATURITY_LEVELS]')
+ALTER TABLE [dbo].[MATURITY_LEVELS] NOCHECK CONSTRAINT [FK_MATURITY_LEVELS_MATURITY_MODELS]
+
+PRINT(N'Drop constraints from [dbo].[MATURITY_GROUPINGS]')
+ALTER TABLE [dbo].[MATURITY_GROUPINGS] NOCHECK CONSTRAINT [FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES]
+ALTER TABLE [dbo].[MATURITY_GROUPINGS] NOCHECK CONSTRAINT [FK_MATURITY_GROUPINGS_MATURITY_MODELS]
+
+PRINT(N'Drop constraint FK_MATURITY_DOMAIN_REMARKS_MATURITY_GROUPINGS from [dbo].[MATURITY_DOMAIN_REMARKS]')
+ALTER TABLE [dbo].[MATURITY_DOMAIN_REMARKS] NOCHECK CONSTRAINT [FK_MATURITY_DOMAIN_REMARKS_MATURITY_GROUPINGS]
 
 PRINT(N'Drop constraints from [dbo].[GALLERY_GROUP_DETAILS]')
 ALTER TABLE [dbo].[GALLERY_GROUP_DETAILS] NOCHECK CONSTRAINT [FK_GALLERY_GROUP_DETAILS_GALLERY_GROUP]
@@ -126,9 +140,6 @@ ALTER TABLE [dbo].[ANALYTICS_MATURITY_GROUPINGS] NOCHECK CONSTRAINT [FK_ANALYTIC
 PRINT(N'Drop constraint FK__AVAILABLE__model__6F6A7CB2 from [dbo].[AVAILABLE_MATURITY_MODELS]')
 ALTER TABLE [dbo].[AVAILABLE_MATURITY_MODELS] NOCHECK CONSTRAINT [FK__AVAILABLE__model__6F6A7CB2]
 
-PRINT(N'Drop constraint FK_MATURITY_LEVELS_MATURITY_MODELS from [dbo].[MATURITY_LEVELS]')
-ALTER TABLE [dbo].[MATURITY_LEVELS] NOCHECK CONSTRAINT [FK_MATURITY_LEVELS_MATURITY_MODELS]
-
 PRINT(N'Drop constraint FK_MODES_SETS_MATURITY_MODELS_MATURITY_MODELS from [dbo].[MODES_SETS_MATURITY_MODELS]')
 ALTER TABLE [dbo].[MODES_SETS_MATURITY_MODELS] NOCHECK CONSTRAINT [FK_MODES_SETS_MATURITY_MODELS_MATURITY_MODELS]
 
@@ -142,9 +153,6 @@ ALTER TABLE [dbo].[FILE_KEYWORDS] NOCHECK CONSTRAINT [FILE_KEYWORDS_GEN_FILE_FK]
 PRINT(N'Drop constraint FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE from [dbo].[GEN_FILE_LIB_PATH_CORL]')
 ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL] NOCHECK CONSTRAINT [FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE]
 
-PRINT(N'Drop constraint FK_MATURITY_REFERENCES_GEN_FILE from [dbo].[MATURITY_REFERENCES]')
-ALTER TABLE [dbo].[MATURITY_REFERENCES] NOCHECK CONSTRAINT [FK_MATURITY_REFERENCES_GEN_FILE]
-
 PRINT(N'Drop constraint FK_REQUIREMENT_REFERENCES_GEN_FILE from [dbo].[REQUIREMENT_REFERENCES]')
 ALTER TABLE [dbo].[REQUIREMENT_REFERENCES] NOCHECK CONSTRAINT [FK_REQUIREMENT_REFERENCES_GEN_FILE]
 
@@ -156,6 +164,8 @@ ALTER TABLE [dbo].[ASSESSMENTS] NOCHECK CONSTRAINT [FK_ASSESSMENTS_GALLERY_ITEM]
 
 PRINT(N'Update rows in [dbo].[MATURITY_QUESTIONS]')
 UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Text]=N'Is two-factor authentication implemented for all privileged (e.g. system administrators) and remote users?' WHERE [Mat_Question_Id] = 1915
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'AC.L1-B.1.I', [Question_Text]=N'<p>Limit information system access to authorized users, processes acting on behalf of authorized users, or devices (including other information systems).</p>&#10;&#10;<p><b>Determine if:</b></p>&#10;<ol class="alpha-bracket">&#10; <li>authorized users are identified;</li>&#10;<li>processes acting on behalf of authorized users are identified;</li>&#10;<li>devices (and other systems) authorized to connect to the system are identified;</li>&#10;<li>system access is limited to authorized users;</li>&#10;<li>system access is limited to processes acting on behalf of authorized users; and</li>&#10;<li>system access is limited to authorized devices (including other systems).</li>&#10;</ol>&#10;&#10;', [Supplemental_Info]=N'<div><b>ASSESSMENT OBJECTIVES [NIST SP 800-171A]&#160;</b></div><div>Determine if:&#160;</div><div>[a] authorized users are identified;&#160;</div><div>[b] processes acting on behalf of authorized users are identified;&#160;</div><div>[c] devices (and other systems) authorized to connect to the system are identified;&#160;</div><div>[d] system access is limited to authorized users;&#160;</div><div>[e] system access is limited to processes acting on behalf of authorized users; and&#160;</div><div>[f] system access is limited to authorized devices (including other systems).&#160;</div><div><br></div><div><b>POTENTIAL ASSESSMENT METHODS AND OBJECTS [NIST SP 800-171A]</b></div><div><b>Examine</b></div><div>[SELECT FROM: Access control policy; procedures addressing account management; system&#10;security plan; system design documentation; system configuration settings and associated &#10;documentation; list of active system accounts and the name of the individual associated with &#10;each account; notifications or records of recently transferred, separated, or terminated &#10;employees; list of conditions for group and role membership; list of recently disabled system &#10;accounts along with the name of the individual associated with each account; access &#10;authorization records; account management compliance reviews; system monitoring &#10;records; system audit logs and records; list of devices and systems authorized to connect to &#10;organizational systems; other relevant documents or records].&#160;</div><div><b>Interview&#160;</b></div><div>[SELECT FROM: Personnel with account management responsibilities; system or network &#10;administrators; personnel with information security responsibilities].&#160;</div><div><b>Test&#160;</b></div><div>[SELECT FROM: Organizational processes for managing system accounts; mechanisms for &#10;implementing account management]<br><b><br>DISCUSSION [NIST SP 800-171 R2]&#160;</b></div><div>Access control policies (e.g., identity- or role-based policies, control matrices, and &#10;cryptography) control access between active entities or subjects (i.e., users or processes &#10;acting on behalf of users) and passive entities or objects (e.g., devices, files, records, and &#10;domains) in systems. Access enforcement mechanisms can be employed at the application &#10;and service level to provide increased information security. Other systems include systems &#10;internal and external to the organization. This requirement focuses on account management &#10;for systems and applications. The definition of and enforcement of access authorizations, &#10;other than those determined by account type (e.g., privileged verses [sic] non-privileged) are &#10;addressed in requirement 3.1.2.&#160;</div><div><br></div>&#10;<div><b>FURTHER DISCUSSION&#160;</b></div><div><i><b>NOTE: This section is derived from CMMC 1.02 guidance for informational purposes only. It will be updated when the CMMC 2.0 publications become available.</b></i></div><div>Identify users, processes, and devices that are allowed to use company computers and can &#10;log on to the company network [a]. Automated updates and other automatic processes &#10;should be associated with the user who initiated (authorized) the process [b]. Limit the &#10;devices (e.g., printers) that can be accessed by company computers [c]. Set up your system &#10;so that only authorized users, processes, and devices can access the company network [d,e,f].&#10;This practice, AC.1.001, controls system access based on user, process or device &#10;identity. AC.1.001 leverages IA.1.076 which provides a vetted and trusted identity for access &#10;control required by AC.1.001.&#160;</div><div><b>Example 1&#160;</b></div><div>Your company maintains a list of all personnel authorized to use company information &#10;systems [a]. This list is used to support identification and authentication activities conducted &#10;by IT when authorizing access to systems [a,d].&#160;</div><div><b>Example 2&#160;</b></div><div>A coworker wants to buy a new multi-function printer/scanner/fax device and make it &#10;available on the company network. You explain that the company controls system and device &#10;access to the network, and will prevent network access by unauthorized systems and devices &#10;[c]. You help the coworker submit a ticket that asks for the printer to be granted access to &#10;the network and appropriate leadership approves the device [f].&#160;</div><div><b>Potential Assessment Considerations</b></div><div>&#160;&#8226; Is a list of authorized users maintained that defines their identities and roles [a]?&#160;</div><div>&#160;&#8226; Are account requests authorized before system access is granted [d,e,f]?<br></div><div><b><br></b></div><div><b>KEY REFERENCES</b></div><div><ul><li>FAR Clause 52.204-21 b.1.i </li><li>NIST SP 800-171 Rev 2 3.1.1</li></ul><div><b>ADDITIONAL REFERENCES</b></div><ul><li>CIS Controls v7.1 1.4, 1.6, 5.1, 14.6, 15.10, 16.8, 16.9, 16.11</li><li>NIST CSF v1.1 PR.AC-1, PR.AC-3, PR.AC-4, PR.AC-6, PR.PT-3, PR.PT-4</li><li>CERT RMM v1.2 TM:SG4.SP1</li><li>NIST SP 800-53 Rev 4 AC-2, AC- 3, AC-17</li><li>AU ACSC Essential Eigh<span>t</span></li></ul></div>', [Scope]=N'', [Recommend_Action]=N'', [Risk_Addressed]=N'', [Services]=N'' WHERE [Mat_Question_Id] = 4785
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Text]=N'<p>Limit information system access to the types of transactions and functions that authorized users are permitted to execute.</p>&#10;&#10;<div><b>Determine if:</b>&#10;     <ol class="alpha-bracket">&#10;          <li>the types of transactions and functions that authorized users are permitted to execute are defined; and&#10;          </li>&#10;          <li>system access is limited to the defined types of transactions and functions for authorized users.</li>&#10;     </ol>&#10;</div>', [Scope]=N'', [Recommend_Action]=N'', [Risk_Addressed]=N'', [Services]=N'' WHERE [Mat_Question_Id] = 4879
 UPDATE [dbo].[MATURITY_QUESTIONS] SET [Implementation_Guides]=N'<p class="fst-italic">All bullets for an answer option must be satisfied to meet the criteria for that answer.</p><div class="sub-header-2">Implemented</div>  <ul>  <li>Organization has implemented a documented System Lifecycle management process for applications and assets throughout the facility networks.  The process is enforced, reviewed, and updated at least annually.  As part of this process, any applications or assets that are no longer supported have been removed from the system.</li>    </ul>    <div class="sub-header-2">In Progress</div>  <ul>  <li>Organization has began drafting the required documented System Lifecycle management process for applications and assets throughout the facility networks.  Unsupported applications and assets have been identified and the removal process has started</li>    </ul>    <div class="sub-header-2">Scoped</div>  <ul>  <li>Organization has identified the required documented System Lifecycle management process for applications and assets throughout the facility networks.  Unsupported applications and assets have been identified</li>    </ul>    <div class="sub-header-2">Not Implemented</div>  <ul>  <li>Organization does not have a documented System Lifecycle management process for applications and assets throughout the facility networks.  Unsupported applications and assets have not been identified or removed.</li>  </ul>  </div>' WHERE [Mat_Question_Id] = 8500
 UPDATE [dbo].[MATURITY_QUESTIONS] SET [Implementation_Guides]=N'<p class="fst-italic">All bullets for an answer option must be satisfied to meet the criteria for that answer.</p><div class="sub-header-2">Implemented</div>  <ul>  <li>Organization has implemented an ongoing program to identify and inventory unused IT/OT services and devices on the networks, and then disable and/or remove them within a specified amount of time not to exceed 180 days.</li>    </ul>    <div class="sub-header-2">In Progress</div>  <ul>  <li>Facility has documented all systems, applications, and services running on their network and has started to disable all unnecessary systems, applications, and services.</li>    </ul>    <div class="sub-header-2">Scoped</div>  <ul>  <li>Facility has documented all systems, applications, and services running on their network and has not disables all unnecessary systems, applications, and services.</li>    </ul>    <div class="sub-header-2">Not Implemented</div>  <ul>  <li>Organization does not have a program to detect unused IT/OT services and devices on the networks.  Unused services and devices have not been removed.</li>  </ul>  </div>' WHERE [Mat_Question_Id] = 8501
 UPDATE [dbo].[MATURITY_QUESTIONS] SET [Implementation_Guides]=N'<p class="fst-italic">All bullets for an answer option must be satisfied to meet the criteria for that answer.</p><div class="sub-header-2">Implemented</div>  <ul>  <li>Organization has established a Mobile Device Management program that is enforced, documented, and reviewed and updated at least annually.  The MDM program requires asset and application inventory of any mobile device on the the network.  The program should also clearly define and publish an acceptable use policy for mobile devices. The program should also include policies about Bring Your Own Device (BYOD) requirements.</li>    </ul>    <div class="sub-header-2">In Progress</div>  <ul>  <li>Organization has  a Mobile Device Management program that enforcement has started. It is documented, and has a requirement to be reviewed and updated at least annually.  The MDM program requires asset and application inventory of any mobile device on the the network.  The program should also clearly define and publish an acceptable use policy for mobile devices. The program should also include policies about Bring Your Own Device (BYOD) requirements.</li>    </ul>    <div class="sub-header-2">Scoped</div>  <ul>  <li>Organization has documented  a Mobile Device Management program. It is currently unforced.   The MDM program requires asset and application inventory of any mobile device on the the network.  The program should also clearly define and publish an acceptable use policy for mobile devices. The program should also include policies about Bring Your Own Device (BYOD) requirements.</li>    </ul>    <div class="sub-header-2">Not Implemented</div>  <ul>  <li>Organization does not have a mobile device management program.  The organization doesn''t track either assets or applications, and has no insight into what devices may be present on their network.</li>  </ul>  </div>' WHERE [Mat_Question_Id] = 8502
@@ -883,7 +893,7 @@ UPDATE [dbo].[MATURITY_QUESTIONS] SET [Implementation_Guides]=N'<p class="fst-it
 <li>None of the above implementation levels are met.</li>
 </ul>
 ' WHERE [Mat_Question_Id] = 9917
-PRINT(N'Operation applied to 42 rows out of 42')
+PRINT(N'Operation applied to 44 rows out of 44')
 
 PRINT(N'Update row in [dbo].[GALLERY_GROUP_DETAILS]')
 UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=3 WHERE [Group_Detail_Id] = 115
@@ -4990,6 +5000,100 @@ PRINT(N'Operation applied to 646 rows out of 646')
 PRINT(N'Update row in [dbo].[GEN_FILE]')
 UPDATE [dbo].[GEN_FILE] SET [File_Name]=N'OT Monitoring Tools_The Ultimate Guide for Conducting Multi-Vendor Proof of Concepts_v1.1.pdf', [Short_Name]=N'OT Monitoring Tools', [Publish_Date]='2023-05-10 00:00:00.000', [Summary]=N'The purpose of this guide is to help organizations understand the current market offerings in OT monitoring as well as to provide a structured approach for conducting proof of  concepts.', [Is_Uploaded]=0 WHERE [Gen_File_Id] = 6116
 
+PRINT(N'Update rows in [dbo].[GALLERY_ITEM]')
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nerc-cip.png', [Icon_File_Name_Large]=N'nerc-cip.png' WHERE [Gallery_Item_Guid] = '7481093d-eefa-423c-8479-025bb74d0d63'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'sp800-82.jpeg', [Icon_File_Name_Large]=N'sp800-82.jpeg' WHERE [Gallery_Item_Guid] = '1d673e6f-ad89-41b3-a264-02b463139030'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'critical-infrastructure.png', [Icon_File_Name_Large]=N'critical-infrastructure.png' WHERE [Gallery_Item_Guid] = 'a8c5b590-dee3-4851-8ec0-09f8898954ab'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'cis-v8.png', [Icon_File_Name_Large]=N'cis-v8.png' WHERE [Gallery_Item_Guid] = '22ae54d0-94a7-4c49-a2e4-0c9a3df0d312'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'default.jpeg', [Icon_File_Name_Large]=N'default.jpeg' WHERE [Gallery_Item_Guid] = 'faab0432-6285-49f2-a837-0fe66fef4ffa'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'tsa-pipeline.png', [Icon_File_Name_Large]=N'tsa-pipeline.png' WHERE [Gallery_Item_Guid] = '1092c438-b928-4dda-a104-13506dd360c4'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'wind-cert.png', [Icon_File_Name_Large]=N'wind-cert.png' WHERE [Gallery_Item_Guid] = '8b81d3b0-41a6-497e-aafa-144d4a722008'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = 'e4d8c03b-3a33-4f2d-bd72-160040aed1ba'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'tsa-pipeline.png', [Icon_File_Name_Large]=N'tsa-pipeline.png' WHERE [Gallery_Item_Guid] = '12d8b693-7ee3-4ada-b4fa-1af7f554f130'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'tsa-pipeline.png', [Icon_File_Name_Large]=N'tsa-pipeline.png' WHERE [Gallery_Item_Guid] = '7cf3a4a1-56b6-40ad-ac66-1b1ac936a356'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'acet.png', [Icon_File_Name_Large]=N'acet.png' WHERE [Gallery_Item_Guid] = 'f8fa1cdc-63ac-4076-b00d-1f5dcb34e3a9'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'health-insurance.png', [Icon_File_Name_Large]=N'health-insurance.png' WHERE [Gallery_Item_Guid] = '3218f866-7f61-4851-97c5-21e213a26b97'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'operational_technology.jpeg', [Icon_File_Name_Large]=N'operational_technology.jpeg' WHERE [Gallery_Item_Guid] = 'edf05bdf-ed10-42c5-a147-2260a4ae5c16'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'dod.jpeg', [Icon_File_Name_Large]=N'dod.jpeg' WHERE [Gallery_Item_Guid] = '4fb4efe3-b792-4dfc-b20f-2406b06717f2'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'key.jpeg', [Icon_File_Name_Large]=N'key.jpeg' WHERE [Gallery_Item_Guid] = 'e7b895a9-a268-4baa-aa46-273319f2a730'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'pci.png', [Icon_File_Name_Large]=N'pci.png' WHERE [Gallery_Item_Guid] = 'f4509fb7-1729-437b-a486-27d7df8c85a8'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nistir.png', [Icon_File_Name_Large]=N'nistir.png' WHERE [Gallery_Item_Guid] = '4ae6aedf-d3bc-4238-b0ee-285f00d55e02'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nerc-cip.png', [Icon_File_Name_Large]=N'nerc-cip.png' WHERE [Gallery_Item_Guid] = '251080d8-9858-40fc-80e7-2e32c64c70a1'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'rail-transit.png', [Icon_File_Name_Large]=N'rail-transit.png' WHERE [Gallery_Item_Guid] = '3edb25dd-a1ff-4a0a-9762-33e4a0887ef5'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = 'dcfcd4a1-5515-48fd-9789-36fb36d46806'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-csf.png', [Icon_File_Name_Large]=N'nist-csf.png' WHERE [Gallery_Item_Guid] = '4737748d-c762-4459-bc76-393e816c6a2d'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'wmata.jpeg', [Icon_File_Name_Large]=N'wmata.jpeg' WHERE [Gallery_Item_Guid] = '855f847b-f845-4c88-9dce-39b4686feafc'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'cis-v8.png', [Icon_File_Name_Large]=N'cis-v8.png' WHERE [Gallery_Item_Guid] = 'ca12d2be-11bb-40d6-bd4f-3def3db34f11'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'cag.jpeg', [Icon_File_Name_Large]=N'cag.jpeg' WHERE [Gallery_Item_Guid] = 'c67b4152-4083-48e7-9f8c-3f4baeb8e503'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'cis-v8.png', [Icon_File_Name_Large]=N'cis-v8.png' WHERE [Gallery_Item_Guid] = '99935f8f-8216-43ae-8a14-40f7e2420ca5'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = '4c6c47f4-c649-4e84-b7d4-42dc77b17630'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'cmmc.jpeg', [Icon_File_Name_Large]=N'cmmc.jpeg' WHERE [Gallery_Item_Guid] = '588b16e5-ae9a-435e-a6e3-441a7578d64a'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'wind-cert.png', [Icon_File_Name_Large]=N'wind-cert.png' WHERE [Gallery_Item_Guid] = 'a3b6d634-b149-41cf-a16f-4bb19db5e6c0'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'industrial-automation.png', [Icon_File_Name_Large]=N'industrial-automation.png' WHERE [Gallery_Item_Guid] = '3cc7b809-207c-423b-b1b3-4f04cd586999'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'cis-v8.png', [Icon_File_Name_Large]=N'cis-v8.png' WHERE [Gallery_Item_Guid] = '7ba9f3e0-825f-481a-af3b-50b12638eec5'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'faa-maintenance.png', [Icon_File_Name_Large]=N'faa-maintenance.png', [Is_Visible]=1 WHERE [Gallery_Item_Guid] = '4ee4c330-5a4c-42f0-8584-5188edda4e95'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'ise.jpeg', [Icon_File_Name_Large]=N'ise.jpeg' WHERE [Gallery_Item_Guid] = '2f25c878-09ce-4c2b-b186-54d5ff2385c1'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'control-systems.png', [Icon_File_Name_Large]=N'control-systems.png' WHERE [Gallery_Item_Guid] = '53699862-9ce4-415f-95d8-56246f69d4d1'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'code.jpeg', [Icon_File_Name_Large]=N'code.jpeg' WHERE [Gallery_Item_Guid] = 'e528befe-348e-4b83-83e9-61d6d723214d'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = '317a8213-7656-4d51-9031-6dd3b6d08135'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = 'ab9f36f9-b3c2-4c6c-ba60-6e82501d0b3c'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'default.jpeg', [Icon_File_Name_Large]=N'default.jpeg' WHERE [Gallery_Item_Guid] = '2ebb851a-9a93-455e-9c12-6f0ee6ea6673'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = '50351c1b-8ffe-4148-b0b8-73271112de8f'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = '3141e08b-2feb-4c12-a3e8-7fc388d76d42'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'isa.jpeg', [Icon_File_Name_Large]=N'isa.jpeg' WHERE [Gallery_Item_Guid] = 'b9dca07b-887d-4aaa-aba6-806172581636'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-161.png', [Icon_File_Name_Large]=N'nist-sp-800-161.png' WHERE [Gallery_Item_Guid] = '3fe5f3fb-8a6b-48fd-9bcf-815eccae94cd'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'csf.png', [Icon_File_Name_Large]=N'csf.png' WHERE [Gallery_Item_Guid] = '6ef7d8e3-cf6e-4a25-9f16-83b3ac569a53'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'code.jpeg', [Icon_File_Name_Large]=N'code.jpeg' WHERE [Gallery_Item_Guid] = 'f2407ff1-9f0f-420b-8f86-8528b60fcbc1'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nerc-cip.png', [Icon_File_Name_Large]=N'nerc-cip.png' WHERE [Gallery_Item_Guid] = 'b1e9b990-7388-4d07-8113-8707a9ec729b'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = '996aec03-0706-4087-bc80-873f2d6cbb11'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = 'b1abc503-08db-4110-b45b-8874ea090527'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = '16a06476-1c35-42be-acbf-898e8e7e94ed'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nerc-cip.png', [Icon_File_Name_Large]=N'nerc-cip.png' WHERE [Gallery_Item_Guid] = '61821e5b-9bf8-4034-890d-8b0b058413fd'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = '57c4dcf9-6ac6-4640-b3ca-8c55af97001c'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nerc-cip.png', [Icon_File_Name_Large]=N'nerc-cip.png' WHERE [Gallery_Item_Guid] = '1991731e-26fc-4b99-a793-8d3dfe875383'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'hydro.jpeg', [Icon_File_Name_Large]=N'hydro.jpeg' WHERE [Gallery_Item_Guid] = '79bb6d0b-b8bf-4610-9a76-8f1930d3881a'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'rail-transit.png', [Icon_File_Name_Large]=N'rail-transit.png' WHERE [Gallery_Item_Guid] = '8046f780-a288-45dd-9c77-92c20e3ae324'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = '17ddca62-8e52-4f5c-8071-939349cea116'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'scert.png', [Icon_File_Name_Large]=N'scert.png' WHERE [Gallery_Item_Guid] = 'a013ce92-ffeb-4526-b5bc-93c6d74d9ce4'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'scert.png', [Icon_File_Name_Large]=N'scert.png' WHERE [Gallery_Item_Guid] = '73092076-db92-44f1-9967-93f602e94425'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'sp800-82.jpeg', [Icon_File_Name_Large]=N'sp800-82.jpeg' WHERE [Gallery_Item_Guid] = '7a58c1cf-31ca-4682-849c-960010824830'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'network-diagram.png', [Icon_File_Name_Large]=N'network-diagram.png' WHERE [Gallery_Item_Guid] = '19913f37-44e2-4388-9754-9bc2eaa74d1b'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'cmmc.jpeg', [Icon_File_Name_Large]=N'cmmc.jpeg' WHERE [Gallery_Item_Guid] = '6a463c71-fe29-4189-bd7d-a0b1712b582c'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = 'e4ae8b43-37ad-47c9-8f65-a7abc3eb774e'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nistir.png', [Icon_File_Name_Large]=N'nistir.png' WHERE [Gallery_Item_Guid] = 'b03d1aee-9247-4160-8bd7-aa27682d1366'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nrc.png', [Icon_File_Name_Large]=N'nrc.png' WHERE [Gallery_Item_Guid] = '125811a5-004c-4020-925a-adf95351d3f7'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'universal.jpeg', [Icon_File_Name_Large]=N'universal.jpeg' WHERE [Gallery_Item_Guid] = 'b81f1451-4138-4af4-b624-b130c2c9cea3'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'cnssi.jpeg', [Icon_File_Name_Large]=N'cnssi.jpeg' WHERE [Gallery_Item_Guid] = '2d38023d-c610-48ca-85c6-b21bbf53fd25'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'c2m2.png', [Icon_File_Name_Large]=N'c2m2.png' WHERE [Gallery_Item_Guid] = 'fc53c0d6-881d-41b8-a49e-b375b36709ff'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-82.png', [Icon_File_Name_Large]=N'nist-sp-800-82.png' WHERE [Gallery_Item_Guid] = '2b54aa8a-9cbf-4c79-a9cc-b7cf574a406a'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'cjis.png', [Icon_File_Name_Large]=N'cjis.png' WHERE [Gallery_Item_Guid] = '98d5ecc2-01ba-4bba-a72b-be4b9f1c0dad'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'imr.png', [Icon_File_Name_Large]=N'imr.png' WHERE [Gallery_Item_Guid] = 'a802be1c-7f3d-42f1-8e15-c739695b5532'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'cag.jpeg', [Icon_File_Name_Large]=N'cag.jpeg' WHERE [Gallery_Item_Guid] = '5bd71393-883f-4546-8caa-c7535de9b167'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'csf.png', [Icon_File_Name_Large]=N'csf.png' WHERE [Gallery_Item_Guid] = 'd0c19648-00f5-4215-af2d-c7ebd75fc578'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'hydro-electric.jpeg', [Icon_File_Name_Large]=N'hydro-electric.jpeg' WHERE [Gallery_Item_Guid] = '31664fcc-60a4-4fa6-aadc-c81110740c12'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'cnssi.jpeg', [Icon_File_Name_Large]=N'cnssi.jpeg' WHERE [Gallery_Item_Guid] = '3b9f2073-7209-48d5-920b-c85c4b5fd0b5'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'csf.png', [Icon_File_Name_Large]=N'csf.png' WHERE [Gallery_Item_Guid] = '9219f73d-a9ec-4e13-b884-ca1677bac576'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-82.png', [Icon_File_Name_Large]=N'nist-sp-800-82.png' WHERE [Gallery_Item_Guid] = 'd002d9c0-949d-4446-a8e4-cb8fc1679944'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'mvra.png', [Icon_File_Name_Large]=N'mvra.png' WHERE [Gallery_Item_Guid] = 'fda63fec-80b9-4c97-8e07-ccd2f1dc58a6'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'faa-maintenance.png', [Icon_File_Name_Large]=N'faa-maintenance.png', [Is_Visible]=1 WHERE [Gallery_Item_Guid] = '4929452f-a737-4afc-9778-ce8d550df305'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'cor-7.jpeg', [Icon_File_Name_Large]=N'cor-7.jpeg' WHERE [Gallery_Item_Guid] = '6d705a92-5d8e-4865-aaea-d090570485c1'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = '37e3c5ae-ff95-4dd7-a1da-d25c814abd74'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'tsa-pipeline-april-2011.png', [Icon_File_Name_Large]=N'tsa-pipeline-april-2011.png' WHERE [Gallery_Item_Guid] = '7e650e05-b3c2-4b55-8830-d335ca41eeef'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'cnssi.jpeg', [Icon_File_Name_Large]=N'cnssi.jpeg' WHERE [Gallery_Item_Guid] = '1766a7c4-0e16-491b-8580-d3f0641aa33c'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = 'd7314c82-83b4-443c-a275-d5215a73220e'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-161.png', [Icon_File_Name_Large]=N'nist-sp-800-161.png' WHERE [Gallery_Item_Guid] = '446b8d52-16ba-4d18-afd4-d7431d501617'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'tsa-pipeline.png', [Icon_File_Name_Large]=N'tsa-pipeline.png' WHERE [Gallery_Item_Guid] = '8f3f4431-3482-44c0-92c2-dccbb14dd8aa'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'operational_technology.jpeg', [Icon_File_Name_Large]=N'operational_technology.jpeg' WHERE [Gallery_Item_Guid] = 'c4dcba19-9465-4a8e-b8c8-decd64092372'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nei-08-09.png', [Icon_File_Name_Large]=N'nei-08-09.png' WHERE [Gallery_Item_Guid] = '62ecb9d1-d825-4b0e-85a9-e53823b468c2'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-171.png', [Icon_File_Name_Large]=N'nist-sp-800-171.png' WHERE [Gallery_Item_Guid] = '5e48de28-156e-47df-9380-e72b482509e2'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'operational_technology.jpeg', [Icon_File_Name_Large]=N'operational_technology.jpeg' WHERE [Gallery_Item_Guid] = 'd752a1b1-9afe-44cb-b114-e7517339d776'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'don.jpeg', [Icon_File_Name_Large]=N'don.jpeg' WHERE [Gallery_Item_Guid] = '3238a34e-e53d-4bf5-bcdd-ea17f0043e1f'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-53.png', [Icon_File_Name_Large]=N'nist-sp-800-53.png' WHERE [Gallery_Item_Guid] = 'f7cf9b71-d8ef-4fd5-934f-ec94a0666b3c'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'cnssi.jpeg', [Icon_File_Name_Large]=N'cnssi.jpeg' WHERE [Gallery_Item_Guid] = '74fba5a4-1b38-48fd-b750-ee00abf9c8d9'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'nist-sp-800-82.png', [Icon_File_Name_Large]=N'nist-sp-800-82.png' WHERE [Gallery_Item_Guid] = '2f798ad3-24ef-4329-9032-ef65faf0579a'
+UPDATE [dbo].[GALLERY_ITEM] SET [Icon_File_Name_Small]=N'healthcare-405.png', [Icon_File_Name_Large]=N'healthcare-405.png' WHERE [Gallery_Item_Guid] = '9596a8ec-1ea5-4d7c-b303-f0fe419cc533'
+PRINT(N'Operation applied to 91 rows out of 91')
+
 PRINT(N'Update row in [dbo].[DIAGRAM_TEMPLATES]')
 UPDATE [dbo].[DIAGRAM_TEMPLATES] SET [Diagram_Markup]=N'
 <?xml version="1.0"?>
@@ -5431,7 +5535,7 @@ INSERT INTO [dbo].[GALLERY_ITEM] ([Gallery_Item_Guid], [Icon_File_Name_Small], [
 
 PRINT(N'Add row to [dbo].[MATURITY_MODELS]')
 SET IDENTITY_INSERT [dbo].[MATURITY_MODELS] ON
-INSERT INTO [dbo].[MATURITY_MODELS] ([Maturity_Model_Id], [Model_Name], [Answer_Options], [Questions_Alias], [Analytics_Rollup_Level], [Model_Title], [Maturity_Level_Usage_Type]) VALUES (19, N'SD02-E', N'Y,N,NA,A', N'Requirements', 1, N'Security Directive (SD) Pipeline-2021-02 Series E', N'Static')
+INSERT INTO [dbo].[MATURITY_MODELS] ([Maturity_Model_Id], [Model_Name], [Answer_Options], [Questions_Alias], [Analytics_Rollup_Level], [Model_Title], [Maturity_Level_Usage_Type]) VALUES (19, N'CMMC2F', NULL, NULL, 1, N'CMMC 2.0 Final', NULL)
 SET IDENTITY_INSERT [dbo].[MATURITY_MODELS] OFF
 
 PRINT(N'Add rows to [dbo].[NCSF_CONVERSION_MAPPINGS]')
@@ -5517,44 +5621,44 @@ INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_FULL] ([Full_Level_Titles], [Require
 PRINT(N'Operation applied to 38 rows out of 38')
 
 PRINT(N'Add rows to [dbo].[NCSF_CONVERSION_MAPPINGS_MID]')
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'1.A', 9889)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'1.B', 9896)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'1.C', 9897)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'1.D', 9900)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'1.E', 9901)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'1.F', 9906)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'1.G', 9908)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'1.H', 9909)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'1.I', 9907)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.A', 9898)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.B', 9899)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.C', 9894)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.D', 9895)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.E', 9916)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.F', 9881)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.G', 9883)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.H', 9885)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.I', 9886)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.J', 9884)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.K', 9914)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.L', 9880)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.M', 9882)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.N', 9888)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.O', 9891)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.P', 9913)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.Q', 9887)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.R', 9912)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.S', 9911)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.T', 9892)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.U', 9893)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.V', 9890)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.W', 9904)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'2.X', 9905)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'3.A', 9915)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'4.A', 9902)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'4.B', 9903)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'4.C', 9910)
-INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Question_Id]) VALUES (N'5.A', 9917)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'1.A', 9889)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'1.B', 9896)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'1.C', 9897)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'1.D', 9900)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'1.E', 9901)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'1.F', 9906)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'1.G', 9908)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'1.H', 9909)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'1.I', 9907)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.A', 9898)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.B', 9899)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.C', 9894)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.D', 9895)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.E', 9916)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.F', 9881)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.G', 9883)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.H', 9885)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.I', 9886)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.J', 9884)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.K', 9914)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.L', 9880)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.M', 9882)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.N', 9888)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.O', 9891)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.P', 9913)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.Q', 9887)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.R', 9912)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.S', 9911)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.T', 9892)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.U', 9893)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.V', 9890)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.W', 9904)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'2.X', 9905)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'3.A', 9915)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'4.A', 9902)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'4.B', 9903)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'4.C', 9910)
+INSERT INTO [dbo].[NCSF_CONVERSION_MAPPINGS_MID] ([Mid_Level_Titles], [Mat_Question_Id]) VALUES (N'5.A', 9917)
 PRINT(N'Operation applied to 38 rows out of 38')
 
 PRINT(N'Add rows to [dbo].[NEW_QUESTION_SETS]')
@@ -7324,6 +7428,34 @@ PRINT(N'Add row to [dbo].[GALLERY_GROUP_DETAILS]')
 SET IDENTITY_INSERT [dbo].[GALLERY_GROUP_DETAILS] ON
 INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (6251, 34, 2, 0, 'ff43e99b-d6dd-409f-a07f-22f7aa55b9f3')
 SET IDENTITY_INSERT [dbo].[GALLERY_GROUP_DETAILS] OFF
+
+PRINT(N'Add rows to [dbo].[MATURITY_GROUPINGS]')
+SET IDENTITY_INSERT [dbo].[MATURITY_GROUPINGS] ON
+INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [Maturity_Model_Id], [Sequence], [Parent_Id], [Group_Level], [Type_Id], [Title_Id], [Abbreviation], [Title_Prefix], [Description_Extended]) VALUES (1203, N'CMMC 2.0 Practices', NULL, 19, 1, NULL, NULL, 2, N'16', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [Maturity_Model_Id], [Sequence], [Parent_Id], [Group_Level], [Type_Id], [Title_Id], [Abbreviation], [Title_Prefix], [Description_Extended]) VALUES (1204, N'Access Control (AC)', NULL, 19, 1, 1203, NULL, 2, N'17', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [Maturity_Model_Id], [Sequence], [Parent_Id], [Group_Level], [Type_Id], [Title_Id], [Abbreviation], [Title_Prefix], [Description_Extended]) VALUES (1205, N'Awareness and Training (AT)', NULL, 19, 2, 1203, NULL, 2, N'18', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [Maturity_Model_Id], [Sequence], [Parent_Id], [Group_Level], [Type_Id], [Title_Id], [Abbreviation], [Title_Prefix], [Description_Extended]) VALUES (1206, N'Audit and Accountability (AU)', NULL, 19, 3, 1203, NULL, 2, N'19', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [Maturity_Model_Id], [Sequence], [Parent_Id], [Group_Level], [Type_Id], [Title_Id], [Abbreviation], [Title_Prefix], [Description_Extended]) VALUES (1207, N'Configuration Management (CM)', NULL, 19, 4, 1203, NULL, 2, N'20', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [Maturity_Model_Id], [Sequence], [Parent_Id], [Group_Level], [Type_Id], [Title_Id], [Abbreviation], [Title_Prefix], [Description_Extended]) VALUES (1208, N'Identification and Authentication (IA)', NULL, 19, 5, 1203, NULL, 2, N'21', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [Maturity_Model_Id], [Sequence], [Parent_Id], [Group_Level], [Type_Id], [Title_Id], [Abbreviation], [Title_Prefix], [Description_Extended]) VALUES (1209, N'Incident Response (IR)', NULL, 19, 6, 1203, NULL, 2, N'22', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [Maturity_Model_Id], [Sequence], [Parent_Id], [Group_Level], [Type_Id], [Title_Id], [Abbreviation], [Title_Prefix], [Description_Extended]) VALUES (1210, N'Maintenance (MA)', NULL, 19, 7, 1203, NULL, 2, N'23', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [Maturity_Model_Id], [Sequence], [Parent_Id], [Group_Level], [Type_Id], [Title_Id], [Abbreviation], [Title_Prefix], [Description_Extended]) VALUES (1211, N'Media Protection (MP)', NULL, 19, 8, 1203, NULL, 2, N'24', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [Maturity_Model_Id], [Sequence], [Parent_Id], [Group_Level], [Type_Id], [Title_Id], [Abbreviation], [Title_Prefix], [Description_Extended]) VALUES (1212, N'Personnel Security (PS)', NULL, 19, 9, 1203, NULL, 2, N'25', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [Maturity_Model_Id], [Sequence], [Parent_Id], [Group_Level], [Type_Id], [Title_Id], [Abbreviation], [Title_Prefix], [Description_Extended]) VALUES (1213, N'Physical Protection (PE)', NULL, 19, 10, 1203, NULL, 2, N'26', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [Maturity_Model_Id], [Sequence], [Parent_Id], [Group_Level], [Type_Id], [Title_Id], [Abbreviation], [Title_Prefix], [Description_Extended]) VALUES (1214, N'Risk Assessment (RA)', NULL, 19, 11, 1203, NULL, 2, N'27', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [Maturity_Model_Id], [Sequence], [Parent_Id], [Group_Level], [Type_Id], [Title_Id], [Abbreviation], [Title_Prefix], [Description_Extended]) VALUES (1215, N'Security Assessment (CA)', NULL, 19, 12, 1203, NULL, 2, N'28', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [Maturity_Model_Id], [Sequence], [Parent_Id], [Group_Level], [Type_Id], [Title_Id], [Abbreviation], [Title_Prefix], [Description_Extended]) VALUES (1216, N'Systems and Communications Protection (SC)', NULL, 19, 13, 1203, NULL, 2, N'29', NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_GROUPINGS] ([Grouping_Id], [Title], [Description], [Maturity_Model_Id], [Sequence], [Parent_Id], [Group_Level], [Type_Id], [Title_Id], [Abbreviation], [Title_Prefix], [Description_Extended]) VALUES (1217, N'System and Information Integrity (SI)', NULL, 19, 14, 1203, NULL, 2, N'30', NULL, NULL, NULL)
+SET IDENTITY_INSERT [dbo].[MATURITY_GROUPINGS] OFF
+PRINT(N'Operation applied to 15 rows out of 15')
+
+PRINT(N'Add rows to [dbo].[MATURITY_LEVELS]')
+SET IDENTITY_INSERT [dbo].[MATURITY_LEVELS] ON
+INSERT INTO [dbo].[MATURITY_LEVELS] ([Maturity_Level_Id], [Level], [Level_Name], [Maturity_Model_Id]) VALUES (36, 1, N'Level 1', 19)
+INSERT INTO [dbo].[MATURITY_LEVELS] ([Maturity_Level_Id], [Level], [Level_Name], [Maturity_Model_Id]) VALUES (37, 2, N'Level 2', 19)
+INSERT INTO [dbo].[MATURITY_LEVELS] ([Maturity_Level_Id], [Level], [Level_Name], [Maturity_Model_Id]) VALUES (38, 2, N'Level 3', 19)
+SET IDENTITY_INSERT [dbo].[MATURITY_LEVELS] OFF
+PRINT(N'Operation applied to 3 rows out of 3')
 
 PRINT(N'Add rows to [dbo].[NCSF_ENTRY_TO_MID]')
 INSERT INTO [dbo].[NCSF_ENTRY_TO_MID] ([Entry_Level_Titles], [Mid_Level_Titles]) VALUES (N'GV.OC-02', N'1.B')
@@ -17294,6 +17426,5408 @@ INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requ
 INSERT INTO [dbo].[REQUIREMENT_QUESTIONS_SETS] ([Question_Id], [Set_Name], [Requirement_Id]) VALUES (17303, N'WMATA', 37914)
 PRINT(N'Operation applied to 1579 rows out of 1579')
 
+PRINT(N'Add rows to [dbo].[MATURITY_QUESTIONS]')
+SET IDENTITY_INSERT [dbo].[MATURITY_QUESTIONS] ON
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5270, N'AC.L1-b.1.i', N'Limit information system access to authorized users, processes acting on behalf of authorized users, or devices (including other information systems).', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>authorized users are identified;</li>
+<li>processes acting on behalf of authorized users are identified;</li>
+<li>devices (and other systems) authorized to connect to the system are identified;</li>
+<li>system access is limited to authorized users;</li>
+<li>system access is limited to processes acting on behalf of authorized users; and</li>
+<li>system access is limited to authorized devices (including other systems).</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing account management; system security plan45; system design documentation; system configuration settings and associated documentation; list of active system accounts and the name of the individual associated with each account; notifications or records of recently transferred, separated, or terminated employees; list of conditions for group and role membership; list of recently disabled system accounts along with the name of the individual associated with each account; access authorization records; account management compliance reviews; system monitoring records; system audit logs and records; list of devices and systems authorized to connect to organizational systems; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with account management responsibilities; system or network administrators; personnel with information security responsibilities].</p>
+<p>4 It is recommended that an OSA develop a SSP as a best practice at Level 1, however, it is not required in order to obtain a Level 1 self-assessment.</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for managing system accounts; mechanisms for implementing account management].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Access control policies (e.g., identity- or role-based policies, control matrices, and cryptography) control access between active entities or subjects (i.e., users or processes acting on behalf of users) and passive entities or objects (e.g., devices, files, records, and domains) in systems. Access enforcement mechanisms can be employed at the application and service level to provide increased information security. Other systems include systems internal and external to the organization. This requirement focuses on account management for systems and applications. The definition of and enforcement of access authorizations, other than those determined by account type (e.g., privileged verses [sic] non-privileged) are addressed in AC.L1-b.1.ii.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Identify users, processes, and devices that are allowed to use company computers and can log on to the company network. Automated updates and other automatic processes should be associated with the user who initiated (authorized) the process. Limit the devices (e.g., printers) that can be accessed by company computers. Set up your system so that only authorized users, processes, and devices can access the company network.</p>
+<p>This requirement, AC.L1-b.1.i, controls system access based on user, process, or device identity. AC.L1-b.1.i leverages IA.L1-b.1.v which provides a vetted and trusted identity for access control.</p>
+<div class="sub-header-2">Example 1</div>
+<p>Your company maintains a list of all personnel authorized to use company information systems [a]. This list is used to support identification and authentication activities conducted by IT when authorizing access to systems [a,d].</p>
+<div class="sub-header-2">Example 2</div>
+<p>A coworker wants to buy a new multi-function printer/scanner/fax device and make it available on the company network. You explain that the company controls system and device access to the network, and will prevent network access by unauthorized systems and devices [c]. You help the coworker submit a ticket that asks for the printer to be granted access to the network, and appropriate leadership approves the device [f].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is a list of authorized users maintained that defines their identities and roles [a]?</li>
+<li>Are account requests authorized before system access is granted [d,e,f]?</li>
+</ul>
+
+', NULL, NULL, 36, 1, 19, NULL, NULL, 1204, NULL, N'Authorized Access Control', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5271, N'AC.L1-b.1.ii', N'Limit information system access to the types of transactions and functions that authorized users are permitted to execute.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the types of transactions and functions that authorized users are permitted to execute are defined; and</li>
+<li>system access is limited to the defined types of transactions and functions for authorized users.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing access enforcement; system security plan; system design documentation; list of approved authorizations including remote access authorizations; system audit logs and records; system configuration settings and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with access enforcement responsibilities; system or network administrators; personnel with information security responsibilities; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing access control policy].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations may choose to define access privileges or other attributes by account, by type of account, or a combination of both. System account types include individual, shared, group, system, anonymous, guest, emergency, developer, manufacturer, vendor, and temporary. Other attributes required for authorizing access include restrictions on time-of-day, day-of- week, and point-of -origin. In defining other account attributes, organizations consider system-related requirements (e.g., system upgrades scheduled maintenance,) and mission or business requirements, (e.g., time zone differences, customer requirements, remote access to support travel requirements).</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Limit users to only the information systems, roles, or applications they are permitted to use and require for their roles and responsibilities. Limit access to applications and data based on authorized users’ roles and responsibilities. Common types of functions a user can be assigned are create, read, update, and delete.</p>
+<div class="sub-header-2">Example</div>
+<p>You supervise the team that manages DoD contracts for your company. Members of your team need to access the contract information to perform their work properly. Because some of that data contains FCI, you work with IT to set up your group’s systems so that users can be assigned access based on their specific roles [a]. Each role limits whether an employee has read-access or create/read/delete/update -access [b]. Implementing this access control restricts access to FCI information unless specifically authorized.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are access control lists used to limit access to applications and data based on role and/or identity [a]?</li>
+<li>Is access for authorized users restricted to those parts of the system they are explicitly permitted to use, that is, is access denied by default and allowed by exception (e.g., a person who only performs word-processing cannot access developer tools) [b]?</li>
+</ul>
+
+', NULL, NULL, 36, 2, 19, NULL, NULL, 1204, NULL, N'Transaction & Function Control', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5272, N'AC.L1-b.1.iii', N'Verify and control/limit connections to and use of external information systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>connections to external systems are identified;</li>
+<li>the use of external systems is identified;</li>
+<li>connections to external systems are verified;</li>
+<li>the use of external systems is verified;</li>
+<li>connections to external systems are controlled/limited; and</li>
+<li>the use of external systems is controlled/limited.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing the use of external systems; terms and conditions for external systems; system security plan; list of applications accessible from external systems; system configuration settings and associated documentation; system connection or processing agreements; account management documents; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibilities for defining terms and conditions for use of external systems to access organizational systems; system or network administrators; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing terms and conditions on use of external systems].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>External systems are systems or components of systems for which organizations typically have no direct supervision and authority over the application of security requirements and controls or the determination of the effectiveness of implemented controls on those systems. External systems include personally owned systems, components, or devices and privately- owned computing and communications devices resident in commercial or public facilities.</p>
+<p>This requirement also addresses the use of external systems for the processing, storage, or transmission of FCI, including accessing cloud services (e.g., infrastructure as a service, platform as a service, or software as a service) from organizational systems.</p>
+<p>Organizations establish terms and conditions for the use of external systems in accordance with organizational security policies and procedures. Terms and conditions address as a minimum, the types of applications that can be accessed on organizational systems from external systems. If terms and conditions with the owners of external systems cannot be established, organizations may impose restrictions on organizational personnel using those external systems.</p>
+<p>This requirement recognizes that there are circumstances where individuals using external systems (e.g., contractors, coalition partners) need to access organizational systems. In those situations, organizations need confidence that the external systems contain the necessary controls so as not to compromise, damage, or otherwise harm organizational systems. Verification that the required controls have been effectively implemented can be achieved by third-party, independent assessments, attestations, or other means, depending on the assurance or confidence level required by organizations.</p>
+<p>Note that while “external” typically refers to outside of the organization’s direct supervision and authority, that is not always the case. Regarding the protection of FCI across an organization, the organization may have systems that process FCI and others that do not. And among the systems that process FCI there are likely access restrictions for FCI that apply between systems. Therefore, from the perspective of a given system, other systems within the organization may be considered “external" to that system.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Control and manage connections between your company network and outside networks. Outside networks could include the public internet, one of your own company’s networks that falls outside of your CMMC Assessment Scope (e.g., an isolated lab), or a network that does not belong to your company. Tools to manage connections include firewalls and connection allow/deny lists. External systems not controlled by your company could be running applications that are prohibited or blocked. Control and limit access to corporate networks from personally owned devices such as laptops, tablets, and phones. You may choose to limit how and when your network is connected to outside systems or only allow certain employees to connect to outside systems from network resources.</p>
+<div class="sub-header-2">Example</div>
+<p>Your company has just been awarded a contract which contains FCI. You remind your coworkers of the policy requirement to use their company laptops, not personal laptops or tablets, when working remotely on this contract [b,f]. You also remind everyone to work from the cloud environment that is approved for processing and storing FCI rather than the other collaborative tools that may be used for other projects [b,f].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are all connections to external systems outside of the assessment scope identified [a]?</li>
+<li>Are external systems (e.g., systems managed by OSAs, partners, or vendors; personal devices) that are permitted to connect to or make use of organizational systems identified [b]?</li>
+<li>Are methods employed to ensure that only authorized connections are being made to external systems (e.g., requiring log-ins or certificates, access from a specific IP address, or access via VPN) [c,e]?</li>
+<li>Are methods employed to confirm that only authorized external systems are connecting (e.g., if employees are receiving company email on personal cell phones, is the OSA checking to verify that only known/expected devices are connecting) [d]?</li>
+<li>Is the use of external systems limited, including by policy or physical control [f]?</li>
+</ul>
+
+', NULL, NULL, 36, 3, 19, NULL, NULL, 1204, NULL, N'External Connections', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5273, N'AC.L1-b.1.iv', N'Control information posted or processed on publicly accessible information systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>individuals authorized to post or process information on publicly accessible systems are identified;</li>
+<li>procedures to ensure [FCI] is not posted or processed on publicly accessible systems are identified;</li>
+<li>a review process is in place prior to posting of any content to publicly accessible systems;</li>
+<li>content on publicly accessible systems is reviewed to ensure that it does not include [FCI]; and</li>
+<li>mechanisms are in place to remove and address improper posting of [FCI].</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing publicly accessible content; system security plan; list of users authorized to post publicly accessible content on organizational systems; training materials and/or records; records of publicly accessible information reviews; records of response to nonpublic information on public websites; system audit logs and records; security awareness training records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibilities for managing publicly accessible information posted on organizational systems; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing management of publicly accessible content].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>In accordance with laws, Executive Orders, directives, policies, regulations, or standards, the public is not authorized access to nonpublic information (e.g., information protected under the Privacy Act, FCI, and proprietary information). This requirement addresses systems that are controlled by the organization and accessible to the public, typically without identification or authentication. Individuals authorized to post FCI onto publicly accessible systems are designated. The content of information is reviewed prior to posting onto publicly accessible systems to ensure that nonpublic information is not included.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Only government officials can be authorized to publicly release FCI. Do not allow FCI to become public – always safeguard the confidentiality of FCI by controlling the posting of FCI on company-controlled websites or public forums and the exposure of FCI in public presentations or on public displays. It is important to know which users are allowed to publish information on publicly accessible systems, like your company website, and implement a review process before posting such information. If FCI is discovered on a publicly accessible system, procedures should be in place to remove that information and alert the appropriate parties.</p>
+<div class="sub-header-2">Example</div>
+<p>Your company decides to start issuing press releases about its projects in an effort to reach more potential customers. Your company receives FCI from the government as part of its DoD contract. Because you recognize the need to manage controlled information, including FCI, you meet with the employees who write the releases and post information to establish a review process [c]. It is decided that you will review press releases for FCI before posting it on the company website [a,d]. Only certain employees will be authorized to post to the website [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does information on externally facing systems (e.g., publicly accessible) have a documented approval chain for public release [c]?</li>
+</ul>
+
+', NULL, NULL, 36, 4, 19, NULL, NULL, 1204, NULL, N'Control Public Information', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5274, N'IA.L1-b.1.v', N'Identify information system users, processes acting on behalf of users, or devices.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>system users are identified;</li>
+<li>processes acting on behalf of users are identified; and</li>
+<li>devices accessing the system are identified.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Identification and authentication policy; procedures addressing user identification and authentication; system security plan, system design documentation; system configuration settings and associated documentation; system audit logs and records; list of system accounts; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system operations responsibilities; personnel with information security responsibilities; system or network administrators; personnel with account management responsibilities; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for uniquely identifying and authenticating users; mechanisms supporting or implementing identification and authentication capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Common device identifiers include media access control (MAC), Internet Protocol (IP) addresses, or device-unique token identifiers. Management of individual identifiers is not applicable to shared system accounts. Typically, individual identifiers are the user names associated with the system accounts assigned to those individuals. Organizations may require unique identification of individuals in group accounts or for detailed accountability of individual activity. In addition, this requirement addresses individual identifiers that are not necessarily associated with system accounts. Organizational devices requiring identification may be defined by type, by device, or by a combination of type/device. NIST SP 800-63-3 provides guidance on digital identities.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Individual, unique identifiers (e.g., user names) should be assigned to all users and processes that access company systems. Authorized devices also should have unique identifiers. Unique identifiers can be as simple as a short set of alphanumeric characters (e.g., SW001 could refer to a network switch, SW002 could refer to a different network switch).</p>
+<p>This requirement, IA.L1-b.1.v, provides a vetted and trusted identity that supports the access control mechanism required by AC.L1-b.1.i.</p>
+<div class="sub-header-2">Example</div>
+<p>You want to make sure that all employees working on a project can access important information about it. Because this is work for the DoD and contains FCI, you also need to prevent employees who are not working on that project from being able to access the information. You assign each employee a unique user ID, which they use to log on to the system [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are unique identifiers issued to individual users (e.g., usernames) [a]?</li>
+<li>Are the processes and service accounts that an authorized user initiates identified (e.g., scripts, automatic updates, configuration updates, vulnerability scans) [b]?</li>
+<li>Are unique device identifiers used for devices that access the system identified [c]?</li>
+</ul>
+
+', NULL, NULL, 36, 1, 19, NULL, NULL, 1208, NULL, N'Identification', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5275, N'IA.L1-b.1.vi', N'Authenticate (or verify) the identities of those users, processes, or devices, as a prerequisite to allowing access to organizational information systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the identity of each user is authenticated or verified as a prerequisite to system access;</li>
+<li>the identity of each process acting on behalf of a user is authenticated or verified as a prerequisite to system access; and</li>
+<li>the identity of each device accessing or connecting to the system is authenticated or verified as a prerequisite to system access.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Identification and authentication policy; system security plan; procedures addressing authenticator management; procedures addressing user identification and authentication; system design documentation; list of system authenticator types; system configuration settings and associated documentation; change control records associated with managing system authenticators; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with authenticator management responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing authenticator management capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Individual authenticators include the following: passwords, key cards, cryptographic devices, and one-time password devices. Initial authenticator content is the actual content of the authenticator, for example, the initial password. In contrast, the requirements about authenticator content include the minimum password length. Developers ship system components with factory default authentication credentials to allow for initial installation and configuration. Default authentication credentials are often well known, easily discoverable, and present a significant security risk.</p>
+<p>Systems support authenticator management by organization-defined settings and restrictions for various authenticator characteristics including minimum password length, validation time window for time synchronous one-time tokens, and number of allowed rejections during the verification stage of biometric authentication. Authenticator management includes issuing and revoking, when no longer needed, authenticators for temporary access such as that required for remote maintenance. Device authenticators include certificates and passwords.</p>
+<p>NIST SP 800-63-3 provides guidance on digital identities.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Before a person or device is given system access, verify that the user or device is who or what it claims to be. This verification is called authentication. The most common way to verify identity is using a username and a hard-to-guess password.</p>
+<p>Some devices ship with a default username (e.g., admin) and password. A default username and password should be immediately changed to something unique. Default passwords may be well known to the public, easily found in a search, or easy to guess, allowing an unauthorized person to access the system.</p>
+<div class="sub-header-2">Example 1</div>
+<p>You are in charge of purchasing laptops that will store FCI. You know that some laptops come with a default username and password. You notify IT that all default passwords should be reset prior to laptop use [a]. You ask IT to explain the importance of resetting default passwords and convey how easily they are discovered using internet searches during next week’s cybersecurity awareness training.</p>
+<div class="sub-header-2">Example 2</div>
+<p>Your company decides to use cloud services for email and other capabilities that will transmit FCI. Upon reviewing this requirement, you realize every user or device that connects to the cloud service must be authenticated. As a result, you work with your cloud service provider to ensure that only properly authenticated users and devices are allowed to connect to the system [a,c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are unique authenticators used to verify user identities (e.g., usernames and passwords) [a]?</li>
+<li>An example of a process acting on behalf of users could be a script that logs in as a person or service account [b]. Can the OSA show that it maintains a record of all of those service accounts for use when reviewing log data or responding to an incident?</li>
+<li>Are user credentials authenticated in system processes (e.g., credentials binding, certificates, tokens) [b]?</li>
+<li>Are device identifiers used in authentication processes (e.g., MAC address, non- anonymous computer name, certificates) [c]?</li>
+</ul>
+
+', NULL, NULL, 36, 2, 19, NULL, NULL, 1208, NULL, N'Authentication', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5276, N'MP.L1-b.1.vii', N'Sanitize or destroy information system media containing Federal Contract Information before disposal or release for reuse.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>system media containing [FCI] is sanitized or destroyed before disposal; and</li>
+<li>system media containing [FCI] is sanitized before it is released for reuse.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System media protection policy; procedures addressing media sanitization and disposal; applicable standards and policies addressing media sanitization; system security plan; media sanitization records; system audit logs and records; system design documentation; system configuration settings and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with media sanitization responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for media sanitization; mechanisms supporting or implementing media sanitization].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement applies to all system media, digital and non-digital, subject to disposal or reuse. Examples include: digital media found in workstations, network components, scanners, copiers, printers, notebook computers, and mobile devices; and non-digital media such as paper and microfilm. The sanitization process removes information from the media such that the information cannot be retrieved or reconstructed. Sanitization techniques, including clearing, purging, cryptographic erase, and destruction, prevent the disclosure of information to unauthorized individuals when such media is released for reuse or disposal.</p>
+<p>Organizations determine the appropriate sanitization methods, recognizing that destruction may be necessary when other methods cannot be applied to the media requiring sanitization.</p>
+<p>Organizations use discretion on the employment of sanitization techniques and procedures for media containing information that is in the public domain or publicly releasable or deemed to have no adverse impact on organizations or individuals if released for reuse or disposal. Sanitization of non-digital media includes destruction, removing FCI from documents, or redacting selected sections or words from a document by obscuring the redacted sections or words in a manner equivalent in effectiveness to removing the words or sections from the document. NARA policy and guidance control sanitization processes. NIST SP 800-88 provides guidance on media sanitization.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Media can include a broad range of items that store information, including paper documents, disks, tapes, digital photography, USB drives, CDs, DVDs, and mobile phones. It is important to know what information is on media so that you can handle it properly. If there is FCI, you or someone in your company should either:</p>
+<ul>
+<li>shred or destroy the device before disposal so it cannot be read; or</li>
+<li>clean or purge the information, if you want to reuse the device.</li>
+</ul>
+<p>See NIST Special Publication 800-88, Revision 1, Guidelines for Media Sanitization, for more information.</p>
+<div class="sub-header-2">Example</div>
+<p>As you pack for an office move, you find some old CDs in a file cabinet. You determine that one has FCI from a project your company did for the DoD. You shred the CD rather than simply throwing it in the trash [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is all managed data storage erased, encrypted, or destroyed using mechanisms to ensure that no usable data is retrievable [a,b]?</li>
+</ul>
+
+', NULL, NULL, 36, 1, 19, NULL, NULL, 1211, NULL, N'Media Disposal', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5277, N'PE.L1-b.1.viii', N'Limit physical access to organizational information systems, equipment, and the respective operating environments to authorized individuals.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>authorized individuals allowed physical access are identified;</li>
+<li>physical access to organizational systems is limited to authorized individuals;</li>
+<li>physical access to equipment is limited to authorized individuals; and</li>
+<li>physical access to operating environments is limited to authorized individuals.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Physical and environmental protection policy; procedures addressing physical access authorizations; system security plan; authorized personnel access list; authorization credentials; physical access list reviews; physical access termination records and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with physical access authorization responsibilities; personnel with physical access to system facility; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for physical access authorizations; mechanisms supporting or implementing physical access authorizations].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement applies to employees, individuals with permanent physical access authorization credentials, and visitors. Authorized individuals have credentials that include badges, identification cards, and smart cards. Organizations determine the strength of authorization credentials needed consistent with applicable laws, directives, policies, regulations, standards, procedures, and guidelines. This requirement applies only to areas within facilities that have not been designated as publicly accessible.</p>
+<p>Limiting physical access to equipment may include placing equipment in locked rooms or other secured areas and allowing access to authorized individuals only, and placing equipment in locations that can be monitored by organizational personnel. Computing devices, external disk drives, networking devices, monitors, printers, copiers, scanners, facsimile machines, and audio devices are examples of equipment.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>This addresses the company’s physical space (e.g., office, testing environments, equipment rooms), technical assets, and non-technical assets that need to be protected from unauthorized physical access. Specific environments are limited to authorized employees, and access is controlled with badges, electronic locks, physical key locks, etc.</p>
+<p>Output devices, such as printers, are placed in areas where their use does not expose data to unauthorized individuals. Lists of personnel with authorized access are developed and maintained, and personnel are issued appropriate authorization credentials.</p>
+<div class="sub-header-2">Example</div>
+<p>You manage a DoD project that stores FCI on computers used only by project team members [b,c]. You work with the facilities manager to put locks on the doors to the areas where the computers are stored and used [b,c,d]. Project team members are the only individuals issued with keys to the space. This restricts access to only those employees who work on the DoD project and require access.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are lists of personnel with authorized access developed and maintained, and are appropriate authorization credentials issued [a]?</li>
+<li>Has the facility/building manager designated building areas as “sensitive” and designed physical security protections (e.g., guards, locks, cameras, card readers) to limit physical access to the area to only authorized employees [b,c,d]?</li>
+<li>Are output devices such as printers placed in areas where their use does not expose data to unauthorized individuals [c]?</li>
+</ul>
+
+', NULL, NULL, 36, 1, 19, NULL, NULL, 1213, NULL, N'Limit Physical Access', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5278, N'PE.L1-b.1.ix', N'Escort visitors and monitor visitor activity; maintain audit logs of physical access; and control and manage physical access devices.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>visitors are escorted;</li>
+<li>visitor activity is monitored;</li>
+<li>audit logs of physical access are maintained;</li>
+<li>physical access devices are identified;</li>
+<li>physical access devices are controlled; and</li>
+<li>physical access devices are managed.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Physical and environmental protection policy; procedures addressing physical access control; system security plan; physical access control logs or records; inventory records of physical access control devices; system entry and exit points; records of key and lock combination changes; storage locations for physical access control devices; physical access control devices; list of security safeguards controlling access to designated publicly accessible areas within facility; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with physical access control responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for physical access control; mechanisms supporting or implementing physical access control; physical access control devices].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Individuals with permanent physical access authorization credentials are not considered visitors. Audit logs can be used to monitor visitor activity.</p>
+<p>Organizations have flexibility in the types of audit logs employed. Audit logs can be procedural (e.g., written log of individuals accessing the facility), automated (e.g., capturing ID provided by a Personal Identity Verification (PIV) card), or some combination thereof. Physical access points can include facility access points, interior access points to systems or system components requiring supplemental access controls, or both. System components (e.g., workstations, notebook computers) may be in areas designated as publicly accessible with organizations safeguarding access to such devices.</p>
+<p>Physical access devices include keys, locks, combinations, and card readers.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Do not allow visitors, even those people you know well, to walk around your facility without an escort. All non-employees should wear special visitor badges and/or are escorted by an employee at all times while on the property.</p>
+<p>Make sure you have a record of who accesses your facility (e.g., office, plant, factory). You can do this in writing by having employees and visitors sign in and sign out or by electronic means such as badge readers. Whatever means you use, you need to retain the access records for the time period that your company has defined.</p>
+<p>Identifying and controlling physical access devices (e.g., locks, badges, key cards) is just as important as monitoring and limiting who is able to physically access certain equipment. Physical access devices are only strong protection if you know who has them and what access they allow. Physical access devices can be managed using manual or automatic processes such a list of who is assigned what key, or updating the badge access system as personnel change roles.</p>
+<div class="sub-header-2">Example 1</div>
+<p>Coming back from a meeting, you see the friend of a coworker walking down the hallway near your office where FCI is stored. You know this person well and trust them, but are not sure why they are in the building. You stop to talk, and the person explains that they are meeting a coworker for lunch, but cannot remember where the lunchroom is. You walk the person back to the reception area to get a visitor badge and wait until someone can escort them to the lunchroom [a]. You report this incident, and the company decides to install a badge reader at the main door so visitors cannot enter without an escort [a].</p>
+<div class="sub-header-2">Example 2</div>
+<p>You and your coworkers like to have friends and family join you for lunch at the office on Fridays. Your small company has just signed a contract with the DoD in which your company will receive FCI and you now need to document who enters and leaves your facility. You work with the reception staff to ensure that all non-employees sign in at the reception area and sign out when they leave [c]. You retain those paper sign-in sheets in a locked filing cabinet for one year. Employees receive badges or key cards that enable tracking and logging access to company facilities.</p>
+<div class="sub-header-2">Example 3</div>
+<p>You are a facility manager. A team member retired today and returns their company keys to you. The project on which they were working requires access to areas that contain equipment with FCI. You receive the keys, check your electronic records against the serial numbers on the keys to ensure all have been returned, and mark each key returned [f].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are personnel required to accompany visitors to areas in a facility with physical access to organizational systems [a]?</li>
+<li>Are visitors clearly distinguishable from regular personnel [b]?</li>
+<li>Is visitor activity monitored (e.g., use of cameras or guards, reviews of secure areas upon visitor departure, review of visitor audit logs) [b]?</li>
+<li>Are logs of physical access to sensitive areas (both authorized access and visitor access) maintained per retention requirements [c]?</li>
+<li>Are visitor access records retained for as long as required [c]?</li>
+<li>Are lists or inventories of physical access devices maintained (e.g., keys, facility badges, key cards) [d]?</li>
+<li>Is access to physical access devices limited (e.g., granted to, and accessible only by, authorized individuals) [e]?</li>
+<li>Are physical access devices managed (e.g., revoking key card access when necessary, changing locks as needed, maintaining access control devices and systems) [f]?</li>
+</ul>
+
+', NULL, NULL, 36, 2, 19, NULL, NULL, 1213, NULL, N'Manage Visitors & Physical Access', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5279, N'SC.L1-b.1.x', N'Monitor, control, and protect organizational communications (i.e., information transmitted or received by organizational information systems) at the external boundaries and key internal boundaries of the information systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the external system boundary is defined;</li>
+<li>key internal system boundaries are defined;</li>
+<li>communications are monitored at the external system boundary;</li>
+<li>communications are monitored at key internal boundaries;</li>
+<li>communications are controlled at the external system boundary;</li>
+<li>communications are controlled at key internal boundaries;</li>
+<li>communications are protected at the external system boundary; and</li>
+<li>communications are protected at key internal boundaries.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing boundary protection; system security plan; list of key internal boundaries of the system; system design documentation; boundary protection hardware and software; enterprise security architecture documentation; system audit logs and records; system configuration settings and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developers; personnel with boundary protection responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing boundary protection capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Communications can be monitored, controlled, and protected at boundary components and by restricting or prohibiting interfaces in organizational systems. Boundary components include gateways, routers, firewalls, guards, network-based malicious code analysis and virtualization systems, or encrypted tunnels implemented within a system security architecture (e.g., routers protecting firewalls or application gateways residing on protected subnetworks). Restricting or prohibiting interfaces in organizational systems includes restricting external web communications traffic to designated web servers within managed interfaces and prohibiting external traffic that appears to be spoofing internal addresses.</p>
+<p>Organizations consider the shared nature of commercial telecommunications services in the implementation of security requirements associated with the use of such services. Commercial telecommunications services are commonly based on network components and consolidated management systems shared by all attached commercial customers and may also include third party-provided access lines and other service elements. Such transmission services may represent sources of increased risk despite contract security provisions. NIST SP 800-41 provides guidance on firewalls and firewall policy. NIST SP 800-125B provides guidance on security for virtualization technologies.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Fences, locks, badges, and key cards help keep non-employees out of your physical facilities. Similarly, your company’s IT network or system has boundaries that must be protected. Many companies use a web proxy and a firewall.</p>
+<p>When an employee uses a company computer to go to a website, a web proxy makes the request on the user’s behalf, looks at the web request, and decides if it should let the employee go to the website.</p>
+<p>A firewall controls access from the inside and outside, protecting valuable information and resources stored on the company’s network. A firewall stops unwanted traffic on the internet from passing through an outside “fence” to the company’s networks and information systems. Internal boundaries determine where data can flow, for instance a software development environment may have its own boundary controlling, monitoring, and protecting the data that can leave that boundary.</p>
+<p>It may be wise to monitor, control, or protect one part of the company network from another. This can also be accomplished with a firewall and limits the ability of attackers and disgruntled employees from entering sensitive parts of your internal network and causing damage.</p>
+<div class="sub-header-2">Example</div>
+<p>You are setting up the new network with an FCI enclave. You start by sketching out a simple diagram that identifies the external boundary of your network and any internal boundaries that are needed [a,b]. The first piece of equipment you install is the firewall, a device to separate your internal network from the internet. The firewall also has a feature that allows you to block access to potentially malicious websites, and you configure that service as well [a,c,e,g]. Some of your coworkers complain that they cannot get to certain websites [c,e,g]. You explain that the new network blocks websites that are known for spreading malware. The firewall sends you a daily digest of blocked activity so that you can monitor the system for attack trends [c,d].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>What are the external system boundary components that make up the entry and exit points for data flow (e.g., firewalls, gateways, cloud service boundaries), behind which all system components that handle regulated data are contained? What are the supporting system components necessary for the protection of regulated data [a]?</li>
+<li>What are the internal system boundary components that make up the entry and exit points for key internal data flow (e.g., internal firewalls, routers, any devices that can bridge the connection between one segment of the system and another) that separate segments of the internal network – including devices that separate internal network segments such as development and production networks as well as a traditional DMZ at the edge of the network [b]?</li>
+<li>Is data flowing in and out of the external and key internal system boundaries monitored (e.g., connections are logged and able to be reviewed, suspicious traffic generates alerts) [c,d]?</li>
+<li>Is data traversing the external and internal system boundaries controlled such that connections are denied by default and only authorized connections are allowed [e,f]?</li>
+<li>Is data flowing in and out of the external and key internal system boundaries protected (e.g., applying encryption when required or prudent, tunneling traffic as needed) [g,h]?</li>
+</ul>
+
+', NULL, NULL, 36, 1, 19, NULL, NULL, 1216, NULL, N'Boundary Protection', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5280, N'SC.L1-b.1.xi', N'Implement subnetworks for publicly accessible system components that are physically or logically separated from internal networks.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>publicly accessible system components are identified; and</li>
+<li>subnetworks for publicly accessible system components are physically or logically separated from internal networks.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing boundary protection; system security plan; list of key internal boundaries of the system; system design documentation; boundary protection hardware and software; system configuration settings and associated documentation; enterprise security architecture documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developers; personnel with boundary protection responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing boundary protection capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Subnetworks that are physically or logically separated from internal networks are referred to as demilitarized zones (DMZs). DMZs are typically implemented with boundary control devices and techniques that include routers, gateways, firewalls, virtualization, or cloud- based technologies.</p>
+<p>NIST SP 800-41 provides guidance on firewalls and firewall policy. SP 800-125B provides guidance on security for virtualization technologies.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Publicly accessible systems should be separated from the internal systems that need to be protected. Internal systems should not be placed on the same network as publicly accessible systems, and access by default from DMZ networks to internal networks should be blocked.</p>
+<p>One method of accomplishing this is to create a DMZ network, which enhances security by providing public access to a specific set of resources while preventing connections from those resources to the rest of the IT environment. Some OSAs may achieve a similar result through the use of a cloud computing environment that is separated from the rest of the company’s infrastructure.</p>
+<div class="sub-header-2">Example</div>
+<p>The head of recruiting at your firm wants to launch a website to post job openings and allow the public to download an application form [a]. After some discussion, your team realizes it needs to use a firewall to create a perimeter network to do this because your network contains FCI [b]. You host the server separately from the company’s internal network where FCI is stored and make sure the network on which it resides is isolated with the proper firewall rules [b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are any system components reachable by the public (e.g., internet-facing web servers, VPN gateways, publicly accessible cloud services) [a]?</li>
+<li>Are publicly accessible system components on physically or logically separated subnetworks (e.g., isolated subnetworks using separate, dedicated VLAN segments such as DMZs) [b]?</li>
+</ul>
+
+', NULL, NULL, 36, 2, 19, NULL, NULL, 1216, NULL, N'Public-Access System Separation', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5281, N'SI.L1-b.1.xii', N'Identify, report, and correct information and information system flaws in a timely manner.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the time within which to identify system flaws is specified;</li>
+<li>system flaws are identified within the specified time frame;</li>
+<li>the time within which to report system flaws is specified;</li>
+<li>system flaws are reported within the specified time frame;</li>
+<li>the time within which to correct system flaws is specified; and</li>
+<li>system flaws are corrected within the specified time frame.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and information integrity policy; procedures addressing flaw remediation; procedures addressing configuration management; system security plan; list of flaws and vulnerabilities potentially affecting the system; list of recent security flaw remediation actions performed on the system (e.g., list of installed patches, service packs, hot fixes, and other software updates to correct system flaws); test results from the installation of software and firmware updates to correct system flaws; installation/change control records for security-relevant software and firmware updates; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; personnel installing, configuring, and maintaining the system; personnel with responsibility for flaw remediation; personnel with configuration management responsibility].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for identifying, reporting, and correcting system flaws; organizational process for installing software and firmware updates; mechanisms supporting or implementing reporting, and correcting system flaws; mechanisms supporting or implementing testing software and firmware updates].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations identify systems that are affected by announced software and firmware flaws including potential vulnerabilities resulting from those flaws and report this information to designated personnel with information security responsibilities. Security-relevant updates include patches, service packs, hot fixes, and anti-virus signatures. Organizations address flaws discovered during security assessments, continuous monitoring, incident response activities, and system error handling. Organizations can take advantage of available resources such as the Common Weakness Enumeration (CWE) database or Common Vulnerabilities and Exposures (CVE) database in remediating flaws discovered in organizational systems.</p>
+<p>Organization-defined time periods for updating security-relevant software and firmware may vary based on a variety of factors including the criticality of the update (i.e., severity of the vulnerability related to the discovered flaw). Some types of flaw remediation may require more testing than other types of remediation. NIST SP 800-40 provides guidance on patch management technologies.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>All software and firmware have potential flaws. Many vendors work to remedy those flaws by releasing vulnerability information and updates to their software and firmware. OSAs should have a process to review relevant vendor notifications and updates about problems or weaknesses. After reviewing the information, the OSA should implement a patch management process that allows for software and firmware flaws to be fixed without adversely affecting the system functionality. OSAs should define the time frames within which flaws are identified, reported, and corrected for all systems.</p>
+<div class="sub-header-2">Example</div>
+<p>You know that software vendors typically release patches, service packs, hot fixes, etc. and want to make sure your software that processes FCI is up to date. You develop a policy that requires checking vendor websites for flaw notifications every week [a]. The policy further requires that those flaws be assessed for severity and patched on end-user computers once each week and servers once each month [c,e]. Consistent with that policy, you configure the system to check for updates weekly or daily depending on the criticality of the software [b,e]. Your team reviews available updates and implements the applicable ones according to the defined schedule [f].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is the time frame (e.g., a set number of days) within which system flaw identification activities (e.g., vulnerability scans, configuration scans, manual review) must be performed defined and documented [a]?</li>
+<li>Are system flaws (e.g., vulnerabilities, misconfigurations) identified in accordance with the specified time frame [b]?</li>
+<li>Is the time frame (e.g., a set number of days dependent on the assessed severity of a flaw) within which system flaws must be corrected defined and documented [e]?</li>
+<li>Are system flaws (e.g., applied security patches, made configuration changes, or implemented workarounds or mitigations) corrected within the specified time frame [f]?</li>
+</ul>
+
+', NULL, NULL, 36, 1, 19, NULL, NULL, 1217, NULL, N'Flaw Remediation', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5282, N'SI.L1-b.1.xiii', N'Provide protection from malicious code at appropriate locations within organizational information systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>designated locations for malicious code protection are identified; and</li>
+<li>protection from malicious code at designated locations is provided.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and information integrity policy; configuration management policy and procedures; procedures addressing malicious code protection; records of malicious code protection updates; malicious code protection mechanisms; system security plan; system configuration settings and associated documentation; record of actions initiated by malicious code protection mechanisms in response to malicious code detection; scan results from malicious code protection mechanisms; system design documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; personnel installing, configuring, and maintaining the system; personnel with responsibility for malicious code protection; personnel with configuration management responsibility].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for employing, updating, and configuring malicious code protection mechanisms; organizational process for addressing false positives and resulting potential impact; mechanisms supporting or implementing employing, updating, and configuring malicious code protection mechanisms; mechanisms supporting or implementing malicious code scanning and subsequent actions].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Designated [appropriate] locations include system entry and exit points which may include firewalls, remote access servers, workstations, electronic mail servers, web servers, proxy servers, notebook computers, and mobile devices. Malicious code includes viruses, worms,</p>
+<p>Trojan horses, and spyware. Malicious code can be encoded in various formats (e.g., UUENCODE, Unicode), contained within compressed or hidden files, or hidden in files using techniques such as steganography. Malicious code can be inserted into systems in a variety of ways including web accesses, electronic mail, electronic mail attachments, and portable storage devices. Malicious code insertions occur through the exploitation of system vulnerabilities.</p>
+<p>Malicious code protection mechanisms include anti-virus signature definitions and reputation-based technologies. A variety of technologies and methods exist to limit or eliminate the effects of malicious code. Pervasive configuration management and comprehensive software integrity controls may be effective in preventing execution of unauthorized code. In addition to commercial off-the-shelf software, malicious code may also be present in custom-built software. This could include logic bombs, back doors, and other types of cyber-attacks that could affect organizational missions/business functions. Traditional malicious code protection mechanisms cannot always detect such code. In these situations, organizations rely instead on other safeguards including secure coding practices, configuration management and control, trusted procurement processes, and monitoring practices to help ensure that software does not perform functions other than the functions intended. NIST SP 800-83 provides guidance on malware incident prevention.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Malicious code purposely performs unauthorized activity that undermines the security of an information system. A designated location may be a network device such as a firewall or an end user’s computer.</p>
+<p>Malicious code, which can be delivered by a range of means (e.g., email, removable media, or websites), includes the following:</p>
+<ul>
+<li>Virus – program designed to cause damage, steal information, change data, send email, show messages, or any combination of these things;</li>
+<li>Spyware – program designed to secretly gather information about a person’s activity;</li>
+<li>Trojan Horse – type of malware made to look like legitimate software and used by cyber criminals to get access to a company’s systems; and</li>
+<li>Ransomware – type of malware that threatens to publish the victim’s data or perpetually block access to it unless a ransom is paid.</li>
+</ul>
+<p>Consider use of anti-malware tools to stop or lessen the impact of malicious code.</p>
+<div class="sub-header-2">Example</div>
+<p>Your company’s IT team is buying new computers and wants to protect your company’s information from viruses and spyware. The computers will be used to process, store, and transmit FCI. They research anti-malware products, select an appropriate solution, and deploy antivirus software on all hosts for which satisfactory antivirus software is available [a,b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are system components (e.g., workstations, servers, email gateways, mobile devices) for which malicious code protection must be provided identified and documented [a]?</li>
+</ul>
+
+', NULL, NULL, 36, 2, 19, NULL, NULL, 1217, NULL, N'Malicious Code Protection', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5283, N'SI.L1-b.1.xiv', N'Update malicious code protection mechanisms when new releases are available.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>malicious code protection mechanisms are updated when new releases are available.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and information integrity policy; configuration management policy and procedures; procedures addressing malicious code protection; malicious code protection mechanisms; records of malicious code protection updates; system security plan; system design documentation; system configuration settings and associated documentation; scan results from malicious code protection mechanisms; record of actions initiated by malicious code protection mechanisms in response to malicious code detection; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; personnel installing, configuring, and maintaining the system; personnel with responsibility for malicious code protection; personnel with configuration management responsibility].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for employing, updating, and configuring malicious code protection mechanisms; organizational process for addressing false positives and resulting potential impact; mechanisms supporting or implementing malicious code protection mechanisms (including updates and configurations); mechanisms supporting or implementing malicious code scanning and subsequent actions].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Malicious code protection mechanisms include anti-virus signature definitions and reputation-based technologies. A variety of technologies and methods exist to limit or eliminate the effects of malicious code. Pervasive configuration management and comprehensive software integrity controls may be effective in preventing execution of unauthorized code. In addition to commercial off-the-shelf software, malicious code may also be present in custom-built software. This could include logic bombs, back doors, and other</p>
+<p>36 NIST SP 800-171 Rev. 2, pp 41-42 types of cyber-attacks that could affect organizational missions/business functions. Traditional malicious code protection mechanisms cannot always detect such code. In these situations, organizations rely instead on other safeguards including secure coding practices, configuration management and control, trusted procurement processes, and monitoring practices to help ensure that software does not perform functions other than the functions intended.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Malware changes on an hourly or daily basis, and it is important to update detection and protection mechanisms frequently to maintain the effectiveness of the protection.</p>
+<div class="sub-header-2">Example</div>
+<p>You have installed anti-malware software to protect a computer that stores FCI from malicious code. Knowing that malware evolves rapidly, you configure the software to automatically check for malware definition updates every day and update as needed [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is there a defined frequency at which malicious code protection mechanisms must be updated (e.g., frequency of automatic updates or manual processes) [a]?</li>
+</ul>
+
+', NULL, NULL, 36, 3, 19, NULL, NULL, 1217, NULL, N'Update Malicious Code Protection', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5284, N'SI.L1-b.1.xv', N'Perform periodic scans of the information system and real-time scans of files from external sources as files are downloaded, opened, or executed.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the frequency for malicious code scans is defined;</li>
+<li>malicious code scans are performed with the defined frequency; and</li>
+<li>real-time malicious code scans of files from external sources as files are downloaded, opened, or executed are performed.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and information integrity policy; configuration management policy and procedures; procedures addressing malicious code protection; malicious code protection mechanisms; records of malicious code protection updates; system security plan; system design documentation; system configuration settings and associated documentation; scan results from malicious code protection mechanisms; record of actions initiated by malicious code protection mechanisms in response to malicious code detection; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; personnel installing, configuring, and maintaining the system; personnel with responsibility for malicious code protection; personnel with configuration management responsibility].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for employing, updating, and configuring malicious code protection mechanisms; organizational process for addressing false positives and resulting potential impact; mechanisms supporting or implementing malicious code protection mechanisms (including updates and configurations); mechanisms supporting or implementing malicious code scanning and subsequent actions].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Periodic scans of organizational systems and real-time scans of files from external sources can detect malicious code. Malicious code can be encoded in various formats (e.g.,</p>
+<p>UUENCODE, Unicode), contained within compressed or hidden files, or hidden in files using techniques such as steganography. Malicious code can be inserted into systems in a variety of ways including web accesses, electronic mail, electronic mail attachments, and portable storage devices. Malicious code insertions occur through the exploitation of system vulnerabilities.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Consider use of anti-malware software to scan for viruses in your computer systems and determine how often scans are conducted. Real-time scans look at the system whenever files are downloaded, opened, and saved. Periodic scans check previously saved files against updated malware information. Anti-malware software should be installed, run, and updated on all hosts for which satisfactory antivirus software is available.</p>
+<div class="sub-header-2">Example</div>
+<p>Your company transmits FCI over email. You work with your company’s email provider to enable enhanced protections that will scan all attachments to identify and quarantine those that may be harmful prior to a user opening them [c]. In addition, you configure antivirus software on each computer to scan for malicious code every day [a,b]. The software also scans files that are downloaded or copied from removable media such as USB drives. It quarantines any suspicious files and notifies the security team [c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are files from media (e.g., USB drives, CD-ROM) included in the definition of external sources and are they being scanned [c]?</li>
+</ul>
+
+', NULL, NULL, 36, 4, 19, NULL, NULL, 1217, NULL, N'System & File Scanning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5285, N'AC.L2-3.1.1', N'Limit system access to authorized users, processes acting on behalf of authorized users, and devices (including other systems).', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>authorized users are identified;</li>
+<li>processes acting on behalf of authorized users are identified;</li>
+<li>devices (and other systems) authorized to connect to the system are identified;</li>
+<li>system access is limited to authorized users;</li>
+<li>system access is limited to processes acting on behalf of authorized users; and</li>
+<li>system access is limited to authorized devices (including other systems).</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing account management; system security plan; system design documentation; system configuration settings and associated documentation; list of active system accounts and the name of the individual associated with each account; notifications or records of recently transferred, separated, or terminated employees; list of conditions for group and role membership; list of recently disabled system accounts along with the name of the individual associated with each account; access authorization records; account management compliance reviews; system monitoring records; system audit logs and records; list of devices and systems authorized to connect to organizational systems; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with account management responsibilities; system or network administrators; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for managing system accounts; mechanisms for implementing account management].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Access control policies (e.g., identity- or role-based policies, control matrices, and cryptography) control access between active entities or subjects (i.e., users or processes acting on behalf of users) and passive entities or objects (e.g., devices, files, records, and domains) in systems. Access enforcement mechanisms can be employed at the application and service level to provide increased information security. Other systems include systems internal and external to the organization. This requirement focuses on account management for systems and applications. The definition of and enforcement of access authorizations, other than those determined by account type (e.g., privileged verses [sic] non-privileged) are addressed in requirement 3.1.2 (AC.L2-3.1.2).</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Identify users, processes, and devices that are allowed to use company computers and can log on to the company network. Automated updates and other automatic processes should be associated with the user who initiated (authorized) the process. Limit the devices (e.g., printers) that can be accessed by company computers. Set up your system so that only authorized users, processes, and devices can access the company network.</p>
+<p>This requirement, AC.L2-3.1.1, controls system access based on user, process, or device identity. AC.L2-3.1.1 leverages IA.L2-3.5.1 which provides a vetted and trusted identity for access control.</p>
+<div class="sub-header-2">Example 1</div>
+<p>Your company maintains a list of all personnel authorized to use company information systems, including those that store, process, and transmit CUI [a]. This list is used to support identification and authentication activities conducted by IT when authorizing access to systems [a,d].</p>
+<div class="sub-header-2">Example 2</div>
+<p>A coworker wants to buy a new multi-function printer/scanner/fax device and make it available on the company network within the CUI enclave. You explain that the company controls system and device access to the network and will prevent network access by unauthorized systems and devices [c]. You help the coworker submit a ticket that asks for the printer to be granted access to the network, and appropriate leadership approves the device [f].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is a list of authorized users maintained that defines their identities and roles [a]?</li>
+<li>Are account requests authorized before system access is granted [d,e,f]?</li>
+</ul>
+
+', NULL, NULL, 37, 5, 19, NULL, NULL, 1204, NULL, N'Authorized Access Control', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5286, N'AC.L2-3.1.2', N'Limit system access to the types of transactions and functions that authorized users are permitted to execute.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the types of transactions and functions that authorized users are permitted to execute are defined; and</li>
+<li>system access is limited to the defined types of transactions and functions for authorized users.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing access enforcement; system security plan; system design documentation; list of approved authorizations including remote access authorizations; system audit logs and records; system configuration settings and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with access enforcement responsibilities; system or network administrators; personnel with information security responsibilities; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing access control policy].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations may choose to define access privileges or other attributes by account, by type of account, or a combination of both. System account types include individual, shared, group, system, anonymous, guest, emergency, developer, manufacturer, vendor, and temporary. Other attributes required for authorizing access include restrictions on time-of-day, day-of- week, and point-of-origin. In defining other account attributes, organizations consider system-related requirements (e.g., system upgrades scheduled maintenance,) and mission or business requirements, (e.g., time zone differences, customer requirements, remote access to support travel requirements).</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Limit users to only the information systems, roles, or applications they are permitted to use and are needed for their roles and responsibilities. Limit access to applications and data based on the authorized users’ roles and responsibilities. Common types of functions a user can be assigned are create, read, update, and delete.</p>
+<div class="sub-header-2">Example</div>
+<p>Your team manages DoD contracts for your company. Members of your team need to access the contract information to perform their work properly. Because some of that data contains CUI, you work with IT to set up your group’s systems so that users can be assigned access based on their specific roles [a]. Each role limits whether an employee has read-access or create/read/delete/update -access [b]. Implementing this access control restricts access to CUI information unless specifically authorized.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are access control lists used to limit access to applications and data based on role and/or identity [a]?</li>
+<li>Is access for authorized users restricted to those parts of the system they are explicitly permitted to use (e.g., a person who only performs word-processing cannot access developer tools) [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 6, 19, NULL, NULL, 1204, NULL, N'Transaction & Function Control', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5287, N'AC.L2-3.1.3', N'Control the flow of CUI in accordance with approved authorizations.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>information flow control policies are defined;</li>
+<li>methods and enforcement mechanisms for controlling the flow of CUI are defined;</li>
+<li>designated sources and destinations (e.g., networks, individuals, and devices) for CUI within the system and between interconnected systems are identified;</li>
+<li>authorizations for controlling the flow of CUI are defined; and</li>
+<li>approved authorizations for controlling the flow of CUI are enforced.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; information flow control policies; procedures addressing information flow enforcement; system security plan; system design documentation; system configuration settings and associated documentation; list of information flow authorizations; system baseline configuration; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing information flow enforcement policy].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Information flow control regulates where information can travel within a system and between systems (versus who can access the information) and without explicit regard to subsequent accesses to that information. Flow control restrictions include the following: keeping export-controlled information from being transmitted in the clear to the internet; blocking outside traffic that claims to be from within the organization; restricting requests to the internet that are not from the internal web proxy server; and limiting information transfers between organizations based on data structures and content.</p>
+<p>Organizations commonly use information flow control policies and enforcement mechanisms to control the flow of information between designated sources and destinations (e.g., networks, individuals, and devices) within systems and between interconnected systems. Flow control is based on characteristics of the information or the information path. Enforcement occurs in boundary protection devices (e.g., gateways, routers, guards, encrypted tunnels, firewalls) that employ rule sets or establish configuration settings that restrict system services, provide a packet-filtering capability based on header information, or message-filtering capability based on message content (e.g., implementing key word searches or using document characteristics). Organizations also consider the trustworthiness of filtering and inspection mechanisms (i.e., hardware, firmware, and software components) that are critical to information flow enforcement.</p>
+<p>Transferring information between systems representing different security domains with different security policies introduces risk that such transfers violate one or more domain security policies.</p>
+<p>Organizations consider the shared nature of commercial telecommunications services in the implementation of security requirements associated with the use of such services. Commercial telecommunications services are commonly based on network components and consolidated management systems shared by all attached commercial customers and may also include third party-provided access lines and other service elements. Such transmission services may represent sources of increased risk despite contract security provisions. NIST SP 800-41 provides guidance on firewalls and firewall policy. SP 800-125B provides guidance on security for virtualization technologies.</p>
+<p>In such situations, information owners or stewards provide guidance at designated policy enforcement points between interconnected systems. Organizations consider mandating specific architectural solutions when required to enforce specific security policies. Enforcement includes: prohibiting information transfers between interconnected systems (i.e., allowing access only); employing hardware mechanisms to enforce one-way information flows; and implementing trustworthy regrading mechanisms to reassign security attributes and security labels.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Typically, companies will have a firewall between the internal network and the internet. Often multiple firewalls or routing switches are used inside a network to create zones to separate sensitive data, business units, or user groups. Proxy servers can be used to break the connection between multiple networks. All traffic entering or leaving a network is intercepted by the proxy, preventing direct access between networks. Companies should also ensure by policy and enforcement mechanisms that all CUI allowed to flow across the internet is encrypted.</p>
+<div class="sub-header-2">Example 1</div>
+<p>You configure a proxy device on your company’s network. CUI is stored within this environment. Your goal is to better mask and protect the devices inside the network while enforcing information flow policies. After the device is configured, information does not flow directly from the internal network to the internet. The proxy device intercepts the traffic and analyzes it to determine if the traffic conforms to organization information flow control policies. If it does, the device allows the information to pass to its destination [b]. The proxy blocks traffic that does not meet policy requirements [e].</p>
+<div class="sub-header-2">Example 2</div>
+<p>As a subcontractor on a DoD contract, your organization sometimes needs to transmit CUI to the prime contractor. You create a policy document that specifies who is allowed to transmit CUI and that such transmission requires manager approval [a,c,d]. The policy instructs users to encrypt any CUI transmitted via email or to use a designated secure file sharing utility [b,d]. The policy states that users who do not follow appropriate procedures may be subject to disciplinary action [e].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are designated sources of regulated data identified within the system (e.g., internal network and IP address) and between interconnected systems (e.g., external networks, IP addresses, ports, and protocols) [c]?</li>
+<li>Are designated destinations of regulated data identified within the system (e.g., internal network and IP address) and between interconnected systems (external networks and IP addresses) [c]?</li>
+<li>Are authorizations defined for each source and destination within the system and between interconnected systems (e.g., allow or deny rules for each combination of source and destination) [d]?</li>
+<li>Are approved authorizations for controlling the flow of regulated data enforced within the system and between interconnected systems (e.g., traffic between authorized sources and destinations is allowed and traffic between unauthorized sources and destinations is denied) [e]?</li>
+</ul>
+
+', NULL, NULL, 37, 7, 19, NULL, NULL, 1204, NULL, N'Control CUI Flow', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5288, N'AC.L2-3.1.4', N'Separate the duties of individuals to reduce the risk of malevolent activity without collusion.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the duties of individuals requiring separation are defined;</li>
+<li>responsibilities for duties that require separation are assigned to separate individuals; and</li>
+<li>access privileges that enable individuals to exercise the duties that require separation are granted to separate individuals.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing divisions of responsibility and separation of duties; system security plan; system configuration settings and associated documentation; list of divisions of responsibility and separation of duties; system access authorizations; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibilities for defining divisions of responsibility and separation of duties; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing separation of duties policy].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Separation of duties addresses the potential for abuse of authorized privileges and helps to reduce the risk of malevolent activity without collusion. Separation of duties includes dividing mission functions and system support functions among different individuals or roles; conducting system support functions with different individuals (e.g., configuration management, quality assurance and testing, system management, programming, and network security); and ensuring that security personnel administering access control functions do not also administer audit functions. Because separation of duty violations can span systems and application domains, organizations consider the entirety of organizational systems and system components when developing policy on separation of duties.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>No one person should be in charge of an entire critical task from beginning to end. Documenting and dividing elements of important duties and tasks between employees reduces intentional or unintentional execution of malicious activities.</p>
+<div class="sub-header-2">Example 1</div>
+<p>You are responsible for the management of several key systems within your organization including some that process CUI. You assign the task of reviewing the system logs to two different people. This way, no one person is solely responsible for the execution of this critical security function [c].</p>
+<div class="sub-header-2">Example 2</div>
+<p>You are a system administrator. Human Resources notifies you of a new hire, and you create an account with general privileges, but you are not allowed to grant access to systems that contain CUI [a,b]. The program manager contacts the team in your organization that has system administration authority over the CUI systems and informs them which CUI the new hire will need to access. Subsequently, a second system administrator grants access privileges to the new hire [c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does system documentation identify the system functions or processes that require separation of duties (e.g., function combinations that represent a conflict of interest or an over-allocation of security privilege for one individual) [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 8, 19, NULL, NULL, 1204, NULL, N'Separation Of Duties', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5289, N'AC.L2-3.1.5', N'Employ the principle of least privilege, including for specific security functions and privileged accounts.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>privileged accounts are identified;</li>
+<li>access to privileged accounts is authorized in accordance with the principle of least privilege;</li>
+<li>security functions are identified; and</li>
+<li>access to security functions is authorized in accordance with the principle of least privilege.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing account management; system security plan; system design documentation; system configuration settings and associated documentation; list of active system accounts and the name of the individual associated with each account; list of conditions for group and role membership; notifications or records of recently transferred, separated, or terminated employees; list of recently disabled system accounts along with the name of the individual associated with each account; access authorization records; account management compliance reviews; system monitoring/audit records; procedures addressing least privilege; list of security functions (deployed in hardware, software, and firmware) and security-relevant information for which access is to be explicitly authorized; list of system-generated privileged accounts; list of system administration personnel; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with account management responsibilities; system or network administrators; personnel with information security responsibilities; personnel with responsibilities for defining least privileges necessary to accomplish specified tasks].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for managing system accounts; mechanisms for implementing account management; mechanisms implementing least privilege functions; mechanisms prohibiting privileged access to the system].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations employ the principle of least privilege for specific duties and authorized accesses for users and processes. The principle of least privilege is applied with the goal of authorized privileges no higher than necessary to accomplish required organizational missions or business functions. Organizations consider the creation of additional processes, roles, and system accounts as necessary, to achieve least privilege. Organizations also apply least privilege to the development, implementation, and operation of organizational systems. Security functions include establishing system accounts, setting events to be logged, setting intrusion detection parameters, and configuring access authorizations (i.e., permissions, privileges).</p>
+<p>Privileged accounts, including super user accounts, are typically described as system administrator for various types of commercial off-the-shelf operating systems. Restricting privileged accounts to specific personnel or roles prevents day-to-day users from having access to privileged information or functions. Organizations may differentiate in the application of this requirement between allowed privileges for local accounts and for domain accounts provided organizations retain the ability to control system configurations for key security parameters and as otherwise necessary to sufficiently mitigate risk.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>The principle of least privilege applies to all users and processes on all systems, but it is critical to systems containing or accessing CUI. Least privilege:</p>
+<ul>
+<li>restricts user access to only the machines and information needed to fulfill job responsibilities; and</li>
+<li>limits what system configuration settings users can change, only allowing individuals with a business need to change them.</li>
+</ul>
+<div class="sub-header-2">Example</div>
+<p>You create accounts for an organization that processes CUI. By default, everyone is assigned a basic user role, which prevents a user from modifying system configurations. Privileged access is only assigned to users and processes that require it to carry out job functions, such as IT staff, and is very selectively granted [b,d].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are privileged accounts documented and is when they may be used defined [a]?</li>
+<li>Are users assigned privileged accounts to perform their job functions only when it is necessary [b]?</li>
+<li>Are necessary security functions identified (e.g., access control configuration, system configuration settings, or privileged account lists) that must be managed through the use of privileged accounts [c]?</li>
+<li>Is access to privileged functions and security information restricted to authorized employees [d]?</li>
+</ul>
+
+', NULL, NULL, 37, 9, 19, NULL, NULL, 1204, NULL, N'Least Privilege', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5290, N'AC.L2-3.1.6', N'Use non-privileged accounts or roles when accessing nonsecurity functions.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>nonsecurity functions are identified; and</li>
+<li>users are required to use non-privileged accounts or roles when accessing nonsecurity functions.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing least privilege; system security plan; list of system-generated security functions assigned to system accounts or roles; system configuration settings and associated documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibilities for defining least privileges necessary to accomplish specified organizational tasks; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing least privilege functions].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement limits exposure when operating from within privileged accounts or roles. The inclusion of roles addresses situations where organizations implement access control policies such as role-based access control and where a change of role provides the same degree of assurance in the change of access authorizations for the user and all processes acting on behalf of the user as would be provided by a change between a privileged and non- privileged account.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>A user with a privileged account can perform more tasks and access more information than a person with a non-privileged account. Tasks (including unauthorized tasks orchestrated by attackers) performed when using the privileged account can have a greater impact on the system. System administrators and users with privileged accounts must be trained not to use their privileged accounts for everyday tasks, such as browsing the internet or connecting unnecessarily to other systems or services.</p>
+<div class="sub-header-2">Example</div>
+<p>You are logged in using your privileged account and you need to look up how to reset a non- functioning application which processes CUI. You should log on to another computer with your non-privileged account before you connect to the web and start searching for the reset information [b]. That way, if your account is compromised during the search, it will be your regular user account rather than an account with elevated privileges.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are nonsecurity functions and non-privileged roles defined [a,b]?</li>
+<li>Is it required that nonsecurity functions only be accessed with the use of non-privileged accounts? How is this verified [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 10, 19, NULL, NULL, 1204, NULL, N'Non-Privileged Account Use', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5291, N'AC.L2-3.1.7', N'Prevent non-privileged users from executing privileged functions and capture the execution of such functions in audit logs.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>privileged functions are defined;</li>
+<li>non-privileged users are defined;</li>
+<li>non-privileged users are prevented from executing privileged functions; and</li>
+<li>the execution of privileged functions is captured in audit logs.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Privacy and security policies, procedures addressing system use notification; documented approval of system use notification messages or banners; system audit logs and records; system design documentation; user acknowledgements of notification message or banner; system security plan; system use notification messages; system configuration settings and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibilities for defining least privileges necessary to accomplish specified tasks; personnel with information security responsibilities; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing least privilege functions for non-privileged users; mechanisms auditing the execution of privileged functions].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Privileged functions include establishing system accounts, performing system integrity checks, conducting patching operations, or administering cryptographic key management activities. Non-privileged users are individuals that do not possess appropriate authorizations. Circumventing intrusion detection and prevention mechanisms or malicious code protection mechanisms are examples of privileged functions that require protection from non-privileged users. Note that this requirement represents a condition to be achieved by the definition of authorized privileges in 3.1.2 (AC.L2-3.1.2).</p>
+<p>Misuse of privileged functions, either intentionally or unintentionally by authorized users, or by unauthorized external entities that have compromised system accounts, is a serious and ongoing concern and can have significant adverse impacts on organizations. Logging the use of privileged functions is one way to detect such misuse, and in doing so, help mitigate the risk from insider threats and the advanced persistent threat.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Non-privileged users should receive only those permissions required to perform their basic job functions. Privileged users are granted additional permissions because their jobs require them. Privileged functions typically involve the control, monitoring, or administration of the system and its security measures. When these special privileged functions are performed, the activity must be captured in an audit log, which can be used to identify abuse. Non- privileged employees must not be granted permission to perform any of the functions of a privileged user.</p>
+<p>This requirement, AC.L2-3.1.7, manages non-privileged users by logging any attempts to execute privileged functions. AC.L2-3.1.7 leverages AU.L2-3.3.2, which ensures logging and traceability of user actions. AC.L2-3.1.7 also extends AC.L2-3.1.2, which defines a requirement to limit types of transactions and functions to those that authorized users are permitted to execute.</p>
+<div class="sub-header-2">Example</div>
+<p>Your organization handles CUI and has put security controls in place that prevent non- privileged users from performing privileged activities [a,b,c]. However, a standard user was accidentally given elevated system administrator privileges. The organization has implemented an endpoint detection and response solution that provides visibility into the use of privileged activities. The monitoring system logs a security misconfiguration because the use of administrative privileges was performed by a user who was not known to have that ability. This allows you to correct the error [d].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is it possible to identify who enabled privileges at any particular time [d]?</li>
+<li>Are the privileged system functions documented (e.g., functions that involve the control, monitoring or administration of the system, including security functions and log management) [a]?</li>
+<li>Do documented procedures describe the configuration of the system to ensure system roles do not grant non-privileged users the ability to execute privileged functions [c]?</li>
+<li>Do procedures describe the configuration of system settings to capture the execution of all privileged functions in audit logs [d]?</li>
+</ul>
+
+', NULL, NULL, 37, 11, 19, NULL, NULL, 1204, NULL, N'Privileged Functions', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5292, N'AC.L2-3.1.8', N'Limit unsuccessful logon attempts.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the means of limiting unsuccessful logon attempts is defined; and</li>
+<li>the defined means of limiting unsuccessful logon attempts is implemented.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing unsuccessful logon attempts; system security plan; system design documentation; system configuration settings and associated documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with information security responsibilities; system developers; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing access control policy for unsuccessful logon attempts].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement applies regardless of whether the logon occurs via a local or network connection. Due to the potential for denial of service, automatic lockouts initiated by systems are, in most cases, temporary and automatically release after a predetermined period established by the organization (i.e., a delay algorithm). If a delay algorithm is selected, organizations may employ different algorithms for different system components based on the capabilities of the respective components. Responses to unsuccessful logon attempts may be implemented at the operating system and application levels.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Consecutive unsuccessful logon attempts may indicate malicious activity. OSAs can mitigate these attacks by limiting the number of unsuccessful logon attempts, typically by locking the account. A defined number of consecutive unsuccessful logon attempts is a common configuration setting. OSAs are expected to set this number at a level that fits their risk profile with the knowledge that fewer unsuccessful attempts provide higher security.</p>
+<p>After an unsuccessful login attempt threshold is exceeded and the system locks an account, the account may either remain locked until an administrator takes action to unlock it, or it may be locked for a predefined time after which it unlocks automatically.</p>
+<div class="sub-header-2">Example</div>
+<p>You attempt to log on to your work computer, which stores CUI. You mistype your password three times in a row, and an error message is generated telling you the account is locked [b]. You call your IT help desk or system administrator to request assistance. The system administrator explains that the account is locked as a result of three unsuccessful logon attempts [a]. The administrator offers to unlock the account and notes that you can wait 30 minutes for the account to unlock automatically.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is there a defined threshold for the number of unsuccessful logon attempts for which the system takes action to prevent additional attempts [a]?</li>
+<li>Is a mechanism for limiting the number of unsuccessful logon attempts implemented and does it use the defined threshold [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 12, 19, NULL, NULL, 1204, NULL, N'Unsuccessful Logon Attempts', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5293, N'AC.L2-3.1.9', N'Provide privacy and security notices consistent with applicable CUI rules.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>privacy and security notices required by CUI-specified rules are identified, consistent, and associated with the specific CUI category; and</li>
+<li>privacy and security notices are displayed.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Privacy and security policies, procedures addressing system use notification; documented approval of system use notification messages or banners; system audit logs and records; system design documentation; user acknowledgements of notification message or banner; system security plan; system use notification messages; system configuration settings and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; personnel with responsibility for providing legal advice; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing system use notification].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>System use notifications can be implemented using messages or warning banners displayed before individuals log in to organizational systems. System use notifications are used only for access via logon interfaces with human users and are not required when such human interfaces do not exist. Based on a risk assessment, organizations consider whether a secondary system use notification is needed to access applications or other system resources after the initial network logon. Where necessary, posters or other printed materials may be used in lieu of an automated system banner. Organizations consult with the Office of General Counsel for legal review and approval of warning banner content.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Every system containing or providing access to CUI has legal requirements concerning user privacy and security notices. One method of addressing this requirement is the use of a system-use notification banner that displays the legal requirements of using the system. Users may be required to click to agree to the displayed requirements of using the system each time they log on to the machine. This agreement can be used in the civil and/or criminal prosecution of an attacker that violates the terms.</p>
+<p>The legal notification should meet all applicable requirements. At a minimum, the notice should inform the user that:</p>
+<ul>
+<li>information system usage may be monitored or recorded, and is subject to audit;</li>
+<li>unauthorized use of the information systems is prohibited;</li>
+<li>unauthorized use is subject to criminal and civil penalties;</li>
+<li>use of the information system affirms consent to monitoring and recording;</li>
+<li>the information system contains CUI with specific requirements imposed by the Department of Defense; and</li>
+<li>use of the information system may be subject to other specified requirements associated with certain types of CUI such as Export Controlled information.</li>
+</ul>
+<div class="sub-header-2">Example</div>
+<p>You are setting up IT equipment including a database server that will contain CUI. You have worked with legal counsel to draft a notification. It contains both general and specific CUI security and privacy requirements [a]. The system displays the required security and privacy information before anyone logs on to your organization’s computers that contain or provide access to CUI [b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are objectives identified for privacy and security notices, and does the implementation satisfy the required objectives [a,b]? Discrepancies may indicate a deficient process and/or an incomplete objective for the overall requirement.</li>
+<li>Are there any special requirements associated with the specific CUI category [a]?</li>
+<li>Are appropriate notices displayed in areas where paper-based CUI is stored and processed [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 13, 19, NULL, NULL, 1204, NULL, N'Privacy & Security Notices', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5294, N'AC.L2-3.1.10', N'Use session lock with pattern-hiding displays to prevent access and viewing of data after a period of inactivity.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the period of inactivity after which the system initiates a session lock is defined;</li>
+<li>access to the system and viewing of data is prevented by initiating a session lock after the defined period of inactivity; and</li>
+<li>previously visible information is concealed via a pattern-hiding display after the defined period of inactivity.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing session lock; procedures addressing identification and authentication; system design documentation; system configuration settings and associated documentation; system security plan; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing access control policy for session lock].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Session locks are temporary actions taken when users stop work and move away from the immediate vicinity of the system but do not want to log out because of the temporary nature of their absences. Session locks are implemented where session activities can be determined, typically at the operating system level (but can also be at the application level). Session locks are not an acceptable substitute for logging out of the system, for example, if organizations require users to log out at the end of the workday.</p>
+<p>Pattern-hiding displays can include static or dynamic images, for example, patterns used with screen savers, photographic images, solid colors, clock, battery life indicator, or a blank screen, with the additional caveat that none of the images convey controlled unclassified information.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Session locks can be initiated by the user or, more fundamentally, enabled automatically when the system has been idle for a period of time, for example, five minutes. Session locks are a quick way to prevent unauthorized use of the systems without having a user log off. Minimum configuration requirements are left up to the organization to define.</p>
+<p>A locked session shows pattern-hiding information on the screen to mask the data on the display.</p>
+<div class="sub-header-2">Example</div>
+<p>You manage systems for an organization that stores, processes, and transmits CUI. You notice that employees leave their offices without locking their computers. Sometimes their screens display sensitive company information. You configure all machines to lock after five minutes of inactivity [a,b]. You also remind your coworkers to lock their systems when they walk away [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does the session lock hide previously visible information (e.g., replacing what was visible with a lock screen or screensaver that does not include sensitive information) [c]?</li>
+<li>If session locks are not managed centrally, how are all computer users made aware of the requirements and how to configure them [a,b,c]?</li>
+</ul>
+
+', NULL, NULL, 37, 14, 19, NULL, NULL, 1204, NULL, N'Session Lock', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5295, N'AC.L2-3.1.11', N'Terminate (automatically) a user session after a defined condition.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>conditions requiring a user session to terminate are defined; and</li>
+<li>a user session is automatically terminated after any of the defined conditions occur.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing session termination; system design documentation; system security plan; system configuration settings and associated documentation; list of conditions or trigger events requiring session disconnect; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing user session termination].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement addresses the termination of user-initiated logical sessions in contrast to the termination of network connections that are associated with communications sessions (i.e., disconnecting from the network). A logical session (for local, network, and remote access) is initiated whenever a user (or process acting on behalf of a user) accesses an organizational system. Such user sessions can be terminated (and thus terminate user access) without terminating network sessions. Session termination terminates all processes associated with a user’s logical session except those processes that are specifically created by the user (i.e., session owner) to continue after the session is terminated. Conditions or trigger events requiring automatic session termination can include organization-defined periods of user inactivity, targeted responses to certain types of incidents, and time-of-day restrictions on system use.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Configure the system to terminate user sessions based on the organization’s policy. Session termination policies can be simple or sophisticated. Examples are inactivity (end the session after a specified duration (e.g., one hour33) of inactivity), day/time (all sessions are terminated at the end of the established workday), misbehavior (end the session due to an attempted policy violation), and maintenance (terminate sessions to prevent issues with an upgrade or service outage). If there is no automatic control of user sessions, an attacker can take advantage of an unattended session.</p>
+<div class="sub-header-2">Example 1</div>
+<p>You manage systems containing CUI for your organization and configure the system to terminate all user sessions after 1 hour of inactivity [a]. As the session timeout approaches, the system prompts users with a warning banner asking if they want to continue the session. When the session timeout does occur, the login page pops up, and the users must log in to start a new session [b].</p>
+<div class="sub-header-2">Example 2</div>
+<p>A user is logged into a corporate database containing CUI but is not authorized to view CUI. The user has submitted a series of queries that unintentionally violate policy, as they attempt to extract CUI that the user is not authorized to view [a]. The session terminates with a warning as a result of a violation of corporate policy [b]. The user must reestablish the session before being able to submit additional legitimate queries.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are the conditions in which a user session must be terminated described (e.g., after a period of inactivity or after a defined time limit) [a]?</li>
+<li>Are procedures documented that describe how to configure the system to enable automatic termination of user sessions after any of the defined conditions occur [b]?</li>
+<li>Are user sessions terminated based on organization-defined conditions [a,b]?</li>
+</ul>
+
+', NULL, NULL, 37, 15, 19, NULL, NULL, 1204, NULL, N'Session Termination', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5296, N'AC.L2-3.1.12', N'Monitor and control remote access sessions.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>remote access sessions are permitted;</li>
+<li>the types of permitted remote access are identified;</li>
+<li>remote access sessions are controlled; and</li>
+<li>remote access sessions are monitored.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing remote access implementation and usage (including restrictions); configuration management plan; system security plan; system design documentation; system configuration settings and associated documentation; remote access authorizations; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibilities for managing remote access connections; system or network administrators; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Remote access management capability for the system].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Remote access is access to organizational systems by users (or processes acting on behalf of users) communicating through external networks (e.g., the internet). Remote access methods include dial-up, broadband, and wireless. Organizations often employ encrypted virtual private networks (VPNs) to enhance confidentiality over remote connections. The use of encrypted VPNs does not make the access non-remote; however, the use of VPNs, when adequately provisioned with appropriate control (e.g., employing encryption techniques for confidentiality protection), may provide sufficient assurance to the organization that it can effectively treat such connections as internal networks. VPNs with encrypted tunnels can affect the capability to adequately monitor network communications traffic for malicious code.</p>
+<p>Automated monitoring and control of remote access sessions allows organizations to detect cyber-attacks and help to ensure ongoing compliance with remote access policies by auditing connection activities of remote users on a variety of system components (e.g., servers, workstations, notebook computers, smart phones, and tablets).</p>
+<p>NIST SP 800-46, SP 800-77, and SP 800-113 provide guidance on secure remote access and virtual private networks.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Remote access connections pass through untrusted networks and therefore require proper security controls such as encryption to ensure data confidentiality. Initialization of all remote sessions should ensure that only authorized users and devices are connecting. After the remote session is established, the connection is monitored to track who is accessing the network remotely and what files are being accessed during the session.</p>
+<p>Remote access sessions can encompass more than just remote connections back to a headquarters network. Access to cloud-based email providers or server infrastructures also are relevant to this requirement if those environments contain CUI.</p>
+<p>This requirement, AC.L2-3.1.12, requires the control of remote access sessions and complements five other requirements dealing with remote access (AC.L2-3.1.14, AC.L2- 3.1.13, AC.L2-3.1.15, IA.L2-3.5.3, and MA.L2-3.7.5):</p>
+<ul>
+<li>AC.L2-3.1.14 limits remote access to specific access control points.</li>
+<li>AC.L2-3.1.13 requires the use of cryptographic mechanisms when enabling remote sessions.</li>
+<li>AC.L2-3.1.15 requires authorization for privileged commands executed during a remote session.</li>
+<li>IA.L2-3.5.3 requires multifactor authentication for network access to non-privileged accounts.</li>
+<li>Finally, MA.L2-3.7.5 requires the addition of multifactor authentication for remote maintenance sessions.</li>
+</ul>
+<div class="sub-header-2">Example</div>
+<p>You often need to work from remote locations, such as your home or client sites, and you are permitted to access your organization’s internal networks (including a network containing CUI) from those remote locations [a]. A system administrator issues you a company laptop with VPN software installed, which is required to connect to the networks remotely [b]. After the laptop connects to the VPN server, you must accept a privacy notice that states that the company’s security department may monitor the connection. This monitoring is achieved through the analysis of data from sensors on the network notifying IT if issues arise. The security department may also review audit logs to see who is connecting remotely, when, and what information they are accessing [d]. During session establishment, the message “Verifying Compliance” means software like a Device Health Check (DHC) application is checking the remote device to ensure it meets the established requirements to connect [c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Do policies identify when remote access is permitted and what methods must be used [a,b]?</li>
+<li>Are systems configured to permit only approved remote access sessions (e.g., disallow remote access sessions by default) [c]?</li>
+<li>Are automated or manual mechanisms employed for monitoring remote connections? If the monitoring is manual, does it occur at a frequency commensurate with the level of risk [d]?</li>
+</ul>
+
+', NULL, NULL, 37, 16, 19, NULL, NULL, 1204, NULL, N'Control Remote Access', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5297, N'AC.L2-3.1.13', N'Employ cryptographic mechanisms to protect the confidentiality of remote access sessions.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>cryptographic mechanisms to protect the confidentiality of remote access sessions are identified; and</li>
+<li>cryptographic mechanisms to protect the confidentiality of remote access sessions are implemented.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing remote access to the system; system security plan; system design documentation; system configuration settings and associated documentation; cryptographic mechanisms and associated configuration documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Cryptographic mechanisms protecting remote access sessions].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Cryptographic standards include FIPS-validated cryptography and NSA-approved cryptography.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>A remote access session involves logging into the organization’s systems such as its internal network or a cloud service provider from a remote location such as home or an alternate work site. Because the use of cryptography in this requirement is to protect the confidentiality of CUI, the cryptography used must meet the criteria specified in requirement SC.L2-3.13.11. Although not explicitly required to meet AC.L2-3.1.13 requirements, this remote access session must be secured using FIPS-validated cryptography to provide confidentiality and prevent anyone from deciphering session information exchanges.</p>
+<p>This requirement, AC.L2-3.1.13, requires the use of cryptographic mechanisms when enabling remote sessions and complements five other requirements dealing with remote access (AC.L2-3.1.12, AC.L2-3.1.14, AC.L2-3.1.15, IA.L2-3.5.3, and MA.L2-3.7.5):</p>
+<ul>
+<li>AC.L2-3.1.12 requires the control of remote access sessions.</li>
+<li>AC.L2-3.1.14 limits remote access to specific access control points.</li>
+<li>AC.L2-3.1.15 requires authorization for privileged commands executed during a remote session.</li>
+<li>IA.L2-3.5.3 requires multifactor authentication for network access to non-privileged accounts.</li>
+<li>Finally, MA.L2-3.7.5 requires the addition of multifactor authentication for remote maintenance sessions.</li>
+</ul>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for implementing a remote network access capability for users who access CUI remotely. In order to provide session confidentiality, you decide to implement a VPN mechanism and select a product that has completed FIPS 140 validation [a,b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are cryptographic mechanisms used for remote access sessions (e.g., Transport Layer Security (TLS) and Internet Protocol Security (IPSec) using FIPS-validated encryption algorithms) defined and implemented [a,b]? Note that simply using an approved algorithm is not sufficient – the module (software and/or hardware) used to implement the algorithm must be separately validated under FIPS 140.</li>
+</ul>
+
+', NULL, NULL, 37, 17, 19, NULL, NULL, 1204, NULL, N'Remote Access Confidentiality', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5298, N'AC.L2-3.1.14', N'Route remote access via managed access control points.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>managed access control points are identified and implemented; and</li>
+<li>remote access is routed through managed network access control points.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing remote access to the system; system security plan; system design documentation; list of all managed network access control points; system configuration settings and associated documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms routing all remote accesses through managed network access control points].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Routing remote access through managed access control points enhances explicit, organizational control over such connections, reducing the susceptibility to unauthorized access to organizational systems resulting in the unauthorized disclosure of CUI.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>The OSA can route all remote access through a limited number of remote access control points to reduce the attack surface and simplify network management. This allows for better monitoring and control of the remote connections.</p>
+<p>This requirement, AC.L2-3.1.14, limits remote access to specific access control points and complements five other requirements dealing with remote access (AC.L2-3.1.12, AC.L2- 3.1.13, AC.L2-3.1.15, IA.L2-3.5.3, and MA.L2-3.7.5):</p>
+<ul>
+<li>AC.L2-3.1.12 requires the control of remote access sessions.</li>
+<li>AC.L2-3.1.13 requires the use of cryptographic mechanisms when enabling remote sessions.</li>
+<li>AC.L2-3.1.15 requires authorization for privileged commands executed during a remote session.</li>
+<li>IA.L2-3.5.3 requires multifactor authentication for network access to non-privileged accounts.</li>
+<li>Finally, MA.L2-3.7.5 requires the addition of multifactor authentication for remote maintenance sessions.</li>
+</ul>
+<div class="sub-header-2">Example</div>
+<p>You manage systems for a company that processes CUI at multiple locations, and several employees at different locations need to connect to the organization’s networks while working remotely. Because each company location has a direct connection to headquarters, you decide to route all remote access through the headquarters location [a]. All remote traffic is routed through a single location to simplify monitoring [b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>How many managed access control points are implemented [a]?</li>
+<li>Is all remote access routed through the managed access control points [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 18, 19, NULL, NULL, 1204, NULL, N'Remote Access Routing', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5299, N'AC.L2-3.1.15', N'Authorize remote execution of privileged commands and remote access to security-relevant information.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>privileged commands authorized for remote execution are identified;</li>
+<li>security-relevant information authorized to be accessed remotely is identified;</li>
+<li>the execution of the identified privileged commands via remote access is authorized; and</li>
+<li>access to the identified security-relevant information via remote access is authorized.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing remote access to the system; system configuration settings and associated documentation; system security plan; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing remote access management].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>A privileged command is a human-initiated (interactively or via a process operating on behalf of the human) command executed on a system involving the control, monitoring, or administration of the system including security functions and associated security-relevant information. Security-relevant information is any information within the system that can potentially impact the operation of security functions or the provision of security services in a manner that could result in failure to enforce the system security policy or maintain isolation of code and data. Privileged commands give individuals the ability to execute sensitive, security-critical, or security-relevant system functions. Controlling such access from remote locations helps to ensure that unauthorized individuals are not able to execute such commands freely with the potential to do serious or catastrophic damage to organizational systems. Note that the ability to affect the integrity of the system is considered security-relevant as that could enable the means to by-pass security functions although not directly impacting the function itself.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Privileged users are not necessarily allowed to perform their job functions from a remote location. Likewise, not all privileged commands may be executed remotely. Allowing remote execution of privileged commands or remote access to security-relevant information should be avoided if possible. If absolutely necessary, the privileged commands authorized for remote execution should be identified and documented. Document which user roles have permissions to remotely execute privileged commands to make changes and to access security relevant information. Documentation must be used to establish security mechanisms that enforce the policy.</p>
+<p>This requirement, AC.L2-3.1.15, requires authorization for privileged commands executed during a remote session and complements five other requirements dealing with remote access (AC.L2-3.1.12, AC.L2-3.1.14, AC.L2-3.1.13, IA.L2-3.5.3, and MA.L2-3.7.5):</p>
+<ul>
+<li>AC.L2-3.1.12 requires the control of remote access sessions.</li>
+<li>AC.L2-3.1.14 limits remote access to specific access control points.</li>
+<li>AC.L2-3.1.13 requires the use of cryptographic mechanisms when enabling remote sessions.</li>
+<li>IA.L2-3.5.3 requires multifactor authentication for network access to non-privileged accounts.</li>
+<li>Finally, MA.L2-3.7.5 requires the addition of multifactor authentication for remote maintenance sessions.</li>
+</ul>
+<p>This requirement, AC.L2-3.1.15, also extends AC.L2-3.1.2, which limits the types of transactions and functions that authorized users are permitted to execute.</p>
+<div class="sub-header-2">Example</div>
+<p>Your company’s Access Control Policy permits certain work roles to remotely perform a limited set of privileged commands from company-owned computers [a]. You implement controls to enforce who can remotely execute a privileged command, which privileged commands they can execute, and who is allowed access to security relevant information such as audit log configuration settings [a,c,d].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does system documentation identify system administration or security functions that can be executed remotely [a]?</li>
+<li>Is execution of the identified privileged commands via remote access only authorized for documented operational needs [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 19, 19, NULL, NULL, 1204, NULL, N'Privileged Remote Access', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5300, N'AC.L2-3.1.16', N'Authorize wireless access prior to allowing such connections.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>wireless access points are identified; and</li>
+<li>wireless access is authorized prior to allowing such connections.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; configuration management plan; procedures addressing wireless access implementation and usage (including restrictions); system security plan; system design documentation; system configuration settings and associated documentation; wireless access authorizations; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibilities for managing wireless access connections; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Wireless access management capability for the system].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Establishing usage restrictions and configuration/connection requirements for wireless access to the system provides criteria for organizations to support wireless access authorization decisions. Such restrictions and requirements reduce the susceptibility to unauthorized access to the system through wireless technologies. Wireless networks use authentication protocols that provide credential protection and mutual authentication.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Guidelines from management form the basis for the requirements that must be met prior to authorizing a wireless connection. These guidelines may include the following:</p>
+<ul>
+<li>types of devices, such as corporate or privately owned equipment;</li>
+<li>configuration requirements of the devices; and</li>
+<li>authorization requirements before granting such connections.</li>
+</ul>
+<p>AC.L2-3.1.16, AC.L2-3.1.17, and AC.L2-3.1.18 are complementary requirements in that they all establish control for the connection of mobile devices and wireless devices through the use of authentication, authorization, and encryption mechanisms.</p>
+<div class="sub-header-2">Example</div>
+<p>Your company is implementing a wireless network at its headquarters. CUI may be transmitted on this network. You work with management to draft a policy about the use of the wireless network. The policy states that only company-approved devices that contain verified security configuration settings are allowed to connect. The policy also includes usage restrictions that must be followed for anyone who wants to use the wireless network. Authorization is required before devices are allowed to connect to the wireless network [b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is an updated list of approved network devices providing wireless access to the system maintained [a]?</li>
+<li>Are network devices providing wireless access configured to require users or devices be authorized prior to permitting a wireless connection [b]?</li>
+<li>Is wireless access to the system authorized and managed [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 20, 19, NULL, NULL, 1204, NULL, N'Wireless Access Authorization', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5301, N'AC.L2-3.1.17', N'Protect wireless access using authentication and encryption.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>wireless access to the system is protected using authentication; and</li>
+<li>wireless access to the system is protected using encryption.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; system design documentation; procedures addressing wireless implementation and usage (including restrictions); system security plan; system configuration settings and associated documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing wireless access protections to the system].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations authenticate individuals and devices to help protect wireless access to the system. Special attention is given to the wide variety of devices that are part of the Internet of Things with potential wireless access to organizational systems.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Use a combination of authentication and encryption methods to protect the access to wireless networks. Authenticating users to a wireless access point can be achieved in multiple ways. The most common authentication and encryption methods used include:</p>
+<ul>
+<li>WPA2-PSK (WiFi Protected Access-Pre-shared Key) – This method uses a password or passphrase known by the wireless access point and the client (user device). It is common in small companies that have little turnover because the key must be changed each time an employee leaves in order to prevent the terminated employee from connecting to the network without authorization. WPA2 is typically configured to use Advanced Encryption Standard (AES) encryption.</li>
+<li>WPA2 Enterprise – This method may be better for larger companies and enterprise networks because authentication is based on the identity of the individual user or device rather than a shared password or passphrase. It typically requires a Remote Authentication Dial-in User Service (RADIUS) server for authentication and can provide higher security than WPA2-PSK.</li>
+</ul>
+<p>Open authentication must not be used because it authenticates any user and lacks security capabilities.</p>
+<p>Because the use of cryptography in this requirement is to protect the confidentiality of CUI, the cryptography used must meet the criteria specified in requirement SC.L2-3.13.11.</p>
+<p>AC.L2-3.1.16, AC.L2-3.1.17, and AC.L2-3.1.18 are complementary requirements in that they all establish control for the connection of mobile devices and wireless devices through the use of authentication, authorization, and encryption mechanisms.</p>
+<div class="sub-header-2">Example 1</div>
+<p>You manage the wireless network at a small company and are installing a new wireless solution that may transmit CUI. You start by selecting a product that employs encryption validated against the FIPS 140 standard. You configure the wireless solution to use WPA2, requiring users to enter a pre-shared key to connect to the wireless network [a,b].</p>
+<div class="sub-header-2">Example 2</div>
+<p>You manage the wireless network at a large company and are installing a new wireless solution that may transmit CUI. You start by selecting a product that employs encryption that is validated against the FIPS 140 standard. Because of the size of your workforce, you configure the wireless system to authenticate users with a RADIUS server. Users must provide the wireless system with their domain usernames and passwords to be able to connect, and the RADIUS server verifies those credentials. Users unable to authenticate are denied access [a,b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is wireless access limited only to authenticated and authorized users (e.g., required to supply a username and password) [a]?</li>
+<li>If the organization is securing its wireless network with a pre-shared key, is access to that key restricted to only authorized users [a]?</li>
+<li>Is wireless access encrypted using FIPS-validated cryptography? Note that simply using an approved algorithm is not sufficient; the module (software and/or hardware) used to implement the algorithm must be separately validated under FIPS 140 [b].</li>
+</ul>
+
+', NULL, NULL, 37, 21, 19, NULL, NULL, 1204, NULL, N'Wireless Access Protection', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5302, N'AC.L2-3.1.18', N'Control connection of mobile devices.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>mobile devices that process, store, or transmit CUI are identified;</li>
+<li>mobile device connections are authorized; and</li>
+<li>mobile device connections are monitored and logged.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; authorizations for mobile device connections to organizational systems; procedures addressing access control for mobile device usage (including restrictions); system design documentation; configuration management plan; system security plan; system audit logs and records; system configuration settings and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel using mobile devices to access organizational systems; system or network administrators; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Access control capability authorizing mobile device connections to organizational systems].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>A mobile device is a computing device that has a small form factor such that it can easily be carried by a single individual; is designed to operate without a physical connection (e.g., wirelessly transmit or receive information); possesses local, non-removable or removable data storage; and includes a self-contained power source. Mobile devices may also include voice communication capabilities, on-board sensors that allow the device to capture information, or built-in features for synchronizing local data with remote locations. Examples of mobile devices include smart phones, e-readers, and tablets.</p>
+<p>Due to the large variety of mobile devices with different technical characteristics and capabilities, organizational restrictions may vary for the different types of devices. Usage restrictions and implementation guidance for mobile devices include: device identification and authentication; configuration management; implementation of mandatory protective software (e.g., malicious code detection, firewall); scanning devices for malicious code; updating virus protection software; scanning for critical software updates and patches; conducting primary operating system (and possibly other resident software) integrity checks; and disabling unnecessary hardware (e.g., wireless, infrared). The need to provide adequate security for mobile devices goes beyond this requirement. Many controls for mobile devices are reflected in other CUI security requirements. NIST SP 800-124 provides guidance on mobile device security.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Establish guidelines and acceptable requirements for proper configuration, use, and management of mobile devices. Devices that process, store, or transmit CUI must be identified with a device-specific identifier. There are many different types of identifiers, and it is important to select one that can accommodate all devices and be used in a consistent manner. These identifiers are important for facilitating the required monitoring and logging function.</p>
+<p>In addition to smartphones, consider the security of other portable devices such as e-readers and tablets.</p>
+<p>AC.L2-3.1.16, AC.L2-3.1.17, and AC.L2-3.1.18 are complementary requirements in that they all establish control for the connection of mobile devices and wireless devices through the use of authentication, authorization, and encryption mechanisms.</p>
+<div class="sub-header-2">Example</div>
+<p>Your organization has a policy stating that all mobile devices, including iPads, tablets, mobile phones, and Personal Digital Assistants (PDAs), must be approved and registered with the IT department before connecting to the network that contains CUI. The IT department uses a Mobile Device Management solution to monitor mobile devices and enforce policies across the enterprise [b,c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is a list of mobile devices that are permitted to process, store, or transmit CUI maintained [a,b]?</li>
+<li>Is the system configured to only permit connections from identified, authorized mobile devices [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 22, 19, NULL, NULL, 1204, NULL, N'Mobile Device Connection', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5303, N'AC.L2-3.1.19', N'Encrypt CUI on mobile devices and mobile computing platforms.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>mobile devices and mobile computing platforms that process, store, or transmit CUI are identified; and</li>
+<li>encryption is employed to protect CUI on identified mobile devices and mobile computing platforms.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing access control for mobile devices; system design documentation; system configuration settings and associated documentation; encryption mechanisms and associated configuration documentation; system security plan; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with access control responsibilities for mobile devices; system or network administrators; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Encryption mechanisms protecting confidentiality of information on mobile devices].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations can employ full-device encryption or container-based encryption to protect the confidentiality of CUI on mobile devices and computing platforms. Container-based encryption provides a more fine-grained approach to the encryption of data and information including encrypting selected data structures such as files, records, or fields.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Ensure CUI is encrypted on all mobile devices and mobile computing platforms that process, store, or transmit CUI including smartphones, tablets, and e-readers.</p>
+<p>Because the use of cryptography in this requirement is to protect the confidentiality of CUI, the cryptography used must meet the criteria specified in requirement SC.L2-3.13.11.</p>
+<p>This requirement, AC.L2-3.1.19, specifies that CUI be encrypted on mobile devices and extends three other CUI protection requirements (MP.L2-3.8.1, MP.L2-3.8.2, and SC.L2- 3.13.16):</p>
+<ul>
+<li>MP.L2-3.8.1 requires that media containing CUI be protected.</li>
+<li>MP.L2-3.8.2 limits access to CUI to authorized users.</li>
+<li>Finally, SC.L2-3.13.16 requires confidentiality of CUI at rest.</li>
+</ul>
+<p>This requirement, AC.L2-3.1.19, also leverages SC.L2-3.13.11, which specifies that the algorithms used must be FIPS-validated cryptography, and SC.L2-3.13.10, which specifies that any cryptographic keys in use must be protected.</p>
+<div class="sub-header-2">Example</div>
+<p>You are in charge of mobile device security for a company that processes CUI. You configure all laptops to use the full-disk encryption technology built into the operating system. This approach is FIPS-validated and encrypts all files, folders, and volumes.</p>
+<p>Phones and tablets pose a greater technical challenge with their wide range of manufacturers and operating systems. You select a proprietary mobile device management (MDM) solution to enforce FIPS-validated encryption on those devices [a,b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is a list maintained of mobile devices and mobile computing platforms that are permitted to process, store, or transmit CUI [a]?</li>
+<li>Is CUI encrypted on mobile devices using FIPS-validated algorithms [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 23, 19, NULL, NULL, 1204, NULL, N'Encrypt Cui On Mobile', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5304, N'AC.L2-3.1.20', N'Verify and control/limit connections to and use of external systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>connections to external systems are identified;</li>
+<li>the use of external systems is identified;</li>
+<li>connections to external systems are verified;</li>
+<li>the use of external systems is verified;</li>
+<li>connections to external systems are controlled/limited; and</li>
+<li>the use of external systems is controlled/limited.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing the use of external systems; terms and conditions for external systems; system security plan; list of applications accessible from external systems; system configuration settings and associated documentation; system connection or processing agreements; account management documents; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibilities for defining terms and conditions for use of external systems to access organizational systems; system or network administrators; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing terms and conditions on use of external systems].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>External systems are systems or components of systems for which organizations typically have no direct supervision and authority over the application of security requirements and controls or the determination of the effectiveness of implemented controls on those systems. External systems include personally owned systems, components, or devices and privately- owned computing and communications devices resident in commercial or public facilities.</p>
+<p>This requirement also addresses the use of external systems for the processing, storage, or transmission of CUI, including accessing cloud services (e.g., infrastructure as a service, platform as a service, or software as a service) from organizational systems.</p>
+<p>Organizations establish terms and conditions for the use of external systems in accordance with organizational security policies and procedures. Terms and conditions address as a minimum, the types of applications that can be accessed on organizational systems from external systems. If terms and conditions with the owners of external systems cannot be established, organizations may impose restrictions on organizational personnel using those external systems.</p>
+<p>This requirement recognizes that there are circumstances where individuals using external systems (e.g., contractors, coalition partners) need to access organizational systems. In those situations, organizations need confidence that the external systems contain the necessary controls so as not to compromise, damage, or otherwise harm organizational systems. Verification that the required controls have been effectively implemented can be achieved by third-party, independent assessments, attestations, or other means, depending on the assurance or confidence level required by organizations.</p>
+<p>Note that while “external” typically refers to outside of the organization’s direct supervision and authority, that is not always the case. Regarding the protection of CUI across an organization, the organization may have systems that process CUI and others that do not. And among the systems that process CUI there are likely access restrictions for CUI that apply between systems. Therefore, from the perspective of a given system, other systems within the organization may be considered “external" to that system.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Control and manage connections between your company network and outside networks. Outside networks could include the public internet, one of your own company’s networks that falls outside of your CMMC Assessment Scope (e.g., an isolated lab), or a network that does not belong to your company. Tools to accomplish include firewalls and connection allow/deny lists. External systems not controlled by your company could be running applications that are prohibited or blocked. Control and limit access to corporate networks from personally owned devices such as laptops, tablets, and phones. You may choose to limit how and when your network is connected to outside systems or only allow certain employees to connect to outside systems from network resources.</p>
+<div class="sub-header-2">Example</div>
+<p>Your company has a project that contains CUI. You remind your coworkers of the policy requirement to use their company laptops, not personal laptops or tablets, when working remotely on the project [b,f]. You also remind everyone to work from the cloud environment that is approved for processing and storing CUI rather than the other collaborative tools that may be used for other projects [b,f].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are all connections to external systems outside of the assessment scope identified [a]?</li>
+<li>Are external systems (e.g., systems managed by OSAs, partners, or vendors; personal devices) that are permitted to connect to or make use of organizational systems identified [b]?</li>
+<li>Are methods employed to ensure that only authorized connections are being made to external systems (e.g., requiring log-ins or certificates, access from a specific IP address, or access via Virtual Private Network (VPN)) [c,e]?</li>
+<li>Are methods employed to confirm that only authorized external systems are connecting (e.g., if employees are receiving company email on personal cell phones, is the OSA checking to verify that only known/expected devices are connecting) [d]?</li>
+<li>Is the use of external systems limited, including by policy or physical control [f]?</li>
+</ul>
+
+', NULL, NULL, 37, 24, 19, NULL, NULL, 1204, NULL, N'External Connections', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5305, N'AC.L2-3.1.21', N'Limit use of portable storage devices on external systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the use of portable storage devices containing CUI on external systems is identified and documented;</li>
+<li>limits on the use of portable storage devices containing CUI on external systems are defined; and</li>
+<li>the use of portable storage devices containing CUI on external systems is limited as defined.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing the use of external systems; system security plan; system configuration settings and associated documentation; system connection or processing agreements; account management documents; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibilities for restricting or prohibiting use of organization-controlled storage devices on external systems; system or network administrators; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing restrictions on use of portable storage devices].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Limits on the use of organization-controlled portable storage devices in external systems include complete prohibition of the use of such devices or restrictions on how the devices may be used and under what conditions the devices may be used. Note that while “external” typically refers to outside of the organization’s direct supervision and authority that is not always the case. Regarding the protection of CUI across an organization, the organization may have systems that process CUI and others that do not. Among the systems that process CUI there are likely access restrictions for CUI that apply between systems. Therefore, from the perspective of a given system, other systems within the organization may be considered</p>
+<p>“external" to that system.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>A portable storage device is a system component that can be inserted or attached and easily removed from a system. It is used to store data or information. Examples of portable storage devices include:</p>
+<ul>
+<li>compact/digital video disks (CDs/DVDs);</li>
+<li>Universal Serial Bus (USB) drives;</li>
+<li>external hard disk drives;</li>
+<li>flash memory cards/drives; and</li>
+<li>floppy disks.</li>
+</ul>
+<p>This requirement can be implemented in two ways:</p>
+<ul>
+<li>identifying the portable storage device usage restrictions, identifying portable storage devices that may be used on external systems, identifying associated external systems on which a portable storage device may be used, and administratively (through the use of a written policy) limiting the usage of the devices to those systems; or</li>
+<li>configuring devices to work only when connected to a system to which the portable storage device can authenticate, limiting the devices’ use on external systems to those that the OSA has the ability to manage.</li>
+</ul>
+<div class="sub-header-2">Example</div>
+<p>Your organization, which stores and processes CUI, has a written portable device usage restriction policy. It states that users can only use external storage devices such as thumb dives or external hard disks that belong to the company. When needed for a specific business function, a user checks the device out from IT and returns it to IT when no longer needed [a,b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are the portable storage devices authorized for external use identified and documented [a]?</li>
+<li>Are the circumstances defined in which portable storage devices containing CUI may be used on external systems (e.g., with management approval) [b]?</li>
+<li>Are limitations stipulated for the use of portable storage devices containing CUI on external systems (e.g., authorized personnel only, encrypted drives required) [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 25, 19, NULL, NULL, 1204, NULL, N'Portable Storage Use', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5306, N'AC.L2-3.1.22', N'Control CUI posted or processed on publicly accessible systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>individuals authorized to post or process information on publicly accessible systems are identified;</li>
+<li>procedures to ensure CUI is not posted or processed on publicly accessible systems are identified;</li>
+<li>a review process is in place prior to posting of any content to publicly accessible systems;</li>
+<li>content on publicly accessible systems is reviewed to ensure that it does not include CUI; and</li>
+<li>mechanisms are in place to remove and address improper posting of CUI.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing publicly accessible content; system security plan; list of users authorized to post publicly accessible content on organizational systems; training materials and/or records; records of publicly accessible information reviews; records of response to nonpublic information on public websites; system audit logs and records; security awareness training records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibilities for managing publicly accessible information posted on organizational systems; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing management of publicly accessible content].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>In accordance with laws, Executive Orders, directives, policies, regulations, or standards, the public is not authorized access to nonpublic information (e.g., information protected under the Privacy Act, CUI, and proprietary information). This requirement addresses systems that are controlled by the organization and accessible to the public, typically without identification or authentication. Individuals authorized to post CUI onto publicly accessible systems are designated. The content of information is reviewed prior to posting onto publicly accessible systems to ensure that nonpublic information is not included.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Only government officials can be authorized to release CUI to the public. Do not allow CUI to become public – always safeguard the confidentiality of CUI by controlling the posting of CUI on company-controlled websites or public forums, and the exposure of CUI in public presentations or on public displays. It is important to know which users are allowed to publish information on publicly accessible systems, like your company website, and implement a review process before posting such information. If CUI is discovered on a publicly accessible system, procedures should be in place to remove that information and alert the appropriate parties.</p>
+<div class="sub-header-2">Example</div>
+<p>Your company decides to start issuing press releases about its projects in an effort to reach more potential customers. Your company receives CUI from the government as part of its DoD contract. Because you recognize the need to manage controlled information, including CUI, you meet with the employees who write the releases and post information to establish a review process [c]. It is decided that you will review press releases for CUI before posting it on the company website [a,d]. Only certain employees will be authorized to post to the website [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does information on externally facing systems (i.e., publicly accessible) have a documented approval chain for public release [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 26, 19, NULL, NULL, 1204, NULL, N'Control Public Information', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5307, N'AT.L2-3.2.1', N'Ensure that managers, systems administrators, and users of organizational systems are made aware of the security risks associated with their activities and of the applicable policies, standards, and procedures related to the security of those systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>security risks associated with organizational activities involving CUI are identified;</li>
+<li>policies, standards, and procedures related to the security of the system are identified;</li>
+<li>managers, systems administrators, and users of the system are made aware of the security risks associated with their activities; and</li>
+<li>managers, systems administrators, and users of the system are made aware of the applicable policies, standards, and procedures related to the security of the system.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Security awareness and training policy; procedures addressing security awareness training implementation; relevant codes of federal regulations; security awareness training curriculum; security awareness training materials; system security plan; training records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibilities for security awareness training; personnel with information security responsibilities; personnel composing the general system user community; personnel with responsibilities for role-based awareness training].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms managing security awareness training; mechanisms managing role-based security training].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations determine the content and frequency of security awareness training and security awareness techniques based on the specific organizational requirements and the systems to which personnel have authorized access. The content includes a basic understanding of the need for information security and user actions to maintain security and to respond to suspected security incidents. The content also addresses awareness of the need for operations security. Security awareness techniques include: formal training; offering supplies inscribed with security reminders; generating email advisories or notices from organizational officials; displaying logon screen messages; displaying security awareness posters; and conducting information security awareness events.</p>
+<p>NIST SP 800-50 provides guidance on security awareness and training programs.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Awareness training focuses user attention on security. Several techniques can be used, such as:</p>
+<ul>
+<li>synchronous or asynchronous training;</li>
+<li>simulations (e.g., simulated phishing emails);</li>
+<li>security awareness campaigns (posters, reminders, group discussions); and</li>
+<li>communicating regular email advisories and notices to employees.</li>
+</ul>
+<p>Awareness training and role-based training are different. This requirement, AT.L2-3.2.1, covers awareness training, which provides general security training to influence user behavior. This training can apply broadly or be tailored to a specific role. Role-based training focuses on the knowledge, skills, and abilities needed to complete a specific job and is covered by AT.L2-3.2.2.</p>
+<div class="sub-header-2">Example</div>
+<p>Your organization holds a DoD contract which requires the use of CUI. You want to provide information to employees so they can identify phishing emails. To do this, you prepare a presentation that highlights basic traits, including:</p>
+<ul>
+<li>suspicious-looking email address or domain name;</li>
+<li>a message that contains an attachment or URL; and</li>
+<li>a message that is poorly written and often contains obvious misspelled words.</li>
+</ul>
+<p>You encourage everyone to not click on attachments or links in a suspicious email [c]. You tell employees to forward such a message immediately to IT security [d]. You download free security awareness posters to hang in the office [c,d]. You send regular emails and tips to all employees to ensure your message is not forgotten over time [c,d].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Do all users, managers, and system administrators receive initial and refresher training commensurate with their roles and responsibilities [c,d]?</li>
+<li>Do training materials identify the organization-defined security requirements that must be met by users while interacting with the system as described in written policies, standards, and procedures [d]?</li>
+</ul>
+
+', NULL, NULL, 37, 1, 19, NULL, NULL, 1205, NULL, N'Role-Based Risk Awareness', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5308, N'AT.L2-3.2.2', N'Ensure that personnel are trained to carry out their assigned information security-related duties and responsibilities.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>information security-related duties, roles, and responsibilities are defined;</li>
+<li>information security-related duties, roles, and responsibilities are assigned to designated personnel; and</li>
+<li>personnel are adequately trained to carry out their assigned information security- related duties, roles, and responsibilities.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Security awareness and training policy; procedures addressing security training implementation; codes of federal regulations; security training curriculum; security training materials; system security plan; training records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibilities for role-based security training; personnel with assigned system security roles and responsibilities; personnel with responsibilities for security awareness training; personnel with information security responsibilities; personnel representing the general system user community].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms managing role-based security training; mechanisms managing security awareness training].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations determine the content and frequency of security training based on the assigned duties, roles, and responsibilities of individuals and the security requirements of organizations and the systems to which personnel have authorized access. In addition, organizations provide system developers, enterprise architects, security architects, acquisition/procurement officials, software developers, system developers, systems integrators, system/network administrators, personnel conducting configuration management and auditing activities, personnel performing independent verification and validation, security assessors, and other personnel having access to system-level software, security-related technical training specifically tailored for their assigned duties.</p>
+<p>Comprehensive role-based training addresses management, operational, and technical roles and responsibilities covering physical, personnel, and technical controls. Such training can include policies, procedures, tools, and artifacts for the security roles defined. Organizations also provide the training necessary for individuals to carry out their responsibilities related to operations and supply chain security within the context of organizational information security programs.</p>
+<p>NIST SP 800-181 provides guidance on role-based information security training in the workplace. SP 800-161 provides guidance on supply chain risk management.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Training imparts skills and knowledge to enable staff to perform a specific job function. Training should be available to all employees for all organizational roles to accommodate role changes without being constrained by the training schedule. Awareness training and role-based training are different. Awareness training provides general security training to influence user behavior and is covered by AT.L2-3.2.1. This requirement, AT.L2-3.2.2, covers role-based training that focuses on the knowledge, skills, and abilities needed to complete a specific job. Role-based training may include awareness topics specific to individual roles such as ensuring systems administrators understand the risk associated with using an administrative account.</p>
+<div class="sub-header-2">Example</div>
+<p>Your company upgraded the firewall to a newer, more advanced system to protect the CUI it stores. You have been identified as an employee who needs training on the new device [a,b,c]. This will enable you to use the firewall effectively and efficiently. Your company considered training resources when it planned for the upgrade and ensured that training funds were available as part of the upgrade project [c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are the duties, roles, and responsibilities that impact, directly or indirectly, the information security of the company or its systems defined and documented [a]?</li>
+<li>Do information security-related tasks have accountable owners, and is a strictly limited group of individuals assigned to perform them [b]?</li>
+<li>Are personnel who are assigned information security-related duties, roles, and responsibilities trained on those responsibilities, including the security requirements unique or inherent to their roles or responsibilities [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 2, 19, NULL, NULL, 1205, NULL, N'Role-Based Training', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5309, N'AT.L2-3.2.3', N'Provide security awareness training on recognizing and reporting potential indicators of insider threat.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>potential indicators associated with insider threats are identified; and</li>
+<li>security awareness training on recognizing and reporting potential indicators of insider threat is provided to managers and employees.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Security awareness and training policy; procedures addressing security awareness training implementation; security awareness training curriculum; security awareness training materials; insider threat policy and procedures; system security plan; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel that participate in security awareness training; personnel with responsibilities for basic security awareness training; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms managing insider threat training].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Potential indicators and possible precursors of insider threat include behaviors such as: inordinate, long-term job dissatisfaction; attempts to gain access to information that is not required for job performance; unexplained access to financial resources; bullying or sexual harassment of fellow employees; workplace violence; and other serious violations of the policies, procedures, directives, rules, or practices of organizations. Security awareness training includes how to communicate employee and management concerns regarding potential indicators of insider threat through appropriate organizational channels in accordance with established organizational policies and procedures. Organizations may consider tailoring insider threat awareness topics to the role (e.g., training for managers may be focused on specific changes in behavior of team members, while training for employees may be focused on more general observations).</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>An insider threat is the threat that an insider will use their authorized access, wittingly or unwittingly, to do harm. Insider threat security awareness training focuses on recognizing employee behaviors and characteristics that might be indicators of an insider threat and the guidelines and procedures to handle and report it. Training for managers will provide guidance on observing team members to identify all potential threat indicators, while training for general employees will provide guidance for focusing on a smaller number of indicators. Employee behaviors will vary depending on roles, team membership, and associated information needs. The person responsible for specifying insider threat indicators must be cognizant of these factors. Because of this, organizations may choose to tailor the training for specific roles. This requirement does not require separate training regarding insider threat. Organizations may choose to integrate these topics into their standard security awareness training programs.</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for training all employees on the awareness of high-risk behaviors that can indicate a potential insider threat [b]. You educate yourself on the latest research on insider threat indicators by reviewing a number of law enforcement bulletins [a]. You then add the following example to the training package: A baseline of normal behavior for work schedules has been created. One employee’s normal work schedule is 8:00 AM–5:00 PM, but another employee noticed that the employee has been working until 9:00 PM every day even though no projects requiring additional hours have been assigned [b]. The observing employee reports the abnormal work schedule using the established reporting guidelines.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Do training materials include potential indicators associated with insider threats (e.g., repeated security violations, unusual work hours, unexpected significant transfers of data, suspicious contacts, concerning behaviors outside the workplace) [a,b]?</li>
+<li>Do training materials include methods of reporting potential indicators of insider threats to management or responsible security personnel [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 3, 19, NULL, NULL, 1205, NULL, N'Insider Threat Awareness', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5310, N'AU.L2-3.3.1', N'Create and retain system audit logs and records to the extent needed to enable the monitoring, analysis, investigation, and reporting of unlawful or unauthorized system activity.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>audit logs needed (i.e., event types to be logged) to enable the monitoring, analysis, investigation, and reporting of unlawful or unauthorized system activity are specified;</li>
+<li>the content of audit records needed to support monitoring, analysis, investigation, and reporting of unlawful or unauthorized system activity is defined;</li>
+<li>audit records are created (generated);</li>
+<li>audit records, once created, contain the defined content;</li>
+<li>retention requirements for audit records are defined; and</li>
+<li>audit records are retained as defined.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Audit and accountability policy; procedures addressing auditable events; system security plan; system design documentation; system configuration settings and associated documentation; procedures addressing control of audit records; procedures addressing audit record generation; system audit logs and records; system auditable events; system incident reports; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with audit and accountability responsibilities; personnel with information security responsibilities; personnel with audit review, analysis and reporting responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing system audit logging].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>An event is any observable occurrence in a system, which includes unlawful or unauthorized system activity. Organizations identify event types for which a logging functionality is needed as those events which are significant and relevant to the security of systems and the environments in which those systems operate to meet specific and ongoing auditing needs. Event types can include password changes, failed logons or failed accesses related to systems, administrative privilege usage, or third-party credential usage. In determining event types that require logging, organizations consider the monitoring and auditing appropriate for each of the CUI security requirements. Monitoring and auditing requirements can be balanced with other system needs. For example, organizations may determine that systems must have the capability to log every file access both successful and unsuccessful, but not activate that capability except for specific circumstances due to the potential burden on system performance.</p>
+<p>Audit records can be generated at various levels of abstraction, including at the packet level as information traverses the network. Selecting the appropriate level of abstraction is a critical aspect of an audit logging capability and can facilitate the identification of root causes to problems. Organizations consider in the definition of event types, the logging necessary to cover related events such as the steps in distributed, transaction-based processes (e.g., processes that are distributed across multiple organizations) and actions that occur in service-oriented or cloud-based architectures.</p>
+<p>Audit record content that may be necessary to satisfy this requirement includes time stamps, source and destination addresses, user or process identifiers, event descriptions, success or failure indications, filenames involved, and access control or flow control rules invoked. Event outcomes can include indicators of event success or failure and event-specific results (e.g., the security state of the system after the event occurred).</p>
+<p>Detailed information that organizations may consider in audit records includes full text recording of privileged commands or the individual identities of group account users. Organizations consider limiting the additional audit log information to only that information explicitly needed for specific audit requirements. This facilitates the use of audit trails and audit logs by not including information that could potentially be misleading or could make it more difficult to locate information of interest. Audit logs are reviewed and analyzed as often as needed to provide important information to organizations to facilitate risk-based decision making. NIST SP 800-92 provides guidance on security log management.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>OSAs must ensure that all applicable systems create and retain audit logs that contain enough information to identify and investigate potentially unlawful or unauthorized system activity. OSAs must define the audit logs it needs to collect as well as the specific events to capture within the selected logs. Captured audit records are checked to verify that they contain the required events.</p>
+<p>In defining the audit log retention period, OSAs must ensure that logs are retained for a sufficiently long period to allow for the investigation of a security event. The retention period must take into account the delay of weeks or months that can occur between an initial compromise and the discovery of attacker activity.</p>
+<div class="sub-header-2">Example</div>
+<p>You set up audit logging capability for your company. You determine that all systems that contain CUI must have extra detail in the audit logs. Because of this, you configure these systems to log the following information for all user actions [b,c]:</p>
+<ul>
+<li>time stamps;</li>
+<li>source and destination addresses;</li>
+<li>user or process identifiers;</li>
+<li>event descriptions;</li>
+<li>success or fail indications; and</li>
+<li>filenames.</li>
+</ul>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are audit log retention requirements appropriate to the system and its associated level of risk [e]?</li>
+</ul>
+
+', NULL, NULL, 37, 1, 19, NULL, NULL, 1206, NULL, N'System Auditing', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5311, N'AU.L2-3.3.2', N'Ensure that the actions of individual system users can be uniquely traced to those users so they can be held accountable for their actions.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the content of the audit records needed to support the ability to uniquely trace users to their actions is defined; and</li>
+<li>audit records, once created, contain the defined content.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Audit and accountability policy; procedures addressing audit records and event types; system security plan; system design documentation; system configuration settings and associated documentation; procedures addressing audit record generation; procedures addressing audit review, analysis, and reporting; reports of audit findings; system audit logs and records; system events; system incident reports; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with audit and accountability responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing system audit logging].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement ensures that the contents of the audit record include the information needed to link the audit event to the actions of an individual to the extent feasible. Organizations consider logging for traceability including results from monitoring of account usage, remote access, wireless connectivity, mobile device connection, communications at system boundaries, configuration settings, physical access, nonlocal maintenance, use of maintenance tools, temperature and humidity, equipment delivery and removal, system component inventory, use of mobile code, and use of VoIP.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Capturing the necessary information in audit logs ensures that you can trace actions to a specific user. This may include capturing user IDs, source and destination addresses, and time stamps. Logging from networks, servers, clients, and applications should be considered in ensuring accountability.</p>
+<p>This requirement, AU.L2-3.3.2, which ensures logging and traceability of user actions, supports the control of non-privileged users required by AC.L2-3.1.7 as well as many other auditing, configuration management, incident response, and situation awareness requirements.</p>
+<div class="sub-header-2">Example</div>
+<p>You manage systems for a company that stores, processes, and transmits CUI. You want to ensure that you can trace all remote access sessions to a specific user. You configure the VPN device to capture the following information for all remote access connections: source and destination IP address, user ID, machine name, time stamp, and user actions during the remote session [b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are users uniquely traced and held responsible for unauthorized actions [a]?</li>
+<li>Does the system protect against an individual denying having performed an action (non- repudiation) [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 2, 19, NULL, NULL, 1206, NULL, N'User Accountability', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5312, N'AU.L2-3.3.3', N'Review and update logged events.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>a process for determining when to review logged events is defined;</li>
+<li>event types being logged are reviewed in accordance with the defined review process; and</li>
+<li>event types being logged are updated based on the review.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Audit and accountability policy; procedures addressing audit records and event types; system security plan; list of organization-defined event types to be logged; reviewed and updated records of logged event types; system audit logs and records; system incident reports; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with audit and accountability responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting review and update of logged event types].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>The intent of this requirement is to periodically re-evaluate which logged events will continue to be included in the list of events to be logged. The event types that are logged by organizations may change over time. Reviewing and updating the set of logged event types periodically is necessary to ensure that the current set remains necessary and sufficient.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>This requirement is focused on the configuration of the auditing system, not the review of the audit records produced by the selected events. The review of the audit logs is covered under AU.L2-3.3.5 and AU.L2-3.3.6.</p>
+<div class="sub-header-2">Example</div>
+<p>You are in charge of IT operations for a company that processes CUI and are responsible for identifying and documenting which events are relevant to the security of your company’s systems. Your company has decided that this list of events should be updated annually or when new security threats or events have been identified, which may require additional events to be logged and reviewed [a]. The list of events you are capturing in your logs started as the list of recommended events given by the manufacturers of your operating systems and devices, but it has grown from experience.</p>
+<p>Your company experiences a security incident, and a forensics review shows the logs appear to have been deleted by a remote user. You notice that remote sessions are not currently being logged [b]. You update the list of events to include logging all VPN sessions [c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Do documented processes include methods for determining when to review logged event types (i.e., regular frequency, after incidents, after major system changes) [a]?</li>
+<li>Do documented processes include methods for reviewing event types being logged (i.e., based on specific threat, use case, retention capacity, current utilization, and/or newly added system component or functionality) [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 3, 19, NULL, NULL, 1206, NULL, N'Event Review', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5313, N'AU.L2-3.3.4', N'Alert in the event of an audit logging process failure.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>personnel or roles to be alerted in the event of an audit logging process failure are identified;</li>
+<li>types of audit logging process failures for which alert will be generated are defined; and</li>
+<li>identified personnel or roles are alerted in the event of an audit logging process failure.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Audit and accountability policy; procedures addressing response to audit logging processing failures; system design documentation; system security plan; system configuration settings and associated documentation; list of personnel to be notified in case of an audit logging processing failure; system incident reports; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with audit and accountability responsibilities; personnel with information security responsibilities; system or network administrators; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing system response to audit logging process failures].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Audit logging process failures include software and hardware errors, failures in the audit record capturing mechanisms, and audit record storage capacity being reached or exceeded. This requirement applies to each audit record data storage repository (i.e., distinct system component where audit records are stored), the total audit record storage capacity of organizations (i.e., all audit record data storage repositories combined), or both.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Audit logging keeps track of activities occurring on the network, servers, user workstations, and other components of the overall system. These logs must always be available and functional. The company’s designated security personnel (e.g., system administrator and security officer) need to be aware when the audit log process fails or becomes unavailable [a]. Notifications (e.g., email, Short Message Service (SMS)) should to be sent to the company’s designated security personnel to immediately take appropriate action. If security personnel are unaware of the audit logging process failure, then they will be unaware of any suspicious activity occurring at that time. Response to an audit logging process failure should account for the extent of the failure (e.g., a single component’s audit logging versus failure of the centralized logging solution), the risks involved in this loss of audit logging, and other factors (e.g., the possibility that an adversary could have caused the audit logging process failure).</p>
+<div class="sub-header-2">Example</div>
+<p>You are in charge of IT operations for a company that processes CUI, and your responsibilities include managing the audit logging process. You configure your systems to send you an email in the event of an audit log failure. One day, you receive one of these alerts. You connect to the system, restart logging, and determine why the logging stopped [a,b,c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Will the system alert personnel with security responsibilities in the event of an audit processing failure?</li>
+</ul>
+
+', NULL, NULL, 37, 4, 19, NULL, NULL, 1206, NULL, N'Audit Failure Alerting', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5314, N'AU.L2-3.3.5', N'Correlate audit record review, analysis, and reporting processes for investigation and response to indications of unlawful, unauthorized, suspicious, or unusual activity.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>audit record review, analysis, and reporting processes for investigation and response to indications of unlawful, unauthorized, suspicious, or unusual activity are defined; and</li>
+<li>defined audit record review, analysis, and reporting processes are correlated.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Audit and accountability policy; procedures addressing audit record review, analysis, and reporting; system security plan; system design documentation; system configuration settings and associated documentation; procedures addressing investigation of and response to suspicious activities; system audit logs and records across different repositories; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with audit record review, analysis, and reporting responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting analysis and correlation of audit records; mechanisms integrating audit review, analysis and reporting].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Correlating audit record review, analysis, and reporting processes helps to ensure that they do not operate independently, but rather collectively. Regarding the assessment of a given organizational system, the requirement is agnostic as to whether this correlation is applied at the system level or at the organization level across all systems.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Companies must review, analyze, and report audit records to help detect and respond to security incidents in a timely manner for the purpose of investigation and corrective actions. Collection of audit logs into one or more central repositories may facilitate correlated review.</p>
+<p>Small companies may be able to accomplish this manually with well-defined and -managed procedures. Larger companies will use an automated system for analysis that correlates log data from across the entire enterprise. Some companies may want to orchestrate the analysis process to include the use of Application Programming Interfaces (APIs) for collection, correlation, and the automation of responses based on programed rulesets.</p>
+<div class="sub-header-2">Example</div>
+<p>You are a member of a cyber defense team responsible for audit log analysis. You run an automated tool that analyzes all the audit logs across a Local Area Network (LAN) segment simultaneously looking for similar anomalies on separate systems at separate locations. Some of these systems store CUI. After extracting anomalous information and performing a correlation analysis [b], you determine that four different systems have had their event log information cleared between 2:00 AM to 3:00 AM, although the associated dates are different. The team monitors all systems on the same LAN segment between 2:00 AM to 3:00 AM for the next 30 days.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are mechanisms used across different repositories to integrate audit review, analysis, correlation, and reporting processes [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 5, 19, NULL, NULL, 1206, NULL, N'Audit Correlation', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5315, N'AU.L2-3.3.6', N'Provide audit record reduction and report generation to support on-demand analysis and reporting.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>an audit record reduction capability that supports on-demand analysis is provided; and</li>
+<li>a report generation capability that supports on-demand reporting is provided.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Audit and accountability policy; procedures addressing audit record reduction and report generation; system design documentation; system security plan; system configuration settings and associated documentation; audit record reduction, review, analysis, and reporting tools; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with audit record reduction and report generation responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Audit record reduction and report generation capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Audit record reduction is a process that manipulates collected audit information and organizes such information in a summary format that is more meaningful to analysts. Audit record reduction and report generation capabilities do not always emanate from the same system or organizational entities conducting auditing activities. Audit record reduction capability can include, for example, modern data mining techniques with advanced data filters to identify anomalous behavior in audit records. The report generation capability provided by the system can help generate customizable reports. Time ordering of audit records can be a significant issue if the granularity of the time stamp in the record is insufficient.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Raw audit log data is difficult to review, analyze, and report because of the volume of data. Audit record reduction is an automated process that interprets raw audit log data and extracts meaningful and relevant information without altering the original logs. An example of log reduction for files to be analyzed would be the removal of details associated with nightly backups. Report generation on reduced log information allows you to create succinct customized reports without the need to burden the reader with unimportant information. In addition, the security-relevant audit information must be made available to personnel on demand for immediate review, analysis, reporting, and event investigation support. Performing audit log reduction and providing on-demand reports may allow the analyst to take mitigating action before an adversary completes its malicious actions.</p>
+<div class="sub-header-2">Example</div>
+<p>You are in charge of IT operations in a company that processes CUI. You are responsible for providing audit record reduction and report generation capability. To support this function, you deploy an open-source solution that will collect and analyze data for signs of anomalies. The solution queries your central log repository to extract relevant data and provide you with a concise and comprehensive view for further analysis to identify potentially malicious activity [a]. In addition to creating on-demand data sets for analysis, you create customized reports explaining the contents of the data set [b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does the system support on-demand audit review, analysis, and reporting requirements and after-the-fact security investigations [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 6, 19, NULL, NULL, 1206, NULL, N'Reduction & Reporting', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5316, N'AU.L2-3.3.7', N'Provide a system capability that compares and synchronizes internal system clocks with an authoritative source to generate time stamps for audit records.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>internal system clocks are used to generate time stamps for audit records;</li>
+<li>an authoritative source with which to compare and synchronize internal system clocks is specified; and</li>
+<li>internal system clocks used to generate time stamps for audit records are compared to and synchronized with the specified authoritative time source.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Audit and accountability policy; procedures addressing time stamp generation; system design documentation; system security plan; system configuration settings and associated documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with information security responsibilities; system or network administrators; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing time stamp generation; mechanisms implementing internal information system clock synchronization].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Internal system clocks are used to generate time stamps, which include date and time. Time is expressed in Coordinated Universal Time (UTC), a modern continuation of Greenwich Mean Time (GMT), or local time with an offset from UTC. The granularity of time measurements refers to the degree of synchronization between system clocks and reference clocks, for example, clocks synchronizing within hundreds of milliseconds or within tens of milliseconds. Organizations may define different time granularities for different system components. Time service can also be critical to other security capabilities such as access control and identification and authentication, depending on the nature of the mechanisms used to support those capabilities. This requirement provides uniformity of time stamps for systems with multiple system clocks and systems connected over a network.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Each system must synchronize its time with a central time server to ensure that all systems are recording audit logs using the same time source. Reviewing audit logs from multiple systems can be a difficult task if time is not synchronized. Systems can be synchronized to a network device or directory service or configured manually.</p>
+<div class="sub-header-2">Example</div>
+<p>You are setting up several new computers on your company’s network, which contains CUI. You update the time settings on each machine to use the same authoritative time server on the internet [b,c]. When you review audit logs, all your machines will have synchronized time, which aids in any potential security investigations.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Can the records’ time stamps map to Coordinated Universal Time (UTC), compare system clocks with authoritative Network Time Protocol (NTP) servers, and synchronize system clocks when the time difference is greater than 1 second [c]?</li>
+<li>Does the system synchronize internal system clocks on a defined frequency [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 7, 19, NULL, NULL, 1206, NULL, N'Authoritative Time Source', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5317, N'AU.L2-3.3.8', N'Protect audit information and audit logging tools from unauthorized access, modification, and deletion.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>audit information is protected from unauthorized access;</li>
+<li>audit information is protected from unauthorized modification;</li>
+<li>audit information is protected from unauthorized deletion;</li>
+<li>audit logging tools are protected from unauthorized access;</li>
+<li>audit logging tools are protected from unauthorized modification; and</li>
+<li>audit logging tools are protected from unauthorized deletion.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Audit and accountability policy; access control policy and procedures; procedures addressing protection of audit information; system security plan; system design documentation; system configuration settings and associated documentation, system audit logs and records; audit logging tools; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with audit and accountability responsibilities; personnel with information security responsibilities; system or network administrators; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing audit information protection].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Audit information includes all information (e.g., audit records, audit log settings, and audit reports) needed to successfully audit system activity. Audit logging tools are those programs and devices used to conduct audit and logging activities. This requirement focuses on the technical protection of audit information and limits the ability to access and execute audit logging tools to authorized individuals. Physical protection of audit information is addressed by media protection and physical and environmental protection requirements.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Audit information is a critical record of what events occurred, the source of the events, and the outcomes of the events; this information needs to be protected. The logs must be properly secured so that the information may not be modified or deleted, either intentionally or unintentionally. Only those with a legitimate need-to-know should have access to audit information, whether that information is being accessed directly from logs or from audit tools.</p>
+<div class="sub-header-2">Example</div>
+<p>You are in charge of IT operations in a company that handles CUI. Your responsibilities include protecting audit information and audit logging tools. You protect the information from modification or deletion by having audit log events forwarded to a central server and by restricting the local audit logs to only be viewable by the system administrators [a,b,c]. Only a small group of security professionals can view the data on the central audit server [b,c,d]. For an additional layer of protection, you back up the server daily and encrypt the backups before sending them to a cloud data repository [a,b,c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is there a list of authorized users for audit systems and tools [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 8, 19, NULL, NULL, 1206, NULL, N'Audit Protection', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5318, N'AU.L2-3.3.9', N'Limit management of audit logging functionality to a subset of privileged users.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>a subset of privileged users granted access to manage audit logging functionality is defined; and</li>
+<li>management of audit logging functionality is limited to the defined subset of privileged users.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Audit and accountability policy; access control policy and procedures; procedures addressing protection of audit information; system security plan; system design documentation; system configuration settings and associated documentation; access authorizations; system-generated list of privileged users with access to management of audit logging functionality; access control list; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with audit and accountability responsibilities; personnel with information security responsibilities; system or network administrators; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms managing access to audit logging functionality].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Individuals with privileged access to a system and who are also the subject of an audit by that system, may affect the reliability of audit information by inhibiting audit logging activities or modifying audit records. This requirement specifies that privileged access be further defined between audit-related privileges and other privileges, thus limiting the users with audit-related privileges.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Companies should restrict access to audit logging functions to a limited number of privileged users who can modify audit logs and audit settings. General users should not be granted permissions to perform audit management. All audit managers should be privileged users, but only a small subset of privileged users will be given audit management responsibilities. Functions performed by privileged users must be distinctly separate from the functions performed by users who have audit-related responsibilities to reduce the potential of fraudulent activities by privileged users not being detected or reported. When possible, individuals who manage audit logs should not have access to other privileged functions.</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for the administration of select company infrastructure that contains CUI, but you are not responsible for managing audit information. You are not permitted to review audit logs, delete audit logs, or modify audit log settings [b]. Full control of audit logging functions has been given to senior system administrators [a,b]. This separation of system administration duties from audit logging management is necessary to prevent possible log file tampering.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are audit records of nonlocal accesses to privileged accounts and the execution of privileged functions protected [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 9, 19, NULL, NULL, 1206, NULL, N'Audit Management', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5319, N'CM.L2-3.4.1', N'Establish and maintain baseline configurations and inventories of organizational systems (including hardware, software, firmware, and documentation) throughout the respective system development life cycles.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>a baseline configuration is established;</li>
+<li>the baseline configuration includes hardware, software, firmware, and documentation;</li>
+<li>the baseline configuration is maintained (reviewed and updated) throughout the system development life cycle;</li>
+<li>a system inventory is established;</li>
+<li>the system inventory includes hardware, software, firmware, and documentation; and</li>
+<li>the inventory is maintained (reviewed and updated) throughout the system development life cycle.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Configuration management policy; procedures addressing the baseline configuration of the system; procedures addressing system inventory; system security plan; configuration management plan; system inventory records; inventory review and update records; enterprise architecture documentation; system design documentation; system architecture and configuration documentation; system configuration settings and associated documentation; change control records; system component installation records; system component removal records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with configuration management responsibilities; personnel with responsibilities for establishing the system inventory; personnel with responsibilities for updating the system inventory; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for managing baseline configurations; mechanisms supporting configuration control of the baseline configuration; organizational processes for developing and documenting an inventory of system components; organizational processes for updating inventory of system components; mechanisms supporting or implementing the system inventory; mechanisms implementing updating of the system inventory].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement establishes and maintains baseline configurations for systems and system components including for system communications and connectivity. Baseline configurations are documented, formally reviewed, and agreed-upon sets of specifications for systems or configuration items within those systems. Baseline configurations serve as a basis for future builds, releases, and changes to systems. Baseline configurations include information about system components (e.g., standard software packages installed on workstations, notebook computers, servers, network components, or mobile devices; current version numbers and update and patch information on operating systems and applications; and configuration settings and parameters), network topology, and the logical placement of those components within the system architecture. Baseline configurations of systems also reflect the current enterprise architecture. Maintaining effective baseline configurations requires creating new baselines as organizational systems change over time. Baseline configuration maintenance includes reviewing and updating the baseline configuration when changes are made based on security risks and deviations from the established baseline configuration.</p>
+<p>Organizations can implement centralized system component inventories that include components from multiple organizational systems. In such situations, organizations ensure that the resulting inventories include system-specific information required for proper component accountability (e.g., system association, system owner). Information deemed necessary for effective accountability of system components includes hardware inventory specifications, software license information, software version numbers, component owners, and for networked components or devices, machine names and network addresses. Inventory specifications include manufacturer, device type, model, serial number, and physical location.</p>
+<p>NIST SP 800-128 provides guidance on security-focused configuration management.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>An effective cybersecurity program depends on consistent, secure system and component configuration and management. Build and configure systems from a known, secure, and approved configuration baseline. This includes:</p>
+<ul>
+<li>documenting the software and configuration settings of a system;</li>
+<li>placement within the network; and</li>
+<li>other specifications as required by the organization.</li>
+</ul>
+<div class="sub-header-2">Example</div>
+<p>You are in charge of upgrading the computer operating systems of your office’s computers. Some of these computers process, store, or transmit CUI. You research how to set up and configure a workstation with the least functionality and highest security and use that as the framework for creating a configuration that minimizes functionality while still allowing users to do their tasks. After testing the new baseline on a single workstation, you document this configuration and apply it to the other computers [a]. You then check to make sure that the software changes are accurately reflected in your master system inventory [e]. Finally, you set a calendar reminder to review the baseline in three months [f].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Do baseline configurations include software versions and patch level, configuration parameters, network information, and communications with connected systems [a,b]?</li>
+<li>Are baseline configurations updated as needed to accommodate security risks or software changes [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 1, 19, NULL, NULL, 1207, NULL, N'System Baselining', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5320, N'CM.L2-3.4.2', N'Establish and enforce security configuration settings for information technology products employed in organizational systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>security configuration settings for information technology products employed in the system are established and included in the baseline configuration; and</li>
+<li>security configuration settings for information technology products employed in the system are enforced.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Configuration management policy; baseline configuration; procedures addressing configuration settings for the system; configuration management plan; system security plan; system design documentation; system configuration settings and associated documentation; security configuration checklists; evidence supporting approved deviations from established configuration settings; change control records; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with security configuration management responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for managing configuration settings; mechanisms that implement, monitor, and/or control system configuration settings; mechanisms that identify and/or document deviations from established configuration settings; processes for managing baseline configurations; mechanisms supporting configuration control of baseline configurations].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Configuration settings are the set of parameters that can be changed in hardware, software, or firmware components of the system that affect the security posture or functionality of the system. Information technology products for which security-related configuration settings can be defined include mainframe computers, servers, workstations, input and output devices (e.g., scanners, copiers, and printers), network components (e.g., firewalls, routers, gateways, voice and data switches, wireless access points, network appliances, sensors), operating systems, middleware, and applications.</p>
+<p>Security parameters are those parameters impacting the security state of systems including the parameters required to satisfy other security requirements. Security parameters include: registry settings; account, file, directory permission settings; and settings for functions, ports, protocols, and remote connections. Organizations establish organization-wide configuration settings and subsequently derive specific configuration settings for systems. The established settings become part of the systems configuration baseline.</p>
+<p>Common secure configurations (also referred to as security configuration checklists, lockdown and hardening guides, security reference guides, security technical implementation guides) provide recognized, standardized, and established benchmarks that stipulate secure configuration settings for specific information technology platforms/products and instructions for configuring those system components to meet operational requirements. Common secure configurations can be developed by a variety of organizations including information technology product developers, manufacturers, vendors, consortia, academia, industry, federal agencies, and other organizations in the public and private sectors.</p>
+<p>NIST SP 800-70 and SP 800-128 provide guidance on security configuration settings.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Information security is an integral part of a company’s configuration management process. Security-related configuration settings are customized to satisfy the company’s security requirements and are applied them to all systems once tested and approved. The configuration settings must reflect the most restrictive settings that are appropriate for the system. Any required deviations from the baseline are reviewed, documented, and approved.</p>
+<div class="sub-header-2">Example</div>
+<p>You manage baseline configurations for your company’s systems, including those that process, store, and transmit CUI. As part of this, you download a secure configuration guide for each of your asset types (servers, workstations, network components, operating systems, middleware, and applications) from a well-known and trusted IT security organization. You then apply all of the settings that you can while still ensuring the assets can perform the role for which they are needed. Once you have the configuration settings identified and tested, you document them to ensure all applicable machines can be configured the same way [a,b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Do security settings reflect the most restrictive settings appropriate [a]?</li>
+<li>Are changes or deviations to security settings documented [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 2, 19, NULL, NULL, 1207, NULL, N'Security Configuration Enforcement', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5321, N'CM.L2-3.4.3', N'Track, review, approve or disapprove, and log changes to organizational systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>changes to the system are tracked;</li>
+<li>changes to the system are reviewed;</li>
+<li>changes to the system are approved or disapproved; and</li>
+<li>changes to the system are logged.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Configuration management policy; procedures addressing system configuration change control; configuration management plan; system architecture and configuration documentation; system security plan; change control records; system audit logs and records; change control audit and review reports; agenda/minutes from configuration change control oversight meetings; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with configuration change control responsibilities; personnel with information security responsibilities; system or network administrators; members of change control board or similar].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for configuration change control; mechanisms that implement configuration change control].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Tracking, reviewing, approving/disapproving, and logging changes is called configuration change control. Configuration change control for organizational systems involves the systematic proposal, justification, implementation, testing, review, and disposition of changes to the systems, including system upgrades and modifications. Configuration change control includes changes to baseline configurations for components and configuration items of systems, changes to configuration settings for information technology products (e.g., operating systems, applications, firewalls, routers, and mobile devices), unscheduled and unauthorized changes, and changes to remediate vulnerabilities.</p>
+<p>Processes for managing configuration changes to systems include Configuration Control Boards or Change Advisory Boards that review and approve proposed changes to systems. For new development systems or systems undergoing major upgrades, organizations consider including representatives from development organizations on the Configuration Control Boards or Change Advisory Boards. Audit logs of changes include activities before and after changes are made to organizational systems and the activities required to implement such changes.</p>
+<p>NIST SP 800-128 provides guidance on configuration change control.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>You must track, review, and approve configuration changes before committing to production. Changes to computing environments can create unintended and unforeseen issues that can affect the security and availability of the systems, including those that process CUI. Relevant experts and stakeholders must review and approve proposed changes. They should discuss potential impacts before the organization puts the changes in place. Relevant items include changes to the physical environment and to the systems hosted within it.</p>
+<div class="sub-header-2">Example</div>
+<p>Once a month, the management and technical team leads join a change control board meeting. During this meeting, everyone reviews all proposed changes to the environment [b,c]. This includes changes to the physical and computing environments. The meeting ensures that relevant subject-matter experts review changes and propose alternatives where needed.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are changes to the system authorized by company management and documented [a,b,c,d]?</li>
+<li>Are changes documented and tracked (e.g., manually written down or included in a tracking service such as a ticketing system) [d]?</li>
+</ul>
+
+', NULL, NULL, 37, 3, 19, NULL, NULL, 1207, NULL, N'System Change Management', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5322, N'CM.L2-3.4.4', N'Analyze the security impact of changes prior to implementation.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the security impact of changes to the system is analyzed prior to implementation.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Configuration management policy; procedures addressing security impact analysis for system changes; configuration management plan; security impact analysis documentation; system security plan; analysis tools and associated outputs; change control records; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibility for conducting security impact analysis; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for security impact analysis].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizational personnel with information security responsibilities (e.g., system administrators, system security officers, system security managers, and systems security engineers) conduct security impact analyses. Individuals conducting security impact analyses possess the necessary skills and technical expertise to analyze the changes to systems and the associated security ramifications. Security impact analysis may include reviewing security plans to understand security requirements and reviewing system design documentation to understand the implementation of controls and how specific changes might affect the controls. Security impact analyses may also include risk assessments to better understand the impact of the changes and to determine if additional controls are required.</p>
+<p>NIST SP 800-128 provides guidance on configuration change control and security impact analysis.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Changes to complex environments are reviewed for potential security impact before implemented. Changes to IT systems can cause unforeseen problems and have unintended consequences for both users and the security of the operating environment. Analyze the security impact of changes prior to implementing them. This can uncover and mitigate potential problems before they occur.</p>
+<div class="sub-header-2">Example</div>
+<p>You have been asked to deploy a new web browser plug-in. Your standard change management process requires that you produce a detailed plan for the change, including a review of its potential security impact. A subject-matter expert who did not submit the change reviews the plan and tests the new plug-in for functionality and security. You update the change plan based on the expert’s findings and submit it to the change control board for final approval [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are configuration changes tested, validated, and documented before installing them on the operational system [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 4, 19, NULL, NULL, 1207, NULL, N'Security Impact Analysis', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5323, N'CM.L2-3.4.5', N'Define, document, approve, and enforce physical and logical access restrictions associated with changes to organizational systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>physical access restrictions associated with changes to the system are defined;</li>
+<li>physical access restrictions associated with changes to the system are documented;</li>
+<li>physical access restrictions associated with changes to the system are approved;</li>
+<li>physical access restrictions associated with changes to the system are enforced;</li>
+<li>logical access restrictions associated with changes to the system are defined;</li>
+<li>logical access restrictions associated with changes to the system are documented;</li>
+<li>logical access restrictions associated with changes to the system are approved; and</li>
+<li>logical access restrictions associated with changes to the system are enforced.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Configuration management policy; procedures addressing access restrictions for changes to the system; system security plan; configuration management plan; system design documentation; system architecture and configuration documentation; system configuration settings and associated documentation; logical access approvals; physical access approvals; access credentials; change control records; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with logical access control responsibilities; personnel with physical access control responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for managing access restrictions associated with changes to the system; mechanisms supporting, implementing, and enforcing access restrictions associated with changes to the system].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Any changes to the hardware, software, or firmware components of systems can potentially have significant effects on the overall security of the systems. Therefore, organizations permit only qualified and authorized individuals to access systems for purposes of initiating changes, including upgrades and modifications. Access restrictions for change also include software libraries. Access restrictions include physical and logical access control requirements, workflow automation, media libraries, abstract layers (e.g., changes implemented into external interfaces rather than directly into systems), and change windows (e.g., changes occur only during certain specified times). In addition to security concerns, commonly-accepted due diligence for configuration management includes access restrictions as an essential part in ensuring the ability to effectively manage the configuration.</p>
+<p>NIST SP 800-128 provides guidance on configuration change control.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Define, identify, and document qualified individuals authorized to make physical and logical changes to the organization’s hardware, software, software libraries, or firmware components. Control of configuration management activities may involve:</p>
+<ul>
+<li>physical access control that prohibits unauthorized users from gaining physical access to an asset (e.g., requiring a special key card to enter a server room);</li>
+<li>logical access control that prevents unauthorized users from logging onto a system to make configuration changes (e.g., requiring specific credentials for modifying configuration settings, patching software, or updating software libraries);</li>
+<li>workflow automation in which configuration management workflow rules define human tasks and data or files are routed between people authorized to do configuration management based on pre-defined business rules (e.g., passing an electronic form to a manager requesting approval of configuration change made by an authorized employee);</li>
+<li>an abstraction layer for configuration management that requires changes be made from an external system through constrained interface (e.g., software updates can only be made from a patch management system with a specific IP address); and</li>
+<li>utilization of a configuration management change window (e.g., software updates are only allowed between 8:00 AM and 10:00 AM or between 6:00 PM and 8:00 PM).</li>
+</ul>
+<div class="sub-header-2">Example</div>
+<p>Your datacenter requires expanded storage capacity in a server. The change has been approved, and security is planning to allow an external technician to access the building at a specific date and time under the supervision of a manager [a,b,c,d]. A system administrator creates a temporary privileged account that can be used to log into the server’s operating system and update storage settings [e,f,g]. On the appointed day, the technician is escorted into the datacenter, upgrades the hardware, expands the storage in the operating system (OS), and departs. The manager verifies the upgrade and disables the privileged account [h].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are only employees who are approved to make physical or logical changes on systems allowed to do so [a,d,e,h]?</li>
+<li>Are authorized personnel approved and documented by the service owner and IT security [a,e]?</li>
+<li>Does all change documentation include the name of the authorized employee making the change [b,d,f,h]?</li>
+</ul>
+
+', NULL, NULL, 37, 5, 19, NULL, NULL, 1207, NULL, N'Access Restrictions For Change', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5324, N'CM.L2-3.4.6', N'Employ the principle of least functionality by configuring organizational systems to provide only essential capabilities.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>essential system capabilities are defined based on the principle of least functionality; and</li>
+<li>the system is configured to provide only the defined essential capabilities.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Configuration management policy; configuration management plan; procedures addressing least functionality in the system; system security plan; system design documentation; system configuration settings and associated documentation; security configuration checklists; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with security configuration management responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes prohibiting or restricting functions, ports, protocols, or services; mechanisms implementing restrictions or prohibition of functions, ports, protocols, or services].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Systems can provide a wide variety of functions and services. Some of the functions and services routinely provided by default, may not be necessary to support essential organizational missions, functions, or operations. It is sometimes convenient to provide multiple services from single system components. However, doing so increases risk over limiting the services provided by any one component. Where feasible, organizations limit component functionality to a single function per component.</p>
+<p>Organizations review functions and services provided by systems or components of systems, to determine which functions and services are candidates for elimination. Organizations disable unused or unnecessary physical and logical ports and protocols to prevent unauthorized connection of devices, transfer of information, and tunneling. Organizations can utilize network scanning tools, intrusion detection and prevention systems, and end- point protections such as firewalls and host-based intrusion detection systems to identify and prevent the use of prohibited functions, ports, protocols, and services.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>You should customize organizational systems to remove non-essential applications and disable unnecessary services. Systems come with many unnecessary applications and settings enabled by default including unused ports and protocols. Leave only the fewest capabilities necessary for the systems to operate effectively.</p>
+<div class="sub-header-2">Example</div>
+<p>You have ordered a new server, which has arrived with a number of free utilities installed in addition to the operating system. Before you deploy the server, you research the utilities to determine which ones can be eliminated without impacting functionality. You remove the unneeded software, then move on to disable unused ports and services. The server that enters production therefore has only the essential capabilities enabled for the system to function in its role [a,b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are the roles and functions for each system identified along with the software and services required to perform those functions [a]?</li>
+<li>Are the software and services required for those defined functions identified [a]?</li>
+<li>Is the information system configured to exclude any function not needed in the operational environment [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 6, 19, NULL, NULL, 1207, NULL, N'Least Functionality', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5325, N'CM.L2-3.4.7', N'Restrict, disable, or prevent the use of nonessential programs, functions, ports, protocols, and services.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>essential programs are defined;</li>
+<li>the use of nonessential programs is defined;</li>
+<li>the use of nonessential programs is restricted, disabled, or prevented as defined;</li>
+<li>essential functions are defined;</li>
+<li>the use of nonessential functions is defined;</li>
+<li>the use of nonessential functions is restricted, disabled, or prevented as defined;</li>
+<li>essential ports are defined;</li>
+<li>the use of nonessential ports is defined;</li>
+<li>the use of nonessential ports is restricted, disabled, or prevented as defined;</li>
+<li>essential protocols are defined;</li>
+<li>the use of nonessential protocols is defined;</li>
+<li>the use of nonessential protocols is restricted, disabled, or prevented as defined;</li>
+<li>essential services are defined;</li>
+<li>the use of nonessential services is defined; and</li>
+<li>the use of nonessential services is restricted, disabled, or prevented as defined.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Configuration management policy; procedures addressing least functionality in the system; configuration management plan; system security plan; system design documentation; security configuration checklists; system configuration settings and associated documentation; specifications for preventing software program execution; documented reviews of programs, functions, ports, protocols, and/or services; change control records; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibilities for reviewing programs, functions, ports, protocols, and services on the system; personnel with information security responsibilities; system or network administrators; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for reviewing and disabling nonessential programs, functions, ports, protocols, or services; mechanisms implementing review and handling of nonessential programs, functions, ports, protocols, or services; organizational processes preventing program execution on the system; organizational processes for software program usage and restrictions; mechanisms supporting or implementing software program usage and restrictions; mechanisms preventing program execution on the system].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Restricting the use of nonessential software (programs) includes restricting the roles allowed to approve program execution; prohibiting auto-execute; program blacklisting and whitelisting; or restricting the number of program instances executed at the same time. The organization makes a security-based determination which functions, ports, protocols, and/or services are restricted. Bluetooth, File Transfer Protocol (FTP), and peer-to-peer networking are examples of protocols organizations consider preventing the use of, restricting, or disabling.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Organizations should only use the minimum set of programs, services, ports, and protocols required for to accomplish the organization’s mission. This has several implications:</p>
+<ul>
+<li>All unnecessary programs and accounts are removed from all endpoints and servers.</li>
+<li>The organization makes a policy decision to control the execution of programs through either whitelisting or blacklisting. Whitelisting means a program can only run if the software has been vetted in some way, and the executable name has been entered onto a list of allowed software. Blacklisting means any software can execute as long it is not on a list of known malicious software. Whitelisting provides far more security than blacklisting, but the organization’s policy can direct the implementation of either approach. Control of execution applies to both servers and endpoints.</li>
+<li>The organization restricts the use of all unnecessary ports, protocols, and system services in order to limit entry points that attackers can use. For example, the use of the FTP service is eliminated from all computers, and the associated ports are blocked unless a required service utilizes those ports. The elimination of nonessential functionality on the network and systems provides a smaller attack surface for an attacker to gain access and take control of your network or systems.</li>
+</ul>
+<p>This requirement, CM.L2-3.4.7, which requires limiting functionality to essential programs, ports, protocols, and services, extends CM.L2-3.4.6, which requires adherence to the principle of least functionality but does not specifically address which elements of a system should be limited.</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for purchasing new endpoint hardware, installing organizationally required software to the hardware, and configuring the endpoint in accordance with the organization’s policy. The organization has a system imaging capability that loads all necessary software, but it does not remove unnecessary services, eliminate the use of certain protocols, or close unused ports. After imaging the systems, you close all ports and block the use of all protocols except the following:</p>
+<ul>
+<li>TCP for SSH on port 22;</li>
+<li>SMTP on port 25;</li>
+<li>TCP and UDP on port 53; and</li>
+<li>HTTP and HTTPS on port 443.</li>
+</ul>
+<p>The use of any other ports or protocols are allowed by exception only [i,l,o].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are only applications and services that are needed for the function of the system configured and enabled [a,b,c,d,e,f]?</li>
+<li>Are only those ports and protocols necessary to provide the service of the information system configured for that system [g,h,i,j,k,l]?</li>
+<li>Are systems services reviewed to determine what is essential for the function of that system [m]?</li>
+</ul>
+
+', NULL, NULL, 37, 7, 19, NULL, NULL, 1207, NULL, N'Nonessential Functionality', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5326, N'CM.L2-3.4.8', N'Apply deny-by-exception (blacklisting) policy to prevent the use of unauthorized software or deny-all, permit-by-exception (whitelisting) policy to allow the execution of authorized software.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>a policy specifying whether whitelisting or blacklisting is to be implemented is specified;</li>
+<li>the software allowed to execute under whitelisting or denied use under blacklisting is specified; and</li>
+<li>whitelisting to allow the execution of authorized software or blacklisting to prevent the use of unauthorized software is implemented as specified.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Configuration management policy; procedures addressing least functionality in the system; system security plan; configuration management plan; system design documentation; system configuration settings and associated documentation; list of software programs not authorized to execute on the system; list of software programs authorized to execute on the system; security configuration checklists; review and update records associated with list of authorized or unauthorized software programs; change control records; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibilities for identifying software authorized or not authorized to execute on the system; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational process for identifying, reviewing, and updating programs authorized or not authorized to execute on the system; process for implementing blacklisting or whitelisting; mechanisms supporting or implementing blacklisting or whitelisting].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>The process used to identify software programs that are not authorized to execute on systems is commonly referred to as blacklisting. The process used to identify software programs that are authorized to execute on systems is commonly referred to as whitelisting. Whitelisting is the stronger of the two policies for restricting software program execution. In addition to whitelisting, organizations consider verifying the integrity of whitelisted software programs using, for example, cryptographic checksums, digital signatures, or hash functions. Verification of whitelisted software can occur either prior to execution or at system startup.</p>
+<p>NIST SP 800-167 provides guidance on application whitelisting.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Organizations should determine their blacklisting or whitelisting policy and configure the system to manage software that is allowed to run. Blacklisting or deny-by-exception allows all software to run except if on an unauthorized software list such as what is maintained in antivirus solutions. Whitelisting or permit-by-exception does not allow any software to run except if on an authorized software list. The stronger policy of the two is whitelisting.</p>
+<p>This requirement, CM.L2-3.4.8, requires the implementation of allow-lists and deny-lists for application software. It leverages CM.L2-3.4.1, which requires the organization to establish and maintain software inventories.</p>
+<p>This requirement, CM.L2-3.4.8, also extends CM.L2-3.4.9, which only requires control and monitoring of any user installed software.</p>
+<div class="sub-header-2">Example</div>
+<p>To improve your company’s protection from malware, you have decided to allow only designated programs to run. With additional research you identify a capability within the latest operating system that can control executables, scripts, libraries, or application installers run in your environment [c]. To ensure success you begin by authorizing digitally signed executables. Once they are deployed, you then plan to evaluate and deploy whitelisting for software libraries and scripts [c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is the information system configured to only allow authorized software to run [a,b,c]?</li>
+<li>Is the system configured to disallow running unauthorized software [a,b,c]?</li>
+<li>Is there a defined list of software programs authorized to execute on the system [b]?</li>
+<li>Is the authorization policy a deny-all, permit by exception for software allowed to execute on the system [a,b,c]?</li>
+<li>Are automated mechanisms used to prevent program execution in accordance with defined lists (e.g., whitelisting) [a,b,c]?</li>
+</ul>
+
+', NULL, NULL, 37, 8, 19, NULL, NULL, 1207, NULL, N'Application Execution Policy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5327, N'CM.L2-3.4.9', N'Control and monitor user-installed software.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>a policy for controlling the installation of software by users is established;</li>
+<li>installation of software by users is controlled based on the established policy; and</li>
+<li>installation of software by users is monitored.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Configuration management policy; procedures addressing user installed software; configuration management plan; system security plan; system design documentation; system configuration settings and associated documentation; list of rules governing user-installed software; system monitoring records; system audit logs and records; continuous monitoring strategy; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibilities for governing user-installed software; personnel operating, using, or maintaining the system; personnel monitoring compliance with user-installed software policy; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes governing user-installed software on the system; mechanisms enforcing rules or methods for governing the installation of software by users; mechanisms monitoring policy compliance].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Users can install software in organizational systems if provided the necessary privileges. To maintain control over the software installed, organizations identify permitted and prohibited actions regarding software installation through policies. Permitted software installations include updates and security patches to existing software and applications from organization-approved “app stores.” Prohibited software installations may include software with unknown or suspect pedigrees or software that organizations consider potentially malicious. The policies organizations select governing user-installed software may be organization-developed or provided by some external entity. Policy enforcement methods include procedural methods, automated methods, or both.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Software that users have the ability to install is limited to items that the organization approves. When not controlled, users could install software that can create unnecessary risk. This risk applies both to the individual machine and to the larger operating environment. Policies and technical controls reduce risk to the organization by preventing users from installing unauthorized software.</p>
+<div class="sub-header-2">Example</div>
+<p>You are a system administrator. A user calls you for help installing a software package. They are receiving a message asking for a password because they do not have permission to install the software. You explain that the policy prohibits users from installing software without approval [a]. When you set up workstations for users, you do not provide administrative privileges. After the call, you redistribute the policy to all users ensuring everyone in the company is aware of the restrictions.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are user controls in place to prohibit the installation of unauthorized software [a]?</li>
+<li>Is all software in use on the information systems approved [b]?</li>
+<li>Is there a mechanism in place to monitor the types of software a user is permitted to download (e.g., is there a whitelist of approved software) [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 9, 19, NULL, NULL, 1207, NULL, N'User-Installed Software', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5328, N'IA.L2-3.5.1', N'Identify system users, processes acting on behalf of users, and devices.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>system users are identified;</li>
+<li>processes acting on behalf of users are identified; and</li>
+<li>devices accessing the system are identified.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Identification and authentication policy; procedures addressing user identification and authentication; system security plan, system design documentation; system configuration settings and associated documentation; system audit logs and records; list of system accounts; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system operations responsibilities; personnel with information security responsibilities; system or network administrators; personnel with account management responsibilities; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for uniquely identifying and authenticating users; mechanisms supporting or implementing identification and authentication capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Common device identifiers include media access control (MAC), Internet Protocol (IP) addresses, or device-unique token identifiers. Management of individual identifiers is not applicable to shared system accounts. Typically, individual identifiers are the user names associated with the system accounts assigned to those individuals. Organizations may require unique identification of individuals in group accounts or for detailed accountability of individual activity. In addition, this requirement addresses individual identifiers that are not necessarily associated with system accounts. Organizational devices requiring identification may be defined by type, by device, or by a combination of type/device. NIST SP 800-63-3 provides guidance on digital identities.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Make sure to assign individual, unique identifiers (e.g., user names) to all users and processes that access company systems. Authorized devices also should have unique identifiers. Unique identifiers can be as simple as a short set of alphanumeric characters (e.g., SW001 could refer to a network switch, SW002 could refer to a different network switch).</p>
+<p>This requirement, IA.L2-3.5.1, provides a vetted and trusted identity that supports the access control mechanism required by AC.L2-3.1.1.</p>
+<div class="sub-header-2">Example</div>
+<p>You want to make sure that all employees working on a project can access important information about it. Because this is work for the DoD and may contain CUI, you also need to prevent employees who are not working on that project from being able to access the information. You assign each employee is assigned a unique user ID, which they use to log into the system [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are unique identifiers issued to individual users (e.g., usernames) [a]?</li>
+<li>Are the processes and service accounts that an authorized user initiates identified (e.g., scripts, automatic updates, configuration updates, vulnerability scans) [b]?</li>
+<li>Are unique device identifiers used for devices that access the system identified [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 3, 19, NULL, NULL, 1208, NULL, N'Identification', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5329, N'IA.L2-3.5.2', N'Authenticate (or verify) the identities of users, processes, or devices, as a prerequisite to allowing access to organizational systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the identity of each user is authenticated or verified as a prerequisite to system access;</li>
+<li>the identity of each process acting on behalf of a user is authenticated or verified as a prerequisite to system access; and</li>
+<li>the identity of each device accessing or connecting to the system is authenticated or verified as a prerequisite to system access.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Identification and authentication policy; system security plan; procedures addressing authenticator management; procedures addressing user identification and authentication; system design documentation; list of system authenticator types; system configuration settings and associated documentation; change control records associated with managing system authenticators; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with authenticator management responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing authenticator management capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Individual authenticators include the following: passwords, key cards, cryptographic devices, and one-time password devices. Initial authenticator content is the actual content of the authenticator, for example, the initial password. In contrast, the requirements about authenticator content include the minimum password length. Developers ship system components with factory default authentication credentials to allow for initial installation and configuration. Default authentication credentials are often well known, easily discoverable, and present a significant security risk.</p>
+<p>Systems support authenticator management by organization-defined settings and restrictions for various authenticator characteristics including minimum password length, validation time window for time synchronous one-time tokens, and number of allowed rejections during the verification stage of biometric authentication. Authenticator management includes issuing and revoking, when no longer needed, authenticators for temporary access such as that required for remote maintenance. Device authenticators include certificates and passwords.</p>
+<p>NIST SP 800-63-3 provides guidance on digital identities.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Before a person or device is given system access, verify that the user or device is who or what it claims to be. This verification is called authentication. The most common way to verify identity is using a username and a hard-to-guess password.</p>
+<p>Some devices ship with default usernames and passwords. Some devices ship with a default username (e.g., admin) and password. A default username and password must be immediately changed to something unique. Default passwords may be well known to the public, easily found in a search, or easy to guess, allowing an unauthorized person to access the system.</p>
+<div class="sub-header-2">Example 1</div>
+<p>You are in charge of purchasing. You know that some laptops come with a default username and password. You notify IT that all default passwords should be reset prior to laptop use [a]. You ask IT to explain the importance of resetting default passwords and convey how easily they are discovered using internet searches during next week’s cybersecurity awareness training.</p>
+<div class="sub-header-2">Example 2</div>
+<p>Your company decides to use cloud services for email and other capabilities. Upon reviewing this requirement, you realize every user or device that connects to the cloud service must be authenticated. As a result, you work with your cloud service provider to ensure that only properly authenticated users and devices are allowed to connect to the system [a,c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are unique authenticators used to verify user identities (e.g., passwords) [a]?</li>
+<li>An example of a process acting on behalf of users could be a script that logs in as a person or service account [b]. Can the OSA show that it maintains a record of all of those service accounts for use when reviewing log data or responding to an incident?</li>
+<li>Are user credentials authenticated in system processes (e.g., credentials binding, certificates, tokens) [b]?</li>
+<li>Are device identifiers used in authentication processes (e.g., MAC address, non- anonymous computer name, certificates) [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 4, 19, NULL, NULL, 1208, NULL, N'Authentication', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5330, N'IA.L2-3.5.3', N'Use multifactor authentication for local and network access to privileged accounts and for network access to non-privileged accounts.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>privileged accounts are identified;</li>
+<li>multifactor authentication is implemented for local access to privileged accounts;</li>
+<li>multifactor authentication is implemented for network access to privileged accounts; and</li>
+<li>multifactor authentication is implemented for network access to non-privileged accounts.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Identification and authentication policy; procedures addressing user identification and authentication; system security plan; system design documentation; system configuration settings and associated documentation; system audit logs and records; list of system accounts; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with authenticator management responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing authenticator management capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Multifactor authentication requires the use of two or more different factors to authenticate. The factors are defined as something you know (e.g., password, personal identification number [PIN]); something you have (e.g., cryptographic identification device, token); or something you are (e.g., biometric). Multifactor authentication solutions that feature physical authenticators include hardware authenticators providing time-based or challenge- response authenticators and smart cards. In addition to authenticating users at the system level (i.e., at logon), organizations may also employ authentication mechanisms at the application level, when necessary, to provide increased information security. Access to organizational systems is defined as local access or network access. Local access is any access to organizational systems by users (or processes acting on behalf of users) where such access is obtained by direct connections without the use of networks. Network access is access to systems by users (or processes acting on behalf of users) where such access is obtained through network connections (i.e., nonlocal accesses). Remote access is a type of network access that involves communication through external networks. The use of encrypted virtual private networks for connections between organization-controlled and non-organization controlled endpoints may be treated as internal networks with regard to protecting the confidentiality of information.</p>
+<p>NIST SP 800-63-3 provides guidance on digital identities.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Implement a combination of two or more factors of authentication to verify privileged account holders’ identity regardless of how the user is accessing the account. Implement a combination of two or more factors for non-privileged users accessing the system over a network.</p>
+<p>The implementation of multi-factor authentication will depend on the environment and business needs. Although two-factor authentication directly on the computer is most common, there are situations (e.g., multi-factor identification for a mission system that cannot be altered) where additional technical or physical solutions can provide security. If a mobile device is used to access a system or application containing CUI, multi-factor authentication is required.</p>
+<p>This requirement, IA.L2-3.5.3, requires multifactor authentication for network access to non-privileged accounts and complements five other requirements dealing with remote access (AC.L2-3.1.12, AC.L2-3.1.14, AC.L2-3.1.13, AC.L2-3.1.15, and MA.L2-3.7.5:</p>
+<ul>
+<li>AC.L2-3.1.12 requires the control of remote access sessions.</li>
+<li>AC.L2-3.1.14 limits remote access to specific access control points.</li>
+<li>AC.L2-3.1.13 requires the use of cryptographic mechanisms when enabling remote sessions.</li>
+<li>AC.L2-3.1.15 requires authorization for privileged commands executed during a remote.</li>
+<li>Finally, MA.L2-3.7.5 requires the addition of multifactor authentication for remote maintenance sessions.</li>
+</ul>
+<p>This requirement, IA.L2-3.5.3, also enhances IA.L2-3.5.2, which is a requirement for a less rigorous form of user authentication.</p>
+<div class="sub-header-2">Example</div>
+<p>You decide to implement multifactor authentication (MFA) to improve security of your network. Your first step is enabling MFA on VPN access to your internal network [c,d]. When users initiate remote access, they will be prompted for the additional authentication factor.</p>
+<p>Because you also use a cloud-based email solution, you require MFA for access to that resource as well [c,d]. Finally, you enable MFA for both local and network logins for the system administrator accounts used to patch and manage servers [a,b,c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does the system uniquely identify and authenticate users, including privileged accounts [b,c,d]?</li>
+</ul>
+
+', NULL, NULL, 37, 5, 19, NULL, NULL, 1208, NULL, N'Multifactor Authentication', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5331, N'IA.L2-3.5.4', N'Employ replay-resistant authentication mechanisms for network access to privileged and non-privileged accounts.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>replay-resistant authentication mechanisms are implemented for network account access to privileged and non-privileged accounts.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Identification and authentication policy; procedures addressing user identification and authentication; system security plan; system design documentation; system configuration settings and associated documentation; system audit logs and records; list of privileged system accounts; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system operations responsibilities; personnel with account management responsibilities; personnel with information security responsibilities; system or network administrators; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing identification and authentication capability or replay resistant authentication mechanisms].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Authentication processes resist replay attacks if it is impractical to successfully authenticate by recording or replaying previous authentication messages. Replay-resistant techniques include protocols that use nonces or challenges such as time synchronous or challenge- response one-time authenticators.</p>
+<p>NIST SP 800-63-3 provides guidance on digital identities.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>When insecure protocols are used for access to computing resources, an adversary may be able to capture login information and immediately reuse (replay) it for other purposes. It is important to use mechanisms that resist this technique.</p>
+<div class="sub-header-2">Example</div>
+<p>To protect your IT infrastructure, you understand that the methods for authentication must not be easily copied and re-sent to your systems by an adversary. You select Kerberos for authentication because of its built-in resistance to replay attacks. As a next step you upgrade all of your web applications to require Transport Layer Security (TLS), which also is replay- resistant. Your use of MFA to protect remote access also confers some replay resistance.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are only anti-replay authentication mechanisms used [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 6, 19, NULL, NULL, 1208, NULL, N'Replay-Resistant Authentication', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5332, N'IA.L2-3.5.5', N'Prevent reuse of identifiers for a defined period.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>a period within which identifiers cannot be reused is defined; and</li>
+<li>reuse of identifiers is prevented within the defined period.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Identification and authentication policy; system security plan; procedures addressing authenticator management; procedures addressing user identification and authentication; system design documentation; list of system authenticator types; system configuration settings and associated documentation; change control records associated with managing system authenticators; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with authenticator management responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing authenticator management capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Identifiers are provided for users, processes acting on behalf of users, or devices (IA.L2- 3.5.1). Preventing reuse of identifiers implies preventing the assignment of previously used individual, group, role, or device identifiers to different individuals, groups, roles, or devices.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Identifiers uniquely associate a user ID to an individual, group, role, or device. Establish guidelines and implement mechanisms to prevent identifiers from being reused for the period of time established in the policy.</p>
+<div class="sub-header-2">Example</div>
+<p>As a system administrator, you maintain a central directory/domain that holds the accounts for users, computers, and network devices. As part of your job, you issue unique usernames (e.g., riley@acme.com) for the staff to access resources. When you issue staff computers you also rename the computer to reflect to whom it is assigned (e.g., riley-laptop01). Riley has recently left the organization, so you must manage the former staff member’s account. Incidentally, their replacement is also named Riley. In the directory, you do not assign the previous account to the new user, as policy has defined an identifier reuse period of 24 months [a]. In accordance with policy, you create an account called riley02 [b]. This account is assigned the appropriate permissions for the new user. A new laptop is also provided with the identifier of riley02-laptop01.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are accounts uniquely assigned to employees, contractors, and subcontractors [b]?</li>
+<li>Are account identifiers reused [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 7, 19, NULL, NULL, 1208, NULL, N'Identifier Reuse', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5333, N'IA.L2-3.5.6', N'Disable identifiers after a defined period of inactivity.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>a period of inactivity after which an identifier is disabled is defined; and</li>
+<li>identifiers are disabled after the defined period of inactivity.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Identification and authentication policy; procedures addressing identifier management; procedures addressing account management; system security plan; system design documentation; system configuration settings and associated documentation; list of system accounts; list of identifiers generated from physical access control devices; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with identifier management responsibilities; personnel with information security responsibilities; system or network administrators; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing identifier management].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Inactive identifiers pose a risk to organizational information because attackers may exploit an inactive identifier to gain undetected access to organizational devices. The owners of the inactive accounts may not notice if unauthorized access to the account has been obtained.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Identifiers are uniquely associated with an individual, account, process, or device. An inactive identifier is one that has not been used for a defined extended period of time. For example, a user account may be needed for a certain time to allow for transition of business processes to existing or new staff. Once use of the identifier is no longer necessary, it should be disabled as soon as possible. Failure to maintain awareness of accounts that are no longer needed yet still active could allow an adversary to exploit IT services.</p>
+<div class="sub-header-2">Example</div>
+<p>One of your responsibilities is to enforce your company’s inactive account policy: any account that has not been used in the last 45 days must be disabled [a]. You enforce this by writing a script that runs once a day to check the last login date for each account and generates a report of the accounts with no login records for the last 45 days. After reviewing the report, you notify each inactive employee’s supervisor and disable the account [b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are user accounts or identifiers monitored for inactivity [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 8, 19, NULL, NULL, 1208, NULL, N'Identifier Handling', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5334, N'IA.L2-3.5.7', N'Enforce a minimum password complexity and change of characters when new passwords are created.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>password complexity requirements are defined;</li>
+<li>password change of character requirements are defined;</li>
+<li>minimum password complexity requirements as defined are enforced when new passwords are created; and</li>
+<li>minimum password change of character requirements as defined are enforced when new passwords are created.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Identification and authentication policy; password policy; procedures addressing authenticator management; system security plan; system configuration settings and associated documentation; system design documentation; password configurations and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with authenticator management responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing authenticator management capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement applies to single-factor authentication of individuals using passwords as individual or group authenticators, and in a similar manner, when passwords are used as part of multifactor authenticators. The number of changed characters refers to the number of changes required with respect to the total number of positions in the current password. To mitigate certain brute force attacks against passwords, organizations may also consider salting passwords.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Password complexity means using different types of characters as well as a specified number of characters. This applies to both the creation of new passwords and the modification of existing passwords. Characters to manage complexity include numbers, lowercase and uppercase letters, and symbols. Minimum complexity requirements are left up to the organization to define. Define the lowest level of password complexity required. Define the number of characters that must be changed when an existing password is changed. Enforce these rules for all passwords. Salting passwords adds a string of random characters (salt) to a password prior to hashing. This ensures the randomness of the resulting hash value.</p>
+<div class="sub-header-2">Example</div>
+<p>You work with management to define password complexity rules and ensure they are listed in the company’s security policy. You define and enforce a minimum number of characters for each password and ensure that a certain number of characters must be changed when updating passwords [a,b]. Characters include numbers, lowercase and uppercase letters, and symbols [a]. These rules help create hard-to-guess passwords, which help to secure your network.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is a degree of complexity specified for passwords, (e.g., are account passwords a minimum of 12 characters and a mix of upper/lower case, numbers, and special characters), including minimum requirements for each type [a,b,c]?</li>
+<li>Is a change of characters required when new passwords are created [d]?</li>
+</ul>
+
+', NULL, NULL, 37, 9, 19, NULL, NULL, 1208, NULL, N'Password Complexity', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5335, N'IA.L2-3.5.8', N'Prohibit password reuse for a specified number of generations.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the number of generations during which a password cannot be reused is specified and</li>
+<li>reuse of passwords is prohibited during the specified number of generations.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Identification and authentication policy; password policy; procedures addressing authenticator management; system security plan; system design documentation; system configuration settings and associated documentation; password configurations and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with authenticator management responsibilities; personnel with information security responsibilities; system or network administrators; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing password-based authenticator management capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Password lifetime restrictions do not apply to temporary passwords.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Individuals may not reuse their passwords for a defined period of time and a set number of passwords generated.</p>
+<div class="sub-header-2">Example</div>
+<p>You explain in your company’s security policy that changing passwords regularly provides increased security by reducing the ability of adversaries to exploit stolen or purchased passwords over an extended period. You define how often individuals can reuse their passwords and the minimum number of password generations before reuse [a]. If a user tries to reuse a password before the number of password generations has been exceeded, an error message is generated, and the user is required to enter a new password [b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>How many generations of password changes need to take place before a password can be reused [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 10, 19, NULL, NULL, 1208, NULL, N'Password Reuse', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5336, N'IA.L2-3.5.9', N'Allow temporary password use for system logons with an immediate change to a permanent password.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>an immediate change to a permanent password is required when a temporary password is used for system logon.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Identification and authentication policy; password policy; procedures addressing authenticator management; system security plan; system configuration settings and associated documentation; system design documentation; password configurations and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with authenticator management responsibilities; personnel with information security responsibilities; system or network administrators; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing password-based authenticator management capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Changing temporary passwords to permanent passwords immediately after system logon ensures that the necessary strength of the authentication mechanism is implemented at the earliest opportunity, reducing the susceptibility to authenticator compromises.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Users must change their temporary passwords the first time they log in. Temporary passwords often follow a consistent style within an organization and can be more easily guessed than passwords created by the unique user. This approach to temporary passwords should be avoided.</p>
+<div class="sub-header-2">Example</div>
+<p>One of your duties as a systems administrator is to create accounts for new users. You configure all systems with user accounts to require users to change a temporary password upon initial login to a permanent password [a]. When a user logs on for the first time, they are prompted to create a unique password that meets all of the defined complexity rules.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are temporary passwords only valid to allow a user to perform a password reset [a]?</li>
+<li>Does the system enforce an immediate password change after logon when a temporary password is issued [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 11, 19, NULL, NULL, 1208, NULL, N'Temporary Passwords', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5337, N'IA.L2-3.5.10', N'Store and transmit only cryptographically-protected passwords.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>passwords are cryptographically protected in storage; and</li>
+<li>passwords are cryptographically protected in transit.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Identification and authentication policy; system security plan; procedures addressing authenticator management; procedures addressing user identification and authentication; system design documentation; list of system authenticator types; system configuration settings and associated documentation; change control records associated with managing system authenticators; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with authenticator management responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing authenticator management capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Cryptographically-protected passwords use salted one-way cryptographic hashes of passwords.</p>
+<p>See NIST Cryptographic Standards and Guidelines.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>All passwords must be cryptographically protected using a one-way function for storage and transmission. This type of protection changes passwords into another form, or a hashed password. A one-way transformation makes it theoretically impossible to turn the hashed password back into the original password, but inadequate complexity (IA.L2-3.5.7) may still facilitate offline cracking of hashes.</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for managing passwords for your organization. You protect all passwords with a one-way transformation, or hashing, before storing them. Passwords are never transmitted across a network unencrypted [a,b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are passwords prevented from being stored in reversible encryption form in any company systems [a]?</li>
+<li>Are passwords stored as one-way hashes constructed from passwords [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 12, 19, NULL, NULL, 1208, NULL, N'Cryptographically-Protected Passwords', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5338, N'IA.L2-3.5.11', N'Obscure feedback of authentication information.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>authentication information is obscured during the authentication process.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Identification and authentication policy; procedures addressing authenticator feedback; system security plan; system design documentation; system configuration settings and associated documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with information security responsibilities; system or network administrators; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing the obscuring of feedback of authentication information during authentication].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>The feedback from systems does not provide any information that would allow unauthorized individuals to compromise authentication mechanisms. For some types of systems or system components, for example, desktop or notebook computers with relatively large monitors, the threat (often referred to as shoulder surfing) may be significant. For other types of systems or components, for example, mobile devices with small displays, this threat may be less significant, and is balanced against the increased likelihood of typographic input errors due to the small keyboards. Therefore, the means for obscuring the authenticator feedback is selected accordingly. Obscuring authenticator feedback includes displaying asterisks when users type passwords into input devices or displaying feedback for a very limited time before fully obscuring it.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Authentication information includes passwords. When users enter a password, the system displays a symbol, such as an asterisk, to obscure feedback preventing others from seeing the actual characters. Feedback is obscured based on a defined policy (e.g., smaller devices may briefly show characters before obscuring).</p>
+<div class="sub-header-2">Example</div>
+<p>As a system administrator, you configure your systems to display an asterisk when users enter their passwords into a computer system [a]. For mobile devices, the password characters are briefly displayed to the user before being obscured. This prevents people from figuring out passwords by looking over someone’s shoulder.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is the feedback immediately obscured when the authentication is presented on a larger display (e.g., desktop or notebook computers with relatively large monitors) [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 13, 19, NULL, NULL, 1208, NULL, N'Obscure Feedback', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5339, N'IR.L2-3.6.1', N'Establish an operational incident-handling capability for organizational systems that includes preparation, detection, analysis, containment, recovery, and user response activities.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>an operational incident-handling capability is established;</li>
+<li>the operational incident-handling capability includes preparation;</li>
+<li>the operational incident-handling capability includes detection;</li>
+<li>the operational incident-handling capability includes analysis;</li>
+<li>the operational incident-handling capability includes containment;</li>
+<li>the operational incident-handling capability includes recovery; and</li>
+<li>the operational incident-handling capability includes user response activities.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Incident response policy; contingency planning policy; procedures addressing incident handling; procedures addressing incident response assistance; incident response plan; contingency plan; system security plan; procedures addressing incident response training; incident response training curriculum; incident response training materials; incident response training records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with incident handling responsibilities; personnel with contingency planning responsibilities; personnel with incident response training and operational responsibilities; personnel with incident response assistance and support responsibilities; personnel with access to incident response support and assistance capability; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Incident-handling capability for the organization; organizational processes for incident response assistance; mechanisms supporting or implementing incident response assistance].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations recognize that incident handling capability is dependent on the capabilities of organizational systems and the mission/business processes being supported by those systems. Organizations consider incident handling as part of the definition, design, and development of mission/business processes and systems. Incident-related information can be obtained from a variety of sources including audit monitoring, network monitoring, physical access monitoring, user and administrator reports, and reported supply chain events. Effective incident handling capability includes coordination among many organizational entities including mission/business owners, system owners, authorizing officials, human resources offices, physical and personnel security offices, legal departments, operations personnel, procurement offices, and the risk executive.</p>
+<p>As part of user response activities, incident response training is provided by organizations and is linked directly to the assigned roles and responsibilities of organizational personnel to ensure that the appropriate content and level of detail is included in such training. For example, regular users may only need to know who to call or how to recognize an incident on the system; system administrators may require additional training on how to handle or remediate incidents; and incident responders may receive more specific training on forensics, reporting, system recovery, and restoration. Incident response training includes user training in the identification/reporting of suspicious activities from external and internal sources. User response activities also includes incident response assistance which may consist of help desk support, assistance groups, and access to forensics services or consumer redress services, when required.</p>
+<p>NIST SP 800-61 provides guidance on incident handling. SP 800-86 and SP 800-101 provide guidance on integrating forensic techniques into incident response. SP 800-161 provides guidance on supply chain risk management.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Incident handling capabilities prepare your organization to respond to incidents and may:</p>
+<ul>
+<li>identify people inside and outside your organization you may need to contact during an incident;</li>
+<li>establish a way to report incidents, such as an email address or a phone number;</li>
+<li>establish a system for tracking incidents; and</li>
+<li>determine a place and a way to store evidence of an incident.</li>
+</ul>
+<p>Software and hardware may be required to analyze incidents when they occur. Incident prevention activities are also part of an incident-handling capability. The incident-handling team provides input for such things as risk assessments and training.</p>
+<p>OSAs detect incidents using different indicators. Indicators may include:</p>
+<ul>
+<li>alerts from sensors or antivirus software;</li>
+<li>a filename that looks unusual; and</li>
+<li>log entries that raise concern.</li>
+</ul>
+<p>After detecting an incident, an incident response team performs analysis. This requires some knowledge of normal network operations. The incident should be documented including all the log entries associated with the incident.</p>
+<p>Containment of the incident is a critical step to stop the damage the incident is causing to your network. Containment activities should be based on previously defined organizational priorities and assessment of risk.</p>
+<p>Recovery activities restore systems to pre-incident functionality and address its underlying causes. Organizations should use recovery activities as a means of improving their overall resilience to future attacks.</p>
+<div class="sub-header-2">Example</div>
+<p>Your manager asks you to set up your company’s incident-response capability [a]. First, you create an email address to collect information on possible incidents. Next, you draft a contact list of all the people who need to know when an incident occurs. You document a procedure for how to submit incidents that includes roles and responsibilities when a potential incident is detected or reported. The procedure also explains how to track incidents, from initial creation to closure [b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is there an incident response policy which specifically outlines requirements for handling of incidents involving CUI [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 1, 19, NULL, NULL, 1209, NULL, N'Incident Handling', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5340, N'IR.L2-3.6.2', N'Track, document, and report incidents to designated officials and/or authorities both internal and external to the organization.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>incidents are tracked;</li>
+<li>incidents are documented;</li>
+<li>authorities to whom incidents are to be reported are identified;</li>
+<li>organizational officials to whom incidents are to be reported are identified;</li>
+<li>identified authorities are notified of incidents; and</li>
+<li>identified organizational officials are notified of incidents.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Incident response policy; procedures addressing incident monitoring; incident response records and documentation; procedures addressing incident reporting; incident reporting records and documentation; incident response plan; system security plan; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with incident monitoring responsibilities; personnel with incident reporting responsibilities; personnel who have or should have reported incidents; personnel (authorities) to whom incident information is to be reported; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Incident monitoring capability for the organization; mechanisms supporting or implementing tracking and documenting of system security incidents; organizational processes for incident reporting; mechanisms supporting or implementing incident reporting].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Tracking and documenting system security incidents includes maintaining records about each incident, the status of the incident, and other pertinent information necessary for forensics, evaluating incident details, trends, and handling. Incident information can be obtained from a variety of sources including incident reports, incident response teams, audit monitoring, network monitoring, physical access monitoring, and user/administrator reports. Reporting incidents addresses specific incident reporting requirements within an organization and the formal incident reporting requirements for the organization. Suspected security incidents may also be reported and include the receipt of suspicious email communications that can potentially contain malicious code. The types of security incidents reported, the content and timeliness of the reports, and the designated reporting authorities reflect applicable laws, Executive Orders, directives, regulations, and policies.</p>
+<p>NIST SP 800-61 provides guidance on incident handling.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Incident handling is the actions the organization takes to prevent or contain the impact of an incident to the organization while it is occurring or shortly after it has occurred. The majority of the process consists of incident identification, containment, eradication, and recovery. During this process, it is essential to track the work processes required in order to effectively respond. Designate a central hub to serve as the point to coordinate, communicate, and track activities. The hub should receive and document information from system administrators, incident handlers, and others involved throughout the process. As the incident process moves toward eradication, executives, affected business units, and any required external stakeholders should be kept aware of the incident in order to make decisions affecting the business. Report to designated authorities, taking into account applicable laws, directives, regulations, and other guidance. Specify staff responsible for communicating about the incident to internal and external stakeholders.</p>
+<div class="sub-header-2">Example</div>
+<p>You notice unusual activity on a server and determine a potential security incident has occurred. You open a tracking ticket with the Security Operations Center (SOC), which assigns an incident handler to work the ticket [a]. The handler investigates and documents initial findings, which lead to a determination that unauthorized access occurred on the server [b]. The SOC establishes an incident management team consisting of security, database, network, and system administrators. The team meets daily to update progress and plan courses of action to contain the incident [a]. At the end of the day, the team provides a status report to IT executives [d,f]. Two days later, the team declares the incident contained. The team produces a final report as the database system is rebuilt and placed back into operation.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is there an incident response policy that directs the establishment of requirements for tracking and reporting of incidents involving CUI to appropriate officials [a,d]?</li>
+<li>Is cybersecurity incident information promptly reported to management [e,f]?</li>
+</ul>
+
+', NULL, NULL, 37, 2, 19, NULL, NULL, 1209, NULL, N'Incident Reporting', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5341, N'IR.L2-3.6.3', N'Test the organizational incident response capability.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the incident response capability is tested.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Incident response policy; contingency planning policy; procedures addressing incident response testing; procedures addressing contingency plan testing; incident response testing material; incident response test results; incident response test plan; incident response plan; contingency plan; system security plan; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with incident response testing responsibilities; personnel with information security responsibilities; personnel with responsibilities for testing plans related to incident response].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms and processes for incident response].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations test incident response capabilities to determine the effectiveness of the capabilities and to identify potential weaknesses or deficiencies. Incident response testing includes the use of checklists, walk-through or tabletop exercises, simulations (both parallel and full interrupt), and comprehensive exercises. Incident response testing can also include a determination of the effects on organizational operations (e.g., reduction in mission capabilities), organizational assets, and individuals due to incident response.</p>
+<p>NIST SP 800-84 provides guidance on testing programs for information technology capabilities.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Testing incident response capability validates existing plans and highlights potential deficiencies. The test should address questions such as what happens during an incident; who is responsible for incident management; what tasks are assigned within the IT organization; what support is needed from legal, public affairs, or other business components; how resources are added if needed during the incident; and how law enforcement is involved. Any negative impacts to the normal day-to-day operations when responding to an incident should also be identified and documented.</p>
+<div class="sub-header-2">Example</div>
+<p>You decide to conduct an incident response table top exercise that simulates an attacker gaining access to the network through a compromised server. You include relevant IT staff such as security, database, network, and system administrators as participants. You also request representatives from legal, human resources, and communications. You provide a scenario to the group and have prepared key questions aligned with the response plans to guide the exercise. During the exercise, you focus on how the team executes the incident response plan. Afterward, you conduct a debrief with everyone that was involved to provide feedback and develop improvements to the incident response plan [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does the incident response policy outline requirements for regular incident response plan testing and reviews of incident response capabilities [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 3, 19, NULL, NULL, 1209, NULL, N'Incident Response Testing', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5342, N'MA.L2-3.7.1', N'Perform maintenance on organizational systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>system maintenance is performed.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System maintenance policy; procedures addressing controlled system maintenance; maintenance records; manufacturer or vendor maintenance specifications; equipment sanitization records; media sanitization records; system security plan; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system maintenance responsibilities; personnel with information security responsibilities; personnel responsible for media sanitization; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for scheduling, performing, documenting, reviewing, approving, and monitoring maintenance and repairs for systems; organizational processes for sanitizing system components; mechanisms supporting or implementing controlled maintenance; mechanisms implementing sanitization of system components].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement addresses the information security aspects of the system maintenance program and applies to all types of maintenance to any system component (including hardware, firmware, applications) conducted by any local or nonlocal entity. System maintenance also includes those components not directly associated with information processing and data or information retention such as scanners, copiers, and printers.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>One common form of computer security maintenance is regular patching of discovered vulnerabilities in software and operating systems, though there are others that require attention.</p>
+<p>System maintenance includes:</p>
+<ul>
+<li>corrective maintenance (e.g., repairing problems with the technology);</li>
+<li>preventative maintenance (e.g., updates to prevent potential problems);</li>
+<li>adaptive maintenance (e.g., changes to the operative environment); and</li>
+<li>perfective maintenance (e.g., improve operations).</li>
+</ul>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for maintenance activities on your company’s machines. This includes regular planned maintenance, unscheduled maintenance, reconfigurations when required, and damage repairs [a]. You know that failing to conduct maintenance activities can impact system security and availability, so you ensure that maintenance is regularly performed. You track all maintenance performed to assist with troubleshooting later if needed.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are systems, devices, and supporting systems maintained per manufacturer recommendations or company defined schedules [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 1, 19, NULL, NULL, 1210, NULL, N'Perform Maintenance', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5343, N'MA.L2-3.7.2', N'Provide controls on the tools, techniques, mechanisms, and personnel used to conduct system maintenance.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>tools used to conduct system maintenance are controlled;</li>
+<li>techniques used to conduct system maintenance are controlled;</li>
+<li>mechanisms used to conduct system maintenance are controlled; and</li>
+<li>personnel used to conduct system maintenance are controlled.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System maintenance policy; procedures addressing system maintenance tools and media; maintenance records; system maintenance tools and associated documentation; maintenance tool inspection records; system security plan; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system maintenance responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for approving, controlling, and monitoring maintenance tools; mechanisms supporting or implementing approval, control, and monitoring of maintenance tools; organizational processes for inspecting maintenance tools; mechanisms supporting or implementing inspection of maintenance tools; organizational process for inspecting media for malicious code; mechanisms supporting or implementing inspection of media used for maintenance].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement addresses security-related issues with maintenance tools that are not within the organizational system boundaries that process, store, or transmit CUI, but are used specifically for diagnostic and repair actions on those systems. Organizations have flexibility in determining the controls in place for maintenance tools, but can include approving, controlling, and monitoring the use of such tools. Maintenance tools are potential vehicles for transporting malicious code, either intentionally or unintentionally, into a facility and into organizational systems. Maintenance tools can include hardware, software, and firmware items, for example, hardware and software diagnostic test equipment and hardware and software packet sniffers.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Tools used to perform maintenance must remain secure so they do not introduce viruses or other malware into your system. Controlling your maintenance techniques prevents intentional or unintentional harm to your network and systems. Additionally, the personnel responsible for maintenance activities should be supervised considering their elevated privilege on company assets.</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for maintenance activities on your company’s machines. To avoid introducing additional vulnerability into the systems you are maintaining, you make sure that all maintenance tools are approved and their usage is monitored and controlled [a,b]. You ensure the tools are kept current and up-to-date [a]. You and your backup are the only people authorized to use these tools and perform system maintenance [d].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are physical or logical access controls used to limit access to maintenance tools to authorized personnel [a]?</li>
+<li>Are physical or logical access controls used to limit access to system documentation and organizational maintenance process documentation to authorized personnel [b]?</li>
+<li>Are physical or logical access controls used to limit access to automated mechanisms (e.g., automated scripts, scheduled jobs) to authorized personnel [c]?</li>
+<li>Are physical or logical access controls used to limit access to the system entry points that enable maintenance (e.g., administrative portals, local and remote console access, and physical equipment panels) to authorized personnel [d]?</li>
+</ul>
+
+', NULL, NULL, 37, 2, 19, NULL, NULL, 1210, NULL, N'System Maintenance Control', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5344, N'MA.L2-3.7.3', N'Ensure equipment removed for off-site maintenance is sanitized of any CUI.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>equipment to be removed from organizational spaces for off-site maintenance is sanitized of any CUI.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System maintenance policy; procedures addressing controlled system maintenance; maintenance records; manufacturer or vendor maintenance specifications; equipment sanitization records; media sanitization records; system security plan; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system maintenance responsibilities; personnel with information security responsibilities; personnel responsible for media sanitization; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for scheduling, performing, documenting, reviewing, approving, and monitoring maintenance and repairs for systems; organizational processes for sanitizing system components; mechanisms supporting or implementing controlled maintenance; mechanisms implementing sanitization of system components].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement addresses the information security aspects of system maintenance that are performed off-site and applies to all types of maintenance to any system component (including applications) conducted by a local or nonlocal entity (e.g., in-contract, warranty, in-house, software maintenance agreement).</p>
+<p>NIST SP 800-88 provides guidance on media sanitization.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Sanitization is a process that makes access to data infeasible on media such as a hard drive. The process may overwrite the entire media with a fixed pattern such as binary zeros. In addition to clearing the data an organization could purge (e.g., degaussing, secure erasing, or disassembling) the data, or even destroy the media (e.g., incinerating, shredding, or pulverizing). Performing one of these activities ensures that the data is extremely hard to recover, thus ensuring its confidentiality.</p>
+<p>For additional guidance on which specific sanitization actions should be taken on any specific type of media, review the description of the Purge actions given in NIST SP 800-88 Revision 1 – Guidelines for Media Sanitization.</p>
+<div class="sub-header-2">Example</div>
+<p>You manage your organization’s IT equipment. A recent DoD project has been using a storage array to house CUI. Recently, the array has experienced disk issues. After troubleshooting with the vendor, they recommend several drives be replaced in the array. Knowing the drives may contain CUI, you reference NIST 800-88 Rev. 1 and determine a strategy you can implement on the defective equipment – processing the drives with a degaussing unit [a]. Once all the drives have been wiped, you document the action and ship the faulty drives to the vendor.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is there a process for sanitizing (e.g., erasing, wiping, degaussing) equipment that was used to store, process, or transmit CUI before it is removed from the facility for off-site maintenance (e.g., manufacturer or contracted maintenance support) [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 3, 19, NULL, NULL, 1210, NULL, N'Equipment Sanitization', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5345, N'MA.L2-3.7.4', N'Check media containing diagnostic and test programs for malicious code before the media are used in organizational systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>media containing diagnostic and test programs are checked for malicious code before being used in organizational systems that process, store, or transmit CUI.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System maintenance policy; procedures addressing system maintenance tools; system maintenance tools and associated documentation; maintenance records; system security plan; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system maintenance responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational process for inspecting media for malicious code; mechanisms supporting or implementing inspection of media used for maintenance].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>If, upon inspection of media containing maintenance diagnostic and test programs, organizations determine that the media contain malicious code, the incident is handled consistent with incident handling policies and procedures.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>As part of troubleshooting, a vendor may provide a diagnostic application to install on a system. As this is executable code, there is a chance that the file is corrupt or infected with malicious code. Implement procedures to scan any files prior to installation. The same level of scrutiny must be made as with any file a staff member may download.</p>
+<p>This requirement, MA.L2-3.7.4, extends both SI.L2-3.14.2 and SI.L2-3.14.4. SI.L2-3.14.2 and SI.L2-3.14.4 require the implementation and updating of mechanisms to protect systems from malicious code, and MA.L2-3.7.4 extends this requirement to diagnostic and testing tools.</p>
+<div class="sub-header-2">Example</div>
+<p>You have recently been experiencing performance issues on one of your servers. After troubleshooting for much of the morning, the vendor has asked to install a utility that will collect more data from the server. The file is stored on the vendor’s FTP server. The support technician gives you the FTP site so you can anonymously download the utility file. You also ask him for a hash of the utility file. As you download the file to your local computer, you realize it is compressed. You unzip the file and perform a manual antivirus scan, which reports no issues [a]. To verify the utility file has not been altered, you run an application to see that the hash from the vendor matches.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are media containing diagnostic and test programs (e.g., downloaded or copied utilities or tools from manufacturer, third-party, or in-house support teams) checked for malicious code (e.g., using antivirus or antimalware scans) before the media are used on organizational systems [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 4, 19, NULL, NULL, 1210, NULL, N'Media Inspection', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5346, N'MA.L2-3.7.5', N'Require multifactor authentication to establish nonlocal maintenance sessions via external network connections and terminate such connections when nonlocal maintenance is complete.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>multifactor authentication is used to establish nonlocal maintenance sessions via external network connections; and</li>
+<li>nonlocal maintenance sessions established via external network connections are terminated when nonlocal maintenance is complete.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System maintenance policy; procedures addressing nonlocal system maintenance; system security plan; system design documentation; system configuration settings and associated documentation; maintenance records; diagnostic records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system maintenance responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for managing nonlocal maintenance; mechanisms implementing, supporting, and managing nonlocal maintenance; mechanisms for strong authentication of nonlocal maintenance diagnostic sessions; mechanisms for terminating nonlocal maintenance sessions and network connections].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Nonlocal maintenance and diagnostic activities are those activities conducted by individuals communicating through an external network. The authentication techniques employed in the establishment of these nonlocal maintenance and diagnostic sessions reflect the network access requirements in IA.L2-3.5.3.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Nonlocal maintenance activities must use multifactor authentication. Multifactor authentication requires at least two factors, such as:</p>
+<ul>
+<li>something you know (e.g., password, personal identification number [PIN]);</li>
+<li>something you have (e.g., cryptographic identification device, token); or</li>
+<li>something you are (e.g., biometric fingerprint or facial scan).</li>
+</ul>
+<p>Requiring two or more factors to prove your identity increases the security of the connection. Nonlocal maintenance activities are activities conducted from external network connections such as over the internet. After nonlocal maintenance activities are complete, shut down the external network connection.</p>
+<p>This requirement, MA.L2-3.7.5 specifies the addition of multifactor authentication for remote maintenance sessions and complements five other requirements dealing with remote access (AC.L2-3.1.12, AC.L2-3.1.14, AC.L2-3.1.13, AC.L2-3.1.15, and IA.L2-3.5.3):</p>
+<ul>
+<li>AC.L2-3.1.12 requires the control of remote access sessions.</li>
+<li>AC.L2-3.1.14 limits remote access to specific access control points.</li>
+<li>AC.L2-3.1.13 requires the use of cryptographic mechanisms when enabling remote sessions.</li>
+<li>AC.L2-3.1.15 requires authorization for privileged commands executed during a remote session.</li>
+<li>Finally, IA.L2-3.5.3 requires multifactor authentication for network access to non- privileged accounts.</li>
+</ul>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for maintaining your company’s firewall. In order to conduct maintenance while working remotely, you connect to the firewall’s management interface and log in using administrator credentials. The firewall then sends a verification request to the multifactor authentication app on your smartphone [a]. You need both of these things to prove your identity [a]. After you respond to the multifactor challenge, you have access to the maintenance interface. When you finish your activities, you shut down the remote connection by logging out and quitting your web browser [b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is multifactor authentication required prior to maintenance of a system when connecting remotely from outside the system boundary [a]?</li>
+<li>Are personnel required to manually terminate remote maintenance sessions established via external network connections when maintenance is complete, or are connections terminated automatically through system session management mechanisms [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 5, 19, NULL, NULL, 1210, NULL, N'Nonlocal Maintenance', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5347, N'MA.L2-3.7.6', N'Supervise the maintenance activities of maintenance personnel without required access authorization.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>maintenance personnel without required access authorization are supervised during maintenance activities.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System maintenance policy; procedures addressing maintenance personnel; service provider contracts; service-level agreements; list of authorized personnel; maintenance records; access control records; system security plan; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system maintenance responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for authorizing and managing maintenance personnel; mechanisms supporting or implementing authorization of maintenance personnel].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement applies to individuals who are performing hardware or software maintenance on organizational systems, while PE.L2-3.10.1 addresses physical access for individuals whose maintenance duties place them within the physical protection perimeter of the systems (e.g., custodial staff, physical plant maintenance personnel). Individuals not previously identified as authorized maintenance personnel, such as information technology manufacturers, vendors, consultants, and systems integrators, may require privileged access to organizational systems, for example, when required to conduct maintenance activities with little or no notice. Organizations may choose to issue temporary credentials to these individuals based on organizational risk assessments. Temporary credentials may be for one-time use or for very limited time periods.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Individuals without proper permissions must be supervised while conducting maintenance on organizational machines. Consider creating temporary accounts with short-term expiration periods rather than regular user accounts. Additionally, limit the permissions and access these accounts have to the most restrictive settings possible.</p>
+<div class="sub-header-2">Example</div>
+<p>One of your software providers has to come on-site to update the software on your company’s computers. You give the individual a temporary logon and password that expires in 12 hours and is limited to accessing only the computers necessary to complete the work [a]. This gives the technician access long enough to perform the update. You monitor the individual’s physical and network activity while the maintenance is taking place [a] and revoke access when the job is done.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are there processes for escorting and supervising maintenance personnel without required access authorization (e.g., vendor support personnel, short-term maintenance contractors) during system maintenance [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 6, 19, NULL, NULL, 1210, NULL, N'Maintenance Personnel', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5348, N'MP.L2-3.8.1', N'Protect (i.e., physically control and securely store) system media containing CUI, both paper and digital.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>paper media containing CUI is physically controlled;</li>
+<li>digital media containing CUI is physically controlled;</li>
+<li>paper media containing CUI is securely stored; and</li>
+<li>digital media containing CUI is securely stored.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System media protection policy; procedures addressing media storage; procedures addressing media access restrictions; access control policy and procedures; physical and environmental protection policy and procedures; system security plan; media storage facilities; access control records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system media protection responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for restricting information media; mechanisms supporting or implementing media access restrictions].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>System media includes digital and non-digital media. Digital media includes diskettes, magnetic tapes, external and removable hard disk drives, flash drives, compact disks, and digital video disks. Non-digital media includes paper and microfilm. Protecting digital media includes limiting access to design specifications stored on compact disks or flash drives in the media library to the project leader and any individuals on the development team. Physically controlling system media includes conducting inventories, maintaining accountability for stored media, and ensuring procedures are in place to allow individuals to check out and return media to the media library. Secure storage includes a locked drawer, desk, or cabinet, or a controlled media library.</p>
+<p>Access to CUI on system media can be limited by physically controlling such media, which includes conducting inventories, ensuring procedures are in place to allow individuals to check out and return media to the media library, and maintaining accountability for all stored media.</p>
+<p>NIST SP 800-111 provides guidance on storage encryption technologies for end user devices.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>CUI can be contained on two types of physical media:</p>
+<ul>
+<li>hardcopy (e.g., CD drives, USB drives, magnetic tape); and</li>
+<li>digital devices (e.g., CD drives, USB drives, video).</li>
+</ul>
+<p>You should store physical media containing CUI in a secure location. This location should be accessible only to those people with the proper permissions. All who access CUI should follow the process for checking it out and returning it.</p>
+<div class="sub-header-2">Example</div>
+<p>Your company has CUI for a specific Army contract contained on a USB drive. You store the drive in a locked drawer, and you log it on an inventory [d]. You establish a procedure to check out the USB drive so you have a history of who is accessing it. These procedures help to maintain the confidentiality, integrity, and availability of the data.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is hardcopy media containing CUI handled only by authorized personnel according to defined procedures [a]?</li>
+<li>Is digital media containing CUI handled only by authorized personnel according to defined procedures [b]?</li>
+<li>Is paper media containing CUI physically secured (e.g., in a locked drawer or cabinet) [c]?</li>
+<li>Is digital media containing CUI securely stored (e.g., in access-controlled repositories) [d]?</li>
+</ul>
+
+', NULL, NULL, 37, 2, 19, NULL, NULL, 1211, NULL, N'Media Protection', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5349, N'MP.L2-3.8.2', N'Limit access to CUI on system media to authorized users.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>access to CUI on system media is limited to authorized users.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System media protection policy; procedures addressing media storage; physical and environmental protection policy and procedures; access control policy and procedures; system security plan; system media; designated controlled areas; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system media protection and storage responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for storing media; mechanisms supporting or implementing secure media storage and media protection].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Access can be limited by physically controlling system media and secure storage areas. Physically controlling system media includes conducting inventories, ensuring procedures are in place to allow individuals to check out and return system media to the media library, and maintaining accountability for all stored media. Secure storage includes a locked drawer, desk, or cabinet, or a controlled media library.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Limit physical access to CUI to people permitted to access CUI. Use locked or controlled storage areas and limit access to only those allowed to access CUI. Keep track of who accesses physical CUI in an audit log.</p>
+<div class="sub-header-2">Example</div>
+<p>Your company has CUI for a specific Army contract contained on a USB drive. In order to control the data, you establish specific procedures for handling the drive. You designate the project manager as the owner of the data and require anyone who needs access to the data to get permission from the data owner [a]. The data owner maintains a list of users that are authorized to access the information. Before an authorized individual can get access to the USB drive that contains the CUI they have to fill out a log and check out the drive. When they are done with the data, they check in the drive and return it to its secure storage location.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is a list of users who are authorized to access the CUI contained on system media maintained [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 3, 19, NULL, NULL, 1211, NULL, N'Media Access', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5350, N'MP.L2-3.8.3', N'Sanitize or destroy system media containing CUI before disposal or release for reuse.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>system media containing CUI is sanitized or destroyed before disposal; and</li>
+<li>system media containing CUI is sanitized before it is released for reuse.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System media protection policy; procedures addressing media sanitization and disposal; applicable standards and policies addressing media sanitization; system security plan; media sanitization records; system audit logs and records; system design documentation; system configuration settings and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with media sanitization responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for media sanitization; mechanisms supporting or implementing media sanitization].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement applies to all system media, digital and non-digital, subject to disposal or reuse. Examples include: digital media found in workstations, network components, scanners, copiers, printers, notebook computers, and mobile devices; and non-digital media such as paper and microfilm. The sanitization process removes information from the media such that the information cannot be retrieved or reconstructed. Sanitization techniques, including clearing, purging, cryptographic erase, and destruction, prevent the disclosure of information to unauthorized individuals when such media is released for reuse or disposal. Organizations determine the appropriate sanitization methods, recognizing that destruction may be necessary when other methods cannot be applied to the media requiring sanitization.</p>
+<p>Organizations use discretion on the employment of sanitization techniques and procedures for media containing information that is in the public domain or publicly releasable or deemed to have no adverse impact on organizations or individuals if released for reuse or disposal. Sanitization of non-digital media includes destruction, removing CUI from documents, or redacting selected sections or words from a document by obscuring the redacted sections or words in a manner equivalent in effectiveness to removing the words or sections from the document. NARA policy and guidance control sanitization processes. NIST SP 800-88 provides guidance on media sanitization.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>“Media” refers to a broad range of items that store information, including paper documents, disks, tapes, digital photography, USB drives, CDs, DVDs, and mobile phones. It is important to know what information is on media so that you can handle it properly. If there is CUI, you or someone in your company should either:</p>
+<ul>
+<li>shred or destroy the device before disposal so it cannot be read; or</li>
+<li>clean or purge the information, if you want to reuse the device.</li>
+</ul>
+<p>See NIST Special Publication 800-88, Revision 1, Guidelines for Media Sanitization, for more information.</p>
+<div class="sub-header-2">Example</div>
+<p>As you pack for an office move, you find some old CDs in a file cabinet. You determine that one has information about an old project your company did for the DoD. You shred the CD rather than simply throwing it in the trash [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is all managed data storage erased, encrypted, or destroyed using mechanisms to ensure that no usable data is retrievable [a,b]?</li>
+</ul>
+
+', NULL, NULL, 37, 4, 19, NULL, NULL, 1211, NULL, N'Media Disposal', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5351, N'MP.L2-3.8.4', N'Mark media with necessary CUI markings and distribution limitations.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>media containing CUI is marked with applicable CUI markings; and</li>
+<li>media containing CUI is marked with distribution limitations.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System media protection policy; procedures addressing media marking; physical and environmental protection policy and procedures; system security plan; list of system media marking security attributes; designated controlled areas; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system media protection and marking responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for marking information media; mechanisms supporting or implementing media marking].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>The term security marking refers to the application or use of human-readable security attributes. System media includes digital and non-digital media. Marking of system media reflects applicable federal laws, Executive Orders, directives, policies, and regulations.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>All media, hardcopy and digital, must be properly marked to alert individuals to the presence of CUI stored on the media. The National Archives and Records Administration (NARA) has published guidelines for labeling media of different sizes.146</p>
+<p>MP.L2-3.8.8 requires that media have an identifiable owner, so organizations may find it desirable to include ownership information on the device label as well.</p>
+<p>146 NARA, CUI Notice 2019-01: Controlled Unclassified Information (CUI) Coversheets and Labels</p>
+<div class="sub-header-2">Example</div>
+<p>You were recently contacted by the project team for a new DoD program. The team said they wanted the CUI in use for the program to be properly protected. When speaking with them, you realize that most of the protections will be provided as part of existing enterprise cybersecurity capabilities. They also mentioned that the project team will use several USB drives to share specific data. You explain that the team must ensure the USB drives are externally marked to indicate the presence of CUI [a]. The project team labels the outside of each USB drive with an appropriate CUI label following NARA guidance [a]. Further, the labels indicate that distribution is limited to those employees supporting the DoD program [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are all media containing CUI identified [a,b]?</li>
+</ul>
+
+', NULL, NULL, 37, 5, 19, NULL, NULL, 1211, NULL, N'Media Markings', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5352, N'MP.L2-3.8.5', N'Control access to media containing CUI and maintain accountability for media during transport outside of controlled areas.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>access to media containing CUI is controlled; and</li>
+<li>accountability for media containing CUI is maintained during transport outside of controlled areas.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System media protection policy; procedures addressing media storage; physical and environmental protection policy and procedures; access control policy and procedures; system security plan; system media; designated controlled areas; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system media protection and storage responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for storing media; mechanisms supporting or implementing media storage and media protection].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Controlled areas are areas or spaces for which organizations provide physical or procedural controls to meet the requirements established for protecting systems and information. Controls to maintain accountability for media during transport include locked containers and cryptography. Cryptographic mechanisms can provide confidentiality and integrity protections depending upon the mechanisms used. Activities associated with transport include the actual transport as well as those activities such as releasing media for transport and ensuring that media enters the appropriate transport processes. For the actual transport, authorized transport and courier personnel may include individuals external to the organization. Maintaining accountability of media during transport includes restricting transport activities to authorized personnel and tracking and obtaining explicit records of transport activities as the media moves through the transportation system to prevent and detect loss, destruction, or tampering.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>CUI is protected in both physical and digital formats. Physical control can be accomplished using traditional concepts like restricted access to physical locations or locking papers in a desk or filing cabinet. The digitization of data makes access to CUI much easier. CUI can be stored and transported on magnetic disks, tapes, USB drives, CD-ROMs, and so on. This makes digital CUI data very portable. It is important for an organization to apply mechanisms to prevent unauthorized access to CUI due to ease of transport.</p>
+<div class="sub-header-2">Example</div>
+<p>Your team has recently completed configuring a server for a DoD customer. The customer has asked that it be ready to plug in and use. An application installed on the server contains data that is considered CUI. You box the server for shipment using tamper-evident packaging and label it with the specific recipient for the shipment [b]. You select a reputable shipping service so you will get a tracking number to monitor the progress. Once the item is shipped, you send the recipients the tracking number so they can monitor and ensure prompt delivery at their facility.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Do only approved individuals have access to media containing CUI [a]?</li>
+<li>Is access to the media containing CUI recorded in an audit log [b]?</li>
+<li>Is all CUI data on media encrypted or physically locked prior to transport outside of secure locations [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 6, 19, NULL, NULL, 1211, NULL, N'Media Accountability', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5353, N'MP.L2-3.8.6', N'Implement cryptographic mechanisms to protect the confidentiality of CUI stored on digital media during transport unless otherwise protected by alternative physical safeguards.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the confidentiality of CUI stored on digital media is protected during transport using cryptographic mechanisms or alternative physical safeguards.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System media protection policy; procedures addressing media transport; system design documentation; system security plan; system configuration settings and associated documentation; system media transport records; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system media transport responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Cryptographic mechanisms protecting information on digital media during transportation outside controlled areas].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement applies to portable storage devices (e.g., USB memory sticks, digital video disks, compact disks, external or removable hard disk drives).</p>
+<p>NIST SP 800-111 provides guidance on storage encryption technologies for end user devices.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>CUI can be stored and transported on a variety of portable media, which increases the chance that the CUI can be lost. When identifying the paths CUI flows through your company, identify devices to include in this requirement.</p>
+<p>To mitigate the risk of losing or exposing CUI, implement an encryption scheme to protect the data. Even if the media are lost, proper encryption renders the data inaccessible. When encryption is not an option, apply alternative physical safeguards during transport.</p>
+<p>Because the use of cryptography in this requirement is to protect the confidentiality of CUI, the cryptography used must meet the criteria specified in requirement SC.L2-3.13.11.</p>
+<p>This requirement, MP.L2-3.8.6, provides additional protections to those provided by MP.L2-</p>
+<p>3.8.5. This requirement is intended to protect against situations where control of media access fails, such as through the loss of the media.</p>
+<div class="sub-header-2">Example</div>
+<p>You manage the backups for file servers in your datacenter. You know that in addition to the company’s sensitive information, CUI is stored on the file servers. As part of a broader plan to protect data, you send the backup tapes off site to a vendor. You are aware that your backup software provides the option to encrypt data onto tape. You develop a plan to test and enable backup encryption for the data sent off site. This encryption provides additional protections for the data on the backup tapes during transport and offsite storage [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are all CUI data on media encrypted or physically protected prior to transport outside of controlled areas [a]?</li>
+<li>Are cryptographic mechanisms used to protect digital media during transport outside of controlled areas [a]?</li>
+<li>Do cryptographic mechanisms comply with FIPS 140-2 [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 7, 19, NULL, NULL, 1211, NULL, N'Portable Storage Encryption', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5354, N'MP.L2-3.8.7', N'Control the use of removable media on system components.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the use of removable media on system components is controlled.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System media protection policy; system use policy; procedures addressing media usage restrictions; system security plan; rules of behavior; system design documentation; system configuration settings and associated documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system media use responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for media use; mechanisms restricting or prohibiting use of system media on systems or system components].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>In contrast to requirement MP.L2-3.8.1, which restricts user access to media, this requirement restricts the use of certain types of media on systems, for example, restricting or prohibiting the use of flash drives or external hard disk drives. Organizations can employ technical and nontechnical controls (e.g., policies, procedures, and rules of behavior) to control the use of system media. Organizations may control the use of portable storage devices, for example, by using physical cages on workstations to prohibit access to certain external ports, or disabling or removing the ability to insert, read, or write to such devices.</p>
+<p>Organizations may also limit the use of portable storage devices to only approved devices including devices provided by the organization, devices provided by other approved organizations, and devices that are not personally owned. Finally, organizations may control the use of portable storage devices based on the type of device, prohibiting the use of writeable, portable devices, and implementing this restriction by disabling or removing the capability to write to such devices. Malicious code protection mechanisms include anti-virus signature definitions and reputation-based technologies. Many technologies and methods exist to limit or eliminate the effects of malicious code. Pervasive configuration management and comprehensive software integrity controls may be effective in preventing execution of unauthorized code. In addition to commercial off-the-shelf software, malicious code may also be present in custom-built software. This could include logic bombs, back doors, and other types of cyber-attacks that could affect organizational missions/business functions. Traditional malicious code protection mechanisms cannot always detect such code. In these situations, organizations rely instead on other safeguards including secure coding practices, configuration management and control, trusted procurement processes, and monitoring technologies to help ensure that software does not perform functions other than the functions intended.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Removable media are any type of media storage that you can remove from your computer or machine (e.g., CDs, DVDs, diskettes, and USB drives). Write a specific policy for removable media. The policy should cover the various types of removable media (e.g., write-once media and rewritable media) and should discuss the company’s approach to removable media. Ensure the following controls are considered and included in the policy:</p>
+<ul>
+<li>limit the use of removable media to the smallest number needed; and</li>
+<li>scan all removable media for viruses.</li>
+</ul>
+<div class="sub-header-2">Example</div>
+<p>You are in charge of IT operations. You establish a policy for removable media that includes USB drives [a]. The policy information such as:</p>
+<ul>
+<li>only USB drives issued by the organization may be used; and</li>
+<li>USB drives are to be used for work purposes only [a].</li>
+</ul>
+<p>You set up a separate computer to scan these drives before anyone uses them on the network. This computer has anti-virus software installed that is kept up to date.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are removable media allowed [a]?</li>
+<li>Are policies and/or procedures in use to control the use of removable media [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 8, 19, NULL, NULL, 1211, NULL, N'Removeable Media', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5355, N'MP.L2-3.8.8', N'Prohibit the use of portable storage devices when such devices have no identifiable owner.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the use of portable storage devices is prohibited when such devices have no identifiable owner.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System media protection policy; system use policy; procedures addressing media usage restrictions; system security plan; rules of behavior; system configuration settings and associated documentation; system design documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system media use responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for media use; mechanisms prohibiting use of media on systems or system components].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Requiring identifiable owners (e.g., individuals, organizations, or projects) for portable storage devices reduces the overall risk of using such technologies by allowing organizations to assign responsibility and accountability for addressing known vulnerabilities in the devices (e.g., insertion of malicious code).</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>A portable storage device is a system component that can be inserted into and removed from a system and is used to store data or information. It typically plugs into a laptop or desktop port (e.g., USB port). These devices can contain malicious files that can lead to a compromise of a connected system. Therefore, use should be prohibited if the device cannot be traced to an owner who is responsible and accountable for its security.</p>
+<p>This requirement, MP.L2-3.8.8, furthers the protections provided by MP.L2-3.8.7 by prohibiting unidentified media use even if that media type is allowable.</p>
+<div class="sub-header-2">Example</div>
+<p>You are the IT manager. One day, a staff member reports finding a USB drive in the parking lot. You investigate and learn that there are no labels on the outside of the drive to indicate who might be responsible for it. You send an email to all employees to remind them that IT policies expressly prohibit plugging unknown devices into company computers. You also direct staff members to turn in to the IT help desk any devices that have no identifiable owner [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Do portable storage devices used have identifiable owners [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 9, 19, NULL, NULL, 1211, NULL, N'Shared Media', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5356, N'MP.L2-3.8.9', N'Protect the confidentiality of backup CUI at storage locations.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the confidentiality of backup CUI is protected at storage locations.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Procedures addressing system backup; system configuration settings and associated documentation; security plan; backup storage locations; system backup logs or records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with system backup responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for conducting system backups; mechanisms supporting or implementing system backups].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations can employ cryptographic mechanisms or alternative physical controls to protect the confidentiality of backup information at designated storage locations. Backed-up information containing CUI may include system-level information and user-level information. System-level information includes system-state information, operating system software, application software, and licenses. User-level information includes information other than system-level information.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>You protect CUI to ensure that it remains private (confidentiality) and unchanged (integrity). Methods to ensure confidentiality may include:</p>
+<ul>
+<li>encrypting files or media;</li>
+<li>managing who has access to the information; and</li>
+<li>physically securing devices and media that contain CUI.</li>
+</ul>
+<p>Storage locations for information are varied, and may include:</p>
+<ul>
+<li>external hard drives;</li>
+<li>USB drives;</li>
+<li>magnetic media (tape cartridge);</li>
+<li>optical disk (CD, DVD);</li>
+<li>Networked Attached Storage (NAS);</li>
+<li>servers; and</li>
+<li>cloud backup.</li>
+</ul>
+<p>This requirement, MP.L2-3.8.9, requires the confidentiality of backup information at storage locations.</p>
+<div class="sub-header-2">Example</div>
+<p>You are in charge of protecting CUI for your company. Because the company’s backups contain CUI, you work with IT to protect the confidentiality of backup data. You agree to encrypt all CUI data as it is saved to an external hard drive [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are data backups encrypted on media before removal from a secured facility [a]?</li>
+<li>Are cryptographic mechanisms FIPS validated [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 10, 19, NULL, NULL, 1211, NULL, N'Protect Backups', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5357, N'PS.L2-3.9.1', N'Screen individuals prior to authorizing access to organizational systems containing CUI.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>individuals are screened prior to authorizing access to organizational systems containing CUI.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Personnel security policy; procedures addressing personnel screening; records of screened personnel; system security plan; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with personnel security responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for personnel screening].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Personnel security screening (vetting) activities involve the evaluation/assessment of individual’s conduct, integrity, judgment, loyalty, reliability, and stability (i.e., the trustworthiness of the individual) prior to authorizing access to organizational systems containing CUI. The screening activities reflect applicable federal laws, Executive Orders, directives, policies, regulations, and specific criteria established for the level of access required for assigned positions.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Ensure all employees who need access to CUI undergo organization-defined screening before being granted access. Base the types of screening on the requirements for a given position and role.</p>
+<p>The effective screening of personnel provided by this requirement, PS.L2-3.9.1, improves upon the effectiveness of authentication performed in IA.L2-3.5.2.</p>
+<div class="sub-header-2">Example</div>
+<p>You are in charge of security at your organization. You complete standard criminal background and credit checks of all individuals you hire before they can access CUI [a]. Your screening program follows appropriate laws, policies, regulations, and criteria for the level of access required for each position.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are appropriate background checks completed prior granting access to organizational systems containing CUI [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 1, 19, NULL, NULL, 1212, NULL, N'Screen Individuals', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5358, N'PS.L2-3.9.2', N'Ensure that organizational systems containing CUI are protected during and after personnel actions such as terminations and transfers.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>a policy and/or process for terminating system access and any credentials coincident with personnel actions is established;</li>
+<li>system access and credentials are terminated consistent with personnel actions such as termination or transfer; and</li>
+<li>the system is protected during and after personnel transfer actions.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Personnel security policy; procedures addressing personnel transfer and termination; records of personnel transfer and termination actions; list of system accounts; records of terminated or revoked authenticators and credentials; records of exit interviews; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with personnel security responsibilities; personnel with account management responsibilities; system or network administrators; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for personnel transfer and termination; mechanisms supporting or implementing personnel transfer and termination notifications; mechanisms for disabling system access and revoking authenticators].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Protecting CUI during and after personnel actions may include returning system-related property and conducting exit interviews. System-related property includes hardware authentication tokens, identification cards, system administration technical manuals, keys, and building passes. Exit interviews ensure that individuals who have been terminated understand the security constraints imposed by being former employees and that proper accountability is achieved for system-related property. Security topics of interest at exit interviews can include reminding terminated individuals of nondisclosure agreements and potential limitations on future employment. Exit interviews may not be possible for some terminated individuals, for example, in cases related to job abandonment, illnesses, and non- availability of supervisors. For termination actions, timely execution is essential for individuals terminated for cause. In certain situations, organizations consider disabling the system accounts of individuals that are being terminated prior to the individuals being notified.</p>
+<p>This requirement applies to reassignments or transfers of individuals when the personnel action is permanent or of such extended durations as to require protection. Organizations define the CUI protections appropriate for the types of reassignments or transfers, whether permanent or extended. Protections that may be required for transfers or reassignments to other positions within organizations include returning old and issuing new keys, identification cards, and building passes; changing system access authorizations (i.e., privileges); closing system accounts and establishing new accounts; and providing for access to official records to which individuals had access at previous work locations and in previous system accounts.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Employee access to CUI is removed when they change jobs or leave the company. When employment or program access is terminated for any reason, the following actions may occur within the defined time frame:</p>
+<ul>
+<li>all company IT equipment (e.g., laptops, cell phones, storage devices) is returned;</li>
+<li>all identification, access cards, and keys are returned; and</li>
+<li>an exit interview is conducted to remind the employee of their obligations to not discuss CUI, even after employment.</li>
+</ul>
+<p>Additionally, perform the following:</p>
+<ul>
+<li>remove access to all accounts granting access to CUI or modify access to CUI as appropriate for a new work role;</li>
+<li>disable or close employee accounts for departing employees; and</li>
+<li>limit access to physical spaces with CUI for departing employees or those who transition to a work role that does not require access to CUI.</li>
+</ul>
+<p>This requirement, PS.L2-3.9.2, leverages the identification of system users required by IA.L2-</p>
+<p>3.5.1 in order to ensure that all accesses are identified and removed.</p>
+<div class="sub-header-2">Example 1</div>
+<p>You are in charge of IT operations. Per organizational policies, when workers leave the company, you remove them from any physical CUI access lists. If you are not their supervisor, you contact their supervisor or human resources immediately and ask them to:</p>
+<ul>
+<li>turn in the former employees’ computers for proper handling;</li>
+<li>inform help desk or system administrators to have the former employees’ system access revoked;</li>
+<li>retrieve the former employees’ identification and access cards; and</li>
+<li>have the former employees attend an exit interview where you or human resources remind them of their obligations to not discuss CUI [b].</li>
+</ul>
+<div class="sub-header-2">Example 2</div>
+<p>An employee transfers from one working group in your company to another. Human resources team notifies IT of the transfer date, and the employee’s new manager follows procedure by submitting a ticket to the IT help desk to provide information on the access rights the employee will require in their new role. IT implements the rights for the new position and revokes the access for the prior position on the official date of the transfer [c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is information system access disabled upon employee termination or transfer [c]?</li>
+<li>Are authenticators/ credentials associated with the employee revoked upon termination or transfer within a certain time frame [b,c]?</li>
+<li>Is all company information system-related property retrieved from the terminated or transferred employee within a certain timeframe [a,c]?</li>
+<li>Is access to company information and information systems formerly controlled by the terminated or transferred employee retained for a certain timeframe [a,c]?</li>
+<li>Is the information security office and data owner of the change in authorization notified within a certain timeframe [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 2, 19, NULL, NULL, 1212, NULL, N'Personnel Actions', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5359, N'PE.L2-3.10.1', N'Limit physical access to organizational systems, equipment, and the respective operating environments to authorized individuals.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>authorized individuals allowed physical access are identified;</li>
+<li>physical access to organizational systems is limited to authorized individuals;</li>
+<li>physical access to equipment is limited to authorized individuals; and</li>
+<li>physical access to operating environments is limited to authorized individuals.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Physical and environmental protection policy; procedures addressing physical access authorizations; system security plan; authorized personnel access list; authorization credentials; physical access list reviews; physical access termination records and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with physical access authorization responsibilities; personnel with physical access to system facility; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for physical access authorizations; mechanisms supporting or implementing physical access authorizations].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement applies to employees, individuals with permanent physical access authorization credentials, and visitors. Authorized individuals have credentials that include badges, identification cards, and smart cards. Organizations determine the strength of authorization credentials needed consistent with applicable laws, directives, policies, regulations, standards, procedures, and guidelines. This requirement applies only to areas within facilities that have not been designated as publicly accessible.</p>
+<p>Limiting physical access to equipment may include placing equipment in locked rooms or other secured areas and allowing access to authorized individuals only, and placing equipment in locations that can be monitored by organizational personnel. Computing devices, external disk drives, networking devices, monitors, printers, copiers, scanners, facsimile machines, and audio devices are examples of equipment.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>This addresses the company’s physical space (e.g., office, testing environments, equipment rooms), technical assets, and non-technical assets that need to be protected from unauthorized physical access. Specific environments are limited to authorized employees, and access is controlled with badges, electronic locks, physical key locks, etc.</p>
+<p>Output devices, such as printers, are placed in areas where their use does not expose data to unauthorized individuals. Lists of personnel with authorized access are developed and maintained, and personnel are issued appropriate authorization credentials.</p>
+<div class="sub-header-2">Example</div>
+<p>You manage a DoD project that requires special equipment used only by project team members [b,c]. You work with the facilities manager to put locks on the doors to the areas where the equipment is stored and used [b,c,d]. Project team members are the only individuals issued with keys to the space. This restricts access to only those employees who work on the DoD project and require access to that equipment.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are lists of personnel with authorized access developed and maintained, and are appropriate authorization credentials issued [a]?</li>
+<li>Has the facility/building manager designated building areas as “sensitive” and designed physical security protections (e.g., guards, locks, cameras, card readers) to limit physical access to the area to only authorized employees [b,c,d]?</li>
+<li>Are output devices such as printers placed in areas where their use does not expose data to unauthorized individuals [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 3, 19, NULL, NULL, 1213, NULL, N'Limit Physical Access', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5360, N'PE.L2-3.10.2', N'Protect and monitor the physical facility and support infrastructure for organizational systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the physical facility where organizational systems reside is protected;</li>
+<li>the support infrastructure for organizational systems is protected;</li>
+<li>the physical facility where organizational systems reside is monitored; and</li>
+<li>the support infrastructure for organizational systems is monitored.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Physical and environmental protection policy; procedures addressing physical access monitoring; system security plan; physical access logs or records; physical access monitoring records; physical access log reviews; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with physical access monitoring responsibilities; personnel with incident response responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for monitoring physical access; mechanisms supporting or implementing physical access monitoring; mechanisms supporting or implementing the review of physical access logs].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Monitoring of physical access includes publicly accessible areas within organizational facilities. This can be accomplished, for example, by the employment of guards; the use of sensor devices; or the use of video surveillance equipment such as cameras. Examples of support infrastructure include system distribution, transmission, and power lines. Security controls applied to the support infrastructure prevent accidental damage, disruption, and physical tampering. Such controls may also be necessary to prevent eavesdropping or modification of unencrypted transmissions. Physical access controls to support infrastructure include locked wiring closets; disconnected or locked spare jacks; protection of cabling by conduit or cable trays; and wiretapping sensors.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>The infrastructure inside of a facility, such as power and network cables, is protected so that visitors and unauthorized employees cannot access it. The protection is also monitored by security guards, video cameras, sensors, or alarms.</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for protecting your IT facilities. You install video cameras at each entrance and exit, connect them to a video recorder, and show the camera feeds on a display at the reception desk [c,d]. You also make sure there are secure locks on all entrances, exits, and windows to the facilities [a,b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is physical access monitored to detect and respond to physical security incidents [c, d]?</li>
+</ul>
+
+', NULL, NULL, 37, 4, 19, NULL, NULL, 1213, NULL, N'Monitor Facility', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5361, N'PE.L2-3.10.3', N'Escort visitors and monitor visitor activity.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>visitors are escorted; and</li>
+<li>visitor activity is monitored.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Physical and environmental protection policy; procedures addressing physical access control; system security plan; physical access control logs or records; inventory records of physical access control devices; system entry and exit points; records of key and lock combination changes; storage locations for physical access control devices; physical access control devices; list of security safeguards controlling access to designated publicly accessible areas within facility; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with physical access control responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for physical access control; mechanisms supporting or implementing physical access control; physical access control devices].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Individuals with permanent physical access authorization credentials are not considered visitors. Audit logs can be used to monitor visitor activity.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Do not allow visitors, even those people you know well, to walk around your facility without an escort. Make sure that all non-employees wear special visitor badges and/or are escorted by an employee at all times while on the property.</p>
+<div class="sub-header-2">Example</div>
+<p>Coming back from a meeting, you see the friend of a coworker walking down the hallway near your office. You know this person well and trust them, but are not sure why they are in the building. You stop to talk, and the person explains that they are meeting a coworker for lunch, but cannot remember where the lunchroom is. You walk the person back to the reception area to get a visitor badge and wait until someone can escort them to the lunch room [a]. You report this incident and the company decides to install a badge reader at the main door so visitors cannot enter without an escort [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are personnel required to accompany visitors to areas in a facility with physical access to organizational systems [a]?</li>
+<li>Are visitors clearly distinguishable from regular personnel [b]?</li>
+<li>Is visitor activity monitored (e.g., use of cameras or guards, reviews of secure areas upon visitor departure, review of visitor audit logs) [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 5, 19, NULL, NULL, 1213, NULL, N'Escort Visitors', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5362, N'PE.L2-3.10.4', N'Maintain audit logs of physical access.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>audit logs of physical access are maintained.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Physical and environmental protection policy; procedures addressing physical access control; system security plan; physical access control logs or records; inventory records of physical access control devices; system entry and exit points; records of key and lock combination changes; storage locations for physical access control devices; physical access control devices; list of security safeguards controlling access to designated publicly accessible areas within facility; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with physical access control responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for physical access control; mechanisms supporting or implementing physical access control; physical access control devices].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations have flexibility in the types of audit logs employed. Audit logs can be procedural (e.g., written log of individuals accessing the facility), automated (e.g., capturing ID provided by a PIV card), or some combination thereof. Physical access points can include facility access points, interior access points to systems or system components requiring supplemental access controls, or both. System components (e.g., workstations, notebook computers) may be in areas designated as publicly accessible with organizations safeguarding access to such devices.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Make sure you have a record of who accesses your facility (e.g., office, plant, factory). You can do this in writing by having employees and visitors sign in and sign out or by electronic means such as badge readers. Whatever means you use, you need to retain the access records for the time period that your company has defined.</p>
+<div class="sub-header-2">Example</div>
+<p>You and your coworkers like to have friends and family join you for lunch at the office on Fridays. Your small company has just signed a contract with the DoD, however, and you now need to document who enters and leaves your facility. You work with the reception staff to ensure that all non-employees sign in at the reception area and sign out when they leave [a]. You retain those paper sign-in sheets in a locked filing cabinet for one year. Employees receive badges or key cards that enable tracking and logging access to company facilities.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are logs of physical access to sensitive areas (both authorized access and visitor access) maintained per retention requirements [a]?</li>
+<li>Are visitor access records retained for as long as required [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 6, 19, NULL, NULL, 1213, NULL, N'Physical Access Logs', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5363, N'PE.L2-3.10.5', N'Control and manage physical access devices.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>physical access devices are identified;</li>
+<li>physical access devices are controlled; and</li>
+<li>physical access devices are managed.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Physical and environmental protection policy; procedures addressing physical access control; system security plan; physical access control logs or records; inventory records of physical access control devices; system entry and exit points; records of key and lock combination changes; storage locations for physical access control devices; physical access control devices; list of security safeguards controlling access to designated publicly accessible areas within facility; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with physical access control responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for physical access control; mechanisms supporting or implementing physical access control; physical access control devices].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Physical access devices include keys, locks, combinations, and card readers.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Identifying and controlling physical access devices (e.g., locks, badges, key cards) is just as important as monitoring and limiting who is able to physically access certain equipment. Physical access devices are only strong protection if you know who has them and what access they allow. Physical access devices can be managed using manual or automatic processes such a list of who is assigned what key, or updating the badge access system as personnel change roles.</p>
+<div class="sub-header-2">Example</div>
+<p>You are a facility manager. A team member retired today and returns their company keys to you. The project on which they were working requires access to areas that contain equipment with CUI. You receive the keys, check your electronic records against the serial numbers on the keys to ensure all have been returned, and mark each key returned [c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are lists or inventories of physical access devices maintained (e.g., keys, facility badges, key cards) [a]?</li>
+<li>Is access to physical access devices limited (e.g., granted to, and accessible only by, authorized individuals) [b]?</li>
+<li>Are physical access devices managed (e.g., revoking key card access when necessary, changing locks as needed, maintaining access control devices and systems) [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 7, 19, NULL, NULL, 1213, NULL, N'Manage Physical Access', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5364, N'PE.L2-3.10.6', N'Enforce safeguarding measures for CUI at alternate work sites.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>safeguarding measures for CUI are defined for alternate work sites; and</li>
+<li>safeguarding measures for CUI are enforced for alternate work sites.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Physical and environmental protection policy; procedures addressing alternate work sites for personnel; system security plan; list of safeguards required for alternate work sites; assessments of safeguards at alternate work sites; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel approving use of alternate work sites; personnel using alternate work sites; personnel assessing controls at alternate work sites; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for security at alternate work sites; mechanisms supporting alternate work sites; safeguards employed at alternate work sites; means of communications between personnel at alternate work sites and security personnel].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Alternate work sites may include government facilities or the private residences of employees. Organizations may define different security requirements for specific alternate work sites or types of sites depending on the work-related activities conducted at those sites.</p>
+<p>NIST SP 800-46 and NIST SP 800-114 provide guidance on enterprise and user security when teleworking.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Many people work from home or travel as part of their job. Define and implement safeguards to account for protection of information beyond the enterprise perimeter. Safeguards may include physical protections, such as locked file drawers, as well as electronic protections such as encryption, audit logging, and proper access controls.</p>
+<div class="sub-header-2">Example</div>
+<p>Many of your company’s project managers work remotely as they often travel to sponsor locations or even work from home. Because the projects on which they work require access to CUI, you must ensure the same level of protection is afforded as when they work in the office. You ensure that each laptop is deployed with patch management and anti-virus software protection [b]. Because data may be stored on the local hard drive, you have enabled full-disk encryption on their laptops [b]. When a remote staff member needs access to the internal network you require VPN connectivity that also disconnects the laptop from the remote network (i.e., prevents split tunneling) [b]. The VPN requires multifactor authentication to verify remote users are who they claim to be [b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Do all alternate sites where CUI data is stored or processed meet the same physical security requirements as the main site [b]?</li>
+<li>Does the alternate processing site provide information security measures equivalent to those of the primary site [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 8, 19, NULL, NULL, 1213, NULL, N'Alternative Work Sites', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5365, N'RA.L2-3.11.1', N'Periodically assess the risk to organizational operations (including mission, functions, image, or reputation), organizational assets, and individuals, resulting from the operation of organizational systems and the associated processing, storage, or transmission of CUI.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the frequency to assess risk to organizational operations, organizational assets, and individuals is defined; and</li>
+<li>risk to organizational operations, organizational assets, and individuals resulting from the operation of an organizational system that processes, stores, or transmits CUI is assessed with the defined frequency.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Risk assessment policy; security planning policy and procedures; procedures addressing organizational risk assessments; system security plan; risk assessment; risk assessment results; risk assessment reviews; risk assessment updates; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with risk assessment responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for risk assessment; mechanisms supporting or for conducting, documenting, reviewing, disseminating, and updating the risk assessment].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Clearly defined system boundaries are a prerequisite for effective risk assessments. Such risk assessments consider threats, vulnerabilities, likelihood, and impact to organizational operations, organizational assets, and individuals based on the operation and use of organizational systems. Risk assessments also consider risk from external parties (e.g., service providers, contractor operating systems on behalf of the organization, individuals accessing organizational systems, outsourcing entities). Risk assessments, either formal or informal, can be conducted at the organization level, the mission or business process level, or the system level, and at any phase in the system development life cycle.</p>
+<p>NIST SP 800-30 provides guidance on conducting risk assessments.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Risk arises from anything that can reduce an organization’s assurance of mission/business success; cause harm to image or reputation; or harm individuals, other organizations, or the Nation.</p>
+<p>Organizations assess the risk to their operations and assets at regular intervals. Areas where weakness or vulnerabilities could lead to risk may include:</p>
+<ul>
+<li>poorly designed and executed business processes;</li>
+<li>inadvertent actions of people, such as disclosure or modification of information;</li>
+<li>intentional actions of people inside and outside the organization;</li>
+<li>failure of systems to perform as intended;</li>
+<li>failures of technology; and</li>
+<li>external events, such as natural disasters, public infrastructure and supply chain failures.</li>
+</ul>
+<p>When conducting risk assessments use established criteria and procedures. The results of formal risk assessments are documented. It is important to note that risk assessments differ from vulnerability assessments (see RA.L2-3.11.2). A vulnerability assessment provides input to a risk assessment along with other information such as results from likelihood analysis and analysis of potential treat sources.</p>
+<p>Risk assessments should be performed at defined regular intervals. Mission risks include anything that will keep an organization from meeting its mission. Function risk is anything that will prevent the performance of a function. Image and reputation risks refer to intangible risks that have value and could cause damage to potential or future trust relationships.173</p>
+<p>This requirement, RA.L2-3.11.1, which requires periodically assessing the risk to organization systems, assets, and individuals, is a baseline Risk Assessment requirement. RA.L2-3.11.1 enables other Risk Assessment requirements (e.g., RA.L2-3.11.3, Vulnerability Remediation), as well as CA.L2-3.12.2, Plan of Action.</p>
+<div class="sub-header-2">Example</div>
+<p>You are a system administrator. You and your team members are working on a big government contract requiring you to store CUI. As part of your periodic (e.g., annual) risk assessment exercise, you evaluate the new risk involved with storing CUI [a,b]. When conducting the assessment you consider increased legal exposure, financial requirements of safeguarding CUI, potentially elevated attention from external attackers, and other factors.</p>
+<p>173 NIST SP 800-30, Guide for Conducting Risk Assessments, September 2012.</p>
+<p>After determining how storing CUI affects your overall risk profile, you use that as a basis for a conversation on how that risk should be mitigated.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Have initial and periodic risk assessments been conducted [b]?</li>
+<li>Are methods defined for assessing risk (e.g., reviewing security assessments, incident reports, and security advisories, identifying threat sources, threat events, and vulnerabilities, and determining likelihood, impact, and overall risk to the confidentiality of CUI) [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 1, 19, NULL, NULL, 1214, NULL, N'Risk Assessments', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5366, N'RA.L2-3.11.2', N'Scan for vulnerabilities in organizational systems and applications periodically and when new vulnerabilities affecting those systems and applications are identified.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the frequency to scan for vulnerabilities in organizational systems and applications is defined;</li>
+<li>vulnerability scans are performed on organizational systems with the defined frequency;</li>
+<li>vulnerability scans are performed on applications with the defined frequency;</li>
+<li>vulnerability scans are performed on organizational systems when new vulnerabilities are identified; and</li>
+<li>vulnerability scans are performed on applications when new vulnerabilities are identified.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Risk assessment policy; procedures addressing vulnerability scanning; risk assessment; system security plan; security assessment report; vulnerability scanning tools and associated configuration documentation; vulnerability scanning results; patch and vulnerability management records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with risk assessment, security assessment and vulnerability scanning responsibilities; personnel with vulnerability scan analysis and remediation responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for vulnerability scanning, analysis, remediation, and information sharing; mechanisms supporting or implementing vulnerability scanning, analysis, remediation, and information sharing].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations determine the required vulnerability scanning for all system components, ensuring that potential sources of vulnerabilities such as networked printers, scanners, and copiers are not overlooked. The vulnerabilities to be scanned are readily updated as new vulnerabilities are discovered, announced, and scanning methods developed. This process ensures that potential vulnerabilities in the system are identified and addressed as quickly as possible. Vulnerability analyses for custom software applications may require additional approaches such as static analysis, dynamic analysis, binary analysis, or a hybrid of the three approaches. Organizations can employ these analysis approaches in source code reviews and in a variety of tools (e.g., static analysis tools, web-based application scanners, binary analyzers). Vulnerability scanning includes: scanning for patch levels; scanning for functions, ports, protocols, and services that should not be accessible to users or devices; and scanning for improperly configured or incorrectly operating information flow control mechanisms.</p>
+<p>To facilitate interoperability, organizations consider using products that are Security Content Automated Protocol (SCAP)-validated, scanning tools that express vulnerabilities in the Common Vulnerabilities and Exposures (CVE) naming convention, and that employ the Open Vulnerability Assessment Language (OVAL) to determine the presence of system vulnerabilities. Sources for vulnerability information include the Common Weakness Enumeration (CWE) listing and the National Vulnerability Database (NVD).</p>
+<p>Security assessments, such as red team exercises, provide additional sources of potential vulnerabilities for which to scan. Organizations also consider using scanning tools that express vulnerability impact by the Common Vulnerability Scoring System (CVSS). In certain situations, the nature of the vulnerability scanning may be more intrusive or the system component that is the subject of the scanning may contain highly sensitive information. Privileged access authorization to selected system components facilitates thorough vulnerability scanning and protects the sensitive nature of such scanning.</p>
+<p>NIST SP 800-40 provides guidance on vulnerability management.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>A vulnerability scanner is an application that identifies vulnerabilities in organizational assets. Most scanners can create a prioritized list of vulnerabilities ordered by their level of severity. Scan for vulnerabilities on all devices connected to the network including servers, desktops, laptops, virtual machines, containers, firewalls, switches, and printers. All assets that are within the scope of the CMMC assessment must be scanned, including assets such as laptop computers that may not routinely connect to an organization’s network.</p>
+<p>Perform reviews of your organization’s custom-developed software. Vulnerability analysis of a custom-made solution may require a penetration tester to properly test and validate findings. Automated vulnerability scanners may not be as thorough when scanning custom developed applications. Source code scanners can help identify weaknesses and vulnerabilities within code prior to compilation and use.</p>
+<p>The vulnerability scanning process is a regular activity, not a single occurrence. Organizations put in place a vulnerability scanner that updates its database each time it performs a scan so it can identify the most current known vulnerabilities. Schedule scans with consideration of the potential for impact to normal operations and use caution when scanning critical assets.</p>
+<p>This requirement, RA.L2-3.11.2, which ensures scanning for vulnerabilities in organizational systems and application, is a baseline Risk Assessment requirement. RA.L2- 3.11.2, contributes to performing risk assessments as described in RA.L2-3.11.1.</p>
+<div class="sub-header-2">Example</div>
+<p>You are a system administrator. Your organization has assessed its risk and determined that it needs to scan for vulnerabilities in systems and applications once each quarter [a]. You conduct some tests and decide that it is important to be able to schedule scans after standard business hours. You also realize that you have remote workers and that you will need to be sure to scan their remote computers as well [b]. After some final tests, you integrate the scans into normal IT operations, running as scheduled [b,c]. You verify that the scanner application receives the latest updates on vulnerabilities and that those are included in future scans [d,e].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is the frequency specified for vulnerability scans to be performed in organizational systems and applications (e.g., continuous passive scanning, scheduled active scans) [a]?</li>
+<li>Are vulnerability scans performed on a defined frequency or randomly in accordance with company policy [a,b,c]?</li>
+<li>Are systems periodically scanned for common and new vulnerabilities [d,e]?</li>
+<li>Is the list of scanned system vulnerabilities updated on a defined frequency or when new vulnerabilities are identified and reported [d,e]?</li>
+</ul>
+
+', NULL, NULL, 37, 2, 19, NULL, NULL, 1214, NULL, N'Vulnerability Scan', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5367, N'RA.L2-3.11.3', N'Remediate vulnerabilities in accordance with risk assessments.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>vulnerabilities are identified; and</li>
+<li>vulnerabilities are remediated in accordance with risk assessments.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Risk assessment policy; procedures addressing vulnerability scanning; risk assessment; system security plan; security assessment report; vulnerability scanning tools and associated configuration documentation; vulnerability scanning results; patch and vulnerability management records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with risk assessment, security assessment and vulnerability scanning responsibilities; personnel with vulnerability scan analysis responsibilities; personnel with vulnerability remediation responsibilities; personnel with information security responsibilities; system or network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for vulnerability scanning, analysis, remediation, and information sharing; mechanisms supporting or implementing vulnerability scanning, analysis, remediation, and information sharing].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Vulnerabilities discovered, for example, via the scanning conducted in response to RA.L2- 3.11.2, are remediated with consideration of the related assessment of risk. The consideration of risk influences the prioritization of remediation efforts and the level of effort to be expended in the remediation for specific vulnerabilities.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Not all vulnerabilities captured in a vulnerability scanner may pose the same level of risk to an organization. Prioritize mitigation efforts to close the most critical vulnerabilities first.</p>
+<p>Track all vulnerability remediation to ensure completion; also track vulnerabilities that you have determined not to remediate.</p>
+<p>This requirement, RA.L2-3.11.3, benefits from CA.L2-3.12.2. RA.L2-3.11.3 allows remediation of vulnerabilities to take place based on the developed plans of actions for vulnerabilities from CA.L2-3.12.2.</p>
+<div class="sub-header-2">Example</div>
+<p>You are a system administrator. Each quarter you receive a list of vulnerabilities generated by your company’s vulnerability scanner [a]. You prioritize that list and note which vulnerabilities should be targeted as soon as possible as well as which vulnerabilities you can safely defer addressing at this time. You document the reasoning behind accepting the risk of the unremediated flaws and note to continue to monitor these vulnerabilities in case you need to revise the decision at a later date [b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are the results of risk assessments used to prioritize vulnerabilities for remediation [b]?</li>
+<li>For any given vulnerability is action taken for remediation, acceptance, avoidance, or transference of the vulnerability risk [b]?</li>
+<li>Are all high risk vulnerabilities prioritized [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 3, 19, NULL, NULL, 1214, NULL, N'Vulnerability Remediation', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5368, N'CA.L2-3.12.1', N'Periodically assess the security controls in organizational systems to determine if the controls are effective in their application.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the frequency of security control assessments is defined; and</li>
+<li>security controls are assessed with the defined frequency to determine if the controls are effective in their application.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Security assessment and authorization policy; procedures addressing security assessment planning; procedures addressing security assessments; security assessment plan; system security plan; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with security assessment responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting security assessment, security assessment plan development, and security assessment reporting].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations assess security controls in organizational systems and the environments in which those systems operate as part of the system development life cycle. Security controls are the safeguards or countermeasures organizations implement to satisfy security requirements. By assessing the implemented security controls, organizations determine if the security safeguards or countermeasures are in place and operating as intended. Security control assessments ensure that information security is built into organizational systems; identify weaknesses and deficiencies early in the development process; provide essential information needed to make risk-based decisions; and ensure compliance to vulnerability mitigation procedures. Assessments are conducted on the implemented security controls as documented in system security plans.</p>
+<p>Security assessment reports document assessment results in sufficient detail as deemed necessary by organizations, to determine the accuracy and completeness of the reports and whether the security controls are implemented correctly, operating as intended, and producing the desired outcome with respect to meeting security requirements. Security assessment results are provided to the individuals or roles appropriate for the types of assessments being conducted.</p>
+<p>Organizations ensure that security assessment results are current, relevant to the determination of security control effectiveness, and obtained with the appropriate level of assessor independence. Organizations can choose to use other types of assessment activities such as vulnerability scanning and system monitoring to maintain the security posture of systems during the system life cycle.</p>
+<p>NIST SP 800-53 provides guidance on security and privacy controls for systems and organizations. SP 800-53A provides guidance on developing security assessment plans and conducting assessments.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Avoid a “set it and forget it” mentality when implementing security controls. The security landscape is constantly changing. Reassess existing controls at periodic intervals in order to validate their effectiveness in your environment. Set the assessment schedule according to organizational needs. Consider regulatory obligations and internal policies when assessing the controls.</p>
+<p>Outputs from security control assessments typically include:</p>
+<ul>
+<li>documented assessment results;</li>
+<li>proposed new controls, or updates to existing controls;</li>
+<li>remediation plans; and</li>
+<li>newly identified risks.</li>
+</ul>
+<p>This requirement, CA.L2-3.12.1, which ensures determining security controls are implemented properly, promotes effective security assessments for organizational systems mandated by CA.L2-3.12.3.</p>
+<div class="sub-header-2">Example</div>
+<p>You are in charge of IT operations. You need to ensure that the security controls implemented within the system are achieving their objectives [b]. Taking the requirements outlined in your SSP as a guide, you conduct annual written reviews of the security controls to ensure they meet your organization’s needs. When you find controls that do not meet requirements, you propose updated or new controls, develop a written implementation plan, document new risks, and execute the changes.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are security controls assessed at least annually [a]?</li>
+<li>Is the output of the security controls assessment documented [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 1, 19, NULL, NULL, 1215, NULL, N'Security Control Assessment', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5369, N'CA.L2-3.12.2', N'Develop and implement plans of action designed to correct deficiencies and reduce or eliminate vulnerabilities in organizational systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>deficiencies and vulnerabilities to be addressed by the plan of action are identified;</li>
+<li>a plan of action is developed to correct identified deficiencies and reduce or eliminate identified vulnerabilities; and</li>
+<li>the plan of action is implemented to correct identified deficiencies and reduce or eliminate identified vulnerabilities.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Security assessment and authorization policy; procedures addressing plan of action; system security plan; security assessment plan; security assessment report; security assessment evidence; plan of action; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with plan of action development and implementation responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms for developing, implementing, and maintaining plan of action].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>The plan of action is a key document in the information security program. Organizations develop plans of action that describe how any unimplemented security requirements will be met and how any planned mitigations will be implemented. Organizations can document the system security plan and plan of action as separate or combined documents and in any chosen format.</p>
+<p>Federal agencies may consider the submitted system security plans and plans of action as critical inputs to an overall risk management decision to process, store, or transmit CUI on a system hosted by a nonfederal organization and whether it is advisable to pursue an agreement or contract with the nonfederal organization.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>When you write a plan of action, define the clear goal or objective of the plan. You may include the following in the action plan:</p>
+<ul>
+<li>ownership of who is accountable for ensuring the plan’s performance;</li>
+<li>specific steps or milestones that are clear and actionable;</li>
+<li>assigned responsibility for each step or milestone;</li>
+<li>milestones to measure plan progress; and</li>
+<li>completion dates.</li>
+</ul>
+<p>This requirement, CA.L2-3.12.2, which ensures developing and implementing operational plans of action to correct and reduce vulnerabilities in systems, is driven by risk management requirement RA.L2-3.11.1, which promotes periodically assessing risk to organizational systems. CA.L2-3.12.2 promotes monitoring security controls on an ongoing basis as defined in requirement CA.L2-3.12.3.</p>
+<p>An operational plan of action in accordance with CA.L2-3.12.2 differs from a CMMC assessment POA&M as described in 32 CFR § 170.21. The assessment POA&M places conditions on which security requirements can be assessed as NOT MET and allows the OSA to qualify for a CMMC Status of Conditional Level 2 (Self), Conditional Level 2 (C3PAO), or Conditional Level 3 (DIBCAC). Operational plans of action are not subject to the 180 day POA&M closeout requirement. Severity, availability of remediation, and business requirements are among the factors to consider when creating and maintaining operational plans of action.</p>
+<div class="sub-header-2">Example</div>
+<p>As IT director, one of your duties is to develop action plans when you discover that your company is not meeting security requirements or when a security issue arises [b]. A recent vulnerability scan identified several items that need to be addressed so you develop a plan to fix them [b]. Your plan identifies the people responsible for fixing the issues, how to do it, and when the remediation will be completed [b]. You also define how to verify that the person responsible has fixed the vulnerability [b]. You document this in an operational plan of action that is updated as milestones are reached [b]. You have a separate resource review the modifications after they have been completed to ensure the plan has been implemented correctly [c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is there an action plan to remediate identified weaknesses or deficiencies [a]?</li>
+<li>Is the action plan maintained as remediation is performed [b]?</li>
+<li>Does the action plan designate remediation dates and milestones for each item [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 2, 19, NULL, NULL, 1215, NULL, N'Operational Plan Of Action', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5370, N'CA.L2-3.12.3', N'Monitor security controls on an ongoing basis to ensure the continued effectiveness of the controls.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>security controls are monitored on an ongoing basis to ensure the continued effectiveness of those controls.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Security planning policy; organizational procedures addressing system security plan development and implementation; procedures addressing system security plan reviews and updates; enterprise architecture documentation; system security plan; records of system security plan reviews and updates; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with security planning and system security plan implementation responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for system security plan development, review, update, and approval; mechanisms supporting the system security plan].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Continuous monitoring programs facilitate ongoing awareness of threats, vulnerabilities, and information security to support organizational risk management decisions. The terms continuous and ongoing imply that organizations assess and analyze security controls and information security-related risks at a frequency sufficient to support risk-based decisions. The results of continuous monitoring programs generate appropriate risk response actions by organizations. Providing access to security information on a continuing basis through reports or dashboards gives organizational officials the capability to make effective and timely risk management decisions. Automation supports more frequent updates to hardware, software, firmware inventories, and other system information. Effectiveness is further enhanced when continuous monitoring outputs are formatted to provide information that is specific, measurable, actionable, relevant, and timely. Monitoring requirements, including the need for specific monitoring, may also be referenced in other requirements.</p>
+<p>NIST SP 800-137 provides guidance on continuous monitoring.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Provide a plan for monitoring the state of security controls on a recurring basis that occurs more frequently than the periodic assessments discussed in CA.L2-3.12.1. This process provides a mechanism to assess the overall security posture of your organization, which directly relates to activities discussed in CA.L2-3.12.4. As a result, the process not only maintains awareness of vulnerabilities and threats, but it also informs management of the effectiveness of the security controls in determining if security controls are current and for management to make an acceptable risk decision.</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for ensuring your company fulfills all cybersecurity requirements for its DoD contracts. You review those requirements and the security controls your company has put in place to meet them. You then create a plan to evaluate each control regularly over the next year. You mark several controls to be evaluated by a third-party security assessor. You assign other IT resources in the organization to evaluate controls within their area of responsibility. To ensure progress you establish recurring meetings with the accountable IT staff to assess continuous monitoring progress, review security information, evaluate risks from gaps in continuous monitoring, and produce reports for your management [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are the security controls that need to be continuously monitored identified [a]?</li>
+<li>Is the timeframe for continuous monitoring activities to support risk-based decision making defined [a]?</li>
+<li>Is the output of continuous monitoring activities provided to stakeholders [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 3, 19, NULL, NULL, 1215, NULL, N'Security Control Monitoring', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5371, N'CA.L2-3.12.4', N'Develop, document, and periodically update system security plans that describe system boundaries, system environments of operation, how security requirements are implemented, and the relationships with or connections to other systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>a system security plan is developed;</li>
+<li>the system boundary is described and documented in the system security plan;</li>
+<li>the system environment of operation is described and documented in the system security plan;</li>
+<li>the security requirements identified and approved by the designated authority as non-applicable are identified;</li>
+<li>the method of security requirement implementation is described and documented in the system security plan;</li>
+<li>the relationship with or connection to other systems is described and documented in the system security plan;</li>
+<li>the frequency to update the system security plan is defined; and</li>
+<li>system security plan is updated with the defined frequency.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Security planning policy; procedures addressing system security plan development and implementation; procedures addressing system security plan reviews and updates; enterprise architecture documentation; system security plan; records of system security plan reviews and updates; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with security planning and system security plan implementation responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for system security plan development, review, update, and approval; mechanisms supporting the system security plan].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>System security plans relate security requirements to a set of security controls. System security plans also describe, at a high level, how the security controls meet those security requirements, but do not provide detailed, technical descriptions of the design or implementation of the controls. System security plans contain sufficient information to enable a design and implementation that is unambiguously compliant with the intent of the plans and subsequent determinations of risk if the plan is implemented as intended. Security plans need not be single documents; the plans can be a collection of various documents including documents that already exist. Effective security plans make extensive use of references to policies, procedures, and additional documents (e.g., design and implementation specifications) where more detailed information can be obtained. This reduces the documentation requirements associated with security programs and maintains security-related information in other established management/operational areas related to enterprise architecture, system development life cycle, systems engineering, and acquisition.</p>
+<p>Federal agencies may consider the submitted system security plans and plans of action as critical inputs to an overall risk management decision to process, store, or transmit CUI on a system hosted by a nonfederal organization and whether it is advisable to pursue an agreement or contract with the nonfederal organization.</p>
+<p>NIST SP 800-18 provides guidance on developing security plans.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>A system security plan (SSP) is a document that outlines how an organization implements its security requirements. OSAs must have an SSP in place at the time of assessment to describe each information system within the CMMC Assessment Scope. The absence of an up-to-date SSP at the time of the assessment would result in a finding that an assessment could not be completed due to incomplete information and noncompliance with DFARS clause 252.204-7012. OSAs are free to choose the format of their SSP. At a minimum, an SSP must include:</p>
+<ul>
+<li>Description of the CMMC Assessment Scope;</li>
+<li>CMMC Assessment Scope Description: high-level description of the assets within the assessment scope186;</li>
+<li>Description of the Environment of Operation: physical surroundings in which an information system processes, stores, and transmits information;</li>
+<li>Identified and Approved Security Requirements: requirements levied on an information system that are derived from applicable laws, Executive Orders, directives, policies, standards, instructions, regulations, procedures, or organizational mission/business case needs to ensure the confidentiality, integrity, and availability of the information being processed, stored, or transmitted;</li>
+</ul>
+<p>186 There is no requirement to embed every asset in the SSP. .</p>
+<ul>
+<li>Implementation Method for Security Requirements: description of how the identified and approved security requirements are implemented with the system or environment;</li>
+<li>Connections and Relationships to Other Systems and Networks: description of related, dependent, and interconnected systems; and</li>
+<li>Defined Frequency of Updates: at least annually.</li>
+</ul>
+<p>In addition to the requirements above, an SSP often includes:</p>
+<ul>
+<li>general information system description: technical and functional description;</li>
+<li>design philosophies: defense-in-depth strategies and allowed interfaces and network protocols; and</li>
+<li>roles and responsibilities: description of the roles and responsibilities for key personnel, which may include the system owner, system custodian, authorizing officials, and other stakeholders</li>
+</ul>
+<p>This requirement, CA.L2-3.12.4, which requires developing, documenting, and updating system security plans, promotes effective information security within organizational systems required by SC.L2-3.13.2, as well as other system and communications protection requirements.</p>
+<div class="sub-header-2">Example</div>
+<p>You are in charge of system security. You develop an SSP and have senior leadership formally approve the document [a]. The SSP explains how your organization handles CUI and defines how that data is stored, transmitted, and protected [d,e]. The criteria outlined in the SSP is used to guide configuration of the network and other information resources to meet your company’s goals. Knowing that it is important to keep the SSP current, you establish a policy that requires a formal review and update of the SSP each year [g,h].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Do mechanisms exist to develop and periodically update an SSP [a,g]?</li>
+<li>Are security requirements identified and approved by the designated authority as non-applicable documented [d]?</li>
+</ul>
+
+', NULL, NULL, 37, 4, 19, NULL, NULL, 1215, NULL, N'System Security Plan', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5372, N'SC.L2-3.13.1', N'Monitor, control, and protect communications (i.e., information transmitted or received by organizational systems) at the external boundaries and key internal boundaries of organizational systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the external system boundary is defined;</li>
+<li>key internal system boundaries are defined;</li>
+<li>communications are monitored at the external system boundary;</li>
+<li>communications are monitored at key internal boundaries;</li>
+<li>communications are controlled at the external system boundary;</li>
+<li>communications are controlled at key internal boundaries;</li>
+<li>communications are protected at the external system boundary; and</li>
+<li>communications are protected at key internal boundaries.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing boundary protection; system security plan; list of key internal boundaries of the system; system design documentation; boundary protection hardware and software; enterprise security architecture documentation; system audit logs and records; system configuration settings and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developers; personnel with boundary protection responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing boundary protection capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Communications can be monitored, controlled, and protected at boundary components and by restricting or prohibiting interfaces in organizational systems. Boundary components include gateways, routers, firewalls, guards, network-based malicious code analysis and virtualization systems, or encrypted tunnels implemented within a system security architecture (e.g., routers protecting firewalls or application gateways residing on protected subnetworks). Restricting or prohibiting interfaces in organizational systems includes restricting external web communications traffic to designated web servers within managed interfaces and prohibiting external traffic that appears to be spoofing internal addresses.</p>
+<p>Organizations consider the shared nature of commercial telecommunications services in the implementation of security requirements associated with the use of such services. Commercial telecommunications services are commonly based on network components and consolidated management systems shared by all attached commercial customers and may also include third party-provided access lines and other service elements. Such transmission services may represent sources of increased risk despite contract security provisions. NIST SP 800-41 provides guidance on firewalls and firewall policy. NIST SP 800-125B provides guidance on security for virtualization technologies.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Fences, locks, badges, and key cards help keep non-employees out of your physical facilities. Similarly, your company’s IT network or system has boundaries that must be protected. Many companies use a web proxy and a firewall.</p>
+<p>When an employee uses a company computer to go to a website, a web proxy makes the request on the user’s behalf, looks at the web request, and decides if it should let the employee go to the website.</p>
+<p>A firewall controls access from the inside and outside, protecting valuable information and resources stored on the company’s network. A firewall stops unwanted traffic on the internet from passing through an outside “fence” to the company’s networks and information systems. Internal boundaries determine where data can flow, for instance a software development environment may have its own boundary controlling, monitoring, and protecting the data that can leave that boundary.</p>
+<p>It may be wise to monitor, control, or protect one part of the company network from another. This can also be accomplished with a firewall and limits the ability of attackers and disgruntled employees from entering sensitive parts of your internal network and causing damage.</p>
+<div class="sub-header-2">Example</div>
+<p>You are setting up the new network and want to keep your company’s information and resources safe. You start by sketching out a simple diagram that identifies the external boundary of your network and any internal boundaries that are needed [a,b]. The first piece of equipment you install is the firewall, a device to separate your internal network from the internet. The firewall also has a feature that allows you to block access to potentially malicious websites, and you configure that service as well [a,c,e,g]. Some of your coworkers complain that they cannot get onto certain websites [c,e,g]. You explain that the new network blocks websites that are known for spreading malware. The firewall sends you a daily digest of blocked activity so that you can monitor the system for attack trends [c,d].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>What are the external system boundary components that make up the entry and exit points for data flow (e.g., firewalls, gateways, cloud service boundaries), behind which all system components that handle regulated data are contained? What are the supporting system components necessary for the protection of regulated data [a]?</li>
+<li>What are the internal system boundary components that make up the entry and exit points for key internal data flow (e.g., internal firewalls, routers, any devices that can bridge the connection between one segment of the system and another) that separate segments of the internal network – including devices that separate internal network segments such as development and production networks as well as a traditional Demilitarized Zone (DMZ) at the edge of the network [b]?</li>
+<li>Is data flowing in and out of the external and key internal system boundaries monitored (e.g., connections are logged and able to be reviewed, suspicious traffic generates alerts) [c,d]?</li>
+<li>Is data traversing the external and internal system boundaries controlled such that connections are denied by default and only authorized connections are allowed [e,f]?</li>
+<li>Is data flowing in and out of the external and key internal system boundaries protected (e.g., applying encryption when required or prudent, tunneling traffic as needed) [g,h]?</li>
+</ul>
+
+', NULL, NULL, 37, 3, 19, NULL, NULL, 1216, NULL, N'Boundary Protection', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5373, N'SC.L2-3.13.2', N'Employ architectural designs, software development techniques, and systems engineering principles that promote effective information security within organizational systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>architectural designs that promote effective information security are identified;</li>
+<li>software development techniques that promote effective information security are identified;</li>
+<li>systems engineering principles that promote effective information security are identified;</li>
+<li>identified architectural designs that promote effective information security are employed;</li>
+<li>identified software development techniques that promote effective information security are employed; and</li>
+<li>identified systems engineering principles that promote effective information security are employed.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Security planning policy; procedures addressing system security plan development and implementation; procedures addressing system security plan reviews and updates; enterprise architecture documentation; system security plan; records of system security plan reviews and updates; system and communications protection policy; procedures addressing security engineering principles used in the specification, design, development, implementation, and modification of the system; security architecture documentation; security requirements and specifications for the system; system design documentation; system configuration settings and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with responsibility for determining information system security requirements; personnel with information system design, development, implementation, and modification responsibilities; personnel with security planning and system security plan implementation responsibilities; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for system security plan development, review, update, and approval; mechanisms supporting the system security plan; processes for applying security engineering principles in system specification, design, development, implementation, and modification; automated mechanisms supporting the application of security engineering principles in information system specification, design, development, implementation, and modification].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations apply systems security engineering principles to new development systems or systems undergoing major upgrades. For legacy systems, organizations apply systems security engineering principles to system upgrades and modifications to the extent feasible, given the current state of hardware, software, and firmware components within those systems. The application of systems security engineering concepts and principles helps to develop trustworthy, secure, and resilient systems and system components and reduce the susceptibility of organizations to disruptions, hazards, and threats. Examples of these concepts and principles include developing layered protections; establishing security policies, architecture, and controls as the foundation for design; incorporating security requirements into the system development life cycle; delineating physical and logical security boundaries; ensuring that developers are trained on how to build secure software; and performing threat modeling to identify use cases, threat agents, attack vectors and patterns, design patterns, and compensating controls needed to mitigate risk. Organizations that apply security engineering concepts and principles can facilitate the development of trustworthy, secure systems, system components, and system services; reduce risk to acceptable levels; and make informed risk-management decisions.</p>
+<p>NIST SP 800-160-1 provides guidance on systems security engineering.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Familiarity with security engineering principles and their successful application to your infrastructure will increase the security of your environment. NIST SP 800-160 System Security Engineering: Considerations for a Multidisciplinary Approach in the Engineering of Trustworthy Secure Systems can serve as a source of security engineering and design principles.</p>
+<p>Decide which designs and principles to apply. Some will not be possible or appropriate for a given company or for specific systems or components.</p>
+<p>Designs and principles should be applied to policies and security standards. Starting with the baseline configuration, they should be extended through all layers of the technology stack (e.g., hardware, software, firmware) and throughout all the components of the infrastructure. The application of these chosen designs and principles should drive you towards a secure architecture with the required security capabilities and intrinsic behaviors present throughout the lifecycle of your technology.</p>
+<p>As legacy components age, it may become increasingly difficult for those components to meet security principles and requirements. This should factor into life-cycle decisions for those components (e.g., replacing legacy hardware, upgrading or re-writing software, upgrading run-time environments).</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for developing strategies to protect data and harden your infrastructure. You are on a team responsible for performing a major upgrade to a legacy system. You refer to your documented security engineering principles [c]. Reviewing each, you decide which are appropriate and applicable [c]. You apply the chosen designs and principles when creating your design for the upgrade [f].</p>
+<p>You document the security requirements for the software and hardware changes to ensure the principles are followed. You review the upgrade at critical points in the workflow to ensure the requirements are met. You assist in updating the policies covering the use of the upgraded system so user behavior stays aligned with the principles.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does the organization have a defined system architecture [a,d]?</li>
+<li>Are system security engineering principles applied in the specification, design, development and implementation of the systems [d,e,f]?</li>
+</ul>
+
+', NULL, NULL, 37, 4, 19, NULL, NULL, 1216, NULL, N'Security Engineering', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5374, N'SC.L2-3.13.3', N'Separate user functionality from system management functionality.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>user functionality is identified;</li>
+<li>system management functionality is identified; and</li>
+<li>user functionality is separated from system management functionality.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing application partitioning; system design documentation; system configuration settings and associated documentation; system security plan; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developer].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Separation of user functionality from system management functionality].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>System management functionality includes functions necessary to administer databases, network components, workstations, or servers, and typically requires privileged user access. The separation of user functionality from system management functionality is physical or logical. Organizations can implement separation of system management functionality from user functionality by using different computers, different central processing units, different instances of operating systems, or different network addresses; virtualization techniques; or combinations of these or other methods, as appropriate. This type of separation includes web administrative interfaces that use separate authentication methods for users of any other system resources. Separation of system and user functionality may include isolating administrative interfaces on different domains and with additional access controls.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Prevent users and user services from accessing system management functionality on IT components (e.g., databases, network components, workstations, servers). This reduces the attack surface to those critical interfaces by limiting who can access and how they can be accessed. By separating the user functionality from system management functionality, the administrator or privileged functions are not available to the general user.</p>
+<p>The intent of this requirement is to ensure:</p>
+<ul>
+<li>general users are not permitted to perform system administration functions; and</li>
+<li>system administrators only perform system administration functions from their privileged account.</li>
+</ul>
+<p>This can be accomplished using separation like VLANs or logical separation using strong access control methods.</p>
+<div class="sub-header-2">Example</div>
+<p>As a system administrator, you are responsible for managing a number of core systems. Policy prevents you from conducting any administration from the computer or system account you use for day-to-day work [a,b]. The servers you manage also are isolated from the main corporate network. To work with them you use a special unique account to connect to a “jump” server that has access to the systems you routinely administer.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are physical or logical controls used to separate user functionality from system management-related functionality (e.g., to ensure that administration (e.g., privilege) options are not available to general users) [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 5, 19, NULL, NULL, 1216, NULL, N'Role Separation', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5375, N'SC.L2-3.13.4', N'Prevent unauthorized and unintended information transfer via shared system resources.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>unauthorized and unintended information transfer via shared system resources is prevented.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing application partitioning; system security plan; system design documentation; system configuration settings and associated documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developer].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Separation of user functionality from system management functionality].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>The control of information in shared system resources (e.g., registers, cache memory, main memory, hard disks) is also commonly referred to as object reuse and residual information protection. This requirement prevents information produced by the actions of prior users or roles (or the actions of processes acting on behalf of prior users or roles) from being available to any current users or roles (or current processes acting on behalf of current users or roles) that obtain access to shared system resources after those resources have been released back to the system. This requirement also applies to encrypted representations of information. This requirement does not address information remnants, which refers to residual representation of data that has been nominally deleted; covert channels (including storage or timing channels) where shared resources are manipulated to violate information flow restrictions; or components within systems for which there are only single users or roles.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>No shared system resource, such as cache memory, hard disks, registers, or main memory may pass information from one user to another user. In other words, when objects are reused no residual information should exist on that object. This protects the confidentiality of the information. This is typically a feature provided by operating system and software vendors.</p>
+<div class="sub-header-2">Example</div>
+<p>You are a system administrator responsible for creating and deploying the system hardening procedures for your company’s computers. You ensure that the computer baselines include software patches to prevent attackers from exploiting flaws in the processor architecture to read data (e.g., the Meltdown and Spectre exploits). You also verify that the computer operating system is configured to prevent users from accessing other users’ folders [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are shared system resources identified and documented [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 6, 19, NULL, NULL, 1216, NULL, N'Shared Resource Control', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5376, N'SC.L2-3.13.5', N'Implement subnetworks for publicly accessible system components that are physically or logically separated from internal networks.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>publicly accessible system components are identified; and</li>
+<li>subnetworks for publicly accessible system components are physically or logically separated from internal networks.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing boundary protection; system security plan; list of key internal boundaries of the system; system design documentation; boundary protection hardware and software; system configuration settings and associated documentation; enterprise security architecture documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developers; personnel with boundary protection responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing boundary protection capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Subnetworks that are physically or logically separated from internal networks are referred to as demilitarized zones (DMZs). DMZs are typically implemented with boundary control devices and techniques that include routers, gateways, firewalls, virtualization, or cloud- based technologies.</p>
+<p>NIST SP 800-41 provides guidance on firewalls and firewall policy. SP 800-125B provides guidance on security for virtualization technologies.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Separate the publicly accessible systems from the internal systems that need to be protected. Do not place internal systems on the same network as the publicly accessible systems and block access by default from DMZ networks to internal networks.</p>
+<p>One method of accomplishing this is to create a DMZ network, which enhances security by providing public access to a specific set of resources while preventing connections from those resources to the rest of the IT environment. Some OSAs achieve a similar result through the use of a cloud computing environment that is separated from the rest of the company’s infrastructure.</p>
+<div class="sub-header-2">Example</div>
+<p>The head of recruiting at your company wants to launch a website to post job openings and allow the public to download an application form [a]. After some discussion, your team realizes it needs to use a firewall to create a perimeter network to do this [b]. You host the server separately from the company’s internal network and make sure the network on which it resides is isolated with the proper firewall rules [b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are any system components reachable by the public (e.g., internet-facing web servers, VPN gateways, publicly accessible cloud services) [a]?</li>
+<li>Are publicly accessible system components on physically or logically separated subnetworks (e.g., isolated subnetworks using separate, dedicated VLAN segments such as DMZs) [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 7, 19, NULL, NULL, 1216, NULL, N'Public-Access System Separation', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5377, N'SC.L2-3.13.6', N'Deny network communications traffic by default and allow network communications traffic by exception (i.e., deny all, permit by exception).', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>network communications traffic is denied by default; and</li>
+<li>network communications traffic is allowed by exception.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing boundary protection; system security plan; system design documentation; system configuration settings and associated documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developer; personnel with boundary protection responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing traffic management at managed interfaces].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement applies to inbound and outbound network communications traffic at the system boundary and at identified points within the system. A deny-all, permit-by-exception network communications traffic policy ensures that only those connections which are essential and approved are allowed.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Block all traffic entering and leaving the network, but permit specific traffic based on organizational policies, exceptions, or criteria. This process of permitting only authorized traffic to the network is called whitelisting and limits the number of unintentional connections to the network.</p>
+<p>This requirement, SC.L2-3.13.6, requires a deny-all permit by exception approach for all network communications. In doing so, it adds specifics for SC.L2-3.13.1, which only requires monitoring, control, and protection of communication channels.</p>
+<div class="sub-header-2">Example</div>
+<p>You are setting up a new environment to house CUI. To properly isolate the CUI network, you install a firewall between it and other networks and set the firewall rules to deny all traffic [a]. You review each service and application that runs in the new environment and determine that you only need to allow http and https traffic outbound [b]. You test the functionality of the required services and make some needed adjustments, then comment each firewall rule so there is documentation of why it is required. You review the firewall rules on a regular basis to make sure no unauthorized changes were made.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are network communications traffic on relevant system components (e.g., host and network firewalls, routers, gateways) denied by default (e.g., configured with an implicit deny rule that takes effect in the absence of any other matching traffic rules) [a]?</li>
+<li>Are network communications traffic on relevant system components (e.g., host and network firewalls, routers, gateways) allowed by exception (e.g., configured with explicit allow rules that takes effect only when network traffic matches one or more rules) [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 8, 19, NULL, NULL, 1216, NULL, N'Network Communication By Exception', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5378, N'SC.L2-3.13.7', N'Prevent remote devices from simultaneously establishing non-remote connections with organizational systems and communicating via some other connection to resources in external networks (i.e., split tunneling).', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>remote devices are prevented from simultaneously establishing non-remote connections with the system and communicating via some other connection to resources in external networks (i.e., split tunneling).</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing boundary protection; system security plan; system design documentation; system hardware and software; system architecture; system configuration settings and associated documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developer; personnel with boundary protection responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing boundary protection capability; mechanisms supporting or restricting non-remote connections].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Split tunneling might be desirable by remote users to communicate with local system resources such as printers or file servers. However, split tunneling allows unauthorized external connections, making the system more vulnerable to attack and to exfiltration of organizational information. This requirement is implemented in remote devices (e.g., notebook computers, smart phones, and tablets) through configuration settings to disable split tunneling in those devices, and by preventing configuration settings from being readily configurable by users. This requirement is implemented in the system by the detection of split tunneling (or of configuration settings that allow split tunneling) in the remote device, and by prohibiting the connection if the remote device is using split tunneling.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Split tunneling for a remote user utilizes two connections: accessing resources on the internal network via a VPN and simultaneously accessing an external network such as a public network or the internet.</p>
+<p>Split tunneling presents a potential opportunity where an open unencrypted connection from a public network could allow an adversary to access resources on internal network. As a mitigation strategy, the split tunneling setting should be disabled on all devices so that all traffic, including traffic for external networks or the internet, goes through the VPN.</p>
+<div class="sub-header-2">Example</div>
+<p>You are a system administrator responsible for configuring the network to prevent remote users from using split tunneling. You review the configuration of remote user laptops. You discover that remote users are able to access files, email, database and other services through the VPN connection while also being able to print and access resources on their local network. You change the configuration settings for all company computers to disable split tunneling [a]. You test a laptop that has had the new hardening procedures applied and verify that all traffic from the laptop is now routed through the VPN connection.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does the system prevent remote devices that have established connections (e.g., remote laptops) with the system from communicating outside that communications path with resources on uncontrolled/unauthorized networks [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 9, 19, NULL, NULL, 1216, NULL, N'Split Tunneling', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5379, N'SC.L2-3.13.8', N'Implement cryptographic mechanisms to prevent unauthorized disclosure of CUI during transmission unless otherwise protected by alternative physical safeguards.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>cryptographic mechanisms intended to prevent unauthorized disclosure of CUI are identified;</li>
+<li>alternative physical safeguards intended to prevent unauthorized disclosure of CUI are identified; and</li>
+<li>either cryptographic mechanisms or alternative physical safeguards are implemented to prevent unauthorized disclosure of CUI during transmission.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing transmission confidentiality and integrity; system security plan; system design documentation; system configuration settings and associated documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developer].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Cryptographic mechanisms or mechanisms supporting or implementing transmission confidentiality; organizational processes for defining and implementing alternative physical safeguards].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement applies to internal and external networks and any system components that can transmit information including servers, notebook computers, desktop computers, mobile devices, printers, copiers, scanners, and facsimile machines. Communication paths outside the physical protection of controlled boundaries are susceptible to both interception and modification. Organizations relying on commercial providers offering transmission services as commodity services rather than as fully dedicated services (i.e., services which can be highly specialized to individual customer needs), may find it difficult to obtain the necessary assurances regarding the implementation of the controls for transmission confidentiality. In such situations, organizations determine what types of confidentiality services are available in commercial telecommunication service packages. If it is infeasible or impractical to obtain the necessary safeguards and assurances of the effectiveness of the safeguards through appropriate contracting vehicles, organizations implement compensating safeguards or explicitly accept the additional risk. An example of an alternative physical safeguard is a protected distribution system (PDS) where the distribution medium is protected against electronic or physical intercept, thereby ensuring the confidentiality of the information being transmitted.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>The intent of this requirement is to ensure CUI is cryptographically protected during transit, particularly on the internet. The most common way to accomplish this is to establish a TLS tunnel between the source and destination using the most current version of TLS. This requirement does not specify a mutually authenticated handshake, but mutual authentication is the most secure approach to creating a tunnel.</p>
+<p>Because the use of cryptography in this requirement is to protect the confidentiality of CUI, the cryptography used must meet the criteria specified in requirement SC.L2-3.13.11.</p>
+<p>This requirement, SC.L2-3.13.8, requires cryptographic mechanisms be used to prevent the disclosure of CUI in-transit and leverages SC.L2-3.13.11, which specifies that the algorithms used must be FIPS-validated cryptography.</p>
+<div class="sub-header-2">Example</div>
+<p>You are a system administrator responsible for configuring encryption on all devices that contain CUI. Because your users regularly store CUI on laptops and take them out of the office, you encrypt the hard drives with a FIPS-validated encryption tool built into the operating system. For users who need to share CUI, you install a Secure FTP server to allow CUI to be transmitted in a compliant manner [a]. You verify that the server is using a FIPS- validated encryption module by checking the NIST Cryptographic Module Validation Program website [c]. You turn on the “FIPS Compliance” setting for the server during configuration because that is what is required for this product in order to use only FIPS- validated cryptography [c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are cryptographic mechanisms used to prevent unauthorized disclosure of information during transmission unless otherwise protected by alternative physical measures (e.g., PDS) [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 10, 19, NULL, NULL, 1216, NULL, N'Data In Transit', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5380, N'SC.L2-3.13.9', N'Terminate network connections associated with communications sessions at the end of the sessions or after a defined period of inactivity.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>a period of inactivity to terminate network connections associated with communications sessions is defined;</li>
+<li>network connections associated with communications sessions are terminated at the end of the sessions; and</li>
+<li>network connections associated with communications sessions are terminated after the defined period of inactivity.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing network disconnect; system design documentation; system security plan; system configuration settings and associated documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developer].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing network disconnect capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>This requirement applies to internal and external networks. Terminating network connections associated with communications sessions include de-allocating associated TCP/IP address or port pairs at the operating system level, or de-allocating networking assignments at the application level if multiple application sessions are using a single, operating system-level network connection. Time periods of user inactivity may be established by organizations and include time periods by type of network access or for specific network accesses.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Prevent malicious actors from taking advantage of an open network session or an unattended computer at the end of the connection. Balance user work patterns and needs against security to determine the length of inactivity that will force a termination.</p>
+<p>This requirement, SC.L2-3.13.9, specifies network connections be terminated under certain conditions, which complements AC.L2-3.1.18 that specifies control of mobile device connections.</p>
+<div class="sub-header-2">Example</div>
+<p>You are an administrator of a server that provides remote access. Your company’s policies state that network connections must be terminated after being idle for 60 minutes [a]. You edit the server configuration file and set the timeout to 60 minutes and restart the remote access software [c]. You test the software and verify that the connection is terminated appropriately.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are the network connections requiring management and time-out for inactivity documented [a]?</li>
+<li>Are the network connections requiring management and time-out for inactivity configured and implemented [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 11, 19, NULL, NULL, 1216, NULL, N'Connections Termination', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5381, N'SC.L2-3.13.10', N'Establish and manage cryptographic keys for cryptography employed in organizational systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>cryptographic keys are established whenever cryptography is employed; and</li>
+<li>cryptographic keys are managed whenever cryptography is employed.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing cryptographic key establishment and management; system security plan; system design documentation; cryptographic mechanisms; system configuration settings and associated documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; personnel with responsibilities for cryptographic key establishment and management].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing cryptographic key establishment and management].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Cryptographic key management and establishment can be performed using manual procedures or mechanisms supported by manual procedures. Organizations define key management requirements in accordance with applicable federal laws, Executive Orders, policies, directives, regulations, and standards specifying appropriate options, levels, and parameters.</p>
+<p>NIST SP 800-56A and NIST SP 800-57-1 provide guidance on cryptographic key management and key establishment.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Develop processes and technical mechanisms to protect the cryptographic keys’ confidentiality, authenticity, and authorized use in accordance with industry standards and regulations. Key management systems provide oversight, assurance, and the capability to demonstrate the cryptographic keys are created in a secure manner and protected from loss or misuse throughout their lifecycle (e.g., active, expired, revoked). For a small number of keys, this can be accomplished with manual procedures and mechanisms. As the number of keys and cryptographic units increase, automation and tool support will be required.</p>
+<p>The first intent of this requirement is to ensure cryptographic keys are properly created in a secure manner that prevents them from being reproduced by an adversary. The second intent of this requirement is to ensure cryptographic keys are managed in a secure manner that prevents them from being stolen by an adversary.</p>
+<p>Key establishment involves the creation of keys and coordination among parties that will use the keys of the methodology for generating the final keying material. This is discussed in detail in SP 800-56A, B, and C.</p>
+<p>Key management involves protecting keys when they are distributed, when they are stored, when they are being used, and when they are being recovered.</p>
+<p>Key establishment best practices are identified in NIST SP 800-56A, B, and C. Key management best practices are identified in NIST SP 800-57 Parts 1, 2, and 3.</p>
+<p>This requirement, SC.L2-3.13.10, complements AC.L2-3.1.19 by specifying that any cryptographic keys in use must be protected.</p>
+<div class="sub-header-2">Example 1</div>
+<p>You are a system administrator responsible for providing key management. You have generated a public-private key pair to exchange CUI [a]. You require all system administrators to read the key management policy before you allow them to install the private key on their machines [b]. No one else is allowed to know or have a copy of the private key per the policy. You provide the public key to the other parties who will be sending you CUI and test the Public Key Infrastructure (PKI) to ensure the encryption is working [a]. You set a revocation period of one year on all your certificates per organizational policy [b].</p>
+<div class="sub-header-2">Example 2</div>
+<p>You encrypt all of your company’s computers using the disk encryption utility built into the operating system. As you configure encryption on each device, it generates a cryptographic key. You associate each key with the correct computer in your inventory spreadsheet and restrict access to the spreadsheet to the system administrators whose work role requires them to manage the computers [b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are cryptographic keys established whenever cryptography is employed (e.g., digital signatures, authentication, authorization, transport, or other cryptographic mechanisms) [a]?</li>
+<li>Are cryptographic keys maintained whenever cryptography is employed (e.g., key storage, backup, recovery, revocation, destruction, etc.) [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 12, 19, NULL, NULL, 1216, NULL, N'Key Management', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5382, N'SC.L2-3.13.11', N'Employ FIPS-validated cryptography when used to protect the confidentiality of CUI.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>FIPS-validated cryptography is employed to protect the confidentiality of CUI.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing cryptographic protection; system security plan; system design documentation; system configuration settings and associated documentation; cryptographic module validation certificates; list of FIPS-validated cryptographic modules; system audit logs and records; any other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developers; personnel with responsibilities for cryptographic protection].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing cryptographic protection].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Cryptography can be employed to support many security solutions including the protection of controlled unclassified information, the provision of digital signatures, and the enforcement of information separation when authorized individuals have the necessary clearances for such information but lack the necessary formal access approvals. Cryptography can also be used to support random number generation and hash generation. Cryptographic standards include FIPS-validated cryptography and/or NSA-approved cryptography.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>FIPS-validated cryptography means the cryptographic module has to have been tested and validated to meet FIPS 140-2 requirements. Simply using an approved algorithm is not sufficient – the module (software and/or hardware) used to implement the algorithm must be separately validated under FIPS 140. Accordingly, FIPS-validated cryptography is required to protect CUI when transmitted or stored outside the protected environment of the covered OSA information system (including wireless/remote access). Encryption used for other purposes, such as within applications or devices within the protected environment of the covered OSA information system, would not need to use FIPS-validated cryptography.</p>
+<p>This requirement, SC.L2-3.13.11, complements AC.L2-3.1.19, MP.L2-3.8.6, SC.L2-3.13.8, and SC.L2-3.13.16 by specifying that FIPS-validated cryptography must be used. While FIPS- validated modules and algorithms are critical for protecting CUI, in limited cases Enduring Exceptions and temporary deficiencies may apply when implementing such cryptographic mechanisms.</p>
+<div class="sub-header-2">Example</div>
+<p>You are a system administrator responsible for deploying encryption on all devices that contain CUI. You must ensure that the encryption you use on the devices is FIPS-validated cryptography [a]. An employee informs you of a need to carry a large volume of CUI offsite and asks for guidance on how to do so. You provide the user with disk encryption software that you have verified via the NIST website that uses a CMVP-validated encryption module [a]. Once the encryption software is active, the user copies the CUI data onto the drive for transport.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is cryptography implemented to protect the confidentiality of CUI at rest and in transit, through the configuration of systems and applications or through the use of encryption tools [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 13, 19, NULL, NULL, 1216, NULL, N'CUI Encryption', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5383, N'SC.L2-3.13.12', N'Prohibit remote activation of collaborative computing devices and provide indication of devices in use to users present at the device.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>collaborative computing devices are identified;</li>
+<li>collaborative computing devices provide indication to users of devices in use; and</li>
+<li>remote activation of collaborative computing devices is prohibited.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing collaborative computing; access control policy and procedures; system security plan; system design documentation; system audit logs and records; system configuration settings and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developer; personnel with responsibilities for managing collaborative computing devices].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing management of remote activation of collaborative computing devices; mechanisms providing an indication of use of collaborative computing devices].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Collaborative computing devices include networked white boards, cameras, and microphones. Indication of use includes signals to users when collaborative computing devices are activated. Dedicated video conferencing systems, which rely on one of the participants calling or connecting to the other party to activate the video conference, are excluded.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Notification that a device is in use can include an indicator light that turns on or a specific text window that appears on screen. If a device does not have the means to alert a user when in use, the organization should provide manual means. Manual means can include, as necessary:</p>
+<ul>
+<li>paper notification on entryways; and</li>
+<li>locking entryways when a collaborative computing device is in use.</li>
+</ul>
+<p>This requirement is not intended to include technologies that enable users to share the contents of their computer screens via the internet.</p>
+<div class="sub-header-2">Example</div>
+<p>A group of remote employees at your company routinely collaborate using cameras and microphones attached to their computers [a]. To prevent the misuse of these devices, you disable the ability to turn on cameras or microphones remotely [c]. You ensure the machines alert users when the camera or microphone are in use with a light beside the camera and an onscreen notification [b]. Although remote activation is blocked, this enables users to see if the devices are active.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are the collaborative computing devices configured to provide indication to users when in use (e.g., a light, text notification, or audio tone) or are users alerted before entering a space (e.g., written notice posted outside the space) where they are in use [b]?</li>
+<li>Are the collaborative computing devices configured to prevent them from being turned on without user interaction or consent [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 14, 19, NULL, NULL, 1216, NULL, N'Collaborative Device Control', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5384, N'SC.L2-3.13.13', N'Control and monitor the use of mobile code.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>use of mobile code is controlled; and</li>
+<li>use of mobile code is monitored.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing mobile code; mobile code usage restrictions, mobile code implementation policy and procedures; system audit logs and records; system security plan; list of acceptable mobile code and mobile code technologies; list of unacceptable mobile code and mobile technologies; authorization records; system monitoring records; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; personnel with responsibilities for managing mobile code].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational process for controlling, authorizing, monitoring, and restricting mobile code; mechanisms supporting or implementing the management of mobile code; mechanisms supporting or implementing the monitoring of mobile code].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Mobile code technologies include Java, JavaScript, ActiveX, Postscript, PDF, Flash animations, and VBScript. Decisions regarding the use of mobile code in organizational systems are based on the potential for the code to cause damage to the systems if used maliciously. Usage restrictions and implementation guidance apply to the selection and use of mobile code installed on servers and mobile code downloaded and executed on individual workstations, notebook computers, and devices (e.g., smart phones). Mobile code policy and procedures address controlling or preventing the development, acquisition, or introduction of unacceptable mobile code in systems, including requiring mobile code to be digitally signed by a trusted source.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Ensure mobile code is authorized to execute in company systems only in accordance with policy and technical configuration, and that unauthorized mobile code is not. Monitor the use of mobile code through boundary devices (e.g., firewalls), audit logs, or security utilities (e.g., mobile device management, advanced endpoint protection) and implement remediation activities as needed.</p>
+<p>The first intent of this requirement is to ensure the limits of mobile code usage and usage restrictions are documented and enforced. This includes documenting all authorizations for the use of mobile code and ensuring it is not used in other ways. Usage restrictions and implementation guidance apply to the selection and use of mobile code installed on servers and mobile code downloaded and executed on individual workstations and devices to include all mobile devices and smart phones.</p>
+<p>The second intent is to monitor the use of mobile code and implement remediation steps if its use does not align with policy.</p>
+<div class="sub-header-2">Example</div>
+<p>Your company has decided to prohibit the use of Flash, ActiveX, and Java plug-ins for web browsers on all of its computers [a]. To enforce this policy you configure the computer baseline configuration to disable and deny the execution of mobile code [a]. You implement an exception process to re-enable mobile code execution only for those users with a legitimate business need [a].</p>
+<p>One department complains that a web application they need to perform their job no longer works. You meet with them and verify that the web application uses ActiveX in the browser. You submit a change request with the Change Review Board. Once the change is approved, you reconfigure the department’s computers to allow the running of ActiveX in the browser. You also configure the company firewall to alert you if ActiveX is used by any website but the allowed one [b]. You set a reminder for yourself to check in with the department at the end of the year to verify they still need that web application.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are there defined limits of mobile code usage and established usage restrictions, which specifically authorize use of mobile code (e.g., Java, JavaScript, ActiveX, PDF, Flash, Shockwave, Postscript, VBScript) within the information system [a]?</li>
+<li>Is the use of mobile code documented, monitored, and managed (e.g., Java, JavaScript, ActiveX, PDF, Flash, Shockwave, Postscript, VBScript) [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 15, 19, NULL, NULL, 1216, NULL, N'Mobile Code', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5385, N'SC.L2-3.13.14', N'Control and monitor the use of Voice over Internet Protocol (VoIP) technologies.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>use of Voice over Internet Protocol (VoIP) technologies is controlled; and</li>
+<li>use of Voice over Internet Protocol (VoIP) technologies is monitored.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing VoIP; VoIP usage restrictions; VoIP implementation guidance; system security plan; system design documentation; system audit logs and records; system configuration settings and associated documentation; system monitoring records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; personnel with responsibilities for managing VoIP].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational process for authorizing, monitoring, and controlling VoIP; mechanisms supporting or implementing authorizing, monitoring, and controlling VoIP].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>VoIP has different requirements, features, functionality, availability, and service limitations when compared with the Plain Old Telephone Service (POTS) (i.e., the standard telephone service). In contrast, other telephone services are based on high-speed, digital communications lines, such as Integrated Services Digital Network (ISDN) and Fiber Distributed Data Interface (FDDI). The main distinctions between POTS and non-POTS services are speed and bandwidth. To address the threats associated with VoIP, usage restrictions and implementation guidelines are based on the potential for the VoIP technology to cause damage to the system if it is used maliciously. Threats to VoIP are similar to those inherent with any Internet-based application.</p>
+<p>NIST SP 800-58 provides guidance on Voice Over IP Systems.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Controlling VoIP technologies starts with establishing guidelines and enforcing the appropriate usage that is described in organizational policies. Monitoring should include the users’ activity for anything other than what is permitted and authorized and detection of insecure or unauthorized use of the VoIP technology. Security concerns for VoIP include eavesdropping on calls and using ID spoofing to impersonate trusted individuals.</p>
+<p>Selecting a solution that can encrypt VoIP traffic is helpful in maintaining the confidentiality and integrity of the voice data.</p>
+<div class="sub-header-2">Example</div>
+<p>You are a system administrator responsible for the VoIP system. You configure VoIP for new users after being notified that they have signed the Acceptable Use Policy for VoIP technology [a]. You verify that the VoIP solution is configured to use encryption and have enabled requirements for passwords on voice mailboxes and on phone extension management. You require phone system administrators to log in using multifactor authentication when managing the system [a]. You add the VoIP software to the list of applications that are patched monthly as needed [a,b]. Finally, you configure the VoIP system to send logs to your log aggregator so that they can be correlated with those from other systems and examined for signs of suspicious activity [b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are VoIP technologies (e.g., approved and managed products or solutions) that may or may not be used in the system defined [a]?</li>
+<li>Is monitoring for unapproved VoIP technologies or unapproved use of the allowed VoIP solutions employed [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 16, 19, NULL, NULL, 1216, NULL, N'Voice Over Internet Protocol', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5386, N'SC.L2-3.13.15', N'Protect the authenticity of communications sessions.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the authenticity of communications sessions is protected.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing session authenticity; system security plan; system design documentation; system configuration settings and associated documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing session authenticity]</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Authenticity protection includes protecting against man-in-the-middle attacks, session hijacking, and the insertion of false information into communications sessions. This requirement addresses communications protection at the session versus packet level (e.g., sessions in service-oriented architectures providing web-based services) and establishes grounds for confidence at both ends of communications sessions in ongoing identities of other parties and in the validity of information transmitted.</p>
+<p>NIST SP 800-77, NIST SP 800-95, and NIST SP 800-113 provide guidance on secure communications sessions.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>The intent of this requirement is to ensure a trust relationship is established between both ends of a communication session. Each end can be assured that the other end is who it is supposed to be. This is often implemented using a mutual authentication handshake when the session is established, especially between devices. Session authenticity is usually provided by a security protocol enforced for a communication session. Choosing and enforcing a protocol will provide authenticity throughout a communications session.</p>
+<div class="sub-header-2">Example</div>
+<p>You are a system administrator responsible for ensuring that the two-factor user authentication mechanism for the servers is configured correctly. You purchase and maintain the digital certificate and replace it with a new one before the old one expires. You ensure the TLS configuration settings on the web servers, VPN solution, and other components that use TLS are correct, using secure settings that address risks against attacks on the encrypted sessions [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is a communications protocol used that ensures the sending and receiving parties do not change during a communications session [a]?</li>
+<li>Are controls in place to validate the identities and information transmitted to protect against man-in-the-middle attacks, session hijacking, and insertion of false information into communications sessions [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 17, 19, NULL, NULL, 1216, NULL, N'Communications Authenticity', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5387, N'SC.L2-3.13.16', N'Protect the confidentiality of CUI at rest.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the confidentiality of CUI at rest is protected.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing protection of information at rest; system security plan; system design documentation; list of information at rest requiring confidentiality protections; system configuration settings and associated documentation; cryptographic mechanisms and associated configuration documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; system developer].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting or implementing confidentiality protections for information at rest].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Information at rest refers to the state of information when it is not in process or in transit and is located on storage devices as specific components of systems. The focus of protection at rest is not on the type of storage device or the frequency of access but rather the state of the information. Organizations can use different mechanisms to achieve confidentiality protections, including the use of cryptographic mechanisms and file share scanning. Organizations may also use other controls including secure off-line storage in lieu of online storage when adequate protection of information at rest cannot otherwise be achieved or continuous monitoring to identify malicious code at rest.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>CUI at rest means information that is not moving through the network; typically this means data currently stored on hard drives, media, and mobile devices. Implement the necessary security controls to protect the confidentiality of CUI at rest. Although an approved encryption method protects data stored at rest, there are other technical and physical solutions. The methods chosen should depend on the environment and business needs.</p>
+<p>Implementing encryption for CUI is one approach to this requirement, but it is not mandatory. Physical security is often employed to restrict access to CUI, particularly when it resides on servers within a company’s offices. Other approaches for protecting CUI include system-related protections such as configurations and rule sets for firewalls, gateways, intrusion detection/prevention systems, filtering routers, and authenticator content that eliminate attempts at exfiltration. You may also employ other security requirements including secure off-line storage.</p>
+<p>Because the use of cryptography in this requirement is to protect the confidentiality of CUI, the cryptography used must meet the criteria specified in requirement SC.L2-3.13.11.</p>
+<p>This requirement, SC.L2-3.13.16, specifies confidentially be provided for CUI at rest and complements MP.L2-3.8.9, which specifies confidentially of CUI at backup storage locations. This requirement, SC.L2-3.13.16, also leverages SC.L2-3.13.11, which specifies that the algorithms used must be FIPS-validated cryptography.</p>
+<div class="sub-header-2">Example 1</div>
+<p>Your company has a policy stating CUI must be protected at rest and you work to enforce that policy. You research Full Disk Encryption (FDE) products that meet the FIPS encryption requirement. After testing, you deploy the encryption to all computers to protect CUI at rest [a].</p>
+<div class="sub-header-2">Example 2</div>
+<p>You have used encryption to protect the CUI on most of the computers at your company, but you have some devices that do not support encryption. You create a policy requiring these devices to be signed out when needed, stay in possession of the signer when checked out, and to be signed back in and locked up in a secured closet when the user is done with the device [a]. At the end of the day each Friday, you audit the sign-out sheet and make sure all devices are returned to the closet.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is the confidentiality of CUI at rest protected using encryption of storage devices and/or appropriate physical methods [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 18, 19, NULL, NULL, 1216, NULL, N'Data At Rest', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5388, N'SI.L2-3.14.1', N'Identify, report, and correct system flaws in a timely manner.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the time within which to identify system flaws is specified;</li>
+<li>system flaws are identified within the specified time frame;</li>
+<li>the time within which to report system flaws is specified;</li>
+<li>system flaws are reported within the specified time frame;</li>
+<li>the time within which to correct system flaws is specified; and</li>
+<li>system flaws are corrected within the specified time frame.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and information integrity policy; procedures addressing flaw remediation; procedures addressing configuration management; system security plan; list of flaws and vulnerabilities potentially affecting the system; list of recent security flaw remediation actions performed on the system (e.g., list of installed patches, service packs, hot fixes, and other software updates to correct system flaws); test results from the installation of software and firmware updates to correct system flaws; installation/change control records for security-relevant software and firmware updates; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; personnel installing, configuring, and maintaining the system; personnel with responsibility for flaw remediation; personnel with configuration management responsibility].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for identifying, reporting, and correcting system flaws; organizational process for installing software and firmware updates; mechanisms supporting or implementing reporting, and correcting system flaws; mechanisms supporting or implementing testing software and firmware updates].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations identify systems that are affected by announced software and firmware flaws including potential vulnerabilities resulting from those flaws and report this information to designated personnel with information security responsibilities. Security-relevant updates include patches, service packs, hot fixes, and anti-virus signatures. Organizations address flaws discovered during security assessments, continuous monitoring, incident response activities, and system error handling. Organizations can take advantage of available resources such as the Common Weakness Enumeration (CWE) database or Common Vulnerabilities and Exposures (CVE) database in remediating flaws discovered in organizational systems.</p>
+<p>Organization-defined time periods for updating security-relevant software and firmware may vary based on a variety of factors including the criticality of the update (i.e., severity of the vulnerability related to the discovered flaw). Some types of flaw remediation may require more testing than other types of remediation. NIST SP 800-40 provides guidance on patch management technologies.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>All software and firmware have potential flaws. Many vendors work to remedy those flaws by releasing vulnerability information and updates to their software and firmware. OSAs must have a process to review relevant vendor notifications and updates about problems or weaknesses. After reviewing the information, the OSA must implement a patch management process that allows for software and firmware flaws to be fixed without adversely affecting the system functionality. OSAs must define the time frames within which flaws are identified, reported, and corrected for all systems. OSAs should consider purchasing support from their vendors to ensure timely access to updates.</p>
+<div class="sub-header-2">Example</div>
+<p>You know that software vendors typically release patches, service packs, hot fixes, etc. and want to make sure your software is up to date. You develop a policy that requires checking vendor websites for flaw notifications every week [a]. The policy further requires that those flaws be assessed for severity and patched on end-user computers once each week and servers once each month [c,e]. Consistent with that policy, you configure the system to check for updates weekly or daily depending on the criticality of the software [b,e]. Your team reviews available updates and implements the applicable ones according to the defined schedule [f].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is the time frame (e.g., a set number of days) within which system flaw identification activities (e.g., vulnerability scans, configuration scans, manual review) must be performed defined and documented [a]?</li>
+<li>Are system flaws (e.g., vulnerabilities, misconfigurations) identified in accordance with the specified time frame [b]?</li>
+<li>Is the time frame (e.g., a set number of days dependent on the assessed severity of a flaw) within which system flaws must be corrected defined and documented [e]?</li>
+<li>Are system flaws (e.g., applied security patches, made configuration changes, or implemented workarounds or mitigations) corrected in accordance with the specified time frame [f]?</li>
+</ul>
+
+', NULL, NULL, 37, 5, 19, NULL, NULL, 1217, NULL, N'Flaw Remediation', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5389, N'SI.L2-3.14.2', N'Provide protection from malicious code at designated locations within organizational systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>designated locations for malicious code protection are identified; and</li>
+<li>protection from malicious code at designated locations is provided.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and information integrity policy; configuration management policy and procedures; procedures addressing malicious code protection; records of malicious code protection updates; malicious code protection mechanisms; system security plan; system configuration settings and associated documentation; record of actions initiated by malicious code protection mechanisms in response to malicious code detection; scan results from malicious code protection mechanisms; system design documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; personnel installing, configuring, and maintaining the system; personnel with responsibility for malicious code protection; personnel with configuration management responsibility].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for employing, updating, and configuring malicious code protection mechanisms; organizational process for addressing false positives and resulting potential impact; mechanisms supporting or implementing employing, updating, and configuring malicious code protection mechanisms; mechanisms supporting or implementing malicious code scanning and subsequent actions].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Designated locations include system entry and exit points which may include firewalls, remote access servers, workstations, electronic mail servers, web servers, proxy servers, notebook computers, and mobile devices. Malicious code includes viruses, worms, Trojan horses, and spyware. Malicious code can be encoded in various formats (e.g., UUENCODE,</p>
+<p>Unicode), contained within compressed or hidden files, or hidden in files using techniques such as steganography. Malicious code can be inserted into systems in a variety of ways including web accesses, electronic mail, electronic mail attachments, and portable storage devices. Malicious code insertions occur through the exploitation of system vulnerabilities.</p>
+<p>Malicious code protection mechanisms include anti-virus signature definitions and reputation-based technologies. A variety of technologies and methods exist to limit or eliminate the effects of malicious code. Pervasive configuration management and comprehensive software integrity controls may be effective in preventing execution of unauthorized code. In addition to commercial off-the-shelf software, malicious code may also be present in custom-built software. This could include logic bombs, back doors, and other types of cyber-attacks that could affect organizational missions/business functions. Traditional malicious code protection mechanisms cannot always detect such code. In these situations, organizations rely instead on other safeguards including secure coding practices, configuration management and control, trusted procurement processes, and monitoring technologies to help ensure that software does not perform functions other than the functions intended. NIST SP 800-83 provides guidance on malware incident prevention.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>A designated location may be a network device such as a firewall or an end user’s computer.</p>
+<p>Malicious code, which can be delivered by a range of means (e.g., email, removable media, or websites), includes the following:</p>
+<ul>
+<li>virus – program designed to damage, steal information, change data, send email, show messages, or any combination of these things;</li>
+<li>spyware – program designed to gather information about a person’s activity in secret when they click on a link, usually installed without the person knowing ;</li>
+<li>trojan horse – type of malware made to look like legitimate software and used by cyber criminals to get access to a company’s systems; and</li>
+<li>ransomware – type of malware that threatens to publish the victim’s data or perpetually block access to it unless a ransom is paid.</li>
+</ul>
+<p>Use anti-malware tools to stop or lessen the impact of malicious code.</p>
+<div class="sub-header-2">Example</div>
+<p>You are buying a new computer and want to protect your company’s information from viruses, spyware, etc. You buy and install anti-malware software [a,b].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are system components (e.g., workstations, servers, email gateways, mobile devices) for which malicious code protection must be provided identified and documented [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 6, 19, NULL, NULL, 1217, NULL, N'Malicious Code Protection', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5390, N'SI.L2-3.14.3', N'Monitor system security alerts and advisories and take action in response.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>response actions to system security alerts and advisories are identified;</li>
+<li>system security alerts and advisories are monitored; and</li>
+<li>actions in response to system security alerts and advisories are taken.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and information integrity policy; procedures addressing security alerts, advisories, and directives; system security plan; records of security alerts and advisories; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Personnel with security alert and advisory responsibilities; personnel implementing, operating, maintaining, and using the system; personnel, organizational elements, and external organizations to whom alerts, advisories, and directives are to be disseminated; system or network administrators; personnel with information security responsibilities].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for defining, receiving, generating, disseminating, and complying with security alerts, advisories, and directives; mechanisms supporting or implementing definition, receipt, generation, and dissemination of security alerts, advisories, and directives; mechanisms supporting or implementing security directives].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>There are many publicly available sources of system security alerts and advisories. The United States Computer Emergency Readiness Team (US-CERT) generates security alerts and advisories to maintain situational awareness across the federal government and in nonfederal organizations. Software vendors, subscription services, and relevant industry information sharing and analysis centers (ISACs) may also provide security alerts and advisories. Examples of response actions include notifying relevant external organizations, for example, external mission/business partners, supply chain partners, external service providers, and peer or supporting organizations.</p>
+<p>NIST SP 800-161 provides guidance on supply chain risk management.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Solicit and receive security alerts, advisories, and directives from reputable external organizations. Identify sources relevant to the industry and technology used by your company. Methods to receive alerts and advisories may include:</p>
+<ul>
+<li>signing up for email distributions;</li>
+<li>subscribing to RSS feeds; and</li>
+<li>attending meetings.</li>
+</ul>
+<p>Review alerts and advisories for applicability as they are received. The frequency of the reviews should be based on the frequency of the alerts and advisories to ensure you have the most up-to-date information.</p>
+<p>External alerts and advisories may prompt you to generate internal security alerts, advisories, or directives, and share these with all personnel with a need-to-know. The individuals should assess the risk related to a given alert and act to respond as appropriate. Sometimes it may require a configuration update. Other times, the information may also require adjusting system architecture in order to thwart a threat described in an advisory.</p>
+<div class="sub-header-2">Example</div>
+<p>You monitor security advisories each week. You review the alert emails and online subscription service alerts to determine which ones apply [b]. You create a list of the applicable alerts and research what steps you need to take to address them. Next, you generate a plan that you review with your change management group so that the work can be scheduled [c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are the responses to system security alerts and advisories identified in relation to the assessed severity of potential flaws (e.g., communicating with responsible personnel, initiating vulnerability scans, initiating system flaw remediation activities) [a]?</li>
+<li>Are system security alerts and advisories addressed (e.g., assessing potential severity or likelihood, communicating with responsible personnel, initiating vulnerability scans, initiating system flaw remediation activities) [a,c]?</li>
+</ul>
+
+', NULL, NULL, 37, 7, 19, NULL, NULL, 1217, NULL, N'Security Alerts & Advisories', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5391, N'SI.L2-3.14.4', N'Update malicious code protection mechanisms when new releases are available.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>malicious code protection mechanisms are updated when new releases are available.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and information integrity policy; configuration management policy and procedures; procedures addressing malicious code protection; malicious code protection mechanisms; records of malicious code protection updates; system security plan; system design documentation; system configuration settings and associated documentation; scan results from malicious code protection mechanisms; record of actions initiated by malicious code protection mechanisms in response to malicious code detection; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; personnel installing, configuring, and maintaining the system; personnel with responsibility for malicious code protection; personnel with configuration management responsibility].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for employing, updating, and configuring malicious code protection mechanisms; organizational process for addressing false positives and resulting potential impact; mechanisms supporting or implementing malicious code protection mechanisms (including updates and configurations); mechanisms supporting or implementing malicious code scanning and subsequent actions].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Malicious code protection mechanisms include anti-virus signature definitions and reputation-based technologies. A variety of technologies and methods exist to limit or eliminate the effects of malicious code. Pervasive configuration management and comprehensive software integrity controls may be effective in preventing execution of unauthorized code. In addition to commercial off-the-shelf software, malicious code may also be present in custom-built software. This could include logic bombs, back doors, and other types of cyber-attacks that could affect organizational missions/business functions.</p>
+<p>Traditional malicious code protection mechanisms cannot always detect such code. In these situations, organizations rely instead on other safeguards including secure coding practices, configuration management and control, trusted procurement processes, and monitoring technologies to help ensure that software does not perform functions other than the functions intended.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Malware changes on an hourly or daily basis, and it is important to update detection and protection mechanisms frequently to maintain the effectiveness of the protection.</p>
+<div class="sub-header-2">Example</div>
+<p>You have installed anti-malware software to protect a computer from malicious code. Knowing that malware evolves rapidly, you configure the software to automatically check for malware definition updates every day and update as needed [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is there a defined frequency by which malicious code protection mechanisms must be updated (e.g., frequency of automatic updates or manual processes) [a]?</li>
+</ul>
+
+', NULL, NULL, 37, 8, 19, NULL, NULL, 1217, NULL, N'Update Malicious Code Protection', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5392, N'SI.L2-3.14.5', N'Perform periodic scans of organizational systems and real-time scans of files from external sources as files are downloaded, opened, or executed.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the frequency for malicious code scans is defined;</li>
+<li>malicious code scans are performed with the defined frequency; and</li>
+<li>real-time malicious code scans of files from external sources as files are downloaded, opened, or executed are performed.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and information integrity policy; configuration management policy and procedures; procedures addressing malicious code protection; malicious code protection mechanisms; records of malicious code protection updates; system security plan; system design documentation; system configuration settings and associated documentation; scan results from malicious code protection mechanisms; record of actions initiated by malicious code protection mechanisms in response to malicious code detection; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; personnel installing, configuring, and maintaining the system; personnel with responsibility for malicious code protection; personnel with configuration management responsibility].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for employing, updating, and configuring malicious code protection mechanisms; organizational process for addressing false positives and resulting potential impact; mechanisms supporting or implementing malicious code protection mechanisms (including updates and configurations); mechanisms supporting or implementing malicious code scanning and subsequent actions].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Periodic scans of organizational systems and real-time scans of files from external sources can detect malicious code. Malicious code can be encoded in various formats (e.g.,</p>
+<p>UUENCODE, Unicode), contained within compressed or hidden files, or hidden in files using techniques such as steganography. Malicious code can be inserted into systems in a variety of ways including web accesses, electronic mail, electronic mail attachments, and portable storage devices. Malicious code insertions occur through the exploitation of system vulnerabilities.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Use anti-malware software to scan for and identify viruses in your computer systems and determine how often scans are conducted. Real-time scans look at the system whenever new files are downloaded, opened, and saved. Periodic scans check previously saved files against updated malware information.</p>
+<div class="sub-header-2">Example</div>
+<p>You work with your company’s email provider to enable enhanced protections that will scan all attachments to identify and quarantine those that may be harmful prior to a user opening them [c]. In addition, you configure antivirus software on each computer to scan for malicious code every day [a,b]. The software also scans files that are downloaded or copied from removable media such as USB drives. It quarantines any suspicious files and notifies the security team [c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are files from media (e.g., USB drives, CD-ROM) included in the definition of external sources and are they being scanned [c]?</li>
+</ul>
+
+', NULL, NULL, 37, 9, 19, NULL, NULL, 1217, NULL, N'System & File Scanning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5393, N'SI.L2-3.14.6', N'Monitor organizational systems, including inbound and outbound communications traffic, to detect attacks and indicators of potential attacks.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>the system is monitored to detect attacks and indicators of potential attacks;</li>
+<li>inbound communications traffic is monitored to detect attacks and indicators of potential attacks; and</li>
+<li>outbound communications traffic is monitored to detect attacks and indicators of potential attacks.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and information integrity policy; procedures addressing system monitoring tools and techniques; continuous monitoring strategy; system and information integrity policy; procedures addressing system monitoring tools and techniques; facility diagram or layout; system security plan; system monitoring tools and techniques documentation; system design documentation; locations within system where monitoring devices are deployed; system protocols; system configuration settings and associated documentation; system audit logs and records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; personnel installing, configuring, and maintaining the system; personnel with responsibility monitoring the system; personnel with responsibility for the intrusion detection system].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for system monitoring; mechanisms supporting or implementing intrusion detection capability and system monitoring; mechanisms supporting or implementing system monitoring capability; organizational processes for intrusion detection and system monitoring; mechanisms supporting or implementing the monitoring of inbound and outbound communications traffic].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>System monitoring includes external and internal monitoring. External monitoring includes the observation of events occurring at the system boundary (i.e., part of perimeter defense and boundary protection). Internal monitoring includes the observation of events occurring within the system. Organizations can monitor systems, for example, by observing audit record activities in real time or by observing other system aspects such as access patterns, characteristics of access, and other actions. The monitoring objectives may guide determination of the events. System monitoring capability is achieved through a variety of tools and techniques (e.g., intrusion detection systems, intrusion prevention systems, malicious code protection software, scanning tools, audit record monitoring software, network monitoring software). Strategic locations for monitoring devices include selected perimeter locations and near server farms supporting critical applications, with such devices being employed at managed system interfaces. The granularity of monitoring information collected is based on organizational monitoring objectives and the capability of systems to support such objectives.</p>
+<p>System monitoring is an integral part of continuous monitoring and incident response programs. Output from system monitoring serves as input to continuous monitoring and incident response programs. A network connection is any connection with a device that communicates through a network (e.g., local area network, Internet). A remote connection is any connection with a device communicating through an external network (e.g., the Internet). Local, network, and remote connections can be either wired or wireless.</p>
+<p>Unusual or unauthorized activities or conditions related to inbound/outbound communications traffic include internal traffic that indicates the presence of malicious code in systems or propagating among system components, the unauthorized exporting of information, or signaling to external systems. Evidence of malicious code is used to identify potentially compromised systems or system components. System monitoring requirements, including the need for specific types of system monitoring, may be referenced in other requirements.</p>
+<p>NIST SP 800-94 provides guidance on intrusion detection and prevention systems.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Think of indicators of attack as a set of footprints an adversary leaves during an attack. Indicators of attack provide information on the steps the adversary followed and its intent. Indicators of attacks on organizational systems may include:</p>
+<ul>
+<li>internal traffic that indicates the presence of malicious code;</li>
+<li>anomalous activity detected during non-business hours;</li>
+<li>unauthorized data leaving the organization; and</li>
+<li>communicating to external information systems.</li>
+</ul>
+<p>To detect attacks and indicators of attacks, deploy monitoring devices or agents. Place these sensors at strategic points within the systems and networks to collect essential information. Strategic points include internal and external system boundaries. Monitor both inbound traffic and outbound traffic as well as actions on hosts.</p>
+<p>This requirement, SI.L2-3.14.6, provides details for the communications of organizational systems. SI.L2-3.14.6 supports the requirement AU.L2-3.3.1, which involves creating and retaining records for monitoring, analysis, and investigations.</p>
+<div class="sub-header-2">Example</div>
+<p>It is your job to look for known indicators of attack or anomalous activity within your systems and communications traffic [a,b,c]. Because these indicators can show up in a variety of places on your network, you have created a checklist of places to check each week. These include the office firewall logs, the audit logs of the file server where CUI is stored, and the connection log for your VPN gateway [b].</p>
+<p>You conduct additional reviews when you find an indicator, or something that does not perform as it should [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are details provided for the methodology of determining attacks and indicators of attack [a]?</li>
+<li>Are monitoring devices deployed within the information system to collect information that may indicate an attack [a]?</li>
+<li>Are communications traffic flows understood and is there a deployed capability to review that traffic [b,c]?</li>
+</ul>
+
+', NULL, NULL, 37, 10, 19, NULL, NULL, 1217, NULL, N'Monitor Communications For Attacks', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5394, N'SI.L2-3.14.7', N'Identify unauthorized use of organizational systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>authorized use of the system is defined; and</li>
+<li>unauthorized use of the system is identified.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Continuous monitoring strategy; system and information integrity policy; procedures addressing system monitoring tools and techniques; facility diagram/layout; system security plan; system design documentation; system monitoring tools and techniques documentation; locations within system where monitoring devices are deployed; system configuration settings and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System or network administrators; personnel with information security responsibilities; personnel installing, configuring, and maintaining the system; personnel with responsibility for monitoring the system].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for system monitoring; mechanisms supporting or implementing system monitoring capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>System monitoring includes external and internal monitoring. System monitoring can detect unauthorized use of organizational systems. System monitoring is an integral part of continuous monitoring and incident response programs. Monitoring is achieved through a variety of tools and techniques (e.g., intrusion detection systems, intrusion prevention systems, malicious code protection software, scanning tools, audit record monitoring software, network monitoring software). Output from system monitoring serves as input to continuous monitoring and incident response programs.</p>
+<p>Unusual/unauthorized activities or conditions related to inbound and outbound communications traffic include internal traffic that indicates the presence of malicious code in systems or propagating among system components, the unauthorized exporting of information, or signaling to external systems. Evidence of malicious code is used to identify potentially compromised systems or system components. System monitoring requirements, including the need for specific types of system monitoring, may be referenced in other requirements.</p>
+<p>NIST SP 800-94 provides guidance on intrusion detection and prevention systems.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Define authorized use of your systems. Create an acceptable use policy to establish the baseline for how users access devices, internal network services, and the internet. Define authorized use by specific roles such as: user, administrator, and technician. After authorized use is defined, identify unauthorized use of systems.</p>
+<p>Monitor systems by observing audit activities from the system logs. This can be accomplished in real time using automated solutions or by manual means. To identify unauthorized use, leverage existing tools and techniques, such as:</p>
+<ul>
+<li>intrusion detection systems;</li>
+<li>intrusion prevention systems;</li>
+<li>malicious code protection software;</li>
+<li>scanning tools;</li>
+<li>audit record monitoring software; and</li>
+<li>network monitoring software.</li>
+</ul>
+<p>This requirement, SI.L2-3.14.7, which deals with identifying unauthorized use of organizational systems, is related to requirements: AC.L2-3.1.1, AU.L2-3.3.1, IA.L2-3.5.1, and IA.L2-3.5.2. All of these requirements help create the building blocks that support SI.L2-3.14.7.</p>
+<div class="sub-header-2">Example 1</div>
+<p>You are in charge of IT operations. You need to ensure that everyone using an organizational system is authorized to do so and conforms to the written authorized use policy. To do this, you deploy an application that monitors user activity and records the information for later analysis. You review the data from this application for signs of activity that does not conform to the acceptable use policy [a,b].</p>
+<div class="sub-header-2">Example 2</div>
+<p>You are alerted through your Intrusion Detection System (IDS) that one of your users is connecting to a server that is from a high-risk domain (based on your commercial domain reputation service). You investigate and determine that it’s not the user, but instead an unauthorized connection attempt [b]. You add the domain to your list of blocked domains to prevent connections in the future.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Is authorized use of systems defined (e.g., data types permitted for storage or processing, personnel authorized to access, times or days of permitted use, permitted software) [a]?</li>
+<li>Is unauthorized use of systems defined (e.g., not authorized to use systems for bitcoin mining, not authorized for pornographic content, not authorized to access gambling games/content) [b]?</li>
+</ul>
+
+', NULL, NULL, 37, 11, 19, NULL, NULL, 1217, NULL, N'Identify Unauthorized Use', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5395, N'AC.L3-3.1.2E', N'Restrict access to systems and system components to only those information resources that are owned, provisioned, or issued by the organization.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>Information resources that are owned, provisioned, or issued by the organization are identified; and</li>
+<li>Access to systems and system components is restricted to only those information resources that are owned, provisioned, or issued by the organization.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; procedures addressing the use of external systems; list of information resources owned, provisioned, or issued by the organization; security plan; system design documentation; system configuration settings and associated documentation; system connection or processing agreements; system audit records; account management documents; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for restricting or prohibiting the use of non-organizationally owned systems, system components, or devices; system and network administrators; organizational personnel responsible for system security].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing restrictions on the use of non-organizationally owned systems, components, or devices].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Information resources that are not owned, provisioned, or issued by the organization include systems or system components owned by other organizations and personally owned devices. Non-organizational information resources present significant risks to the organization and complicate the ability to employ a “comply-to-connect” policy or implement component or device attestation techniques to ensure the integrity of the organizational system.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Implementing this requirement ensures that an organization has control over the systems that can connect to organizational assets. This control will allow more effective and efficient application of security policy. The terms “has control over” provides policy for systems that are not owned outright by the organization. Control includes policies, regulations or standards that are enforced on the resource accessing contractor systems. Control may also be exercised through contracts or agreements with the external party. Provisioned includes setting configuration, whether through direct technical means or by policy or agreement. For purposes of this requirement, GFE can be considered provisioned by the OSA.</p>
+<div class="sub-header-2">Example 1</div>
+<p>You are the chief network architect for your company. Company policy states that all company-owned assets must be separated from all non-company-owned (i.e., guest or employee) assets. You decide the best way forward is to modify the corporate wired and wireless networks to only allow company-owned devices to connect [b]. All other devices are connected to a second (untrusted) network that non-corporate devices may use to access the internet. The two environments are physically separated and are not allowed to be connected. You also decide to limit the virtual private network (VPN) services of the company to devices owned by the corporation by installing certificate keys and have the VPN validate the configuration of connecting devices before they are allowed in [b].</p>
+<div class="sub-header-2">Example 2</div>
+<p>You are a small company that uses an External Service Provider (ESP) to provide your audit logging. Access between the ESP and the organization is controlled by the agreement between the organization and the ESP. That agreement will include the policies, standards, and configuration for the required access. Technical controls should be documented and in place which limit the ESP’s access to the minimum required to perform the logging service.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Can the organization demonstrate a non-company-owned device failing to access information resources owned by the company [b]?</li>
+<li>How is this requirement met for organizational devices that are specialized assets (GFE, restricted information systems) [a,b]?</li>
+<li>Does the company allow employees to charge personal cell phones on organizational systems [b]?</li>
+</ul>
+
+', NULL, NULL, 38, 27, 19, NULL, NULL, 1204, NULL, N'Organizationally Controlled Assets', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5396, N'AC.L3-3.1.3E', N'Employ secure information transfer solutions to control information flows between security domains on connected systems.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>[ODP1] Secure information transfer solutions are defined;</li>
+<li>Information flows between security domains on connected systems are identified; and</li>
+<li>Secure information transfer solutions are employed to control information flows between security domains on connected systems.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; information flow control policies; procedures addressing information flow enforcement; system design documentation; security plan; system configuration settings and associated documentation; system audit records; system baseline configuration; list of information flow authorizations; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: System and network administrators; organizational personnel responsible for information security; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing information flow enforcement policy; mechanisms implementing secure information transfer solutions].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations employ information flow control policies and enforcement mechanisms to control the flow of information between designated sources and destinations within systems and between connected systems. Flow control is based on the characteristics of the information and/or the information path. Enforcement occurs, for example, in boundary protection devices that employ rule sets or establish configuration settings that restrict system services, provide a packet-filtering capability based on header information, or provide a message-filtering capability based on message content. Organizations also consider the trustworthiness of filtering and inspection mechanisms (i.e., hardware, firmware, and software components) that are critical to information flow enforcement.</p>
+<p>Transferring information between systems in different security domains with different security policies introduces the risk that the transfers violate one or more domain security</p>
+<p>policies. In such situations, information owners or information stewards provide guidance at designated policy enforcement points between connected systems. Organizations mandate specific architectural solutions when required to enforce logical or physical separation between systems in different security domains. Enforcement includes prohibiting information transfers between connected systems, employing hardware mechanisms to enforce one-way information flows, verifying write permissions before accepting information from another security domain or connected system, and implementing trustworthy regrading mechanisms to reassign security attributes and labels.</p>
+<p>Secure information transfer solutions often include one or more of the following properties: use of cross-domain solutions when traversing security domains, mutual authentication of the sender and recipient (using hardware-based cryptography), encryption of data in transit and at rest, isolation from other domains, and logging of information transfers (e.g., title of file, file size, cryptographic hash of file, sender, recipient, transfer time and Internet Protocol [IP] address, receipt time, and IP address).</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>The organization implementing this requirement must decide on the secure information transfer solutions they will use. The solutions must be configured to have strong protection mechanisms for information flow between security domains. Secure information transfer solutions control information flow between a Level 3 enclave and other CMMC or non-CMMC enclaves. If CUI requiring Level 3 protection resides in one area of the environment or within a given enclave outside of the normal working environment, protection to prevent unauthorized personnel from accessing, disseminating, and sharing the protected information is required. Physical and virtual methods can be employed to implement secure information transfer solutions.</p>
+<div class="sub-header-2">Example</div>
+<p>You are the administrator for an enterprise that stores and processes CUI requiring Level 3 protection. The files containing CUI information are tagged by the company as CUI. To ensure secure information transfer, you use an intermediary device to check the transfer of any CUI files. The device sits at the boundary of the CUI enclave, is aware of all other CUI domains in the enterprise, and has the ability to examine the metadata in the encrypted payload. The tool checks all outbound communications paths. It first checks the metadata for all data being transferred. If that data is identified as CUI, the device checks the destination to see if the transfer is to another, sufficiently certified CUI domain. If the destination is not a sufficient CUI domain, the tool blocks the communication path and does not allow the transfer to take place. If the destination is a sufficient CUI domain, the transfer is allowed. The intermediary device logs all blocks.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Has the organization defined the secure information transfer solutions it is using [b]?</li>
+<li>Has the organization defined domains, boundaries, and flows between those domains that need to be controlled [a]?</li>
+<li>Has the organization defined attributes to be associated with the CUI, and both source and destination objects [b]?</li>
+<li>Has the organization defined metadata or some other tagging mechanism to be used as a means of enforcing CUI flow control [b]?</li>
+<li>Has the organization defined filters to be used as a basis for enforcing flow control decisions [b]?</li>
+<li>Has the organization identified CUI flows for which flow control decisions are to be applied and enforced [a,b]?</li>
+</ul>
+
+', NULL, NULL, 38, 28, 19, NULL, NULL, 1204, NULL, N'Secured Information Transfer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5397, N'AT.L3-3.2.1E', N'Provide awareness training upon initial hire, following a significant cyber event, and at least annually, focused on recognizing and responding to threats from social engineering, advanced persistent threat actors, breaches, and suspicious behaviors; update the training at least annually or when there are significant changes to the threat.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>Threats from social engineering, advanced persistent threat actors, breaches, and suspicious behaviors are identified;</li>
+<li>Awareness training focused on recognizing and responding to threats from social engineering, advanced persistent threat actors, breaches, and suspicious behaviors is provided upon initial hire, following a significant cyber event, and at least annually;</li>
+<li>Significant changes to the threats from social engineering, advanced persistent threat actors, breaches, and suspicious behaviors are identified; and</li>
+<li>Awareness training is updated at least annually or when there are significant changes to the threat.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Awareness training policy; procedures addressing awareness training implementation; appropriate codes of federal regulations; awareness training curriculum; awareness training materials; security plan; training records; threat information on social engineering, advanced persistent threat actors, suspicious behaviors, and breaches; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for awareness training; organizational personnel responsible for information security; organizational personnel comprising the general system user community].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms managing awareness training; mechanisms managing threat information].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>An effective method to detect APT activities and reduce the effectiveness of those activities is to provide specific awareness training for individuals. A well-trained and security-aware workforce provides another organizational safeguard that can be employed as part of a defense-in-depth strategy to protect organizations against malicious code injections via email or web applications. Threat awareness training includes educating individuals on the various ways that APTs can infiltrate organizations, including through websites, emails, advertisement pop-ups, articles, and social engineering. Training can include techniques for recognizing suspicious emails, the use of removable systems in non-secure settings, and the potential targeting of individuals by adversaries outside the workplace. Awareness training is assessed and updated periodically to ensure that the training is relevant and effective, particularly with respect to the threat since it is constantly, and often rapidly, evolving.</p>
+<p>[NIST SP 800-50] provides guidance on security awareness and training programs.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>All organizations, regardless of size, should have a cyber training program that helps employees understand threats they will face on a daily basis. This training must include knowledge about APT actors, breaches, and suspicious behaviors.</p>
+<div class="sub-header-2">Example</div>
+<p>You are the cyber training coordinator for a small business with eight employees. You do not have your own in-house cyber training program. Instead, you use a third-party company to provide cyber training. New hires take the course when they start, and all current staff members receive refresher training at least once a year [b]. When significant changes to the threat landscape take place, the company contacts you and informs you that an update to the training has been completed [c,d] and everyone will need to receive training [b]. You keep a log of all employees who have gone through the cyber training program and the dates of training.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does the organization have evidence that employees participate in cyber awareness training at initial hire and at least annually thereafter or when there have been significant changes to the threat [b]?</li>
+</ul>
+
+', NULL, NULL, 38, 4, 19, NULL, NULL, 1205, NULL, N'Advanced Threat Awareness', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5398, N'AT.L3-3.2.2E', N'Include practical exercises in awareness training for all users, tailored by roles, to include general users, users with specialized roles, and privileged users, that are aligned with current threat scenarios and provide feedback to individuals involved in the training and their supervisors.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>Practical exercises are identified;</li>
+<li>Current threat scenarios are identified;</li>
+<li>Individuals involved in training and their supervisors are identified;</li>
+<li>Practical exercises that are aligned with current threat scenarios are included in awareness training for all users, tailored by roles, to include general users, users with specialized roles, and privileged users; and</li>
+<li>Feedback is provided to individuals involved in the training and their supervisors.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Awareness training policy; procedures addressing awareness training implementation; appropriate codes of federal regulations; awareness training curriculum; awareness training materials; security plan; training records; threat information on social engineering, advanced persistent threat actors, suspicious behaviors, breaches, or other relevant adversary tactics, techniques, or procedures; feedback on practical exercises and awareness training; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for awareness training; organizational personnel responsible for information security; organizational personnel with roles identified for practical exercises; supervisors of personnel with roles identified for practical exercises].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms managing awareness training; mechanisms managing threat information].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Awareness training is most effective when it is complemented by practical exercises tailored to the tactics, techniques, and procedures (TTP) of the threat. Examples of practical exercises include unannounced social engineering attempts to gain unauthorized access, collect information, or simulate the adverse impact of opening malicious email attachments or invoking, via spear phishing attacks, malicious web links. Rapid feedback is essential to reinforce desired user behavior. Training results, especially failures of personnel in critical roles, can be indicative of a potentially serious problem. It is important that senior management are made aware of such situations so that they can take appropriate remediating actions.</p>
+<p>[NIST SP 800-181] provides guidance on role-based security training, including a lexicon and taxonomy that describes cybersecurity work via work roles.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>This requirement can be performed by the organization or by a third-party company. Training exercises (including unannounced exercises, such as phishing training) should be performed at various times throughout the year to encourage employee readiness. After each exercise session has been completed, the results should be recorded (date, time, what and who the training tested, and the percent of successful and unsuccessful responses). The purpose of training is to help employees in all roles act appropriately for any given training situation, which should reflect real-life scenarios. Collected results will help identify shortcomings in the cyber training and/or whether additional instructional training may be needed.</p>
+<p>General exercises can be included for all users, but exercises tailored for specific roles are important, too. Training tailored for specific roles helps make sure individuals are ready for actions and events specific to their positions in a company. Privileged users receive training that emphasizes what permissions their privileged account has in a given environment and what extra care is required when using their privileged account.</p>
+<div class="sub-header-2">Example</div>
+<p>You are the cyber training coordinator for a medium-sized business. You and a coworker have developed a specialized awareness training to increase cybersecurity awareness around your organization. Your training includes social media campaigns, social engineering phone calls, and phishing emails with disguised links to staff to train them beyond the standard cybersecurity training [a,b].</p>
+<p>To send simulated phishing emails to staff, you subscribe to a third-party service that specializes in this area [a]. The service sets up fictitious websites with disguised links to help train general staff against this TTP used by APTs [d]. The third-party company tracks the individuals who were sent phishing emails and whether they click on any of the of the links within the emails. After the training action is completed, you receive a report from the third- party company. The results show that 20% of the staff clicked on one or more phishing email links, demonstrating a significant risk to your company. As the cyber training coordinator,</p>
+<p>you notify the individuals, informing them they failed the training and identifying the area(s) of concern [e]. You send an email to the supervisors informing them who in their organization has received training. You also send an email out to the entire company explaining the training that just took place and the overall results [e].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are the individuals being trained and the results recorded [e]?</li>
+<li>Are the training exercises performed [c]?</li>
+<li>Are the exercises set up for all users? Are there tailored exercises based on roles within the organization (general users, users with specialized roles, and privileged users) [d]?</li>
+<li>Does the organization have documentation recording the training exercises, who participated, and feedback provided to those who participated in a training session [c,e]?</li>
+</ul>
+
+', NULL, NULL, 38, 5, 19, NULL, NULL, 1205, NULL, N'Practical Training Exercises', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5399, N'CM.L3-3.4.1E', N'Establish and maintain an authoritative source and repository to provide a trusted source and accountability for approved and implemented system components.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>Approved system components are identified;</li>
+<li>Implemented system components are identified;</li>
+<li>An authoritative source and repository are established to provide a trusted source and accountability for approved and implemented system components; and</li>
+<li>An authoritative source and repository are maintained to provide a trusted source and accountability for approved and implemented system components.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Configuration management policy; procedures addressing the baseline configuration of the system; configuration management plan; enterprise architecture documentation; system design documentation; system architecture and configuration documentation; system configuration settings and associated documentation; change control records; system and system component inventory records; inventory reviews and update records; security plan; system audit records; change control audit and review reports; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for configuration management; organizational personnel responsible for system component inventory; organizational personnel responsible for configuration change control; organizational personnel responsible for information security; system/network administrators; members of a change control board or similar].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms that implement configuration change control; mechanisms supporting configuration control of the baseline configuration; mechanisms supporting and/or implementing the system component inventory].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>The establishment and maintenance of an authoritative source and repository includes a system component inventory of approved hardware, software, and firmware; approved system baseline configurations and configuration changes; and verified system software and firmware, as well as images and/or scripts. The authoritative source implements integrity controls to log changes or attempts to change software, configurations, or data in the repository. Additionally, changes to the repository are subject to change management procedures and require authentication of the user requesting the change. In certain situations, organizations may also require dual authorization for such changes. Software changes are routinely checked for integrity and authenticity to ensure that the changes are legitimate when updating the repository and when refreshing a system from the known, trusted source. The information in the repository is used to demonstrate adherence to or identify deviation from the established configuration baselines and to restore system components from a trusted source. From an automated assessment perspective, the system description provided by the authoritative source is referred to as the desired state. The desired state is compared to the actual state to check for compliance or deviations. [NIST SP 800-128] provides guidance on security configuration management, including security configuration settings and configuration change control.</p>
+<p>[NIST IR 8011-1] provides guidance on automation support to assess system and system component configurations.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Trusted software, whether securely developed in house or obtained from a trusted source, should have baseline data integrity established when first created or obtained, such as by using hash algorithms to obtain a hash value that would be used to validate the source prior to use of the software in a given system. Hardware in the repository should be stored in boxes or containers with tamper-evident seals. Hashes and seals should be checked on a regular basis employing the principle of separation of duties.</p>
+<div class="sub-header-2">Example</div>
+<p>You are the primary system build technician at a medium-sized company. You have been put in charge of creating, documenting, and implementing a baseline configuration for all user systems [c]. You have identified a minimum set of software that is needed by all employees to complete their work (e.g., office automation software). You acquire trusted versions of the software and build one or more baselines of all system software, firmware, and applications required by the organization. The gold version of each baseline is stored in a secure configuration management system repository and updated as required to maintain integrity and security. Access to the build repository for updates and use is carefully controlled using access control mechanisms that limit access to you and your staff. All interactions with the repository are logged. Using an automated build tool, your team builds each organizational system using the standard baseline</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does an authoritative source and repository exist to provide a trusted source and accountability for approved and implemented system components [c,d]?</li>
+</ul>
+
+', NULL, NULL, 38, 10, 19, NULL, NULL, 1207, NULL, N'Authoritative Repository', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5400, N'CM.L3-3.4.2E', N'Employ automated mechanisms to detect misconfigured or unauthorized system components; after detection, remove the components or place the components in a quarantine or remediation network to facilitate patching, re-configuration, or other mitigations.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>Automated mechanisms to detect misconfigured or unauthorized system components are identified;</li>
+<li>Automated mechanisms are employed to detect misconfigured or unauthorized system components;</li>
+<li>Misconfigured or unauthorized system components are detected; and</li>
+<li>After detection, system components are removed or placed in a quarantine or remediation network to facilitate patching, re-configuration, or other mitigations.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Configuration management policy; procedures addressing the baseline configuration of the system; configuration management plan; authoritative source or repository; enterprise architecture documentation; system design documentation; system architecture and configuration documentation; system procedures addressing system configuration change control; configuration settings and associated documentation; change control records; change control audit and review reports; agenda/minutes from configuration change control oversight meetings; alerts/notifications of unauthorized baseline configuration changes; security plan; system audit records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for configuration management; organizational personnel responsible for information security; organizational personnel responsible for configuration change control; system developers; system/network administrators; members of a change control board or similar roles].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Automated mechanisms supporting configuration control of the baseline configuration; automated mechanisms that implement security responses to changes to the baseline configurations; automated mechanisms that implement configuration change control; automated mechanisms that detect misconfigured or unauthorized system components].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>System components used to process, store, transmit, or protect CUI are monitored and checked against the authoritative source (i.e., hardware and software inventory and associated baseline configurations). From an automated assessment perspective, the system description provided by the authoritative source is referred to as the desired state. Using automated tools, the desired state is compared to the actual state to check for compliance or deviations. Security responses to system components that are unknown or that deviate from approved configurations can include removing the components; halting system functions or processing; placing the system components in a quarantine or remediation network that facilitates patching, re-configuration, or other mitigations; or issuing alerts and/or notifications to personnel when there is an unauthorized modification of an organization- defined configuration item. Responses can be automated, manual, or procedural. Components that are removed from the system are rebuilt from the trusted configuration baseline established by the authoritative source.</p>
+<p>[NIST IR 8011-1] provides guidance on using automation support to assess system configurations</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>For this requirement, the organization is required to implement automated tools to help identify misconfigured components. Once under an attacker’s control, the system may be modified in some manner and the automated tool should detect this. Or, if a user performs a manual configuration adjustment, the system will be viewed as misconfigured, and that change should be detected. Another common example is if a component has been offline and not updated, the tool should detect the incorrect configuration. If any of these scenarios occurs, the automated configuration management system (ACMS) will notice a change and can take the system offline, quarantine the system, or send an alert so the component(s) can be manually removed. Quarantining a misconfigured component does not require it to be removed from the network. Quarantining only requires that a temporary limitation be put in place eliminating the component’s ability to process, store, or transmit CUI until it is properly configured. If a component has the potential of disrupting business operations then the OSC should take extra care to ensure configuration updates are properly tested and that components are properly configured and tested before being added to the network. Once one of these actions is accomplished, a system technician may need to manually inspect the system or rebuild it using the baseline configuration. Another option is for an ACMS to make adjustments while the system is running rather than performing an entire rebuild. These adjustments can include replacing configuration files, executable files, scripts, or library files on the fly.</p>
+<div class="sub-header-2">Example 1</div>
+<p>As the system administrator, you implement company policy stating that every system connecting to the company network via VPN will be checked for specific configuration settings and software versioning before it is allowed to connect to the network, after it passes authentication [a,b]. If any deviations from the authoritative baseline are identified, the</p>
+<p>system is placed in a VPN quarantine zone (remediation network) using a virtual local area network (VLAN) [b,c,d]. This VLAN is set up for system analysis, configuration changes, and rebuilding after forensic information is pulled from the system. Once the system updates are complete, the system will be removed from the quarantine zone and placed on the network through the VPN connection.</p>
+<div class="sub-header-2">Example 2</div>
+<p>As the system administrator, you have chosen to use a network access control (NAC) solution to validate system configurations before they are allowed to connect to the corporate network [a]. When a system plugs into or connects to a local network port or the VPN, the NAC solution checks the hash of installed system software [b,c]. If the system does not pass the configuration check, it is put in quarantine until an administrator can examine it or the ACMS updates the system to pass the system checks [d].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Can the organization explain the automated process that identifies, quarantines, and remediates a system when a misconfiguration or unauthorized system component is identified [a,b,c,d]?</li>
+<li>Does the organization have a patching and rebuild process for all assets that may be taken offline [d]?</li>
+</ul>
+
+', NULL, NULL, 38, 11, 19, NULL, NULL, 1207, NULL, N'Automated Detection & Remediation', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5401, N'CM.L3-3.4.3E', N'Employ automated discovery and management tools to maintain an up-to-date, complete, accurate, and readily available inventory of system components.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>Automated discovery and management tools for the inventory of system components are identified;</li>
+<li>An up-to-date, complete, accurate, and readily available inventory of system components exists; and</li>
+<li>Automated discovery and management tools are employed to maintain an up-to-date, complete, accurate, and readily available inventory of system components.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Configuration management policy; configuration management plan; procedures addressing system component inventory; procedures addressing the baseline configuration of the system; configuration management plan; system design documentation; system architecture and configuration documentation; security plan; system configuration settings and associated documentation; configuration change control records; system inventory records; change control records; system maintenance records; system audit records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for information security; organizational personnel responsible for configuration management; organizational personnel responsible for managing the automated mechanisms implementing the system component inventory; system developers; system/network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Automated mechanisms implementing baseline configuration maintenance; automated mechanisms implementing the system component inventory].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>The system component inventory includes system-specific information required for component accountability and to provide support to identify, control, monitor, and verify configuration items in accordance with the authoritative source. The information necessary for effective accountability of system components includes the system name, hardware and software component owners, hardware inventory specifications, software license</p>
+<p>information, software version numbers, and— for networked components—the machine names and network addresses. Inventory specifications include the manufacturer, supplier information, component type, date of receipt, cost, model, serial number, and physical location. Organizations also use automated mechanisms to implement and maintain authoritative (i.e., up-to-date, complete, accurate, and available) baseline configurations for systems that include hardware and software inventory tools, configuration management tools, and network management tools. Tools can be used to track version numbers on operating systems, applications, types of software installed, and current patch levels.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Organizations use an automated capability to discover components connected to the network and system software installed. The automated capability must also be able to identify attributes associated with those components. For systems that have already been coupled to the environment, they should allow remote access for inspection of the system software configuration and components. Another option is to place an agent on systems that performs internal system checks to identify system software configuration and components. Collection of switch and router data can also be used to identify systems on networks.</p>
+<div class="sub-header-2">Example</div>
+<p>Within your organization, you are in charge of implementing an authoritative inventory of system components. You first create a list of the automated technologies you will use and what each technology will be responsible for identifying [a]. This includes gathering information from switches, routers, access points, primary domain controllers, and all connected systems or devices, whether wired or wireless (printers, IoT, IIoT, OT, IT, etc.) [b]. To keep the data up-to-date, you set a very short search frequency for identifying new components. To maximize availability of this data, all information will be placed in a central inventory/configuration management system, and automated reporting is performed every day [c]. A user dashboard is set up that allows you and other administrators to run reports at any time.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Can the organization explain the process by which current inventory information is acquired [a]?</li>
+<li>Is the organization able to produce an inventory of components on the network [b,c]?</li>
+<li>Has the organization implemented a valid frequency for the component discovery solution [b,c]?</li>
+<li>Can the organization demonstrate that the inventory is current and accurate [b]?</li>
+<li>Has the organization developed a defined list of identifiable attributes for each component type, and is that list adequate to support component accountability [a]?</li>
+<li>Is the organization able to track, monitor, and verify configuration items in accordance with the organization’s authoritative list of components [b,c]?</li>
+</ul>
+
+', NULL, NULL, 38, 12, 19, NULL, NULL, 1207, NULL, N'Automated Inventory', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5402, N'IA.L3-3.5.1E', N'Identify and authenticate systems and system components, where possible, before establishing a network connection using bidirectional authentication that is cryptographically based and replay resistant.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>[ODP1] Systems and system components to identify and authenticate are defined;</li>
+<li>Bidirectional authentication that is cryptographically-based is implemented;</li>
+<li>Bidirectional authentication that is replay-resistant is implemented; and</li>
+<li>Systems and system components, where possible, are identified and authenticated before establishing a network connection using bidirectional authentication that is cryptographically-based and replay-resistant.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Identification and authentication policy; procedures addressing device identification and authentication; network connection policy; security plan; system configuration settings and associated documentation; system design documentation; list of devices requiring unique identification and authentication; device connection reports; system audit records; list of privileged system accounts; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for system operations; organizational personnel responsible for account management; organizational personnel responsible for device identification and authentication; organizational personnel responsible for information security; system/network administrators; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Cryptographically-based bidirectional authentication mechanisms; mechanisms supporting and/or implementing network connection policy; mechanisms supporting and/or implementing replay-resistant authentication mechanisms; mechanisms supporting and/or implementing an identification and authentication capability; mechanisms supporting and/or implementing a device identification and authentication capability].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Cryptographically-based and replay-resistant authentication between systems, components, and devices addresses the risk of unauthorized access from spoofing (i.e., claiming a false identity). The requirement applies to client-server authentication, server-server authentication, and device authentication (including mobile devices). The cryptographic key for authentication transactions is stored in suitably secure storage available to the authenticator application (e.g., keychain storage, Trusted Platform Module [TPM], Trusted Execution Environment [TEE], or secure element). Mandating authentication requirements at every connection point may not be practical, and therefore, such requirements may only be applied periodically or at the initial point of network connection.</p>
+<p>[NIST SP 800-63-3] provides guidance on identity and authenticator management.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>The intent of this practice is to prevent unauthorized devices from connecting to one another. One example satisfying this requirement is a web server configured with transport layer security (TLS) using mutual authentication. At a lower level in the OSI stack, IPsec provides application-transparent mutual authentication. Another example would be implementing 802.1X technology to enforce port-based NAC. This is done by enabling 802.1X on switches, wireless access points, and VPN connections for a given network. 802.1X defines authentication controls for devices trying to access a given network. NAC controls authorization and policy management. For this to be implemented, bidirectional authentication must be turned on via 802.1X. Once successfully authenticated, the device may communicate on the network. A final example, at the application-server level, involves the use of Kerberos to control 1) which files a client can access and 2) the transmission of sensitive data from the client to the server.</p>
+<div class="sub-header-2">Example 1</div>
+<p>You are the network engineer in charge of implementing this requirement. You have been instructed to implement a technology that will provide mutual authentication for client server connections. You implement Kerberos.</p>
+<p>On the server side, client authentication is implemented by having the client establish a local security context. This is initially accomplished by having the client present credentials which are confirmed by the Active Directory Domain Controller (DC). After that, the client may establish context via a session of a logged-in user. The service does not accept connections from any unauthenticated client.</p>
+<p>On the client side, server authentication requires registration, using administrator privileges, of unique Service Provider Names (SPNs) for each service instance offered. The names are registered in the Active Directory Domain Controller. When a client requests a connection to a service, it composes an SPN for a service instance, using known data or data provided by the user. For authentication, the client presents its SPN to the Key Distribution Center (KDC), and the KDC searches for computers with the registered SPN before allowing a connection via an encrypted message passed to the client for forwarding to the server.</p>
+<div class="sub-header-2">Example 2</div>
+<p>You are the network engineer in charge of implementing this requirement. You have been instructed to implement a technology that will provide authentication for each system prior to connecting to the environment. You implement the company-approved scheme that uses cryptographic keys installed on each system for it to authenticate to the environment, as well as user-based cryptographic keys that are used in combination with a user’s password for user-level authentication [a,c]. Your authentication implementation is finalized on each system using an ACM solution. When a system connects to the network, the system uses the system-level certificate to authenticate itself to the switch before the switch will allow it to access the corporate network [a,c]. This is accomplished using 802.1x technology on the switch and by authenticating with a RADIUS server that authenticates itself with the system via cryptographic keys. If either system fails to authenticate to the other, the trust is broken, and the system will not be able to connect to or communicate on the network. You also set up a similar implementation in your wireless access point.</p>
+<div class="sub-header-2">Example 3</div>
+<p>You are the network engineer in charge of implementing the VPN solution used by the organization. To meet this requirement, you use a VPN gateway server and public key infrastructure (PKI) certificates via a certification authority (CA) and a chain of trust. When a client starts a VPN connection, the server presents its certificate to the client and if the certificate is trusted, the client then presents its certificate to the server [a]. If the server validates the client certificate, an established communications channel is opened for the client to finish the authentication process and gain access to the network via the VPN gateway server [c]. If the client fails final authentication, fails the certification validation, or the VPN gateway fails the certificate check by the client, the communication channel will be denied.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Are cryptographic keys stored securely [a]?</li>
+<li>Has the requirement been implemented for any of the three use cases, where applicable: client-server authentication, server-server authentication, and device authentication [b,c]?</li>
+</ul>
+
+', NULL, NULL, 38, 14, 19, NULL, NULL, 1208, NULL, N'Bidirectional Authentication', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5403, N'IA.L3-3.5.3E', N'Employ automated or manual/procedural mechanisms to prohibit system components from connecting to organizational systems unless the components are known, authenticated, in a properly configured state, or in a trust profile.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>System components that are known, authenticated, in a properly configured state, or in a trust profile are identified;</li>
+<li>Automated or manual/procedural mechanisms to prohibit system components from connecting to organizational systems are identified; and</li>
+<li>Automated or manual/procedural mechanisms are employed to prohibit system components from connecting to organizational systems unless the components are known, authenticated, in a properly configured state, or in a trust profile.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Configuration management policy; identification and authentication policy; system and information integrity policy; procedures addressing system component inventory; procedures addressing device identification and authentication; procedures addressing device configuration management; procedures addressing system monitoring tools and techniques; configuration management plan; security plan; system design documentation; system configuration settings and associated documentation; system inventory records; configuration management records; system monitoring records; alerts/notifications of unauthorized components within the system; change control records; system audit records; system monitoring tools and techniques documentation; documented authorization/approval of network services; notifications or alerts of unauthorized network services; system monitoring logs or records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for managing the mechanisms implementing unauthorized system component detection; organizational personnel responsible for device identification and authentication; organizational personnel responsible for information security; organizational personnel responsible for installing, configuring, and/or maintaining the system; system/network administrators; organizational personnel responsible for monitoring the system; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing the detection of unauthorized system components; mechanisms supporting and/or implementing a device identification and authentication capability; mechanisms for providing alerts; mechanisms supporting and/or implementing configuration management; cryptographic mechanisms supporting device attestation; mechanisms supporting and/or implementing a system monitoring capability; mechanisms for auditing network services].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Identification and authentication of system components and component configurations can be determined, for example, via a cryptographic hash of the component. This is also known as device attestation and known operating state or trust profile. A trust profile based on factors such as the user, authentication method, device type, and physical location is used to make dynamic decisions on authorizations to data of varying types. If device attestation is the means of identification and authentication, then it is important that patches and updates to the device are handled via a configuration management process such that the patches and updates are done securely and do not disrupt the identification and authentication of other devices.</p>
+<p>[NIST IR 8011-1] provides guidance on using automation support to assess system configurations.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>This requirement can be achieved in several ways, such as blocking based on posture assessments, conditional access, or trust profiles. A posture assessment can be used to assess a given system’s posture to validate that it meets the standards set by the organization before allowing it to connect. Conditional access is the set of policies and configurations that control devices receiving access to services and data sources. Conditional access helps an organization build rules that manage security controls, perform blocking, and restrict components. A trust profile is a set of factors that are checked to inform a device that a system can be trusted.</p>
+<div class="sub-header-2">Example 1</div>
+<p>In a Windows environment, you authorize devices to connect to systems by defining configuration rules in one or more Group Policy Objects (GPO) that can be automatically applied to all relevant devices in a domain [a]. This provides you with a mechanism to apply rules for which devices are authorized to connect to any given system and prevent devices that are not within the defined list from connecting [b,c]. For instance, universal serial bus (USB) device rules for authorization can be defined by using a USB device’s serial number, model number, and manufacturer information. This information can be used to build a trust profile for a device and authorize it for use by a given system. You use security policies to prevent unauthorized components from connecting to systems [c].</p>
+<div class="sub-header-2">Example 2</div>
+<p>You have been assigned to build trust profiles for all devices allowed to connect to your organization’s systems. You want to test the capability starting with printers. You talk to your purchasing department, and they tell you that policy states every printer must be from a specific manufacturer; they only purchase four different models. They also collect all serial numbers from purchased printers. You gather this information and build trust profiles for each device [a,b]. Because your organization shares printers, you push the trust profiles out to organizational systems. Now, the systems are not allowed to connect to a network printer unless they are within the trust profiles you have provided [b,c].</p>
+<div class="sub-header-2">Example 3</div>
+<p>Your organization has implemented a network access control solution (NAC) to help ensure that only properly configured computers are allowed to connect to the corporate network [a,b]. The solution first checks for the presence of a certificate to indicate that the device is company-owned. It next reviews the patch state of the computer and forces the installation of any patches that are required by the organization. Finally, it reviews the computer’s configuration to ensure that the firewall is active and that the appropriate security policies have been applied. Once the computer has passed all of these requirements, it is allowed access to network resources and defined as a trusted asset for the length of its session [a]. Devices that do not meet all of the requirements are automatically blocked from connecting to the network [c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>If the organization is using a manual method, is the method outlined in detail so any user will be able to follow it without making an error [b,c]?</li>
+<li>If the organization is using an automated method, can the organization explain how the technology performs the task? Can they explain the steps needed to implement [a,b,c]?</li>
+<li>Can the organization provide evidence showing they have trust profiles for specific devices [a,b,c]?</li>
+<li>Can the organization explain how their system components authenticate to a system if they are not using trust profiles [b,c]?</li>
+</ul>
+
+', NULL, NULL, 38, 15, 19, NULL, NULL, 1208, NULL, N'Block Untrusted Assets', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5404, N'IR.L3-3.6.1E', N'Establish and maintain a security operations center capability that operates 24/7, with allowance for remote/on-call staff.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>A security operations center capability is established;</li>
+<li>The security operations center capability operates 24/7, with allowance for remote/on- call staff; and</li>
+<li>The security operations center capability is maintained.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Incident response policy; contingency planning policy; procedures addressing incident handling; procedures addressing the security operations center operations; mechanisms supporting dynamic response capabilities; incident response plan; contingency plan; security plan; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for incident handling; organizational personnel responsible for contingency planning; security operations center personnel; organizational personnel responsible for information security].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms that support and/or implement the security operations center capability; mechanisms that support and/or implement the incident handling process].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>A security operations center (SOC) is the focal point for security operations and computer network defense for an organization. The purpose of the SOC is to defend and monitor an organization’s systems and networks (i.e., cyber infrastructure) on an ongoing basis. The SOC is also responsible for detecting, analyzing, and responding to cybersecurity incidents in a timely manner. The SOC is staffed with skilled technical and operational personnel (e.g., security analysts, incident response personnel, systems security engineers); in some instances operates 24 hours per day, seven days per week; and implements technical, management, and operational controls (e.g., monitoring, scanning, and forensics tools) to</p>
+<p>monitor, fuse, correlate, analyze, and respond to security-relevant event data from multiple sources. Sources of event data include perimeter defenses, network devices (e.g., gateways, routers, and switches), and endpoint agent data feeds. The SOC provides a holistic situational awareness capability to help organizations determine the security posture of the system and organization. An SOC capability can be obtained in many ways. Larger organizations may implement a dedicated SOC while smaller organizations may employ third-party organizations to provide such a capability.</p>
+<p>[NIST SP 800-61] provides guidance on incident handling. [NIST SP 800-86] and [NIST SP 800-101] provide guidance on integrating forensic techniques into incident response. [NIST SP 800-150] provides guidance on cyber threat information sharing. [NIST SP 800-184] provides guidance on cybersecurity event recovery.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Security operations centers are created to monitor and respond to suspicious activities across an organization’s IT applications and infrastructure. A SOC may be implemented in a variety of physical, virtual, and geographic constructs. The organization may also opt to not hire their own staff but to engage a third-party external service provider to serve as their SOC.</p>
+<p>The SOC is typically comprised of multiple levels of cybersecurity analysts. Each tier of cybersecurity analysts works on increasingly complex aspects of Incident Response. The SOC may also have dedicated cybersecurity engineers to support configuration and management of defensive cyber tools. The SOC may work with staff in IT operations who provide support to the SOC.</p>
+<p>SOC capabilities run 24/7, and while staff may not always be performing tasks for the SOC, the capability alerts staff members and directs them to go to a facility or perform SOC actions from a remote location. Staff members should be scheduled or on call to ensure they are available when needed.</p>
+<div class="sub-header-2">Example</div>
+<p>You are the Chief Information Security Officer (CISO) of a medium-sized organization. To meet the goal of 24/7 SOC operation, you have decided to adjust the current SOC, which operates five days a week for 12 hours a day, by minimizing active staff members and hiring trusted expert consultants to have on call at all times (i.e., seven days a week, 24 hours a day) [a,b]. You design your SOC to be remotely accessible so your experts can access your environment when needed. You also decide to set up a very strong automated capability that is good at identifying questionable activities and alerting the appropriate staff. You create a policy stating that after an alert goes out, two members of the SOC team must remotely connect to the environment within 15 minutes to address the problem. All staff members also have regular working hours during which they perform other SOC activities, such as updating information to help the automated tool perform its functions [c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>How does the organization enable 24/7 SOC capabilities? Does the organization have people in seats 24/7 or on-call members? If on-call members are used, what are the trigger and alerting mechanisms that allow for 24/7 coverage [a,b]?</li>
+<li>Does the organization have sufficient trained full-time equivalent staff to enable 24/7 SOC services [a,b]?</li>
+</ul>
+
+', NULL, NULL, 38, 4, 19, NULL, NULL, 1209, NULL, N'Security Operations Center', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5405, N'IR.L3-3.6.2E', N'Establish and maintain a cyber incident response team that can be deployed by the organization within 24 hours.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>A cyber incident response team is established;</li>
+<li>The cyber incident response team can be deployed by the organization within 24 hours; and</li>
+<li>The cyber incident response team is maintained.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Incident response policy; procedures addressing incident response; incident response plan; security plan; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for incident response; organizational personnel from the incident response team; organizational personnel responsible for information security].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting and/or implementing incident response].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>A cyber incident response team (CIRT) is a team of experts that assesses, documents, and responds to cyber incidents so that organizational systems can recover quickly and implement the necessary controls to avoid future incidents. CIRT personnel include, for example, forensic analysts, malicious code analysts, systems security engineers, and real- time operations personnel. The incident handling capability includes performing rapid forensic preservation of evidence and analysis of and response to intrusions. The team members may or may not be full-time but need to be available to respond in the time period required. The size and specialties of the team are based on known and anticipated threats. The team is typically pre-equipped with the software and hardware (e.g., forensic tools) necessary for rapid identification, quarantine, mitigation, and recovery and is familiar with how to preserve evidence and maintain chain of custody for law enforcement or counterintelligence uses. For some organizations, the CIRT can be implemented as a cross organizational entity or as part of the Security Operations Center (SOC).</p>
+<p>[NIST SP 800-61] provides guidance on incident handling. [NIST SP 800-86] and [NIST SP 800-101] provide guidance on integrating forensic techniques into incident response. [NIST SP 800-150] provides guidance on cyber threat information sharing. [NIST SP 800-184] provides guidance on cybersecurity event recovery.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>The CIRT’s primary function is to handle information security incident management and response for the environments the SOC oversees. The primary goals of the CIRT are triage and initial response to an incident. They also communicate with all the proper people to ensure understanding of an incident and the response actions, including collection of forensic evidence, have been conveyed.</p>
+<p>If and when an incident is detected by the organization’s SOC, the IR team is responsible for handling the incident and communicating what has happened to the appropriate people within the organization, as well to the authorities (as needed).</p>
+<p>The deployment of a team does not necessarily mean they are “physically deployed.” Deployment may simply mean connecting to a remote system in a manner that is equivalent to being on the system’s keyboard. Remote access can provide just as much capability as local access in many cases.</p>
+<p>Some situations require physical access. For instance, if the company has a physically isolated environment located at a remote location, a team must be physically present at the remote facility to perform the duties required.</p>
+<div class="sub-header-2">Example</div>
+<p>You are the lead for an IR team within your organization. Your manager is the SOC lead, and she reports to the chief information officer (CIO). As the SOC is alerted and/or identifies incidents within the organization’s environments, you lead and deploy teams to resolve the issues, including incidents involving cloud-based systems. You use a custom dashboard that was created for your team members to view and manage incidents, perform response actions, and record actions and notes for each case. You also have your team create an after action report for all incidents to which they respond; this information is used to determine if a given incident requires additional action and reporting [a].</p>
+<p>One day, you receive a message from the SOC that your website has become corrupted. Within minutes, you have a team on the system inspecting logs, analyzing applications, preserving key information, and looking for evidence of tampering/attack [b]. Your team runs through a procedure set for this specific incident type based on a handbook the organization has created and maintains [c]. It is found that a cyberattack caused the corruption, but the corruption caused a crash, which prevented the attack from continuing. Your team takes note of all actions they perform, and at the end of the incident analysis, you send a message to the website lead to inform them of the issue, case number, and notes created by the team. The website lead has their team rebuild the system and validate that the attack no longer works. At the end of the incident, the CISO and CIO are informed of the issue.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does the organization have a response capability that has remote access to the organization’s systems and system components within 24 hours in place of physical access [a,b]?</li>
+</ul>
+
+', NULL, NULL, 38, 5, 19, NULL, NULL, 1209, NULL, N'Cyber Incident Response Team', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5406, N'PS.L3-3.9.2E', N'Ensure that organizational systems are protected if adverse information develops or is obtained about individuals with access to CUI.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>Individuals with access to CUI are identified;</li>
+<li>Adverse information about individuals with access to CUI is defined;</li>
+<li>Organizational systems to which individuals have access are identified; and</li>
+<li>Mechanisms are in place to protect organizational systems if adverse information develops or is obtained about individuals with access to CUI.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Personnel security policy; system and services acquisition policy; procedures addressing personnel screening; records of screened personnel; enterprise architecture documentation; system design documentation; system architecture and configuration documentation; security plan; list of individuals who have been identified as posing an increased level of risk; list of appropriate access authorizations required for system personnel; personnel screening criteria and associated documentation; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for personnel security; organizational personnel responsible for information security; organizational personnel responsible for system and services acquisition; organizational personnel responsible for personnel screening].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for personnel screening; mechanisms supporting personnel screening].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>If adverse information develops or is obtained about an individual with access to CUI which calls into question whether the individual should have continued access to systems containing CUI, actions are taken (e.g., preclude or limit further access by the individual, audit actions taken by the individual) to protect the CUI while the adverse information is resolved.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>According to Defense Counterintelligence and Security Agency, or DCSA (Industrial Security Letter ISL 2011-04, revised July 15, 2020), adverse information consists of any information that negatively reflects the integrity or character of an individual. This pertains to an individual’s ability to safeguard sensitive information, such as CUI. Adverse information may simply be a report showing someone has sent sensitive information outside the organization or used unapproved software, against company policy. An organization may receive adverse information about an individual through police reports, reported violations of company policies (including social media posts that directly violate company policies), and revocation or suspension of DoD clearance.</p>
+<p>When adverse information is identified about a given individual, the organization should take action to validate that information resources accessible by the individual have been identified and appropriate protection mechanisms are in place to safeguard information and system configurations. Based on organizational policy, an individual’s access to resources may be more closely monitored or restricted until further review. Logs should be examined to identify any attempt to perform unauthorized actions.</p>
+<div class="sub-header-2">Example</div>
+<p>You learn that one of your employees has been convicted on shoplifting charges. Based on organizational policy, you report this information to human resources (HR), which verifies the information with a criminal background check [a,b,c]. Per policy, you increase the monitoring of the employee’s access to ensure that the employee does not exhibit patterns of behavior consistent with an insider threat [d]. You maintain contact with HR as they investigate the adverse information so that you can take stronger actions if required, such as removing access to organizational systems.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does the organization define the protection mechanisms for organizational systems if adverse information develops or is obtained about an individual with access to CUI [d]?</li>
+</ul>
+
+', NULL, NULL, 38, 3, 19, NULL, NULL, 1212, NULL, N'Adverse Information', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5407, N'RA.L3-3.11.1E', N'Employ threat intelligence, at a minimum from open or commercial sources, and any DoD- provided sources, as part of a risk assessment to guide and inform the development of organizational systems, security architectures, selection of security solutions, monitoring, threat hunting, and response and recovery activities.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>[ODP1] Sources of threat intelligence are defined;</li>
+<li>A risk assessment methodology is identified;</li>
+<li>Threat intelligence, at a minimum from open or commercial sources, and any DoD-provided sources, are employed as part of a risk assessment to guide and inform the development of organizational systems and security architectures;</li>
+<li>Threat intelligence, at a minimum from open or commercial sources, and any DoD-provided sources, are employed as part of a risk assessment to guide and inform the selection of security solutions;</li>
+<li>Threat intelligence, at a minimum from open or commercial sources, and any DoD-provided sources, are employed as part of a risk assessment to guide and inform system monitoring activities;</li>
+<li>Threat intelligence, at a minimum from open or commercial sources, and any DoD-provided sources, are employed as part of a risk assessment to guide and inform threat hunting activities; and</li>
+<li>Threat intelligence, at a minimum from open or commercial sources, and any DoD-provided sources, are employed as part of a risk assessment to guide and inform response and recovery activities.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Information security program plan; risk assessment policy; threat awareness program documentation; procedures for the threat awareness program; security planning policy and procedures; procedures addressing organizational assessments of risk; threat hunting program documentation; procedures for the threat hunting program; risk assessment results relevant to threat awareness; threat hunting results; list or other documentation on the cross-organization, information-sharing capability; security plan; risk assessment; risk assessment results; risk assessment reviews; risk assessment updates;</p>
+<p>contingency planning policy; contingency plan; incident response policy; incident response plan; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for information security program planning and plan implementation; organizational personnel responsible for the threat awareness and threat hunting programs; organizational personnel responsible for risk assessments; organizational personnel responsible for the cross-organization, information- sharing capability; organizational personnel responsible for information security; organizational personnel responsible for contingency planning; organizational personnel responsible for incident response; personnel with whom threat awareness information is shared by the organization].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting and/or implementing the threat awareness program; mechanisms supporting and/or implementing the cross-organization, information-sharing capability; mechanisms supporting and/or implementing the threat hunting program; mechanisms for conducting, documenting, reviewing, disseminating, and updating risk assessments; mechanisms supporting and/or implementing contingency plans; mechanisms supporting and/or implementing incident response plans].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>The constant evolution and increased sophistication of adversaries, especially the APT, makes it more likely that adversaries can successfully compromise or breach organizational systems. Accordingly, threat intelligence can be integrated into each step of the risk management process throughout the system development life cycle. This risk management process includes defining system security requirements, developing system and security architectures, selecting security solutions, monitoring (including threat hunting), and remediation efforts.</p>
+<p>[NIST SP 800-30] provides guidance on risk assessments. [NIST SP 800-39] provides guidance on the risk management process. [NIST SP 800-160-1] provides guidance on security architectures and systems security engineering. [NIST SP 800-150] provides guidance on cyber threat information sharing.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>An organization consumes threat intelligence and improves their security posture based on the intelligence relevant to that organization and/or a system(s). The organization can obtain threat intelligence from open or commercial sources but must also use any DoD-provided sources. Threat information can be received in high volumes from various providers and must be processed and analyzed by the organization. It is the responsibility of the organization to process the threat information in a manner that is useful and actionable to their needs. Processing, analyzing, and extracting the intelligence from the threat feeds</p>
+<p>and applying it to all organizational security engineering needs is the primary benefit of this requirement. Note that more than one source is required to meet assessment objectives.</p>
+<div class="sub-header-2">Example</div>
+<p>Your organization receives a commercial threat intelligence feed from FIRST and government threat intelligence feeds from both USCERT and DoD/DC3 to help learn about recent threats and any additional information the threat feeds provide [b,c,d,e,f]. Your organization uses the threat intelligence for multiple purposes:</p>
+<ul>
+<li>To perform up-to-date risk assessments for the organization [a];</li>
+<li>To add rules to the automated system put in place to identify threats (indicators of compromise, or IOCs) on the organization’s network [e];</li>
+<li>To guide the organization in making informed selections of security solutions [c];</li>
+<li>To shape the way the organization performs system monitoring activities [d];</li>
+<li>To manage the escalation process for identified incidents, handling specific events, and performing recovery actions [f];</li>
+<li>To provide additional information to the hunt team to identify threat activities [e];</li>
+<li>To inform the development and design decisions for organizational systems and the overall security architecture, as well as the network architecture [b,c];</li>
+<li>To assist in decision-making regarding systems that are part of the primary network and systems that are placed in special enclaves for additional protections [b]; and</li>
+<li>To determine additional security measures based on current threat activities taking place in similar industry networks [c,d,e,f].</li>
+</ul>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does the organization detail how threat feed information is to be ingested, analyzed, and used [a]?</li>
+<li>Can the organization’s SOC or hunt teams discuss how they use the threat feed information after it is processed [e,f]?</li>
+</ul>
+
+', NULL, NULL, 38, 4, 19, NULL, NULL, 1214, NULL, N'Threat-Informed Risk Assessment', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5408, N'RA.L3-3.11.2E', N'Conduct cyber threat hunting activities on an on-going aperiodic basis or when indications warrant, to search for indicators of compromise in organizational systems and detect, track, and disrupt threats that evade existing controls.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>[ODP4] Organizational systems to search for indicators of compromise are defined;</li>
+<li>Indicators of compromise are identified;</li>
+<li>Cyber threat hunting activities are conducted on an on-going aperiodic basis or when indications warrant, to search for indicators of compromise in organizational systems; and</li>
+<li>Cyber threat hunting activities are conducted on an on-going aperiodic basis or when indications warrant, to detect, track, and disrupt threats that evade existing controls.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and information integrity policy; policy and procedures addressing system monitoring; threat hunting program documentation; procedures for the threat hunting program; threat hunting results; system design documentation; security plan; system monitoring tools and techniques documentation; security planning policy and procedures; system configuration settings and associated documentation; system monitoring logs or records; system audit records; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for threat hunting program; system/network administrators; organizational personnel responsible for information security; system developers; organizational personnel installing, configuring, and/or maintaining the system; organizational personnel responsible for monitoring the system and/or network].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting and/or implementing a threat hunting program; mechanisms supporting and/or implementing a system monitoring capability; mechanisms supporting and/or supporting and/or implementing incident response plans].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Threat hunting is an active means of defense that contrasts with traditional protection measures, such as firewalls, intrusion detection and prevention systems, quarantining</p>
+<p>malicious code in sandboxes, and Security Information and Event Management (SIEM) technologies and systems. Cyber threat hunting involves proactively searching organizational systems, networks, and infrastructure for advanced threats. The objective is to track and disrupt cyber adversaries as early as possible in the attack sequence and to measurably improve the speed and accuracy of organizational responses. Indicators of compromise are forensic artifacts from intrusions that are identified on organizational systems at the host or network level and can include unusual network traffic, unusual file changes, and the presence of malicious code.</p>
+<p>Threat hunting teams use existing threat intelligence and may create new threat information, which may be shared with peer organizations, Information Sharing and Analysis Organizations (ISAO), Information Sharing and Analysis Centers (ISAC), and relevant government departments and agencies. Threat indicators, signatures, tactics, techniques, procedures, and other indicators of compromise may be available via government and non- government cooperatives, including Forum of Incident Response and Security Teams, United States Computer Emergency Response Team, Defense Industrial Base Cybersecurity Information Sharing Program, and CERT Coordination Center.</p>
+<p>[NIST SP 800-30] provides guidance on threat and risk assessments, risk analyses, and risk modeling. [NIST SP 800-160-2] provides guidance on systems security engineering and cyber resiliency. [NIST SP 800-150] provides guidance on cyber threat information sharing.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>For this requirement, threat hunting is conducted on an on-going aperiodic basis. On-going aperiodic refers to activities that happen over and over but without an identifiable repeating pattern over time. For threat hunting, on-going activities take place in an automated manner (e.g., collecting logs, automated analysis, and alerts). Aperiodicity includes humans performing the hunt activities, which take place on an as-needed or as-planned basis.</p>
+<p>APTs can penetrate an environment by means that defeat or avoid conventional monitoring methods and alert triggers—for example, by using zero-day attacks. Zero-day attacks become known only after the attack has happened and alerts are sent via threat intelligence feeds based on expert analysis. Because of the nature of zero-day attacks, automated alerts do not generally trigger when the event occurs but the activity is captured in system logs and forwarded for analysis and retention by the SIEM. Threat intelligence information is typically used by hunt teams to search SIEM systems, system event and security logs, and other components to identify activity that has already taken place on an environment. The hunt team will identify systems related to the event(s) and pass the case to Incident Response team for action on the event(s). The hunt team will also use indicators to identify smaller components of an attack and search for that activity, which may help uncover a broader attack on the environment.</p>
+<p>Threat hunting can also look for anomalous behavior or activity based on an organization’s normal pattern of activity. Understanding the roles and information flows within an organization can help identify activity that might be indicative of adversary behavior before the adversary completes their attack or mission.</p>
+<div class="sub-header-2">Example</div>
+<p>You are the lead for your organization’s cyber threat hunting team. You have local and remote staff on the team to process threat intelligence. Your team is tied closely with the SOC and IR teams. Through a DoD (DC3) intelligence feed, you receive knowledge of a recent APT’s attacks on defense contractors. The intelligence feed provided the indicators of compromise for a zero-day attack that most likely started within the past month. After receiving the IOCs, you use a template for your organization to place the information in a standard format your team understands. You then email the information to your team members and place the information in your hunt team’s dashboard, which tracks all IOCs [a].</p>
+<p>Your team starts by using the information to hunt for IOCs on the environment [b]. One of your team members quickly responds, providing information from the SIEM that an HR system’s logs show evidence that IOCs related to this threat occurred three days ago. The team contacts the owner of the system as they take the system offline into a quarantined environment. Your team pulls all logs from the system and clones the storage on the system. Members go through the logs to look for other systems that may be part of the APT’s attack [c]. While the team is cloning the storage system for evidence, you alert the IR team about the issue. After full forensics of the system, your team has verified your company has been hit by the APT, but nothing was taken and no additional attacks happened. You also alert DoD (DC3) about the finding and discuss the matter with them. There is an after action report and a briefing given to management to make them aware of the issue.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does the organization have a methodology for performing cyber threat hunting actions [b,c]?</li>
+<li>Has the organization defined all organizational systems within scope of cyber threat hunting, including valid and approved documentation for any organization systems that are not within scope [b,c]?</li>
+<li>Has the organization identified a specific set of individuals to perform cyber threat hunting [b,c]?</li>
+<li>Does the threat hunting team have qualified staff members using the threat feed information [b,c]?</li>
+<li>Does the threat hunting team use combinations of events to determine suspicious behaviors [b,c]?</li>
+<li>Does the organization have a documented list of trusted threat feeds that are used by their cyber hunt teams as the latest indicators of compromise during their efforts [a]?</li>
+<li>Does the organization have a clear methodology for processing threat feed information and turning it into actionable information they can use for their threat hunting approach [a]?</li>
+</ul>
+
+', NULL, NULL, 38, 5, 19, NULL, NULL, 1214, NULL, N'Threat Hunting', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5409, N'RA.L3-3.11.3E', N'Employ advanced automation and analytics capabilities in support of analysts to predict and identify risks to organizations, systems, and system components.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>Advanced automation and analytics capabilities to predict and identify risks to organizations, systems, and system components are identified;</li>
+<li>Analysts to predict and identify risks to organizations, systems, and system components are identified; and</li>
+<li>Advanced automation and analytics capabilities are employed in support of analysts to predict and identify risks to organizations, systems, and system components.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and information integrity policy; risk assessment policy; security planning policy and procedures; procedures addressing organizational assessments of risk; procedures addressing system monitoring; enterprise architecture documentation; system design documentation; system architecture and configuration documentation; system monitoring tools and techniques documentation; system configuration settings and associated documentation; system monitoring logs or records; system audit records; security plan; risk assessment artifacts; risk assessment results; risk assessment reviews; risk assessment updates; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for information security; organizational personnel responsible for risk assessments; risk analysts; system developers; organizational personnel installing, configuring, and/or maintaining the system; organizational personnel responsible for monitoring; system/network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Automated mechanisms supporting and/or implementing risk analytics capabilities; automated mechanisms supporting and/or implementing system monitoring capability; automated mechanisms supporting and/or implementing the discovery, collection, distribution, and use of indicators of compromise; automated mechanisms for conducting, documenting, reviewing, disseminating, and updating risk assessments].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>A properly resourced Security Operations Center (SOC) or Computer Incident Response Team (CIRT) may be overwhelmed by the volume of information generated by the proliferation of security tools and appliances unless it employs advanced automation and analytics to analyze the data. Advanced automation and predictive analytics capabilities are typically supported by artificial intelligence concepts and machine learning. Examples include Automated Workflow Operations, Automated Threat Discovery and Response (which includes broad-based collection, context-based analysis, and adaptive response capabilities), and machine-assisted decision tools.</p>
+<p>[NIST SP 800-30] provides guidance on risk assessments and risk analyses.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Advanced automation includes tools to correlate and reduce the cyber data overload created by defensive tools, making the data understandable to the analyst. Automation also allows the defensive mechanisms to respond rapidly when adversary events are identified. Examples of such capabilities are SIEM; Security Orchestration, Automation, and Response (SOAR); and Extended Detection and Response (XDR) tools. An example of an automated rapid response action is a security alert being pushed to the SIEM while the organization’s SOAR solution communicates to the network firewall to block communications to the remote system identified in the security alert.</p>
+<p>SIEM is primarily a log collection tool intended to support data storage and analysis. It collects and sends alerts to security personnel for further investigation. SOAR is a software stack that enables an organization to collect data about security threats and respond to security events without human assistance in order to improve security operations. Orchestration connects and integrates disparate internal and external tools. Automation, fed by the data and alerts collected from security orchestration, ingests and analyzes data and creates repeated, automated responses. SOAR incorporates these capabilities based on the SIEM data and enables disparate security tools to coordinate with one another. SOAR can use artificial intelligence to predict and respond to similar future threats, if such tools are employed.</p>
+<p>XDR streamlines security data ingestion, analysis, prevention, and remediation workflows across an organization’s entire security stack, providing a single console to view and act on threat data. However, the presence of these tools by themselves does not necessarily provide an advanced capability. It is essential that the security team employ critical thinking in support of the intrusion detection and threat hunting processes.</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for information security in your organization. The organization holds and processes CUI in an enterprise. To protect that data, you want to minimize phishing attacks through the use of Security Orchestration and Automated Response (SOAR). Rather than relying on analysts to manually inspect each inbound item, emails containing links and/or attachments are processed by your automation playbook. Implementation of these</p>
+<p>processes involves sending all email links and attachments to detonation chambers or sandboxes prior to delivery to the recipient. When the email is received, SOAR extracts all URL links and attachments from the content and sends them for analysis and testing [a]. The domains in the URLs and the full URLs are processed against bad domain and URL lists. Next, a browser in a sandbox downloads the URLs for malware testing. Lastly, any attachments are sent to detonation chambers to identify if they attempt malicious activities. The hash of the attachments is sent to services to identify if it is known malware [b]. If any one of the items triggers a malware warning from the sandbox, detonation chamber, domain/URL validation service, attachment hash check services, or AV software, an alert about the original email is sent to team members with the recommendation to quarantine it. The team is given the opportunity to select a “take action” button, which would have the SOAR solution take actions to block that email and similar emails from being received by the organization [c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Has the organization implemented a security information and event management system [a,c]?</li>
+<li>Has the organization implemented security orchestration, automation, and response tools [a,b,c]?</li>
+<li>Does the organization use automated processing integrated with the SIEM system to perform analytics [c]?</li>
+<li>Can the organization demonstrate use of relevant threat data to inform detection methods that in turn provide automated alerts/recommendations [c]?</li>
+<li>Has the organization implemented an extended detection capability [c]?</li>
+<li>Does the organization have the ability to merge traditional cyber data, such as network packet captures (e.g., PCAP), or process logs with enrichment data, such as reputation or categorization data [c]?</li>
+<li>Can the organization provide examples of both basic and emerging analytics used to analyze alert anomalies, e.g., both simple queries and unsupervised machine learning algorithms that both improve their effectiveness and automatically filter, reduce, or enrich alerting capabilities [c]?</li>
+</ul>
+
+', NULL, NULL, 38, 6, 19, NULL, NULL, 1214, NULL, N'Advanced Risk Identification', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5410, N'RA.L3-3.11.4E', N'Document or reference in the system security plan the security solution selected, the rationale for the security solution, and the risk determination.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>The system security plan documents or references the security solution selected;</li>
+<li>The system security plan documents or references the rationale for the security solution; and</li>
+<li>The system security plan documents or references the risk determination.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: system security plan; records of security plan reviews and updates; system design documentation; security planning policy; procedures addressing security plan development; procedures addressing security plan reviews and updates; enterprise architecture documentation; enterprise security architecture documentation; system interconnection security agreements and other information exchange agreements; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for information security; organizational personnel responsible for developing, implementing, or approving system interconnection and information exchange agreements; personnel managing the systems to which the Interconnection Security Agreement/Information Exchange Agreement applies; system developers; organizational personnel responsible for security planning and plan implementation; organizational personnel responsible for boundary protection; system developers; system/network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Organizational processes for security plan development, review, update, and approval].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>System security plans relate security requirements to a set of security controls and solutions. The plans describe how the controls and solutions meet the security requirements. For the enhanced security requirements selected when the APT is a concern, the security plan provides traceability between threat and risk assessments and the risk-based selection of a security solution, including discussion of relevant analyses of alternatives and rationale for</p>
+<p>key security-relevant architectural and design decisions. This level of detail is important as the threat changes, requiring reassessment of the risk and the basis for previous security decisions.</p>
+<p>When incorporating external service providers into the system security plan, organizations state the type of service provided (e.g., software as a service, platform as a service), the point and type of connections (including ports and protocols), the nature and type of the information flows to and from the service provider, and the security controls implemented by the service provider. For safety critical systems, organizations document situations for which safety is the primary reason for not implementing a security solution (i.e., the solution is appropriate to address the threat but causes a safety concern).</p>
+<p>[NIST SP 800-18] provides guidance on the development of system security plans.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>The System Security Plan (SSP) is a fundamental component of an organization’s security posture. When solutions for implementing a requirement have differing levels of capabilities associated with their implementation, it is essential that the plan specifically document the rationale for the selected solution and what was acquired for the implementation. This information allows the organization to monitor the environment for threat changes and identify which solutions may no longer be applicable. While not required, it may also be useful to document alternative solutions reviewed and differing levels of risk associated with each alternative, as that information may facilitate future analyses when the threat changes. In addition to the implementations required for Level 2 certification, which may not be risk based, at Level 3, the SSP must carefully document the link between the assessed threat and the risk-based selection of a security solution for the enhanced security requirements (i.e., all CMMC L3 requirements derived from NIST SP 800-172).</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for information security in your organization. Following CMMC requirement RA.L3-3.11.1e – Threat Informed Risk Assessment, your team uses threat intelligence to complete a risk assessment and make a risk determination for all elements of your enterprise. Based on that view of risk, your team decides that requirement RA.L3-3.11.2e – Threat Hunting is a requirement that is very important in protecting your organization’s use of CUI, and you have determined the solution selected could potentially add risk. You want to detect an adversary as soon as possible when they breach the network before any CUI can be exfiltrated. However, there are multiple threat hunting solutions, and each solution has a different set of features that will provide different success rates in identifying IOCs.</p>
+<p>As a result, some solutions increase the risk to the organization by being less capable in detecting and tracking an adversary in your networks. To reduce risk, you evaluate five threat hunting solutions and in each case determine the number of IOCs for which there is a monitoring mechanism. You pick the solution that is cost effective, easy to operate, and optimizes IOC detection for your enterprise; purchase, install, and train SOC personnel on its use; and document the risk-based analysis of alternatives in the SSP. In creating that</p>
+<p>documentation in the SSP, you follow the guidance found in NIST SP 800-18, Guide for Developing Security Plans for Federal Information Systems [a,b,c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Has the organization completed a risk assessment and made a risk determinations for enterprise components that need to be protected [c]?</li>
+<li>Can the organization identify what is being protected and explain why specific protection solutions were selected [a,b]?</li>
+<li>Have all the decisions been documented in the SSP [a,b,c]?</li>
+</ul>
+
+', NULL, NULL, 38, 7, 19, NULL, NULL, 1214, NULL, N'Security Solution Rationale', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5411, N'RA.L3-3.11.5E', N'Assess the effectiveness of security solutions at least annually or upon receipt of relevant cyber threat information, or in response to a relevant cyber incident, to address anticipated risk to organizational systems and the organization based on current and accumulated threat intelligence.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>Security solutions are identified;</li>
+<li>Current and accumulated threat intelligence is identified;</li>
+<li>Anticipated risk to organizational systems and the organization based on current and accumulated threat intelligence is identified; and</li>
+<li>The effectiveness of security solutions is assessed at least annually or upon receipt of relevant cyber threat information, or in response to a relevant cyber incident, to address anticipated risk to organizational systems and the organization based on current and accumulated threat intelligence.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Risk assessment policy; security planning policy and procedures; security assessment policy and procedures; security assessment plans; security assessment results; procedures addressing organizational assessments of risk; security plan; risk assessment; risk assessment results; risk assessment reviews; risk assessment updates; threat intelligence information; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for security assessments; organizational personnel responsible for risk assessments; organizational personnel responsible for threat analysis; organizational personnel responsible for information security].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting, conducting, documenting, reviewing, disseminating, and updating risk assessments; mechanisms supporting and/or implementing security assessments].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Threat awareness and risk assessment of the organization are dynamic, continuous, and inform system operations, security requirements for the system, and the security solutions employed to meet those requirements. Threat intelligence (i.e., threat information that has been aggregated, transformed, analyzed, interpreted, or enriched to help provide the necessary context for decision making) is infused into the risk assessment processes and information security operations of the organization to identify any changes required to address the dynamic threat environment.</p>
+<p>[NIST SP 800-30] provides guidance on risk assessments, threat assessments, and risk analyses.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>This requirement requires the organization to analyze threat intelligence and consider the effectiveness of currently deployed cybersecurity solutions against existing, new, and emerging threats. The goal is to understand the risk to the systems and the organization based on threat intelligence and to make adjustments to security solutions to reduce the risk to an acceptable level. Analysis of solutions should include analysis of operational system settings of the deployed systems and not be solely a conceptual capability analysis. This analysis includes verifying configuration settings are configured as desired by the organization and have not been changed over time.</p>
+<p>Threat information can be thought of as raw data that may be limited in terms of evaluating the effectiveness of controls across the enterprise. For example, knowledge of a threat that has not been correlated with other threats may result in evaluation of an implementation that only provides partial protection for one set of systems when, in fact, the emerging threat is applicable to the entire enterprise. Large organizations may also have the resources to aggregate, transform, analyze, correlate, interpret, and enrich information to support decision-making about adequacy of existing security mechanisms and methods.</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for information security in your organization, which holds and processes CUI. The organization subscribes to multiple threat intelligence sources [b]. In order to assess the effectiveness of current security solutions, the security team analyzes any new incidents reported in the threat feed. They identify weaknesses that were leveraged by malicious actors and subsequently look for similar weaknesses in their own security architecture[a,c]. This analysis is passed to the architecture team for engineering change recommendations, including system patching guidance, new sensors, and associated alerts that should be generated, and to identify ways to mitigate, transfer, or accept the risk necessary to respond to events if they occur within their own organization [d].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does the organization make adjustments during an incident or operational improvements after an incident has occurred [d]?</li>
+<li>Has the organization implemented an analytical process to assess the effectiveness of security solutions against new or compiled threat intelligence [b,c,d]?</li>
+<li>Has the organization implemented a process to identify if an operational security solution fails to contribute to the protections needed against specific adversarial actions based on new threat intelligence [a,b,c,d]?</li>
+</ul>
+
+', NULL, NULL, 38, 8, 19, NULL, NULL, 1214, NULL, N'Security Solution Effectiveness', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5412, N'RA.L3-3.11.6E', N'Assess, respond to, and monitor supply chain risks associated with organizational systems and system components.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>Supply chain risks associated with organizational systems and system components are identified;</li>
+<li>Supply chain risks associated with organizational systems and system components are assessed;</li>
+<li>Supply chain risks associated with organizational systems and system components are responded to; and</li>
+<li>Supply chain risks associated with organizational systems and system components are monitored.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Risk assessment policy; procedures addressing organizational assessments of risk; security planning policy and procedures; supply chain risk management plan; security plan; risk assessment; risk assessment results; risk assessment reviews; risk assessment updates; threat intelligence information; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for information security; organizational personnel responsible for risk assessments; organizational personnel responsible for supply chain risk management].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting, conducting, documenting, reviewing, disseminating, and updating risk assessments].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Supply chain events include disruption, use of defective components, insertion of counterfeits, theft, malicious development practices, improper delivery practices, and insertion of malicious code. These events can have a significant impact on a system and its information and, therefore, can also adversely impact organizational operations (i.e., mission, functions, image, or reputation), organizational assets, individuals, other organizations, and the Nation. The supply chain-related events may be unintentional or malicious and can occur at any point during the system life cycle. An analysis of supply chain</p>
+<p>risk can help an organization identify systems or components for which additional supply chain risk mitigations are required.</p>
+<p>[NIST SP 800-30] provides guidance on risk assessments, threat assessments, and risk analyses. [NIST SP 800-161 Rev. 1] provides guidance on supply chain risk management.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Organizations will have varying policies, definitions, and actions for this requirement. It is important for a single organization to be consistent and to build a process that makes sense for their organization, strategy, unique supply chain, and the technologies available to them.</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for information security in your organization, which holds and processes CUI. One of your responsibilities is to manage risk associated with your supply chain that may provide an entry point for the adversary. First, you acquire threat information by subscribing to reports that identify supply chain attacks in enough detail that you are able to identify the risk points in your organization’s supply chain [a]. You create an organization- defined prioritized list of risks the organization may encounter and determine the responses to be implemented to mitigate those risks [b,c].</p>
+<p>In addition to incident information, the intelligence provider also makes recommendations for monitoring and auditing your supply chain. You assess, integrate, correlate, and analyze this information so you can use it to acquire monitoring tools to help identify supply chain events that could be an indicator of an incident. This monitoring tool provides visibility of the entire attack surface, including your vendors’ security posture [d]. Second, you analyze the incident information in the intelligence report to help identify defensive tools that will help respond to each of those known supply chain attack techniques as soon as possible after such an incident is detected, thus mitigating risk associated with known techniques.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Has the organization prioritized risks to the supply chain [a,b]?</li>
+<li>Does the organization have viable service-level agreements that describe and enable responses to supply chain incidents [c,d]?</li>
+</ul>
+
+', NULL, NULL, 38, 9, 19, NULL, NULL, 1214, NULL, N'Supply Chain Risk Response', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5413, N'RA.L3-3.11.7E', N'Develop a plan for managing supply chain risks associated with organizational systems and system components; update the plan at least annually, and upon receipt of relevant cyber threat information, or in response to a relevant cyber incident.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>Supply chain risks associated with organizational systems and system components are identified;</li>
+<li>Organizational systems and system components to include in a supply chain risk management plan are identified;</li>
+<li>A plan for managing supply chain risks associated with organizational systems and system components is developed; and</li>
+<li>The plan for managing supply chain risks is updated at least annually, and upon receipt of relevant cyber threat information, or in response to a relevant cyber incident.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Risk assessment policy; supply chain risk management plan; security planning policy and procedures; procedures addressing organizational assessments of risk; security plan; risk assessment; risk assessment results; risk assessment reviews; risk assessment updates; threat intelligence information; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for information security; organizational personnel responsible for risk assessments; organizational personnel responsible for supply chain risk management].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Automated mechanisms supporting, conducting, documenting, reviewing, disseminating, and updating risk assessments].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>The growing dependence on products, systems, and services from external providers, along with the nature of the relationships with those providers, present an increasing level of risk to an organization. Threat actions that may increase risk include the insertion or use of counterfeits, unauthorized production, tampering, theft, insertion of malicious software and hardware, and poor manufacturing and development practices in the supply chain. Supply chain risks can be endemic or systemic within a system element or component, a system, an</p>
+<p>organization, a sector, or the Nation. Managing supply chain risk is a multifaceted undertaking that requires a coordinated effort across an organization to build trust relationships and communicate with both internal and external stakeholders. Supply chain risk management (SCRM) activities involve identifying and assessing risks, determining appropriate mitigating actions, developing SCRM plans to document selected mitigating actions, and monitoring performance against plans. SCRM plans address requirements for developing trustworthy, secure, and resilient systems and system components, including the application of the security design principles implemented as part of life cycle-based systems security engineering processes.</p>
+<p>[NIST SP 800-161 Rev. 1] provides guidance on supply chain risk management.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>An organization is required to have a supply chain risk management plan that assesses and responds to the identified risks from those organizations that provide IT products or services, including any cloud or other third-party services with a role in the operation of the system. The organization should be cognizant of services outside the scope of the system but required for the operation of the system as part of their plan. Since the cyber environment changes rapidly and continuously, it is equally important for the organization to update the plan in response to supply chain cyber incidents or emerging information.</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for information security in your organization, and you have created a supply chain risk management plan [a,b,c]. One of the organization’s suppliers determines that it has been the victim of a cyberattack. Your security team meets with the supplier to determine the nature of the attack and to understand the adversary, the attack, the potential for corruption of delivered goods or services, and current as well as future risks. The understanding of the supply chain will help protect the local environment. Subsequently, you update the risk management plan to include a description of the necessary configuration changes or upgrades to monitoring tools to improve the ability to identify the new risks, and when improved tools are available, you document the acquisition of defensive tools and associated functionality to help mitigate any of the identified techniques [d].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does the organization’s current supply chain risk management plan apply across the</li>
+</ul>
+<p>enterprise, or does it only apply to a limited portion of the supply chain [b]?</p>
+
+', NULL, NULL, 38, 10, 19, NULL, NULL, 1214, NULL, N'Supply Chain Risk Plan', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5414, N'CA.L3-3.12.1E', N'Conduct penetration testing at least annually or when significant security changes are made to the system, leveraging automated scanning tools and ad hoc tests using subject matter experts.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>Automated scanning tools are identified;</li>
+<li>Ad hoc tests using subject matter experts are identified; and</li>
+<li>Penetration testing is conducted at least annually or when significant security changes are made to the system, leveraging automated scanning tools and ad hoc tests using subject matter experts.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Security assessment policy; procedures addressing penetration testing; security plan; security assessment plan; penetration test report; security assessment report; security assessment evidence; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for security assessments; penetration testing team; system/network administrators; organizational personnel responsible for information security].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Automated mechanisms supporting security assessments; automated mechanisms supporting penetration testing].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Penetration testing is a specialized type of assessment conducted on systems or individual system components to identify vulnerabilities that could be exploited by adversaries. Penetration testing goes beyond automated vulnerability scanning. It is conducted by penetration testing agents and teams with particular skills and experience that include technical expertise in network, operating system, and application-level security. Penetration testing can be used to validate vulnerabilities or determine a system’s penetration resistance to adversaries within specified constraints. Such constraints include time, resources, and</p>
+<p>skills. Organizations may also supplement penetration testing with red team exercises. Red teams attempt to duplicate the actions of adversaries in carrying out attacks against organizations and provide an in-depth analysis of security-related weaknesses or deficiencies.</p>
+<p>Organizations can use the results of vulnerability analyses to support penetration testing activities. Penetration testing can be conducted internally or externally on the hardware, software, or firmware components of a system and can exercise both physical and technical controls. A standard method for penetration testing includes pretest analysis based on full knowledge of the system, pretest identification of potential vulnerabilities based on the pretest analysis, and testing designed to determine the exploitability of vulnerabilities. All parties agree to the specified rules of engagement before the commencement of penetration testing. Organizations correlate the rules of engagement for penetration tests and red teaming exercises (if used) with the tools, techniques, and procedures that they anticipate adversaries may employ. The penetration testing or red team exercises may be organization- based or external to the organization. In either case, it is important that the team possesses the necessary skills and resources to do the job and is objective in its assessment.</p>
+<p>[NIST SP 800-53A] provides guidance on conducting security assessments.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>It is important that the organization has a repeatable penetration testing capability, regardless of who performs the penetration testing. This requirement entails performing tests against components of the organization’s architecture to identify cyber weaknesses and vulnerabilities. It does not mean everything in the architecture requires penetration testing. This requirement provides findings and mitigation strategies that benefit the organization and help create a stronger environment against adversary efforts. It may be beneficial for the organization to define the scope of penetration testing. The organization’s approach may involve hiring an expert penetration testing team to perform testing on behalf of the organization. When an organization has penetration testing performed, either by an internal team or external firm, they should establish rules of engagement and impose limits on what can be performed by the penetration test team(s).</p>
+<p>Ensuring the objectivity of the test team is important as well. Potential conflicts of interest, such as having internal testers report directly or indirectly to network defenders or an external test team contracted by network defense leadership, must be carefully managed by organizational leadership.</p>
+<p>Reports on the findings should be used by the organization to determine where to focus funding, staffing, training, or technical improvements for future mitigation strategies.</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for information security in your organization. Leveraging a contract managed by the CIO, you hire an external expert penetration team annually to test the security of the organization’s enclave that stores and processes CUI [a,c]. You hire the same firm annually or on an ad hoc basis when significant changes are made to the architecture or components that affect security [b,c].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does the organization have internal team members who possess the proper level of expertise to perform a valued penetration testing effort [b]?</li>
+<li>If the penetration testing is performed by an internal team, are the individuals performing the testing objectively [b]?</li>
+<li>Is a penetration testing final report provided to the internal team responsible for organizational defense?</li>
+<li>If previous penetration tests have been conducted, can the organization provide samples of penetration test plans, findings reports, and mitigation guidance based on the findings [a,b,c]?</li>
+</ul>
+
+', NULL, NULL, 38, 5, 19, NULL, NULL, 1215, NULL, N'Penetration Testing', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5415, N'SC.L3-3.13.4E', N'Employ physical isolation techniques or logical isolation techniques or both in organizational systems and system components.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>[ODP1] One or more of the following is/are selected: physical isolation techniques; logical isolation techniques;</li>
+<li>[ODP2] Physical isolation techniques are defined (if selected); [ODP3] Logical isolation techniques are defined (if selected);</li>
+<li>Physical isolation techniques or logical isolation techniques or both are employed in organizational systems and system components.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and communications protection policy; procedures addressing boundary protection; system design documentation; procedures addressing the use of thin nodes; list of key internal boundaries of the system; security plan; boundary protection hardware and software; system configuration settings and associated documentation; enterprise architecture documentation; system architecture; security architecture documentation; system audit records; system component inventory; list of security tools and support components to be isolated from other system components; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for information security; system/network administrators; system developers; organizational personnel responsible for boundary protection].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing the boundary protection capability; mechanisms implementing physical isolation techniques; mechanisms supporting and/or implementing the isolation of information security tools, mechanisms, and support components; mechanisms supporting and/or implementing the capability to separate system components supporting organizational missions and business functions; mechanisms implementing</p>
+<p>logical isolation techniques; mechanisms supporting or implementing separate network addresses/different subnets; mechanisms supporting and/or implementing thin nodes].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>A mix of physical and logical isolation techniques (described below) implemented as part of the system architecture can limit the unauthorized flow of CUI, reduce the system attack surface, constrain the number of system components that must be secure, and impede the movement of an adversary. When implemented with a set of managed interfaces, physical and logical isolation techniques for organizational systems and components can isolate CUI into separate security domains where additional protections can be implemented. Any communications across the managed interfaces (i.e., across security domains), including for management or administrative purposes, constitutes remote access even if the communications remain within the organization. Separating system components with boundary protection mechanisms allows for the increased protection of individual components and more effective control of information flows between those components. This enhanced protection limits the potential harm from and susceptibility to hostile cyber- attacks and errors. The degree of isolation can vary depending on the boundary protection mechanisms selected. Boundary protection mechanisms include routers, gateways, and firewalls separating system components into physically separate networks or subnetworks; virtualization and micro-virtualization techniques; encrypting information flows among system components using distinct encryption keys; cross-domain devices separating subnetworks; and complete physical separation (i.e., air gaps).</p>
+<p>System architectures include logical isolation, partial physical and logical isolation, or complete physical isolation between subsystems and at system boundaries between resources that store, process, transmit, or protect CUI and other resources. Examples include:</p>
+<p>· Logical isolation: Data tagging, digital rights management (DRM), and data loss prevention (DLP) that tags, monitors, and restricts the flow of CUI; virtual machines or containers that separate CUI and other information on hosts; and virtual local area networks (VLAN) that keep CUI and other information separate on networks.</p>
+<p>· Partial physical and logical isolation: Physically or cryptographically isolated networks, dedicated hardware in data centers, and secure clients that (a) may not directly access resources outside of the domain (i.e., all applications with cross-enclave connectivity execute as remote virtual applications hosted in a demilitarized zone [DMZ] or internal and protected enclave), (b) access via remote virtualized applications or virtual desktop with no file transfer capability other than with dual authorization, or (c) employ dedicated client hardware (e.g., a zero or thin client) or hardware approved for multi- level secure (MLS) usage.</p>
+<p>· Complete physical isolation: Dedicated (not shared) client and server hardware; physically isolated, stand-alone enclaves for clients and servers; and (a) logically separate network traffic (e.g., using a VLAN) with end-to-end encryption using Public Key Infrastructure (PKI)-based cryptography or (b) physical isolation from other networks.</p>
+<p>Isolation techniques are selected based on a risk management perspective that balances the threat, the information being protected, and the cost of the options for protection. Architectural and design decisions are guided and informed by the security requirements and selected solutions. Organizations consider the trustworthiness of the isolation techniques employed (e.g., the logical isolation relies on information technology that could be considered a high value target because of the function being performed), introducing its own set of vulnerabilities.</p>
+<p>[NIST SP 800-160-1] provides guidance on developing trustworthy, secure, and cyber resilient systems using systems security engineering practices and security design concepts.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>For this requirement, organizations must identify the systems or enclaves that need to be isolated, then design and implement the isolation. The resulting isolation solutions are documented or referenced in the SSP. Documentation will be dependent on the design selected and may include a high-level diagram, but specific details that may change on some frequency would be omitted. During an assessment, providing details such as subnet and VLAN implementation identifiers, internal boundary protection hardware and software, interface device functionality, and system configuration and Access Control List (ACL) settings will be useful.</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for information security in your organization, which holds and processes CUI. You have decided to isolate the systems processing CUI by limiting all communications in and out that enclave with cross-domain interface devices that implement access control [a]. Your security team has identified all the systems containing such CUI, documented network design details, developed network diagrams showing access control points, documented the logic for the access control enforcement decisions, described the interface and protocol to the identification and authentication mechanisms, and documented all details associated with the ACLs, including review, updates, and credential revocation procedures.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Has the organization clearly identified where they use physical, logical, or both isolation techniques [a]?</li>
+<li>Can the organization describe the isolation techniques they have employed [a]?</li>
+<li>Has the organization deployed subnetting, internal firewalls, and VLANs to control packet flow between internal segments [a]?</li>
+<li>Does the organization employ metadata to inform isolation techniques [a]?</li>
+</ul>
+
+', NULL, NULL, 38, 19, 19, NULL, NULL, 1216, NULL, N'Isolation', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5416, N'SI.L3-3.14.1E', N'Verify the integrity of security critical and essential software using root of trust mechanisms or cryptographic signatures.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>[ODP1] Security critical or essential software is defined;</li>
+<li>Root of trust mechanisms or cryptographic signatures are identified; and</li>
+<li>The integrity of security critical and essential software is verified using root of trust mechanisms or cryptographic signatures.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and information integrity policy; procedures addressing software, firmware, and information integrity; system design documentation; security plan; system configuration settings and associated documentation; system component inventory; integrity verification tools and associated documentation; records of integrity verification scans; system audit records; cryptographic mechanisms and associated documentation; records of detected unauthorized changes to software, firmware, and information; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for information security; organizational personnel responsible for software, firmware, and/or information integrity; system developers; system/network administrators].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Software, firmware, and information integrity verification tools; mechanisms supporting and/or implementing integrity verification of the boot process; mechanisms supporting and/or implementing protection of the integrity of boot firmware; cryptographic mechanisms implementing software, firmware, and information integrity; safeguards implementing protection of the integrity of boot firmware].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Verifying the integrity of the organization’s security-critical or essential software is an important capability since corrupted software is the primary attack vector used by adversaries to undermine or disrupt the proper functioning of organizational systems. There are many ways to verify software integrity throughout the system development life cycle. Root of trust mechanisms (e.g., secure boot, trusted platform modules, Unified Extensible Firmware Interface [UEFI]), verify that only trusted code is executed during boot processes. This capability helps system components protect the integrity of boot firmware in organizational systems by verifying the integrity and authenticity of updates to the firmware prior to applying changes to the system component and preventing unauthorized processes from modifying the boot firmware. The employment of cryptographic signatures ensures the integrity and authenticity of critical and essential software that stores, processes, or transmits, CUI. Cryptographic signatures include digital signatures and the computation and application of signed hashes using asymmetric cryptography, protecting the confidentiality of the key used to generate the hash, and using the public key to verify the hash information. Hardware roots of trust are considered to be more secure. This requirement supports 3.4.1e and 3.4.3.e.</p>
+<p>[FIPS 140-3] provides security requirements for cryptographic modules. [FIPS 180-4] and [FIPS 202] provide secure hash standards. [FIPS 186-4] provides a digital signature standard. [NIST SP 800-147] provides BIOS protection guidance. [NIST TRUST] provides guidance on the roots of trust project.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Organizations verify the integrity of security critical and essential software every time that software is executed. Secure boot mechanisms for firmware and a cryptographically protected boot chain ensure the integrity of the operating system (OS) and security critical software, and cryptographic techniques ensure the essential software has not been tampered with after development prior to execution. If software is itself considered to be CUI or if it uses CUI, this requirement ensures it has not been compromised.</p>
+<p>Software and information integrity verification tools can help check the integrity during the development process for those organizations developing software. As critical software is updated, the integrity of any configuration data and the software must result in updated signatures and an ongoing verification process.</p>
+<p>Operating systems include mechanisms to validate digital signatures for installed software. Most software packages use signatures to prove the integrity of the provided software, and the organization should leverage these capabilities. Similarly, most hardware appliance vendors have secure boot checks in place for their devices and built-in features that check the digital signature of an upgrade/update package before they allow an upgrade to take place. For locally developed software, the organization should sign the software to ensure its integrity.</p>
+<div class="sub-header-2">Example 1</div>
+<p>You are responsible for information security in your organization. Your security team has identified the software used to process CUI, and the organization has decided it is mission- critical software that must be protected. You take three actions. First, you ensure all of the platform’s configuration information used at boot is hashed and stored in a TPM [a]. Second, you ensure that the platforms used to execute the software are started with a digitally signed software chain to a secure boot process using the TPM. Finally, you ensure the essential applications are cryptographically protected with a digital signature when stored and the signature is verified prior to execution [b].</p>
+<div class="sub-header-2">Example 2</div>
+<p>Your organization has a software security team, and they are required to validate unsigned essential software provided to systems that do not have TPM modules. The organization has a policy stating no software can be executed on a system unless its hash value matches that of a hash stored in the approved software library kept by the software security team [a]. This action is performed by implementing software restriction policies on systems. The team tests the software on a sandbox system, and once it is proven safe, they run a hashing function on the software to create a hash value. This hash value is placed in a software library so the system will know it can execute the software [b]. Any changes to the software without the software security team’s approval will result in the software failing the security tests, and it will be prevented from executing.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Does the organization use cryptographic signatures to ensure the integrity and authenticity of critical and essential software and data [b]?</li>
+<li>Has the organization identified those devices that require integrity verification of the boot process [a]?</li>
+<li>Does the organization use a TPM to store hashes of pre-run time configuration parameters for those systems [b]?</li>
+<li>Does the organization leverage the TPM configuration hash to verify the hardware and software configuration is unchanged in order to determine that a system is trustworthy before running mission-essential applications [b,c]?</li>
+<li>Does the organization use the TPM for remote attestation to determine to which extent information can be trusted from another system [b,c]?</li>
+<li>Has the organization identified devices requiring organization-defined security safeguards that must be implemented to protect the integrity of boot firmware [a]?</li>
+<li>Has the organization defined security safeguards that will be implemented to protect the integrity of boot firmware in mission-essential devices [a]?</li>
+<li>Has the organization implemented organization-defined security safeguards to protect the integrity of boot firmware in organization-defined essential devices [b]?</li>
+</ul>
+
+', NULL, NULL, 38, 12, 19, NULL, NULL, 1217, NULL, N'Integrity Verification', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5417, N'SI.L3-3.14.3E', N'Ensure that specialized assets including IoT, IIoT, OT, GFE, Restricted Information Systems and test equipment are included in the scope of the specified enhanced security requirements or are segregated in purpose-specific networks.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>Specialized assets including IoT, IIoT, OT, GFE, Restricted Information Systems and test equipment are included in the scope of the specified enhanced security requirements; and</li>
+<li>Systems and system components that are not included in specialized assets including IoT, IIoT, OT, GFE, Restricted Information Systems and test equipment are segregated in purpose-specific networks.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: Access control policy; information flow control policies; system and services acquisition policy; system and communications protection policy; procedures addressing security function isolation; procedures addressing application partitioning; procedures addressing security engineering principles used in the specification, design, development, implementation, and modification of the system; procedures addressing information flow enforcement; procedures addressing access enforcement; system architecture; system design documentation; security plan; system component inventory; system configuration settings and associated documentation; system baseline configuration; list of security functions to be isolated from non-security functions; system audit records; security requirements and specifications for the system; list of approved authorizations (user privileges); list of information flow authorizations; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for access enforcement; system/network administrators; organizational personnel responsible for information security; system developers; system integrators; organizational personnel responsible for acquisition/contracting; organizational personnel responsible for determining system security requirements; system security architects; enterprise architects; organizational personnel responsible for system specification, design, development, implementation, and modification].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms implementing the access control policy; mechanisms implementing the information flow enforcement policy; mechanisms supporting the</p>
+<p>application of security engineering principles in system specification, design, development, implementation, and modification].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Organizations may have a variety of systems and system components in their inventory, including Information Technology (IT), Internet of Things (IoT), Operational Technology (OT), and Industrial Internet of Things (IIoT). The convergence of IT, OT, IoT, and IIoT significantly increases the attack surface of organizations and provides attack vectors that are challenging to address. Compromised IoT, OT, and IIoT system components can serve as launching points for attacks on organizational IT systems that handle CUI. Some IoT, OT, and IIoT system components can store, transmit, or process CUI (e.g., specifications or parameters for objects manufactured in support of critical programs). Most of the current generation of IoT, OT, and IIoT system components are not designed with security as a foundational property and may not be able to be configured to support security functionality. Connections to and from such system components are generally not encrypted, do not provide the necessary authentication, are not monitored, and are not logged. Therefore, these components pose a significant cyber threat. Gaps in IoT, OT, and IIoT security capabilities may be addressed by employing intermediary system components that can provide encryption, authentication, security scanning, and logging capabilities—thus, preventing the components from being accessible from the Internet. However, such mitigation options are not always available or practicable. The situation is further complicated because some of the IoT, OT, and IIoT devices may be needed for essential missions and business functions. In those instances, it is necessary for such devices to be isolated from the Internet to reduce the susceptibility to cyber-attacks.</p>
+<p>[NIST SP 800-160-1] provides guidance on security engineering practices and security design concepts.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>Specialized Assets are addressed in the scoping guidance, which should be overlaid on this requirement. The OSC must document Specialized Assets in the asset inventory; develop, document, and periodically update system security plans; and include Specialized Assets in the network diagram. The Specialized Asset section of the SSP should describe associated system boundaries, system environments of operation, how security requirements are implemented, and the relationships with or connections to other systems.</p>
+<p>Specialized Assets within the Level 3 CMMC assessment scope must be either assessed against all CMMC security requirements or separated into purpose-specific networks. Specialized Assets may have limitations on the application of certain security requirements. To accommodate such issues, the SSP should describe any mitigations.</p>
+<p>Intermediary devices are permitted to mitigate an inability for the asset itself to implement one or more CMMC requirements. An example of an intermediary device used in conjunction with a specialized asset is a boundary device or a proxy.</p>
+<p>The high-level list of Specialized Assets includes:</p>
+<ul>
+<li>Government Furnished Equipment;</li>
+<li>IoT and IIoT devices (physical or virtual) with sensing/actuation capability and programmability features;</li>
+<li>OT used in manufacturing systems, industrial control systems (ICS), or supervisory control and data acquisition (SCADA) systems;</li>
+<li>Restricted Information Systems, which can include systems and IT components that are configured based on government requirements; and</li>
+<li>Test equipment.</li>
+</ul>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for information security in your organization, which processes CUI on the network, and this same network includes GFE for which the configuration is mandated by the government. The GFE is needed to process CUI information [a]. Because the company cannot manage the configuration of the GFE, it has been augmented by placing a bastion host between it and the network. The bastion host meets the requirements that the GFE cannot, and is used to send CUI files to and from the GFE for processing. You and your security team document in the SSP all of the GFE to include GFE connectivity diagrams, a description of the isolation mechanism, and a description of how your organization manages risk associated with that GFE [a].</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Has the organization documented all specialized assets in asset inventory [a]?</li>
+<li>Has the organization documented all specialized assets in the SSP to show how risk is managed [b]?</li>
+<li>Has the organization provided a network diagram for specialized assets [a,b]?</li>
+</ul>
+
+', NULL, NULL, 38, 13, 19, NULL, NULL, 1217, NULL, N'Specialized Asset Security', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Question_Text], [Supplemental_Info], [Category], [Sub_Category], [Maturity_Level_Id], [Sequence], [Maturity_Model_Id], [Parent_Question_Id], [Ranking], [Grouping_Id], [Examination_Approach], [Short_Name], [Mat_Question_Type], [Parent_Option_Id], [Supplemental_Fact], [Scope], [Recommend_Action], [Risk_Addressed], [Services], [Outcome], [Security_Practice], [Implementation_Guides]) VALUES (5418, N'SI.L3-3.14.6E', N'Use threat indicator information and effective mitigations obtained from, at a minimum, open or commercial sources, and any DoD-provided sources, to guide and inform intrusion detection and threat hunting.', N'<div class="sub-header-1">ASSESSMENT OBJECTIVES [NIST SP 800-171A]</div>
+Determine if:
+<ol class="alpha-bracket">
+<li>[ODP1] External organizations from which to obtain threat indicator information and effective mitigations are defined;</li>
+<li>Threat indicator information is identified;</li>
+<li>Effective mitigations are identified;</li>
+<li>Intrusion detection approaches are identified;</li>
+<li>Threat hunting activities are identified; and</li>
+<li>Threat indicator information and effective mitigations obtained from, at a minimum, open or commercial sources and any DoD-provided sources, are used to guide and inform intrusion detection and threat hunting.</li>
+</ol>
+
+<div class="sub-header-1">POTENTIAL ASSESSMENT METHODS AND OBJECTS</div>
+<div class="sub-header-2">Examine</div>
+<p>[SELECT FROM: System and information integrity policy; information security program plan; procedures addressing security alerts, advisories, and directives; threat awareness program documentation; procedures addressing system monitoring; procedures for the threat awareness program; risk assessment results relevant to threat awareness; records of security alerts and advisories; system design documentation; security plan; system monitoring tools and techniques documentation; system configuration settings and associated documentation; system monitoring logs or records; system audit records; documentation on the cross-organization information-sharing capability; other relevant documents or records].</p>
+<div class="sub-header-2">Interview</div>
+<p>[SELECT FROM: Organizational personnel responsible for information security program planning and plan implementation; system/network administrators; organizational personnel responsible for the threat awareness program; organizational personnel responsible for the cross-organization information-sharing capability; organizational personnel responsible for information security; organizational personnel responsible for installing, configuring, and/or maintaining the system; organizational personnel security alerts and advisories; organizational personnel responsible for implementing, operating, maintaining, and using the system; organizational personnel, organizational elements, and/or external organizations to whom alerts, advisories, and directives are to be</p>
+<p>disseminated; personnel with whom threat awareness information is shared by the organization; system developers].</p>
+<div class="sub-header-2">Test</div>
+<p>[SELECT FROM: Mechanisms supporting and/or implementing the threat awareness program; mechanisms supporting and/or implementing the cross-organization information- sharing capability; mechanisms supporting and/or implementing the system monitoring capability; mechanisms supporting and/or implementing the definition, receipt, generation, and dissemination of security alerts, advisories, and directives; mechanisms supporting and/or implementing security directives; mechanisms supporting and/or implementing threat hunting; mechanisms supporting and/or implementing intrusion detection; mechanisms supporting and/or implementing the discovery, collection, distribution, and use of indicators of compromise].</p>
+
+<div class="sub-header-1">DISCUSSION</div>
+<p>Threat information related to specific threat events (e.g., TTPs, targets) that organizations have experienced, threat mitigations that organizations have found to be effective against certain types of threats, and threat intelligence (i.e., indications and warnings about threats that can occur) are sourced from and shared with trusted organizations. This threat information can be used by organizational Security Operations Centers (SOC) and incorporated into monitoring capabilities. Threat information sharing includes threat indicators, signatures, and adversary TTPs from organizations participating in threat- sharing consortia, government-commercial cooperatives, and government-government cooperatives (e.g., CERTCC, CISA/US-CERT, FIRST, ISAO, DIB CS Program). Unclassified indicators, based on classified information but which can be readily incorporated into organizational intrusion detection systems, are available to qualified nonfederal organizations from government sources.</p>
+
+<div class="sub-header-1">FURTHER DISCUSSION</div>
+<p>One way to effectively leverage threat indicator information is to access human- or machine- readable threat intelligence feeds. Effectiveness may also require the organization to create TTPs in support of operational requirements, which will typically include defensive cyber tools supporting incident detection, alerts, incident response, and threat hunting. It is possible that this requirement will be implemented by a third-party managed service provider, and in that case, it will be necessary to carefully define the boundary and responsibilities between the OSC and the ESP to guarantee a robust implementation. It is also important that the OSC validate threat indicator integration into the defensive cyber toolset by being able to (1) implement mitigations for sample industry relevant indicators of compromise (e.g., IP address, file hash), (2) identify sample indicators of compromise across sample endpoints, and (3) identify sample indicators of compromise using analytical processes on a system data repository.</p>
+<div class="sub-header-2">Example</div>
+<p>You are responsible for information security in your organization. You have maintained an effective intrusion detection capability for some time, but now you decide to introduce a threat hunting capability informed by internal and external threat intelligence [a,c,d,e]. You install a SIEM system that leverages threat information to provide functionality to:</p>
+<ul>
+<li>analyze logs, data sources, and alerts;</li>
+<li>query data to identify anomalies;</li>
+<li>identify variations from baseline threat levels;</li>
+<li>provide machine learning capabilities associated with the correlation of anomalous data characteristics across the enterprise; and</li>
+<li>categorize data sets based on expected data values.</li>
+</ul>
+<p>Your team also manages an internal mitigation plan (playbook) for all known threats for your environment. This playbook is used to implement effective mitigation strategies across the environment [b]. Some of the mitigation strategies are developed by team members, and others are obtained by threat feed services.</p>
+<div class="sub-header-2">Potential Assessment Considerations</div>
+<ul>
+<li>Which external sources has the organization identified as threat information sources [a]?</li>
+<li>Does the organization understand the TTPs of key attackers [c,d]?</li>
+<li>Does the organization deploy threat indicators to EDR systems, network intrusion detection systems, or both [c,d,e]?</li>
+<li>What actions does the organization implement when a threat alert/indicator is signaled [c,d,e]?</li>
+<li>Does the organization use internal threat capabilities within their existing security tools [e]?</li>
+<li>How does the organization respond to a third-party notification of a threat indicator [e]?</li>
+</ul>
+
+', NULL, NULL, 38, 14, 19, NULL, NULL, 1217, NULL, N'Threat-Guided Intrusion Detection', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+SET IDENTITY_INSERT [dbo].[MATURITY_QUESTIONS] OFF
+PRINT(N'Operation applied to 149 rows out of 149')
+
+PRINT(N'Add rows to [dbo].[MATURITY_REFERENCES]')
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5270, 693, N'FAR_52_204_21__d3096e66', 0, NULL, N'FAR Clause 52.204-21 b.1.i', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5270, 3970, N'3.1.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5271, 693, N'FAR_52_204_21__d3096e71', 0, NULL, N'FAR Clause 52.204-21 b.1.ii', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5271, 3970, N'3.1.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5272, 693, N'FAR_52_204_21__d3096e76', 0, NULL, N'FAR Clause 52.204-21 b.1.iii', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5272, 3970, N'3.1.20', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5273, 693, N'FAR_52_204_21__d3096e81', 0, NULL, N'FAR Clause 52.204-21 b.1.iv', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5273, 3970, N'3.1.22', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5274, 693, N'FAR_52_204_21__d3096e86', 0, NULL, N'FAR Clause 52.204-21 b.1.v', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5274, 3970, N'3.5.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5275, 693, N'FAR_52_204_21__d3096e91', 0, NULL, N'FAR Clause 52.204-21 b.1.vi', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5275, 3970, N'3.5.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5276, 693, N'FAR_52_204_21__d3096e96', 0, NULL, N'FAR Clause 52.204-21 b.1.vii', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5276, 3970, N'3.8.3', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5277, 693, N'FAR_52_204_21__d3096e101', 0, NULL, N'FAR Clause 52.204-21 b.1.viii', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5277, 3970, N'3.10.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5278, 693, N'FAR_52_204_21__d3096e106', 0, NULL, N'FAR Clause 52.204-21 b.1.ix', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5278, 3970, N'3.10.3', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5278, 3970, N'3.10.4', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5278, 3970, N'3.10.5', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5279, 693, N'FAR_52_204_21__d3096e111', 0, NULL, N'FAR Clause 52.204-21 b.1.x', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5279, 3970, N'3.13.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5280, 693, N'FAR_52_204_21__d3096e119', 0, NULL, N'FAR Clause 52.204-21 b.1.xi', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5280, 3970, N'3.13.5', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5281, 693, N'FAR_52_204_21__d3096e125', 0, NULL, N'FAR Clause 52.204-21 b.1.xii', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5281, 3970, N'3.14.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5282, 693, N'FAR_52_204_21__d3096e130', 0, NULL, N'FAR Clause 52.204-21 b.1.xiii', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5282, 3970, N'3.14.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5283, 693, N'FAR_52_204_21__d3096e135', 0, NULL, N'FAR Clause 52.204-21 b.1.xiv', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5283, 3970, N'3.14.4', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5284, 693, N'FAR_52_204_21__d3096e140', 0, NULL, N'FAR Clause 52.204-21 b.1.xv', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5284, 3970, N'3.14.5', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5285, 693, N'FAR_52_204_21__d3096e66', 0, NULL, N'FAR Clause 52.204-21 b.1.i', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5285, 3970, N'3.1.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5286, 693, N'FAR_52_204_21__d3096e71', 0, NULL, N'FAR Clause 52.204-21 b.1.ii', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5286, 3970, N'3.1.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5287, 3970, N'3.1.3', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5288, 3970, N'3.1.4', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5289, 3970, N'3.1.5', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5290, 3970, N'3.1.6', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5291, 3970, N'3.1.7', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5292, 3970, N'3.1.8', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5293, 3970, N'3.1.9', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5294, 3970, N'3.1.10', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5295, 3970, N'3.1.11', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5296, 3970, N'3.1.12', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5297, 3970, N'3.1.13', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5298, 3970, N'3.1.14', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5299, 3970, N'3.1.15', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5300, 3970, N'3.1.16', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5301, 3970, N'3.1.17', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5302, 3970, N'3.1.18', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5303, 3970, N'3.1.19', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5304, 693, N'FAR_52_204_21__d3096e76', 0, NULL, N'FAR Clause 52.204-21 b.1.iii', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5304, 3970, N'3.1.20', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5305, 3970, N'3.1.21', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5306, 693, N'FAR_52_204_21__d3096e81', 0, NULL, N'FAR Clause 52.204-21 b.1.iv', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5306, 3970, N'3.1.22', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5307, 3970, N'3.2.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5308, 3970, N'3.2.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5309, 3970, N'3.2.3', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5310, 3970, N'3.3.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5311, 3970, N'3.3.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5312, 3970, N'3.3.3', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5313, 3970, N'3.3.4', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5314, 3970, N'3.3.5', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5315, 3970, N'3.3.6', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5316, 3970, N'3.3.7', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5317, 3970, N'3.3.8', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5318, 3970, N'3.3.9', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5319, 3970, N'3.4.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5320, 3970, N'3.4.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5321, 3970, N'3.4.3', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5322, 3970, N'3.4.4', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5323, 3970, N'3.4.5', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5324, 3970, N'3.4.6', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5325, 3970, N'3.4.7', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5326, 3970, N'3.4.8', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5327, 3970, N'3.4.9', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5328, 693, N'FAR_52_204_21__d3096e86', 0, NULL, N'FAR Clause 52.204-21 b.1.v', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5328, 3970, N'3.5.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5329, 693, N'FAR_52_204_21__d3096e91', 0, NULL, N'FAR Clause 52.204-21 b.1.vi', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5329, 3970, N'3.5.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5330, 3970, N'3.5.3', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5331, 3970, N'3.5.4', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5332, 3970, N'3.5.5', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5333, 3970, N'3.5.6', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5334, 3970, N'3.5.7', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5335, 3970, N'3.5.8', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5336, 3970, N'3.5.9', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5337, 3970, N'3.5.10', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5338, 3970, N'3.5.11', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5339, 3970, N'3.6.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5340, 3970, N'3.6.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5341, 3970, N'3.6.3', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5342, 3970, N'3.7.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5343, 3970, N'3.7.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5344, 3970, N'3.7.3', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5345, 3970, N'3.7.4', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5346, 3970, N'3.7.5', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5347, 3970, N'3.7.6', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5348, 3970, N'3.8.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5349, 3970, N'3.8.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5350, 693, N'FAR_52_204_21__d3096e96', 0, NULL, N'FAR Clause 52.204-21 b.1.vii', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5350, 3970, N'3.8.3', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5351, 3970, N'3.8.4', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5352, 3970, N'3.8.5', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5353, 3970, N'3.8.6', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5354, 3970, N'3.8.7', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5355, 3970, N'3.8.8', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5356, 3970, N'3.8.9', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5357, 3970, N'3.9.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5358, 3970, N'3.9.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5359, 693, N'FAR_52_204_21__d3096e101', 0, NULL, N'FAR Clause 52.204-21 b.1.viii', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5359, 3970, N'3.10.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5360, 3970, N'3.10.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5361, 693, N'FAR_52_204_21__d3096e106', 0, NULL, N'FAR Clause 52.204-21 Partial b.1.ix', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5361, 3970, N'3.10.3', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5362, 693, N'FAR_52_204_21__d3096e106', 0, NULL, N'FAR Clause 52.204-21 Partial b.1.ix', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5362, 3970, N'3.10.4', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5363, 693, N'FAR_52_204_21__d3096e106', 0, NULL, N'FAR Clause 52.204-21 Partial b.1.ix', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5363, 3970, N'3.10.5', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5364, 3970, N'3.10.6', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5365, 3970, N'3.11.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5366, 3970, N'3.11.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5367, 3970, N'3.11.3', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5368, 3970, N'3.12.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5369, 3970, N'3.12.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5370, 3970, N'3.12.3', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5371, 3970, N'3.12.4', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5372, 693, N'FAR_52_204_21__d3096e111', 0, NULL, N'FAR Clause 52.204-21 b.1.x', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5372, 3970, N'3.13.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5373, 3970, N'3.13.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5374, 3970, N'3.13.3', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5375, 3970, N'3.13.4', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5376, 693, N'FAR_52_204_21__d3096e119', 0, NULL, N'FAR Clause 52.204-21 b.1.xi', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5376, 3970, N'3.13.5', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5377, 3970, N'3.13.6', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5378, 3970, N'3.13.7', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5379, 3970, N'3.13.8', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5380, 3970, N'3.13.9', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5381, 3970, N'3.13.10', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5382, 3970, N'3.13.11', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5383, 3970, N'3.13.12', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5384, 3970, N'3.13.13', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5385, 3970, N'3.13.14', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5386, 3970, N'3.13.15', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5387, 3970, N'3.13.16', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5388, 693, N'FAR_52_204_21__d3096e125', 0, NULL, N'FAR Clause 52.204-21 b.1.xii', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5388, 3970, N'3.14.1', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5389, 693, N'FAR_52_204_21__d3096e130', 0, NULL, N'FAR Clause 52.204-21 b.1.xiii', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5389, 3970, N'3.14.2', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5390, 3970, N'3.14.3', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5391, 693, N'FAR_52_204_21__d3096e135', 0, NULL, N'FAR Clause 52.204-21 b.1.xiv', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5391, 3970, N'3.14.4', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5392, 693, N'FAR_52_204_21__d3096e140', 0, NULL, N'FAR Clause 52.204-21 b.1.xv', NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5392, 3970, N'3.14.5', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5393, 3970, N'3.14.6', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5394, 3970, N'3.14.7', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5395, 3971, N'3.1.2e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5396, 3971, N'3.1.3e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5397, 3971, N'3.2.1e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5398, 3971, N'3.2.2e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5399, 3971, N'3.4.1e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5400, 3971, N'3.4.2e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5401, 3971, N'3.4.3e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5402, 3971, N'3.5.1e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5403, 3971, N'3.5.3e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5404, 3971, N'3.6.1e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5405, 3971, N'3.6.2e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5406, 3971, N'3.9.2e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5407, 3971, N'3.11.1e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5408, 3971, N'3.11.2e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5409, 3971, N'3.11.3e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5410, 3971, N'3.11.4e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5411, 3971, N'3.11.5e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5412, 3971, N'3.11.6e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5413, 3971, N'3.11.7e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5414, 3971, N'3.12.1e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5415, 3971, N'3.13.4e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5416, 3971, N'3.14.1e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5417, 3971, N'3.14.3e', 0, NULL, NULL, NULL)
+INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (5418, 3971, N'3.14.6e', 0, NULL, NULL, NULL)
+PRINT(N'Operation applied to 183 rows out of 183')
+
+PRINT(N'Add constraints to [dbo].[MATURITY_REFERENCES]')
+ALTER TABLE [dbo].[MATURITY_REFERENCES] CHECK CONSTRAINT [FK_MATURITY_REFERENCES_GEN_FILE]
+ALTER TABLE [dbo].[MATURITY_REFERENCES] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_REFERENCES_MATURITY_QUESTIONS]
+
+PRINT(N'Add constraints to [dbo].[MATURITY_QUESTIONS]')
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] CHECK CONSTRAINT [FK__MATURITY___Matur__5B638405]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_GROUPINGS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_LEVELS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_MODELS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_OPTIONS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_QUESTION_TYPES]
+ALTER TABLE [dbo].[HYDRO_DATA] WITH CHECK CHECK CONSTRAINT [FK__HYDRO_DAT__Mat_Q__38652BE2]
+ALTER TABLE [dbo].[ISE_ACTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MAT_QUESTION_ID]
+ALTER TABLE [dbo].[MATURITY_ANSWER_OPTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_ANSWER_OPTIONS_MATURITY_QUESTIONS1]
+ALTER TABLE [dbo].[MATURITY_QUESTION_PROPS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTION_PROPS_MATURITY_QUESTIONS]
+ALTER TABLE [dbo].[MATURITY_REFERENCE_TEXT] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_REFERENCE_TEXT_MATURITY_QUESTIONS]
+ALTER TABLE [dbo].[MATURITY_SUB_MODEL_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_SUB_MODEL_QUESTIONS_MATURITY_QUESTIONS]
+ALTER TABLE [dbo].[TTP_MAT_QUESTION] WITH CHECK CHECK CONSTRAINT [FK_TTP_MAT_QUESTION_MATURITY_QUESTIONS]
+
 PRINT(N'Add constraints to [dbo].[REQUIREMENT_QUESTIONS_SETS]')
 ALTER TABLE [dbo].[REQUIREMENT_QUESTIONS_SETS] WITH CHECK CHECK CONSTRAINT [FK_REQUIREMENT_QUESTIONS_SETS_NEW_QUESTION]
 ALTER TABLE [dbo].[REQUIREMENT_QUESTIONS_SETS] WITH CHECK CHECK CONSTRAINT [FK_REQUIREMENT_QUESTIONS_SETS_NEW_REQUIREMENT]
@@ -17314,21 +22848,12 @@ PRINT(N'Add constraints to [dbo].[NCSF_ENTRY_TO_MID]')
 ALTER TABLE [dbo].[NCSF_ENTRY_TO_MID] WITH CHECK CHECK CONSTRAINT [FK_NCSF_ENTRY_TO_MID_NCSF_CONVERSION_MAPPINGS_ENTRY]
 ALTER TABLE [dbo].[NCSF_ENTRY_TO_MID] WITH CHECK CHECK CONSTRAINT [FK_NCSF_ENTRY_TO_MID_NCSF_CONVERSION_MAPPINGS_MID]
 
-PRINT(N'Add constraints to [dbo].[MATURITY_QUESTIONS]')
-ALTER TABLE [dbo].[MATURITY_QUESTIONS] CHECK CONSTRAINT [FK__MATURITY___Matur__5B638405]
-ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_GROUPINGS]
-ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_LEVELS]
-ALTER TABLE [dbo].[MATURITY_QUESTIONS] CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_MODELS]
-ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_OPTIONS]
-ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_QUESTION_TYPES]
-ALTER TABLE [dbo].[HYDRO_DATA] WITH CHECK CHECK CONSTRAINT [FK__HYDRO_DAT__Mat_Q__38652BE2]
-ALTER TABLE [dbo].[ISE_ACTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MAT_QUESTION_ID]
-ALTER TABLE [dbo].[MATURITY_ANSWER_OPTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_ANSWER_OPTIONS_MATURITY_QUESTIONS1]
-ALTER TABLE [dbo].[MATURITY_QUESTION_PROPS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTION_PROPS_MATURITY_QUESTIONS]
-ALTER TABLE [dbo].[MATURITY_REFERENCE_TEXT] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_REFERENCE_TEXT_MATURITY_QUESTIONS]
-ALTER TABLE [dbo].[MATURITY_REFERENCES] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_REFERENCES_MATURITY_QUESTIONS]
-ALTER TABLE [dbo].[MATURITY_SUB_MODEL_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_SUB_MODEL_QUESTIONS_MATURITY_QUESTIONS]
-ALTER TABLE [dbo].[TTP_MAT_QUESTION] WITH CHECK CHECK CONSTRAINT [FK_TTP_MAT_QUESTION_MATURITY_QUESTIONS]
+PRINT(N'Add constraints to [dbo].[MATURITY_LEVELS]')
+ALTER TABLE [dbo].[MATURITY_LEVELS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_LEVELS_MATURITY_MODELS]
+
+PRINT(N'Add constraints to [dbo].[MATURITY_GROUPINGS]')
+ALTER TABLE [dbo].[MATURITY_GROUPINGS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES]
+ALTER TABLE [dbo].[MATURITY_DOMAIN_REMARKS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_DOMAIN_REMARKS_MATURITY_GROUPINGS]
 
 PRINT(N'Add constraints to [dbo].[GALLERY_GROUP_DETAILS]')
 ALTER TABLE [dbo].[GALLERY_GROUP_DETAILS] WITH CHECK CHECK CONSTRAINT [FK_GALLERY_GROUP_DETAILS_GALLERY_GROUP]
@@ -17355,7 +22880,6 @@ PRINT(N'Add constraints to [dbo].[MATURITY_MODELS]')
 ALTER TABLE [dbo].[MATURITY_MODELS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_MODELS_MATURITY_LEVEL_USAGE_TYPES]
 ALTER TABLE [dbo].[ANALYTICS_MATURITY_GROUPINGS] WITH CHECK CHECK CONSTRAINT [FK_ANALYTICS_MATURITY_GROUPINGS_MATURITY_MODELS]
 ALTER TABLE [dbo].[AVAILABLE_MATURITY_MODELS] WITH CHECK CHECK CONSTRAINT [FK__AVAILABLE__model__6F6A7CB2]
-ALTER TABLE [dbo].[MATURITY_LEVELS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_LEVELS_MATURITY_MODELS]
 ALTER TABLE [dbo].[MODES_SETS_MATURITY_MODELS] WITH CHECK CHECK CONSTRAINT [FK_MODES_SETS_MATURITY_MODELS_MATURITY_MODELS]
 
 PRINT(N'Add constraints to [dbo].[GEN_FILE]')
@@ -17363,9 +22887,11 @@ ALTER TABLE [dbo].[GEN_FILE] WITH CHECK CHECK CONSTRAINT [FK_GEN_FILE_FILE_REF_K
 ALTER TABLE [dbo].[GEN_FILE] WITH CHECK CHECK CONSTRAINT [FK_GEN_FILE_FILE_TYPE]
 ALTER TABLE [dbo].[FILE_KEYWORDS] CHECK CONSTRAINT [FILE_KEYWORDS_GEN_FILE_FK]
 ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL] CHECK CONSTRAINT [FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE]
-ALTER TABLE [dbo].[MATURITY_REFERENCES] CHECK CONSTRAINT [FK_MATURITY_REFERENCES_GEN_FILE]
 ALTER TABLE [dbo].[REQUIREMENT_REFERENCES] CHECK CONSTRAINT [FK_REQUIREMENT_REFERENCES_GEN_FILE]
 ALTER TABLE [dbo].[SET_FILES] WITH CHECK CHECK CONSTRAINT [FK_SET_FILES_GEN_FILE]
 ALTER TABLE [dbo].[ASSESSMENTS] WITH CHECK CHECK CONSTRAINT [FK_ASSESSMENTS_GALLERY_ITEM]
+
+PRINT(N'Add DML triggers to [dbo].[MATURITY_GROUPINGS]')
+ALTER TABLE [dbo].[MATURITY_GROUPINGS] ENABLE TRIGGER [trg_update_maturity_groupings]
 COMMIT TRANSACTION
 GO

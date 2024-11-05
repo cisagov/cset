@@ -139,7 +139,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * hidden.  Use config moduleBehavior to define this.
    */
   showLevelIndicator(q): boolean {
-    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel.modelName)
+    const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment.maturityModel.modelName);
     if (!!behavior) {
       return behavior.showMaturityLevelBadge ?? true;
     }
