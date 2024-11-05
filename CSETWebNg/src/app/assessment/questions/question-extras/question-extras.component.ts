@@ -689,7 +689,7 @@ export class QuestionExtrasComponent implements OnInit {
       return result;
     }
 
-    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName)
+    const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment.maturityModel?.modelName);
 
     if (mode == 'DETAIL') {
       return behavior?.questionIcons?.showDetails ?? true;
@@ -748,7 +748,7 @@ export class QuestionExtrasComponent implements OnInit {
    * @returns
    */
   whichSupplementalIcon() {
-    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName);
+    const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment.maturityModel?.modelName);
     if (!!behavior && behavior.questionIcons?.guidanceIcon?.toLowerCase() == 'g') {
       return "G";
     } else {
@@ -812,8 +812,8 @@ export class QuestionExtrasComponent implements OnInit {
    * independent from Examination Approach or not
    * @returns
    */
-  seperateGuidanceFromApproach() {
-    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName);
+  separateGuidanceFromApproach() {
+    const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment.maturityModel?.modelName);
     return behavior?.independentSuppGuidance;
   }
 
