@@ -440,6 +440,23 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Route("api/reports/getHydroGapReport")]
+        public IActionResult GetHydroGapReport()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+            var hmm = new HydroMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+
+            return Ok(hmm.GetHydroActions(assessmentId));
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         [Route("api/reports/getHydroActionItemsReport")]
         public IActionResult GetHydroActionItemsReport()
         {

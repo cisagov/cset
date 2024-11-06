@@ -132,6 +132,13 @@ export class ReportService {
   }
 
   /**
+   * 
+   */
+  getHydroGapReport() {
+    return this.http.get(this.configSvc.apiUrl + 'reports/getHydroGapReport', headers);
+  }
+
+  /**
    * Calls the API to get the structure of a SET.
    */
   getModuleContent(setName: string): any {

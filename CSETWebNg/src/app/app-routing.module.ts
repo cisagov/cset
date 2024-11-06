@@ -238,6 +238,7 @@ import { TutorialMvraComponent } from './assessment/prepare/maturity/tutorial-mv
 import { AllAnsweredquestionsComponent } from './reports/all-answeredquestions/all-answeredquestions.component';
 import { AllCommentsmarkedComponent } from './reports/all-commentsmarked/all-commentsmarked.component';
 import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.component';
+import { HydroGapReportComponent } from './reports/hydro/hydro-gap-report/hydro-gap-report.component';
 
 const appRoutes: Routes = [
 
@@ -595,8 +596,8 @@ const appRoutes: Routes = [
       { path: 'appkeyreport', component: KeyReportComponent },
       { path: 'allAnsweredQuestions', component: AllAnsweredquestionsComponent },
       { path: 'allMfrAndComments', component: AllCommentsmarkedComponent},
-      { path: 'allReviewedQuestions', component: AllReviewedComponent}
-
+      { path: 'allReviewedQuestions', component: AllReviewedComponent},
+      { path: 'hydroGapReport', component: HydroGapReportComponent}
       
     ]
   },

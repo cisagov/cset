@@ -676,6 +676,7 @@ import { AllCommentsmarkedComponent } from './reports/all-commentsmarked/all-com
 import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.component';
 import { QuestionsReviewedComponent } from './reports/questions-reviewed/questions-reviewed.component';
 import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.component';
+import { HydroGapReportComponent } from './reports/hydro/hydro-gap-report/hydro-gap-report.component';
 
 
 @NgModule({ declarations: [
@@ -1204,7 +1205,8 @@ import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.com
         AllCommentsmarkedComponent,
         AllReviewedComponent,
         QuestionsReviewedComponent, 
-        RolesChangedComponent
+        RolesChangedComponent,
+        HydroGapReportComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
