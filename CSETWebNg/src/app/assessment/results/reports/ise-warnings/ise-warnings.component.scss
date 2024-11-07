@@ -25,3 +25,10 @@ SOFTWARE.
 .list-type {
     list-style-type:disc;
 }
+
+// Copied over from the general scss file because it wasn't being picked up for some reason
+.alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
