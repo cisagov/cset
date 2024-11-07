@@ -28,7 +28,7 @@ export class AnalyticsService {
 
   getAnalyticsToken(username, password): any {
     return this.http.post(
-      this.analyticsUrl + 'auth/login', { username, password }, this.headers
+      this.analyticsUrl + 'auth/login', { "email":username, password }, this.headers
     );
   }
 

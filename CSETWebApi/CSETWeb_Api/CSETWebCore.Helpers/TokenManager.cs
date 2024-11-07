@@ -71,6 +71,11 @@ namespace CSETWebCore.Helpers
             Init(tokenString);
         }
 
+        public string GetToken()
+        {
+            return _tokenString;
+        }
+
 
         /// <summary>
         /// Initializes the token if it has not been set but there is
