@@ -1,0 +1,63 @@
+/* Answer option button styles */
+$white: #ffffff;
+
+$l1-color: #921285;
+$l1-hover-color: #490943;
+$l1-text-color: #ffffff;
+
+$l2-color: #8cc63f;
+$l2-hover-color: #69952f;
+$l2-text-color: #000000;
+
+$l3-color: #034b61;
+$l3-hover-color: #002236;
+$l3-text-color: #ffffff;
+
+.btn-l1 {
+     background-color: $white;
+     border-color: $l1-color;
+     color: $l1-color;
+}
+
+.btn-l1.answer-selected,
+.btn-l1:hover {
+     background-color: $l1-color;
+     color: $l1-text-color;
+}
+
+.btn-l1.answer-selected:hover {
+     background-color: $l1-hover-color;
+}
+
+.btn-l2 {
+     background-color: $white;
+     border-color: $l2-color;
+     color: $l2-color;
+}
+
+.btn-l2.answer-selected,
+.btn-l2:hover {
+     background-color: $l2-color;
+     color: $l2-text-color;
+}
+
+.btn-l2.answer-selected:hover {
+     background-color: $l2-hover-color;
+}
+
+
+.btn-l3 {
+     background-color: $white;
+     border-color: $l3-color;
+     color: $l3-color;
+}
+
+.btn-l3.answer-selected,
+.btn-l3:hover {
+     background-color: $l3-color;
+     color: $l3-text-color;
+}
+
+.btn-l3.answer-selected:hover {
+     background-color: $l3-hover-color;
+}
