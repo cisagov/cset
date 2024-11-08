@@ -87,7 +87,7 @@ export class GroupingBlockComponent implements OnInit {
 
   /**
    * Indicates if the domain label headers should be shown.
-   * Invisible domains stay invisible.  
+   * Invisible domains stay invisible.
    * If the moduleBehavior.showDomainHeaders is not defined, it defaults to true.
    */
   isDomainVisible(): boolean {
@@ -100,7 +100,7 @@ export class GroupingBlockComponent implements OnInit {
       return false;
     }
 
-    return this.moduleBehavior.showDomainHeaders ?? true;
+    return this.moduleBehavior?.showDomainHeaders ?? true;
   }
 
   /**

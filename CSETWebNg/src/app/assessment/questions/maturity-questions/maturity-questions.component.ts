@@ -271,7 +271,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * 
+   *
    */
   displayTitle() {
     // Bonus questions are for SSGs.
@@ -282,7 +282,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
     let displayName = this.modelName;
 
-    if (this.moduleBehavior.displayNameKey != null) {
+    if (this.moduleBehavior?.displayNameKey != null) {
       displayName = this.tSvc.translate(this.moduleBehavior.displayNameKey);
     }
 
