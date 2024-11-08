@@ -260,9 +260,10 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
 
   onHoverOut(i: number, cardId: number) {
     this.hoverIndex = i;
-
-    var el = document.getElementById('c' + cardId.toString()).parentElement;
-    el.style.removeProperty('right');
+    if (document.getElementById('c' + cardId.toString())) {
+      var el = document.getElementById('c' + cardId.toString()).parentElement;
+      el.style.removeProperty('right');
+    }
   }
 
   getImageSrc(src: string) {
