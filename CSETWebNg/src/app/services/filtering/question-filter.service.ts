@@ -369,7 +369,7 @@ export class QuestionFilterService {
 
         /** evaluate domain heading principle question visibility.
         * Put into 'areFactorQuestionsDeficient' to allow both principle 
-        * and principle-phase tables to have seperate filters
+        * and principle-phase tables to have separate filters
         */ 
         d.categories.areFactorQuestionsDeficient = (d.categories.assessmentFactors.find(af => !af.areQuestionsDeficient) == null ? true : false);
       });

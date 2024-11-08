@@ -624,10 +624,10 @@ namespace CSETWebCore.Business.Maturity
         }
 
 
-
-
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, int maturityModelId = 3)
         {
             //if the available maturity model is not selected and the application is CSET
@@ -670,6 +670,7 @@ namespace CSETWebCore.Business.Maturity
                 partial = partial
             };
         }
+
 
         /// <summary>
         /// 
@@ -1319,7 +1320,7 @@ namespace CSETWebCore.Business.Maturity
             }
 
             //Set the default level for CMMC to 1 (the minimum level)
-            if (modelName == "CMMC")
+            if (modelName == "CMMC" || modelName == "CMMC2F")
             {
                 _context.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
                 {

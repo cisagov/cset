@@ -84,7 +84,8 @@
         <node d="network diagram" id="diagram" path="assessment/{:id}/prepare/diagram/info" visible="OPTION:DIAGRAM" />
 
         <!-- target level selection -->
-        <node displaytext="CMMC Target Level Selection" id="cmmc-levels" path="assessment/{:id}/prepare/cmmc-levels" visible="MATURITY-ANY(2,6)" />
+        <node d="cmmc target level selection" id="cmmc-levels" path="assessment/{:id}/prepare/cmmc-levels" visible="MATURITY-ANY(2,6)" />
+        <node d="cmmc target level selection" id="cmmc2-levels" path="assessment/{:id}/prepare/cmmc2-levels" visible="MATURITY-ANY(19)" />
 
     </node>
 

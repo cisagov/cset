@@ -22,6 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dashboard\" />
+    <Folder Include="Logging\" />
     <Folder Include="Version\" />
     <Folder Include="Demographic\DemographicIO\" />
   </ItemGroup>
