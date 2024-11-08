@@ -14,6 +14,7 @@ using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -158,11 +159,22 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/cf/getScoreBreakdown")]
-        public IActionResult GetScoreBreakdown()
+        public async Task<IActionResult> GetScoreBreakdown()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             var biz = new CFBusiness(_context, _assessmentUtil);
+            try
+            {
+                var temp = await biz.getGroupingScores(assessmentId);
+                return Ok(temp);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
             return Ok(biz.getGroupingScores(assessmentId));
+
         }
     }
 }

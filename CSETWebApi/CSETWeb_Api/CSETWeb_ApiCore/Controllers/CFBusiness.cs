@@ -18,6 +18,7 @@ using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -119,84 +120,12 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        public List<DomainScore> getGroupingScores(int assessmentId)
+        public async Task<List<usp_CF_Score_AveragesResult>> getGroupingScores(int assessmentId)
         {
             _context.FillEmptyQuestionsForAnalysis(assessmentId);
-            var domainList = new List<DomainScore>();
-            for (int i = 1; i < _context.NCSF_FUNCTIONS.Count() + 1; i++)
-            {
-                var tempList = new List<CFAverageScore>();
-                var temp = new CFAverageScore();
-                //string funcId = _context.NCSF_CATEGORY.Where(x => x.NCSF_Cat_Id == i).Select(x => x.NCSF_Function_Id).ToString();
+            var results = await _context.Procedures.usp_CF_Score_AveragesAsync(assessmentId);
 
-                var groupings = from q in _context.NEW_REQUIREMENT
-                                join func in _context.NCSF_FUNCTIONS on q.Standard_Category equals func.NCSF_Function_Name
-                                    into tempFuncs
-                                    from tempFunc in tempFuncs.DefaultIfEmpty()
-                                join cat in _context.NCSF_CATEGORY on q.Standard_Sub_Category equals cat.NCSF_Category_Name
-                                    into tempCats
-                                    from tempCat in tempCats.DefaultIfEmpty()
-                                join ans in _context.ANSWER on q.Requirement_Id equals ans.Question_Or_Requirement_Id
-                                    into tempAnswers
-                                    from tempAnswer in tempAnswers.DefaultIfEmpty()
-                                where tempAnswer.Assessment_Id == assessmentId && q.Original_Set_Name == "NCSF_V2" && tempFunc.NCSF_Function_Order == i
-                                select new { tempFunc, q, tempCat, tempAnswer };
-
-                int runningAnswerTotal = 0;
-
-                //var subcats = groupings.Select(x => x.q.Standard_Sub_Category).Distinct().ToList();
-                var currSubcat = "";
-                int index = 0;
-                int questionCount = 0;
-                var sortedList = groupings.ToList().OrderBy(x => x.tempAnswer.Question_Number);
-
-                foreach (var pair in sortedList)
-                {
-                    if (pair.q.Standard_Sub_Category != currSubcat && index > 0)
-                    {
-                        
-                        tempList.Add(new CFAverageScore()
-                        {
-                            score = decimal.Divide(runningAnswerTotal, questionCount).Round(2),
-                            cat = _context.NCSF_CATEGORY.Where(x => x.NCSF_Category_Name == currSubcat).FirstOrDefault()
-                        });
-
-                        // prepping for new subcat
-                        runningAnswerTotal = 0;
-                        questionCount = 0;
-                        currSubcat = pair.q.Standard_Sub_Category;
-                    }
-                    else
-                    {
-                        currSubcat = pair.q.Standard_Sub_Category;
-                    }
-
-                    if (Int32.TryParse(pair.tempAnswer.Answer_Text, out int ansInt))
-                    {
-                        runningAnswerTotal += ansInt;
-                    }
-                    questionCount++;
-                    index++;
-                }
-
-                tempList.Add(new CFAverageScore()
-                {
-                    score = decimal.Divide(runningAnswerTotal, questionCount).Round(2),
-                    cat = _context.NCSF_CATEGORY.Where(x => x.NCSF_Category_Name == currSubcat).FirstOrDefault()
-                });
-
-                decimal lastSubcatRunningAnswerTotal = 0;
-                tempList.ForEach(x => lastSubcatRunningAnswerTotal += x.score);
-
-                domainList.Add(new DomainScore()
-                {
-                    func = groupings.ToList().FirstOrDefault()?.tempFunc,
-                    averageScores = tempList,
-                    score = (tempList.Count == 0 ? 0 : decimal.Divide(lastSubcatRunningAnswerTotal, tempList.Count).Round(2))
-                });
-            }
-
-            return domainList;
+            return results.ToList();
         }
 
 
