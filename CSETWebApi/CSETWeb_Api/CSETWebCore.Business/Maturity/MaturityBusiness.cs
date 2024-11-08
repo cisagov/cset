@@ -1320,7 +1320,7 @@ namespace CSETWebCore.Business.Maturity
             }
 
             //Set the default level for CMMC to 1 (the minimum level)
-            if (modelName == "CMMC")
+            if (modelName == "CMMC" || modelName == "CMMC2F")
             {
                 _context.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
                 {
