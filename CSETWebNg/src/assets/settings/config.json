@@ -264,6 +264,7 @@
     {
       "moduleName": "CMMC2F",
       "modelId": "19",
+      "displayNameKey": "modules.cmmc2f.display-name",
       "questionIcons": {
         "showDetails": false,
         "showReviewed": false
