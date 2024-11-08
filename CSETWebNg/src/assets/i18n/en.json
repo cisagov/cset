@@ -236,6 +236,7 @@
         "none": "None"
       }
     },
+    "cmmc target level selection": "CMMC Target Level Selection",
     "network diagram": "Network Diagram",
     "diagram component questions": "Diagram Component Questions",
     "standard questions": "Standard Questions",
@@ -424,7 +425,9 @@
       "fi-c2m2": "FI",
       "li-c2m2": "LI",
       "pi-c2m2": "PI",
-      "ni-c2m2": "NI"
+      "ni-c2m2": "NI",
+      "yes-cmmc": "Met",
+      "no-cmmc": "Not"
     },
     "button-tooltips": {
       "yes": "Yes",
@@ -440,14 +443,16 @@
       "partial-mvra": "Partial",
       "alt-acet": "Yes(C)",
       "yes(c)": "Yes Compensating Control",
-      "imp-cpg": "Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
-      "prog-cpg": "In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
-      "scoped-cpg": "Scoped - An organization has identified the full set of activities required to meet the stated outcome of a goal.",
-      "not-cpg": "Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal.",
+      "imp-cpg": "Implemented",
+      "prog-cpg": "In Progress",
+      "scoped-cpg": "Scoped",
+      "not-cpg": "Not Implemented",
       "fi-c2m2": "Fully Implemented - Complete",
       "li-c2m2": "Largely Implemented - Complete, but with a recognized opportunity for improvement",
       "pi-c2m2": "Partially Implemented - Incomplete; there are multiple opportunities for improvement",
-      "ni-c2m2": "Not Implemented - Absent; the practice is not performed by the organization"
+      "ni-c2m2": "Not Implemented - Absent; the practice is not performed by the organization",
+      "yes-cmmc": "Met",
+      "no-cmmc": "Not Met"
     },
     "labels": {
       "yes": "Yes",
@@ -1765,7 +1770,7 @@
   "keyboard": {
     "dialog title": "Keyboard Shortcuts",
     "about": "About",
-    "accessibility": "Accessiblity Features",
+    "accessibility": "Accessibility Features",
     "user guide": "User Guide",
     "resource library": "Resource Library",
     "new assessment": "New Assessment",
@@ -1814,6 +1819,17 @@
     "traffic light protocol": "Traffic Light Protocol",
     "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> is part of the <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Department of Homeland Security</a>",
     "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Website</a>"
+  },
+  "modules": {
+    "cpg": {
+      "display-name": "Cyber Performance Goals (CPG)"
+    },
+    "cmmc2f": {
+      "display-name": "Cybersecurity Maturity Model Certification (CMMC) 2.0"
+    },
+    "rra": {
+      "display-name": "Ransomware Readiness Assessment (RRA)"
+    }
   },
   "aggregation": {
     "assessment alias": "Assessment Alias",

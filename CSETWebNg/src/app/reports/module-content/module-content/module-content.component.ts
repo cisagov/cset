@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReportService } from '../../../services/report.service';
 
@@ -29,7 +29,8 @@ import { ReportService } from '../../../services/report.service';
 @Component({
   selector: 'app-module-content',
   templateUrl: './module-content.component.html',
-  styleUrls: ['./module-content.component.scss', '../../../reports/reports.scss']
+  styleUrls: ['../../../reports/reports.scss', './module-content.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ModuleContentComponent implements OnInit {
 

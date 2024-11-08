@@ -556,7 +556,7 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
       layout: 'noBorders'
     }
 
-    // A seperate table for the table key
+    // A separate table for the table key
     let tableLegend = {
       layout: 'noBorders',
       table: {
