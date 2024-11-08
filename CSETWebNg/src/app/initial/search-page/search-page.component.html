@@ -25,7 +25,7 @@
   <div *ngIf="rows.length == 0">
     {{t('no search results')}}
   </div>
-  <div *ngFor="let row of rows" class="m-4" style="height: 250px;">
+  <div *ngFor="let row of rows" class="m-4" style="height: 240px;">
     <swiper class="gallery-slider" [config]="config" (slideChange)="onSlideChange()" #swiper>
       <ng-template swiperSlide *ngFor="let c of row; let i = index">
 

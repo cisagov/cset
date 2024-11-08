@@ -3958,7 +3958,7 @@ h6.dropdown-header {
 }
 
 .gallery-card:hover {
-  border: 1px solid #ffc107;
+  border: 1px solid $secondary-color;
 }
 
 .img-cropped-calc {
@@ -3967,15 +3967,15 @@ h6.dropdown-header {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity:20%;
+  opacity: 20%;
 }
 
 .gallery-card:hover .img-cropped-calc {
-  opacity:70% !important;
+  opacity: 70% !important;
 }
 
 .gallery-card-footer {
-  background-color: #ffc107 !important;
+  background-color: $secondary-color !important;
 
 }
 
@@ -3988,9 +3988,9 @@ h6.dropdown-header {
 }
 
 .gallery-btn-play {
-  color: #ffc107  !important;
+  color: $secondary-color  !important;
 }
 
 .gallery-btn-info:hover {
-  color: #ffc107  !important;
+  color: $secondary-color  !important;
 }
