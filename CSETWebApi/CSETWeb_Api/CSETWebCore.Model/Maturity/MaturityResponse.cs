@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+#nullable enable
 using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Maturity
@@ -17,12 +18,12 @@ namespace CSETWebCore.Model.Maturity
         /// <summary>
         /// The name of the maturity model.
         /// </summary>
-        public string ModelName { get; set; }
+        public string ModelName { get; set; } = "";
 
         /// <summary>
         /// The name of the current grouping represented in the response;
         /// </summary>
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         /// <summary>
         /// Lists the display names of the maturity levels in this assessment's maturity model.
@@ -47,7 +48,7 @@ namespace CSETWebCore.Model.Maturity
         /// <summary>
         /// If the maturity model refers to 'questions' by another name, this is that name.
         /// </summary>
-        public string QuestionsAlias { get; set; }
+        public string? QuestionsAlias { get; set; }
 
         /// <summary>
         /// The top level of groupings.  This will usually be Domains.

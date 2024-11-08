@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+#nullable enable
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Document;
 using System.Collections.Generic;
@@ -12,12 +13,9 @@ namespace CSETWebCore.Model.Maturity
 {
     public class MatRelevantAnswers
     {
-        public MatRelevantAnswers()
-        {
-        }
 
-        public ANSWER ANSWER { get; set; }
-        public MATURITY_QUESTIONS Mat { get; set; }
+        public ANSWER? ANSWER { get; set; }
+        public MATURITY_QUESTIONS? Mat { get; set; }
 
         // This should have a defined getter since as a property is ascertainable
         // but that getter would ping the database, and the GetMissingParents() function
@@ -44,10 +42,10 @@ namespace CSETWebCore.Model.Maturity
         {
         }
 
-        public string Title { get; set; }
+        public string? Title { get; set; }
         public bool IsDeficient { get; set; }
         public bool AreFactorQuestionsDeficient { get; set; }
-        public List<MaturityAnsweredQuestionsAssesment> AssessmentFactors { get; set; }
+        public List<MaturityAnsweredQuestionsAssesment>? AssessmentFactors { get; set; }
     }
 
     public class MaturityAnsweredQuestionsAssesment
@@ -55,10 +53,11 @@ namespace CSETWebCore.Model.Maturity
         public MaturityAnsweredQuestionsAssesment()
         {
         }
-        public string Title { get; set; }
+
+        public string? Title { get; set; }
         public bool IsDeficient { get; set; }
         public bool AreQuestionsDeficient { get; set; }
-        public List<MaturityAnsweredQuestionsComponent> Components { get; set; }
+        public List<MaturityAnsweredQuestionsComponent>? Components { get; set; }
         public List<MaturityAnsweredQuestions>? Questions { get; set; }
 
     }
@@ -67,9 +66,9 @@ namespace CSETWebCore.Model.Maturity
         public MaturityAnsweredQuestionsComponent()
         {
         }
-        public string Title { get; set; }
+        public string? Title { get; set; }
         public bool IsDeficient { get; set; }
-        public List<MaturityAnsweredQuestions> Questions { get; set; }
+        public List<MaturityAnsweredQuestions>? Questions { get; set; }
     }
 
     public class MaturityAnsweredQuestions
@@ -77,16 +76,16 @@ namespace CSETWebCore.Model.Maturity
         public MaturityAnsweredQuestions()
         {
         }
-        public string Title { get; set; }
-        public string QuestionText { get; set; }
-        public string MaturityLevel { get; set; }
-        public string Comments { get; set; }
-        public string AnswerText { get; set; }
+        public string? Title { get; set; }
+        public string? QuestionText { get; set; }
+        public string? MaturityLevel { get; set; }
+        public string? Comments { get; set; }
+        public string? AnswerText { get; set; }
         public bool MarkForReview { get; set; }
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
         public int MatQuestionId { get; set; }
-        public string FreeResponseText { get; set; }
-        public List<DocumentWithAnswerId> Documents { get; set; }
+        public string? FreeResponseText { get; set; }
+        public List<DocumentWithAnswerId>? Documents { get; set; }
         public bool Visible { get; set; }
     }
 

@@ -23,13 +23,11 @@
 <div class="d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="cset-icons-exclamation-triangle fs-base-6 me-3"></span>
-    <span>Access Denied</span>
+    <span>{{t('dialogs.access denied')}}</span>
   </div>
   <mat-dialog-content class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
-    <p class="pe-3">Your session has expired, a connection error has occurred, or you are no longer authorized to access
-      that
-      assessment.</p>
-    <p>Please log in again.</p>
+    <p class="pe-3">{{t('dialogs.access denied 1')}}</p>
+    <p>{{t('dialogs.access denied 2')}}</p>
   </mat-dialog-content>
   <mat-dialog-actions class="p-3 pt-0 mb-0">
     <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>

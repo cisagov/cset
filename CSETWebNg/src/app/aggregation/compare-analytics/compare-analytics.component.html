@@ -20,33 +20,33 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex justify-content-start flex-column flex-11a trend-table-width">
+<div class="white-panel d-flex justify-content-start flex-column flex-11a trend-table-width" *transloco="let t">
   <div class="max-1200">
-    <h3 class="mb-4">Compare Assessments</h3>
+    <h3 class="mb-4">{{t('aggregation.compare.compare assessments')}}</h3>
 
     <div class="btn-group-toggle mt-3" data-toggle="buttons">
       <label *ngIf="this.type === 'standards-based'" class="btn btn-sal-select btn-rounded form-check-label"
         [class.active]="tab === 'SUMMARY'" (click)="changeState('SUMMARY')">
         <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
-          [checked]="tab === 'SUMMARY'">Overall Summary
+          [checked]="tab === 'SUMMARY'">{{t('aggregation.compare.overall summary')}}
       </label>
 
       <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'INDIVIDUAL'"
         (click)="changeState('INDIVIDUAL')">
         <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
-          [checked]="tab === 'INDIVIDUAL'">Individual Assessment Comparison
+          [checked]="tab === 'INDIVIDUAL'">{{t('aggregation.compare.individual assessment comparison')}}
       </label>
 
       <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'MISSED'"
         (click)="changeState('MISSED')">
         <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
-          [checked]="tab === 'MISSED'">Commonly Missed Questions
+          [checked]="tab === 'MISSED'">{{t('aggregation.compare.commonly missed questions')}}
       </label>
 
       <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'BESTWORST'"
         (click)="changeState('BESTWORST')">
         <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
-          [checked]="tab === 'BESTWORST'">Best to Worst
+          [checked]="tab === 'BESTWORST'">{{t('aggregation.compare.best to worst')}}
       </label>
 
       <hr class="w-100 hr-sal mt-1 mb-5" />
@@ -68,9 +68,9 @@
     </div>
 
     <div class="mt-3 d-flex justify-content-between flex-00a">
-      <button class="btn btn-primary" (click)="navAggSvc.navBack('compare-analytics')">Back</button>
-      <button *ngIf="this.type != 'maturity-based'" class="btn btn-primary" (click)="generateReport('compare-report')">Generate Compare Report</button>
-      <button *ngIf="this.type === 'maturity-based'" class="btn btn-primary" (click)="generateReport('compare-report-m')">Generate Compare Report</button>
+      <button class="btn btn-primary" (click)="navAggSvc.navBack('compare-analytics')">{{t('buttons.back')}}</button>
+      <button *ngIf="this.type != 'maturity-based'" class="btn btn-primary" (click)="generateReport('compare-report')">{{t('aggregation.compare.generate compare report')}}</button>
+      <button *ngIf="this.type === 'maturity-based'" class="btn btn-primary" (click)="generateReport('compare-report-m')">{{t('aggregation.compare.generate compare report')}}</button>
     </div>
   </div>
 </div>
