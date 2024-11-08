@@ -2879,6 +2879,20 @@ table.assessment-documents th {
   color: $primary-550;
 }
 
+ol.alpha-bracket {
+  list-style-type: none; 
+  counter-reset: list-counter; 
+}
+
+ol.alpha-bracket li {
+  counter-increment: list-counter; 
+  margin-bottom: 5px;
+}
+
+ol.alpha-bracket li::before {
+  content: "[" counter(list-counter, lower-alpha) "] "; 
+}
+
 
 /// nested formatting
 .nested-question-title {

@@ -236,6 +236,7 @@
         "none": "None"
       }
     },
+    "cmmc target level selection": "CMMC Target Level Selection",
     "network diagram": "Network Diagram",
     "diagram component questions": "Diagram Component Questions",
     "standard questions": "Standard Questions",
@@ -422,7 +423,9 @@
       "fi-c2m2": "FI",
       "li-c2m2": "LI",
       "pi-c2m2": "PI",
-      "ni-c2m2": "NI"
+      "ni-c2m2": "NI",
+      "yes-cmmc": "Met",
+      "no-cmmc": "Not"
     },
     "button-tooltips": {
       "yes": "Yes",
@@ -445,7 +448,9 @@
       "fi-c2m2": "Fully Implemented - Complete",
       "li-c2m2": "Largely Implemented - Complete, but with a recognized opportunity for improvement",
       "pi-c2m2": "Partially Implemented - Incomplete; there are multiple opportunities for improvement",
-      "ni-c2m2": "Not Implemented - Absent; the practice is not performed by the organization"
+      "ni-c2m2": "Not Implemented - Absent; the practice is not performed by the organization",
+      "yes-cmmc": "Met",
+      "no-cmmc": "Not Met"
     },
     "labels": {
       "yes": "Yes",
