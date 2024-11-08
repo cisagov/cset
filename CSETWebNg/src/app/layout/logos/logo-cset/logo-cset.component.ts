@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   selector: 'app-logo-cset',
@@ -43,11 +44,13 @@ export class LogoCsetComponent implements OnInit {
 
   color1: string;
   color2: string;
+  skin: string;
 
-  constructor() { }
+  constructor(public configSvc: ConfigService) { }
 
   ngOnInit(): void {
     this.logoWidth = this.logoHeight * 4.28;
+    this.skin = this.configSvc.installationMode;
 
     if (this.mode == 'white') {
       this.color1 = 'fill-primary';
