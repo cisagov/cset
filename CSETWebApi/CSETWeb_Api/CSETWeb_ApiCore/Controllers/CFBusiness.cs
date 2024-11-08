@@ -158,17 +158,17 @@ namespace CSETWebCore.Api.Controllers
                         tempList.Add(new CFAverageScore()
                         {
                             score = decimal.Divide(runningAnswerTotal, questionCount).Round(2),
-                            cat = _context.NCSF_CATEGORY.Where(x => x.NCSF_Category_Name == currSubcat).FirstOrDefault()
+                            cat = pair.tempCat
                         });
 
                         // prepping for new subcat
                         runningAnswerTotal = 0;
                         questionCount = 0;
-                        currSubcat = pair.q.Standard_Sub_Category;
+                        currSubcat = pair.tempCat?.NCSF_Category_Name;
                     }
                     else
                     {
-                        currSubcat = pair.q.Standard_Sub_Category;
+                        currSubcat = pair.tempCat?.NCSF_Category_Name;
                     }
 
                     if (Int32.TryParse(pair.tempAnswer.Answer_Text, out int ansInt))
