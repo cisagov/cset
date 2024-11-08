@@ -26,6 +26,17 @@ export class AnalyticsService {
     return this.http.get(this.apiUrl + 'getAggregation');
   }
 
+
+  getAnalyticResults(assessmentId: any, sectorId: any): any {
+    return
+    // return this.http.get('mostafa endpoint');
+  }
+
+  getSectors(): any {
+    return
+    // return this.http.get('5050/sectors');
+  }
+
   getAnalyticsToken(username, password): any {
     return this.http.post(
       this.analyticsUrl + 'auth/login', { username, password }, this.headers

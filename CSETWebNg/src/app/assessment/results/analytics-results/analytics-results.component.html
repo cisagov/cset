@@ -1,0 +1,164 @@
+<div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a">
+
+    <div class="container">
+        <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm">
+                <mat-card class="mat-card-margin-10">
+                  <mat-card-header class="mat-card-header-accent">
+                    <mat-card-title>Analytic Assessments</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <!-- <div class="table-container" *ngIf="showAssessments"> -->
+                      <!-- <table mat-table [dataSource]="data" class="mat-elevation-z2"> -->
+                        <!-- <ng-container matColumnDef="alias">
+                          <th mat-header-cell *matHeaderCellDef>Assessment Alias</th>
+                          <td mat-cell *matCellDef="let element">{{ element.alias }}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="setName">
+                          <th mat-header-cell *matHeaderCellDef>Standard</th>
+                          <td mat-cell *matCellDef="let element">
+                            {{ element.setName }}
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="sector">
+                          <th mat-header-cell *matHeaderCellDef>Sector</th>
+                          <td mat-cell *matCellDef="let element">
+                            {{ element.sectorName }}
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="industry">
+                          <th mat-header-cell *matHeaderCellDef>Industry</th>
+                          <td mat-cell *matCellDef="let element">
+                            {{ element.industryName }}
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="assessmentCreatedDate">
+                          <th mat-header-cell *matHeaderCellDef>Create Date</th>
+                          <td mat-cell *matCellDef="let element">
+                            {{ element.assessmentCreatedDate | date }}
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="lastAccessedDate">
+                          <th mat-header-cell *matHeaderCellDef>Last Accessed</th>
+                          <td mat-cell *matCellDef="let element">
+                            {{ element.lastAccessedDate | date }}
+                          </td>
+                        </ng-container>
+          
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr
+                          mat-row
+                          *matRowDef="let row; columns: displayedColumns"
+                          (click)="setRecord(row)"
+                        ></tr> -->
+                      <!-- </table> -->
+                    <!-- </div> -->
+                    <!-- <mat-paginator
+                      [length]="resultsLength"
+                      [pageSize]="10"
+                      [pageSizeOptions]="[5, 10, 25, 100]"
+                    >
+                    </mat-paginator> -->
+          
+                    <!-- <div class="alert alert-danger" role="alert" *ngIf="!showAssessments">
+                      No assessements available
+                    </div> -->
+                  </mat-card-content>
+                </mat-card>
+                <!-- <mat-card class="mat-card-margin-10" *ngIf="showComparison">
+                  <mat-card-header class="mat-card-header-accent">
+                    <mat-card-title>Assessment Comparison</mat-card-title>
+                  </mat-card-header> -->
+                  <!-- <mat-card-content>
+                    <div class="row">
+                      <div class="col-3">
+                        <div class="card" style="height: 48vh">
+                          <div class="card-header">
+                            <span style="font-size: 1rem; font-weight: 500"
+                              >Assessment:</span
+                            >&nbsp;
+                            <span style="font-size: 1rem">{{
+                              currentAssessmentAlias
+                            }}</span
+                            ><br />
+                            <span style="font-size: 1rem; font-weight: 500"
+                              >Standard:</span
+                            >&nbsp;
+                            <span style="font-size: 1rem">{{ currentAssessmentStd }}</span
+                            ><br />
+                            <span style="font-size: 1rem; font-weight: 500"
+                              >Sample Size:</span
+                            >&nbsp; <span style="font-size: 1rem">{{ sampleSize }}</span>
+                          </div>
+                          <div class="card-body" style="overflow: auto">
+                            <h6 style="padding-top: 10px">Sectors</h6>
+                            <mat-radio-group
+                              [(ngModel)]="selectedSector"
+                              (ngModelChange)="sectorChange($event)"
+                            >
+                              <mat-tree
+                                [dataSource]="sectorSource"
+                                [treeControl]="treeControl"
+                              >
+                                <mat-tree-node
+                                  *matTreeNodeDef="let node"
+                                  matTreeNodePadding
+                                >
+                                  <button mat-icon-button disabled></button>
+                                  <mat-radio-button
+                                    color="primary"
+                                    value="{{ node.parent }}|{{ node.name }}"
+                                    id="{{ node.name }}{{ node.parent }}"
+                                    name="{{ node.name }}{{ node.count }}"
+                                  >
+                                    {{ node.name }}
+                                  </mat-radio-button>
+                                </mat-tree-node>
+                                <mat-tree-node
+                                  *matTreeNodeDef="let node; when: hasChild"
+                                  matTreeNodePadding
+                                >
+                                  <button
+                                    mat-icon-button
+                                    matTreeNodeToggle
+                                    [attr.aria-label]="'Toggle ' + node.name"
+                                  >
+                                    <mat-icon class="mat-icon-rtl-mirror">
+                                      {{
+                                        treeControl.isExpanded(node)
+                                          ? "expand_more"
+                                          : "chevron_right"
+                                      }}
+                                    </mat-icon>
+                                  </button>
+                                  {{ node.name }}
+                                </mat-tree-node>
+                              </mat-tree>
+                            </mat-radio-group>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-9" style="height: 48vh; overflow: auto">
+                        <canvas
+                          baseChart
+                          [datasets]="barChartData"
+                          [labels]="barChartLabels"
+                          [options]="barChartOptions"
+                          [legend]="barChartLegend"
+                          [chartType]="barChartType"
+                          (chartHover)="chartHovered($event)"
+                          (chartClick)="chartClicked($event)"
+                        >
+                        </canvas>
+                      </div>
+                    </div>
+                  </mat-card-content> -->
+                <!-- </mat-card> -->
+              </div>
+            </div>
+          </div>
+
+    <app-nav-back-next [page]="'analytics-results-page'" [hide]="navSvc.isLastVisiblePage('analytics') ? 'next' : ''"></app-nav-back-next>
+
+</div>
