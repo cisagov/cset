@@ -100,7 +100,7 @@ export class GroupingBlockComponent implements OnInit {
       return false;
     }
 
-    return this.moduleBehavior.showDomainHeaders ?? true;
+    return this.moduleBehavior?.showDomainHeaders ?? true;
   }
 
   /**
