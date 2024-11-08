@@ -1796,6 +1796,32 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
+        public virtual async Task<List<usp_CF_Score_AveragesResult>> usp_CF_Score_AveragesAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "Assessment_Id",
+                    Value = Assessment_Id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_CF_Score_AveragesResult>("EXEC @returnValue = [dbo].[usp_CF_Score_Averages] @Assessment_Id = @Assessment_Id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
         public virtual async Task<int> usp_CopyIntoSetAsync(string SourceSetName, string DestinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter

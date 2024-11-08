@@ -9,11 +9,12 @@ import { ReportService } from '../../services/report.service';
 @Component({
   selector: 'app-cf-reviewed',
   templateUrl: './cf-reviewed.component.html',
-  styleUrls: ['../reports.scss', './cf-reviewed.component.scss']
+  styleUrls: ['../reports.scss', './cf-reviewed.component.scss', '../acet-reports.scss']
 })
 export class CfReviewedComponent implements OnInit {
-  single: any[];
-  multi: any[];
+  barChart: any[];
+  scores: any[];
+  parsedScores: any[] = [];
 
   view: any[] = [800, 500];
 
@@ -44,13 +45,25 @@ export class CfReviewedComponent implements OnInit {
     this.cfSvc.getBarChartInfo().subscribe(
       (r: any) => {
         console.log(r)
-        this.single = r;
+        this.barChart = r;
     });
 
     this.cfSvc.getScoreBreakdown().subscribe(
       (r: any) => {
         console.log(r)
-        this.multi = r;
-    });
+        this.scores = r;
+        console.log(this.scores.filter(x => x.standard_Category == 'Govern'))
+        this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Govern'));
+        this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Identify'));
+        this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Protect'));
+        this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Detect'));
+        this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Respond'));
+        this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Recover'));
+      });
+  }
+
+  getBackground(score: any) {
+    let lowestLevelAchieved = score.toString();
+    return 'cf-' + lowestLevelAchieved.substring(0, 1);
   }
 }
