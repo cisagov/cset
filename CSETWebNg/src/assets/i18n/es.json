@@ -120,10 +120,10 @@
         "change": "Cambiar",
         "remove": "Eliminar",
         "not authorized message": "No está autorizado/a para realizar cambios en los contactos de esta evaluación.",
-        "contact an administrator message": "Por favor, contacte a un administrador de esta evaluación para realizar cambios o para obtener acceso administrativo.", 
-        "details": "Detalles adicionales", 
-        "no details": "Ninguna disponible", 
-        "creator": "Creador de evaluaciones", 
+        "contact an administrator message": "Por favor, contacte a un administrador de esta evaluación para realizar cambios o para obtener acceso administrativo.",
+        "details": "Detalles adicionales",
+        "no details": "Ninguna disponible",
+        "creator": "Creador de evaluaciones",
         "editor": "Editor de evaluación"
     },
     "acet": {
@@ -538,7 +538,15 @@
         "please confirm": "Confirme, por favor",
         "remove contact": "¿Estás seguro de que quieres eliminar a {{firstName}} {{lastName}} de esta evaluación?",
         "remove assessment": "¿Estás seguro de que quieres eliminar {{assessmentName}}?",
-        "confirm create new assessment": "¿Está seguro de que desea crear una nueva evaluación?"
+        "confirm create new assessment": "¿Está seguro de que desea crear una nueva evaluación?", 
+        "export assessment title": "Opciones de evaluación de exportación", 
+        "scrub pcii": "Seleccione para eliminar los campos PCII de la exportación", 
+        "encrypt 1": "Para cifrar su evaluación, ingrese una contraseña.", 
+        "encrypt 2": "Si continúa sin ingresar una contraseña, no se utilizará ningún cifrado.", 
+        "access denied": "Acceso denegado", 
+        "access denied 1": "Su sesión expiró, se produjo un error de conexión o ya no está autorizado a acceder a esa evaluación.", 
+        "access denied 2": "Por favor inicia sesión nuevamente.", 
+        "access denied 3": "Otro usuario ha cambiado su función en esta evaluación."
     },
     "reports": {
         "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el {date}.",
@@ -635,7 +643,7 @@
                 "high-level assessment description": "[ES]High-Level Assessment Description",
                 "standards compliance": "[ES]Standards Compliance",
                 "security assurance level": "Nivel de garantía de seguridad (SAL)",
-                "document library": "[ES]Document Library",
+                "document library": "Biblioteca de documentos",
                 "ranked categories": "[ES]Ranked Categories",
                 "summary of ranked questions": "[ES]Summary of Ranked Questions",
                 "summary of ranked questions desc": "[ES]Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below. The displayed levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High (VH). CNSSI levels are for Confidentiality (C), Integrity (I), and Availability (A). DoD Instruction 8500.2 levels are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive (S), and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category."
@@ -1295,5 +1303,38 @@
         "traffic light protocol": "Protocolo de Semáforo (TLP)",
         "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> es parte del <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Departamento de Seguridad Nacional</a>",
         "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Sitio Web</a>"
+    },
+    "aggregation": {
+        "assessment alias": "Alias de evaluación",
+        "total": "Total",
+        "compare": {
+            "compare assessments": "Comparar evaluaciones",
+            "overall summary": "Resumen general",
+            "overall average summary": "Resumen general promedio",
+            "overall comparison": "Comparación general",
+            "sal comparison": "Comparación general de los niveles de seguridad",
+            "category percent comparisons": "Comparaciones de porcentaje de categoría",
+            "standards answers": "Respuestas a los estándares",
+            "components answers": "Respuestas a los componentes",
+            "both need diagrams": "Los visuales de comparación solo están disponibles cuando ambas evaluaciones incluyen diagramas de red.",
+            "category avg all assessments": "Promedio de categoría para todas las evaluaciones",
+            "percentages may not equal 100": "Los porcentajes pueden no sumar 100% al comparar evaluaciones debido al promedio de las respuestas.",
+            "individual assessment comparison": "Comparación de evaluación individual",
+            "commonly missed questions": "Preguntas comúnmente perdidas",
+            "best to worst": "De mejor a peor",
+            "assessment answer summary": "Resumen de la respuesta de la evaluación",
+            "domain level compliance": "Cumplimiento a nivel de dominio",
+            "compliance 1": "El siguiente gráfico indica las puntuaciones de cumplimiento normalizadas (porcentajes) para las evaluaciones que se están comparando. Las preguntas que se responden como 'Implementado' cuentan para las puntuaciones representadas.",
+            "compliance 2": "Las distribuciones de respuestas se pueden ver en la pestaña 'De mejor a peor'.",
+            "lists questions answered no": "Esta tabla enumera las preguntas o requisitos a los que se respondió 'No' en todas las evaluaciones comparadas.",
+            "title": "Título",
+            "category": "Categoría",
+            "subcategory": "Subcategoría",
+            "question": "Pregunta",
+            "no missed questions": "No hay preguntas a las que se haya respondido 'No' en todas las evaluaciones comparadas.",
+            "generate compare report": "Generar informe de comparación",
+            "report title": "Informe de Comparación de Múltiples Evaluaciones",
+            "document library": "Biblioteca de documentos"
+        }
     }
 }

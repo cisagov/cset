@@ -36,7 +36,7 @@ namespace CSETWebCore.CryptoBuffer
                 newSalt.AddBytes(salt);
                 salt = newSalt.GetAllBytes();
             }
-            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(keyStr, salt, 7);
+            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(keyStr, salt, 100, HashAlgorithmName.SHA256);
             Initialize(key, cryptoAlgorithm, paddingMode);
         }
 
@@ -53,7 +53,7 @@ namespace CSETWebCore.CryptoBuffer
                 newSalt.AddBytes(salt);
                 salt = newSalt.GetAllBytes();
             }
-            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(keyBytes, salt, 7);
+            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(keyBytes, salt, 100, HashAlgorithmName.SHA256);
             Initialize(key, cryptoAlgorithm, paddingMode);
         }
 
@@ -64,20 +64,20 @@ namespace CSETWebCore.CryptoBuffer
 
         public EncryptionBuffer(byte[] password, byte[] saltValueBytes, SymmetricCryptoAlgorithm cryptoAlgorithm = SymmetricCryptoAlgorithm.AES_256_CBC, PaddingMode paddingMode = PaddingMode.PKCS7)
         {
-            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, saltValueBytes, 7);
+            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, saltValueBytes, 100, HashAlgorithmName.SHA256);
             Initialize(key, cryptoAlgorithm, paddingMode);
         }
 
         public EncryptionBuffer(string password, byte[] saltValueBytes, SymmetricCryptoAlgorithm cryptoAlgorithm = SymmetricCryptoAlgorithm.AES_256_CBC, PaddingMode paddingMode = PaddingMode.PKCS7)
         {
-            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, saltValueBytes, 7);
+            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, saltValueBytes, 100, HashAlgorithmName.SHA256);
             Initialize(key, cryptoAlgorithm, paddingMode);
         }
 
         public EncryptionBuffer(string password, string salt, SymmetricCryptoAlgorithm cryptoAlgorithm = SymmetricCryptoAlgorithm.AES_256_CBC, PaddingMode paddingMode = PaddingMode.PKCS7)
         {
             byte[] saltValueBytes = CryptoCommon.GetBytes(salt);
-            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, saltValueBytes, 7);
+            Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, saltValueBytes, 100, HashAlgorithmName.SHA256);
             Initialize(key, cryptoAlgorithm, paddingMode);
         }
 

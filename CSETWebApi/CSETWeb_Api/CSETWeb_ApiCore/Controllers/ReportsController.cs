@@ -658,11 +658,6 @@ namespace CSETWebCore.Api.Controllers
             response.SalList = new List<BasicReportData.OverallSALTable>();
             response.DocumentLibraryTable = new List<DocumentLibraryTable>();
 
-            //var aggregationID = _token.PayloadInt("aggreg");
-            //if (aggregationID == null)
-            //{
-            //    return Ok(response);
-            //}
 
             var assessmentList = _aggregation.GetAssessmentsForAggregation((int)aggregationID);
             Aggregation ag = _aggregation.GetAggregation((int)aggregationID);

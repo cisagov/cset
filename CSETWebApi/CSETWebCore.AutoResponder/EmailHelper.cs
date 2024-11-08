@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Mail;
 using System.Net;
+using NLog;
 
 namespace CSETWebCore.AutoResponder
 {
@@ -22,6 +23,11 @@ namespace CSETWebCore.AutoResponder
             this._resourceHelper = resourceHelper;
 
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void SendFollowUp(string email, string firstName, string lastName)
         {
             string templateFile = @"App_Data\assessmentFollowUpTemplate_CF.html";
@@ -34,14 +40,27 @@ namespace CSETWebCore.AutoResponder
             message.Subject = "CSET Assessment Follow-up for Cybersecure Florida";
             message.Body = bodyHtml;
             message.To.Add(new MailAddress(email));
-            message.From = new MailAddress(
-            emailConfig.FirstOrDefault(x => x.Key == "Email:SenderEmail").Value,
-            emailConfig.FirstOrDefault(x => x.Key == "Email:SenderDisplayName").Value);
+
+            var configFromEmail = emailConfig.FirstOrDefault(x => x.Key == "Email:SenderEmail");
+            if (configFromEmail.Value == null)
+            {
+                // Don't send email because we don't have a "From:" address configured
+                LogManager.GetCurrentClassLogger().Error("No configuration for Email:SenderEmail");
+                return;
+            }
+
+            message.From = new MailAddress(configFromEmail.Value,
+                emailConfig.FirstOrDefault(x => x.Key == "Email:SenderDisplayName").Value);
 
             message.IsBodyHtml = true;
 
             SendMail(message);
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void SendWeekly(string attachmentPath, string email, string firstName, string lastName)
         {
             string templateFile = @"App_Data\weeklyTemplate_CF.html";
@@ -54,15 +73,24 @@ namespace CSETWebCore.AutoResponder
             message.Subject = "New Weekly Contacts for Cybersecure Florida";
             message.Body = bodyHtml;
             message.To.Add(new MailAddress(email));
-            message.From = new MailAddress(
-            emailConfig.FirstOrDefault(x => x.Key == "Email:SenderEmail").Value,
-            emailConfig.FirstOrDefault(x => x.Key == "Email:SenderDisplayName").Value);
+
+            var configFromEmail = emailConfig.FirstOrDefault(x => x.Key == "Email:SenderEmail");
+            if (configFromEmail.Value == null)
+            {
+                // Don't send email because we don't have a "From:" address configured
+                LogManager.GetCurrentClassLogger().Error("No configuration for Email:SenderEmail");
+                return;
+            }
+
+            message.From = new MailAddress(configFromEmail.Value,
+                emailConfig.FirstOrDefault(x => x.Key == "Email:SenderDisplayName").Value);
 
             message.IsBodyHtml = true;
             message.Attachments.Add(new Attachment(attachmentPath));
 
             SendMail(message);
         }
+
 
         // <summary>
         /// Sends a MailMessage using the configured SmtpClient.
@@ -81,11 +109,21 @@ namespace CSETWebCore.AutoResponder
             string footerCF = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_CF.html");
             mail.Body = mail.Body.Replace("{{email-footer-CF}}", footerCF);
 
+            var configSmtpHost = emailConfig.FirstOrDefault(x => x.Key == "Email:SmtpHost");
+
+            // if no mail host defined, don't send the email
+            if (configSmtpHost.Value == null)
+            {
+                LogManager.GetCurrentClassLogger().Error("No configuration for Email:SmtpHost");
+                return;
+            }
+
+
             SmtpClient client = new SmtpClient
             {
                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                Host = emailConfig.FirstOrDefault(x => x.Key == "Email:SmtpHost").Value,
-                Port = int.Parse(emailConfig.FirstOrDefault(x => x.Key == "Email:SmtpPort").Value),
+                Host = configSmtpHost.Value,
+                Port = int.Parse(emailConfig.FirstOrDefault(x => x.Key == "Email:SmtpPort").Value ?? "25"),
                 UseDefaultCredentials = false
             };
 

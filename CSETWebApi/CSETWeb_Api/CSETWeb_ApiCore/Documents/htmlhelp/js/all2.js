@@ -236,10 +236,6 @@ DR_EXPLAIN.dataManager = (function() {
             return data_search.DREXPLAIN_PREVIEW_MODE_SEARCH_IS_DISABLED_NOTICE;
         },
 
-        getErrorInLocalSearch: function() {
-            return data_search.DREXPLAIN_ERROR_LOCAL_SEARCH;
-        },
-
         getErrorInRemoteSearch: function(code) {
             return data_search.DREXPLAIN_ERROR_REMOTE_SEARCH.replace('{0}', code.toString());
         },
@@ -913,59 +909,50 @@ DR_EXPLAIN.searchEngine = (function() {
     var StringPairArray = new Array();
     var SearchResults=new Array();
     var iStringToSearch=0;
-    var HTTP = {};
 
-    HTTP.newRequest = function()
+    var loadedSearchFiles = []
+
+    function loadSearchFile(url, callback, resultExtractor)
     {
-        var xmlhttp=false;
-        /* running locally on IE5.5, IE6, IE7 */                                              
-        if(location.protocol=="file:"){
-            if(!xmlhttp)try{ xmlhttp=new ActiveXObject("MSXML2.XMLHTTP"); }catch(e){xmlhttp=false;}
-            if(!xmlhttp)try{ xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); }catch(e){xmlhttp=false;}
-        }                                                                                
-        /* IE7, Firefox, Safari, Opera...  */
-        if(!xmlhttp)try{ xmlhttp=new XMLHttpRequest(); }catch(e){xmlhttp=false;}
-        /* IE6 */
-        if(typeof ActiveXObject != "undefined"){
-            if(!xmlhttp)try{ xmlhttp=new ActiveXObject("MSXML2.XMLHTTP"); }catch(e){xmlhttp=false;}
-            if(!xmlhttp)try{ xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); }catch(e){xmlhttp=false;}
+        if (loadedSearchFiles.indexOf(url) !== -1) {
+            // Need to use timeout to avoid synchronous callback calls
+            // in case content has already been loaded in the past
+            setTimeout(function() {
+                callback(resultExtractor());
+            }, 0);
+            return;
         }
-        /* IceBrowser */
-        if(!xmlhttp)try{ xmlhttp=createRequest(); }catch(e){xmlhttp=false;}
-
-        if (!xmlhttp)
-        {
-            throw new Error("Failed to initialize XMLHttpRequest");
-        }
-        return xmlhttp;
-    };
-
-
-    var request = HTTP.newRequest();
+        var script = document.createElement('script');
+        script.src = url;
+        script.addEventListener('load', function() {
+            try {
+                document.head.removeChild(script);
+            } catch (e) {
+            }
+            loadedSearchFiles.push(url);
+            callback(resultExtractor());
+        });
+        script.addEventListener('error', function() {
+            try {
+                document.head.removeChild(script);
+            } catch (e) {
+            }
+            callback(false);
+        })
+        document.head.appendChild(script);
+    }
 
     function ID()
     {
         if (!SearchResults.length) getSearchResultOutput();
-        var sID = dirname() + "/de_search/ids.json";
-        request.open("GET", sID, true);
-        request.onreadystatechange = function()
-        {
-            if (request.readyState == 4)
-            if (request.status == 200 || request.status == 0)
-            {
-                var arrFileId;
-                try
+        var sID = dirname() + "/de_search/ids.js";
+        loadSearchFile(
+            sID,
+            function(arrFileId) {
+                if (!arrFileId)
                 {
-                    arrFileId = JSON.parse(request.responseText);
-                }
-                catch(e)
-                {
-                    //Something is wrong, abort search
-                    SearchResults = new Array();
-                    SearchResults[0] = new Array();
-                    SearchResults[0][0] = "Error!";
-                    SearchResults[0][1] = "mailto:help@drexplain.com";
-                    getSearchResultOutput();
+                    $(document).trigger("searchError");
+                    DR_EXPLAIN.searchManager.showRemoteSearchError(-35);
                     return;
                 }
 
@@ -980,10 +967,11 @@ DR_EXPLAIN.searchEngine = (function() {
                         SearchResults[i][2] = arrFileId[id][2];
                 }
                 getSearchResultOutput();
+            },
+            function() {
+                return DR_EXPLAIN.searchIndex.ids;
             }
-        }
-        request.send(null);
-
+        );
     }
 
     function getSearchResultOutput()
@@ -991,18 +979,11 @@ DR_EXPLAIN.searchEngine = (function() {
         $( document ).trigger( "searchComplete" );
     }
 
-    function SearchInFile()
+    function SearchInFile(arrFileStrings)
     {
-        if (request.readyState != 4) return;
-        if (request.status != 200 && request.status != 0)  return;
-
-        var arrFileStrings;
-        try
-        {
-            arrFileStrings = JSON.parse(request.responseText);
-        }
-        catch(e)
-        {
+        if (!arrFileStrings) {
+            $(document).trigger("searchError");
+            DR_EXPLAIN.searchManager.showRemoteSearchError(-36);
             return;
         }
 
@@ -1034,10 +1015,17 @@ DR_EXPLAIN.searchEngine = (function() {
     function SearchForNextString()
     {
         if (iStringToSearch >= StringsForSearch.length) return ID();
-        var sURL = dirname() + "/de_search/"+StringPairArray[iStringToSearch][1];
-        request.open("GET", sURL, true);
-        request.onreadystatechange = SearchInFile;
-        request.send(null);
+        var fileName = StringPairArray[iStringToSearch][1];
+        var sURL = dirname() + "/de_search/"+fileName;
+        var charHexCode = fileName.substr(3, 4);
+        var char = String.fromCodePoint(parseInt(charHexCode, 16));
+        loadSearchFile(
+            sURL,
+            SearchInFile,
+            function() {
+                return DR_EXPLAIN.searchIndex[char];
+            }
+        )
     }
     function strcmp ( str1, str2 ) {
         // Binary safe string comparison
@@ -1132,39 +1120,22 @@ DR_EXPLAIN.searchEngine = (function() {
     {
         SearchResults=new Array();
         NextStringToSearch=0; //?
-        var sURL = dirname() + "/de_search/prefixes.json";
-        request.open("GET", sURL);
-        request.onreadystatechange = function() {
-            if (request.readyState === 4)
-            {
-                if (request.status === 200 || request.status === 0 && request.responseText !== '')
-                {
-                    try
-                    {
-                        IndexOfFiles = JSON.parse(request.responseText);
-                    }
-                    catch(e)
-                    {
-                        $(document).trigger("searchError");
-                        if (isRemoteSearch())
-                            DR_EXPLAIN.searchManager.showRemoteSearchError(-34);
-                        else
-                            DR_EXPLAIN.searchManager.showLocalSearchError();
-                        return;
-                    }
-                    AttachFilesToStrings();
-                }
-                else
-                {
+        var sURL = dirname() + "/de_search/prefixes.js";
+        loadSearchFile(
+            sURL,
+            function(result) {
+                if (!result) {
                     $(document).trigger("searchError");
-                    if (isRemoteSearch())
-                        DR_EXPLAIN.searchManager.showRemoteSearchError(request.status);
-                    else
-                        DR_EXPLAIN.searchManager.showLocalSearchError();
+                    DR_EXPLAIN.searchManager.showRemoteSearchError(-34);
+                    return;
                 }
+                IndexOfFiles = result;
+                AttachFilesToStrings();
+            },
+            function () {
+                return DR_EXPLAIN.searchIndex.prefixes;
             }
-        };
-        request.send(null);
+        );
     }
 
     function dirname()
@@ -1458,13 +1429,6 @@ DR_EXPLAIN.searchManager = (function(){
             $( document ).trigger( "searchCompleteBuildTree" );
         },
 
-        showLocalSearchError: function() {
-            this.highlightManager.hide();
-            var $msg = $( '<div class="b-tree__searchResultText">' + this.dataManager.getErrorInLocalSearch() + '</div>' );
-            this.dom.tabs.search.$tree.html( $msg );
-            $( document ).trigger( "searchCompleteBuildTree" );
-        },
-
         showRemoteSearchError: function(code) {
             this.highlightManager.hide();
             var $msg = $( '<div class="b-tree__searchResultText">' + this.dataManager.getErrorInRemoteSearch(code) + '</div>' );
@@ -1484,7 +1448,7 @@ DR_EXPLAIN.searchManager = (function(){
 
         isSearchTabSelectedOnStart: function() {
             var $navTree_search = this.dom.tabs.search.$wrapperItem;
-            if ( $navTree_search.index() === parseInt( this.urlEncoder.getValueByKey( this.urlEncoder.KEY_NAME__TAB_INDEX ) ) ) {
+            if ( DR_EXPLAIN.tabController.getTabIndex( $navTree_search ) === parseInt( this.urlEncoder.getValueByKey( this.urlEncoder.KEY_NAME__TAB_INDEX ) ) ) {
                 return true;
             }
             else {
@@ -1535,10 +1499,6 @@ DR_EXPLAIN.searchManager = (function(){
 
         doSearchIfQueryStringNotEmpty: function() {
             _class.doSearchIfQueryStringNotEmpty();
-        },
-
-        showLocalSearchError: function() {
-            _class.showLocalSearchError();
         },
 
         showRemoteSearchError: function(code) {
@@ -1837,6 +1797,16 @@ DR_EXPLAIN.tabController = (function(){
         doSetScrollPositionToSelectedTab: function() {
             var selectedTabIndex = this.getSelectedTabIndex();
             this.showTabByIndex( selectedTabIndex );
+        },
+
+        getTabIndex: function( $wrapperItem ) {
+            for ( var index = 0; index < this.tabArr.length; index += 1 ) {
+                var $currTabWrapper = this.tabArr[ index ].$wrapper;
+                if ($currTabWrapper.get(0) === $wrapperItem.get(0)) {
+                    return index;
+                }
+            }
+            return -1;
         }
     };
 
@@ -1871,6 +1841,10 @@ DR_EXPLAIN.tabController = (function(){
 
         isIndexTabShown: function() {
             return _class.DREX_SHOW_INDEX != 0;
+        },
+
+        getTabIndex: function( $wrapperItem ) {
+            return _class.getTabIndex( $wrapperItem );
         }
     };
 

@@ -57,9 +57,9 @@ export class RraSummaryComponent implements OnInit {
   legendColors: ColorHelper;
 
   constructor(
-    public rraDataSvc: RraDataService, 
+    public rraDataSvc: RraDataService,
     public tSvc: TranslocoService
-    ) {
+  ) {
     Object.assign(this.single);
   }
 
@@ -86,7 +86,7 @@ export class RraSummaryComponent implements OnInit {
       }
       var p = level.series.find(x => x.name == element.answer_Full_Name);
       p.value = element.percent;
-      
+
     });
     if (this.filter == "Overall") {
       let overall = [];
@@ -98,16 +98,16 @@ export class RraSummaryComponent implements OnInit {
       });
       this.single = overall;
 
-      for (let i of this.single){
-       i.name = this.tSvc.translate('answer-options.button-labels.' + (i.name).toLowerCase())
+      for (let i of this.single) {
+        i.name = this.tSvc.translate('answer-options.button-labels.' + (i.name).toLowerCase())
       }
       this.buildLegend();
       return;
     }
     this.single = levelList.find(x => this.tSvc.translate('level.' + (x.name).toLowerCase()) == this.filter).series;
 
-    for (let i of levelList){
-      for (let j of i.series){
+    for (let i of levelList) {
+      for (let j of i.series) {
         j.name = this.tSvc.translate('answer-options.button-labels.' + (j.name).toLowerCase())
       }
     }
@@ -122,7 +122,7 @@ export class RraSummaryComponent implements OnInit {
 
   @HostListener('window:beforeprint')
   beforePrint() {
-    this.view = [500, 500];
+    this.view = [250, 250];
   }
 
   @HostListener('window:afterprint')

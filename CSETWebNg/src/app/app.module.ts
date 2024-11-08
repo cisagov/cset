@@ -553,7 +553,7 @@ import { InfoBlockComponent } from './reports/info-block/info-block.component';
 import { SiteInformationComponent } from './reports/site-information/site-information.component';
 import { AboutRenewComponent } from './dialogs/about-renew/about-renew.component';
 import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-cyber-shield.component';
-import { ExportPasswordComponent } from './dialogs/assessment-encryption/export-password/export-password.component';
+import { ExportAssessmentComponent } from './dialogs/assessment-encryption/export-assessment/export-assessment.component';
 import { ImportPasswordComponent } from './dialogs/assessment-encryption/import-password/import-password.component';
 import { HydroDeficiencyComponent } from './assessment/results/hydro/hydro-deficiency/hydro-deficiency.component';
 import { HydroDonutComponent } from './assessment/results/hydro/hydro-donut/hydro-donut.component';
@@ -657,6 +657,7 @@ import { ConversionComponent } from './assessment/prepare/conversion/conversion.
 import { CfAnsweredQuestionsComponent } from './reports/cf-answeredquestions/cf-answeredquestions.component';
 import { CfCommentsMarkedForReviewComponent } from './reports/cf-commentsmarked/cf-commentsmarked.component';
 import { CfReviewedComponent } from './reports/cf-reviewed/cf-reviewed.component';
+import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.component';
 
 
 @NgModule({ declarations: [
@@ -1093,7 +1094,7 @@ import { CfReviewedComponent } from './reports/cf-reviewed/cf-reviewed.component
         SiteInformationComponent,
         AboutRenewComponent,
         LogoCyberShieldComponent,
-        ExportPasswordComponent,
+        ExportAssessmentComponent,
         ImportPasswordComponent,
         HydroDeficiencyComponent,
         HydroDonutComponent,
@@ -1189,7 +1190,8 @@ import { CfReviewedComponent } from './reports/cf-reviewed/cf-reviewed.component
         ConversionComponent,
         CfAnsweredQuestionsComponent,
         CfCommentsMarkedForReviewComponent,
-        CfReviewedComponent
+        CfReviewedComponent,        
+        RolesChangedComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,

@@ -422,7 +422,14 @@ namespace CSETWebCore.Api.Controllers
                 if (assessmentId >= 0)
                 {
                     // Updating a Contact in the context of the current Assessment.  
-                    (_token).AuthorizeAdminRole();
+                    try
+                    {
+                        (_token).AuthorizeAdminRole();
+                    }
+                    catch
+                    {
+                        return Forbid();
+                    }
 
                     int newUserId = (int)userBeingUpdated.UserId;
 

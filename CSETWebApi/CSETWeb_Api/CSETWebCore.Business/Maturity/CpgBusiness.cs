@@ -1,11 +1,7 @@
 ﻿using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
-using SixLabors.ImageSharp.ColorSpaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Maturity
 {
