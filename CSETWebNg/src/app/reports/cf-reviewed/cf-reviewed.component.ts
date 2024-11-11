@@ -60,10 +60,39 @@ export class CfReviewedComponent implements OnInit {
         this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Respond'));
         this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Recover'));
       });
+
+    this.cfSvc.getTop5Lowest().subscribe(
+      (r: any) => {
+        console.log(r)
+        // this.scores = r;
+        // console.log(this.scores.filter(x => x.standard_Category == 'Govern'))
+        
+      });
   }
 
   getBackground(score: any) {
     let lowestLevelAchieved = score.toString();
-    return 'cf-' + lowestLevelAchieved.substring(0, 1);
+
+    // switch(lowestLevelAchieved.substring(0, 1)) {
+    //   case 0:
+        return 'lightgray !important';
+    //   case 1:
+    //     return 'red !important';
+    //   default:
+        // return '#f5752b !important';
+    // }
+    // return 'cf-' + lowestLevelAchieved.substring(0, 1);
+  }
+
+  convertScoreToPercent(score: any) {
+    console.log('score: ' + score)
+    let wholeNum = (score*100) / 7;
+    console.log('wholeNumber: ' + wholeNum )
+    // let remainder = (score*100) % 7;
+    // console.log('remainder: ' + remainder )
+
+    // let num = +(wholeNum.toString() + '.' + remainder.toString());
+    // console.log(num)
+    return wholeNum;
   }
 }

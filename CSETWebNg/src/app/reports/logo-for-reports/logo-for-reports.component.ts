@@ -54,6 +54,10 @@ export class LogoForReportsComponent implements OnInit {
       this.showVector = true;
       this.showRaster = false;
     }
+    else if (this.configSvc.installationMode == 'CF') {
+      this.sourceImage = 'assets/images/CF/CIP_Logo_with_Text.svg';
+      this.LogoAlt = "CF Logo";
+    }
     else {
       this.sourceImage = 'assets/images/CISA_Logo_183px.png';
       this.LogoAlt = "CISA Logo";

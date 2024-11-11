@@ -32,7 +32,7 @@
 
         <div class="column">
             <p style="text-align:center;">
-                <img width="471" height="529" alt="cset" src="assets/images/DetailFiles/image002.jpg">
+                <img width="471" height="529" alt="cip" src="assets/images/CF/CIP_logo.svg">
             </p>
         </div>
         <div class="cover-page-bottom">
@@ -87,7 +87,48 @@
                 <ng-container *ngFor="let subcat of catInfo">
                     <tr>
                         <td>{{ subcat.standard_Sub_Category }}</td>
-                        <td [class]="getBackground(subcat.average)">{{ subcat.average }}</td>
+                        <td>
+                            <ng-container class="d-flex flex-column">
+                                <div class="progress-bar" [style]="{'background-color': getBackground(subcat.average)}" style.width="150 px">
+                                    <div class="progress-bar-fill" [style.width]="convertScoreToPercent(subcat.average) + '%'"></div>
+                                    
+                                </div>
+                                <!-- <svg height="16px" width="16px" xmlns="http://www.w3.org/2000/svg">
+                                        <circle r="8px" [cx]="150 * (subcat.average / 7)" cy="0" fill="red" stroke="green" stroke-width="1" />
+                                    </svg>                                   -->
+                                <!-- <mat-progress-bar
+                                    mode="determinate" 
+                                    [value]="convertScoreToPercent(subcat.average)">
+                                </mat-progress-bar> -->
+                                <!-- <mat-slider [--mdc-slider-handle-color]="getBackground(subcat.average)" [color]="warning" style="width: 600px;" [disabled]="disabled" [max]="8" [min]="0" [step]="1"
+                                    [discrete]="false" [showTickMarks]="true">
+                                    <input matSliderThumb [value]="subcat.average" #slider>
+                                </mat-slider> -->
+                                <!-- <ng-container class="d-flex flex-row" style="margin-left: 8px; margin-right: 4px; justify-content: space-between;">
+                                    <div>0</div>
+                                    <div>1</div>
+                                    <div>2</div>
+                                    <div>3</div>
+                                    <div>4</div>
+                                    <div>5</div>
+                                    <div>5</div>
+                                    <div>6</div>
+                                    <div>7</div>
+                                </ng-container>
+                                <ng-container class="d-flex flex-row">
+                                        <ng-container>
+                                            Not<br>Mapped
+                                        </ng-container>
+                                    <ng-container class="d-flex flex-column" style="margin-left:auto">
+                                        <ng-container>Optimized</ng-container>
+                                    </ng-container>
+                                </ng-container> -->
+                                
+                                <!-- <div style="font-weight: bold;">
+                                    {{ t('answer-options.labels.' + (q.answer ?? '1') + '-cf') }}
+                                </div> -->
+                            </ng-container>
+                        </td>
                     </tr>
                 </ng-container>
             </ng-container>
