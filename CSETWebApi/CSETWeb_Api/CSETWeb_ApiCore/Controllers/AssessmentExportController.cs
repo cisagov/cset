@@ -15,7 +15,11 @@ using NLog;
 using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Mime;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Office2010.PowerPoint;
 using Microsoft.Extensions.Configuration;
 
 
@@ -67,15 +71,20 @@ namespace CSETWebCore.Api.Controllers
             return null;
         }
         
+        /// <summary>
+        /// export assessment and send it to enterprise using enterprise token
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/assessment/exportAndSend")]
         public async Task<IActionResult> ExportAndSendAssessment([FromQuery] string token)
         {
             try
             {
-                _token.SetToken(token);
-
-                int assessmentId = _token.AssessmentForUser(token);
+                var assessmentId = _token.AssessmentForUser();
+                _token.SetEnterpriseToken(token);
+                
                 string url = _configuration["AssessmentUploadUrl"];
                 // Export the assessment
                 if (!string.IsNullOrEmpty(url))
@@ -102,7 +111,7 @@ namespace CSETWebCore.Api.Controllers
                     }
                 }
 
-                return StatusCode(500, "There was an error sending the assessment to the target URL.");
+                return BadRequest("There was an error sending the assessment to the target URL");
             }
             catch (Exception exc)
             {
@@ -153,17 +162,38 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                ;
-                using (var client = new System.Net.Http.HttpClient())
+                
+                using(var client = new HttpClient())
+                using(var content = new MultipartFormDataContent())
+                using (var byteContent = new ByteArrayContent(fileContents))
                 {
-                    var content = new System.Net.Http.ByteArrayContent(fileContents);
-                    content.Headers.Add("Content-Type", "application/octet-stream");
-                    content.Headers.Add("Content-Disposition", $"attachment; filename=\"{fileName}\"");
-                    content.Headers.Add("Authorization", $"Bearer {_token.GetToken()}");
-
+                    client.DefaultRequestHeaders.Authorization =
+                        new AuthenticationHeaderValue("Bearer", _token.GetEnterpriseToken());
+                    byteContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
+                    
+                    content.Add(byteContent, "file", "assessment.csetw");
                     var response = await client.PostAsync(targetUrl, content);
                     return response.IsSuccessStatusCode;
+
                 }
+
+                ;
+                /*using (var client = new System.Net.Http.HttpClient())
+                {
+                    using(var client = httpClient)
+                        
+                    
+                    var content = new System.Net.Http.ByteArrayContent(fileContents);
+                    client.DefaultRequestHeaders.Authorization =
+                        new AuthenticationHeaderValue("Bearer", _token.GetEnterpriseToken());
+                    
+                    content.Headers.Add("Content-Type", "multipart/form-data");
+                    content.Headers.Add("Content-Disposition", $"attachment; filename=\"{fileName}\"");
+                    //content.Headers.Add("Authorization", $"Bearer {_token.GetEnterpriseToken()}");
+                    
+                    var response = await client.PostAsync(targetUrl, content);
+                    return response.IsSuccessStatusCode;
+                }*/
             }
             catch (Exception exc)
             {
