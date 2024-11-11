@@ -1247,6 +1247,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[usp_CF_Questions]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[usp_CF_Score_Averages]",
          "ObjectType": 1
       },

@@ -176,5 +176,16 @@ namespace CSETWebCore.Api.Controllers
             return Ok(biz.getGroupingScores(assessmentId));
 
         }
+
+        [HttpGet]
+        [Route("api/cf/getTop5Lowest")]
+        public async Task<IActionResult> GetTop5Lowest()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            var biz = new CFBusiness(_context, _assessmentUtil);
+            // 5-lowest parsing is done on frontend
+            return Ok(await biz.Top5LowestScoredForAllSubcats(assessmentId));
+
+        }
     }
 }

@@ -88,6 +88,8 @@ export class QuestionBlockCfComponent implements OnInit {
       });
     }
 
+    console.log(this.mySubCategory.questions)
+
     // this.mySubCategory.questions.forEach((q: Question) => {
     //   q.
     // });

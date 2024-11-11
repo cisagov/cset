@@ -1002,7 +1002,11 @@
         },
         "3": {
           "title": "Answer Summary",
-          "desc": "This report includes a high-level summary of the answer distributions of the report."
+          "desc": "This report includes a high-level summary of the answer distributions of the assessment."
+        },
+        "4": {
+          "title": "Detailed Answers",
+          "desc": "This report includes a detailed view of the answer distributions of the assessment and the lowest 5 scoring areas per category."
         }
       }
     },

@@ -23,7 +23,7 @@
     <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
-                ANSWER SUMMARY
+                DETAILED ANSWER
             </p>
             <p class="report-title">
                 REPORT
@@ -51,7 +51,7 @@
 
     <div class="page-break">
         <h1>
-            Answer Summary
+            Detailed Answer
         </h1>
 
         <ngx-charts-bar-horizontal
@@ -72,63 +72,41 @@
 
     <div class="page-break">
         <h1>
-            Scores
+            Categories with Lowest Scored Questions
         </h1>
         <table class="w-100 table-responsive td-align-top td-padding-half-rem">
             <tr style="color:#383444">
-                <td>Category</td>
-                <td>Average Score</td>
+                <td style="width: 100px">Title</td>
+                <td></td>
+                <td style="width: 70px">Score</td>
             </tr>
             <ng-container *ngFor="let catInfo of parsedScores" style="justify-content: space-between;">
                 <tr class="rkw-domain">
-                    <td style="background-color: #383444; color:white">{{ catInfo[0].standard_Category }}</td>
-                    <td style="background-color: #383444; color:white">{{ catInfo[0].groupAvg }}</td>
+                    <td style="background-color: #383444; color:white; font-weight: bold;" colspan="2">{{ catInfo[0].standard_Category }}</td>
+                    <td style="background-color: #383444; color:white; font-weight: bold;">{{ catInfo[0].groupAvg }}</td>
                 </tr>
                 <ng-container *ngFor="let subcat of catInfo">
                     <tr>
-                        <td>{{ subcat.standard_Sub_Category }}</td>
-                        <td>
-                            <ng-container class="d-flex flex-column">
+                        <td style="background-color: #706c6c; color:white; font-weight: bold;" colspan="2">{{ subcat.standard_Sub_Category }}</td>
+                        <td style="background-color: #706c6c; color:white; font-weight: bold;">
+                            {{ subcat.average }}
+                            <!-- <ng-container class="d-flex flex-column">
                                 <div class="progress-bar" [style]="{'background-color': getBackground(subcat.average)}" style.width="150 px">
                                     <div class="progress-bar-fill" [style.width]="convertScoreToPercent(subcat.average) + '%'"></div>
-                                    
-                                </div>
-                                <!-- <svg height="16px" width="16px" xmlns="http://www.w3.org/2000/svg">
-                                        <circle r="8px" [cx]="150 * (subcat.average / 7)" cy="0" fill="red" stroke="green" stroke-width="1" />
-                                    </svg>                                   -->
-                                <!-- <mat-progress-bar
-                                    mode="determinate" 
-                                    [value]="convertScoreToPercent(subcat.average)">
-                                </mat-progress-bar> -->
-                                <!-- <mat-slider [--mdc-slider-handle-color]="getBackground(subcat.average)" [color]="warning" style="width: 600px;" [disabled]="disabled" [max]="8" [min]="0" [step]="1"
-                                    [discrete]="false" [showTickMarks]="true">
-                                    <input matSliderThumb [value]="subcat.average" #slider>
-                                </mat-slider> -->
-                                <!-- <ng-container class="d-flex flex-row" style="margin-left: 8px; margin-right: 4px; justify-content: space-between;">
-                                    <div>0</div>
-                                    <div>1</div>
-                                    <div>2</div>
-                                    <div>3</div>
-                                    <div>4</div>
-                                    <div>5</div>
-                                    <div>5</div>
-                                    <div>6</div>
-                                    <div>7</div>
-                                </ng-container>
-                                <ng-container class="d-flex flex-row">
-                                        <ng-container>
-                                            Not<br>Mapped
-                                        </ng-container>
-                                    <ng-container class="d-flex flex-column" style="margin-left:auto">
-                                        <ng-container>Optimized</ng-container>
-                                    </ng-container>
-                                </ng-container> -->
-                                
-                                <!-- <div style="font-weight: bold;">
-                                    {{ t('answer-options.labels.' + (q.answer ?? '1') + '-cf') }}
-                                </div> -->
+                                  </div>
+                            </ng-container> -->
+                        </td>
+                    </tr>
+                    <tr *ngFor="let q of top5LowestPerSubcat.get(subcat.standard_Sub_Category); let i = index">
+                        <td style="font-weight: bold;">{{ q.requirement_Title }}</td>
+                        <td>
+                            {{ q.requirement_text }}
+                            <ng-container *ngIf="(i + 1) < top5LowestPerSubcat.get(subcat.standard_Sub_Category).length">
+                                <hr class="page-line">
                             </ng-container>
                         </td>
+                        <td>{{ q.answer_Value }}</td>
+                        
                     </tr>
                 </ng-container>
             </ng-container>

@@ -154,6 +154,19 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+
+        public async Task<List<usp_CF_QuestionsResult>> Top5LowestScoredForAllSubcats(int assessmentId)
+        {
+            var temp = await _context.Procedures.usp_CF_QuestionsAsync(assessmentId);
+            return temp;
+        }
+
+
+        public class tempclass
+        {
+
+        }
+
         public class CFBar
         { 
             public string name { get; set; }
@@ -167,8 +180,6 @@ namespace CSETWebCore.Api.Controllers
         public class CFAverageScore
         {
             public NCSF_CATEGORY cat { get; set; }
-            public int answerTotal { get; set; }
-            public int questionsCount { get; set; }
 
             public decimal score { get; set; }
 
