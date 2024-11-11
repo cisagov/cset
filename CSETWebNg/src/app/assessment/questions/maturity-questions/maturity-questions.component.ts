@@ -271,7 +271,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * 
+   *
    */
   displayTitle() {
     // Bonus questions are for SSGs.
