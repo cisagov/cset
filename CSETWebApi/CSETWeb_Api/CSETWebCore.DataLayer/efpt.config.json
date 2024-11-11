@@ -1255,6 +1255,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[usp_CF_Score_Overall]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[usp_CopyIntoSet_Delete]",
          "ObjectType": 1
       },

@@ -179,7 +179,7 @@ namespace CSETWebCore.Business.Contact
             // remove the AVAILABLE_STANDARDS record and the RRA record in the AVAILABLE_MATURITY_MODELS table
             // add a CPG record in the AVAILABLE_MATURITY_MODELS table
             var availStandard = _context.AVAILABLE_STANDARDS
-                .Where(x => x.Assessment_Id == assessmentId && x.Set_Name == CF_CSF_SetName && x.Selected).FirstOrDefault();
+                .Where(x => x.Assessment_Id == assessmentId && CF_CSF_SetNames.Contains(x.Set_Name) && x.Selected).FirstOrDefault();
             var availMaturity = _context.AVAILABLE_MATURITY_MODELS
                 .Where(x => x.Assessment_Id == assessmentId && x.model_id == RRA_Model_Id && x.Selected).FirstOrDefault();
 
@@ -187,7 +187,8 @@ namespace CSETWebCore.Business.Contact
             {
                 _context.AVAILABLE_STANDARDS.Remove(availStandard);
                 //availMaturity.Selected = false;
-                _context.AVAILABLE_MATURITY_MODELS.Remove(availMaturity);
+                if(availMaturity!=null)
+                    _context.AVAILABLE_MATURITY_MODELS.Remove(availMaturity);
 
                 var newAvailMaturity = new AVAILABLE_MATURITY_MODELS()
                 {
@@ -229,7 +230,7 @@ namespace CSETWebCore.Business.Contact
             var convertableTitles = (from a in _context.NCSF_ENTRY_TO_MID
                                      join b in _context.NCSF_CONVERSION_MAPPINGS_ENTRY on a.Entry_Level_Titles equals b.Entry_Level_Titles
                                      join c in _context.NCSF_CONVERSION_MAPPINGS_MID on a.Mid_Level_Titles equals c.Mid_Level_Titles
-                                     join ans in _context.ANSWER on b.Requirement_Id equals ans.Question_Or_Requirement_Id
+                                     join ans in _context.Answer_Requirements on b.Requirement_Id equals ans.Question_Or_Requirement_Id
                                      where ans.Assessment_Id == assessmentId
                                      select new { b.Requirement_Id, c.Mat_Question_Id, ans }).ToList();
 
@@ -343,8 +344,8 @@ namespace CSETWebCore.Business.Contact
             var convertableTitles = (from a in _context.NCSF_FULL_TO_MID
                                      join b in _context.NCSF_CONVERSION_MAPPINGS_MID on a.Mid_Level_Titles equals b.Mid_Level_Titles
                                      join c in _context.NCSF_CONVERSION_MAPPINGS_FULL on a.Full_Level_Titles equals c.Full_Level_Titles
-                                     join ans in _context.ANSWER on b.Mat_Question_Id equals ans.Question_Or_Requirement_Id
-                                     where ans.Assessment_Id == assessmentId
+                                     join ans in _context.Answer_Maturity on b.Mat_Question_Id equals ans.Question_Or_Requirement_Id
+                                     where ans.Assessment_Id == assessmentId 
                                      orderby b.Mat_Question_Id
                                      select new { b.Mat_Question_Id, c.Requirement_Id, ans }).ToList();
 
@@ -356,7 +357,7 @@ namespace CSETWebCore.Business.Contact
 
             if (convertableTitles != null)
             {
-                var entryAnsList = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Is_Requirement == true && x.Answer_Text != "U").ToList();
+                var entryAnsList = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Is_Requirement == true).ToList();
                 
                 foreach (var entryAnswer in entryAnsList)
                 {
@@ -367,7 +368,7 @@ namespace CSETWebCore.Business.Contact
                 {
                     
                     if (titleRow.ans != null)
-                    {
+                    {   
                         ANSWER ansToAdd = new ANSWER()
                         {
                             Assessment_Id = assessmentId,
@@ -422,7 +423,7 @@ namespace CSETWebCore.Business.Contact
                             else
                             {
                                 // new answer record not in the DB, so we can add this to the DB at the end
-                                newFullAnswerDict.TryAdd(titleRow.Requirement_Id, ansToAdd);
+                                newFullAnswerDict.Add(titleRow.Requirement_Id, ansToAdd);
                             }
 
                         }
@@ -496,12 +497,16 @@ namespace CSETWebCore.Business.Contact
         {
             switch (answerText)
             {
+                case "A":
                 case "Y":
                     // 2 for "Informally Performed" (didn't go through the CPG process, so can't infer anymore than a 2)
                     return "2";
                 case "N":
+                case "NA":
                     // 1 for "Not Performed"
                     return "1";
+                case "U":
+                    return "0";
                 default:
                     return "1";
             }
