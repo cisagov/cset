@@ -4,12 +4,8 @@ import { AuthenticationService } from '../../../../services/authentication.servi
 import { ConfigService } from '../../../../services/config.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { Demographic } from '../../../../models/assessment-info.model';
-
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DemographicService } from '../../../../services/demographic.service';
 import { ActivatedRoute } from '@angular/router';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-key-report',
