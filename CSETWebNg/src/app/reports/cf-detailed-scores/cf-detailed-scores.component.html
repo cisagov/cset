@@ -1,0 +1,117 @@
+<!----------------------
+   Copyright 2024 Battelle Energy Alliance, LLC
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="report-body mb-5" *transloco="let t;" >
+
+    <div class="flex-container">
+        <div class="column mt-3">
+            <p class="report-title">
+                DETAILED ANSWER
+            </p>
+            <p class="report-title">
+                REPORT
+            </p>
+        </div>
+
+        <div class="column">
+            <p style="text-align:center;">
+                <img width="471" height="529" alt="cip" src="assets/images/CF/CIP_logo.svg">
+            </p>
+        </div>
+        <div class="cover-page-bottom">
+            <app-logo-for-reports></app-logo-for-reports>
+            <app-info-block [response]="response" />
+        </div>
+    </div>
+    
+    <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
+        <app-report-disclaimer></app-report-disclaimer>
+    </div>
+
+    <div class="page-break">
+        <app-report-advisory></app-report-advisory>
+    </div>
+
+    <div class="page-break">
+        <h1>
+            Detailed Answer
+        </h1>
+
+        <ngx-charts-bar-horizontal
+            [view]="view" 
+            [scheme] ="colorScheme" 
+            [results]="barChart" 
+            [gradient]="gradient" 
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis" 
+            [legend]="showLegend" 
+            [showXAxisLabel]="showXAxisLabel" 
+            [showYAxisLabel]="showYAxisLabel" 
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel">
+        </ngx-charts-bar-horizontal>
+
+    </div>
+
+    <div class="page-break">
+        <h1>
+            Categories with Lowest Scored Questions
+        </h1>
+        <table class="w-100 table-responsive td-align-top td-padding-half-rem">
+            <tr style="color:#383444">
+                <td style="width: 100px">Title</td>
+                <td></td>
+                <td style="width: 70px">Score</td>
+            </tr>
+            <ng-container *ngFor="let catInfo of parsedScores" style="justify-content: space-between;">
+                <tr class="rkw-domain">
+                    <td style="background-color: #383444; color:white; font-weight: bold;" colspan="2">{{ catInfo[0].standard_Category }}</td>
+                    <td style="background-color: #383444; color:white; font-weight: bold;">{{ catInfo[0].groupAvg }}</td>
+                </tr>
+                <ng-container *ngFor="let subcat of catInfo">
+                    <tr>
+                        <td style="background-color: #706c6c; color:white; font-weight: bold;" colspan="2">{{ subcat.standard_Sub_Category }}</td>
+                        <td style="background-color: #706c6c; color:white; font-weight: bold;">
+                            {{ subcat.average }}
+                            <!-- <ng-container class="d-flex flex-column">
+                                <div class="progress-bar" [style]="{'background-color': getBackground(subcat.average)}" style.width="150 px">
+                                    <div class="progress-bar-fill" [style.width]="convertScoreToPercent(subcat.average) + '%'"></div>
+                                  </div>
+                            </ng-container> -->
+                        </td>
+                    </tr>
+                    <tr *ngFor="let q of top5LowestPerSubcat.get(subcat.standard_Sub_Category); let i = index">
+                        <td style="font-weight: bold;">{{ q.requirement_Title }}</td>
+                        <td>
+                            {{ q.requirement_text }}
+                            <ng-container *ngIf="(i + 1) < top5LowestPerSubcat.get(subcat.standard_Sub_Category).length">
+                                <hr class="page-line">
+                            </ng-container>
+                        </td>
+                        <td>{{ q.answer_Value }}</td>
+                        
+                    </tr>
+                </ng-container>
+            </ng-container>
+        </table>
+    </div>
+
+</div>
+

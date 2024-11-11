@@ -243,6 +243,7 @@ import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.compon
 import { CfAnsweredQuestionsComponent } from './reports/cf-answeredquestions/cf-answeredquestions.component';
 import { CfCommentsMarkedForReviewComponent } from './reports/cf-commentsmarked/cf-commentsmarked.component';
 import { CfReviewedComponent } from './reports/cf-reviewed/cf-reviewed.component';
+import { CfDetailedScoresComponent } from './reports/cf-detailed-scores/cf-detailed-scores.component';
 
 const appRoutes: Routes = [
 
@@ -605,7 +606,8 @@ const appRoutes: Routes = [
       { path: 'allReviewedQuestions', component: AllReviewedComponent},
       { path: 'cfAnsweredQuestions', component: CfAnsweredQuestionsComponent},
       { path: 'cfMfr', component: CfCommentsMarkedForReviewComponent},
-      { path: 'cfSummary', component: CfReviewedComponent}
+      { path: 'cfSummary', component: CfReviewedComponent},
+      { path: 'cfDetailedScores', component: CfDetailedScoresComponent}
     ]
   },
   { path: '**', redirectTo: 'home' }

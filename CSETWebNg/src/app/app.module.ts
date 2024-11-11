@@ -658,6 +658,7 @@ import { CfAnsweredQuestionsComponent } from './reports/cf-answeredquestions/cf-
 import { CfCommentsMarkedForReviewComponent } from './reports/cf-commentsmarked/cf-commentsmarked.component';
 import { CfReviewedComponent } from './reports/cf-reviewed/cf-reviewed.component';
 import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.component';
+import { CfDetailedScoresComponent } from './reports/cf-detailed-scores/cf-detailed-scores.component';
 
 
 @NgModule({ declarations: [
@@ -1191,7 +1192,8 @@ import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.com
         CfAnsweredQuestionsComponent,
         CfCommentsMarkedForReviewComponent,
         CfReviewedComponent,        
-        RolesChangedComponent
+        RolesChangedComponent,
+        CfDetailedScoresComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
