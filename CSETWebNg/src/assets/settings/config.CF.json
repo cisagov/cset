@@ -5,7 +5,7 @@
     "galleryLayout": "CF",
     "installationMode": "CF",
     "behaviors": {
-        "defaultTitle": "CSET-CF",
+        "defaultTitle": "CF",
         "showModuleBuilder": false,
         "showAssessmentDocuments": false,
         "showAggregation": false,

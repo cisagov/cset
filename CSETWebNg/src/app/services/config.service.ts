@@ -394,7 +394,7 @@ export class ConfigService {
           link.href = 'assets/icons/favicon_cf.ico?app=cf1';
 
           var title = this.document.querySelector('title');
-          title.innerText = 'CSET-CF';
+          title.innerText = 'CF';
         }
         break;
       case 'RRA':

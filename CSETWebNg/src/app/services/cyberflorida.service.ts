@@ -229,4 +229,8 @@ export class CyberFloridaService {
   getScoreBreakdown(){
     return this.http.get(this.apiUrl + 'cf/getScoreBreakdown');
   }
+
+  getTop5Lowest(){
+    return this.http.get(this.apiUrl + 'cf/getTop5Lowest');
+  }
 }
