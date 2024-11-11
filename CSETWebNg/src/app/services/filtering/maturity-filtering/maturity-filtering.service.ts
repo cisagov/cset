@@ -272,23 +272,29 @@ export class MaturityFilteringService {
         case 'ACET':
           this.acetFilteringSvc.setQuestionVisibility(q, this.currentDomainName);
           break;
+
         case 'ISE':
           this.acetFilteringSvc.setIseQuestionVisibility(q, this.currentDomainName);
           break;
+
         case 'CMMC':
         case 'CMMC2':
+        case 'CMMC2F':
           this.cmmcFilteringSvc.setQuestionVisibility(q);
           break;
 
         case 'EDM':
           this.edmFilteringSvc.setQuestionVisibility(q);
           break;
+
         case 'CRR':
           this.crrFilteringSvc.setQuestionVisibility(q);
           break;
+          
         case 'RRA':
           this.rraFilteringSvc.setQuestionVisibility(q);
           break;
+
         default:
           this.basicFilteringSvc.setQuestionVisibility(q);
       }
