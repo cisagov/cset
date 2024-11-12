@@ -5,10 +5,15 @@
       <div class="row">
         <div class="col-sm">
           <mat-card>
-            <mat-card-header class="d-flex justify-content-center"><h2>Analytics</h2></mat-card-header>
+            <mat-card-header class="d-flex justify-content-center">
+              <h2>Analytics</h2>
+            </mat-card-header>
             <div class="p-4">
               <mat-button-toggle-group [(ngModel)]="dataType" (change)="toggleData($event)">
-                <mat-button-toggle value="mySector">My Sector</mat-button-toggle>
+                <mat-button-toggle [value]="'mySector'" [disabled]="!showSector" matTooltip="Select a sector from demographics"
+                  [matTooltipDisabled]="showSector">
+                  My Sector: {{sectorTitle}}
+                </mat-button-toggle>
                 <mat-button-toggle value="allSectors">All Sectors</mat-button-toggle>
               </mat-button-toggle-group>
             </div>
