@@ -1,0 +1,26 @@
+<div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a">
+
+  <div class="container">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm">
+          <mat-card>
+            <mat-card-header class="d-flex justify-content-center"><h2>Analytics</h2></mat-card-header>
+            <div class="p-4">
+              <mat-button-toggle-group [(ngModel)]="dataType" (change)="toggleData($event)">
+                <mat-button-toggle value="mySector">My Sector</mat-button-toggle>
+                <mat-button-toggle value="allSectors">All Sectors</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+            <div style="display: block;">
+              <canvas #barCanvas></canvas>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+
+    <app-nav-back-next [page]="'analytics-results-page'"
+      [hide]="navSvc.isLastVisiblePage('analytics') ? 'next' : ''"></app-nav-back-next>
+
+  </div>
