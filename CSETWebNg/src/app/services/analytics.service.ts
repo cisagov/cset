@@ -26,6 +26,10 @@ export class AnalyticsService {
     return this.http.get(this.apiUrl + 'getAggregation');
   }
 
+  isCisaAssessorMode() {
+    return this.configSvc.installationMode == "IOD";
+  }
+
 
   getAnalyticResults(assessmentId: any, maturityModelId: any, sectorId?: any): any {
     let url = this.configSvc.config.csetAnalyticsUrl
