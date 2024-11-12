@@ -26,6 +26,16 @@ export class AnalyticsService {
     return this.http.get(this.apiUrl + 'getAggregation');
   }
 
+
+  getAnalyticResults(assessmentId: any, maturityModelId: any, sectorId?: any): any {
+    let url = `http://csetac:5210/api/analytics/maturity?modelId=${maturityModelId}&assessmentId=${assessmentId}`;
+
+    if (sectorId) {
+      url += `&sectorId=${sectorId}`;
+    }
+    return this.http.get(url);
+}
+
   getAnalyticsToken(username, password): any {
     return this.http.post(
       this.analyticsUrl + 'auth/login', { username, password }, this.headers
