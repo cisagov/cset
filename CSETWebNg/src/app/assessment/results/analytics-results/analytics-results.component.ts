@@ -5,9 +5,24 @@ import Chart, { ChartConfiguration, ChartType, registerables } from 'chart.js/au
 import { AssessmentService } from '../../../services/assessment.service';
 import { AggregationService } from '../../../services/aggregation.service';
 import { AssessmentDetail } from '../../../models/assessment-info.model';
+import { DemographicService } from '../../../services/demographic.service';
+import { DemographicIodService } from '../../../services/demographic-iod.service';
 
 Chart.register(...registerables);
 
+interface Sector {
+  sectorId: number;
+  sectorName: string;
+}
+
+interface DemographicsIod {
+  listSectors: listSectors[];
+}
+
+interface listSectors {
+  optionValue: number;
+  optionText: string;
+}
 @Component({
   selector: 'app-analytics-results',
   templateUrl: './analytics-results.component.html',
@@ -15,7 +30,7 @@ Chart.register(...registerables);
 })
 export class AnalyticsResultsComponent implements OnInit {
 
-  sectorId: any;
+  sectorId: number;
   assessmentId: any;
   modelId: any; 
   minData: number[] = [];
@@ -23,6 +38,10 @@ export class AnalyticsResultsComponent implements OnInit {
   maxData: number[] = [];
   currentUserData: number[] = [];
   labels: string[] = [];
+  sectorsList: Sector[];
+  sectorTitle: string;
+  showSector: boolean = true;
+
 
   @ViewChild('barCanvas') private barCanvas!: ElementRef<HTMLCanvasElement>;
   private barChart!: Chart;
@@ -34,7 +53,9 @@ export class AnalyticsResultsComponent implements OnInit {
     public navSvc: NavigationService,
     public analyticsSvc: AnalyticsService,
     public assessSvc: AssessmentService,
-    public aggregSvc: AggregationService
+    public aggregSvc: AggregationService, 
+    public demoSvc: DemographicService,
+    public demoIodSvc: DemographicIodService
   ) { }
 
   ngOnInit(): void {
@@ -42,9 +63,38 @@ export class AnalyticsResultsComponent implements OnInit {
       this.assessmentId = resp.id;
       this.sectorId = resp.sectorId;
       this.modelId = resp.maturityModel.modelId;
+      if (this.sectorId == null){
+        this.showSector = false; 
+        this.dataType = "allSectors"
+      }
+      let isCISA = this.analyticsSvc.isCisaAssessorMode()
+      if (isCISA){
+        this.demoIodSvc.getDemographics().subscribe((resp: DemographicsIod) => {
+          resp.listSectors.forEach(sector => {
+            if (sector.optionValue == this.sectorId){
+              this.sectorTitle = sector.optionText
+            }
+          });
+        })
+      } else {
+        this.demoSvc.getAllSectors().subscribe(
+          (data: Sector[]) => {
+              this.sectorsList = data;
+              this.sectorsList.forEach(sector => {
+                if (sector.sectorId == this.sectorId){
+                  this.sectorTitle = sector.sectorName
+                }
+              });
+          }
+        )
+      }
+      
+
       // Fetch initial data after getting assessment details
       this.getAnalyticsResults();
     });
+
+   
   }
 
   ngAfterViewInit(): void {
