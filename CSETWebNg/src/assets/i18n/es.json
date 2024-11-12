@@ -232,6 +232,7 @@
                 "vh": "Muy Alto"
             }
         },
+        "cmmc target level selection": "Selección del nivel objetivo de CMMC",
         "network diagram": "Diagrama de red",
         "diagram component questions": "Preguntas del diagrama",
         "standard questions": "Preguntas del estándar",
@@ -341,7 +342,9 @@
             "fi-c2m2": "FI",
             "li-c2m2": "LI",
             "pi-c2m2": "PI",
-            "ni-c2m2": "NI"
+            "ni-c2m2": "NI",
+            "yes-cmmc": "Cump",
+            "no-cmmc": "No"
         },
         "button-tooltips": {
             "yes": "Sí",
@@ -363,7 +366,9 @@
             "fi-c2m2": "[ES] Fully Implemented - Complete",
             "li-c2m2": "[ES] Largely Implemented - Complete, but with a recognized opportunity for improvement",
             "pi-c2m2": "[ES] Partially Implemented - Incomplete; there are multiple opportunities for improvement",
-            "ni-c2m2": "[ES] Not Implemented - Absent; the practice is not performed by the organization"
+            "ni-c2m2": "[ES] Not Implemented - Absent; the practice is not performed by the organization",
+            "yes-cmmc": "Cumplido",
+            "no-cmmc": "No cumplido"
         },
         "labels": {
             "yes": "Sí",

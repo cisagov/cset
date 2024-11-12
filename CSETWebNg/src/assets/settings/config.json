@@ -262,6 +262,27 @@
       ]
     },
     {
+      "moduleName": "CMMC2F",
+      "modelId": "19",
+      "displayNameKey": "modules.cmmc2f.display-name",
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "yes-cmmc",
+          "buttonCss": "btn-yes"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "no-cmmc",
+          "buttonCss": "btn-no"
+        }
+      ]
+    },
+    {
       "moduleName": "C2M2",
       "modelId": "12",
       "questionIcons": {

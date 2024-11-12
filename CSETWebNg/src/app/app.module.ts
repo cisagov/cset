@@ -283,6 +283,7 @@ import { CompareReportMComponent } from './reports/compare-report-m/compare-repo
 import { AwwaStandardComponent } from './assessment/prepare/standards/awwa-standard/awwa-standard.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
+import { Cmmc2LevelsComponent } from './assessment/prepare/maturity/cmmc2-levels/cmmc2-levels.component';
 import { CmmcAComponent } from './assessment/prepare/maturity/cmmc-a/cmmc-a.component';
 import { CategoryBlockComponent } from './assessment/questions/category-block/category-block.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
@@ -830,6 +831,7 @@ import { AnalyticsResultsComponent } from './assessment/results/analytics-result
         AssessmentConfigComponent,
         CmmcAComponent,
         CmmcLevelsComponent,
+        Cmmc2LevelsComponent,
         CmmcLevelResultsComponent,
         CmmcLevelDrilldownComponent,
         CmmcComplianceComponent,
