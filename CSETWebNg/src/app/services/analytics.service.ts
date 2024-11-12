@@ -28,8 +28,13 @@ export class AnalyticsService {
 
 
   getAnalyticResults(assessmentId: any, maturityModelId: any, sectorId?: any): any {
-    let url = `http://csetac:5210/api/analytics/maturity?modelId=${maturityModelId}&assessmentId=${assessmentId}`;
-
+    let url = this.configSvc.config.csetAnalyticsUrl
+    if (maturityModelId) {
+      url += `&modelId=${maturityModelId}`;
+    }
+    if (assessmentId) {
+      url += `&assessmentId=${assessmentId}`;
+    }
     if (sectorId) {
       url += `&sectorId=${sectorId}`;
     }

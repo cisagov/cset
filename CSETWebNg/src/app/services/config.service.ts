@@ -67,6 +67,7 @@ export class ConfigService {
   onlineUrl: string;
   analyticsUrl: string = "http://localhost:5278/";
 
+  csetAnalyticsUrl: string;
   csetGithubApiUrl: string;
   helpContactEmail: string;
   helpContactPhone: string;
