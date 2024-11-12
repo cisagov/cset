@@ -27,15 +27,14 @@ export class AnalyticsService {
   }
 
 
-  getAnalyticResults(assessmentId: any, sectorId: any): any {
-    return
-    // return this.http.get('mostafa endpoint');
-  }
+  getAnalyticResults(assessmentId: any, maturityModelId: any, sectorId?: any): any {
+    let url = `http://csetac:5210/api/analytics/maturity?modelId=${maturityModelId}&assessmentId=${assessmentId}`;
 
-  getSectors(): any {
-    return
-    // return this.http.get('5050/sectors');
-  }
+    if (sectorId) {
+      url += `&sectorId=${sectorId}`;
+    }
+    return this.http.get(url);
+}
 
   getAnalyticsToken(username, password): any {
     return this.http.post(
