@@ -25,6 +25,7 @@ namespace CSETWebCore.Helpers
         private const string _bearerToken = "Bearer ";
         private JwtSecurityToken _token = null;
         private string _tokenString = null;
+        private string _enterpriseTokenString = null;
 
         private IHttpContextAccessor _httpContext;
         private readonly IConfiguration _configuration;
@@ -33,6 +34,7 @@ namespace CSETWebCore.Helpers
         private CSETContext _context;
         private static string _secret = null;
         private static object _myLockObject = new object();
+        
 
 
         /// <summary>
@@ -69,6 +71,24 @@ namespace CSETWebCore.Helpers
         {
             _tokenString = tokenString;
             Init(tokenString);
+        }
+
+        /// <summary>
+        /// set enterprise token for export
+        /// </summary>
+        /// <param name="tokenString"></param>
+        public void SetEnterpriseToken(string tokenString)
+        {
+            _enterpriseTokenString = tokenString;
+        }
+
+        /// <summary>
+        /// retrieve enterprise token for export
+        /// </summary>
+        /// <returns></returns>
+        public string GetEnterpriseToken()
+        {
+            return _enterpriseTokenString;
         }
 
 

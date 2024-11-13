@@ -8,6 +8,7 @@ import { ConfigService } from './config.service';
 })
 export class AnalyticsService {
   private apiUrl: string;
+  private baseUrl: string;
   private analyticsUrl: string;
   public headers = {
     headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -17,7 +18,8 @@ export class AnalyticsService {
 
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
-    this.apiUrl = this.configSvc.apiUrl + "analytics/";
+    this.baseUrl = this.configSvc.apiUrl;
+    this.apiUrl = this.baseUrl + "analytics/";
     this.analyticsUrl = this.configSvc.analyticsUrl + "api/";
 
   }
@@ -47,20 +49,15 @@ export class AnalyticsService {
 
   getAnalyticsToken(username, password): any {
     return this.http.post(
-      this.analyticsUrl + 'auth/login', { username, password }, this.headers
+      this.analyticsUrl + 'auth/login', { "email":username, password }, this.headers
     );
   }
 
-  postAnalyticsWithLogin(analytics, token): any {
-    let header: HttpHeaders = new HttpHeaders();
-    header = header.append('Content-Type', 'application/json');
-    header = header.append("Authorization", "Bearer " + token);
-    console.log(token);
-    console.log(analytics);
-    let params: HttpParams = new HttpParams();
 
-    return this.http.post(
-      this.analyticsUrl + 'assessment/saveassessment', analytics, { headers: header, params }
+  postAnalyticsWithLogin(token): any {
+    
+    return this.http.get(
+      this.baseUrl + 'assessment/exportandsend?token='+token
     );
   }
 
