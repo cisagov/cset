@@ -41,6 +41,8 @@ export class AnalyticsResultsComponent implements OnInit {
   sectorsList: Sector[];
   sectorTitle: string;
   showSector: boolean = true;
+  sampleSize: number;
+  allSectors: string = 'All Sectors';
 
 
   @ViewChild('barCanvas') private barCanvas!: ElementRef<HTMLCanvasElement>;
@@ -123,6 +125,7 @@ export class AnalyticsResultsComponent implements OnInit {
     this.maxData = result.max || [];
     this.currentUserData = result.barData?.values || [];
     this.labels = result.barData?.labels || [];
+    this.sampleSize = result.sampleSize;
     if (this.barChart) {
       this.updateChart();
     }
