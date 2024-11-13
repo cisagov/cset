@@ -17,6 +17,8 @@ namespace CSETWebCore.Interfaces.Helpers
     public interface ITokenManager
     {
         void SetToken(String tokenString);
+        void SetEnterpriseToken(string tokenString);
+        string GetEnterpriseToken();
         void Init(string tokenString);
         string Payload(string claim);
         int? PayloadInt(string claim);

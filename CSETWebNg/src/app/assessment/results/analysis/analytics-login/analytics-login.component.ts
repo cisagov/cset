@@ -67,7 +67,7 @@ export class AnalyticsloginComponent implements OnInit {
         data => {
           let token = data.token;
           console.log(token);
-          this.analyticsSvc.postAnalyticsWithLogin(this.analytics, token).subscribe(
+          this.analyticsSvc.postAnalyticsWithLogin(token).subscribe(
             (data: any) => {
                 this.dialogMat.open(AlertComponent, {
                 data: { 
