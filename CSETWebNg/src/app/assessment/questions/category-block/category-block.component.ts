@@ -42,6 +42,10 @@ export class CategoryBlockComponent implements OnInit {
    * 
    */
   ngOnInit() {
+    // a lot of CF domains stopped showing and I don't have time 
+    // to figure out why yet
+    // TODO: figure out why and take this out after
+    this.c.visible = true;
   }
 
   /**

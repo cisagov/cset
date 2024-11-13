@@ -22,80 +22,34 @@ SOFTWARE.
 
 */
 .cf-0 {
-    --mdc-slider-handle-color:#706c6c !important;
-    --mdc-slider-focus-handle-color: #15161e;
-    --mdc-slider-hover-handle-color: #15161e;
-    --mdc-slider-active-track-color: #15161e;
-    --mdc-slider-inactive-track-color: #2125297e;
-    --mdc-slider-with-tick-marks-active-container-color: white;
-    --mdc-slider-with-tick-marks-inactive-container-color: black;
-    --mat-mdc-slider-ripple-color: #15161e;
-    --mat-mdc-slider-hover-ripple-color: rgba(21, 22, 30, 0.05);
-    --mat-mdc-slider-focus-ripple-color: rgba(33, 37, 41, 0.2);
-    --mdc-slider-active-track-height: 8px;
-    --mdc-slider-inactive-track-height: 8px;
+    background-color:#706c6c;
 }
 .cf-1 {
-    --mdc-slider-handle-color:red !important;
-    --mdc-slider-focus-handle-color: #15161e;
-    --mdc-slider-hover-handle-color: #15161e;
-    --mdc-slider-active-track-color: #15161e;
-    --mdc-slider-inactive-track-color: #2125297e;
-    --mdc-slider-with-tick-marks-active-container-color: white;
-    --mdc-slider-with-tick-marks-inactive-container-color: black;
-    --mat-mdc-slider-ripple-color: #15161e;
-    --mat-mdc-slider-hover-ripple-color: rgba(21, 22, 30, 0.05);
-    --mat-mdc-slider-focus-ripple-color: rgba(33, 37, 41, 0.2);
-    --mdc-slider-active-track-height: 8px;
-    --mdc-slider-inactive-track-height: 8px;
+    background-color:red;
 }
 .cf-2 {
-    --mdc-slider-handle-color:#f5752b !important;
-    --mdc-slider-focus-handle-color: #15161e;
-    --mdc-slider-hover-handle-color: #15161e;
-    --mdc-slider-active-track-color: #15161e;
-    --mdc-slider-inactive-track-color: #2125297e;
-    --mdc-slider-with-tick-marks-active-container-color: white;
-    --mdc-slider-with-tick-marks-inactive-container-color: black;
-    --mat-mdc-slider-ripple-color: #15161e;
-    --mat-mdc-slider-hover-ripple-color: rgba(21, 22, 30, 0.05);
-    --mat-mdc-slider-focus-ripple-color: rgba(33, 37, 41, 0.2);
-    --mdc-slider-active-track-height: 8px;
-    --mdc-slider-inactive-track-height: 8px;
+    background-color:#f5752b;
 }
 .cf-3 {
-    --mdc-slider-handle-color:#f09628;
+    background-color:#f09628;
 }
 .cf-4 {
-    --mdc-slider-handle-color:#f8c024;
+    background-color:#f8c024;
 }
 .cf-5 {
-    --mdc-slider-handle-color:#8db83f;
+    background-color:#8db83f;
 }
 .cf-6 {
-    --mdc-slider-handle-color:green;
+    background-color:green;
 }
 .cf-7 {
-    --mdc-slider-handle-color:darkgreen;
-}
-.mat-mdc-slider.mat-primary {
-    --mdc-slider-handle-color: #15161e;
-    --mdc-slider-focus-handle-color: #15161e;
-    --mdc-slider-hover-handle-color: #15161e;
-    --mdc-slider-active-track-color: #15161e;
-    --mdc-slider-inactive-track-color: #2125297e;
-    --mdc-slider-with-tick-marks-active-container-color: white;
-    --mdc-slider-with-tick-marks-inactive-container-color: black;
-    --mat-mdc-slider-ripple-color: #15161e;
-    --mat-mdc-slider-hover-ripple-color: rgba(21, 22, 30, 0.05);
-    --mat-mdc-slider-focus-ripple-color: rgba(33, 37, 41, 0.2);
-    --mdc-slider-active-track-height: 8px;
-    --mdc-slider-inactive-track-height: 8px;
+    background-color:darkgreen;
 }
 
 .progress-bar {
     width: 100%;
     height: 10px;
+    overflow: visible;
     background-color: lightgray;
     border-radius: 8px;
   }
@@ -104,5 +58,26 @@ SOFTWARE.
     height: 100%;
     background-color: #15161e;
     border-radius: 8px;
+    overflow: visible;
     transition: width 0.5s ease-in-out;
   }
+
+  .progress-bar-dot {
+    height: 16px;
+    width: 16px;
+    transform: translateY(10.5px);
+    border: 1px solid #15161e;
+    margin-left: auto;
+    //background-color: red;
+    border-radius: 8px;
+    transition: width 0.5s ease-in-out;
+  }
+
+  .tooltip {
+    background-color: #383444;
+    color: white;
+    font-size: 14px;
+    border-radius: 8px;
+    transform: translateY(13px);
+  }
+

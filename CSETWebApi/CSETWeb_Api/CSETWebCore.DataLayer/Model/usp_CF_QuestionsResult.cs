@@ -11,6 +11,6 @@ namespace CSETWebCore.DataLayer.Model
         public string Standard_Sub_Category { get; set; }
         public string requirement_text { get; set; }
         public string Requirement_Title { get; set; }
-        public double? Answer_Value { get; set; }
+        public int? Answer_Value { get; set; }
     }
 }
