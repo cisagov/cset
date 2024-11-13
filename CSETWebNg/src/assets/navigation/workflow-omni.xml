@@ -337,12 +337,14 @@
         <node displaytext="Level Drill Down" id="cmmc-level-drilldown" path="assessment/{:id}/results/cmmc-level-drilldown" visible="MATURITY:2" />
         <node displaytext="Compliance Score" id="cmmc-compliance" path="assessment/{:id}/results/cmmc-compliance" visible="MATURITY:2" />
         <node displaytext="Detailed Gaps List" id="cmmc-gaps" path="assessment/{:id}/results/cmmc-gaps" visible="MATURITY:2" />
+        <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY:2" />
 
 
         <!-- Results - CMMC2 -->
         <node displaytext="Performance by Level" id="cmmc2-level-results" path="assessment/{:id}/results/cmmc2-level-results" visible="MATURITY:6" />
         <node displaytext="Performance by Domain" id="cmmc2-domain-results" path="assessment/{:id}/results/cmmc2-domain-results" visible="MATURITY:6" />
         <node displaytext="SPRS Score" id="sprs-score" path="assessment/{:id}/results/sprs-score" visible="MATURITY:6 TARGET-LEVEL-GT:1" />
+        <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY:6" />
 
 
 
@@ -352,6 +354,7 @@
         <node displaytext="Relationship Management and Governance" id="relationship-management" path="assessment/{:id}/results/relationship-management" visible="MATURITY:3" />
         <node displaytext="Service Protection and Sustainment" id="service-protection" path="assessment/{:id}/results/service-protection" visible="MATURITY:3" />
         <node displaytext="Maturity Indicator Levels" id="maturity-indicator-levels" path="assessment/{:id}/results/maturity-indicator-levels" visible="MATURITY:3" />
+        <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY:3" />
 
 
 
@@ -367,6 +370,7 @@
         <node displaytext="External Dependencies Management" id="crr-domain-edm" path="assessment/{:id}/results/crr-domain-edm" visible="MATURITY:4" />
         <node displaytext="Training and Awareness" id="crr-domain-ta" path="assessment/{:id}/results/crr-domain-ta" visible="MATURITY:4" />
         <node displaytext="Situational Awareness" id="crr-domain-sa" path="assessment/{:id}/results/crr-domain-sa" visible="MATURITY:4" />
+        <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY:4" />
 
 
 
@@ -374,18 +378,21 @@
         <node d="goal performance" id="rra-gaps" path="assessment/{:id}/results/rra-gaps" visible="MATURITY:5" />
         <node d="assessment tiers" id="rra-level-results" path="assessment/{:id}/results/rra-level-results" visible="MATURITY:5" />
         <node d="performance summary" id="rra-summary-all" path="assessment/{:id}/results/rra-summary-all" visible="MATURITY:5" />
+        <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY:5" />
 
 
 
         <!-- Results - ACET -->
         <node d="acet maturity results" id="acet-detail" path="assessment/{:id}/results/acet-detail" visible="MATURITY:1" />
         <node d="acet dashboard" id="acet-dashboard" path="assessment/{:id}/results/acet-dashboard" visible="MATURITY:1" />
+        <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY:1" />
 
 
 
         <!-- Results - CIS -->
         <node displaytext="CIS Section Scoring" id="section-scoring" path="assessment/{:id}/results/section-scoring" visible="MATURITY:8" />
         <node displaytext="CIS Deficiencies" id="ranked-deficiency" path="assessment/{:id}/results/ranked-deficiency" visible="MATURITY:8" />
+        <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY:8" />
 
 
         <!-- Results - HYDRO -->
@@ -393,18 +400,24 @@
         <node displaytext="Feasibility" id="hydro-feasibility" path="assessment/{:id}/results/hydro-feasibility" visible="MATURITY:13" />
         <node displaytext="Impact" id="hydro-impact" path="assessment/{:id}/results/hydro-impact" visible="MATURITY:13" />
         <node displaytext="Action Items" id="hydro-actions" path="assessment/{:id}/results/hydro-actions" visible="MATURITY:13" />
+        <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY:13" />
+
 
         <!-- Results - MVRA -->
         <node d="goal performance" id="mvra-gaps-page" path="assessment/{:id}/results/mvra-gaps-page" visible="MATURITY:9" />
         <node d="performance summary" id="mvra-summary-page" path="assessment/{:id}/results/mvra-summary-page" visible="MATURITY:9" />
+        <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY:9" />
+
 
         <!-- Results - CPG -->
         <node d="performance summary" id="cpg-summary-page" path="assessment/{:id}/results/cpg-summary-page" visible="MATURITY:11" />
         <node d="security practice checklist" id="cpg-practices-page" path="assessment/{:id}/results/cpg-practices-page" visible="MATURITY:11" />
-         <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY:11" />
+        <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY:11" />
 
         <!-- Results - SD02 Series -->
         <node displaytext="SD02 Series Pipeline Answer Summary" id="sd-answer-summary" path="assessment/{:id}/results/sd-answer-summary" visible="MATURITY:14" />
+        <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY:14" />
+
 
         <!-- Results - Diagram -->
         <node d="components results" visible="OPTION:DIAGRAM">
