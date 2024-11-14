@@ -302,6 +302,8 @@ import { CommonModule } from '@angular/common';
 import { NavBackNextComponent } from './assessment/navigation/nav-back-next/nav-back-next.component';
 import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component';
 import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-components/compliance-score/compliance-score.component';
+import { ScoreBarComponent } from './assessment/results/score-bar/score-bar.component';
+import { ScoreBarsComponent } from './assessment/results/score-bars/score-bars.component';
 import { CmmcStyleService } from './services/cmmc-style.service';
 import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
 import { IrpSectionComponent } from './reports/irp/irp.component';
@@ -840,6 +842,8 @@ import { AnalyticsResultsComponent } from './assessment/results/analytics-result
         Cmmc2DomainResultsComponent,
         SprsScoreComponent,
         ComplianceScoreComponent,
+        ScoreBarComponent,
+        ScoreBarsComponent,
         ModelSelectComponent,
         CategoryBlockComponent,
         AskQuestionsComponent,
