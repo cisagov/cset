@@ -5,7 +5,7 @@
     "galleryLayout": "CF",
     "installationMode": "CF",
     "behaviors": {
-        "defaultTitle": "CF",
+        "defaultTitle": "FCRA",
         "showModuleBuilder": false,
         "showAssessmentDocuments": false,
         "showAggregation": false,
