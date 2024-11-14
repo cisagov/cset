@@ -48,6 +48,9 @@ export class AnalyticsResultsComponent implements OnInit {
   @ViewChild('barCanvas') private barCanvas!: ElementRef<HTMLCanvasElement>;
   private barChart!: Chart;
 
+  // result from API call
+  scoreBarData: any;
+
   // Toggle state
   dataType: "mySector" | "allSectors" = "mySector";
 
@@ -113,7 +116,13 @@ export class AnalyticsResultsComponent implements OnInit {
       } else {
         result = await this.analyticsSvc.getAnalyticResults(this.assessmentId, this.modelId, this.sectorId).toPromise();
       }
-      this.setData(result);
+      //this.setData(result);
+
+
+      this.scoreBarData = result;
+
+
+
     } catch (error) {
       console.error('Error fetching analytics results', error);
     }
