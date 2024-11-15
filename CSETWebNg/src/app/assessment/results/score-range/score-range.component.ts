@@ -24,23 +24,26 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-score-bar',
+  selector: 'app-score-range',
   standalone: false,
-  templateUrl: './score-bar.component.html',
-  styleUrl: './score-bar.component.scss'
+  templateUrl: './score-range.component.html',
+  styleUrl: './score-range.component.scss'
 })
-export class ScoreBarComponent implements OnInit {
+export class ScoreRangeComponent implements OnInit {
 
   @Input()
   chartWidth: number;
 
-  rangeStart = 10;
-  rangeWidth: number;
+  containerWidth: number;
+
+
 
   /**
    * height this svg is rendered at
    */
-  h = 40;
+  h = 50;
+
+  barH: number;
 
   @Input()
   label: string;
@@ -57,6 +60,11 @@ export class ScoreBarComponent implements OnInit {
   @Input()
   myScore: number;
 
+  @Input()
+  myColor = "#0000aa";
+
+  rangeColor = "#87909e";
+
   /**
    * padding value to get things away from the left and right edge
    */
@@ -64,6 +72,7 @@ export class ScoreBarComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.rangeWidth = this.chartWidth - 10;
+    this.containerWidth = this.chartWidth * 1.05;
+    this.barH = this.h * .1;
   }
 }

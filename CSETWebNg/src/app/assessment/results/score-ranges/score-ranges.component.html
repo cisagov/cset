@@ -20,23 +20,36 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div style="margin-top: 1rem; border: 1px solid #ddd">
+<div style="border: 0px solid #ddd">
+     <div class="mt-2 mb-4 ms-4 p-2" style="border: 1px solid #ddd; width: 50%">
+          <div>
+               <svg width="8" height="8" class="me-3">
+                    <circle cy="4" cx="4" r="4" [attr.fill]="myColor" />
+               </svg>
+               <span style="font-size: .8rem">Current assessment score</span>
+          </div>
+          <div>
+               <span class="me-3">|</span>
+               <span style="font-size: .8rem">Vertical bar is median score for sample</span>
+          </div>
+     </div>
+
      <table class="ms-3">
           <tr *ngFor="let cat of categories">
                <td class="pe-3 text-end" style="font-size: .8rem">
                     {{cat.label}}
                </td>
                <td>
-                    <app-score-bar class="d-block" chartWidth="500" [min]="cat.min" [median]="cat.median"
-                         [max]="cat.max" [myScore]="cat.myScore"></app-score-bar>
+                    <app-score-range class="d-block" chartWidth="500" [min]="cat.min" [median]="cat.median"
+                         [max]="cat.max" [myScore]="cat.myScore" [myColor]="myColor"></app-score-range>
                </td>
           </tr>
           <tr>
                <td></td>
                <td>
                     <!-- scale -->
-                    <svg width="500" height="50" xmlns="http://www.w3.org/2000/svg">
-                         <line x1="10" y1="25" [attr.x2]="chartWidth - 10" y2="25" stroke="#666666" stroke-width="1" />
+                    <svg width="containerWidth" height="50" xmlns="http://www.w3.org/2000/svg">
+                         <line x1="10" y1="25" [attr.x2]="containerWidth" y2="25" stroke="#666666" stroke-width=".8" />
 
                          <g *ngFor="let tick of ticks">
                               <line [attr.x1]="tick.x + 10" y1="20" [attr.x2]="tick.x + 10" y2="30" stroke="#666666"
