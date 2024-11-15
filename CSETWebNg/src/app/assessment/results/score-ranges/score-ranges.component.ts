@@ -24,12 +24,12 @@
 import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-score-bars',
+  selector: 'app-score-ranges',
   standalone: false,
-  templateUrl: './score-bars.component.html',
-  styleUrl: './score-bars.component.scss'
+  templateUrl: './score-ranges.component.html',
+  styleUrl: './score-ranges.component.scss'
 })
-export class ScoreBarsComponent implements OnInit, OnChanges {
+export class ScoreRangesComponent implements OnInit, OnChanges {
 
   @Input()
   data: any;
@@ -49,6 +49,12 @@ export class ScoreBarsComponent implements OnInit, OnChanges {
   @Input()
   chartWidth: number;
 
+  containerWidth: number;
+
+
+  @Input()
+  myColor: string;
+
   ticks: any;
 
   @ViewChild('myDiv') myDiv!: ElementRef;
@@ -59,6 +65,8 @@ export class ScoreBarsComponent implements OnInit, OnChanges {
    * 
    */
   ngOnInit(): void {
+    this.containerWidth = this.chartWidth * 1.05;
+
     // build scale
     this.ticks = Array.from({ length: 11 }, (_, i) => ({
       value: i * 10,

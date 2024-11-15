@@ -120,6 +120,7 @@ export class AnalyticsResultsComponent implements OnInit {
 
 
       this.scoreBarData = result;
+      this.sampleSize = result.sampleSize;
 
 
 
