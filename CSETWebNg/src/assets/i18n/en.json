@@ -878,6 +878,14 @@
         "1": {
           "title": "Action Items Report",
           "desc": "This report includes action items by implementation status."
+        },
+        "2": {
+          "title": "Answered Questions Report",
+          "desc": "The report contains a list of all questions and their corresponding answers."
+        },
+        "3": {
+          "title": "Gap Report",
+          "desc": "This report includes action items by implementation status."
         }
       },
       "sd02 series": {

@@ -25,7 +25,7 @@
     <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
-                ACTION ITEMS
+                GAP
             </p>
             <p class="report-title">
                 REPORT
@@ -101,137 +101,9 @@
                     <!-- Distribution of action items by implementation status. -->
                     <br>
                     <br>
-                    <table class="table-responsive td-align-top td-padding-half-rem">
-                        <tr class="report-text-blue">
-                            <td style="width: 15%">Domain</td>
-                            <td style="width: 27%">Question</td>
-                            <td style="width: 48%">Text</td>
-                            <td style="width: 10%">Response</td>
-                        </tr>
-                        <!-- Yeah, it's a quintuple nested for loop. Very scary. Cower in fear. Happy Halloween. (10/31/24) -->
-                        <div *ngFor="let domain of questionList.groupings">
-                            <div class="h2 report-text-blue">
-                                <!-- <td class="background-2 font-weight-bold ps-4" colspan="3">
-                                    {{domain.title}}
-                                </td> -->
-                            </div>
-                            <div *ngFor="let section of domain.groupings">
-                                <!-- <tr>
-                                    <td colspan="4" class="background-2 font-weight-bold ps-4">{{section.title}} - Domain
-                                    </td>
-                                </tr> -->
-                                <!-- <tr class="h2 report-text-blue">
-                                    <td class="background-2 font-weight-bold ps-4" colspan="3">
-                                        {{section.title}}
-                                    </td>
-                                </tr> -->
-                                <div *ngFor="let subSections of section.groupings">
-                                    <!-- <tr>
-                                        <td colspan="4" class="background-2 font-weight-bold ps-4">{{subSections.title}} - Sector
-                                        </td>
-                                    </tr> -->
-                                    <div *ngFor="let q of subSections.questions">
-                                        <!-- <tr class="h2 report-text-blue">
-                                            <td class="background-2 font-weight-bold ps-4" colspan="3">
-                                                {{subSections.title}}
-                                            </td>
-                                        </tr> -->
-
-                                        <!-- <td class="background-2 font-weight-bold ps-4">
-                                            {{ q.questionNumber }}</td>                                         -->
-                                        <div *ngFor="let o of q.options">
-                                            <div *ngIf="o.answerId != null">
-                                                <tr>
-                                                    <td class="font-weight-bold text-nowrap cell">{{ section.title }}</td>
-                                                    <td class="font-weight-bold text-nowrap cell">{{ subSections.title }}</td>
-                                                    <td class="font-weight-bold text-nowrap cell">{{ q.displayNumber }}</td>
-                                                    <td class="font-weight-bold text-nowrap cell">{{ o.optionText }}</td>
-                                                </tr>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- <div *ngIf="question.isParentQuestion">
-
-                                    </div> -->
-                                </div>
-                            </div>
-                        </div>
-                    </table>
-
-                    <table class="table-responsive td-align-top td-padding-half-rem">
-                        <tr class="report-text-blue">
-                            <td style="width: 15%;">Impact</td>
-                            <td style="width: 60%">Action</td>
-                            <td style="width: 25%">Comment</td>
-                        </tr>
-                        <ng-container *ngIf="actionItems.length == 0">
-                            <tr>
-                                <td colspan="3" style="text-align: center;">No Action Items to report.</td>
-                            </tr>
-                        </ng-container>
-                        <ng-container *ngFor="let progressArray of actionItems">
-                            <tr>
-                                <td colspan="3" [class]="classArray[progressArray[0].actionData.progress_Id-1]"
-                                    style="pointer-events: none;">
-                                    {{ progressInfo[progressArray[0].actionData.progress_Id-1].progress_Text }}
-                                </td>
-                            </tr>
-                            <ng-container *ngFor="let item of progressArray">
-                                <tr>
-                                    <td class="font-weight-bold text-nowrap cell" style="text-align: center;">{{
-                                        hydroSvc.impactTranslator(item.action.severity) }}</td>
-                                    <td class="cell" [innerHTML]="item.action.action_Items"></td>
-                                    <td class="cell" [innerHTML]="item.actionData.comment"></td>
-                                </tr>
-                            </ng-container>
-                        </ng-container>
-                    </table>
-
+                    <app-hydro-report-deficiency [questionMap]="questionList"></app-hydro-report-deficiency>
                 </div>
             </div>
-
-            <!-- <div class="page-break">
-                <br>
-                <div class="ms-3 me-3">
-                    <div class="d-flex flex-row" style="justify-content: space-between">
-                        <div style="align-self: flex-end;">
-                            <div class="h2 report-text-blue">Action Items</div>
-                        </div>
-                    </div>
-                    Distribution of action items by implementation status.
-                    <br>
-                    <br>
-                    <table class="table-responsive td-align-top td-padding-half-rem">
-                        <tr class="report-text-blue">
-                            <td style="width: 15%;">Impact</td>
-                            <td style="width: 60%">Action</td>
-                            <td style="width: 25%">Comment</td>
-                        </tr>
-                        <ng-container *ngIf="actionItems.length == 0">
-                            <tr>
-                                <td colspan="3" style="text-align: center;">No Action Items to report.</td>
-                            </tr>
-                        </ng-container>
-                        <ng-container *ngFor="let progressArray of actionItems">
-                            <tr>
-                                <td colspan="3" [class]="classArray[progressArray[0].actionData.progress_Id-1]"
-                                    style="pointer-events: none;">
-                                    {{ progressInfo[progressArray[0].actionData.progress_Id-1].progress_Text }}
-                                </td>
-                            </tr>
-                            <ng-container *ngFor="let item of progressArray">
-                                <tr>
-                                    <td class="font-weight-bold text-nowrap cell" style="text-align: center;">{{
-                                        hydroSvc.impactTranslator(item.action.severity) }}</td>
-                                    <td class="cell" [innerHTML]="item.action.action_Items"></td>
-                                    <td class="cell" [innerHTML]="item.actionData.comment"></td>
-                                </tr>
-                            </ng-container>
-                        </ng-container>
-                    </table>
-
-                </div>
-            </div> -->
 
         </ng-template>
     </div>

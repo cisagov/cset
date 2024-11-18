@@ -677,6 +677,7 @@ import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.compon
 import { QuestionsReviewedComponent } from './reports/questions-reviewed/questions-reviewed.component';
 import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.component';
 import { HydroGapReportComponent } from './reports/hydro/hydro-gap-report/hydro-gap-report.component';
+import { HydroReportDeficiencyComponent } from './reports/hydro/hydro-gap-report/hydro-report-deficiency/hydro-report-deficiency.component';
 
 
 @NgModule({ declarations: [
@@ -1206,7 +1207,8 @@ import { HydroGapReportComponent } from './reports/hydro/hydro-gap-report/hydro-
         AllReviewedComponent,
         QuestionsReviewedComponent, 
         RolesChangedComponent,
-        HydroGapReportComponent
+        HydroGapReportComponent,
+        HydroReportDeficiencyComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,

@@ -239,6 +239,8 @@ import { AllAnsweredquestionsComponent } from './reports/all-answeredquestions/a
 import { AllCommentsmarkedComponent } from './reports/all-commentsmarked/all-commentsmarked.component';
 import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.component';
 import { HydroGapReportComponent } from './reports/hydro/hydro-gap-report/hydro-gap-report.component';
+import { HydroAnsweredquestionsComponent } from './reports/hydro/hydro-answeredquestions/hydro-answeredquestions.component';
+import { HydroReportDeficiencyComponent } from './reports/hydro/hydro-gap-report/hydro-report-deficiency/hydro-report-deficiency.component';
 
 const appRoutes: Routes = [
 
@@ -597,8 +599,8 @@ const appRoutes: Routes = [
       { path: 'allAnsweredQuestions', component: AllAnsweredquestionsComponent },
       { path: 'allMfrAndComments', component: AllCommentsmarkedComponent},
       { path: 'allReviewedQuestions', component: AllReviewedComponent},
-      { path: 'hydroGapReport', component: HydroGapReportComponent}
-      
+      { path: 'hydroGapReport', component: HydroGapReportComponent},
+      { path: 'hydroAnsweredQestions', component: HydroAnsweredquestionsComponent}
     ]
   },
   { path: '**', redirectTo: 'home' }
