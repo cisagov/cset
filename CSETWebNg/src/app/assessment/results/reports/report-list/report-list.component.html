@@ -12,6 +12,10 @@
                          [disabled]="rl.disabled" class="btn btn-link btn-link-dark px-0 pt-0">
                          {{ t('reports.launch.' + sectionId.toLowerCase() + '.' + (i+1) + '.title') }}
                     </button>
+                    <button style="margin-left: 25px;" *ngIf="rl.hasExcelExport" tabindex="1" (click)="reportSvc.clickExcelReport(rl.linkUrl, rl.print ?? false)"
+                              [disabled]="rl.disabled" class="btn btn-link btn-link-dark px-0 pt-0">
+                              Export to Excel
+                    </button>                    
                </div>
                <div class="ms-4" *ngIf="rl.securityPicker">
                     <label class="mb-1" for="securityId">Confidentiality</label>

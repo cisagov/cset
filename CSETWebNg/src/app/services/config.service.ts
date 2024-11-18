@@ -27,6 +27,7 @@ import { DOCUMENT } from '@angular/common';
 import { concat } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { merge } from 'lodash';
+import { ModuleBehavior } from '../models/module-config.model';
 
 @Injectable()
 export class ConfigService {
@@ -332,7 +333,7 @@ export class ConfigService {
    * Either the modelId or moduleName can be sent as a key.
    * Returns null if it can't be found.
    */
-  getModuleConfig(id: any) {
+  getModuleBehavior(id: any): ModuleBehavior {
     // check the model's configuration
     let modelConfiguration =
       this.config.moduleBehaviors.find(x => x.modelId == +id) ||

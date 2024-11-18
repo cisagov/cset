@@ -26,8 +26,12 @@ SOFTWARE.
 
 $primary-color: #052637;
 $secondary-color: #094997;
+
 $gray-50: #fafafa;
 $gray-100: #f2f2f2;
+
+$primary-550: $primary-color;
+$primary-900: $secondary-color;
 
 
 * {
@@ -525,8 +529,14 @@ table.assessment-summary th {
   padding: .5rem;
 }
 
-.table.table-td-p2 th, .table.table-td-p2 td {
+.table.table-td-p2 th,
+.table.table-td-p2 td {
   padding: .5rem !important;
+}
+
+// force transparent
+.table>:not(caption)>*>* {
+  background-color: transparent !important;
 }
 
 /*
@@ -1912,14 +1922,33 @@ div.spinner-size-50 {
 
 
 
-///   CPG Styles ////////////////////////////////////////////////
+///   Supplemental Guidance Styles ////////////////////////////////////////////////
+
 .sub-header-1 {
   font-weight: bold;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
+  color: $primary-550;
 }
 
+.sub-header-2 {
+  font-weight: bold;
+  font-size: 1rem;
+  color: $primary-900;
+}
 
+ol.alpha-bracket {
+  list-style-type: none;
+  counter-reset: list-counter;
+}
 
+ol.alpha-bracket li {
+  counter-increment: list-counter;
+  margin-bottom: 5px;
+}
+
+ol.alpha-bracket li::before {
+  content: "[" counter(list-counter, lower-alpha) "] ";
+}
 
 
 

@@ -280,7 +280,8 @@
     "title": "NCSF_V2",
     "reportList": [
       {
-        "linkUrl": "cfAnsweredQuestions"
+        "linkUrl": "cfAnsweredQuestions",
+        "hasExcelExport": true
       },
       {
         "linkUrl": "cfMfr"
