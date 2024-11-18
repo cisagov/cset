@@ -57,39 +57,46 @@ namespace CSETWebCore.Business.Contact.Tests
             
             List<int> ids = db.ASSESSMENTS.Select(x => x.Assessment_Id).ToList();
 
+            /**
+             * only convert completed Entry assessments
+             * only convert 
+            */
+            var m = db.METRIC_ASSESSMENT_COMPLETE.Where(x=> x.PERC_COMPLETE>=1.0m) .ToDictionary(x => x.Assessment_id, x => x.PERC_COMPLETE);
+
             foreach (int id in ids)
             {
-                if (conversionBusiness.IsEntryCF(id))
+                if (m.ContainsKey(id))
                 {
-                    try
+                    if (conversionBusiness.IsEntryCF(id))
                     {
-                        conversionBusiness.ConvertEntryToMid(id);
+                        try
+                        {
+                            conversionBusiness.ConvertEntryToMid(id);
+                        }
+                        catch (Exception ex)
+                        {
+                            Assert.Fail(ex.Message);
+                        }
+                        var dd =  db.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == id && x.DataItemName == "FORMER-CF-ENTRY").FirstOrDefault();
+                        if (dd != null)
+                        {
+                            Assert.IsTrue(dd.StringValue.ToLower()=="true");
+                        }
                     }
-                    catch (Exception ex)
+                    else if (conversionBusiness.IsMidCF(id))
                     {
-                        Assert.Fail(ex.Message);
+                        try
+                        {
+                            conversionBusiness.ConvertMidToFull(id);
+                        }
+                        catch (Exception ex)
+                        {
+                            Assert.Fail(ex.Message);
+                        }
+                        var dd = db.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == id && x.DataItemName == "FORMER-CF-MID").FirstOrDefault();
+                        if (dd != null)
+                            Assert.IsTrue(dd.StringValue.ToLower() == "true");
                     }
-                    var dd =  db.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == id && x.DataItemName == "FORMER-CF-ENTRY").FirstOrDefault();
-                    if (dd != null)
-                    {
-                        Assert.IsTrue(dd.StringValue.ToLower()=="true");
-                    }
-                        
-                    
-                }
-                if (conversionBusiness.IsMidCF(id))
-                {
-                    try
-                    {
-                        conversionBusiness.ConvertMidToFull(id);
-                    }
-                    catch (Exception ex)
-                    {
-                        Assert.Fail(ex.Message);
-                    }
-                    var dd = db.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == id && x.DataItemName == "FORMER-CF-MID").FirstOrDefault();
-                    if (dd != null)
-                        Assert.IsTrue(dd.StringValue.ToLower() == "true");
                 }
             }
             

@@ -999,6 +999,10 @@
          "ObjectType": 3
       },
       {
+         "Name": "[dbo].[METRIC_ASSESSMENT_COMPLETE]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[dbo].[vAllSimpleQuestions]",
          "ObjectType": 3
       },
