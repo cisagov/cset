@@ -322,6 +322,8 @@
 
     <!-- Results Phase -->
     <node d="results" id="phase-results" visible="CF-DEMOGRAPHICS-COMPLETE" enabled="CF-ASSESSMENT-COMPLETE">
+    <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY-ANY(2,6,3,4,5,1,8,13,9,11,14)" />
+
         <!-- Results - Standards -->
         <node d="standard results" visible="OPTION:STANDARD">
             <node d="analysis dashboard" id="dashboard" path="assessment/{:id}/results/dashboard" />
@@ -394,9 +396,11 @@
         <node displaytext="Impact" id="hydro-impact" path="assessment/{:id}/results/hydro-impact" visible="MATURITY:13" />
         <node displaytext="Action Items" id="hydro-actions" path="assessment/{:id}/results/hydro-actions" visible="MATURITY:13" />
 
+
         <!-- Results - MVRA -->
         <node d="goal performance" id="mvra-gaps-page" path="assessment/{:id}/results/mvra-gaps-page" visible="MATURITY:9" />
         <node d="performance summary" id="mvra-summary-page" path="assessment/{:id}/results/mvra-summary-page" visible="MATURITY:9" />
+
 
         <!-- Results - CPG -->
         <node d="performance summary" id="cpg-summary-page" path="assessment/{:id}/results/cpg-summary-page" visible="MATURITY:11" />
@@ -404,6 +408,7 @@
 
         <!-- Results - SD02 Series -->
         <node displaytext="SD02 Series Pipeline Answer Summary" id="sd-answer-summary" path="assessment/{:id}/results/sd-answer-summary" visible="MATURITY:14" />
+
 
         <!-- Results - Diagram -->
         <node d="components results" visible="OPTION:DIAGRAM">
@@ -422,7 +427,7 @@
         <!--node displaytext="Assessment Comparison" id="analytics-compare" path="assessment/{:id}/results/analytics-compare" visible="ORIGIN:CF" /-->
 
         <node d="feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="INSTALL-MODE-ANY(CSET,IOD,CIE) SHOW-FEEDBACK" />
-        <node d="analytics" id="analytics" path="assessment/{:id}/results/analytics" visible="HIDE" />
+        <node d="analytics" id="analytics" path="assessment/{:id}/results/analytics" visible="SHOW" />
 
         <node d="assessment complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
 

@@ -144,7 +144,7 @@
                                     matTooltip="This control requires further review.">
                                     <input name="q_{{ q.questionId }}_F" type="checkbox"
                                         (keydown)="checkKeyPress($event, q, 'mfr')" (click)="saveMFR(q);" tabindex="0"
-                                        checked="{{ q.markForReview === true }}">
+                                        [checked]="q.markForReview === true">
                                     <span class="cset-icons-flag-dark fs-base"></span>
                                 </label>
                             </div>

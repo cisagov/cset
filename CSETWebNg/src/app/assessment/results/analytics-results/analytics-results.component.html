@@ -1,0 +1,36 @@
+<div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a">
+  <h3 class="mb-3">Assessment Analytics</h3>
+  <p>This chart displays the implementation scoring of the current assessment in relation to other assessments of the
+    same type. Each category is scored, with the minimum, maximum, and median scores charted to illustrate how the
+    current assessment compares to other assessments within the same sector or across all sectors</p>
+  <div class="container">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm">
+          <mat-card>
+            <mat-card-header class="d-flex justify-content-center">  <h3>{{ dataType === 'mySector' ? sectorTitle : 'All Sectors' }}</h3>
+            </mat-card-header>
+            <div class="p-4">
+              <mat-button-toggle-group [(ngModel)]="dataType" (change)="toggleData($event)">
+                <mat-button-toggle [value]="'mySector'" [disabled]="!showSector"
+                  matTooltip="Select a sector from demographics" [matTooltipDisabled]="showSector">
+                  My Sector
+                  <div *ngIf="dataType === 'mySector'"><h6 style="font-size: 13px;">Sample Size: {{sampleSize}}</h6></div>
+                </mat-button-toggle>
+                <mat-button-toggle value="allSectors">All Sectors
+                  <div *ngIf="dataType === 'allSectors'"><h6 style="font-size: 13px;">Sample Size: {{sampleSize}}</h6></div>
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+            <div style="display: block;">
+              <canvas #barCanvas></canvas>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+
+    <app-nav-back-next [page]="'analytics-results-page'"
+      [hide]="navSvc.isLastVisiblePage('analytics') ? 'next' : ''"></app-nav-back-next>
+
+  </div>
