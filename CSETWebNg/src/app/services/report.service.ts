@@ -154,7 +154,10 @@ export class ReportService {
     localStorage.setItem('report-confidentiality', this.confidentiality);
     window.open(url, '_blank');
   }
-
+  clickExcelReport(reportType: string) {    
+      window.location.href = this.configSvc.apiUrl + 'ExcelExportCF?token=' + localStorage.getItem('userToken');
+    
+  }
   /**
    * Converts linebreak characters to HTML <br> tag.
    */
