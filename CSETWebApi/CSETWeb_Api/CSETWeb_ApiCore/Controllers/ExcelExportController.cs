@@ -12,6 +12,8 @@ using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.ReportEngine;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NPOI.SS.UserModel;
+using System.IO;
 using System.Linq;
 
 namespace CSETWebCore.Api.Controllers
@@ -42,6 +44,33 @@ namespace CSETWebCore.Api.Controllers
             _context = context;
             _exporter = new ExcelExporter(_context, _data, _acetMaturity, _acet, _http);
         }
+
+
+        /// <summary>
+        /// Exports an assessment into a spreadsheet with 1 row per answer.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/ExcelExportCF")]
+        public IActionResult GetExcelExportCF(string token)
+        {
+            int assessmentId = _token.AssessmentForUser(token);
+            string appName = _token.Payload(Constants.Constants.Token_Scope);
+
+            CustomExcelExport exporter = new CustomExcelExport(_context);
+
+            var result = exporter.ExportExcel(assessmentId);            
+            IWorkbook book  = result.Result;
+            MemoryStream ms = new MemoryStream();
+            book.Write(ms,true);            
+            ms.Seek(0, System.IO.SeekOrigin.Begin);
+
+            var rval =  File(ms, excelContentType, GetFilename(assessmentId, appName));
+            book.Close();
+            return rval;
+        }
+
 
 
         /// <summary>

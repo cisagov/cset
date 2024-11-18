@@ -243,6 +243,7 @@ import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.compon
 import { CfAnsweredQuestionsComponent } from './reports/cf-answeredquestions/cf-answeredquestions.component';
 import { CfCommentsMarkedForReviewComponent } from './reports/cf-commentsmarked/cf-commentsmarked.component';
 import { CfReviewedComponent } from './reports/cf-reviewed/cf-reviewed.component';
+import { Cmmc2LevelsComponent } from './assessment/prepare/maturity/cmmc2-levels/cmmc2-levels.component';
 import { CfDetailedScoresComponent } from './reports/cf-detailed-scores/cf-detailed-scores.component';
 
 const appRoutes: Routes = [
@@ -416,6 +417,7 @@ const appRoutes: Routes = [
               },
               { path: 'config-cis', component: ConfigCisComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
+              { path: 'cmmc2-levels', component: Cmmc2LevelsComponent },
               { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },

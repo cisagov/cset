@@ -999,6 +999,10 @@
          "ObjectType": 3
       },
       {
+         "Name": "[dbo].[METRIC_ASSESSMENT_COMPLETE]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[dbo].[vAllSimpleQuestions]",
          "ObjectType": 3
       },
@@ -1252,6 +1256,10 @@
       },
       {
          "Name": "[dbo].[usp_CF_Score_Averages]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[usp_CF_Score_Overall]",
          "ObjectType": 1
       },
       {
