@@ -101,7 +101,7 @@ export class QuestionExtrasComponent implements OnInit {
 
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
@@ -154,7 +154,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   scrollToExtras() {
     setTimeout(() => {

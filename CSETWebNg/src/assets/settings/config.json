@@ -22,6 +22,7 @@
     "port": "5000",
     "apiIdentifier": "api"
   },
+  "csetAnalyticsUrl": "http://csetac:5210/api/analytics/maturity?",
   "csetGithubApiUrl": "https://api.github.com/repos/cisagov/cset/releases/latest",
   "helpContactEmail": "CSET_PMO@cisa.dhs.gov",
   "helpContactPhone": "",
