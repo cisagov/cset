@@ -23,7 +23,20 @@
 
 <div class="white-panel d-flex flex-column justify-content-start flex-11a" *transloco="let t">
   <h3 class="mb-2 flex-00a">{{t('titles.control priorities')}}</h3>
-  <p class="mb-3 w-100" [innerHTML]="t('control priorities intro1') + docUrl + t('control priorities intro2')">
+  <p class="mb-3 w-100">
+    {{t('control priorities intro1')}}
+  </p>
+  <p class="mb-3 w-100">
+    {{t('control priorities intro2')}}
+  </p>
+  <ul>
+    <li>{{t('control priorities bullet1')}}</li>
+    <li>{{t('control priorities bullet2')}}</li>
+    <li>{{t('control priorities bullet3')}}</li>
+    <li>{{t('control priorities bullet4')}}</li>
+  </ul>
+  <p class="mb-3 w-100">
+    {{t('control priorities intro3')}}
   </p>
   <div *ngIf="!initialized" class="d-flex flex-11a w-100">
     <div class="spinner-container d-flex justify-content-center align-items-center flex-11a w-100">
