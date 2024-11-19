@@ -1,3 +1,4 @@
+
 -- =============================================
 -- Author:		Randy Woods
 -- Create date: 10-OCT-2023
@@ -34,7 +35,10 @@ RETURNS
 	[Scope] [nvarchar](250) NULL,
 	[Recommend_Action] [nvarchar](max) NULL,
 	[Risk_Addressed] [nvarchar](max) NULL,
-	[Services] [nvarchar](max) NULL
+	[Services] [nvarchar](max) NULL,
+	[Outcome] nvarchar(max) null,
+	[Security_Practice] nvarchar(max) null,
+	[Implementation_Guides] nvarchar(max) null
 )
 AS
 BEGIN
