@@ -317,7 +317,7 @@
 
         <div *ngIf=" !!extras && mode === 'DOCS'">
             <table class="reference-table">
-                <tr>
+                <tr *ngIf="extras?.documents.length > 0">
                     <th>{{t('extras.artifact title')}}</th>
                     <th>{{t('extras.file name')}}</th>
                     <th></th>
