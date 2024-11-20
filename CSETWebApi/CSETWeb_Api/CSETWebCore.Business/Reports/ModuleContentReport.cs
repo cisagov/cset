@@ -86,7 +86,7 @@ namespace CSETWebCore.Business.Reports
                         {
                             req.SourceDocs.Add(new ReferenceDoc
                             {
-                                SectionRef = link.rsf.Section_Ref,
+                                SectionRef = link.rsf.Section_Ref.Trim(),
                                 ID = link.gf.Gen_File_Id,
                                 Title = link.gf.Title,
                                 Name = link.gf.Name,
@@ -127,7 +127,7 @@ namespace CSETWebCore.Business.Reports
                         {
                             req.AdditionalDocs.Add(new ReferenceDoc
                             {
-                                SectionRef = link.rsf.Section_Ref,
+                                SectionRef = link.rsf.Section_Ref.Trim(),
                                 ID = link.gf.Gen_File_Id,
                                 Title = link.gf.Title,
                                 Name = link.gf.Name,
