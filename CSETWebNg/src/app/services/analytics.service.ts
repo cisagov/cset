@@ -45,23 +45,23 @@ export class AnalyticsService {
       url += `&sectorId=${sectorId}`;
     }
     return this.http.get(url);
-}
+  }
 
   getAnalyticsToken(username, password): any {
     return this.http.post(
-      this.analyticsUrl + 'auth/login', { "email":username, password }, this.headers
+      this.analyticsUrl + 'auth/login', { "email": username, password }, this.headers
     );
   }
 
 
   postAnalyticsWithLogin(token): any {
-    
+
     return this.http.get(
-      this.baseUrl + 'assessment/exportandsend?token='+token
+      this.baseUrl + 'assessment/exportandsend?token=' + token
     );
   }
 
   // pingAnalyticsService(): any {
-    // return this.http.get(this.analyticsUrl + 'ping/GetPing');
+  // return this.http.get(this.analyticsUrl + 'ping/GetPing');
   // }
 }
