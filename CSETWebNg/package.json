@@ -16,7 +16,7 @@
         "setup:electron-build-files": "shx rm -rf temp-electron && shx mkdir -p temp-electron/node_modules && shx cp -r {package.json,main-electron.js,License.txt,NOTICE.txt,dist} temp-electron && shx cp -r node_modules/{electron-log,electron-find-on-page,lodash} temp-electron/node_modules"
     },
     "dependencies": {
-        "@angular-devkit/build-webpack": "^0.1802.11",
+        "@angular-devkit/build-webpack": "^0.1900.0",
         "@angular-devkit/schematics": "^18.2.10",
         "@angular-eslint/schematics": "^18.4.0",
         "@angular-slider/ngx-slider": "^18.0.0",
