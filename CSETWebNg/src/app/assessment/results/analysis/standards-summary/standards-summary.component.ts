@@ -61,6 +61,7 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
   }
 
   setupChart(x: any) {
+    console.log(x)
     this.initialized = false;
     this.dataRows = x.dataRowsPie;
 

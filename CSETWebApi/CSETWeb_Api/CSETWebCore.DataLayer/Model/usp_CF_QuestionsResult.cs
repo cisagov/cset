@@ -12,5 +12,6 @@ namespace CSETWebCore.DataLayer.Model
         public string requirement_text { get; set; }
         public string Requirement_Title { get; set; }
         public int? Answer_Value { get; set; }
+        public string Display_Tag { get; set; }
     }
 }

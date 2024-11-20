@@ -233,4 +233,8 @@ export class CyberFloridaService {
   getTop5Lowest(){
     return this.http.get(this.apiUrl + 'cf/getTop5Lowest');
   }
+
+  getTotalAverageForReports(){
+    return this.http.get(this.apiUrl + 'cf/getTotalAverageForReports');
+  }
 }

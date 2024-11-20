@@ -15,7 +15,7 @@ export class CfDetailedScoresComponent implements OnInit {
   barChart: any[];
   scores: any[];
   parsedScores: any[] = [];
-
+  totalAvg: any;
 
   top5LowestPerSubcat: Map<string, any[]> = new Map<string, any[]>();
 
@@ -60,6 +60,11 @@ export class CfDetailedScoresComponent implements OnInit {
         this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Detect'));
         this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Respond'));
         this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Recover'));
+      });
+
+      this.cfSvc.getTotalAverageForReports().subscribe(
+        (r: any) => {
+          this.totalAvg = r;
       });
 
     this.cfSvc.getTop5Lowest().subscribe(

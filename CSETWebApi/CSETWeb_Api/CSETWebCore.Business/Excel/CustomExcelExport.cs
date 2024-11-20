@@ -37,19 +37,19 @@ namespace CSETWebCore.Api.Controllers
             var rlist = await this.context.Procedures.usp_CF_QuestionsAsync(assessmentId);
 
             DataTable usersTable = new DataTable();
-            usersTable.Columns.Add("Standard_Category");
-            usersTable.Columns.Add("Standard_Sub_Category");
-            usersTable.Columns.Add("requirement_text");
-            usersTable.Columns.Add("Requirement_Title");
-            usersTable.Columns.Add("Answer_Value");
+            usersTable.Columns.Add("Standard Category");
+            usersTable.Columns.Add("Standard Sub Category");
+            usersTable.Columns.Add("Requirement Text");
+            usersTable.Columns.Add("Requirement Title");
+            usersTable.Columns.Add("Answer Value");
 
             foreach (var r in rlist) {
                 DataRow userRow = usersTable.NewRow();
-                userRow["Standard_Category"] = r.Standard_Category;
-                userRow["Standard_Sub_Category"] = r.Standard_Sub_Category;
-                userRow["requirement_text"] = r.requirement_text;
-                userRow["Requirement_Title"] = r.Requirement_Title;
-                userRow["Answer_Value"] = r.Answer_Value;
+                userRow["Standard Category"] = r.Standard_Category;
+                userRow["Standard Sub Category"] = r.Standard_Sub_Category;
+                userRow["Requirement Text"] = r.requirement_text;
+                userRow["Requirement Title"] = r.Requirement_Title;
+                userRow["Answer Value"] = r.Display_Tag;
                 usersTable.Rows.Add(userRow);
             }
             
