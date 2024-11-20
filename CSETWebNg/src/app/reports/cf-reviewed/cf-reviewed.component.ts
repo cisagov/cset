@@ -15,6 +15,7 @@ export class CfReviewedComponent implements OnInit {
   barChart: any[];
   scores: any[];
   parsedScores: any[] = [];
+  totalAvg: any;
 
   view: any[] = [800, 500];
 
@@ -61,6 +62,11 @@ export class CfReviewedComponent implements OnInit {
         this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Recover'));
       });
 
+    this.cfSvc.getTotalAverageForReports().subscribe(
+      (r: any) => {
+        this.totalAvg = r;
+    });
+
     // this.cfSvc.getTop5Lowest().subscribe(
     //   (r: any) => {
     //     console.log(r)
@@ -72,13 +78,11 @@ export class CfReviewedComponent implements OnInit {
 
   getBackground(score: any) {
     let lowestLevelAchieved = score.toString();
-    return 'progress-bar-dot cf-' + lowestLevelAchieved.substring(0, 1);
+    return 'progress-bar-dot';
   }
 
   convertScoreToPercent(score: any) {
-    console.log('score: ' + score)
     let wholeNum = (score*100) / 7;
-    console.log('wholeNumber: ' + wholeNum )
     // let remainder = (score*100) % 7;
     // console.log('remainder: ' + remainder )
 

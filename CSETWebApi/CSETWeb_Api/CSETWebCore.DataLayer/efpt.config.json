@@ -647,6 +647,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[NCSF_INDEX_ANSWERS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[NCSF_MIGRATION]",
          "ObjectType": 0
       },
@@ -1256,10 +1260,6 @@
       },
       {
          "Name": "[dbo].[usp_CF_Score_Averages]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[usp_CF_Score_Overall]",
          "ObjectType": 1
       },
       {

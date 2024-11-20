@@ -8,18 +8,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model;
 
-[Keyless]
-public partial class Analytics_Answers
+public partial class NCSF_INDEX_ANSWERS
 {
-    public int Assessment_Id { get; set; }
-
-    public int Question_Or_Requirement_Id { get; set; }
-
-    [Required]
-    [StringLength(20)]
-    public string Question_Type { get; set; }
+    [Key]
+    public int Raw_Answer_Value { get; set; }
 
     [Required]
-    [StringLength(1)]
-    public string Answer_Text { get; set; }
+    [StringLength(100)]
+    public string Display_Tag { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string Display_Value { get; set; }
 }

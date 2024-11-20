@@ -9,9 +9,9 @@ namespace CSETWebCore.DataLayer.Model
     {
         public string Standard_Category { get; set; }
         public string Standard_Sub_Category { get; set; }
-        [Column("Average", TypeName = "decimal(10,3)")]
+        [Column("Average", TypeName = "decimal(10,2)")]
         public decimal? Average { get; set; }
-        [Column("groupAvg", TypeName = "decimal(10,3)")]
+        [Column("groupAvg", TypeName = "decimal(10,2)")]
         public decimal? groupAvg { get; set; }
         public int? rseq { get; set; }
     }

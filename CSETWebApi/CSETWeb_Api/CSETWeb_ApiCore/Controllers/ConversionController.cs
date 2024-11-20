@@ -187,5 +187,15 @@ namespace CSETWebCore.Api.Controllers
             return Ok(await biz.Top5LowestScoredForAllSubcats(assessmentId));
 
         }
+
+        [HttpGet]
+        [Route("api/cf/getTotalAverageForReports")]
+        public async Task<IActionResult> GetTotalAverageForReports()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            var biz = new CFBusiness(_context, _assessmentUtil);
+            return Ok(await biz.GetTotalAverageForReports(assessmentId));
+
+        }
     }
 }

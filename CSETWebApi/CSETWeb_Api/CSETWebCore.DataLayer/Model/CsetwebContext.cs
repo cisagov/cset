@@ -357,6 +357,8 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
 
+    public virtual DbSet<NCSF_INDEX_ANSWERS> NCSF_INDEX_ANSWERS { get; set; }
+
     public virtual DbSet<NCSF_MIGRATION> NCSF_MIGRATION { get; set; }
 
     public virtual DbSet<NERC_RISK_RANKING> NERC_RISK_RANKING { get; set; }
@@ -1985,6 +1987,11 @@ public partial class CsetwebContext : DbContext
         modelBuilder.Entity<NCSF_FUNCTIONS>(entity =>
         {
             entity.ToTable(tb => tb.HasComment("A collection of NCSF_FUNCTIONS records"));
+        });
+
+        modelBuilder.Entity<NCSF_INDEX_ANSWERS>(entity =>
+        {
+            entity.Property(e => e.Raw_Answer_Value).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<NERC_RISK_RANKING>(entity =>

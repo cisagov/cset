@@ -97,7 +97,11 @@ namespace CSETWebCore.Api.Controllers
             var ansCount = infoHolder.Where(x => x.Answer_Text == "0" 
                                                 || x.Answer_Text == "U" 
                                                 || x.Answer_Text == "NA" 
-                                                || x.Answer_Text == "A").Count();
+                                                //|| x.Answer_Text == "A"
+                                                ).Count();
+
+            Dictionary<int, string> answerLookup = _context.NCSF_INDEX_ANSWERS.ToDictionary(x => x.Raw_Answer_Value, y => y.Display_Value);
+
             list.Add(new CFBar()
             {
                 name = "0 - Unanswered / Not Mapped",
@@ -111,7 +115,7 @@ namespace CSETWebCore.Api.Controllers
                 ansCount = infoHolder.Where(x => x.Answer_Text == stringIndex).Count();
                 list.Add(new CFBar()
                 {
-                    name = convertAnsToScale(stringIndex),
+                    name = answerLookup[i],
                     value = ansCount
                 });
             }
@@ -129,36 +133,28 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        public string convertAnsToScale(string ansText)
-        {
-            // the two 5's are not a mistake
-            switch (ansText){
-                case "1":
-                    return "1 - Not Performed";
-                case "2":
-                    return "2 - Informally Performed";
-                case "3":
-                    return "3 - Documented Policy";
-                case "4":
-                    return "4 - Partially Documented Standards and/or Procedures";
-                case "5":
-                    return "5 - Risk Formally Accepted";
-                case "6":
-                    return "5 - Implementation in Progress";
-                case "7":
-                    return "6 - Tested and Verified";
-                case "8":
-                    return "7 - Optimized";
-                default:
-                    return "0 - Unanswered / Not Mapped";
-            }
-        }
-
-
         public async Task<List<usp_CF_QuestionsResult>> Top5LowestScoredForAllSubcats(int assessmentId)
         {
             var temp = await _context.Procedures.usp_CF_QuestionsAsync(assessmentId);
+            //temp.ForEach(x =>
+            //{
+            //    x.Answer_Value
+            //}
             return temp;
+        }
+
+
+        public async Task<decimal> GetTotalAverageForReports(int assessmentId)
+        {
+            decimal total = 0;
+            var questions = await _context.Procedures.usp_CF_QuestionsAsync(assessmentId);
+            questions.ForEach(x =>
+            {
+                total += (decimal)((x.Answer_Value ?? 0) == 6 ? 5.5m : x.Answer_Value ?? 0);
+            });
+            decimal totalAvg = decimal.Divide(total, questions.Count).Round(2);
+
+            return totalAvg;
         }
 
 
