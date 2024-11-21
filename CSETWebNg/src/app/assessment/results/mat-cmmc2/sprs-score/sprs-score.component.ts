@@ -45,7 +45,7 @@ export class SprsScoreComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.maturitySvc.getSPRSScore().subscribe(result => {
+    this.maturitySvc.getSprsScore().subscribe(result => {
       this.response = result;
       this.sprsGauge = this.response.gaugeSvg;
 

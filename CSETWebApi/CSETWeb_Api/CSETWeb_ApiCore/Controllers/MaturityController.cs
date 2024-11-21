@@ -171,6 +171,11 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        /// <summary>
+        /// TODO: Cannot find this endpoint name in the UI codebase
+        /// </summary>
+        /// <param name="mat_model_id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/MaturityModel/GetLevelScoresByGroup")]
         public IActionResult GetLevelScoresByGroup(int mat_model_id)
@@ -180,37 +185,6 @@ namespace CSETWebCore.Api.Controllers
                 .Get_LevelScoresByGroup(assessmentId, mat_model_id));
         }
 
-
-        /// <summary>        
-        /// </summary>
-        [HttpGet]
-        [Route("api/SPRSScore")]
-        public IActionResult GetSPRSScore()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetSPRSScore(assessmentId));
-        }
-
-
-        [HttpGet]
-        [Route("api/results/compliancebylevel")]
-        public IActionResult GetComplianceByLevel()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerDistributionByLevel(assessmentId));
-        }
-
-
-        [HttpGet]
-        [Route("api/results/compliancebydomain")]
-        public IActionResult GetComplianceByDomain()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerDistributionByDomain(assessmentId));
-        }
 
 
         /// <summary>

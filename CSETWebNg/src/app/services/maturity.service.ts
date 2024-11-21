@@ -321,8 +321,8 @@ export class MaturityService {
     return this.http.get(this.configSvc.apiUrl + 'getEdmPercentScores')
   }
 
-  getSPRSScore() {
-    return this.http.get(this.configSvc.apiUrl + 'SPRSScore');
+  getSprsScore() {
+    return this.http.get(this.configSvc.apiUrl + 'sprs-score');
   }
   /**
    *
