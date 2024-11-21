@@ -27,6 +27,7 @@ namespace CSETWebCore.Api.Controllers
     {
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
+        private IConversionBusiness _biz;
         private readonly ITokenManager _tokenManager;
         static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -34,11 +35,12 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ConversionController(CSETContext context, ITokenManager tokenManager, IAssessmentUtil assessmentUtil)
+        public ConversionController(CSETContext context, ITokenManager tokenManager, IAssessmentUtil assessmentUtil, IConversionBusiness conversionBusiness)
         {
             _context = context;
             _tokenManager = tokenManager;
             _assessmentUtil = assessmentUtil;
+            _biz = conversionBusiness;
         }
 
 
@@ -51,15 +53,15 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult IsEntryCF()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            var biz = new ConversionBusiness(_context, _assessmentUtil);
-            return Ok(biz.IsEntryCF(assessmentId));
+            
+            return Ok(_biz.IsEntryCF(assessmentId));
         }
         [HttpPost]
         [Route("api/convert/cf/entrys")]
         public IActionResult IsEntrysCF(List<int> assessmentIds)
         {   
-            var biz = new ConversionBusiness(_context, _assessmentUtil);
-            return Ok(biz.IsEntryCF(assessmentIds));
+            
+            return Ok(_biz.IsEntryCF(assessmentIds));
         }
 
 
@@ -72,8 +74,8 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult IsMidCF()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            var biz = new ConversionBusiness(_context, _assessmentUtil);
-            return Ok(biz.IsMidCF(assessmentId));
+            
+            return Ok(_biz.IsMidCF(assessmentId));
         }
 
 
@@ -88,8 +90,8 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz = new ConversionBusiness(_context, _assessmentUtil);
-            biz.ConvertCF(assessmentId);
+            
+            _biz.ConvertCF(assessmentId);
 
             return Ok();
         }
@@ -102,14 +104,14 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/convert/entryToMid")]
-        public IActionResult ConvertEntryToMid()
+        public async Task<IActionResult> ConvertEntryToMid()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz = new ConversionBusiness(_context, _assessmentUtil);
-            biz.ConvertEntryToMid(assessmentId);
+            
+            await _biz.ConvertEntryToMid(assessmentId);
 
-            return Ok();
+            return Ok(assessmentId);
         }
 
 
@@ -124,8 +126,8 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz = new ConversionBusiness(_context, _assessmentUtil);
-            biz.ConvertMidToFull(assessmentId);
+            
+            _biz.ConvertMidToFull(assessmentId);
 
             return Ok();
         }

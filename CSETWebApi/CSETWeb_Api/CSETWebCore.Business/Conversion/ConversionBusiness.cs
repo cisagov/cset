@@ -13,13 +13,22 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using System;
 using Npoi.Mapper;
 using DocumentFormat.OpenXml.Office2013.Excel;
+using CSETWebCore.Business.AssessmentIO.Export;
+using CSETWebCore.Business.AssessmentIO.Import;
+using CSETWebCore.Helpers;
+using Org.BouncyCastle.Security;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Contact
 {
-    public class ConversionBusiness
+    public class ConversionBusiness:IConversionBusiness
     {
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
+        private readonly IImportManager _importManager;
+        private ITokenManager _tokenManager;
+        private IUtilities _utilities;
 
         /// <summary>
         /// The set name for the Cyber Florida trimmed down CSF set
@@ -49,10 +58,14 @@ namespace CSETWebCore.Business.Contact
         /// </summary>
         /// <param name="context"></param>
         /// <param name="assessmentUtil"></param>
-        public ConversionBusiness(CSETContext context, IAssessmentUtil assessmentUtil)
+        public ConversionBusiness(IAssessmentUtil assessmentUtil, ITokenManager tokenManager, CSETContext context, IImportManager importManager)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
+            _importManager = importManager;
+            _tokenManager = tokenManager;
+            
+
         }
 
 
@@ -158,14 +171,28 @@ namespace CSETWebCore.Business.Contact
             _assessmentUtil.TouchAssessment(assessmentId);
         }
 
+
+        private async Task<int> DuplicateAssessment(int assessmentId)
+        {
+            AssessmentExportManager exportManager = new AssessmentExportManager(_context);
+            var outFile = exportManager.ExportAssessment(assessmentId, ".zip");
+             outFile.FileContents.Seek(0, SeekOrigin.Begin);
+            
+            return  await _importManager.ProcessCSETAssessmentImport(((MemoryStream)outFile.FileContents).ToArray(), 
+                    _tokenManager.GetUserId(), _tokenManager.GetAccessKey(), _context);
+            
+            
+        }
+
         /// <summary>
         /// Converts a Cyber Florida "entry" assessment to a mid-level
         /// assessment with CPG only.
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public void ConvertEntryToMid(int assessmentId)
+        public async Task ConvertEntryToMid(int assessmentId)
         {
+            assessmentId = await DuplicateAssessment(assessmentId);
             // Delete the "CF RRA" submodel record.  This will have the effect of looking
             // at the entire RRA model.
             var cfRraRecord = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x =>
@@ -211,6 +238,52 @@ namespace CSETWebCore.Business.Contact
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             assessment.GalleryItemGuid = Guid.Parse(Mid_Gallery_Guid);
             assessment.UseStandard = false;
+
+            _context.SaveChanges();
+
+            _assessmentUtil.TouchAssessment(assessmentId);
+        }
+
+        public async Task ConvertMidToFull(int assessmentId)
+        {
+
+            assessmentId = await DuplicateAssessment(assessmentId);
+            // remove the CPG AVAILABLE_MATURITY_MODELS record and
+            // add the CF and RRA records back in
+            var availMaturity = _context.AVAILABLE_MATURITY_MODELS
+                .Where(x => x.Assessment_Id == assessmentId && x.model_id == CPG_Model_Id && x.Selected).FirstOrDefault();
+
+            if (availMaturity != null)
+            {
+                _context.AVAILABLE_MATURITY_MODELS.Remove(availMaturity);
+
+                var newAvailMaturity = new AVAILABLE_MATURITY_MODELS()
+                {
+                    Assessment_Id = assessmentId,
+                    Selected = true,
+                    model_id = RRA_Model_Id
+                };
+
+                _context.AVAILABLE_MATURITY_MODELS.Add(newAvailMaturity);
+                _context.AVAILABLE_STANDARDS.Add(new AVAILABLE_STANDARDS()
+                {
+                    Assessment_Id = assessmentId,
+                    Selected = true,
+                    Set_Name = CF_SetName
+                });
+            }
+
+            CreateAnswerRecordsFromCPGToCF(assessmentId);
+
+
+            // add details_demographics flagging the assessment as a "used to be a CyberFlorida entry assessment"
+            var biz = new DemographicBusiness(_context, _assessmentUtil);
+            biz.SaveDD(assessmentId, "FORMER-CF-MID", "true", null);
+
+            // changing gallery guid to mid-level
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            assessment.GalleryItemGuid = Guid.Parse(Mid_Gallery_Guid);
+            assessment.UseStandard = true;
 
             _context.SaveChanges();
 
@@ -287,52 +360,7 @@ namespace CSETWebCore.Business.Contact
 
         }
 
-        public void ConvertMidToFull(int assessmentId)
-        {
-
-            // remove the CPG AVAILABLE_MATURITY_MODELS record and
-            // add the CF and RRA records back in
-            var availMaturity = _context.AVAILABLE_MATURITY_MODELS
-                .Where(x => x.Assessment_Id == assessmentId && x.model_id == CPG_Model_Id && x.Selected).FirstOrDefault();
-
-            if (availMaturity != null)
-            {
-                _context.AVAILABLE_MATURITY_MODELS.Remove(availMaturity);
-
-                var newAvailMaturity = new AVAILABLE_MATURITY_MODELS()
-                {
-                    Assessment_Id = assessmentId,
-                    Selected = true,
-                    model_id = RRA_Model_Id
-                };
-
-                _context.AVAILABLE_MATURITY_MODELS.Add(newAvailMaturity);
-                _context.AVAILABLE_STANDARDS.Add(new AVAILABLE_STANDARDS()
-                {
-                    Assessment_Id = assessmentId,
-                    Selected = true,
-                    Set_Name = CF_SetName
-                });
-            }
-
-            CreateAnswerRecordsFromCPGToCF(assessmentId);
-
-
-            // add details_demographics flagging the assessment as a "used to be a CyberFlorida entry assessment"
-            var biz = new DemographicBusiness(_context, _assessmentUtil);
-            biz.SaveDD(assessmentId, "FORMER-CF-MID", "true", null);
-
-            // changing gallery guid to mid-level
-            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-            assessment.GalleryItemGuid = Guid.Parse(Mid_Gallery_Guid);
-            assessment.UseStandard = true;
-
-            _context.SaveChanges();
-
-            _assessmentUtil.TouchAssessment(assessmentId);
-        }
-
-
+      
         /// <summary>
         /// Creates new answer records for CF based off answers from "entry" level Florida_NCSF_V2 and "mid" level CPG
         /// </summary>
