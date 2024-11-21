@@ -57,7 +57,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <param name="zipFileFromDatabase"></param>
         /// <param name="currentUserId"></param>
         /// <returns></returns>
-        public async Task ProcessCSETAssessmentImport(byte[] zipFileFromDatabase, int? currentUserId, string accessKey, CSETContext context, string password = "", bool overwriteAssessment = false)
+        public async Task<int> ProcessCSETAssessmentImport(byte[] zipFileFromDatabase, int? currentUserId, string accessKey, CSETContext context, string password = "", bool overwriteAssessment = false)
         {
             //* read from db and set as memory stream here.
             using (Stream fs = new MemoryStream(zipFileFromDatabase))
@@ -247,6 +247,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         DiagramManager dm = new DiagramManager(context);
                         dm.ImportOldCSETDFile(oldXml, newAssessmentId);
                     }
+                    return newAssessmentId;
                 }
                 catch (Exception exc)
                 {

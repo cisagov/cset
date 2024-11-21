@@ -181,6 +181,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IJSONFileExport, JSONFileExport>();
             services.AddTransient<IMalcolmBusiness, MalcolmBusiness>();
             services.AddScoped<IVersionBusiness, VersionBusiness>();
+            services.AddTransient<IConversionBusiness, ConversionBusiness>();
 
             services.AddSwaggerGen(c =>
             {
