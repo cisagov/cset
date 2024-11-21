@@ -121,7 +121,7 @@
 
 
                                 <!-- Mark For Review Flag  -->
-                                <label class="me-0 ms-2 btn btm-check btn-mfr"
+                                <label class="me-0 ms-2 btn form-check-label btn-mfr"
                                     [class.answer-selected]="q.markForReview === true"
                                     matTooltip="This control requires further review.">
                                     <input name="q_{{q.questionId}}_F" type="checkbox" class="btn-check" (click)="saveMFR(q);"
@@ -202,7 +202,7 @@
 
 
                                 <!-- Mark For Review Flag  -->
-                                <label class="me-0 ms-2 btn btn-mfr"
+                                <label class="me-0 ms-2 btn btn-mfr form-check-label"
                                     [class.answer-selected]="q.markForReview === true"
                                     matTooltip="This control requires further review.">
                                     <input name="q_{{q.questionId}}_F" type="checkbox" class="btn-check" (click)="saveMFR(q);"

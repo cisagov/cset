@@ -482,7 +482,12 @@
       "fi-c2m2": "Fully Implemented (FI)",
       "li-c2m2": "Largely Implemented (LI)",
       "pi-c2m2": "Partially Implemented (PI)",
-      "ni-c2m2": "Not Implemented (NI)"
+      "ni-c2m2": "Not Implemented (NI)",
+      "yes-cmmc": "Met",
+      "y-cmmc": "Met",
+      "na-cmmc": "N/A",
+      "no-cmmc": "Not Met",
+      "n-cmmc": "Not Met"
     },
     "placeholders": {
       "alt acet": "Description, explanation and/or justification for compensating control",

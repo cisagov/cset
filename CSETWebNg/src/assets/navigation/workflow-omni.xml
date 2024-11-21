@@ -322,7 +322,7 @@
 
     <!-- Results Phase -->
     <node d="results" id="phase-results" visible="CF-DEMOGRAPHICS-COMPLETE" enabled="CF-ASSESSMENT-COMPLETE">
-    <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY-ANY(2,6,3,4,5,1,8,13,9,11,14)" />
+    <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY-ANY(2,6,3,4,5,1,8,13,9,11,14,19)" />
 
         <!-- Results - Standards -->
         <node d="standard results" visible="OPTION:STANDARD">
@@ -342,9 +342,9 @@
 
 
         <!-- Results - CMMC2 -->
-        <node displaytext="Performance by Level" id="cmmc2-level-results" path="assessment/{:id}/results/cmmc2-level-results" visible="MATURITY:6" />
-        <node displaytext="Performance by Domain" id="cmmc2-domain-results" path="assessment/{:id}/results/cmmc2-domain-results" visible="MATURITY:6" />
-        <node displaytext="SPRS Score" id="sprs-score" path="assessment/{:id}/results/sprs-score" visible="MATURITY:6 TARGET-LEVEL-GT:1" />
+        <node displaytext="Performance by Level" id="cmmc2-level-results" path="assessment/{:id}/results/cmmc2-level-results" visible="MATURITY(6,19)" />
+        <node displaytext="Performance by Domain" id="cmmc2-domain-results" path="assessment/{:id}/results/cmmc2-domain-results" visible="MATURITY(6,19)" />
+        <node displaytext="SPRS Score" id="sprs-score" path="assessment/{:id}/results/sprs-score" visible="MATURITY(6,19) TARGET-LEVEL-GT:1" />
 
 
 
