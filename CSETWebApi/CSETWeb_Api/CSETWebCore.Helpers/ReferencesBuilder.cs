@@ -113,7 +113,7 @@ namespace CSETWebCore.Helpers
                     FileName = doc.File_Name,
                     Url = doc.Url,
                     Title = doc.Title,
-                    SectionRef = doc.Section_Ref,
+                    SectionRef = doc.Section_Ref.Trim(),
                     DestinationString = doc.Destination_String,
                 };
 

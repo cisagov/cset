@@ -22,10 +22,20 @@
                 </mat-button-toggle>
               </mat-button-toggle-group>
             </div>
-            <div style="display: block;">
+            <div style="display: block;" class="d-none">
               <canvas #barCanvas></canvas>
             </div>
+            
+            
+            <div *ngIf="!scoreBarData">
+              <div class="spinner-container" style="margin: 2em auto">
+                <div style="max-width: 50px; max-height: 50px;"></div>
+              </div>
+            </div>
+            <app-score-ranges *ngIf="!!scoreBarData" chartWidth="500" [data]="scoreBarData" myColor="#174792"></app-score-ranges>
+            
           </mat-card>
+
         </div>
       </div>
     </div>
