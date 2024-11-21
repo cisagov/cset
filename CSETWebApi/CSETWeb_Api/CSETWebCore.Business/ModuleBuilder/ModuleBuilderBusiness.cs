@@ -1501,7 +1501,7 @@ namespace CSETWebCore.Business.ModuleBuilder
             {
                 sourceList.Add(new ReferenceDoc
                 {
-                    SectionRef = reff.Section_Ref,
+                    SectionRef = reff.Section_Ref.Trim(),
                     ID = reff.Gen_File_Id,
                     Title = reff.Gen_File.Title,
                     Name = reff.Gen_File.Name,
@@ -1525,7 +1525,7 @@ namespace CSETWebCore.Business.ModuleBuilder
             {
                 resourceList.Add(new ReferenceDoc
                 {
-                    SectionRef = reff.Section_Ref,
+                    SectionRef = reff.Section_Ref.Trim(),
                     ID = reff.Gen_File_Id,
                     Title = reff.Gen_File.Title,
                     Name = reff.Gen_File.Name,
