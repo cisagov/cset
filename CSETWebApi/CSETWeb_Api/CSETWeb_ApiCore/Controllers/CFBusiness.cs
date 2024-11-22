@@ -9,6 +9,7 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Nested;
 using CSETWebCore.Model.Question;
+using CSETWebCore.Model.Set;
 using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using MathNet.Numerics;
 using Microsoft.EntityFrameworkCore;

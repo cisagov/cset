@@ -723,7 +723,7 @@ export class AssessmentService {
       );
     }
     else {
-      this.floridaSvc.getInitialState().then(() => {
+      this.floridaSvc.getInitialState(this.usesStandard('Florida_NCSF_V2')).then(() => {
         this.assessmentStateChanged$.next(125);
       }
       );
@@ -739,21 +739,11 @@ export class AssessmentService {
     }
 
     if (this.isCyberFloridaComplete()) {
-
-      this.convSvc.isEntryCfAssessment().subscribe((data) => {
-        if (data)
-          this.assessmentStateChanged$.next(124);
-      });
-
-      this.convSvc.isMidCfAssessment().subscribe((data) => {
-        // console.log('in isMidComp')
-        // console.log(data)
-
-        if (data) {
-          
-          this.assessmentStateChanged$.next(124);
-        }
-      });
+      // if (this.usesStandard('Florida_NCSF_V2') || this.usesMaturityModel('CPG') || )
+        this.assessmentStateChanged$.next(124);
+      // else if (this.usesStandard('NCSF_V2')) {
+      //   this.assessmentStateChanged$.next(124);
+      // }
     }
     else {
       this.assessmentStateChanged$.next(126);
