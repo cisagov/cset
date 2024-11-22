@@ -1,11 +1,14 @@
 ﻿using CSETWebCore.Business.AssessmentIO.Export;
 using CSETWebCore.Business.AssessmentIO.Import;
+using CSETWebCore.Business.Contact;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualBasic;
 
 namespace DuplicateAssessments
 {
@@ -35,7 +38,7 @@ namespace DuplicateAssessments
             //var optionsBuilder = new DbContextOptionsBuilder<CsetwebContext>();
             //optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             _context = new CSETContext(Configuration);
-            
+
             AssessmentsDuplicator duper = new AssessmentsDuplicator();
             await duper.RunAssessmentsDuplicator();
         }
@@ -46,23 +49,47 @@ namespace DuplicateAssessments
         /// </summary>
         public async Task RunAssessmentsDuplicator()
         {
-            AssessmentExportManager exportManager = new AssessmentExportManager(_context);
-
-            Guid[] guidsToExport = _context?.ASSESSMENTS
-                //.Where(x=> x.Assessment_Id ==571)
-                .Select(a => a.Assessment_GUID).ToArray() ?? Array.Empty<Guid>();
-            //comment out the below line to no longer debug
-            //guidsToExport = new Guid[] { new Guid("F2776CC4-0FBA-4C15-A845-305FC4A70082") };
-            MemoryStream assessmentsExportArchive = exportManager.BulkExportAssessments(guidsToExport, "dup");
+            //this is a version entry to full upgrader for all assessments
             String testToken = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJDU0VUX0FVRCIsImlzcyI6IkNTRVRfSVNTIiwiZXhwIjoxNzEzOTkwOTg0LCJ1c2VyaWQiOjIsImFjY2tleSI6bnVsbCwidHpvZmZzZXQiOiIzNjAiLCJzY29wZSI6IkNGIn0.bmDP2wMQaCTKhztzZ39KfddgCATBBiRAYncxM5yFBvg";
             ITokenManager tokenManager = new MockTokenManager(testToken, _context);
             IAssessmentUtil assessmentUtil = new AssessmentUtil(_context);
             IUtilities utilities = new MockUtilities();
+            IImportManager importManager = new ImportManager(tokenManager, assessmentUtil, utilities, _context);
+            ConversionBusiness conversionBusiness = new ConversionBusiness(assessmentUtil, tokenManager, _context, importManager);
+            var m = _context.METRIC_ASSESSMENT_COMPLETE.Where(x => x.PERC_COMPLETE >= 1.0m).OrderBy(x => x.Assessment_id).Select(x => x.Assessment_id).ToList();
+            //D0C19648-00F5-4215-AF2D-C7EBD75FC578
+            foreach (int id in m)
+            {
 
-            assessmentsExportArchive.Seek(0, SeekOrigin.Begin);
-
-            ImportManager importManager = new ImportManager(tokenManager, assessmentUtil, utilities, _context);
-            await importManager.BulkImportAssessments(assessmentsExportArchive, false);
+                if (conversionBusiness.IsEntryCF(id))
+                {
+                    try
+                    {
+                        await conversionBusiness.ConvertEntryToMid(id);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());   
+                    }
+                }
+            }
+            var legacies = _context.ASSESSMENTS.Where(x=> x.GalleryItemGuid == new Guid("D0C19648-00F5-4215-AF2D-C7EBD75FC578")).Select(x => x.Assessment_Id).ToList();
+            foreach(var id in legacies) 
+            {
+                if (conversionBusiness.IsLegacyCFFull(id))
+                {
+                    try
+                    {
+                        await conversionBusiness.ConvertLegacy(id);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
+                }
+            }
+            
         }
+
     }
 }

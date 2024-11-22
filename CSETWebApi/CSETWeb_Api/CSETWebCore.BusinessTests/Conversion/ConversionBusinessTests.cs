@@ -33,7 +33,7 @@ namespace CSETWebCore.Business.Contact.Tests
         }
 
 
-        [TestMethod(),Timeout(1200000)]
+        [TestMethod(), Timeout(1200000)]
         public void ConversionBusinessTest()
         {
 
@@ -53,15 +53,17 @@ namespace CSETWebCore.Business.Contact.Tests
             }
 
             IAssessmentUtil util = new TestAssessmentUtil();
-            ConversionBusiness conversionBusiness = new ConversionBusiness(db, util);
-            
+
+
+            ConversionBusiness conversionBusiness = new ConversionBusiness(util,null,db,null);
+
             List<int> ids = db.ASSESSMENTS.Select(x => x.Assessment_Id).ToList();
 
             /**
              * only convert completed Entry assessments
              * only convert 
             */
-            var m = db.METRIC_ASSESSMENT_COMPLETE.Where(x=> x.PERC_COMPLETE>=1.0m) .ToDictionary(x => x.Assessment_id, x => x.PERC_COMPLETE);
+            var m = db.METRIC_ASSESSMENT_COMPLETE.Where(x => x.PERC_COMPLETE >= 1.0m).ToDictionary(x => x.Assessment_id, x => x.PERC_COMPLETE);
 
             foreach (int id in ids)
             {
@@ -77,10 +79,10 @@ namespace CSETWebCore.Business.Contact.Tests
                         {
                             Assert.Fail(ex.Message);
                         }
-                        var dd =  db.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == id && x.DataItemName == "FORMER-CF-ENTRY").FirstOrDefault();
+                        var dd = db.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == id && x.DataItemName == "FORMER-CF-ENTRY").FirstOrDefault();
                         if (dd != null)
                         {
-                            Assert.IsTrue(dd.StringValue.ToLower()=="true");
+                            Assert.IsTrue(dd.StringValue.ToLower() == "true");
                         }
                     }
                     else if (conversionBusiness.IsMidCF(id))
@@ -99,7 +101,7 @@ namespace CSETWebCore.Business.Contact.Tests
                     }
                 }
             }
-            
+
         }
 
 
@@ -114,13 +116,20 @@ namespace CSETWebCore.Business.Contact.Tests
             }
 
             IAssessmentUtil util = new TestAssessmentUtil();
-            ConversionBusiness conversionBusiness = new ConversionBusiness(db, util);
+            ConversionBusiness conversionBusiness = new ConversionBusiness(util,null,db,null);
             var mm = db.MATURITY_MODELS.FirstOrDefault();
             List<int> ids = db.ASSESSMENTS.Select(x => x.Assessment_Id).ToList();
             List<CFEntry> entries = conversionBusiness.IsEntryCF(ids);
             Assert.IsTrue(entries.Count > 0);
         }
 
+        [TestMethod()]
+        public void IsLegacyCFFullTest()
+        {
+            IAssessmentUtil util = new TestAssessmentUtil();
+            ConversionBusiness conversionBusiness = new ConversionBusiness(util, null, context, null);
+            Assert.IsTrue(conversionBusiness.IsLegacyCFFull(686));
+        }
     }
 
 

@@ -518,7 +518,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                     var set = _context.SETS
                         .Include(s => s.Set_Category)
-                        .Where(s => s.Set_Name == standard.Set_Name).FirstOrDefault();
+                        .Where(s => s.Set_Name == standard.Set_Name && s.Is_Custom == true).FirstOrDefault();
                     if (set == null)
                     {
                         continue;

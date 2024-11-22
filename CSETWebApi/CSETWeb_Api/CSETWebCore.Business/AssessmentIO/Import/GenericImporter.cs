@@ -90,6 +90,14 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// </summary>
         public void SaveFromJson(string json, DataLayer.Model.CSETContext context)
         {
+
+            /**
+             * Get a list of the tables that are available
+             * look to see if it is in the xml document 
+             * if it is not then just go ahead and process it anyway. 
+             * note process this last
+             */
+
             JObject oAssessment = JObject.Parse(json);
 
             dbio = new DBIO(context);
@@ -104,6 +112,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 string result = reader.ReadToEnd();
                 xColumnRules.LoadXml(result);
             }
+
 
 
             // process the tables defined in the XML in order

@@ -77,8 +77,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                 ms.Position = 0;
                 StreamReader sr = new StreamReader(ms);
-                string jsonObject = sr.ReadToEnd();
-
+                string jsonObject = sr.ReadToEnd();                
                 // Apply any data updates to older versions
                 ImportUpgradeManager upgrader = new ImportUpgradeManager();
                 jsonObject = upgrader.Upgrade(jsonObject);
@@ -92,14 +91,12 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     {
                         var genFile = context.GEN_FILE.FirstOrDefault(s => s.File_Name == doc);
                         if (genFile == null)
-                        {
-                            //StreamReader docReader = new StreamReader(zip.GetEntry(doc + ".json").Open());
+                        {   
                             StreamReader docReader = new StreamReader(ms);
                             var docModel = JsonConvert.DeserializeObject<ExternalDocument>(docReader.ReadToEnd());
                             genFile = ReferenceConverter.ToGenFile(docModel);
                             var extension = Path.GetExtension(genFile.File_Name).Substring(1);
                             genFile.File_Type = context.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
-
                             try
                             {
                                 context.FILE_REF_KEYS.Add(new FILE_REF_KEYS { Doc_Num = genFile.Doc_Num });
