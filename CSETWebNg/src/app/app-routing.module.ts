@@ -245,6 +245,8 @@ import { CfCommentsMarkedForReviewComponent } from './reports/cf-commentsmarked/
 import { CfReviewedComponent } from './reports/cf-reviewed/cf-reviewed.component';
 import { Cmmc2LevelsComponent } from './assessment/prepare/maturity/cmmc2-levels/cmmc2-levels.component';
 import { CfDetailedScoresComponent } from './reports/cf-detailed-scores/cf-detailed-scores.component';
+import { NcsfDashbordComponent } from './assessment/results/ncsf/ncsf-dashbord/ncsf-dashbord.component';
+import { NscfControlPrioritiesComponent } from './assessment/results/ncsf/nscf-control-priorities/nscf-control-priorities.component';
 
 const appRoutes: Routes = [
 
@@ -526,6 +528,8 @@ const appRoutes: Routes = [
               { path: 'hydro-actions', component: HydroActionsComponent },
               { path: 'sd-answer-summary', component: SdAnswerSummaryComponent },
 
+              { path: 'ncsf-dashboard', component: NcsfDashbordComponent },
+              { path: 'ncsf-priorities', component: NscfControlPrioritiesComponent },
             ]
           },
 

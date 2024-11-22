@@ -1,0 +1,62 @@
+<!----------------------
+
+   Copyright 2024 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="white-panel d-flex flex-column justify-content-start flex-11a" id="analysisDiv" *transloco="let t">
+    <h3>Control Priorities</h3>
+    <div *ngIf="loaded < 3; else main">
+        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+    </div>
+    <ng-template #main class="d-flex flex-column flex-11a">
+        <br>
+        <h4>NIST CSF 2.0 Total Average: {{totalAvg}}</h4>
+
+        <p>
+            Below are listed the lowest 5 scoring questions of each category.
+        </p>
+        <table class="w-100 table-responsive td-align-top td-padding-half-rem">
+            <tr style="color:#383444">
+                <td style="width: 100px">Title</td>
+                <td></td>
+                <td style="width: 200px">Score</td>
+            </tr>
+            <ng-container *ngFor="let catInfo of parsedScores" style="justify-content: space-between;">
+                <tr class="rkw-domain">
+                    <td style="background-color: #383444; color:white; font-weight: bold; padding: 8px" colspan="2">{{ catInfo[0].standard_Category }}</td>
+                    <td style="background-color: #383444; color:white; font-weight: bold; padding: 8px">{{ catInfo[0].groupAvg }}</td>
+                </tr>
+                <tr *ngFor="let q of top5LowestPerCat.get(catInfo[0].standard_Category); let i = index">
+                    <td style="font-weight: bold; padding: 8px">{{ q.requirement_Title }}</td>
+                    <td style="padding: 8px">
+                        {{ q.requirement_text }}
+                        <ng-container *ngIf="(i + 1) < top5LowestPerCat.get(catInfo[0].standard_Category).length">
+                            <hr class="page-line">
+                        </ng-container>
+                    </td>
+                    <td style="padding: 8px">{{ q.display_Tag }}</td>
+                    
+                </tr>
+            </ng-container>
+        </table>
+    </ng-template>
+</div>

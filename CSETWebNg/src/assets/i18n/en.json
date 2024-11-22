@@ -1024,34 +1024,6 @@
         "7": {
           "title": "RRA Comments and Marked for Review",
           "desc": "This document consolidates all RRA practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
-        },
-        "8": {
-          "title": "Executive Summary",
-          "desc": "This report includes the high-level assessment description, the executive summary, the Security Assurance Level (SAL), and a set of charts that highlight overall compliance and compliance by component type."
-        },
-        "9": {
-          "title": "Site Summary Report",
-          "desc": "This report includes the same information as the Executive Summary as well as site information, the network diagram, component compliance by subject area, findings and recommendations from basic network analysis, the document library, comments, alternate justifications for responses, and questions marked for review."
-        },
-        "10": {
-          "title": "Site Cybersecurity Plan",
-          "desc": "This template is intended to be used as a tool for the development of a security plan. The template assists in identifying the controls in place and those needing further implementation based upon the answers provided in the assessment. The purpose of the security plan is to provide an overview of the security requirements of the system and describe the controls in place or planned, for meeting those requirements. "
-        },
-        "11": {
-          "title": "Site Detail Report",
-          "desc": "This report includes the same information as the Site Summary Report as well as a list of all network component questions and their corresponding answers."
-        },
-        "12": {
-          "title": "Answered Questions Report",
-          "desc": "This report indicates how each question was answered."
-        },
-        "13": {
-          "title": "Comments and Marked for Review",
-          "desc": "This document consolidates all practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
-        },
-        "14": {
-          "title": "Reviewed Questions",
-          "desc": "This document consolidates all practices that have been marked as reviewed during the assessment process."
         }
       }
     },
