@@ -137,6 +137,11 @@ export class PageVisibilityService {
         show = show && !this.maturityAny(c);
       }
 
+      // look for the specified standard
+      if (c.startsWith('STANDARD:') || c.startsWith('STANDARD-ANY(')) {
+        show = show && this.standardAny(c);
+      }
+
       if (c.startsWith('STANDARD-NOT:') || c.startsWith('STANDARD-NONE(')) {
         show = show && !this.standardAny(c);
       }

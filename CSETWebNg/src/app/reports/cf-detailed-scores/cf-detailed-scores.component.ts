@@ -47,7 +47,6 @@ export class CfDetailedScoresComponent implements OnInit {
   ngOnInit() {
     this.cfSvc.getBarChartInfo().subscribe(
       (r: any) => {
-        console.log(r)
         this.barChart = r;
     });
 
@@ -97,22 +96,6 @@ export class CfDetailedScoresComponent implements OnInit {
 
             this.top5LowestPerSubcat.set(key, value);
         });
-
-        console.log(this.top5LowestPerSubcat)
-
-        // let governPortion = r.filter(x => x.standard_Category == 'Govern').sort((a,b) => a.answer_Value - b.answer_Value);
-        // let identifyPortion = r.filter(x => x.standard_Category == 'Identify').sort((a,b) => a.answer_Value - b.answer_Value);
-        // let protectPortion = r.filter(x => x.standard_Category == 'Protect').sort((a,b) => a.answer_Value - b.answer_Value);
-        // let detectPortion = r.filter(x => x.standard_Category == 'Detect').sort((a,b) => a.answer_Value - b.answer_Value);
-        // let respondPortion = r.filter(x => x.standard_Category == 'Respond').sort((a,b) => a.answer_Value - b.answer_Value);
-        // let recoverPortion = r.filter(x => x.standard_Category == 'Recover').sort((a,b) => a.answer_Value - b.answer_Value);
-
-        // this.top5LowestPerSubcat.push(governPortion.length > 5 ? governPortion.slice(0, 5) : governPortion);
-        // this.top5LowestPerSubcat.push(identifyPortion.length > 5 ? identifyPortion.slice(0, 5) : identifyPortion);
-        // this.top5LowestPerSubcat.push(protectPortion.length > 5 ? protectPortion.slice(0, 5) : protectPortion);
-        // this.top5LowestPerSubcat.push(detectPortion.length > 5 ? detectPortion.slice(0, 5) : detectPortion);
-        // this.top5LowestPerSubcat.push(respondPortion.length > 5 ? respondPortion.slice(0, 5) : respondPortion);
-        // this.top5LowestPerSubcat.push(recoverPortion.length > 5 ? recoverPortion.slice(0, 5) : recoverPortion);
       });
   }
 
@@ -127,24 +110,11 @@ export class CfDetailedScoresComponent implements OnInit {
       default:
         return '#f5752b !important';
     }
-    // return 'cf-' + lowestLevelAchieved.substring(0, 1);
   }
 
   convertScoreToPercent(score: any) {
     let wholeNum = (score*100) / 7;
-    // let remainder = (score*100) % 7;
-    // console.log('remainder: ' + remainder )
-
-    // let num = +(wholeNum.toString() + '.' + remainder.toString());
-    // console.log(num)
     return wholeNum;
-  }
-
-  getTextStyle(index: number, subcat: string) {
-    // if not the final
-    if ((index + 1) < this.top5LowestPerSubcat.get(subcat).length) {
-
-    }
   }
 
 }
