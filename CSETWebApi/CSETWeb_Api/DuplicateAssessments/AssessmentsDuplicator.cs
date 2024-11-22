@@ -70,7 +70,7 @@ namespace DuplicateAssessments
                 }
             }
             var legacies = _context.ASSESSMENTS.Where(x=> x.GalleryItemGuid == new Guid("D0C19648-00F5-4215-AF2D-C7EBD75FC578")).Select(x => x.Assessment_Id).ToList();
-            foreach(var id in legacies) 
+            foreach(var id in legacies)
             {
                 if (conversionBusiness.IsLegacyCFFull(id))
                 {
