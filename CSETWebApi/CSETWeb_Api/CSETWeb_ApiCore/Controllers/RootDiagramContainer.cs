@@ -28,5 +28,6 @@ namespace CSETWebCore.Api.Controllers
         public List<mxGraphModelRootMxCell> shapeVertices { get; internal set; }
         public List<mxGraphModelRootMxCell> shapes { get; internal set; }
         public List<mxGraphModelRootMxCell> texts { get; internal set; }
+        public List<ComponentSymbolGroup> symbols { get; internal set; }
     }
 }

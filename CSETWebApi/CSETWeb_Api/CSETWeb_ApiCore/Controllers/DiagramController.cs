@@ -309,6 +309,7 @@ namespace CSETWebCore.Api.Controllers
                 diagramContainer.shapeVertices = _diagram.ProcessDiagramShapes(new StringReader(contentReader), assessmentId ?? 0);
                 diagramContainer.shapes = _diagram.GetDiagramShapes(diagramContainer.shapeVertices);
                 diagramContainer.texts = _diagram.GetDiagramText(diagramContainer.shapeVertices);
+                diagramContainer.symbols = _diagram.GetComponentSymbols();
                 return diagramContainer;
 
 
