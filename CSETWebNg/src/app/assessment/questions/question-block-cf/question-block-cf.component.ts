@@ -74,7 +74,7 @@ export class QuestionBlockCfComponent implements OnInit {
   ngOnInit() {
     this.answerOptions = this.questionsSvc.questions?.answerOptions;
     this.refreshReviewIndicator();
-    // this.refreshPercentAnswered();
+    this.refreshPercentAnswered();
 
     this.mySubCategory.questions.forEach(q => {
       if (q.answer == null) {
@@ -235,7 +235,7 @@ export class QuestionBlockCfComponent implements OnInit {
         }
       } else {
         totalCount++;
-        if (q.answer && q.answer !== "U") {
+        if (q.answer  && (!(q.answer === 'U' || q.answer === '0'))) {
           answeredCount++;
         }
       }
@@ -296,7 +296,7 @@ export class QuestionBlockCfComponent implements OnInit {
 
     this.refreshReviewIndicator();
 
-    // this.refreshPercentAnswered();
+    this.refreshPercentAnswered();
 
     this.questionsSvc.storeSubCategoryAnswers(subCatAnswers)
       .subscribe();
@@ -333,7 +333,7 @@ export class QuestionBlockCfComponent implements OnInit {
 
     this.refreshReviewIndicator();
 
-    // this.refreshPercentAnswered();
+    this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer)
       .subscribe((ansId: number) => {
