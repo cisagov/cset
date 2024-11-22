@@ -56,21 +56,17 @@ namespace DuplicateAssessments
             IUtilities utilities = new MockUtilities();
             IImportManager importManager = new ImportManager(tokenManager, assessmentUtil, utilities, _context);
             ConversionBusiness conversionBusiness = new ConversionBusiness(assessmentUtil, tokenManager, _context, importManager);
-            var m = _context.METRIC_ASSESSMENT_COMPLETE.Where(x => x.PERC_COMPLETE >= 1.0m).OrderBy(x => x.Assessment_id).Select(x => x.Assessment_id).ToList();
+            var m = _context.METRIC_COMPLETED_ENTRY.OrderBy(x => x.assessment_id).Select(x => x.assessment_id).ToList();
             //D0C19648-00F5-4215-AF2D-C7EBD75FC578
             foreach (int id in m)
             {
-
-                if (conversionBusiness.IsEntryCF(id))
+                try
                 {
-                    try
-                    {
-                        await conversionBusiness.ConvertEntryToMid(id);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.ToString());   
-                    }
+                    await conversionBusiness.ConvertEntryToMid(id);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());   
                 }
             }
             var legacies = _context.ASSESSMENTS.Where(x=> x.GalleryItemGuid == new Guid("D0C19648-00F5-4215-AF2D-C7EBD75FC578")).Select(x => x.Assessment_Id).ToList();

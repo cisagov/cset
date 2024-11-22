@@ -1003,7 +1003,7 @@
          "ObjectType": 3
       },
       {
-         "Name": "[dbo].[METRIC_ASSESSMENT_COMPLETE]",
+         "Name": "[dbo].[METRIC_COMPLETED_ENTRY]",
          "ObjectType": 3
       },
       {

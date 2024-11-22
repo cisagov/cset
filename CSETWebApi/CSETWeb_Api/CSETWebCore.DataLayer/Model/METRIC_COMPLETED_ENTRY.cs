@@ -9,15 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace CSETWebCore.DataLayer.Model;
 
 [Keyless]
-public partial class METRIC_ASSESSMENT_COMPLETE
+public partial class METRIC_COMPLETED_ENTRY
 {
-    public int Assessment_id { get; set; }
-
-    [Required]
-    [StringLength(17)]
-    [Unicode(false)]
-    public string Question_Type { get; set; }
-
-    [Column(TypeName = "numeric(26, 14)")]
-    public decimal? PERC_COMPLETE { get; set; }
+    public int assessment_id { get; set; }
 }

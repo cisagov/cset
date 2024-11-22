@@ -331,7 +331,7 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<MATURITY_SUB_MODEL_QUESTIONS> MATURITY_SUB_MODEL_QUESTIONS { get; set; }
 
-    public virtual DbSet<METRIC_ASSESSMENT_COMPLETE> METRIC_ASSESSMENT_COMPLETE { get; set; }
+    public virtual DbSet<METRIC_COMPLETED_ENTRY> METRIC_COMPLETED_ENTRY { get; set; }
 
     public virtual DbSet<METRO_ANSWERS> METRO_ANSWERS { get; set; }
 
@@ -1911,9 +1911,9 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Sub_Model_NameNavigation).WithMany(p => p.MATURITY_SUB_MODEL_QUESTIONS).HasConstraintName("FK_MATURITY_SUB_MODEL_QUESTIONS_MATURITY_SUB_MODELS");
         });
 
-        modelBuilder.Entity<METRIC_ASSESSMENT_COMPLETE>(entity =>
+        modelBuilder.Entity<METRIC_COMPLETED_ENTRY>(entity =>
         {
-            entity.ToView("METRIC_ASSESSMENT_COMPLETE");
+            entity.ToView("METRIC_COMPLETED_ENTRY");
         });
 
         modelBuilder.Entity<METRO_ANSWERS>(entity =>
