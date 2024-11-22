@@ -30,6 +30,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using CSETWebCore.Helpers;
 using CSETWebCore.Model.Document;
 using Microsoft.IdentityModel.Tokens;
+using System.IO;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -280,6 +281,51 @@ namespace CSETWebCore.Api.Controllers
         {
             return _diagram.GetAllComponentSymbols();
         }
+
+
+        /// <summary>
+        /// A refactor of the diagram data calls
+        /// to consolidate them into one call
+        /// </summary>
+        /// <returns>A container that holds all the diagram data</returns>
+        [CsetAuthorize]
+        [Route("api/diagram/getAllDiagram")]
+        [HttpGet]
+        public RootDiagramContainer GetAllDiagramData()
+        {
+            try
+            {
+                int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
+                var diagramXml = _diagram.GetDiagramXml((int)assessmentId);
+                
+                RootDiagramContainer diagramContainer = new RootDiagramContainer();
+                diagramContainer.diagramXml = _diagram.GetDiagramXml((int)assessmentId);
+                String contentReader = diagramXml.ReadToEnd();
+                diagramContainer.vertices = _diagram.ProcessDiagramVertices(new StringReader(contentReader), assessmentId ?? 0);                
+                diagramContainer.zones = _diagram.GetDiagramZones(diagramContainer.vertices);
+                diagramContainer.components = _diagram.GetDiagramComponents(diagramContainer.vertices);
+                diagramContainer.edges = _diagram.ProcessDiagramEdges(new StringReader(contentReader), assessmentId ?? 0);
+                diagramContainer.links = _diagram.GetDiagramLinks(diagramContainer.edges);
+                diagramContainer.shapeVertices = _diagram.ProcessDiagramShapes(new StringReader(contentReader), assessmentId ?? 0);
+                diagramContainer.shapes = _diagram.GetDiagramShapes(diagramContainer.shapeVertices);
+                diagramContainer.texts = _diagram.GetDiagramText(diagramContainer.shapeVertices);
+                diagramContainer.symbols = _diagram.GetComponentSymbols();
+                return diagramContainer;
+
+
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+
+                return null; //BadRequest("No components available");
+            }
+            finally
+            {
+            }
+        }
+
+
 
         /// <summary>
         /// Returns list of diagram components
