@@ -25,9 +25,12 @@ namespace DuplicateAssessments
             throw new NotImplementedException();
         }
 
+        //in the test harness we assume that the time 
+        //is the same time zone on both ends
         public DateTime UtcToLocal(DateTime dt)
         {
-            throw new NotImplementedException();
+            
+            return dt;
         }
     }
 }

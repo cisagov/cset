@@ -162,5 +162,17 @@
   <Table name="ASSESSMENT_IRP" />
 	
   <Table name="AVAILABLE_MATURITY_MODELS" />
+  <Table name="ANSWER_PROFILE" />
     
+    <Table name="CIS_CSI_USER_COUNTS" />
+    <Table name="COUNTY_ANSWERS" />
+    <Table name="CSAF_FILE" />
+    <Table name="DEMOGRAPHIC_ANSWERS" />
+    <Table name="FINANCIAL_DOMAIN_FILTERS_V2" />
+    <Table name="MALCOLM_ANSWERS" />
+    <Table name="MATURITY_DOMAIN_REMARKS" />
+    <Table name="METRO_ANSWERS" />
+    <Table name="REGION_ANSWERS" />
+
+
 </Tables>

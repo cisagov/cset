@@ -68,6 +68,17 @@ namespace CSETWebCore.Business.Contact
 
         }
 
+        public bool IsLegacyCFFull(int assessmentId)
+        {
+            //saving the db lookup so far we think it can only be this value
+            //D0C19648-00F5-4215-AF2D-C7EBD75FC578
+            var assess = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            if(assess == null) { return false; }
+            return assess.GalleryItemGuid == new Guid("D0C19648-00F5-4215-AF2D-C7EBD75FC578");
+        }
+
+        
+
 
         /// <summary>
         /// Returns true if the assessment has a MATURITY-SUBMODEL record of 'RRA CF'
@@ -123,6 +134,65 @@ namespace CSETWebCore.Business.Contact
             return results;
         }
 
+        public async Task ConvertLegacy(int assessmentId)
+        {
+
+            /**
+             * Before here the upgrade script should grab 
+             * all the old guids
+             * 
+             * Clone the assessment
+             * update the answers for U to 0
+             * update the answers for N to 1
+             * update the answers for Y,A, NA to 2
+             * update the guid to be the new guid
+             * 
+                new Guid CB818F86-9074-4B8A-8544-FFA946EAF1EA
+                old GUID D0C19648-00F5-4215-AF2D-C7EBD75FC578
+             */
+            assessmentId = await DuplicateAssessment(assessmentId);
+            // remove the CPG AVAILABLE_MATURITY_MODELS record and
+            // add the CF and RRA records back in
+            var availMaturity = _context.AVAILABLE_MATURITY_MODELS
+                .Where(x => x.Assessment_Id == assessmentId && x.model_id == CPG_Model_Id && x.Selected).FirstOrDefault();
+
+            if (availMaturity != null)
+            {
+                _context.AVAILABLE_MATURITY_MODELS.Remove(availMaturity);
+
+                var newAvailMaturity = new AVAILABLE_MATURITY_MODELS()
+                {
+                    Assessment_Id = assessmentId,
+                    Selected = true,
+                    model_id = RRA_Model_Id
+                };
+
+                _context.AVAILABLE_MATURITY_MODELS.Add(newAvailMaturity);
+                _context.AVAILABLE_STANDARDS.Add(new AVAILABLE_STANDARDS()
+                {
+                    Assessment_Id = assessmentId,
+                    Selected = true,
+                    Set_Name = CF_SetName
+                });
+            }
+
+            //just call the stored proc
+            await _context.Procedures.usp_CF_ConvertLegacyFullAsync(assessmentId);
+
+
+            // add details_demographics flagging the assessment as a "used to be a CyberFlorida entry assessment"
+            var biz = new DemographicBusiness(_context, _assessmentUtil);
+            biz.SaveDD(assessmentId, "FORMER-CF-LEGACY-FULL", "true", null);
+
+            // changing gallery guid to mid-level
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            assessment.GalleryItemGuid = Guid.Parse("CB818F86-9074-4B8A-8544-FFA946EAF1EA");
+            assessment.UseStandard = true;
+
+            _context.SaveChanges();
+
+            _assessmentUtil.TouchAssessment(assessmentId);
+        }
 
         /// <summary>
         /// Converts a Cyber Florida "entry" assessment to a full
@@ -296,7 +366,7 @@ namespace CSETWebCore.Business.Contact
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public void CreateAnswerRecordsFromCFToCPG(int assessmentId)
+        private void CreateAnswerRecordsFromCFToCPG(int assessmentId)
         {
             // get the titles 
 

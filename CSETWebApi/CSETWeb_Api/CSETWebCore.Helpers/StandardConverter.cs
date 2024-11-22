@@ -139,8 +139,9 @@ namespace CSETWebCore.Helpers
                     question.Std_Ref_Id = question.Std_Ref + question.Std_Ref_Number;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.Write(e);
                 result.LogError("Module could not be added.");
             }
 
