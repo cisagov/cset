@@ -253,7 +253,7 @@ export class MyAssessmentsComponent implements OnInit, AfterViewInit {
     this.assessSvc.getAssessmentsCompletion().pipe(
       concatMap((assessmentsCompletionData: any[]) =>
         this.assessSvc.getAssessments().pipe(
-          map((assessments: UserAssessment[]) => {
+          map((assessments: any[]) => {            
             assessments.forEach((item, index, arr) => {
               if (this.isCF) {
                 assessmentiDs.push(item.assessmentId);
