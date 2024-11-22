@@ -30,6 +30,7 @@ import { ReportAnalysisService } from '../../../services/report-analysis.service
 import { ReportService } from '../../../services/report.service';
 import { RraDataService } from '../../../services/rra-data.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
   selector: 'app-rra-deficiency',
@@ -57,7 +58,8 @@ export class RraDeficiencyComponent implements OnInit {
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
     public rraDataSvc: RraDataService,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService,
+    public assessSvc: AssessmentService
   ) { }
 
   
@@ -69,7 +71,6 @@ export class RraDeficiencyComponent implements OnInit {
       .subscribe(value =>
         this.titleService.setTitle(this.tSvc.translate('reports.core.rra.rra deficiency report') + ' - ' + this.configSvc.behaviors.defaultTitle));
     
-
     this.maturitySvc.getMaturityDeficiency("RRA").subscribe(
       (r: any) => {
         this.response = r;
