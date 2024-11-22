@@ -25,6 +25,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Vendor } from '../models/diagram-vulnerabilities.model';
+import { Subject } from 'rxjs';
 
 const headers = {
   headers: new HttpHeaders()
@@ -37,9 +38,19 @@ export class DiagramService {
   apiUrl: string;
   id: number;
   csafVendors: Vendor[] = [];
+  private dataSubject = new Subject<any>();
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
-    this.apiUrl = this.configSvc.apiUrl + 'diagram/';
+    this.apiUrl = this.configSvc.apiUrl + 'diagram/';    
+  }
+  
+
+  getDiagramDataObservable() {
+    return this.dataSubject.asObservable();
+  }
+
+  emitDiagramData(data: any) {
+    this.dataSubject.next(data);
   }
 
   // calls to retrieve static data
@@ -53,6 +64,14 @@ export class DiagramService {
 
   getAllSymbols() {
     return this.http.get(this.apiUrl + 'symbols/getAll');
+  }
+
+  //replaces all the previous seperate calls
+  //to eliminate the current deadlock on the server
+  getCompleteDiagram(){
+    return this.http.get(this.apiUrl + 'getAllDiagram').subscribe((diaDataResult)=>{
+      this.emitDiagramData(diaDataResult);
+    });
   }
 
   // get diagram components
