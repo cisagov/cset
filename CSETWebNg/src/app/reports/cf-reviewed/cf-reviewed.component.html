@@ -32,7 +32,7 @@
 
         <div class="column">
             <p style="text-align:center;">
-                <img width="471" height="529" alt="cip" src="assets/images/CF/CIP_logo.svg">
+                <img width="580" height="518" alt="cip" src="assets/images/CF/CIP_Cover.png">
             </p>
         </div>
         <div class="cover-page-bottom">
@@ -47,6 +47,14 @@
 
     <div class="page-break">
         <app-report-advisory></app-report-advisory>
+    </div>
+
+    <div class="page-break">
+        <h1>Maturity Scale</h1>
+        <div style="margin-left: 14%">
+            <img src="assets/images/CF/Seven_Steps_v2.svg" style="width: 580px;"/>
+            <p style="width: 580px;">Maturity Scale provided courtesy of the Center for Internet Security (<a href="https://www.cisecurity.org/" target="_blank">www.cisecurity.org</a>)</p>
+        </div>
     </div>
 
     <div class="page-break">
@@ -93,49 +101,16 @@
                                 <div class="progress-bar" style="width: 250px">
                                     <div class="progress-bar-fill d-flex justify-content-end align-items-center"
                                         [style.width]="convertScoreToPercent(subcat.average) + '%'">
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <div [class]="getBackground(subcat.average)"></div>
-                                                <div style="background-color: #383444; color: white; 
-                                                    transform: translateY(13px); border-radius: 8px; 
-                                                    padding-left: 4px; padding-right: 4px;">
-                                                    {{ subcat.average }}
-                                                </div>
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <div class="progress-bar-dot"></div>
+                                            <div style="background-color: #383444; color: white; 
+                                                transform: translateY(13px); border-radius: 8px; 
+                                                padding-left: 4px; padding-right: 4px;">
+                                                {{ subcat.average }}
                                             </div>
+                                        </div>
                                     </div>
-                                    
                                 </div>
-                                                                 
-                                <!-- <mat-progress-bar
-                                    mode="determinate" 
-                                    [value]="convertScoreToPercent(subcat.average)">
-                                </mat-progress-bar> -->
-                                <!-- <mat-slider [--mdc-slider-handle-color]="getBackground(subcat.average)" [color]="warning" style="width: 600px;" [disabled]="disabled" [max]="8" [min]="0" [step]="1"
-                                    [discrete]="false" [showTickMarks]="true">
-                                    <input matSliderThumb [value]="subcat.average" #slider>
-                                </mat-slider> -->
-                                <!-- <ng-container class="d-flex flex-row" style="margin-left: 8px; margin-right: 4px; justify-content: space-between;">
-                                    <div>0</div>
-                                    <div>1</div>
-                                    <div>2</div>
-                                    <div>3</div>
-                                    <div>4</div>
-                                    <div>5</div>
-                                    <div>5</div>
-                                    <div>6</div>
-                                    <div>7</div>
-                                </ng-container>
-                                <ng-container class="d-flex flex-row">
-                                        <ng-container>
-                                            Not<br>Mapped
-                                        </ng-container>
-                                    <ng-container class="d-flex flex-column" style="margin-left:auto">
-                                        <ng-container>Optimized</ng-container>
-                                    </ng-container>
-                                </ng-container> -->
-                                
-                                <!-- <div style="font-weight: bold;">
-                                    {{ t('answer-options.labels.' + (q.answer ?? '1') + '-cf') }}
-                                </div> -->
                             </ng-container>
                         </td>
                     </tr>

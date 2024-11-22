@@ -660,6 +660,8 @@ import { CfCommentsMarkedForReviewComponent } from './reports/cf-commentsmarked/
 import { CfReviewedComponent } from './reports/cf-reviewed/cf-reviewed.component';
 import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.component';
 import { CfDetailedScoresComponent } from './reports/cf-detailed-scores/cf-detailed-scores.component';
+import { NcsfDashbordComponent } from './assessment/results/ncsf/ncsf-dashbord/ncsf-dashbord.component';
+import { NscfControlPrioritiesComponent } from './assessment/results/ncsf/nscf-control-priorities/nscf-control-priorities.component';
 
 
 @NgModule({ declarations: [
@@ -1195,7 +1197,9 @@ import { CfDetailedScoresComponent } from './reports/cf-detailed-scores/cf-detai
         CfCommentsMarkedForReviewComponent,
         CfReviewedComponent,        
         RolesChangedComponent,
-        CfDetailedScoresComponent
+        CfDetailedScoresComponent,
+        NcsfDashbordComponent,
+        NscfControlPrioritiesComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,

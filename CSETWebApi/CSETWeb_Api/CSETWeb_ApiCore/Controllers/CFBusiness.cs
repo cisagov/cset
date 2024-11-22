@@ -100,7 +100,7 @@ namespace CSETWebCore.Api.Controllers
                                                 //|| x.Answer_Text == "A"
                                                 ).Count();
 
-            Dictionary<int, string> answerLookup = _context.NCSF_INDEX_ANSWERS.ToDictionary(x => x.Raw_Answer_Value, y => y.Display_Value);
+            Dictionary<int, string> answerLookup = _context.NCSF_INDEX_ANSWERS.ToDictionary(x => x.Raw_Answer_Value, y => y.Display_Tag);
 
             list.Add(new CFBar()
             {

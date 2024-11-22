@@ -1,23 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { CyberFloridaService } from '../../services/cyberflorida.service';
-import { TranslocoService } from '@jsverse/transloco';
 import { Title } from '@angular/platform-browser';
-import { ConfigService } from '../../services/config.service';
-import { QuestionsService } from '../../services/questions.service';
-import { ReportService } from '../../services/report.service';
+import { TranslocoService } from '@jsverse/transloco';
+import { ConfigService } from '../../../../services/config.service';
+import { CyberFloridaService } from '../../../../services/cyberflorida.service';
+import { QuestionsService } from '../../../../services/questions.service';
+import { ReportService } from '../../../../services/report.service';
 
 @Component({
-  selector: 'app-cf-reviewed',
-  templateUrl: './cf-reviewed.component.html',
-  styleUrls: ['../reports.scss', './cf-reviewed.component.scss', '../acet-reports.scss']
+  selector: 'app-ncsf-dashbord',
+  templateUrl: './ncsf-dashbord.component.html',
+  styleUrl: './ncsf-dashbord.component.scss'
 })
-export class CfReviewedComponent implements OnInit {
+export class NcsfDashbordComponent implements OnInit {
   barChart: any[];
   scores: any[];
   parsedScores: any[] = [];
   totalAvg: any;
 
-  view: any[] = [800, 500];
+  domainChart: any[] = [];
+
+  answerView: any[] = [800, 500];
+  categoryView: any[] = [800, 400];
 
   // options
   showXAxis = true;
@@ -29,8 +32,16 @@ export class CfReviewedComponent implements OnInit {
   showYAxisLabel = true;
   yAxisLabel = 'Answer';
 
+  xScaleMin: number = 7;
+
+  loaded: number = 0;
+
   colorScheme = {
     domain: ['#706c6c', '#706c6c', '#706c6c', '#706c6c', '#706c6c', '#383444', '#383444', '#383444', '#383444']
+  };
+
+  categoryColorScheme = {
+    domain: []
   };
 
   constructor(
@@ -41,33 +52,37 @@ export class CfReviewedComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService
   ) {}
-  
+
   ngOnInit() {
     this.cfSvc.getBarChartInfo().subscribe(
       (r: any) => {
         this.barChart = r;
+        this.loaded++;
     });
 
     this.cfSvc.getScoreBreakdown().subscribe(
       (r: any) => {
+        console.log(r)
         this.scores = r;
+        console.log(this.scores.filter(x => x.standard_Category == 'Govern'))
         this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Govern'));
         this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Identify'));
         this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Protect'));
         this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Detect'));
         this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Respond'));
         this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Recover'));
+        this.loaded++;
+
+        this.parsedScores.forEach(domain => {
+          this.domainChart.push({"name": domain[0].standard_Category, "value": domain[0].groupAvg});
+          this.categoryColorScheme.domain.push(domain[0].groupAvg < 5 ? '#706c6c' : '#383444');
+        });
       });
 
     this.cfSvc.getTotalAverageForReports().subscribe(
       (r: any) => {
         this.totalAvg = r;
+        this.loaded++;
     });
-
-  }
-
-  convertScoreToPercent(score: any) {
-    let wholeNum = (score*100) / 7;
-    return wholeNum;
   }
 }
