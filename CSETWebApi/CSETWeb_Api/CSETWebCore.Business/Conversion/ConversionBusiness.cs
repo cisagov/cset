@@ -313,7 +313,8 @@ namespace CSETWebCore.Business.Contact
             _context.SaveChanges();
 
             var assessInfo = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
-            assessInfo.Assessment_Name += " (Upgraded)";
+            
+            assessInfo.Assessment_Name += " (Converted)";
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(assessmentId);
@@ -366,8 +367,11 @@ namespace CSETWebCore.Business.Contact
             _assessmentUtil.TouchAssessment(assessmentId);
 
             var assessInfo = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
-            assessInfo.Assessment_Name += " (Upgraded)";
-            _context.SaveChanges();
+            if (!assessInfo.Assessment_Name.EndsWith(" (Converted)"))
+            {
+                assessInfo.Assessment_Name += " (Converted)";
+                _context.SaveChanges();
+            }
 
             return assessmentId;
         }
