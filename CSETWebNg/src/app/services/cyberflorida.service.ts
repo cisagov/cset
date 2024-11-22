@@ -218,9 +218,9 @@ export class CyberFloridaService {
       this.http.get(this.apiUrl + 'cf/isMidComplete').toPromise()
       .then((data: any[])=>{    
           data.forEach(element => {
-            // for(let a in element){            
+            for(let a in element){            
               this.updateMidCompleteStatus(element);
-            // }  
+            }  
           });      
           
           resolve('initial state pulled');
