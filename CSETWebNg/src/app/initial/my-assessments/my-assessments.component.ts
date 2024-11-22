@@ -285,20 +285,21 @@ export class MyAssessmentsComponent implements OnInit, AfterViewInit {
                     this.navSvc.beginNewAssessmentGallery(response.rows[0].galleryItems[0]);
                 });
               }
-              this.conversionSvc.isEntryCfAssessments(assessmentiDs).subscribe(
-                (result: any) => {
-                  result.forEach((element: any) => {
-                    let assessment = assessments.find(x => x.assessmentId === element.assessmentId);
-                    if (assessment) {
-                      assessment.isEntry = element.isEntry;
-                      assessment.isEntryString = element.isEntry ? 'Entry' : (assessment.selectedMaturityModel == 'CPG' ? 'Mid' : 'Full');                        
-                      if(assessment.isEntry)
-                        assessment.totalAvailableQuestionsCount = 20;
-                    }
-                  });
-                  this.sortedAssessments = assessments;
-                }
-              );
+              if(assessmentiDs.length>0)
+                this.conversionSvc.isEntryCfAssessments(assessmentiDs).subscribe(
+                  (result: any) => {
+                    result.forEach((element: any) => {
+                      let assessment = assessments.find(x => x.assessmentId === element.assessmentId);
+                      if (assessment) {
+                        assessment.isEntry = element.isEntry;
+                        assessment.isEntryString = element.isEntry ? 'Entry' : (assessment.selectedMaturityModel == 'CPG' ? 'Mid' : 'Full');                        
+                        if(assessment.isEntry)
+                          assessment.totalAvailableQuestionsCount = 20;
+                      }
+                    });
+                    this.sortedAssessments = assessments;
+                  }
+                );
             }
             else {
               this.sortedAssessments = assessments;
