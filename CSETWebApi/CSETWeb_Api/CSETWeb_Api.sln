@@ -41,8 +41,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSETWebCore.DatabaseManager
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuplicateAssessments", "DuplicateAssessments\DuplicateAssessments.csproj", "{4D47B51B-C626-418F-991E-05A77A65F1AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSETWebCore.DataLayerTests", "CSETWebCore.DataLayerTests\CSETWebCore.DataLayerTests.csproj", "{27DDED49-6D8C-4367-B260-3C694695069B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -242,16 +240,6 @@ Global
 		{4D47B51B-C626-418F-991E-05A77A65F1AF}.NCUA|Any CPU.Build.0 = Debug|Any CPU
 		{4D47B51B-C626-418F-991E-05A77A65F1AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D47B51B-C626-418F-991E-05A77A65F1AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{27DDED49-6D8C-4367-B260-3C694695069B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27DDED49-6D8C-4367-B260-3C694695069B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27DDED49-6D8C-4367-B260-3C694695069B}.localdb|Any CPU.ActiveCfg = Debug|Any CPU
-		{27DDED49-6D8C-4367-B260-3C694695069B}.localdb|Any CPU.Build.0 = Debug|Any CPU
-		{27DDED49-6D8C-4367-B260-3C694695069B}.localhost|Any CPU.ActiveCfg = Debug|Any CPU
-		{27DDED49-6D8C-4367-B260-3C694695069B}.localhost|Any CPU.Build.0 = Debug|Any CPU
-		{27DDED49-6D8C-4367-B260-3C694695069B}.NCUA|Any CPU.ActiveCfg = Debug|Any CPU
-		{27DDED49-6D8C-4367-B260-3C694695069B}.NCUA|Any CPU.Build.0 = Debug|Any CPU
-		{27DDED49-6D8C-4367-B260-3C694695069B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27DDED49-6D8C-4367-B260-3C694695069B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

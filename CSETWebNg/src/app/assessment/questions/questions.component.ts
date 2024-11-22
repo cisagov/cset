@@ -115,8 +115,7 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
     });
 
   }
-  ngOnInit(): void {
-    console.log(this.assessSvc.assessment)
+  ngOnInit(): void {    
     this.configSvc.checkOnlineStatusFromConfig();
   }
 
