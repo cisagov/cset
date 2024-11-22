@@ -1,3 +1,4 @@
+
 -- =============================================
 -- Author:		Barry
 -- Create date: 4/6/2022
@@ -16,13 +17,13 @@ BEGIN
 	from
 	(
 		select distinct Assessment_Id= @assessment_id,
-		Question_Group as Title, Answer_Text = 'Y'
+		Question_Group as Title, Global_Sequence, Answer_Text = 'Y'
 		from ANALYTICS_MATURITY_GROUPINGS		
 		where Maturity_Model_Id= @maturity_model_id			
 	) G1 LEFT OUTER JOIN
 	(
 		select
-		Question_Group as Title,answer_text, count(answer_text) answer_count,
+		Question_Group as Title, answer_text, count(answer_text) answer_count,
 		sum(count(answer_text)) OVER(PARTITION BY Question_Group) AS Total,
 		cast(IsNull(Round((cast((COUNT(a.answer_text)) as float)/(isnull(nullif(sum(count(answer_text)) OVER(PARTITION BY Question_Group),0),1)))*100,0),0) as int)  as [Percentage] 
 		from Analytics_Answers a
@@ -31,7 +32,5 @@ BEGIN
 		group by Question_Group, Answer_Text
 	) G2 ON G1.Title = G2.Title AND G1.Answer_Text = G2.Answer_Text		
 	where g1.answer_text = 'Y'
-	order by Title
+	order by Global_Sequence
 END
-
---update ANSWER set Answer_Text = 'NA' where Assessment_Id = 9

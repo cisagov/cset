@@ -32,7 +32,7 @@
         <div class="disclaimer-blurb mt-4">
             <p>
                 This deficiency report shows the overall status of the assessment and how each question was answered.
-                The report then lists statements that are currently unanswered, have been answered with 
+                The report then lists statements that are currently unanswered, have been answered with
                 "No" or answered "N/A" for further review.
             </p>
             <p>
@@ -93,7 +93,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="deficiencies-list-item" style="width:630px;"><b>{{s.questionText}}</b></td>
+                            <td class="deficiencies-list-item" style="width:630px;"><b [innerHTML]="s.questionText | safe: 'html'"></b></td>
 
                             <td
                                 style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555;width:100px;">

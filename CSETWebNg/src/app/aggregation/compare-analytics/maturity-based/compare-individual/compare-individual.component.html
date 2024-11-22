@@ -22,8 +22,12 @@
 -------------------------->
 <div *transloco="let t">
 
-  <div class="chart d-flex flex-column flex-00a">
+  <div class="chart d-flex flex-column flex-00a mb-5">
     <h3>{{t('aggregation.compare.assessment answer summary')}}</h3>
+
+    <p>
+      {{t('aggregation.compare.para 10')}}
+    </p>
 
     <table class="table table-bordered table-td-p2">
       <tr>
@@ -51,10 +55,10 @@
       {{t('aggregation.compare.domain level compliance')}}
     </h3>
     <p class="text-start">
-      {{t('aggregation.compare.compliance 1')}}
+      {{t('aggregation.compare.para 6')}}
     </p>
     <p class="text-start">
-      {{t('aggregation.compare.compliance 2')}}
+      {{t('aggregation.compare.compliance 1')}}
     </p>
 
     <div *ngIf="!chartsMaturityCompliance || chartsMaturityCompliance.length == 0">

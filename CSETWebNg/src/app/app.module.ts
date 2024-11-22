@@ -279,6 +279,8 @@ import { CommonModule } from '@angular/common';
 import { NavBackNextComponent } from './assessment/navigation/nav-back-next/nav-back-next.component';
 import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component';
 import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-components/compliance-score/compliance-score.component';
+import { ScoreRangeComponent } from './assessment/results/score-range/score-range.component';
+import { ScoreRangesComponent } from './assessment/results/score-ranges/score-ranges.component';
 import { CmmcStyleService } from './services/cmmc-style.service';
 import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
 import { IrpSectionComponent } from './reports/irp/irp.component';
@@ -662,6 +664,7 @@ import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.com
 import { CfDetailedScoresComponent } from './reports/cf-detailed-scores/cf-detailed-scores.component';
 import { NcsfDashbordComponent } from './assessment/results/ncsf/ncsf-dashbord/ncsf-dashbord.component';
 import { NscfControlPrioritiesComponent } from './assessment/results/ncsf/nscf-control-priorities/nscf-control-priorities.component';
+import { AnalyticsResultsComponent } from './assessment/results/analytics-results/analytics-results.component';
 
 
 @NgModule({ declarations: [
@@ -824,6 +827,8 @@ import { NscfControlPrioritiesComponent } from './assessment/results/ncsf/nscf-c
         Cmmc2DomainResultsComponent,
         SprsScoreComponent,
         ComplianceScoreComponent,
+        ScoreRangeComponent,
+        ScoreRangesComponent,
         ModelSelectComponent,
         CategoryBlockComponent,
         AskQuestionsComponent,
@@ -1199,7 +1204,10 @@ import { NscfControlPrioritiesComponent } from './assessment/results/ncsf/nscf-c
         RolesChangedComponent,
         CfDetailedScoresComponent,
         NcsfDashbordComponent,
-        NscfControlPrioritiesComponent
+        NscfControlPrioritiesComponent,
+        QuestionsReviewedComponent, 
+        RolesChangedComponent, 
+        AnalyticsResultsComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
