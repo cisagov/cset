@@ -260,7 +260,7 @@ namespace CSETWebCore.Business.Contact
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task ConvertEntryToMid(int assessmentId)
+        public async Task<int> ConvertEntryToMid(int assessmentId)
         {
             assessmentId = await DuplicateAssessment(assessmentId);
             // Delete the "CF RRA" submodel record.  This will have the effect of looking
@@ -312,9 +312,10 @@ namespace CSETWebCore.Business.Contact
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(assessmentId);
+            return assessmentId;
         }
 
-        public async Task ConvertMidToFull(int assessmentId)
+        public async Task<int> ConvertMidToFull(int assessmentId)
         {
 
             assessmentId = await DuplicateAssessment(assessmentId);
@@ -358,6 +359,7 @@ namespace CSETWebCore.Business.Contact
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(assessmentId);
+            return assessmentId;
         }
 
         /// <summary>

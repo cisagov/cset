@@ -109,9 +109,9 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             
-            await _biz.ConvertEntryToMid(assessmentId);
+            int newId = await _biz.ConvertEntryToMid(assessmentId);
 
-            return Ok(assessmentId);
+            return Ok(newId);
         }
 
 
@@ -122,14 +122,14 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/convert/midToFull")]
-        public IActionResult ConvertMidToFull()
+        public async Task<IActionResult> ConvertMidToFull()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
             
-            _biz.ConvertMidToFull(assessmentId);
+            int newId = await _biz.ConvertMidToFull(assessmentId);
 
-            return Ok();
+            return Ok(newId);
         }
 
         [HttpGet]
