@@ -157,7 +157,6 @@ export class CyberFloridaService {
         isComplete = false;
       }
     });
-    console.log(isComplete)
 
     return isComplete;
   }
