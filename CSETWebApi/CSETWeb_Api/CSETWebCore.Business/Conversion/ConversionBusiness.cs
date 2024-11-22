@@ -308,7 +308,12 @@ namespace CSETWebCore.Business.Contact
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             assessment.GalleryItemGuid = Guid.Parse(Mid_Gallery_Guid);
             assessment.UseStandard = false;
+            
 
+            _context.SaveChanges();
+
+            var assessInfo = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+            assessInfo.Assessment_Name += " (Upgraded)";
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(assessmentId);
@@ -359,6 +364,11 @@ namespace CSETWebCore.Business.Contact
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(assessmentId);
+
+            var assessInfo = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+            assessInfo.Assessment_Name += " (Upgraded)";
+            _context.SaveChanges();
+
             return assessmentId;
         }
 

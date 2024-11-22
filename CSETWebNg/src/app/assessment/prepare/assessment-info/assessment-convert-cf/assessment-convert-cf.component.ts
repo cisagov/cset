@@ -54,8 +54,8 @@ export class AssessmentConvertCfComponent implements OnInit {
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
         if (this.isEntry) {
-          this.convertSvc.convertCfToMid().subscribe(resp => {
-            this.assessSvc.loadAssessment(this.assessSvc.assessment.id);
+          this.convertSvc.convertCfToMid().subscribe((resp: number) => {
+            this.assessSvc.loadAssessment(resp);
   
             const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
             dlgOkay.componentInstance.hasHeader = true;
@@ -68,8 +68,8 @@ export class AssessmentConvertCfComponent implements OnInit {
           });
         }
         else {
-          this.convertSvc.convertMidToFull().subscribe(resp => {
-            this.assessSvc.loadAssessment(this.assessSvc.assessment.id);
+          this.convertSvc.convertMidToFull().subscribe((resp: number) => {
+            this.assessSvc.loadAssessment(resp);
   
             const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
             dlgOkay.componentInstance.hasHeader = true;
