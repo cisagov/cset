@@ -63,23 +63,23 @@ export class DiagramComponentsComponent implements OnInit {
   /**
    *
    */
-  ngOnInit() {
-    this.getComponents();
-    this.getSymbols();
+  ngOnInit() {    
+    
+    this.diagramSvc.getDiagramDataObservable().subscribe((data) => {      
+      const z = data.components.filter(y => y.assetType != 'Connector');
+      this.diagramComponentList = z;
+      this.getComponents();
+      //this.getSymbols();  
+    });
+    
   }
 
   /**
    *
    */
   getComponents() {
-    this.diagramSvc.getDiagramComponents().subscribe((x: any[]) => {
-
-      // remove 'Connector' entries from the inventory list to reduce clutter and confusion
-      const z = x.filter(y => y.assetType != 'Connector');
-
-      this.diagramComponentList = z;
-      this.componentsChange.emit(this.diagramComponentList);
-    });
+      // remove 'Connector' entries from the inventory list to reduce clutter and confusion      
+      this.componentsChange.emit(this.diagramComponentList);    
   }
 
   /**
