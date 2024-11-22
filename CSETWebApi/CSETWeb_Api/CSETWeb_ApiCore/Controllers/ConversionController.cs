@@ -134,7 +134,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/cf/isComplete")]
-        public IActionResult IsCFComplete()
+        public IActionResult IsEntryComplete()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             var biz = new CFBusiness(_context, _assessmentUtil);

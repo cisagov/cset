@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Answer } from '../models/questions.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
+import { CompletionService } from './completion.service';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -116,7 +117,8 @@ export class CyberFloridaService {
 
   constructor(
     private http: HttpClient,
-    private configSvc: ConfigService
+    private configSvc: ConfigService,
+    private completionSvc: CompletionService
     ) {
     this.clearState();
     this.apiUrl = this.configSvc.apiUrl;
@@ -124,26 +126,32 @@ export class CyberFloridaService {
 
   isAssessmentComplete(entryLevel: boolean): boolean {    
     let isComplete = true;
-    this.needArrays.forEach((needArray) => {  
-      isComplete = true;    
-      needArray.forEach(function (value) {
-        if (value.answer == null) {
-          isComplete = isComplete && false;
-        }
-        else if (entryLevel) {
-          if (value.answer.answerText=='U'){
-            isComplete = isComplete && false;
+
+    if (entryLevel) {
+      this.needArrays.forEach((needArray) => {  
+        isComplete = true;    
+        needArray.forEach(function (value) {
+          if (value.answer == null) {
+            return false;
           }
-        } 
-        else {
-          if (value.answer.answerText=='U' || value.answer.answerText=='0' || value.answer.answerText=='NA' || value.answer.answerText=='A'){
-            isComplete = isComplete && false;
-          }
-        }
+          else if (value.answer.answerText=='U'){
+            return  false;
+          } 
+          // else {
+          //   if (value.answer.answerText=='U' || value.answer.answerText=='0' || value.answer.answerText=='NA' || value.answer.answerText=='A'){
+          //     isComplete = false;
+          //   }
+          // }
+        });
+        if(isComplete)
+          return isComplete;
       });
-      if(isComplete)
-        return isComplete;
-    });
+    }
+
+    else {
+      isComplete = (this.completionSvc.answeredCount == this.completionSvc.totalCount);
+    }
+    
     return isComplete;
   }
 
@@ -183,22 +191,24 @@ export class CyberFloridaService {
     });
   }
 
-  getInitialState(){
+  getInitialState(entryLevel: boolean){
     this.clearState();
-    return new Promise((resolve, reject)=> {
-      this.http.get(this.apiUrl + 'cf/isComplete').toPromise()
-      .then((data: any[])=>{    
-          data.forEach(element => {
-            for(let a in element){            
-              this.updateCompleteStatus(element[a]);
-            }  
-          });      
-          
-          resolve('initial state pulled');
-        }
-      );
-    }
-    )
+
+    // if (entryLevel) {
+      return new Promise((resolve, reject)=> {
+        this.http.get(this.apiUrl + 'cf/isComplete').toPromise()
+        .then((data: any[])=>{    
+            data.forEach(element => {
+              for(let a in element){            
+                this.updateCompleteStatus(element[a]);
+              }  
+            });      
+            
+            resolve('initial state pulled');
+          }
+        );
+      });
+    // }
     
   }
 
