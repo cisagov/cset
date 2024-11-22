@@ -28,11 +28,16 @@
                 {{t('reports.core.rra.cmfr.report title') | uppercase}}
             </p>
         </div>
-        <div class="column">
+        <div *ngIf="configSvc.config.installationMode != 'CF'; else cf" class="column">
             <p style="text-align: center">
-                <img width="471" height="529" src="assets/images/ExecutiveFiles/image002.jpg">
+              <img width="471" height="529" src="assets/images/ExecutiveFiles/image002.jpg">
             </p>
         </div>
+        <ng-template #cf class="column">
+            <p style="text-align: center">
+              <img width="580" height="518" alt="cip" src="assets/images/CF/CIP_Cover.png">
+            </p>
+        </ng-template>
 
         <div class="cover-page-bottom">
             <app-logo-for-reports></app-logo-for-reports>
