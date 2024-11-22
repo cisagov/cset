@@ -45,15 +45,12 @@ export class CfReviewedComponent implements OnInit {
   ngOnInit() {
     this.cfSvc.getBarChartInfo().subscribe(
       (r: any) => {
-        console.log(r)
         this.barChart = r;
     });
 
     this.cfSvc.getScoreBreakdown().subscribe(
       (r: any) => {
-        console.log(r)
         this.scores = r;
-        console.log(this.scores.filter(x => x.standard_Category == 'Govern'))
         this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Govern'));
         this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Identify'));
         this.parsedScores.push(this.scores.filter(x => x.standard_Category == 'Protect'));
@@ -67,27 +64,10 @@ export class CfReviewedComponent implements OnInit {
         this.totalAvg = r;
     });
 
-    // this.cfSvc.getTop5Lowest().subscribe(
-    //   (r: any) => {
-    //     console.log(r)
-    //     // this.scores = r;
-    //     // console.log(this.scores.filter(x => x.standard_Category == 'Govern'))
-        
-    //   });
-  }
-
-  getBackground(score: any) {
-    let lowestLevelAchieved = score.toString();
-    return 'progress-bar-dot';
   }
 
   convertScoreToPercent(score: any) {
     let wholeNum = (score*100) / 7;
-    // let remainder = (score*100) % 7;
-    // console.log('remainder: ' + remainder )
-
-    // let num = +(wholeNum.toString() + '.' + remainder.toString());
-    // console.log(num)
     return wholeNum;
   }
 }

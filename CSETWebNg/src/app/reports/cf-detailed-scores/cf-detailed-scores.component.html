@@ -32,7 +32,7 @@
 
         <div class="column">
             <p style="text-align:center;">
-                <img width="471" height="529" alt="cip" src="assets/images/CF/CIP_logo.svg">
+                <img width="580" height="518" alt="cip" src="assets/images/CF/CIP_Cover.png">
             </p>
         </div>
         <div class="cover-page-bottom">
@@ -47,6 +47,14 @@
 
     <div class="page-break">
         <app-report-advisory></app-report-advisory>
+    </div>
+
+    <div class="page-break">
+        <h1>Maturity Scale</h1>
+        <div style="margin-left: 14%">
+            <img src="assets/images/CF/Seven_Steps_v2.svg" style="width: 580px;"/>
+            <p style="width: 580px;">Maturity Scale provided courtesy of the Center for Internet Security (<a href="https://www.cisecurity.org/" target="_blank">www.cisecurity.org</a>)</p>
+        </div>
     </div>
 
     <div class="page-break">
@@ -80,7 +88,7 @@
             <tr style="color:#383444">
                 <td style="width: 100px">Title</td>
                 <td></td>
-                <td style="width: 70px">Score</td>
+                <td style="width: 200px">Score</td>
             </tr>
             <ng-container *ngFor="let catInfo of parsedScores" style="justify-content: space-between;">
                 <tr class="rkw-domain">
