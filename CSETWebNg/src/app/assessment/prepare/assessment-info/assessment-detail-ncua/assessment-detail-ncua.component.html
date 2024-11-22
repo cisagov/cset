@@ -206,9 +206,11 @@
                         </select>
                     </div>
                 </div>
+                <br>
                 <div *ngIf="assessment.charterType == 2 || assessment.charter >= 60000" (click)="toggleJoint()"
-                    tabindex="0" class="state-led cursor-pointer"
-                    [ngClass]="{'state-led-selected': assessment.isE_StateLed}">
+                  tabindex="0" class="state-led cursor-pointer"
+                  [ngClass]="{'state-led-selected': assessment.isE_StateLed}"
+                  matTooltip="NCUA examiners should check this box ONLY when completing a limited review of the ISE statements on state-led examinations. State examiners should check this box for all assessments.">
                     <div class="row">
                         <div class="col-2">
                             <h3 *ngIf="!assessment.isE_StateLed">&#x2610;</h3>
