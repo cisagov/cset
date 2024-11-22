@@ -263,7 +263,7 @@ namespace CSETWebCore.Business.Question
                             QuestionText = q.Simple_Question
                         };
 
-            this.QuestionsList = query.ToList();
+            this.QuestionsList = query.Distinct().ToList();
 
 
             RequirementTabData tabData = new RequirementTabData();

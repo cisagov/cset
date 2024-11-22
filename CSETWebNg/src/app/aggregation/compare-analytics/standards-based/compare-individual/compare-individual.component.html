@@ -21,8 +21,8 @@
   SOFTWARE.
 -------------------------->
 <div *transloco="let t">
-  <div class="chart d-flex flex-column flex-00a">
-    <h3>{{t('aggregation.compare.assessment answer summary')}}</h3>
+  <div class="d-flex flex-column flex-00a mb-5">
+    <h3 class="text-center">{{t('aggregation.compare.assessment answer summary')}}</h3>
     <table class="table table-bordered table-td-p2">
       <tr>
         <th class="text-start p-2">{{t('aggregation.assessment alias')}}</th>
@@ -43,25 +43,40 @@
         <td class="text-end p-2 ps-3" style="width: 10%">{{ a.u }}</td>
       </tr>
     </table>
-  </div>
-  <div *ngIf="answerCounts == null">
-    <div class="spinner-container" style="margin: 2em auto">
-      <div style="max-width: 50px; max-height: 50px;"></div>
+    <div *ngIf="answerCounts == null">
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
     </div>
   </div>
 
-  <div class="chart d-flex flex-column flex-00a">
-    <h3>{{t('aggregation.compare.overall comparison')}}</h3>
+  <div class="d-flex flex-column flex-00a mb-5">
+    <h3 class="text-center">{{t('aggregation.compare.overall comparison')}}</h3>
+
+    <p>
+      {{t('aggregation.compare.para 3')}}
+    </p>
+    <p>
+      {{t('aggregation.compare.para 4')}}
+    </p>
+
     <div *ngIf="chartOverallComparison == null">
       <div class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
       </div>
     </div>
-    <canvas id="canvasOverallComparison" style="max-height: 50rem;">{{ chartOverallComparison }}</canvas>
+    <div class="chart">
+      <canvas id="canvasOverallComparison" style="max-height: 50rem;">{{ chartOverallComparison }}</canvas>
+    </div>
   </div>
 
-  <div class=" chart d-flex flex-column flex-00a">
-    <h3>{{t('aggregation.compare.sal comparison')}}</h3>
+  <div class="d-flex flex-column flex-00a mb-5">
+    <h3 class="text-center">{{t('aggregation.compare.sal comparison')}}</h3>
+
+    <p>
+      {{t('aggregation.compare.para 5')}}
+    </p>
+
     <div *ngIf="sals == null">
       <div class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
@@ -98,8 +113,13 @@
     </div>
   </div>
 
-  <div class="chart d-flex flex-column flex-00a">
-    <h3>{{t('aggregation.compare.category percent comparisons')}}</h3>
+  <div class="d-flex flex-column flex-00a mb-5">
+    <h3 class="text-center">{{t('aggregation.compare.category percent comparisons')}}</h3>
+
+    <p>
+      {{t('aggregation.compare.para 6')}}
+    </p>
+
     <div *ngIf="chartCategoryPercent == null">
       <div class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>

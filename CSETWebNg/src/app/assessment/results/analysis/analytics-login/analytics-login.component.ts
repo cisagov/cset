@@ -42,7 +42,6 @@ export class AnalyticsloginComponent implements OnInit {
   @Output() submitEM = new EventEmitter();
 
 
-
   constructor(
     @Inject(MAT_DIALOG_DATA) public analytics: any,
     private dialog: MatDialogRef<AnalyticsloginComponent>, 
@@ -61,22 +60,22 @@ export class AnalyticsloginComponent implements OnInit {
   }
 
   postAnalyticsWithLogin() {
-    var message;
+    
     if(this.dataloginForm.valid){
       this.analyticsSvc.getAnalyticsToken(this.dataloginForm.controls.username.value, this.dataloginForm.controls.password.value).subscribe(
         data => {
           let token = data.token;
-          console.log(token);
-          this.analyticsSvc.postAnalyticsWithLogin(this.analytics, token).subscribe(
+          this.analyticsSvc.postAnalyticsWithLogin(token).subscribe(
             (data: any) => {
                 this.dialogMat.open(AlertComponent, {
                 data: { 
                     title: 'Success',
                     iconClass: 'cset-icons-check-circle',
-                    messageText: data.message 
-                }
+                    messageText: "Assessment has been uploaded"
+                  }
                 });
-              this.close();
+                
+                this.dialog.close();
             });
         },
         err => {
@@ -95,9 +94,7 @@ export class AnalyticsloginComponent implements OnInit {
             }
           } else {
             this.error = 'We were unable to log you in.  Error with login. Try again.';
-            message = err.message;
-            if (message)
-              this.error = message;
+            
           }
         });
     } else {
@@ -110,14 +107,6 @@ export class AnalyticsloginComponent implements OnInit {
    */
   close() {
     return this.dialog.close({ cancel: true });
-  }
-
-
-  /**
-   * Take user to page where they can register as a new user.
-   */
-  register() {
-    window.open(this.config.analyticsUrl + "index.html", "_blank");
   }
 
   openSnackBar(message) {

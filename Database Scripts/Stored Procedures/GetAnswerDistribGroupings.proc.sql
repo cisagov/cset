@@ -1,3 +1,4 @@
+
 -- =============================================
 -- Author:		Randy Woods
 -- Create date: 15 November 2022
@@ -7,13 +8,21 @@
 --              specific grouping?  g.Parent_Id = X
 -- =============================================
 CREATE PROCEDURE [dbo].[GetAnswerDistribGroupings] 
-	@assessmentId int
+	@assessmentId int,
+	@modelId int = null
 AS
 BEGIN
 	SET NOCOUNT ON;
 	exec FillEmptyMaturityQuestionsForAnalysis @assessmentId
 
+	-- get the main model ID for the assessment
 	declare @maturityModelId int = (select model_id from AVAILABLE_MATURITY_MODELS where Assessment_Id = @assessmentId)
+
+	-- if the caller specified a model ID, use that instead
+	if @modelId is not null 
+	BEGIN
+		select @maturityModelId = @modelId
+	END
 
 	select [grouping_id], [title], [answer_text], count(answer_text) as [answer_count]
 	from (
