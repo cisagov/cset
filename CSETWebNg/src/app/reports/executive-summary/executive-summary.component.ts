@@ -60,6 +60,7 @@ export class ExecutiveSummaryComponent implements OnInit {
   pageInitialized = false;
 
   acetDashboard: AcetDashboard;
+  cf: boolean = false;
 
 
   constructor(
@@ -75,6 +76,7 @@ export class ExecutiveSummaryComponent implements OnInit {
 
   ngOnInit() {
 
+    this.cf = this.configSvc.config.installationMode=="CF";
     this.titleService.setTitle("Executive Summary - " + this.configSvc.behaviors.defaultTitle);
 
     this.translationSub = this.translocoService.selectTranslate('')

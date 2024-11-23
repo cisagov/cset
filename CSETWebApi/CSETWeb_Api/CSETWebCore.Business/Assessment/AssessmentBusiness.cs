@@ -65,8 +65,8 @@ namespace CSETWebCore.Business.Assessment
             DateTime nowUTC = DateTime.UtcNow;
 
             string defaultExecSumm = "Cyber terrorism is a real and growing threat. Standards and guides have been developed, vetted, and widely accepted" +
-                                     " to assist with protection from cyber attacks. The Cyber Security Evaluation Tool (CSET) includes a selectable array of these standards for" +
-                                     " a tailored assessment of cyber vulnerabilities. Once the standards were selected and the resulting question sets answered, the CSET created" +
+                                     " to assist with protection from cyber attacks. The this tool includes a selectable array of these standards for" +
+                                     " a tailored assessment of cyber vulnerabilities. Once the standards were selected and the resulting question sets answered," +
                                      " a compliance summary, compiled variance statistics, ranked top areas of concern, and generated security recommendations.";
 
             string defaultAssessmentName = "New Assessment";

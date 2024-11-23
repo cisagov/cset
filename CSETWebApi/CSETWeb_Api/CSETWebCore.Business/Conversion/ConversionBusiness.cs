@@ -260,8 +260,9 @@ namespace CSETWebCore.Business.Contact
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<int> ConvertEntryToMid(int assessmentId)
+        public async Task<string> ConvertEntryToMid(int assessmentId)
         {
+            int oldAssessmentId = assessmentId;
             assessmentId = await DuplicateAssessment(assessmentId);
             // Delete the "CF RRA" submodel record.  This will have the effect of looking
             // at the entire RRA model.
@@ -312,18 +313,19 @@ namespace CSETWebCore.Business.Contact
 
             _context.SaveChanges();
 
+            var assessInfoOld = _context.INFORMATION.Where(x => x.Id == oldAssessmentId).FirstOrDefault();
             var assessInfo = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
-            
-            assessInfo.Assessment_Name += " (Converted)";
+           
+            assessInfo.Assessment_Name = assessInfoOld.Assessment_Name+ " (Converted)";
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(assessmentId);
-            return assessmentId;
+            return assessInfo.Assessment_Name;
         }
 
-        public async Task<int> ConvertMidToFull(int assessmentId)
+        public async Task<String> ConvertMidToFull(int assessmentId)
         {
-
+            int OldAssessmentId = assessmentId;
             assessmentId = await DuplicateAssessment(assessmentId);
             // remove the CPG AVAILABLE_MATURITY_MODELS record and
             // add the CF and RRA records back in
@@ -366,14 +368,17 @@ namespace CSETWebCore.Business.Contact
 
             _assessmentUtil.TouchAssessment(assessmentId);
 
+            var assessInfoOld = _context.INFORMATION.Where(x => x.Id == OldAssessmentId).FirstOrDefault();
             var assessInfo = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+
+            assessInfo.Assessment_Name = assessInfoOld.Assessment_Name + " (Converted)";
             if (!assessInfo.Assessment_Name.EndsWith(" (Converted)"))
             {
                 assessInfo.Assessment_Name += " (Converted)";
                 _context.SaveChanges();
             }
 
-            return assessmentId;
+            return assessInfo.Assessment_Name;
         }
 
         /// <summary>

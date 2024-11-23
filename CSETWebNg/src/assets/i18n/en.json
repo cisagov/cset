@@ -110,7 +110,7 @@
       "show ip rights assertion": false
     },
     "cf": {
-      "app long name": "Cyber Florida Assessment Tool",
+      "app long name": "Florida Cyber Risk Assessment (FCRA ®)",
       "app short name": "CF",
       "org long name": "Cyber Florida",
       "org short name": "CF",
@@ -394,8 +394,8 @@
     "submitted": "Submitted"
   },
   "cyber-florida": {
-    "upgrade message": "We hope you find these reports helpful.  You can expand these results with more information by completing the full assessment here.  To participate in the Cyber Florida Full Assessment click the convert button below.",
-    "upgrade confirm 1": "Upgrading the assessment.  Would you like to continue?",
+    "upgrade message": "We hope you find these reports helpful.  You can expand these results with more information by completing the Mid-Level (CPGs) Assessment here.  To participate in the next level Cyber Florida Assessment click the convert button below.",
+    "upgrade confirm 1": "Converting the assessment.  Would you like to continue?",
     "upgrade confirm 2": "The assessment has been converted.",
     "title upgrade complete": "Conversion Complete",
     "upgrade to mid button": "Convert to Mid Assessment",

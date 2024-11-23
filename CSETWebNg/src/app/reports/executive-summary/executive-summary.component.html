@@ -30,8 +30,9 @@
       </p>
     </div>
     <div class="column">
-      <p style="text-align: center">
-        <img width="471" height="529" alt="cset" src="assets/images/ExecutiveFiles/image002.jpg">
+      <p style="text-align: center">        
+        <img *ngIf="!cf" width="471" height="529" alt="cset" src="assets/images/ExecutiveFiles/image002.jpg">
+        <img *ngIf="cf" width="580" height="515"  src="assets/images/CF/CIP_Cover.png">
       </p>
     </div>
 
