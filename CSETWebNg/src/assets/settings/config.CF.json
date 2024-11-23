@@ -19,6 +19,7 @@
         "showCityName": false,
         "showStateName": false,
         "showContacts": true,
+        "showDisclaimer":false,
         "showOrganizationName": true,
         "showBusinessAgencyName": true,
         "showCriticalService": true,

@@ -7,6 +7,7 @@ import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component'
 import { TranslocoService } from '@jsverse/transloco';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { GalleryService } from '../../../../services/gallery.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-assessment-convert-cf',
@@ -26,7 +27,8 @@ export class AssessmentConvertCfComponent implements OnInit {
     private convertSvc: ConversionService,
     public dialog: MatDialog,
     private navSvc: NavigationService,
-    private gallerySvc: GalleryService
+    private gallerySvc: GalleryService,
+    public router: Router
   ) { }
 
   /**
@@ -53,37 +55,36 @@ export class AssessmentConvertCfComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
-        if (this.isEntry) {
-          this.convertSvc.convertCfToMid().subscribe((resp: number) => {
-            this.assessSvc.loadAssessment(resp);
-  
-            const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
+        if (this.isEntry) {          
+          this.convertSvc.convertCfToMid().subscribe((resp: string) => {
+            var tmpMsg = msg2 + "\n Your new assessment is named "+ resp;
+            const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: tmpMsg } });
             dlgOkay.componentInstance.hasHeader = true;
-            dlgOkay.afterClosed().subscribe(() => {
-              this.navSvc.buildTree();
-              this.navSvc.navDirect('tutorial-conversion');
+             dlgOkay.afterClosed().subscribe(() => {
+              this.router.navigate(['/landing-page-tabs'], {
+                queryParams: {
+                  'tab': 'myAssessments'
+                },
+                queryParamsHandling: 'merge',
+              });
+                           
             });
-            // this.navSvc.navDirect('standard-questions');
             
           });
         }
         else {
-          this.convertSvc.convertMidToFull().subscribe((resp: number) => {
-            this.assessSvc.loadAssessment(resp);
-  
-            const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
+          this.convertSvc.convertMidToFull().subscribe((resp: string) => {            
+            var tmpMsg = msg2 + "\n Your new assessment is named "+ resp;    
+            const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: tmpMsg } });
             dlgOkay.componentInstance.hasHeader = true;
-            dlgOkay.afterClosed().subscribe(() => {
-              this.navSvc.buildTree();
-              this.gallerySvc.getGalleryItems('CF').subscribe(
-                (result: any) => {
-                  result[0]
+             dlgOkay.afterClosed().subscribe(() => {
+              this.router.navigate(['/landing-page-tabs'], {
+                queryParams: {
+                  'tab': 'myAssessments'
+                },
+                queryParamsHandling: 'merge',
               });
-              //this.navSvc.beginNewAssessmentGallery();
-              this.navSvc.navDirect('tutorial-conversion');
             });
-            // this.navSvc.navDirect('standard-questions');
-            
           });
         }
       }

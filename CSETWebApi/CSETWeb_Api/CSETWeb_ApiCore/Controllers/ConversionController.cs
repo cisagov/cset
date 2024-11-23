@@ -109,9 +109,9 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             
-            int newId = await _biz.ConvertEntryToMid(assessmentId);
+            string name = await _biz.ConvertEntryToMid(assessmentId);
 
-            return Ok(newId);
+            return Ok(name);
         }
 
 
@@ -127,9 +127,9 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             
-            int newId = await _biz.ConvertMidToFull(assessmentId);
+            string name = await _biz.ConvertMidToFull(assessmentId);
 
-            return Ok(newId);
+            return Ok(name);
         }
 
         [HttpGet]
