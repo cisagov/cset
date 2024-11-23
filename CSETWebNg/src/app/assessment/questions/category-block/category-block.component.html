@@ -32,7 +32,7 @@
   {{ (!c.domainName && !!c.standardShortName) ? ' - ' + c.standardShortName : '' }}
 </div>
 
-<div *ngIf="c.standardShortName == 'CSF 2.0'; else normal">
+<div *ngIf="c.standardShortName == 'CSF 2.0 Index'; else normal">
 
   <div *ngFor="let sg of c.subCategories" [ngClass]="addDomainPad(c.displayText)" style="margin-bottom: 1em;"
     >

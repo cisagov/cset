@@ -386,6 +386,6 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
   }
 
   fullCF() {
-    return this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard('NCSF_V2') ? 'd-flex flex-row white-panel' : 'white-panel';
+    return this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard('NCSF_V2_Index') ? 'd-flex flex-row white-panel' : 'white-panel';
   }
 }
