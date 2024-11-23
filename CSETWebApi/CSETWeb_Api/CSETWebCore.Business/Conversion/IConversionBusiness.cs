@@ -15,7 +15,7 @@ namespace CSETWebCore.Business.Contact
         List<CFEntry> IsEntryCF(List<int> assessmentIds);
         public bool IsMidCF(int assessmentId);
         bool IsEntryCF(int assessmentId);
-        Task<string> ConvertEntryToMid(int assessmentId);
-        Task<string> ConvertMidToFull(int assessmentId);
+        Task<ConvertResult> ConvertEntryToMid(int assessmentId);
+        Task<ConvertResult> ConvertMidToFull(int assessmentId);
     }
 }

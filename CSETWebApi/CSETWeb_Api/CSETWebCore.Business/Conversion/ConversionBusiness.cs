@@ -9,14 +9,9 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Business.Demographic;
 using System.Linq;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Http.HttpResults;
 using System;
-using Npoi.Mapper;
-using DocumentFormat.OpenXml.Office2013.Excel;
 using CSETWebCore.Business.AssessmentIO.Export;
 using CSETWebCore.Business.AssessmentIO.Import;
-using CSETWebCore.Helpers;
-using Org.BouncyCastle.Security;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -40,6 +35,7 @@ namespace CSETWebCore.Business.Contact
         /// The set name for Cybersecurity Framework v1.1
         /// </summary>
         private readonly string CF_SetName = "NCSF_V2";
+        private readonly string CF_SetName_Full = "NCSF_V2_Index";
 
         /// <summary>
         /// The model id for CPG
@@ -172,7 +168,7 @@ namespace CSETWebCore.Business.Contact
                 {
                     Assessment_Id = assessmentId,
                     Selected = true,
-                    Set_Name = CF_SetName
+                    Set_Name = CF_SetName_Full
                 });
             }
 
@@ -260,7 +256,7 @@ namespace CSETWebCore.Business.Contact
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public async Task<string> ConvertEntryToMid(int assessmentId)
+        public async Task<ConvertResult> ConvertEntryToMid(int assessmentId)
         {
             int oldAssessmentId = assessmentId;
             assessmentId = await DuplicateAssessment(assessmentId);
@@ -320,10 +316,10 @@ namespace CSETWebCore.Business.Contact
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(assessmentId);
-            return assessInfo.Assessment_Name;
+            return new ConvertResult() { NewName = assessInfo.Assessment_Name, newAssessmentId = assessmentId };
         }
 
-        public async Task<String> ConvertMidToFull(int assessmentId)
+        public async Task<ConvertResult> ConvertMidToFull(int assessmentId)
         {
             int OldAssessmentId = assessmentId;
             assessmentId = await DuplicateAssessment(assessmentId);
@@ -348,7 +344,7 @@ namespace CSETWebCore.Business.Contact
                 {
                     Assessment_Id = assessmentId,
                     Selected = true,
-                    Set_Name = CF_SetName
+                    Set_Name = CF_SetName_Full
                 });
             }
 
@@ -378,7 +374,7 @@ namespace CSETWebCore.Business.Contact
                 _context.SaveChanges();
             }
 
-            return assessInfo.Assessment_Name;
+            return new ConvertResult() { NewName = assessInfo.Assessment_Name, newAssessmentId = assessmentId };
         }
 
         /// <summary>
