@@ -53,17 +53,8 @@ export class DiagramService {
     this.dataSubject.next(data);
   }
 
-  // calls to retrieve static data
-  getSymbols() {
-    return this.http.get(this.apiUrl + 'symbols/get');
-  }
-
   saveComponent(component) {
     return this.http.post(this.apiUrl + 'saveComponent', component, headers)
-  }
-
-  getAllSymbols() {
-    return this.http.get(this.apiUrl + 'symbols/getAll');
   }
 
   //replaces all the previous seperate calls
@@ -72,27 +63,6 @@ export class DiagramService {
     return this.http.get(this.apiUrl + 'getAllDiagram').subscribe((diaDataResult)=>{
       this.emitDiagramData(diaDataResult);
     });
-  }
-
-  // get diagram components
-  getDiagramComponents() {
-    return this.http.get(this.apiUrl + 'getComponents');
-  }
-
-  getDiagramZones() {
-    return this.http.get(this.apiUrl + 'getZones');
-  }
-
-  getDiagramShapes() {
-    return this.http.get(this.apiUrl + 'getShapes');
-  }
-
-  getDiagramText() {
-    return this.http.get(this.apiUrl + 'getTexts');
-  }
-
-  getDiagramLinks() {
-    return this.http.get(this.apiUrl + 'getLinks');
   }
 
   getDiagramWarnings() {
