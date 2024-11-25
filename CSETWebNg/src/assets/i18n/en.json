@@ -1025,6 +1025,37 @@
           "title": "RRA Comments and Marked for Review",
           "desc": "This document consolidates all RRA practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
         }
+      },
+      "ncsf_v2_index": {
+        "sectionTitle": "FCRA Reports",
+        "1": {
+          "title": "Answered Questions Report",
+          "desc": "This report indicates how each question of the assessment was answered on a scale from 0 to 7."
+        },
+        "2": {
+          "title": "Comments Report",
+          "desc": "This document consolidates all practices that have received comments during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
+        },
+        "3": {
+          "title": "Answer Summary",
+          "desc": "This report includes a high-level summary of the answer distributions of the assessment."
+        },
+        "4": {
+          "title": "Detailed Answers",
+          "desc": "This report includes a detailed view of the answer distributions of the RRA practices and the lowest 5 scoring areas per category."
+        },
+        "5": {
+          "title": "RRA Report",
+          "desc": "The report includes a wide array of charts and graphs designed to visually present and summarize the responses gathered throughout the assessment process. Additionally, it includes a compilation of all RRA practices along with their corresponding references. This report provides a comprehensive overview of the assessment outcomes, enabling organizations to analyze and assess their ransomware readiness effectively."
+        },
+        "6": {
+          "title": "RRA Deficiency Report",
+          "desc": "The report contains a list of all RRA practices that were marked as “No” or unanswered during the assessment process. This report serves to identify potential deficiencies or gaps in the organization’s ransomware readiness practices and provides suggested areas for improvement."
+        },
+        "7": {
+          "title": "RRA Comments and Marked for Review",
+          "desc": "This document consolidates all RRA practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
+        }
       }
     },
     "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated {date}.",

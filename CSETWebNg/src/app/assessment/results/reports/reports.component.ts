@@ -350,43 +350,62 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       // Network diagram and standard assessments use the same assessment list. sectionId will be passed as DIAGRAM
       if (this.assessSvc.usesStandard('MOPhysical')) {
         this.currentSectionId = 'MOPhysical';
-      } else if (this.assessSvc.usesStandard('NCSF_V2')) {
-        this.currentSectionId = 'NCSF_V2';
-      } else if (this.assessSvc.assessment.useStandard && !this.isMobile) {
+      }             
+      else if (this.assessSvc.usesStandard('NCSF_V2_Index')) {
+        this.currentSectionId = 'NCSF_V2_Index';      
+      } 
+      else if (this.assessSvc.assessment.useStandard && !this.isMobile) {
           this.currentSectionId = 'STANDARD';
-      } else if (this.assessSvc.assessment.useDiagram && !this.isMobile) {
+      } 
+      else if (this.assessSvc.assessment.useDiagram && !this.isMobile) {
           this.currentSectionId = 'DIAGRAM';
-      } else if (this.assessSvc.usesMaturityModel('CMMC') ) {
+      } 
+      else if (this.assessSvc.usesMaturityModel('CMMC') ) {
         this.currentSectionId = 'CMMC';
-      } else if (this.assessSvc.usesMaturityModel('EDM')) {
+      } 
+      else if (this.assessSvc.usesMaturityModel('EDM')) {
         this.currentSectionId = 'EDM';
-      } else if (this.assessSvc.usesMaturityModel('CRR')) {
+      } 
+      else if (this.assessSvc.usesMaturityModel('CRR')) {
         this.currentSectionId = 'CRR';
-      } else if (this.assessSvc.usesMaturityModel('IMR')) {
+      } 
+      else if (this.assessSvc.usesMaturityModel('IMR')) {
         this.currentSectionId = 'IMR';
-      } else if (this.assessSvc.usesMaturityModel('CIS')) {
+      } 
+      else if (this.assessSvc.usesMaturityModel('CIS')) {
         this.currentSectionId = 'CIS';
-      } else if (this.assessSvc.usesMaturityModel('CMMC2')) {
+      } 
+      else if (this.assessSvc.usesMaturityModel('CMMC2')) {
         this.currentSectionId = 'CMMC2';
-      } else if (this.assessSvc.usesMaturityModel('RRA') && !this.isMobile) {
+      } 
+      else if (this.assessSvc.usesMaturityModel('RRA') && !this.isMobile) {
           this.currentSectionId = 'RRA';
-      } else if (this.assessSvc.usesMaturityModel('ACET') && !this.isMobile) {
+      } 
+      else if (this.assessSvc.usesMaturityModel('ACET') && !this.isMobile) {
           this.currentSectionId = 'ACET';
-      } else if (this.assessSvc.usesMaturityModel('MVRA') && !this.isMobile) {
+      } 
+      else if (this.assessSvc.usesMaturityModel('MVRA') && !this.isMobile) {
           this.currentSectionId = 'MVRA';
-      } else if (this.assessSvc.usesMaturityModel('CPG') && !this.isMobile) {
+      } 
+      else if (this.assessSvc.usesMaturityModel('CPG') && !this.isMobile) {
           this.currentSectionId = 'CPG';
-      } else if (this.assessSvc.usesMaturityModel('VADR') && !this.isMobile) {
+      } 
+      else if (this.assessSvc.usesMaturityModel('VADR') && !this.isMobile) {
         this.currentSectionId = 'VADR';
-      } else if (this.assessSvc.usesMaturityModel('C2M2') && !this.isMobile) {
+      } 
+      else if (this.assessSvc.usesMaturityModel('C2M2') && !this.isMobile) {
         this.currentSectionId = 'C2M2';
-      } else if (this.assessSvc.usesMaturityModel('SD02 Series') && !this.  isMobile) {
+      } 
+      else if (this.assessSvc.usesMaturityModel('SD02 Series') && !this.  isMobile) {
         this.currentSectionId = 'SD02 Series';
-      } else if (this.assessSvc.usesMaturityModel('SD02 Owner') && !this.isMobile) {
+      } 
+      else if (this.assessSvc.usesMaturityModel('SD02 Owner') && !this.isMobile) {
         this.currentSectionId = 'SD02 Owner';
-      } else if (this.assessSvc.usesMaturityModel('HYDRO') && !this.isMobile) {
+      } 
+      else if (this.assessSvc.usesMaturityModel('HYDRO') && !this.isMobile) {
         this.currentSectionId = 'HYDRO';
-      } else {
+      } 
+      else {
         this.currentSectionId = null; // No valid section ID
       }
     } else {
