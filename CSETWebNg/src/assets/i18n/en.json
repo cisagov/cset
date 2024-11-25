@@ -998,6 +998,7 @@
     "answer": "Answer",
     "rank": "Rank",
     "question": "Question",
+    "overall score text": "There may be a discrepancy in the displayed percentages because some questions apply to more than one component of the system. As a result, these questions are counted multiple times in the percentage calculation total. Essentially, the overlap in question relevance causes the overall component based score to appear lower than the component summary score.",
     "assessment compliance text": "This chart shows the overall percentage scores. <br> Please note that unanswered questions are counted as a NO answer in these scores.",
     "ranked categories text": "This chart shows the top areas of concern ranked. These are calculated from a weighted risk score based on the difficulty of attack. The attack weights are most heavily weighted for easy attacks to less for more difficult to attack.",
     "ranked categories text 2": "This chart shows subject areas needing the most attention. Each bar represents the labeled subject area's weighted contribution so that the combined total always equals 100%. The weighted contribution includes the importance of both the question and the subject area, as well as the percentage of missed questions in that subject area.",
