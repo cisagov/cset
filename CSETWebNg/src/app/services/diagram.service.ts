@@ -25,6 +25,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Vendor } from '../models/diagram-vulnerabilities.model';
+import { Subject } from 'rxjs';
 
 const headers = {
   headers: new HttpHeaders()
@@ -37,43 +38,31 @@ export class DiagramService {
   apiUrl: string;
   id: number;
   csafVendors: Vendor[] = [];
+  private dataSubject = new Subject<any>();
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
-    this.apiUrl = this.configSvc.apiUrl + 'diagram/';
+    this.apiUrl = this.configSvc.apiUrl + 'diagram/';    
+  }
+  
+
+  getDiagramDataObservable() {
+    return this.dataSubject.asObservable();
   }
 
-  // calls to retrieve static data
-  getSymbols() {
-    return this.http.get(this.apiUrl + 'symbols/get');
+  emitDiagramData(data: any) {
+    this.dataSubject.next(data);
   }
 
   saveComponent(component) {
     return this.http.post(this.apiUrl + 'saveComponent', component, headers)
   }
 
-  getAllSymbols() {
-    return this.http.get(this.apiUrl + 'symbols/getAll');
-  }
-
-  // get diagram components
-  getDiagramComponents() {
-    return this.http.get(this.apiUrl + 'getComponents');
-  }
-
-  getDiagramZones() {
-    return this.http.get(this.apiUrl + 'getZones');
-  }
-
-  getDiagramShapes() {
-    return this.http.get(this.apiUrl + 'getShapes');
-  }
-
-  getDiagramText() {
-    return this.http.get(this.apiUrl + 'getTexts');
-  }
-
-  getDiagramLinks() {
-    return this.http.get(this.apiUrl + 'getLinks');
+  //replaces all the previous seperate calls
+  //to eliminate the current deadlock on the server
+  getCompleteDiagram(){
+    return this.http.get(this.apiUrl + 'getAllDiagram').subscribe((diaDataResult)=>{
+      this.emitDiagramData(diaDataResult);
+    });
   }
 
   getDiagramWarnings() {

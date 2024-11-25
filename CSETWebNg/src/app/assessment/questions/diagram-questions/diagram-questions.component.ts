@@ -68,11 +68,11 @@ export class DiagramQuestionsComponent implements OnInit {
 
   ngOnInit() {
     this.loadQuestions();
+
+    // listen for changes to overrides so that we can reload
     this.questionsSvc.questionOverrideSubject.subscribe((x) => {
       if (x) {
         this.loadQuestions();
-      } else {
-        this.questionsSvc.questionOverrideSubject.next(false);
       }
     });
   }
