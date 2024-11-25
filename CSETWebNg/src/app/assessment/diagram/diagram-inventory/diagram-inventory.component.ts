@@ -50,17 +50,18 @@ export class DiagramInventoryComponent implements OnInit,AfterViewInit {
   ) { }
   
   ngAfterViewInit(): void {
+    if (this.componentsExist){
     this.diagramSvc.getCompleteDiagram();
+    }
   }
 
   /**
    *
    */
   ngOnInit() {    
-    if (this.assessSvc.hasDiagram()) {
-      this.componentsExist = true;
-    }
-    // console.log('components exits='+this.componentsExist)
+    this.assessSvc.hasDiagram().subscribe((result: boolean) => {
+      this.componentsExist = result;
+    })
   }
 
   /**
