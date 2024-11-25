@@ -275,9 +275,35 @@
         "linkUrl": "detail"
       }
     ]
-  },
+  },   
   {
     "title": "NCSF_V2",
+    "reportList": [
+      {
+        "linkUrl": "executive"
+      },
+      {
+        "linkUrl": "sitesummary"
+      },
+      {
+        "linkUrl": "securityplan"
+      },
+      {
+        "linkUrl": "detail"
+      },
+      {
+        "linkUrl": "allAnsweredQuestions"
+      },
+      {
+        "linkUrl": "allMfrAndComments"
+      },
+      {
+        "linkUrl": "allReviewedQuestions"
+      }
+    ]
+  },
+  {
+    "title": "NCSF_V2_Index",
     "reportList": [
       {
         "linkUrl": "cfAnsweredQuestions",

@@ -48,7 +48,13 @@ namespace CSETWebCore.Business.Contact
         private readonly int RRA_Model_Id = 5;
 
         private readonly string Mid_Gallery_Guid = "FF43E99B-D6DD-409F-A07F-22F7AA55B9F3";
-
+        private readonly string Full_Legacy_Gallery_Guid = "D0C19648-00F5-4215-AF2D-C7EBD75FC578";
+        private readonly string Entry_Gallery_Guid = "9219F73D-A9EC-4E13-B884-CA1677BAC576";
+        private readonly string Full_Gallery_Guid = "CB818F86-9074-4B8A-8544-FFA946EAF1EA";
+//D0C19648-00F5-4215-AF2D-C7EBD75FC578
+//9219F73D-A9EC-4E13-B884-CA1677BAC576
+//CB818F86-9074-4B8A-8544-FFA946EAF1EA
+//FF43E99B-D6DD-409F-A07F-22F7AA55B9F3
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -70,7 +76,7 @@ namespace CSETWebCore.Business.Contact
             //D0C19648-00F5-4215-AF2D-C7EBD75FC578
             var assess = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             if(assess == null) { return false; }
-            return assess.GalleryItemGuid == new Guid("D0C19648-00F5-4215-AF2D-C7EBD75FC578");
+            return assess.GalleryItemGuid == new Guid(Full_Legacy_Gallery_Guid);
         }
 
         
@@ -180,7 +186,6 @@ namespace CSETWebCore.Business.Contact
             var biz = new DemographicBusiness(_context, _assessmentUtil);
             biz.SaveDD(assessmentId, "FORMER-CF-LEGACY-FULL", "true", null);
 
-            // changing gallery guid to mid-level
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             assessment.GalleryItemGuid = Guid.Parse("CB818F86-9074-4B8A-8544-FFA946EAF1EA");
             assessment.UseStandard = true;
@@ -355,9 +360,9 @@ namespace CSETWebCore.Business.Contact
             var biz = new DemographicBusiness(_context, _assessmentUtil);
             biz.SaveDD(assessmentId, "FORMER-CF-MID", "true", null);
 
-            // changing gallery guid to mid-level
+            // changing gallery guid to full
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-            assessment.GalleryItemGuid = Guid.Parse(Mid_Gallery_Guid);
+            assessment.GalleryItemGuid = Guid.Parse(Full_Gallery_Guid);
             assessment.UseStandard = true;
 
             _context.SaveChanges();

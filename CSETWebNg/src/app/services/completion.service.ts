@@ -140,7 +140,7 @@ export class CompletionService {
    * Tallies answered questions
    */
   countAnswers() {
-    this.answeredCount = this.questionflat.filter(x => x.answer !== 'U' && x.answer !== '' && x.answer !== null).length;
+    this.answeredCount = this.questionflat.filter(x => x.answer !== 'U' && x.answer !== '' && x.answer !== null && x.answer!=0).length;
     this.totalCount = this.questionflat.length;
   }
 }
