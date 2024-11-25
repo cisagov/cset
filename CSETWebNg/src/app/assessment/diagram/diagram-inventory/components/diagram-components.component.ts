@@ -69,7 +69,7 @@ export class DiagramComponentsComponent implements OnInit {
       const z = data.components.filter(y => y.assetType != 'Connector');
       this.diagramComponentList = z;
       this.getComponents();
-      //this.getSymbols();  
+      this.getSymbols(data.symbols);  
     });
     
   }
@@ -86,8 +86,7 @@ export class DiagramComponentsComponent implements OnInit {
    * Gets the full list of symbols so that we 
    * can build SELECT controls for Asset Type.
    */
-  getSymbols() {
-    this.diagramSvc.getSymbols().subscribe((g: any[]) => {
+  getSymbols(g: any[]) {
       this.symbols = [];
 
       g.forEach(gg => {
@@ -100,7 +99,6 @@ export class DiagramComponentsComponent implements OnInit {
       this.symbols = this.symbols.filter(s => s.symbol_Name != 'Connector');
 
       this.symbols.sort((a, b) => a.symbol_Name.localeCompare(b.symbol_Name));
-    });
   }
 
   /**

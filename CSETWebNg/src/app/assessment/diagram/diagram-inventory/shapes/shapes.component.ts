@@ -56,12 +56,12 @@ export class ShapesComponent implements OnInit {
   }
 
   getShapes() {
-    this.diagramSvc.getDiagramShapes().subscribe((x: any) => {
-      if (this.shapes.length > x.length) { // if a shape was removed (i.e. changed to a component)
+    this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
+      if (this.shapes.length > x.shapes.length) { // if a shape was removed (i.e. changed to a component)
         this.componentsChange.emit(this.getComponents());
       }
 
-      this.shapes = x;
+      this.shapes = x.shapes;
     });
   }
 
@@ -69,8 +69,8 @@ export class ShapesComponent implements OnInit {
    *
    */
   getComponents() {
-    this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
-      this.diagramComponentList = x;
+    this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
+      this.diagramComponentList = x.components;
     });
   }
 
@@ -80,7 +80,7 @@ export class ShapesComponent implements OnInit {
    * can build SELECT controls for Asset Type.
    */
   getSymbols() {
-    this.diagramSvc.getSymbols().subscribe((g: any) => {
+    this.diagramSvc.getDiagramDataObservable().subscribe((g: any) => {
       this.symbols = [];
       this.symbols.push( // inserts a default blank object in the beginning 
         {
@@ -94,7 +94,7 @@ export class ShapesComponent implements OnInit {
           'width': 0
         });
 
-      g.forEach(gg => {
+      g.symbols.forEach(gg => {
         gg.symbols.forEach(s => {
           this.symbols.push(s);
         });
@@ -109,9 +109,9 @@ export class ShapesComponent implements OnInit {
     let id = shape.id;
     let label = shape.value ? shape.value : '';
 
-    this.diagramSvc.getDiagramComponents().subscribe(
+    this.diagramSvc.getDiagramDataObservable().subscribe(
       (x: any) => {
-        label = label == '' ? this.diagramSvc.applyComponentSuffix(type, x) : label;
+        label = label == '' ? this.diagramSvc.applyComponentSuffix(type, x.components) : label;
 
         this.diagramSvc.changeShapeToComponent(type, id, label).subscribe(
           (compList: any) => {

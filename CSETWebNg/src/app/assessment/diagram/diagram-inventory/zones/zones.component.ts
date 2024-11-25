@@ -42,8 +42,8 @@ export class ZonesComponent implements OnInit {
   }
 
   getZones() {
-    this.diagramSvc.getDiagramZones().subscribe((x: any) => {
-      this.zones = x;
+    this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
+      this.zones = x.zones;
     });
   }
 
