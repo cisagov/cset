@@ -323,8 +323,9 @@
 
     <!-- Results Phase -->
     <node d="results" id="phase-results" visible="CF-DEMOGRAPHICS-COMPLETE" enabled="CF-ASSESSMENT-COMPLETE">
+    <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY-ANY(2,6,3,4,5,1,8,13,9,11,14)" />
         <!-- Results - Standards -->
-        <node d="standard results" visible="OPTION:STANDARD">
+        <node d="standard results" visible="OPTION:STANDARD STANDARD-NOT:NCSF_V2_Index">
             <node d="analysis dashboard" id="dashboard" path="assessment/{:id}/results/dashboard" />
             <node d="control priorities" id="ranked-questions" path="assessment/{:id}/results/ranked-questions" />
             <node d="standards summary" id="standards-summary" path="assessment/{:id}/results/standards-summary" />
@@ -375,11 +376,7 @@
         <node displaytext="FCRA Results" visible="STANDARD:NCSF_V2_Index">
             <node displaytext="Analysis Dashboard" id="ncsf-dashboard" path="assessment/{:id}/results/ncsf-dashboard" />
             <node displaytext="Control Priorities" id="ncsf-priorities" path="assessment/{:id}/results/ncsf-priorities" />
-        </node>
-        <node displaytext="FCRA Results" visible="STANDARD:NCSF_V2_Index">
-            <node displaytext="Analysis Dashboard" id="ncsf-dashboard" path="assessment/{:id}/results/ncsf-dashboard" />
-            <node displaytext="Control Priorities" id="ncsf-priorities" path="assessment/{:id}/results/ncsf-priorities" />
-        </node>
+        </node>        
 
 
         <!-- Results - RRA -->
