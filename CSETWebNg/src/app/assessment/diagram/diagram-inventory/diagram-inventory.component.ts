@@ -37,7 +37,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 })
 export class DiagramInventoryComponent implements OnInit,AfterViewInit {
 
-  componentsExist: boolean = true;
+  componentsExist: any = true;
   compListUpdateFromShapesTab: any = [];
 
   /**
@@ -50,17 +50,18 @@ export class DiagramInventoryComponent implements OnInit,AfterViewInit {
   ) { }
   
   ngAfterViewInit(): void {
+    if (this.componentsExist){
     this.diagramSvc.getCompleteDiagram();
+    }
   }
 
   /**
    *
    */
   ngOnInit() {    
-    if (this.assessSvc.hasDiagram()) {
-      this.componentsExist = true;
-    }
-    // console.log('components exits='+this.componentsExist)
+    this.assessSvc.hasDiagram().subscribe(result => {
+      this.componentsExist = result;
+    })
   }
 
   /**
