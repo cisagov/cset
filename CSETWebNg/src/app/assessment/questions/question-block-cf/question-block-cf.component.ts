@@ -308,8 +308,12 @@ export class QuestionBlockCfComponent implements OnInit {
    * @param ans
    */
   storeAnswer(q: Question, newAnswerValueNumber: number) {
+    if(newAnswerValueNumber==0){
+      newAnswerValueNumber =1;
+    }
+    
     let newAnswerValue = newAnswerValueNumber.toString();
-   
+    
     q.answer = newAnswerValue;
 
     const answer: Answer = {
