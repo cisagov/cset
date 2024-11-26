@@ -167,6 +167,9 @@ export class UploadExportComponent implements OnInit {
         },
         fail => {
           if (fail && fail.message) {
+
+            console.log(fail);
+
             this.canBeClosed = true;
             this.dialog.disableClose = false;
             this.statusText = fail.message;
