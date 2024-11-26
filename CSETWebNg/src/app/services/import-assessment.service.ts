@@ -143,6 +143,10 @@ export class ImportAssessmentService {
    * Parses the error string to display only the "hint" that a user might need
    */
   extractAssessmentHint(message: string) {
+
+    console.log('extractAssessmentHint:', message);
+
+
     let hint = "";
 
     // We could use regex here, but this works.
