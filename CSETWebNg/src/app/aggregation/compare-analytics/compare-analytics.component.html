@@ -24,6 +24,10 @@
   <div class="max-1200">
     <h3 class="mb-4">{{t('aggregation.compare.compare assessments')}}</h3>
 
+    <p>
+      {{t('aggregation.compare.para 14')}}
+    </p>
+
     <div class="btn-group-toggle mt-3" data-toggle="buttons">
       <label *ngIf="this.type === 'standards-based'" class="btn btn-sal-select btn-rounded form-check-label"
         [class.active]="tab === 'SUMMARY'" (click)="changeState('SUMMARY')">
@@ -69,8 +73,10 @@
 
     <div class="mt-3 d-flex justify-content-between flex-00a">
       <button class="btn btn-primary" (click)="navAggSvc.navBack('compare-analytics')">{{t('buttons.back')}}</button>
-      <button *ngIf="this.type != 'maturity-based'" class="btn btn-primary" (click)="generateReport('compare-report')">{{t('aggregation.compare.generate compare report')}}</button>
-      <button *ngIf="this.type === 'maturity-based'" class="btn btn-primary" (click)="generateReport('compare-report-m')">{{t('aggregation.compare.generate compare report')}}</button>
+      <button *ngIf="this.type != 'maturity-based'" class="btn btn-primary"
+        (click)="generateReport('compare-report')">{{t('aggregation.compare.generate compare report')}}</button>
+      <button *ngIf="this.type === 'maturity-based'" class="btn btn-primary"
+        (click)="generateReport('compare-report-m')">{{t('aggregation.compare.generate compare report')}}</button>
     </div>
   </div>
 </div>

@@ -34,7 +34,7 @@ export class AnalyticsService {
 
 
   getAnalyticResults(assessmentId: any, maturityModelId: any, sectorId?: any): any {
-    let url = this.configSvc.config.csetAnalyticsUrl
+    let url = this.apiUrl + "maturity/bars?"
     if (maturityModelId) {
       url += `&modelId=${maturityModelId}`;
     }
