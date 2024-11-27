@@ -342,9 +342,9 @@
 
 
         <!-- Results - CMMC2 -->
-        <node displaytext="Performance by Level" id="cmmc2-level-results" path="assessment/{:id}/results/cmmc2-level-results" visible="MATURITY(6,19)" />
-        <node displaytext="Performance by Domain" id="cmmc2-domain-results" path="assessment/{:id}/results/cmmc2-domain-results" visible="MATURITY(6,19)" />
-        <node displaytext="SPRS Score" id="sprs-score" path="assessment/{:id}/results/sprs-score" visible="MATURITY(6,19) TARGET-LEVEL-GT:1" />
+        <node displaytext="Performance by Level" id="cmmc2-level-results" path="assessment/{:id}/results/cmmc2-level-results" visible="MATURITY-ANY(6:19)" />
+        <node displaytext="Performance by Domain" id="cmmc2-domain-results" path="assessment/{:id}/results/cmmc2-domain-results" visible="MATURITY-ANY(6,19)" />
+        <node displaytext="SPRS Score" id="sprs-score" path="assessment/{:id}/results/sprs-score" visible="MATURITY-ANY(6,19) TARGET-LEVEL-GT:1" />
 
 
 
