@@ -24,7 +24,6 @@
   *transloco="let t; read: 'tutorials.cmmc2'">
   <h3 class="wrap-text mb-3">{{t('title')}}</h3>
 
-  <!-- this DIV contains the tutorial content for CMMC 2.0 FINAL -->
   <div>
     <h5>{{t('1')}}</h5>
     <p>
@@ -32,91 +31,60 @@
     </p>
 
     <p>
-      The CMMC Program is designed to provide increased assurance to the DoD
-      that defense contractors and subcontractors are compliant with information
-      protection requirements for FCI and CUI, and are protecting such information
-      at a level commensurate with risk from cybersecurity threats, including
-      Advanced Persistent Threats (APTs).
+      {{t('3')}}
     </p>
 
     <p>
-      The CMMC Model incorporates the security requirements from: 1) FAR
-      52.204-21, Basic Safeguarding of Covered Contractor Information Systems,
-      2) NIST SP 800-171 Rev 2, Protecting Controlled Unclassified Information in
-      Nonfederal Systems and Organizations, and 3) a subset of the requirements
-      from NIST SP 800-172, Enhanced Security Requirements for Protecting
-      Controlled Unclassified Information: A Supplement to NIST Special Publication
-      800-171.
+      {{t('4')}}
     </p>
 
-    <h5>CMMC Levels</h5>
+    <h5>{{t('5')}}</h5>
     <p>
-      The CMMC Model measures the implementation of cybersecurity
-      requirements at three levels. Each level consists of a set of CMMC practices:
+      {{t('6')}}
     </p>
     <ul>
-      <li>
-        <strong>Level 1 - Foundational:</strong> Focuses on the protection of FCI and
-        consists of the security requirements that correspond to the basic
-        safeguarding requirements specified in 48 CFR 52.204-21, commonly
-        referred to as the FAR Clause.
-      </li>
-      <li>
-        <strong>Level 2 - Advanced:</strong> Focuses on the protection of CUI and
-        incorporates the security requirements specified in NIST SP 800-171
-        Rev 2 per DFARS Clause 252.204-7012.
-      </li>
-      <li>
-        <strong>Level 3 - Expert:</strong> Focuses on enhanced security requirements for CUI
-        specified in NIST SP 800-172, with DoD-approved parameters where
-        applicable.
-      </li>
+      <li [innerHTML]="t('7')"></li>
+      <li [innerHTML]="t('8')"></li>
+      <li [innerHTML]="t('9')"></li>
     </ul>
 
     <p>
-      The CMMC levels and their corresponding requirements are cumulative. More
-      specifically, for an organization to achieve a specific CMMC level, it must also
-      demonstrate achievement of the preceding lower levels. For the case in
-      which an organization does not meet its targeted level, it will be certified at
-      the highest level for which it has achieved all applicable practices.
+      {{t('10')}}
     </p>
 
     <div class="img-frame p-3" style="width: 70%">
       <img src="assets/images/CMMC/tutorial2/Picture1F.png" class="mb-3" style="max-width: 100%"
         alt="The CMMC 2 model hierarchy">
       <div class="img-title">
-        Figure 1 provides an overview of the CMMC 2.0 levels.
+        {{t('11')}}
       </div>
     </div>
 
 
-    <h5>Assessment</h5>
+    <h5>{{t('12')}}</h5>
     <p>
-      The CMMC assessment consists of 14 domains that align with the families
-      specified in NIST SP 800-171 Rev 2. The number of requirements varies
-      based on the selected level. The domains and their abbreviations are as
-      follows:
+      {{t('13')}}
     </p>
 
     <ul>
-      <li>Access Control (AC)</li>
-      <li>Awareness & Training (AT)</li>
-      <li>Audit & Accountability (AU)</li>
-      <li>Configuration Management (CM)</li>
-      <li>Identification & Authentication (IA)</li>
-      <li>Incident Response (IR)</li>
-      <li>Maintenance (MA)</li>
-      <li>Media Protection (MP)</li>
-      <li>Personnel Security (PS)</li>
-      <li>Physical Protection (PE)</li>
-      <li>Risk Assessment (RA)</li>
-      <li>Security Assessment (CA)</li>
-      <li>System and Communications Protection (SC)</li>
-      <li>System and Information Integrity (SI)</li>
+      <li>{{t('13a')}}</li>
+      <li>{{t('13b')}}</li>
+      <li>{{t('13c')}}</li>
+      <li>{{t('13d')}}</li>
+      <li>{{t('13e')}}</li>
+      <li>{{t('13f')}}</li>
+      <li>{{t('13g')}}</li>
+      <li>{{t('13h')}}</li>
+      <li>{{t('13i')}}</li>
+      <li>{{t('13j')}}</li>
+      <li>{{t('13k')}}</li>
+      <li>{{t('13l')}}</li>
+      <li>{{t('13m')}}</li>
+      <li>{{t('13n')}}</li>
     </ul>
 
     <p>
-      Each requirement includes the following components.
+      {{t('14')}}
     </p>
 
     <div class="img-frame p-3" style="width: 70%">
@@ -124,57 +92,54 @@
     </div>
 
 
-    <h6>Domain</h6>
+    <h6>{{t('15')}}</h6>
     <div class="img-frame p-3" style="width: 70%">
       <img src="assets/images/CMMC/tutorial2/Picture3F.png" style="max-width: 100%" alt="A domain header">
     </div>
     <p>
-      Each domain has a set of associated requirements.
+      {{t('16')}}
     </p>
 
 
-    <h6>Practice Identifier</h6>
+    <h6>{{t('17')}}</h6>
     <div class="img-frame p-3">
       <img src="assets/images/CMMC/tutorial2/Picture4F.png" style="max-width: 150px" alt="Practice identifier detail">
     </div>
 
-    <p>Each requirement has an assigned practice identifier structured as follows: <strong>DD.L#-REQ</strong></p>
+    <p [innerHTML]="t('18')"></p>
 
     <ul>
-      <li>DD is the two-letter domain abbreviation</li>
-      <li>L# is the level number</li>
-      <li>REQ is the FAR Clause 52.204-21 paragraph number, NIST SP 800-171 Rev 2, or NIST SP 800-172 security
-        requirement number</li>
+      <li>{{t('18a')}}</li>
+      <li>{{t('18b')}}</li>
+      <li>{{t('18c')}}</li>
     </ul>
 
     <p>
-      An example of the above structure is AC:L1-b.1.i, which represents Access
-      Control, Level 1, FAR Clause 52.204-21 b.1.i. The blue oval beneath each
-      identifier indicates the level for the practice.
+      {{t('19')}}
     </p>
 
-    <h6>Requirement</h6>
+    <h6>{{t('20')}}</h6>
     <div class="img-frame p-3" style="width: 70%">
       <img src="assets/images/CMMC/tutorial2/Picture5F.png" style="max-width: 100%" alt="Requirement detail">
     </div>
     <p>
-      The mitigation(s) that organizations should implement to achieve the corresponding cybersecurity standard(s).
+      {{t('21')}}
     </p>
 
 
-    <h6>CSET Icons</h6>
+    <h6>{{t('22')}}</h6>
     <div class="img-frame p-3">
       <img src="assets/images/CMMC/tutorial2/Picture6F.png" style="max-width: 100%"
         alt="Icons available for each question">
     </div>
 
     <p>
-      Selecting the Supplemental Guidance icon provides information on:
+      {{t('23')}}
     </p>
     <ul>
-      <li>Assessment Objectives</li>
-      <li>Potential Assessment Methods and Objectives</li>
-      <li>Discussion points and examples</li>
+      <li>{{t('23a')}}</li>
+      <li>{{t('23b')}}</li>
+      <li>{{t('23c')}}</li>
     </ul>
 
     <div class="img-frame p-3" style="width: 70%">
@@ -183,47 +148,35 @@
     </div>
 
     <p>
-      Select the Reference icon to view additional documents and links to the standards associated with the requirement.
+      {{t('24')}}
     </p>
 
     <div class="img-frame p-3" style="width: 70%">
       <img src="assets/images/CMMC/tutorial2/Picture8F.png" style="max-width: 100%" alt="Practice reference listing">
     </div>
 
-    <h6>Answer Buttons</h6>
+    <h6>{{t('25')}}</h6>
     <div class="img-frame p-3">
       <img src="assets/images/CMMC/tutorial2/Picture9F.png" style="max-width: 230px" alt="Answer option buttons">
     </div>
     <p>
-      Select the applicable answer for each question. Unanswered questions are calculated as a “Not” response.
+      {{t('26')}}
     </p>
     <ul class="mb-4">
-      <li><b>Met</b> - indicates the contractor has successfully <b>MET</b> all applicable objectives for the
-        requirement.</li>
-      <li><b>Not</b> - indicates the contractor has <b>NOT MET</b> all applicable objectives for the requirement.</li>
-      <li><b>N/A</b> - the requirement is <b>NOT APPLICABLE</b> to the contractor.</li>
+      <li [innerHTML]="t('26a')"></li>
+      <li [innerHTML]="t('26b')"></li>
+      <li [innerHTML]="t('26c')"></li>
     </ul>
 
 
-    <h5>SPRS Score</h5>
-    <p>
-      A NIST SPRS score is calculated for assessments completed at Level 2. For more information on the scoring
-      methodology, please view:
-      <a href="https://www.federalregister.gov/documents/2024/10/15/2024-22905/cybersecurity-maturity-model-certification-cmmc-program#sectno-reference-170.24"
-        target="_blank">32 CFR Part 170 §170.24</a>.
-    </p>
+    <h5>{{t('27')}}</h5>
+    <p [innerHTML]="t('28')"></p>
 
-    <h5>Additional Resources</h5>
+    <h5>{{t('29')}}</h5>
     <p>
-      Additional information on how to complete a CSET assessment is available in the CSET User Guide. To access the
-      user guide, select the option from the Help dropdown menu in the CSET tool bar.
+      {{t('30')}}
     </p>
-    <p>
-      Please visit <a href="https://dodcio.defense.gov/cmmc/Resources-Documentation/"
-        target="_blank">https://dodcio.defense.gov/cmmc/Resources-Documentation/</a>
-      for more information, including CMMC
-      Assessment Guides and Scoping Guidance for each level.
-    </p>
+    <p [innerHTML]="t('31')"></p>
 
   </div>
 
