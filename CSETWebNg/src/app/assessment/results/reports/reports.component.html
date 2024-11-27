@@ -76,7 +76,7 @@
 
     <button class="btn me-2" style="background-color: #3b68aa; color: white;" (click)="navSvc.navBack('reports')"
       tabindex="0" aria-label="Back">
-      Back
+      {{ 'buttons.back' | transloco }}
     </button>
 
     <button class="btn" *ngIf="!ncuaSvc.ISE_StateLed" aria-label="Submit" tabindex="0"
