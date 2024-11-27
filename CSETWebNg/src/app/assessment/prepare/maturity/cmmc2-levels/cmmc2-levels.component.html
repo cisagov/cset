@@ -20,70 +20,60 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex justify-content-start flex-column flex-11a" *transloco="let t">
-     <h3 class="wrap-text mb-3">{{t('titles.cmmc target level selection')}}</h3>
+<div class="white-panel d-flex justify-content-start flex-column flex-11a" *transloco="let t; read: 'cmmc.level selection'">
+     <h3 class="wrap-text mb-3">{{'titles.cmmc target level selection' | transloco}}</h3>
 
      <p>
-          Select the level appropriate to your organization's assessment.
+          {{t('para 1')}}
      </p>
 
-     <div class="d-flex flex-row my-3">
+     <div class="d-flex flex-row p-3" [class.outline]="selectedLevel == 1">
           <div class="w-25 text-center align-content-center">
                <label class="btn btn-l1 form-check-label" [class.answer-selected]="selectedLevel == 1"
                     (click)="saveLevel(1)">
                     <input name="q_L1" class="btn-check" type="radio" autocomplete="off"
-                         [checked]="selectedLevel == 1">Level 1
+                         [checked]="selectedLevel == 1">{{t('level 1')}}
                </label>
           </div>
           <div class="w-75">
-               Foundational. Level 1 is comprised of the 15 basic safeguarding requirements specified in Federal
-               Acquisition Regulation
-               (FAR) Clause 52.204-21. Level 1 is achievable by self-assessment.
+               {{t('l1 a')}}
           </div>
      </div>
 
-     <hr>
 
-     <div class="d-flex flex-row my-3">
+     <div class="d-flex flex-row p-3" [class.outline]="selectedLevel == 2">
           <div class="w-25 text-center align-content-center">
                <label class="btn btn-l2 form-check-label" [class.answer-selected]="selectedLevel == 2"
                     (click)="saveLevel(2)">
                     <input name="q_L2" class="btn-check" type="radio" autocomplete="off"
-                         [checked]="selectedLevel == 2">Level 2
+                         [checked]="selectedLevel == 2">{{t('level 2')}}
                </label>
           </div>
           <div class="w-75">
                <p>
-                    Advanced. Consists of 110 practices aligned with NIST SP 800-171. Requires annual self-assessment
-                    for select contractors or triennial third-party assessments for critical national security projects.
-
-                    The advanced level will calculate a scorecard with the Supplier Performance Risk System (SPRS)
-                    score.
+                    {{t('l2 a')}}
                </p>
                <p>
-                    Level 2 can be used for a self-assessment or a certification assessment. It incorporates
-                    the security requirements specified in NIST SP 800-171 Revision 2.
+                    {{t('l2 b')}}
                </p>
           </div>
      </div>
 
-     <hr>
 
-     <div class="d-flex flex-row my-3">
+     <div class="d-flex flex-row p-3" [class.outline]="selectedLevel == 3">
           <div class="w-25 text-center align-content-center">
                <label class="btn btn-l3 form-check-label" [class.answer-selected]="selectedLevel == 3"
                     (click)="saveLevel(3)">
                     <input name="q_L3" class="btn-check" type="radio" autocomplete="off"
-                         [checked]="selectedLevel == 3">Level 3
+                         [checked]="selectedLevel == 3">{{t('level 3')}}
                </label>
           </div>
           <div class="w-75">
                <p>
-                    Level 3 consists of selected security requirements derived from National Institute of Standards and
-                    Technology (NIST) Special Publication (SP) 800-172,
+                    {{t('l3 a')}}
                </p>
                <p>
-                    Level 3 only applies to systems that have already achieved a Final Level 2 (C3PAO) CMMC Status.
+                    {{t('l3 b')}}
                </p>
           </div>
      </div>
