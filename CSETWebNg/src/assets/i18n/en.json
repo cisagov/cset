@@ -604,6 +604,19 @@
     "significant": "Significant",
     "most": "Most"
   },
+  "cmmc": {
+    "level selection": {
+      "para 1": "Select the level appropriate to your organization's assessment.",
+      "level 1": "Level 1",
+      "l1 a": "Foundational. Level 1 is comprised of the 15 basic safeguarding requirements specified in Federal Acquisition Regulation (FAR) Clause 52.204-21. Level 1 is achievable by self-assessment.",
+      "level 2": "Level 2",
+      "l2 a": "Advanced. Consists of 110 practices aligned with NIST SP 800-171. Requires annual self-assessment for select contractors or triennial third-party assessments for critical national security projects. The advanced level will calculate a scorecard with the Supplier Performance Risk System (SPRS) score.",
+      "l2 b": "Level 2 can be used for a self-assessment or a certification assessment. It incorporates the security requirements specified in NIST SP 800-171 Revision 2.",
+      "level 3": "Level 3",
+      "l3 a": "Expert.  Consists of selected security requirements derived from National Institute of Standards and Technology (NIST) Special Publication (SP) 800-172.",
+      "l3 b": "Level 3 only applies to systems that have already achieved a Final Level 2 (C3PAO) CMMC Status."
+    }
+  },
   "filter-menu": {
     "search": "Search",
     "select deselect all": "Select/Deselect All",
@@ -1929,6 +1942,11 @@
       "11b": "– An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
       "11c": "– An organization has identified the full set of activities required to meet the stated outcome of a goal.",
       "11d": "– An organization has no immediate plans to implement the recommended actions for a goal."
+    },
+    "cmmc2": {
+      "title": "Cybersecurity Maturity Model Certification (CMMC) 2.0 Tutorial",
+      "1": "Overview",
+      "2": "The theft of intellectual property and sensitive information from all industrial sectors because of malicious cyber activity threatens economic security and national security. Malicious cyber actors have targeted and continue to target the Defense Industrial Base (DIB) sector and the Department of Defense (DoD) supply chain. These attacks not only focus on the large prime contractors, but also target subcontractors that make up the lower tiers of the DoD supply chain."
     },
     "mvra": {
       "title": "Minimum Viable Resilience Assessment (MVRA) Tutorial",
