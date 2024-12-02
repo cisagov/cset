@@ -6,7 +6,7 @@
         <!-- maturity model tutorials -->
         <node d="cmmc tutorial" id="tutorial-cmmc" path="assessment/{:id}/prepare/tutorial-cmmc" visible="MATURITY:2" />
         <node d="cis tutorial" id="tutorial-cis" path="assessment/{:id}/prepare/tutorial-cis" visible="MATURITY:8" />
-        <node d="cmmc tutorial" id="tutorial-cmmc2" path="assessment/{:id}/prepare/tutorial-cmmc2" visible="MATURITY:6" />
+        <node d="cmmc tutorial" id="tutorial-cmmc2" path="assessment/{:id}/prepare/tutorial-cmmc2" visible="MATURITY-ANY(6,19)" />
         <node d="edm tutorial" id="tutorial-edm" path="assessment/{:id}/prepare/tutorial-edm" visible="MATURITY:3" />
         <node d="crr tutorial" id="tutorial-crr" path="assessment/{:id}/prepare/tutorial-crr" visible="MATURITY:4" />
         <node d="imr tutorial" id="tutorial-imr" path="assessment/{:id}/prepare/tutorial-imr" visible="MATURITY:15" />

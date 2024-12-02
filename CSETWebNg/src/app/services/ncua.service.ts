@@ -538,6 +538,12 @@ export class NCUAService {
             let questions = subcat?.questions?.sort(
               (a, b) => {
                 if (a.title.length == b.title.length) {
+
+                  // Core and Core+ both start at 1.1 now
+                  if (a.maturityLevel == "CORE" || a.maturityLevel == "CORE+") {
+                    return a.maturityLevel.length > b.maturityLevel.length ? 1 : ((b.maturityLevel.length > a.maturityLevel.length ? -1 : 0));
+                  }
+
                   return a.title > b.title ? 1 : ((b.title > a.title ? -1 : 0));
                 }
                 return a.title.length > b.title.length ? 1 : ((b.title.length > a.title.length ? -1 : 0));
