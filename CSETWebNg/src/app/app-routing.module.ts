@@ -240,6 +240,8 @@ import { AllCommentsmarkedComponent } from './reports/all-commentsmarked/all-com
 import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.component';
 import { AnalyticsResultsComponent } from './assessment/results/analytics-results/analytics-results.component';
 import { Cmmc2LevelsComponent } from './assessment/prepare/maturity/cmmc2-levels/cmmc2-levels.component';
+import { Cmmc2ScoresComponent } from './assessment/results/mat-cmmc2/cmmc2-scores/cmmc2-scores.component';
+import { Cmmc2ScorecardComponent } from './assessment/results/mat-cmmc2/cmmc2-scorecard/cmmc2-scorecard.component';
 
 const appRoutes: Routes = [
 
@@ -462,6 +464,8 @@ const appRoutes: Routes = [
               { path: 'cmmc-compliance', component: CmmcComplianceComponent },
               { path: 'cmmc-gaps', component: CmmcGapsComponent },
               { path: 'sprs-score', component: SprsScoreComponent },
+              { path: 'cmmc2-scores', component: Cmmc2ScoresComponent },
+              { path: 'cmmc2-scorecard', component: Cmmc2ScorecardComponent },
               { path: 'cmmc2-level-results', component: Cmmc2LevelResultsComponent },
               { path: 'cmmc2-domain-results', component: Cmmc2DomainResultsComponent },
               { path: 'rra-summary-all', component: RraSummaryAllComponent },
