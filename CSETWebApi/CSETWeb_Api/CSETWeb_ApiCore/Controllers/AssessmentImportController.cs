@@ -130,7 +130,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 var returnMessage = "";
 
-                if (e.Message == "Exception of type 'Ionic.Zip.BadPasswordException' was thrown.")
+                if (e.Message == "No password available for encrypted stream")
                 {
                     returnMessage = (hint == null) ? "Bad Password Exception" : "Bad Password Exception - " + hint.Name;
                     return StatusCode(423, returnMessage);
