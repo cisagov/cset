@@ -68,7 +68,7 @@ namespace CSETWebCore.Api.Controllers
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
 
-            return null;
+            return Ok();
         }
         
         /// <summary>
