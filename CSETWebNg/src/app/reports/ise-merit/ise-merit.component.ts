@@ -67,6 +67,11 @@ export class IseMeritComponent implements OnInit {
 
   masterActionItemsMap: Map<number, any[]> = new Map<number, any[]>();
 
+  // 12/3/24: Jon wants the action items all combined into one big paragraph. If he decided he doesn't want this
+  // in the future, just remove any code that references "combinedActionItems" it'll go back to the way it was.
+  combinedActionItems: Map<number, string> = new Map<number, string>();
+
+
   // actionItemsMap: Map<number, Map<number, any[]>> = new Map<number, Map<number, any[]>>();
   //                 finding_Id, <question_Id, [action_Items]>
   // manualOrAutoMap: Map<number, string> = new Map<number, string>();
@@ -122,25 +127,38 @@ export class IseMeritComponent implements OnInit {
 
         this.acetSvc.getActionItemsReport(this.ncuaSvc.translateExamLevelToInt(examLevelString)).subscribe((findingData: any) => {
           this.actionData = findingData;
+
+          let combinedCount = 1;
           for (let i = 0; i < this.actionData?.length; i++) {
             let actionItemRow = this.actionData[i];
 
-            if (actionItemRow.action_Items != '') { //filters out 'deleted' action items
+            // filters out 'deleted' action items
+            if (actionItemRow.action_Items != '') {
               if (!this.masterActionItemsMap.has(actionItemRow.observation_Id)) {
-
                 this.masterActionItemsMap.set(actionItemRow.observation_Id, [actionItemRow]);
-              } else {
+                this.combinedActionItems.set(actionItemRow.observation_Id, "");
+                combinedCount = 1;
+              } 
+              else 
+              {
                 let tempActionArray = this.masterActionItemsMap.get(actionItemRow.observation_Id);
-
                 tempActionArray.push(actionItemRow);
-
                 this.masterActionItemsMap.set(actionItemRow.observation_Id, tempActionArray);
+
+                let combinedText = this.combinedActionItems.get(actionItemRow.observation_Id);
+                combinedText += (combinedCount + ". " + actionItemRow.action_Items + " ");
+                this.combinedActionItems.set(actionItemRow.observation_Id, combinedText);
+                combinedCount++;
+
               }
             }
           }
-          this.loadingCounter++;
 
+          console.log("this.combinedActionItems");
+          console.log(this.combinedActionItems);
+          this.loadingCounter++;
         });
+
 
         this.loadingCounter++;
 
@@ -169,13 +187,12 @@ export class IseMeritComponent implements OnInit {
 
                     for (let i = 0; i < sourceDocList?.length; i++) {
                       if (!this.sourceFilesMap.has(observation.finding.finding_Id)) {
-
                         this.sourceFilesMap.set(observation.finding.finding_Id, [sourceDocList[i]]);
-                      } else {
+                      }
+                      else 
+                      {
                         let tempFileArray = this.sourceFilesMap.get(observation.finding.finding_Id);
-
                         tempFileArray.push(sourceDocList[i]);
-
                         this.sourceFilesMap.set(observation.finding.finding_Id, tempFileArray);
                       }
                     }
