@@ -81,10 +81,7 @@
               "node_modules/@fortawesome/fontawesome-free/js/all.min.js",
               "src/assets/cset.js",
               "src/assets/shim.min.js",
-              "src/assets/zone.js",
-              {
-                "input": "node_modules/document-register-element/build/document-register-element.js"
-              }
+              "src/assets/zone.js"
             ]
           },
           "configurations": {
