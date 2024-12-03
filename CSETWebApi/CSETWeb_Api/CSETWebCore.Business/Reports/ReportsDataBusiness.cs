@@ -897,6 +897,7 @@ namespace CSETWebCore.Business.Reports
         public List<BasicReportData.RequirementControl> GetControls(string applicationMode)
         {
             var lang = _tokenManager.GetCurrentLanguage();
+            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
 
             _questionRequirement.InitializeManager(_assessmentId);
 
@@ -968,7 +969,8 @@ namespace CSETWebCore.Business.Reports
                         Simple_Question = q.qu.Simple_Question,
                         Standard_Category = q.r.Standard_Category,
                         Standard_Sub_Category = q.r.Standard_Sub_Category,
-                        Standard_Level = q.rl.Standard_Level
+                        Standard_Level = q.rl.Standard_Level,
+                        Answer_Id = q.a.Answer_Id
                     });
                 }
             }
@@ -1000,44 +1002,9 @@ namespace CSETWebCore.Business.Reports
                     var c = _overlay.GetPropertyValue("STANDARD_CATEGORY", a.Standard_Category.ToLower(), lang);
                     var s = _overlay.GetPropertyValue("STANDARD_CATEGORY", a.Standard_Sub_Category.ToLower(), lang);
 
-                    // Check for custom parameters
-                    var customParameter = (from pa in _context.PARAMETER_ASSESSMENT
-                                           join pr in _context.PARAMETER_REQUIREMENTS
-                                           on pa.Parameter_ID equals pr.Parameter_Id
-                                           join p in _context.PARAMETERS
-                                           on pa.Parameter_ID equals p.Parameter_ID
-                                           where pr.Requirement_Id == a.Requirement_Id 
-                                           where pa.Assessment_ID == _assessmentId
-                                           select new
-                                           {
-                                               pa.Parameter_Value_Assessment,
-                                               pa.Assessment_ID,
-                                               p.Parameter_Name
-                                           }).Distinct().ToList();
-
-                    var QuestionRequirementText = r?.RequirementText ?? a.Requirement_Text;
-
+                    
                     // Replace parameter in requirement text if custom parameter is found 
-                    if (customParameter != null)
-                    {
-                        // Replace text or escape quickly if parameter is not found in original text
-                        foreach (var param in customParameter)
-                        {
-                            if (QuestionRequirementText.Contains(param.Parameter_Name))
-                            {
-                                var newText = Regex.Replace(r?.RequirementText ?? a.Requirement_Text, param.Parameter_Name.Replace("[", "\\[").Replace("]", "\\]"), param.Parameter_Value_Assessment);
-
-                                if (r?.RequirementText != null)
-                                {
-                                    r.RequirementText = newText;
-                                }
-                                else
-                                {
-                                    a.Requirement_Text = newText;
-                                }
-                            }
-                        }
-                    }
+                    a.Requirement_Text = rm.ResolveParameters(a.Requirement_Id, a.Answer_Id, a.Requirement_Text);
 
                     control = new BasicReportData.RequirementControl()
                     {
@@ -1415,6 +1382,7 @@ namespace CSETWebCore.Business.Reports
 
             var results = new List<QuestionsWithComments>();
 
+            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
             // get any "marked for review" or commented answers that currently apply
             var relevantAnswers = new RelevantAnswers().GetAnswersForAssessment(_assessmentId, _context)
                 .Where(ans => !string.IsNullOrEmpty(ans.Comment))
@@ -1436,7 +1404,7 @@ namespace CSETWebCore.Business.Reports
                             {
                                 Answer = ans.Answer_Text,
                                 CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
-                                Question = req.Requirement_Text,
+                                Question = rm.ResolveParameters(ans.Question_Or_Requirement_ID, ans.Answer_ID, req.Requirement_Text),
                                 Comment = ans.Comment
                             };
 
@@ -1523,6 +1491,7 @@ namespace CSETWebCore.Business.Reports
         {
 
             var results = new List<QuestionsMarkedForReview>();
+            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
 
             // get any "marked for review" or commented answers that currently apply
             var relevantAnswers = new RelevantAnswers().GetAnswersForAssessment(_assessmentId, _context)
@@ -1545,7 +1514,7 @@ namespace CSETWebCore.Business.Reports
                             {
                                 Answer = ans.Answer_Text,
                                 CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
-                                Question = req.Requirement_Text
+                                Question = rm.ResolveParameters(ans.Question_Or_Requirement_ID, ans.Answer_ID, req.Requirement_Text)
                             };
 
                 return query.ToList();
