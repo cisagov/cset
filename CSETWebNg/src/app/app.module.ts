@@ -295,6 +295,11 @@ import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-le
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
 import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
 import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
+import { Cmmc2ScoresComponent } from './assessment/results/mat-cmmc2/cmmc2-scores/cmmc2-scores.component';
+import { Cmmc2Level1ScoreComponent } from './assessment/results/mat-cmmc2/cmmc2-level1-score/cmmc2-level1-score.component';
+import { Cmmc2Level2ScoreComponent } from './assessment/results/mat-cmmc2/cmmc2-level2-score/cmmc2-level2-score.component';
+import { Cmmc2Level3ScoreComponent } from './assessment/results/mat-cmmc2/cmmc2-level3-score/cmmc2-level3-score.component';
+import { Cmmc2ScorecardComponent } from './assessment/results/mat-cmmc2/cmmc2-scorecard/cmmc2-scorecard.component';
 import { Cmmc2LevelResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-level-results/cmmc2-level-results.component';
 import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-domain-results/cmmc2-domain-results.component';
 import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
@@ -838,6 +843,11 @@ import { AnalyticsResultsComponent } from './assessment/results/analytics-result
         CmmcLevelDrilldownComponent,
         CmmcComplianceComponent,
         CmmcGapsComponent,
+        Cmmc2ScoresComponent,
+        Cmmc2Level1ScoreComponent,
+        Cmmc2Level2ScoreComponent,
+        Cmmc2Level3ScoreComponent,
+        Cmmc2ScorecardComponent,
         Cmmc2LevelResultsComponent,
         Cmmc2DomainResultsComponent,
         SprsScoreComponent,
