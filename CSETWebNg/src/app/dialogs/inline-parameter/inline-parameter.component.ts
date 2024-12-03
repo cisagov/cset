@@ -55,6 +55,10 @@ export class InlineParameterComponent implements OnInit {
    * Push the new value to the API and close the dialog.
    */
   save() {
+
+    if(this.parameterValue.trim()==""){
+      this.parameterValue = this.originalValue;
+    }
     const answerParm: ParameterForAnswer = {
       requirementId: this.question.questionId,
       answerId: this.question.answer_Id,

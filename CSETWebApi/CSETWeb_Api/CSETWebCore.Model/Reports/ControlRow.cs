@@ -26,5 +26,7 @@ namespace CSETWebCore.Model.Reports
         public string Answer_Text;
         public string Comment;
         public string Simple_Question;
+
+        public int Answer_Id { get; set; }
     }
 }
