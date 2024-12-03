@@ -72,7 +72,7 @@
         "style-loader": "^4.0.0",
         "swiper": "^8.4.7",
         "typescript": "5.5",
-        "zone.js": "^0.14.10"
+        "zone.js": "^0.15.0"
     },
     "devDependencies": {
         "@angular-builders/custom-webpack": "^18.0.0",
