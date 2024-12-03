@@ -73,7 +73,7 @@ export class Cmmc2LevelResultsComponent implements OnInit, AfterContentInit {
   refreshChart() {
     this.maturitySvc.getComplianceByLevel().subscribe((r: any) => {
       this.response = r;
-      this.response.reverse();
+      //this.response.reverse();
 
       r.forEach(level => {
         let g = level.answerDistribution.find(a => a.value == 'Y');

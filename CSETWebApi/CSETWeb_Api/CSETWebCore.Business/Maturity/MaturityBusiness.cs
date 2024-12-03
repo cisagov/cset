@@ -22,7 +22,6 @@ using System.Xml.Linq;
 using CSETWebCore.Model.Mvra;
 
 
-
 namespace CSETWebCore.Business.Maturity
 {
     public class MaturityBusiness : IMaturityBusiness
@@ -274,71 +273,6 @@ namespace CSETWebCore.Business.Maturity
                 return int.Parse(asl.Standard_Specific_Sal_Level);
             }
             return 0;
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public SprsScoreModel GetSPRSScore(int assessmentId)
-        {
-            var response = new SprsScoreModel();
-
-            IList<SPRSScore> scores = _context.usp_GetSPRSScore(assessmentId);
-
-
-            var maturityExtra = _context.MATURITY_EXTRA.ToList();
-
-            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructureAsXml(assessmentId, true);
-
-
-            int calculatedScore = 110;
-
-            foreach (var goal in x.Descendants("Goal"))
-            {
-                var d = new SprsDomain();
-                d.DomainName = goal.Attribute("title").Value;
-                response.Domains.Add(d);
-
-                foreach (var question in goal.Descendants("Question"))
-                {
-                    var q = new SprsQuestion();
-                    q.Id = question.Attribute("displaynumber").Value;
-                    q.QuestionText = question.Attribute("questiontext").Value;
-                    q.AnswerText = question.Attribute("answer").Value;
-
-                    int questionID = int.Parse(question.Attribute("questionid").Value);
-                    var mx = maturityExtra.Where(x => x.Maturity_Question_Id == questionID).FirstOrDefault();
-
-                    switch (q.AnswerText)
-                    {
-                        case "Y":
-                        case "NA":
-                            break;
-                        case "N":
-                        case "U":
-                            if (mx != null)
-                            {
-                                q.Score = (int)mx.SPRSValue;
-                            }
-                            break;
-                    }
-
-                    calculatedScore -= q.Score;
-
-                    d.Questions.Add(q);
-                }
-            }
-
-            response.SprsScore = calculatedScore;
-
-            var sprsGauge = new Helpers.ReportWidgets.SprsScoreGauge(calculatedScore, 500, 100);
-            response.GaugeSvg = sprsGauge.ToString();
-
-            return response;
         }
 
 
