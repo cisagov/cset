@@ -645,7 +645,7 @@ namespace CSETWebCore.Business.Question
             List<ParameterToken> tokens = this.GetTokensForRequirement(reqId, ansId);
             foreach (ParameterToken t in tokens)
             {
-                requirementText = requirementText.Replace(t.Token, t.Substitution);
+                requirementText =  requirementText.Replace(t.Token, "<br><i>" +t.Substitution +"</i>");
             }
 
             requirementText = requirementText.Replace("\r\n", "<br/>").Replace("\r", "<br/>").Replace("\n", "<br/>");
