@@ -89,7 +89,6 @@ export class ImportAssessmentService {
       // Make sure our assessment hints are empty ahead of time
 
       this.hintMap.clear();
-
       // send the http-request and subscribe for progress-updates
       this.http.request(req).subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
@@ -143,10 +142,6 @@ export class ImportAssessmentService {
    * Parses the error string to display only the "hint" that a user might need
    */
   extractAssessmentHint(message: string) {
-
-    console.log('extractAssessmentHint:', message);
-
-
     let hint = "";
 
     // We could use regex here, but this works.
@@ -163,10 +158,6 @@ export class ImportAssessmentService {
    */
   postAssessmentImport(assessmentModel: any) {
     return this.http.post(this.configSvc.apiUrl + 'assessment/import', assessmentModel, headers);
-  }
-
-  legacyAssessmentImport(importFilepath: string) {
-    return this.http.post(this.configSvc.apiUrl + 'assessment/legacy/import', importFilepath, headers);
   }
 
 }
