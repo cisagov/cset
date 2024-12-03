@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Ionic.Zip;
+using ICSharpCode.SharpZipLib.Zip;
 using CSETWebCore.Business.Demographic.DemographicIO.Models;
 using CSETWebCore.Business.Demographic.DemographicIO;
 
@@ -99,7 +99,7 @@ namespace CSETWebCore.Business.Demographic.Export
             var archiveStream = new MemoryStream();
             var model = CopyForExport(assessmentId);
 
-            using (var archive = new ZipFile())
+            using (var archive = new ZipOutputStream(archiveStream))
             {
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
 
@@ -134,8 +134,5 @@ namespace CSETWebCore.Business.Demographic.Export
 
             return new DemographicsExportFile(fileName, assessmentFileContents);
         }
-
-
-
     }
 }
