@@ -181,18 +181,6 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        /// <summary>        
-        /// </summary>
-        [HttpGet]
-        [Route("api/SPRSScore")]
-        public IActionResult GetSPRSScore()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetSPRSScore(assessmentId));
-        }
-
-
         [HttpGet]
         [Route("api/results/compliancebylevel")]
         public IActionResult GetComplianceByLevel()
