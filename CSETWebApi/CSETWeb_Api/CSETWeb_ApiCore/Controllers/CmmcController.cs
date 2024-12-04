@@ -43,12 +43,27 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>        
         /// </summary>
         [HttpGet]
-        [Route("api/cmmcscores")]
+        [Route("api/cmmc/scores")]
         public IActionResult GetCmmcScores()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
             return Ok(new CmmcBusiness(_context, _assessmentUtil, _adminTabBusiness).GetCmmcScores(assessmentId));
+        }
+
+
+        /// <summary>       
+        /// Returns a collection of scorecards for each active maturity level.
+        /// </summary>
+        [HttpGet]
+        [Route("api/cmmc/scorecards")]
+        public IActionResult GetLevelScorecards()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var biz = new CmmcBusiness(_context, _assessmentUtil, _adminTabBusiness);
+
+            return Ok(biz.GetLevelScorecards(assessmentId));
         }
 
 

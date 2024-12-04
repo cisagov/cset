@@ -300,6 +300,7 @@ import { Cmmc2Level1ScoreComponent } from './assessment/results/mat-cmmc2/cmmc2-
 import { Cmmc2Level2ScoreComponent } from './assessment/results/mat-cmmc2/cmmc2-level2-score/cmmc2-level2-score.component';
 import { Cmmc2Level3ScoreComponent } from './assessment/results/mat-cmmc2/cmmc2-level3-score/cmmc2-level3-score.component';
 import { Cmmc2ScorecardComponent } from './assessment/results/mat-cmmc2/cmmc2-scorecard/cmmc2-scorecard.component';
+import { LevelScorecardComponent } from './assessment/results/mat-cmmc2/level-scorecard/level-scorecard.component';
 import { Cmmc2LevelResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-level-results/cmmc2-level-results.component';
 import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-domain-results/cmmc2-domain-results.component';
 import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
@@ -848,6 +849,7 @@ import { AnalyticsResultsComponent } from './assessment/results/analytics-result
         Cmmc2Level2ScoreComponent,
         Cmmc2Level3ScoreComponent,
         Cmmc2ScorecardComponent,
+        LevelScorecardComponent,
         Cmmc2LevelResultsComponent,
         Cmmc2DomainResultsComponent,
         SprsScoreComponent,

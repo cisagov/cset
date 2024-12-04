@@ -274,6 +274,8 @@
       "how to use": "Instructions"
     },
     "cis config": "CIS Configuration",
+    "cmmc scoring": "CMMC Scoring",
+    "cmmc scorecard": "CMMC Scorecard",
     "acet dashboard": "ACET Dashboard",
     "analysis dashboard": "Analysis Dashboard",
     "standard results": "Standard Results",
@@ -486,7 +488,10 @@
       "pi-c2m2": "Partially Implemented (PI)",
       "ni-c2m2": "Not Implemented (NI)",
       "yes-cmmc": "Met",
-      "no-cmmc": "Not Met"
+      "y-cmmc": "Met",
+      "no-cmmc": "Not Met",
+      "n-cmmc": "Not Met",
+      "na-cmmc": "N/A"
     },
     "placeholders": {
       "alt acet": "Description, explanation and/or justification for compensating control",
@@ -615,6 +620,17 @@
       "level 3": "Level 3",
       "l3 a": "Expert.  Consists of selected security requirements derived from National Institute of Standards and Technology (NIST) Special Publication (SP) 800-172.",
       "l3 b": "Level 3 only applies to systems that have already achieved a Final Level 2 (C3PAO) CMMC Status."
+    },
+    "scoring": {
+      "score charts description": "To progress through the levels, you must be fully compliant at the current level before moving on to the next. This means achieving all required criteria at Level 1 before you can receive credit for Level 2, and so forth. Please note that we only display scoring charts for the levels relevant to your current assessment. For example, if your target is Level 1, you will see a single bar chart reflecting your compliance status for that specific level. This approach ensures clarity and focus on the immediate requirements.",
+      "level2 inactive description": "This chart shows your progress, but it is disabled because the previous level is not yet fully compliant.",
+      "level3 inactive description": "This chart shows your progress, but it is disabled because the previous level is not yet fully compliant.",
+      "scorecard description": "Each level's questions are listed here with their answers and, if not met, the number of points deducted from a perfect score.",
+      "practice": "Practice",
+      "response-long": "Response",
+      "response-abbr": "Resp",
+      "deduct-long": "Deduction",
+      "deduct-abbr": "Deduct"
     }
   },
   "filter-menu": {
