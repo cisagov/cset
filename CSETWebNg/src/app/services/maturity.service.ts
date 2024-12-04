@@ -322,7 +322,11 @@ export class MaturityService {
   }
 
   getCmmcScores() {
-    return this.http.get(this.configSvc.apiUrl + 'cmmcscores');
+    return this.http.get(this.configSvc.apiUrl + 'cmmc/scores');
+  }
+
+  getCmmcScorecards() {
+    return this.http.get(this.configSvc.apiUrl + 'cmmc/scorecards');
   }
 
   getSPRSScore() {
