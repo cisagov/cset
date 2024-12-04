@@ -20,15 +20,30 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel oy-auto d-flex flex-column flex-11a">
-     <h3>CMMC Scorecard</h3>
+<div class="white-panel oy-auto d-flex flex-column flex-11a" *transloco="let t">
+     <h3>{{t('titles.cmmc scorecard')}}</h3>
 
      <p style="font-style: italic">
-          Here we will present tables containing each question with its current answer and,
-          in the case of a "Not met" answer, we will indicate how many points this cost them.
-          It will look like what we display for CMMC 2.0 DRAFT, but we will split the
-          table into each of the three levels.
+          {{t('cmmc.scoring.scorecard description')}}
      </p>
+
+     <div>
+          <h4>Level 1</h4>
+          <app-level-scorecard [response]="level(0)"></app-level-scorecard> 
+     </div>
+
+
+     <div *ngIf="assessSvc.assessment.maturityModel.maturityTargetLevel >= 2">
+          <h4>Level 2</h4>
+          <app-level-scorecard [response]="level(1)"></app-level-scorecard> 
+     </div>
+
+
+     <div *ngIf="assessSvc.assessment.maturityModel.maturityTargetLevel >= 3">
+          <h4>Level 3</h4>
+          <app-level-scorecard [response]="level(2)"></app-level-scorecard> 
+     </div>
+
 
      <app-nav-back-next [page]="'cmmc2-scorecard'"></app-nav-back-next>
 

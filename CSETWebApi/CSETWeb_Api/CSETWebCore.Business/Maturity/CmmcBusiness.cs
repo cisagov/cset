@@ -10,7 +10,9 @@ using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Maturity;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using System.Linq;
+
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -31,6 +33,10 @@ namespace CSETWebCore.Business.Maturity
 
         private AdditionalSupplemental _addlSuppl;
 
+        private List<MATURITY_EXTRA> _maturityExtra;
+
+        private List<string> _goodAnswerOptions = new List<string>() {"Y", "NA"};
+
 
         private readonly int modelIdCmmc2 = 19;
 
@@ -50,6 +56,14 @@ namespace CSETWebCore.Business.Maturity
             _addlSuppl = new AdditionalSupplemental(context);
 
             _overlay = new TranslationOverlay();
+
+            var query = from me in _context.MATURITY_EXTRA
+                        join mq in _context.MATURITY_QUESTIONS on me.Maturity_Question_Id equals mq.Mat_Question_Id
+                        where mq.Maturity_Model_Id == modelIdCmmc2
+                        select me;
+
+
+            _maturityExtra = query.ToList();
         }
 
 
@@ -85,11 +99,11 @@ namespace CSETWebCore.Business.Maturity
         /// <summary>
         /// Sums up the number of "Y" and "NA" answers for CMMC2F questions 
         /// at a given maturity level.
+        /// 
+        /// This method assumes 1 point rewarded per MET question.
         /// </summary>
         public int GetScoreForLevel(int assessmentId, int level)
         {
-            var goodAnswers = new List<string>() { "Y", "NA" };
-
             var levelId = _context.MATURITY_LEVELS
                 .Where(x => x.Level == level && x.Maturity_Model_Id == modelIdCmmc2)
                 .Select(x => x.Maturity_Level_Id)
@@ -102,13 +116,108 @@ namespace CSETWebCore.Business.Maturity
 
             var answerList = query.ToList().Select(x => x.Answer_Text).ToList();
 
-            var score = answerList.Where(x => goodAnswers.Contains(x)).Count();
+            var score = answerList.Where(x => _goodAnswerOptions.Contains(x)).Count();
 
             return score;
         }
 
 
         /// <summary>
+        /// Returns a list of scorecards, one for each active level.
+        /// </summary>
+        /// <returns></returns>
+        public List<SprsScoreModel> GetLevelScorecards(int assessmentId)
+        {
+            var response = new List<SprsScoreModel>();
+
+
+            IList<SPRSScore> scores = _context.usp_GetSPRSScore(assessmentId);
+
+
+            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+
+            var options = new StructureOptions() {
+                IncludeQuestionText = true,
+                IncludeSupplemental = false
+            };
+
+            var x = biz.GetMaturityStructureAsXml(assessmentId, options);
+
+
+            var l1 = FilterByLevel(x, 1);
+            if (l1.Domains.Count > 0)
+            {
+                response.Add(l1);
+            }
+
+            var l2 = FilterByLevel(x, 2);
+            if (l2.Domains.Count > 0)
+            {
+                response.Add(l2);
+            }
+
+            var l3 = FilterByLevel(x, 3);
+            if (l3.Domains.Count > 0)
+            {
+                response.Add(l3);
+            }
+
+            return response;
+        }
+
+
+        /// <summary>
+        /// Returns an object with all domains and questions at 
+        /// the specified maturity level.  
+        /// 
+        /// Questions are also assigned their score/deduction.
+        /// </summary>
+        private SprsScoreModel FilterByLevel(XDocument x, int level)
+        {
+            var response = new SprsScoreModel();
+            response.Level = level;
+
+
+            foreach (var goal in x.Descendants("Goal"))
+            {
+                var d = new SprsDomain();
+                d.DomainName = goal.Attribute("title").Value;
+                
+
+                foreach (var question in goal.Descendants("Question"))
+                {
+                    if (question.Attribute("level").Value != level.ToString())
+                    {
+                        continue;
+                    }
+
+                    var q = new SprsQuestion();
+                    q.QuestionId = int.Parse(question.Attribute("questionid").Value);
+                    q.Title = question.Attribute("displaynumber").Value;
+                    q.QuestionText = question.Attribute("questiontext")?.Value;
+                    q.AnswerText = question.Attribute("answer").Value;
+
+                    // default the question score to 1 
+                    q.Score = DeductionForAnswer(q);
+
+                    d.Questions.Add(q);
+                }
+
+                if (d.Questions.Count() > 0)
+                {
+                    response.Domains.Add(d);
+                }
+            }
+
+            return response;
+        }
+
+
+        /// <summary>
+        /// 
+        /// DEPRECATE OR REFACTOR THIS
+        /// 
+        /// 
         /// Calculates a SPRS score based on the question scoring values in MATURITY_EXTRA.
         /// </summary>
         /// <param name="assessmentId"></param>
@@ -120,10 +229,11 @@ namespace CSETWebCore.Business.Maturity
             IList<SPRSScore> scores = _context.usp_GetSPRSScore(assessmentId);
 
 
-            var maturityExtra = _context.MATURITY_EXTRA.ToList();
+            //var maturityExtra = _context.MATURITY_EXTRA.ToList();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructureAsXml(assessmentId, true);
+            var options = new StructureOptions() { IncludeQuestionText = true, IncludeSupplemental = false };
+            var x = biz.GetMaturityStructureAsXml(assessmentId, options);
 
 
             int calculatedScore = 110;
@@ -137,28 +247,14 @@ namespace CSETWebCore.Business.Maturity
                 foreach (var question in goal.Descendants("Question"))
                 {
                     var q = new SprsQuestion();
-                    q.Id = question.Attribute("displaynumber").Value;
+                    q.Title = question.Attribute("displaynumber").Value;
                     q.QuestionText = question.Attribute("questiontext").Value;
                     q.AnswerText = question.Attribute("answer").Value;
 
                     int questionID = int.Parse(question.Attribute("questionid").Value);
-                    var mx = maturityExtra.Where(x => x.Maturity_Question_Id == questionID).FirstOrDefault();
 
-                    switch (q.AnswerText)
-                    {
-                        case "Y":
-                        case "NA":
-                            break;
-                        case "N":
-                        case "U":
-                            if (mx != null)
-                            {
-                                q.Score = mx.SPRSValue ?? 0;
-                            }
-                            break;
-                    }
 
-                    calculatedScore -= q.Score;
+                    calculatedScore -= DeductionForAnswer(q);
 
                     d.Questions.Add(q);
                 }
@@ -172,6 +268,28 @@ namespace CSETWebCore.Business.Maturity
             response.GaugeSvg = sprsGauge.ToString();
 
             return response;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private int DeductionForAnswer(SprsQuestion q)
+        {
+            if (_goodAnswerOptions.Contains(q.AnswerText))
+            {
+                return 0;
+            }
+
+            var mx = _maturityExtra.Where(x => x.Maturity_Question_Id == q.QuestionId).FirstOrDefault();
+
+            // default to 1 if no score is defined
+            if (mx == null || mx.SPRSValue == null)
+            {
+                return 1;
+            }
+
+            return (int)mx.SPRSValue;
         }
     }
 }

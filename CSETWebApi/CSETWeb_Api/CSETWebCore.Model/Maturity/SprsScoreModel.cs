@@ -4,16 +4,15 @@
 // 
 // 
 //////////////////////////////// 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CSETWebCore.Model.Maturity
 {
     public class SprsScoreModel
     {
+        public int Level { get; set; }
+
         public int SprsScore { get; set; }
 
         public List<SprsDomain> Domains { get; set; }
@@ -40,7 +39,9 @@ namespace CSETWebCore.Model.Maturity
 
     public class SprsQuestion
     {
-        public string Id { get; set; }
+        public int QuestionId { get; set; }
+
+        public string Title { get; set; }
         public string QuestionText { get; set; }
 
         public string AnswerText { get; set; }

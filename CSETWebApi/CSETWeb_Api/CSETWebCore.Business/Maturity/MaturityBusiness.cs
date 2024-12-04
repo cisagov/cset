@@ -338,7 +338,8 @@ namespace CSETWebCore.Business.Maturity
             var response = new List<DomainAnswers>();
 
 
-            var structure = new MaturityStructureAsXml(assessmentId, _context, false);
+            var options = new StructureOptions() { IncludeQuestionText = false, IncludeSupplemental = false };
+            var structure = new MaturityStructureAsXml(assessmentId, _context, options);
 
 
             // In this model sructure, the Goal element represents domains
@@ -1300,9 +1301,9 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public XDocument GetMaturityStructureAsXml(int assessmentId, bool includeSupplemental)
+        public XDocument GetMaturityStructureAsXml(int assessmentId, StructureOptions options)
         {
-            var x = new MaturityStructureAsXml(assessmentId, _context, includeSupplemental);
+            var x = new MaturityStructureAsXml(assessmentId, _context, options);
             return x.ToXDocument();
         }
 
