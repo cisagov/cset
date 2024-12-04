@@ -20,8 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel oy-auto d-flex flex-column flex-11a">
-     <h3>CMMC Scoring</h3>
+<div class="white-panel oy-auto d-flex flex-column flex-11a" *transloco="let t">
+     <h3>{{t('titles.cmmc scoring')}}</h3>
 
      <div *ngIf="loading">
           <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
@@ -29,24 +29,19 @@
           </div>
      </div>
 
-     <p style="font-style: italic">
-          Here we can have a brief explanation of how the scoring works; maybe explain how you must be fully
-          compliant in one level in order to get credit for the next level, stuff like that.  Also, we only
-          show scoring charts for applicable levels, so we might want to mention that as well.  So they know
-          why their target level 1 assessment is only showing a single bar chart.
+     <p>
+          {{t('cmmc.scoring.score charts description')}}
      </p>
 
      <div *ngIf="!loading">
 
           <app-cmmc2-level1-score [score]="scores?.level1Score"></app-cmmc2-level1-score>
 
-          <app-cmmc2-level2-score [score]="scores?.level2Score" 
-               [active]="scores?.level2Active" 
+          <app-cmmc2-level2-score [score]="scores?.level2Score" [active]="scores?.level2Active"
                *ngIf="assessSvc.assessment.maturityModel.maturityTargetLevel >= 2">
           </app-cmmc2-level2-score>
 
-          <app-cmmc2-level3-score [score]="scores?.level3Score" 
-               [active]="scores?.level3Active" 
+          <app-cmmc2-level3-score [score]="scores?.level3Score" [active]="scores?.level3Active"
                *ngIf="assessSvc.assessment.maturityModel.maturityTargetLevel >= 3">
           </app-cmmc2-level3-score>
 
