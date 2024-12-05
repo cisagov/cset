@@ -24,11 +24,6 @@ namespace CSETWebCore.Business.Maturity
         private CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
-
-        private int _maturityModelId;
-
-        private static object myLock = new object();
-
         private TranslationOverlay _overlay;
 
         private AdditionalSupplemental _addlSuppl;
@@ -107,12 +102,12 @@ namespace CSETWebCore.Business.Maturity
             var levelId = _context.MATURITY_LEVELS
                 .Where(x => x.Level == level && x.Maturity_Model_Id == modelIdCmmc2)
                 .Select(x => x.Maturity_Level_Id)
-                .FirstOrDefault(); 
+                .FirstOrDefault();
 
             var query = from a in _context.ANSWER
-                     join q in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals q.Mat_Question_Id
-                     where q.Maturity_Level_Id == levelId && a.Assessment_Id == assessmentId
-                     select a;
+                        join q in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals q.Mat_Question_Id
+                        where q.Maturity_Level_Id == levelId && a.Assessment_Id == assessmentId
+                        select a;
 
             var answerList = query.ToList().Select(x => x.Answer_Text).ToList();
 
