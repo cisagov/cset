@@ -20,12 +20,12 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<table class="table table-td-p2" [class.fs-smaller]="layoutSvc.hp" *transloco="let t">
+<table class="table table-td-p2 table-td-small" [class.fs-smaller]="layoutSvc.hp" *transloco="let t">
      <tr>
           <th>{{t('cmmc.scoring.practice')}}</th>
           <th></th>
           <th>
-               {{ layoutSvc.hp ? t('cmmc.scoring.response-abbr') : t('cmmc.scoring.response-long') }}
+               {{ layoutSvc.hp ? t('cmmc.scoring.answer-abbr') : t('cmmc.scoring.answer-long') }}
           </th>
           <th>
                {{ layoutSvc.hp ? t('cmmc.scoring.deduct-abbr') : t('cmmc.scoring.deduct-long') }}
@@ -34,7 +34,7 @@
 
      <ng-template ngFor let-d [ngForOf]="response?.domains">
           <tr>
-               <td colspan="4" class="h5">
+               <td colspan="4" class="h5" style="font-size: .9em;">
                     <div style="border-top: 1px solid #555; border-bottom: 1px solid #555;">
                          {{d.domainName}}
                     </div>

@@ -32,11 +32,12 @@ export class Cmmc2Level1ScoreComponent {
 
   width = 700;
 
-  maxScore: number = 15;
-
   
   @Input()
   score: number;
+
+  @Input()
+  maxScore: number;
   
   @Input()
   active = true;

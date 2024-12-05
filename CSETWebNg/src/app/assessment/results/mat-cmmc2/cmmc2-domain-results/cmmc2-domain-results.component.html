@@ -20,13 +20,12 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-  <h3>Performance by Domain</h3>
+<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a" *transloco="let t">
+  <h3>{{t('titles.performance by domain')}}</h3>
 
   <div>
     <p>
-      The following chart shows the percentage of practices met for each
-      domain at target level {{targetLevel}}.
+      {{ t('cmmc.scoring.perf by domain desc', {targetLevel: targetLevel}) }}
     </p>
 
     <div *ngIf="loading">
