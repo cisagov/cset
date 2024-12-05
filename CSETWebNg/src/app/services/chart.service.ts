@@ -187,7 +187,7 @@ export class ChartService {
    * @param canvasId
    * @param x
    */
-  buildDoughnutChart(canvasId: string, x: any) {
+  buildDoughnutChart(canvasId: string, x: any, modelName?: string) {
     let tempChart = Chart.getChart(canvasId);
     if (tempChart) {
       tempChart.destroy();
@@ -198,7 +198,7 @@ export class ChartService {
     let segmentLabels = [];
     x.labels.forEach(element => {
       segmentColors.push(this.segmentColor(element));
-      segmentLabels.push(this.questionsSvc.answerDisplayLabel('', element));
+      segmentLabels.push(this.questionsSvc.answerDisplayLabel(modelName ?? '', element));
     });
 
 

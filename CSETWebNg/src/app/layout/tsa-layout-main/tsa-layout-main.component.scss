@@ -637,6 +637,10 @@ table.assessment-summary th {
   padding: .5rem !important;
 }
 
+.table.table-td-small th, .table.table-td-small td {
+  font-size: .875em;
+}
+
 // force transparent
 .table>:not(caption)>*>* {
   background-color: transparent !important;

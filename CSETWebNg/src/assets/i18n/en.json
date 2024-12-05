@@ -296,6 +296,8 @@
     "analytics": "Analytics",
     "assessment complete": "Assessment Complete",
     "performance summary": "Performance Summary",
+    "performance by domain": "Performance by Domain",
+    "performance by level": "Performance by Level",
     "security practice checklist": "Security Practice Checklist",
     "goal performance": "Goal Performance",
     "assessment tiers": "Assessment Tiers",
@@ -623,15 +625,18 @@
       "l3 b": "Level 3 only applies to systems that have already achieved a Final Level 2 (C3PAO) CMMC Status."
     },
     "scoring": {
-      "score charts description": "To progress through the levels, you must be fully compliant at the current level before moving on to the next. This means achieving all required criteria at Level 1 before you can receive credit for Level 2, and so forth. Please note that we only display scoring charts for the levels relevant to your current assessment. For example, if your target is Level 1, you will see a single bar chart reflecting your compliance status for that specific level. This approach ensures clarity and focus on the immediate requirements.",
-      "level2 inactive description": "This chart shows your progress, but it is disabled because the previous level is not yet fully compliant.",
-      "level3 inactive description": "This chart shows your progress, but it is disabled because the previous level is not yet fully compliant.",
-      "scorecard description": "Each level's questions are listed here with their answers and, if not met, the number of points deducted from a perfect score.",
+      "score charts description 1": "The following chart(s) illustrate the organization's progress in meeting the cybersecurity standards evaluated in the CMMC assessment. This page provides data based on the level selected on the CMMC Target Level Selection page (e.g., if the user selects a target level of 2, charts for both Level 1 and Level 2 will display). This approach ensures clarity and focus on the immediate requirements.",
+      "score charts description 2": "Scoring within the CMMC program is cumulative, meaning organizations must achieve compliance in all previous levels before advancing to the next one. For instance, an organization must complete the requirements for Level 1 and Level 2 before progressing to Level 3.",
+      "score charts description 3": "For further guidance, refer to the CMMC Tutorial within the Prepare section. A link to CMMC documentation is also available in the Additional Resources section.",
+      "inactive description": "The following chart displays the organization’s current progress within the level, independent of the CMMC program's cumulative scoring requirements, and without consideration for the progress made in previous levels. Please note that the level is not considered achieved, as the organization has not met the compliance requirements for the preceding level(s).",
+      "scorecard description": "The table below lists all practices and their corresponding responses, organized by level and then by the individual domain. Additionally, if a requirement is not met, the points deducted from the total score are shown in the Deduction column.",
       "practice": "Practice",
-      "response-long": "Response",
-      "response-abbr": "Resp",
+      "answer-long": "Answer",
+      "answer-abbr": "Ans",
       "deduct-long": "Deduction",
-      "deduct-abbr": "Deduct"
+      "deduct-abbr": "Deduct",
+      "perf by domain desc": "The following chart shows the percentage of practices Met or N/A for each domain at target level {{targetLevel}}.",
+      "perf by level desc": "The following chart(s) displays the percentage distribution of each response type by level."
     }
   },
   "filter-menu": {

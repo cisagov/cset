@@ -9,10 +9,12 @@ namespace CSETWebCore.Model.Maturity
     public class CmmcScores
     {
         public int Level1Score { get; set; }
+        public int Level1MaxScore { get; set; }
 
 
 
         public int Level2Score { get; set; }
+        public int Level2MaxScore { get; set; }
 
         /// <summary>
         /// Level 3 is only active if Level 1 is 100% compliant
@@ -22,6 +24,7 @@ namespace CSETWebCore.Model.Maturity
 
 
         public int Level3Score { get; set; }
+        public int Level3MaxScore { get; set; }
 
         /// <summary>
         /// Level 3 is only active if Level 2 is 100% compliant
