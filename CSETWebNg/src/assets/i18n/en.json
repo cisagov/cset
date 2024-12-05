@@ -491,7 +491,8 @@
       "y-cmmc": "Met",
       "no-cmmc": "Not Met",
       "n-cmmc": "Not Met",
-      "na-cmmc": "N/A"
+      "na-cmmc": "N/A",
+      "u-cmmc": "Unanswered"
     },
     "placeholders": {
       "alt acet": "Description, explanation and/or justification for compensating control",

@@ -49,8 +49,10 @@
 
     <!-- Draw bar -->
     <g class="bars" transform="translate(30, 30)">
-      <rect x="0" y="40" [attr.width]="width" height="20" fill="url(#barGradient)" [matTooltip]="'SPRS: ' + score">
+      <rect x="0" y="40" [attr.width]="width" height="20" fill="url(#barGradient)" [matTooltip]="'SPRS: ' + score" *ngIf="active">
       </rect>
+      <rect x="0" y="40" [attr.width]="width" height="20" fill="white" stroke="#aaa" [matTooltip]="'SPRS: ' + score" *ngIf="!active">
+     </rect>
     </g>
 
     <!-- Axis line for current score -->

@@ -9,35 +9,35 @@ using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Maturity
 {
-    public class SprsScoreModel
+    public class CmmcScoreModel
     {
         public int Level { get; set; }
 
-        public int SprsScore { get; set; }
+        public int LevelScore { get; set; }
 
-        public List<SprsDomain> Domains { get; set; }
+        public List<CmmcDomain> Domains { get; set; }
 
         public string GaugeSvg { get; set; }
 
-        public SprsScoreModel()
+        public CmmcScoreModel()
         {
-            this.Domains = new List<SprsDomain>();
+            this.Domains = new List<CmmcDomain>();
         }
     }
 
-    public class SprsDomain
+    public class CmmcDomain
     {
         public string DomainName { get; set; }
 
-        public List<SprsQuestion> Questions { get; set; }
+        public List<CmmcQuestion> Questions { get; set; }
 
-        public SprsDomain()
+        public CmmcDomain()
         {
-            this.Questions = new List<SprsQuestion>();
+            this.Questions = new List<CmmcQuestion>();
         }
     }
 
-    public class SprsQuestion
+    public class CmmcQuestion
     {
         public int QuestionId { get; set; }
 
