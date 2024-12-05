@@ -112,9 +112,9 @@ export class AnalyticsResultsComponent implements OnInit {
     try {
       let result = null;
       if (allSectors){
-        result = await this.analyticsSvc.getAnalyticResults(this.assessmentId, this.modelId).toPromise();
+        result = await this.analyticsSvc.getAnalyticResults(this.modelId).toPromise();
       } else {
-        result = await this.analyticsSvc.getAnalyticResults(this.assessmentId, this.modelId, this.sectorId).toPromise();
+        result = await this.analyticsSvc.getAnalyticResults(this.modelId, this.sectorId).toPromise();
       }
       //this.setData(result);
 
