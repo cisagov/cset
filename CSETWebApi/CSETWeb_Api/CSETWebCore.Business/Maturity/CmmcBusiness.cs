@@ -30,13 +30,13 @@ namespace CSETWebCore.Business.Maturity
 
         private List<MATURITY_EXTRA> _maturityExtra;
 
-        private List<string> _goodAnswerOptions = new List<string>() {"Y", "NA"};
+        private readonly List<string> _goodAnswerOptions = new List<string>() {"Y", "NA"};
 
-
+        // CMMC 2.0 FINAL model ID
         private readonly int modelIdCmmc2 = 19;
 
-        private int _level1Max = 15;
-        private int _level2Max = 110;
+        private readonly int _level1Max = 15;
+        private readonly int _level2Max = 110;
 
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace CSETWebCore.Business.Maturity
 
             // Level 2
             var sprs = GetSPRSScore(assessmentId);
-            response.Level2Score = sprs.SprsScore;
+            response.Level2Score = sprs.LevelScore;
             response.Level2Active = (response.Level1Score == _level1Max);
 
 
@@ -121,13 +121,9 @@ namespace CSETWebCore.Business.Maturity
         /// Returns a list of scorecards, one for each active level.
         /// </summary>
         /// <returns></returns>
-        public List<SprsScoreModel> GetLevelScorecards(int assessmentId)
+        public List<CmmcScoreModel> GetLevelScorecards(int assessmentId)
         {
-            var response = new List<SprsScoreModel>();
-
-
-            IList<SPRSScore> scores = _context.usp_GetSPRSScore(assessmentId);
-
+            var response = new List<CmmcScoreModel>();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
@@ -167,15 +163,15 @@ namespace CSETWebCore.Business.Maturity
         /// 
         /// Questions are also assigned their score/deduction.
         /// </summary>
-        private SprsScoreModel FilterByLevel(XDocument x, int level)
+        private CmmcScoreModel FilterByLevel(XDocument x, int level)
         {
-            var response = new SprsScoreModel();
+            var response = new CmmcScoreModel();
             response.Level = level;
 
 
             foreach (var goal in x.Descendants("Goal"))
             {
-                var d = new SprsDomain();
+                var d = new CmmcDomain();
                 d.DomainName = goal.Attribute("title").Value;
                 
 
@@ -186,13 +182,12 @@ namespace CSETWebCore.Business.Maturity
                         continue;
                     }
 
-                    var q = new SprsQuestion();
+                    var q = new CmmcQuestion();
                     q.QuestionId = int.Parse(question.Attribute("questionid").Value);
                     q.Title = question.Attribute("displaynumber").Value;
                     q.QuestionText = question.Attribute("questiontext")?.Value;
                     q.AnswerText = question.Attribute("answer").Value;
 
-                    // default the question score to 1 
                     q.Score = DeductionForAnswer(q);
 
                     d.Questions.Add(q);
@@ -209,22 +204,11 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
-        /// 
-        /// DEPRECATE OR REFACTOR THIS
-        /// 
-        /// 
         /// Calculates a SPRS score based on the question scoring values in MATURITY_EXTRA.
         /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public SprsScoreModel GetSPRSScore(int assessmentId)
+        public CmmcScoreModel GetSPRSScore(int assessmentId)
         {
-            var response = new SprsScoreModel();
-
-            IList<SPRSScore> scores = _context.usp_GetSPRSScore(assessmentId);
-
-
-            //var maturityExtra = _context.MATURITY_EXTRA.ToList();
+            var response = new CmmcScoreModel();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var options = new StructureOptions() { IncludeQuestionText = true, IncludeSupplemental = false };
@@ -235,27 +219,29 @@ namespace CSETWebCore.Business.Maturity
 
             foreach (var goal in x.Descendants("Goal"))
             {
-                var d = new SprsDomain();
+                var d = new CmmcDomain();
                 d.DomainName = goal.Attribute("title").Value;
                 response.Domains.Add(d);
 
                 foreach (var question in goal.Descendants("Question"))
                 {
-                    var q = new SprsQuestion();
+                    var q = new CmmcQuestion();
+                    q.QuestionId = int.Parse(question.Attribute("questionid").Value);
                     q.Title = question.Attribute("displaynumber").Value;
                     q.QuestionText = question.Attribute("questiontext").Value;
                     q.AnswerText = question.Attribute("answer").Value;
+                    q.Score = DeductionForAnswer(q);
 
                     int questionID = int.Parse(question.Attribute("questionid").Value);
 
-
-                    calculatedScore -= DeductionForAnswer(q);
+                    // Adjust the SPRS score 
+                    calculatedScore -= q.Score;
 
                     d.Questions.Add(q);
                 }
             }
 
-            response.SprsScore = calculatedScore;
+            response.LevelScore = calculatedScore;
 
             // TODO:  With the release of CMMC 2.0 Final the gauge is built in the UI and this 
             //        code will not be needed.
@@ -267,9 +253,12 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
-        /// 
+        /// Returns the number of points deducted based on the question's answer.
+        /// Successful answers (Y, NA) deduct no points.
+        /// Questions not defined with a point value in MATURITY_EXTRA (e.g., Level 1 and Level 3)
+        /// default to a 1-point deduction.
         /// </summary>
-        private int DeductionForAnswer(SprsQuestion q)
+        private int DeductionForAnswer(CmmcQuestion q)
         {
             if (_goodAnswerOptions.Contains(q.AnswerText))
             {
