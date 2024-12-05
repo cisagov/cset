@@ -4,38 +4,17 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Acet;
-using CSETWebCore.Business.Maturity;
-using CSETWebCore.Business.Maturity.Configuration;
 using CSETWebCore.Business.Question;
-using CSETWebCore.Business.Sal;
-using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
-using CSETWebCore.Interfaces.AdminTab;
-using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.Maturity;
-using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Reports;
-using CSETWebCore.Model.Diagram;
-using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Reports;
-using CSETWebCore.Model.Set;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Nelibur.ObjectMapper;
-using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.Intrinsics.Arm;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using static Lucene.Net.Util.Fst.Util;
 
 
 namespace CSETWebCore.Business.Reports
