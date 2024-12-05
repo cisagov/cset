@@ -33,7 +33,7 @@ export class AnalyticsService {
   }
 
 
-  getAnalyticResults(maturityModelId: any, sectorId?: any): any {
+  getAnalyticResults(maturityModelId: number, sectorId?: number): any {
     let url = this.apiUrl + "maturity/bars?"
     if (maturityModelId) {
       url += `&modelId=${maturityModelId}`;
