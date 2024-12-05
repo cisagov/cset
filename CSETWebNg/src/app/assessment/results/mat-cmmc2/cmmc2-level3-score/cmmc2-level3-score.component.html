@@ -24,7 +24,7 @@
   <h5>{{t('level.level 3')}}</h5>
 
   <p *ngIf="!active">
-    {{t('cmmc.scoring.scorecard description')}}
+    {{t('cmmc.scoring.level2 inactive description')}}
   </p>
 
   <svg viewBox="0 0 800 130" [attr.width]="width" height="130" xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +39,8 @@
 
     <!-- Draw bar -->
     <g class="bars" transform="translate(30, 30)">
-      <rect x="0" y="50" [attr.width]="n(score)" height="20" fill="#034b61" [matTooltip]="score"></rect>
+      <rect x="0" y="50" [attr.width]="n(score)" height="20" fill="#034b61" [matTooltip]="score" *ngIf="active"></rect>
+      <rect x="0" y="50" [attr.width]="n(score)" height="20" fill="white" stroke="#aaa" [matTooltip]="score" *ngIf="!active"></rect>
     </g>
 
     <!-- Axis line for current score -->
