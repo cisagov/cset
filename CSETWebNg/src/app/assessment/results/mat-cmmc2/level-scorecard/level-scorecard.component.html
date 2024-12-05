@@ -47,7 +47,7 @@
                     <td class="align-top" [class.fw-bold]="q.score != 0" [innerHTML]="q.questionText"></td>
                     <td class="align-top" [class.fw-bold]="q.score != 0">{{t('answer-options.labels.' + q.answerText.toLowerCase() +
                          '-cmmc')}}</td>
-                    <td class="align-top" [class.fw-bold]="q.score != 0">{{q.score == 0 ? '' : q.score}}</td>
+                    <td class="align-top align-end" [class.fw-bold]="q.score != 0">{{q.score == 0 ? '' : q.score}}</td>
                </tr>
           </ng-template>
      </ng-template>
