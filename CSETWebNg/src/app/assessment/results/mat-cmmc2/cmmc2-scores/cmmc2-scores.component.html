@@ -30,19 +30,26 @@
      </div>
 
      <p>
-          {{t('cmmc.scoring.score charts description')}}
+          {{t('cmmc.scoring.score charts description 1')}}
+     </p>
+     <p>
+          {{t('cmmc.scoring.score charts description 2')}}
+     </p>
+     <p>
+          {{t('cmmc.scoring.score charts description 3')}}
      </p>
 
      <div *ngIf="!loading">
 
-          <app-cmmc2-level1-score [score]="scores?.level1Score"></app-cmmc2-level1-score>
+          <app-cmmc2-level1-score [score]="scores?.level1Score"
+               [maxScore]="scores?.level1MaxScore"></app-cmmc2-level1-score>
 
-          <app-cmmc2-level2-score [score]="scores?.level2Score" [active]="scores?.level2Active"
-               *ngIf="assessSvc.assessment.maturityModel.maturityTargetLevel >= 2">
+          <app-cmmc2-level2-score [score]="scores?.level2Score" [maxScore]="scores?.level2MaxScore"
+               [active]="scores?.level2Active" *ngIf="assessSvc.assessment.maturityModel.maturityTargetLevel >= 2">
           </app-cmmc2-level2-score>
 
-          <app-cmmc2-level3-score [score]="scores?.level3Score" [active]="scores?.level3Active"
-               *ngIf="assessSvc.assessment.maturityModel.maturityTargetLevel >= 3">
+          <app-cmmc2-level3-score [score]="scores?.level3Score" [maxScore]="scores?.level3MaxScore"
+               [active]="scores?.level3Active" *ngIf="assessSvc.assessment.maturityModel.maturityTargetLevel >= 3">
           </app-cmmc2-level3-score>
 
      </div>

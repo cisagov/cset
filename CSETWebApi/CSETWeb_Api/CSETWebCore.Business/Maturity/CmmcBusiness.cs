@@ -37,6 +37,7 @@ namespace CSETWebCore.Business.Maturity
 
         private readonly int _level1Max = 15;
         private readonly int _level2Max = 110;
+        private readonly int _level3Max = 24;
 
 
         /// <summary>
@@ -72,18 +73,21 @@ namespace CSETWebCore.Business.Maturity
 
             // Level 1
             response.Level1Score = GetScoreForLevel(assessmentId, 1);
+            response.Level1MaxScore = _level1Max;
 
 
 
             // Level 2
             var sprs = GetSPRSScore(assessmentId);
             response.Level2Score = sprs.LevelScore;
+            response.Level2MaxScore = _level2Max;
             response.Level2Active = (response.Level1Score == _level1Max);
 
 
 
             // Level 3
             response.Level3Score = GetScoreForLevel(assessmentId, 3);
+            response.Level3MaxScore = _level3Max;
             response.Level3Active = (response.Level2Score == _level2Max);
 
 

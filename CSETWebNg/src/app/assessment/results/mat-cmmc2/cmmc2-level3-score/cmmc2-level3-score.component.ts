@@ -31,11 +31,12 @@ import { Component, Input } from '@angular/core';
 export class Cmmc2Level3ScoreComponent {
 
   width = 700;
-
-  maxScore: number = 35;
-
+  
   @Input()
   score: number;
+  
+  @Input()
+  maxScore: number;
 
   @Input()
   active = true;
