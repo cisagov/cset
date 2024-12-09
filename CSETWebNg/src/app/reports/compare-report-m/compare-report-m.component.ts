@@ -86,7 +86,7 @@ export class CompareReportMComponent implements OnInit, AfterViewChecked {
   populateCharts(aggId: number) {
 
     // Overall Average
-    this.aggregationSvc.getOverallAverageSummary(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getOverallAverageSummary().subscribe((x: any) => {
 
       // Makes the Compliance Summary chart a light blue color instead of grey
       const chartColors = new ChartColors();
@@ -98,7 +98,7 @@ export class CompareReportMComponent implements OnInit, AfterViewChecked {
     });
 
     // Assessment Answer Summary - tabular data
-    this.aggregationSvc.getMaturityAnswerTotals(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getMaturityAnswerTotals().subscribe((x: any) => {
       // 
       this.answerCounts = x;
 
@@ -132,7 +132,7 @@ export class CompareReportMComponent implements OnInit, AfterViewChecked {
       });
     });
     // Category Percentage Comparison
-    this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
       this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
       (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });

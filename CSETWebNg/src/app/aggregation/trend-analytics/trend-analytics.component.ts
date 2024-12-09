@@ -67,22 +67,22 @@ export class TrendAnalyticsComponent implements OnInit {
     //const aggregationId = this.aggregationSvc.id();
     var aggId: number = +localStorage.getItem("aggregationId");
     // Overall Compliance
-    this.aggregationSvc.getOverallComplianceScores(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
       this.chartOverallCompl = this.chartSvc.buildLineChart('canvasOverallCompliance', x);
     });
 
     // Top 5
-    this.aggregationSvc.getTrendTop5(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getTrendTop5().subscribe((x: any) => {
       this.chartTop5 = this.chartSvc.buildLineChart('canvasTop5', x);
     });
 
     // Bottom 5
-    this.aggregationSvc.getTrendBottom5(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getTrendBottom5().subscribe((x: any) => {
       this.chartBottom5 = this.chartSvc.buildLineChart('canvasBottom5', x);
     });
 
     // Category Percentage Comparison
-    this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
       this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
       (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });
