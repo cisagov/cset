@@ -825,6 +825,7 @@ namespace CSETWebCore.Business.Maturity
             var questionQuery = _context.MATURITY_QUESTIONS
                 .Include(x => x.Maturity_Level)
                 .Include(x => x.MATURITY_QUESTION_PROPS)
+                .Include(x => x.MATURITY_EXTRA)
                 .Where(q =>
                 targetModelId == q.Maturity_Model_Id);
 

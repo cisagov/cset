@@ -55,7 +55,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   private _timeoutId: NodeJS.Timeout;
 
   percentAnswered = 0;
-  answerOptions = [];
+  modelAnswerOptions = [];
 
   // tokenized placeholder for transloco, made this variable a switch between the different placeholders
   altTextPlaceholder = "alt cset";
@@ -88,7 +88,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
    */
   ngOnInit(): void {
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
-      this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
+      this.modelAnswerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
       this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
       this.maturityModelName = this.assessSvc.assessment.maturityModel.modelName;
     }
@@ -238,12 +238,10 @@ export class QuestionBlockMaturityComponent implements OnInit {
         return;
       }
       if (q.visible) {
-
         totalCount++;
         if (q.answer && q.answer !== "U") {
           answeredCount++;
         }
-
       }
     });
     this.percentAnswered = (answeredCount / totalCount) * 100;
@@ -300,7 +298,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
         this.storeAnswer(q, newAnswerValue);
       }
     }
-
   }
 
   checkReviewKeyPress(event: any, q: Question) {
@@ -310,6 +307,4 @@ export class QuestionBlockMaturityComponent implements OnInit {
       }
     }
   }
-
-
 }

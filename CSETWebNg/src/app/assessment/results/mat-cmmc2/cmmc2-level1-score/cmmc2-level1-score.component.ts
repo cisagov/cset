@@ -21,7 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
+import { TsaService } from '../../../../services/tsa.service';
 
 @Component({
   selector: 'app-cmmc2-level1-score',

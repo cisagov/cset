@@ -98,7 +98,7 @@
                 <div *ngIf="!q.isParentQuestion">
                     <!-- build the list of answer choice buttons -->
                     <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
-                        <label *ngFor="let option of answerOptions"
+                        <label *ngFor="let option of q.answerOptions ?? modelAnswerOptions"
                             class="btn form-check-label d-flex align-items-center" tabindex="0"
                             [class]="questionsSvc.answerOptionCss(maturityModelName, option)"
                             [class.answer-selected]="q.answer === option"
