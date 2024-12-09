@@ -49,7 +49,6 @@ export class Cmmc2ScoresComponent implements OnInit {
    */
   ngOnInit(): void {
     this.maturitySvc.getCmmcScores().subscribe(x => {
-      console.log(x);
       this.scores = x;
     });
 

@@ -197,7 +197,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
 
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
-        this.filterSvc.answerOptions = response.answerOptions;
+        this.filterSvc.answerOptions = response.answerOptions.slice();
         this.filterSvc.maturityModelId = response.modelId;
         this.filterSvc.maturityModelName = response.modelName;
 
@@ -247,7 +247,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
 
       this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
-      this.filterSvc.answerOptions = response.answerOptions;
+      this.filterSvc.answerOptions = response.answerOptions.slice();
       this.filterSvc.maturityModelId = response.modelId;
 
       this.pageTitle = this.questionsAlias + ' - ' + this.modelName;

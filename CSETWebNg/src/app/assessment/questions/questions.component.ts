@@ -309,7 +309,7 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
 
         this.categories = response.categories;
 
-        this.filterSvc.answerOptions = response.answerOptions;
+        this.filterSvc.answerOptions = response.answerOptions.slice();
         this.filterSvc.maturityModelId = 0;
 
         this.filterSvc.evaluateFiltersForCategories(this.categories);

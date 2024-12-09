@@ -88,7 +88,7 @@ namespace CSETWebCore.Business.Maturity
             // Level 3
             response.Level3Score = GetScoreForLevel(assessmentId, 3);
             response.Level3MaxScore = _level3Max;
-            response.Level3Active = (response.Level2Score == _level2Max);
+            response.Level3Active = response.Level2Active && (response.Level2Score == _level2Max);
 
 
             return response;
@@ -208,7 +208,7 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
-        /// Calculates a SPRS score based on the question scoring values in MATURITY_EXTRA.
+        /// Calculates a SPRS score based on the level 2 question scoring values in MATURITY_EXTRA.
         /// </summary>
         public CmmcScoreModel GetSPRSScore(int assessmentId)
         {
@@ -227,7 +227,7 @@ namespace CSETWebCore.Business.Maturity
                 d.DomainName = goal.Attribute("title").Value;
                 response.Domains.Add(d);
 
-                foreach (var question in goal.Descendants("Question"))
+                foreach (var question in goal.Descendants("Question").Where(x => x.Attribute("level").Value == "2"))
                 {
                     var q = new CmmcQuestion();
                     q.QuestionId = int.Parse(question.Attribute("questionid").Value);

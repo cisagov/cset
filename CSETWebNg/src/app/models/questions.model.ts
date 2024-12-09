@@ -144,6 +144,7 @@ export interface Question {
     questionText: string;
     parmSubs: SubToken[];
     stdRefId: string;
+    answerOptions: string[];
     answer_Id: number;
     answer: string;
     altAnswerText: string;
