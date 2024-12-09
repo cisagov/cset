@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel oy-auto d-flex flex-column flex-11a">
+<div class="white-panel oy-auto d-flex flex-column flex-11a" *transloco="let t">
   <h3>SPRS Score</h3>
 
   <div *ngIf="loading">
@@ -39,12 +39,15 @@
 
       <h4>Scorecard</h4>
       <p>
-        The following is an accounting of CMMC Level 2 interpreted as your NIST 171 SPRS score.
+        The following is an accounting of CMMC Level 2 interpreted as your NIST 171 Supplier Performance Risk System
+        (SPRS) score.  Unmet practices are bolded.
+      </p>
+      <p>
         For more information on SPRS scoring methodology and preliminary requirements for its use, please refer to the
         tutorial.
       </p>
 
-      <table class="cset-table" [class.fs-smaller]="layoutSvc.hp">
+      <table class="table table-td-p2" style="width: 90%" [class.fs-smaller]="layoutSvc.hp">
         <tr>
           <th>Practice</th>
           <th></th>
@@ -52,21 +55,22 @@
             {{ layoutSvc.hp ? 'Resp' : 'Response' }}
           </th>
           <th>
-            {{ layoutSvc.hp ? 'Val' : 'Value' }}
+            {{ layoutSvc.hp ? 'Deduct' : 'Deduction' }}
           </th>
         </tr>
 
         <ng-template ngFor let-d [ngForOf]="response.domains">
-          <tr style="border-top: 1px solid #000; border-bottom: 1px solid #000; background-color: #fff;;">
-            <td colspan="4" class="h5">{{d.domainName}}</td>
+          <tr style="border-top: 1px solid #000; border-bottom: 1px solid #000;">
+            <td colspan="4" class="h5 py-2">{{d.domainName}}</td>
           </tr>
 
           <ng-template ngFor let-q [ngForOf]="d.questions">
             <tr>
-              <td class="text-nowrap align-top" [class.font-weight-bold]="q.score != 0">{{q.id}}</td>
-              <td class="align-top" [class.font-weight-bold]="q.score != 0" [innerHTML]="q.questionText"></td>
-              <td class="align-top" [class.font-weight-bold]="q.score != 0">{{q.answerText}}</td>
-              <td class="align-top" [class.font-weight-bold]="q.score != 0">{{q.score == 0 ? '' : q.score}}</td>
+              <td class="text-nowrap align-top" [class.fw-bold]="q.score != 0">{{q.id}}</td>
+              <td class="align-top" [class.fw-bold]="q.score != 0" [innerHTML]="q.questionText"></td>
+              <td class="align-top" [class.fw-bold]="q.score != 0">{{ t('answer-options.labels.' +
+                q.answerText.toLowerCase() + '-cmmc') }}</td>
+              <td class="align-top text-end" [class.fw-bold]="q.score != 0">{{q.score == 0 ? '' : q.score}}</td>
             </tr>
           </ng-template>
         </ng-template>
