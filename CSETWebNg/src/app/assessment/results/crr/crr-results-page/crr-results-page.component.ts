@@ -35,8 +35,7 @@ import { filter } from 'rxjs/operators';
  */
 @Component({
   selector: 'app-crr-results-page',
-  templateUrl: './crr-results-page.component.html',
-  styleUrls: ['../../../../reports/reports.scss']
+  templateUrl: './crr-results-page.component.html'
 })
 export class CrrResultsPage implements OnInit {
 
