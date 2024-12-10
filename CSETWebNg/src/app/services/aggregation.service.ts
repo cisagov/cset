@@ -216,8 +216,8 @@ export class AggregationService {
     return this.http.post(this.apiUrl + 'analysis/categoryaverages', null);
   }
 
-  getAggregationCompliance(aggId) {
-    return this.http.get(this.apiUrl + 'analysis/maturity/compliance?aggregationId=' + aggId, {});
+  getAggregationCompliance() {
+    return this.http.get(this.apiUrl + 'analysis/maturity/compliance', null);
   }
 
 

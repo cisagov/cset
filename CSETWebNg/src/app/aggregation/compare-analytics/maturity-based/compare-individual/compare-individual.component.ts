@@ -56,8 +56,6 @@ export class CompareMaturityIndividualComponent implements OnInit {
    * 
    */
   populateCharts() {
-    const aggId: number = +localStorage.getItem("aggregationId");
-
     // Assessment Answer Summary - tabular data
     this.aggregationSvc.getMaturityAnswerTotals().subscribe((x: any) => {
       // 
@@ -71,9 +69,8 @@ export class CompareMaturityIndividualComponent implements OnInit {
       });
     });
 
-
     // Maturity Compliance By Model/Domain
-    this.aggregationSvc.getAggregationCompliance(aggId).subscribe((resp: any) => {
+    this.aggregationSvc.getAggregationCompliance().subscribe((resp: any) => {
       let showLegend = true;
 
       if (!resp.length) {

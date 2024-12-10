@@ -15,10 +15,12 @@ using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Analysis;
 using Microsoft.EntityFrameworkCore;
 using Snickler.EFCore;
+using CSETWebCore.Business.Authorization;
+
 
 
 namespace CSETWebCore.Api.Controllers
-{
+{   [CsetAuthorize]
     [ApiController]
     public class AggregationAnalysisController : ControllerBase
     {
