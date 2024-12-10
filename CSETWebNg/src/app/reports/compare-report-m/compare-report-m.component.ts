@@ -79,11 +79,11 @@ export class CompareReportMComponent implements OnInit, AfterViewChecked {
       error => console.log('Compare report load Error: ' + (<Error>error).message)
     );
 
-    this.populateCharts(aggId);
+    this.populateCharts();
   }
 
 
-  populateCharts(aggId: number) {
+  populateCharts() {
 
     // Overall Average
     this.aggregationSvc.getOverallAverageSummary().subscribe((x: any) => {
@@ -112,7 +112,7 @@ export class CompareReportMComponent implements OnInit, AfterViewChecked {
 
 
     // Maturity Compliance By Model/Domain
-    this.aggregationSvc.getAggregationCompliance(aggId).subscribe((resp: any) => {
+    this.aggregationSvc.getAggregationCompliance().subscribe((resp: any) => {
       let showLegend = true;
 
       if (!resp.length) {
