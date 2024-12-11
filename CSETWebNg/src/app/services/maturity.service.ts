@@ -329,7 +329,7 @@ export class MaturityService {
     return this.http.get(this.configSvc.apiUrl + 'cmmc/scorecards');
   }
 
-  getSPRSScore() {
+  getSprsScore() {
     return this.http.get(this.configSvc.apiUrl + 'SPRSScore');
   }
 

@@ -1073,7 +1073,8 @@
         "standard based": "Standard Based",
         "component based": "Component Based",
         "no standards answers": "No Standards Answers",
-        "no components answers": "No Components Answers"
+        "no components answers": "No Components Answers",
+        "sprs": "SPRS"
       },
       "executive summary": {
         "report title": "Executive Summary",
