@@ -1,10 +1,6 @@
 ﻿using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Helpers
 {
@@ -48,6 +44,11 @@ namespace CSETWebCore.Helpers
                 MaturityLevelName = myQ.Maturity_Level.Level_Name,
                 SetName = string.Empty
             };
+
+            if (myQ.MATURITY_EXTRA?.Answer_Options != null)
+            {
+                qa.AnswerOptions = myQ.MATURITY_EXTRA?.Answer_Options.Split(',').ToList();
+            }
 
             return qa;
         }
