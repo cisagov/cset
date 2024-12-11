@@ -121,7 +121,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
         this.groupings = response.groupings;
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
-        this.filterSvc.answerOptions = response.answerOptions;
+        this.filterSvc.answerOptions = response.answerOptions.slice();
         this.filterSvc.maturityModelId = response.modelId;
         this.filterSvc.maturityModelName = response.modelName;
 
