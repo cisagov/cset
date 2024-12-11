@@ -81,7 +81,7 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
       error => console.log('Executive report load Error: ' + (<Error>error).message)
     );
 
-    this.maturitySvc.getSPRSScore().subscribe((r: any) => {
+    this.maturitySvc.getSprsScore().subscribe((r: any) => {
       this.responseSprs = r;
       this.sprsGauge = this.responseSprs.gaugeSvg;
     });

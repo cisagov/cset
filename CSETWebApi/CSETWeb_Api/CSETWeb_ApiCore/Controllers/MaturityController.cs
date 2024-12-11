@@ -171,6 +171,11 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        /// <summary>
+        /// TODO: Cannot find this endpoint name in the UI codebase
+        /// </summary>
+        /// <param name="mat_model_id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/MaturityModel/GetLevelScoresByGroup")]
         public IActionResult GetLevelScoresByGroup(int mat_model_id)

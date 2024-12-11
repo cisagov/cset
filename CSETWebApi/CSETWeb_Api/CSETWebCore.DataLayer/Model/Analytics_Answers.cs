@@ -19,6 +19,7 @@ public partial class Analytics_Answers
     [StringLength(20)]
     public string Question_Type { get; set; }
 
+    [Required]
     [StringLength(1)]
     public string Answer_Text { get; set; }
 }

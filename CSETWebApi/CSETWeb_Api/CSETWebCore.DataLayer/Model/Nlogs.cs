@@ -25,4 +25,7 @@ public partial class Nlogs
 
     [StringLength(4000)]
     public string Message { get; set; }
+
+    [StringLength(100)]
+    public string User { get; set; }
 }
