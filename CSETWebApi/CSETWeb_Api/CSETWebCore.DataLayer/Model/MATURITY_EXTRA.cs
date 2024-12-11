@@ -30,4 +30,11 @@ public partial class MATURITY_EXTRA
 
     [StringLength(100)]
     public string CMMC2_Title { get; set; }
+
+    [StringLength(50)]
+    public string Answer_Options { get; set; }
+
+    [ForeignKey("Maturity_Question_Id")]
+    [InverseProperty("MATURITY_EXTRA")]
+    public virtual MATURITY_QUESTIONS Maturity_Question { get; set; }
 }

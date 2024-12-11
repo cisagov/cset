@@ -21,6 +21,12 @@ public partial class ANALYTICS_MATURITY_GROUPINGS
     [StringLength(200)]
     public string Question_Group { get; set; }
 
+    public int? Group_Sequence { get; set; }
+
+    public int? Global_Sequence { get; set; }
+
+    public int? Group_id { get; set; }
+
     [ForeignKey("Maturity_Model_Id")]
     [InverseProperty("ANALYTICS_MATURITY_GROUPINGS")]
     public virtual MATURITY_MODELS Maturity_Model { get; set; }

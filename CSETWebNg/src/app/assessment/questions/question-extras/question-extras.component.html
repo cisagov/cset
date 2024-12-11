@@ -149,7 +149,7 @@
             <label *ngIf="showMfr" class="me-0 ms-2 btn form-check-label btn-mfr"
                 [class.answer-selected]="myQuestion.markForReview === true"
                 matTooltip="This control requires further review.">
-                <input name="q_{{myQuestion.questionId}}_F" type="checkbox"
+                <input name="q_{{myQuestion.questionId}}_F" type="checkbox" class="btn-check"
                     (click)="this.questionsSvc.saveMFR(myQuestion);" tabindex="0"
                     checked="{{myQuestion.markForReview === true}}">
                 <span class="cset-icons-flag-dark fs-base"></span>

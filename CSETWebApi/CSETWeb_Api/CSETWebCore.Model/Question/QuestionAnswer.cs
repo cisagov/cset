@@ -35,6 +35,13 @@ namespace CSETWebCore.Model.Question
         public List<ParameterToken> ParmSubs { get; set; }
         public string StdRefId { get; set; }
         public string Answer { get; set; }
+
+        /// <summary>
+        /// If a question's potential answer set deviates from the one 
+        /// defined at the MaturityModel level.  
+        /// </summary>
+        public List<string> AnswerOptions { get; set; }
+
         public string AltAnswerText { get; set; }
         public string FreeResponseAnswer { get; set; }
         public string Comment { get; set; }
