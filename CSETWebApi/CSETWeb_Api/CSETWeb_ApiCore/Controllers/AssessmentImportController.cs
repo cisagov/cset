@@ -14,11 +14,13 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using CSETWebCore.Business.Authorization;
 using ICSharpCode.SharpZipLib.Zip;
 
 
 namespace CSETWebCore.Api.Controllers
 {
+    [CsetAuthorize]
     public class AssessmentImportController : ControllerBase
     {
         private ITokenManager _tokenManager;
@@ -39,7 +41,6 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        //  [CSETAuthorize]
         [Route("api/assessment/legacy/import/installed")]
         public IActionResult LegacyImportIsInstalled()
         {
@@ -48,7 +49,6 @@ namespace CSETWebCore.Api.Controllers
 
 
         [HttpPost]
-        // [CSETAuthorize]
         [Route("api/assessment/legacy/import")]
         public async Task<IActionResult> ImportLegacyAssessment()
         {
