@@ -23,9 +23,9 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { LayoutService } from '../../../../services/layout.service';
-import { MaturityService } from '../../../../services/maturity.service';
-import { NavigationService } from '../../../../services/navigation/navigation.service';
+import { LayoutService } from '../../../../../services/layout.service';
+import { MaturityService } from '../../../../../services/maturity.service';
+import { NavigationService } from '../../../../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-sprs-score',
