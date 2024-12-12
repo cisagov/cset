@@ -362,6 +362,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         this.currentSectionId = 'CIS';
       } else if (this.assessSvc.usesMaturityModel('CMMC2')) {
         this.currentSectionId = 'CMMC2';
+      } else if (this.assessSvc.usesMaturityModel('CMMC2F')) {
+        this.currentSectionId = 'CMMC2';
       } else if (this.assessSvc.usesMaturityModel('RRA') && !this.isMobile) {
           this.currentSectionId = 'RRA';
       } else if (this.assessSvc.usesMaturityModel('ACET') && !this.isMobile) {

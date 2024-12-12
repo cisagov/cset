@@ -9,6 +9,13 @@ using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Maturity
 {
+    public class ScorecardResponse
+    {
+        public int TargetLevel { get; set; } = 0;
+        public List<CmmcScoreModel> LevelScorecards { get; set; } = [];
+    }
+
+
     public class CmmcScoreModel
     {
         public int Level { get; set; }
@@ -25,6 +32,7 @@ namespace CSETWebCore.Model.Maturity
         }
     }
 
+
     public class CmmcDomain
     {
         public string DomainName { get; set; }
@@ -36,6 +44,7 @@ namespace CSETWebCore.Model.Maturity
             this.Questions = new List<CmmcQuestion>();
         }
     }
+
 
     public class CmmcQuestion
     {

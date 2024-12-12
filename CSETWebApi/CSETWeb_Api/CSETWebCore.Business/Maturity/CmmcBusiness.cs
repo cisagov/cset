@@ -70,6 +70,16 @@ namespace CSETWebCore.Business.Maturity
         {
             var response = new CmmcScores();
 
+            var selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS
+                .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel)
+                .FirstOrDefault();
+
+            if (selectedLevel != null)
+            {
+                response.TargetLevel = int.Parse(selectedLevel.Standard_Specific_Sal_Level);
+            }
+
+
 
             // Level 1
             response.Level1Score = GetScoreForLevel(assessmentId, 1);
@@ -125,9 +135,18 @@ namespace CSETWebCore.Business.Maturity
         /// Returns a list of scorecards, one for each active level.
         /// </summary>
         /// <returns></returns>
-        public List<CmmcScoreModel> GetLevelScorecards(int assessmentId)
+        public ScorecardResponse GetLevelScorecards(int assessmentId)
         {
-            var response = new List<CmmcScoreModel>();
+            var response = new ScorecardResponse();
+
+            var selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS
+               .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel)
+               .FirstOrDefault();
+
+            if (selectedLevel != null)
+            {
+                response.TargetLevel = int.Parse(selectedLevel.Standard_Specific_Sal_Level);
+            }
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
@@ -142,19 +161,19 @@ namespace CSETWebCore.Business.Maturity
             var l1 = FilterByLevel(x, 1);
             if (l1.Domains.Count > 0)
             {
-                response.Add(l1);
+                response.LevelScorecards.Add(l1);
             }
 
             var l2 = FilterByLevel(x, 2);
             if (l2.Domains.Count > 0)
             {
-                response.Add(l2);
+                response.LevelScorecards.Add(l2);
             }
 
             var l3 = FilterByLevel(x, 3);
             if (l3.Domains.Count > 0)
             {
-                response.Add(l3);
+                response.LevelScorecards.Add(l3);
             }
 
             return response;

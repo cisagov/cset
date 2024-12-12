@@ -298,9 +298,9 @@ import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-
 import { Cmmc2ScoresComponent } from './assessment/results/mat-cmmc2/cmmc2-scores/cmmc2-scores.component';
 import { Cmmc2Level1ScoreComponent } from './assessment/results/mat-cmmc2/cmmc2-level1-score/cmmc2-level1-score.component';
 import { Cmmc2Level2ScoreComponent } from './assessment/results/mat-cmmc2/cmmc2-level2-score/cmmc2-level2-score.component';
-import { Cmmc2Level3ScoreComponent } from './assessment/results/mat-cmmc2/cmmc2-level3-score/cmmc2-level3-score.component';
-import { Cmmc2ScorecardComponent } from './assessment/results/mat-cmmc2/cmmc2-scorecard/cmmc2-scorecard.component';
-import { LevelScorecardComponent } from './assessment/results/mat-cmmc2/level-scorecard/level-scorecard.component';
+import { Cmmc2Level3ScoreComponent } from './assessment/results/mat-cmmc2/scorecard/cmmc2-level3-score/cmmc2-level3-score.component';
+import { Cmmc2ScorecardPageComponent } from './assessment/results/mat-cmmc2/scorecard/cmmc2-scorecard/cmmc2-scorecard-page.component';
+import { LevelScorecardComponent } from './assessment/results/mat-cmmc2/scorecard/level-scorecard/level-scorecard.component';
 import { Cmmc2LevelResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-level-results/cmmc2-level-results.component';
 import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-domain-results/cmmc2-domain-results.component';
 import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
@@ -417,7 +417,7 @@ import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessm
 import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
 import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/feature-option-tsa/feature-option-tsa.component';
 import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
-import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
+import { SprsScoreComponent } from './assessment/results/mat-cmmc2/scorecard/sprs-score/sprs-score.component';
 import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
@@ -510,6 +510,7 @@ import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-s
 import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-main-toc.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
 import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
+import { Cmmc2ScorecardReportComponent } from './reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
 import { IseAnsweredQuestionsComponent } from './reports/ise-answeredquestions/ise-answeredquestions.component';
 import { IseMeritComponent } from './reports/ise-merit/ise-merit.component';
 import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-chart.component';
@@ -848,7 +849,7 @@ import { AnalyticsResultsComponent } from './assessment/results/analytics-result
         Cmmc2Level1ScoreComponent,
         Cmmc2Level2ScoreComponent,
         Cmmc2Level3ScoreComponent,
-        Cmmc2ScorecardComponent,
+        Cmmc2ScorecardPageComponent,
         LevelScorecardComponent,
         Cmmc2LevelResultsComponent,
         Cmmc2DomainResultsComponent,
@@ -1064,6 +1065,7 @@ import { AnalyticsResultsComponent } from './assessment/results/analytics-result
         CrrMainTocComponent,
         Cmmc2CommentsMarkedComponent,
         Cmmc2DeficiencyComponent,
+        Cmmc2ScorecardReportComponent,
         PrivacyWarningComponent,
         PrivacyWarningRejectComponent,
         SearchPageComponent,
