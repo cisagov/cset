@@ -1020,6 +1020,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/maturity/mvra/mvraTree")]
+        [Obsolete("No longer in use")]
         public IActionResult GetMvraTree([FromQuery] int id)
         {
             //int assessemntId = _tokenManager.AssessmentForUser();

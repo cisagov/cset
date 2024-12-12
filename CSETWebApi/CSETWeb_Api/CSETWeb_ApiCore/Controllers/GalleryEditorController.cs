@@ -15,7 +15,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Api.Controllers
-{
+{   [Obsolete("No longer in use")]
     [ApiController]
     public class GalleryEditorController : ControllerBase
     {
