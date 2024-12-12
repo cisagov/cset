@@ -26,8 +26,8 @@ Install-WindowsFeature -Name Web-Server -IncludeManagementTools
 # Install URL Rewrite module for IIS
 Start-Process rewrite_amd64_en-US.msi -Wait
 
-# Install dotnet 6 hosting bundle 
-Start-Process dotnet-hosting-8.0.1-win.exe -Wait
+# Install dotnet hosting bundle 
+Start-Process -FilePath (Resolve-Path -Path "dotnet-hosting-*") -Wait
 
 # Update enviornment path to ensure sqlcmd works after installing SQL server
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine")

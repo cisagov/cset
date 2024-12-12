@@ -308,7 +308,7 @@ export class MyAssessmentsComponent implements OnInit {
   removeAssessment(assessment: UserAssessment, assessmentIndex: number) {
     // first, call the API to see if this is a legal move
     this.assessSvc
-      .isDeletePermitted(assessment.assessmentId)
+      .isDeletePermitted()
       .subscribe(canDelete => {
         if (!canDelete) {
           this.dialog.open(AlertComponent, {
