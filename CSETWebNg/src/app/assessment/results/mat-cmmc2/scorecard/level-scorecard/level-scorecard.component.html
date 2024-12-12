@@ -45,7 +45,7 @@
                <tr>
                     <td class="text-nowrap align-top" [class.fw-bold]="q.score != 0">{{q.title}}</td>
                     <td class="align-top" [class.fw-bold]="q.score != 0" [innerHTML]="q.questionText"></td>
-                    <td class="align-top" [class.fw-bold]="q.score != 0">{{t('answer-options.labels.' + q.answerText.toLowerCase() +
+                    <td class="align-top text-nowrap" [class.fw-bold]="q.score != 0">{{t('answer-options.labels.' + q.answerText.toLowerCase() +
                          '-cmmc')}}</td>
                     <td class="align-top text-center" [class.fw-bold]="q.score != 0">{{q.score == 0 ? '' : q.score}}</td>
                </tr>

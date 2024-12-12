@@ -451,6 +451,10 @@ export class ChartService {
       case 'N':
       case 'No':
         return '#DC3545';
+      case "I":
+      case "Incomplete":
+      case "Inc":
+        return '#B17300';
       default:
         return '#000000';
     }

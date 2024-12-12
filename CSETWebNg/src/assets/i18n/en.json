@@ -792,11 +792,11 @@
         "sectionTitle": "Capability Maturity Model Certification (CMMC) 2.0",
         "1": {
           "title": "CMMC 2.0 - Executive Summary",
-          "desc": "The report includes graphs to highlight compliance by level, compliance by domain, and the SPRS Scorecard. Additionally, it includes a compilation of all CMMC practices and their responses, along with their corresponding assessment objectives and SPRS value."
+          "desc": "The report includes graphs to highlight compliance by level, compliance by domain, and scoring by level."
         },
         "2": {
-          "title": "CMMC 2.0 - Deficiency Report",
-          "desc": "The report contains a list of all CMMC practices that were marked as “No” or unanswered during the assessment process. This report serves to identify potential deficiencies or gaps in the contractor’s cybersecurity practices."
+           "title": "CMMC 2.0 - Scorecard Report",
+          "desc": "The report lists all practices, how they were answered and any scoring deductions for unmet practices."
         },
         "3": {
           "title": "CMMC 2.0 - Comments and Marked for Review",

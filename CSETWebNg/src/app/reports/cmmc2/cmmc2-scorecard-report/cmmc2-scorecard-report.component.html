@@ -20,33 +20,39 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a" *transloco="let t">
-    <h3>{{t('titles.performance by level')}}</h3>
+<div class="report-body mb-5" *transloco="let t">
 
-    <div *ngIf="loading">
-        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-            <div style="max-width: 50px; max-height: 50px;"></div>
-        </div>
-    </div>
+     <app-cover-sheet-a [title]="'CMMC 2.0 SCORECARD REPORT'" [assessmentName]="assessmentName"
+          [assessmentDate]="assessmentDate" [assessorName]="assessorName"
+          [facilityName]="facilityName"></app-cover-sheet-a>
 
-    <div>
-        <p>
-            {{t('cmmc.scoring.perf by level desc')}}
-        </p>
-        <div class="d-flex flex-row" *ngFor="let l of response">
-            <!-- pie charts for compliance at each level -->
-            <div class="me-5 d-flex" style="align-items: center; justify-content: center;">
-                <div style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold"
-                    [class]="'cmmc2-level-' + l.levelValue">
-                    {{l.name}}
-                </div>
-            </div>
-            <div id="chart" class="mb-3">
-                <canvas id="{{'level' + l.levelValue }}" style="max-width: 800px; margin: 0 auto;">{{l.chart}}</canvas>
-            </div>
-        </div>
-    </div>
+     <div class="page-break">
+          <app-disclaimer-blurb-a></app-disclaimer-blurb-a>
+     </div>
 
-    <app-nav-back-next [page]="'cmmc2-results'"></app-nav-back-next>
+
+     <div class="page-break text-start">
+
+          <p class="mt-4">
+               {{t('cmmc.scoring.scorecard description')}}
+          </p>
+
+          <div>
+               <h4>Level 1</h4>
+               <app-level-scorecard [response]="scorecardForLevel(1)"></app-level-scorecard>
+          </div>
+
+
+          <div *ngIf="targetLevel >= 2">
+               <h4>Level 2</h4>
+               <app-level-scorecard [response]="scorecardForLevel(2)"></app-level-scorecard>
+          </div>
+
+
+          <div *ngIf="targetLevel >= 3">
+               <h4>Level 3</h4>
+               <app-level-scorecard [response]="scorecardForLevel(3)"></app-level-scorecard>
+          </div>
+     </div>
 
 </div>

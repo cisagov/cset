@@ -45,6 +45,8 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
   responseLevels: any;
   responseDomains: any;
 
+  scores: any;
+
   responseSprs: any;
   sprsGauge = '';
 
@@ -75,10 +77,9 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
     this.reportSvc.getReport('executivematurity').subscribe(
       (r: any) => {
         this.responseGeneral = r;
-
-        this.targetLevel = r.maturityModels.find(m => m.maturityModelName == 'CMMC2')?.targetLevel;
+        this.targetLevel = r.maturityModels.find(m => m.maturityModelName == 'CMMC2F' || m.maturityModelName == 'CMMC2')?.targetLevel;
       },
-      error => console.log('Executive report load Error: ' + (<Error>error).message)
+      error => console.error('Executive report load Error: ' + (<Error>error).message)
     );
 
     this.maturitySvc.getSprsScore().subscribe((r: any) => {
@@ -91,8 +92,18 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
    *
    */
   ngAfterViewInit() {
+    this.populateScoringCharts();
     this.populateLevelsCharts();
     this.populateDomainChart();
+  }
+
+  /**
+   * 
+   */
+  populateScoringCharts() {
+    this.maturitySvc.getCmmcScores().subscribe(x => {
+      this.scores = x;
+    });
   }
 
   /**
@@ -101,8 +112,6 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
   populateLevelsCharts() {
     this.maturitySvc.getComplianceByLevel().subscribe((r: any) => {
       this.responseLevels = r;
-
-      this.responseLevels.reverse();
 
       r.forEach(level => {
 
@@ -124,7 +133,7 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
         });
 
         setTimeout(() => {
-          level.chart = this.chartSvc.buildDoughnutChart('level' + level.levelValue, x);
+          level.chart = this.chartSvc.buildDoughnutChart('level' + level.levelValue, x, 'CMMC2F');
         }, 10);
       });
 

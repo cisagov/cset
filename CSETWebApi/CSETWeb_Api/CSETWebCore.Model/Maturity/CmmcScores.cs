@@ -8,6 +8,9 @@ namespace CSETWebCore.Model.Maturity
 {
     public class CmmcScores
     {
+        public int TargetLevel { get; set; } = 0;
+
+
         public int Level1Score { get; set; }
         public int Level1MaxScore { get; set; }
 
