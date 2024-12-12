@@ -15,10 +15,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using CSETWebCore.Business;
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Sal;
 
 namespace CSETWebCore.Api.Controllers
-{
+{   [CsetAuthorize]
     [ApiController]
     public class GeneralSalController : ControllerBase
     {
