@@ -29,19 +29,19 @@
 
      <div>
           <h4>Level 1</h4>
-          <app-level-scorecard [response]="level(0)"></app-level-scorecard> 
+          <app-level-scorecard [response]="scorecardForLevel(1)"></app-level-scorecard> 
      </div>
 
 
-     <div *ngIf="assessSvc.assessment.maturityModel.maturityTargetLevel >= 2">
+     <div *ngIf="targetLevel >= 2">
           <h4>Level 2</h4>
-          <app-level-scorecard [response]="level(1)"></app-level-scorecard> 
+          <app-level-scorecard [response]="scorecardForLevel(2)"></app-level-scorecard> 
      </div>
 
 
-     <div *ngIf="assessSvc.assessment.maturityModel.maturityTargetLevel >= 3">
+     <div *ngIf="targetLevel >= 3">
           <h4>Level 3</h4>
-          <app-level-scorecard [response]="level(2)"></app-level-scorecard> 
+          <app-level-scorecard [response]="scorecardForLevel(3)"></app-level-scorecard> 
      </div>
 
 

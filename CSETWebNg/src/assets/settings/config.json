@@ -290,6 +290,12 @@
           "buttonCss": "btn-na",
           "chartSegmentColor": "#0a4b6e",
           "consideredMissed": true
+        },
+        {
+          "code": "I",
+          "buttonLabelKey": "inc",
+          "buttonCss": "btn-inc",
+          "consideredMissed": true
         }
       ]
     },
