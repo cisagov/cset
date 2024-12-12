@@ -15,9 +15,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using CSETWebCore.Business.Authorization;
 
 namespace CSETWebCore.Api.Controllers
-{
+{   [CsetAuthorize]
     [ApiController]
     public class ReportsCmmcController : ControllerBase
     {

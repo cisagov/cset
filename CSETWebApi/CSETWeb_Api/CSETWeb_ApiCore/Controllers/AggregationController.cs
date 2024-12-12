@@ -4,6 +4,8 @@
 // 
 // 
 //////////////////////////////// 
+
+using System;
 using CSETWebCore.Business.Aggregation;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
@@ -17,6 +19,8 @@ namespace CSETWebCore.Api.Controllers
 {
     [CsetAuthorize]
     [ApiController]
+    [Obsolete("This controller is no longer used")]
+
     public class AggregationController : ControllerBase
     {
         private readonly ITokenManager _token;
@@ -75,7 +79,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         [HttpPost]
-        [Route("api/aggregation/update")]
+        [Route("api/aggregation/update")] 
         public IActionResult UpdateAggregation([FromBody] Aggregation aggregation)
         {
             var aggregationID = _token.PayloadInt("aggreg");
@@ -94,6 +98,11 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/aggregation/delete")]
         public IActionResult DeleteAggregation([FromQuery] int aggregationId)
         {
+            var aggregationID = _token.PayloadInt("aggreg");
+            if (aggregationID == null)
+            {
+                return Ok();
+            }
             var manager = new AggregationBusiness(_context, _token);
             manager.DeleteAggregation(aggregationId);
             return Ok();

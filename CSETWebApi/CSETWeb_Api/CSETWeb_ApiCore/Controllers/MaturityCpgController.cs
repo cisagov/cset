@@ -4,6 +4,8 @@
 // 
 // 
 //////////////////////////////// 
+
+using CSETWebCore.Business.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
@@ -13,7 +15,8 @@ using CSETWebCore.Interfaces.Reports;
 
 
 namespace CSETWebCore.Api.Controllers
-{
+{   [CsetAuthorize]
+    
     /// <summary>
     /// 
     /// </summary>
