@@ -69,7 +69,8 @@ export class IseMeritComponent implements OnInit {
 
   // 12/3/24: Jon wants the action items all combined into one big paragraph. If he decided he doesn't want this
   // in the future, just remove any code that references "combinedActionItems" it'll go back to the way it was.
-  combinedActionItems: Map<number, string> = new Map<number, string>();
+  // 12/12/24: Jon changed his mind. Leaving this here for now in case he changes his mind again.
+  //combinedActionItems: Map<number, string> = new Map<number, string>();
 
 
   // actionItemsMap: Map<number, Map<number, any[]>> = new Map<number, Map<number, any[]>>();
@@ -136,7 +137,6 @@ export class IseMeritComponent implements OnInit {
             if (actionItemRow.action_Items != '') {
               if (!this.masterActionItemsMap.has(actionItemRow.observation_Id)) {
                 this.masterActionItemsMap.set(actionItemRow.observation_Id, [actionItemRow]);
-                this.combinedActionItems.set(actionItemRow.observation_Id, "");
                 combinedCount = 1;
               } 
               else 
@@ -144,18 +144,10 @@ export class IseMeritComponent implements OnInit {
                 let tempActionArray = this.masterActionItemsMap.get(actionItemRow.observation_Id);
                 tempActionArray.push(actionItemRow);
                 this.masterActionItemsMap.set(actionItemRow.observation_Id, tempActionArray);
-
-                let combinedText = this.combinedActionItems.get(actionItemRow.observation_Id);
-                combinedText += (combinedCount + ". " + actionItemRow.action_Items + " ");
-                this.combinedActionItems.set(actionItemRow.observation_Id, combinedText);
-                combinedCount++;
-
               }
             }
           }
 
-          console.log("this.combinedActionItems");
-          console.log(this.combinedActionItems);
           this.loadingCounter++;
         });
 
@@ -236,8 +228,6 @@ export class IseMeritComponent implements OnInit {
         );
       });
 
-
-
     // this.acetSvc.getIseSourceFiles().subscribe(
     //   (r: any) => {
     //     this.files = r;
@@ -245,6 +235,18 @@ export class IseMeritComponent implements OnInit {
     //   },
     //   error => console.log('Assessment Information Error: ' + (<Error>error).message)
     // )
+  }
+
+  getActionItemsToCopy(findingId: any) {
+    let combinedText = "";
+
+    if (this.masterActionItemsMap.get(findingId) != undefined) {
+      this.masterActionItemsMap.get(findingId).forEach(item => {
+        combinedText += (item.action_Items + "\n");
+      });
+    }
+    
+    return combinedText;
   }
 
   addExaminerFinding(title: any) {
