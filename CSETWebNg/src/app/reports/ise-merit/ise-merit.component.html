@@ -235,7 +235,7 @@
 
                                 <div *ngIf="observation?.finding?.type !== 'Supplemental Fact'">
                                     <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; flex-direction: column; line-height: 150%;" 
-                                      title="Copy to Clipboard" [cdkCopyToClipboard]="this.combinedActionItems.get(observation?.finding?.finding_Id)">
+                                      title="Copy to Clipboard" [cdkCopyToClipboard]="getActionItemsToCopy(observation?.finding?.finding_Id)">
                                         <span class="cset-icons-copy"></span>
                                     </label>
                                     <strong> Action Items: </strong>
@@ -249,24 +249,16 @@
                                         </div>
                                     </div>
                                     <div *ngIf="this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
-                                        {{ this.combinedActionItems.get(observation?.finding?.finding_Id) }}
-
-                                        <!-- The below code lists all action items individually. This changed on 12/3/24, uncomment this to revert if necessary -->
-                                        <!--<div *ngFor="let allActionsInFinding of this.masterActionItemsMap.get(observation?.finding?.finding_Id); let i = index">
+                                        <div *ngFor="let allActionsInFinding of this.masterActionItemsMap.get(observation?.finding?.finding_Id); let i = index">
                                             <div *ngIf="allActionsInFinding.action_Items != '' && allActionsInFinding.action_Items != '.'">
-                                                <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; flex-direction: column; line-height: 150%;" 
-                                                  title="Copy to Clipboard" [cdkCopyToClipboard]="allActionsInFinding.action_Items">
-                                                    <span class="cset-icons-copy"></span>
-                                                </label> {{
-                                                this.getChildQuestionNumber(allActionsInFinding.question_Title) }}: {{
-                                                allActionsInFinding.action_Items }}
+                                                {{ this.getChildQuestionNumber(allActionsInFinding.question_Title) }}: {{ allActionsInFinding.action_Items }}
                                             </div>
 
                                             <div
                                                 *ngIf="(allActionsInFinding.action_Items == '' || allActionsInFinding.action_Items == '.') && observation?.finding?.actionItems == null">
                                                 (no Action Items available)
                                             </div>
-                                        </div>-->
+                                        </div>
                                     </div>
 
                                     <div
