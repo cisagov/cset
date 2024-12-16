@@ -29,7 +29,7 @@ let appName;
 switch (installationMode) {
   case 'ACET':
     clientCode = 'NCUA';
-    appName = 'ACET';
+    appName = config.behaviors.defaultTitle;
     break;
   case 'TSA':
     clientCode = 'TSA';
@@ -455,6 +455,7 @@ process.on('uncaughtException', (error) => {
 
 app.on('ready', () => {
   // set log to output to local appdata folder
+
   log.transports.file.resolvePathFn = () =>
     path.join(app.getPath('home'), `AppData/Local/${clientCode}/${appName}/${appName}_electron.log`);
   log.errorHandler.startCatching();
