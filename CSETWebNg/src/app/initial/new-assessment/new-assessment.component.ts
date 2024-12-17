@@ -160,9 +160,10 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   onSlideChange() { }
 
   getImageSrc(src: string) {
+    console.log(src);
     let path = "assets/images/cards/";
     if (src) {
-      return path + src;
+      return path + src.toLowerCase();
     }
     return path + 'default.jpeg';
   }
