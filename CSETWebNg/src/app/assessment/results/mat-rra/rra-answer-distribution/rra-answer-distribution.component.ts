@@ -86,7 +86,7 @@ export class RraAnswerDistributionComponent implements OnInit {
 
   @HostListener('window:beforeprint')
   beforePrint() {
-    this.view = [800, 300];
+    this.view = [600, 350];
   }
 
   @HostListener('window:afterprint')
