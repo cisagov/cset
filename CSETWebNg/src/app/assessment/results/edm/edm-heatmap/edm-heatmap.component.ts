@@ -25,11 +25,11 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
-  selector: 'app-edm-relationship',
-  templateUrl: './edm-relationship.component.html',
-  styleUrls: ['./edm-relationship.component.scss', '../../../../reports/reports.scss']
+  selector: 'app-edm-heatmap',
+  templateUrl: './edm-heatmap.component.html',
+  styleUrls: ['./edm-heatmap.component.scss', '../../../../reports/reports.scss']
 })
-export class EdmRelationshipComponent implements OnInit, OnChanges {
+export class EdmHeatmapComponent implements OnInit, OnChanges {
   @Input() section: string;
   scores: any[];
   constructor(public maturitySvc: MaturityService) { }
