@@ -33,7 +33,8 @@ SOFTWARE.
     padding-left:0;
     padding-right:0;
 }
-.row-mod{
+.row, .row > * {
+    width: auto !important;
 }
 .col-mod-header{
     margin-bottom: 3px;
