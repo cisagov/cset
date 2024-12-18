@@ -494,6 +494,7 @@
       "no-cmmc": "Not Met",
       "n-cmmc": "Not Met",
       "na-cmmc": "N/A",
+      "i-cmmc": "Incomplete",
       "u-cmmc": "Unanswered"
     },
     "placeholders": {
