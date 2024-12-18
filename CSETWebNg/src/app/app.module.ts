@@ -348,7 +348,7 @@ import { RraFilteringService } from './services/filtering/maturity-filtering/rra
 import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 import { FeatureOptionComponent } from './assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component';
-import { EdmRelationshipComponent } from './assessment/results/edm/edm-relationship/edm-relationship.component';
+import { EdmHeatmapComponent } from './assessment/results/edm/edm-heatmap/edm-heatmap.component';
 import { EdmGlossaryComponent } from './reports/edm/edm-glossary/edm-glossary.component';
 import { EdmIntroTextComponent } from './reports/edm/edm-intro-text/edm-intro-text.component';
 import { EdmTocComponent } from './reports/edm/edm-toc/edm-toc.component';
@@ -909,7 +909,7 @@ import { AnalyticsResultsComponent } from './assessment/results/analytics-result
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
         FeatureOptionComponent,
-        EdmRelationshipComponent,
+        EdmHeatmapComponent,
         EdmGlossaryComponent,
         EdmIntroTextComponent,
         EdmTocComponent,
