@@ -1558,6 +1558,7 @@
     "component type": "Component Type",
     "override component answer": "Override Component Answer",
     "override": "Override",
+    "override details": "The question currently displayed pertains to the specific component you previously selected to override.",
     "none": "None",
     "artifact title": "Artifact/Document Title",
     "file name": "File Name",
