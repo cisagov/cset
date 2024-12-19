@@ -3,12 +3,12 @@
   <p>This chart displays the implementation scoring of the current assessment in relation to other assessments of the
     same type. Each category is scored, with the minimum, maximum, and median scores charted to illustrate how the
     current assessment compares to other assessments within the same sector or across all sectors</p>
-  <div class="container">
-    <div class="container-fluid">
+  <div class="container ps-0">
+    <div class="container-fluid ps-0">
       <div class="row">
-        <div class="col-sm">
-          <mat-card>
-            <mat-card-header class="d-flex justify-content-center">  <h3>{{ dataType === 'mySector' ? sectorTitle : 'All Sectors' }}</h3>
+        <div class="col-sm ps-0">
+          <mat-card class="p-3" style="background-color: transparent; box-shadow: none">
+            <mat-card-header class="d-flex justify-content-center">  <h4>{{ dataType === 'mySector' ? sectorTitle : 'All Sectors' }}</h4>
             </mat-card-header>
             <div class="p-4">
               <mat-button-toggle-group [(ngModel)]="dataType" (change)="toggleData($event)">
@@ -40,7 +40,6 @@
       </div>
     </div>
 
-    <app-nav-back-next [page]="'analytics-results-page'"
-      [hide]="navSvc.isLastVisiblePage('analytics') ? 'next' : ''"></app-nav-back-next>
+    <app-nav-back-next [page]="'analytics-results-page'"></app-nav-back-next>
 
   </div>
