@@ -1050,6 +1050,7 @@
         "component type": "Tipo de componente",
         "override component answer": "Sobreescribir Respuesta",
         "override": "Sobreescribir",
+        "override details": "La pregunta que se muestra actualmente pertenece al componente específico que usted seleccionó previamente para anular.",
         "none": "No",
         "artifact title": "Título del artefacto/documento",
         "file name": "Nombre de archivo",
