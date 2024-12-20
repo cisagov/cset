@@ -64,7 +64,7 @@
         "ng2-file-upload": "^7.0.1",
         "ngx-csv": "^0.3.2",
         "ngx-ellipsis": "^5.0.1",
-        "pdfmake": "^0.2.14",
+        "pdfmake": "^0.2.16",
         "rxjs": "^7.8.1",
         "sanitize-html": "^2.13.0",
         "sass": "^1.83.0",
