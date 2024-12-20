@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Authorization;
+using CSETWebCore.Business.CF;
 using CSETWebCore.Business.Contact;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
@@ -137,7 +138,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult IsEntryComplete()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            var biz = new CFBusiness(_context, _assessmentUtil);
+            var biz = new CFBusiness(_context);
             return Ok(biz.getInitialAnswers(assessmentId));
         }
 
@@ -146,7 +147,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult IsCFMidComplete()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            var biz = new CFBusiness(_context, _assessmentUtil);
+            var biz = new CFBusiness(_context);
             return Ok(biz.getMidInitialAnswers(assessmentId));
         }
 
@@ -155,7 +156,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetAnswerBreakdownForBarChart()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            var biz = new CFBusiness(_context, _assessmentUtil);
+            var biz = new CFBusiness(_context);
             return Ok(biz.getBarChartInfo(assessmentId));
         }
 
@@ -164,7 +165,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> GetScoreBreakdown()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            var biz = new CFBusiness(_context, _assessmentUtil);
+            var biz = new CFBusiness(_context);
             try
             {
                 var temp = await biz.getGroupingScores(assessmentId);
@@ -184,7 +185,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> GetTop5Lowest()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            var biz = new CFBusiness(_context, _assessmentUtil);
+            var biz = new CFBusiness(_context);
             // 5-lowest parsing is done on frontend
             return Ok(await biz.Top5LowestScoredForAllSubcats(assessmentId));
 
@@ -195,7 +196,7 @@ namespace CSETWebCore.Api.Controllers
         public async Task<IActionResult> GetTotalAverageForReports()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            var biz = new CFBusiness(_context, _assessmentUtil);
+            var biz = new CFBusiness(_context);
             return Ok(await biz.GetTotalAverageForReports(assessmentId));
 
         }

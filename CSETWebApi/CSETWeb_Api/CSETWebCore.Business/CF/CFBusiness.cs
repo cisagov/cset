@@ -4,34 +4,30 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Interfaces.CF;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Model.Nested;
 using CSETWebCore.Model.Question;
-using CSETWebCore.Model.Set;
-using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using MathNet.Numerics;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using NPOI.SS.Formula.Functions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace CSETWebCore.Api.Controllers
+namespace CSETWebCore.Business.CF
 {
-    internal class CFBusiness
+    public class CFBusiness:ICFBusiness
     {
-        private CSETContext _context;
-        private IAssessmentUtil assessmentUtil;
+        private CSETContext _context;        
 
-        public CFBusiness(CSETContext context, IAssessmentUtil assessmentUtil)
+        public CFBusiness(CSETContext context)
         {
             this._context = context;
-            this.assessmentUtil = assessmentUtil;
+            
         }
 
         public List<List<Answer>> getInitialAnswers(int assessmentId)
@@ -190,6 +186,55 @@ namespace CSETWebCore.Api.Controllers
             public decimal score { get; set; }
         }
 
+        public async Task<string> callBull(int assessmentId, int userId)
+        {   
+            var tojson = (from a in  _context.METRIC_ANSWER_DETAILS                
+                         where a.Assessment_id == assessmentId && a.Question_Type == "Requirement"                         
+                         select new CyberSecurityPlanExport() {  QuestionId = a.DisplayID, Response = a.Answer_Text=="U"?"0":a.Answer_Text }
+                         ).ToList();
+
+            var tmp = JsonConvert.SerializeObject(tojson);
+
+            string jsonData = "{ \"UserId\": \"" + userId + "\", \"AssessmentID\": \"" + assessmentId + "\", \"SurveyIdentifier\": \"v3\", \"SurveyData\": " + tmp  + "}";
+            // THE RESPONSE IS THE REDIRECT URL
+            string response = await PostToApiAsync("https://edvision.ai/api/survey/data", jsonData);
+            return response;
+
+        }
+
+
+        public async Task<string> PostToApiAsync(string url, string jsonContent)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    // Set up the request content
+                    var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                    // Send the POST request
+                    HttpResponseMessage response = await client.PostAsync(url, content);
+
+                    // Ensure the request was successful
+                    response.EnsureSuccessStatusCode();
+
+                    // Read and return the response content
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    return responseBody;
+                }catch(Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+                return null;
+            }
+        }
+
+    }
+
+    public class CyberSecurityPlanExport
+    {
+        public string QuestionId { get; set; }
+        public string Response { get; set; }
     }
 }
 

@@ -13,8 +13,6 @@ const headers = {
   providedIn: 'root'
 })
 export class CyberFloridaService {
-  
-  
   clearState() {
     this.needArray = [
       { id: 12297, answer: null },
@@ -245,5 +243,8 @@ export class CyberFloridaService {
 
   getTotalAverageForReports(){
     return this.http.get(this.apiUrl + 'cf/getTotalAverageForReports');
+  }
+  sendToOtherGroup() {
+    return this.http.get(this.apiUrl + 'CF');
   }
 }

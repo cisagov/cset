@@ -1003,6 +1003,14 @@
          "ObjectType": 3
       },
       {
+         "Name": "[dbo].[METRIC_ANSWER_DETAILS]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[METRIC_ASSESSMENT_COMPLETE]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[dbo].[METRIC_COMPLETED_ENTRY]",
          "ObjectType": 3
       },

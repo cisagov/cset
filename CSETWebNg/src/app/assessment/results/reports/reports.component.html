@@ -39,6 +39,7 @@
 
   <!-- Moved this check from inside the component to here to prevent extra whitespace when not CF -->
   <app-assessment-convert-cf *ngIf="isCfEntry || isCfMid" [isEntry]="isCfEntry" [isMid]="isCfMid" class="mt-4"></app-assessment-convert-cf>
+  
 
 
   <!-- Observation Tear Out Sheets -->
@@ -153,13 +154,13 @@
             <span class="cset-icons-export-up fs-base-2 me-2"></span>
             <span>{{assessSvc.usesMaturityModel('CIE') ? 'CSET FILE' : ''}} {{ 'buttons.export' | transloco }}</span>
           </button>
-
           <button *ngIf="configSvc.cisaAssessorWorkflow" tabindex="0"
             class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
             (click)="clickExport(true)" matTooltip="{{ 'tooltip.export assessment json' | transloco }}">
             <span class="cset-icons-export-up fs-base-2 me-2"></span>
             <span>{{ 'buttons.export json' | transloco }}</span>
           </button>
+          <app-cf-redirect *ngIf="isCyberFlorida" class="d-flex justify-content-center align-items-center flex-00a me-2"></app-cf-redirect>
         </div>
 
       </div>
