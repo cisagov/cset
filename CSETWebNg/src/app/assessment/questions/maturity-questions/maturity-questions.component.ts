@@ -58,6 +58,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   groupingTitle: string = '';
   questionsAlias: string = '';
   showTargetLevel = false;    // TODO: set this from a new column in the DB
+  modelSupportsTargetLevel = false; 
 
   loaded = false;
 
@@ -196,6 +197,9 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.groupings = response.groupings;
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
 
+        // 100 is the default level if the model does not support a target
+        this.modelSupportsTargetLevel = response.maturityTargetLevel < 100;
+
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions.slice();
         this.filterSvc.maturityModelId = response.modelId;
@@ -237,9 +241,9 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     }
 
     this.completionSvc.reset();
+    this.groupings = null;
 
     this.maturitySvc.getGroupingQuestions(groupingId).subscribe((response: MaturityQuestionResponse) => {
-
       this.modelId = response.modelId;
       this.modelName = response.modelName;
       this.questionsAlias = response.questionsAlias;
@@ -387,6 +391,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    * @returns
    */
   areGroupingsVisible() {
-    return this.groupings.some(g => g.visible);
+    return this.groupings?.some(g => g.visible);
   }
 }

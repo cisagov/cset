@@ -45,6 +45,7 @@ export interface MaturityQuestionResponse {
     modelId: number;
     modelName: string;
     questionsAlias: string;
+    groupingId: number;
     title: string;
     levels: [];
     maturityTargetLevel: number;

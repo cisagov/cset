@@ -21,6 +21,11 @@ namespace CSETWebCore.Model.Maturity
         public string ModelName { get; set; } = "";
 
         /// <summary>
+        /// The ID of the grouping being returned.
+        /// </summary>
+        public int GroupingId { get; set; }
+
+        /// <summary>
         /// The name of the current grouping represented in the response;
         /// </summary>
         public string? Title { get; set; }
