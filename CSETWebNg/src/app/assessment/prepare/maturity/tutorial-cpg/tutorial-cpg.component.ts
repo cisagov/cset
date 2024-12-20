@@ -24,6 +24,7 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../services/layout.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-tutorial-cpg',
@@ -40,8 +41,11 @@ export class TutorialCpgComponent implements OnInit {
 
 
   constructor(
-    public layoutSvc: LayoutService
-  ) { }
+    public layoutSvc: LayoutService, 
+    public tSvc: TranslocoService
+  ) { 
+    //this.tSvc.load('tutorial').subscribe();
+  }
 
   ngOnInit(): void {
 
