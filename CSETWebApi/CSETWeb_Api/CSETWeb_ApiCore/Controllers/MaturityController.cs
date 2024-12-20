@@ -383,6 +383,7 @@ namespace CSETWebCore.Api.Controllers
                 resp.AnswerOptions.ForEach(x => x = x.Trim());
             }
 
+            resp.GroupingId = groupingId;
             resp.Title = grouping.Title;
             resp.Description = grouping.Description;
             resp.Description_Extended = grouping.Description_Extended;
