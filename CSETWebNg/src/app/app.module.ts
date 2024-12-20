@@ -630,6 +630,7 @@ import { OtherRemarksComponent } from './assessment/questions/other-remarks/othe
 import { CmuOtherRemarksComponent } from './reports/cmu/cmu-other-remarks/cmu-other-remarks.component';
 import { TranslocoRootModule } from './transloco-root.module';
 import { TranslocoService } from '@jsverse/transloco';
+import { provideTranslocoScope } from '@jsverse/transloco';
 import { UserLanguageComponent } from './dialogs/user-language/user-language.component';
 import { MalcolmUploadErrorComponent } from './dialogs/malcolm/malcolm-upload-error.component';
 import { FooterService } from './services/footer.service';
@@ -1323,8 +1324,10 @@ import { AnalyticsResultsComponent } from './assessment/results/analytics-result
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
             baseUrl: 'assets/monaco'
-        })], providers: [
+        })], 
+        providers: [
         TranslocoService,
+        provideTranslocoScope('tutorial', 'reports'),
         ConfigService,
         AuthenticationService,
         {
