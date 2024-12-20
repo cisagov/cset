@@ -78,6 +78,8 @@ using CSETWebCore.Interfaces.Cmu;
 using CSETWebCore.Business.Version;
 using CSETWebCore.Interfaces.Version;
 using CSETWebCore.Business.Demographic.Import;
+using CSETWebCore.Interfaces.CF;
+using CSETWebCore.Business.CF;
 
 namespace CSETWeb_ApiCore
 {
@@ -182,6 +184,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IMalcolmBusiness, MalcolmBusiness>();
             services.AddScoped<IVersionBusiness, VersionBusiness>();
             services.AddTransient<IConversionBusiness, ConversionBusiness>();
+            services.AddTransient<ICFBusiness, CFBusiness>();
 
             services.AddSwaggerGen(c =>
             {

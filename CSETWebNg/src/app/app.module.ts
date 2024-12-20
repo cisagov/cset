@@ -662,6 +662,7 @@ import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.com
 import { CfDetailedScoresComponent } from './reports/cf-detailed-scores/cf-detailed-scores.component';
 import { NcsfDashbordComponent } from './assessment/results/ncsf/ncsf-dashbord/ncsf-dashbord.component';
 import { NscfControlPrioritiesComponent } from './assessment/results/ncsf/nscf-control-priorities/nscf-control-priorities.component';
+import { CfRedirectComponent } from './assessment/results/reports/cf-redirect/cf-redirect.component';
 
 
 @NgModule({ declarations: [
@@ -1195,7 +1196,8 @@ import { NscfControlPrioritiesComponent } from './assessment/results/ncsf/nscf-c
         ConversionComponent,
         CfAnsweredQuestionsComponent,
         CfCommentsMarkedForReviewComponent,
-        CfReviewedComponent,        
+        CfReviewedComponent,
+        CfRedirectComponent,                
         RolesChangedComponent,
         CfDetailedScoresComponent,
         NcsfDashbordComponent,
