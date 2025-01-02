@@ -38,7 +38,6 @@ import { TranslocoService } from '@jsverse/transloco';
 })
 export class RraReportComponent implements OnInit {
   response: any;
-  translationTabTitle: any;
 
   overallScoreDisplay: string;
   standardBasedScore: number;
@@ -131,9 +130,9 @@ export class RraReportComponent implements OnInit {
       error => console.log('Main RRA report load Error: ' + (<Error>error).message)
     );
 
-    this.translationTabTitle = this.tSvc.selectTranslate('reports.core.rra.tab title')
-      .subscribe(value =>
-        this.titleService.setTitle(this.tSvc.translate('reports.core.rra.tab title') + ' - ' + this.configSvc.behaviors.defaultTitle));
+    this.tSvc.selectTranslate('core.rra.tab title', {}, { scope: 'reports' })
+      .subscribe(title =>
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
   }
 
   /**

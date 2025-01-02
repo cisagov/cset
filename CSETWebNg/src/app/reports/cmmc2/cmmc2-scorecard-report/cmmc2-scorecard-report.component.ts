@@ -1,6 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
+import { TranslocoService } from '@jsverse/transloco';
+import { TypescriptDefaultsService } from '@ngstack/code-editor';
+import { Title } from '@angular/platform-browser';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   selector: 'app-cmmc2-scorecard-report',
@@ -18,18 +22,26 @@ export class Cmmc2ScorecardReportComponent {
 
   targetLevel: number;
 
-/**
- * 
- */
+  /**
+   * 
+   */
   constructor(
     public assessSvc: AssessmentService,
-    public maturitySvc: MaturityService
+    public maturitySvc: MaturityService,
+    public tSvc: TranslocoService,
+    public titleService: Title,
+    public configSvc: ConfigService
   ) { }
 
   /**
    * 
    */
   ngOnInit(): void {
+    this.tSvc.selectTranslate('scorecard report', {}, { scope: 'reports' })
+      .subscribe(title => {
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle)
+      });
+
     this.maturitySvc.getCmmcReportData().subscribe((r: any) => {
       const info = r.reportData.information;
       this.assessmentDate = info.assessment_Date;
