@@ -94,6 +94,12 @@ export class CpgPracticeTableComponent implements OnInit {
       case 564:
         // recover
         return this.colorSvc.nistCsfFuncColor('RC');
+      case 565:
+        // SSG - IT Software Development
+        return '#305496';
+        case 566:
+        // SSG - IT Product Design
+        return '#548235';
       default:
         return '#6BA443';
     }
