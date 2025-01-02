@@ -150,6 +150,15 @@ namespace CSETWebCore.Business.Maturity
             }
 
 
+            // INFORMATION TECHNOLOGY (IT)
+            var itSectors = new List<int>() { 13, 28 };
+            if ((itSectors.Contains(demographics?.SectorId ?? -1))
+                || itSectors.Contains(ddSector?.IntValue ?? -1))
+            {
+                return 20;
+            }
+
+
             return null;
         }
     }
