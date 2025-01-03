@@ -14,6 +14,9 @@ namespace CSETWebCore.Model.Question
         public string SupplementalFact { get; set; }
         public string ExaminationApproach { get; set; }
 
+        public string Measurement { get; set; }
+        public string Attestation { get; set; }
+
         public string Set_Name { get; set; }
     }
 }

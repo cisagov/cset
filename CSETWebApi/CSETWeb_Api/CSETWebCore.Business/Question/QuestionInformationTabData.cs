@@ -17,6 +17,7 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Question;
+using Microsoft.EntityFrameworkCore.Query;
 
 
 
@@ -567,6 +568,12 @@ namespace CSETWebCore.Business.Question
                 tabData.SupplementalFact = FormatSupplementalInfo(tabData.SupplementalFact);
 
                 tabData.ExaminationApproach = info.MaturityQuestion.Examination_Approach;
+
+
+                //Include details stored in MATURITY_QUESTION_PROPS
+                tabData.Measurement = info.MaturityQuestion.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "MEASUREMENT")?.PropertyValue;
+                tabData.Attestation = info.MaturityQuestion.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "ATTESTATION")?.PropertyValue;
+
 
 
                 // apply an overlay if one exists
