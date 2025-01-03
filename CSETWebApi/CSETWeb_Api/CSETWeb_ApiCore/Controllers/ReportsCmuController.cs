@@ -22,6 +22,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.Model.Maturity;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -79,7 +80,8 @@ namespace CSETWebCore.Api.Controllers
             _report.SetReportsAssessmentId(assessmentId);
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var modelXml = biz.GetMaturityStructureAsXml(assessmentId, true);
+            var options = new StructureOptions() { IncludeQuestionText = true, IncludeSupplemental = true };
+            var modelXml = biz.GetMaturityStructureAsXml(assessmentId, options);
 
             var deficiencyData = new MaturityBasicReportData()
             {

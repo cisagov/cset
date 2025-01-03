@@ -21,22 +21,22 @@
   SOFTWARE. 
 -------------------------->
 
-<div class="assess-component d-flex flex-column justify-content-start flex-11a">
-  <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-    <div class="my-5">
-      <div *ngIf="!summaryResultLoaded" class="spinner-container" style="margin: 2em auto">
-        <div style="max-width: 50px; max-height: 50px;"></div>
-      </div>
-      <app-crr-results-summary *ngIf="summaryResultLoaded" [model]="crrModel"></app-crr-results-summary>
+<div class="white-panel">
+  <h3>Summary of CRR Results</h3>
+  <div>
+    <div *ngIf="!summaryResultLoaded" class="my-5 spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
-
-    <div class="my-5">
-      <app-crr-percentage-of-practices [model]="crrModel"></app-crr-percentage-of-practices>
-      <div *ngIf="!chartLoaded" class="spinner-container" style="margin: 2em auto">
-        <div style="max-width: 50px; max-height: 50px;"></div>
-      </div>
-    </div>
-
-    <app-nav-back-next [page]="'crr-summary-results'"></app-nav-back-next>
+    <app-crr-results-summary *ngIf="summaryResultLoaded" [model]="crrModel"></app-crr-results-summary>
   </div>
+
+  <div class="mb-5">
+    <app-crr-percentage-of-practices [model]="crrModel"></app-crr-percentage-of-practices>
+    <div *ngIf="!chartLoaded" class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
+
+  <app-nav-back-next [page]="'crr-summary-results'"></app-nav-back-next>
+
 </div>

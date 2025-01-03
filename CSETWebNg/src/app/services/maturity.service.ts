@@ -321,9 +321,18 @@ export class MaturityService {
     return this.http.get(this.configSvc.apiUrl + 'getEdmPercentScores')
   }
 
-  getSPRSScore() {
+  getCmmcScores() {
+    return this.http.get(this.configSvc.apiUrl + 'cmmc/scores');
+  }
+
+  getCmmcScorecards() {
+    return this.http.get(this.configSvc.apiUrl + 'cmmc/scorecards');
+  }
+
+  getSprsScore() {
     return this.http.get(this.configSvc.apiUrl + 'SPRSScore');
   }
+
   /**
    *
    * @param modelName
