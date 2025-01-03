@@ -524,7 +524,7 @@ namespace CSETWebCore.Business.Assessment
                 if (assessment.BaselineAssessmentId != null)
                 {
                     var baseInfo = _context.INFORMATION.FirstOrDefault(x => x.Id == assessment.BaselineAssessmentId);
-                    assessment.BaselineAssessmentName = baseInfo.Assessment_Name;
+                    assessment.BaselineAssessmentName = baseInfo?.Assessment_Name;
                 }
 
 

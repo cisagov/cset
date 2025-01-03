@@ -47,14 +47,15 @@ export class AssessCompareAnalyticsService {
     private assessSvc: AssessmentService,
     private router: Router
   ) { }
-
-  analyticsAssessment(assessId: number) {
-    this.http.get(
-      this.configSvc.apiUrl + "tsa/getAssessmentById",
-      headers,
-    )
-    this.router.navigate(["/assessment-comparison-analytics"], { queryParamsHandling: 'preserve' });
-  }
+  
+  // Method no longer in use
+  // analyticsAssessment(assessId: number) {
+  //   this.http.get(
+  //     this.configSvc.apiUrl + "tsa/getAssessmentById",
+  //     headers,
+  //   )
+  //   this.router.navigate(["/assessment-comparison-analytics"], { queryParamsHandling: 'preserve' });
+  // }
 
   loadAssessment(id: number) {
     this.getAssessmentToken(id).then(() => {

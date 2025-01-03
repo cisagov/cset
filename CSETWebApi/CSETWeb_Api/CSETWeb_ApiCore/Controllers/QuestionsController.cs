@@ -150,9 +150,10 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/GetChildAnswers")]
-        public IList<GetChildrenAnswersResult> GetChildAnswers([FromQuery] int parentId, [FromQuery] int assessId)
+        public IList<GetChildrenAnswersResult> GetChildAnswers([FromQuery] int parentId)
         {
-            return _context.Get_Children_Answers(parentId, assessId);
+            int assessmentId = _token.AssessmentForUser();
+            return _context.Get_Children_Answers(parentId, assessmentId);
         }
 
         /// <summary>
@@ -630,9 +631,10 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="answerId">The document ID</param>
         [HttpPost]
         [Route("api/DeleteDocument")]
-        public IActionResult DeleteDocument([FromQuery] int id, [FromQuery] int questionId, [FromQuery] int assessId)
+        public IActionResult DeleteDocument([FromQuery] int id, [FromQuery] int questionId)
         {
-            _document.DeleteDocument(id, questionId, assessId);
+            int assessmentId = _token.AssessmentForUser();
+            _document.DeleteDocument(id, questionId, assessmentId);
             return Ok();
         }
 

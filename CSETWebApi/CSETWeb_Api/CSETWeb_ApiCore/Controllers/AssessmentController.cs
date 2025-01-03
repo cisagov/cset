@@ -267,6 +267,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/getAssessmentById")]
+        [Obsolete("Method no longer in use.")]
         public IActionResult GetAssessmentById(int assessmentId)
         {
             var assessment = _assessmentBusiness.GetAssessmentById(assessmentId);

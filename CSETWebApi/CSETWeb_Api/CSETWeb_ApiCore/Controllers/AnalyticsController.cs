@@ -86,111 +86,13 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(agg);
         }
-
-
-        [HttpGet]
-        [Route("api/analytics/maturity")]
-        public IActionResult GetAnalytics(int modelId, int? sectorId, int? industryId, int assessmentId)
-        {
-
-            string connectionString = _configuration.GetConnectionString("CSET_DB") ?? "";
-
-            var dtPool = new DataTable();
-            var dtTargetAssessment = new DataTable();
-            var SampleSize = new DataTable();
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-
-                using (SqlCommand command = new SqlCommand("analytics_setup_maturity_groupings", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    command.ExecuteNonQuery();
-                }
-
-
-
-                using (SqlCommand command = new SqlCommand("analytics_Compute_MaturityAll", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    // Add input parameter
-                    command.Parameters.Add(new SqlParameter("@maturity_model_id", modelId));
-                    command.Parameters.Add(new SqlParameter("@sector_id", sectorId));
-                    command.Parameters.Add(new SqlParameter("@industry_id", industryId));
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        dtPool.Load(reader);
-                    }
-                }
-
-
-                using (SqlCommand command = new SqlCommand("analytics_compute_single_averages_maturity", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    // Add input parameter
-                    command.Parameters.Add(new SqlParameter("@assessment_id", assessmentId));
-                    command.Parameters.Add(new SqlParameter("@maturity_model_id", modelId));
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        dtTargetAssessment.Load(reader);
-                    }
-                }
-
-                using (SqlCommand command = new SqlCommand("analytics_Compute_MaturitySampleSize", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    // Add input parameter
-                    command.Parameters.Add(new SqlParameter("@maturity_model_id", modelId));
-                    command.Parameters.Add(new SqlParameter("@sector_id", sectorId));
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        SampleSize.Load(reader);
-                    }
-                }
-
-            }
-
-
-            var response = new AnalyticsResponse();
-            foreach (DataRow row in dtPool.Rows)
-            {
-                response.Min.Add((double)row["minimum"]);
-                response.Max.Add((double)row["maximum"]);
-                response.Average.Add((double)row["average"]);
-                response.Median.Add((int)row["median"]);
-            }
-
-
-            foreach (DataRow row in dtTargetAssessment.Rows)
-            {
-                response.BarData.Labels.Add(row["Title"].ToString() ?? "[unknown]");
-                response.BarData.Values.Add((int)row["Percentage"]);
-            }
-
-            int total_count = 0;
-            foreach (DataRow row in SampleSize.Rows)
-            {
-                total_count += Convert.ToInt32(row["AssessmentCount"]);
-            }
-            response.SampleSize = total_count;
-
-
-            return Ok(response);
-        }
+        
 
         [HttpGet]
         [Route("api/analytics/maturity/bars")]
-        public IActionResult GetAnalyticsNew(int modelId, int? sectorId, int? industryId, int assessmentId)
+        public IActionResult GetAnalyticsNew(int modelId, int? sectorId, int? industryId)
         {
-
+            int assessmentId = _token.AssessmentForUser();
             string connectionString = _configuration.GetConnectionString("CSET_DB") ?? "";
 
             var dtPool = new DataTable();

@@ -30,9 +30,20 @@ import { CmuReportModel } from '../../../../models/reports.model';
   styleUrls: ['./../crr-report.component.scss']
 })
 export class CrrResultsSummaryComponent implements OnInit {
-  @Input() model: CmuReportModel;
+
+  @Input() 
+  model: CmuReportModel;
+
+  averageMil: number;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    let sum = 0;
+    this.model?.cmuResultsData.cmuDomains.forEach(d => {
+      sum += d.domainScore;
+    });
+
+    this.averageMil = sum / this.model?.cmuResultsData.cmuDomains.length;
+  }
 }

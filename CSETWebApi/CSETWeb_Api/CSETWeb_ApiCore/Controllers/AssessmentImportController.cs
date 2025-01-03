@@ -14,10 +14,13 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Ionic.Zip;
+using CSETWebCore.Business.Authorization;
+using ICSharpCode.SharpZipLib.Zip;
+
 
 namespace CSETWebCore.Api.Controllers
 {
+    [CsetAuthorize]
     public class AssessmentImportController : ControllerBase
     {
         private ITokenManager _tokenManager;
@@ -38,7 +41,6 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        //  [CSETAuthorize]
         [Route("api/assessment/legacy/import/installed")]
         public IActionResult LegacyImportIsInstalled()
         {
@@ -47,7 +49,6 @@ namespace CSETWebCore.Api.Controllers
 
 
         [HttpPost]
-        // [CSETAuthorize]
         [Route("api/assessment/legacy/import")]
         public async Task<IActionResult> ImportLegacyAssessment()
         {
@@ -110,11 +111,12 @@ namespace CSETWebCore.Api.Controllers
                     using (Stream fs = new MemoryStream(bytes))
                     {
                         MemoryStream ms = new MemoryStream();
-                        ZipFile zip = ZipFile.Read(fs);
+
+                        var zip = new ZipFile(fs);
 
                         foreach (ZipEntry entry in zip)
                         {
-                            if (entry.FileName.Contains(".hint"))
+                            if (entry.Name.Contains(".hint"))
                             {
                                 hint = entry;
                             }
@@ -128,14 +130,14 @@ namespace CSETWebCore.Api.Controllers
             {
                 var returnMessage = "";
 
-                if (e.Message == "Exception of type 'Ionic.Zip.BadPasswordException' was thrown.")
+                if (e.Message == "No password available for encrypted stream")
                 {
-                    returnMessage = (hint == null) ? "Bad Password Exception" : "Bad Password Exception - " + hint.FileName;
+                    returnMessage = (hint == null) ? "Bad Password Exception" : "Bad Password Exception - " + hint.Name;
                     return StatusCode(423, returnMessage);
                 }
                 else if (e.Message == "The password did not match.")
                 {
-                    returnMessage = (hint == null) ? "Invalid Password" : "Invalid Password - " + hint.FileName;
+                    returnMessage = (hint == null) ? "Invalid Password" : "Invalid Password - " + hint.Name;
                     return StatusCode(406, returnMessage);
                 }
                 else if (e.Message == "Custom module not found")

@@ -28,8 +28,7 @@ import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-crr-percentage-of-practices',
-  templateUrl: './crr-percentage-of-practices.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+  templateUrl: './crr-percentage-of-practices.component.html'
 })
 export class CrrPercentageOfPracticesComponent implements OnChanges {
   @Input() model: CmuReportModel;

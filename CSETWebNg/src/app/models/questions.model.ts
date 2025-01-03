@@ -45,6 +45,7 @@ export interface MaturityQuestionResponse {
     modelId: number;
     modelName: string;
     questionsAlias: string;
+    groupingId: number;
     title: string;
     levels: [];
     maturityTargetLevel: number;
@@ -144,6 +145,7 @@ export interface Question {
     questionText: string;
     parmSubs: SubToken[];
     stdRefId: string;
+    answerOptions: string[];
     answer_Id: number;
     answer: string;
     altAnswerText: string;
