@@ -28,6 +28,7 @@ import Chart from 'chart.js/auto';
 import { ChartService } from '../../../services/chart.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { ConfigService } from '../../../services/config.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
@@ -62,7 +63,8 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
     public chartSvc: ChartService,
     private maturitySvc: MaturityService,
     private titleService: Title,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public tSvc: TranslocoService
   ) {
 
   }
@@ -71,7 +73,10 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
    *
    */
   ngOnInit() {
-    this.titleService.setTitle("Executive Summary - " + this.configSvc.behaviors.defaultTitle);
+    
+    this.tSvc.selectTranslate('executive summary', {}, { scope: 'reports' })
+      .subscribe(title =>
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.targetLevel = 0;
     this.reportSvc.getReport('executivematurity').subscribe(
