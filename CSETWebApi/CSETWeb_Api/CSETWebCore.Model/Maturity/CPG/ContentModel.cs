@@ -52,6 +52,9 @@ namespace CSETWebCore.Model.Maturity.CPG
         public string Impact { get; set; }
         public string Complexity { get; set; }
 
+        public string Measurement { get; set; }
+        public string Attestation { get; set; }
+
         public List<string> CsfMappings { get; set; } = [];
         public List<TTPReference> TTP { get; set; } = [];
 

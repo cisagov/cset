@@ -308,6 +308,7 @@
     "answer buttons": "Answer Buttons",
     "ssg": {
       "chemical": "Chemical Sector Goals",
+      "it": "Information Technology Goals",
       "other": "Other Sector Goals"
     }
   },
@@ -746,6 +747,8 @@
     "recommended action": "Recommended Action",
     "free services": "Free Services and References",
     "implementation guidance": "Implementation Guidance",
+    "attestation": "Attestation",
+    "measurement": "Measurement",
     "component type": "Component Type",
     "override component answer": "Override Component Answer",
     "override": "Override",
