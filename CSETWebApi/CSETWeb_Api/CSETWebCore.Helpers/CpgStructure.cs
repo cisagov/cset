@@ -245,6 +245,10 @@ namespace CSETWebCore.Helpers
                     question.Complexity = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "COMPLEXITY")?.PropertyValue;
 
 
+                    question.Measurement = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "MEASUREMENT")?.PropertyValue;
+                    question.Attestation = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "ATTESTATION")?.PropertyValue;
+
+
                     // overlay
                     var o = _overlay.GetMaturityQuestion(question.QuestionId, _lang);
                     if (o != null)

@@ -239,8 +239,8 @@
             </div>
 
             <div *ngIf=" !!extras && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
-                <!-- CPG "pieces" -->
 
+                <!-- CPG "pieces" -->
                 <div *ngIf="!!myQuestion.scope" class="mb-3">
                     <div class="sub-header-1">{{t('extras.scope')}}</div>
                     <div>
@@ -253,6 +253,22 @@
                         {{t('extras.recommended action')}}
                     </div>
                     <div [innerHTML]="myQuestion.recommendedAction">
+                    </div>
+                </div>
+
+                <div *ngIf="!!tab?.requirementsData?.attestation" class="mb-3">
+                    <div class="sub-header-1">
+                        {{t('extras.attestation')}}
+                    </div>
+                    <div [innerHTML]="tab.requirementsData.attestation">
+                    </div>
+                </div>
+
+                <div *ngIf="!!tab?.requirementsData?.measurement" class="mb-3">
+                    <div class="sub-header-1">
+                        {{t('extras.measurement')}}
+                    </div>
+                    <div [innerHTML]="tab.requirementsData.measurement">
                     </div>
                 </div>
 
