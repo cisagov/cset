@@ -4,6 +4,7 @@
     "publicDomainName": "cset-tsa.inl.gov",
     "behaviors": {
         "defaultTitle":"CSET TSA-Online",
+        "clientCode": "TSA",
         "showModuleBuilder": false,
         "showModuleImport": false,
         "showAggregation": false,

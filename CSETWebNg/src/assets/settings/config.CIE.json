@@ -3,7 +3,8 @@
     "installationMode":"CIE",
     "helpContactEmail": "cie@inl.gov",
     "behaviors": {
-        "defaultTitle":"CIE",
+        "defaultTitle": "CIE",
+        "clientCode": "CIE",
         "showModuleBuilder": true,
         "showAssessmentDocuments": true,
         "showAggregation": true,

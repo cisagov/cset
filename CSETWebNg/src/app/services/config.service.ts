@@ -63,9 +63,8 @@ export class ConfigService {
   libraryUrl: string;
   dhsEmail: string;
 
-
   onlineUrl: string;
-  analyticsUrl: string = "http://134.20.8.30:5778/";
+  analyticsUrl: string = 'http://134.20.8.30:5778/';
 
   csetGithubApiUrl: string;
   helpContactEmail: string;
@@ -106,7 +105,7 @@ export class ConfigService {
    * Constructor.
    * @param http
    */
-  constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) { }
+  constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) {}
 
   /**
    *
@@ -182,7 +181,6 @@ export class ConfigService {
     const apiProtocol = this.config.api.protocol + '://';
     const appProtocol = this.config.app.protocol + '://';
 
-
     const localStorageApiUrl = localStorage.getItem('apiUrl');
     const localStorageLibraryUrl = localStorage.getItem('libraryUrl');
     if (!!localStorageApiUrl) {
@@ -196,7 +194,7 @@ export class ConfigService {
     }
 
     this.appUrl = appProtocol + this.config.app.host + appPort;
-    this.analyticsUrl = "http://134.20.8.30:5778/";
+    this.analyticsUrl = 'http://134.20.8.30:5778/';
     this.helpContactEmail = this.config.helpContactEmail;
     this.helpContactPhone = this.config.helpContactPhone;
     this.csetGithubApiUrl = this.config.csetGithubApiUrl;
@@ -215,9 +213,10 @@ export class ConfigService {
     } else if (!!rl) {
       const rlProtocol = rl.protocol + '://';
       const rlPort = !!rl.port ? ':' + rl.port : '';
-      this.libraryUrl = rlProtocol + rl.host + rlPort + '/' + (rl.apiIdentifier ?? 'api') + '/library/'
+      this.libraryUrl = rlProtocol + rl.host + rlPort + '/' + (rl.apiIdentifier ?? 'api') + '/library/';
     } else {
-      this.libraryUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/library/';
+      this.libraryUrl =
+        apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/library/';
     }
 
     this.refDocUrl = this.libraryUrl + 'doc/';
@@ -329,23 +328,26 @@ export class ConfigService {
   }
 
   /**
-   * Returns the module configuration object from configuration.  
+   * Returns the module configuration object from configuration.
    * Either the modelId or moduleName can be sent as a key.
    * Returns null if it can't be found.
    */
   getModuleBehavior(id: any): ModuleBehavior {
     // check the model's configuration
     let modelConfiguration =
-      this.config.moduleBehaviors.find(x => x.modelId == +id) ||
-      this.config.moduleBehaviors.find(x => x.moduleName == id);
-    
+      this.config.moduleBehaviors.find((x) => x.modelId == +id) ||
+      this.config.moduleBehaviors.find((x) => x.moduleName == id);
+
     return modelConfiguration;
   }
 
   /**
-   * 
+   *
    */
   switchConfigsForMode(installationMode) {
+    let title = this.document.querySelector('title');
+    title.innerText = this.config.behaviors.defaultTitle;
+
     switch (installationMode) {
       case 'ACET':
         {
@@ -362,9 +364,6 @@ export class ConfigService {
           // change favicon and title
           const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
           link.href = 'assets/icons/favicon_acet.ico?app=acet1';
-
-          var title = this.document.querySelector('title');
-          title.innerText = 'ACET';
         }
         break;
       case 'TSA':
@@ -372,9 +371,6 @@ export class ConfigService {
           // change favicon and title
           const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
           link.href = 'assets/icons/favicon_tsa.ico?app=tsa1';
-
-          var title = this.document.querySelector('title');
-          title.innerText = 'CSET-TSA';
         }
         break;
       case 'CIE':
@@ -382,9 +378,6 @@ export class ConfigService {
           // change favicon and title
           const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
           link.href = 'assets/icons/favicon_cie.ico?app=cie1';
-
-          var title = this.document.querySelector('title');
-          title.innerText = 'CIE';
         }
         break;
       case 'CF':
@@ -392,9 +385,6 @@ export class ConfigService {
           // change favicon and title
           const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
           link.href = 'assets/icons/favicon_cf.ico?app=cf1';
-
-          var title = this.document.querySelector('title');
-          title.innerText = 'CSET-CF';
         }
         break;
       case 'RRA':
@@ -402,9 +392,6 @@ export class ConfigService {
           // change favicon and title
           const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
           link.href = 'assets/icons/favicon_rra.ico?app=rra1';
-
-          var title = this.document.querySelector('title');
-          title.innerText = 'CISA - Ransomware Readiness';
         }
         break;
       case 'RENEW':
@@ -412,18 +399,12 @@ export class ConfigService {
           // change favicon and title
           const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
           link.href = 'assets/icons/favicon_renew.ico?app=renew1';
-
-          var title = this.document.querySelector('title');
-          title.innerText = 'CSET Renewables';
         }
         break;
       default: {
         // change favicon and title
         const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
         link.href = 'assets/icons/favicon_cset.ico?app=cset';
-
-        var title = this.document.querySelector('title');
-        title.innerText = 'CSET';
       }
     }
   }
