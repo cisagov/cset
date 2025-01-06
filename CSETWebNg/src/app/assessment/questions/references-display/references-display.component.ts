@@ -73,13 +73,17 @@ export class ReferencesDisplayComponent implements OnInit {
     const list: ReferenceDocLink[] = [];
 
     docList?.forEach(ref => {
+      ref.fileName = ref.fileName?.trim();
+      ref.title = ref.title?.trim();
+      ref.url = ref.url?.trim();
+
       let listDoc: ReferenceDocLink = list.find(d => d.fileName == ref.fileName && d.title == ref.title);
       if (!listDoc) {
         listDoc = {
           fileId: ref.fileId,
-          fileName: ref.fileName?.trim(),
-          title: ref.title?.trim(),
-          url: ref.url?.trim(),
+          fileName: ref.fileName,
+          title: ref.title,
+          url: ref.url,
           isUploaded: ref.isUploaded,
           bookmarks: []
         };
