@@ -431,7 +431,7 @@ app.on('ready', () => {
   // set log to output to local appdata folder
 
   log.transports.file.resolvePathFn = () =>
-    path.join(app.getPath('home'), `AppData/Local/${clientCode}/ACET/ACET_electron.log`);
+    path.join(app.getPath('home'), `AppData/Local/${clientCode}/${appName}/${appName}_electron.log`);
   log.errorHandler.startCatching();
 
   if (mainWindow === null) {
