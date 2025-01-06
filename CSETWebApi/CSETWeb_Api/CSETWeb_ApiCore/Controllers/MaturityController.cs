@@ -218,7 +218,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var options = new StructureOptions() { IncludeQuestionText = true, IncludeSupplemental = true };
+            var options = new StructureOptions() { IncludeQuestionText = true, IncludeSupplemental = true, IncludeOtherText = true };
             var x = biz.GetMaturityStructureAsXml(assessmentId, options);
 
 
@@ -383,6 +383,7 @@ namespace CSETWebCore.Api.Controllers
                 resp.AnswerOptions.ForEach(x => x = x.Trim());
             }
 
+            resp.GroupingId = groupingId;
             resp.Title = grouping.Title;
             resp.Description = grouping.Description;
             resp.Description_Extended = grouping.Description_Extended;

@@ -30,7 +30,11 @@ namespace CSETWebCore.Business.Maturity
 
         private List<MATURITY_EXTRA> _maturityExtra;
 
+        // Answers that don't count against the score
         private readonly List<string> _goodAnswerOptions = new List<string>() {"Y", "NA"};
+
+        // The questions that allow an "incomplete" answer selection
+        private readonly List<int> _questionsThatAllowIncomplete = new List<int>() { 5330, 5382 };
 
         // CMMC 2.0 FINAL model ID
         private readonly int modelIdCmmc2 = 19;
@@ -280,9 +284,19 @@ namespace CSETWebCore.Business.Maturity
         /// Successful answers (Y, NA) deduct no points.
         /// Questions not defined with a point value in MATURITY_EXTRA (e.g., Level 1 and Level 3)
         /// default to a 1-point deduction.
+        /// 
+        /// SPECIAL CASE:  Two of the questions can get a partial score.  This limited scenario is not
+        /// worth a total refactor of MATURITY_EXTRA, so we are handling it programmatically
+        /// in this method for now.  
         /// </summary>
         private int DeductionForAnswer(CmmcQuestion q)
         {
+            // Special "incomplete" scenario for CMMC questions 5330 and 5382
+            if (_questionsThatAllowIncomplete.Contains(q.QuestionId) && q.AnswerText == "I")
+            {
+                return 3;
+            }
+
             if (_goodAnswerOptions.Contains(q.AnswerText))
             {
                 return 0;

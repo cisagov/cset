@@ -263,6 +263,38 @@
       ]
     },
     {
+      "moduleName": "SSG IT",
+      "modelId": "20",
+      "autoLoadSupplemental": true,
+      "showMaturityLevelBadge": false,
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes"
+        },
+        {
+          "code": "I",
+          "buttonLabelKey": "Prog-CPG",
+          "buttonCss": "btn-na"
+        },
+        {
+          "code": "S",
+          "buttonLabelKey": "Scoped-CPG",
+          "buttonCss": "btn-alt"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no"
+        }
+      ]
+    },
+    {
       "moduleName": "CMMC2F",
       "modelId": "19",
       "displayNameKey": "modules.cmmc2f.display-name",

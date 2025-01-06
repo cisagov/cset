@@ -87,9 +87,9 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.translationSub = this.tSvc.selectTranslate('reports.core.site summary.report title')
-      .subscribe(value =>
-        this.titleService.setTitle(this.tSvc.translate('reports.core.site summary.report title') + ' - ' + this.configSvc.behaviors.defaultTitle));
+    this.tSvc.selectTranslate('core.site summary.report title', {}, {scope: 'reports'})
+      .subscribe(title =>
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.isCmmc = this.maturitySvc.maturityModelIsCMMC();
     this.reportSvc.getReport('sitesummary').subscribe(
