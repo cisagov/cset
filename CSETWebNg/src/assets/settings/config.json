@@ -38,6 +38,7 @@
   "mobileEnvironment": "",
   "behaviors": {
     "defaultTitle": "CSET",
+    "clientCode": "DHS",
     "showDisclaimer": true,
     "showModuleBuilder": true,
     "showModuleImport": true,

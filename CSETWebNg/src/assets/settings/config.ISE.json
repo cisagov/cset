@@ -3,6 +3,7 @@
     "galleryLayout": "ISE",
     "behaviors": {
         "defaultTitle": "TOOLBOX",
+        "clientCode": "NCUA",
         "showModuleBuilder": true,
         "showAssessmentDocuments": false,
         "showAggregation": true,
