@@ -3,7 +3,8 @@
     "installationMode":"TSA",
     "helpContactEmail": "tsasupport@inl.gov",
     "behaviors": {
-        "defaultTitle":"CSET-TSA",
+        "defaultTitle": "CSET-TSA",
+        "clientCode": "TSA",
         "showModuleBuilder": true,
         "showAssessmentDocuments": true,
         "showAggregation": true,
