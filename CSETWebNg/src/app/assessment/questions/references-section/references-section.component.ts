@@ -10,7 +10,7 @@ import { ResourceLibraryService } from '../../../services/resource-library.servi
 })
 export class ReferencesSectionComponent {
 
-  @Input() documents;
+  @Input() documents: any[];
 
   @Input('q')
   question: any;
