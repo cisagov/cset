@@ -6,6 +6,7 @@
     "installationMode": "CF",
     "behaviors": {
         "defaultTitle": "CSET-CF",
+        "clientCode": "CF",
         "showModuleBuilder": false,
         "showAssessmentDocuments": false,
         "showAggregation": false,

@@ -23,34 +23,8 @@ config.currentConfigChain.forEach((configProfile) => {
 });
 
 const installationMode = config.installationMode;
-
-let clientCode;
-let appName;
-switch (installationMode) {
-  case 'ACET':
-    clientCode = 'NCUA';
-    appName = config.behaviors.defaultTitle;
-    break;
-  case 'TSA':
-    clientCode = 'TSA';
-    appName = 'CSET-TSA';
-    break;
-  case 'CF':
-    clientCode = 'CF';
-    appName = 'CSET-CF';
-    break;
-  case 'RENEW':
-    clientCode = 'DOE';
-    appName = 'CSET Renewables';
-    break;
-  case 'CIE':
-    clientCode = 'CIE';
-    appName = 'CIE';
-    break;
-  default:
-    clientCode = 'DHS';
-    appName = 'CSET';
-}
+const clientCode = config.behaviors.clientCode;
+const appName = config.behaviors.defaultTitle;
 
 let mainWindow = null;
 
@@ -457,7 +431,7 @@ app.on('ready', () => {
   // set log to output to local appdata folder
 
   log.transports.file.resolvePathFn = () =>
-    path.join(app.getPath('home'), `AppData/Local/${clientCode}/${appName}/${appName}_electron.log`);
+    path.join(app.getPath('home'), `AppData/Local/${clientCode}/ACET/ACET_electron.log`);
   log.errorHandler.startCatching();
 
   if (mainWindow === null) {

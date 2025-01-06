@@ -3,6 +3,7 @@
     "galleryLayout": "ACET",
     "behaviors": {
         "defaultTitle": "ACET",
+        "clientCode": "NCUA",
         "showModuleBuilder": true,
         "showAssessmentDocuments": false,
         "showAggregation": true,
