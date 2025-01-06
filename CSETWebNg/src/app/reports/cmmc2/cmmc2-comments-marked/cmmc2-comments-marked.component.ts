@@ -26,6 +26,7 @@ import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-cmmc2-comments-marked',
@@ -45,13 +46,18 @@ export class Cmmc2CommentsMarkedComponent implements OnInit {
     public configSvc: ConfigService,
     private titleService: Title,
     private maturitySvc: MaturityService,
-    public questionsSvc: QuestionsService
+    public questionsSvc: QuestionsService,
+    public tSvc: TranslocoService
   ) { }
 
   ngOnInit() {
+    this.tSvc.selectTranslate('comments and marked for review', {}, { scope: 'reports' })
+      .subscribe(title =>
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
+
     this.loading = true;
     this.keyToCategory = this.maturitySvc.keyToCategory;
-    this.titleService.setTitle("CMMC 2.0 Comments and Marked for Review - " + this.configSvc.behaviors.defaultTitle);
+
 
     this.maturitySvc.getCmmcReportData().subscribe(
       (r: any) => {

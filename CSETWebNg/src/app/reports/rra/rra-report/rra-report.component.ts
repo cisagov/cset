@@ -38,7 +38,6 @@ import { TranslocoService } from '@jsverse/transloco';
 })
 export class RraReportComponent implements OnInit {
   response: any;
-  translationTabTitle: any;
 
   overallScoreDisplay: string;
   standardBasedScore: number;
@@ -90,7 +89,7 @@ export class RraReportComponent implements OnInit {
     private titleService: Title,
     public cmmcStyleSvc: CmmcStyleService,
     public rraDataSvc: RraDataService,
-    public configSvc: ConfigService, 
+    public configSvc: ConfigService,
     public tSvc: TranslocoService
   ) {
     this.columnWidthEmitter = new BehaviorSubject<number>(25)
@@ -109,7 +108,7 @@ export class RraReportComponent implements OnInit {
       this.createAnswerDistribByGoal(r);
 
       this.createChart1(r);
-      
+
 
       this.createTopRankedGoals(r);
 
@@ -131,9 +130,9 @@ export class RraReportComponent implements OnInit {
       error => console.log('Main RRA report load Error: ' + (<Error>error).message)
     );
 
-    this.translationTabTitle = this.tSvc.selectTranslate('reports.core.rra.tab title')
-      .subscribe(value =>
-        this.titleService.setTitle(this.tSvc.translate('reports.core.rra.tab title') + ' - ' + this.configSvc.behaviors.defaultTitle));
+    this.tSvc.selectTranslate('core.rra.tab title', {}, { scope: 'reports' })
+      .subscribe(title =>
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
   }
 
   /**
@@ -177,9 +176,9 @@ export class RraReportComponent implements OnInit {
     });
 
     this.complianceGraph1 = levelList;
-    for (let i of this.complianceGraph1){
-      i.name = this.tSvc.translate('level.'+ i.name.toLowerCase())
-     }
+    for (let i of this.complianceGraph1) {
+      i.name = this.tSvc.translate('level.' + i.name.toLowerCase())
+    }
   }
 
 
@@ -206,9 +205,9 @@ export class RraReportComponent implements OnInit {
     });
 
     this.answerDistribByGoal = goalList;
-    for (let i of this.answerDistribByGoal){
-      for (let j of i.series){
-        j.name = this.tSvc.translate('answer-options.button-labels.'+ j.name.toLowerCase())
+    for (let i of this.answerDistribByGoal) {
+      for (let j of i.series) {
+        j.name = this.tSvc.translate('answer-options.button-labels.' + j.name.toLowerCase())
       }
     }
   }
@@ -265,7 +264,7 @@ export class RraReportComponent implements OnInit {
 
   @HostListener('window:beforeprint')
   beforePrint() {
-    this.view = [1300, 600];
+    this.view = [600, 350];
   }
 
   @HostListener('window:afterprint')

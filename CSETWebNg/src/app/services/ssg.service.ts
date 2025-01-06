@@ -54,6 +54,10 @@ export class SsgService {
       return 'chemical';
     }
 
+    if ([13, 28].includes(s)) {
+      return 'it';
+    }
+
     return 'other';
   }
 
@@ -70,6 +74,11 @@ export class SsgService {
     
     if ([1, 19].includes(s)) {
       return 18; // chemical
+    }
+
+
+    if ([13, 28].includes(s)) {
+      return 20; // I.T.
     }
     return null;
   }

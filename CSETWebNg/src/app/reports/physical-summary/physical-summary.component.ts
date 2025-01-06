@@ -64,9 +64,9 @@ export class PhysicalSummaryComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.translationSub = this.tSvc.selectTranslate('reports.core.physical summary.report title')
-      .subscribe(value =>
-        this.titleService.setTitle(this.tSvc.translate('reports.core.physical summary.report title') + ' - ' + this.configSvc.behaviors.defaultTitle));
+    this.tSvc.selectTranslate('core.physical summary.report title', {}, { scope: 'reports' })
+      .subscribe(title =>
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.reportSvc.getReport('physicalsummary').subscribe(
       (r: any) => {

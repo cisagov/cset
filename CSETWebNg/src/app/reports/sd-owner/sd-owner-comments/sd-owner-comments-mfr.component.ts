@@ -38,7 +38,6 @@ import { Title } from '@angular/platform-browser';
 })
 
 export class SdOwnerCommentsMfrComponent {
-  translationTabTitle: any;
   response: any = null;
   remarks: string;
   loading: boolean = false;
@@ -59,9 +58,9 @@ export class SdOwnerCommentsMfrComponent {
   ngOnInit(): void {
     this.loading = true;
     
-    this.translationTabTitle = this.tSvc.selectTranslate('reports.core.rra.cmfr.report title')
-    .subscribe(value =>
-      this.titleService.setTitle(this.tSvc.translate('reports.core.rra.cmfr.report title') + ' - ' + this.configSvc.behaviors.defaultTitle));
+    this.tSvc.selectTranslate('core.rra.cmfr.report title', {}, {scope: 'reports'})
+    .subscribe(title =>
+      this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
   
 
     this.maturitySvc.getCommentsMarked().subscribe(

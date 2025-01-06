@@ -37,8 +37,6 @@ import { TranslocoService } from '@jsverse/transloco';
   styleUrls: ['../../reports.scss', '../../acet-reports.scss']
 })
 export class RraDeficiencyComponent implements OnInit {
-  translationTabTitle: any;
-
   response: any;
 
   loading: boolean = false;
@@ -65,9 +63,9 @@ export class RraDeficiencyComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     
-    this.translationTabTitle = this.tSvc.selectTranslate('reports.core.rra.rra deficiency report')
-      .subscribe(value =>
-        this.titleService.setTitle(this.tSvc.translate('reports.core.rra.rra deficiency report') + ' - ' + this.configSvc.behaviors.defaultTitle));
+    this.tSvc.selectTranslate('core.rra.rra deficiency report', {}, {scope: 'reports'})
+      .subscribe(title =>
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
     
 
     this.maturitySvc.getMaturityDeficiency("RRA").subscribe(
