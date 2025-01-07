@@ -17,7 +17,7 @@
     },
     "dependencies": {
         "@angular-devkit/build-webpack": "^0.1900.0",
-        "@angular-devkit/schematics": "^18.2.10",
+        "@angular-devkit/schematics": "^19.0.6",
         "@angular-eslint/schematics": "^18.4.3",
         "@angular-slider/ngx-slider": "^18.0.0",
         "@angular/animations": "^18.2.11",
