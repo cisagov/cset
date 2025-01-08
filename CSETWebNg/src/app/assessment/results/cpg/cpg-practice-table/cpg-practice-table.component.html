@@ -40,10 +40,12 @@
                                 <span [innerHTML]="q.securityPractice"></span>
                             </div>
                         </div>
-                        <div class="text-end ms-4 font-weight-normal">
-                            <span *ngFor="let c of q.csfMappings; let l = last" class="text-nowrap">
-                                {{c}}{{ l ? '' : ', '}}
-                            </span>
+                        <div class="ms-4 font-weight-normal d-flex flex-wrap justify-content-end align-content-start">
+                            <ng-content *ngFor="let c of q.csfMappings; let l = last">
+                                <span class="text-nowrap">
+                                    {{c}}{{ l ? '' : ','}}
+                                </span>&nbsp;
+                            </ng-content>
                         </div>
                     </div>
                 </th>
