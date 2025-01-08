@@ -73,9 +73,7 @@ export class AnalyticsComponent implements OnInit {
         }).afterClosed().subscribe(info => {
             if (!!info && info.cancel) {
                 // user canceled, do nothing
-            } else {
-                window.open(this.config.analyticsUrl + "index.html", "_blank");
-            }
+            } 
         });
     }
 

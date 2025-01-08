@@ -35,12 +35,18 @@ namespace CSETWebCore.Helpers
 
         private AdditionalSupplemental _addlSuppl { get; set; }
 
+
+        private bool _includeQuestionText = true;
+
+        private bool _includeSupplemental = true;
+
         /// <summary>
         /// The consumer can optionally suppress 
         /// grouping descriptions, question text and supplemental info
         /// if they want a smaller response object.
         /// </summary>
-        private bool _includeText = true;
+        private bool _includeOtherText = true;
+
 
 
         /// <summary>
@@ -48,11 +54,14 @@ namespace CSETWebCore.Helpers
         /// and question structure for an assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityStructureAsXml(int assessmentId, CSETContext context, bool includeText)
+        public MaturityStructureAsXml(int assessmentId, CSETContext context, StructureOptions options)
         {
             this.AssessmentId = assessmentId;
             this._context = context;
-            this._includeText = includeText;
+
+            this._includeQuestionText = options.IncludeQuestionText;
+            this._includeSupplemental = options.IncludeSupplemental;
+            this._includeOtherText = options.IncludeOtherText;
 
             this._addlSuppl = new AdditionalSupplemental(context);
 
@@ -167,7 +176,7 @@ namespace CSETWebCore.Helpers
                 xE.Add(xGrouping);
                 xGrouping.SetAttributeValue("abbreviation", sg.Abbreviation);
 
-                if (_includeText)
+                if (_includeOtherText)
                 {
                     xGrouping.SetAttributeValue("description", sg.Description);
                 }
@@ -193,19 +202,26 @@ namespace CSETWebCore.Helpers
                     xQuestion.SetAttributeValue("questionid", myQ.Mat_Question_Id.ToString());
                     xQuestion.SetAttributeValue("parentquestionid", myQ.Parent_Question_Id.ToString());
                     xQuestion.SetAttributeValue("sequence", myQ.Sequence.ToString());
+                    xQuestion.SetAttributeValue("level", myQ.Maturity_Level.Level.ToString());
                     xQuestion.SetAttributeValue("displaynumber", myQ.Question_Title);
                     xQuestion.SetAttributeValue("answer", answer?.a.Answer_Text ?? "");
                     xQuestion.SetAttributeValue("comment", answer?.a.Comment ?? "");
                     xQuestion.SetAttributeValue("isparentquestion", B2S(parentQuestionIDs.Contains(myQ.Mat_Question_Id)));
 
-                    if (_includeText)
+                    if (_includeQuestionText)
                     {
                         xQuestion.SetAttributeValue("questiontext", myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "));
-
-                        xQuestion.SetAttributeValue("supplemental", myQ.Supplemental_Info);
-
-                        // CPG question elements
                         xQuestion.SetAttributeValue("securitypractice", myQ.Security_Practice);
+                    }
+
+                    if (_includeSupplemental)
+                    {
+                        xQuestion.SetAttributeValue("supplemental", myQ.Supplemental_Info);
+                    }
+
+                    if (_includeOtherText)
+                    {
+                        // CPG question elements
                         xQuestion.SetAttributeValue("outcome", myQ.Outcome);
                         xQuestion.SetAttributeValue("scope", myQ.Scope);
                         xQuestion.SetAttributeValue("recommendedaction", myQ.Recommend_Action);

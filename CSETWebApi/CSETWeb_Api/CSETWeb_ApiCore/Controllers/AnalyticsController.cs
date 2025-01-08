@@ -5,8 +5,12 @@
 // 
 //////////////////////////////// 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
+using Microsoft.Extensions.Configuration;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
@@ -17,6 +21,7 @@ using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Interfaces.Analytics;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -31,10 +36,13 @@ namespace CSETWebCore.Api.Controllers
         private readonly IQuestionRequirementManager _questionRequirement;
         private readonly IQuestionBusiness _question;
         private readonly IAnalyticsBusiness _analytics;
+        private readonly IConfiguration _configuration;
 
         public AnalyticsController(IRequirementBusiness requirement, IAssessmentBusiness assessment,
             ITokenManager token, IDemographicBusiness demographic,
-            IQuestionRequirementManager questionRequirement, IQuestionBusiness question, IAnalyticsBusiness analytics)
+            IQuestionRequirementManager questionRequirement,
+            IQuestionBusiness question, IAnalyticsBusiness analytics,
+            IConfiguration configuration)
         {
             _requirement = requirement;
             _assessment = assessment;
@@ -43,6 +51,7 @@ namespace CSETWebCore.Api.Controllers
             _questionRequirement = questionRequirement;
             _question = question;
             _analytics = analytics;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -77,6 +86,129 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(agg);
         }
+        
+
+        [HttpGet]
+        [Route("api/analytics/maturity/bars")]
+        public IActionResult GetAnalyticsNew(int modelId, int? sectorId, int? industryId)
+        {
+            int assessmentId = _token.AssessmentForUser();
+            string connectionString = _configuration.GetConnectionString("CSET_DB") ?? "";
+
+            var dtPool = new DataTable();
+            var dtTargetAssessment = new DataTable();
+            var SampleSize = new DataTable();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("analytics_setup_maturity_groupings", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.ExecuteNonQuery();
+                }
+
+
+
+                using (SqlCommand command = new SqlCommand("analytics_Compute_MaturityAll", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add input parameter
+                    command.Parameters.Add(new SqlParameter("@maturity_model_id", modelId));
+                    command.Parameters.Add(new SqlParameter("@sector_id", sectorId));
+                    command.Parameters.Add(new SqlParameter("@industry_id", industryId));
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        dtPool.Load(reader);
+                    }
+                }
+
+
+                using (SqlCommand command = new SqlCommand("analytics_compute_single_averages_maturity", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add input parameter
+                    command.Parameters.Add(new SqlParameter("@assessment_id", assessmentId));
+                    command.Parameters.Add(new SqlParameter("@maturity_model_id", modelId));
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        dtTargetAssessment.Load(reader);
+                    }
+                }
+
+                using (SqlCommand command = new SqlCommand("analytics_Compute_MaturitySampleSize", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add input parameter
+                    command.Parameters.Add(new SqlParameter("@maturity_model_id", modelId));
+                    command.Parameters.Add(new SqlParameter("@sector_id", sectorId));
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        SampleSize.Load(reader);
+                    }
+                }
+
+            }
+
+
+            /*
+        categories: any[] = [
+    { label: 'Invent', min: 10, max: 77, median: 42, myScore: 33},
+    { label: 'Prevent', min: 40, max: 95, median: 61, myScore: 83},
+    { label: 'Circumvent', min: 25, max: 54, median: 33, myScore: 50},
+    { label: 'Dryer Vent', min: 0, max: 94, median: 67, myScore: 23},
+    { label: 'Lament', min: 47, max: 62, median: 52, myScore: 47},
+    { label: 'Intent', min: 8, max: 80, median: 63, myScore: 33},
+    { label: 'Get Bent', min: 14, max: 58, median: 36, myScore: 29}
+  ];
+        */
+
+            var response = new NewResponse();
+
+            foreach (DataRow row in dtPool.Rows)
+            {
+                var cat = new Category();
+
+                response.Categories.Add(cat);
+
+                cat.Label = row["Question_Group_Heading"].ToString() ?? "[unknown]";
+
+                cat.Min = (double)row["minimum"];
+                cat.Max = (double)row["maximum"];
+                cat.Avg = (double)row["average"];
+                cat.Median = (int)row["median"];
+            }
+
+
+            foreach (DataRow row in dtTargetAssessment.Rows)
+            {
+                var r = response.Categories.FirstOrDefault(x => x.Label == row["title"].ToString());
+                if (r != null)
+                {
+                    r.MyScore = (int)row["Percentage"];
+                }
+            }
+
+
+            int total_count = 0;
+            foreach (DataRow row in SampleSize.Rows)
+            {
+                total_count += Convert.ToInt32(row["AssessmentCount"]);
+            }
+            response.SampleSize = total_count;
+
+
+            return Ok(response);
+        }
+
 
         private AnalyticsAssessment GetAnalyticsAssessment()
         {
@@ -117,5 +249,41 @@ namespace CSETWebCore.Api.Controllers
                 return _question.GetAnalyticQuestionAnswers(resp).OrderBy(x => x.QuestionId).ToList();
             }
         }
+    }
+
+        public class NewResponse
+    {
+        public List<Category> Categories { get; set; } = [];
+        public int SampleSize { get; set; } = 0;
+    }
+
+
+    public class Category
+    {
+        public string Label { get; set; }
+        public double Min { get; set; }
+        public double Max { get; set; }
+        public double Median { get; set; }
+        public double Avg { get; set; }
+        public double MyScore { get; set; }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class AnalyticsResponse
+    {
+        public List<double> Min { get; set; } = [];
+        public List<double> Max { get; set; } = [];
+        public List<int> Median { get; set; } = [];
+        public List<double> Average { get; set; } = [];
+        public BarItem BarData { get; set; } = new BarItem();
+        public int SampleSize { get; set; } = 0;
+    }
+
+    public class BarItem
+    {
+        public List<double> Values { get; set; } = [];
+        public List<string> Labels { get; set; } = [];
     }
 }

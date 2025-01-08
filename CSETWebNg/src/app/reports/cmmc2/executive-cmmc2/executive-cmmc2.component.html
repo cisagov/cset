@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div class="report-body mb-5" *transloco="let t">
 
   <div class="flex-container">
     <div class="column mt-3">
@@ -60,7 +60,37 @@
     </div>
   </div>
 
+  <div class="page-break">
+    <h1 class="pageHeader">
+      Scoring By Level
+    </h1>
 
+    <p>
+      {{t('cmmc.scoring.score charts description 1')}}
+    </p>
+    <p>
+      {{t('cmmc.scoring.score charts description 2')}}
+    </p>
+    <p>
+      {{t('cmmc.scoring.score charts description 3')}}
+    </p>
+
+    <div *ngIf="!loading">
+
+      <app-cmmc2-level1-score [score]="scores?.level1Score"
+        [maxScore]="scores?.level1MaxScore"></app-cmmc2-level1-score>
+
+      <app-cmmc2-level2-score [score]="scores?.level2Score" [maxScore]="scores?.level2MaxScore"
+        [active]="scores?.level2Active" *ngIf="targetLevel >= 2">
+      </app-cmmc2-level2-score>
+
+      <app-cmmc2-level3-score [score]="scores?.level3Score" [maxScore]="scores?.level3MaxScore"
+        [active]="scores?.level3Active" *ngIf="targetLevel >= 3">
+      </app-cmmc2-level3-score>
+
+    </div>
+
+  </div>
 
 
   <div class="page-break">
@@ -70,7 +100,7 @@
     <p>The figure shows the organization's progress throughout the CMMC based on the individual target level and
       overall cybersecurity assessment.</p>
 
-    <div class="d-flex flex-row" *ngFor="let l of responseLevels">
+    <div class="d-flex flex-row justify-content-center" *ngFor="let l of responseLevels">
       <!-- pie charts for compliance at each level -->
       <div class="me-5 d-flex" style="align-items: center; justify-content: center;">
         <div style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold"
@@ -81,10 +111,6 @@
       <div id="chart" class="mb-3">
         <canvas id="{{'level' + l.levelValue }}" style="max-width: 800px; margin: 0 auto;">{{l.chart}}</canvas>
       </div>
-      <div class="d-none">
-        <div>Compliant: {{l.compliancePercent}}%</div>
-        <div>Non Compliant {{l.nonCompliancePercent}}%</div>
-      </div>
     </div>
   </div>
 
@@ -93,8 +119,9 @@
   <div class="page-break">
     <h1 class="pageHeader">Compliance by Domain</h1>
 
-    <p>The following chart shows the percentage of practices met for each
-      domain at target level {{targetLevel}}.</p>
+    <p>
+      {{ t('cmmc.scoring.perf by domain desc', {targetLevel: targetLevel}) }}
+    </p>
 
     <div class="d-block mb-5">
       <canvas id="domainResults">{{chartDomain}}</canvas>
@@ -108,7 +135,11 @@
     </div>
   </div>
 
-  <div class="page-break" *ngIf="targetLevel > 1">
+
+
+
+  <!-- everything below here will go away - it now lives in the CMMC Scorecard Report -->
+  <!-- <div class="page-break" *ngIf="targetLevel > 1">
     <h1 class="pageHeader">SPRS Scorecard</h1>
 
     <div class="mt-3 text-center" [innerHTML]="sprsGauge | safe"></div>
@@ -148,5 +179,5 @@
       </ng-template>
 
     </table>
-  </div>
+  </div> -->
 </div>

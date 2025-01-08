@@ -28,6 +28,7 @@ import Chart from 'chart.js/auto';
 import { ChartService } from '../../../services/chart.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { ConfigService } from '../../../services/config.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
@@ -45,6 +46,8 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
   responseLevels: any;
   responseDomains: any;
 
+  scores: any;
+
   responseSprs: any;
   sprsGauge = '';
 
@@ -60,7 +63,8 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
     public chartSvc: ChartService,
     private maturitySvc: MaturityService,
     private titleService: Title,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public tSvc: TranslocoService
   ) {
 
   }
@@ -69,19 +73,21 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
    *
    */
   ngOnInit() {
-    this.titleService.setTitle("Executive Summary - " + this.configSvc.behaviors.defaultTitle);
+    
+    this.tSvc.selectTranslate('executive summary', {}, { scope: 'reports' })
+      .subscribe(title =>
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.targetLevel = 0;
     this.reportSvc.getReport('executivematurity').subscribe(
       (r: any) => {
         this.responseGeneral = r;
-
-        this.targetLevel = r.maturityModels.find(m => m.maturityModelName == 'CMMC2')?.targetLevel;
+        this.targetLevel = r.maturityModels.find(m => m.maturityModelName == 'CMMC2F' || m.maturityModelName == 'CMMC2')?.targetLevel;
       },
-      error => console.log('Executive report load Error: ' + (<Error>error).message)
+      error => console.error('Executive report load Error: ' + (<Error>error).message)
     );
 
-    this.maturitySvc.getSPRSScore().subscribe((r: any) => {
+    this.maturitySvc.getSprsScore().subscribe((r: any) => {
       this.responseSprs = r;
       this.sprsGauge = this.responseSprs.gaugeSvg;
     });
@@ -91,8 +97,18 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
    *
    */
   ngAfterViewInit() {
+    this.populateScoringCharts();
     this.populateLevelsCharts();
     this.populateDomainChart();
+  }
+
+  /**
+   * 
+   */
+  populateScoringCharts() {
+    this.maturitySvc.getCmmcScores().subscribe(x => {
+      this.scores = x;
+    });
   }
 
   /**
@@ -101,8 +117,6 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
   populateLevelsCharts() {
     this.maturitySvc.getComplianceByLevel().subscribe((r: any) => {
       this.responseLevels = r;
-
-      this.responseLevels.reverse();
 
       r.forEach(level => {
 
@@ -124,7 +138,7 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
         });
 
         setTimeout(() => {
-          level.chart = this.chartSvc.buildDoughnutChart('level' + level.levelValue, x);
+          level.chart = this.chartSvc.buildDoughnutChart('level' + level.levelValue, x, 'CMMC2F');
         }, 10);
       });
 

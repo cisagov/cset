@@ -43,9 +43,9 @@
     </div>
 
     <div class="d-block mb-2">
-      <h2 *ngIf="groupings?.length != 0">{{ pageTitle }}</h2>
+      <h3>{{ pageTitle }}</h3>
 
-      <h3>{{ groupingTitle }}</h3>
+      <h4>{{ groupingTitle }}</h4>
 
       <div class="mb-2" *ngIf="showTargetLevel">
         The target maturity level for this assessment is set to
@@ -53,7 +53,7 @@
       </div>
     </div>
 
-    <div *ngIf="!!groupings && !areGroupingsVisible()"
+    <div *ngIf="!!groupings && !areGroupingsVisible() && modelSupportsTargetLevel"
       class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
       <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
       <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">

@@ -646,8 +646,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/contacts/ValidateRemoval")]
-        public IActionResult ValidateMyRemoval(int assessmentId)
+        public IActionResult ValidateMyRemoval()
         {
+            int assessmentId = _token.AssessmentForUser();
             _token.IsAuthenticated();
             if (_token.AmILastAdminWithUsers(assessmentId))
             {

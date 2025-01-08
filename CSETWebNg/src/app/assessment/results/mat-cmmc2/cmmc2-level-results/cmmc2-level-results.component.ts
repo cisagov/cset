@@ -73,7 +73,6 @@ export class Cmmc2LevelResultsComponent implements OnInit, AfterContentInit {
   refreshChart() {
     this.maturitySvc.getComplianceByLevel().subscribe((r: any) => {
       this.response = r;
-      this.response.reverse();
 
       r.forEach(level => {
         let g = level.answerDistribution.find(a => a.value == 'Y');
@@ -93,7 +92,7 @@ export class Cmmc2LevelResultsComponent implements OnInit, AfterContentInit {
         });
 
         setTimeout(() => {
-          level.chart = this.chartSvc.buildDoughnutChart('level' + level.levelValue, x);
+          level.chart = this.chartSvc.buildDoughnutChart('level' + level.levelValue, x, 'CMMC2F');
         }, 10);
       });
 

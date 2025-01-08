@@ -89,6 +89,9 @@ public partial class MATURITY_QUESTIONS
     [InverseProperty("Mat_Question")]
     public virtual ICollection<MATURITY_ANSWER_OPTIONS> MATURITY_ANSWER_OPTIONS { get; set; } = new List<MATURITY_ANSWER_OPTIONS>();
 
+    [InverseProperty("Maturity_Question")]
+    public virtual MATURITY_EXTRA MATURITY_EXTRA { get; set; }
+
     [InverseProperty("Mat_Question")]
     public virtual ICollection<MATURITY_QUESTION_PROPS> MATURITY_QUESTION_PROPS { get; set; } = new List<MATURITY_QUESTION_PROPS>();
 

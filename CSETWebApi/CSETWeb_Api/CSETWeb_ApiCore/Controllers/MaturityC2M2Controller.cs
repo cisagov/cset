@@ -5,16 +5,18 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
+using CSETWebCore.Model.Maturity;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace CSETWebCore.Api.Controllers
-{
+{   [CsetAuthorize]
     public class MaturityC2M2Controller : ControllerBase
     {
         private readonly ITokenManager _tokenManager;
@@ -54,7 +56,8 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructureAsXml(assessmentId, true);
+            var options = new StructureOptions() { IncludeQuestionText = true, IncludeSupplemental = true };
+            var x = biz.GetMaturityStructureAsXml(assessmentId, options);
 
             var json = Helpers.CustomJsonWriter.Serialize(x.Root);
             return Ok(json);

@@ -247,18 +247,11 @@ export class MyAssessmentsComponent implements OnInit {
                 assessmentiDs.push(item.assessmentId);
                 item.isEntry = false;
               }
-              let type = '';
-              if (item.useDiagram) type += ', Diagram';
-              item.questionAlias = 'questions';
-              if (item.useMaturity) {
-                type += ', ' + item.selectedMaturityModel;
-                if (item.selectedMaturityModel === 'ISE') {
-                  item.questionAlias = 'statements';
-                }
-              }
-              if (item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;
-              if (type.length > 0) type = type.substring(2);
-              item.type = type;
+
+              // determine assessment type display
+              item.type = this.determineAssessmentType(item);
+
+
               let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
               item.completedQuestionsCount = currentAssessmentStats?.completedCount;
               item.totalAvailableQuestionsCount =
@@ -298,6 +291,43 @@ export class MyAssessmentsComponent implements OnInit {
         ))).subscribe();
   }
 
+  /**
+   * 
+   */
+  determineAssessmentType(item: UserAssessment) {
+    let type = '';
+
+    if (item.useDiagram) type += ', Diagram';
+    item.questionAlias = 'questions';
+
+    if (item.useMaturity) {
+      type += ', ' + this.getMaturityModelShortName(item);
+      if (item.selectedMaturityModel === 'ISE') {
+        item.questionAlias = 'statements';
+      }
+    }
+    if (item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;
+    if (type.length > 0) type = type.substring(2);
+
+    return type;
+  }
+
+  /**
+   * Tries to find a "model short title" in the language files.
+   * If it can't find a defintion, just use the selected model's title.
+   */
+  getMaturityModelShortName(a: UserAssessment) {
+    const key = `modules.${a.selectedMaturityModel.toLowerCase()}.model short title`;
+    const val = this.tSvc.translate(key);
+    if (key == val) {
+      return a.selectedMaturityModel;
+    }
+    return val;
+  }
+
+  /**
+   * 
+   */
   hasPath(rpath: string) {
     if (rpath != null) {
       localStorage.removeItem("returnPath");
@@ -308,7 +338,7 @@ export class MyAssessmentsComponent implements OnInit {
   removeAssessment(assessment: UserAssessment, assessmentIndex: number) {
     // first, call the API to see if this is a legal move
     this.assessSvc
-      .isDeletePermitted(assessment.assessmentId)
+      .isDeletePermitted()
       .subscribe(canDelete => {
         if (!canDelete) {
           this.dialog.open(AlertComponent, {

@@ -14,6 +14,7 @@ using CSETWebCore.DataLayer.Model;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Snickler.EFCore;
 
 namespace CSETWebCore.DataLayer.Model
@@ -27,6 +28,7 @@ namespace CSETWebCore.DataLayer.Model
         {
         }
 
+        [ActivatorUtilitiesConstructor]
         public CSETContext(IConfiguration config)
         {
             _connectionString = config.GetConnectionString("CSET_DB");
@@ -145,24 +147,6 @@ namespace CSETWebCore.DataLayer.Model
             //modelBuilder.Query<Answer_Questions_No_Components>().ToView("Answer_Questions_No_Components").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
         }
 
-
-        public virtual IList<SPRSScore> usp_GetSPRSScore(Nullable<int> assessment_id)
-        {
-
-            if (!assessment_id.HasValue)
-                throw new ApplicationException("parameters may not be null");
-
-            IList<SPRSScore> myrval = null;
-            this.LoadStoredProc("usp_GenerateSPRSScore")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<SPRSScore>();
-                     });
-            return myrval;
-
-        }
 
 
         public string ConnectionString { get { return this._connectionString; } }

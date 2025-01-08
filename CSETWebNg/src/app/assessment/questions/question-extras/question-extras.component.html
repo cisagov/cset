@@ -149,7 +149,7 @@
             <label *ngIf="showMfr" class="me-0 ms-2 btn form-check-label btn-mfr"
                 [class.answer-selected]="myQuestion.markForReview === true"
                 matTooltip="This control requires further review.">
-                <input name="q_{{myQuestion.questionId}}_F" type="checkbox"
+                <input name="q_{{myQuestion.questionId}}_F" type="checkbox" class="btn-check"
                     (click)="this.questionsSvc.saveMFR(myQuestion);" tabindex="0"
                     checked="{{myQuestion.markForReview === true}}">
                 <span class="cset-icons-flag-dark fs-base"></span>
@@ -169,7 +169,7 @@
             </div>
         </div>
         <div *ngIf="myQuestion.is_Component; else detailTab">
-            <div *ngIf=" !!extras && !!tab && mode == 'COMPONENT'" class="detail">
+            <div *ngIf=" !!extras && !!tab && mode == 'COMPONENT' && !extras.overRide" class="detail">
                 <table>
                     <tr>
                         <th class="pe-3">{{t('extras.component type')}}</th>
@@ -190,6 +190,7 @@
                     </tr>
                 </table>
             </div>
+            <div *ngIf=" !!extras && !!tab && mode == 'COMPONENT' && extras.overRide" class="detail">{{t('extras.override details')}}</div>
             <div *ngIf="!!extras && !!tab && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
 
                 <div *ngIf="!!tab?.requirementsData?.supplementalInfo"
@@ -238,8 +239,8 @@
             </div>
 
             <div *ngIf=" !!extras && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
-                <!-- CPG "pieces" -->
 
+                <!-- CPG "pieces" -->
                 <div *ngIf="!!myQuestion.scope" class="mb-3">
                     <div class="sub-header-1">{{t('extras.scope')}}</div>
                     <div>
@@ -252,6 +253,22 @@
                         {{t('extras.recommended action')}}
                     </div>
                     <div [innerHTML]="myQuestion.recommendedAction">
+                    </div>
+                </div>
+
+                <div *ngIf="!!tab?.requirementsData?.attestation" class="mb-3">
+                    <div class="sub-header-1">
+                        {{t('extras.attestation')}}
+                    </div>
+                    <div [innerHTML]="tab.requirementsData.attestation">
+                    </div>
+                </div>
+
+                <div *ngIf="!!tab?.requirementsData?.measurement" class="mb-3">
+                    <div class="sub-header-1">
+                        {{t('extras.measurement')}}
+                    </div>
+                    <div [innerHTML]="tab.requirementsData.measurement">
                     </div>
                 </div>
 

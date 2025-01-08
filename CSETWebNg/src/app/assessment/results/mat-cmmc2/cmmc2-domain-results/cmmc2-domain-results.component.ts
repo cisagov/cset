@@ -23,7 +23,6 @@
 ////////////////////////////////
 import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
-import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../../../services/maturity.service';
 import { CmmcStyleService } from '../../../../services/cmmc-style.service';
 import { ChartService } from '../../../../services/chart.service';
@@ -48,7 +47,6 @@ export class Cmmc2DomainResultsComponent implements OnInit, AfterContentInit {
   constructor(
     public navSvc: NavigationService,
     public maturitySvc: MaturityService,
-    private titleService: Title,
     public cmmcStyleSvc: CmmcStyleService,
     public chartSvc: ChartService
   ) { }
@@ -63,7 +61,6 @@ export class Cmmc2DomainResultsComponent implements OnInit, AfterContentInit {
         this.targetLevel = r.toString();
       }
     });
-
   }
 
   ngAfterContentInit(): void {

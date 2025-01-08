@@ -117,8 +117,8 @@ export class QuestionsService {
    * Grab all the child question's answers for a specific parent question.
    * Currently set up for use in an ISE assessment.
   */
-  getChildAnswers(parentId: number, assessId: number) {
-    headers.params = headers.params.set('parentId', parentId).set('assessId', assessId);
+  getChildAnswers(parentId: number) {
+    headers.params = headers.params.set('parentId', parentId);
     return this.http.get(this.configSvc.apiUrl + 'GetChildAnswers', headers);
   }
 
@@ -202,7 +202,7 @@ export class QuestionsService {
    * Deletes a document.
    */
   deleteDocument(id: number, questionId: number) {
-    return this.http.post(this.configSvc.apiUrl + 'deletedocument?id=' + id + "&questionId=" + questionId + "&assessId=" + localStorage.getItem('assessmentId'), headers);
+    return this.http.post(this.configSvc.apiUrl + 'deletedocument?id=' + id + "&questionId=" + questionId, headers);
   }
 
   /**

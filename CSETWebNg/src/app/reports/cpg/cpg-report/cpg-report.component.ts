@@ -35,10 +35,8 @@ import { TranslocoService } from '@jsverse/transloco';
   styleUrls: ['./cpg-report.component.scss', '../../reports.scss']
 })
 export class CpgReportComponent implements OnInit {
-  translationTabTitle: any;
-
   loading = false;
-  
+
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
@@ -66,9 +64,9 @@ export class CpgReportComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.translationTabTitle = this.tSvc.selectTranslate('reports.core.cpg.report.cpg report')
-      .subscribe(value =>
-        this.titleSvc.setTitle(this.tSvc.translate('reports.core.cpg.report.cpg report') + ' - ' + this.configSvc.behaviors.defaultTitle));
+    this.tSvc.selectTranslate('core.cpg.report.cpg report', {}, { scope: 'reports' })
+      .subscribe(title =>
+        this.titleSvc.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;

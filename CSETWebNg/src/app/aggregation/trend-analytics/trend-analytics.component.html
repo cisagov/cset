@@ -2,7 +2,7 @@
 
    Copyright 2024 Battelle Energy Alliance, LLC  
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  Permission is hereby granted, free of charge, to any person obtaining a copy 250px"
   of this software and associated documentation files (the "Software"), to deal 
   in the Software without restriction, including without limitation the rights 
   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
@@ -20,54 +20,90 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex justify-content-start flex-column flex-11a">
+<div class="white-panel d-flex justify-content-start flex-column flex-11a" *transloco="let t">
   <div class="max-1200">
-    <h3 class="mb-4">Trend Analytics</h3>
+    <h3 class="mb-4">{{t('aggregation.trend.trend analytics')}}</h3>
+
+    <p>
+      {{t('aggregation.compare.para 15')}}
+    </p>
 
     <div class="analytics-wrapper">
-      <div class="chart d-flex flex-column flex-00a mb-5">
-        <h3>
-          Overall Percent Compliance Score
-        </h3>
+      <div class="d-flex flex-column flex-00a mb-5">
+        <h4 class="text-center">
+          {{t('aggregation.compare.overall percent compliance score')}}
+        </h4>
+
+        <p>
+          {{t('aggregation.compare.para 16')}} 
+        </p>
+
+        <p>
+          {{t('aggregation.compare.para 17')}}
+        </p>
+
         <div *ngIf="chartOverallCompl == null">
           <div class="spinner-container" style="margin: 2em auto">
             <div style="max-width: 50px; max-height: 50px;"></div>
           </div>
         </div>
-        <canvas id="canvasOverallCompliance">{{ chartOverallCompl }}</canvas>
+
+        <div class="chart">
+          <canvas id="canvasOverallCompliance">{{ chartOverallCompl }}</canvas>
+        </div>
       </div>
 
-      <div class=" chart d-flex flex-column flex-00a mb-5">
-        <h3>
-          Top 5 Most Improved Areas
-        </h3>
+      <div class="d-flex flex-column flex-00a mb-5">
+        <h4 class="text-center">
+          {{t('aggregation.trend.top 5')}}
+        </h4>
+        <p>
+          {{t('aggregation.compare.para 18')}}
+        </p>
+
         <div *ngIf="chartTop5 == null">
           <div class="spinner-container" style="margin: 2em auto">
             <div style="max-width: 50px; max-height: 50px;"></div>
           </div>
         </div>
-        <canvas id="canvasTop5">{{ chartTop5 }}</canvas>
+
+        <div class="chart">
+          <canvas id="canvasTop5">{{ chartTop5 }}</canvas>
+        </div>
       </div>
 
-      <div class=" chart d-flex flex-column flex-00a mb-5">
-        <h3>
-          Top 5 Areas of Concern
-        </h3>
+      <div class="d-flex flex-column flex-00a mb-5">
+        <h4 class="text-center">
+          {{t('aggregation.trend.bottom 5')}}
+        </h4>
+
+        <p>
+          {{t('aggregation.compare.para 19')}}
+        </p>
+
         <div *ngIf="chartBottom5 == null">
           <div class="spinner-container" style="margin: 2em auto">
             <div style="max-width: 50px; max-height: 50px;"></div>
           </div>
         </div>
-        <canvas id="canvasBottom5">{{ chartBottom5 }}</canvas>
+
+        <div class="chart">
+          <canvas id="canvasBottom5">{{ chartBottom5 }}</canvas>
+        </div>
       </div>
 
-      <div class=" chart d-flex flex-column flex-00a mb-5">
-        <h3>Category Percent Comparisons</h3>
+      <div class="d-flex flex-column flex-00a mb-5">
+        <h4 class="text-center">{{t('aggregation.compare.category percent comparisons')}}</h4>
+        <p>
+          {{t('aggregation.compare.para 20')}}
+        </p>
+
         <div *ngIf="chartCategoryPercent == null">
           <div class="spinner-container" style="margin: 2em auto">
             <div style="max-width: 50px; max-height: 50px;"></div>
           </div>
         </div>
+
         <div class="chart-container" style="position: relative; height:80vh; width: 100%">
           <canvas id="canvasCategoryPercent">{{ chartCategoryPercent }}</canvas>
         </div>
@@ -75,8 +111,8 @@
     </div>
 
     <div class="mt-3 d-flex justify-content-between flex-00a">
-      <button class="btn btn-primary" (click)="navAggSvc.navBack('trend-analytics')">Back</button>
-      <button class="btn btn-primary" (click)="generateReport('trend-report')">Generate Trend Report</button>
+      <button class="btn btn-primary" (click)="navAggSvc.navBack('trend-analytics')">{{t('buttons.back')}}</button>
+      <button class="btn btn-primary" (click)="generateReport('trend-report')">{{t('aggregation.trend.generate report')}}</button>
     </div>
   </div>
 </div>

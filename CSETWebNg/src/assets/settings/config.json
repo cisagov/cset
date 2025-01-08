@@ -22,7 +22,6 @@
     "port": "5000",
     "apiIdentifier": "api"
   },
-  "csetAnalyticsUrl": "http://localhost:5002/api/analytics/maturity/bars?",
   "csetGithubApiUrl": "https://api.github.com/repos/cisagov/cset/releases/latest",
   "helpContactEmail": "CSET_PMO@cisa.dhs.gov",
   "helpContactPhone": "",
@@ -39,6 +38,7 @@
   "mobileEnvironment": "",
   "behaviors": {
     "defaultTitle": "CSET",
+    "clientCode": "DHS",
     "showDisclaimer": true,
     "showModuleBuilder": true,
     "showModuleImport": true,
@@ -231,8 +231,80 @@
       ]
     },
     {
+      "moduleName": "CPG2",
+      "modelId": "21",
+      "displayNameKey": "modules.cpg2.display-name",
+      "showDomainHeaders": false,
+      "autoLoadSupplemental": true,
+      "showMaturityLevelBadge": false,
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
+        },
+        {
+          "code": "I",
+          "buttonLabelKey": "Prog-CPG",
+          "buttonCss": "btn-na",
+          "chartSegmentColor": "#0a4b6e"
+        },
+        {
+          "code": "S",
+          "buttonLabelKey": "Scoped-CPG",
+          "buttonCss": "btn-alt",
+          "chartSegmentColor": "#b17300"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "consideredMissed": true
+        }
+      ]
+    },
+    {
       "moduleName": "SSG Chemical",
       "modelId": "18",
+      "autoLoadSupplemental": true,
+      "showMaturityLevelBadge": false,
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes"
+        },
+        {
+          "code": "I",
+          "buttonLabelKey": "Prog-CPG",
+          "buttonCss": "btn-na"
+        },
+        {
+          "code": "S",
+          "buttonLabelKey": "Scoped-CPG",
+          "buttonCss": "btn-alt"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no"
+        }
+      ]
+    },
+    {
+      "moduleName": "SSG IT",
+      "modelId": "20",
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {
@@ -274,12 +346,29 @@
         {
           "code": "Y",
           "buttonLabelKey": "yes-cmmc",
-          "buttonCss": "btn-yes"
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
         },
         {
           "code": "N",
           "buttonLabelKey": "no-cmmc",
-          "buttonCss": "btn-no"
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "consideredMissed": true
+        },
+        {
+          "code": "NA",
+          "buttonLabelKey": "na",
+          "buttonCss": "btn-na",
+          "chartSegmentColor": "#0a4b6e",
+          "consideredMissed": true
+        },
+        {
+          "code": "I",
+          "buttonLabelKey": "inc",
+          "buttonCss": "btn-inc",
+          "consideredMissed": true
         }
       ]
     },
