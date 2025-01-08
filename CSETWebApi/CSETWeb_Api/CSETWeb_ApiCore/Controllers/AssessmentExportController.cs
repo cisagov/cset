@@ -68,7 +68,7 @@ namespace CSETWebCore.Api.Controllers
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
 
-            return null;
+            return Ok();
         }
         
         /// <summary>
@@ -107,7 +107,7 @@ namespace CSETWebCore.Api.Controllers
                     bool isSuccess = await SendFileToApi($"{url}/api/assessment/import", fileContents, result.FileName);
                     if (isSuccess)
                     {
-                        return Ok("Assessment uploaded successfully");
+                        return Ok();
                     }
                 }
 

@@ -4,10 +4,13 @@
 // 
 // 
 //////////////////////////////// 
+
+using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
@@ -20,6 +23,7 @@ using CSETWebCore.Helpers;
 
 namespace CSETWebCore.Api.Controllers
 {
+    [CsetAuthorize]
     [ApiController]
     public class DemographicsController : ControllerBase
     {
@@ -51,6 +55,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/demographics")]
+        [Obsolete("No longer in use anymore")]
         public IActionResult Get()
         {
             int assessmentId = _token.AssessmentForUser();
@@ -63,6 +68,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/demographics")]
+        [Obsolete("No longer in use anymore")]
         public IActionResult Post([FromBody] Demographics demographics)
         {
             demographics.AssessmentId = _token.AssessmentForUser();

@@ -608,5 +608,15 @@ namespace DuplicateAssessments
             TimeSpan t = (DateTime.UtcNow - new DateTime(1970, 1, 1));
             return (int)t.TotalSeconds;
         }
+
+        public void SetEnterpriseToken(string tokenString)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetEnterpriseToken()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -5,16 +5,6 @@ using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
 using Microsoft.AspNetCore.Mvc;
-using CSETWebCore.Helpers.ReportWidgets;
-using System.Xml.Linq;
-using System.Xml.XPath;
-using System.Linq;
-using System.Collections.Generic;
-using CSETWebCore.Business.Maturity;
-using CSETWebCore.Business.Reports;
-using CSETWebCore.Reports.Models;
-using CSETWebCore.Api.Models;
-using Newtonsoft.Json;
 using CSETWebCore.Interfaces.Cmu;
 
 namespace CSETWebCore.Api.Controllers

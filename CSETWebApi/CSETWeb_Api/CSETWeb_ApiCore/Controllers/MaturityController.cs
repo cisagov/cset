@@ -171,6 +171,11 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        /// <summary>
+        /// TODO: Cannot find this endpoint name in the UI codebase
+        /// </summary>
+        /// <param name="mat_model_id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/MaturityModel/GetLevelScoresByGroup")]
         public IActionResult GetLevelScoresByGroup(int mat_model_id)
@@ -178,18 +183,6 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness)
                 .Get_LevelScoresByGroup(assessmentId, mat_model_id));
-        }
-
-
-        /// <summary>        
-        /// </summary>
-        [HttpGet]
-        [Route("api/SPRSScore")]
-        public IActionResult GetSPRSScore()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetSPRSScore(assessmentId));
         }
 
 
@@ -225,7 +218,8 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructureAsXml(assessmentId, true);
+            var options = new StructureOptions() { IncludeQuestionText = true, IncludeSupplemental = true, IncludeOtherText = true };
+            var x = biz.GetMaturityStructureAsXml(assessmentId, options);
 
 
             var j = "";
@@ -389,6 +383,7 @@ namespace CSETWebCore.Api.Controllers
                 resp.AnswerOptions.ForEach(x => x = x.Trim());
             }
 
+            resp.GroupingId = groupingId;
             resp.Title = grouping.Title;
             resp.Description = grouping.Description;
             resp.Description_Extended = grouping.Description_Extended;
@@ -1026,6 +1021,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/maturity/mvra/mvraTree")]
+        [Obsolete("No longer in use")]
         public IActionResult GetMvraTree([FromQuery] int id)
         {
             //int assessemntId = _tokenManager.AssessmentForUser();

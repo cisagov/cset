@@ -4,6 +4,8 @@
 // 
 // 
 //////////////////////////////// 
+
+using CSETWebCore.Business.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.Interfaces.Framework;
@@ -11,7 +13,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Framework;
 
 namespace CSETWebCore.Api.Controllers
-{
+{   [CsetAuthorize]
     [ApiController]
     public class FrameworkController : ControllerBase
     {

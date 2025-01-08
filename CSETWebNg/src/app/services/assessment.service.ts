@@ -402,9 +402,9 @@ export class AssessmentService {
    * Checks to see if deleting the assessment would leave it without
    * an ADMIN contact
    */
-  isDeletePermitted(assessmentId: number) {
+  isDeletePermitted() {
     return this.http.post(
-      this.apiUrl + 'contacts/validateremoval?assessmentId=' + assessmentId,
+      this.apiUrl + 'contacts/validateremoval',
       null,
       headers
     );

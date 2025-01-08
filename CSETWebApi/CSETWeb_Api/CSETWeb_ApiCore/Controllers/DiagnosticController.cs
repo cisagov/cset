@@ -63,7 +63,7 @@ namespace CSETWebCore.Api.Controllers
             var logToFile = LogManager.GetLogger("DBManager");
             logToFile.Info(text);
 
-            return Ok();
+            return Ok($"Complete at {DateTime.UtcNow} UTC");
         }
     }
 }

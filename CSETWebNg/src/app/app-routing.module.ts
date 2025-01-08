@@ -150,7 +150,7 @@ import { RraSummaryAllComponent } from './assessment/results/mat-rra/rra-summary
 import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-results-page.component';
 import { CrrSummaryResultsComponent } from './assessment/results/crr/crr-summary-results/crr-summary-results.component';
 import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
-import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
+import { SprsScoreComponent } from './assessment/results/mat-cmmc2/scorecard/sprs-score/sprs-score.component';
 import { Cmmc2LevelResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-level-results/cmmc2-level-results.component';
 import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-domain-results/cmmc2-domain-results.component';
 import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
@@ -240,6 +240,9 @@ import { AllCommentsmarkedComponent } from './reports/all-commentsmarked/all-com
 import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.component';
 import { AnalyticsResultsComponent } from './assessment/results/analytics-results/analytics-results.component';
 import { Cmmc2LevelsComponent } from './assessment/prepare/maturity/cmmc2-levels/cmmc2-levels.component';
+import { Cmmc2ScoresComponent } from './assessment/results/mat-cmmc2/cmmc2-scores/cmmc2-scores.component';
+import { Cmmc2ScorecardPageComponent } from './assessment/results/mat-cmmc2/scorecard/cmmc2-scorecard/cmmc2-scorecard-page.component';
+import { Cmmc2ScorecardReportComponent } from './reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
 
 const appRoutes: Routes = [
 
@@ -462,6 +465,8 @@ const appRoutes: Routes = [
               { path: 'cmmc-compliance', component: CmmcComplianceComponent },
               { path: 'cmmc-gaps', component: CmmcGapsComponent },
               { path: 'sprs-score', component: SprsScoreComponent },
+              { path: 'cmmc2-scores', component: Cmmc2ScoresComponent },
+              { path: 'cmmc2-scorecard', component: Cmmc2ScorecardPageComponent },
               { path: 'cmmc2-level-results', component: Cmmc2LevelResultsComponent },
               { path: 'cmmc2-domain-results', component: Cmmc2DomainResultsComponent },
               { path: 'rra-summary-all', component: RraSummaryAllComponent },
@@ -548,6 +553,7 @@ const appRoutes: Routes = [
       { path: 'cmmcCommentsMarked', component: CmmcCommentsMarkedComponent },
       { path: 'cmmcAltJustifications', component: CmmcAltJustificationsComponent },
       { path: 'cmmc2DeficiencyReport', component: Cmmc2DeficiencyComponent },
+      { path: 'cmmc2ScorecardReport', component: Cmmc2ScorecardReportComponent },
       { path: 'cmmc2CommentsMarked', component: Cmmc2CommentsMarkedComponent },
       { path: 'executivecmmc2', component: ExecutiveCMMC2Component },
       { path: 'edm', component: EdmComponent },

@@ -59,17 +59,16 @@ export class SecurityplanComponent implements OnInit {
     private assessmentSvc: AssessmentService,
     private sanitizer: DomSanitizer,
     public tSvc: TranslocoService,
-    private translocoService: TranslocoService
   ) { }
 
   /**
    *
    */
   ngOnInit() {
-    
-    this.translationSub = this.translocoService.selectTranslate('reports.core.security plan.report title')
-      .subscribe(value =>
-        this.titleService.setTitle(this.tSvc.translate('reports.core.security plan.report title') + ' - ' + this.configSvc.behaviors.defaultTitle));
+    this.tSvc.selectTranslate('core.security plan.report title', {}, { scope: 'reports' })
+      .subscribe(title => {
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle)
+      });
 
     this.reportSvc.getReport('securityplan').subscribe(
       (r: any) => {

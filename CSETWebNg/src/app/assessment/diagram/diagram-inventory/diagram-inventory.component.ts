@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DiagramService } from '../../../services/diagram.service';
 import { ConfigService } from '../../../services/config.service';
 import { saveAs } from "file-saver";
@@ -35,7 +35,7 @@ import { AssessmentService } from '../../../services/assessment.service';
   templateUrl: './diagram-inventory.component.html',
   styleUrls: ['./diagram-inventory.component.scss']
 })
-export class DiagramInventoryComponent implements OnInit {
+export class DiagramInventoryComponent implements OnInit,AfterViewInit {
 
   componentsExist: boolean = true;
   compListUpdateFromShapesTab: any = [];
@@ -48,15 +48,20 @@ export class DiagramInventoryComponent implements OnInit {
     private assessSvc: AssessmentService,
     private configSvc: ConfigService
   ) { }
+  
+  ngAfterViewInit(): void {
+    if (this.componentsExist){
+    this.diagramSvc.getCompleteDiagram();
+    }
+  }
 
   /**
    *
    */
-  ngOnInit() {
-    if (this.assessSvc.hasDiagram()) {
-      this.componentsExist = true;
-    }
-    // console.log('components exits='+this.componentsExist)
+  ngOnInit() {    
+    this.assessSvc.hasDiagram().subscribe((result: boolean) => {
+      this.componentsExist = result;
+    })
   }
 
   /**

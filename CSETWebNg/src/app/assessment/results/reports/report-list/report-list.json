@@ -53,6 +53,20 @@
     ]
   },
   {
+    "title": "CMMC2",
+    "reportList": [
+      {
+        "linkUrl": "executivecmmc2"
+      },
+      {
+        "linkUrl": "cmmc2ScorecardReport"
+      },
+      {
+        "linkUrl": "cmmc2CommentsMarked"
+      }
+    ]
+  },
+  {
     "title": "CPG",
     "reportList": [
       {
@@ -186,20 +200,6 @@
       },
       {
         "linkUrl": "crrCommentsMarked"
-      }
-    ]
-  },
-  {
-    "title": "CMMC2",
-    "reportList": [
-      {
-        "linkUrl": "executivecmmc2"
-      },
-      {
-        "linkUrl": "cmmc2DeficiencyReport"
-      },
-      {
-        "linkUrl": "cmmc2CommentsMarked"
       }
     ]
   },

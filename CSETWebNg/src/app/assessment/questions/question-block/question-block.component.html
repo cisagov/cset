@@ -116,7 +116,7 @@
               </label>
 
               <!-- Mark For Review Flag  -->
-              <label class="me-0 ms-2 btn btn-mfr" [class.answer-selected]="q.markForReview === true"
+              <label class="me-0 ms-2 btn btn-mfr form-check-label" [class.answer-selected]="q.markForReview === true"
                 [matTooltip]="('tooltip.mfr-flag' | transloco)">
                 <input name="q_{{q.questionId}}_F" type="checkbox" class="btn-check" (click)="saveMFR(q);" tabindex="0"
                   checked="{{q.markForReview === true}}">
@@ -171,9 +171,9 @@
               </label>
 
               <!-- Mark For Review Flag  -->
-              <label class="me-0 ms-2 btn form-check-label btn-mfr align-items-center"
+              <label class="me-0 ms-2 btn btn-mfr form-check-label align-items-center"
                 [class.answer-selected]="q.markForReview === true" [matTooltip]="('tooltip.mfr-flag' | transloco)">
-                <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
+                <input name="q_{{q.questionId}}_F" type="checkbox" class="btn-check" (click)="saveMFR(q);" tabindex="0"
                   checked="{{q.markForReview === true}}">
                 <span class="cset-icons-flag-dark fs-base"></span>
               </label>

@@ -1,0 +1,59 @@
+<!---------------------- 
+
+   Copyright 2024 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="white-panel oy-auto d-flex flex-column flex-11a" *transloco="let t">
+     <h3>{{t('titles.cmmc scoring')}}</h3>
+
+     <div *ngIf="loading">
+          <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+               <div style="max-width: 50px; max-height: 50px;"></div>
+          </div>
+     </div>
+
+     <p>
+          {{t('cmmc.scoring.score charts description 1')}}
+     </p>
+     <p>
+          {{t('cmmc.scoring.score charts description 2')}}
+     </p>
+     <p>
+          {{t('cmmc.scoring.score charts description 3')}}
+     </p>
+
+     <div *ngIf="!loading">
+
+          <app-cmmc2-level1-score [score]="scores?.level1Score"
+               [maxScore]="scores?.level1MaxScore"></app-cmmc2-level1-score>
+
+          <app-cmmc2-level2-score [score]="scores?.level2Score" [maxScore]="scores?.level2MaxScore"
+               [active]="scores?.level2Active" *ngIf="assessSvc.assessment.maturityModel.maturityTargetLevel >= 2">
+          </app-cmmc2-level2-score>
+
+          <app-cmmc2-level3-score [score]="scores?.level3Score" [maxScore]="scores?.level3MaxScore"
+               [active]="scores?.level3Active" *ngIf="assessSvc.assessment.maturityModel.maturityTargetLevel >= 3">
+          </app-cmmc2-level3-score>
+
+     </div>
+
+     <app-nav-back-next [page]="'cmmc2-scores'"></app-nav-back-next>
+
+</div>

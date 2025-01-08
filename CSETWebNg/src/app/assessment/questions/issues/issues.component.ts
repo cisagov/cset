@@ -86,7 +86,7 @@ export class IssuesComponent implements OnInit {
         this.update();
       });
 
-    this.questionsSvc.getChildAnswers(this.questionID, this.assessmentId).subscribe(
+    this.questionsSvc.getChildAnswers(this.questionID).subscribe(
       (data: any) => {
         this.questionData = data;
       });

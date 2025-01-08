@@ -18,6 +18,7 @@ using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Business.Question
 {
@@ -92,12 +93,21 @@ namespace CSETWebCore.Business.Question
                 bool IsQuestion = mode.IsQuestion;
                 // bool IsRequirement = IsComponent ? !IsComponent : mode.IsRequirement;
                 var newqp = _context.NEW_QUESTION.Where(q => q.Question_Id == questionId).FirstOrDefault();
-                var newAnswer = this._context.ANSWER.Where(a =>
+                var answer = this._context.ANSWER.Where(a =>
                     a.Question_Or_Requirement_Id == questionId
                     && a.Assessment_Id == assessmentId
-                    && a.Question_Type == questionType).FirstOrDefault();
-
-
+                    && a.Question_Type == questionType).ToList();
+                
+                if (answer.Count() > 1)
+                {
+                    response.overRide = true; 
+                }
+                else
+                {
+                    response.overRide = false;
+                }
+                ANSWER newAnswer = answer.FirstOrDefault();
+                
                 if (newAnswer == null)
                 {
                     newAnswer = new ANSWER()
@@ -122,7 +132,10 @@ namespace CSETWebCore.Business.Question
 
                 if (questionType == "Maturity")
                 {
-                    var matQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == questionId).FirstOrDefault();
+                    var matQuestion = _context.MATURITY_QUESTIONS
+                        .Include(x => x.MATURITY_QUESTION_PROPS)
+                        .Where(q => q.Mat_Question_Id == questionId).FirstOrDefault();
+
                     qp = new QuestionPoco(_context, newAnswer, matQuestion);
                 }
                 else

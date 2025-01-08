@@ -39,6 +39,8 @@ namespace CSETWebCore.Business.Question
 
 
         public bool IsDetailAndInfo { get; set; }
+        
+        public bool? overRide { get; set; }
 
 
         /// <summary>

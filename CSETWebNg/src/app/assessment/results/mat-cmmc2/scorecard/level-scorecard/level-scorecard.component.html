@@ -1,0 +1,55 @@
+<!---------------------- 
+
+   Copyright 2024 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<table class="table table-td-p2 table-td-small" [class.fs-smaller]="layoutSvc.hp" *transloco="let t">
+     <tr>
+          <th>{{t('cmmc.scoring.practice')}}</th>
+          <th></th>
+          <th>
+               {{ layoutSvc.hp ? t('cmmc.scoring.answer-abbr') : t('cmmc.scoring.answer-long') }}
+          </th>
+          <th class="text-center">
+               {{ layoutSvc.hp ? t('cmmc.scoring.deduct-abbr') : t('cmmc.scoring.deduct-long') }}
+          </th>
+     </tr>
+
+     <ng-template ngFor let-d [ngForOf]="response?.domains">
+          <tr>
+               <td colspan="4" class="h5" style="font-size: .9em;">
+                    <div style="border-top: 1px solid #555; border-bottom: 1px solid #555;">
+                         {{d.domainName}}
+                    </div>
+               </td>
+          </tr>
+
+          <ng-template ngFor let-q [ngForOf]="d.questions">
+               <tr>
+                    <td class="text-nowrap align-top" [class.fw-bold]="q.score != 0">{{q.title}}</td>
+                    <td class="align-top" [class.fw-bold]="q.score != 0" [innerHTML]="q.questionText"></td>
+                    <td class="align-top text-nowrap" [class.fw-bold]="q.score != 0">{{t('answer-options.labels.' + q.answerText.toLowerCase() +
+                         '-cmmc')}}</td>
+                    <td class="align-top text-center" [class.fw-bold]="q.score != 0">{{q.score == 0 ? '' : q.score}}</td>
+               </tr>
+          </ng-template>
+     </ng-template>
+
+</table>
