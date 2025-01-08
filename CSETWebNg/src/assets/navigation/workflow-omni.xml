@@ -157,7 +157,7 @@
         <node d="maturity questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" visible="OPTION:MATURITY MATURITY-NONE(1,10,8,9,14,13,17)" />
 
         <!-- Bonus model (SSG) -->
-        <node d="ssg" ssg="true" id="maturity-questions-bonus" path="assessment/{:id}/maturity-questions/bonus" visible="MATURITY-ANY(11) SECTOR-ANY(1,19,13,28)" />
+        <node d="ssg" ssg="true" id="maturity-questions-bonus" path="assessment/{:id}/maturity-questions/bonus" visible="MATURITY-ANY(11,21) SECTOR-ANY(1,19,13,28)" />
 
 
 
@@ -405,8 +405,8 @@
 
 
         <!-- Results - CPG -->
-        <node d="performance summary" id="cpg-summary-page" path="assessment/{:id}/results/cpg-summary-page" visible="MATURITY:11" />
-        <node d="security practice checklist" id="cpg-practices-page" path="assessment/{:id}/results/cpg-practices-page" visible="MATURITY:11" />
+        <node d="performance summary" id="cpg-summary-page" path="assessment/{:id}/results/cpg-summary-page" visible="MATURITY-ANY(11,21)" />
+        <node d="security practice checklist" id="cpg-practices-page" path="assessment/{:id}/results/cpg-practices-page" visible="MATURITY-ANY(11,21)" />
 
         <!-- Results - SD02 Series -->
         <node displaytext="SD02 Series Pipeline Answer Summary" id="sd-answer-summary" path="assessment/{:id}/results/sd-answer-summary" visible="MATURITY:14" />
