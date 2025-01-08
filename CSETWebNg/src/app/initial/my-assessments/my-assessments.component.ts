@@ -317,7 +317,7 @@ export class MyAssessmentsComponent implements OnInit {
    * If it can't find a defintion, just use the selected model's title.
    */
   getMaturityModelShortName(a: UserAssessment) {
-    const key = `${a.selectedMaturityModel.toLowerCase()}.model short title`;
+    const key = `modules.${a.selectedMaturityModel.toLowerCase()}.model short title`;
     const val = this.tSvc.translate(key);
     if (key == val) {
       return a.selectedMaturityModel;
