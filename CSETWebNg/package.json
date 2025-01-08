@@ -75,7 +75,7 @@
         "zone.js": "^0.14.10"
     },
     "devDependencies": {
-        "@angular-builders/custom-webpack": "^18.0.0",
+        "@angular-builders/custom-webpack": "^19.0.0",
         "@electron/packager": "^18.3.5",
         "electron": "^33.0.2",
         "shx": "^0.3.4"
