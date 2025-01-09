@@ -677,7 +677,7 @@
                "cisa ransomware readiness assessment": "CISA Ransomware Readiness Assessment",
                "assessment full title": "Ransomware Readiness",
                "goal performance summary": "The Goal Performance chart provides a high-level overview of how well an organization meets each ransomware readiness goal. It presents the percentage of practice compliance for each goal in a bar chart. Additionally, the data is displayed in a table below the chart for further examination.",
-               "assessment tiers summary": "The Assessment Tiers charts visually represents the implementation status of ransomware readiness practices within an organization across the basic, intermediate, and advanced tiers. The charts display the number of “yes,” “no,” and “unanswered” responses per tier, as well as the distribution percentage of each response type per tier.",
+               "assessment tiers summary": "The Assessment Tiers charts visually represent the implementation status of ransomware readiness practices within an organization across the basic, intermediate, and advanced tiers. The practices are intended to be implemented from one tier to the next and are designed to provide a clear path for improvement. The charts below display the number of \"yes,\" \"no,\" and \"unanswered\" responses by tier, as well as the distribution percentage of each response type by tier.",
                "report": {
                     "assessment tiers": "RRA Assessment Tiers",
                     "answered tier": "Practices Answered Per Tier",
