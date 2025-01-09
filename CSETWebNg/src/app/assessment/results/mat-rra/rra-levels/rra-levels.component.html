@@ -21,38 +21,37 @@
   SOFTWARE. 
 -------------------------->
 <div *transloco="let t">
-<p>
-    {{t('reports.core.rra.report.levels.text 1')}}
-</p>
-<div class="pyramidGraphContainer">
-    <div class="pyramidGraph">
-        <div class="arrowContainer">
-            <div class="topHalfArrowMask">
-                <div class="corners triangle-topright"></div>
-                <div class="corners triangle-topleft"></div>
-            </div>
-            <div class="bottomHalfArrowMask">
-                <div class="arrowBaseMask arrowBaseLeft"></div>
-                <div class="arrowBaseCenter" style="color: white; justify-content: center;">
-                    <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">
-                        {{t('reports.core.rra.report.levels.rra practices')}}
-                    </span>
+
+    <div class="pyramidGraphContainer">
+        <div class="pyramidGraph">
+            <div class="arrowContainer">
+                <div class="topHalfArrowMask">
+                    <div class="corners triangle-topright"></div>
+                    <div class="corners triangle-topleft"></div>
                 </div>
-                <div class="arrowBaseMask arrowBaseRight"></div>
+                <div class="bottomHalfArrowMask">
+                    <div class="arrowBaseMask arrowBaseLeft"></div>
+                    <div class="arrowBaseCenter" style="color: white; justify-content: center;">
+                        <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">
+                            {{t('reports.core.rra.report.levels.rra practices')}}
+                        </span>
+                    </div>
+                    <div class="arrowBaseMask arrowBaseRight"></div>
+                </div>
             </div>
-        </div>
-        <div class="pyramidLevel levelOne pyramidRowItem" [ngStyle]="getPyramidRowColor(3)">
-            <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">{{t('level.advanced')}}</span>
-        </div>
-        <div class="pyramidLevel levelTwo pyramidRowItem" [ngStyle]="getPyramidRowColor(2)">
-            <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">{{t('level.intermediate')}}</span>
-        </div>
-        <div class="pyramidLevel levelThree pyramidRowItem" [ngStyle]="getPyramidRowColor(1)">
-            <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">{{t('level.basic')}}</span>
+            <div class="pyramidLevel levelOne pyramidRowItem" [ngStyle]="getPyramidRowColor(3)">
+                <span
+                    style="font-size: 1.2em; font-weight: bold; background-color: transparent;">{{t('level.advanced')}}</span>
+            </div>
+            <div class="pyramidLevel levelTwo pyramidRowItem" [ngStyle]="getPyramidRowColor(2)">
+                <span
+                    style="font-size: 1.2em; font-weight: bold; background-color: transparent;">{{t('level.intermediate')}}</span>
+            </div>
+            <div class="pyramidLevel levelThree pyramidRowItem" [ngStyle]="getPyramidRowColor(1)">
+                <span
+                    style="font-size: 1.2em; font-weight: bold; background-color: transparent;">{{t('level.basic')}}</span>
+            </div>
         </div>
     </div>
-</div>
-<p class="my-4">
-    {{t('reports.core.rra.report.levels.text 2')}}
-</p>
+
 </div>

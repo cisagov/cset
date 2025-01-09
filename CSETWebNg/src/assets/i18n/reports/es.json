@@ -298,7 +298,7 @@
                "report title": "Objetivos de Rendimiento Cibernético de CISA (CPG)",
                "report": {
                     "cpg report": "[ES]CPG Report",
-                    "performance summary": "Resumen de desempeño",
+                    "performance summary": "Resumen de rendimiento",
                     "chart detail": "[ES]Chart Detail",
                     "security practice checklist": "[ES]Security Practice Checklist",
                     "p": {
@@ -335,6 +335,8 @@
                "comments and marked for review": "Comentarios y Marcados para Revisión",
                "cisa ransomware readiness assessment": "CISA Informe de Evaluación de Preparación para Ransomware (RRA)",
                "assessment full title": "Preparación para ransomware",
+               "goal performance summary": "El gráfico de rendimiento de objetivos ofrece una descripción general de alto nivel de cómo una organización cumple con cada objetivo de preparación para el ransomware. Presenta el porcentaje de cumplimiento de las prácticas para cada objetivo en un gráfico de barras. Además, los datos se muestran en una tabla debajo del gráfico para un análisis más detallado.",
+               "assessment tiers summary": "Los gráficos de niveles de evaluación representan visualmente el estado de implementación de las prácticas de preparación para el ransomware dentro de una organización en los niveles básico, intermedio y avanzado. Las prácticas están pensadas para implementarse de un nivel al siguiente y están diseñadas para proporcionar un camino claro hacia la mejora. Los gráficos a continuación muestran la cantidad de respuestas \"sí\", \"no\" y \"sin respuesta\" por nivel, así como el porcentaje de distribución de cada tipo de respuesta por nivel.",
                "report": {
                     "assessment tiers": "Niveles de evaluación de RRA",
                     "answered tier": "Prácticas respondidas por nivel",
@@ -356,7 +358,7 @@
                     "suggested text": "Los objetivos de la evaluación se clasifican en orden de deficiencia y los objetivos que tienen menos prácticas satisfechas se clasifican más arriba en el cuadro. El gráfico de barras refleja el porcentaje de prácticas para cada objetivo a las que se respondió 'No' o se dejaron sin respuesta.",
                     "goal completion summary": "Resumen de consecución de objetivos",
                     "goal performance": "Rendimiento de objetivos",
-                    "rra performance by goal": "Desempeño de RRA por objetivo",
+                    "rra performance by goal": "Rendimiento de RRA por objetivo",
                     "performance by goal text": "Este gráfico muestra los resultados positivos de su evaluación. Es deseable obtener puntuaciones altas en este gráfico.",
                     "tiers": "Niveles de evaluación",
                     "rra practice list": "[ES] RRA Practice List with Corresponding References",
