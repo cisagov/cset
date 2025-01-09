@@ -22,10 +22,9 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ConfigService } from '../../../../services/config.service';
 import { MaturityService } from '../../../../services/maturity.service';
-import { filter } from 'rxjs/operators';
 
 
 /**
@@ -42,7 +41,7 @@ export class CrrResultsPage implements OnInit {
   public domain: any;
   public loaded = false;
 
-  public pageName = "";
+  public pageName: string = "";
   public domainAbbrev = "";
   public domainName;
 
@@ -57,18 +56,17 @@ export class CrrResultsPage implements OnInit {
   constructor(
     private maturitySvc: MaturityService,
     public configSvc: ConfigService,
-    private router: Router
+    public activatedRoute: ActivatedRoute
   ) {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((e: any) => {
-      var url: string = e.url;
-      var slash = url.lastIndexOf('/');
-      this.pageName = url.substr(slash + 1);
-      this.domainAbbrev = this.pageName.substr(this.pageName.indexOf('crr-domain-') + 11).toUpperCase();
-    });
+    this.manualNav();
   }
-
+  /**
+   * We are reusing crr results component for multiple routes and must handle routing manually. 
+   */
+  manualNav(): void {
+    this.pageName = this.activatedRoute.snapshot.url.join('/');
+    this.domainAbbrev = this.pageName.substring(this.pageName.indexOf('crr-domain-') + 11).toUpperCase();
+  }
 
   /**
    * 
