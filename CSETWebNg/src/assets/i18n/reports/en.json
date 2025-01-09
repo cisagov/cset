@@ -341,14 +341,17 @@
      "question": "Question",
      "overall score text": "There may be a discrepancy in the displayed percentages because some questions apply to more than one component of the system. As a result, these questions are counted multiple times in the percentage calculation total. Essentially, the overlap in question relevance causes the overall component based score to appear lower than the component summary score.",
      "assessment compliance text": "This chart shows the overall percentage scores. <br> Please note that unanswered questions are counted as a NO answer in these scores.",
-     "ranked categories text": "This chart shows the top areas of concern ranked. These are calculated from a weighted risk score based on the difficulty of attack. The attack weights are most heavily weighted for easy attacks to less for more difficult to attack.",
+     "ranked categories text 1a": "This chart ranks the top areas of concern based on a weighted risk score. The percentages are calculated by assigning higher weights to requirements that, if not implemented, would make the system more vulnerable to easier attacks. Lower weights are assigned to requirements associated with more difficult attacks.",
+     "ranked categories text 1b": "Categories are ranked in order of highest priority to lowest. Organizations can use this information to identify where to allocate additional resources and implement effective mitigating controls.",
      "ranked categories text 2": "This chart shows subject areas needing the most attention. Each bar represents the labeled subject area's weighted contribution so that the combined total always equals 100%. The weighted contribution includes the importance of both the question and the subject area, as well as the percentage of missed questions in that subject area.",
+     "ranked categories text 3": "This table presents the priority ranking for each category, the number of unmet requirements out of the total, and the weighted risk percentage.",
      "passed": "Passed",
      "failed": "Failed",
      "total": "Total",
      "percent": "Percent",
      "number": "Number",
-     "standards summary text": "This chart shows the overall answer percentages for each individual answer type.",
+     "standards summary text 1": "This chart displays the percentage distribution of each response type for standard-based questions.",
+     "standards summary text 2": "This table displays the number of each response type, the total number of questions, and the percentage distribution for each response type.",
      "reference number": "Reference #",
      "high level assessment label": "High-Level Assessment Description",
      "high level assessment desc": "Enter a description of the assessment process and work performed for senior management. This information will be included in the reports. This is not intended to be analysis of the assessment results as requested in the executive summary.",
@@ -446,7 +449,8 @@
           },
           "results by category": {
                "title": "Results by Category",
-               "text": "This chart shows the individual scores for each of the categories from a positive perspective. High scores on this chart show areas of strength."
+               "text 1": "The following chart illustrates the percentage of completed practices for each individual category. This information helps organizations identify their strengths and highlights areas for improvement.",
+               "text 2": "This table shows the number of requirements met out of the total, along with the compliance percentage for each category."
           },
           "security plan": {
                "report title": "Site Cybersecurity Plan",
