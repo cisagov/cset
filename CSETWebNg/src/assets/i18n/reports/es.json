@@ -24,14 +24,17 @@
      "question": "Pregunta",
      "overall score text": "Puede haber una discrepancia en los porcentajes mostrados porque algunas preguntas se aplican a más de un componente del sistema. Como resultado, estas preguntas se cuentan varias veces en el total del cálculo del porcentaje. Esencialmente, la superposición en la relevancia de la pregunta hace que la puntuación general basada en el componente parezca más baja que la puntuación resumida del componente.",
      "assessment compliance text": "Este gráfico muestra las puntuaciones porcentuales generales. <br> Tenga en cuenta que las preguntas sin respuesta se cuentan como respuesta NO en estas puntuaciones.",
-     "ranked categories text": "Este gráfico muestra las principales áreas de preocupación clasificadas. Estos se calculan a partir de una puntuación de riesgo ponderada basada en la dificultad del ataque. Los pesos de ataque son más pesados para ataques fáciles y menos para ataques más difíciles.",
+     "ranked categories text 1a": "Este gráfico clasifica las principales áreas de preocupación en función de una puntuación de riesgo ponderada. Los porcentajes se calculan asignando pesos más altos a los requisitos que, de no implementarse, harían que el sistema fuera más vulnerable a ataques más fáciles. Se asignan pesos más bajos a los requisitos asociados con ataques más difíciles.",
+     "ranked categories text 1b": "Las categorías se clasifican en orden de mayor a menor prioridad. Las organizaciones pueden utilizar esta información para identificar dónde asignar recursos adicionales e implementar controles de mitigación eficaces.",
      "ranked categories text 2": "Este gráfico muestra las áreas temáticas que necesitan más atención. Cada barra representa la contribución ponderada del área temática etiquetada, de modo que el total combinado siempre sea igual al 100%. La contribución ponderada incluye la importancia tanto de la pregunta como del área temática, así como el porcentaje de preguntas incorrectas en esa área temática.",
+     "ranked categories text 3": "En esta tabla se presenta el ranking de prioridad para cada categoría, el número de requisitos no cumplidos respecto del total y el porcentaje de riesgo ponderado.",
      "passed": "Pasado",
      "failed": "Fallido",
      "total": "Total",
      "percent": "Porciento",
      "number": "Número",
-     "standards summary text": "Este gráfico muestra los porcentajes generales de respuesta para cada tipo de respuesta individual.",
+     "standards summary text 1": "Este gráfico muestra la distribución porcentual de cada tipo de respuesta para preguntas basadas en estándares.",
+     "standards summary text 2": "Esta tabla muestra el número de cada tipo de respuesta, el número total de preguntas y la distribución porcentual para cada tipo de respuesta.",
      "reference number": "Referencia #",
      "high level assessment label": "Descripción de la evaluación de alto nivel",
      "high level assessment desc": "Introduzca una descripción del proceso de evaluación y del trabajo realizado para la alta dirección. Esta información se incluirá en los informes. Esto no pretende ser un análisis de los resultados de la evaluación como se solicita en el resumen ejecutivo.",
@@ -117,7 +120,8 @@
           },
           "results by category": {
                "title": "Resultados por categoría",
-               "text": "Este gráfico muestra las puntuaciones individuales de cada una de las categorías desde una perspectiva positiva. Las puntuaciones altas en este gráfico muestran áreas de fortaleza."
+               "text 1": "El siguiente gráfico muestra el porcentaje de prácticas completadas para cada categoría individual. Esta información ayuda a las organizaciones a identificar sus puntos fuertes y destaca áreas de mejora.",
+               "text 2": "En esta tabla se muestra el número de requisitos cumplidos sobre el total, junto con el porcentaje de cumplimiento para cada categoría."
           },
           "security plan": {
                "report title": "Plan de ciberseguridad del sitio",
