@@ -25,11 +25,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
-  selector: 'app-crr-results-summary',
-  templateUrl: './crr-results-summary.component.html',
+  selector: 'app-crr-mil-by-domain',
+  templateUrl: './crr-mil-by-domain.component.html',
   styleUrls: ['./../crr-report.component.scss']
 })
-export class CrrResultsSummaryComponent implements OnInit {
+export class CrrMilByDomainComponent implements OnInit {
 
   @Input() 
   model: CmuReportModel;

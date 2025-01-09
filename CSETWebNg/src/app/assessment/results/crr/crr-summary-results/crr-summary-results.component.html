@@ -21,13 +21,13 @@
   SOFTWARE. 
 -------------------------->
 
-<div class="white-panel">
-  <h3>Summary of CRR Results</h3>
+<div class="white-panel" *transloco="let t">
+  <h3>{{t('reports.core.crr.summary results.title')}}</h3>
   <div>
     <div *ngIf="!summaryResultLoaded" class="my-5 spinner-container" style="margin: 2em auto">
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
-    <app-crr-results-summary *ngIf="summaryResultLoaded" [model]="crrModel"></app-crr-results-summary>
+    <app-crr-mil-by-domain *ngIf="summaryResultLoaded" [model]="crrModel"></app-crr-mil-by-domain>
   </div>
 
   <div class="mb-5">
