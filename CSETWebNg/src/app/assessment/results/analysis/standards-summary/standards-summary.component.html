@@ -22,8 +22,10 @@
 -------------------------->
 <div class="white-panel d-flex flex-column justify-content-start flex-11a" *transloco="let t">
   <h3>{{t('titles.standards summary')}}</h3>
-  <p>{{t('reports.standards summary text')}}</p>
-  <div id="chart" class="mb-3">
+
+  <p>{{t('reports.standards summary text 1')}}</p>
+
+  <div id="chart" class="mb-5">
     <canvas id="canvasStandardSummary" style="max-width: 800px; margin: 0 auto;">{{chart}}</canvas>
   </div>
   <div *ngIf="!initialized">
@@ -32,6 +34,9 @@
     </div>
   </div>
   <div class="data" [hidden]="!initialized">
+    <p>
+      {{t('reports.standards summary text 2')}}
+    </p>
     <table class="table" [class.fs-smaller]="layoutSvc.hp">
       <thead>
         <tr>

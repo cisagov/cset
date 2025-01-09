@@ -28,9 +28,11 @@
     </div>
   </div>
   <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
-    <div class="chart d-flex flex-column flex-00a mb-5">
-      <h3>{{t('reports.core.dashboard.score')}}</h3>
+    <div class="d-flex flex-column flex-00a mb-5">
+      <h3 class="text-center">{{t('reports.core.dashboard.score')}}</h3>
+
       <p>{{t('reports.overall score text')}}</p>
+
       <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2em;">
 
         <div id="overall-score" class="score-container" style="margin: 0 4px;">
@@ -53,28 +55,33 @@
       </div>
     </div>
 
-    <div class="chart d-flex flex-column flex-00a mb-5">
-      <h3>{{t('titles.assessment compliance')}}</h3>
+    <div class="d-flex flex-column flex-00a mb-5">
+      <h3 class="text-center">{{t('titles.assessment compliance')}}</h3>
       <p [innerHTML]="t('reports.assessment compliance text')"></p>
       <canvas id="canvasAssessmentCompliance">{{assessComplChart}}</canvas>
     </div>
 
 
-    <div class="chart d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useStandard">
-      <h3>{{t('titles.ranked categories')}}</h3>
+    <div class="d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useStandard">
+      <h3 class="text-center">{{t('titles.ranked categories')}}</h3>
       <p class="fst-italic" [class.d-none]="showTopCategChart">
         {{t('reports.core.no ranking')}}
       </p>
       <div [class.d-none]="!showTopCategChart">
-        <p>{{t('reports.ranked categories text')}}</p>
+        <p>{{t('reports.ranked categories text 1a')}}</p>
+
+        <p>{{t('reports.ranked categories text 1b')}}</p>
+
         <canvas id="canvasTopCategories">{{topCategChart}}</canvas>
       </div>
     </div>
 
 
-    <div class="chart d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useStandard">
-      <h3>{{t('titles.standards summary')}}</h3>
-      <p>{{t('reports.standards summary text')}}</p>
+    <div class="d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useStandard">
+      <h3 class="text-center">{{t('titles.standards summary')}}</h3>
+
+      <p>{{t('reports.standards summary text 1')}}</p>
+
       <div *ngIf="stdsSummChart == null">
         <div class="spinner-container" style="margin: 2em auto">
           <div style="max-width: 50px; max-height: 50px;"></div>
@@ -86,8 +93,8 @@
     </div>
 
 
-    <div class="chart d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useDiagram">
-      <h3>{{t('reports.core.components summary.components summary')}}</h3>
+    <div class="d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useDiagram">
+      <h3 class="text-center">{{t('reports.core.components summary.components summary')}}</h3>
       <p>{{t('reports.core.components summary.text')}}</p>
       <div *ngIf="!compSummInitialized">
         <div class="spinner-container" style="margin: 2em auto">
