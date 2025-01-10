@@ -102,6 +102,9 @@ export class IseExaminationComponent implements OnInit {
         this.response = r;
         this.examLevel = this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
+        console.log("this.response.matAnsweredQuestions");
+        console.log(this.response.matAnsweredQuestions[0]);
+
         // goes through domains
         for (let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
           let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
@@ -119,8 +122,28 @@ export class IseExaminationComponent implements OnInit {
             }
 
             // goes through questions
+            let coreQuestions = [];
+            let corePlusQuestions = [];
+            let questionsInCorrectOrder = [];
+
             for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
+
+              // Sorts questions into CORE and CORE+
+              if (question.maturityLevel == "CORE") {
+                coreQuestions.push(question);
+              } else if (question.maturityLevel == "CORE+") {
+                corePlusQuestions.push(question);
+              }
+
+              // Ensures correct question order even if CORE questions have a higher id than a CORE+
+              if (k === subcat?.questions?.length - 1) {
+                questionsInCorrectOrder = (coreQuestions.concat(corePlusQuestions));
+                subcat.questions = questionsInCorrectOrder;
+                coreQuestions = [];
+                corePlusQuestions = [];
+                questionsInCorrectOrder = [];
+              }
 
               if (k === 0) {
                 this.expandedOptions.set(question.title, true);
