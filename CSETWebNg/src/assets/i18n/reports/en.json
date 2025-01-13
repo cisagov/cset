@@ -637,8 +637,7 @@
                     "p": {
                          "1": "This chart shows the answer distribution for each of the Security Practice categories.",
                          "2": "This table indicates the answer distribution percentages for each category as indicated in the chart above.",
-                         "3": "This table lists all security practices and how they have been answered.",
-                         "a": "The CPG Performance Summary chart provides a high-level overview of how well an organization meets the goals within each security practice category. It presents the distribution percentage of each response type per category. Additionally, the data is displayed in a table below the chart for further examination.",
+                         "a": "The CPG Performance Summary chart provides a high-level overview of how well an organization meets the goals within each security practice category. It presents the distribution percentage of each response type per category.",
                          "b": "The Security Practice Checklist contains a comprehensive overview of the assessment results, including the TTPs or risks addressed and recommended actions. Additionally, the checklist incorporates criteria such as “Impact,” “Cost,” and “Complexity” for each goal. These criteria can help organizations evaluate the importance and effects of each practice and prioritize them for implementation."
                     },
                     "ssg": {
@@ -668,6 +667,13 @@
                          "4": "There are no deficiencies to display."
                     }
                }
+          },
+          "edm": {
+               "summary results": "Summary Results",
+               "para 1": "This chart displays the percentage of completed EDM practices for each Maturity Indicator Level (MIL) and provides an overview of the organization’s performance. The organization’s current MIL is listed below the chart. It’s important to note that the MIL scale is cumulative; to achieve a desired level, an organization must meet all the requirements for the previous levels and the desired level itself.",
+               "para 2": "This information helps organizations identify any areas for improvement to reach their targeted MIL. For more information about MILs, view the EDM Tutorial within the Prepare section.",
+               "maturity indicator level": "Maturity Indicator Level",
+               "your org": "Your Organization"
           },
           "rra": {
                "report title": "RRA Report",
@@ -730,6 +736,16 @@
                     "with comments": "Questions with Comments",
                     "no comments": "There are no {{questionsAliasLower}} with comments",
                     "other remarks": "Other Remarks"
+               }
+          },
+          "cis": {
+               "section scoring": {
+                    "title": "CIS Section Scoring",
+                    "para 1": "This page displays a series of charts illustrating the score earned by each section. This data helps organizations identify their strengths and pinpoint areas for improvement. If a baseline survey was selected on the Critical Service Information page, the corresponding baseline scores will also display in the charts. This allows organizations to benchmark their progress toward meeting the compliance standards evaluated in the assessment."
+               },
+               "deficiencies": {
+                    "title": "CIS Deficiencies",
+                    "no baseline": "No baseline assessment has been selected to compare against."
                }
           },
           "crr": {
