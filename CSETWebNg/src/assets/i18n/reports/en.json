@@ -668,6 +668,13 @@
                     }
                }
           },
+          "edm": {
+               "summary results": "Summary Results",
+               "para 1": "This chart displays the percentage of completed EDM practices for each Maturity Indicator Level (MIL) and provides an overview of the organization’s performance. The organization’s current MIL is listed below the chart. It’s important to note that the MIL scale is cumulative; to achieve a desired level, an organization must meet all the requirements for the previous levels and the desired level itself.",
+               "para 2": "This information helps organizations identify any areas for improvement to reach their targeted MIL. For more information about MILs, view the EDM Tutorial within the Prepare section.",
+               "maturity indicator level": "Maturity Indicator Level",
+               "your org": "Your Organization"
+          },
           "rra": {
                "report title": "RRA Report",
                "tab title": "Ransomware Readiness Assessment",
@@ -729,6 +736,16 @@
                     "with comments": "Questions with Comments",
                     "no comments": "There are no {{questionsAliasLower}} with comments",
                     "other remarks": "Other Remarks"
+               }
+          },
+          "cis": {
+               "section scoring": {
+                    "title": "CIS Section Scoring",
+                    "para 1": "This page displays a series of charts illustrating the score earned by each section. This data helps organizations identify their strengths and pinpoint areas for improvement. If a baseline survey was selected on the Critical Service Information page, the corresponding baseline scores will also display in the charts. This allows organizations to benchmark their progress toward meeting the compliance standards evaluated in the assessment."
+               },
+               "deficiencies": {
+                    "title": "CIS Deficiencies",
+                    "no baseline": "No baseline assessment has been selected to compare against."
                }
           }
      },
