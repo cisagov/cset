@@ -27,12 +27,12 @@ import Chart from 'chart.js/auto';
 import { CisService } from '../../../../services/cis.service';
 
 @Component({
-  selector: 'app-ranked-deficiencty-chart',
-  templateUrl: './ranked-deficiencty-chart.component.html',
-  styleUrls: ['./ranked-deficiencty-chart.component.scss', '../../../../reports/reports.scss']
+  selector: 'app-ranked-deficiency-chart',
+  templateUrl: './ranked-deficiency-chart.component.html',
+  styleUrls: ['./ranked-deficiency-chart.component.scss', '../../../../reports/reports.scss']
 })
 
-export class RankedDeficienctyChartComponent implements AfterViewInit {
+export class RankedDeficiencyChartComponent implements AfterViewInit {
 
   rankedChart: Chart;
   loading = true;
@@ -48,17 +48,17 @@ export class RankedDeficienctyChartComponent implements AfterViewInit {
     if (this.cisSvc.hasBaseline()) {
       this.hasBaseline = true;
       this.cisSvc.getDeficiencyData().subscribe((data: any) => {
-
         data.option = { options: false };
         var opts = { scales: { x: { position: 'top', min: -100, max: 100 }, x1: { position: 'bottom', min: -100, max: 100 } } };
-        this.rankedChart = this.chartSvc.buildHorizBarChart('ranked-deficiency', data, false, false, opts, false);
+        setTimeout(() => {
+          this.rankedChart = this.chartSvc.buildHorizBarChart('canvas-ranked-deficiency', data, false, false, opts, false);
+          this.loading = false;
+        }, 1000);
 
-        this.loading = false;
       });
     } else {
       this.hasBaseline = false;
       this.loading = false;
     }
   }
-
 }

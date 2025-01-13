@@ -20,11 +20,13 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="d-flex flex-column justify-content-start flex-11a">
+<div class="d-flex flex-column justify-content-start flex-11a" *transloco="let t">
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
     <div class="mb-3">
-      <h3>CIS Deficiencies</h3>
-      <app-ranked-deficiencty-chart></app-ranked-deficiencty-chart>
+      <h3>{{t('reports.core.cis.deficiencies.title')}}</h3>
+
+      <app-ranked-deficiency-chart></app-ranked-deficiency-chart>
+
     </div>
 
     <app-nav-back-next [page]="'ranked-deficiency'"></app-nav-back-next>
