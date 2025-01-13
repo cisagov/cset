@@ -747,6 +747,19 @@
                     "title": "CIS Deficiencies",
                     "no baseline": "No baseline assessment has been selected to compare against."
                }
+          },
+          "crr": {
+               "summary results": {
+                    "title": "Summary of CRR Results",
+                    "mil by domain": "Maturity Indicator Level by Domain",
+                    "para 1": "This chart displays the Maturity Indicator Level achieved by each individual domain. It's important to note that the MIL scale is cumulative; to achieve a desired level, an organization must meet all the requirements for the previous levels and the desired level itself.",
+                    "para 2": "This information helps organizations identify any areas for improvement to reach their targeted MIL. For more information about MILs, view the CRR Tutorial within the Prepare section.",
+                    "domain name": "Domain Name",
+                    "maturity indicator level": "Maturity Indicator Level",
+                    "average mil": "Average MIL",
+                    "percent by domain": "Percentage of Practices Completed by Domain",
+                    "para 3": "The following chart illustrates the percentage of completed practices for each individual domain. This provides a snapshot of each domain's compliance with the cybersecurity requirements measured within the assessment, regardless of the MIL achieved."
+               }
           }
      },
      "acet": {
