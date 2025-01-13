@@ -495,7 +495,7 @@ import { CrrMil1PerformanceSummaryComponent } from './reports/crr/crr-report/crr
 import { CrrPerformanceSummaryComponent } from './reports/crr/crr-report/crr-performance-summary/crr-performance-summary.component';
 import { CrrNistCsfSummaryComponent } from './reports/crr/crr-report/crr-nist-csf-summary/crr-nist-csf-summary.component';
 import { CrrMil1PerformanceComponent } from './reports/crr/crr-report/crr-mil1-performance/crr-mil1-performance.component';
-import { CrrResultsSummaryComponent } from './reports/crr/crr-report/crr-results-summary/crr-results-summary.component';
+import { CrrMilByDomainComponent } from './reports/crr/crr-report/crr-mil-by-domain/crr-mil-by-domain.component';
 import { CrrPercentageOfPracticesComponent } from './reports/crr/crr-report/crr-percentage-of-practices/crr-percentage-of-practices.component';
 import { CrrDomainDetailComponent } from './reports/crr/crr-report/crr-domain-detail/crr-domain-detail.component';
 import { CrrResourcesComponent } from './reports/crr/crr-report/crr-resources/crr-resources.component';
@@ -1047,7 +1047,7 @@ import { AnalyticsResultsComponent } from './assessment/results/analytics-result
         CrrPerformanceSummaryComponent,
         CrrNistCsfSummaryComponent,
         CrrMil1PerformanceComponent,
-        CrrResultsSummaryComponent,
+        CrrMilByDomainComponent,
         CrrPercentageOfPracticesComponent,
         CrrDomainDetailComponent,
         CrrResourcesComponent,
