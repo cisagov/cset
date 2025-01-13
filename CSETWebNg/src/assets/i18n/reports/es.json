@@ -303,8 +303,7 @@
                     "security practice checklist": "[ES]Security Practice Checklist",
                     "p": {
                          "1": "[ES]This chart shows the answer distribution for each of the Security Practice categories.",
-                         "2": "[ES]This table indicates the answer distribution percentages for each category as indicated in the chart above.",
-                         "3": "[ES]This table lists all security practices and how they have been answered."
+                         "2": "[ES]This table indicates the answer distribution percentages for each category as indicated in the chart above."
                     },
                     "current assessment": "[ES]Evaluacion corriente",
                     "notes": "Notas",
@@ -327,6 +326,13 @@
                          "4": "No hay deficiencias para mostrar."
                     }
                }
+          },
+          "edm": {
+               "summary results": "Resultados resumidos",
+               "para 1": "Este gráfico muestra el porcentaje de prácticas EDM completadas para cada Nivel de Indicador de Madurez (MIL) y proporciona una visión general del rendimiento de la organización. El MIL actual de la organización se encuentra listado debajo del gráfico. Es importante destacar que la escala MIL es acumulativa; para alcanzar un nivel deseado, una organización debe cumplir con todos los requisitos de los niveles anteriores y del nivel deseado en sí.",
+               "para 2": "Esta información ayuda a las organizaciones a identificar áreas de mejora para alcanzar su MIL objetivo. Para obtener más información sobre los MIL, consulte el Tutorial de EDM en la sección de Preparación.",
+               "maturity indicator level": "Nivel de Indicador de Madurez (MIL)",
+               "your org": "Su organización"
           },
           "rra": {
                "report title": "Informe RRA",
@@ -393,6 +399,16 @@
                     "no marked for review": "No hay {{questionsAliasLower}} marcadas para revisión",
                     "no comments": "No hay {{questionsAliasLower}} con comentarios",
                     "other remarks": "Otras notas"
+               }
+          },
+          "cis": {
+               "section scoring": {
+                    "title": "Puntuación de Secciónes CIS",
+                    "para 1": "Esta página muestra una serie de gráficos que ilustran la puntuación obtenida por cada sección. Estos datos ayudan a las organizaciones a identificar sus fortalezas y a señalar áreas de mejora. Si se seleccionó una encuesta de referencia en la página de Información Crítica del Servicio, las puntuaciones de referencia correspondientes también se mostrarán en los gráficos. Esto permite a las organizaciones comparar su progreso hacia el cumplimiento de los estándares evaluados en la evaluación."
+               },
+               "deficiencies": {
+                    "title": "Deficiencias CIS",
+                    "no baseline": "No se ha seleccionado una evaluación de referencia para comparar."
                }
           }
      },

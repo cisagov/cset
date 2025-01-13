@@ -20,10 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="d-flex flex-column justify-content-start flex-11a">
+<div class="d-flex flex-column justify-content-start flex-11a" *transloco="let t">
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
     <div class="mb-3">
-      <h3>CIS Section Scoring</h3>
+      <h3>{{t('reports.core.cis.section scoring.title')}}</h3>
+
+      <p>
+        {{t('reports.core.cis.section scoring.para 1')}}
+      </p>
+
       <div *ngIf="loading">
         <div class="spinner-container" style="margin: 2em auto">
           <div style="max-width: 50px; max-height: 50px;"></div>
