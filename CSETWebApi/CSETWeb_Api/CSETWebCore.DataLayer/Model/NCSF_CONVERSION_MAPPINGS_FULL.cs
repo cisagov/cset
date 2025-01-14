@@ -8,15 +8,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model;
 
-public partial class ROLES
+public partial class NCSF_CONVERSION_MAPPINGS_FULL
 {
     [Key]
-    public int RoleId { get; set; }
-
-    [Required]
     [StringLength(50)]
-    public string RoleName { get; set; }
+    public string Full_Level_Titles { get; set; }
 
-    [InverseProperty("Role")]
-    public virtual ICollection<USER_ROLES> USER_ROLES { get; set; } = new List<USER_ROLES>();
+    public int Requirement_Id { get; set; }
+
+    [InverseProperty("Full_Level_TitlesNavigation")]
+    public virtual ICollection<NCSF_FULL_TO_MID> NCSF_FULL_TO_MID { get; set; } = new List<NCSF_FULL_TO_MID>();
 }

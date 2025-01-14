@@ -8,15 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model;
 
-public partial class ROLES
+public partial class MATURITY_GLOBAL_SEQUENCES
 {
+    public int Maturity_Model_Id { get; set; }
+
     [Key]
-    public int RoleId { get; set; }
+    public long global_sequence { get; set; }
 
-    [Required]
-    [StringLength(50)]
-    public string RoleName { get; set; }
+    public int g1 { get; set; }
 
-    [InverseProperty("Role")]
-    public virtual ICollection<USER_ROLES> USER_ROLES { get; set; } = new List<USER_ROLES>();
+    public int? g2 { get; set; }
+
+    public int? g3 { get; set; }
+
+    public int? g4 { get; set; }
 }

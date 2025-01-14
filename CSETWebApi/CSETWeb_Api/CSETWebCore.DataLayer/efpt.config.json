@@ -547,6 +547,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[MATURITY_GLOBAL_SEQUENCES]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[MATURITY_GROUPING_TYPES]",
          "ObjectType": 0
       },
@@ -616,6 +620,30 @@
       },
       {
          "Name": "[dbo].[NCSF_CATEGORY]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NCSF_CONVERSION_MAPPINGS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NCSF_CONVERSION_MAPPINGS_ENTRY]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NCSF_CONVERSION_MAPPINGS_FULL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NCSF_CONVERSION_MAPPINGS_MID]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NCSF_ENTRY_TO_MID]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[NCSF_FULL_TO_MID]",
          "ObjectType": 0
       },
       {
@@ -795,6 +823,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ROLES]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[SAL_DETERMINATION_TYPES]",
          "ObjectType": 0
       },
@@ -904,6 +936,10 @@
       },
       {
          "Name": "[dbo].[USER_EMAIL_HISTORY]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[USER_ROLES]",
          "ObjectType": 0
       },
       {
@@ -1456,6 +1492,7 @@
    "UseAsyncStoredProcedureCalls": true,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
+   "UseDatabaseNamesForRoutines": true,
    "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
    "UseDecimalDataAnnotationForSprocResult": true,
@@ -1463,7 +1500,7 @@
    "UseHandleBars": false,
    "UseHierarchyId": false,
    "UseInflector": false,
-   "UseLegacyPluralizer": false,
+   "UseLegacyPluralizer": true,
    "UseManyToManyEntity": true,
    "UseNoDefaultConstructor": false,
    "UseNoNavigations": false,
@@ -1474,5 +1511,6 @@
    "UseSchemaFolders": false,
    "UseSchemaNamespaces": false,
    "UseSpatial": false,
-   "UseT4": false
+   "UseT4": false,
+   "UseT4Split": false
 }
