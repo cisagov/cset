@@ -75,15 +75,29 @@ export class DashboardComponent implements OnInit {
     this.overallScoreDisplay = this.getScore(x.overallBars, 'Overall').toFixed(0) + '%';
 
     this.standardBasedScore = this.getScore(x.overallBars, 'Standards');
-    this.standardBasedScoreDisplay = this.standardBasedScore > 0 ? 
+    this.standardBasedScoreDisplay = this.standardBasedScore > 0 ?
       this.standardBasedScore.toFixed(0) + '%' : this.tSvc.translate('reports.core.dashboard.no standards answers');
 
     this.componentBasedScore = this.getScore(x.overallBars, 'Components');
-    this.componentBasedScoreDisplay = this.componentBasedScore > 0 ? 
+    this.componentBasedScoreDisplay = this.componentBasedScore > 0 ?
       this.componentBasedScore.toFixed(0) + '%' : this.tSvc.translate('reports.core.dashboard.no components answers');
 
 
     // Assessment Compliance
+    if (!(this.assessSvc.assessment?.useStandard && this.assessSvc.assessment?.useDiagram)) {
+      // if we don't have a standard AND a diagram, just show the overall score
+      const b = x.overallBars;
+      const iKeeper = b.englishLabels.findIndex(x => x.toLowerCase() == 'overall');
+      if (iKeeper >= 0) {
+        const label = b.labels[iKeeper];
+        b.labels = [];
+        b.labels.push(label);
+        const dataItem = b.data[iKeeper];
+        b.data = [];
+        b.data.push(dataItem);
+      }
+    }
+
     if (this.assessComplChart) {
       this.assessComplChart.destroy();
     }
