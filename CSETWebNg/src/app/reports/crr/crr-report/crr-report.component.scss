@@ -49,29 +49,6 @@ a.navbar-brand {
   color: #0f3c7a;
 }
 
-h1 {
-  font-size: 48pt;
-  color: #005288;
-}
-
-h2 {
-  font-size: 34pt;
-  color: #005288;
-}
-
-h3 {
-  font-size: 24pt;
-}
-
-h4 {
-  font-size: 16pt;
-  color: #005288;
-}
-
-// p {
-//   font-family: Arial;
-//   font-size: 14pt;
-// }
 
 .small {
   font-size: 0.875rem;
@@ -510,7 +487,7 @@ div.widget {
 
 
 
-.crrResultsTable {
+.crr-results-table {
   width: var(--table-width);
 
   font-size: 0;
@@ -523,7 +500,7 @@ div.widget {
   font-family: Arial;
 }
 
-.crrResultsTableRow {
+.crr-results-table-row {
   width: calc(var(--table-width));
   height: var(--table-row-height);
   box-sizing: border-box;
@@ -532,7 +509,7 @@ div.widget {
   font-size: 0; /*Done to prevent funky margins*/
 }
 
-.crrResultsDomainCell {
+.crr-results-domain-cell {
   height: var(--table-row-height);
   font-size: 12px;
   vertical-align: top;
@@ -541,11 +518,11 @@ div.widget {
   display: inline-block;
 }
 
-.crrResultsTableDomainName {
+.crr-results-table-domain-name {
   width: var(--table-name-width);
 }
 
-.crrResultsProgressBar {
+.crr-results-progress-bar {
   height: var(--bar-height);
   background: rgb(199,121,44);
   display: inline-block;
@@ -610,7 +587,7 @@ div.widget {
   border-right: solid 1px black;
 }
 
-.crrResultsLabelCell {
+.crr-results-label-cell {
   width: var(--table-name-width);
   height: var(--table-row-height);
   font-size: 14px;
@@ -622,7 +599,7 @@ div.widget {
   text-align: right;
 }
 
-.crrTableLabel {
+.crr-table-label {
   text-align: right;
   vertical-align: top;
 }

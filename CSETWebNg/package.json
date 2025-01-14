@@ -38,7 +38,7 @@
         "@fortawesome/fontawesome-free": "^6.6.0",
         "@fortawesome/fontawesome-svg-core": "^6.6.0",
         "@jsverse/transloco": "^7.5.1",
-        "@kolkov/angular-editor": "^3.0.0-beta.0",
+        "@kolkov/angular-editor": "^3.0.0-beta.2",
         "@ng-bootstrap/ng-bootstrap": "^17.0.1",
         "@ngstack/code-editor": "^9.0.0",
         "@swimlane/ngx-charts": "^21.1.2",
@@ -66,8 +66,8 @@
         "ngx-ellipsis": "^5.0.1",
         "pdfmake": "^0.2.18",
         "rxjs": "^7.8.1",
-        "sanitize-html": "^2.13.0",
-        "sass": "^1.83.0",
+        "sass": "^1.83.4",
+        "sanitize-html": "^2.14.0",
         "screenfull": "^5.2.0",
         "style-loader": "^4.0.0",
         "swiper": "^8.4.7",
@@ -76,8 +76,8 @@
     },
     "devDependencies": {
         "@angular-builders/custom-webpack": "^18.0.0",
-        "@electron/packager": "^18.3.5",
-        "electron": "^33.0.2",
+        "@electron/packager": "^18.3.6",
+        "electron": "^33.3.1",
         "shx": "^0.3.4"
     }
 }

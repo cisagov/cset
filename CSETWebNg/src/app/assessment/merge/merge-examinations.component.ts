@@ -39,8 +39,9 @@ import { ActionItemText } from '../questions/observations/observations.model';
 @Component({
   selector: 'merge-examinations',
   templateUrl: './merge-examinations.component.html',
-  styles: ['tr { border-bottom: 1px solid black; text-align: center; }']
+  styleUrls: ['./merge-examinations.component.scss']
 })
+
 export class MergeExaminationsComponent implements OnInit {
   // Show a spinner on the frontend if the "behind the scenes" code is still running.
   pageLoading: boolean = false;

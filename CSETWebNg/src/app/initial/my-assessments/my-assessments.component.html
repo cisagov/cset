@@ -268,7 +268,7 @@
                                 (click)="removeAssessment(assessment, i)"
                                 matTooltip="{{ t('tooltip.remove assessment') }}">
                                 <span class="cset-icons-trash-x fs-base-2 me-2"></span>
-                                <span class="icon-link-button-text-dark">{{t('buttons.remove')}}</span>
+                                <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.remove')}}</span>
                             </button>
                         </td>
                         <td *ngIf="showColumn('export')">
@@ -277,7 +277,7 @@
                                 (click)="clickDownloadLink(assessment.assessmentId)"
                                 matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
                                 <span class="cset-icons-export-up fs-base-2 me-2"></span>
-                                <span class="icon-link-button-text-dark">{{t('buttons.export')}}</span>
+                                <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.export')}}</span>
                             </button>
                         </td>
                         <td *ngIf="showColumn('export json')">
