@@ -31,30 +31,26 @@
         {{t('reports.core.cis.deficiencies.no baseline')}}
     </div>
 
-    <div *ngIf="!loading && hasBaseline" class="mb-5 mt-5">
+    <div *ngIf="!loading && hasBaseline" class="mb-5 mt-3">
         <div *ngIf="hasBaseline">
             <div class="d-flex flex-row">
                 <div class="col-4">
                     <div class="alert alert-secondary h-100 mx-1" style="text-align:left;">
-                        <h4 class="alert-heading">“0” = BASELINE</h4>
-                        <p>The baseline is denoted at the median which is represented by the zero “0” value on the
-                            chart.
+                        <h4 class="alert-heading">{{t('reports.core.cis.deficiencies.gray title')}}</h4>
+                        <p>{{t('reports.core.cis.deficiencies.gray body')}}
                         </p>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="alert alert-danger h-100 mx-1">
-                        <h4 class="alert-heading">RED BAR</h4>
-                        <p>The Deficiency report shows the current CIS assessment deficiencies in red using the baseline
-                            assessment selected during the CIS Configuration Step.</p>
+                        <h4 class="alert-heading">{{t('reports.core.cis.deficiencies.red title')}}</h4>
+                        <p>{{t('reports.core.cis.deficiencies.red body')}}</p>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="alert alert-success h-100 mx-1">
-                        <h4 class="alert-heading">GREEN BAR</h4>
-                        <p>The Deficiency report shows the current CIS assessment improvements in green using the
-                            baseline
-                            assessment selected during the CIS Configuration Step.</p>
+                        <h4 class="alert-heading">{{t('reports.core.cis.deficiencies.green title')}}</h4>
+                        <p>{{t('reports.core.cis.deficiencies.green body')}}</p>
                     </div>
                 </div>
             </div>

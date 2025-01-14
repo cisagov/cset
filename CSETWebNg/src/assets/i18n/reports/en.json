@@ -746,7 +746,15 @@
                },
                "deficiencies": {
                     "title": "CIS Deficiencies",
-                    "no baseline": "No baseline assessment has been selected to compare against."
+                    "report title": "DEFICIENCY REPORT CISA CIS",
+                    "para 1": "The CIS Deficiencies chart compares the results of the current assessment with the selected baseline for each category.",
+                    "no baseline": "No baseline assessment has been selected to compare against.",
+                    "gray title": "“0” = BASELINE",
+                    "gray body": "The baseline is denoted at the median which is represented by the zero “0” value on the chart. No bar is displayed; the results for that category remain unchanged.",
+                    "red title": "RED BAR",
+                    "red body": "The Deficiency report shows the current CIS assessment deficiencies in red using the baseline assessment selected during the CIS Configuration Step.",
+                    "green title": "GREEN BAR",
+                    "green body": "The Deficiency report shows the current CIS assessment improvements in green using the baseline assessment selected during the CIS Configuration Step."
                }
           },
           "crr": {
