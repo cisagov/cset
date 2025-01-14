@@ -20,23 +20,28 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div style="max-width:700px; padding-right:20px;">
-  <h1 class="pageHeader">Summary Results</h1>
-  <div class="sr-header-section">
+<div style="max-width:700px; padding-right:20px;" *transloco="let t">
+  <h3>{{t('reports.core.edm.summary results')}}</h3>
 
-    <div class="sr-subtitle">
-      Percentage of Complete Practices by MIL
-    </div>
+  <p>
+    {{t('reports.core.edm.para 1')}}
+  </p>
+
+  <p>
+    {{t('reports.core.edm.para 2')}}
+  </p>
+
+  <div class="sr-header-section">
 
     <div class="sr-legend">
       <div class='sr-legend-column'>
         <div class="sr-legend-cell">
           Legend
         </div>
-        <div class="sr-legend-cell sr-percent-graph-bar">
+        <div class="sr-legend-cell sr-percent-graph-bar" style="width: 2.5rem;">
           &nbsp;
         </div>
-        <div class="sr-legend-cell mat-indic-lvl-body-graph-bar">
+        <div class="sr-legend-cell mat-indic-lvl-body-graph-bar" style="width: 2.5rem;">
           &nbsp;
         </div>
       </div>
@@ -53,7 +58,8 @@
       </div>
     </div>
   </div>
-  <div class="sr-body-container" style="width:714px;">
+
+  <div class="sr-body-container mb-5" style="width:714px;">
     <div class="sr-body-axis-container">
       <div class="sr-body-axis">
         <table class="w-100">
@@ -229,10 +235,11 @@
       </div>
     </div>
   </div>
+
   <div class="mat-indic-lvl">
-    <div class="mat-indic-lvl-title"> Maturity Indicator Level *</div>
+    <div class="mat-indic-lvl-title">{{t('reports.core.edm.maturity indicator level')}}</div>
     <div class="mat-indic-lvl-body" style="width:700px;">
-      <div class="mat-indic-lvl-body-label">Your Organization</div>
+      <div class="mat-indic-lvl-body-label">{{t('reports.core.edm.your org')}}</div>
       <div class="mat-indic-lvl-body-data">
         <div class="mat-indic-lvl-body-graph-container">
           <div class="mat-indic-lvl-body-graph-bar" [ngStyle]="getBlueBarWidth(blueBarValue)">.</div>
@@ -250,17 +257,5 @@
         </div>
       </div>
     </div>
-    <div class="mat-indic-lvl-detail-text">
-      Maturity Indicator Levels provide a combined measurement of the completeness of EDM practices, as well as the
-      enterprise management
-      activities necessary to ensure that this capability is sustained over time, despite disruptions or organizational
-      changes. The MIL scale is
-      cumulative; each MIL level must be complete before achieving a higher MIL is possible. Viewed collectively, these
-      depictions provide an
-      understanding of overall performance. While achieving a certain Maturity Indicator Level is one possible process
-      improvement objective, it may
-      not be the most importantobjective for every organization or in every context.
-    </div>
   </div>
-
 </div>
