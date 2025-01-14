@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.XPath;
+using CSETWebCore.Business.Authorization;
 
 
 namespace CSETWebCore.Api.Controllers
