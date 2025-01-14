@@ -465,7 +465,7 @@ import { CoverSheetAComponent } from './reports/cis/shared/cover-sheet-a/cover-s
 import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb-a/disclaimer-blurb-a.component';
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
 import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
-import { RankedDeficienctyChartComponent } from './assessment/results/cis/ranked-deficiencty-chart/ranked-deficiencty-chart.component';
+import { RankedDeficiencyChartComponent } from './assessment/results/cis/ranked-deficiency-chart/ranked-deficiency-chart.component';
 import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
 import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
 import { CisScoringChartComponent } from './reports/cis/cis-section-scoring/cis-scoring-chart/cis-scoring-chart.component';
@@ -1021,7 +1021,7 @@ import { AnalyticsResultsComponent } from './assessment/results/analytics-result
         DisclaimerBlurbAComponent,
         ConfigCisComponent,
         CisRankedDeficiencyComponent,
-        RankedDeficienctyChartComponent,
+        RankedDeficiencyChartComponent,
         CisCommentsmarkedComponent,
         RankedDeficiencyComponent,
         CisSectionScoringComponent,

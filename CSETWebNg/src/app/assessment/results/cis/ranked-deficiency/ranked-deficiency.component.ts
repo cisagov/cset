@@ -38,5 +38,4 @@ export class RankedDeficiencyComponent implements OnInit {
   ngOnInit(): void {
     this.hasBaseline = this.cisSvc.hasBaseline();
   }
-
 }
