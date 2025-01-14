@@ -109,8 +109,13 @@ namespace CSETWebCore.Api.Controllers
 
                     command.ExecuteNonQuery();
                 }
-
-
+                using (SqlCommand command = new SqlCommand("FillAll", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    // Add input parameter
+                    command.Parameters.Add(new SqlParameter("@assessment_id", assessmentId));
+                    command.ExecuteNonQuery();
+                }
 
                 using (SqlCommand command = new SqlCommand("analytics_Compute_MaturityAll", connection))
                 {
