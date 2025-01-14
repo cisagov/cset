@@ -18,7 +18,7 @@ export class TranslocoHttpLoader implements TranslocoLoader {
   providers: [
     provideTransloco({
       config: {
-        availableLangs: ['en', 'es', 'uk'],
+        availableLangs: ['en', 'es', 'uk', 'jp'],
         fallbackLang: 'en',
         defaultLang: 'en',
         // Remove this option if your application doesn't support changing language in runtime.
