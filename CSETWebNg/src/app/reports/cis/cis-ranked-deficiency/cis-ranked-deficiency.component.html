@@ -21,9 +21,9 @@
   SOFTWARE.
 -------------------------->
 
-<div class="report-body mb-5">
+<div class="report-body mb-5" *transloco="let t">
 
-    <app-cover-sheet-a [title]="'DEFICIENCY REPORT CISA CIS'" [assessmentName]="assessmentName"
+    <app-cover-sheet-a [title]="t('reports.core.cis.deficiencies.report title')" [assessmentName]="assessmentName"
         [assessmentDate]="assessmentDate" [assessorName]="assessorName"
         [facilityName]="facilityName"></app-cover-sheet-a>
 
@@ -36,7 +36,11 @@
 
     <div>
         <div>
-            <h1>CIS Deficiencies</h1>
+            <h1>{{t('reports.core.cis.deficiencies.title')}}</h1>
+
+            <p>
+                {{t('reports.core.cis.deficiencies.para 1')}}
+            </p>
 
             <app-ranked-deficiency-chart></app-ranked-deficiency-chart>
         </div>

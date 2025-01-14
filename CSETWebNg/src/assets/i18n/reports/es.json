@@ -407,8 +407,16 @@
                },
                "deficiencies": {
                     "title": "Deficiencias CIS",
-                    "no baseline": "No se ha seleccionado una evaluación de referencia para comparar."
-               }
+                    "report title": "INFORME DE DEFICIENCIAS CISA CIS",
+                    "para 1": "El gráfico de Deficiencias CIS compara los resultados de la evaluación actual con la línea base seleccionada para cada categoría.",
+                    "no baseline": "No se ha seleccionado una evaluación de referencia para comparar.",
+                    "gray title": "“0” = LÍNEA BASE",
+                    "gray body": "La línea base se denota en la mediana, que está representada por el valor cero “0” en el gráfico. No se muestra ninguna barra; los resultados para esa categoría permanecen sin cambios.",
+                    "red title": "BARRA ROJA",
+                    "red body": "El informe de Deficiencias muestra las deficiencias de la evaluación CIS actual en rojo usando la evaluación de referencia seleccionada durante el Paso de Configuración CIS.",
+                    "green title": "BARRA VERDE",
+                    "green body": "El informe de Deficiencias muestra las mejoras de la evaluación CIS actual en verde usando la evaluación de referencia seleccionada durante el Paso de Configuración CIS."
+                }
           }
      },
      "acet": {
