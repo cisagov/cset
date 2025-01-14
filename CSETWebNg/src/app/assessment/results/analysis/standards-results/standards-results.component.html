@@ -22,8 +22,10 @@
 -------------------------->
 <div class="white-panel d-flex flex-column justify-content-start flex-11a" *transloco="let t">
   <h3>{{t('reports.core.results by category.title')}}</h3>
-  <p>{{t('reports.core.results by category.text')}}</p>
-  <div id="chart" class="mb-3">
+
+  <p>{{t('reports.core.results by category.text 1')}}</p>
+
+  <div id="chart" class="mb-5">
     <canvas id="canvasStandardResult">{{chart}}</canvas>
   </div>
   <div *ngIf="!initialized">
@@ -31,6 +33,9 @@
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
+
+  <p>{{t('reports.core.results by category.text 2')}}</p>
+
   <div class="data" *ngFor="let ds of dataSets" [hidden]="!initialized">
     <h4 style="display: flex; flex-direction: row;">
       <div style="width: .8em; height: .8em; margin: 4px 10px 4px 0px;" [style.backgroundColor]="ds.backgroundColor">

@@ -188,43 +188,26 @@
                             <ng-container *ngIf="this.showSubcats.get(c.title)">
                                 <tr>
                                     <td colspan="5" class="background-2 ps-5">{{c.title}} - Component
-                                        <label class="btn form-check-label" style="float: right">{{
-                                            this.expandedOptions.get(c.title) ? '-' : '+' }}
-                                            <input class="hide" name="nameExample" type=checkbox
-                                                (click)="toggleExpansion(c.title)">
+                                        <label class="btn form-check-label" style="float: right">{{ this.expandedOptions.get(c.title) ? '-' : '+' }}
+                                            <input class="hide" name="nameExample" type="checkbox" (click)="toggleExpansion(c.title)">
                                         </label>
                                     </td>
                                 </tr>
                                 <ng-container *ngFor="let q of c.questions">
-                                    <tr
-                                        *ngIf="(requiredQuestion(q) || this.ncuaSvc.isParentQuestion(q.title)) && shouldExpand(c.title)">
-                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)"
-                                            class="background-3 font-weight-bold text-nowrap">{{q.title}}</td>
-                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
-                                            class="font-weight-bold text-nowrap">{{q.title}}</td>
-
-                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3"
-                                            [innerHTML]="q.questionText"></td>
-                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
-                                            class="pe-3" [innerHTML]="q.questionText"></td>
-
-                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3">
-                                        </td>
-                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
-                                            class="pe-3">{{ questionsSvc.answerButtonLabel('ISE', q.answerText) }}</td>
-
-                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3">
-                                            {{acetSvc.getAbbrev(q.maturityLevel)}}
-                                        </td>
+                                    <tr *ngIf="(requiredQuestion(q) || this.ncuaSvc.isParentQuestion(q.title)) && shouldExpand(c.title)">
+                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 font-weight-bold text-nowrap">{{q.title}}</td>
+                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="font-weight-bold text-nowrap">{{q.title}}</td>
+                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3" [innerHTML]="q.questionText"></td>
+                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pe-3" [innerHTML]="q.questionText"></td>
+                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3"></td>
+                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pe-3">{{ questionsSvc.answerButtonLabel('ISE', q.answerText) }}</td>
+                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                                         <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3">
-                                            <label class="btn form-check-label" style="float: right">{{
-                                                this.expandedOptions.get(q.title) ? '-' : '+' }}
-                                                <input class="hide" name="nameExample" type=checkbox
-                                                    (click)="toggleExpansion(q.title)">
+                                            <label class="btn form-check-label" style="float: right">{{this.expandedOptions.get(q.title) ? '-' : '+' }}
+                                                <input class="hide" name="nameExample" type="checkbox" (click)="toggleExpansion(q.title)">
                                             </label>
                                         </td>
-                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
-                                            class="pe-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
+                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pe-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                                     </tr>
                                 </ng-container>
                             </ng-container>

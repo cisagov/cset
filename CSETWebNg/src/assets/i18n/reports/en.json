@@ -341,14 +341,17 @@
      "question": "Question",
      "overall score text": "There may be a discrepancy in the displayed percentages because some questions apply to more than one component of the system. As a result, these questions are counted multiple times in the percentage calculation total. Essentially, the overlap in question relevance causes the overall component based score to appear lower than the component summary score.",
      "assessment compliance text": "This chart shows the overall percentage scores. <br> Please note that unanswered questions are counted as a NO answer in these scores.",
-     "ranked categories text": "This chart shows the top areas of concern ranked. These are calculated from a weighted risk score based on the difficulty of attack. The attack weights are most heavily weighted for easy attacks to less for more difficult to attack.",
+     "ranked categories text 1a": "This chart ranks the top areas of concern based on a weighted risk score. The percentages are calculated by assigning higher weights to requirements that, if not implemented, would make the system more vulnerable to easier attacks. Lower weights are assigned to requirements associated with more difficult attacks.",
+     "ranked categories text 1b": "Categories are ranked in order of highest priority to lowest. Organizations can use this information to identify where to allocate additional resources and implement effective mitigating controls.",
      "ranked categories text 2": "This chart shows subject areas needing the most attention. Each bar represents the labeled subject area's weighted contribution so that the combined total always equals 100%. The weighted contribution includes the importance of both the question and the subject area, as well as the percentage of missed questions in that subject area.",
+     "ranked categories text 3": "This table presents the priority ranking for each category, the number of unmet requirements out of the total, and the weighted risk percentage.",
      "passed": "Passed",
      "failed": "Failed",
      "total": "Total",
      "percent": "Percent",
      "number": "Number",
-     "standards summary text": "This chart shows the overall answer percentages for each individual answer type.",
+     "standards summary text 1": "This chart displays the percentage distribution of each response type for standard-based questions.",
+     "standards summary text 2": "This table displays the number of each response type, the total number of questions, and the percentage distribution for each response type.",
      "reference number": "Reference #",
      "high level assessment label": "High-Level Assessment Description",
      "high level assessment desc": "Enter a description of the assessment process and work performed for senior management. This information will be included in the reports. This is not intended to be analysis of the assessment results as requested in the executive summary.",
@@ -446,7 +449,8 @@
           },
           "results by category": {
                "title": "Results by Category",
-               "text": "This chart shows the individual scores for each of the categories from a positive perspective. High scores on this chart show areas of strength."
+               "text 1": "The following chart illustrates the percentage of completed practices for each individual category. This information helps organizations identify their strengths and highlights areas for improvement.",
+               "text 2": "This table shows the number of requirements met out of the total, along with the compliance percentage for each category."
           },
           "security plan": {
                "report title": "Site Cybersecurity Plan",
@@ -633,8 +637,7 @@
                     "p": {
                          "1": "This chart shows the answer distribution for each of the Security Practice categories.",
                          "2": "This table indicates the answer distribution percentages for each category as indicated in the chart above.",
-                         "3": "This table lists all security practices and how they have been answered.",
-                         "a": "The CPG Performance Summary chart provides a high-level overview of how well an organization meets the goals within each security practice category. It presents the distribution percentage of each response type per category. Additionally, the data is displayed in a table below the chart for further examination.",
+                         "a": "The CPG Performance Summary chart provides a high-level overview of how well an organization meets the goals within each security practice category. It presents the distribution percentage of each response type per category.",
                          "b": "The Security Practice Checklist contains a comprehensive overview of the assessment results, including the TTPs or risks addressed and recommended actions. Additionally, the checklist incorporates criteria such as “Impact,” “Cost,” and “Complexity” for each goal. These criteria can help organizations evaluate the importance and effects of each practice and prioritize them for implementation."
                     },
                     "ssg": {
@@ -665,6 +668,13 @@
                     }
                }
           },
+          "edm": {
+               "summary results": "Summary Results",
+               "para 1": "This chart displays the percentage of completed EDM practices for each Maturity Indicator Level (MIL) and provides an overview of the organization’s performance. The organization’s current MIL is listed below the chart. It’s important to note that the MIL scale is cumulative; to achieve a desired level, an organization must meet all the requirements for the previous levels and the desired level itself.",
+               "para 2": "This information helps organizations identify any areas for improvement to reach their targeted MIL. For more information about MILs, view the EDM Tutorial within the Prepare section.",
+               "maturity indicator level": "Maturity Indicator Level",
+               "your org": "Your Organization"
+          },
           "rra": {
                "report title": "RRA Report",
                "tab title": "Ransomware Readiness Assessment",
@@ -673,7 +683,7 @@
                "cisa ransomware readiness assessment": "CISA Ransomware Readiness Assessment",
                "assessment full title": "Ransomware Readiness",
                "goal performance summary": "The Goal Performance chart provides a high-level overview of how well an organization meets each ransomware readiness goal. It presents the percentage of practice compliance for each goal in a bar chart. Additionally, the data is displayed in a table below the chart for further examination.",
-               "assessment tiers summary": "The Assessment Tiers charts visually represents the implementation status of ransomware readiness practices within an organization across the basic, intermediate, and advanced tiers. The charts display the number of “yes,” “no,” and “unanswered” responses per tier, as well as the distribution percentage of each response type per tier.",
+               "assessment tiers summary": "The Assessment Tiers charts visually represent the implementation status of ransomware readiness practices within an organization across the basic, intermediate, and advanced tiers. The practices are intended to be implemented from one tier to the next and are designed to provide a clear path for improvement. The charts below display the number of \"yes,\" \"no,\" and \"unanswered\" responses by tier, as well as the distribution percentage of each response type by tier.",
                "report": {
                     "assessment tiers": "RRA Assessment Tiers",
                     "answered tier": "Practices Answered Per Tier",
@@ -726,6 +736,29 @@
                     "with comments": "Questions with Comments",
                     "no comments": "There are no {{questionsAliasLower}} with comments",
                     "other remarks": "Other Remarks"
+               }
+          },
+          "cis": {
+               "section scoring": {
+                    "title": "CIS Section Scoring",
+                    "para 1": "This page displays a series of charts illustrating the score earned by each section. This data helps organizations identify their strengths and pinpoint areas for improvement. If a baseline survey was selected on the Critical Service Information page, the corresponding baseline scores will also display in the charts. This allows organizations to benchmark their progress toward meeting the compliance standards evaluated in the assessment."
+               },
+               "deficiencies": {
+                    "title": "CIS Deficiencies",
+                    "no baseline": "No baseline assessment has been selected to compare against."
+               }
+          },
+          "crr": {
+               "summary results": {
+                    "title": "Summary of CRR Results",
+                    "mil by domain": "Maturity Indicator Level by Domain",
+                    "para 1": "This chart displays the Maturity Indicator Level achieved by each individual domain. It's important to note that the MIL scale is cumulative; to achieve a desired level, an organization must meet all the requirements for the previous levels and the desired level itself.",
+                    "para 2": "This information helps organizations identify any areas for improvement to reach their targeted MIL. For more information about MILs, view the CRR Tutorial within the Prepare section.",
+                    "domain name": "Domain Name",
+                    "maturity indicator level": "Maturity Indicator Level",
+                    "average mil": "Average MIL",
+                    "percent by domain": "Percentage of Practices Completed by Domain",
+                    "para 3": "The following chart illustrates the percentage of completed practices for each individual domain. This provides a snapshot of each domain's compliance with the cybersecurity requirements measured within the assessment, regardless of the MIL achieved."
                }
           }
      },

@@ -23,13 +23,13 @@
 <ng-container *transloco="let t">
     <div *ngFor="let d of model?.domains">
         <div class="cpg-domain-bar page-break" [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
-            [style.background-color]="backgroundColor(d.groupingId)">
+            [style.background-color]="backgroundColor(d.groupingId)" [style.borderColor]="backgroundColor(d.groupingId)">
             {{d.title}}
         </div>
 
         <table *ngFor="let q of d.questions" class="cpg-table">
             <tr>
-                <th style="width: 45%" [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
+                <th style="width: 45%;" [style.borderLeftColor]="backgroundColor(d.groupingId)" [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
                     [style.background-color]="backgroundColor(d.groupingId)">
                     <div class="d-flex flex-row justify-content-between">
                         <div class="d-flex flex-row">
@@ -40,10 +40,12 @@
                                 <span [innerHTML]="q.securityPractice"></span>
                             </div>
                         </div>
-                        <div class="text-end ms-4 font-weight-normal">
-                            <span *ngFor="let c of q.csfMappings; let l = last" class="text-nowrap">
-                                {{c}}{{ l ? '' : ', '}}
-                            </span>
+                        <div class="ms-4 font-weight-normal d-flex flex-wrap justify-content-end align-content-start">
+                            <ng-content *ngFor="let c of q.csfMappings; let l = last">
+                                <span class="text-nowrap">
+                                    {{c}}{{ l ? '' : ','}}
+                                </span>&nbsp;
+                            </ng-content>
                         </div>
                     </div>
                 </th>
@@ -51,7 +53,7 @@
                     [style.background-color]="backgroundColor(d.groupingId)">
                     {{t('reports.core.cpg.report.current assessment') | uppercase}}
                 </th>
-                <th style="width: 30%" [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
+                <th style="width: 30%" [style.borderRightColor]="backgroundColor(d.groupingId)" [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
                     [style.background-color]="backgroundColor(d.groupingId)">
                     {{t('reports.core.cpg.report.notes') | uppercase}}
                 </th>
