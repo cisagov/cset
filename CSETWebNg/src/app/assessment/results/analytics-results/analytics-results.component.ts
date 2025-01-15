@@ -7,6 +7,7 @@ import { AggregationService } from '../../../services/aggregation.service';
 import { AssessmentDetail } from '../../../models/assessment-info.model';
 import { DemographicService } from '../../../services/demographic.service';
 import { DemographicIodService } from '../../../services/demographic-iod.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 Chart.register(...registerables);
 
@@ -59,7 +60,8 @@ export class AnalyticsResultsComponent implements OnInit {
     public assessSvc: AssessmentService,
     public aggregSvc: AggregationService,
     public demoSvc: DemographicService,
-    public demoIodSvc: DemographicIodService
+    public demoIodSvc: DemographicIodService,
+    public tSvc: TranslocoService
   ) { }
 
   ngOnInit(): void {
@@ -75,7 +77,7 @@ export class AnalyticsResultsComponent implements OnInit {
         this.demoIodSvc.getDemographics().subscribe((resp: DemographicsIod) => {
           resp.listSectors.forEach(sector => {
             if (sector.optionValue == this.sectorId) {
-              this.sectorTitle = sector.optionText
+              this.sectorTitle = this.tSvc.translate('analytics.' + sector.optionText)
             }
           });
         })
