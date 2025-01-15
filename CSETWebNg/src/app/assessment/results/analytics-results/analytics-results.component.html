@@ -1,8 +1,7 @@
-<div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a">
-  <h3 class="mb-3">Assessment Analytics</h3>
-  <p>This chart displays the implementation scoring of the current assessment in relation to other assessments of the
-    same type. Each category is scored, with the minimum, maximum, and median scores charted to illustrate how the
-    current assessment compares to other assessments within the same sector or across all sectors</p>
+<div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a" *transloco="let t" >
+  <h3 class="mb-3">{{t('analytics.title')}}</h3>
+  <p>{{t('analytics.description 1')}}</p>
+  <p>{{t('analytics.description 2')}}</p>
   <div class="container ps-0">
     <div class="container-fluid ps-0">
       <div class="row">
@@ -13,12 +12,12 @@
             <div class="p-4">
               <mat-button-toggle-group [(ngModel)]="dataType" (change)="toggleData($event)">
                 <mat-button-toggle [value]="'mySector'" [disabled]="!showSector"
-                  matTooltip="Select a sector from demographics" [matTooltipDisabled]="showSector">
-                  My Sector
-                  <div *ngIf="dataType === 'mySector'"><h6 style="font-size: 13px;">Sample Size: {{sampleSize}}</h6></div>
+                  matTooltip="Select a sector from Demographics in Assessment Information" [matTooltipDisabled]="showSector">
+                  {{t('analytics.my sector')}}
+                  <div *ngIf="dataType === 'mySector'"><h6 style="font-size: 13px;">{{t('analytics.sample size')}}: {{sampleSize}}</h6></div>
                 </mat-button-toggle>
-                <mat-button-toggle value="allSectors">All Sectors
-                  <div *ngIf="dataType === 'allSectors'"><h6 style="font-size: 13px;">Sample Size: {{sampleSize}}</h6></div>
+                <mat-button-toggle value="allSectors">{{t('analytics.all sectors')}}
+                  <div *ngIf="dataType === 'allSectors'"><h6 style="font-size: 13px;">{{t('analytics.sample size')}}: {{sampleSize}}</h6></div>
                 </mat-button-toggle>
               </mat-button-toggle-group>
             </div>
