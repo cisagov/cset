@@ -4,13 +4,13 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.ExportCSV;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Aggregation;
@@ -20,13 +20,10 @@ using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Assessment;
-using CSETWebCore.Model.CisaAssessorWorkflow;
 using CSETWebCore.Model.Demographic;
 using CSETWebCore.Model.Reports;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -47,6 +44,8 @@ namespace CSETWebCore.Api.Controllers
         private readonly IGalleryEditor _galleryEditor;
         private TranslationOverlay _overlay;
         private readonly IDocumentBusiness _documentBusiness;
+        private ExcelExporter _exporter;
+        private string excelContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
 
         public ReportsController(CSETContext context, IReportsDataBusiness report, ITokenManager token,
@@ -65,6 +64,7 @@ namespace CSETWebCore.Api.Controllers
             _galleryEditor = galleryEditor;
             _overlay = new TranslationOverlay();
             _documentBusiness = documentBusiness;
+            _exporter = new ExcelExporter(_context, _data, _acetMaturity, _acet, _http);
         }
 
 
@@ -149,8 +149,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityReportData data = new MaturityReportData(_context);
-            data.MaturityModels = new List<MaturityReportData.MaturityModel>();
-            data.MaturityModels.Add(_report.GetBasicMaturityModel());
+            data.MaturityModels = [_report.GetBasicMaturityModel()];
             data.information = _report.GetInformation();
 
             return Ok(data);
@@ -395,6 +394,44 @@ namespace CSETWebCore.Api.Controllers
             return Ok(questions);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        private string GetFilename(int assessmentId, string appName)
+        {
+            string filename = $"ExcelExport.xlsx";
+
+            var assessmentName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Assessment_Name;
+            if (!string.IsNullOrEmpty(assessmentName))
+            {
+                filename = $"{appName} Export - {assessmentName}.xlsx";
+            }
+
+            return filename;
+        }
+
+
+        /// <summary>
+        /// Generates and exports an Excel spreadsheet with a POAM template
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/cmmc/excelexport")]
+        public IActionResult GetExcelExport(string token)
+        {
+            int assessmentId = _token.AssessmentForUser(token);
+            string appName = _token.Payload(Constants.Constants.Token_Scope);
+
+            var stream = _exporter.ExportToCSV(assessmentId);
+            stream.Flush();
+            stream.Seek(0, System.IO.SeekOrigin.Begin);
+
+            return File(stream, excelContentType, GetFilename(assessmentId, appName));
+        }
 
 
         //--------------------------------
@@ -785,7 +822,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        
+
         [HttpGet]
         [Route("api/reports/getCieAllQuestions")]
         public IActionResult GetCieAllQuestions()
