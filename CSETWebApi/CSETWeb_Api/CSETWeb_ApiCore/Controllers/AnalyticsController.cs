@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
-using System.Reflection.Metadata.Ecma335;
 using Microsoft.Extensions.Configuration;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Interfaces.Assessment;
