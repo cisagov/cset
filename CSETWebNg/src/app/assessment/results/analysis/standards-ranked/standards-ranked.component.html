@@ -22,22 +22,24 @@
 -------------------------->
 <div class="white-panel d-flex flex-column justify-content-start flex-11a" *transloco="let t">
   <h3>{{t('titles.ranked categories')}}</h3>
-  <p class="fst-italic" [class.d-none]="showChart">
+
+  <div *ngIf="!initialized">
+    <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
+
+  <p class="fst-italic" *ngIf="initialized && !chartIsVisible">
     {{t('reports.core.no ranking')}}
   </p>
-  <div [class.d-none]="!showChart">
+  
+  <div [class.d-none]="!chartIsVisible">
     <p>{{t('reports.ranked categories text 1a')}}</p>
 
     <p>{{t('reports.ranked categories text 1b')}}</p>
 
     <div id="chart" class="mb-5">
       <canvas id="canvasStandardRank">{{chart}}</canvas>
-    </div>
-
-    <div *ngIf="!initialized">
-      <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-        <div style="max-width: 50px; max-height: 50px;"></div>
-      </div>
     </div>
 
     <div class="data" [hidden]="!initialized">
