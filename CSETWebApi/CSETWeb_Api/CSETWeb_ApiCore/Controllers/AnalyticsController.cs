@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.Extensions.Configuration;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Interfaces.Assessment;
@@ -206,7 +207,25 @@ namespace CSETWebCore.Api.Controllers
             int total_count = 0;
             foreach (DataRow row in SampleSize.Rows)
             {
-                total_count += Convert.ToInt32(row["AssessmentCount"]);
+                if (sectorId == null)
+                {
+                    if (row["SectorId"].ToString() == "")
+                    {
+                        total_count += Convert.ToInt32(row["AssessmentCount"]);
+                        break;
+                    }
+                }
+
+                else if (sectorId == Convert.ToInt32(row["SectorId"]))
+                {
+                    total_count += Convert.ToInt32(row["AssessmentCount"]);
+                    break;
+                }
+                else
+                {
+                    total_count += Convert.ToInt32(row["AssessmentCount"]);
+                    break;
+                }
             }
             response.SampleSize = total_count;
 
