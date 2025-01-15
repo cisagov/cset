@@ -134,6 +134,8 @@ export class AnalysisService {
         ],
       },
       options: {
+        responsive: false,
+        maintainAspectRatio: false,
         indexAxis: 'y',
         plugins: {
           title: {
@@ -187,6 +189,8 @@ export class AnalysisService {
         ],
       },
       options: {
+        responsive: false,
+        maintainAspectRatio: false,
         indexAxis: 'y',
         plugins: {
           title: {
