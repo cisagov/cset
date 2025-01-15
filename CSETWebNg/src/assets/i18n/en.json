@@ -1089,5 +1089,14 @@
       "report title": "Multiple Assessment Comparison Report",
       "document library": "Document Library"
     }
+  }, 
+  "analytics": {
+    "title": "Assessment Analytics", 
+    "description 1": "This chart displays the implementation scoring of the current assessment in relation to other assessments of the same type, as applicable. Each category is scored, with the minimum, maximum, and median scores charted to illustrate how the current assessment compares to other assessments. Users can choose to view results within the same sector or across all sectors.", 
+    "description 2": "If additional assessments of the same type have not been conducted, the chart will only display the current assessment results.", 
+    "sample size": "Sample Size", 
+    "tooltip": "Select a sector from Demographics in Assessment Information", 
+    "my sector": "My Sector", 
+    "all sectors": "All Sectors"
   }
 }
