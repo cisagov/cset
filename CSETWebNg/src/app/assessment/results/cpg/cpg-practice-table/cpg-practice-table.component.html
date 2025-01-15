@@ -41,11 +41,11 @@
                             </div>
                         </div>
                         <div class="ms-4 font-weight-normal d-flex flex-wrap justify-content-end align-content-start">
-                            <ng-content *ngFor="let c of q.csfMappings; let l = last">
+                            <ng-container *ngFor="let c of q.csfMappings; let l = last">
                                 <span class="text-nowrap">
                                     {{c}}{{ l ? '' : ','}}
                                 </span>&nbsp;
-                            </ng-content>
+                            </ng-container>
                         </div>
                     </div>
                 </th>
