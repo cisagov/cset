@@ -57,11 +57,11 @@ export class HydroGapReportComponent implements OnInit {
             section.groupings.forEach(subSection => {
               let isThereContent = false;
               subSection.questions.forEach(q => {
-                let optionList = q.options.filter(x => x.answerId != null);
-                if (optionList.length > 0) {
+                let optionList = q.options.filter(x => x.selected == false);
+                // if (optionList.length > 0) {
                   isThereContent = true;
                   this.questionMap.set(subSection.title + ' ' + q.sequence, optionList);
-                }
+                // }
               });
               this.doesGroupingHaveContentMap.set(subSection.title, isThereContent)
             });

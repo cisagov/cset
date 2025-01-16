@@ -10,3 +10,22 @@
 .color-word {
     font-weight: 500; font-size: 75%; opacity: 0.75;
 }
+.cell {
+    padding: 8px;
+}
+.high-impact {
+    background-color: rgb(66, 106, 90);
+    color: white;
+}
+.med-impact {
+    background-color: rgb(127, 182, 133);
+    color: black;
+}
+.low-impact {
+    background-color: rgb(180, 237, 210);
+    color: black;
+}
+.page-line {
+    width: 100%;
+    background-color: #000;
+  }

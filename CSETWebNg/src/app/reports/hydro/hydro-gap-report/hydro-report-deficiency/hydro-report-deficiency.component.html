@@ -29,12 +29,7 @@
 <div *ngIf="!loading" class="d-flex flex-column justify-content-start flex-11a">
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
     <div class="mb-3">
-      <h3>Assessment Scores</h3>
-      <p>
-        Your current percentage implemented based on questions answered, weighted by Impact.
-      </p>
-      <br>
-
+      
       <div class="d-inline-flex">
         <div class="d-inline-flex" style="padding-left: 8px;">
           <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
@@ -55,9 +50,10 @@
           </div>
         </div>
       </div>
-      <div style="justify-items: space-evenly;">
+      <div style="justify-items: space-evenly; padding-left: 8px">
         <div *ngFor="let id of catIds; let i = index" class="d-inline-flex">
           <div class="d-flex flex-column">
+            <h4>{{ domainGroupNames[i] }}</h4>
             <div class="d-flex flex-row">
               <div>
                 <app-hydro-donut [totalData]="catCountMap.get(catIds[i])" 
@@ -65,77 +61,49 @@
               </div>
               <div class="d-flex flex-column">
                 <app-hydro-bar-chart [barData]="subCatWeightsByCat[i]" [subCatNames]="subCatNamesByCat[i]"
-                [colorScheme]="assessScoresColors" [view]="assessView"></app-hydro-bar-chart>
-                <div>
-
-                  <!--  -->
-                  <table class="table-responsive td-align-top td-padding-half-rem">
-                    <tr class="report-text-blue">
-                        <td style="width: 15%;">SubCat</td>
-                        <td style="width: 20%">QuestionNum</td>
-                        <td style="width: 65%">Low-Scoring Answer</td>
-                    </tr>
-                    <ng-container *ngIf="actionItems.length == 0">
-                        <tr>
-                            <td colspan="3" style="text-align: center;">No Action Items to report.</td>
-                        </tr>
-                    </ng-container>
-                    <ng-container *ngFor="let progressArray of actionItems">
-                        <tr>
-                            <td colspan="3" [class]="classArray[progressArray[0].actionData.progress_Id-1]"
-                                style="pointer-events: none;">
-                                {{ progressInfo[progressArray[0].actionData.progress_Id-1].progress_Text }}
-                            </td>
-                        </tr>
-                        <ng-container *ngFor="let item of progressArray">
-                            <tr>
-                                <td class="font-weight-bold text-nowrap cell" style="text-align: center;">{{
-                                    hydroSvc.impactTranslator(item.action.severity) }}</td>
-                                <td class="cell" [innerHTML]="item.action.action_Items"></td>
-                                <td class="cell" [innerHTML]="item.actionData.comment"></td>
-                            </tr>
-                        </ng-container>
-                    </ng-container>
-                  </table>
-                  <!--  -->
-
-                </div>
+                [colorScheme]="assessScoresColors" [view]="assessView[i]"></app-hydro-bar-chart>
+                
               </div>
+              
             </div>
-            
-            <!-- <div class="d-inline-flex"
-              style="margin-left: 10px; margin-right: 10px; width: 130px; justify-content: center;">
-              <button (click)="toggleCategory(catNames[i])" tabindex="0" type="button"
-                style="border-radius: 18px; font-weight: 100; font-size: 75%; justify-content: center;"
-                class="d-inline-flex">
-                <span style="text-align: center; padding-right: 8px;">{{catNames[i]}}</span>
-                <i class="cset-icons-chevron-down q-expand" style="justify-self: end; align-self: center;"
-                  [class.expand-flip]="catExpandedMap.get(catNames[i])"></i>
-              </button>
-            </div> -->
+            <div *ngIf="deficiencyMap.get(domainGroupNames[i]).length > 0; else emptyTable" style="padding-top: 8px; margin-left: 16px; margin-right: 16px;">
+
+              <table class="table-responsive td-align-top td-padding-half-rem">
+                <tr class="background-1 h4 color-white">
+                  <td class="cell" style="width: 18%; text-align: center;">Category</td>
+                  <td class="cell" colspan="2" style="width: 55%; text-align: center;">Question</td>
+                  <td class="cell" style="width: 14%; text-align: center;">Option</td>
+                  <td class="cell" style="width: 13%; text-align: center;">Weight</td>
+                </tr>
+                
+                <tr *ngFor="let answerInfo of deficiencyMap.get(domainGroupNames[i])" class="cell">
+                  <td class="cell">{{ answerInfo.subcatTitle }}</td>
+                  <td class="cell" style="width: 12%">{{ answerInfo.question.displayNumber }}</td>
+                  <td class="cell" style="width: 43%">{{ answerInfo.question.questionText}}</td>
+                  <td class="cell" style="text-align: center;">{{ answerInfo.option.optionText}}</td>
+                  <td [class]="getBackgroundColor(answerInfo.option.threatType)" style="text-align: center;">{{ answerInfo.option.weight}}</td>
+                </tr>
+              </table>
+            </div>
+            <ng-template #emptyTable>
+              <table class="td-align-top td-padding-half-rem" style="padding-top: 8px; margin-left: 16px; margin-right: 16px;">
+                <tr class="background-1 h4 color-white">
+                  <td class="cell" style="width: 18%; text-align: center;">Category</td>
+                  <td class="cell" colspan="2" style="width: 55%; text-align: center;">Question</td>
+                  <td class="cell" style="width: 14%; text-align: center;">Option</td>
+                  <td class="cell" style="width: 13%; text-align: center;">Weight</td>
+                </tr>
+                <tr>
+                  <td class="cell" colspan="5" style="text-align: center;">No weighted deficiencies were found.</td>
+                </tr>
+              </table>
+            </ng-template>
+            <hr class="page-line">
+
           </div>
-          <div>
-            
-          </div>
+
         </div>
       </div>
-      <!-- <div *ngIf="catExpandedMap.get(catNames[0])" style="width: fit-content">
-        <app-hydro-bar-chart [barData]="subCatWeightsByCat[0]" [subCatNames]="subCatNamesByCat[0]"
-          [colorScheme]="assessScoresColors" [view]="assessView"></app-hydro-bar-chart>
-      </div>
-      <div *ngIf="catExpandedMap.get(catNames[1])">
-        <app-hydro-bar-chart [barData]="subCatWeightsByCat[1]" [subCatNames]="subCatNamesByCat[1]"
-          [colorScheme]="assessScoresColors" [view]="assessView"></app-hydro-bar-chart>
-      </div>
-      <div *ngIf="catExpandedMap.get(catNames[2])">
-        <app-hydro-bar-chart [barData]="subCatWeightsByCat[2]" [subCatNames]="subCatNamesByCat[2]"
-          [colorScheme]="assessScoresColors" [view]="assessView"></app-hydro-bar-chart>
-      </div>
-      <div *ngIf="catExpandedMap.get(catNames[3])">
-        <app-hydro-bar-chart [barData]="subCatWeightsByCat[3]" [subCatNames]="subCatNamesByCat[3]"
-          [colorScheme]="assessScoresColors" [view]="assessView"></app-hydro-bar-chart>
-      </div> -->
-
     </div>
   </div>
 </div>

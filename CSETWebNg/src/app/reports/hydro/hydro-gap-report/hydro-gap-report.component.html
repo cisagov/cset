@@ -99,9 +99,20 @@
                         </div>
                     </div>
                     <!-- Distribution of action items by implementation status. -->
+                    <div>
+                        <p>
+                            Below are the Top 5 deficiencies for each domain to aid in prioritizing areas 
+                            for improvement. The tables are ordered from high-impact to low-impact, 
+                            then by weight (relative to each category in the domain).
+                        </p>
+                    </div>
+                    <h3>Assessment Scores</h3>
+                    <p>
+                        Your current percentage implemented based on questions answered, weighted by Impact.
+                    </p>
                     <br>
-                    <br>
-                    <app-hydro-report-deficiency [questionMap]="questionList"></app-hydro-report-deficiency>
+
+                    <app-hydro-report-deficiency [questionList]="questionList"></app-hydro-report-deficiency>
                 </div>
             </div>
 

@@ -974,6 +974,22 @@ namespace CSETWebCore.Api.Controllers
             data.QuestionsMarkedForReview = _report.GetQuestionsReviewed();
             return Ok(data);
         }
+
+
+        [HttpGet]
+        [Route("api/reports/getLowestHydro")]
+        public IActionResult GetLowestHydro()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            _report.SetReportsAssessmentId(assessmentId);
+            BasicReportData data = new BasicReportData();
+            data.information = _report.GetInformation();
+
+            data.QuestionsWithComments = _report.GetQuestionsWithComments();
+            data.QuestionsMarkedForReview = _report.GetQuestionsReviewed();
+            return Ok(data);
+        }
         //[HttpGet]
         //[Route("api/reports/getCieNaQuestions")]
         //public IActionResult getCieNaQuestions()

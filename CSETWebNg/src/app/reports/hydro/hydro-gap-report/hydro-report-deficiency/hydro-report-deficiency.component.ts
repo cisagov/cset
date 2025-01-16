@@ -9,11 +9,11 @@ import { MaturityService } from '../../../../services/maturity.service';
 @Component({
   selector: 'app-hydro-report-deficiency',
   templateUrl: './hydro-report-deficiency.component.html',
-  styleUrls: ['./hydro-report-deficiency.component.scss']
+  styleUrls: ['./hydro-report-deficiency.component.scss', '../../../acet-reports.scss']
 })
 export class HydroReportDeficiencyComponent implements OnInit {
 
-  @Input() questionMap: any;
+  @Input() questionList: any;
 
   allDonutData: any;
   catMap: Map<string, Map<string, any[]>> = new Map<string, Map<string, any[]>>();
@@ -34,7 +34,11 @@ export class HydroReportDeficiencyComponent implements OnInit {
   domainWeightData: any[] = [];
   domainWeightTotals: any[] = []
   weightData: any[] = [];
-  subCat
+
+  deficiencyMap: Map<string, any[]> = new Map<string, any[]>();
+
+  // the any[] has 3 inner arrays: [[lowImpact], [mediumImpact], [highImpact]], 
+  lowest5PerDomain: Map<string, any> = new Map<string, any>();
 
   loading: boolean = true;
 
@@ -46,7 +50,7 @@ export class HydroReportDeficiencyComponent implements OnInit {
   assessScoresColors = {
     domain: ['#426A5A', '#7FB685', '#B4EDD2', '#D95D1E']
   };
-  assessView: any[] = [800, 150];
+  assessView: any[] = [[800, 150], [800, 112.5], [800, 187.5], [800, 150]];
 
   domainGroupNames: string[] = ['Management', 'Site and Service Control Security', 'Critical Operations', 'Dependencies'];
 
@@ -166,6 +170,32 @@ export class HydroReportDeficiencyComponent implements OnInit {
                       lowWeightQuestionTotal += answerOption.weight;
                     }
                   }
+
+                  else {
+                    let unansweredArray = [];
+                    
+                    // organizing by impact type (threatType)
+                    if (answerOption.threatType == 1) {
+                      if (this.lowest5PerDomain[question.category.trim() + '-Low'] != null) {
+                        unansweredArray = this.lowest5PerDomain[question.category.trim() + '-Low'];
+                      }
+                      unansweredArray.push(answerOption);
+                      this.lowest5PerDomain.set(question.category.trim() + '-Low', unansweredArray);
+                    } else if (answerOption.threatType == 2) {
+                      if (this.lowest5PerDomain[question.category.trim() + '-Med'] != null) {
+                        unansweredArray = this.lowest5PerDomain[question.category.trim() + '-Med'];
+                      }
+                      unansweredArray.push(answerOption);
+                      this.lowest5PerDomain.set(question.category.trim() + '-Med', unansweredArray);
+                    } else if (answerOption.threatType == 3) {
+                      if (this.lowest5PerDomain[question.category.trim() + '-High'] != null) {
+                        unansweredArray = this.lowest5PerDomain[question.category.trim() + '-High'];
+                      }
+                      unansweredArray.push(answerOption);
+                      this.lowest5PerDomain.set(question.category.trim() + '-High', unansweredArray);
+                    }
+                  }
+
                 }
 
                 highWeightGroupTotal += highWeightQuestionTotal;
@@ -202,16 +232,14 @@ export class HydroReportDeficiencyComponent implements OnInit {
             this.domainWeightData.push(this.weightData);
             this.subCatWeightsByCat.push(subCatWeights);
             this.subCatNamesByCat.push(subCatNames);
-
             this.toggleCategory(""); //sets all to false
-
+            
             this.loading = false;
           });
       }
     );
 
-
-
+    this.fillHighest5PerDomainMap(this.questionList);
   }
 
   toggleCategory(catName: string) {
@@ -245,6 +273,87 @@ export class HydroReportDeficiencyComponent implements OnInit {
     }
 
     return roundedValue;
+  }
+
+  fillHighest5PerDomainMap(fullStructure: any) {
+    this.deficiencyMap.set(this.domainGroupNames[0], []);
+    this.deficiencyMap.set(this.domainGroupNames[1], []);
+    this.deficiencyMap.set(this.domainGroupNames[2], []);
+    this.deficiencyMap.set(this.domainGroupNames[3], []);
+      
+    fullStructure.groupings[0].groupings.forEach(cat => {
+      cat.groupings.forEach(subcat => {
+        //recursion to include followup questions
+        this.getUnchosenQuestionsOptions(cat.title, subcat.title, subcat.questions);
+      });
+      
+    });
+
+    // sorting by descending order of threatType, then by weight
+    this.deficiencyMap.set(this.domainGroupNames[0], this.deficiencyMap.get(this.domainGroupNames[0]).sort(
+      (a, b) => {
+        return b.option.threatType > a.option.threatType ? 1 : (a.option.threatType > b.option.threatType ? -1 : (b.option.weight > a.option.weight ? 1 : (a.option.weight > b.option.weight ? -1 : 0)))
+      }
+    ));
+    this.deficiencyMap.set(this.domainGroupNames[1], this.deficiencyMap.get(this.domainGroupNames[1]).sort(
+      (a, b) => {
+        return b.option.threatType > a.option.threatType ? 1 : (a.option.threatType > b.option.threatType ? -1 : (b.option.weight > a.option.weight ? 1 : (a.option.weight > b.option.weight ? -1 : 0)))
+      }
+    ));
+    this.deficiencyMap.set(this.domainGroupNames[2], this.deficiencyMap.get(this.domainGroupNames[2]).sort(
+      (a, b) => {
+        return b.option.threatType > a.option.threatType ? 1 : (a.option.threatType > b.option.threatType ? -1 : (b.option.weight > a.option.weight ? 1 : (a.option.weight > b.option.weight ? -1 : 0)))
+      }
+    ));
+    this.deficiencyMap.set(this.domainGroupNames[3], this.deficiencyMap.get(this.domainGroupNames[3]).sort(
+      (a, b) => {
+        return b.option.threatType > a.option.threatType ? 1 : (a.option.threatType > b.option.threatType ? -1 : (b.option.weight > a.option.weight ? 1 : (a.option.weight > b.option.weight ? -1 : 0)))
+      }
+    ));
+
+    this.deficiencyMap.set(this.domainGroupNames[0], this.deficiencyMap.get(this.domainGroupNames[0]).slice(0, 5));
+    this.deficiencyMap.set(this.domainGroupNames[1], this.deficiencyMap.get(this.domainGroupNames[1]).slice(0, 5));
+    this.deficiencyMap.set(this.domainGroupNames[2], this.deficiencyMap.get(this.domainGroupNames[2]).slice(0, 5));
+    this.deficiencyMap.set(this.domainGroupNames[3], this.deficiencyMap.get(this.domainGroupNames[3]).slice(0, 5));
+  }
+
+  getUnchosenQuestionsOptions(catTitle: string, subcatTitle: string, questions: any) {
+    questions.forEach(question => {
+      let unchosenOptions = []; // array because it might be a checkbox question with multiple of the same threatType and weights
+      if (this.deficiencyMap.get(catTitle.trim()).length > 0) {
+        unchosenOptions = this.deficiencyMap.get(catTitle.trim());
+      }     
+
+      question.options.forEach(option => {
+        // really only need to keep track of threatType and weight
+        // use threatType to determine lowest 5, with weight breaking ties, 
+        // and then sequence breaking any remaining ties
+
+        if (option.threatType != null && option.weight != null && option.selected == false) {
+          // including the question to give context in the table
+          unchosenOptions.push({subcatTitle, question, option});
+          this.deficiencyMap.set(catTitle, unchosenOptions);
+        }
+          
+        // check for followups
+        if (option.selected && option.followups.length > 0) {
+          this.getUnchosenQuestionsOptions(catTitle, subcatTitle, option.followups);
+        }
+      });
+    });
+  }
+
+  getBackgroundColor(threatType: number) {
+    switch(threatType) {
+      case 3:
+        return 'cell high-impact';
+      case 2:
+        return 'cell med-impact';
+      case 1:
+        return 'cell low-impact';
+      default:
+        return 'cell';
+    }
   }
 
 }

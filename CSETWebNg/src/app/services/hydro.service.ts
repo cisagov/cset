@@ -73,6 +73,11 @@ export class HydroService {
 
     return this.http.post(this.configSvc.apiUrl + 'malcolm?', formData);
   }
+
+  getHydroDeficiencies(): any {
+    return this.http.get(this.configSvc.apiUrl + 'reports/getHydroDeficiencies');
+  }
+  
 }
 
 export class HydroProgressComment {
