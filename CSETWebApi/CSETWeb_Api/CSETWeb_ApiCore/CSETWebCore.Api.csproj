@@ -5,6 +5,10 @@
     <AssemblyVersion>12.3.0.2</AssemblyVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>EXCLUDE_FROM_PUBLISH</DefineConstants>
+  </PropertyGroup>
+
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'CSETWeb_ApiCore' " />
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
