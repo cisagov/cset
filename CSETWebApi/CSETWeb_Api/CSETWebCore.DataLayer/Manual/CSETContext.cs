@@ -958,6 +958,11 @@ namespace CSETWebCore.DataLayer.Model
                 m = DBNull.Value;
             }
 
+            if (modelId != null)
+            {
+                FillEmptyMaturityQuestionsForModel(assessmentId, (int)modelId);
+            }
+
 
             var parms = new IDbDataParameter[]
             {
