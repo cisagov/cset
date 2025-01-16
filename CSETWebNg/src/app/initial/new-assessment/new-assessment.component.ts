@@ -164,7 +164,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     if (src) {
       return path + src.toLowerCase();
     }
-    return path + 'default.jpeg';
+    return path + 'default.png';
   }
 
   openDialog(data: any) {
