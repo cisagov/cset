@@ -24,8 +24,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { concat } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { concat, firstValueFrom } from 'rxjs';
+import { first, tap } from 'rxjs/operators';
 import { merge } from 'lodash';
 import { ModuleBehavior } from '../models/module-config.model';
 
@@ -114,10 +114,10 @@ export class ConfigService {
     if (!this.initialized) {
       this.isRunningInElectron = localStorage.getItem('isRunningInElectron') == 'true';
 
-      return this.http
-        .get('assets/settings/config.json')
-        .toPromise()
-        .then((config) => {
+      const obs = this.http.get('assets/settings/config.json');
+      const prom = firstValueFrom(obs);
+
+      return prom.then((config) => {
           this.config = config;
         })
         .then(() => {
@@ -145,10 +145,10 @@ export class ConfigService {
   }
 
   enableCisaAssessorWorkflow() {
-    return this.http
-      .get('assets/settings/config.IOD.json')
-      .toPromise()
-      .then((iodConfig) => {
+    const obs = this.http.get('assets/settings/config.IOD.json')
+    const prom = firstValueFrom(obs);
+
+    return prom.then((iodConfig) => {
         merge(this.config, iodConfig);
         this.setConfigPropertiesForLocalService();
       });
