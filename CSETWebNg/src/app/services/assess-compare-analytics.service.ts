@@ -28,7 +28,7 @@ import { AssessmentService } from './assessment.service';
 import {
   AssessmentDetail
 } from '../models/assessment-info.model';
-import { firstValueFrom, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
@@ -69,10 +69,10 @@ export class AssessCompareAnalyticsService {
   }
 
   getAssessmentToken(assessId: number) {
-    const obs = this.http.get(this.configSvc.apiUrl + 'auth/token?assessmentId=' + assessId);
-    const prom = firstValueFrom(obs);
-
-    return prom.then((response: { token: string }) => {
+    return this.http
+      .get(this.configSvc.apiUrl + 'auth/token?assessmentId=' + assessId)
+      .toPromise()
+      .then((response: { token: string }) => {
         localStorage.removeItem('userToken');
         localStorage.setItem('userToken', response.token);
         if (assessId) {

@@ -37,8 +37,7 @@ import { Title } from "@angular/platform-browser";
 import { NavigationService } from "../../services/navigation/navigation.service";
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
-import { of } from "rxjs";
-import { concatMap, map, tap, catchError } from "rxjs/operators";
+import { concatMap, map } from "rxjs/operators";
 import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
@@ -336,57 +335,48 @@ export class MyAssessmentsComponent implements OnInit {
     }
   }
 
-  /**
-   * "Deletes" an assessment by removing the current user from it.  The assessment
-   * is not deleted, but will no longer appear in the current user's list.
-   */
   removeAssessment(assessment: UserAssessment, assessmentIndex: number) {
-    // first, get a token branded for the target assessment
-    this.assessSvc.getAssessmentToken(assessment.assessmentId).then(() => {
-
-      // next, call the API to see if this is a legal move
-      this.assessSvc
-        .isDeletePermitted()
-        .subscribe(canDelete => {
-          if (!canDelete) {
-            this.dialog.open(AlertComponent, {
-              data: {
-                messageText:
-                  "You cannot remove an assessment that has other users."
-              }
-            });
-            return;
-          }
-
-          // if it's legal, see if they really want to
-          const dialogRef = this.dialog.open(ConfirmComponent);
-          dialogRef.componentInstance.confirmMessage =
-            this.tSvc.translate('dialogs.remove assessment', { assessmentName: assessment.assessmentName });
-
-          dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-              this.assessSvc.removeMyContact(assessment.assessmentId).pipe(
-                tap(() => {
-                  this.sortedAssessments.splice(assessmentIndex, 1);
-                }),
-                catchError(error => {
-                  this.dialog.open(AlertComponent, {
-                    data: { messageText: error.statusText }
-                  });
-                  return of(null);
-                })
-              ).subscribe();
+    // first, call the API to see if this is a legal move
+    this.assessSvc
+      .isDeletePermitted()
+      .subscribe(canDelete => {
+        if (!canDelete) {
+          this.dialog.open(AlertComponent, {
+            data: {
+              messageText:
+                "You cannot remove an assessment that has other users."
             }
           });
+          return;
+        }
+
+        // if it's legal, see if they really want to
+        const dialogRef = this.dialog.open(ConfirmComponent);
+        dialogRef.componentInstance.confirmMessage =
+          // "Are you sure you want to remove '" +
+          // assessment.assessmentName +
+          // "'?";
+          this.tSvc.translate('dialogs.remove assessment', { assessmentName: assessment.assessmentName });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.assessSvc.removeMyContact(assessment.assessmentId).subscribe(
+              x => {
+                this.sortedAssessments.splice(assessmentIndex, 1);
+              },
+              x => {
+                this.dialog.open(AlertComponent, {
+                  data: { messageText: x.statusText }
+                });
+              });
+          }
         });
-    });
+      });
   }
 
-  /**
-   * 
-   */
   sortData(sort: Sort) {
+
     if (!sort.active || sort.direction === "") {
+      // this.sortedAssessments = data;
       return;
     }
 
@@ -411,16 +401,10 @@ export class MyAssessmentsComponent implements OnInit {
     });
   }
 
-  /**
-   * 
-   */
   logout() {
     this.authSvc.logout();
   }
 
-  /**
-   * 
-   */
   clickDownloadLink(ment_id: number, jsonOnly: boolean = false) {
     let encryption = this.preventEncrypt;
     // Only allow encryption on .csetw files and only allow PCII scrubbing on JSON files
