@@ -21,9 +21,6 @@ using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
 using CSETWebCore.Model.Reports;
-using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Data;
@@ -48,7 +45,6 @@ namespace CSETWebCore.Api.Controllers
         private readonly IGalleryEditor _galleryEditor;
         private TranslationOverlay _overlay;
         private readonly IDocumentBusiness _documentBusiness;
-        private string excelContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
 
         public ReportsController(CSETContext context, IReportsDataBusiness report, ITokenManager token,
@@ -398,25 +394,6 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// Generate a filename for a POAM report
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        private string GetFilename(int assessmentId)
-        {
-            string filename = $"ExcelExport.xlsx";
-
-            var assessmentName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Assessment_Name;
-            if (!string.IsNullOrEmpty(assessmentName))
-            {
-                filename = $"{assessmentName} - POAM.xlsx";
-            }
-
-            return filename;
-        }
-
-
-        /// <summary>
         /// Generates and exports an Excel spreadsheet with a POAM template
         /// </summary>
         /// <param name="token"></param>
@@ -427,57 +404,19 @@ namespace CSETWebCore.Api.Controllers
         {
 
             int assessmentId = _token.AssessmentForUser(token);
-            // Define Excel column headers
-            var columnHeaders = new[] { "Control Title", "Weakness", "Maturity Level", "Resource Estimate", "Scheduled Completion Date", "Milestones with Interim Completion Dates", "Changes to Milestones", "How was the weakness identified?", "Status (Ongoing or Complete)" };
 
             // Create a memory stream to hold the Excel file
             using var memoryStream = new MemoryStream();
-            using (var spreadsheetDocument = SpreadsheetDocument.Create(memoryStream, SpreadsheetDocumentType.Workbook))
-            {
-                // Add a WorkbookPart
-                var workbookPart = spreadsheetDocument.AddWorkbookPart();
-                workbookPart.Workbook = new Workbook();
 
-                // Add a WorksheetPart
-                var worksheetPart = workbookPart.AddNewPart<WorksheetPart>();
-                worksheetPart.Worksheet = new Worksheet(new SheetData());
-
-
-                // Add Sheets to the Workbook
-                var sheets = spreadsheetDocument.WorkbookPart.Workbook.AppendChild(new Sheets());
-                var sheet = new Sheet
-                {
-                    Id = spreadsheetDocument.WorkbookPart.GetIdOfPart(worksheetPart),
-                    SheetId = 1,
-                    Name = "POAM"
-                };
-
-                sheets.Append(sheet);
-
-                // Get the SheetData
-                var sheetData = worksheetPart.Worksheet.GetFirstChild<SheetData>();
-
-                // Create the header row
-                var headerRow = new Row();
-
-                foreach (var header in columnHeaders)
-                {
-                    var cell = new Cell
-                    {
-                        CellValue = new CellValue(header),
-                        DataType = CellValues.String
-                    };
-                    headerRow.Append(cell);
-                }
-                sheetData.Append(headerRow);
-
-                // Save the worksheet
-                worksheetPart.Worksheet.Save();
-                workbookPart.Workbook.Save();
-            }
+            // Generate the Excel file
+            ExportPoamBusiness.GenerateSpreadSheet(memoryStream);
 
             // Return the file as a downloadable attachment
-            return File(memoryStream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", GetFilename(assessmentId));
+            return File(
+                memoryStream.ToArray(),
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                ExportPoamBusiness.GetFilename(assessmentId, _context)
+            );
 
         }
 
