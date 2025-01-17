@@ -5,6 +5,7 @@ import { EditUserComponent } from '../edit-user/edit-user.component';
 import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../../services/config.service';
 import { DateAdapter } from '@angular/material/core';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-user-language',
@@ -50,7 +51,10 @@ export class UserLanguageComponent implements OnInit {
   *
   */
   save() {
-    this.tSvc.load(this.langSelection).toPromise().then(() => {
+    const obs = this.tSvc.load(this.langSelection);
+    const prom = firstValueFrom(obs);
+
+    prom.then(() => {
       this.tSvc.setActiveLang(this.langSelection);
       this.authSvc.setUserLang(this.langSelection).subscribe(() => {
         this.dateAdapter.setLocale(this.langSelection);

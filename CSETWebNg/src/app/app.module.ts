@@ -76,9 +76,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import {
-  MAT_DATE_LOCALE,
-  MatNativeDateModule,
-  MatRippleModule
+    MAT_DATE_LOCALE,
+    MatNativeDateModule,
+    MatRippleModule
 } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -688,9 +688,11 @@ import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.compon
 import { QuestionsReviewedComponent } from './reports/questions-reviewed/questions-reviewed.component';
 import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.component';
 import { AnalyticsResultsComponent } from './assessment/results/analytics-results/analytics-results.component';
+import { firstValueFrom } from 'rxjs';
 
 
-@NgModule({ declarations: [
+@NgModule({
+    declarations: [
         AppComponent,
         InitialComponent,
         LoginComponent,
@@ -1225,8 +1227,8 @@ import { AnalyticsResultsComponent } from './assessment/results/analytics-result
         AllAnsweredquestionsComponent,
         AllCommentsmarkedComponent,
         AllReviewedComponent,
-        QuestionsReviewedComponent, 
-        RolesChangedComponent, 
+        QuestionsReviewedComponent,
+        RolesChangedComponent,
         AnalyticsResultsComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
@@ -1324,8 +1326,8 @@ import { AnalyticsResultsComponent } from './assessment/results/analytics-result
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
             baseUrl: 'assets/monaco'
-        })], 
-        providers: [
+        })],
+    providers: [
         TranslocoService,
         provideTranslocoScope('tutorial', 'reports'),
         ConfigService,
@@ -1336,10 +1338,10 @@ import { AnalyticsResultsComponent } from './assessment/results/analytics-result
                 return () => {
                     return configSvc.loadConfig().then(() => {
                         // Load and set the language based on config
-                        return tSvc
-                            .load(configSvc.config.defaultLang)
-                            .toPromise()
-                            .then(() => {
+
+                        const obs = tSvc.load(configSvc.config.defaultLang);
+                        const prom = firstValueFrom(obs);
+                        return prom.then(() => {
                             tSvc.setActiveLang(configSvc.config.defaultLang);
                             return authSvc.checkLocal();
                         });
@@ -1406,5 +1408,6 @@ import { AnalyticsResultsComponent } from './assessment/results/analytics-result
         FooterService,
         AnalyticsService,
         provideHttpClient(withInterceptorsFromDi())
-    ] })
+    ]
+})
 export class AppModule { }
