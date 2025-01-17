@@ -393,7 +393,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   exportPoamToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'reports/cmmc/excelexport?token=' + localStorage.getItem('userToken');
+    window.location.href = this.configSvc.apiUrl + 'reports/poam/excelexport?token=' + localStorage.getItem('userToken');
   }
 
 }
