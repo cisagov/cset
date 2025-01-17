@@ -10,7 +10,6 @@ using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.ExportCSV;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Aggregation;
@@ -22,8 +21,13 @@ using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
 using CSETWebCore.Model.Reports;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -44,7 +48,6 @@ namespace CSETWebCore.Api.Controllers
         private readonly IGalleryEditor _galleryEditor;
         private TranslationOverlay _overlay;
         private readonly IDocumentBusiness _documentBusiness;
-        private ExcelExporter _exporter;
         private string excelContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
 
@@ -64,7 +67,6 @@ namespace CSETWebCore.Api.Controllers
             _galleryEditor = galleryEditor;
             _overlay = new TranslationOverlay();
             _documentBusiness = documentBusiness;
-            _exporter = new ExcelExporter(_context, _data, _acetMaturity, _acet, _http);
         }
 
 
@@ -396,18 +398,18 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// 
+        /// Generate a filename for a POAM report
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        private string GetFilename(int assessmentId, string appName)
+        private string GetFilename(int assessmentId)
         {
             string filename = $"ExcelExport.xlsx";
 
             var assessmentName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Assessment_Name;
             if (!string.IsNullOrEmpty(assessmentName))
             {
-                filename = $"{appName} Export - {assessmentName}.xlsx";
+                filename = $"{assessmentName} - POAM.xlsx";
             }
 
             return filename;
@@ -420,17 +422,63 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/reports/cmmc/excelexport")]
+        [Route("api/reports/poam/excelexport")]
         public IActionResult GetExcelExport(string token)
         {
+
             int assessmentId = _token.AssessmentForUser(token);
-            string appName = _token.Payload(Constants.Constants.Token_Scope);
+            // Define Excel column headers
+            var columnHeaders = new[] { "Control Title", "Weakness", "Maturity Level", "Resource Estimate", "Scheduled Completion Date", "Milestones with Interim Completion Dates", "Changes to Milestones", "How was the weakness identified?", "Status (Ongoing or Complete)" };
 
-            var stream = _exporter.ExportToCSV(assessmentId);
-            stream.Flush();
-            stream.Seek(0, System.IO.SeekOrigin.Begin);
+            // Create a memory stream to hold the Excel file
+            using var memoryStream = new MemoryStream();
+            using (var spreadsheetDocument = SpreadsheetDocument.Create(memoryStream, SpreadsheetDocumentType.Workbook))
+            {
+                // Add a WorkbookPart
+                var workbookPart = spreadsheetDocument.AddWorkbookPart();
+                workbookPart.Workbook = new Workbook();
 
-            return File(stream, excelContentType, GetFilename(assessmentId, appName));
+                // Add a WorksheetPart
+                var worksheetPart = workbookPart.AddNewPart<WorksheetPart>();
+                worksheetPart.Worksheet = new Worksheet(new SheetData());
+
+
+                // Add Sheets to the Workbook
+                var sheets = spreadsheetDocument.WorkbookPart.Workbook.AppendChild(new Sheets());
+                var sheet = new Sheet
+                {
+                    Id = spreadsheetDocument.WorkbookPart.GetIdOfPart(worksheetPart),
+                    SheetId = 1,
+                    Name = "POAM"
+                };
+
+                sheets.Append(sheet);
+
+                // Get the SheetData
+                var sheetData = worksheetPart.Worksheet.GetFirstChild<SheetData>();
+
+                // Create the header row
+                var headerRow = new Row();
+
+                foreach (var header in columnHeaders)
+                {
+                    var cell = new Cell
+                    {
+                        CellValue = new CellValue(header),
+                        DataType = CellValues.String
+                    };
+                    headerRow.Append(cell);
+                }
+                sheetData.Append(headerRow);
+
+                // Save the worksheet
+                worksheetPart.Worksheet.Save();
+                workbookPart.Workbook.Save();
+            }
+
+            // Return the file as a downloadable attachment
+            return File(memoryStream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", GetFilename(assessmentId));
+
         }
 
 
