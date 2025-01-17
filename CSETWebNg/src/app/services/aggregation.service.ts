@@ -26,6 +26,7 @@ import { HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
 import { Aggregation } from '../models/aggregation.model';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class AggregationService {
@@ -110,10 +111,10 @@ export class AggregationService {
    * @param aggId
    */
   getAggregationToken(aggId: number) {
-    return this.http
-      .get(this.configSvc.apiUrl + 'auth/token?aggregationId=' + aggId)
-      .toPromise()
-      .then((response: { token: string }) => {
+    const obs = this.http.get(this.configSvc.apiUrl + 'auth/token?aggregationId=' + aggId);
+    const prom = firstValueFrom(obs);
+
+    return prom.then((response: { token: string }) => {
         localStorage.removeItem('userToken');
         localStorage.setItem('userToken', response.token);
         if (aggId) {
