@@ -52,7 +52,7 @@ export class IseExaminationComponent implements OnInit {
 
   sourceFilesMap: Map<number, any[]> = new Map<number, any[]>();
   regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
-  showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action items to show (answered 'No')
+  showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action required to show (answered 'No')
 
   examinerFindings: string[] = [];
   examinerFindingsTotal: number = 0;

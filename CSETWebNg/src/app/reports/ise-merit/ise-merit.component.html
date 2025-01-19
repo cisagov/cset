@@ -238,37 +238,37 @@
                                       title="Copy to Clipboard" [cdkCopyToClipboard]="getActionItemsToCopy(observation?.finding?.finding_Id)">
                                         <span class="cset-icons-copy"></span>
                                     </label>
-                                    <strong> Action Items: </strong>
+                                    <strong> Action Required: </strong>
                                     <br>
                                     <div *ngIf="observation?.finding?.auto_Generated != 1">
                                         <div *ngIf="observation?.finding?.actionItems != null"
                                             style="white-space: pre-wrap;" [innerHTML]="observation?.finding?.actionItems">
                                         </div>
                                         <div *ngIf="observation?.finding?.actionItems == null">
-                                            (no Action Items available)
+                                            (no actions available)
                                         </div>
                                     </div>
                                     <div *ngIf="this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
                                         <div *ngFor="let allActionsInFinding of this.masterActionItemsMap.get(observation?.finding?.finding_Id); let i = index">
                                             <div *ngIf="allActionsInFinding.action_Items != '' && allActionsInFinding.action_Items != '.'">
-                                                {{ this.getChildQuestionNumber(allActionsInFinding.question_Title) }}: {{ allActionsInFinding.action_Items }}
+                                                {{ allActionsInFinding.action_Items }}
                                             </div>
 
                                             <div
                                                 *ngIf="(allActionsInFinding.action_Items == '' || allActionsInFinding.action_Items == '.') && observation?.finding?.actionItems == null">
-                                                (no Action Items available)
+                                                (no actions available)
                                             </div>
                                         </div>
                                     </div>
 
                                     <div
                                         *ngIf="!this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
-                                        (no Action Items available)
+                                        (no actions available)
 
                                     </div>
 
                                     <!-- <div *ngIf="(this.masterActionItemsMap.get(observation?.finding?.finding_Id) == null || this.masterActionItemsMap.get(observation?.finding?.finding_Id) == '') && finding?.finding?.actionItems == null">
-                                        (no Action Items available)
+                                        (no actions available)
                                     </div> -->
 
                                     <!-- <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
