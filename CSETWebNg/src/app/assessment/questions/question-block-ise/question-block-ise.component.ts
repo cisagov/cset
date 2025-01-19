@@ -756,12 +756,26 @@ export class QuestionBlockIseComponent implements OnInit {
     * SCUEP q's 1- 7 and CORE/CORE+ q's 1 - 10 use one domain, CORE/CORE+ q's 11+ have a different domain
     * this checks the q's parentQuestionId to see if it's SCUEP 1 - 7 or CORE/CORE+ 1 - 10 and sets the name accordingly
     */
-    let name = "";
+    let groupingPrefix = "";
     if (this.myGrouping.questions[0].questionId <= 7674) {
-      name = ("Information Security Program, " + this.myGrouping.title);
+      groupingPrefix = "Information Security Program,";
     } else {
-      name = ("Cybersecurity Controls, " + this.myGrouping.title);
+      groupingPrefix = "Cybersecurity Controls,";
     }
+
+    let myArray = this.myGrouping.title.split(" ");
+    let questionNum = Number(myArray[0]);
+
+    let sliceValue = 0;
+    if (questionNum <= 9) {
+      sliceValue = 2;
+    } else {
+      sliceValue = 3;
+    }
+
+    let title = this.myGrouping.title.slice(sliceValue);
+
+    let observationName = groupingPrefix + title;
 
     const observation: Observation = {
       question_Id: parentId,
@@ -777,7 +791,7 @@ export class QuestionBlockIseComponent implements OnInit {
       recommendations: '',
       resolution_Date: null,
       vulnerabilities: '',
-      title: name,
+      title: observationName,
       type: null,
       risk_Area: 'Transaction',
       sub_Risk: 'Information Systems & Technology Controls',

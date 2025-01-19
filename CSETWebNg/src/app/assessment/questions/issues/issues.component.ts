@@ -99,6 +99,7 @@ export class IssuesComponent implements OnInit {
     this.observationSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, questionType).subscribe((response: Observation) => {
 
       this.observation = response;
+      this.observation.title = this.issueTitle; // using the temp name we set earlier so it's not "overriden" for the user
 
       this.questionsSvc.getActionItems(this.questionID, this.observation.observation_Id).subscribe(
         (data: any) => {

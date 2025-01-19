@@ -353,7 +353,7 @@ export class IseMeritComponent implements OnInit {
         }
       }
       if (array?.length == 0) {
-        return "(no Action Items available)";
+        return "(no actions available)";
       }
 
       let formattedItems = array.join("");
