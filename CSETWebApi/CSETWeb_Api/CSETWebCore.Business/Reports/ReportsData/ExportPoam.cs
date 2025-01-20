@@ -5,9 +5,11 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Model.Maturity;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
+using LogicExtensions;
 using System.IO;
 using System.Linq;
 
@@ -19,7 +21,7 @@ namespace CSETWebCore.Business.Reports
         /// <summary>
         /// Generates a CMMC POAM spreadsheet.
         /// </summary>
-        public static void GenerateSpreadSheet(MemoryStream memoryStream)
+        public static void GenerateSpreadSheet(MemoryStream memoryStream, MaturityResponse mm)
         {
             // Define Excel column headers
             var columnHeaders = new[] {
@@ -42,21 +44,17 @@ namespace CSETWebCore.Business.Reports
                 workbookPart.Workbook = new Workbook();
 
                 // Define column widths
-                var columns = new Columns();
-                for (uint i = 1; i <= (uint)columnHeaders.Length; i++)
-                {
-                    columns.Append(new Column
-                    {
-                        Min = i,
-                        Max = i,
-                        Width = 20, // Double the width
-                        CustomWidth = true
-                    });
-                }
+                var columns = CreateColumns(
+                    columnHeaders.Length, // Total number of columns
+                    5,                    // Start specific width at column E (5th column)
+                    9,                    // End specific width at column I (9th column)
+                    40,                   // Specific width for columns E:I
+                    20                    // Default width for other columns
+                );
 
                 // Add Stylesheet (for bold headers and text wrapping)
                 var stylesPart = workbookPart.AddNewPart<WorkbookStylesPart>();
-                stylesPart.Stylesheet = ExportPoamBusiness.CreateStylesheet();
+                stylesPart.Stylesheet = CreateStylesheet();
                 stylesPart.Stylesheet.Save();
 
                 // Add a WorksheetPart
@@ -92,6 +90,53 @@ namespace CSETWebCore.Business.Reports
                 }
                 sheetData.Append(headerRow);
 
+                foreach (var grouping in mm.Groupings)
+                {
+                    foreach (var subgrouping in grouping.SubGroupings)
+                    {
+                        foreach (var question in subgrouping.Questions)
+                        {
+                            // Skip maturity level 1 questions and questions that have been met.
+                            if (question.Answer == "Y" || question.MaturityLevel == 1)
+                            {
+                                continue;
+                            }
+
+                            var row = new Row();
+
+                            // Add the control title cell
+                            var controlTitleCell = new Cell
+                            {
+                                CellValue = new CellValue(question.DisplayNumber),
+                                DataType = CellValues.String
+                            };
+                            row.Append(controlTitleCell);
+
+                            // Add the weakness cell
+                            var weaknessCell = new Cell
+                            {
+                                CellValue = new CellValue(question.QuestionText),
+                                DataType = CellValues.String
+                            };
+                            row.Append(weaknessCell);
+
+                            // Add the maturity level cell
+                            if (!string.IsNullOrEmpty(question.MaturityLevelName))
+                            {
+                                var maturityLevelCell = new Cell
+                                {
+                                    CellValue = new CellValue(question.MaturityLevelName),
+                                    DataType = CellValues.String
+                                };
+                                row.Append(maturityLevelCell);
+                            }
+
+
+                            sheetData.Append(row);
+                        }
+                    }
+                }
+
                 // Save the worksheet
                 worksheetPart.Worksheet.Save();
                 workbookPart.Workbook.Save();
@@ -101,10 +146,35 @@ namespace CSETWebCore.Business.Reports
 
 
         /// <summary>
+        /// Creates column definitions for a worksheet, with specific widths for a range.
+        /// </summary>
+        private static Columns CreateColumns(
+            int numberOfColumns,
+            uint specificWidthStart,
+            uint specificWidthEnd,
+            double specificWidth,
+            double defaultWidth = 10)
+        {
+            var columns = new Columns();
+            for (uint i = 1; i <= (uint)numberOfColumns; i++)
+            {
+                columns.Append(new Column
+                {
+                    Min = i,
+                    Max = i,
+                    Width = (i >= specificWidthStart && i <= specificWidthEnd) ? specificWidth : defaultWidth,
+                    CustomWidth = true
+                });
+            }
+            return columns;
+        }
+
+
+        /// <summary>
         /// Creates a stylesheet with a bold header style and text wrapping.
         /// </summary>
         /// <returns>A Stylesheet object.</returns>
-        public static Stylesheet CreateStylesheet()
+        private static Stylesheet CreateStylesheet()
         {
             return new Stylesheet(
                 new Fonts(
