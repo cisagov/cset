@@ -26,7 +26,8 @@
 
     <p>
       {{ t('assessment complete message').replace('{date}', lastModifiedTimestamp | localizeDate: 'GMT') }}
-      {{ t('reports run prior message') }}</p>
+      {{ t('reports run prior message') }}
+    </p>
     <div class="my-3">
       <button mat-stroked-button (click)="openSnackBar()">
         {{ t('printing report instructions button') }}
@@ -63,6 +64,19 @@
   <!-- All reports component -->
   <app-report-list-common *ngIf="currentSectionId" [sectionId]="currentSectionId"></app-report-list-common>
 
+  <!-- CMMC -->
+  <div *ngIf="currentSectionId == 'CMMC2'">
+    <h4>Plan of Action and Milestones</h4>
+
+    <p>
+      This report generates a Plan of Action and Milestones (POA&M) template which includes a list of unmet practices
+      eligible for remediation. This POA&M will exclude any CMMC practices that are ineligible for inclusion per CMMC ruling.
+    </p>
+    <button class="icon-button-dark btn btn-primary" (click)="exportPoamToExcel()">
+      <span class="cset-icons-export-excel fs-base me-2 align-middle"></span>
+      <span>Export POAM to Excel</span>
+    </button>
+  </div>
 
   <!-- ISE -->
   <app-report-list-common *ngIf="assessSvc.isISE() && !isMobile" sectionId="ISE">
