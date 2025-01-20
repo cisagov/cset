@@ -404,12 +404,14 @@ namespace CSETWebCore.Api.Controllers
         {
 
             int assessmentId = _token.AssessmentForUser(token);
+            string lang = _token.GetCurrentLanguage();
 
             // Create a memory stream to hold the Excel file
             using var memoryStream = new MemoryStream();
+            var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, true, 0, lang);
 
             // Generate the Excel file
-            ExportPoamBusiness.GenerateSpreadSheet(memoryStream);
+            ExportPoamBusiness.GenerateSpreadSheet(memoryStream, mm);
 
             // Return the file as a downloadable attachment
             return File(
