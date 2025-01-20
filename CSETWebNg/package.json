@@ -70,7 +70,7 @@
         "sanitize-html": "^2.14.0",
         "screenfull": "^5.2.0",
         "style-loader": "^4.0.0",
-        "swiper": "^8.4.7",
+        "swiper": "^11.2.1",
         "typescript": "5.5",
         "zone.js": "^0.14.10"
     },
