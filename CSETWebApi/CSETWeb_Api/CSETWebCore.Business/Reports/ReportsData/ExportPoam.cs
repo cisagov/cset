@@ -9,7 +9,7 @@ using CSETWebCore.Model.Maturity;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
-using LogicExtensions;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -97,7 +97,7 @@ namespace CSETWebCore.Business.Reports
                         foreach (var question in subgrouping.Questions)
                         {
                             // Skip maturity level 1 questions and questions that have been met.
-                            if (question.Answer == "Y" || question.MaturityLevel == 1)
+                            if (question.Answer == "Y" || question.MaturityLevel == 1 || isUnpardonable(question.DisplayNumber))
                             {
                                 continue;
                             }
@@ -222,6 +222,31 @@ namespace CSETWebCore.Business.Reports
             }
 
             return filename;
+        }
+
+        /// <summary>
+        /// Check if an item is unpardonable based on its control title.
+        /// </summary>
+        /// <param name="controlTitle"></param>
+        /// <returns>bool</returns>
+        private static bool isUnpardonable(string controlTitle)
+        {
+            var unpardonables = new List<string> {
+                "AC.L2-3.1.20",
+                "AC.L2-3.1.22",
+                "PE.L2-3.10.3",
+                "PE.L2-3.10.4",
+                "PE.L2-3.10.5",
+                "IR.L3-3.6.1E",
+                "IR.L3-3.6.2E",
+                "RA.L3-3.11.1E",
+                "RA.L3-3.11.4E",
+                "RA.L3-3.11.6E",
+                "RA.L3-3.11.7E",
+                "SI.L3-3.14.3E"
+            };
+
+            return unpardonables.Contains(controlTitle);
         }
     }
 }
