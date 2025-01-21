@@ -31,7 +31,7 @@
         "@angular/material": "^18.2.11",
         "@angular/platform-browser": "^18.2.11",
         "@angular/platform-browser-dynamic": "^18.2.11",
-        "@angular/platform-server": "^18.2.11",
+        "@angular/platform-server": "^19.1.2",
         "@angular/router": "^18.2.11",
         "@cloudfactorydk/ng2-tooltip-directive": "^18.0.0",
         "@fortawesome/angular-fontawesome": "^0.15.0",
