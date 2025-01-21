@@ -281,29 +281,28 @@
                             </div>
                             <div *ngIf="observation?.finding?.type !== 'Supplemental Fact'">
 
-                                <strong> Action Items: </strong>
+                                <strong> Action Required: </strong>
                                 <br>
                                 <div *ngIf="observation?.finding?.auto_Generated != 1">
                                     <div *ngIf="observation?.finding?.actionItems != null" style="white-space: pre-wrap;"
                                         [innerHTML]="observation?.finding?.actionItems">
                                     </div>
                                     <div *ngIf="observation?.actionItems == null">
-                                        (no Action Items available)
+                                        (no actions available)
                                     </div>
                                 </div>
                                 <div *ngIf="this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
                                     <div *ngFor="let allActionsInFinding of this.masterActionItemsMap.get(observation?.finding?.finding_Id); let i = index">
                                         <div *ngIf="allActionsInFinding.action_Items != '' && allActionsInFinding.action_Items != '.'">
-                                            {{ this.getChildQuestionNumber(allActionsInFinding.question_Title) }}: {{
-                                            allActionsInFinding.action_Items }}
+                                            {{ allActionsInFinding.action_Items }}
                                         </div>
                                         <div *ngIf="(allActionsInFinding.action_Items == '' || allActionsInFinding.action_Items == '.') && observation?.finding?.actionItems == null">
-                                            (no Action Items available)
+                                            (no actions available)
                                         </div>
                                     </div>
                                 </div>
                                 <div *ngIf="!this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
-                                    (no Action Items available)
+                                    (no actions available)
                                 </div>
                                 <strong> Risk Area: </strong> {{ observation?.finding?.risk_Area }}
                                 <br>
@@ -358,8 +357,7 @@
                                         {{ file.title }} (<strong>Section:</strong> {{ file.sectionRef }})
                                     </div>
                                 </span>
-                                <span *ngIf="!sourceFilesMap.has(observation?.finding?.finding_Id)">(no Resources
-                                    available)</span>
+                                <span *ngIf="!sourceFilesMap.has(observation?.finding?.finding_Id)">(no Resources available)</span>
                             </div>
 
 
