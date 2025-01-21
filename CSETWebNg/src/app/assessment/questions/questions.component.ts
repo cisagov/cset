@@ -227,6 +227,8 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
    */
   setMode(mode: string) {
     this.assessSvc.applicationMode = mode;
+    this.categories = null;
+
     this.questionsSvc.setMode(mode).subscribe(() => {
       this.loadQuestions();
       this.navSvc.buildTree();

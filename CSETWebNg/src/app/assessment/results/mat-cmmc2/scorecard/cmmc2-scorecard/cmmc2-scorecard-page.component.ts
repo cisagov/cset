@@ -9,7 +9,7 @@ import { MaturityService } from '../../../../../services/maturity.service';
 })
 export class Cmmc2ScorecardPageComponent implements OnInit {
 
-  scorecards: any[];
+  scorecards: any[] = [];
 
   targetLevel: number;
 
