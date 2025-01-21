@@ -133,7 +133,7 @@
                                     [matTooltip]="hasComment(q) ? 'Notes with content':'Notes'"
                                     matTooltipPosition="below"
                                     [class.answer-selected]="q.extrasExpanded === true || hasComment(q)">
-                                    <input name="q_{{ q.questionId }}_C" id="checkbox_comment" type="checkbox"
+                                    <input name="q_{{ q.questionId }}_C" id="checkbox_comment" class="btn-check" type="checkbox"
                                         (keydown)="checkKeyPress($event, q, 'comment')" (click)="toggleComment(q)">
                                     <span class="cset-icons-comment fs-base"></span>
                                 </label>
@@ -142,7 +142,7 @@
                                 <label class="me-0 ms-2 btn form-check-label btn-mfr"
                                     [class.answer-selected]="q.markForReview === true"
                                     matTooltip="This control requires further review.">
-                                    <input name="q_{{ q.questionId }}_F" type="checkbox"
+                                    <input name="q_{{ q.questionId }}_F" class="btn-check" type="checkbox"
                                         (keydown)="checkKeyPress($event, q, 'mfr')" (click)="saveMFR(q);" tabindex="0"
                                         [checked]="q.markForReview === true">
                                     <span class="cset-icons-flag-dark fs-base"></span>
