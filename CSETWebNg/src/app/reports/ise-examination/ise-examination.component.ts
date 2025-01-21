@@ -102,9 +102,6 @@ export class IseExaminationComponent implements OnInit {
         this.response = r;
         this.examLevel = this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
-        console.log("this.response.matAnsweredQuestions");
-        console.log(this.response.matAnsweredQuestions[0]);
-
         // goes through domains
         for (let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
           let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
@@ -217,15 +214,14 @@ export class IseExaminationComponent implements OnInit {
                     let sourceDocList = this.files?.listTabs[0]?.sourceDocumentsList;
 
                     for (let i = 0; i < sourceDocList?.length; i++) {
-                      if (!this.sourceFilesMap.has(observation.finding.observation_Id)) {
-
-                        this.sourceFilesMap.set(observation.finding.observation_Id, [sourceDocList[i]]);
+                      if (!this.sourceFilesMap.has(observation.finding.finding_Id)) {
+                        this.sourceFilesMap.set(observation.finding.finding_Id, [sourceDocList[i]]);
                       } else {
-                        let tempFileArray = this.sourceFilesMap.get(observation.finding.observation_Id);
+                        let tempFileArray = this.sourceFilesMap.get(observation.finding.finding_Id);
 
                         tempFileArray.push(sourceDocList[i]);
 
-                        this.sourceFilesMap.set(observation.finding.observation_Id, tempFileArray);
+                        this.sourceFilesMap.set(observation.finding.finding_Id, tempFileArray);
                       }
                     }
                   }
@@ -273,7 +269,6 @@ export class IseExaminationComponent implements OnInit {
       },
       error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
     );
-
   }
 
   /**
