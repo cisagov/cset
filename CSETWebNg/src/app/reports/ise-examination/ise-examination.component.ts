@@ -119,6 +119,7 @@ export class IseExaminationComponent implements OnInit {
             }
 
             // goes through questions
+            let scuepQuestions = [];
             let coreQuestions = [];
             let corePlusQuestions = [];
             let questionsInCorrectOrder = [];
@@ -126,8 +127,10 @@ export class IseExaminationComponent implements OnInit {
             for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
 
-              // Sorts questions into CORE and CORE+
-              if (question.maturityLevel == "CORE") {
+              // Sorts questions into specific categories
+              if (question.maturityLevel == "SCUEP") {
+                scuepQuestions.push(question);
+              } else if (question.maturityLevel == "CORE") {
                 coreQuestions.push(question);
               } else if (question.maturityLevel == "CORE+") {
                 corePlusQuestions.push(question);
@@ -136,7 +139,14 @@ export class IseExaminationComponent implements OnInit {
               // Ensures correct question order even if CORE questions have a higher id than a CORE+
               if (k === subcat?.questions?.length - 1) {
                 questionsInCorrectOrder = (coreQuestions.concat(corePlusQuestions));
-                subcat.questions = questionsInCorrectOrder;
+                
+                if (this.examLevel != "SCUEP") {
+                  subcat.questions = questionsInCorrectOrder;
+                } else {
+                  subcat.questions = scuepQuestions;
+                }
+
+                scuepQuestions = [];
                 coreQuestions = [];
                 corePlusQuestions = [];
                 questionsInCorrectOrder = [];
