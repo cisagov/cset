@@ -29,19 +29,25 @@
 
      <div>
           <h4>Level 1</h4>
-          <app-level-scorecard [response]="scorecardForLevel(1)"></app-level-scorecard> 
+          <app-level-scorecard [response]="scorecardForLevel(1)"></app-level-scorecard>
+     </div>
+
+     <div *ngIf="scorecards.length == 0">
+          <div class="spinner-container" style="margin: 2em auto">
+               <div style="max-width: 50px; max-height: 50px;"></div>
+          </div>
      </div>
 
 
      <div *ngIf="targetLevel >= 2">
           <h4>Level 2</h4>
-          <app-level-scorecard [response]="scorecardForLevel(2)"></app-level-scorecard> 
+          <app-level-scorecard [response]="scorecardForLevel(2)"></app-level-scorecard>
      </div>
 
 
      <div *ngIf="targetLevel >= 3">
           <h4>Level 3</h4>
-          <app-level-scorecard [response]="scorecardForLevel(3)"></app-level-scorecard> 
+          <app-level-scorecard [response]="scorecardForLevel(3)"></app-level-scorecard>
      </div>
 
 
