@@ -251,7 +251,7 @@ namespace CSETWebCore.Business.Reports
 
     public class Individual
     {
-        public string INDIVIDUALFULLNAME { get; set; }
+        public string FullName { get; set; }
         public List<Observations> Observations { get; set; }
     }
 

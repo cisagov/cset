@@ -1124,7 +1124,7 @@ namespace CSETWebCore.Business.Reports
                     individual = new Individual()
                     {
                         Observations = new List<Observations>(),
-                        INDIVIDUALFULLNAME = FormatName(f.d.FirstName, f.d.LastName)
+                        FullName = FormatName(f.d.FirstName, f.d.LastName)
                     };
 
                     individualList.Add(individual);

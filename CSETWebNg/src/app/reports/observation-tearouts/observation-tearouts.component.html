@@ -67,8 +67,8 @@
 
     <div *ngFor="let individual of response?.individuals">
         <div *transloco="let t; read: 'observation'" class="page-break">
-            <div id="indiv_{{individual.individualfullname.replace(' ','_')}}"
-                style="font-weight: bold; color: #0A5278; margin-bottom: .5em;">{{individual.individualfullname}}
+            <div id="indiv_{{individual.fullname.replace(' ','_')}}"
+                style="font-weight: bold; color: #0A5278; margin-bottom: .5em;">{{individual.fullName}}
             </div>
 
             <table class="finding-table" *ngFor="let obs of individual.observations">
