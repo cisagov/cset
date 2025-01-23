@@ -373,7 +373,9 @@
           "no observations message": "The assessment does not contain any observations that are assigned to an individual.",
           "question identifier": "Question Identifier",
           "question text": "Question Text",
-          "summary": "This document contains a list of all observations identified and recorded during the assessment. For more information, view the Observations Tear Out Sheets page in the User Guide."
+          "summary": "This report lists all Observations identified and recorded during the assessment. For more information, view the Observations Tear Out Sheets page in the User Guide.",
+          "export csv link": "Export Observations to Excel",
+          "excel summary": "All Observations are exported to an Excel file.  Observations assigned to multiple parties will have an entry for each person responsible."
      },
      "core": {
           "dashboard": {
