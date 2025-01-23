@@ -64,6 +64,6 @@ export class ObservationTearoutsComponent implements OnInit {
    * @param individual
    */
   private buildTocEntry(individual: any) {
-    return "#indiv_" + individual.INDIVIDUALFULLNAME.replace(' ', '_');
+    return "#indiv_" + individual.fullName.replace(' ', '_');
   }
 }

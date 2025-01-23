@@ -240,6 +240,19 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * 
+   */
+  clickExcelLink(reportType: string) {
+    if (reportType.toLowerCase() == 'poam') {
+      window.location.href = this.configSvc.apiUrl + 'reports/poam/excelexport?token=' + localStorage.getItem('userToken');
+    }
+
+    if (reportType.toLowerCase() == 'observations') { 
+      window.location.href = this.configSvc.apiUrl + 'reports/observations/excel?token=' + localStorage.getItem('userToken');
+    }
+  }
+
+  /**
    * If all ACET statements are not answered, set the 'disable' flag
    * to true.
    */
@@ -391,11 +404,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       this.currentSectionId = null; // No assessment
     }
   }
-
-  exportPoamToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'reports/poam/excelexport?token=' + localStorage.getItem('userToken');
-  }
-
 }
 
 @Component({
