@@ -407,19 +407,20 @@ namespace CSETWebCore.Api.Controllers
             string lang = _token.GetCurrentLanguage();
 
             // Create a memory stream to hold the Excel file
-            using var memoryStream = new MemoryStream();
-            var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, true, 0, lang);
+            using (var memoryStream = new MemoryStream())
+            {
+                var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, true, 0, lang);
 
-            // Generate the Excel file
-            ExportPoamBusiness.GenerateSpreadSheet(memoryStream, mm);
+                // Generate the Excel file
+                ExportPoamBusiness.GenerateSpreadSheet(memoryStream, mm);
 
-            // Return the file as a downloadable attachment
-            return File(
-                memoryStream.ToArray(),
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                ExportPoamBusiness.GetFilename(assessmentId, _context)
-            );
-
+                // Return the file as a downloadable attachment
+                return File(
+                    memoryStream.ToArray(),
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    ExportPoamBusiness.GetFilename(assessmentId, _context)
+                );
+            }
         }
 
 
@@ -531,6 +532,9 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         [HttpGet]
         [Route("api/reports/observations")]
         public IActionResult GetObservations()
@@ -542,6 +546,34 @@ namespace CSETWebCore.Api.Controllers
             data.information = _report.GetInformation();
             data.Individuals = _report.GetObservationIndividuals();
             return Ok(data);
+        }
+
+
+        /// <summary>
+        /// Returns a file stream containing Observations in a CSV format.
+        /// </summary>
+        [HttpGet]
+        [Route("api/reports/observations/excel")]
+        public IActionResult ExportObservationsCsv(string token)
+        {
+            int assessmentId = _token.AssessmentForUser(token);
+            string lang = _token.GetCurrentLanguage();
+
+            var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+
+            // Generate the Excel file
+            using (var memoryStream = new MemoryStream())
+            {
+                var otx = new ObservationsToExcel(_context, _report);
+                otx.GenerateSpreadsheet(assessmentId, memoryStream);
+
+                // Return the file as a downloadable attachment
+                return File(
+                    memoryStream.ToArray(),
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    $"{info.Assessment_Name} - Observations.xlsx"
+                );
+            }
         }
 
 
