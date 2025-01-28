@@ -689,6 +689,7 @@ import { QuestionsReviewedComponent } from './reports/questions-reviewed/questio
 import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.component';
 import { AnalyticsResultsComponent } from './assessment/results/analytics-results/analytics-results.component';
 import { firstValueFrom } from 'rxjs';
+import { VersionUpgradeComponent } from './dialogs/version-upgrade/version-upgrade.component';
 
 
 @NgModule({
@@ -1229,7 +1230,8 @@ import { firstValueFrom } from 'rxjs';
         AllReviewedComponent,
         QuestionsReviewedComponent,
         RolesChangedComponent,
-        AnalyticsResultsComponent
+        AnalyticsResultsComponent,
+        VersionUpgradeComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,

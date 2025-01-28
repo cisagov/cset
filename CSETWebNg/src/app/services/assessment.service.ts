@@ -448,7 +448,7 @@ export class AssessmentService {
           // set the brand new flag
           this.isBrandNew = true;
           this.loadAssessment(response.id).then(() => {
-            resolve('assessment loaded');
+            resolve(response.id);
           });
         },
         error =>
