@@ -297,6 +297,12 @@ namespace CSETWebCore.Api.Controllers
             {
                 int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
                 var diagramXml = _diagram.GetDiagramXml((int)assessmentId);
+
+                // Requests occuring before a diagram is built will be null
+                if (diagramXml == null)
+                {
+                    return null;
+                }
                 
                 RootDiagramContainer diagramContainer = new RootDiagramContainer();
                 diagramContainer.diagramXml = _diagram.GetDiagramXml((int)assessmentId);
@@ -310,9 +316,8 @@ namespace CSETWebCore.Api.Controllers
                 diagramContainer.shapes = _diagram.GetDiagramShapes(diagramContainer.shapeVertices);
                 diagramContainer.texts = _diagram.GetDiagramText(diagramContainer.shapeVertices);
                 diagramContainer.symbols = _diagram.GetComponentSymbols();
+
                 return diagramContainer;
-
-
             }
             catch (Exception exc)
             {

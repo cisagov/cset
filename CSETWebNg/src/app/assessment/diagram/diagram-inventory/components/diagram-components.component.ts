@@ -35,12 +35,8 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class DiagramComponentsComponent implements OnInit {
 
-  //diagramComponentList: any[] = [];
-
   @Output()
   componentsChange = new EventEmitter<any>();
-
-  @Input() diagramComponentList;
 
   comparer: Comparer = new Comparer();
   assetTypes: any;
@@ -63,23 +59,18 @@ export class DiagramComponentsComponent implements OnInit {
   /**
    *
    */
-  ngOnInit() {    
-    
-    this.diagramSvc.getDiagramDataObservable().subscribe((data) => {      
-      const z = data.components.filter(y => y.assetType != 'Connector');
-      this.diagramComponentList = z;
-      this.getComponents();
-      this.getSymbols(data.symbols);  
-    });
-    
+  ngOnInit() {
+    const z = this.diagramSvc.diagramModel?.components.filter(y => y.assetType != 'Connector');
+    this.getComponents();
+    this.getSymbols(this.diagramSvc.diagramModel?.symbols);
   }
 
   /**
    *
    */
   getComponents() {
-      // remove 'Connector' entries from the inventory list to reduce clutter and confusion      
-      this.componentsChange.emit(this.diagramComponentList);    
+    // remove 'Connector' entries from the inventory list to reduce clutter and confusion      
+    this.componentsChange.emit(this.diagramSvc.diagramModel.components);
   }
 
   /**
@@ -87,18 +78,18 @@ export class DiagramComponentsComponent implements OnInit {
    * can build SELECT controls for Asset Type.
    */
   getSymbols(g: any[]) {
-      this.symbols = [];
+    this.symbols = [];
 
-      g.forEach(gg => {
-        gg.symbols.forEach(s => {
-          this.symbols.push(s);
-        });
+    g?.forEach(gg => {
+      gg.symbols.forEach(s => {
+        this.symbols.push(s);
       });
+    });
 
-      // don't include 'Connector' in symbol select for inventory
-      this.symbols = this.symbols.filter(s => s.symbol_Name != 'Connector');
+    // don't include 'Connector' in symbol select for inventory
+    this.symbols = this.symbols.filter(s => s.symbol_Name != 'Connector');
 
-      this.symbols.sort((a, b) => a.symbol_Name.localeCompare(b.symbol_Name));
+    this.symbols.sort((a, b) => a.symbol_Name.localeCompare(b.symbol_Name));
   }
 
   /**
@@ -108,7 +99,7 @@ export class DiagramComponentsComponent implements OnInit {
     let componentGuid = guid;
     let newType = evt.target.value;
 
-    let newLabel = this.diagramSvc.applyComponentSuffix(newType, this.diagramComponentList);
+    let newLabel = this.diagramSvc.applyComponentSuffix(newType, this.diagramSvc.diagramModel.components);
 
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage =
@@ -117,9 +108,9 @@ export class DiagramComponentsComponent implements OnInit {
       "'?";
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        for (let i = 0; i < this.diagramComponentList.length; i++) {
-          if (this.diagramComponentList[i].componentGuid == guid) {
-            this.diagramComponentList[i].label = newLabel;
+        for (let i = 0; i < this.diagramSvc.diagramModel.components.length; i++) {
+          if (this.diagramSvc.diagramModel.components[i].componentGuid == guid) {
+            this.diagramSvc.diagramModel.components[i].label = newLabel;
           }
         }
       } else {
@@ -143,7 +134,7 @@ export class DiagramComponentsComponent implements OnInit {
       return;
     }
 
-    this.diagramComponentList.sort((a, b) => {
+    this.diagramSvc.diagramModel.components.sort((a, b) => {
       const isAsc = sort.direction === "asc";
       switch (sort.active) {
         case "label":

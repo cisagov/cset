@@ -42,9 +42,10 @@ export class TextComponent implements OnInit {
   }
 
   getTexts() {
-    this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
-      this.texts = x.texts;
-    });
+    this.texts = this.diagramSvc.diagramModel?.texts;
+    // this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
+    //   this.texts = x.texts;
+    // });
   }
 
   sortData(sort: Sort) {
