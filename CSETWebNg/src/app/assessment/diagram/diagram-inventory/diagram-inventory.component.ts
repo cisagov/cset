@@ -39,7 +39,6 @@ export class DiagramInventoryComponent implements OnInit {
   componentsExist: boolean = false;
   compListUpdateFromShapesTab: any = [];
 
-
   /**
    *
    */
@@ -52,11 +51,7 @@ export class DiagramInventoryComponent implements OnInit {
   /**
    *
    */
-  ngOnInit() {
-    this.diagramSvc.diagramChanged$.subscribe(message => {
-      this.componentsExist = this.diagramSvc.enchilada?.components.length > 0;
-    });
-  }
+  ngOnInit() { }
 
   /**
    *

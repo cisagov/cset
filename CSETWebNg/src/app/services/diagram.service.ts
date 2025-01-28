@@ -42,11 +42,7 @@ export class DiagramService {
   /**
    * The full result containing diagram data
    */
-  enchilada: any = null;
-
-
-  private refreshSubject = new BehaviorSubject<any>('');
-  diagramChanged$ = this.refreshSubject.asObservable();
+  diagramModel: any = null;
 
 
   /**
@@ -71,18 +67,16 @@ export class DiagramService {
   // flipped to 'true' while waiting for a diagram to be fetched
   fetchingDiagram: boolean = false;
 
-
+  /**
+   * Get diagram from API and update my model
+   */
   async obtainDiagram() {
     this.fetchingDiagram = true;
-    this.enchilada = null;
+    this.diagramModel = null;
 
     this.callDiagramEndpoint().subscribe(x => {
-
       this.fetchingDiagram = false;
-
-      this.enchilada = x;
-
-      this.broadcastDiagramChange('');
+      this.diagramModel = x;
     });
   }
 

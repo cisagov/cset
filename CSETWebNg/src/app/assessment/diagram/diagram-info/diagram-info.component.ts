@@ -65,15 +65,8 @@ export class DiagramInfoComponent implements OnInit {
      * 
      */
     ngOnInit() {
-        this.diagramSvc.diagramChanged$.subscribe(x => {
-            //this.refresh();
-            console.log('diagram-info diagramChanged$ hit');
-        });
-
-        console.log('diagram-info ngOnInit');
         this.refresh();
     }
-
 
     /**
      * 
@@ -89,7 +82,7 @@ export class DiagramInfoComponent implements OnInit {
 
         await this.diagramSvc.obtainDiagram();
 
-        this.hasDiagram = this.diagramSvc.enchilada?.components.length > 0;
+        this.hasDiagram = this.diagramSvc.diagramModel?.components.length > 0;
         this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
     }
 

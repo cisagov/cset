@@ -45,7 +45,7 @@ export class ZonesComponent implements OnInit {
     // this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
     //   this.zones = x.zones;
     // });
-    this.zones = this.diagramSvc.enchilada?.zones;
+    this.zones = this.diagramSvc.diagramModel?.zones;
   }
 
   sortData(sort: Sort) {

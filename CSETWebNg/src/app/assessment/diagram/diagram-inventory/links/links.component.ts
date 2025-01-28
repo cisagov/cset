@@ -48,7 +48,7 @@ export class LinksComponent implements OnInit {
   }
 
   getLinks() {
-    this.links = this.diagramSvc.enchilada?.links;
+    this.links = this.diagramSvc.diagramModel?.links;
     // this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
     //   this.links = x.links;
     // });
