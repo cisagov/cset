@@ -345,7 +345,7 @@
      "assessment compliance text": "This chart displays the compliance score(s) as calculated above. It provides insight into the organization's progress toward meeting the cybersecurity standards evaluated in the assessment. Unanswered questions and \"No\" responses to requirements are considered non-compliant.",
      "ranked categories text 1a": "This chart ranks the top areas of concern based on a weighted risk score. The percentages are calculated by assigning higher weights to requirements that, if not implemented, would make the system more vulnerable to easier attacks. Lower weights are assigned to requirements associated with more difficult attacks.",
      "ranked categories text 1b": "Categories are ranked in order of highest priority to lowest. Organizations can use this information to identify where to allocate additional resources and implement effective mitigating controls.",
-     "ranked categories text 2": "This table presents the priority ranking for each category, the number of unmet requirements out of the total, and the weighted risk percentage.",
+     "ranked categories text 2": "This table presents the priority ranking for each category, the number of unmet requirements out of the total, and the weighted risk percentage. Lower percentages are desirable.",
      "passed": "Passed",
      "failed": "Failed",
      "total": "Total",
