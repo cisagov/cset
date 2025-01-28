@@ -53,7 +53,7 @@ export class DiagramInventoryComponent implements OnInit {
    *
    */
   ngOnInit() {
-    this.diagramSvc.diagramRefreshed$.subscribe(message => {
+    this.diagramSvc.diagramChanged$.subscribe(message => {
       this.componentsExist = this.diagramSvc.enchilada?.components.length > 0;
     });
   }

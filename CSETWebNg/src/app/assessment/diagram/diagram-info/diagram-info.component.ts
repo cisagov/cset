@@ -58,48 +58,39 @@ export class DiagramInfoComponent implements OnInit {
         public hydroSvc: HydroService,
         public malcolmSvc: MalcolmService,
         private dialog: MatDialog,
-        private diagramSvc: DiagramService
+        public diagramSvc: DiagramService
     ) { }
 
     /**
      * 
      */
     ngOnInit() {
+        this.diagramSvc.diagramChanged$.subscribe(x => {
+            //this.refresh();
+            console.log('diagram-info diagramChanged$ hit');
+        });
+
         console.log('diagram-info ngOnInit');
-
-        // this.diagramSvc.diagramRefresh$.subscribe(x => {
-        //     this.refresh();
-        // });
-
         this.refresh();
     }
 
-    
+
     /**
      * 
      */
-    private refresh() {
-        this.diagramSvc.fetchingDiagram = true;
+    private async refresh() {
+        // When returning from Diagram, we get a brand new authSvc.
+        // This refreshes the isLocal flag.
+        if (this.authSvc.isLocal === undefined) {
+            this.authSvc.checkLocalInstallStatus().subscribe((resp: boolean) => {
+                this.authSvc.isLocal = resp;
+            });
+        }
 
-        this.diagramSvc.getCompleteDiagram().subscribe(x => {
+        await this.diagramSvc.obtainDiagram();
 
-            this.diagramSvc.fetchingDiagram = false;
-
-            this.diagramSvc.enchilada = x;
-
-            this.diagramSvc.broadcastDiagramChange('');
-
-            this.hasDiagram = this.diagramSvc.enchilada?.components.length > 0;
-            this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
-
-            // When returning from Diagram, we get a brand new authSvc.
-            // This refreshes the isLocal flag.
-            if (this.authSvc.isLocal === undefined) {
-                this.authSvc.checkLocalInstallStatus().subscribe((resp: boolean) => {
-                    this.authSvc.isLocal = resp;
-                });
-            }
-        });
+        this.hasDiagram = this.diagramSvc.enchilada?.components.length > 0;
+        this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
     }
 
     /**

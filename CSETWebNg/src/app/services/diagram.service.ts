@@ -46,7 +46,7 @@ export class DiagramService {
 
 
   private refreshSubject = new BehaviorSubject<any>('');
-  diagramRefreshed$ = this.refreshSubject.asObservable();
+  diagramChanged$ = this.refreshSubject.asObservable();
 
 
   /**
@@ -61,7 +61,7 @@ export class DiagramService {
    * @param s 
    */
   broadcastDiagramChange(s: string) {
-    this.refreshSubject.next(s);
+    //this.refreshSubject.next(s);
   }
 
   saveComponent(component) {
@@ -69,11 +69,26 @@ export class DiagramService {
   }
 
   // flipped to 'true' while waiting for a diagram to be fetched
-  fetchingDiagram = false;
+  fetchingDiagram: boolean = false;
 
-  //replaces all the previous seperate calls
-  //to eliminate the current deadlock on the server
-  getCompleteDiagram(): Observable<any> {
+
+  async obtainDiagram() {
+    this.fetchingDiagram = true;
+    this.enchilada = null;
+
+    this.callDiagramEndpoint().subscribe(x => {
+
+      this.fetchingDiagram = false;
+
+      this.enchilada = x;
+
+      this.broadcastDiagramChange('');
+    });
+  }
+
+  // replaces all the previous separate calls
+  // to eliminate the current deadlock on the server
+  callDiagramEndpoint(): Observable<any> {
     return this.http.get(this.apiUrl + 'getAllDiagram');
   }
 
