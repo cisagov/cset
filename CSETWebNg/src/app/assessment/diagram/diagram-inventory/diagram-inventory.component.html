@@ -23,7 +23,7 @@
 <div class="mb-5">
   <h5>Component Inventory</h5>
 
-  <div *ngIf="componentsExist">
+  <div *ngIf="diagramSvc.enchilada?.components.length > 0">
     <div class="d-flex justify-content-between mb-3 mt-4">
       <button class="btn btn-primary" (click)="getExport()">
         <i class="cset-icons-export-excel me-2"></i>
@@ -35,6 +35,7 @@
         Update Vulnerabilities Database</button>
       <input id="csafUpload" type="file" accept=".json" multiple (change)="fileSelect($event)" class="display-none">
     </div>
+
     <div class="row stretch mb-3">
       <div class="col-12 mb-5">
         <mat-tab-group style="overflow: auto" class="mb-3">

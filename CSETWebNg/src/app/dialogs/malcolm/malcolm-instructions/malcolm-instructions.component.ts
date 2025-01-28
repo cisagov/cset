@@ -32,22 +32,18 @@ export class MalcolmInstructionsComponent {
     /**
      * 
      */
-    uploadMalcolmData(event: any) {
+    async uploadMalcolmData(event: any) {
         this.malcolmFiles = event.target.files;
 
         if (this.malcolmFiles) {
             this.hydroSvc.uploadMalcolmFiles(this.malcolmFiles).subscribe(
-                (result) => {
+                async (result) => {
                     if (result != null) {
                         this.openUploadErrorDialog(result, true);
                     } else {
                         //location.reload();
                         console.log('K');
-                        this.diagramSvc.getCompleteDiagram().subscribe(x => {
-                            this.diagramSvc.fetchingDiagram = false;
-                            this.diagramSvc.enchilada = x;
-                            this.diagramSvc.broadcastDiagramChange('');
-                        });
+                        await this.diagramSvc.obtainDiagram();
                         this.dialog.closeAll();
                     }
                 });
@@ -88,21 +84,17 @@ export class MalcolmInstructionsComponent {
     /**
      * 
      */
-    attemptToImportFromMalcolm(ipAddress: string) {
+    async attemptToImportFromMalcolm(ipAddress: string) {
         if (this.ipRegEx.test(ipAddress)) {
             this.iperror = false;
             this.malcolmSvc.attemptToImportFromMalcolm(ipAddress).subscribe(
-                (result) => {
+                async (result) => {
                     if (result != null) {
                         this.openUploadErrorDialog(result, false);
                     } else {
                         console.log('J');
                         //location.reload();
-                        this.diagramSvc.getCompleteDiagram().subscribe(x => {
-                            this.diagramSvc.fetchingDiagram = false;
-                            this.diagramSvc.enchilada = x;
-                            this.diagramSvc.broadcastDiagramChange('');
-                        });
+                        await this.diagramSvc.obtainDiagram();
                         this.dialog.closeAll();
                     }
                 });

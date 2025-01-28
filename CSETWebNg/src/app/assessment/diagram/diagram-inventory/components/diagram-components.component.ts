@@ -38,8 +38,6 @@ export class DiagramComponentsComponent implements OnInit {
   @Output()
   componentsChange = new EventEmitter<any>();
 
-  @Input() diagramComponentList;
-
   comparer: Comparer = new Comparer();
   assetTypes: any;
   sal: any;
@@ -63,7 +61,6 @@ export class DiagramComponentsComponent implements OnInit {
    */
   ngOnInit() {
     const z = this.diagramSvc.enchilada?.components.filter(y => y.assetType != 'Connector');
-    this.diagramComponentList = z;
     this.getComponents();
     this.getSymbols(this.diagramSvc.enchilada?.symbols);
   }
@@ -73,7 +70,7 @@ export class DiagramComponentsComponent implements OnInit {
    */
   getComponents() {
     // remove 'Connector' entries from the inventory list to reduce clutter and confusion      
-    this.componentsChange.emit(this.diagramComponentList);
+    this.componentsChange.emit(this.diagramSvc.enchilada.components);
   }
 
   /**
@@ -102,7 +99,7 @@ export class DiagramComponentsComponent implements OnInit {
     let componentGuid = guid;
     let newType = evt.target.value;
 
-    let newLabel = this.diagramSvc.applyComponentSuffix(newType, this.diagramComponentList);
+    let newLabel = this.diagramSvc.applyComponentSuffix(newType, this.diagramSvc.enchilada.components);
 
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage =
@@ -111,9 +108,9 @@ export class DiagramComponentsComponent implements OnInit {
       "'?";
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        for (let i = 0; i < this.diagramComponentList.length; i++) {
-          if (this.diagramComponentList[i].componentGuid == guid) {
-            this.diagramComponentList[i].label = newLabel;
+        for (let i = 0; i < this.diagramSvc.enchilada.components.length; i++) {
+          if (this.diagramSvc.enchilada.components[i].componentGuid == guid) {
+            this.diagramSvc.enchilada.components[i].label = newLabel;
           }
         }
       } else {
@@ -137,7 +134,7 @@ export class DiagramComponentsComponent implements OnInit {
       return;
     }
 
-    this.diagramComponentList.sort((a, b) => {
+    this.diagramSvc.enchilada.components.sort((a, b) => {
       const isAsc = sort.direction === "asc";
       switch (sort.active) {
         case "label":
