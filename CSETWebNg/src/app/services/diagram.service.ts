@@ -25,7 +25,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Vendor } from '../models/diagram-vulnerabilities.model';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 const headers = {
   headers: new HttpHeaders()
@@ -38,31 +38,43 @@ export class DiagramService {
   apiUrl: string;
   id: number;
   csafVendors: Vendor[] = [];
-  private dataSubject = new Subject<any>();
 
+  /**
+   * The full result containing diagram data
+   */
+  enchilada: any = null;
+
+
+  private refreshSubject = new BehaviorSubject<any>('');
+  diagramRefreshed$ = this.refreshSubject.asObservable();
+
+
+  /**
+   * 
+   */
   constructor(private http: HttpClient, private configSvc: ConfigService) {
-    this.apiUrl = this.configSvc.apiUrl + 'diagram/';    
-  }
-  
-
-  getDiagramDataObservable() {
-    return this.dataSubject.asObservable();
+    this.apiUrl = this.configSvc.apiUrl + 'diagram/';
   }
 
-  emitDiagramData(data: any) {
-    this.dataSubject.next(data);
+  /**
+   * Broadcast to all subscribers that the diagram is ready
+   * @param s 
+   */
+  broadcastDiagramChange(s: string) {
+    this.refreshSubject.next(s);
   }
 
   saveComponent(component) {
     return this.http.post(this.apiUrl + 'saveComponent', component, headers)
   }
 
+  // flipped to 'true' while waiting for a diagram to be fetched
+  fetchingDiagram = false;
+
   //replaces all the previous seperate calls
   //to eliminate the current deadlock on the server
-  getCompleteDiagram(){
-    return this.http.get(this.apiUrl + 'getAllDiagram').subscribe((diaDataResult)=>{
-      this.emitDiagramData(diaDataResult);
-    });
+  getCompleteDiagram(): Observable<any> {
+    return this.http.get(this.apiUrl + 'getAllDiagram');
   }
 
   getDiagramWarnings() {

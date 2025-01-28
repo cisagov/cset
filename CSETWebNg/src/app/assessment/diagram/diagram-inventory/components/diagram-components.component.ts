@@ -35,8 +35,6 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class DiagramComponentsComponent implements OnInit {
 
-  //diagramComponentList: any[] = [];
-
   @Output()
   componentsChange = new EventEmitter<any>();
 
@@ -63,23 +61,19 @@ export class DiagramComponentsComponent implements OnInit {
   /**
    *
    */
-  ngOnInit() {    
-    
-    this.diagramSvc.getDiagramDataObservable().subscribe((data) => {      
-      const z = data.components.filter(y => y.assetType != 'Connector');
-      this.diagramComponentList = z;
-      this.getComponents();
-      this.getSymbols(data.symbols);  
-    });
-    
+  ngOnInit() {
+    const z = this.diagramSvc.enchilada?.components.filter(y => y.assetType != 'Connector');
+    this.diagramComponentList = z;
+    this.getComponents();
+    this.getSymbols(this.diagramSvc.enchilada?.symbols);
   }
 
   /**
    *
    */
   getComponents() {
-      // remove 'Connector' entries from the inventory list to reduce clutter and confusion      
-      this.componentsChange.emit(this.diagramComponentList);    
+    // remove 'Connector' entries from the inventory list to reduce clutter and confusion      
+    this.componentsChange.emit(this.diagramComponentList);
   }
 
   /**
@@ -87,18 +81,18 @@ export class DiagramComponentsComponent implements OnInit {
    * can build SELECT controls for Asset Type.
    */
   getSymbols(g: any[]) {
-      this.symbols = [];
+    this.symbols = [];
 
-      g.forEach(gg => {
-        gg.symbols.forEach(s => {
-          this.symbols.push(s);
-        });
+    g?.forEach(gg => {
+      gg.symbols.forEach(s => {
+        this.symbols.push(s);
       });
+    });
 
-      // don't include 'Connector' in symbol select for inventory
-      this.symbols = this.symbols.filter(s => s.symbol_Name != 'Connector');
+    // don't include 'Connector' in symbol select for inventory
+    this.symbols = this.symbols.filter(s => s.symbol_Name != 'Connector');
 
-      this.symbols.sort((a, b) => a.symbol_Name.localeCompare(b.symbol_Name));
+    this.symbols.sort((a, b) => a.symbol_Name.localeCompare(b.symbol_Name));
   }
 
   /**

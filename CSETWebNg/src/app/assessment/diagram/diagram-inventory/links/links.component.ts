@@ -48,9 +48,10 @@ export class LinksComponent implements OnInit {
   }
 
   getLinks() {
-    this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
-      this.links = x.links;
-    });
+    this.links = this.diagramSvc.enchilada?.links;
+    // this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
+    //   this.links = x.links;
+    // });
   }
 
   sortData(sort: Sort) {

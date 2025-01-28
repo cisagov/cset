@@ -106,13 +106,20 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
    *
    */
   getComponents() {
-    this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
-      this.diagramComponentList = x.components;
-      this.diagramComponentList.forEach(component => {
-        this.updateComponentVendorAndProduct(component);
-      })
-      this.componentsChange.emit(this.diagramComponentList);
-    });
+    const x = this.diagramSvc.enchilada;
+    this.diagramComponentList = x.components;
+    this.diagramComponentList.forEach(component => {
+      this.updateComponentVendorAndProduct(component);
+    })
+    this.componentsChange.emit(this.diagramComponentList);
+
+    // this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
+    //   this.diagramComponentList = x.components;
+    //   this.diagramComponentList.forEach(component => {
+    //     this.updateComponentVendorAndProduct(component);
+    //   })
+    //   this.componentsChange.emit(this.diagramComponentList);
+    // });
   }
 
   saveComponent(component) {
