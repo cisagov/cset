@@ -106,7 +106,7 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
    *
    */
   getComponents() {
-    const x = this.diagramSvc.enchilada;
+    const x = this.diagramSvc.diagramModel;
     this.diagramComponentList = x.components;
     this.diagramComponentList.forEach(component => {
       this.updateComponentVendorAndProduct(component);

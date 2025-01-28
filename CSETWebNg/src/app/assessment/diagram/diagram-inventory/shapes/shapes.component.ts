@@ -56,7 +56,7 @@ export class ShapesComponent implements OnInit {
   }
 
   getShapes() {
-    this.shapes = this.diagramSvc.enchilada?.shapes;
+    this.shapes = this.diagramSvc.diagramModel?.shapes;
     this.componentsChange.emit(this.getComponents());
 
     // this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
@@ -72,7 +72,7 @@ export class ShapesComponent implements OnInit {
    *
    */
   getComponents() {
-    this.diagramComponentList = this.diagramSvc.enchilada?.components;
+    this.diagramComponentList = this.diagramSvc.diagramModel?.components;
 
     // this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
     //   this.diagramComponentList = x.components;
@@ -85,7 +85,7 @@ export class ShapesComponent implements OnInit {
    * can build SELECT controls for Asset Type.
    */
   getSymbols() {
-    const g = this.diagramSvc.enchilada;
+    const g = this.diagramSvc.diagramModel;
 
     this.symbols = [];
     this.symbols.push( // inserts a default blank object in the beginning 
@@ -139,7 +139,7 @@ export class ShapesComponent implements OnInit {
     let label = shape.value ? shape.value : '';
 
 
-    const x = this.diagramSvc.enchilada;
+    const x = this.diagramSvc.diagramModel;
     label = label == '' ? this.diagramSvc.applyComponentSuffix(type, x.components) : label;
 
     this.diagramSvc.changeShapeToComponent(type, id, label).subscribe(

@@ -60,9 +60,9 @@ export class DiagramComponentsComponent implements OnInit {
    *
    */
   ngOnInit() {
-    const z = this.diagramSvc.enchilada?.components.filter(y => y.assetType != 'Connector');
+    const z = this.diagramSvc.diagramModel?.components.filter(y => y.assetType != 'Connector');
     this.getComponents();
-    this.getSymbols(this.diagramSvc.enchilada?.symbols);
+    this.getSymbols(this.diagramSvc.diagramModel?.symbols);
   }
 
   /**
@@ -70,7 +70,7 @@ export class DiagramComponentsComponent implements OnInit {
    */
   getComponents() {
     // remove 'Connector' entries from the inventory list to reduce clutter and confusion      
-    this.componentsChange.emit(this.diagramSvc.enchilada.components);
+    this.componentsChange.emit(this.diagramSvc.diagramModel.components);
   }
 
   /**
@@ -99,7 +99,7 @@ export class DiagramComponentsComponent implements OnInit {
     let componentGuid = guid;
     let newType = evt.target.value;
 
-    let newLabel = this.diagramSvc.applyComponentSuffix(newType, this.diagramSvc.enchilada.components);
+    let newLabel = this.diagramSvc.applyComponentSuffix(newType, this.diagramSvc.diagramModel.components);
 
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage =
@@ -108,9 +108,9 @@ export class DiagramComponentsComponent implements OnInit {
       "'?";
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        for (let i = 0; i < this.diagramSvc.enchilada.components.length; i++) {
-          if (this.diagramSvc.enchilada.components[i].componentGuid == guid) {
-            this.diagramSvc.enchilada.components[i].label = newLabel;
+        for (let i = 0; i < this.diagramSvc.diagramModel.components.length; i++) {
+          if (this.diagramSvc.diagramModel.components[i].componentGuid == guid) {
+            this.diagramSvc.diagramModel.components[i].label = newLabel;
           }
         }
       } else {
@@ -134,7 +134,7 @@ export class DiagramComponentsComponent implements OnInit {
       return;
     }
 
-    this.diagramSvc.enchilada.components.sort((a, b) => {
+    this.diagramSvc.diagramModel.components.sort((a, b) => {
       const isAsc = sort.direction === "asc";
       switch (sort.active) {
         case "label":

@@ -42,7 +42,7 @@ export class TextComponent implements OnInit {
   }
 
   getTexts() {
-    this.texts = this.diagramSvc.enchilada?.texts;
+    this.texts = this.diagramSvc.diagramModel?.texts;
     // this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
     //   this.texts = x.texts;
     // });

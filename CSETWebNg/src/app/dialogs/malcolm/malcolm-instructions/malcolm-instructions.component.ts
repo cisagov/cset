@@ -41,10 +41,8 @@ export class MalcolmInstructionsComponent {
                     if (result != null) {
                         this.openUploadErrorDialog(result, true);
                     } else {
-                        //location.reload();
-                        console.log('K');
-                        await this.diagramSvc.obtainDiagram();
                         this.dialog.closeAll();
+                        await this.diagramSvc.obtainDiagram();
                     }
                 });
         }
@@ -92,10 +90,8 @@ export class MalcolmInstructionsComponent {
                     if (result != null) {
                         this.openUploadErrorDialog(result, false);
                     } else {
-                        console.log('J');
-                        //location.reload();
-                        await this.diagramSvc.obtainDiagram();
                         this.dialog.closeAll();
+                        await this.diagramSvc.obtainDiagram();
                     }
                 });
         }
