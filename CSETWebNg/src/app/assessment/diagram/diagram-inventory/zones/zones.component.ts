@@ -42,9 +42,10 @@ export class ZonesComponent implements OnInit {
   }
 
   getZones() {
-    this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
-      this.zones = x.zones;
-    });
+    // this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
+    //   this.zones = x.zones;
+    // });
+    this.zones = this.diagramSvc.enchilada?.zones;
   }
 
   sortData(sort: Sort) {

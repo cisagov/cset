@@ -63,7 +63,13 @@
     </div>
   </div>
 
-  <div *ngIf="!componentsExist" class="pt-3">
+  <div *ngIf="diagramSvc.fetchingDiagram">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
+
+  <div *ngIf="!diagramSvc.fetchingDiagram && !componentsExist" class="pt-3">
     <div class="alert alert-warning">
       There are no network components defined
     </div>

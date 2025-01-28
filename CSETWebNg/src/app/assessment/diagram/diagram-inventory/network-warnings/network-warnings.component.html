@@ -29,7 +29,7 @@
         <td>{{warning.warningText}}</td>
     </tr>
 
-    <tr *ngIf="warnings.length == 0">
+    <tr *ngIf="warnings?.length == 0">
         <td colspan="2" style="text-align: center;">There are no warnings in this Network Diagram.</td>
     </tr>
 </table>

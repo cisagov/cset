@@ -21,64 +21,56 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DiagramService } from '../../../services/diagram.service';
 import { ConfigService } from '../../../services/config.service';
 import { saveAs } from "file-saver";
 import { UploadExportComponent } from './../../../dialogs/upload-export/upload-export.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Vendor } from '../../../models/diagram-vulnerabilities.model';
-import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
   selector: 'app-diagram-inventory',
   templateUrl: './diagram-inventory.component.html',
   styleUrls: ['./diagram-inventory.component.scss']
 })
-export class DiagramInventoryComponent implements OnInit,AfterViewInit {
+export class DiagramInventoryComponent implements OnInit {
 
-  componentsExist: boolean = true;
+  componentsExist: boolean = false;
   compListUpdateFromShapesTab: any = [];
 
-  /**
-   *
-   */
-  constructor(public diagramSvc: DiagramService,
-    private dialog: MatDialog,
-    private assessSvc: AssessmentService,
-    private configSvc: ConfigService
-  ) { }
-  
-  ngAfterViewInit(): void {
-    if (this.componentsExist){
-    this.diagramSvc.getCompleteDiagram();
-    }
-  }
 
   /**
    *
    */
-  ngOnInit() {    
-    this.assessSvc.hasDiagram().subscribe((result: boolean) => {
-      this.componentsExist = result;
-    })
+  constructor(
+    public diagramSvc: DiagramService,
+    private configSvc: ConfigService,
+    private dialog: MatDialog
+  ) { }
+
+  /**
+   *
+   */
+  ngOnInit() {
+    this.diagramSvc.diagramRefreshed$.subscribe(message => {
+      this.componentsExist = this.diagramSvc.enchilada?.components.length > 0;
+    });
   }
 
   /**
    *
    */
   onChange(list: any) {
-    this.componentsExist = list.length > 0;
+    this.componentsExist = list?.length > 0;
   }
 
   /**
    *
    */
   onShapeChange(list: any) {
-    if (list != null) {
-      if (list.length > 0) {
-        this.componentsExist = true;
-      }
+    if (!!list) {
+      this.componentsExist = list.length > 0;
       this.compListUpdateFromShapesTab = list;
     }
   }

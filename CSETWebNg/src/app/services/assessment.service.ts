@@ -566,7 +566,9 @@ export class AssessmentService {
   }
 
   /**
-   *
+   * Possibly deprecated.  The Diagram page can determine if there
+   * is a diagram by looking at the components returned from the
+   * getCompleteDiagram endpoint.
    */
   hasDiagram() {
     return this.http.get(this.apiUrl + 'diagram/has');
