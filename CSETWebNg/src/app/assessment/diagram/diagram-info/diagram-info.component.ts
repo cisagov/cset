@@ -21,9 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { HydroService } from '../../../services/hydro.service';
@@ -33,6 +31,7 @@ import { ConfigService } from '../../../services/config.service';
 import { NavTreeNode, NavigationService } from '../../../services/navigation/navigation.service';
 import { MalcolmService } from '../../../services/malcolm.service';
 import { MalcolmInstructionsComponent } from '../../../dialogs/malcolm/malcolm-instructions/malcolm-instructions.component';
+import { DiagramService } from '../../../services/diagram.service';
 
 @Component({
     selector: 'app-info',
@@ -43,26 +42,36 @@ export class DiagramInfoComponent implements OnInit {
     msgDiagramExists = 'Edit the Network Diagram';
     msgNoDiagramExists = 'Create a Network Diagram';
     buttonText: string = this.msgNoDiagramExists;
+
     hasDiagram: boolean = false;
 
     malcolmFiles: File[];
 
-
-    constructor(private router: Router,
+    /**
+     * 
+     */
+    constructor(
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
         public configSvc: ConfigService,
         public authSvc: AuthenticationService,
         public hydroSvc: HydroService,
         public malcolmSvc: MalcolmService,
-        private location: Location,
         private dialog: MatDialog,
+        public diagramSvc: DiagramService
     ) { }
-    tree: NavTreeNode[] = [];
-    ngOnInit() {
-        //this.populateTree();
-        this.checkForDiagram();
 
+    /**
+     * 
+     */
+    ngOnInit() {
+        this.refresh();
+    }
+
+    /**
+     * 
+     */
+    private async refresh() {
         // When returning from Diagram, we get a brand new authSvc.
         // This refreshes the isLocal flag.
         if (this.authSvc.isLocal === undefined) {
@@ -70,29 +79,16 @@ export class DiagramInfoComponent implements OnInit {
                 this.authSvc.isLocal = resp;
             });
         }
-        this.delayCheckForDiagram(1000);
+
+        await this.diagramSvc.obtainDiagram();
+
+        this.hasDiagram = this.diagramSvc.diagramModel?.components.length > 0;
+        this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
     }
 
-    populateTree() {
-        this.navSvc.buildTree();
-    }
-
-    private checkForDiagram() {
-        this.assessSvc.hasDiagram().subscribe((resp: boolean) => {
-            this.hasDiagram = resp;
-            this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
-        });
-    }
-
-    private async delayCheckForDiagram(ms) {
-        await this.delay(ms)
-        this.checkForDiagram();
-    }
-
-    private delay(ms: number) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
+    /**
+     * 
+     */
     navToDiagram(which: string) {
         const jwt = localStorage.getItem('userToken');
         const apiUrl = this.configSvc.apiUrl;
@@ -121,6 +117,9 @@ export class DiagramInfoComponent implements OnInit {
             '&a=' + localStorage.getItem('assessmentId');
     }
 
+    /**
+     * 
+     */
     uploadMalcolmData(event: any) {
         this.malcolmFiles = event.target.files;
 
@@ -130,12 +129,15 @@ export class DiagramInfoComponent implements OnInit {
                     if (result != null) {
                         this.openUploadErrorDialog(result);
                     } else {
-                        location.reload();
+                        this.dialog.closeAll();
                     }
                 });
         }
     }
 
+    /**
+     * 
+     */
     openUploadErrorDialog(errorData: any) {
         let errorDialog = this.dialog.open(MalcolmUploadErrorComponent, {
             minHeight: '300px',
@@ -146,11 +148,13 @@ export class DiagramInfoComponent implements OnInit {
         });
     }
 
+    /**
+     * 
+     */
     openMalcolmInstructionsDialog() {
         let instructionDialog = this.dialog.open(MalcolmInstructionsComponent, {
             minHeight: '300px',
             minWidth: '400px'
         });
     }
-
 }
