@@ -25,6 +25,8 @@ import { Component } from '@angular/core';
 import { ConfigService } from '../../../../services/config.service';
 import { LayoutService } from '../../../../services/layout.service';
 import { ResourceLibraryService } from '../../../../services/resource-library.service';
+import { MatDialog } from '@angular/material/dialog';
+import { VersionUpgradeComponent } from '../../../../dialogs/version-upgrade/version-upgrade.component';
 
 
 @Component({
@@ -36,8 +38,21 @@ export class TutorialCmmc2Component {
   constructor(
     public configSvc: ConfigService,
     public layoutSvc: LayoutService,
-    private resourceLibSvc: ResourceLibraryService
+    private resourceLibSvc: ResourceLibraryService,
+    private dialog: MatDialog,
+
   ) { }
+
+  ngOnInIt() {
+
+  }
+
+  showDialog() {
+    const dialogRef = this.dialog.open(VersionUpgradeComponent);
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
 
   documentURL(documentName: string) {
     return this.resourceLibSvc.documentUrlByName(documentName);
