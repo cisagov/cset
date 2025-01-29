@@ -1104,5 +1104,16 @@ namespace CSETWebCore.Business.Assessment
 
             return documentsPerAssessment;
         }
+        public void ConvertAssessment(int assessment_id, int original_id)
+        {
+            var answerObj = new ANSWER();
+            var mq = _context.ANSWER.Where(x => x.Assessment_Id == original_id).ToList();
+            // if (mq != null)
+            // {
+            //     us.IsFirstLogin = false;
+            //     _context.SaveChanges();
+            // }
+            return;
+        }
     }
 }

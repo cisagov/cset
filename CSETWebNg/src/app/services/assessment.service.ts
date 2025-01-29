@@ -725,6 +725,12 @@ export class AssessmentService {
     }
   }
 
+  convertAssesment(original_id: number) {
+    return this.http.post(
+      this.apiUrl + 'conversion', original_id, headers
+    );
+  }
+
 
 
 }

@@ -21,8 +21,8 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AssessmentService } from '../../services/assessment.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -31,8 +31,22 @@ import { DemographicIodService } from '../../services/demographic-iod.service';
 import { DemographicsIod } from '../../models/demographics-iod.model';
 import { AssessmentContactsResponse, AssessmentDetail, Demographic } from '../../models/assessment-info.model';
 import { User } from '../../models/user.model';
+import { GalleryService } from '../../services/gallery.service';
+import { ConfigService } from '../../services/config.service';
+import { MaturityService } from '../../services/maturity.service';
 
-
+interface GalleryItem {
+  gallery_Item_Guid: string;
+  icon_File_Name_Small: string | null;
+  icon_File_Name_Large: string | null;
+  configuration_Setup: string;
+  configuration_Setup_Client: string | null;
+  description: string;
+  title: string;
+  parent_Id: number;
+  is_Visible: boolean;
+  custom_Set_Name: string | null;
+}
 @Component({
   selector: 'app-version-upgrade',
   templateUrl: './version-upgrade.component.html',
@@ -40,20 +54,7 @@ import { User } from '../../models/user.model';
 })
 export class VersionUpgradeComponent implements OnInit {
 
-  galleryItem = {
-    "gallery_Item_Guid": "c1a1a2f2-4e5d-4c9b-8d9f-1a2b3c4d5e6f",
-    "icon_File_Name_Small": null,
-    "icon_File_Name_Large": null,
-    "configuration_Setup": "{\"Model\":{\"ModelName\":\"CMMC2F\", \"Level\": 1}}",
-    "configuration_Setup_Client": null,
-    "description": "<p>CMMC 2.0 is a streamlined cybersecurity framework by the U.S. Department of Defense (DoD). It measures the\r\n          implementation of cybersecurity requirements at three maturity levels:</p>\r\n     <ul>\r\n          <li>Level 1 (Foundational): Basic safeguarding requirements for FCI specified in FAR Clause 52.204-21,\r\n               self-assessed.</li>\r\n          <li>Level 2 (Advanced): Aligns with NIST SP 800-171, third-party assessed.</li>\r\n          <li>Level 3 (Expert): Targets advanced threats, aligns with NIST SP 800-172, government-assessed.</li>\r\n     </ul>\r\n     <p>Its goal is to provide increased assurance to the DoD that defense contractors and subcontractors are compliant\r\n          with information protection requirements for FCI and CUI.</p>",
-    "title": "Cybersecurity Maturity Model Certification (CMMC) 2.0",
-    "parent_Id": 4,
-    "is_Visible": true,
-    "custom_Set_Name": null,
-    "plainText": "CMMC 2.0 is a streamlined cybersecurity framework by the U.S. Department of Defense (DoD). It measures the\n          implementation of cybersecurity requirements at three maturity levels:\n     \n          Level 1 (Foundational): Basic safeguarding requirements for FCI specified in FAR Clause 52.204-21,\n               self-assessed.\n          Level 2 (Advanced): Aligns with NIST SP 800-171, third-party assessed.\n          Level 3 (Expert): Targets advanced threats, aligns with NIST SP 800-172, government-assessed.\n     \n     Its goal is to provide increased assurance to the DoD that defense contractors and subcontractors are compliant\n          with information protection requirements for FCI and CUI."
-  }
-
+  galleryItem: GalleryItem;
   contacts: User[];
 
   demographicData: Demographic = {};
@@ -61,43 +62,72 @@ export class VersionUpgradeComponent implements OnInit {
   assessment: AssessmentDetail = {
     assessmentName: ''
   };
+  selectedLevel: number;
+  originalId: number;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public targetModelName: any,
     private dialog: MatDialogRef<VersionUpgradeComponent>,
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public authSvc: AuthenticationService,
     public demoSvc: DemographicService,
-    public demoExtSvc: DemographicIodService
-  ) { }
+    public demoExtSvc: DemographicIodService,
+    public gallerySvc: GalleryService,
+    public configSvc: ConfigService,
+    public maturitySvc: MaturityService
+  ) {
+  }
 
   close() {
     return this.dialog.close("Upgrade complete");
   }
 
+  // Convert draft versions of assessments to final versions 
   async upgrade() {
-    let first = this.assessSvc.assessment
+    // Get details from original assessment
+    let draftDetails = this.assessSvc.assessment
     this.demoSvc.getDemographic().subscribe((data: any) => {
       this.demographicData = data;
     })
-    this.demoExtSvc.getDemographics().subscribe((data: any) => {
-      this.demoExtData = data;
-    })
-    this.assessment = first;
-
+    this.assessment = draftDetails;
+    this.originalId = this.assessment.id
+    this.selectedLevel = this.assessSvc.assessment.maturityModel.maturityTargetLevel
+    // Get gallery item to create and begin new target assessment 
     try {
-      // localStorage.removeItem('assessmentId');
-      const assessmentId = await this.assessSvc.newAssessmentGallery(this.galleryItem);
-      this.navSvc.beginAssessment(assessmentId)
-      this.assessment.id = assessmentId
-      this.assessSvc.assessment = this.assessment
+      this.gallerySvc.getGalleryItems(this.configSvc.galleryLayout).subscribe(
+        async (resp: any) => {
+          rows: for (const row of resp.rows) {
+            items: for (const item of row.galleryItems) {
+              try {
+                const configSetup = JSON.parse(item.configuration_Setup);
+                if (configSetup.Model && configSetup.Model.ModelName == this.targetModelName) {
+                  this.galleryItem = item;
+                  break rows;
+                }
+              } catch (error) {
+                console.error("Error parsing configuration_Setup:", error);
+              }
+            }
+          }
+          // Get id for newly created assessment
+          const newId = await this.assessSvc.newAssessmentGallery(this.galleryItem);
+          this.navSvc.beginAssessment(newId)
+          this.assessment.id = newId
+          // Update new assessment with values 
+          this.assessSvc.assessment = this.assessment
+          this.demoSvc.updateDemographic(this.demographicData);
+          this.assessSvc.updateAssessmentDetails(this.assessment);
+          this.assessSvc.refreshAssessment();
+          this.updateLevel();
+          this.assessSvc.convertAssesment(this.originalId).subscribe((data: any) => {
+            console.log(data)
+          })
+        })
+
     } catch (error) {
       console.error("Error converting assessment:", error);
     }
-    this.demoSvc.updateDemographic(this.demographicData);
-    this.assessSvc.updateAssessmentDetails(this.assessment);
-    this.assessSvc.refreshAssessment();
-    this.refreshContacts()
     return this.close();
   }
 
@@ -105,16 +135,11 @@ export class VersionUpgradeComponent implements OnInit {
 
   }
 
-
-  refreshContacts() {
-    if (this.assessSvc.id()) {
-      this.assessSvc
-        .getAssessmentContacts()
-        .then((data: AssessmentContactsResponse) => {
-          console.log(data)
-          this.contacts = data.contactList;
-        });
-    }
+  updateLevel() {
+    this.maturitySvc.saveLevel(this.selectedLevel).subscribe(() => {
+      this.navSvc.buildTree();
+      return;
+    });
   }
 
 
