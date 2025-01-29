@@ -21,37 +21,44 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../../../services/config.service';
 import { LayoutService } from '../../../../services/layout.service';
 import { ResourceLibraryService } from '../../../../services/resource-library.service';
 import { MatDialog } from '@angular/material/dialog';
 import { VersionUpgradeComponent } from '../../../../dialogs/version-upgrade/version-upgrade.component';
+import { AssessmentService } from '../../../../services/assessment.service';
+import { AssessmentDetail } from '../../../../models/assessment-info.model';
 
 
 @Component({
   selector: 'app-tutorial-cmmc2',
   templateUrl: './tutorial-cmmc2.component.html'
 })
-export class TutorialCmmc2Component {
+export class TutorialCmmc2Component implements OnInit {
+  show: boolean = true;
 
   constructor(
     public configSvc: ConfigService,
     public layoutSvc: LayoutService,
+    public assessSvc: AssessmentService,
     private resourceLibSvc: ResourceLibraryService,
     private dialog: MatDialog,
 
   ) { }
 
-  ngOnInIt() {
+  ngOnInit(): void {
+    this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
+      if (data.maturityModel.modelName == "CMMC2") {
+        this.showDialog()
+      }
+    })
+
 
   }
 
   showDialog() {
-    const dialogRef = this.dialog.open(VersionUpgradeComponent);
-    dialogRef.afterClosed().subscribe(result => {
-
-    });
+    const dialogRef = this.dialog.open(VersionUpgradeComponent, { data: "CMMC2F" });
   }
 
   documentURL(documentName: string) {
