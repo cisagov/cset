@@ -516,7 +516,7 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
-                this._assessmentBusiness.ConvertAssessment(assessmentId, originalAssessmentId);
+                this._assessmentBusiness.ConvertAssessment(assessmentId, originalAssessmentId, "CMMC2");
                 
                 return Ok();
             }
