@@ -39,6 +39,9 @@
     <None Remove="Demographic\DemographicIO\Export\" />
     <None Remove="Demographic\DemographicIO\Import\" />
     <None Remove="Demographic\DemographicIO\Models\" />
+    <None Update="App_Data\AssessmentConversion\CMMC2.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
