@@ -20,50 +20,36 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *ngIf="diagramComponentList.length == 0; else mainContent" class="spinner-container" style="margin: 2em auto">
-  <div style="max-width: 50px; max-height: 50px;"></div>
-</div>
-<ng-template #mainContent>
-  <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
-    <th mat-sort-header="label">Label</th>
-    <th mat-sort-header="assetType">Asset Type</th>
-    <th mat-sort-header="hasUniqueQuestions">Has Unique Questions</th>
-    <th mat-sort-header="sal">SAL</th>
-    <th mat-sort-header="criticality">Criticality</th>
-    <!-- <th mat-sort-header="layer">Layer</th>
-    <th mat-sort-header="ipAddress">IP Address</th> -->
-    <th mat-sort-header="zone">Zone</th>
-    <th mat-sort-header="description">Description</th>
-    <th mat-sort-header="hostName">Host Name</th>
-    <!-- <th mat-sort-header="visible">Visible</th> -->
+<table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto' *ngIf="!diagramSvc.fetchingDiagram">
+  <th mat-sort-header="label">Label</th>
+  <th mat-sort-header="assetType">Asset Type</th>
+  <th mat-sort-header="hasUniqueQuestions" class="text-align-center">Has Unique Questions</th>
+  <th mat-sort-header="sal">SAL</th>
+  <th mat-sort-header="criticality">Criticality</th>
+  <th mat-sort-header="zone">Zone</th>
+  <th mat-sort-header="description">Description</th>
+  <th mat-sort-header="hostName">Host Name</th>
 
-    <tr *ngFor="let component of diagramComponentList;">
-      <td [innerHTML]="component.label"></td>
-      <td>
-        <select class="form-select" (change)="changeAssetType($event, component.componentGuid, component.label)"
-          [compGuid]="component.componentGuid">
-          <option *ngFor="let o of this.symbols" [value]="o.abbreviation"
-            [selected]="component.assetType == o.symbol_Name">
-            {{o.symbol_Name}}
-          </option>
-        </select>
-      </td>
-      <td style="padding-left: 20px">
-        <input type="checkbox" name="{{ component.label }}" id="{{ component.label }}" class="checkbox-custom mt-1"
-          [(ngModel)]="component.hasUniqueQuestions" [disabled]="true" [checked]="component.hasUniqueQuestions">
-        <label for="{{ component.label }}" class="checkbox-custom-label"></label>
-      </td>
-      <td>{{component.sal}}</td>
-      <td>{{component.criticality}}</td>
-      <!-- <td>{{component.layerName}}</td> -->
-      <!-- <td>{{component.ipAddress}}</td> -->
-      <td>{{component.zoneLabel}}</td>
-      <td>{{component.description}}</td>
-      <td>{{component.hostName}}</td>
-      <!-- <td style="padding-left: 20px;">
-        <input type="checkbox" name="{{ component.visible }}" class="mt-1" [(ngModel)]="component.visible"
-          [checked]="component.visible" [disabled]="true">
-      </td> -->
-    </tr>
-  </table>
-</ng-template>
+  <tr *ngFor="let component of diagramSvc.diagramModel?.components">
+    <td [innerHTML]="component.label"></td>
+    <td>
+      <select class="form-select" (change)="changeAssetType($event, component.componentGuid, component.label)"
+        [compGuid]="component.componentGuid">
+        <option *ngFor="let o of this.symbols" [value]="o.abbreviation"
+          [selected]="component.assetType == o.symbol_Name">
+          {{o.symbol_Name}}
+        </option>
+      </select>
+    </td>
+    <td style="padding-left: 20px">
+      <input type="checkbox" name="{{ component.label }}" id="{{ component.label }}" class="checkbox-custom mt-1"
+        [(ngModel)]="component.hasUniqueQuestions" [disabled]="true" [checked]="component.hasUniqueQuestions">
+      <label for="{{ component.label }}" class="checkbox-custom-label" style="justify-content: space-around;"></label>
+    </td>
+    <td>{{component.sal}}</td>
+    <td>{{component.criticality}}</td>
+    <td>{{component.zoneLabel}}</td>
+    <td>{{component.description}}</td>
+    <td>{{component.hostName}}</td>
+  </tr>
+</table>
