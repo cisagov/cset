@@ -23,17 +23,27 @@
 <div *transloco="let t" class="confirm-dialog d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="me-3 fs-base-6 cset-icons-check-circle"></span>
-    <span>Upgrade to CMMC 2.0 Final</span>
+    <span>Upgrade draft assessment to final</span>
   </div>
 
-  <div class="p-3 pb-0 pe-0 mt-2 oy-auto d-flex flex-column flex-11a">
-    <mat-dialog-content class="p-0 pe-3 d-flex flex-column flex-11a text-center">
-      Upgrade this draft to the final version of 2.0
-      <button (click)="upgrade()">Convert</button>
+  <div class="p-3 mt-2 oy-auto d-flex flex-column flex-11a">
+    <mat-dialog-content *ngIf="loading; else content" class="p-6d-flex flex-column flex-11a text-center">
+      Converting your assessment, this may take a few moments.
     </mat-dialog-content>
+    <ng-template #content>
+      <mat-dialog-content class="p-0 pr-3 pe-3 d-flex flex-column flex-11a text-center">
+        <div>The final version of this assessment is now available. </div>
+        <div>All applicable answered questions, along with assessment information and demographics, will be transferred.
+        </div>
+        <div class="pb-2 wrap-text">Would you like to upgrade your draft assessment to the final version?</div>
+
+      </mat-dialog-content>
+    </ng-template>
   </div>
 
-  <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-start flex-00a">
-    <button class=" btn btn-primary m-0 me-2" (click)="close()">Close</button>
+  <mat-dialog-actions *ngIf="!loading" class="p-3 mb-0 d-flex justify-content-between flex-00a">
+    <button class="btn btn-primary m-0" (click)="close(false)">Close</button>
+    <button (click)="upgrade()" class="btn btn-primary m-0">Convert</button>
   </mat-dialog-actions>
+
 </div>

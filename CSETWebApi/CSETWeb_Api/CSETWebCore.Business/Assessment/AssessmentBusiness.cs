@@ -12,7 +12,6 @@ using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
-using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Helpers;
@@ -29,7 +28,7 @@ using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NPOI.SS.Formula.Functions;
+
 
 
 namespace CSETWebCore.Business.Assessment
@@ -1114,53 +1113,67 @@ namespace CSETWebCore.Business.Assessment
         }
         public void ConvertAssessment(int assessment_id, int original_id, string targetAssessment)
         {
-            JArray questionIds = null;
-            
-            var rh = new ResourceHelper();
-            var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "AssessmentConversion", $"{targetAssessment}.json"));
-
-            if (json == null)
+            try
             {
-                return;
-            }
-            
-            questionIds = JsonConvert.DeserializeObject<JArray>(json);
+                JArray questionIds = null;
 
-            foreach (var row in questionIds)
-            {
-                var originalQuestionId = row.SelectToken("original").ToString().ToInt32();
-                var newQuestionId = row.SelectToken("new").ToString().ToInt32();
+                var rh = new ResourceHelper();
+                var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "AssessmentConversion",
+                    $"{targetAssessment}.json"));
 
-                var ar = _context.ANSWER
-                    .Where(x => x.Assessment_Id == original_id && x.Question_Or_Requirement_Id == originalQuestionId)
-                    .FirstOrDefault();
-                
-
-                var answer = new Answer()
+                if (json == null)
                 {
-                    QuestionId = newQuestionId, 
-                    QuestionNumber = ar.Question_Number.ToString(),
-                    OptionId = ar.Mat_Option_Id, 
-                    AnswerText = ar.Answer_Text,
-                    AltAnswerText = ar.Alternate_Justification, 
-                    FreeResponseAnswer = ar.Free_Response_Answer,
-                    Feedback = ar.FeedBack, 
-                    MarkForReview = ar.Mark_For_Review ?? false,
-                    ComponentGuid = ar.Component_Guid, 
-                    Reviewed = ar.Reviewed, 
-                    QuestionType = ar.Question_Type,
-                    Is_Maturity = ar.Is_Maturity ?? true
-                };
+                    return;
+                }
 
-                var adminTabBusiness = new AdminTabBusiness(_context);
-                var mb = new MaturityBusiness(_context, _assessmentUtil, adminTabBusiness);
-                mb.StoreAnswer(assessment_id, answer);
+                questionIds = JsonConvert.DeserializeObject<JArray>(json);
+
+                foreach (var row in questionIds)
+                {
+                    var originalQuestionId = row.SelectToken("original").ToString().ToInt32();
+                    var newQuestionId = row.SelectToken("new").ToString().ToInt32();
+
+                    var original_record = _context.ANSWER
+                        .Where(x => x.Assessment_Id == original_id &&
+                                    x.Question_Or_Requirement_Id == originalQuestionId)
+                        .FirstOrDefault();
+
+                    if (original_record == null || original_record.Answer_Text == "U")
+                    {
+                        continue;
+                    }
+
+                    var answer = new Answer()
+                    {
+                        QuestionId = newQuestionId,
+                        QuestionNumber = original_record.Question_Number.ToString(),
+                        OptionId = original_record.Mat_Option_Id,
+                        AnswerText = original_record.Answer_Text,
+                        AltAnswerText = original_record.Alternate_Justification,
+                        FreeResponseAnswer = original_record.Free_Response_Answer,
+                        Feedback = original_record.FeedBack,
+                        MarkForReview = original_record.Mark_For_Review ?? false,
+                        ComponentGuid = original_record.Component_Guid,
+                        Reviewed = original_record.Reviewed,
+                        QuestionType = original_record.Question_Type,
+                        Is_Maturity = original_record.Is_Maturity ?? true
+                    };
+
+                    var adminTabBusiness = new AdminTabBusiness(_context);
+                    var mb = new MaturityBusiness(_context, _assessmentUtil, adminTabBusiness);
+                    mb.StoreAnswer(assessment_id, answer);
+                }
+                // Hide draft assessment
+                var draft = _context.ASSESSMENT_CONTACTS
+                    .Where(x => x.Assessment_Id == original_id)
+                    .FirstOrDefault();
+                draft.UserId = null;
+                _context.SaveChanges();
             }
-            
-            
-            
-            
-            return;
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
         }
     }
 }
