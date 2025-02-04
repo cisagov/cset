@@ -22,162 +22,169 @@
 -------------------------->
 <div class="white-panel d-flex justify-content-start flex-column flex-11a tutorial"
   *transloco="let t; read: 'tutorial.cmmc2'">
-  <h3 class="wrap-text mb-3">{{t('title')}}</h3>
+  <div *ngIf="loading">
+    <div class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+  </div>
+  <div [hidden]="loading">
+    <h3 class="wrap-text mb-3">{{t('title')}}</h3>
 
-  <div>
-    <h5>{{t('1')}}</h5>
-    <p>
-      {{t('2')}}
-    </p>
+    <div>
+      <h5>{{t('1')}}</h5>
+      <p>
+        {{t('2')}}
+      </p>
 
-    <p>
-      {{t('3')}}
-    </p>
+      <p>
+        {{t('3')}}
+      </p>
 
-    <p>
-      {{t('4')}}
-    </p>
+      <p>
+        {{t('4')}}
+      </p>
 
-    <h5>{{t('5')}}</h5>
-    <p>
-      {{t('6')}}
-    </p>
-    <ul>
-      <li [innerHTML]="t('7')"></li>
-      <li [innerHTML]="t('8')"></li>
-      <li [innerHTML]="t('9')"></li>
-    </ul>
+      <h5>{{t('5')}}</h5>
+      <p>
+        {{t('6')}}
+      </p>
+      <ul>
+        <li [innerHTML]="t('7')"></li>
+        <li [innerHTML]="t('8')"></li>
+        <li [innerHTML]="t('9')"></li>
+      </ul>
 
-    <p>
-      {{t('10')}}
-    </p>
+      <p>
+        {{t('10')}}
+      </p>
 
-    <div class="img-frame p-3" style="width: 70%">
-      <img src="assets/images/CMMC/tutorial2/Picture1F.png" class="mb-3" style="max-width: 100%"
-        alt="The CMMC 2 model hierarchy">
-      <div class="img-title">
-        {{t('11')}}
+      <div class="img-frame p-3" style="width: 70%">
+        <img src="assets/images/CMMC/tutorial2/Picture1F.png" class="mb-3" style="max-width: 100%"
+          alt="The CMMC 2 model hierarchy">
+        <div class="img-title">
+          {{t('11')}}
+        </div>
       </div>
+
+
+      <h5>{{t('12')}}</h5>
+      <p>
+        {{t('13')}}
+      </p>
+
+      <ul>
+        <li>{{t('13a')}}</li>
+        <li>{{t('13b')}}</li>
+        <li>{{t('13c')}}</li>
+        <li>{{t('13d')}}</li>
+        <li>{{t('13e')}}</li>
+        <li>{{t('13f')}}</li>
+        <li>{{t('13g')}}</li>
+        <li>{{t('13h')}}</li>
+        <li>{{t('13i')}}</li>
+        <li>{{t('13j')}}</li>
+        <li>{{t('13k')}}</li>
+        <li>{{t('13l')}}</li>
+        <li>{{t('13m')}}</li>
+        <li>{{t('13n')}}</li>
+      </ul>
+
+      <p>
+        {{t('14')}}
+      </p>
+
+      <div class="img-frame p-3" style="width: 70%">
+        <img src="assets/images/CMMC/tutorial2/Picture2F.png" style="max-width: 100%" alt="A CMMC 2 practice display">
+      </div>
+
+
+      <h6>{{t('15')}}</h6>
+      <div class="img-frame p-3" style="width: 70%">
+        <img src="assets/images/CMMC/tutorial2/Picture3F.png" style="max-width: 100%" alt="A domain header">
+      </div>
+      <p>
+        {{t('16')}}
+      </p>
+
+
+      <h6>{{t('17')}}</h6>
+      <div class="img-frame p-3">
+        <img src="assets/images/CMMC/tutorial2/Picture4F.png" style="max-width: 150px" alt="Practice identifier detail">
+      </div>
+
+      <p [innerHTML]="t('18')"></p>
+
+      <ul>
+        <li>{{t('18a')}}</li>
+        <li>{{t('18b')}}</li>
+        <li>{{t('18c')}}</li>
+      </ul>
+
+      <p>
+        {{t('19')}}
+      </p>
+
+      <h6>{{t('20')}}</h6>
+      <div class="img-frame p-3" style="width: 70%">
+        <img src="assets/images/CMMC/tutorial2/Picture5F.png" style="max-width: 100%" alt="Requirement detail">
+      </div>
+      <p>
+        {{t('21')}}
+      </p>
+
+
+      <h6>{{t('22')}}</h6>
+      <div class="img-frame p-3">
+        <img src="assets/images/CMMC/tutorial2/Picture6F.png" style="max-width: 100%"
+          alt="Icons available for each question">
+      </div>
+
+      <p>
+        {{t('23')}}
+      </p>
+      <ul>
+        <li>{{t('23a')}}</li>
+        <li>{{t('23b')}}</li>
+        <li>{{t('23c')}}</li>
+      </ul>
+
+      <div class="img-frame p-3" style="width: 70%">
+        <img src="assets/images/CMMC/tutorial2/Picture7F.png" class="mb-3" style="max-width: 100%"
+          alt="Supplemental guidance detail">
+      </div>
+
+      <p>
+        {{t('24')}}
+      </p>
+
+      <div class="img-frame p-3" style="width: 70%">
+        <img src="assets/images/CMMC/tutorial2/Picture8F.png" style="max-width: 100%" alt="Practice reference listing">
+      </div>
+
+      <h6>{{t('25')}}</h6>
+      <div class="img-frame p-3">
+        <img src="assets/images/CMMC/tutorial2/Picture9F.png" style="max-width: 230px" alt="Answer option buttons">
+      </div>
+      <p>
+        {{t('26')}}
+      </p>
+      <ul class="mb-4">
+        <li [innerHTML]="t('26a')"></li>
+        <li [innerHTML]="t('26b')"></li>
+        <li [innerHTML]="t('26c')"></li>
+      </ul>
+
+
+      <h5>{{t('27')}}</h5>
+      <p [innerHTML]="t('28')"></p>
+
+      <h5>{{t('29')}}</h5>
+      <p>
+        {{t('30')}}
+      </p>
+      <p [innerHTML]="t('31')"></p>
+
     </div>
-
-
-    <h5>{{t('12')}}</h5>
-    <p>
-      {{t('13')}}
-    </p>
-
-    <ul>
-      <li>{{t('13a')}}</li>
-      <li>{{t('13b')}}</li>
-      <li>{{t('13c')}}</li>
-      <li>{{t('13d')}}</li>
-      <li>{{t('13e')}}</li>
-      <li>{{t('13f')}}</li>
-      <li>{{t('13g')}}</li>
-      <li>{{t('13h')}}</li>
-      <li>{{t('13i')}}</li>
-      <li>{{t('13j')}}</li>
-      <li>{{t('13k')}}</li>
-      <li>{{t('13l')}}</li>
-      <li>{{t('13m')}}</li>
-      <li>{{t('13n')}}</li>
-    </ul>
-
-    <p>
-      {{t('14')}}
-    </p>
-
-    <div class="img-frame p-3" style="width: 70%">
-      <img src="assets/images/CMMC/tutorial2/Picture2F.png" style="max-width: 100%" alt="A CMMC 2 practice display">
-    </div>
-
-
-    <h6>{{t('15')}}</h6>
-    <div class="img-frame p-3" style="width: 70%">
-      <img src="assets/images/CMMC/tutorial2/Picture3F.png" style="max-width: 100%" alt="A domain header">
-    </div>
-    <p>
-      {{t('16')}}
-    </p>
-
-
-    <h6>{{t('17')}}</h6>
-    <div class="img-frame p-3">
-      <img src="assets/images/CMMC/tutorial2/Picture4F.png" style="max-width: 150px" alt="Practice identifier detail">
-    </div>
-
-    <p [innerHTML]="t('18')"></p>
-
-    <ul>
-      <li>{{t('18a')}}</li>
-      <li>{{t('18b')}}</li>
-      <li>{{t('18c')}}</li>
-    </ul>
-
-    <p>
-      {{t('19')}}
-    </p>
-
-    <h6>{{t('20')}}</h6>
-    <div class="img-frame p-3" style="width: 70%">
-      <img src="assets/images/CMMC/tutorial2/Picture5F.png" style="max-width: 100%" alt="Requirement detail">
-    </div>
-    <p>
-      {{t('21')}}
-    </p>
-
-
-    <h6>{{t('22')}}</h6>
-    <div class="img-frame p-3">
-      <img src="assets/images/CMMC/tutorial2/Picture6F.png" style="max-width: 100%"
-        alt="Icons available for each question">
-    </div>
-
-    <p>
-      {{t('23')}}
-    </p>
-    <ul>
-      <li>{{t('23a')}}</li>
-      <li>{{t('23b')}}</li>
-      <li>{{t('23c')}}</li>
-    </ul>
-
-    <div class="img-frame p-3" style="width: 70%">
-      <img src="assets/images/CMMC/tutorial2/Picture7F.png" class="mb-3" style="max-width: 100%"
-        alt="Supplemental guidance detail">
-    </div>
-
-    <p>
-      {{t('24')}}
-    </p>
-
-    <div class="img-frame p-3" style="width: 70%">
-      <img src="assets/images/CMMC/tutorial2/Picture8F.png" style="max-width: 100%" alt="Practice reference listing">
-    </div>
-
-    <h6>{{t('25')}}</h6>
-    <div class="img-frame p-3">
-      <img src="assets/images/CMMC/tutorial2/Picture9F.png" style="max-width: 230px" alt="Answer option buttons">
-    </div>
-    <p>
-      {{t('26')}}
-    </p>
-    <ul class="mb-4">
-      <li [innerHTML]="t('26a')"></li>
-      <li [innerHTML]="t('26b')"></li>
-      <li [innerHTML]="t('26c')"></li>
-    </ul>
-
-
-    <h5>{{t('27')}}</h5>
-    <p [innerHTML]="t('28')"></p>
-
-    <h5>{{t('29')}}</h5>
-    <p>
-      {{t('30')}}
-    </p>
-    <p [innerHTML]="t('31')"></p>
-
   </div>
 
   <app-nav-back-next [page]="'tutorial-cmmc2'"></app-nav-back-next>
