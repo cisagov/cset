@@ -511,21 +511,19 @@ namespace CSETWebCore.Api.Controllers
         
         [HttpPost]
         [Route("api/conversion")]
-        public IActionResult AssessmentConversion([FromBody] int originalAssessmentId)
+        public IActionResult AssessmentConversion([FromQuery] int originalAssessmentId, [FromQuery] string targetModelName)
         {
             try
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
-                this._assessmentBusiness.ConvertAssessment(assessmentId, originalAssessmentId, "CMMC2");
-                
-                return Ok();
+               _assessmentBusiness.ConvertAssessment(assessmentId, originalAssessmentId, targetModelName);
             }
             catch (Exception exc)
             {
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
 
-            return null;
+            return Ok();
         }
         
         

@@ -37,6 +37,9 @@ import { AssessmentDetail } from '../../../../models/assessment-info.model';
 })
 export class TutorialCmmc2Component implements OnInit {
   show: boolean = true;
+  loading = false;
+  message: string;
+
 
   constructor(
     public configSvc: ConfigService,
@@ -58,7 +61,20 @@ export class TutorialCmmc2Component implements OnInit {
   }
 
   showDialog() {
-    const dialogRef = this.dialog.open(VersionUpgradeComponent, { data: "CMMC2F" });
+    const dialogRef = this.dialog.open(VersionUpgradeComponent, {
+      data: {
+        targetModelName: "CMMC2F",
+        callback: this.receiveMessage.bind(this)
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.loading = false;
+    })
+
+  }
+
+  receiveMessage() {
+    this.loading = true;
   }
 
   documentURL(documentName: string) {

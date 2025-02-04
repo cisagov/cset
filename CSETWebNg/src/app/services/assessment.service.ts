@@ -725,9 +725,14 @@ export class AssessmentService {
     }
   }
 
-  convertAssesment(original_id: number) {
+  convertAssesment(original_id: number, targetModelName: string) {
+    // Setting up query parameters
+    let queryParams = new HttpParams()
+      .set('originalAssessmentId', original_id)
+      .set('targetModelName', targetModelName)
+
     return this.http.post(
-      this.apiUrl + 'conversion', original_id, headers
+      this.apiUrl + 'conversion', null, { params: queryParams }
     );
   }
 

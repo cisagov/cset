@@ -52,11 +52,10 @@ interface GalleryItem {
   templateUrl: './version-upgrade.component.html',
   host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
 })
-export class VersionUpgradeComponent implements OnInit {
+export class VersionUpgradeComponent {
 
   galleryItem: GalleryItem;
   contacts: User[];
-
   demographicData: Demographic = {};
   demoExtData: DemographicsIod = {};
   assessment: AssessmentDetail = {
@@ -64,9 +63,11 @@ export class VersionUpgradeComponent implements OnInit {
   };
   selectedLevel: number;
   originalId: number;
+  dataToSend: string = 'Hello from Dialog Component';
+  loading = false;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public targetModelName: any,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private dialog: MatDialogRef<VersionUpgradeComponent>,
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
@@ -75,16 +76,21 @@ export class VersionUpgradeComponent implements OnInit {
     public demoExtSvc: DemographicIodService,
     public gallerySvc: GalleryService,
     public configSvc: ConfigService,
-    public maturitySvc: MaturityService
+    public maturitySvc: MaturityService,
+    public dialogRef: MatDialogRef<VersionUpgradeComponent>
   ) {
+    dialogRef.disableClose = true;
   }
 
+
   close() {
-    return this.dialog.close("Upgrade complete");
+    return this.dialog.close();
   }
 
   // Convert draft versions of assessments to final versions 
   async upgrade() {
+    this.loading = true;
+    this.sendMessage();
     // Get details from original assessment
     let draftDetails = this.assessSvc.assessment
     this.demoSvc.getDemographic().subscribe((data: any) => {
@@ -101,7 +107,7 @@ export class VersionUpgradeComponent implements OnInit {
             items: for (const item of row.galleryItems) {
               try {
                 const configSetup = JSON.parse(item.configuration_Setup);
-                if (configSetup.Model && configSetup.Model.ModelName == this.targetModelName) {
+                if (configSetup.Model && configSetup.Model.ModelName == this.data.targetModelName) {
                   this.galleryItem = item;
                   break rows;
                 }
@@ -112,7 +118,6 @@ export class VersionUpgradeComponent implements OnInit {
           }
           // Get id for newly created assessment
           const newId = await this.assessSvc.newAssessmentGallery(this.galleryItem);
-          this.navSvc.beginAssessment(newId)
           this.assessment.id = newId
           // Update new assessment with values 
           this.assessSvc.assessment = this.assessment
@@ -120,19 +125,21 @@ export class VersionUpgradeComponent implements OnInit {
           this.assessSvc.updateAssessmentDetails(this.assessment);
           this.assessSvc.refreshAssessment();
           this.updateLevel();
-          this.assessSvc.convertAssesment(this.originalId).subscribe((data: any) => {
-            console.log(data)
+          // Fill answers into new assessment from original and then navigate to the new assesment 
+          this.assessSvc.convertAssesment(this.originalId, this.data.targetModelName).subscribe((data: any) => {
+            this.navSvc.beginAssessment(newId)
+            this.loading = false;
+            this.close();
           })
         })
 
     } catch (error) {
       console.error("Error converting assessment:", error);
     }
-    return this.close();
   }
 
-  ngOnInit() {
-
+  sendMessage() {
+    this.data.callback();
   }
 
   updateLevel() {
