@@ -508,5 +508,24 @@ namespace CSETWebCore.Api.Controllers
 
             return null;
         }
+        
+        [HttpPost]
+        [Route("api/conversion")]
+        public IActionResult AssessmentConversion([FromQuery] int originalAssessmentId, [FromQuery] string targetModelName)
+        {
+            try
+            {
+                int assessmentId = _tokenManager.AssessmentForUser();
+               _assessmentBusiness.ConvertAssessment(assessmentId, originalAssessmentId, targetModelName);
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok();
+        }
+        
+        
     }
 }

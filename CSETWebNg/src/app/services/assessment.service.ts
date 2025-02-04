@@ -448,7 +448,7 @@ export class AssessmentService {
           // set the brand new flag
           this.isBrandNew = true;
           this.loadAssessment(response.id).then(() => {
-            resolve('assessment loaded');
+            resolve(response.id);
           });
         },
         error =>
@@ -725,6 +725,17 @@ export class AssessmentService {
           this.assessmentStateChanged$.next(124);
       });
     }
+  }
+
+  convertAssesment(original_id: number, targetModelName: string) {
+    // Setting up query parameters
+    let queryParams = new HttpParams()
+      .set('originalAssessmentId', original_id)
+      .set('targetModelName', targetModelName)
+
+    return this.http.post(
+      this.apiUrl + 'conversion', null, { params: queryParams }
+    );
   }
 
 
