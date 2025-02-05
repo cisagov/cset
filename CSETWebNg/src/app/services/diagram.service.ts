@@ -39,6 +39,9 @@ export class DiagramService {
   id: number;
   csafVendors: Vendor[] = [];
 
+  private diagramRefreshSubject = new BehaviorSubject<any>(null);
+  refresh$ = this.diagramRefreshSubject.asObservable();
+
   /**
    * The full result containing diagram data
    */
@@ -70,13 +73,15 @@ export class DiagramService {
   /**
    * Get diagram from API and update my model
    */
-  async obtainDiagram() {
+  obtainDiagram() {
     this.fetchingDiagram = true;
     this.diagramModel = null;
 
     this.callDiagramEndpoint().subscribe(x => {
       this.fetchingDiagram = false;
       this.diagramModel = x;
+
+      this.diagramRefreshSubject.next('');
     });
   }
 

@@ -41,7 +41,7 @@ export class DiagramInfoComponent implements OnInit {
 
     msgDiagramExists = 'Edit the Network Diagram';
     msgNoDiagramExists = 'Create a Network Diagram';
-    buttonText: string = this.msgNoDiagramExists;
+    buttonText: string = '';
 
     hasDiagram: boolean = false;
 
@@ -65,6 +65,11 @@ export class DiagramInfoComponent implements OnInit {
      * 
      */
     ngOnInit() {
+        this.diagramSvc.refresh$.subscribe(value => {
+            this.hasDiagram = this.diagramSvc.diagramModel?.components.length > 0;
+            this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
+        });
+
         this.refresh();
     }
 
@@ -80,10 +85,7 @@ export class DiagramInfoComponent implements OnInit {
             });
         }
 
-        await this.diagramSvc.obtainDiagram();
-
-        this.hasDiagram = this.diagramSvc.diagramModel?.components.length > 0;
-        this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
+        this.diagramSvc.obtainDiagram();
     }
 
     /**
