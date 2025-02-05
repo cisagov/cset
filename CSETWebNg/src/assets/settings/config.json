@@ -28,6 +28,7 @@
   "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
   "supplementalAutoloadInitialValue": false,
   "debug": {
+    "showCmmcConversion": true,
     "showBuildTime": false,
     "showQuestionAndRequirementIDs": false,
     "canDeleteCustomModules": true,
