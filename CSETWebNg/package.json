@@ -34,7 +34,7 @@
         "@angular/platform-server": "^18.2.11",
         "@angular/router": "^18.2.11",
         "@cloudfactorydk/ng2-tooltip-directive": "^18.0.0",
-        "@fortawesome/angular-fontawesome": "^0.15.0",
+        "@fortawesome/angular-fontawesome": "^1.0.0",
         "@fortawesome/fontawesome-free": "^6.6.0",
         "@fortawesome/fontawesome-svg-core": "^6.6.0",
         "@jsverse/transloco": "^7.5.1",
