@@ -77,7 +77,7 @@
     "showUpdateDiagramCsafVulnerabilitiesButton": false,
     "showVulnerabilitiesDiagramInventoryTab": false,
     "additionalUserGuides": [],
-    "showMalcolmImport": false,
+    "showMalcolmImport": true,
     "showMalcolmAnswerComparison": false,
     "replaceAssessmentWithAnalysis": false,
     "showPostalCode": false
