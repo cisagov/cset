@@ -4,12 +4,17 @@
 // 
 // 
 //////////////////////////////// 
-///
 namespace CSETWebCore.Model.Standards
 {
-    public class QuestionGroupHeadingsInOrder
+    public class QuestionGroupHeadingSimple
     {
         public string Question_Group_Heading { get; set; }
-        public int Question_Group_Heading_Id { get; set; }
+        public int QGH_Id { get; set; }
+
+        public QuestionGroupHeadingSimple(string name, int id)
+        {
+            Question_Group_Heading = name;
+            QGH_Id = id;
+        }
     }
 }
