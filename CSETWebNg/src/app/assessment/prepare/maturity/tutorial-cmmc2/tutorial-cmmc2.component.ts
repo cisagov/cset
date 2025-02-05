@@ -51,12 +51,13 @@ export class TutorialCmmc2Component implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
-      if (data.maturityModel.modelName == "CMMC2") {
-        this.showDialog()
-      }
-    })
-
+    if (this.configSvc.config.debug.showCmmcConversion ?? false) {
+      this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
+        if (data.maturityModel.modelName == "CMMC2") {
+          this.showDialog()
+        }
+      });
+    }
 
   }
 
