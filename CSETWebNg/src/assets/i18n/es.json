@@ -413,7 +413,7 @@
         "instructions 1": "Seleccione la respuesta aplicable para cada una de las siguientes preguntas.",
         "unanswered equals no": "Las preguntas sin respuesta se calculan como una respuesta '{{no-ans}}.'",
         "cpg answer key": "Clave de Respuestas CPG",
-        "instructions ssg": "Las metas específicas del sector (SSG) se muestran según el sector seleccionado en los datos de la evaluación. Estos objetivos, adjuntos a las CPG, están diseñados para abordar inquietudes adicionales exclusivas de su industria. Los SSG no afectarán los resultados de las CPG y se mostrarán por separado en los resultados y los informes."
+        "instructions ssg": "Las metas específicas del sector (SSG) se muestran según el sector seleccionado en los datos de la evaluación. Estos objetivos, adjuntos a las CPG, están diseñados para abordar inquietudes adicionales exclusivas de su industria."
     },
     "tooltip": {
         "view detail": "Ver detalle",
