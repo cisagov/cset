@@ -1,6 +1,6 @@
 {
   "NOTENODE": "Casing on config chain matters, the only item that should be changed here is the current ConfigChain value.  Once that is changed everything else should be set",
-  "currentConfigChain": ["CSET"],
+  "currentConfigChain": ["ISE"],
   "defaultLang": "en",
   "isRunningAnonymous": false,
   "app": {
