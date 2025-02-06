@@ -51,7 +51,7 @@
         "electron-log": "^5.2.0",
         "file-saver": "^2.0.5",
         "font-awesome": "^4.7.0",
-        "fuse.js": "^7.0.0",
+        "fuse.js": "^7.1.0",
         "html-to-pdfmake": "^2.5.20",
         "intersection-observer": "^0.12.2",
         "jquery": "^3.7.1",
