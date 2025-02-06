@@ -339,10 +339,9 @@
                                     (no Regulatory Citations available)
                                 </div>
                             </div>
+
                             <div *ngIf="observation?.finding?.type === 'Supplemental Fact'">
-
                                 <strong> Supplemental Fact: </strong>
-
                                 <br>
                                 <span
                                     *ngIf="observation?.finding?.supp_Guidance != null && observation?.finding?.supp_Guidance != ''"
@@ -358,6 +357,16 @@
                                     </div>
                                 </span>
                                 <span *ngIf="!sourceFilesMap.has(observation?.finding?.finding_Id)">(no Resources available)</span>
+
+                                <br>
+
+                                <strong> References: </strong>
+                                <br>
+                                <span *ngIf="regCitationsMap.has(observation?.question?.mat_Question_Id)">
+                                    {{ regCitationsMap.get(observation?.question?.mat_Question_Id) }}
+                                </span>
+                                <span *ngIf="!regCitationsMap.has(observation?.question?.mat_Question_Id)">(No Regulatory Citations available)</span>
+                                <br>
                             </div>
 
 

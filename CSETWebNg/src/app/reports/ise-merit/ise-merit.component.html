@@ -20,7 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div *ngIf="!loading">
+    <div class="report-body mb-5">
 
     <div class="flex-container">
         <div class="column mt-3">
@@ -372,7 +373,7 @@
                                     <br>
                                     <span *ngIf="sourceFilesMap.has(observation?.finding?.finding_Id)">
                                         <div *ngFor="let file of sourceFilesMap.get(observation?.finding?.finding_Id)">
-                                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
+                                            <label class="btn form-check-label btn-copy" style="text-align: left; font-weight: normal; font-size: 14px;
                                                 flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
                                                 [cdkCopyToClipboard]="file.title + ' (Section: ' + file.sectionRef + ')'">
                                                 <span class="cset-icons-copy"></span>
@@ -380,7 +381,22 @@
                                             {{ file.title }} (<strong>Section:</strong> {{ file.sectionRef }})
                                         </div>
                                     </span>
-                                    <span *ngIf="!sourceFilesMap.has(observation?.finding?.finding_Id)">(no Resources available)</span>
+                                    <span *ngIf="!sourceFilesMap.has(observation?.finding?.finding_Id)">(No Resources available)</span>
+
+                                    <br>
+
+                                    <strong> References: </strong>
+                                    <br>
+                                    <span *ngIf="regCitationsMap.has(observation?.question?.mat_Question_Id)">
+                                        <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
+                                            flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                            [cdkCopyToClipboard]="getReferenceCopyText(observation?.question?.mat_Question_Id)">
+                                            <span class="cset-icons-copy"></span>
+                                        </label>
+                                        {{ regCitationsMap.get(observation?.question?.mat_Question_Id) }}
+                                    </span>
+                                    <span *ngIf="!regCitationsMap.has(observation?.question?.mat_Question_Id)">(No Regulatory Citations available)</span>
+                                    <br>
                                 </div>
 
                                 <hr class="page-line">
@@ -394,5 +410,6 @@
                 </div>
             </div>
         </ng-template>
+    </div>
     </div>
 </div>

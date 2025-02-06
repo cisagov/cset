@@ -429,4 +429,12 @@ export class QuestionsService {
     //then when the list is complete enable the navigation
     this.assessmentSvc.updateAnswer(answer);
   }
+
+  /**
+   * 
+   */
+  getRegulatoryCitations(questionId: number) {
+    return this.http.get(this.configSvc.apiUrl + 'getRegulatoryCitations?questionId=' + questionId)
+  }
+
 }
