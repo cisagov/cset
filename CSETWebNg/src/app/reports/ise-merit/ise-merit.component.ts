@@ -153,6 +153,7 @@ export class IseMeritComponent implements OnInit {
           this.loadingCounter++;
         });
 
+        this.loadingCounter++;
 
         this.acetSvc.getAssessmentInformation().subscribe(
           (r: any) => {
@@ -209,9 +210,6 @@ export class IseMeritComponent implements OnInit {
                   }
                   this.relaventIssues = true;
                   
-                  if (i == this.response?.length - 1) {
-                    this.finishLoading(true);
-                  }
                 })
               }
             }
@@ -241,11 +239,6 @@ export class IseMeritComponent implements OnInit {
     });
   }
 
-  finishLoading(doneLoading: boolean) {
-    if (doneLoading) {
-      this.loading = false;
-    }
-  }
 
   getActionItemsToCopy(findingId: any) {
     let combinedText = "";
