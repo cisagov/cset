@@ -20,8 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *ngIf="!loading">
-    <div class="report-body mb-5">
+<div class="report-body mb-5">
 
     <div class="flex-container">
         <div class="column mt-3">
@@ -291,64 +290,18 @@
                                     <br>
                                     <strong>Regulatory Citation: </strong>
                                     <br>
-                                    <div *ngIf="this.masterActionItemsMap.has(observation?.finding?.finding_Id)">
-                                        <div
-                                            *ngIf="observation?.finding?.citations != null && observation?.finding?.citations != ''">
-                                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px;
-                                                    flex-direction: column; line-height: 150%;"
-                                                title="Copy to Clipboard"
-                                                [cdkCopyToClipboard]="((this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation == null
-                                                    || this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation == '') ?
-                                                    ' ' : this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation + ', ') + observation?.finding?.citations">
-                                                <span class="cset-icons-copy"></span>
-                                            </label>
-                                            {{
-                                            (this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                            == null
-                                            ||
-                                            this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                            == '') ?
-                                            ' ' :
-                                            this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                            + ', ' }}{{ observation?.finding?.citations }}
-                                        </div>
-                                        <div
-                                            *ngIf="(observation?.finding?.citations == null || observation?.finding?.citations == '')
-                                                    && this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation != null
-                                                    && this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation != ''">
-                                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px;
-                                                    flex-direction: column; line-height: 150%;"
-                                                title="Copy to Clipboard"
-                                                [cdkCopyToClipboard]="this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation">
-                                                <span class="cset-icons-copy"></span>
-                                            </label>
-                                            {{
-                                            this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                            }}
-                                        </div>
-                                        <div
-                                            *ngIf="(this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation == null
-                                            || this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation == '')
-                                            && (observation?.finding?.citations == null || observation?.finding?.citations == '')">
-                                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px;
-                                                    flex-direction: column; line-height: 150%;"
-                                                title="Copy to Clipboard"
-                                                [cdkCopyToClipboard]="'(no Regulatory Citations available)'">
-                                                <span class="cset-icons-copy"></span>
-                                            </label>
-                                            (no Regulatory Citations available)
-                                        </div>
-                                    </div>
-                                    <div *ngIf="!this.masterActionItemsMap.has(observation?.finding?.finding_Id)">
-                                        <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px;
-                                                flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                            [cdkCopyToClipboard]="'(no Regulatory Citations available)'">
+                                    <span *ngIf="regCitationsMap.has(observation?.question?.mat_Question_Id)">
+                                        <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
+                                            flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                            [cdkCopyToClipboard]="getReferenceCopyText(observation?.question?.mat_Question_Id)">
                                             <span class="cset-icons-copy"></span>
                                         </label>
-                                        (no Regulatory Citations available)
-                                    </div>
-
+                                        {{ regCitationsMap.get(observation?.question?.mat_Question_Id) }}
+                                    </span>
+                                    <span *ngIf="!regCitationsMap.has(observation?.question?.mat_Question_Id)">(No Regulatory Citations available)</span>
+                                    <br>
                                 </div>
+
                                 <div *ngIf="observation?.finding?.type === 'Supplemental Fact'">
                                     <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
                                         flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
@@ -359,9 +312,9 @@
                                     <strong> Supplemental Fact: </strong>
                                     <br>
                                     <span *ngIf="observation?.finding?.supp_Guidance != ''" style="white-space: pre-wrap;"
-                                        [innerHtml]="observation?.finding?.supp_Guidance"></span>
-                                    <span *ngIf="observation?.finding?.supp_Guidance == ''">(no Supplemental Fact
-                                        available)</span>
+                                        [innerHtml]="observation?.finding?.supp_Guidance">
+                                    </span>
+                                    <span *ngIf="observation?.finding?.supp_Guidance == ''">(no Supplemental Fact available)</span>
 
                                     <br>
                                     <!-- <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
@@ -410,6 +363,5 @@
                 </div>
             </div>
         </ng-template>
-    </div>
     </div>
 </div>
