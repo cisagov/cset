@@ -51,7 +51,7 @@ export class IseExaminationComponent implements OnInit {
   masterActionItemsMap: Map<number, any[]> = new Map<number, any[]>();
 
   sourceFilesMap: Map<number, any[]> = new Map<number, any[]>();
-  regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
+  regCitationsMap: Map<number, string> = new Map<number, string>();
   showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action required to show (answered 'No')
 
   examinerFindings: string[] = [];
@@ -217,6 +217,11 @@ export class IseExaminationComponent implements OnInit {
             for (let i = 0; i < this.observationResponse?.length; i++) {
               if (this.ncuaSvc.translateExamLevel(this.observationResponse[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
                 let observation = this.observationResponse[i];
+
+                this.questionsSvc.getRegulatoryCitations(observation.question.mat_Question_Id).subscribe((result: any) => {
+                  this.regCitationsMap.set(observation.question.mat_Question_Id, result.regulatory_Citation);
+                });
+
                 this.questionsSvc.getDetails(observation.question.mat_Question_Id, 'Maturity').subscribe(
                   (r: any) => {
                     this.files = r;
@@ -389,4 +394,7 @@ export class IseExaminationComponent implements OnInit {
     return false;
   }
 
+  getReferenceCopyText(parentId: number) {
+    return (this.regCitationsMap.get(parentId));
+  }
 }
