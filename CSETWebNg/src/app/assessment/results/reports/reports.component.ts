@@ -41,6 +41,7 @@ import { CisaWorkflowFieldValidationResponse } from '../../../models/demographic
 import { TranslocoService } from '@jsverse/transloco';
 import { ConversionService } from '../../../services/conversion.service';
 import { CieDocumentsComponent } from '../../../dialogs/cie-documents/cie-documents.component';
+import { ExportAssessmentComponent } from '../../../dialogs/assessment-encryption/export-assessment/export-assessment.component';
 
 @Component({
   selector: 'app-reports',
@@ -248,7 +249,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       url = this.configSvc.apiUrl + 'reports/poam/excelexport?token=' + localStorage.getItem('userToken');
     }
 
-    if (reportType.toLowerCase() == 'observations') { 
+    if (reportType.toLowerCase() == 'observations') {
       url = this.configSvc.apiUrl + 'reports/observations/excel?token=' + localStorage.getItem('userToken');
     }
 
@@ -297,16 +298,49 @@ export class ReportsComponent implements OnInit, AfterViewInit {
    *
    */
   clickExport(jsonOnly: boolean = false) {
-    // get short-term JWT from API
-    this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
-      let url = this.fileSvc.exportUrl + '?token=' + response.token;
+    if (jsonOnly) {
+      let dialogRef = this.dialog.open(ExportAssessmentComponent, {
+        data: { jsonOnly }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
 
-      if (jsonOnly) {
-        url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
-      }
+          // get short-term JWT from API
+          this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
+            let url = this.fileSvc.exportUrl + "?token=" + response.token;
 
-      window.location.href = url;
-    });
+
+            if (jsonOnly) {
+              url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
+            }
+
+
+            if (result.scrubData) {
+              url = url + "&scrubData=" + result.scrubData;
+            }
+
+            if (result.encryptionData.password != null && result.encryptionData.password != "") {
+              url = url + "&password=" + result.encryptionData.password;
+            }
+
+            if (result.encryptionData.hint != null && result.encryptionData.hint != "") {
+              url = url + "&passwordHint=" + result.encryptionData.hint;
+            }
+
+
+            //if electron
+            window.location.href = url;
+
+          });
+        }
+      });
+    } else {
+      // If encryption is turned off
+      this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
+        let url = this.fileSvc.exportUrl + "?token=" + response.token;
+        window.location.href = url;
+      })
+    }
   }
 
   disableSubmitButton() {
