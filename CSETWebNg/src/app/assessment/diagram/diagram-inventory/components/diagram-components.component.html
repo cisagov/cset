@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto' *ngIf="!diagramSvc.fetchingDiagram">
+<table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'
+  *ngIf="!diagramSvc.fetchingDiagram">
   <th mat-sort-header="label">Label</th>
   <th mat-sort-header="assetType">Asset Type</th>
   <th mat-sort-header="hasUniqueQuestions" class="text-align-center">Has Unique Questions</th>

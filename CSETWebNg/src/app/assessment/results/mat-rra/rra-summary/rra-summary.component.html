@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2024 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -24,8 +24,8 @@
     <div class="row">
         <h5>{{title}}</h5>
         <div class="col-12">
-            <ngx-charts-pie-chart [animations]="animation" [view]="view" [scheme]="colorScheme" [results]="single" [arcWidth]="arcWidth"
-                [gradient]="gradient" [labels]="showLabels" [doughnut]="isDoughnut">
+            <ngx-charts-pie-chart [animations]="animation" [view]="view" [scheme]="colorScheme" [results]="single"
+                [arcWidth]="arcWidth" [gradient]="gradient" [labels]="showLabels" [doughnut]="isDoughnut">
                 <ng-template #tooltipTemplate let-model="model">
                     <div class="p-1">
                         {{model.name}}<br />

@@ -1,6 +1,6 @@
 /* 
 
-  Copyright 2024 Battelle Energy Alliance, LLC  
+  Copyright 2025 Battelle Energy Alliance, LLC  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -34,10 +34,11 @@ SOFTWARE.
 }
 
 .btn-link-light {
-    color:white !important;
+    color: white !important;
 }
+
 .btn-link-light:hover {
-    color:#c8c8c8 !important;
+    color: #c8c8c8 !important;
     text-decoration: underline !important;
 }
 
@@ -52,12 +53,12 @@ SOFTWARE.
 }
 
 .input-icon {
-    color: gray; 
+    color: gray;
     position: absolute;
     width: 20px;
     background-color: #fff;
-    text-align: center; 
-    top: 15px; 
+    text-align: center;
+    top: 15px;
     right: 10px;
     cursor: pointer;
     -moz-transition: all .15s ease-in;
@@ -68,6 +69,7 @@ SOFTWARE.
     user-select: none;
 }
 
-.input-icon:hover, .input-icon:focus {
-    color: black; 
+.input-icon:hover,
+.input-icon:focus {
+    color: black;
 }

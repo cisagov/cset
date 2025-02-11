@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -113,9 +113,8 @@
                                     [class]="questionsSvc.answerOptionCss(maturityModelName, option)"
                                     [class.answer-selected]="q.answer === option"
                                     [matTooltip]="questionsSvc.answerDisplayLabel(maturityModelName, option)">
-                                    <input name="q_{{q.questionId}}" class="btn-check" type="radio"
-                                        autocomplete="off" (click)="storeAnswer(q, option)"
-                                        [checked]="q.answer === option">
+                                    <input name="q_{{q.questionId}}" class="btn-check" type="radio" autocomplete="off"
+                                        (click)="storeAnswer(q, option)" [checked]="q.answer === option">
                                     {{questionsSvc.answerButtonLabel(maturityModelName, option)}}
                                 </label>
 
@@ -124,8 +123,8 @@
                                 <label class="me-0 ms-2 btn form-check-label btn-mfr"
                                     [class.answer-selected]="q.markForReview === true"
                                     matTooltip="This control requires further review.">
-                                    <input name="q_{{q.questionId}}_F" type="checkbox" class="btn-check" (click)="saveMFR(q);"
-                                        tabindex="0" checked="{{q.markForReview === true}}">
+                                    <input name="q_{{q.questionId}}_F" type="checkbox" class="btn-check"
+                                        (click)="saveMFR(q);" tabindex="0" checked="{{q.markForReview === true}}">
                                     <span class="cset-icons-flag-dark fs-base"></span>
                                 </label>
                             </div>
@@ -133,7 +132,7 @@
                             <div *ngIf="q.answer === 'A'">
                                 <textarea appAutoSize class="form-control"
                                     [class.alt-text-required]="isAltTextRequired(q)"
-                                    style="width: 100%; min-height: 80px;" 
+                                    style="width: 100%; min-height: 80px;"
                                     [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
                                     [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
                                 <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required
@@ -194,9 +193,8 @@
                                     [class]="questionsSvc.answerOptionCss(maturityModelName, option)"
                                     [class.answer-selected]="q.answer === option"
                                     [matTooltip]="questionsSvc.answerDisplayLabel(maturityModelName, option)">
-                                    <input name="q_{{q.questionId}}" class="btn-check" type="radio"
-                                        autocomplete="off" (click)="storeAnswer(q, option)"
-                                        [checked]="q.answer === option">
+                                    <input name="q_{{q.questionId}}" class="btn-check" type="radio" autocomplete="off"
+                                        (click)="storeAnswer(q, option)" [checked]="q.answer === option">
                                     {{questionsSvc.answerButtonLabel(maturityModelName, option)}}
                                 </label>
 
@@ -205,8 +203,8 @@
                                 <label class="me-0 ms-2 btn btn-mfr form-check-label"
                                     [class.answer-selected]="q.markForReview === true"
                                     matTooltip="This control requires further review.">
-                                    <input name="q_{{q.questionId}}_F" type="checkbox" class="btn-check" (click)="saveMFR(q);"
-                                        tabindex="0" checked="{{q.markForReview === true}}">
+                                    <input name="q_{{q.questionId}}_F" type="checkbox" class="btn-check"
+                                        (click)="saveMFR(q);" tabindex="0" checked="{{q.markForReview === true}}">
                                     <span class="cset-icons-flag-dark fs-base"></span>
                                 </label>
                             </div>

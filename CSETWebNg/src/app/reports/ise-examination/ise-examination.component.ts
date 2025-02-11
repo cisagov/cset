@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -139,7 +139,7 @@ export class IseExaminationComponent implements OnInit {
               // Ensures correct question order even if CORE questions have a higher id than a CORE+
               if (k === subcat?.questions?.length - 1) {
                 questionsInCorrectOrder = (coreQuestions.concat(corePlusQuestions));
-                
+
                 if (this.examLevel != "SCUEP") {
                   subcat.questions = questionsInCorrectOrder;
                 } else {

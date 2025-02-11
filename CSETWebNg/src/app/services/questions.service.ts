@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -391,7 +391,7 @@ export class QuestionsService {
     if (!!model && String(model).trim().length > 0) {
 
       // first try to find the model configuration using its model name
-      let modelConfiguration = this.configSvc.getModuleBehavior(model); 
+      let modelConfiguration = this.configSvc.getModuleBehavior(model);
 
       if (!!modelConfiguration) {
         // first look for a skin-specific answer option

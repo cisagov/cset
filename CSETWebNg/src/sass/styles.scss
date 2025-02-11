@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2024 Battelle Energy Alliance, LLC
+  Copyright 2025 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -217,7 +217,7 @@ label[required]::after {
 }
 
 .footer .bg-primary {
-  background-color: $primary-900  !important;
+  background-color: $primary-900 !important;
 }
 
 .footer .card-header:first-child {
@@ -348,15 +348,18 @@ table.assessment-summary th {
   padding: .5rem;
 }
 
-.table.table-td-p1 th, .table.table-td-p1 td {
+.table.table-td-p1 th,
+.table.table-td-p1 td {
   padding: .25rem !important;
 }
 
-.table.table-td-p2 th, .table.table-td-p2 td {
+.table.table-td-p2 th,
+.table.table-td-p2 td {
   padding: .5rem !important;
 }
 
-.table.table-td-small th, .table.table-td-small td {
+.table.table-td-small th,
+.table.table-td-small td {
   font-size: .875em;
 }
 
@@ -767,15 +770,15 @@ table.td-align-top td {
 
 .ngx-slider .ngx-slider-pointer,
 .ngx-slider .ngx-slider-selection {
-  background-color: $primary-450  !important;
+  background-color: $primary-450 !important;
 }
 
 .ngx-slider .ngx-slider-tick.ngx-slider-selected {
-  background: $primary-450  !important;
+  background: $primary-450 !important;
 }
 
 .ngx-slider .ngx-slider-active::after {
-  background: $primary-250  !important;
+  background: $primary-250 !important;
 }
 
 .ngx-slider .ngx-slider-tick-legend {
@@ -826,8 +829,8 @@ table.td-align-top td {
 
 .mdc-tooltip__surface {
   font-size: 1em !important;
-  background-color: $gray-200  !important;
-  color: $gray-900  !important;
+  background-color: $gray-200 !important;
+  color: $gray-900 !important;
   letter-spacing: normal !important;
   border: 1px solid $gray-100 !important;
   line-height: 1.5em !important;
@@ -1019,7 +1022,7 @@ ul.mat-tree-node mat-tree-node {
 
 table.data-table {
   width: 100%;
-  border: 2px solid $black  !important;
+  border: 2px solid $black !important;
 }
 
 tr.data-table:nth-child(even) {
@@ -1748,7 +1751,7 @@ tooltip.glossary-definition.tooltip-bottom::after {
 }
 
 tooltip.glossary-definition.tooltip-left::after {
-  border-color: transparent transparent transparent $glossary-background  !important;
+  border-color: transparent transparent transparent $glossary-background !important;
 }
 
 // Question Extras
@@ -3150,7 +3153,7 @@ table.td-text-start td {
 /////////////////// Tutorial pages ///////////////
 div.tutorial h5,
 .tutorial h6 {
-  color: $primary-600  !important;
+  color: $primary-600 !important;
 }
 
 div.tutorial h6 {

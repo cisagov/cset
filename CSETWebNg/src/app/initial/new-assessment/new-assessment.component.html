@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -43,13 +43,15 @@
                             style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
 
                     </div>
-                    <div class="card-footer" [class.gallery-card-footer]="c.gallery_Item_Guid==hoverIndex" style="text-align:right;">
+                    <div class="card-footer" [class.gallery-card-footer]="c.gallery_Item_Guid==hoverIndex"
+                        style="text-align:right;">
                         <!--[hidden]="c.gallery_Item_Guid!=hoverIndex">-->
                         <button [matTooltip]="t('tooltip.view detail')" [hidden]="c.gallery_Item_Guid!=hoverIndex"
                             class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c)"
                             style="margin-right:5px; z-index:100"><i class="fa-solid fa-circle-info"
                                 style="font-size: 16px;"></i></button>
-                        <button [matTooltip]="t('tooltip.create assessment')" [hidden]="c.gallery_Item_Guid!=hoverIndex" class="btn btn-light btn-circle btn-sm gallery-btn-play"
+                        <button [matTooltip]="t('tooltip.create assessment')" [hidden]="c.gallery_Item_Guid!=hoverIndex"
+                            class="btn btn-light btn-circle btn-sm gallery-btn-play"
                             (click)="navSvc.beginNewAssessmentGallery(c)"><i class="fa-solid fa-play"
                                 style="font-size: 16px; z-index:100"></i></button>
                     </div>

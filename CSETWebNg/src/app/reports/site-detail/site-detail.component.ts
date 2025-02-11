@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -80,7 +80,7 @@ export class SiteDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.tSvc.selectTranslate('core.site detail report.report title', {}, {scope: 'reports'})
+    this.tSvc.selectTranslate('core.site detail report.report title', {}, { scope: 'reports' })
       .subscribe(title =>
         this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
 
@@ -113,18 +113,18 @@ export class SiteDetailComponent implements OnInit {
     });
 
     this.assessmentSvc.getAssessmentDetail().subscribe(x => {
-      if (x['useMaturity'] === true){
-          this.acetSvc.getMatDetailList().subscribe(
-        (data) => {
-          this.matDetails = data;
-        },
-        error => {
-          console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-          console.log('Error getting all documents: ' + (<Error>error).stack);
-        });
+      if (x['useMaturity'] === true) {
+        this.acetSvc.getMatDetailList().subscribe(
+          (data) => {
+            this.matDetails = data;
+          },
+          error => {
+            console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+            console.log('Error getting all documents: ' + (<Error>error).stack);
+          });
       }
     })
-    
+
 
     if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment?.maturityModel?.modelName)) {
       this.acetSvc.getAcetDashboard().subscribe(

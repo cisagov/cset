@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -47,7 +47,7 @@ export class ReportService {
   /**
    *
    */
-  constructor(private http: HttpClient, 
+  constructor(private http: HttpClient,
     private configSvc: ConfigService, private tSvc: TranslocoService,
     private authSvc: AuthenticationService
   ) {
@@ -245,7 +245,7 @@ export class ReportService {
       return t.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS);
     }
   }
-  
+
   getStandardAnsweredQuestions() {
     return this.http.get(this.configSvc.apiUrl + 'reports/getStandardAnsweredQuestions');
   }

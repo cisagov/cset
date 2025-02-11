@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -31,8 +31,7 @@
             <app-logo-rra></app-logo-rra>
         </div>
 
-        <div class="mb-4 p-3 bgc-black c-white"
-            [ngClass]="{'login-margin' : (configSvc.installationMode === 'ACET') }">
+        <div class="mb-4 p-3 bgc-black c-white" [ngClass]="{'login-margin' : (configSvc.installationMode === 'ACET') }">
             <div *ngIf="configSvc.installationMode === 'CSET' || configSvc.installationMode === ''">
                 {{t('change password.enter email cset')}}
             </div>
