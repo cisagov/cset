@@ -73,7 +73,7 @@
 
             <table class="finding-table" *ngFor="let obs of individual.observations">
                 <tr>
-                    <td colspan="4" class="tint1">{{obs.observation}}</td>
+                    <td colspan="4" class="tint1">{{obs.observationTitle}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">{{ 'reports.observations tear-out sheets.question identifier' | transloco }}:</td>
@@ -107,7 +107,7 @@
                 </tr>
                 <tr>
                     <td class="tint2">{{ 'contact.contacts' | transloco }}:</td>
-                    <td colspan="3">{{obs.otherContacts.replace(',',', ')}}</td>
+                    <td colspan="3">{{obs.assignees?.replace(',',', ')}}</td>
                 </tr>
             </table>
         </div>
