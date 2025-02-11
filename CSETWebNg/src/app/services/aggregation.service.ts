@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -115,16 +115,16 @@ export class AggregationService {
     const prom = firstValueFrom(obs);
 
     return prom.then((response: { token: string }) => {
-        localStorage.removeItem('userToken');
-        localStorage.setItem('userToken', response.token);
-        if (aggId) {
-          localStorage.removeItem('aggregationId');
-          localStorage.setItem(
-            'aggregationId',
-            aggId ? aggId.toString() : ''
-          );
-        }
-      });
+      localStorage.removeItem('userToken');
+      localStorage.setItem('userToken', response.token);
+      if (aggId) {
+        localStorage.removeItem('aggregationId');
+        localStorage.setItem(
+          'aggregationId',
+          aggId ? aggId.toString() : ''
+        );
+      }
+    });
   }
 
 

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -25,23 +25,26 @@
     <h4>Naming the Analysis</h4>
 
     <p>
-        To realize the full benefits of this CIE Analysis tool, returning users can import previous answers as well as compare a previously completed Analysis as a baseline.
+        To realize the full benefits of this CIE Analysis tool, returning users can import previous answers as well as
+        compare a previously completed Analysis as a baseline.
     </p>
     <p>
-        All CIE users must first name and save their Analysis accordingly. Naming the CIE implementation takes place in the CIE Analysis Configuration screen. Naming conventions should be considered when saving for ease of locating a particular Analysis in the future. 
+        All CIE users must first name and save their Analysis accordingly. Naming the CIE implementation takes place in
+        the CIE Analysis Configuration screen. Naming conventions should be considered when saving for ease of locating
+        a particular Analysis in the future.
     </p>
     <div class="form-group col-md-6">
 
         <label class="mb-1" for="name">Analysis Name</label>
-        <input type="text" maxlength="100"
-            class="form-control" id="name" name="name" required focusOnInit="true"
+        <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true"
             [(ngModel)]="assessment.assessmentName" (ngModelChange)="assessment.assessmentName"
             (change)="update($event)" autofocus tabindex="0">
-        
+
     </div>
     <h2>New CIE User</h2>
     <p>
-        If you are a new user, the Import and Select Baseline fields below will be blank. Click “next” to begin your CIE Analysis.
+        If you are a new user, the Import and Select Baseline fields below will be blank. Click “next” to begin your CIE
+        Analysis.
     </p>
     <h2>Returning CIE User</h2>
     <p>
@@ -52,20 +55,24 @@
     </p>
     <ul>
         <li>
-            <strong>Increase efficiency</strong> when prepopulating a future Analysis by importing answers from a previous CIE Analysis.
+            <strong>Increase efficiency</strong> when prepopulating a future Analysis by importing answers from a
+            previous CIE Analysis.
         </li>
         <li>
             <p>
-                <strong>Track progress</strong> by choosing a previously completed CIE Analysis to serve as a baseline for comparison against the new Analysis.
+                <strong>Track progress</strong> by choosing a previously completed CIE Analysis to serve as a baseline
+                for comparison against the new Analysis.
             </p>
             <p>
-                If you are a returning user, the fields below offer the ability to <strong>Import</strong> a previous Analysis and/or Select a Baseline Analysis from a previously saved CIE Analysis.
+                If you are a returning user, the fields below offer the ability to <strong>Import</strong> a previous
+                Analysis and/or Select a Baseline Analysis from a previously saved CIE Analysis.
             </p>
         </li>
     </ul>
 
     <h2>Import CIE Answers</h2>
-    <p>Import all answers from a previous CIE Analysis. All answers, comments, and artifacts currently in the Analysis will be overwritten.</p>
+    <p>Import all answers from a previous CIE Analysis. All answers, comments, and artifacts currently in the Analysis
+        will be overwritten.</p>
     <div class="d-flex flex-row">
         <!-- <select class="form-select" (change)="changeBaseline($event)" [(ngModel)]="baselineAssessmentId">
             <option [ngValue]="null">-- No Baseline Assessment --</option>

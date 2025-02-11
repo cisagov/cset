@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -94,9 +94,9 @@ export class CieAllQuestionsComponent {
             for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
 
-                this.expandedOptions.set('Phase_' + domain?.title + '_' + subcat?.title, false);
-                this.phaseTitleList.push('Phase_' + domain?.title + '_' + subcat?.title);
-                // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
+              this.expandedOptions.set('Phase_' + domain?.title + '_' + subcat?.title, false);
+              this.phaseTitleList.push('Phase_' + domain?.title + '_' + subcat?.title);
+              // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
             }
           }
         }
@@ -148,7 +148,7 @@ export class CieAllQuestionsComponent {
         combinedClass += 'top-half-border';
       }
     }
-    else{
+    else {
       combinedClass += 'bottom-half-border';
     }
     return combinedClass;
@@ -182,12 +182,12 @@ export class CieAllQuestionsComponent {
    */
   expandAll(mode: boolean, principleOrPhase: string) {
     if (principleOrPhase == 'Principle') {
-      for(let i = 0; i < this.principleTitleList.length; i++ ) {
+      for (let i = 0; i < this.principleTitleList.length; i++) {
         this.expandedOptions.set(this.principleTitleList[i], mode);
       }
     }
     if (principleOrPhase == 'Phase') {
-      for(let i = 0; i < this.phaseTitleList.length; i++ ) {
+      for (let i = 0; i < this.phaseTitleList.length; i++) {
         this.expandedOptions.set(this.phaseTitleList[i], mode);
       }
     }

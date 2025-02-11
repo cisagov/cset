@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -86,7 +86,8 @@
             (click)="toggleExtras('DOCS')"
             [matTooltip]="has('DOCS')==='inline'? t('tooltip.artifacts documents with content'):t('tooltip.artifacts documents')"
             matTooltipPosition="above">
-            <svg viewBox="0 0 25 30" style="height: 31px; width: 31px; margin: auto; margin-top: 4px; margin-left: -2px">
+            <svg viewBox="0 0 25 30"
+                style="height: 31px; width: 31px; margin: auto; margin-top: 4px; margin-left: -2px">
                 <path fill="#044" stroke="transparent" stroke-width="0" transform="scale(.7)"
                     d="M19.495,0L19.495,8.726 28.221,8.726z M0,0.202L0,35 28.02,35 28.02,11.522 16.7,11.522 16.7,0.202z M5.729,16.483L22.08,16.483 22.08,19.558 5.729,19.558z M5.729,21.654L22.08,21.654 22.08,24.728 5.729,24.728z M5.729,26.825L22.08,26.825 22.08,29.899 5.729,29.899z" />
                 <circle cx="23" cy="7" r="6" stroke="#fff" stroke-width="1" fill="#900" [style.display]="has('DOCS')" />
@@ -190,7 +191,8 @@
                     </tr>
                 </table>
             </div>
-            <div *ngIf=" !!extras && !!tab && mode == 'COMPONENT' && extras.overRide" class="detail">{{t('extras.override details')}}</div>
+            <div *ngIf=" !!extras && !!tab && mode == 'COMPONENT' && extras.overRide" class="detail">
+                {{t('extras.override details')}}</div>
             <div *ngIf="!!extras && !!tab && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
 
                 <div *ngIf="!!tab?.requirementsData?.supplementalInfo"
@@ -209,14 +211,15 @@
                 <div *ngIf="tab?.relatedFrameworkCategory"><span class="reqlabel">{{t('extras.category')}}:
                     </span>{{tab?.relatedFrameworkCategory}}</div>
                 <div *ngIf="!tab?.isMaturity && tab?.levelName && !usesRAC()">
-                    <span class="reqlabel">{{t('extras.sal level')}}: </span>{{salLevel(tab?.levelName)}} 
+                    <span class="reqlabel">{{t('extras.sal level')}}: </span>{{salLevel(tab?.levelName)}}
                 </div>
 
                 <div *ngIf="tab?.isMaturity && tab?.levelName">
                     <span class="reqlabel">{{t('extras.maturity level')}}: </span>{{tab?.levelName}}
                 </div>
 
-                <div *ngIf="!tab?.showRequirementStandards" class="reqlabel">{{t('extras.standard specific requirement')}}:</div>
+                <div *ngIf="!tab?.showRequirementStandards" class="reqlabel">{{t('extras.standard specific
+                    requirement')}}:</div>
                 <div *ngIf="!tab?.showRequirementStandards">
                     <span
                         [innerHTML]="tab?.requirementsData?.text ? (tab.requirementsData.text | safe: 'html') : 'none'"></span>
@@ -294,7 +297,7 @@
                     [innerHTML]="tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html'">
                 </div>
 
-                
+
                 <div *ngIf="!separateGuidanceFromApproach()">
                     <hr
                         *ngIf="!!tab?.requirementsData?.supplementalInfo && !!tab?.requirementsData?.examinationApproach">
@@ -313,22 +316,28 @@
         <div *ngIf=" !!extras && mode === 'CMNT'">
             <div *ngIf="!assessSvc.usesMaturityModel('CIE'); else cieComment" class="form-group">
                 <textarea appAutoSize [(ngModel)]="myQuestion.comment" (change)="saveComment($event)"
-                    style="min-height: 72px; width: 100%" class="form-control" placeholder="{{t('extras.comment placeholder')}}"></textarea>
+                    style="min-height: 72px; width: 100%" class="form-control"
+                    placeholder="{{t('extras.comment placeholder')}}"></textarea>
             </div>
             <ng-template #cieComment class="form-group">
-                <textarea appAutoSize [value]="cieSvc.commentMap.get(myQuestion.questionId) != null ? cieSvc.commentMap.get(myQuestion.questionId) : ''" 
-                (change)="saveComment($event)" maxlength="2048" style="min-height: 72px; width: 100%" class="form-control"></textarea>
+                <textarea appAutoSize
+                    [value]="cieSvc.commentMap.get(myQuestion.questionId) != null ? cieSvc.commentMap.get(myQuestion.questionId) : ''"
+                    (change)="saveComment($event)" maxlength="2048" style="min-height: 72px; width: 100%"
+                    class="form-control"></textarea>
             </ng-template>
         </div>
 
         <div *ngIf=" !!extras && mode === 'FDBK'">
             <div *ngIf="!assessSvc.usesMaturityModel('CIE'); else cieFeedback" class="form-group">
                 <textarea appAutoSize [(ngModel)]="myQuestion.feedback" (change)="saveFeedback($event)" maxlength="2048"
-                    style="min-height: 72px; width: 100%" class="form-control" placeholder="{{t('extras.feedback placeholder')}}"></textarea>
+                    style="min-height: 72px; width: 100%" class="form-control"
+                    placeholder="{{t('extras.feedback placeholder')}}"></textarea>
             </div>
             <ng-template #cieFeedback class="form-group">
-                <textarea appAutoSize [value]="cieSvc.feedbackMap.get(myQuestion.questionId) != null ? cieSvc.feedbackMap.get(myQuestion.questionId) : ''" 
-                (change)="saveFeedback($event)" maxlength="2048" style="min-height: 72px; width: 100%" class="form-control"></textarea>
+                <textarea appAutoSize
+                    [value]="cieSvc.feedbackMap.get(myQuestion.questionId) != null ? cieSvc.feedbackMap.get(myQuestion.questionId) : ''"
+                    (change)="saveFeedback($event)" maxlength="2048" style="min-height: 72px; width: 100%"
+                    class="form-control"></textarea>
             </ng-template>
         </div>
 

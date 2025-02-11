@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -59,11 +59,13 @@ export class IseDataComponent implements OnInit {
     public acetSvc: ACETService,
     public configSvc: ConfigService,
     public ncuaSvc: NCUAService,
-    public observationSvc: ObservationsService, 
+    public observationSvc: ObservationsService,
     public versionSvc: VersionService
-  ) {  this.versionSvc.localVersionObservable$.subscribe(localVersion => {
-    this.versionName = localVersion;
-  });}
+  ) {
+    this.versionSvc.localVersionObservable$.subscribe(localVersion => {
+      this.versionName = localVersion;
+    });
+  }
 
   ngOnInit(): void {
     this.titleService.setTitle("Data Report - ISE");

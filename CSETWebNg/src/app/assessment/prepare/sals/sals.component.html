@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -37,9 +37,11 @@
       <div class="d-flex flex-wrap flex-00a sticky-sal" *ngIf="!!this.salsSvc.selectedSAL">
         <div class="d-flex flex-11a">
           <div class="mb-2 p-2 quick-info-container d-flex justify-content-center flex-column flex-11a">
-            <div class="ws-no-wrap d-flex justify-content-center align-items-center flex-11a">{{t('titles.sal.overall')}}</div>
+            <div class="ws-no-wrap d-flex justify-content-center align-items-center flex-11a">
+              {{t('titles.sal.overall')}}</div>
             <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center align-items-center flex-11a">
-              {{ salsSvc.selectedSAL?.selected_Sal_Level != null ? t('titles.sal.level.' + salsSvc.selectedSAL?.selected_Sal_Level.toLowerCase()) : '' }}
+              {{ salsSvc.selectedSAL?.selected_Sal_Level != null ? t('titles.sal.level.' +
+              salsSvc.selectedSAL?.selected_Sal_Level.toLowerCase()) : '' }}
             </div>
           </div>
         </div>
@@ -47,21 +49,26 @@
 
           <div [class.ms-2]="!layoutSvc.hp"
             class="p-2 quick-info-container d-flex justify-content-center flex-column flex-11a">
-            <div class="ws-no-wrap d-flex justify-content-center align-items-center flex-11a">{{t('titles.sal.confidentiality')}}</div>
+            <div class="ws-no-wrap d-flex justify-content-center align-items-center flex-11a">
+              {{t('titles.sal.confidentiality')}}</div>
             <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">
-              {{ salsSvc.selectedSAL?.cLevel != null ? t('titles.sal.level.' + salsSvc.selectedSAL.cLevel.toLowerCase()) : '' }}</div>
+              {{ salsSvc.selectedSAL?.cLevel != null ? t('titles.sal.level.' + salsSvc.selectedSAL.cLevel.toLowerCase())
+              : '' }}</div>
           </div>
 
           <div class="ms-2 p-2 quick-info-container d-flex flex-column justify-content-center flex-11a">
             <div class="ws-no-wrap d-flex justify-content-center align-items-center">{{t('titles.sal.integrity')}}</div>
             <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">
-              {{ salsSvc.selectedSAL?.iLevel != null ? t('titles.sal.level.' + salsSvc.selectedSAL.iLevel.toLowerCase()) : '' }}</div>
+              {{ salsSvc.selectedSAL?.iLevel != null ? t('titles.sal.level.' + salsSvc.selectedSAL.iLevel.toLowerCase())
+              : '' }}</div>
           </div>
 
           <div class="ms-2 p-2 quick-info-container d-flex flex-column justify-content-center flex-11a">
-            <div class="ws-no-wrap d-flex justify-content-center align-items-center">{{t('titles.sal.availability')}}</div>
+            <div class="ws-no-wrap d-flex justify-content-center align-items-center">{{t('titles.sal.availability')}}
+            </div>
             <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">
-              {{ salsSvc.selectedSAL?.aLevel != null ? t('titles.sal.level.' + salsSvc.selectedSAL.aLevel.toLowerCase()) : '' }}</div>
+              {{ salsSvc.selectedSAL?.aLevel != null ? t('titles.sal.level.' + salsSvc.selectedSAL.aLevel.toLowerCase())
+              : '' }}</div>
           </div>
 
         </div>

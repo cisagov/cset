@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2024 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -73,8 +73,9 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label class="mb-1" for="citySite">{{ t('state province region') }}</label>
-                        <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion"
-                            [(ngModel)]="assessment.stateProvRegion" (change)="update($event)" tabindex="0">
+                        <input type="text" maxlength="100" class="form-control" id="stateProvRegion"
+                            name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion" (change)="update($event)"
+                            tabindex="0">
                     </div>
                 </div>
                 <div class="form-row" [hidden]="configSvc.installationMode !== 'ACET'">
@@ -208,9 +209,9 @@
                 </div>
                 <br>
                 <div *ngIf="assessment.charterType == 2 || assessment.charter >= 60000" (click)="toggleJoint()"
-                  tabindex="0" class="state-led cursor-pointer"
-                  [ngClass]="{'state-led-selected': assessment.isE_StateLed}"
-                  matTooltip="This checkbox bypasses NCUA required procedures and should only be used by State Supervisory Authorities.">
+                    tabindex="0" class="state-led cursor-pointer"
+                    [ngClass]="{'state-led-selected': assessment.isE_StateLed}"
+                    matTooltip="This checkbox bypasses NCUA required procedures and should only be used by State Supervisory Authorities.">
                     <div class="row">
                         <div class="col-2">
                             <h3 *ngIf="!assessment.isE_StateLed">&#x2610;</h3>

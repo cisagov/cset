@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -30,11 +30,10 @@
                 <div class="form-group col-md-6">
 
                     <label class="mb-1" for="name">Project Name for CIE Analysis</label>
-                    <input type="text" maxlength="100"
-                        class="form-control" id="name" name="name" required focusOnInit="true"
-                        [(ngModel)]="assessment.assessmentName" (ngModelChange)="assessment.assessmentName"
-                        (change)="update($event)" autofocus tabindex="0">
-                    
+                    <input type="text" maxlength="100" class="form-control" id="name" name="name" required
+                        focusOnInit="true" [(ngModel)]="assessment.assessmentName"
+                        (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
+
                 </div>
                 <div class="form-group col-md-6">
                     <label class="mb-1" for="date">Date of Analysis</label>
@@ -50,37 +49,40 @@
                     [(ngModel)]="assessment.facilityName" (change)="update($event)" tabindex="0">
             </div>
             <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label class="mb-1" for="citySite">{{t('city or site name')}}</label>
-                        <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite"
-                            [(ngModel)]="assessment.cityOrSiteName" (change)="update($event)" tabindex="0">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="mb-1" for="stateProvRegion">Project {{t('state province region')}}</label>
-                        <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion"
-                            [(ngModel)]="assessment.stateProvRegion" (change)="update($event)" tabindex="0">
-                    </div>
+                <div class="form-group col-md-6">
+                    <label class="mb-1" for="citySite">{{t('city or site name')}}</label>
+                    <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite"
+                        [(ngModel)]="assessment.cityOrSiteName" (change)="update($event)" tabindex="0">
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="mb-1" for="stateProvRegion">Project {{t('state province region')}}</label>
+                    <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion"
+                        [(ngModel)]="assessment.stateProvRegion" (change)="update($event)" tabindex="0">
+                </div>
             </div>
             <!-- <div class="form-row"> -->
-                <div class="form-group">
-                    <label class="mb-1" for="otherDetails">Other Details</label>
-                    <textarea id="otherDetailsTextarea" name="otherDetailsTextarea" class="form-control mb-2"
-                        [style]="('width: 100%; min-height: 40px; max-height: ' + summaryBoxMax + 'px')"
-                        [(ngModel)]="assessment.additionalNotesAndComments"
-                        (focus)="autoResize()" (keydown)="autoResize()"
-                        (change)="update($event)" spellcheck="true" tabindex="0"></textarea>
-                            
+            <div class="form-group">
+                <label class="mb-1" for="otherDetails">Other Details</label>
+                <textarea id="otherDetailsTextarea" name="otherDetailsTextarea" class="form-control mb-2"
+                    [style]="('width: 100%; min-height: 40px; max-height: ' + summaryBoxMax + 'px')"
+                    [(ngModel)]="assessment.additionalNotesAndComments" (focus)="autoResize()" (keydown)="autoResize()"
+                    (change)="update($event)" spellcheck="true" tabindex="0"></textarea>
 
-                    <!-- <input type="text" maxlength="100" class="form-control" id="otherInfo" name="otherInfo"
+
+                <!-- <input type="text" maxlength="100" class="form-control" id="otherInfo" name="otherInfo"
                         [(ngModel)]="assessment.additionalNotesAndComments" (change)="update($event)" tabindex="0"> -->
-                </div>
+            </div>
             <!-- </div> -->
         </form>
         <div class="mt-4">
             <h4>Analysis Type</h4>
             <h5>{{ assessment.typeTitle || 'Blank Analysis' }}</h5>
             <p>
-                This CIE Analysis tool within CSET translates the questions in the CIE Implementation Guide into an interactive tool that allows users to conduct an analysis of their CIE implementation for an individual system, process, project, or organization. Unlike an evaluation or assessment, this analysis does not result in a score. Rather, it offers a tool for users to consider the questions with their teams, record and track responses, and ultimately conduct the level of analysis needed to effective implement CIE. 
+                This CIE Analysis tool within CSET translates the questions in the CIE Implementation Guide into an
+                interactive tool that allows users to conduct an analysis of their CIE implementation for an individual
+                system, process, project, or organization. Unlike an evaluation or assessment, this analysis does not
+                result in a score. Rather, it offers a tool for users to consider the questions with their teams, record
+                and track responses, and ultimately conduct the level of analysis needed to effective implement CIE.
             </p>
             <p *ngIf="assessment.typeDescription && assessment.typeTitle != assessment.typeDescription"
                 [innerHtml]="assessment.typeDescription | safe"></p>

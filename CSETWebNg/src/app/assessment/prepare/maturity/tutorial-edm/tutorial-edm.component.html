@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2024 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -23,205 +23,264 @@
 <div class="white-panel d-flex justify-content-start flex-column flex-11a tutorial">
     <h3 class="wrap-text mb-3">External Dependencies Management (EDM) Tutorial</h3>
 
-    
-        <h5>Overview</h5>
 
-        <p>
-            The External Dependencies Management (EDM) assessment, developed by the Department of Homeland Security (DHS) Cybersecurity and Infrastructure Security Agency (CISA), is based on the CERT® Resilience Management Model (CERT®-RMM) from Carnegie Mellon University's Software Engineering Institute. It evaluates the practices for managing risks associated with external dependencies, focusing on a specific critical service and the assets necessary to provide that service. These types of risks are commonly referred to as supply chain or third-party risks.
-        </p>
+    <h5>Overview</h5>
 
-        <h5>Scope</h5>
+    <p>
+        The External Dependencies Management (EDM) assessment, developed by the Department of Homeland Security (DHS)
+        Cybersecurity and Infrastructure Security Agency (CISA), is based on the CERT® Resilience Management Model
+        (CERT®-RMM) from Carnegie Mellon University's Software Engineering Institute. It evaluates the practices for
+        managing risks associated with external dependencies, focusing on a specific critical service and the assets
+        necessary to provide that service. These types of risks are commonly referred to as supply chain or third-party
+        risks.
+    </p>
 
-        <p>
-            The scope of this assessment addresses the external dependency management cybersecurity practices of critical infrastructure owners and operators, particularly those related to information and communications technology (ICT).
-        </p>
-        <p>Determine the assessment scope by considering the following factors:</p>
-        <ul>
-            <li><b>Critical Service</b>: Which service will be the focus of the assessment? </li>
-            <li><b>Business Unit/Agency</b>: Which part(s) of the organization delivers the critical service?</li>
-            <li><b>External Entities</b>: Which key external entities are involved with supporting the performance or production of the critical service? </li>
-            <li><b>Asset(s)</b>: Which assets (people, technology, information, and facilities) are required for delivery of the service?</li>
-        </ul>
-        <h5>Critical Service</h5>
-        <p>
-            A set of activities an organization carries out in the performance of a duty or in the production of a product that is so critical to the organization's success that its disruption would severely impact continued operations or success in meeting the organization's mission.
-        </p>
-        <p>
-            Organizations typically have a set of critical services that define their mission. The selection of a critical service for assessment—rather than assessing the organization as a whole—helps to scope the assessment and tie the results to the organization's mission.
-        </p>
-        <p>
-            Below are some examples of organizations and their typical critical services:
-        </p>
-        <ul>
-            <li>Banks and other financial institutions: clearing and settlement, mortgage application processing</li>
-            <li>Emergency services providers: processing 911 calls, dispatch</li>
-            <li>Electrical power plants: electricity generation, electricity distribution</li>
-            <li>Hospitals: clinical services, prescription management</li>
-            <li>Government agencies: court case management, benefit management</li>
-            <li>Manufacturing companies: machining operations, product engineering and design</li>
-            <li>Airports: air traffic control, fuel management</li>
-        </ul>
-        <h5>External Entity Services</h5>
-        <p>
-            External dependencies form when external entities have defined responsibilities or relationships with the assets or services an organization needs to achieve its business objectives and mission. These responsibilities include providing, operating, controlling, accessing, owning, or managing key ITC and related assets.
-        </p>
-        <p>Examples include external entities that provide:</p>
-        <ul>
-            <li>
-                <b>Services that explicitly involve the operation, maintenance, or provisioning of ICT for the organization,</b> such as cloud services, data hosting, on-site maintenance services, and the operation of control systems to support the organization.
-            </li>
-            <li>
-                <b>Services supported by ICT</b> including any type of service that is appreciably supported using information and communications technology. (In the financial sector, examples may include the printing of account statements by the subcontractor to a banking institution.)
-            </li>
-            <li>
-                <b>Governmental services,</b> such as fire and police response to protect data centers.
-            </li>
-            <li>
-                <b>Infrastructure services,</b> such as electricity, telecommunications networks, or transportation assets.
-            </li>
-            <li>
-                <b>Technology products and services,</b> such as hardware and software that is utilized by the organization to provided services to its customers.
-            </li>
-        </ul>
-        <h5>External Entity Types</h5>
-        <p>
-            The EDM considers three categories of external entities: Suppliers, Government Services, and Infrastructure Providers. Some questions may require a separate answer for each of the three entities while other questions may refer to all entities. The definition for each entity type is listed below:
-        </p>
-        <ul>
-            <li>
-                <b>Suppliers:</b> External entities that provide ICT-related goods and services, with which the acquirer has some ability to negotiate. Suppliers may also be known as subcontractors, vendors, or separate divisions or affiliates of a larger enterprise.
-            </li>
-            <li>
-                <b>Governmental Services:</b> Services provided by a governmental department or agency. These services frequently involve security, such as fire, police, and emergency response.
-            </li>
-            <li>
-                <b>Infrastructure Providers:</b> External entities that provide goods or services to a region, economy, infrastructure sector, or political subdivision; however, the acquirer typically has no commercially practical ability to negotiate. Examples of infrastructure providers include water, power, or transportation.
-            </li>
-        </ul>
+    <h5>Scope</h5>
 
-        <h5>Asset Types</h5>
-        <p>
-            The EDM considers four categories of assets: People, Information, Technology, and Facilities. Some questions may require a separate answer for each of the four assets while other questions may refer to all assets. The definition for each asset type is listed below:
-        </p>
-        <ul>
-            <li>
-                <b>People:</b> the staff (both internal and external to the organization) such as people that support data centers or otherwise use information and communications technology to operate, monitor, and support the service.
-            </li>
-            <li>
-                <b>Information:</b> account information, technology asset configuration files, operational data, customer information, and other information necessary for the delivery of a service.
-            </li>
-            <li>
-                <b>Technology:</b> computers (hardware), software, control systems, or other technology including external information systems used by the organization to deliver the service.
-            </li>
-            <li>
-                <b>Facilities:</b> office buildings, data centers, and other physical structures supporting the delivery of the service.
-            </li>
-        </ul>
-        <h5>Maturity Indicator Levels (MILs)</h5>
-        <p>
-            The EDM utilizes Maturity Indicator Levels (MILs) to approximate how thoroughly the practices are institutionalized within the organization. Institutionalization means that the cybersecurity practices are deeply embedded and supported, becoming a lasting part of the organization. When practices are well-institutionalized, their outcomes are more predictable and reliable, and are more likely to be maintained during times of disruption or stress.
-        </p>
-        <p>
-            An organization can only achieve a specific MIL if it has achieved all preceding MILs. For example, if an organization does not perform all MIL1 practices within a domain, it cannot achieve MIL2 or subsequent MILs within the domain, even if the organization performs all practices at those levels.
-        </p>
-        <p>The definition for each of the six MILs is listed below:</p>
-        <p><b>MIL0: Incomplete</b></p>
-        <p>All practices in the domain are not being fully performed as measured by responses to the relevant EDM questions in the domain.</p>
+    <p>
+        The scope of this assessment addresses the external dependency management cybersecurity practices of critical
+        infrastructure owners and operators, particularly those related to information and communications technology
+        (ICT).
+    </p>
+    <p>Determine the assessment scope by considering the following factors:</p>
+    <ul>
+        <li><b>Critical Service</b>: Which service will be the focus of the assessment? </li>
+        <li><b>Business Unit/Agency</b>: Which part(s) of the organization delivers the critical service?</li>
+        <li><b>External Entities</b>: Which key external entities are involved with supporting the performance or
+            production of the critical service? </li>
+        <li><b>Asset(s)</b>: Which assets (people, technology, information, and facilities) are required for delivery of
+            the service?</li>
+    </ul>
+    <h5>Critical Service</h5>
+    <p>
+        A set of activities an organization carries out in the performance of a duty or in the production of a product
+        that is so critical to the organization's success that its disruption would severely impact continued operations
+        or success in meeting the organization's mission.
+    </p>
+    <p>
+        Organizations typically have a set of critical services that define their mission. The selection of a critical
+        service for assessment—rather than assessing the organization as a whole—helps to scope the assessment and tie
+        the results to the organization's mission.
+    </p>
+    <p>
+        Below are some examples of organizations and their typical critical services:
+    </p>
+    <ul>
+        <li>Banks and other financial institutions: clearing and settlement, mortgage application processing</li>
+        <li>Emergency services providers: processing 911 calls, dispatch</li>
+        <li>Electrical power plants: electricity generation, electricity distribution</li>
+        <li>Hospitals: clinical services, prescription management</li>
+        <li>Government agencies: court case management, benefit management</li>
+        <li>Manufacturing companies: machining operations, product engineering and design</li>
+        <li>Airports: air traffic control, fuel management</li>
+    </ul>
+    <h5>External Entity Services</h5>
+    <p>
+        External dependencies form when external entities have defined responsibilities or relationships with the assets
+        or services an organization needs to achieve its business objectives and mission. These responsibilities include
+        providing, operating, controlling, accessing, owning, or managing key ITC and related assets.
+    </p>
+    <p>Examples include external entities that provide:</p>
+    <ul>
+        <li>
+            <b>Services that explicitly involve the operation, maintenance, or provisioning of ICT for the
+                organization,</b> such as cloud services, data hosting, on-site maintenance services, and the operation
+            of control systems to support the organization.
+        </li>
+        <li>
+            <b>Services supported by ICT</b> including any type of service that is appreciably supported using
+            information and communications technology. (In the financial sector, examples may include the printing of
+            account statements by the subcontractor to a banking institution.)
+        </li>
+        <li>
+            <b>Governmental services,</b> such as fire and police response to protect data centers.
+        </li>
+        <li>
+            <b>Infrastructure services,</b> such as electricity, telecommunications networks, or transportation assets.
+        </li>
+        <li>
+            <b>Technology products and services,</b> such as hardware and software that is utilized by the organization
+            to provided services to its customers.
+        </li>
+    </ul>
+    <h5>External Entity Types</h5>
+    <p>
+        The EDM considers three categories of external entities: Suppliers, Government Services, and Infrastructure
+        Providers. Some questions may require a separate answer for each of the three entities while other questions may
+        refer to all entities. The definition for each entity type is listed below:
+    </p>
+    <ul>
+        <li>
+            <b>Suppliers:</b> External entities that provide ICT-related goods and services, with which the acquirer has
+            some ability to negotiate. Suppliers may also be known as subcontractors, vendors, or separate divisions or
+            affiliates of a larger enterprise.
+        </li>
+        <li>
+            <b>Governmental Services:</b> Services provided by a governmental department or agency. These services
+            frequently involve security, such as fire, police, and emergency response.
+        </li>
+        <li>
+            <b>Infrastructure Providers:</b> External entities that provide goods or services to a region, economy,
+            infrastructure sector, or political subdivision; however, the acquirer typically has no commercially
+            practical ability to negotiate. Examples of infrastructure providers include water, power, or
+            transportation.
+        </li>
+    </ul>
 
-        <p><b>MIL1: Performed</b></p>
-        <p>All practices that support the goals in a domain are being performed as measured by responses to the relevant EDM questions.</p>
+    <h5>Asset Types</h5>
+    <p>
+        The EDM considers four categories of assets: People, Information, Technology, and Facilities. Some questions may
+        require a separate answer for each of the four assets while other questions may refer to all assets. The
+        definition for each asset type is listed below:
+    </p>
+    <ul>
+        <li>
+            <b>People:</b> the staff (both internal and external to the organization) such as people that support data
+            centers or otherwise use information and communications technology to operate, monitor, and support the
+            service.
+        </li>
+        <li>
+            <b>Information:</b> account information, technology asset configuration files, operational data, customer
+            information, and other information necessary for the delivery of a service.
+        </li>
+        <li>
+            <b>Technology:</b> computers (hardware), software, control systems, or other technology including external
+            information systems used by the organization to deliver the service.
+        </li>
+        <li>
+            <b>Facilities:</b> office buildings, data centers, and other physical structures supporting the delivery of
+            the service.
+        </li>
+    </ul>
+    <h5>Maturity Indicator Levels (MILs)</h5>
+    <p>
+        The EDM utilizes Maturity Indicator Levels (MILs) to approximate how thoroughly the practices are
+        institutionalized within the organization. Institutionalization means that the cybersecurity practices are
+        deeply embedded and supported, becoming a lasting part of the organization. When practices are
+        well-institutionalized, their outcomes are more predictable and reliable, and are more likely to be maintained
+        during times of disruption or stress.
+    </p>
+    <p>
+        An organization can only achieve a specific MIL if it has achieved all preceding MILs. For example, if an
+        organization does not perform all MIL1 practices within a domain, it cannot achieve MIL2 or subsequent MILs
+        within the domain, even if the organization performs all practices at those levels.
+    </p>
+    <p>The definition for each of the six MILs is listed below:</p>
+    <p><b>MIL0: Incomplete</b></p>
+    <p>All practices in the domain are not being fully performed as measured by responses to the relevant EDM questions
+        in the domain.</p>
 
-        <p><b>MIL2: Planned</b></p>
-        <p>All specific practices in the EDM domain are not only performed but are also supported by planning, policy, stakeholders, and relevant standards and guidelines.</p>
+    <p><b>MIL1: Performed</b></p>
+    <p>All practices that support the goals in a domain are being performed as measured by responses to the relevant EDM
+        questions.</p>
 
-        <p><b>MIL3: Managed</b></p>
-        <p>All practices in a domain are performed, planned, and have the basic governance infrastructure in place, are appropriately staffed, adequately funded and managed for risk.</p>
-        
-        <p><b>MIL4: Measured</b></p>
-        <p>All practices in a domain are performed, planned, managed, monitored, and controlled. A measured process or practice is periodically evaluated for effectiveness, evaluated against its practice description and plan, and periodically reviewed with higher level management.</p>
+    <p><b>MIL2: Planned</b></p>
+    <p>All specific practices in the EDM domain are not only performed but are also supported by planning, policy,
+        stakeholders, and relevant standards and guidelines.</p>
 
-        <p><b>MIL5: Defined</b></p>
-        <p>All practices in a domain are performed, planned, managed, measured, and consistent across all constituencies within an organization who have a vested interest in the performance of the practice. At MIL5, a process or practice is defined by the organization and tailored by individual operating units and supported by improvement information that is collected by and shared among operating units for the overall benefit of the organization.</p>
+    <p><b>MIL3: Managed</b></p>
+    <p>All practices in a domain are performed, planned, and have the basic governance infrastructure in place, are
+        appropriately staffed, adequately funded and managed for risk.</p>
 
-        <h5>Assessment</h5>
-        <p>The EDM consists of 105 practices (questions), each aligning with an MIL or goal associated with one of the following four domains:</p>
-        <ul>
-            <li>Relationship Formation</li>
-            <li>Relationship Management and Governance</li>
-            <li>Service Protection and Sustainment</li>
-            <li>Maturity Indicator Levels</li>
-        </ul>
-        <p>Each practice includes the following components.</p>
-        <div class="img-frame">
-            <img src="assets/images/EDM/tutorial/Picture1.png" style="width: 550px">
-        </div>
-        <h6>Domain</h6>
-        <div class="img-frame">
-            <img src="assets/images/EDM/tutorial/Picture2.png" style="width: 550px">
-        </div>
-        <p>
-            Each domain is composed of a purpose statement, a set of specific goals, and associated practice questions unique to the domain. The Maturity Indicator Levels section includes a set of common goals, and the questions apply to all the domains in the assessment as they each represent a part of the same lifecycle.
-        </p>
-        <h6>Goal</h6>
-        <div class="img-frame">
-            <img src="assets/images/EDM/tutorial/Picture3.png" style="width: 550px">
-        </div>
-        <p>The intended external dependencies management outcome that each of its associated practices aims to enable.</p>
+    <p><b>MIL4: Measured</b></p>
+    <p>All practices in a domain are performed, planned, managed, monitored, and controlled. A measured process or
+        practice is periodically evaluated for effectiveness, evaluated against its practice description and plan, and
+        periodically reviewed with higher level management.</p>
 
-        <h6>Practice Identifier</h6>
-        <div class="img-frame">
-            <img src="assets/images/EDM/tutorial/Picture4.png" style="width: 100px">
-        </div>
-        <p>Each question has an assigned practice identifier structured as follows: </p>
-        <p>Domain [DD]: Goal Number [G#]. Question Number [Q#]</p>
-        <p>
-            An example of the above structure is RF:G1.Q1, which represents Relationship Formation: <br>Goal 1. Question Number 1. The blue oval beneath each identifier indicates the level for the practice.
-        </p>
-        <h6>Practice</h6>
-        <div class="img-frame">
-            <img src="assets/images/EDM/tutorial/Picture5.png" style="width: 550px">
-        </div>
-        <p>Questions designed to evaluate if the organization has implemented the associated goal or MIL.</p>
-        
-        <h6>CSET Icon</h6>
-        <div class="img-frame">
-                <img src="assets/images/icons/cset-icons.png" style="width: 300px">
-        </div>
-        <p>Selecting the Supplemental Guidance icon provides information on:</p>
-        <ul>
-                <li>Question Intent</li>
-                <li>Typical Work Products</li>
-                <li>Criteria for “Yes” Response</li>
-                <li>Criteria for “Incomplete” Response</li>
-                <li>Additional guidance as applicable</li>
-        </ul>
-        <h6>Answer Buttons</h6>
-        <div class="img-frame">
-            <img src="assets/images/EDM/tutorial/Picture7.png" style="width: 200px">
-        </div>
-        <p>Select the applicable answer for each question. Unanswered questions are calculated as a “No” response.</p>
-                <ul>
-                        <li>
-                                <b>Yes</b> – the organization fully performs the activity specified in the question. 
-                        </li>
-                        <li>
-                                <b>Incomplete</b> – the organization partially performs the activity.
-                        </li>
-                        <li>
-                                <b>No</b> – the organization does not perform the activity at all. 
-                        </li>
-                </ul>
-        <h6>Domain Remarks</h6>
-        <div class="img-frame">
-            <img src="assets/images/EDM/tutorial/Picture6.png" style="width: 550px">
+    <p><b>MIL5: Defined</b></p>
+    <p>All practices in a domain are performed, planned, managed, measured, and consistent across all constituencies
+        within an organization who have a vested interest in the performance of the practice. At MIL5, a process or
+        practice is defined by the organization and tailored by individual operating units and supported by improvement
+        information that is collected by and shared among operating units for the overall benefit of the organization.
+    </p>
+
+    <h5>Assessment</h5>
+    <p>The EDM consists of 105 practices (questions), each aligning with an MIL or goal associated with one of the
+        following four domains:</p>
+    <ul>
+        <li>Relationship Formation</li>
+        <li>Relationship Management and Governance</li>
+        <li>Service Protection and Sustainment</li>
+        <li>Maturity Indicator Levels</li>
+    </ul>
+    <p>Each practice includes the following components.</p>
+    <div class="img-frame">
+        <img src="assets/images/EDM/tutorial/Picture1.png" style="width: 550px">
     </div>
-        <p>At the end of each domain section, a text box is available for entering remarks, which are then included in the EDM report.</p>
-        
-
-        <h5>Additional Resources</h5>
-                <p>Additional information on how to complete a CSET assessment is available in the User Guide. To access the user guide, select the option from the Help dropdown menu in the CSET tool bar.</p>
-
-                <p>Please visit <a href="https://www.cisa.gov/resources-tools/resources/external-dependencies-management-downloadable-resources">https://www.cisa.gov/resources-tools/resources/external-dependencies-management-downloadable-resources</a> for more information.</p>
-
-        <app-nav-back-next [page]="'tutorial-edm'"></app-nav-back-next>
+    <h6>Domain</h6>
+    <div class="img-frame">
+        <img src="assets/images/EDM/tutorial/Picture2.png" style="width: 550px">
     </div>
+    <p>
+        Each domain is composed of a purpose statement, a set of specific goals, and associated practice questions
+        unique to the domain. The Maturity Indicator Levels section includes a set of common goals, and the questions
+        apply to all the domains in the assessment as they each represent a part of the same lifecycle.
+    </p>
+    <h6>Goal</h6>
+    <div class="img-frame">
+        <img src="assets/images/EDM/tutorial/Picture3.png" style="width: 550px">
+    </div>
+    <p>The intended external dependencies management outcome that each of its associated practices aims to enable.</p>
+
+    <h6>Practice Identifier</h6>
+    <div class="img-frame">
+        <img src="assets/images/EDM/tutorial/Picture4.png" style="width: 100px">
+    </div>
+    <p>Each question has an assigned practice identifier structured as follows: </p>
+    <p>Domain [DD]: Goal Number [G#]. Question Number [Q#]</p>
+    <p>
+        An example of the above structure is RF:G1.Q1, which represents Relationship Formation: <br>Goal 1. Question
+        Number 1. The blue oval beneath each identifier indicates the level for the practice.
+    </p>
+    <h6>Practice</h6>
+    <div class="img-frame">
+        <img src="assets/images/EDM/tutorial/Picture5.png" style="width: 550px">
+    </div>
+    <p>Questions designed to evaluate if the organization has implemented the associated goal or MIL.</p>
+
+    <h6>CSET Icon</h6>
+    <div class="img-frame">
+        <img src="assets/images/icons/cset-icons.png" style="width: 300px">
+    </div>
+    <p>Selecting the Supplemental Guidance icon provides information on:</p>
+    <ul>
+        <li>Question Intent</li>
+        <li>Typical Work Products</li>
+        <li>Criteria for “Yes” Response</li>
+        <li>Criteria for “Incomplete” Response</li>
+        <li>Additional guidance as applicable</li>
+    </ul>
+    <h6>Answer Buttons</h6>
+    <div class="img-frame">
+        <img src="assets/images/EDM/tutorial/Picture7.png" style="width: 200px">
+    </div>
+    <p>Select the applicable answer for each question. Unanswered questions are calculated as a “No” response.</p>
+    <ul>
+        <li>
+            <b>Yes</b> – the organization fully performs the activity specified in the question.
+        </li>
+        <li>
+            <b>Incomplete</b> – the organization partially performs the activity.
+        </li>
+        <li>
+            <b>No</b> – the organization does not perform the activity at all.
+        </li>
+    </ul>
+    <h6>Domain Remarks</h6>
+    <div class="img-frame">
+        <img src="assets/images/EDM/tutorial/Picture6.png" style="width: 550px">
+    </div>
+    <p>At the end of each domain section, a text box is available for entering remarks, which are then included in the
+        EDM report.</p>
+
+
+    <h5>Additional Resources</h5>
+    <p>Additional information on how to complete a CSET assessment is available in the User Guide. To access the user
+        guide, select the option from the Help dropdown menu in the CSET tool bar.</p>
+
+    <p>Please visit <a
+            href="https://www.cisa.gov/resources-tools/resources/external-dependencies-management-downloadable-resources">https://www.cisa.gov/resources-tools/resources/external-dependencies-management-downloadable-resources</a>
+        for more information.</p>
+
+    <app-nav-back-next [page]="'tutorial-edm'"></app-nav-back-next>
+</div>

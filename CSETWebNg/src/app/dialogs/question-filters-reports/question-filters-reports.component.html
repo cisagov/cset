@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2024 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -21,7 +21,8 @@
   SOFTWARE. 
 -------------------------->
 <div *transloco="let t; read: 'filter-menu'" class="d-flex flex-column justify-content-center flex-11a">
-  <div class="p-3 d-flex justify-content-start align-items-center flex-00a" style="color:white; background-color: #094997;">
+  <div class="p-3 d-flex justify-content-start align-items-center flex-00a"
+    style="color:white; background-color: #094997;">
     <!-- <span class="me-3 fs-base-6 cset-icons-filter" aria-label="{{ 'buttons.filter' | transloco }}"></span> -->
     <img src="assets/images/icons/filter.svg">
     <span>{{ t(skin + '.dialog title') }}</span>
@@ -46,7 +47,8 @@
         <div>
           <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn(option.value)"
             [id]="getId(option)" (click)="updateFilters($event, option.value)">
-          <label [for]="getId(option)" class="checkbox-custom-label d-block" [innerHTML]="t(skin + '.show answered as', {'optionText': option.text })">
+          <label [for]="getId(option)" class="checkbox-custom-label d-block"
+            [innerHTML]="t(skin + '.show answered as', {'optionText': option.text })">
           </label>
         </div>
       </div>
@@ -55,7 +57,7 @@
           name="cbShowFreeResponse" (click)="updateFilters($event, 'FR')">
         <label for="cbShowFreeResponse" class="checkbox-custom-label d-block">
           {{ t(skin + '.show open ended') }}
-          
+
         </label>
       </div>
       <div *ngIf="!isInstallation('CIE')">

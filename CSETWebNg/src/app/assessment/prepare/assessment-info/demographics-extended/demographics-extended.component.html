@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -88,8 +88,8 @@
                 Are you intending to apply for the State of Florida Local Cybersecurity Grant Program? The full
                 assessments completes the requirements for house bill 7055?
             </p>
-            <input #radioNo class="radio-custom" style="visibility: visible" name="hb7055GrantNo" id="hb7055GrantNo" type="radio"
-                autocomplete="off" tabindex="1" (click)="sethb7055Grant('N')"
+            <input #radioNo class="radio-custom" style="visibility: visible" name="hb7055GrantNo" id="hb7055GrantNo"
+                type="radio" autocomplete="off" tabindex="1" (click)="sethb7055Grant('N')"
                 [checked]="demographicData.hb7055GrantGrant == 'N'">
             <label class="radio-custom-label" for="hb7055GrantNo">No</label>
             <input class="radio-custom" style="visibility: visible" name="hb7055GrantYes" id="hb7055GrantYes"
@@ -222,8 +222,8 @@
             How many total employees <u>directly support</u>
             business/operations in the geographic areas selected?
         </p>
-        <select class="form-select" id="employees" name="employees" tabindex="0"
-            [(ngModel)]="demographicData.employees" (change)="update($event.target.value)">
+        <select class="form-select" id="employees" name="employees" tabindex="0" [(ngModel)]="demographicData.employees"
+            (change)="update($event.target.value)">
             <option [ngValue]="null">-- Select Employees --</option>
             <option *ngFor="let e of employeeRanges" [value]="e.value">
                 {{e.value}}

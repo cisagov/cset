@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -182,11 +182,11 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
     let q = scrollTarget.split(',').find(x => x.startsWith('Q:'))?.replace('Q:', '');
 
     // NEED TO DETERMINE WHICH GROUP TO EXPAND
-      // // expand the question's group
-      // var groupToExpand = this.findGroupingById(Number(g), this.groupings);
-      // if (!!groupToExpand) {
-      //   groupToExpand.expanded = true;
-      // }
+    // // expand the question's group
+    // var groupToExpand = this.findGroupingById(Number(g), this.groupings);
+    // if (!!groupToExpand) {
+    //   groupToExpand.expanded = true;
+    // }
 
 
     // scroll to the question

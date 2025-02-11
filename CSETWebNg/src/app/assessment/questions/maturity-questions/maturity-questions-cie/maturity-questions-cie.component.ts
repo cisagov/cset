@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -135,7 +135,7 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
 
     // probes to see when question element is visible and able to be scrolled to
     const intervalId = setInterval(() => {
-      let mqElement = document.getElementById('question-'+mq);
+      let mqElement = document.getElementById('question-' + mq);
       if (mqElement != null) {
         this.scrollToResumeQuestionsTarget(mg, mqElement);
         clearInterval(intervalId);
@@ -144,7 +144,7 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
     }, 1000);
   }
 
-  
+
   ngOnDestroy(): void {
     this._routerSub.unsubscribe();
   }
@@ -169,7 +169,7 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
         this.completionSvc.setQuestionArray(response);
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
-        this.sectionIndex = this.sectionId.valueOf() - response.groupings[0].groupingID -1;
+        this.sectionIndex = this.sectionId.valueOf() - response.groupings[0].groupingID - 1;
 
         // the recommended maturity level(s) based on IRP
         this.maturityLevels = response.levels;
@@ -185,7 +185,7 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
         this.filterSvc.answerOptions = response.answerOptions.slice();
         this.filterSvc.maturityModelId = response.modelId;
 
-       
+
       },
       error => {
         console.log(
@@ -196,7 +196,7 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
         console.log('Error getting questions: ' + (<Error>error).stack);
       }
     );
-    
+
   }
 
   /**
@@ -253,12 +253,12 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
    */
   setMode(mode: string) {
     this.assessSvc.applicationMode = mode;
-    this.questionsSvc.setMode(mode).subscribe(() => {});
+    this.questionsSvc.setMode(mode).subscribe(() => { });
     localStorage.setItem("questionSet", mode == 'P' ? "Principle" : "Principle-Phase");
   }
 
-  
-  
+
+
   /**
    * If a "resume questions" target is defined, attempt to scroll to it
    */
