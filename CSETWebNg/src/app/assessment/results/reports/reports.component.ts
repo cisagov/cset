@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -248,7 +248,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       url = this.configSvc.apiUrl + 'reports/poam/excelexport?token=' + localStorage.getItem('userToken');
     }
 
-    if (reportType.toLowerCase() == 'observations') { 
+    if (reportType.toLowerCase() == 'observations') {
       url = this.configSvc.apiUrl + 'reports/observations/excel?token=' + localStorage.getItem('userToken');
     }
 

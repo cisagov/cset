@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ViewEncapsulation,OnInit, isDevMode } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, isDevMode } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AggregationService } from '../../services/aggregation.service';
@@ -44,7 +44,7 @@ import { VersionService } from '../../services/version.service';
   host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
 
 })
-export class LayoutMainComponent  implements OnInit {
+export class LayoutMainComponent implements OnInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
@@ -52,11 +52,11 @@ export class LayoutMainComponent  implements OnInit {
   devMode: boolean = isDevMode();
 
   display = "none";
-  displayNotifications="none";
+  displayNotifications = "none";
   localVersion: string;
-  
-  
-   
+
+
+
   constructor(
     public auth: AuthenticationService,
     public assessSvc: AssessmentService,
@@ -67,7 +67,7 @@ export class LayoutMainComponent  implements OnInit {
     public setBuilderSvc: SetBuilderService,
     public dialog: MatDialog,
     public router: Router,
-    public versionSvc:VersionService
+    public versionSvc: VersionService
   ) { }
   ngOnInit() {
     this.versionSvc.getLatestVersion();
@@ -101,13 +101,13 @@ export class LayoutMainComponent  implements OnInit {
   showDisclaimer() {
     this.dialog.open(OnlineDisclaimerComponent, { data: { publicDomainName: this.configSvc.publicDomainName } });
   }
-  
+
   showNotifications(): void {
     this.display = "block";
   }
 
   onCloseHandled() {
     this.display = "none";
-    this.displayNotifications="none"
-  }  
+    this.displayNotifications = "none"
+  }
 }

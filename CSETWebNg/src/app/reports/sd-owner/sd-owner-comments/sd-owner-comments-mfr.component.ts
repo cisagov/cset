@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -57,11 +57,11 @@ export class SdOwnerCommentsMfrComponent {
 
   ngOnInit(): void {
     this.loading = true;
-    
-    this.tSvc.selectTranslate('core.rra.cmfr.report title', {}, {scope: 'reports'})
-    .subscribe(title =>
-      this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
-  
+
+    this.tSvc.selectTranslate('core.rra.cmfr.report title', {}, { scope: 'reports' })
+      .subscribe(title =>
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
+
 
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {

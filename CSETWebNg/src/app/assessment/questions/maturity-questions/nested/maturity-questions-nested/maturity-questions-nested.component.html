@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -48,8 +48,8 @@
     <!-- This extra blank div hides the text that shows up while scrolling in the small gap between the tabs bar and the chart. -->
     <div *ngIf="false || (!!section && maturitySvc.showChartOnNestedQPage())" class="w-100 sticky-sal"></div>
 
-    <div *ngIf="false || (!!section && maturitySvc.showChartOnNestedQPage())" class="w-100 text-center mb-3 mt-3 sticky-sal"
-    style="border: 1px solid #ccc; border-radius: .3rem; top: 5px;">
+    <div *ngIf="false || (!!section && maturitySvc.showChartOnNestedQPage())"
+      class="w-100 text-center mb-3 mt-3 sticky-sal" style="border: 1px solid #ccc; border-radius: .3rem; top: 5px;">
       <h6><strong>{{title}}</strong></h6>
       <canvas id="canvasScore" class="m-3" style="width: 75%; max-height: 100px;">{{chartScore}}</canvas>
     </div>

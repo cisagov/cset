@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2024 Battelle Energy Alliance, LLC
+  Copyright 2025 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -76,12 +76,10 @@ $primary-900: map-get($primary, 900); // Main Dark Primary
 $primary-color: $primary-900;
 $secondary-color: map-get($primary, 450);
 
-$ncua-primary-background-image: linear-gradient(
-  to right,
-  #0f3c7a,
-  #5290e5,
-  #0f3c7a
-);
+$ncua-primary-background-image: linear-gradient(to right,
+    #0f3c7a,
+    #5290e5,
+    #0f3c7a);
 $ncua-secondary-color: #0f3c7a;
 
 $link-color-dark: #1a53ff; //$primary-350;
@@ -162,5 +160,3 @@ $c2m2-ni-color: #DCA237;
 $c2m2-ni-hover-color: #bb8521;
 
 $spacer: 18px;
-
-

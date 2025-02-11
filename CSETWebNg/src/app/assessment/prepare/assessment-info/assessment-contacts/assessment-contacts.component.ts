@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -220,25 +220,25 @@ export class AssessmentContactsComponent implements OnInit {
       .getAssessmentContacts()
       .then((data: AssessmentContactsResponse) => {
         if (data.currentUserRole == 2) {
-        try {
-          this.assessSvc.updateContact(contact).subscribe(data => {
-            if (data && data.userId != contact.userId) {
-              // Update the userId in case changing email linked to new user in backend
-              this.contacts.find(x => x.userId === contact.userId).userId = data.userId;
-            }
-            this.contactItems.forEach(x => x.enableMyControls = true);
-            this.changeOccurred();
-          });
-        } catch (error) {
-          console.error(error)
+          try {
+            this.assessSvc.updateContact(contact).subscribe(data => {
+              if (data && data.userId != contact.userId) {
+                // Update the userId in case changing email linked to new user in backend
+                this.contacts.find(x => x.userId === contact.userId).userId = data.userId;
+              }
+              this.contactItems.forEach(x => x.enableMyControls = true);
+              this.changeOccurred();
+            });
+          } catch (error) {
+            console.error(error)
+          }
+        } else {
+          console.error("User does not have the correct role to edit")
         }
-      } else {
-        console.error("User does not have the correct role to edit")
-      }
       })
   }
 
-  refreshContacts(){
+  refreshContacts() {
     this.contacts = [] as EditableUser[];
     this.ngOnInit();
   }

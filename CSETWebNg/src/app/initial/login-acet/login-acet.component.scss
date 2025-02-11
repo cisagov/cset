@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2024 Battelle Energy Alliance, LLC
+  Copyright 2025 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,84 +22,98 @@ SOFTWARE.
 
 */
 @media only screen and (max-width: 600px) {
-    .login-space{
-      margin-top:0 !important;
-    }
-    .login-margin{
-      margin-top:0 !important;
-    }
-    .seal-height{
-      height: 91px !important;
-    }
+  .login-space {
+    margin-top: 0 !important;
   }
-  a:focus{
-    text-decoration: underline;
-  }
-  .btn-primary {
-      color: #000;
-      background-color: #fff;
-      border-color: #c8c8c8;
-    }
-  .btn-primary:hover {
-      background-color: #c8c8c8;
-      border-color: #c8c8c8;
-      color:#000;
-  }
-  .btn-link-dark{
-      color:white !important;
-  }
-  .btn-link-dark:hover{
-      color:#c8c8c8 !important;
-      text-decoration: underline !important;
-  }
-  label{
-      color: #fff !important;
-      font-size: 14px;
-  }
-  .login-space{
-      margin-top:147px;
-  }
-  .login-margin{
-    margin-top:20px;
 
+  .login-margin {
+    margin-top: 0 !important;
   }
-  .login-background {
-      background-image: url("/assets/images/NCUA/background_image_login.jpg");
-      background-size:cover;
 
-    }
+  .seal-height {
+    height: 91px !important;
+  }
+}
 
-    .login-background-color{
-      background-color: #184D96;
-    }
+a:focus {
+  text-decoration: underline;
+}
 
-    .login-divider{
-      height: 90%; background-color: #fff; width: 1px; margin-top: 20px;
-    }
+.btn-primary {
+  color: #000;
+  background-color: #fff;
+  border-color: #c8c8c8;
+}
 
-    .input-container {
-    position: relative;
-    padding: 0;
+.btn-primary:hover {
+  background-color: #c8c8c8;
+  border-color: #c8c8c8;
+  color: #000;
+}
+
+.btn-link-dark {
+  color: white !important;
+}
+
+.btn-link-dark:hover {
+  color: #c8c8c8 !important;
+  text-decoration: underline !important;
+}
+
+label {
+  color: #fff !important;
+  font-size: 14px;
+}
+
+.login-space {
+  margin-top: 147px;
+}
+
+.login-margin {
+  margin-top: 20px;
+
+}
+
+.login-background {
+  background-image: url("/assets/images/NCUA/background_image_login.jpg");
+  background-size: cover;
+
+}
+
+.login-background-color {
+  background-color: #184D96;
+}
+
+.login-divider {
+  height: 90%;
+  background-color: #fff;
+  width: 1px;
+  margin-top: 20px;
+}
+
+.input-container {
+  position: relative;
+  padding: 0;
 }
 
 .input-icon {
-    color: gray; 
-    position: absolute;
-    width: 20px;
-    background-color: #fff;
-    text-align: center; 
-    top: 15px; 
-    right: 10px;
-    cursor: pointer;
-    -moz-transition: all .15s ease-in;
-    -o-transition: all .15s ease-in;
-    -webkit-transition: all .15s ease-in;
-    transition: all .15s ease-in;
-    -webkit-user-select: none;
-    user-select: none;
+  color: gray;
+  position: absolute;
+  width: 20px;
+  background-color: #fff;
+  text-align: center;
+  top: 15px;
+  right: 10px;
+  cursor: pointer;
+  -moz-transition: all .15s ease-in;
+  -o-transition: all .15s ease-in;
+  -webkit-transition: all .15s ease-in;
+  transition: all .15s ease-in;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
-.input-icon:hover, .input-icon:focus {
-    color: black; 
+.input-icon:hover,
+.input-icon:focus {
+  color: black;
 }
-

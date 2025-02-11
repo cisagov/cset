@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -32,24 +32,24 @@
         <div class="card gallery-card" (mouseover)="onHover(c.item.gallery_Item_Guid)"
           (mouseleave)="onHoverOut(-1, c.item.gallery_Item_Guid)">
 
-          <div class="card-body gallery-card-body cursor-pointer"
-          style="min-height:150px; max-height:150px; z-index:1"
-          (click)="navSvc.beginNewAssessmentGallery(c.item)">
-          <div class="img-container">
+          <div class="card-body gallery-card-body cursor-pointer" style="min-height:150px; max-height:150px; z-index:1"
+            (click)="navSvc.beginNewAssessmentGallery(c.item)">
+            <div class="img-container">
               <img class="img-cropped-calc" [src]="getImageSrc(c.item.icon_File_Name_Small)">
-          </div>
-          <h6 class="card-title" ellipsis [ellipsis-content]="c.item.title"
+            </div>
+            <h6 class="card-title" ellipsis [ellipsis-content]="c.item.title"
               style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
 
-      </div>
-          <div class="card-footer" [class.gallery-card-footer]="c.item.gallery_Item_Guid==hoverIndex" style="text-align:right;">
+          </div>
+          <div class="card-footer" [class.gallery-card-footer]="c.item.gallery_Item_Guid==hoverIndex"
+            style="text-align:right;">
             <!--[hidden]="c.item.gallery_Item_Guid!=hoverIndex">-->
-            <button class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c.item)" [hidden]="c.item.gallery_Item_Guid!=hoverIndex"
-              style="margin-right:5px; z-index:100"><i class="fa-solid fa-circle-info"
-                style="font-size: 18px;"></i></button>
+            <button class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c.item)"
+              [hidden]="c.item.gallery_Item_Guid!=hoverIndex" style="margin-right:5px; z-index:100"><i
+                class="fa-solid fa-circle-info" style="font-size: 18px;"></i></button>
             <button class="btn btn-light btn-circle btn-sm gallery-btn-play"
-              (click)="navSvc.beginNewAssessmentGallery(c.item)" [hidden]="c.item.gallery_Item_Guid!=hoverIndex"><i class="fa-solid fa-play"
-                style="font-size: 18px; z-index:100"></i></button>
+              (click)="navSvc.beginNewAssessmentGallery(c.item)" [hidden]="c.item.gallery_Item_Guid!=hoverIndex"><i
+                class="fa-solid fa-play" style="font-size: 18px; z-index:100"></i></button>
           </div>
         </div>
       </ng-template>

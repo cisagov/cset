@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -86,15 +86,15 @@ export class DemographicIodService {
    * POSTs the screen data to the API.
    * @param demographic
    */
-  updateIndividualDemographics(name: string, val: any, type: string){
+  updateIndividualDemographics(name: string, val: any, type: string) {
 
-     // Setting up query parameters
-     let queryParams = new HttpParams()
-     .set('name', name)
-     .set('val', val)
-     .set('t', type);
+    // Setting up query parameters
+    let queryParams = new HttpParams()
+      .set('name', name)
+      .set('val', val)
+      .set('t', type);
 
     this.http.post(this.configSvc.apiUrl + 'demographics/ext3', null, { params: queryParams })
-    .subscribe(() => {})
+      .subscribe(() => { })
   }
 }
