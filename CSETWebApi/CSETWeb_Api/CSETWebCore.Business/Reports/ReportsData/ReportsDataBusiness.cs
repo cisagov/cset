@@ -36,7 +36,7 @@ namespace CSETWebCore.Business.Reports
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IMaturityBusiness _maturityBusiness;
         private readonly IQuestionRequirementManager _questionRequirement;
-        private readonly ITokenManager _tokenManager;
+        private ITokenManager _tokenManager;
 
         public List<int> OutOfScopeQuestions = new List<int>();
 
@@ -59,6 +59,17 @@ namespace CSETWebCore.Business.Reports
             _tokenManager = tokenManager;
 
             _overlay = new TranslationOverlay();
+        }
+
+
+        /// <summary>
+        /// Allows the token to be set after construction.  This is needed
+        /// in the Reports realm, when tokens are passed as a param to the controller method.
+        /// </summary>
+        /// <param name="token"></param>
+        public void SetToken(ITokenManager token)
+        {
+            _tokenManager = token;
         }
 
 
@@ -675,7 +686,6 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<QuestionsWithComments> GetQuestionsWithComments()
         {
-
             var results = new List<QuestionsWithComments>();
 
             var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
@@ -731,7 +741,6 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<QuestionsMarkedForReview> GetQuestionsMarkedForReview()
         {
-
             var results = new List<QuestionsMarkedForReview>();
 
             // get any "marked for review" or commented answers that currently apply
@@ -785,7 +794,6 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<QuestionsMarkedForReview> GetQuestionsReviewed()
         {
-
             var results = new List<QuestionsMarkedForReview>();
             var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
 
@@ -1087,24 +1095,34 @@ namespace CSETWebCore.Business.Reports
 
 
         /// <summary>
-        /// Returns a list of individuals assigned to observations.
+        /// 
         /// </summary>
         /// <returns></returns>
         public List<Individual> GetObservationIndividuals()
         {
-            var observations = (from a in _context.FINDING_CONTACT
-                                join b in _context.FINDING on a.Finding_Id equals b.Finding_Id
-                                join c in _context.ANSWER on b.Answer_Id equals c.Answer_Id
-                                join mq in _context.MATURITY_QUESTIONS on c.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mq1
+            List<Individual> individualList = [];
+
+            var observations = (from f in _context.FINDING
+                                join fc in _context.FINDING_CONTACT on f.Finding_Id equals fc.Finding_Id 
+                                join a in _context.ANSWER on f.Answer_Id equals a.Answer_Id
+                                join mq in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mq1
                                 from mq in mq1.DefaultIfEmpty()
-                                join r in _context.NEW_REQUIREMENT on c.Question_Or_Requirement_Id equals r.Requirement_Id into r1
-                                from r in r1.DefaultIfEmpty()
-                                join d in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals d.Assessment_Contact_Id
-                                join i in _context.IMPORTANCE on b.Importance_Id equals i.Importance_Id into i1
+                                join nr in _context.NEW_REQUIREMENT on a.Question_Or_Requirement_Id equals nr.Requirement_Id into nr1
+                                from nr in nr1.DefaultIfEmpty()
+                                join ac in _context.ASSESSMENT_CONTACTS on fc.Assessment_Contact_Id equals ac.Assessment_Contact_Id into ac1
+                                from ac in ac1.DefaultIfEmpty()
+                                join i in _context.IMPORTANCE on f.Importance_Id equals i.Importance_Id into i1
                                 from i in i1.DefaultIfEmpty()
-                                where c.Assessment_Id == _assessmentId
-                                orderby a.Assessment_Contact_Id, b.Answer_Id, b.Finding_Id
-                                select new { a, b, c, mq, r, d, i.Value }).ToList();
+                                where a.Assessment_Id == _assessmentId
+                                select new ObservationIngredients() { 
+                                    Finding = f, 
+                                    FC = fc,
+                                    Answer = a, 
+                                    MaturityQuestion = mq, 
+                                    NewRequirement = nr, 
+                                    Importance = i }).ToList();
+
+            var acc = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == _assessmentId).OrderBy(x => x.Assessment_Contact_Id).ToList();
 
 
             // Get any associated questions to get their display reference
@@ -1112,57 +1130,84 @@ namespace CSETWebCore.Business.Reports
             var componentQuestions = GetComponentQuestions();
 
 
-            List<Individual> individualList = new List<Individual>();
-
-            int contactId = 0;
-            Individual individual = null;
-
-            foreach (var f in observations)
+            
+            // First handle the 'assigned' Observations
+            foreach (var contact in acc)
             {
-                if (contactId != f.a.Assessment_Contact_Id)
+                Individual individual = new Individual()
                 {
-                    individual = new Individual()
-                    {
-                        Observations = new List<Observations>(),
-                        FullName = FormatName(f.d.FirstName, f.d.LastName)
-                    };
+                    FullName = FormatName(contact.FirstName, contact.LastName)
+                };
 
-                    individualList.Add(individual);
-                }
-                contactId = f.a.Assessment_Contact_Id;
+                individualList.Add(individual);
 
+                var obsList = observations.Where(x => x.FC?.Assessment_Contact_Id == contact.Assessment_Contact_Id).ToList();
 
-                TinyMapper.Bind<FINDING, Observations>();
-                Observations obs = TinyMapper.Map<Observations>(f.b);
-                obs.Observation = f.b.Summary;
-                obs.ResolutionDate = f.b.Resolution_Date;
-                obs.Importance = f.Value;
-
-
-                // get the question identifier and text
-                GetQuestionTitleAndText(f, standardQuestions, componentQuestions, f.c.Answer_Id,
-                    out string qid, out string qtxt);
-
-                if (_maturityBusiness.GetMaturityModel(_assessmentId)?.ModelName == "CIE")
+                foreach (var m in obsList)
                 {
-                    GetQuestionTitleAndTextForCie(f, standardQuestions, componentQuestions, f.c.Answer_Id,
-                        out qid, out qtxt);
+                    var obs = GenerateObservation(m, standardQuestions, componentQuestions);
+
+                    individual.Observations.Add(obs);
                 }
-
-                obs.QuestionIdentifier = qid;
-                obs.QuestionText = qtxt;
+            }
 
 
+            // Include any 'unassigned' Observations
+            var ind = new Individual();
+            ind.FullName = "Unassigned";
 
-                var othersList = (from a in f.b.FINDING_CONTACT
-                                  join b in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals b.Assessment_Contact_Id
-                                  select FormatName(b.FirstName, b.LastName)).ToList();
-                obs.OtherContacts = string.Join(",", othersList);
+            var unnasignedObs = observations.Where(x => x.FC == null).ToList();
+            foreach (var obs in unnasignedObs)
+            {
+                var observation = GenerateObservation(obs, standardQuestions, componentQuestions);
+                ind.Observations.Add(observation);
+            }
 
-                individual.Observations.Add(obs);
+            if (ind.Observations.Count > 0)
+            {
+                individualList.Add(ind);
             }
 
             return individualList;
+        }
+
+
+        /// <summary>
+        /// Creates and populates an instance of Observation
+        /// </summary>
+        /// <param name="oi"></param>
+        /// <returns></returns>
+        private Observation GenerateObservation(ObservationIngredients oi, List<StandardQuestions> standardQuestions, List<ComponentQuestion> componentQuestions)
+        {
+            TinyMapper.Bind<FINDING, Observation>();
+            Observation obs = TinyMapper.Map<Observation>(oi.Finding);
+            obs.ObservationTitle = oi.Finding.Summary;
+            obs.ResolutionDate = oi.Finding.Resolution_Date;
+            obs.Importance = oi.Importance.Value;
+
+
+            // get the question identifier and text
+            GetQuestionTitleAndText(oi, standardQuestions, componentQuestions, oi.Answer.Answer_Id,
+                out string qid, out string qtxt);
+
+            if (_maturityBusiness.GetMaturityModel(_assessmentId)?.ModelName == "CIE")
+            {
+                GetQuestionTitleAndTextForCie(oi, standardQuestions, componentQuestions, oi.Answer.Answer_Id,
+                    out qid, out qtxt);
+            }
+
+            obs.QuestionIdentifier = qid;
+            obs.QuestionText = qtxt;
+
+
+            // list names of all people assigned to the observation
+            var othersList = (from a in oi.Finding.FINDING_CONTACT
+                              join b in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals b.Assessment_Contact_Id
+                              select FormatName(b.FirstName, b.LastName)).ToList();
+            obs.Assignees = string.Join(",", othersList);
+
+
+            return obs;
         }
 
 
