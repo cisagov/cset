@@ -592,6 +592,12 @@ namespace CSETWebCore.Business.Question
             return info;
         }
 
+        public ISE_ACTIONS GetRegulatoryCitations(int questionId)
+        {
+            var result = _context.ISE_ACTIONS.Where(x => x.Parent_Id == questionId).FirstOrDefault();
+            return result;
+        }
+
 
         public int SaveHydroComment(ANSWER answer, int answerId, int progressId, string comment)
         {

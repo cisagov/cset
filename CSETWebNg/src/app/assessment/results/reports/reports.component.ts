@@ -243,12 +243,17 @@ export class ReportsComponent implements OnInit, AfterViewInit {
    * 
    */
   clickExcelLink(reportType: string) {
+    let url = '';
     if (reportType.toLowerCase() == 'poam') {
-      window.location.href = this.configSvc.apiUrl + 'reports/poam/excelexport?token=' + localStorage.getItem('userToken');
+      url = this.configSvc.apiUrl + 'reports/poam/excelexport?token=' + localStorage.getItem('userToken');
     }
 
     if (reportType.toLowerCase() == 'observations') { 
-      window.location.href = this.configSvc.apiUrl + 'reports/observations/excel?token=' + localStorage.getItem('userToken');
+      url = this.configSvc.apiUrl + 'reports/observations/excel?token=' + localStorage.getItem('userToken');
+    }
+
+    if (url.length > 0) {
+      window.open(url, '_blank');
     }
   }
 
