@@ -1678,7 +1678,9 @@ ul.nav-tabs li.active button .tab-icon {
 
 .menu-divider {
   background-color: $gray-150;
+  color: $gray-150;
   margin: 8px 0;
+  opacity: .8;
 }
 
 .navbar-menu-header,
