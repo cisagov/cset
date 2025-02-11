@@ -21,15 +21,14 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Input, OnInit } from '@angular/core';
 import { AssessmentService } from '../../services/assessment.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { DemographicService } from '../../services/demographic.service';
 import { DemographicIodService } from '../../services/demographic-iod.service';
 import { DemographicsIod } from '../../models/demographics-iod.model';
-import { AssessmentContactsResponse, AssessmentDetail, Demographic } from '../../models/assessment-info.model';
+import { AssessmentDetail, Demographic } from '../../models/assessment-info.model';
 import { User } from '../../models/user.model';
 import { GalleryService } from '../../services/gallery.service';
 import { ConfigService } from '../../services/config.service';
@@ -48,12 +47,12 @@ interface GalleryItem {
   custom_Set_Name: string | null;
 }
 @Component({
-  selector: 'app-version-upgrade',
-  templateUrl: './version-upgrade.component.html',
-  host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
+  selector: 'app-upgrade',
+  templateUrl: './upgrade.component.html'
 })
-export class VersionUpgradeComponent {
+export class UpgradeComponent implements OnInit {
 
+  @Input() data: any;
   galleryItem: GalleryItem;
   contacts: User[];
   demographicData: Demographic = {};
@@ -67,8 +66,6 @@ export class VersionUpgradeComponent {
   loading = false;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialog: MatDialogRef<VersionUpgradeComponent>,
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public authSvc: AuthenticationService,
@@ -77,20 +74,14 @@ export class VersionUpgradeComponent {
     public gallerySvc: GalleryService,
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
-    public dialogRef: MatDialogRef<VersionUpgradeComponent>
-  ) {
-    dialogRef.disableClose = true;
+  ) { }
+  ngOnInit() {
+
   }
 
-
-  close() {
-    return this.dialog.close();
-  }
-
-  // Convert draft versions of assessments to final versions 
+  // // Convert draft versions of assessments to final versions 
   async upgrade() {
     this.loading = true;
-    this.sendMessage();
     // Get details from original assessment
     let draftDetails = this.assessSvc.assessment
     this.demoSvc.getDemographic().subscribe((data: any) => {
@@ -107,7 +98,7 @@ export class VersionUpgradeComponent {
             items: for (const item of row.galleryItems) {
               try {
                 const configSetup = JSON.parse(item.configuration_Setup);
-                if (configSetup.Model && configSetup.Model.ModelName == this.data.targetModelName) {
+                if (configSetup.Model && configSetup.Model.ModelName == this.data) {
                   this.galleryItem = item;
                   break rows;
                 }
@@ -126,20 +117,15 @@ export class VersionUpgradeComponent {
           this.assessSvc.refreshAssessment();
           this.updateLevel();
           // Fill answers into new assessment from original and then navigate to the new assesment 
-          this.assessSvc.convertAssesment(this.originalId, this.data.targetModelName).subscribe((data: any) => {
+          this.assessSvc.convertAssesment(this.originalId, this.data).subscribe((data: any) => {
             this.navSvc.beginAssessment(newId)
             this.loading = false;
-            this.close();
           })
         })
 
     } catch (error) {
       console.error("Error converting assessment:", error);
     }
-  }
-
-  sendMessage() {
-    this.data.callback();
   }
 
   updateLevel() {
