@@ -36,9 +36,10 @@
             (change)="importClick($event)">
         </label>
 
-        <button tabindex="0" id="demographic-export" style="margin-bottom: 8px"
+        <button tabindex="0" id="demographic-export"
           class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-          (click)="exportClick()" matTooltip="Export Organization Demographics, Assessment Configuration, Critical Service Information">
+          (click)="exportClick()"
+          matTooltip="Export Organization Demographics, Assessment Configuration, Critical Service Information">
           <span class="cset-icons-export-up fs-base-2 me-2"></span>
           <span class="icon-link-button-text-dark">{{t('buttons.export')}}</span>
         </button>
