@@ -1139,8 +1139,6 @@ namespace CSETWebCore.Business.Reports
                     FullName = FormatName(contact.FirstName, contact.LastName)
                 };
 
-                individualList.Add(individual);
-
                 var obsList = observations.Where(x => x.FC?.Assessment_Contact_Id == contact.Assessment_Contact_Id).ToList();
 
                 foreach (var m in obsList)
@@ -1148,6 +1146,11 @@ namespace CSETWebCore.Business.Reports
                     var obs = GenerateObservation(m, standardQuestions, componentQuestions);
 
                     individual.Observations.Add(obs);
+                }
+
+                if (individual.Observations.Count > 0)
+                {
+                    individualList.Add(individual);
                 }
             }
 
