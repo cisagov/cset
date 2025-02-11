@@ -327,7 +327,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
               url = url + "&passwordHint=" + result.encryptionData.hint;
             }
 
-
             //if electron
             window.location.href = url;
 
