@@ -26,6 +26,10 @@
   <h3 *ngIf="this.configSvc.installationMode !== 'ACET'" class="mb-3">{{t('titles.assessment configuration')}}</h3>
   <h3 *ngIf="this.configSvc.installationMode === 'ACET'" class="mb-3">{{ t('demographics') }}</h3>
 
+  <div *ngIf="this.showUpgrade">
+    <app-upgrade [data]="this.targetModel"></app-upgrade>
+  </div>
+
   <app-assessment-detail *ngIf="configSvc.installationMode != 'CF' && configSvc.installationMode !== 'ACET'"
     class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail>
   <app-assessment-detail-ncua *ngIf="configSvc.installationMode === 'ACET'"
