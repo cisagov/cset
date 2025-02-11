@@ -269,7 +269,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   getImageSrc(src: string) {
     let path = "assets/images/cards/";
     if (src) {
-      return path + src;
+      return path + src.toLowerCase();
     }
     return path + 'default.jpeg';
   }
