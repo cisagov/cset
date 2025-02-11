@@ -33,6 +33,8 @@ import { User } from '../../models/user.model';
 import { GalleryService } from '../../services/gallery.service';
 import { ConfigService } from '../../services/config.service';
 import { MaturityService } from '../../services/maturity.service';
+import { CsiServiceComposition, CsiServiceDemographic } from '../../models/csi.model';
+import { CsiService } from '../../services/cis-csi.service';
 
 interface GalleryItem {
   gallery_Item_Guid: string;
@@ -64,6 +66,11 @@ export class UpgradeComponent implements OnInit {
   originalId: number;
   dataToSend: string = 'Hello from Dialog Component';
   loading = false;
+  iodDemographics: DemographicsIod = {};
+  csiServiceDemographic: CsiServiceDemographic = {};
+  serviceComposition: CsiServiceComposition = {};
+
+
 
   constructor(
     public assessSvc: AssessmentService,
@@ -74,6 +81,8 @@ export class UpgradeComponent implements OnInit {
     public gallerySvc: GalleryService,
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
+    public iodDemoSvc: DemographicIodService,
+    public csiSvc: CsiService
   ) { }
   ngOnInit() {
 
@@ -82,14 +91,7 @@ export class UpgradeComponent implements OnInit {
   // // Convert draft versions of assessments to final versions 
   async upgrade() {
     this.loading = true;
-    // Get details from original assessment
-    let draftDetails = this.assessSvc.assessment
-    this.demoSvc.getDemographic().subscribe((data: any) => {
-      this.demographicData = data;
-    })
-    this.assessment = draftDetails;
-    this.originalId = this.assessment.id
-    this.selectedLevel = this.assessSvc.assessment.maturityModel.maturityTargetLevel
+    this.getOriginalData()
     // Get gallery item to create and begin new target assessment 
     try {
       this.gallerySvc.getGalleryItems(this.configSvc.galleryLayout).subscribe(
@@ -110,12 +112,7 @@ export class UpgradeComponent implements OnInit {
           // Get id for newly created assessment
           const newId = await this.assessSvc.newAssessmentGallery(this.galleryItem);
           this.assessment.id = newId
-          // Update new assessment with values 
-          this.assessSvc.assessment = this.assessment
-          this.demoSvc.updateDemographic(this.demographicData);
-          this.assessSvc.updateAssessmentDetails(this.assessment);
-          this.assessSvc.refreshAssessment();
-          this.updateLevel();
+          this.fillNewAssessment()
           // Fill answers into new assessment from original and then navigate to the new assesment 
           this.assessSvc.convertAssesment(this.originalId, this.data).subscribe((data: any) => {
             this.navSvc.beginAssessment(newId)
@@ -133,6 +130,43 @@ export class UpgradeComponent implements OnInit {
       this.navSvc.buildTree();
       return;
     });
+  }
+
+  // Get details from original assessment
+  getOriginalData() {
+    let draftDetails = this.assessSvc.assessment
+    this.demoSvc.getDemographic().subscribe((data: any) => {
+      this.demographicData = data;
+    })
+    this.iodDemoSvc.getDemographics().subscribe((data: any) => {
+      this.iodDemographics = data;
+    });
+    if (this.configSvc.cisaAssessorWorkflow == true) {
+      this.csiSvc.getCsiServiceDemographic().subscribe((result: CsiServiceDemographic) => {
+        this.csiServiceDemographic = result;
+      });
+      this.csiSvc.getCsiServiceComposition().subscribe(
+        (data: CsiServiceComposition) => {
+          this.serviceComposition = data;
+        });
+    }
+    this.assessment = draftDetails;
+    this.originalId = this.assessment.id
+    this.selectedLevel = this.assessSvc.assessment.maturityModel.maturityTargetLevel
+  }
+
+  // Update new assessment with values 
+  fillNewAssessment() {
+    this.assessSvc.assessment = this.assessment
+    this.demoSvc.updateDemographic(this.demographicData);
+    this.iodDemoSvc.updateDemographic(this.iodDemographics);
+    if (this.configSvc.cisaAssessorWorkflow == true) {
+      this.csiSvc.updateCsiServiceDemographic(this.csiServiceDemographic);
+      this.csiSvc.updateCsiServiceComposition(this.serviceComposition);
+    }
+    this.assessSvc.updateAssessmentDetails(this.assessment);
+    this.assessSvc.refreshAssessment();
+    this.updateLevel();
   }
 
 
