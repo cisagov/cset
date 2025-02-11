@@ -18,6 +18,8 @@ export class AssessmentConfigIodComponent implements OnInit {
   contacts: User[];
   assessment: AssessmentDetail = {};
   IsPCII: boolean = false;
+  showUpgrade: boolean = false;
+  targetModel: string = '';
 
   constructor(
     private assessSvc: AssessmentService,
@@ -37,6 +39,15 @@ export class AssessmentConfigIodComponent implements OnInit {
     });
 
     this.getAssessmentDetail();
+
+    if (this.configSvc.config.debug.showCmmcConversion ?? false) {
+      this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
+        if (data.maturityModel.modelName == "CMMC2") {
+          this.showUpgrade = true;
+          this.targetModel = "CMMC2F"
+        }
+      })
+    };
 
   }
 

@@ -21,12 +21,13 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { ACETService } from '../../../services/acet.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
   selector: 'app-assessment-info',
@@ -34,7 +35,10 @@ import { ACETService } from '../../../services/acet.service';
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class AssessmentInfoComponent {
+export class AssessmentInfoComponent implements OnInit {
+
+  showUpgrade: boolean = false;
+  targetModel: string = '';
 
   constructor(
     public assessSvc: AssessmentService,
@@ -43,4 +47,16 @@ export class AssessmentInfoComponent {
     public ncuaSvc: NCUAService,
     public acetSvc: ACETService
   ) { }
+
+  ngOnInit(): void {
+    if (this.configSvc.config.debug.showCmmcConversion ?? false) {
+      this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
+        if (data.maturityModel.modelName == "CMMC2") {
+          this.showUpgrade = true;
+          this.targetModel = "CMMC2F"
+        }
+      });
+    }
+
+  }
 }
