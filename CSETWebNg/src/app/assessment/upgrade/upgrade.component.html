@@ -20,30 +20,23 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" class="confirm-dialog d-flex flex-column justify-content-center flex-11a">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span class="me-3 fs-base-6 cset-icons-check-circle"></span>
-    <span>Upgrade draft assessment to final</span>
+<div *transloco="let t" class="alert alert-danger ">
+  <div class="p-3 justify-content-center">
+    <span>Upgrade {{this.assessSvc.assessment.maturityModel.modelTitle}} to final version</span>
   </div>
 
-  <div class="p-3 mt-2 oy-auto d-flex flex-column flex-11a">
-    <mat-dialog-content *ngIf="loading; else content" class="p-6d-flex flex-column flex-11a text-center">
+  <div class="p-3">
+    <div *ngIf="loading; else content" class="">
       Converting your assessment, this may take a few moments.
-    </mat-dialog-content>
+    </div>
     <ng-template #content>
-      <mat-dialog-content class="p-0 pr-3 pe-3 d-flex flex-column flex-11a text-center">
-        <div>The final version of this assessment is now available. </div>
-        <div>All applicable answered questions, along with assessment information and demographics, will be transferred.
-        </div>
-        <div class="pb-2 wrap-text">Would you like to upgrade your draft assessment to the final version?</div>
-
-      </mat-dialog-content>
+      <div>
+        <div>The final version of this assessment is now available. All applicable answered questions, along with
+          assessment information and demographics, will be transferred. </div>
+      </div>
     </ng-template>
+    <div *ngIf="!loading" class="p-3 mb-0 d-flex justify-content-end flex-00a">
+      <button (click)="upgrade()" class="btn btn-primary m-0">Upgrade</button>
+    </div>
   </div>
-
-  <mat-dialog-actions *ngIf="!loading" class="p-3 mb-0 d-flex justify-content-between flex-00a">
-    <button class="btn btn-primary m-0" (click)="close(false)">Close</button>
-    <button (click)="upgrade()" class="btn btn-primary m-0">Convert</button>
-  </mat-dialog-actions>
-
 </div>
