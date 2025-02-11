@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ export class CrrPerformanceAppendixAComponent implements OnInit {
   legend: string = '';
   mil1FullAnswerDistribChart = '';
 
-  constructor(private cmuSvc: CmuService) {}
+  constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
     this.cmuSvc.getPerformanceAppendixABodyData().subscribe((resp: any) => {

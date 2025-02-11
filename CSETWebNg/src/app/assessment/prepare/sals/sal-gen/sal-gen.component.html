@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2024 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -47,7 +47,8 @@
 
             <div class="p-2">
                 <div class="sal-slider-label">{{t('titles.sal.gen sal.on site')}} {{slider?.offSite?.values[0]}}</div>
-                <div class="sal-slider-label">{{t('titles.sal.gen sal.on site')}} {{slider?.offSite?.values[slider?.offSite?.values?.length - 1]}}
+                <div class="sal-slider-label">{{t('titles.sal.gen sal.on site')}}
+                    {{slider?.offSite?.values[slider?.offSite?.values?.length - 1]}}
                 </div>
                 <ngx-slider [(value)]="slider.onSite.slider_Value"
                     (valueChange)="valueChange($event, slider.onSite.sal_Name)" [options]="slider.onSite.options"
@@ -55,7 +56,8 @@
                 </ngx-slider>
 
                 <div class="sal-slider-label">{{t('titles.sal.gen sal.off site')}} {{slider?.onSite?.values[0]}}</div>
-                <div class="sal-slider-label">{{t('titles.sal.gen sal.off site')}} {{slider?.onSite?.values[slider?.offSite?.values?.length - 1]}}
+                <div class="sal-slider-label">{{t('titles.sal.gen sal.off site')}}
+                    {{slider?.onSite?.values[slider?.offSite?.values?.length - 1]}}
                 </div>
                 <ngx-slider [(value)]="slider.offSite.slider_Value"
                     (valueChange)="valueChange($event, slider.offSite.sal_Name)" [options]="slider.offSite.options"

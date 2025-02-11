@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,25 +32,25 @@ import { AssessmentService } from '../../../services/assessment.service';
 })
 export class ExportAssessmentComponent {
   preventEncrypt: any;
-  
+
 
   constructor(
     public assessSvc: AssessmentService,
     public dialogRef: MatDialogRef<ExportAssessmentComponent>,
     @Inject(MAT_DIALOG_DATA) public input: any,
-  ) 
-  {
+  ) {
     dialogRef.disableClose = true;
   }
 
   dialogTitle: string = "Export Assessment Options";
 
   data = {
-  scrubData: false,
-  encryptionData: {
-    password: "",
-    hint: "",
-  }};
+    scrubData: false,
+    encryptionData: {
+      password: "",
+      hint: "",
+    }
+  };
 
   password = "";
   passwordHint = "";

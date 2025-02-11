@@ -1,6 +1,6 @@
 /* 
 
-  Copyright 2024 Battelle Energy Alliance, LLC  
+  Copyright 2025 Battelle Energy Alliance, LLC  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -27,17 +27,20 @@ SOFTWARE.
   background-color: #E9E9EA;
   border-bottom: 1px solid #cccccc;
 }
-.btn-button{
-width: 220px !important;
+
+.btn-button {
+  width: 220px !important;
 }
-@media print{
-  .noprint{
+
+@media print {
+  .noprint {
     visibility: hidden;
   }
 }
-.exportBtb{
+
+.exportBtb {
   background-color: #d9d9d9;
-  color:black;
+  color: black;
 }
 
 .exportBtb:hover {

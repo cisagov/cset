@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -57,9 +57,9 @@ export class PhysicalSummaryComponent implements OnInit, AfterViewInit {
     public reportSvc: ReportService,
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
-    private titleService: Title,    
+    private titleService: Title,
     private sanitizer: DomSanitizer,
-    private maturitySvc: MaturityService,    
+    private maturitySvc: MaturityService,
     public tSvc: TranslocoService
   ) { }
 
@@ -83,7 +83,7 @@ export class PhysicalSummaryComponent implements OnInit, AfterViewInit {
 
   }
 
-  
+
   ngOnDestroy() {
     this.translationSub.unsubscribe()
   }

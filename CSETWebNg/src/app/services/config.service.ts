@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -105,7 +105,7 @@ export class ConfigService {
    * Constructor.
    * @param http
    */
-  constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) {}
+  constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) { }
 
   /**
    *
@@ -118,8 +118,8 @@ export class ConfigService {
       const prom = firstValueFrom(obs);
 
       return prom.then((config) => {
-          this.config = config;
-        })
+        this.config = config;
+      })
         .then(() => {
           const configPaths = [];
           this.config.currentConfigChain.forEach((configProfile) => {
@@ -149,9 +149,9 @@ export class ConfigService {
     const prom = firstValueFrom(obs);
 
     return prom.then((iodConfig) => {
-        merge(this.config, iodConfig);
-        this.setConfigPropertiesForLocalService();
-      });
+      merge(this.config, iodConfig);
+      this.setConfigPropertiesForLocalService();
+    });
   }
 
   checkLocalDocStatus() {

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ import { ReportService } from '../../services/report.service';
 @Component({
   selector: 'app-all-reviewed',
   templateUrl: './all-reviewed.component.html',
-  styleUrls: ['../reports.scss','./all-reviewed.component.scss']
+  styleUrls: ['../reports.scss', './all-reviewed.component.scss']
 })
 export class AllReviewedComponent {
   response: any;
@@ -42,7 +42,7 @@ export class AllReviewedComponent {
     public titleService: Title,
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService
-  ) {}
+  ) { }
 
   ngOnInit() {
 

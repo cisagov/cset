@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,7 @@
         </div>
 
         <div *ngIf="q.questionType == 'text'">
-            
+
             <input type="text" class="form-control w-100" maxlength="4000" [value]="q.answerMemo"
                 (change)="changeText(q, $event)">
         </div>
