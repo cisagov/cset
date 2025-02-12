@@ -82,6 +82,9 @@ export class AssessmentService {
 
   public assessmentCreator: any;
 
+  //Hide upgrade assessment alert
+  public hideUpgradeAlert: boolean = false;
+
   /**
    *
    */
@@ -482,6 +485,7 @@ export class AssessmentService {
    * this one.
    */
   loadAssessment(id: number): Promise<any> {
+    this.hideUpgradeAlert = false;
     return new Promise((resolve, reject) => {
       this.getAssessmentToken(id).then(() => {
         this.getAssessmentDetail().subscribe(data => {
