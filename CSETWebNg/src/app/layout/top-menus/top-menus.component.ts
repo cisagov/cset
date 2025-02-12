@@ -408,12 +408,14 @@ export class TopMenusComponent implements OnInit {
   }
 
   exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+    const url = this.configSvc.apiUrl + 'assessment/export/excel?token=' + localStorage.getItem('userToken');
+    window.open(url);
   }
 
 
   exportToExcelNCUA() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExportISE?token=' + localStorage.getItem('userToken');
+    const url = this.configSvc.apiUrl + 'ExcelExportISE?token=' + localStorage.getItem('userToken');
+    window.open(url);
   }
 
   /**

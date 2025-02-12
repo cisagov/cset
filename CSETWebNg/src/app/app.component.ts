@@ -241,7 +241,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+    const url = this.configSvc.apiUrl + 'assessment/export/excel?token=' + localStorage.getItem('userToken');
+    window.open(url);
   }
 
 
