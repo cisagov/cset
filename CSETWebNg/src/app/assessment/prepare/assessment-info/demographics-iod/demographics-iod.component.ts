@@ -21,32 +21,32 @@ export class DemographicsIodComponent implements OnInit {
   @Input() events: Observable<void>;
 
   private eventsSubscription: any;
-  
+
   /**
    * The principal model for this page
    */
   @Input() demographicData: DemographicsIod = {};
-  assessmentConfig: AssessmentConfig; 
-  serviceDemographics: ServiceDemographic; 
-  serviceComposition: ServiceComposition; 
-  criticalServiceInfo: CriticalServiceInfo; 
+  assessmentConfig: AssessmentConfig;
+  serviceDemographics: ServiceDemographic;
+  serviceComposition: ServiceComposition;
+  criticalServiceInfo: CriticalServiceInfo;
 
 
-  constructor(public demoSvc: DemographicIodService, 
+  constructor(public demoSvc: DemographicIodService,
     private assessSvc: AssessmentService,
     private sanitizer: DomSanitizer,
     public dialog: MatDialog,
-    private configSvc : ConfigService, 
+    private configSvc: ConfigService,
     private iodDemoSvc: DemographicIodService,
-    private demoSvc2: DemographicService, 
+    private demoSvc2: DemographicService,
     private csiSvc: CsiService
-    ) {}
+  ) { }
 
   /**
    *
    */
   ngOnInit() {
-    this.populateDemographicsModel()    
+    this.populateDemographicsModel()
   }
 
   populateDemographicsModel() {
@@ -65,20 +65,23 @@ export class DemographicsIodComponent implements OnInit {
    */
   onChangeSector(evt: any) {
     this.demographicData.subsector = null;
-
     this.demoSvc.updateIndividualDemographics('SECTOR', this.demographicData.sector, 'int');
     this.demoSvc.updateIndividualDemographics('SUBSECTOR', this.demographicData.subsector, 'int');
 
-    if (this.demographicData.sector) {
+    //Check if user selected null for sector and reset subsectors 
+    if (this.demographicData.sector.toString() == "null") {
+      this.demographicData.listSubsectors = null;
+    } else {
       this.demoSvc.getSubsectors(this.demographicData.sector).subscribe((data: any[]) => {
         this.demographicData.listSubsectors = data;
       });
-      this.assessSvc.assessment.sectorId = this.demographicData.sector;
-      this.assessSvc.assessmentStateChanged$.next(126);
     }
+
+    this.assessSvc.assessment.sectorId = this.demographicData.sector;
+    this.assessSvc.assessmentStateChanged$.next(126);
   }
 
-  onChangeOrgType(evt: any){
+  onChangeOrgType(evt: any) {
     this.demographicData.organizationType = parseInt(evt.target.value)
     this.newUpdate('ORG-TYPE', evt, 'int')
   }
@@ -118,7 +121,7 @@ export class DemographicsIodComponent implements OnInit {
   }
 
   update(event: any) {
-    this.updateDemographics();    
+    this.updateDemographics();
   }
 
   updateDemographics() {
@@ -126,7 +129,7 @@ export class DemographicsIodComponent implements OnInit {
     this.demoSvc.updateDemographic(this.demographicData);
   }
 
-  newUpdate(name: string, event: any, type: string){
+  newUpdate(name: string, event: any, type: string) {
     this.configSvc.cisaAssessorWorkflow = true;
 
     let val = event.target.value;
@@ -136,5 +139,5 @@ export class DemographicsIodComponent implements OnInit {
 
     this.demoSvc.updateIndividualDemographics(name, val, type)
   }
-  
+
 } 
