@@ -57,7 +57,7 @@
       <label for="sector" class="form-label">Sector</label>
       <select [ngClass]="{ 'alert-danger' : !demographicData.sector}" class="form-select" id="sector" tabindex="0"
         name="sector" [(ngModel)]="demographicData.sector" (change)="onChangeSector($event)">
-        <option [ngValue]="null">-- Select Sector --</option>
+        <option [value]=null>-- Select Sector --</option>
         <option *ngFor="let i of demographicData.listSectors" [value]="i.optionValue"
           [selected]="i.optionValue === demographicData?.sector">
           {{ i.optionText }}
