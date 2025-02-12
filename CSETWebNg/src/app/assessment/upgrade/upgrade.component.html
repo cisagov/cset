@@ -20,23 +20,35 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" class="alert alert-danger ">
-  <div class="p-3 justify-content-center">
-    <span>Upgrade {{this.assessSvc.assessment.maturityModel.modelTitle}} to final version</span>
+<div *transloco="let t" class="alert alert-warning" [hidden]="this.assessSvc.hideUpgradeAlert">
+  <div class="d-flex justify-content-between">
+    <div class="d-flex align-items-center">
+      <span class="p-2 fs-large cset-icons-exclamation-triangle"></span>
+      <span class="fs-base-2 p-2 justify-content-center flex-11a">
+        Upgrade {{ this.assessSvc.assessment.maturityModel.modelTitle }} to final version
+      </span>
+    </div>
+    <div class="align-items-start">
+      <button class="btn btn-outline-light btn-sm align-items-center" (click)="hideAlert()">
+        <i class="fa-solid fa-xmark ms-1" style="color:#664d03"></i>
+      </button>
+    </div>
   </div>
-
-  <div class="p-3">
-    <div *ngIf="loading; else content" class="">
+  <div class="p-2">
+    <div *ngIf="loading; else content">
       Converting your assessment, this may take a few moments.
     </div>
     <ng-template #content>
       <div>
-        <div>The final version of this assessment is now available. All applicable answered questions, along with
-          assessment information and demographics, will be transferred. </div>
+        <div>
+          The final version of this assessment is now available. All your answered questions, along with assessment
+          information and demographics, will be transferred. Please note that this process is irreversible.
+        </div>
       </div>
     </ng-template>
-    <div *ngIf="!loading" class="p-3 mb-0 d-flex justify-content-end flex-00a">
-      <button (click)="upgrade()" class="btn btn-primary m-0">Upgrade</button>
+    <div *ngIf="!loading" class="mb-0 d-flex justify-content-end flex-00a">
+      <button (click)="upgrade()" class="btn btn-outline m-0"
+        style="border-color: #664d03; color: #664d03;">Upgrade</button>
     </div>
   </div>
 </div>

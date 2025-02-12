@@ -85,7 +85,10 @@ export class UpgradeComponent implements OnInit {
     public csiSvc: CsiService
   ) { }
   ngOnInit() {
+  }
 
+  hideAlert() {
+    this.assessSvc.hideUpgradeAlert = true;
   }
 
   // // Convert draft versions of assessments to final versions 
