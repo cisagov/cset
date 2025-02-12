@@ -53,7 +53,9 @@ namespace CSETWebCore.ExportCSV
             var stream = new MemoryStream();
             var answerslist = _context.ANSWER;
             if (answerslist.Count() <= 0)
+            {
                 return stream;
+            }
             CSETtoExcelDataMappings export = new CSETtoExcelDataMappings(assessment_id, _context, _dataHandling);
             export.ProcessTables(stream);
             return stream;
