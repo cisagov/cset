@@ -196,7 +196,8 @@ namespace CSETWebCore.ExportCSV
                                                select new QuestionExport()
                                                {
                                                    Question_Id = q.Mat_Question_Id,
-                                                   Simple_Question = q.Question_Text,
+                                                   Simple_Question = DetermineQuestionText(q),
+                                                   Requirement_Title = q.Question_Title,
                                                    Answer_Text = a.Answer_Text,
                                                    Mark_For_Review = a.Mark_For_Review ?? false,
                                                    Reviewed = a.Reviewed,
@@ -210,12 +211,34 @@ namespace CSETWebCore.ExportCSV
                                                };
 
             var rows = list.ToList<QuestionExport>();
+
             rows.ForEach(q =>
             {
                 q.Is_Question = !((q.Is_Requirement ?? false) || (q.Is_Component ?? false) || (q.Is_Maturity ?? false) || (q.Is_Framework ?? false));
             });
 
             doc.AddList<QuestionExport>(rows, "Maturity Questions", QuestionExport.Headings);
+        }
+
+
+        /// <summary>
+        /// Not all questions use Question_Text.  
+        /// </summary>
+        /// <param name="q"></param>
+        /// <returns></returns>
+        private string DetermineQuestionText(MATURITY_QUESTIONS q)
+        {
+            if (!String.IsNullOrEmpty(q.Question_Text))
+            {
+                return q.Question_Text;
+            }
+
+            if (!String.IsNullOrEmpty(q.Security_Practice))
+            {
+                return q.Security_Practice;
+            }
+
+            return "";
         }
 
 
