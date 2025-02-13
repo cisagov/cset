@@ -1,4 +1,25 @@
 {
+     "launch": {
+          "cmmc2": {
+               "sectionTitle": "Certificación del Modelo de Madurez de Capacidades (CMMC) 2.0",
+               "1": {
+                    "title": "CMMC 2.0 - Resumen ejecutivo",
+                    "desc": "El informe incluye gráficos para resaltar el cumplimiento por nivel, el cumplimiento por dominio y la puntuación por nivel."
+               },
+               "2": {
+                    "title": "CMMC 2.0 - Informe de cuadro de mando",
+                    "desc": "El informe enumera todas las prácticas, cómo se respondieron y cualquier deducción de puntuación por prácticas no cumplidas."
+               },
+               "3": {
+                    "title": "CMMC 2.0 - Comentarios y marcados para revisión",
+                    "desc": "Este documento consolida todas las prácticas que han recibido comentarios y que se han marcado para su revisión durante el proceso de evaluación. Ofrece una descripción general de las áreas en las que puede ser necesario prestar más atención o realizar aclaraciones."
+               },
+               "4": {
+                    "title": "Exportar POAM a Excel",
+                    "desc": "Este informe genera una plantilla de Plan de acción e hitos (POA&M) que incluye una lista de prácticas no cumplidas que pueden remediarse. Este POA&M excluirá cualquier práctica de CMMC que no sea elegible para su inclusión según la resolución de CMMC. Está disponible para evaluaciones que hayan alcanzado el Nivel 1 o superior."
+               }
+          }
+     },
      "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el {date}.",
      "reports run prior message": " Los informes generados antes de esa actualización pueden no reflejar el estado actual de la evaluación.",
      "printing report instructions button": "Instrucciones para imprimir informes",

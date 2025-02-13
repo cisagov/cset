@@ -1103,7 +1103,8 @@ namespace CSETWebCore.Business.Reports
             List<Individual> individualList = [];
 
             var observations = (from f in _context.FINDING
-                                join fc in _context.FINDING_CONTACT on f.Finding_Id equals fc.Finding_Id 
+                                join fc in _context.FINDING_CONTACT on f.Finding_Id equals fc.Finding_Id into fc1
+                                from fc in fc1.DefaultIfEmpty()
                                 join a in _context.ANSWER on f.Answer_Id equals a.Answer_Id
                                 join mq in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mq1
                                 from mq in mq1.DefaultIfEmpty()
