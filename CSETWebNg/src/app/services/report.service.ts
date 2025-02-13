@@ -156,6 +156,24 @@ export class ReportService {
   }
 
   /**
+   * 
+   */
+  clickExcelLink(reportType: string) {
+    let url = '';
+    if (reportType.toLowerCase() == 'poam') {
+      url = this.configSvc.apiUrl + 'reports/poam/excelexport?token=' + localStorage.getItem('userToken');
+    }
+
+    if (reportType.toLowerCase() == 'observations') {
+      url = this.configSvc.apiUrl + 'reports/observations/excel?token=' + localStorage.getItem('userToken');
+    }
+
+    if (url.length > 0) {
+      window.open(url, '_blank');
+    }
+  }
+
+  /**
    * Converts linebreak characters to HTML <br> tag.
    */
   formatLinebreaks(text: string) {
