@@ -7,12 +7,24 @@
      <div *ngFor="let rl of list; let i = index" class="mb-3 p-3 w-100"
           [class.gray-box]="translateDesc(sectionId, i).length > 0">
           <div class="d-flex flex-row" style="align-items: end">
-               <div>
+
+               <!-- normal report link -->
+               <div *ngIf="!!rl.linkUrl">
                     <button tabindex="0" (click)="reportSvc.clickReportLink(rl.linkUrl, rl.print ?? false)"
                          [disabled]="rl.disabled" class="btn btn-link btn-link-dark px-0 pt-0">
                          {{ t('reports.launch.' + sectionId.toLowerCase() + '.' + (i+1) + '.title') }}
                     </button>
                </div>
+
+               <!-- excel export link -->
+               <div *ngIf="!!rl.exportUrl">
+                    <button tabindex="0" (click)="reportSvc.clickExcelLink(rl.exportUrl)" [disabled]="isDisabled(rl.disabledWhen)"
+                         class="btn btn-link btn-link-dark px-0 pt-0">
+                         <span class="cset-icons-export-excel fs-base me-2 align-middle"></span>
+                         {{ t('reports.launch.' + sectionId.toLowerCase() + '.' + (i+1) + '.title') }}
+                    </button>
+               </div>
+
                <div class="ms-4" *ngIf="rl.securityPicker">
                     <label class="mb-1" for="securityId">Confidentiality</label>
                     <select class="form-select" [(ngModel)]="confidentiality" id="securityId" name="securityId"
