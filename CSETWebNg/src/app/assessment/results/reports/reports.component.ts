@@ -240,23 +240,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  /**
-   * 
-   */
-  clickExcelLink(reportType: string) {
-    let url = '';
-    if (reportType.toLowerCase() == 'poam') {
-      url = this.configSvc.apiUrl + 'reports/poam/excelexport?token=' + localStorage.getItem('userToken');
-    }
-
-    if (reportType.toLowerCase() == 'observations') {
-      url = this.configSvc.apiUrl + 'reports/observations/excel?token=' + localStorage.getItem('userToken');
-    }
-
-    if (url.length > 0) {
-      window.open(url, '_blank');
-    }
-  }
 
   /**
    * If all ACET statements are not answered, set the 'disable' flag
