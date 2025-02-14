@@ -694,9 +694,7 @@ export class AssessmentService {
   * @param status
   */
   persistEncryptPreference(preventEncrypt: boolean) {
-    let status = preventEncrypt;
-    return this.http.post(this.apiUrl + 'savePreventEncrypt', status, headers).subscribe();
-
+    return this.http.post(this.apiUrl + 'savePreventEncrypt', preventEncrypt, headers);
   }
 
   /**
