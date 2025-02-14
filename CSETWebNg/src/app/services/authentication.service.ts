@@ -135,7 +135,7 @@ export class AuthenticationService {
 
       },
       (error) => {
-        console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');
+        console.warn('Error getting stand-alone status. Assuming Enterprise configuration.');
         this.isLocal = false;
       }
     );
