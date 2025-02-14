@@ -848,7 +848,11 @@
       "my assessments": "My Assessments",
       "change password": "Change Password",
       "user language": "User Language",
-      "logout": "Logout"
+      "logout": "Logout",
+      "settings": "Settings",
+      "encrypt": "Password encryption for assessment export",
+      "on": "On",
+      "off": "Off"
     }
   },
   "merge examinations": {
@@ -1013,6 +1017,12 @@
     "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> is part of the <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Department of Homeland Security</a>",
     "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Website</a>"
   },
+  "upgrade": {
+    "upgrade": "Upgrade",
+    "final": "to final version",
+    "convert": "Converting your assessment, this may take a few moments.",
+    "p1": "The final version of this assessment is now available. All your answered questions, along with assessment information and demographics, will be transferred. Please note that this process is irreversible."
+  },
   "modules": {
     "cpg": {
       "display-name": "Cyber Performance Goals (CPG)",
@@ -1092,14 +1102,14 @@
       "report title": "Multiple Assessment Comparison Report",
       "document library": "Document Library"
     }
-  }, 
+  },
   "analytics": {
-    "title": "Assessment Analytics", 
-    "description 1": "This chart displays the implementation scoring of the current assessment in relation to other assessments of the same type, as applicable. Each category is scored, with the minimum, maximum, and median scores charted to illustrate how the current assessment compares to other assessments. Users can choose to view results within the same sector or across all sectors.", 
-    "description 2": "If additional assessments of the same type have not been conducted, the chart will only display the current assessment results.", 
-    "sample size": "Sample Size", 
-    "tooltip": "Select a sector from Demographics in Assessment Information", 
-    "my sector": "My Sector", 
+    "title": "Assessment Analytics",
+    "description 1": "This chart displays the implementation scoring of the current assessment in relation to other assessments of the same type, as applicable. Each category is scored, with the minimum, maximum, and median scores charted to illustrate how the current assessment compares to other assessments. Users can choose to view results within the same sector or across all sectors.",
+    "description 2": "If additional assessments of the same type have not been conducted, the chart will only display the current assessment results.",
+    "sample size": "Sample Size",
+    "tooltip": "Select a sector from Demographics in Assessment Information",
+    "my sector": "My Sector",
     "all sectors": "All Sectors"
   }
 }

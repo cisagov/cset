@@ -25,7 +25,7 @@
     <div class="d-flex align-items-center">
       <span class="p-2 fs-large cset-icons-exclamation-triangle"></span>
       <span class="fs-base-2 p-2 justify-content-center flex-11a">
-        Upgrade {{ this.assessSvc.assessment.maturityModel.modelTitle }} to final version
+        {{t('upgrade.upgrade')}} {{ this.assessSvc.assessment.maturityModel.modelTitle }} {{t('upgrade.final')}}
       </span>
     </div>
     <div class="align-items-start">
@@ -36,19 +36,18 @@
   </div>
   <div class="p-2">
     <div *ngIf="loading; else content">
-      Converting your assessment, this may take a few moments.
+      {{t('upgrade.convert')}}
     </div>
     <ng-template #content>
       <div>
         <div>
-          The final version of this assessment is now available. All your answered questions, along with assessment
-          information and demographics, will be transferred. Please note that this process is irreversible.
+          {{t('upgrade.p1')}}
         </div>
       </div>
     </ng-template>
     <div *ngIf="!loading" class="mb-0 d-flex justify-content-end flex-00a">
       <button (click)="upgrade()" class="btn btn-outline m-0"
-        style="border-color: #664d03; color: #664d03;">Upgrade</button>
+        style="border-color: #664d03; color: #664d03;">{{t('upgrade.upgrade')}}</button>
     </div>
   </div>
 </div>

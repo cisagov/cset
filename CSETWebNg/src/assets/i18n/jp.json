@@ -389,7 +389,11 @@
                "my assessments": "私の評価",
                "change password": "パスワードを変更する",
                "user language": "ユーザー言語",
-               "logout": "ログアウト"
+               "logout": "ログアウト",
+               "setting": "設定",
+               "encrypt": "評価エクスポート時のパスワード暗号化",
+               "on": "の上",
+               "off": "オフ"
           }
      },
      "tooltip": {
@@ -473,6 +477,11 @@
           "traffic light protocol": "交通信号プロトコル",
           "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> は <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">国土安全保障省(ＤＨＳ)</a> の一部です",
           "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE ウェブサイト</a>"
-      }
-      
+     },
+     "upgrade": {
+          "upgrade": "アップグレード",
+          "final": "最終バージョンへ",
+          "convert": "評価を変換しています。しばらくお待ちください。",
+          "p1": "この評価の最終バージョンが利用可能になりました。回答したすべての質問、評価情報、および人口統計が転送されます。このプロセスは元に戻せないことに注意してください。"
+     }
 }
