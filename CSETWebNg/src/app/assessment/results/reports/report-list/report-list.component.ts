@@ -87,12 +87,12 @@ export class ReportListComponent implements OnInit {
    */
   setCmmcLevelAchievement() {
     const a = this.assessSvc.assessment;
-
     const cmmcModels = ['CMMC', 'CMMC2', 'CMMC2F'];
+
     if (a.maturityModel?.maturityTargetLevel > 1 &&
       cmmcModels.indexOf(a.maturityModel?.modelName) >= 0) {
       this.maturitySvc.getCmmcScores().subscribe((scores: any) => {
-        this.cmmcLevel1Achieved = scores.level1Score == scores.level1MaxScore;
+        this.cmmcLevel1Achieved = scores.level1Score >= scores.level1MaxScore;
       });
     }
   }

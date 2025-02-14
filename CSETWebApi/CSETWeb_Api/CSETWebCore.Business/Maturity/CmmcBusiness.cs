@@ -12,7 +12,6 @@ using CSETWebCore.Model.Maturity;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Linq;
-using CSETWebCore.Business.Aggregation;
 
 
 namespace CSETWebCore.Business.Maturity
@@ -122,8 +121,11 @@ namespace CSETWebCore.Business.Maturity
         {
             _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
+            var modelId = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault()?.model_id;
+
+
             var levelId = _context.MATURITY_LEVELS
-                .Where(x => x.Level == level && x.Maturity_Model_Id == modelIdCmmc2)
+                .Where(x => x.Level == level && x.Maturity_Model_Id == modelId)
                 .Select(x => x.Maturity_Level_Id)
                 .FirstOrDefault();
 
