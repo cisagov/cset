@@ -49,7 +49,7 @@ import { FileUploadClientService } from '../../services/file-client.service';
 import { GalleryService } from '../../services/gallery.service';
 import { SetBuilderService } from './../../services/set-builder.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
-import { UserLanguageComponent } from '../../dialogs/user-language/user-language.component';
+import { UserSettingsComponent } from '../../dialogs/user-settings/user-settings.component';
 import { translate } from '@jsverse/transloco';
 
 @Component({
@@ -496,14 +496,12 @@ export class TopMenusComponent implements OnInit {
     if (this.dialog.openDialogs[0]) {
       return;
     }
-    this.dialogRef = this.dialog.open(UserLanguageComponent);
-    this.dialogRef.afterClosed().subscribe(
-      (data: any) => {
-        // the update user request happened when the dialog's form was saved
-        this.dialogRef = undefined;
-      },
-      (error) => console.log(error.message)
-    );
+    this.dialogRef = this.dialog.open(UserSettingsComponent);
+    this.dialogRef.afterClosed().subscribe((results) => {
+      if (results) {
+        this.assessSvc.persistEncryptPreference(results.preventEncrypt).subscribe(() => { });
+      }
+    });
   }
 
   /**

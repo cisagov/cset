@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<ng-content *transloco="let t">
+<div *transloco="let t">
     <div mat-dialog-title class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
         <span style="color: white;" class="me-2 cset-icons-export-excel"></span>
         <span style="color: white;">{{t('dialogs.export excel dialog title')}}</span>
@@ -32,13 +32,13 @@
 
         <div>
             <input type="checkbox" id="doNotShowAgain" name="doNotShowAgain" class="checkbox-custom" autocomplete="off"
-            (change)="setDoNotShow()" [(ngModel)]="doNotShow" [checked]="doNotShow">
+                (change)="setDoNotShow()" [(ngModel)]="doNotShow" [checked]="doNotShow">
             <label for="doNotShowAgain" class="checkbox-custom-label">{{t('dialogs.export excel do not show')}}</label>
         </div>
     </mat-dialog-content>
-    
+
     <mat-dialog-actions class="mx-3 mb-3 justify-content-between">
         <button class="btn btn-primary" (click)="exportToExcel()">{{t('buttons.export')}}</button>
         <button class="btn btn-secondary" (click)="close()">{{t('buttons.cancel')}}</button>
     </mat-dialog-actions>
-</ng-content>
+</div>
