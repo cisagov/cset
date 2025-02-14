@@ -107,7 +107,7 @@
                },
                "4": {
                     "title": "Export POAM to Excel",
-                    "desc": "This report generates a Plan of Action and Milestones (POA&M) template which includes a list of unmet practices eligible for remediation. This POA&M will exclude any CMMC practices that are ineligible for inclusion per CMMC ruling. It is available for assessments that have achieved Level 1 or above."
+                    "desc": "This report generates a Plan of Action and Milestones (POA&M) template which includes a list of unmet practices eligible for remediation. This POA&M will exclude any CMMC practices that are ineligible for inclusion per CMMC ruling. It is available for assessments that are targeting a Level 2 or 3 and have achieved Level 1."
                }
           },
           "rra": {
