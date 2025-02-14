@@ -6,14 +6,17 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../../services/config.service';
 import { DateAdapter } from '@angular/material/core';
 import { firstValueFrom } from 'rxjs';
+import { AssessmentService } from '../../services/assessment.service';
+import { NCUAService } from '../../services/ncua.service';
 
 @Component({
-  selector: 'app-user-language',
-  templateUrl: './user-language.component.html'
+  selector: 'app-user-settings',
+  templateUrl: './user-settings.component.html'
 })
-export class UserLanguageComponent implements OnInit {
+export class UserSettingsComponent implements OnInit {
 
   languageOptions = [];
+  preventEncrypt: boolean;
 
   constructor(
     private dialog: MatDialogRef<EditUserComponent>,
@@ -21,7 +24,9 @@ export class UserLanguageComponent implements OnInit {
     private tSvc: TranslocoService,
     private authSvc: AuthenticationService,
     private configSvc: ConfigService,
-    private dateAdapter: DateAdapter<any>
+    private dateAdapter: DateAdapter<any>,
+    public assessSvc: AssessmentService,
+    public ncuaSvc: NCUAService
   ) { }
 
   langSelection: string;
@@ -45,6 +50,10 @@ export class UserLanguageComponent implements OnInit {
       this.langSelection = resp.lang.toLowerCase();
       this.dateAdapter.setLocale(this.langSelection);
     });
+
+    this.assessSvc.getEncryptPreference().subscribe((result: boolean) => {
+      this.preventEncrypt = result
+    });
   }
 
   /**
@@ -61,13 +70,16 @@ export class UserLanguageComponent implements OnInit {
       });
     },
       error => console.error('Error updating user langugage: ' + error.message));
-    this.dialog.close();
+  }
+
+  updateEncryptPreference() {
+    this.preventEncrypt = !this.preventEncrypt
   }
 
   /**
    *
    */
   cancel() {
-    this.dialog.close();
+    this.dialog.close({ preventEncrypt: this.preventEncrypt });
   }
 }

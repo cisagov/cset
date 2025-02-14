@@ -631,7 +631,7 @@ import { CmuOtherRemarksComponent } from './reports/cmu/cmu-other-remarks/cmu-ot
 import { TranslocoRootModule } from './transloco-root.module';
 import { TranslocoService } from '@jsverse/transloco';
 import { provideTranslocoScope } from '@jsverse/transloco';
-import { UserLanguageComponent } from './dialogs/user-language/user-language.component';
+import { UserSettingsComponent } from './dialogs/user-settings/user-settings.component';
 import { MalcolmUploadErrorComponent } from './dialogs/malcolm/malcolm-upload-error.component';
 import { FooterService } from './services/footer.service';
 import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-info/assessment-convert-cf/assessment-convert-cf.component';
@@ -1176,7 +1176,7 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         CmuAppendixCoverComponent,
         OtherRemarksComponent,
         CmuOtherRemarksComponent,
-        UserLanguageComponent,
+        UserSettingsComponent,
         MalcolmUploadErrorComponent,
         AssessmentConvertCfComponent,
         IseWarningsComponent,
