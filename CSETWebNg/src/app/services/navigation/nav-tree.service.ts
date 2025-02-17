@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ import { SsgService } from '../ssg.service';
   providedIn: 'root'
 })
 export class NavTreeService {
-  
+
 
   dataSource: MatTreeNestedDataSource<NavTreeNode> = new MatTreeNestedDataSource<NavTreeNode>();
   dataChange$ = new BehaviorSubject<NavTreeNode[]>([]);
@@ -125,13 +125,13 @@ export class NavTreeService {
       if (!!workflowNode.attributes['displaytext'] || !!workflowNode.attributes['d']) {
 
         let displaytext = workflowNode.attributes['displaytext']?.value;
-        
+
         // localize the 'd' attribute
         let d = workflowNode.attributes['d']?.value;
         if (!!d) {
           displaytext = this.tSvc.translate(`titles.${d}`);
         }
-        
+
         // plug in the applicable SSG description
         let ssg = workflowNode.attributes['ssg']?.value ?? false;
         if (!!ssg) {
@@ -410,5 +410,5 @@ export class NavTreeService {
     else if (node != null) this.tocControl.expand(node);
   }
 
-  
+
 }

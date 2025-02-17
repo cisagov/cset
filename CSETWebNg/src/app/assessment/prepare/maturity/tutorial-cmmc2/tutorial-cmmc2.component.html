@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,7 @@
 -------------------------->
 <div class="white-panel d-flex justify-content-start flex-column flex-11a tutorial"
   *transloco="let t; read: 'tutorial.cmmc2'">
-  <div *ngIf="loading">
-    <div class="spinner-container" style="margin: 2em auto">
-      <div style="max-width: 50px; max-height: 50px;"></div>
-    </div>
-  </div>
-  <div [hidden]="loading">
+  <div>
     <h3 class="wrap-text mb-3">{{t('title')}}</h3>
 
     <div>

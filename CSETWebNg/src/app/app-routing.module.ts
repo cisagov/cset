@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -94,7 +94,7 @@ import { TrendReportComponent } from './reports/trend-report/trend-report.compon
 import { CompareReportComponent } from './reports/compare-report/compare-report.component';
 import { CompareReportMComponent } from './reports/compare-report-m/compare-report-m.component';
 import { SiteSummaryComponent } from './reports/site-summary/site-summary.component';
-import { PhysicalSummaryComponent} from './reports/physical-summary/physical-summary.component';
+import { PhysicalSummaryComponent } from './reports/physical-summary/physical-summary.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
@@ -476,7 +476,7 @@ const appRoutes: Routes = [
               { path: 'mvra-summary-page', component: MvraSummaryPageComponent },
               { path: 'cpg-summary-page', component: CpgSummaryComponent },
               { path: 'cpg-practices-page', component: CpgPracticesComponent },
-              { path: 'analytics-results-page', component: AnalyticsResultsComponent},
+              { path: 'analytics-results-page', component: AnalyticsResultsComponent },
               { path: 'analysis', component: AnalysisComponent },
               { path: 'dashboard', component: DashboardComponent },
               { path: 'ranked-questions', component: RankedQuestionsComponent },
@@ -604,10 +604,10 @@ const appRoutes: Routes = [
       { path: 'sdo-comments-and-mfr', component: SdOwnerCommentsMfrComponent },
       { path: 'appkeyreport', component: KeyReportComponent },
       { path: 'allAnsweredQuestions', component: AllAnsweredquestionsComponent },
-      { path: 'allMfrAndComments', component: AllCommentsmarkedComponent},
-      { path: 'allReviewedQuestions', component: AllReviewedComponent}
+      { path: 'allMfrAndComments', component: AllCommentsmarkedComponent },
+      { path: 'allReviewedQuestions', component: AllReviewedComponent }
 
-      
+
     ]
   },
   { path: '**', redirectTo: 'home' }

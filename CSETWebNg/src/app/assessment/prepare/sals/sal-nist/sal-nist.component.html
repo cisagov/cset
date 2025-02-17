@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2024 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -132,8 +132,9 @@
         <tr *ngFor="let model of topModel?.models; let i = index">
           <td>
             <input type="checkbox" [attr.csetid]="'checkbox' + model.type_Value" [id]="'cb_model' + i" tabindex="0"
-              value="{{model.type_Value}}" (change)="checkBoxChanged($event, model)" [checked]="model.selected" class="checkbox-custom">
-              <label [for]="'cb_model' + i" class="checkbox-custom-label"></label>
+              value="{{model.type_Value}}" (change)="checkBoxChanged($event, model)" [checked]="model.selected"
+              class="checkbox-custom">
+            <label [for]="'cb_model' + i" class="checkbox-custom-label"></label>
           </td>
           <td>
             <label [for]="'cb_model' + i">
@@ -142,8 +143,7 @@
           <td class="text-center">
             <a [attr.csetid]="'ConfidentialitySpecialFactorC' + model.type_Value" class="special-factors-link"
               tabindex="0" *ngIf='model.confidentiality_Special_Factor; else basicC'
-              matTooltip="{{t('titles.sal.nist.tooltip c')}}"
-              (click)="changeSpecialFactor(model, 'C')">
+              matTooltip="{{t('titles.sal.nist.tooltip c')}}" (click)="changeSpecialFactor(model, 'C')">
               {{salsSvc.getDisplayLevel(model.confidentiality_Value)}}
             </a>
             <ng-template #basicC>{{salsSvc.getDisplayLevel(model.confidentiality_Value)}}</ng-template>
@@ -151,8 +151,7 @@
           <td class="text-center">
             <a [attr.csetid]="'ConfidentialitySpecialFactorI' + model.type_Value" class="special-factors-link"
               tabindex="0" *ngIf='model.integrity_Special_Factor; else basicI'
-              matTooltip="{{t('titles.sal.nist.tooltip i')}}"
-              (click)="changeSpecialFactor(model, 'I')">
+              matTooltip="{{t('titles.sal.nist.tooltip i')}}" (click)="changeSpecialFactor(model, 'I')">
               {{salsSvc.getDisplayLevel(model.integrity_Value)}}
             </a>
             <ng-template #basicI>{{salsSvc.getDisplayLevel(model.integrity_Value)}}</ng-template>
@@ -180,14 +179,12 @@
             <div class="btn-group btn-group-toggle" style="white-space: nowrap" data-toggle="buttons">
               <label [attr.csetid]="question.question_Text + 'Yes'" class="btn btn-level btn-rounded form-check-label"
                 [class.active]="question.question_Answer === 'Yes'" (click)="saveQuestionChanged(question,'Yes')">
-                <input class="btn-check" type="radio" autocomplete="off"
-                  name="options{{question.question_Number}}"
+                <input class="btn-check" type="radio" autocomplete="off" name="options{{question.question_Number}}"
                   [checked]="question.question_Answer === 'Yes'">{{t('answer-options.labels.yes')}}
               </label>
               <label [attr.csetid]="question.question_Text + 'No'" class="btn btn-level btn-rounded form-check-label"
                 [class.active]="question.question_Answer === 'No'" (click)="saveQuestionChanged(question,'No')">
-                <input class="btn-check" type="radio" autocomplete="off"
-                  name="options{{question.question_Number}}"
+                <input class="btn-check" type="radio" autocomplete="off" name="options{{question.question_Number}}"
                   [checked]="question.question_Answer === 'No'">{{t('answer-options.labels.no')}}
               </label>
             </div>

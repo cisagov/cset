@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -75,12 +75,13 @@
 
       <h4 class="accordion-header" id="headingOne">
         <button id="footerExpanderButton" class="cset-footer-expand-button" style="font-size: 1rem; align-items: center"
-          type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-          aria-controls="collapseOne" (click)="toggleFooter()"
+          type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseOne"
+          (click)="toggleFooter()"
           [ngClass]="{'cset-icons-chevron-down': !footerClosed, 'cset-icons-chevron-up': footerClosed}"></button>
       </h4>
 
-      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionFooter">
+      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+        data-bs-parent="#accordionFooter">
         <div class="accordion-body footer-section-2 p-0">
           <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
             <ng-container *ngIf="isRunningAnonymous()">
@@ -110,8 +111,7 @@
       </div>
     </div>
 
-    <div class="bgc-white"
-      *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
+    <div class="bgc-white" *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
     <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
       <div class="modal-dialog" role="document">
         <div class="modal-content localversionModal">

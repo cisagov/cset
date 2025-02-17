@@ -95,7 +95,7 @@ namespace CSETWebCore.Business.Reports
                 _report.SetReportsAssessmentId(assessmentId);
                 BasicReportData data = new BasicReportData();
                 data.information = _report.GetInformation();
-                data.Individuals = _report.GetObservationIndividuals().OrderBy(x => x.FullName).ToList();
+                data.Individuals = _report.GetObservationIndividuals().ToList();
 
 
                 foreach (var ind in data.Individuals)
@@ -114,7 +114,7 @@ namespace CSETWebCore.Business.Reports
 
                         row.Append(new Cell
                         {
-                            CellValue = new CellValue(obs.Observation),
+                            CellValue = new CellValue(obs.ObservationTitle),
                             DataType = CellValues.String
                         });
 
@@ -130,9 +130,14 @@ namespace CSETWebCore.Business.Reports
                             DataType = CellValues.String
                         });
 
+                        string resolutionDateString = "";
+                        if (obs.ResolutionDate != null)
+                        {
+                            resolutionDateString = obs.ResolutionDate.ToString();
+                        }
                         row.Append(new Cell
                         {
-                            CellValue = new CellValue((DateTimeOffset)obs.ResolutionDate),
+                            CellValue = new CellValue(resolutionDateString),
                             DataType = CellValues.String
                         });
 

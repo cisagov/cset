@@ -1,6 +1,6 @@
 <!-- --------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -85,7 +85,7 @@
             [style.display]="(node.visible == null ? true : node.visible) ? 'flex' : 'none!important'"
             class="flex-column align-items-start mb-3">
 
-            <a *ngIf="!isProcurementOrCatalog(node)" class="mt-2 p-0" href="{{node?.value ? docUrl + node.docId : ''}}" 
+            <a *ngIf="!isProcurementOrCatalog(node)" class="mt-2 p-0" href="{{node?.value ? docUrl + node.docId : ''}}"
               target="_blank" rel="noopener noreferrer">
               <h5><span class="btn-link mb-3">
                   {{node?.label}}
@@ -93,7 +93,8 @@
               </h5>
             </a>
 
-            <div *ngIf="isProcurementOrCatalog(node)" class="btn btn-link mt-2 p-0" (click)="displayDocumentContent(node?.docId)">
+            <div *ngIf="isProcurementOrCatalog(node)" class="btn btn-link mt-2 p-0"
+              (click)="displayDocumentContent(node?.docId)">
               <h5><span class="btn-link mb-3">
                   {{node?.label}}
                 </span>

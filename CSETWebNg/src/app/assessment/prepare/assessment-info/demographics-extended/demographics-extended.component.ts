@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -357,17 +357,17 @@ export class DemographicsExtendedComponent implements OnInit {
     this.demographicData.hb7055Party = event.target.value;
     this.updateDemographics();
   }
-  getGrant():boolean{    
+  getGrant(): boolean {
     return (this.demographicData.hb7055Grant == 'Y');
   }
-  getGrantNo():boolean{
+  getGrantNo(): boolean {
     return (this.demographicData.hb7055Grant == 'N');
   }
   sethb7055Grant(value: string) {
     this.demographicData.hb7055Grant = value;
     if (value != 'Y') {
-      this.demographicData.hb7055Grant = '';      
-    }    
+      this.demographicData.hb7055Grant = '';
+    }
     this.updateDemographics();
 
   }

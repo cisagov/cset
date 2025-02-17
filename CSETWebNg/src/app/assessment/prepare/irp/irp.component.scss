@@ -1,6 +1,6 @@
 /* 
 
-  Copyright 2024 Battelle Energy Alliance, LLC  
+  Copyright 2025 Battelle Energy Alliance, LLC  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -21,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 
 */
-.irp-risk { 
+.irp-risk {
     margin: 10px 30px;
     width: 80%;
     border-radius: .25rem;
@@ -64,12 +64,12 @@ SOFTWARE.
 }
 
 .risk-subheader {
-    color: rgb(140,140,140);
+    color: rgb(140, 140, 140);
 }
 
 .irp-info-box {
     width: 90%;
-    border: 3px solid rgb(200,200,200);
+    border: 3px solid rgb(200, 200, 200);
     margin: 5px 20px;
     line-height: 1.4;
     border-radius: .25rem;
@@ -79,13 +79,13 @@ SOFTWARE.
     border: 0px;
     width: 100%;
     text-align: left;
-    background-color: rgb(200,200,200);
+    background-color: rgb(200, 200, 200);
     padding: 5px;
     cursor: pointer;
 }
 
 .irp-info-body {
-    background-color: rgb(245,245,245);
+    background-color: rgb(245, 245, 245);
     padding: 5px;
 }
 

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ import { Title } from "@angular/platform-browser";
 import { NavigationService } from "../../services/navigation/navigation.service";
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
-import { of } from "rxjs";
+import { firstValueFrom, of } from "rxjs";
 import { concatMap, map, tap, catchError } from "rxjs/operators";
 import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
@@ -104,9 +104,6 @@ export class MyAssessmentsComponent implements OnInit {
 
   exportAllInProgress: boolean = false;
 
-  preventEncrypt: boolean = true;
-  disabledEncrypt: boolean = false;
-
   timer = ms => new Promise(res => setTimeout(res, ms));
 
 
@@ -143,8 +140,6 @@ export class MyAssessmentsComponent implements OnInit {
     this.appName = 'CSET';
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
-        this.preventEncrypt = true;
-        this.updateEncryptPreference();
         this.ncuaSvc.reset();
         break;
       case 'TSA':
@@ -170,8 +165,6 @@ export class MyAssessmentsComponent implements OnInit {
 
     this.ncuaSvc.assessmentsToMerge = [];
     this.cieSvc.assessmentsToMerge = [];
-
-    this.assessSvc.getEncryptPreference().subscribe((result: boolean) => this.preventEncrypt = result);
 
     this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.cisaAssessorWorkflow = resp);
   }
@@ -421,52 +414,57 @@ export class MyAssessmentsComponent implements OnInit {
   /**
    * 
    */
-  clickDownloadLink(ment_id: number, jsonOnly: boolean = false) {
-    let encryption = this.preventEncrypt;
-    // Only allow encryption on .csetw files and only allow PCII scrubbing on JSON files
-    if (!this.preventEncrypt || jsonOnly) {
-      let dialogRef = this.dialog.open(ExportAssessmentComponent, {
-        data: { jsonOnly, encryption }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-
-          // get short-term JWT from API
-          this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-            let url = this.fileSvc.exportUrl + "?token=" + response.token;
+  async clickDownloadLink(ment_id: number, jsonOnly: boolean = false) {
+    // this.assessSvc.getEncryptPreference().subscribe((result: boolean) => {
+    const obs = this.assessSvc.getEncryptPreference()
+    const prom = firstValueFrom(obs);
+    prom.then((response: boolean) => {
+      let preventEncrypt = response
 
 
-            if (jsonOnly) {
-              url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
-            }
+      let encryption = preventEncrypt;
+      console.log("export", preventEncrypt);
 
+      if (!preventEncrypt || jsonOnly) {
+        let dialogRef = this.dialog.open(ExportAssessmentComponent, {
+          data: { jsonOnly, encryption }
+        });
 
-            if (result.scrubData) {
-              url = url + "&scrubData=" + result.scrubData;
-            }
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            // get short-term JWT from API
+            this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
+              let url = this.fileSvc.exportUrl + "?token=" + response.token;
 
-            if (result.encryptionData.password != null && result.encryptionData.password != "") {
-              url = url + "&password=" + result.encryptionData.password;
-            }
+              if (jsonOnly) {
+                url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
+              }
 
-            if (result.encryptionData.hint != null && result.encryptionData.hint != "") {
-              url = url + "&passwordHint=" + result.encryptionData.hint;
-            }
+              if (result.scrubData) {
+                url = url + "&scrubData=" + result.scrubData;
+              }
 
+              if (result.encryptionData.password != null && result.encryptionData.password !== "") {
+                url = url + "&password=" + result.encryptionData.password;
+              }
 
-            //if electron
-            window.location.href = url;
+              if (result.encryptionData.hint != null && result.encryptionData.hint !== "") {
+                url = url + "&passwordHint=" + result.encryptionData.hint;
+              }
 
-          });
-        }
-      });
-    } else {
-      // If encryption is turned off
-      this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-        let url = this.fileSvc.exportUrl + "?token=" + response.token;
-        window.location.href = url;
-      })
-    }
+              // if electron
+              window.location.href = url;
+            });
+          }
+        });
+      } else {
+        // If encryption is turned off
+        this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
+          let url = this.fileSvc.exportUrl + "?token=" + response.token;
+          window.location.href = url;
+        });
+      }
+    });
   }
 
   /**
@@ -560,12 +558,6 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
     this.exportAllInProgress = false;
-  }
-
-  updateEncryptPreference() {
-    this.disabledEncrypt = true;
-    this.assessSvc.persistEncryptPreference(this.preventEncrypt);
-    this.disabledEncrypt = false;
   }
 
   temp() {

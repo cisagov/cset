@@ -1,17 +1,11 @@
 using CSETWebCore.Business.Authorization;
-using CSETWebCore.Business.Document;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.AdminTab;
-using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
-using CSETWebCore.Model.Document;
-using CSETWebCore.Model.Question;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Elfie.Model.Map;
-using System.Collections.Generic;
+
 
 namespace CSETWebCore.Api.Controllers
 {

@@ -550,6 +550,9 @@
         "remove assessment": "¿Estás seguro de que quieres eliminar {{assessmentName}}?",
         "confirm create new assessment": "¿Está seguro de que desea crear una nueva evaluación?",
         "export assessment title": "Opciones de evaluación de exportación",
+        "export excel dialog title": "Exportar evaluación a Excel",
+        "export excel dialog 1": "La exportación de la evaluación a Excel se realiza para realizar análisis de datos simples. Los datos de Excel no se pueden volver a importar.",
+        "export excel do not show": "No volver a mostrar este mensaje",
         "scrub pcii": "Seleccione para eliminar los campos PCII de la exportación",
         "encrypt 1": "Para cifrar su evaluación, ingrese una contraseña.",
         "encrypt 2": "Si continúa sin ingresar una contraseña, no se utilizará ningún cifrado.",
@@ -706,7 +709,11 @@
             "my assessments": "Mis evaluaciones",
             "change password": "Cambiar la contraseña",
             "user language": "Idioma del usuario",
-            "logout": "Cerrar sesión"
+            "logout": "Cerrar sesión",
+            "settings": "Ajustes",
+            "encrypt": "Cifrado de contraseña para exportación de evaluaciones",
+            "on": "Encendido",
+            "off": "Apagado"
         }
     },
     "merge examinations": {
@@ -871,6 +878,12 @@
         "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> es parte del <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Departamento de Seguridad Nacional</a>",
         "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Sitio Web</a>"
     },
+    "upgrade": {
+        "upgrade": "Actualizar",
+        "final": "a la versión final",
+        "convert": "Convirtiendo su evaluación, esto puede tardar unos momentos.",
+        "p1": "La versión final de esta evaluación ya está disponible. Todas sus preguntas respondidas, junto con la información de la evaluación y la demografía, serán transferidas. Tenga en cuenta que este proceso es irreversible."
+    },
     "modules": {
         "cpg": {
             "display-name": "Cyber Performance Goals (CPG)"
@@ -913,14 +926,14 @@
             "report title": "Informe de Comparación de Múltiples Evaluaciones",
             "document library": "Biblioteca de documentos"
         }
-    },  
-    "analytics": { 
-        "title": "Análisis de Evaluación", 
-        "description 1": "Este gráfico muestra la puntuación de implementación de la evaluación actual en relación con otras evaluaciones del mismo tipo, según corresponda. Cada categoría se puntúa, con las puntuaciones mínima, máxima y mediana graficadas para ilustrar cómo se compara la evaluación actual con otras evaluaciones. Los usuarios pueden elegir ver los resultados dentro del mismo sector o en todos los sectores.", 
-        "description 2": "Si no se han realizado evaluaciones adicionales del mismo tipo, el gráfico solo mostrará los resultados de la evaluación actual.", 
-        "sample size": "Tamaño de Muestra", 
-        "tooltip": "Seleccione un sector de Demografía en Información de Evaluación", 
-        "my sector": "Mi Sector", 
+    },
+    "analytics": {
+        "title": "Análisis de Evaluación",
+        "description 1": "Este gráfico muestra la puntuación de implementación de la evaluación actual en relación con otras evaluaciones del mismo tipo, según corresponda. Cada categoría se puntúa, con las puntuaciones mínima, máxima y mediana graficadas para ilustrar cómo se compara la evaluación actual con otras evaluaciones. Los usuarios pueden elegir ver los resultados dentro del mismo sector o en todos los sectores.",
+        "description 2": "Si no se han realizado evaluaciones adicionales del mismo tipo, el gráfico solo mostrará los resultados de la evaluación actual.",
+        "sample size": "Tamaño de Muestra",
+        "tooltip": "Seleccione un sector de Demografía en Información de Evaluación",
+        "my sector": "Mi Sector",
         "all sectors": "Todos los Sectores"
     }
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -41,6 +41,7 @@ import { CisaWorkflowFieldValidationResponse } from '../../../models/demographic
 import { TranslocoService } from '@jsverse/transloco';
 import { ConversionService } from '../../../services/conversion.service';
 import { CieDocumentsComponent } from '../../../dialogs/cie-documents/cie-documents.component';
+import { ExportAssessmentComponent } from '../../../dialogs/assessment-encryption/export-assessment/export-assessment.component';
 
 @Component({
   selector: 'app-reports',
@@ -239,18 +240,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  /**
-   * 
-   */
-  clickExcelLink(reportType: string) {
-    if (reportType.toLowerCase() == 'poam') {
-      window.location.href = this.configSvc.apiUrl + 'reports/poam/excelexport?token=' + localStorage.getItem('userToken');
-    }
-
-    if (reportType.toLowerCase() == 'observations') { 
-      window.location.href = this.configSvc.apiUrl + 'reports/observations/excel?token=' + localStorage.getItem('userToken');
-    }
-  }
 
   /**
    * If all ACET statements are not answered, set the 'disable' flag
@@ -285,23 +274,56 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+    const url = this.configSvc.apiUrl + 'assessment/export/excel?token=' + localStorage.getItem('userToken');
+    window.open(url);
   }
 
   /**
    *
    */
   clickExport(jsonOnly: boolean = false) {
-    // get short-term JWT from API
-    this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
-      let url = this.fileSvc.exportUrl + '?token=' + response.token;
+    if (jsonOnly) {
+      let dialogRef = this.dialog.open(ExportAssessmentComponent, {
+        data: { jsonOnly }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
 
-      if (jsonOnly) {
-        url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
-      }
+          // get short-term JWT from API
+          this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
+            let url = this.fileSvc.exportUrl + "?token=" + response.token;
 
-      window.location.href = url;
-    });
+
+            if (jsonOnly) {
+              url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
+            }
+
+
+            if (result.scrubData) {
+              url = url + "&scrubData=" + result.scrubData;
+            }
+
+            if (result.encryptionData.password != null && result.encryptionData.password != "") {
+              url = url + "&password=" + result.encryptionData.password;
+            }
+
+            if (result.encryptionData.hint != null && result.encryptionData.hint != "") {
+              url = url + "&passwordHint=" + result.encryptionData.hint;
+            }
+
+            //if electron
+            window.location.href = url;
+
+          });
+        }
+      });
+    } else {
+      // If encryption is turned off
+      this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
+        let url = this.fileSvc.exportUrl + "?token=" + response.token;
+        window.location.href = url;
+      })
+    }
   }
 
   disableSubmitButton() {

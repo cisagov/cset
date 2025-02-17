@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -631,7 +631,7 @@ import { CmuOtherRemarksComponent } from './reports/cmu/cmu-other-remarks/cmu-ot
 import { TranslocoRootModule } from './transloco-root.module';
 import { TranslocoService } from '@jsverse/transloco';
 import { provideTranslocoScope } from '@jsverse/transloco';
-import { UserLanguageComponent } from './dialogs/user-language/user-language.component';
+import { UserSettingsComponent } from './dialogs/user-settings/user-settings.component';
 import { MalcolmUploadErrorComponent } from './dialogs/malcolm/malcolm-upload-error.component';
 import { FooterService } from './services/footer.service';
 import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-info/assessment-convert-cf/assessment-convert-cf.component';
@@ -689,8 +689,7 @@ import { QuestionsReviewedComponent } from './reports/questions-reviewed/questio
 import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.component';
 import { AnalyticsResultsComponent } from './assessment/results/analytics-results/analytics-results.component';
 import { firstValueFrom } from 'rxjs';
-import { VersionUpgradeComponent } from './dialogs/version-upgrade/version-upgrade.component';
-
+import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
 
 @NgModule({
     declarations: [
@@ -1177,7 +1176,7 @@ import { VersionUpgradeComponent } from './dialogs/version-upgrade/version-upgra
         CmuAppendixCoverComponent,
         OtherRemarksComponent,
         CmuOtherRemarksComponent,
-        UserLanguageComponent,
+        UserSettingsComponent,
         MalcolmUploadErrorComponent,
         AssessmentConvertCfComponent,
         IseWarningsComponent,
@@ -1231,7 +1230,7 @@ import { VersionUpgradeComponent } from './dialogs/version-upgrade/version-upgra
         QuestionsReviewedComponent,
         RolesChangedComponent,
         AnalyticsResultsComponent,
-        VersionUpgradeComponent
+        UpgradeComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,

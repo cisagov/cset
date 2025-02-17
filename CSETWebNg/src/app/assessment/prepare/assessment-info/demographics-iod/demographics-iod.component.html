@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -57,7 +57,7 @@
       <label for="sector" class="form-label">Sector</label>
       <select [ngClass]="{ 'alert-danger' : !demographicData.sector}" class="form-select" id="sector" tabindex="0"
         name="sector" [(ngModel)]="demographicData.sector" (change)="onChangeSector($event)">
-        <option [ngValue]="null">-- Select Sector --</option>
+        <option [value]=null>-- Select Sector --</option>
         <option *ngFor="let i of demographicData.listSectors" [value]="i.optionValue"
           [selected]="i.optionValue === demographicData?.sector">
           {{ i.optionText }}

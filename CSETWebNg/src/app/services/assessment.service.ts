@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -81,6 +81,9 @@ export class AssessmentService {
   public isBrandNew = false;
 
   public assessmentCreator: any;
+
+  //Hide upgrade assessment alert
+  public hideUpgradeAlert: boolean = false;
 
   /**
    *
@@ -482,6 +485,7 @@ export class AssessmentService {
    * this one.
    */
   loadAssessment(id: number): Promise<any> {
+    this.hideUpgradeAlert = false;
     return new Promise((resolve, reject) => {
       this.getAssessmentToken(id).then(() => {
         this.getAssessmentDetail().subscribe(data => {
@@ -690,9 +694,7 @@ export class AssessmentService {
   * @param status
   */
   persistEncryptPreference(preventEncrypt: boolean) {
-    let status = preventEncrypt;
-    return this.http.post(this.apiUrl + 'savePreventEncrypt', status, headers).subscribe();
-
+    return this.http.post(this.apiUrl + 'savePreventEncrypt', preventEncrypt, headers);
   }
 
   /**

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,18 @@
 
     <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
         <p>
-            During the assessment process, personnel conducting the assessment along with facility stakeholders identified potential vulnerabilities along with suggested options for consideration. The process and listed options for consideration provide an opportunity for the facility owners/operators (stakeholders) to mitigate vulnerabilities, increase resilience, and implement protective measures. This process involves an assessment of risk tailored to the facility that takes into consideration the threat, assets to be protected, facility characteristics and capital expenditures planning.  The options for consideration are not prescriptive endorsements of specific protective measures to be installed and/or used at the facility. The critical infrastructure owner or operator determines for the facility whether the options for consideration provide the desired enhancements in light of the facility’s current security and resilience posture, anticipated growth or organizational changes, budgetary outlook, etc. No assessment process or respective options for consideration have the ability to provide solutions which fully eliminate the possibility of undesirable events or associated outcomes.
+            During the assessment process, personnel conducting the assessment along with facility stakeholders
+            identified potential vulnerabilities along with suggested options for consideration. The process and listed
+            options for consideration provide an opportunity for the facility owners/operators (stakeholders) to
+            mitigate vulnerabilities, increase resilience, and implement protective measures. This process involves an
+            assessment of risk tailored to the facility that takes into consideration the threat, assets to be
+            protected, facility characteristics and capital expenditures planning. The options for consideration are not
+            prescriptive endorsements of specific protective measures to be installed and/or used at the facility. The
+            critical infrastructure owner or operator determines for the facility whether the options for consideration
+            provide the desired enhancements in light of the facility’s current security and resilience posture,
+            anticipated growth or organizational changes, budgetary outlook, etc. No assessment process or respective
+            options for consideration have the ability to provide solutions which fully eliminate the possibility of
+            undesirable events or associated outcomes.
         </p>
         <app-report-disclaimer></app-report-disclaimer>
     </div>
@@ -66,14 +77,22 @@
         </h1>
 
         <p>
-            During the assessment process, personnel conducting the assessment along with facility stakeholders identified potential vulnerabilities
-            along with suggested options for consideration. The process and listed options for consideration provide an opportunity for the facility
-            owners/operators (stakeholders) to mitigate vulnerabilities, increase resilience, and implement protective measures. This process involves 
-            an assessment of risk tailored to the facility that takes into consideration the threat, assets to be protected, facility characteristics 
-            and capital expenditures planning.  The options for consideration are <u>not prescriptive endorsements</u> of specific protective measures to be 
-            installed and/or used at the facility. The <u>critical infrastructure owner or operator</u> determines for the facility whether the options for 
-            consideration provide the desired enhancements in light of the facility’s current security and resilience posture, anticipated growth or 
-            organizational changes, budgetary outlook, etc. No assessment process or respective options for consideration have the ability to provide 
+            During the assessment process, personnel conducting the assessment along with facility stakeholders
+            identified potential vulnerabilities
+            along with suggested options for consideration. The process and listed options for consideration provide an
+            opportunity for the facility
+            owners/operators (stakeholders) to mitigate vulnerabilities, increase resilience, and implement protective
+            measures. This process involves
+            an assessment of risk tailored to the facility that takes into consideration the threat, assets to be
+            protected, facility characteristics
+            and capital expenditures planning. The options for consideration are <u>not prescriptive endorsements</u> of
+            specific protective measures to be
+            installed and/or used at the facility. The <u>critical infrastructure owner or operator</u> determines for
+            the facility whether the options for
+            consideration provide the desired enhancements in light of the facility’s current security and resilience
+            posture, anticipated growth or
+            organizational changes, budgetary outlook, etc. No assessment process or respective options for
+            consideration have the ability to provide
             solutions which fully eliminate the possibility of undesirable events or associated outcomes.
         </p>
 
@@ -81,14 +100,15 @@
             <tr>
                 <th style="width: 15%">{{t('reports.core.rank')}}: {{rq.rank}}</th>
                 <th>{{rq.categoryAndNumber}}</th>
-                <th style="width: 15%">{{t('reports.core.level')}}: {{t('titles.sal.level.' + rq.level.toLowerCase())}}</th>
+                <th style="width: 15%">{{t('reports.core.level')}}: {{t('titles.sal.level.' + rq.level.toLowerCase())}}
+                </th>
             </tr>
             <tr>
                 <td colspan="2" [innerHTML]="rq.question"></td>
                 <td class="tint2">{{t('answer-options.labels.' + rq.answer.toLowerCase())}}</td>
             </tr>
             <tr>
-                <td colspan="3" [innerHTML]="rq.supplemental"></td>     
+                <td colspan="3" [innerHTML]="rq.supplemental"></td>
             </tr>
             <tr>
                 <td class="tint2">{{t('reports.core.questions comments.comment')}}:</td>

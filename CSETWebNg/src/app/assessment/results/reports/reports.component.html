@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -45,7 +45,7 @@
   <!-- Observation Tear Out Sheets -->
   <div *ngIf="!assessSvc.usesMaturityModel('ISE')"
     class="d-flex flex-column justify-content-start align-items-start mb-4">
-    
+
     <div class="mb-3 p-3 w-100" [class.gray-box]="true">
       <div class="d-flex flex-row" style="align-items: end">
         <div>
@@ -54,13 +54,13 @@
           </button>
         </div>
       </div>
-      <div class="my-3">
+      <div class="mt-3">
         {{t('observations tear-out sheets.summary')}}
       </div>
     </div>
 
     <div class="mb-3 p-3 w-100" [class.gray-box]="true">
-      <button tabindex="0" (click)="clickExcelLink('observations')" class="btn btn-link btn-link-dark px-0 pt-0">
+      <button tabindex="0" (click)="reportSvc.clickExcelLink('observations')" class="btn btn-link btn-link-dark px-0 pt-0">
         <span class="cset-icons-export-excel fs-base me-2 align-middle"></span>
         {{t('observations tear-out sheets.export csv link')}}
       </button>
@@ -74,21 +74,6 @@
 
     <!-- All reports component -->
     <app-report-list-common *ngIf="currentSectionId" [sectionId]="currentSectionId"></app-report-list-common>
-
-    <!-- CMMC -->
-    <div *ngIf="currentSectionId == 'CMMC2'">
-      <h4>Plan of Action and Milestones</h4>
-
-      <p>
-        This report generates a Plan of Action and Milestones (POA&M) template which includes a list of unmet practices
-        eligible for remediation. This POA&M will exclude any CMMC practices that are ineligible for inclusion per CMMC
-        ruling.
-      </p>
-      <button class="icon-button-dark btn btn-primary" (click)="clickExcelLink('poam')">
-        <span class="cset-icons-export-excel fs-base me-2 align-middle"></span>
-        <span>Export POAM to Excel</span>
-      </button>
-    </div>
 
     <!-- ISE -->
     <app-report-list-common *ngIf="assessSvc.isISE() && !isMobile" sectionId="ISE">

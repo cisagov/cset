@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -78,13 +78,14 @@ export class IseMeritComponent implements OnInit {
   // manualOrAutoMap: Map<number, string> = new Map<number, string>();
 
   sourceFilesMap: Map<number, any[]> = new Map<number, any[]>();
-  regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
+  regCitationsMap: Map<number, string> = new Map<number, string>();
   showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action items to show (answered 'No')
 
   examLevel: string = '';
 
   relaventIssues: boolean = false;
   loadingCounter: number = 0;
+  loading: boolean = false;
 
 
   constructor(
@@ -99,6 +100,7 @@ export class IseMeritComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.titleService.setTitle("MERIT Scope Report - ISE");
 
     this.acetSvc.getIseAnsweredQuestions().subscribe(
@@ -138,9 +140,8 @@ export class IseMeritComponent implements OnInit {
               if (!this.masterActionItemsMap.has(actionItemRow.observation_Id)) {
                 this.masterActionItemsMap.set(actionItemRow.observation_Id, [actionItemRow]);
                 combinedCount = 1;
-              } 
-              else 
-              {
+              }
+              else {
                 let tempActionArray = this.masterActionItemsMap.get(actionItemRow.observation_Id);
                 tempActionArray.push(actionItemRow);
                 this.masterActionItemsMap.set(actionItemRow.observation_Id, tempActionArray);
@@ -150,7 +151,6 @@ export class IseMeritComponent implements OnInit {
 
           this.loadingCounter++;
         });
-
 
         this.loadingCounter++;
 
@@ -169,10 +169,12 @@ export class IseMeritComponent implements OnInit {
 
             for (let i = 0; i < this.response?.length; i++) {
               if (this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
-
                 let observation = this.response[i];
-                this.questionsSvc.getDetails(observation.question.mat_Question_Id, 'Maturity').subscribe(
-                  (r: any) => {
+
+                this.questionsSvc.getRegulatoryCitations(observation.question.mat_Question_Id).subscribe((result: any) => {
+                  this.regCitationsMap.set(observation.question.mat_Question_Id, result.regulatory_Citation);
+
+                  this.questionsSvc.getDetails(observation.question.mat_Question_Id, 'Maturity').subscribe((r: any) => {
                     this.files = r;
 
                     let sourceDocList = this.files?.listTabs[0]?.sourceDocumentsList;
@@ -181,32 +183,33 @@ export class IseMeritComponent implements OnInit {
                       if (!this.sourceFilesMap.has(observation.finding.finding_Id)) {
                         this.sourceFilesMap.set(observation.finding.finding_Id, [sourceDocList[i]]);
                       }
-                      else 
-                      {
+                      else {
                         let tempFileArray = this.sourceFilesMap.get(observation.finding.finding_Id);
                         tempFileArray.push(sourceDocList[i]);
                         this.sourceFilesMap.set(observation.finding.finding_Id, tempFileArray);
                       }
                     }
+                  });
+
+                  if (observation.finding.type === 'Examiner Finding') {
+                    this.addExaminerFinding(observation.category.title);
                   }
-                );
-                if (observation.finding.type === 'Examiner Finding') {
-                  this.addExaminerFinding(observation.category.title);
-                }
-                if (observation.finding.type === 'DOR') {
-                  this.addDOR(observation.category.title);
-                }
-                if (observation.finding.type === 'Supplemental Fact') {
-                  this.addSupplementalFact(observation.category.title);
-                }
-                if (observation.finding.type === 'Non-reportable') {
-                  this.addNonReportable(observation.category.title);
-                }
-                this.relaventIssues = true;
+                  if (observation.finding.type === 'DOR') {
+                    this.addDOR(observation.category.title);
+                  }
+                  if (observation.finding.type === 'Supplemental Fact') {
+                    this.addSupplementalFact(observation.category.title);
+                  }
+                  if (observation.finding.type === 'Non-reportable') {
+                    this.addNonReportable(observation.category.title);
+                  }
+                  this.relaventIssues = true;
+
+                })
               }
             }
-            if (this.relaventIssues) {
 
+            if (this.relaventIssues) {
               this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
               this.categoryBuilder(this.dors);
 
@@ -218,7 +221,8 @@ export class IseMeritComponent implements OnInit {
 
               this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
               this.categoryBuilder(this.nonReportables);
-            } else {
+            }
+            else {
               this.resultsOfReviewString += 'No Issues were noted.';
             }
 
@@ -227,15 +231,8 @@ export class IseMeritComponent implements OnInit {
           error => console.log('MERIT Report Error: ' + (<Error>error).message)
         );
       });
-
-    // this.acetSvc.getIseSourceFiles().subscribe(
-    //   (r: any) => {
-    //     this.files = r;
-    //     console.log(r)
-    //   },
-    //   error => console.log('Assessment Information Error: ' + (<Error>error).message)
-    // )
   }
+
 
   getActionItemsToCopy(findingId: any) {
     let combinedText = "";
@@ -245,8 +242,12 @@ export class IseMeritComponent implements OnInit {
         combinedText += (item.action_Items + "\n");
       });
     }
-    
+
     return combinedText;
+  }
+
+  getReferenceCopyText(parentId: number) {
+    return (this.regCitationsMap.get(parentId));
   }
 
   addExaminerFinding(title: any) {
