@@ -1,11 +1,12 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
@@ -17,6 +18,8 @@ namespace CSETWebCore.Interfaces.Reports
     public interface IReportsDataBusiness
     {
         void SetReportsAssessmentId(int assessmentId);
+
+        void SetToken(ITokenManager token);
 
         List<MatRelevantAnswers> GetMaturityDeficiencies(int? modelId = null);
         List<MatRelevantAnswers> GetCommentsList(int? modelId = null);

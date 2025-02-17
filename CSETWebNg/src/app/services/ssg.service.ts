@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -39,16 +39,16 @@ export class SsgService {
     private assessSvc: AssessmentService
   ) { }
 
-   /**
-   * Returns a simple keyword that describes the assessment's
-   * sector.  This keyword is concatenated to form a translation key.
-   * 
-   * Because IOD and everyone else use different sector/industry
-   * value lists, these will likely be defined in pairs, one
-   * cyber sector and one NIPP sector.
-   */
-   ssgSimpleSectorLabel() {
-    const s : number = Number(this.assessSvc.assessment?.sectorId);
+  /**
+  * Returns a simple keyword that describes the assessment's
+  * sector.  This keyword is concatenated to form a translation key.
+  * 
+  * Because IOD and everyone else use different sector/industry
+  * value lists, these will likely be defined in pairs, one
+  * cyber sector and one NIPP sector.
+  */
+  ssgSimpleSectorLabel() {
+    const s: number = Number(this.assessSvc.assessment?.sectorId);
 
     if ([1, 19].includes(s)) {
       return 'chemical';
@@ -70,8 +70,8 @@ export class SsgService {
    * cyber sector and one NIPP sector.
    */
   ssgBonusModel(): number {
-    const s : number = Number(this.assessSvc.assessment?.sectorId);
-    
+    const s: number = Number(this.assessSvc.assessment?.sectorId);
+
     if ([1, 19].includes(s)) {
       return 18; // chemical
     }

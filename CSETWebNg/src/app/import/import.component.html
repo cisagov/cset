@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -57,7 +57,8 @@
                         for processing. This may take several minutes</div>
                     <div class="alert alert-danger" role="alert" *ngIf="state=='Failed'">The module failed to import
                         because an error occurred in processing.</div>
-                    <div class="alert alert-warning" role="alert" *ngIf="importNgForm.invalid">You need to resolve all errors before the module can be imported.</div>
+                    <div class="alert alert-warning" role="alert" *ngIf="importNgForm.invalid">You need to resolve all
+                        errors before the module can be imported.</div>
 
                 </div>
                 <form #importNgForm='ngForm' class="d-flex flex-column flex-11a" (submit)="submitForm()">
@@ -163,7 +164,7 @@
                             </li>
                         </ul>
                     </div>
-                    
+
                     <div style="margin: .5em 0">
                         <button [attr.disabled]="state=='Processing'||!importNgForm.valid?true:null" type="submit"
                             class="btn btn-success btn-s me-2" *ngIf="state!='Succeeded'"
@@ -178,12 +179,11 @@
                             <span *ngIf="state=='Ready'">Import</span>
                         </button>
                         <div class="d-flex align-items-center" *ngIf="state!='Processing' && state!='Ready'">
-                          <button class="btn btn-primary"
-                              (click)="clearForm()">Import another module
-                          </button>
-                          <div style="margin-bottom: 0" class="alert alert-warning ms-3">
-                            Warning: This will clear the code editor
-                          </div>
+                            <button class="btn btn-primary" (click)="clearForm()">Import another module
+                            </button>
+                            <div style="margin-bottom: 0" class="alert alert-warning ms-3">
+                                Warning: This will clear the code editor
+                            </div>
                         </div>
                     </div> -->
                 </form>

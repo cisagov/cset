@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ export class Cmmc2Level2ScoreComponent {
    * The max width in score is 313.  (offset / 313)
    */
   n(s: number) {
-    let xOffset =  s + 203;
+    let xOffset = s + 203;
     return (xOffset / 313) * this.width;
   }
 

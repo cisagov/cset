@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -105,8 +105,8 @@
                 <option [ngValue]="null">-- {{t('select type')}} --</option>
                 <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option>
             </select>
-            <select *ngIf="!isSLTT" class="form-select" id="edmOrganizationType" tabindex="0"
-                name="edmOrganizationType" (change)="update($event)" [(ngModel)]="demographicData.organizationType">
+            <select *ngIf="!isSLTT" class="form-select" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
+                (change)="update($event)" [(ngModel)]="demographicData.organizationType">
                 <option [ngValue]="null">-- {{t('select type')}} --</option>
                 <ng-container *ngFor="let t of orgTypes">
                     <option *ngIf="t.organizationTypeId!==3" [value]="t.organizationTypeId">{{t.organizationType}}
@@ -125,8 +125,8 @@
         </div>
         <div *ngIf="showFacilitator()">
             <label class="form-label" for="edmFacilitator">{{t('contact.facilitator')}}</label>
-            <select class="form-select" id="edmFacilitator" tabindex="0" name="edmFacilitator"
-                (change)="update($event)" [(ngModel)]="demographicData.facilitator">
+            <select class="form-select" id="edmFacilitator" tabindex="0" name="edmFacilitator" (change)="update($event)"
+                [(ngModel)]="demographicData.facilitator">
                 <option [ngValue]="null">-- {{t('select facilitator')}} --</option>
                 <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}}
                     {{contact.lastName}}</option>
@@ -155,7 +155,7 @@
                     <input type="checkbox" id="edmIsScoped" name="edmIsScoped" tabindex="0" class="checkbox-custom mt-1"
                         (change)="update($event)" [(ngModel)]="demographicData.isScoped"
                         [checked]="demographicData.isScoped">
-                    <label class="form-label" for="edmIsScoped" class="checkbox-custom-label">
+                    <label class="form-label checkbox-custom-label" for="edmIsScoped">
                         Suppliers are scoped to include other enterprise business units
                     </label>
                 </div>

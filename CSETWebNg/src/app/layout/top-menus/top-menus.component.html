@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -198,8 +198,8 @@
                 <span>{{ t('menu.user.change password') }}</span>
             </button>
             <button mat-menu-item *ngIf="showMenuItem('language picker')" (click)="editLanguage()">
-                <span class="fas fa-language fs-base me-2 align-middle"></span>
-                <span>{{t('menu.user.user language')}}</span>
+                <span class="fa-solid fa-gear fs-base me-2 align-middle"></span>
+                <span>{{t('menu.user.settings')}}</span>
             </button>
             <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()">
                 <span class="cset-icons-logout fs-base me-2 align-middle"></span>

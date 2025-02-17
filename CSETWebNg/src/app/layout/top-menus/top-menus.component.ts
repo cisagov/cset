@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ import { FileUploadClientService } from '../../services/file-client.service';
 import { GalleryService } from '../../services/gallery.service';
 import { SetBuilderService } from './../../services/set-builder.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
-import { UserLanguageComponent } from '../../dialogs/user-language/user-language.component';
+import { UserSettingsComponent } from '../../dialogs/user-settings/user-settings.component';
 import { translate } from '@jsverse/transloco';
 
 @Component({
@@ -123,7 +123,8 @@ export class TopMenusComponent implements OnInit {
     // Resource Library
     this._hotkeysService.add(
       new Hotkey('alt+l', (event: KeyboardEvent): boolean => {
-        this.router.navigate(['resource-library']);
+        const url = "index.html?returnPath=resource-library";
+        window.open(url, '_blank');
         return false; // Prevent bubbling
       })
     );
@@ -408,12 +409,14 @@ export class TopMenusComponent implements OnInit {
   }
 
   exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+    const url = this.configSvc.apiUrl + 'assessment/export/excel?token=' + localStorage.getItem('userToken');
+    window.open(url);
   }
 
 
   exportToExcelNCUA() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExportISE?token=' + localStorage.getItem('userToken');
+    const url = this.configSvc.apiUrl + 'ExcelExportISE?token=' + localStorage.getItem('userToken');
+    window.open(url);
   }
 
   /**
@@ -493,14 +496,12 @@ export class TopMenusComponent implements OnInit {
     if (this.dialog.openDialogs[0]) {
       return;
     }
-    this.dialogRef = this.dialog.open(UserLanguageComponent);
-    this.dialogRef.afterClosed().subscribe(
-      (data: any) => {
-        // the update user request happened when the dialog's form was saved
-        this.dialogRef = undefined;
-      },
-      (error) => console.log(error.message)
-    );
+    this.dialogRef = this.dialog.open(UserSettingsComponent);
+    this.dialogRef.afterClosed().subscribe((results) => {
+      if (results) {
+        this.assessSvc.persistEncryptPreference(results.preventEncrypt).subscribe(() => { });
+      }
+    });
   }
 
   /**

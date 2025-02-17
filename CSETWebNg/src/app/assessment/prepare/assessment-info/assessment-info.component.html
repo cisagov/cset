@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,10 @@
 
   <h3 *ngIf="this.configSvc.installationMode !== 'ACET'" class="mb-3">{{t('titles.assessment configuration')}}</h3>
   <h3 *ngIf="this.configSvc.installationMode === 'ACET'" class="mb-3">{{ t('demographics') }}</h3>
+
+  <div *ngIf="this.showUpgrade">
+    <app-upgrade [data]="this.targetModel"></app-upgrade>
+  </div>
 
   <app-assessment-detail *ngIf="configSvc.installationMode != 'CF' && configSvc.installationMode !== 'ACET'"
     class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail>

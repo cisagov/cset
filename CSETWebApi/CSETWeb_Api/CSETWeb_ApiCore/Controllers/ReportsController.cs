@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -556,6 +556,9 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/observations/excel")]
         public IActionResult ExportObservationsCsv(string token)
         {
+            _token.SetToken(token);
+            _report.SetToken(_token);
+
             int assessmentId = _token.AssessmentForUser(token);
             string lang = _token.GetCurrentLanguage();
 

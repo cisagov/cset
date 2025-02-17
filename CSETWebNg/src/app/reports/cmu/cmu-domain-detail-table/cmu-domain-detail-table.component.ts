@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -36,13 +36,13 @@ import { CmuService } from '../../../services/cmu.service';
 })
 export class CmuResultsDetailComponent implements OnChanges {
   @Input()
-    moduleName: string;
+  moduleName: string;
 
   @Input()
-    domain: any;
+  domain: any;
 
   @Input()
-    showRemarks = true;
+  showRemarks = true;
 
   heatmapWidget = '';
 
@@ -52,7 +52,7 @@ export class CmuResultsDetailComponent implements OnChanges {
     public reportSvc: ReportService,
     public questionsSvc: QuestionsService,
     private cmuSvc: CmuService
-  ) {}
+  ) { }
 
   /**
    * Get the heatmap as soon as we have a domain
@@ -71,14 +71,14 @@ export class CmuResultsDetailComponent implements OnChanges {
    */
   answerCellClass(answer: string) {
     switch (answer) {
-    case 'Y':
-      return 'green-score';
-    case 'I':
-      return 'yellow-score';
-    case 'N':
-      return 'red-score';
-    case 'U':
-      return 'default-score';
+      case 'Y':
+        return 'green-score';
+      case 'I':
+        return 'yellow-score';
+      case 'N':
+        return 'red-score';
+      case 'U':
+        return 'default-score';
     }
   }
 

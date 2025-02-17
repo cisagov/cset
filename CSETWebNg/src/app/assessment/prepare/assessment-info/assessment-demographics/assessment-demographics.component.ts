@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -58,8 +58,8 @@ interface AssessmentSize {
 }
 
 interface ImportExportData {
-    data: any; 
-  }
+    data: any;
+}
 
 @Component({
     selector: 'app-assessment-demographics',
@@ -83,12 +83,12 @@ export class AssessmentDemographicsComponent implements OnInit {
     demographicData: Demographic = {};
     orgTypes: any[];
 
-    assetValueTemp: number; 
+    assetValueTemp: number;
 
     constructor(
         private demoSvc: DemographicService,
         public assessSvc: AssessmentService,
-        public configSvc: ConfigService, 
+        public configSvc: ConfigService,
         public dialog: MatDialog,
     ) { }
 
@@ -127,30 +127,30 @@ export class AssessmentDemographicsComponent implements OnInit {
     }
 
     // Functionality to import demographic information, excluding contacts, organization point of contact, facilitator, critical service point of contact 
-    importClick(event){
+    importClick(event) {
         let dialogRef = null;
         this.unsupportedImportFile = false;
         if (event.target.files[0].name.endsWith(".json")) {
-          // Call Standard import service
-          dialogRef = this.dialog.open(UploadDemographicsComponent, {
-            data: { files: event.target.files, IsNormalLoad: true }
-          });
+            // Call Standard import service
+            dialogRef = this.dialog.open(UploadDemographicsComponent, {
+                data: { files: event.target.files, IsNormalLoad: true }
+            });
         } else {
-          this.unsupportedImportFile = true;
+            this.unsupportedImportFile = true;
         }
-    
+
         if (!this.unsupportedImportFile) {
-          dialogRef.afterClosed().subscribe(result => {
-            this.getDemographics()
-            this.getOrganizationTypes()
-            this.assessSvc.refreshAssessment()
-          });
+            dialogRef.afterClosed().subscribe(result => {
+                this.getDemographics()
+                this.getOrganizationTypes()
+                this.assessSvc.refreshAssessment()
+            });
         }
     }
 
 
     //Functionality to export demographic information, excluding contacts, organization point of contact, facilitator, critical service point of contact 
-    exportClick(){
+    exportClick() {
         this.demoSvc.exportDemographics()
     }
 
@@ -174,7 +174,7 @@ export class AssessmentDemographicsComponent implements OnInit {
             },
             error => console.log('Demographic load Error: ' + (<Error>error).message)
         );
-        
+
     }
 
     getOrganizationTypes() {

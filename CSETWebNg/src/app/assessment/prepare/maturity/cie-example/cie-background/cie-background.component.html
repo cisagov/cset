@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2024 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -21,377 +21,399 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel">
-    <h2>Engineering Case Study</h2>
-    <h4>Disclaimer</h4>
-    <p>
-        This scenario is fictional. Though it is pulled from actual events and experiences, 
-        the information below does not reflect any actual company or infrastructure.
-    </p>
+  <h2>Engineering Case Study</h2>
+  <h4>Disclaimer</h4>
+  <p>
+    This scenario is fictional. Though it is pulled from actual events and experiences,
+    the information below does not reflect any actual company or infrastructure.
+  </p>
 
-    <h2>Background - The Water and Wastewater Utility</h2>
-    <p>
-        The fictional water and wastewater utility discussed herein serves approximately 500,000 people 
-        and thousands of businesses with a service area of approximately 100 square miles. 
-        Over the nearly 100-year history of the organization, the utility has made investments in physical 
-        infrastructure currently valued at over $2 billion. Between 1990 and 2020, asset renewal and 
-        rehabilitation were generally deferred as a short-term cost savings measure. During this period, 
-        asset conditions declined, leading to service disruptions and unwanted attention from elected officials, 
-        the press, and customers. New utility management is now making substantial investments to 
-        provide reliable and resilient services to customers.
-    </p>
-    <p>
-        The utility has four primary facilities including: 
-    </p>
-    <ul>
-        <li>
-            <strong>Water Treatment Plant #1 (WTP #1)</strong> 
-            – The critical function of WTP #1 is to provide high quality water. If the treatment 
-            plant is not able to provide high quality water, residents and businesses would be 
-            without clean water and a nearby regional power generation plant would not have 
-            water for steam generation and cooling. The supervisory control and data 
-            acquisition (SCADA) master system for all potable water facilities 
-            (WTP #2, pump station and remote wells) is located at WTP #1.
-        </li>
-        <li>
-            <strong>Water Treatment Plant #2 (WTP #2)</strong> 
-            – The critical function of WTP #2 is to provide high quality water. If the treatment 
-            plant is not able to provide high quality water, nearby residents and businesses 
-            would be without clean water. This site has a SCADA node that relies on a data 
-            connection to servers located at WTP #1.
-        </li>
-        <li>
-            <strong>Water Pump Station</strong> 
-            – The critical function of the pump station is to provide high quality water at a 
-            useful pressure. If the pump station is not able to provide water at a useful 
-            pressure, nearby residents and businesses could be without water. This could also 
-            impact the ability for the fire department to connect fire trucks and hoses to fire 
-            hydrants within the service zone to put out fires.
-        </li>
-        <li>
-            <strong>Wastewater Treatment Plant (WWTP)</strong> 
-            – The critical functions of the WWTP are to accept all wastewater from residences 
-            and businesses and treat the wastewater within regulations. If the WWTP is not able 
-            to accept all the wastewater, sewage will overflow on streets or at the WWTP. If the 
-            WWTP is not able to treat the wastewater within regulations, this can lead to 
-            property damage and illness. The SCADA master system for all wastewater facilities 
-            (WWTP and remote sewer lift stations) is located at the WWTP.
-        </li>
-    </ul>
+  <h2>Background - The Water and Wastewater Utility</h2>
+  <p>
+    The fictional water and wastewater utility discussed herein serves approximately 500,000 people
+    and thousands of businesses with a service area of approximately 100 square miles.
+    Over the nearly 100-year history of the organization, the utility has made investments in physical
+    infrastructure currently valued at over $2 billion. Between 1990 and 2020, asset renewal and
+    rehabilitation were generally deferred as a short-term cost savings measure. During this period,
+    asset conditions declined, leading to service disruptions and unwanted attention from elected officials,
+    the press, and customers. New utility management is now making substantial investments to
+    provide reliable and resilient services to customers.
+  </p>
+  <p>
+    The utility has four primary facilities including:
+  </p>
+  <ul>
+    <li>
+      <strong>Water Treatment Plant #1 (WTP #1)</strong>
+      – The critical function of WTP #1 is to provide high quality water. If the treatment
+      plant is not able to provide high quality water, residents and businesses would be
+      without clean water and a nearby regional power generation plant would not have
+      water for steam generation and cooling. The supervisory control and data
+      acquisition (SCADA) master system for all potable water facilities
+      (WTP #2, pump station and remote wells) is located at WTP #1.
+    </li>
+    <li>
+      <strong>Water Treatment Plant #2 (WTP #2)</strong>
+      – The critical function of WTP #2 is to provide high quality water. If the treatment
+      plant is not able to provide high quality water, nearby residents and businesses
+      would be without clean water. This site has a SCADA node that relies on a data
+      connection to servers located at WTP #1.
+    </li>
+    <li>
+      <strong>Water Pump Station</strong>
+      – The critical function of the pump station is to provide high quality water at a
+      useful pressure. If the pump station is not able to provide water at a useful
+      pressure, nearby residents and businesses could be without water. This could also
+      impact the ability for the fire department to connect fire trucks and hoses to fire
+      hydrants within the service zone to put out fires.
+    </li>
+    <li>
+      <strong>Wastewater Treatment Plant (WWTP)</strong>
+      – The critical functions of the WWTP are to accept all wastewater from residences
+      and businesses and treat the wastewater within regulations. If the WWTP is not able
+      to accept all the wastewater, sewage will overflow on streets or at the WWTP. If the
+      WWTP is not able to treat the wastewater within regulations, this can lead to
+      property damage and illness. The SCADA master system for all wastewater facilities
+      (WWTP and remote sewer lift stations) is located at the WWTP.
+    </li>
+  </ul>
 
-    <p>
-        In addition, there are numerous smaller outlying facilities within the drinking 
-        water distribution system and wastewater collection system including: 
-    </p>
-    <ul>
-        <li>Remote groundwater well sites (potable water system)</li>
-        <li>Remote tank sites (elevated) (potable water system)</li>
-        <li>Wastewater lift stations (wastewater system)</li>
-    </ul>
-    <p>
-        Due to the burdens placed on the operations staff, the utility has established a temporary 
-        means of accessing the SCADA system that allows operators to remotely access the 
-        SCADA software systems from insecure locations. Due to the deferred asset rehabilitation 
-        and renewal over several decades, utility management has become concerned with 
-        cyber-incidents that might result in physical consequences for the utility.
-    </p>
+  <p>
+    In addition, there are numerous smaller outlying facilities within the drinking
+    water distribution system and wastewater collection system including:
+  </p>
+  <ul>
+    <li>Remote groundwater well sites (potable water system)</li>
+    <li>Remote tank sites (elevated) (potable water system)</li>
+    <li>Wastewater lift stations (wastewater system)</li>
+  </ul>
+  <p>
+    Due to the burdens placed on the operations staff, the utility has established a temporary
+    means of accessing the SCADA system that allows operators to remotely access the
+    SCADA software systems from insecure locations. Due to the deferred asset rehabilitation
+    and renewal over several decades, utility management has become concerned with
+    cyber-incidents that might result in physical consequences for the utility.
+  </p>
 
-    <h4>Engineering Department and Ongoing Investments</h4>
-    <p>
-        Due to increasing population and increasing regulatory pressures, the utility is 
-        making additional investments in new advanced water treatment processes at the existing 
-        facilities. The processes require automation to run successfully and optimally.
-    </p>
-    <p>
-        The utility has not developed and adopted engineering standards. 
-        They have previously been reliant on consultants to use their own standards.
-    </p>
+  <h4>Engineering Department and Ongoing Investments</h4>
+  <p>
+    Due to increasing population and increasing regulatory pressures, the utility is
+    making additional investments in new advanced water treatment processes at the existing
+    facilities. The processes require automation to run successfully and optimally.
+  </p>
+  <p>
+    The utility has not developed and adopted engineering standards.
+    They have previously been reliant on consultants to use their own standards.
+  </p>
 
-    <h4>
-        Current use of Industrial Control System Technology
-    </h4>
-    <p>
-        Two separate SCADA systems are used by the utility to monitor and control the water/ 
-        wastewater (W/WW) facilities. One SCADA system is used to monitor and control the 
-        potable water facilities (water treatment plants, pump station, wells, elevated 
-        storage tanks). The other SCADA system is used to monitor and control the wastewater 
-        facilities (WWTP and remote wastewater lift stations). Standards for SCADA screens 
-        have not been implemented so each system uses different layouts, graphics, and colors. 
-        Different standards have been implemented for each new facility and at each new phase of construction.
-    </p>
-    <p>
-        Through various upgrade projects, the utility has transitioned away from hard-wired input/ 
-        output (I/O) signals in favor of Ethernet communications with process control devices. Each 
-        plant shares a similar general network topology—a star topology using multiple 
-        commercial-off-the-shelf vendor solutions including a mix of managed/unmanaged 
-        switches and proprietary communication devices (e.g., Allen Bradley ETAP). There is 
-        some network segmentation, and the site-to-site communications are using a combination of 
-        900Mhz radios, microwave, and fiber optic lines. The control system technology, including network 
-        switching, WAN/LAN communications, firewall, and SCADA applications, are managed by operational 
-        technology staff. The virtualized server hardware and storage are managed by City IT.
-    </p>
-    <p>
-        Data is transmitted to a cloud-based service to provide regulatory reporting for 
-        users outside the SCADA environment. User access to the reporting function is 
-        managed within the cloud application. The Software-as-a-Service (SaaS) vendor 
-        uses Amazon AWS to host the application.
-    </p>
-    <p>
-        The utility has experienced intrusions into the IT and OT networks; however, no data 
-        or processes were compromised. The utility has not deployed a solution to actively 
-        monitor the environment. With the increasing number of documented insider threats 
-        to utilities, there is greater concern that the trust placed in the utility’s people 
-        and systems is unverified and potentially—at some level of abstraction—unverifiable.
-    </p>
+  <h4>
+    Current use of Industrial Control System Technology
+  </h4>
+  <p>
+    Two separate SCADA systems are used by the utility to monitor and control the water/
+    wastewater (W/WW) facilities. One SCADA system is used to monitor and control the
+    potable water facilities (water treatment plants, pump station, wells, elevated
+    storage tanks). The other SCADA system is used to monitor and control the wastewater
+    facilities (WWTP and remote wastewater lift stations). Standards for SCADA screens
+    have not been implemented so each system uses different layouts, graphics, and colors.
+    Different standards have been implemented for each new facility and at each new phase of construction.
+  </p>
+  <p>
+    Through various upgrade projects, the utility has transitioned away from hard-wired input/
+    output (I/O) signals in favor of Ethernet communications with process control devices. Each
+    plant shares a similar general network topology—a star topology using multiple
+    commercial-off-the-shelf vendor solutions including a mix of managed/unmanaged
+    switches and proprietary communication devices (e.g., Allen Bradley ETAP). There is
+    some network segmentation, and the site-to-site communications are using a combination of
+    900Mhz radios, microwave, and fiber optic lines. The control system technology, including network
+    switching, WAN/LAN communications, firewall, and SCADA applications, are managed by operational
+    technology staff. The virtualized server hardware and storage are managed by City IT.
+  </p>
+  <p>
+    Data is transmitted to a cloud-based service to provide regulatory reporting for
+    users outside the SCADA environment. User access to the reporting function is
+    managed within the cloud application. The Software-as-a-Service (SaaS) vendor
+    uses Amazon AWS to host the application.
+  </p>
+  <p>
+    The utility has experienced intrusions into the IT and OT networks; however, no data
+    or processes were compromised. The utility has not deployed a solution to actively
+    monitor the environment. With the increasing number of documented insider threats
+    to utilities, there is greater concern that the trust placed in the utility’s people
+    and systems is unverified and potentially—at some level of abstraction—unverifiable.
+  </p>
 
-    <h4>Project Delivery</h4>
-    <p>
-        The utility retains project managers to administer design and construction projects. 
-        Each design project is responsible for its own development standards, building on 
-        previous projects and references provided by design consultants. For each project 
-        scope, separate requirements, approach, and milestones are developed. This has led 
-        to a variety of project outcomes, equipment, and levels of detail in design documents.
-    </p>
+  <h4>Project Delivery</h4>
+  <p>
+    The utility retains project managers to administer design and construction projects.
+    Each design project is responsible for its own development standards, building on
+    previous projects and references provided by design consultants. For each project
+    scope, separate requirements, approach, and milestones are developed. This has led
+    to a variety of project outcomes, equipment, and levels of detail in design documents.
+  </p>
 
-    <h4>CIE Program Launch</h4>
-    <p>
-        With the increased focus on investment to improve system wide security, reliability, 
-        and resilience, the utility is launching an internal program to integrate CIE 
-        principles into their engineering practices. The program creates internal processes 
-        to drive change, provide design and construction requirements, and assess existing 
-        facilities’ risk.
-    </p>
-    <p>
-        The utility recently completed a SCADA Master Planning project to support the rollout 
-        of the CIE Program. The goal of the master plan was to identify the steps to improve 
-        the SCADA system and maintain a high level of reliability and security in the future. 
-        In addition to the standard technology evaluation and selection process, the planning 
-        process emphasized continuity of operations and resilience with and without automation.
-    </p>
-    <p>
-        These activities supported the inclusion of CIE as a foundational part of the utility’s 
-        approach to engineering. The master plan led to the following: 
-    </p>
-    <ul>
-        <li>Design standards for electrical, SCADA, and networking</li>
-        <li>Requirements for new project delivery workflow with CIE principles integrated into the engineering and review processes</li>
-        <li>Organizational recommendations for CIE program management, including staffing needs with job descriptions and skillset requirements</li>
-        <li>Prioritized project lists to assess and address existing site conditions</li>
-        <li>Governance recommendations to maintain the SCADA system, supporting resources, and CIE reference documents Specific examples of the application of and outcomes from the CIE initiative are described in detail in CIE Analysis section.</li>
-    </ul>
+  <h4>CIE Program Launch</h4>
+  <p>
+    With the increased focus on investment to improve system wide security, reliability,
+    and resilience, the utility is launching an internal program to integrate CIE
+    principles into their engineering practices. The program creates internal processes
+    to drive change, provide design and construction requirements, and assess existing
+    facilities’ risk.
+  </p>
+  <p>
+    The utility recently completed a SCADA Master Planning project to support the rollout
+    of the CIE Program. The goal of the master plan was to identify the steps to improve
+    the SCADA system and maintain a high level of reliability and security in the future.
+    In addition to the standard technology evaluation and selection process, the planning
+    process emphasized continuity of operations and resilience with and without automation.
+  </p>
+  <p>
+    These activities supported the inclusion of CIE as a foundational part of the utility’s
+    approach to engineering. The master plan led to the following:
+  </p>
+  <ul>
+    <li>Design standards for electrical, SCADA, and networking</li>
+    <li>Requirements for new project delivery workflow with CIE principles integrated into the engineering and review
+      processes</li>
+    <li>Organizational recommendations for CIE program management, including staffing needs with job descriptions and
+      skillset requirements</li>
+    <li>Prioritized project lists to assess and address existing site conditions</li>
+    <li>Governance recommendations to maintain the SCADA system, supporting resources, and CIE reference documents
+      Specific examples of the application of and outcomes from the CIE initiative are described in detail in CIE
+      Analysis section.</li>
+  </ul>
 
-    <h2>CIE Team Roles and Responsibilities</h2>
-    <p>
-        Recognizing that no initiative would be successful without explicit ownership by team 
-        members, the utility developed a high-level roles and responsibilities matrix. Table 
-        below summarizes which organizational units are responsible for the application of 
-        each CIE principle, demonstrating the general breakdown of roles and responsibilities 
-        within the organization. Each organizational unit must consider each CIE principle 
-        through the engineering lifecycle, and may require additional support from other units. 
-        For example, IT Cybersecurity and Management may support OT Cybersecurity and Management 
-        with the application of Principle 3: Secure Information Architecture.
-    </p>
-    <!-- <img src="assets/images/CIE/05_TeamRolesTable_p143.svg" alt="CIE Team Roles, Responsibilities, and Associated Principles"> -->
+  <h2>CIE Team Roles and Responsibilities</h2>
+  <p>
+    Recognizing that no initiative would be successful without explicit ownership by team
+    members, the utility developed a high-level roles and responsibilities matrix. Table
+    below summarizes which organizational units are responsible for the application of
+    each CIE principle, demonstrating the general breakdown of roles and responsibilities
+    within the organization. Each organizational unit must consider each CIE principle
+    through the engineering lifecycle, and may require additional support from other units.
+    For example, IT Cybersecurity and Management may support OT Cybersecurity and Management
+    with the application of Principle 3: Secure Information Architecture.
+  </p>
+  <!-- <img src="assets/images/CIE/05_TeamRolesTable_p143.svg" alt="CIE Team Roles, Responsibilities, and Associated Principles"> -->
 
-    <div>
-        <div class="d-flex table-header">
-          <div class="col-6 table-header" style="padding: 4px;"><strong>ORGANIZATIONAL ROLES</strong></div>
-          <div class="col-6 table-header" style="padding: 4px;"><strong>PRINCIPLES</strong></div>
-        </div>
-        
-        <hr class="page-line">
-    
-        <div class="d-flex">
-            <div class="col-4" style="padding: 4px;"><strong>Leadership</strong></div>
-            <div class="col-8" style="padding: 4px;">12&emsp;Organizational Culture</div>
-        </div>
-        <hr class="page-line">
-    
-        <div class="d-flex">
-          <div class="col-4" style="padding: 4px;"><strong>Operations</strong></div>
-          <div class="col-8" style="padding: 4px; white-space: pre-wrap">
-            <div>&ensp;6&emsp;Active Defense</div>
-            <div>&ensp;7&emsp;Interdependency Evaluation</div>
-            <div>10&emsp;Planned Resilience</div>
-          </div>
-        </div>
-        <hr class="page-line">
-    
-        <div class="d-flex">
-            <div class="col-4" style="padding: 4px;"><strong>Engineering</strong></div>
-            <div class="col-8" style="padding: 4px; white-space: pre-wrap">
-              <div>&ensp;1&emsp;Some of Project Architecture (see above)</div>
-              <div>&ensp;2&emsp;Component Level Design (detailed)</div>
-              <div>&ensp;4&emsp;Design Simplification</div>
-            </div>
-        </div>
-        <hr class="page-line">
-    
-        <div class="d-flex">
-            <div class="col-4" style="padding: 4px;"><strong>Procurement</strong></div>
-            <div class="col-8" style="padding: 4px; white-space: pre-wrap">
-              <div>&ensp;9&emsp;Cyber-Secure Supply Chain Controls</div>
-            </div>
-        </div>
-        <hr class="page-line">
-    
-        <div class="d-flex">
-            <div class="col-4" style="padding: 4px;"><strong>OT Cybersecurity and Management</strong></div>
-            <div class="col-8" style="padding: 4px; white-space: pre-wrap">
-              <div>&ensp;3&emsp;Secure Information Architecture</div>
-              <div>&ensp;5&emsp;Layered Defenses</div>
-              <div>&ensp;8&emsp;Digital Assets Awareness</div>
-            </div>
-        </div>
-        <hr class="page-line">
-    
-        <div class="d-flex">
-            <div class="col-4" style="padding: 4px;"><strong>Legal and Governmental Affairs</strong></div>
-            <div class="col-8" style="padding: 4px; white-space: pre-wrap">
-              <div>11&emsp;Engineering Information Control</div>
-            </div>
-        </div>
-        <hr class="page-line">
+  <div>
+    <div class="d-flex table-header">
+      <div class="col-6 table-header" style="padding: 4px;"><strong>ORGANIZATIONAL ROLES</strong></div>
+      <div class="col-6 table-header" style="padding: 4px;"><strong>PRINCIPLES</strong></div>
     </div>
 
-    <h2>Applying Cyber-Informed Engineering to the Water and Wastewater Utility</h2>
-    <p>
-        The utility begins with the CIE principles and associated definitions summarized in Table below.
-    </p>
-    <!-- <img src="assets/images/CIE/06_AppendixPrinciplesTable_p144.svg" alt="CIE Principles"> -->
-    <div class="d-flex">
-        <div class="col-1 table-header" style="padding: 4px;"></div>
-        <div class="col-5 table-header" style="padding: 4px;"><strong>PRINCIPLE</strong></div>
-        <div class="col-6 table-header" style="padding: 4px;"><strong>DEFINITION</strong></div>
-      </div>
-      
-      <hr class="page-line">
-  
-      <div class="d-flex">
-        <div class="col-1 table-header" style="padding: 4px;">1</div>
-        <div class="col-5" style="padding: 4px;"><strong>Consequence-Focused Design</strong></div>
-        <div class="col-6" style="padding: 4px;">
-            <p>
-                Apply CIE strategies first and foremost to the most critical functions the system performs. Typically these are functions
-                which, if manipulated or subverted, could result in unacceptable or catastrophic consequences for the organization.
-            </p>
-        </div>
-      </div>
-      <div class="d-flex">
-        <div class="col-1 table-header" style="padding: 4px;">2</div>
-        <div class="col-5" style="padding: 4px;"><strong>Engineered Controls</strong></div>
-        <div class="col-6" style="padding: 4px;">
-          <p>
-            Identify engineering design changes to process controls early in system design to eliminate or mitigate cyber risk,
-            reducing the need to bolt on additive IT security controls during implementation.          </p>
-        </div>
-      </div>
-      <div class="d-flex">
-        <div class="col-1 table-header" style="padding: 4px;">3</div>
-        <div class="col-5" style="padding: 4px;"><strong>Secure Information Architecture</strong></div>
-        <div class="col-6" style="padding: 4px;">
-          <p>
-            For each identified data stream, a secure information architecture can be designed, guided by the consequences and
-            impacts identified in consequence-focused design, to segregate the most important data and the systems which contain
-            it to provide more control, protection, and monitoring of those systems and that data.          </p>
-        </div>
-      </div>
-      <div class="d-flex">
-        <div class="col-1 table-header" style="padding: 4px;">4</div>
-        <div class="col-5" style="padding: 4px;"><strong>Design Simplification</strong></div>
-        <div class="col-6" style="padding: 4px;">
-          <p>
-            Simplify the system, component, or architecture design and limit high-consequence, low-value complexity within digital
-            functions at the outset, reducing the opportunity for attackers to misuse digital functionality.          </p>
-        </div>
-      </div>
-      <div class="d-flex">
-        <div class="col-1 table-header" style="padding: 4px;">5</div>
-        <div class="col-5" style="padding: 4px;"><strong>Layered Defenses</strong></div>
-        <div class="col-6" style="padding: 4px;">
-          <p>
-            Assume compromise and employ a defense-in-depth strategy, reducing the opportunity for a single failure to impact
-            critical functions or create cascading failures.          </p>
-        </div>
-      </div>
-      <div class="d-flex">
-        <div class="col-1 table-header" style="padding: 4px;">6</div>
-        <div class="col-5" style="padding: 4px;"><strong>Active Defenses</strong></div>
-        <div class="col-6" style="padding: 4px;">
-          <p>
-            Employ dynamic elements in the design of systems that detect and defend against cyber threats, enabling the system to
-            continue operating resiliently when an intruder is detected, and isolate or remove the threat without compromising critical
-            operations.          </p>
-        </div>
-      </div>
-      <div class="d-flex">
-        <div class="col-1 table-header" style="padding: 4px;">7</div>
-        <div class="col-5" style="padding: 4px;"><strong>Interdependency Evaluation</strong></div>
-        <div class="col-6" style="padding: 4px;">
-          <p>
-            Integrate input from multiple disciplines and operational departments (e.g., safety, quality, maintenance, chemical) to
-            understand how digital misuse could affect their area of operations.          </p>
-        </div>
-      </div>
-      <div class="d-flex">
-        <div class="col-1 table-header" style="padding: 4px;">8</div>
-        <div class="col-5" style="padding: 4px;"><strong>Digital Asset Awareness</strong></div>
-        <div class="col-6" style="padding: 4px;">
-          <p>
-            Maintain a complete and accurate digital asset inventory, enabling engineers to track hardware, firmware, and software
-            over time, and actively analyze the vulnerabilities that may reside within them and facilitate evaluation of potential
-            consequences arising from those vulnerabilities.
-                      </p>
-        </div>
-      </div>
-      <div class="d-flex">
-        <div class="col-1 table-header" style="padding: 4px;">9</div>
-        <div class="col-5" style="padding: 4px;"><strong>Cyber-Secure Supply Chain Controls</strong></div>
-        <div class="col-6" style="padding: 4px;">
-          <p>
-            Use procurement language and contract requirements to ensure that vendors, integrators, and third-party contractors
-            deliver products that meet design specifications and adhere to organizational processes and controls that support
-            cybersecurity.          </p>
-        </div>
-      </div>
-      <div class="d-flex">
-        <div class="col-1 table-header" style="padding: 4px;">10</div>
-        <div class="col-5" style="padding: 4px;"><strong>Planned Resilience</strong></div>
-        <div class="col-6" style="padding: 4px;">
-          <p>
-            Expect that any digital component or system may be compromised at some point during its lifecycle, and plan for
-            continued operation during and after a cyber-attack that degrades digital controls. Implement a zero-trust architecture to
-            the greatest degree possible.          </p>
-        </div>
-      </div>
-      <div class="d-flex">
-        <div class="col-1 table-header" style="padding: 4px;">11</div>
-        <div class="col-5" style="padding: 4px;"><strong>Engineering Information Control</strong></div>
-        <div class="col-6" style="padding: 4px;">
-          <p>
-            Protect sensitive engineering records—including requirements, specifications, designs, configurations, testing, etc.—that
-            if released may provide attackers critical information that places those systems at greater risk.          </p>
-        </div>
-      </div>
-      <div class="d-flex">
-        <div class="col-1 table-header" style="padding: 4px;">12</div>
-        <div class="col-5" style="padding: 4px;"><strong>Organizational Culture</strong></div>
-        <div class="col-6" style="padding: 4px;">
-          <p>
-            Build cybersecurity into the organizational culture by leveraging a cross functional and cross-disciplinary team to consider
-            cyber-related concerns in the system design and implementation. Adopt continuous cybersecurity training across the
-            organization to collectively empower all staff to participate in cybersecurity.          </p>
-        </div>
-      </div>
-    <!--  -->
-    <h2>Engineering Lifecycle Phase Mapping</h2>
-    <p>
-        The guide provides engineering lifecycles phases common to some sectors and industries. 
-        The water/wastewater sector has a different model for engineering lifecycle phases. 
-        Both are shown in Table below. This table was developed to compare and align the two 
-        engineering approaches. This enables the application of CIE principles and associated 
-        questions within the appropriate phase for the utility.
-    </p>
-    <img src="assets/images/CIE/07_EngineeringLifecycleMapping_p145.svg" alt="Engineering Lifecycle Mapping">
+    <hr class="page-line">
 
-    <app-nav-back-next [page]="'cie-background'"></app-nav-back-next>
+    <div class="d-flex">
+      <div class="col-4" style="padding: 4px;"><strong>Leadership</strong></div>
+      <div class="col-8" style="padding: 4px;">12&emsp;Organizational Culture</div>
+    </div>
+    <hr class="page-line">
+
+    <div class="d-flex">
+      <div class="col-4" style="padding: 4px;"><strong>Operations</strong></div>
+      <div class="col-8" style="padding: 4px; white-space: pre-wrap">
+        <div>&ensp;6&emsp;Active Defense</div>
+        <div>&ensp;7&emsp;Interdependency Evaluation</div>
+        <div>10&emsp;Planned Resilience</div>
+      </div>
+    </div>
+    <hr class="page-line">
+
+    <div class="d-flex">
+      <div class="col-4" style="padding: 4px;"><strong>Engineering</strong></div>
+      <div class="col-8" style="padding: 4px; white-space: pre-wrap">
+        <div>&ensp;1&emsp;Some of Project Architecture (see above)</div>
+        <div>&ensp;2&emsp;Component Level Design (detailed)</div>
+        <div>&ensp;4&emsp;Design Simplification</div>
+      </div>
+    </div>
+    <hr class="page-line">
+
+    <div class="d-flex">
+      <div class="col-4" style="padding: 4px;"><strong>Procurement</strong></div>
+      <div class="col-8" style="padding: 4px; white-space: pre-wrap">
+        <div>&ensp;9&emsp;Cyber-Secure Supply Chain Controls</div>
+      </div>
+    </div>
+    <hr class="page-line">
+
+    <div class="d-flex">
+      <div class="col-4" style="padding: 4px;"><strong>OT Cybersecurity and Management</strong></div>
+      <div class="col-8" style="padding: 4px; white-space: pre-wrap">
+        <div>&ensp;3&emsp;Secure Information Architecture</div>
+        <div>&ensp;5&emsp;Layered Defenses</div>
+        <div>&ensp;8&emsp;Digital Assets Awareness</div>
+      </div>
+    </div>
+    <hr class="page-line">
+
+    <div class="d-flex">
+      <div class="col-4" style="padding: 4px;"><strong>Legal and Governmental Affairs</strong></div>
+      <div class="col-8" style="padding: 4px; white-space: pre-wrap">
+        <div>11&emsp;Engineering Information Control</div>
+      </div>
+    </div>
+    <hr class="page-line">
+  </div>
+
+  <h2>Applying Cyber-Informed Engineering to the Water and Wastewater Utility</h2>
+  <p>
+    The utility begins with the CIE principles and associated definitions summarized in Table below.
+  </p>
+  <!-- <img src="assets/images/CIE/06_AppendixPrinciplesTable_p144.svg" alt="CIE Principles"> -->
+  <div class="d-flex">
+    <div class="col-1 table-header" style="padding: 4px;"></div>
+    <div class="col-5 table-header" style="padding: 4px;"><strong>PRINCIPLE</strong></div>
+    <div class="col-6 table-header" style="padding: 4px;"><strong>DEFINITION</strong></div>
+  </div>
+
+  <hr class="page-line">
+
+  <div class="d-flex">
+    <div class="col-1 table-header" style="padding: 4px;">1</div>
+    <div class="col-5" style="padding: 4px;"><strong>Consequence-Focused Design</strong></div>
+    <div class="col-6" style="padding: 4px;">
+      <p>
+        Apply CIE strategies first and foremost to the most critical functions the system performs. Typically these are
+        functions
+        which, if manipulated or subverted, could result in unacceptable or catastrophic consequences for the
+        organization.
+      </p>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="col-1 table-header" style="padding: 4px;">2</div>
+    <div class="col-5" style="padding: 4px;"><strong>Engineered Controls</strong></div>
+    <div class="col-6" style="padding: 4px;">
+      <p>
+        Identify engineering design changes to process controls early in system design to eliminate or mitigate cyber
+        risk,
+        reducing the need to bolt on additive IT security controls during implementation. </p>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="col-1 table-header" style="padding: 4px;">3</div>
+    <div class="col-5" style="padding: 4px;"><strong>Secure Information Architecture</strong></div>
+    <div class="col-6" style="padding: 4px;">
+      <p>
+        For each identified data stream, a secure information architecture can be designed, guided by the consequences
+        and
+        impacts identified in consequence-focused design, to segregate the most important data and the systems which
+        contain
+        it to provide more control, protection, and monitoring of those systems and that data. </p>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="col-1 table-header" style="padding: 4px;">4</div>
+    <div class="col-5" style="padding: 4px;"><strong>Design Simplification</strong></div>
+    <div class="col-6" style="padding: 4px;">
+      <p>
+        Simplify the system, component, or architecture design and limit high-consequence, low-value complexity within
+        digital
+        functions at the outset, reducing the opportunity for attackers to misuse digital functionality. </p>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="col-1 table-header" style="padding: 4px;">5</div>
+    <div class="col-5" style="padding: 4px;"><strong>Layered Defenses</strong></div>
+    <div class="col-6" style="padding: 4px;">
+      <p>
+        Assume compromise and employ a defense-in-depth strategy, reducing the opportunity for a single failure to
+        impact
+        critical functions or create cascading failures. </p>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="col-1 table-header" style="padding: 4px;">6</div>
+    <div class="col-5" style="padding: 4px;"><strong>Active Defenses</strong></div>
+    <div class="col-6" style="padding: 4px;">
+      <p>
+        Employ dynamic elements in the design of systems that detect and defend against cyber threats, enabling the
+        system to
+        continue operating resiliently when an intruder is detected, and isolate or remove the threat without
+        compromising critical
+        operations. </p>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="col-1 table-header" style="padding: 4px;">7</div>
+    <div class="col-5" style="padding: 4px;"><strong>Interdependency Evaluation</strong></div>
+    <div class="col-6" style="padding: 4px;">
+      <p>
+        Integrate input from multiple disciplines and operational departments (e.g., safety, quality, maintenance,
+        chemical) to
+        understand how digital misuse could affect their area of operations. </p>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="col-1 table-header" style="padding: 4px;">8</div>
+    <div class="col-5" style="padding: 4px;"><strong>Digital Asset Awareness</strong></div>
+    <div class="col-6" style="padding: 4px;">
+      <p>
+        Maintain a complete and accurate digital asset inventory, enabling engineers to track hardware, firmware, and
+        software
+        over time, and actively analyze the vulnerabilities that may reside within them and facilitate evaluation of
+        potential
+        consequences arising from those vulnerabilities.
+      </p>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="col-1 table-header" style="padding: 4px;">9</div>
+    <div class="col-5" style="padding: 4px;"><strong>Cyber-Secure Supply Chain Controls</strong></div>
+    <div class="col-6" style="padding: 4px;">
+      <p>
+        Use procurement language and contract requirements to ensure that vendors, integrators, and third-party
+        contractors
+        deliver products that meet design specifications and adhere to organizational processes and controls that
+        support
+        cybersecurity. </p>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="col-1 table-header" style="padding: 4px;">10</div>
+    <div class="col-5" style="padding: 4px;"><strong>Planned Resilience</strong></div>
+    <div class="col-6" style="padding: 4px;">
+      <p>
+        Expect that any digital component or system may be compromised at some point during its lifecycle, and plan for
+        continued operation during and after a cyber-attack that degrades digital controls. Implement a zero-trust
+        architecture to
+        the greatest degree possible. </p>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="col-1 table-header" style="padding: 4px;">11</div>
+    <div class="col-5" style="padding: 4px;"><strong>Engineering Information Control</strong></div>
+    <div class="col-6" style="padding: 4px;">
+      <p>
+        Protect sensitive engineering records—including requirements, specifications, designs, configurations, testing,
+        etc.—that
+        if released may provide attackers critical information that places those systems at greater risk. </p>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="col-1 table-header" style="padding: 4px;">12</div>
+    <div class="col-5" style="padding: 4px;"><strong>Organizational Culture</strong></div>
+    <div class="col-6" style="padding: 4px;">
+      <p>
+        Build cybersecurity into the organizational culture by leveraging a cross functional and cross-disciplinary team
+        to consider
+        cyber-related concerns in the system design and implementation. Adopt continuous cybersecurity training across
+        the
+        organization to collectively empower all staff to participate in cybersecurity. </p>
+    </div>
+  </div>
+  <!--  -->
+  <h2>Engineering Lifecycle Phase Mapping</h2>
+  <p>
+    The guide provides engineering lifecycles phases common to some sectors and industries.
+    The water/wastewater sector has a different model for engineering lifecycle phases.
+    Both are shown in Table below. This table was developed to compare and align the two
+    engineering approaches. This enables the application of CIE principles and associated
+    questions within the appropriate phase for the utility.
+  </p>
+  <img src="assets/images/CIE/07_EngineeringLifecycleMapping_p145.svg" alt="Engineering Lifecycle Mapping">
+
+  <app-nav-back-next [page]="'cie-background'"></app-nav-back-next>
 </div>

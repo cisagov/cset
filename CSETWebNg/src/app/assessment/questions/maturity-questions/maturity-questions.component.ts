@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -58,7 +58,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   groupingTitle: string = '';
   questionsAlias: string = '';
   showTargetLevel = false;    // TODO: set this from a new column in the DB
-  modelSupportsTargetLevel = false; 
+  modelSupportsTargetLevel = false;
 
   loaded = false;
 

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,19 +21,20 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Input, OnInit } from '@angular/core';
 import { AssessmentService } from '../../services/assessment.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { DemographicService } from '../../services/demographic.service';
 import { DemographicIodService } from '../../services/demographic-iod.service';
 import { DemographicsIod } from '../../models/demographics-iod.model';
-import { AssessmentContactsResponse, AssessmentDetail, Demographic } from '../../models/assessment-info.model';
+import { AssessmentDetail, Demographic } from '../../models/assessment-info.model';
 import { User } from '../../models/user.model';
 import { GalleryService } from '../../services/gallery.service';
 import { ConfigService } from '../../services/config.service';
 import { MaturityService } from '../../services/maturity.service';
+import { CsiServiceComposition, CsiServiceDemographic } from '../../models/csi.model';
+import { CsiService } from '../../services/cis-csi.service';
 
 interface GalleryItem {
   gallery_Item_Guid: string;
@@ -48,12 +49,12 @@ interface GalleryItem {
   custom_Set_Name: string | null;
 }
 @Component({
-  selector: 'app-version-upgrade',
-  templateUrl: './version-upgrade.component.html',
-  host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
+  selector: 'app-upgrade',
+  templateUrl: './upgrade.component.html'
 })
-export class VersionUpgradeComponent {
+export class UpgradeComponent implements OnInit {
 
+  @Input() data: any;
   galleryItem: GalleryItem;
   contacts: User[];
   demographicData: Demographic = {};
@@ -65,10 +66,13 @@ export class VersionUpgradeComponent {
   originalId: number;
   dataToSend: string = 'Hello from Dialog Component';
   loading = false;
+  iodDemographics: DemographicsIod = {};
+  csiServiceDemographic: CsiServiceDemographic = {};
+  serviceComposition: CsiServiceComposition = {};
+
+
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialog: MatDialogRef<VersionUpgradeComponent>,
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public authSvc: AuthenticationService,
@@ -77,28 +81,20 @@ export class VersionUpgradeComponent {
     public gallerySvc: GalleryService,
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
-    public dialogRef: MatDialogRef<VersionUpgradeComponent>
-  ) {
-    dialogRef.disableClose = true;
+    public iodDemoSvc: DemographicIodService,
+    public csiSvc: CsiService
+  ) { }
+  ngOnInit() {
   }
 
-
-  close() {
-    return this.dialog.close();
+  hideAlert() {
+    this.assessSvc.hideUpgradeAlert = true;
   }
 
-  // Convert draft versions of assessments to final versions 
+  // // Convert draft versions of assessments to final versions 
   async upgrade() {
     this.loading = true;
-    this.sendMessage();
-    // Get details from original assessment
-    let draftDetails = this.assessSvc.assessment
-    this.demoSvc.getDemographic().subscribe((data: any) => {
-      this.demographicData = data;
-    })
-    this.assessment = draftDetails;
-    this.originalId = this.assessment.id
-    this.selectedLevel = this.assessSvc.assessment.maturityModel.maturityTargetLevel
+    this.getOriginalData()
     // Get gallery item to create and begin new target assessment 
     try {
       this.gallerySvc.getGalleryItems(this.configSvc.galleryLayout).subscribe(
@@ -107,7 +103,7 @@ export class VersionUpgradeComponent {
             items: for (const item of row.galleryItems) {
               try {
                 const configSetup = JSON.parse(item.configuration_Setup);
-                if (configSetup.Model && configSetup.Model.ModelName == this.data.targetModelName) {
+                if (configSetup.Model && configSetup.Model.ModelName == this.data) {
                   this.galleryItem = item;
                   break rows;
                 }
@@ -119,17 +115,11 @@ export class VersionUpgradeComponent {
           // Get id for newly created assessment
           const newId = await this.assessSvc.newAssessmentGallery(this.galleryItem);
           this.assessment.id = newId
-          // Update new assessment with values 
-          this.assessSvc.assessment = this.assessment
-          this.demoSvc.updateDemographic(this.demographicData);
-          this.assessSvc.updateAssessmentDetails(this.assessment);
-          this.assessSvc.refreshAssessment();
-          this.updateLevel();
+          this.fillNewAssessment()
           // Fill answers into new assessment from original and then navigate to the new assesment 
-          this.assessSvc.convertAssesment(this.originalId, this.data.targetModelName).subscribe((data: any) => {
+          this.assessSvc.convertAssesment(this.originalId, this.data).subscribe((data: any) => {
             this.navSvc.beginAssessment(newId)
             this.loading = false;
-            this.close();
           })
         })
 
@@ -138,15 +128,48 @@ export class VersionUpgradeComponent {
     }
   }
 
-  sendMessage() {
-    this.data.callback();
-  }
-
   updateLevel() {
     this.maturitySvc.saveLevel(this.selectedLevel).subscribe(() => {
       this.navSvc.buildTree();
       return;
     });
+  }
+
+  // Get details from original assessment
+  getOriginalData() {
+    let draftDetails = this.assessSvc.assessment
+    this.demoSvc.getDemographic().subscribe((data: any) => {
+      this.demographicData = data;
+    })
+    this.iodDemoSvc.getDemographics().subscribe((data: any) => {
+      this.iodDemographics = data;
+    });
+    if (this.configSvc.cisaAssessorWorkflow == true) {
+      this.csiSvc.getCsiServiceDemographic().subscribe((result: CsiServiceDemographic) => {
+        this.csiServiceDemographic = result;
+      });
+      this.csiSvc.getCsiServiceComposition().subscribe(
+        (data: CsiServiceComposition) => {
+          this.serviceComposition = data;
+        });
+    }
+    this.assessment = draftDetails;
+    this.originalId = this.assessment.id
+    this.selectedLevel = this.assessSvc.assessment.maturityModel.maturityTargetLevel
+  }
+
+  // Update new assessment with values 
+  fillNewAssessment() {
+    this.assessSvc.assessment = this.assessment
+    this.demoSvc.updateDemographic(this.demographicData);
+    this.iodDemoSvc.updateDemographic(this.iodDemographics);
+    if (this.configSvc.cisaAssessorWorkflow == true) {
+      this.csiSvc.updateCsiServiceDemographic(this.csiServiceDemographic);
+      this.csiSvc.updateCsiServiceComposition(this.serviceComposition);
+    }
+    this.assessSvc.updateAssessmentDetails(this.assessment);
+    this.assessSvc.refreshAssessment();
+    this.updateLevel();
   }
 
 

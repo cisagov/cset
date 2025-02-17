@@ -43,6 +43,9 @@ export class ReportListCommonComponent implements OnChanges {
     return result ? result.reportList : [];
   }
 
+  /**
+   * 
+   */
   iseCheckAndSetDisabled(reportList: any[]) {
     if (!this.ncuaSvc.ISE_StateLed) {
       this.acetSvc.getIseAnswerCompletionRate().subscribe((percentAnswered: number) => {

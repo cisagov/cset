@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -67,20 +67,20 @@
           <div class="btn-group answer-group" role="group">
             <label *ngIf="showThisOption('Y')" class="btn btn-yes form-check-label"
               [class.answer-selected]="mySubCategory.subCategoryAnswer === 'Y'">
-              <input name="subcat_{{ mySubCategory.subCategoryId }}" class="btn-check" type="radio"
-                autocomplete="off" (click)="setBlockAnswer('Y')" tabindex="0"
+              <input name="subcat_{{ mySubCategory.subCategoryId }}" class="btn-check" type="radio" autocomplete="off"
+                (click)="setBlockAnswer('Y')" tabindex="0"
                 [checked]="mySubCategory.subCategoryAnswer === 'Y'">{{questionsSvc.answerButtonLabel('', 'Y')}}
             </label>
             <label *ngIf="showThisOption('N')" class="btn btn-no form-check-label"
               [class.answer-selected]="mySubCategory.subCategoryAnswer === 'N'">
-              <input name="subcat_{{ mySubCategory.subCategoryId }}" class="btn-check" type="radio"
-                autocomplete="off" (click)="setBlockAnswer('N')" tabindex="0"
+              <input name="subcat_{{ mySubCategory.subCategoryId }}" class="btn-check" type="radio" autocomplete="off"
+                (click)="setBlockAnswer('N')" tabindex="0"
                 [checked]="mySubCategory.subCategoryAnswer === 'N'">{{questionsSvc.answerButtonLabel('', 'N')}}
             </label>
             <label *ngIf="showThisOption('NA')" class="btn btn-na form-check-label"
               [class.answer-selected]="mySubCategory.subCategoryAnswer === 'NA'">
-              <input name="subcat_{{ mySubCategory.subCategoryId }}" class="btn-check" type="radio"
-                autocomplete="off" (click)="setBlockAnswer('NA')" tabindex="0"
+              <input name="subcat_{{ mySubCategory.subCategoryId }}" class="btn-check" type="radio" autocomplete="off"
+                (click)="setBlockAnswer('NA')" tabindex="0"
                 [checked]="mySubCategory.subCategoryAnswer === 'NA'">{{questionsSvc.answerButtonLabel('', 'NA')}}
             </label>
             <label *ngIf="showThisOption('A')" class="btn btn-na form-check-label" style="visibility: hidden;">
@@ -99,7 +99,7 @@
         [class.display-none]="!q.visible">
 
 
-        
+
 
         <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
           <div class="number-and-text">
@@ -126,16 +126,16 @@
 
             <div *ngIf="q.answer === 'A'">
               <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
-                style="width: 100%; min-height: 80px;" 
-                [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
-                [(ngModel)]="q.altAnswerText"
+                style="width: 100%; min-height: 80px;"
+                [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)" [(ngModel)]="q.altAnswerText"
                 (ngModelChange)="storeAltText(q)" tabindex="0"></textarea>
-              <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg" aria-label="description required">* Description required</div>
+              <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg" aria-label="description required">*
+                Description required</div>
             </div>
 
             <app-malcolm-answer-default *ngIf="configSvc.config.behaviors.showMalcolmAnswerComparison != null 
-              && configSvc.config.behaviors.showMalcolmAnswerComparison && malcolmInfo != null"
-              [userAnswer]= "q.answer" [malcolmAnswer]="malcolmSvc.findMalcolmAnswerForQuestion(q.questionId, malcolmInfo)"></app-malcolm-answer-default>
+              && configSvc.config.behaviors.showMalcolmAnswerComparison && malcolmInfo != null" [userAnswer]="q.answer"
+              [malcolmAnswer]="malcolmSvc.findMalcolmAnswerForQuestion(q.questionId, malcolmInfo)"></app-malcolm-answer-default>
 
           </div>
         </div>
@@ -146,7 +146,7 @@
             </div>
             <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
           </div>
-      </div>
+        </div>
 
         <div class="w-100" *ngIf="layoutSvc.hp">
           <!-- Handheld Portrait -->
@@ -181,11 +181,11 @@
 
             <div *ngIf="q.answer === 'A'">
               <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
-                style="width: 100%; min-height: 80px;" 
-                [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
-                [(ngModel)]="q.altAnswerText"
+                style="width: 100%; min-height: 80px;"
+                [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)" [(ngModel)]="q.altAnswerText"
                 (ngModelChange)="storeAltText(q)" tabindex="0"></textarea>
-              <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg" aria-label="description required">* Description required</div>
+              <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg" aria-label="description required">*
+                Description required</div>
             </div>
           </div>
 

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2024 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -21,17 +21,19 @@
   SOFTWARE. 
 -------------------------->
 <div *transloco="let t; read: 'disclaimer'">
-    <h1>{{ t('title') }}</h1>
-    
-    <p [innerHTML]="t('disclaimer 1', {'appShortName': appShortName, 'orgLongName': orgLongName, 'orgShortName': orgShortName})">
-    </p>
+  <h1>{{ t('title') }}</h1>
 
-    <p [innerHTML]="t('disclaimer 2', {'orgShortName': orgShortName})">
-    </p>
+  <p
+    [innerHTML]="t('disclaimer 1', {'appShortName': appShortName, 'orgLongName': orgLongName, 'orgShortName': orgShortName})">
+  </p>
 
-    <p [innerHTML]="t('disclaimer 3', {'orgShortName': orgShortName})">
-    </p>
+  <p [innerHTML]="t('disclaimer 2', {'orgShortName': orgShortName})">
+  </p>
 
-    <p [innerHTML]="t('disclaimer 4', {'appShortName': appShortName, 'intellectualPropertyRightsDistributionRequestEntity': intellectualPropertyRightsDistributionRequestEntity})">
-    </p>
+  <p [innerHTML]="t('disclaimer 3', {'orgShortName': orgShortName})">
+  </p>
+
+  <p
+    [innerHTML]="t('disclaimer 4', {'appShortName': appShortName, 'intellectualPropertyRightsDistributionRequestEntity': intellectualPropertyRightsDistributionRequestEntity})">
+  </p>
 </div>

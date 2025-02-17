@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ export class DemographicService {
   apiUrl: string;
   id: number;
   shortLivedToken: any;
-  
+
 
   constructor(
     private http: HttpClient,
@@ -49,8 +49,7 @@ export class DemographicService {
     private authSvc: AuthenticationService,
     public fileSvc: FileUploadClientService,
     public assessSvc: AssessmentService
-  )
-  {
+  ) {
     this.apiUrl = this.configSvc.apiUrl + 'Demographics/';
   }
 
@@ -90,7 +89,7 @@ export class DemographicService {
   updateDemographic(demographic: Demographic) {
     this.assessSvc.assessment.sectorId = demographic.sectorId;
     this.assessSvc.assessmentStateChanged$.next(126);
-    
+
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
       .subscribe(() => {
         if (this.configSvc.cisaAssessorWorkflow) {
@@ -99,15 +98,15 @@ export class DemographicService {
       });
   }
 
-  importDemographics(demographic: Demographic){
+  importDemographics(demographic: Demographic) {
     return this.http.post(this.apiUrl + 'import', JSON.stringify(demographic), headers)
-    .subscribe(() => {
+      .subscribe(() => {
 
-    });
+      });
 
   }
 
-  exportDemographics(){
+  exportDemographics() {
     let token = localStorage.getItem('userToken')
     let url = this.apiUrl + 'export' + "?token=" + token;
     window.location.href = url;

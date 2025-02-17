@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -124,7 +124,7 @@ export class DemographicExtendedService {
 
   getThePropertyCompleteList(obj) {
     var keys = [];
-    var exceptList = ["subSector", "sector", "assessment", "hb7055Party", "hb7055Grant",'cyberRiskService'];
+    var exceptList = ["subSector", "sector", "assessment", "hb7055Party", "hb7055Grant", 'cyberRiskService'];
     for (var key in obj) {
       if (!exceptList.includes(key)) {
         keys.push(key);

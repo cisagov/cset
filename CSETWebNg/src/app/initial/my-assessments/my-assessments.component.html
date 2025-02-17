@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -101,18 +101,7 @@
                             </label>
                         </div>
 
-                        <!-- Don't show the encryption for ACET/ISE. They don't want it. -->
-                        <div *ngIf="!this.ncuaSvc.switchStatus">
-                            <div *ngIf="this.configSvc.installationMode != 'ACET'" style="border: 1px solid gray;"
-                                class="p-2">
-                                <input type="checkbox" id="prevent_encrypt" name="prevent_encrypt"
-                                    class="checkbox-custom" [(ngModel)]="preventEncrypt"
-                                    (change)="updateEncryptPreference()"
-                                    matTooltip="{{ t('tooltip.prevent encryption') }}">
-                                <label for="prevent_encrypt" class="checkbox-custom-label"
-                                    style="margin: 0 5px;">{{t('prevent encryption')}}</label>
-                            </div>
-                        </div>
+
 
                     </div>
                     <div *ngIf="unsupportedImportFile"

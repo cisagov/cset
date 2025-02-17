@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2024 Battelle Energy Alliance, LLC
+  Copyright 2025 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,75 +21,89 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
-.col-mod{
-    padding-left:2px;
-    padding-right:0;
-    font-size:small;
+.col-mod {
+    padding-left: 2px;
+    padding-right: 0;
+    font-size: small;
     text-align: center;
 
 }
+
 .col-mod-group {
-    padding-left:0;
-    padding-right:0;
+    padding-left: 0;
+    padding-right: 0;
 }
-.row-mod{
+
+.row-mod {
     margin-left: 0 !important;
     margin-right: 0 !important;
 }
-.col-mod-header{
+
+.col-mod-header {
     margin-bottom: 3px;
     padding: 8px 10px;
 }
-.col-mod-score{
-    padding:4px 4px !important;
+
+.col-mod-score {
+    padding: 4px 4px !important;
     border-radius: 3px;
     color: #fff;
 }
+
 .red-score {
-    background-color:#DC3545;
+    background-color: #DC3545;
     border: 1px solid #DC3545;
     color: #fff;
 }
 
 .yellow-score {
-    background-color:#FFC107;
+    background-color: #FFC107;
     border: 1px solid #FFC107;
     color: #000;
 }
+
 .green-score {
-    background-color:#28A745;
+    background-color: #28A745;
     border: 1px solid #28A745;
     color: #fff;
 }
+
 .default-score {
-    background-color:#6C757D;
+    background-color: #6C757D;
     border: 1px solid #6C757D;
     color: #fff;
 }
 
 @media print {
-*{ print-color-adjust: exact;  -webkit-print-color-adjust: exact; }
-.red-score {
-    background-color:#DC3545;
-    border: 1px solid #DC3545;
-    color: #fff;
-}
+    * {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
 
-.yellow-score {
-    background-color:#FFC107;
-    border: 1px solid #FFC107;
-    color: #000;
+    .red-score {
+        background-color: #DC3545;
+        border: 1px solid #DC3545;
+        color: #fff;
+    }
+
+    .yellow-score {
+        background-color: #FFC107;
+        border: 1px solid #FFC107;
+        color: #000;
+    }
+
+    .green-score {
+        background-color: #28A745;
+        border: 1px solid #28A745;
+        color: #fff;
+    }
+
+    .default-score {
+        background-color: #6C757D;
+        border: 1px solid #6C757D;
+        color: #fff;
+    }
 }
-.green-score {
-    background-color:#28A745;
-    border: 1px solid #28A745;
-    color: #fff;
-}
-.default-score {
-    background-color:#6C757D;
-    border: 1px solid #6C757D;
-    color: #fff;
-}}
 
 
 @media screen {

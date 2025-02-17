@@ -1,5 +1,5 @@
 <!----------------------
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -29,7 +29,7 @@
                 CIE REPORT
             </p>
         </div>
-        
+
         <div class="cover-page-bottom mb-4">
             <div>
                 <img height="150" src="assets/images/CIE/CIE_Logo_Blue_Standard.png" alt="full-cie">
@@ -97,14 +97,15 @@
                     [matTooltip]="t('buttons.collapse all')" [aria-label]="t('buttons.collapse all')">
                     <i class="fas fa-compress-alt" style="color: white;"></i>
                 </button>
-                <button class="btn background-1 cie-questions-header-collapse-button-radius cie-questions-header-expand-button-radius" (click)="expandAll(true)" 
-                    [matTooltip]="t('buttons.expand all')" [aria-label]="t('buttons.expand all')">
+                <button
+                    class="btn background-1 cie-questions-header-collapse-button-radius cie-questions-header-expand-button-radius"
+                    (click)="expandAll(true)" [matTooltip]="t('buttons.expand all')"
+                    [aria-label]="t('buttons.expand all')">
                     <i class="fas fa-expand-alt" style="color: white;"></i>
                 </button>
-                <button class="btn background-1 cie-questions-header-expand-button-radius"
-                    (click)="showFilterDialog(response?.matAnsweredQuestions[0].assessmentFactors[0]
-                        .components[0].questions[0].maturityLevel)" 
-                    [matTooltip]="t('buttons.filter')" [aria-label]="t('buttons.filter')">
+                <button class="btn background-1 cie-questions-header-expand-button-radius" (click)="showFilterDialog(response?.matAnsweredQuestions[0].assessmentFactors[0]
+                        .components[0].questions[0].maturityLevel)" [matTooltip]="t('buttons.filter')"
+                    [aria-label]="t('buttons.filter')">
                     <img class="Filter" src="assets/images/icons/filter.svg">
                 </button>
             </div>
@@ -123,7 +124,8 @@
                         <ng-container *ngIf="!f.isDeficient">
 
                             <tr class="rkw-domain">
-                                <td colspan="4" class="background-1 h4 color-white" style="width: 100%">{{f.title}} - Principle
+                                <td colspan="4" class="background-1 h4 color-white" style="width: 100%">{{f.title}} -
+                                    Principle
                                     <label class="btn form-check-label" style="float: right; color:white">{{
                                         this.expandedOptions.get('Phase_' + f.title) ? '-' : '+' }}
                                         <input class="hide" name="nameExample" type="checkbox"
@@ -137,7 +139,8 @@
                                     <tr *ngIf="shouldExpand('Phase_' + f.title)">
                                         <td colspan="4" class="background-2 ps-4 font-weight-bold">{{c.title}} - Phase
                                             <label class="btn form-check-label" style="float: right">{{
-                                                this.expandedOptions.get('Phase_' + f.title + '_' + c.title) ? '-' : '+' }}
+                                                this.expandedOptions.get('Phase_' + f.title + '_' + c.title) ? '-' : '+'
+                                                }}
                                                 <input class="hide" name="nameExample" type="checkbox"
                                                     (click)="toggleExpansion('Phase_' + f.title + '_' + c.title)">
                                             </label>
@@ -145,32 +148,38 @@
                                     </tr>
                                     <ng-container *ngFor="let q of c.questions">
 
-                                        <ng-container *ngIf="c.title == 'Controlling Processes' && q.title != 'Question K' && shouldExpand('Phase_' + f.title) && shouldExpand('Phase_' + f.title + '_' + c.title) && q.maturityLevel != '5'">
+                                        <ng-container
+                                            *ngIf="c.title == 'Controlling Processes' && q.title != 'Question K' && shouldExpand('Phase_' + f.title) && shouldExpand('Phase_' + f.title + '_' + c.title) && q.maturityLevel != '5'">
                                             <tr class="background-3 font-weight-bold">
-                                                <td *ngIf="q.maturityLevel == '2' && q.title == 'Question 1'" colspan="4" style="font-size: large;" class="pe-5">
+                                                <td *ngIf="q.maturityLevel == '2' && q.title == 'Question 1'"
+                                                    colspan="4" style="font-size: large;" class="pe-5">
                                                     Project Management
                                                 </td>
-                                                <td *ngIf="q.maturityLevel == '3' && q.title == 'Question 1'" colspan="4" style="font-size: large;" class="pe-5">
+                                                <td *ngIf="q.maturityLevel == '3' && q.title == 'Question 1'"
+                                                    colspan="4" style="font-size: large;" class="pe-5">
                                                     Change/Configuration Management
                                                 </td>
-                                                <td *ngIf="q.maturityLevel == '4' && q.title == 'Question 1'" colspan="4" style="font-size: large;" class="pe-5">
+                                                <td *ngIf="q.maturityLevel == '4' && q.title == 'Question 1'"
+                                                    colspan="4" style="font-size: large;" class="pe-5">
                                                     Risk Management
                                                 </td>
                                             </tr>
                                         </ng-container>
 
                                         <!-- the [class] check sees if it is a parent or a child -->
-                                        <tr *ngIf="q.title != 'Question K' && q.visible && shouldExpand('Phase_' + f.title) && shouldExpand('Phase_' + f.title + '_' + c.title) && q.maturityLevel != '5'" 
-                                            [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''"
-                                            >
+                                        <tr *ngIf="q.title != 'Question K' && q.visible && shouldExpand('Phase_' + f.title) && shouldExpand('Phase_' + f.title + '_' + c.title) && q.maturityLevel != '5'"
+                                            [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''">
                                             <td class="font-weight-bold text-nowrap">{{q.title}}</td>
                                             <td class="pe-5" colspan="2" [innerHTML]="q.questionText"></td>
-                                            <td class="pe-5" [innerHTML]="(q.answerText == 'U' ? (q.freeResponseText != null ? 'Yes' : 'No') : 'NA')"></td>
+                                            <td class="pe-5"
+                                                [innerHTML]="(q.answerText == 'U' ? (q.freeResponseText != null ? 'Yes' : 'No') : 'NA')">
+                                            </td>
                                         </tr>
                                         <tr *ngIf="q.title != 'Question K' && q.visible && shouldExpand('Phase_' + f.title + '_' + c.title) && shouldExpand('Phase_' + f.title) && q.maturityLevel != '5' && q.freeResponseText != null"
                                             [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''">
                                             <td></td>
-                                            <td class="pe-5" colspan="3" style="white-space: pre-wrap;" [innerHTML]="'Explanation: \n' + q.freeResponseText"></td>
+                                            <td class="pe-5" colspan="3" style="white-space: pre-wrap;"
+                                                [innerHTML]="'Explanation: \n' + q.freeResponseText"></td>
                                         </tr>
                                         <tr *ngIf="q.title != 'Question K' && q.visible && shouldExpand('Phase_' + f.title + '_' + c.title) && shouldExpand('Phase_' + f.title) 
                                             && q.maturityLevel != '5' && q.documents != null"
@@ -179,11 +188,10 @@
                                             <td class="pe-5" colspan="3" style="white-space: pre-wrap;">
                                                 Documents:
                                                 <ul *ngFor="let doc of q.documents">
-                                                    <li> 
-                                                        <button (click)="download(doc)"
-                                                            class="btn btn-link" style="color: #285464;;
-                                                            background-color:transparent;" tabindex="0">  
-                                                            {{doc.title + ' | ' + doc.fileName}}                                         
+                                                    <li>
+                                                        <button (click)="download(doc)" class="btn btn-link" style="color: #285464;;
+                                                            background-color:transparent;" tabindex="0">
+                                                            {{doc.title + ' | ' + doc.fileName}}
                                                         </button>
                                                     </li>
 

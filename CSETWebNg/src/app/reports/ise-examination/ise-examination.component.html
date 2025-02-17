@@ -1,5 +1,5 @@
 <!----------------------
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -53,8 +53,7 @@
                         localizeDate}}
                     </div>
                     <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
-                    <button class="btn form-check-label btn-copy" title="Print to PDF"
-                        (click)="print()">Print to PDF
+                    <button class="btn form-check-label btn-copy" title="Print to PDF" (click)="print()">Print to PDF
                     </button>
                 </div>
             </div>
@@ -188,26 +187,39 @@
                             <ng-container *ngIf="this.showSubcats.get(c.title)">
                                 <tr>
                                     <td colspan="5" class="background-2 ps-5">{{c.title}} - Component
-                                        <label class="btn form-check-label" style="float: right">{{ this.expandedOptions.get(c.title) ? '-' : '+' }}
-                                            <input class="hide" name="nameExample" type="checkbox" (click)="toggleExpansion(c.title)">
+                                        <label class="btn form-check-label" style="float: right">{{
+                                            this.expandedOptions.get(c.title) ? '-' : '+' }}
+                                            <input class="hide" name="nameExample" type="checkbox"
+                                                (click)="toggleExpansion(c.title)">
                                         </label>
                                     </td>
                                 </tr>
                                 <ng-container *ngFor="let q of c.questions">
-                                    <tr *ngIf="(requiredQuestion(q) || this.ncuaSvc.isParentQuestion(q.title)) && shouldExpand(c.title)">
-                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 font-weight-bold text-nowrap">{{q.title}}</td>
-                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="font-weight-bold text-nowrap">{{q.title}}</td>
-                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3" [innerHTML]="q.questionText"></td>
-                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pe-3" [innerHTML]="q.questionText"></td>
-                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3"></td>
-                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pe-3">{{ questionsSvc.answerButtonLabel('ISE', q.answerText) }}</td>
-                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
+                                    <tr
+                                        *ngIf="(requiredQuestion(q) || this.ncuaSvc.isParentQuestion(q.title)) && shouldExpand(c.title)">
+                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)"
+                                            class="background-3 font-weight-bold text-nowrap">{{q.title}}</td>
+                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
+                                            class="font-weight-bold text-nowrap">{{q.title}}</td>
+                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3"
+                                            [innerHTML]="q.questionText"></td>
+                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
+                                            class="pe-3" [innerHTML]="q.questionText"></td>
+                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3">
+                                        </td>
+                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
+                                            class="pe-3">{{ questionsSvc.answerButtonLabel('ISE', q.answerText) }}</td>
+                                        <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3">
+                                            {{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                                         <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3">
-                                            <label class="btn form-check-label" style="float: right">{{this.expandedOptions.get(q.title) ? '-' : '+' }}
-                                                <input class="hide" name="nameExample" type="checkbox" (click)="toggleExpansion(q.title)">
+                                            <label class="btn form-check-label"
+                                                style="float: right">{{this.expandedOptions.get(q.title) ? '-' : '+' }}
+                                                <input class="hide" name="nameExample" type="checkbox"
+                                                    (click)="toggleExpansion(q.title)">
                                             </label>
                                         </td>
-                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pe-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
+                                        <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
+                                            class="pe-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                                     </tr>
                                 </ng-container>
                             </ng-container>
@@ -284,70 +296,59 @@
                                 <strong> Action Required: </strong>
                                 <br>
                                 <div *ngIf="observation?.finding?.auto_Generated != 1">
-                                    <div *ngIf="observation?.finding?.actionItems != null" style="white-space: pre-wrap;"
-                                        [innerHTML]="observation?.finding?.actionItems">
+                                    <div *ngIf="observation?.finding?.actionItems != null"
+                                        style="white-space: pre-wrap;" [innerHTML]="observation?.finding?.actionItems">
                                     </div>
                                     <div *ngIf="observation?.actionItems == null">
                                         (no actions available)
                                     </div>
                                 </div>
-                                <div *ngIf="this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
-                                    <div *ngFor="let allActionsInFinding of this.masterActionItemsMap.get(observation?.finding?.finding_Id); let i = index">
-                                        <div *ngIf="allActionsInFinding.action_Items != '' && allActionsInFinding.action_Items != '.'">
+                                <div
+                                    *ngIf="this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
+                                    <div
+                                        *ngFor="let allActionsInFinding of this.masterActionItemsMap.get(observation?.finding?.finding_Id); let i = index">
+                                        <div
+                                            *ngIf="allActionsInFinding.action_Items != '' && allActionsInFinding.action_Items != '.'">
                                             {{ allActionsInFinding.action_Items }}
                                         </div>
-                                        <div *ngIf="(allActionsInFinding.action_Items == '' || allActionsInFinding.action_Items == '.') && observation?.finding?.actionItems == null">
+                                        <div
+                                            *ngIf="(allActionsInFinding.action_Items == '' || allActionsInFinding.action_Items == '.') && observation?.finding?.actionItems == null">
                                             (no actions available)
                                         </div>
                                     </div>
                                 </div>
-                                <div *ngIf="!this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
+                                <div
+                                    *ngIf="!this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
                                     (no actions available)
                                 </div>
                                 <strong> Risk Area: </strong> {{ observation?.finding?.risk_Area }}
                                 <br>
                                 <strong> Sub-Risk Area: </strong> {{ observation?.finding?.sub_Risk }}
                                 <br>
-                                <strong> Regulatory Citation: </strong>
+                                <strong>Regulatory Citation: </strong>
                                 <br>
-                                <div *ngIf="this.masterActionItemsMap.has(observation?.finding?.finding_Id)">
-                                    <div *ngIf="observation?.finding?.citations != null && observation?.finding?.citations != ''">
-                                        {{
-                                        (this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                        == null
-                                        ||
-                                        this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                        == '') ?
-                                        ' ' :
-                                        this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                        + ', ' }}{{ observation?.finding?.citations }}
-                                    </div>
-                                    <div *ngIf="(observation?.finding?.citations == null || observation?.finding?.citations == '')
-                                                    && this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation != null
-                                                    && this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation != ''">
-                                        {{
-                                        this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                        }}
-                                    </div>
-                                    <div *ngIf="(this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation == null
-                                            || this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation == '')
-                                            && (observation?.finding?.citations == null || observation?.finding?.citations == '')">
-                                        (no Regulatory Citations available)
-                                    </div>
-                                </div>
-                                <div *ngIf="!this.masterActionItemsMap.has(observation?.finding?.finding_Id)">
-                                    (no Regulatory Citations available)
-                                </div>
+                                <span *ngIf="regCitationsMap.has(observation?.question?.mat_Question_Id)">
+                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
+                                        flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                        [cdkCopyToClipboard]="getReferenceCopyText(observation?.question?.mat_Question_Id)">
+                                        <span class="cset-icons-copy"></span>
+                                    </label>
+                                    {{ regCitationsMap.get(observation?.question?.mat_Question_Id) }}
+                                </span>
+                                <span *ngIf="!regCitationsMap.has(observation?.question?.mat_Question_Id)">(No
+                                    Regulatory Citations available)</span>
+                                <br>
                             </div>
+
                             <div *ngIf="observation?.finding?.type === 'Supplemental Fact'">
-
                                 <strong> Supplemental Fact: </strong>
-
                                 <br>
                                 <span
                                     *ngIf="observation?.finding?.supp_Guidance != null && observation?.finding?.supp_Guidance != ''"
-                                    style="white-space: pre-wrap;" [innerHtml]="observation?.finding?.supp_Guidance"></span>
-                                <span *ngIf="observation?.finding?.supp_Guidance == null || observation?.finding?.supp_Guidance == ''">(no
+                                    style="white-space: pre-wrap;"
+                                    [innerHtml]="observation?.finding?.supp_Guidance"></span>
+                                <span
+                                    *ngIf="observation?.finding?.supp_Guidance == null || observation?.finding?.supp_Guidance == ''">(no
                                     Supplemental Fact available)</span>
                                 <br>
                                 <strong> Resources: </strong>
@@ -357,7 +358,19 @@
                                         {{ file.title }} (<strong>Section:</strong> {{ file.sectionRef }})
                                     </div>
                                 </span>
-                                <span *ngIf="!sourceFilesMap.has(observation?.finding?.finding_Id)">(no Resources available)</span>
+                                <span *ngIf="!sourceFilesMap.has(observation?.finding?.finding_Id)">(no Resources
+                                    available)</span>
+
+                                <br>
+
+                                <strong> References: </strong>
+                                <br>
+                                <span *ngIf="regCitationsMap.has(observation?.question?.mat_Question_Id)">
+                                    {{ regCitationsMap.get(observation?.question?.mat_Question_Id) }}
+                                </span>
+                                <span *ngIf="!regCitationsMap.has(observation?.question?.mat_Question_Id)">(No
+                                    Regulatory Citations available)</span>
+                                <br>
                             </div>
 
 
@@ -381,8 +394,7 @@
                     line-height: 150%;
                 ">
 
-                <button class="btn form-check-label btn-copy" title="Print to PDF"
-                    (click)="print()">Print to PDF
+                <button class="btn form-check-label btn-copy" title="Print to PDF" (click)="print()">Print to PDF
                 </button>
             </div>
         </ng-template>

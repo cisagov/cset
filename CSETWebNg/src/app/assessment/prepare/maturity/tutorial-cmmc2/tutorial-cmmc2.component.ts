@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,62 +21,25 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ConfigService } from '../../../../services/config.service';
 import { LayoutService } from '../../../../services/layout.service';
 import { ResourceLibraryService } from '../../../../services/resource-library.service';
-import { MatDialog } from '@angular/material/dialog';
-import { VersionUpgradeComponent } from '../../../../dialogs/version-upgrade/version-upgrade.component';
 import { AssessmentService } from '../../../../services/assessment.service';
-import { AssessmentDetail } from '../../../../models/assessment-info.model';
-
 
 @Component({
   selector: 'app-tutorial-cmmc2',
   templateUrl: './tutorial-cmmc2.component.html'
 })
-export class TutorialCmmc2Component implements OnInit {
-  show: boolean = true;
-  loading = false;
-  message: string;
-
+export class TutorialCmmc2Component {
 
   constructor(
     public configSvc: ConfigService,
     public layoutSvc: LayoutService,
     public assessSvc: AssessmentService,
     private resourceLibSvc: ResourceLibraryService,
-    private dialog: MatDialog,
 
   ) { }
-
-  ngOnInit(): void {
-    if (this.configSvc.config.debug.showCmmcConversion ?? false) {
-      this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
-        if (data.maturityModel.modelName == "CMMC2") {
-          this.showDialog()
-        }
-      });
-    }
-
-  }
-
-  showDialog() {
-    const dialogRef = this.dialog.open(VersionUpgradeComponent, {
-      data: {
-        targetModelName: "CMMC2F",
-        callback: this.receiveMessage.bind(this)
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      this.loading = false;
-    })
-
-  }
-
-  receiveMessage() {
-    this.loading = true;
-  }
 
   documentURL(documentName: string) {
     return this.resourceLibSvc.documentUrlByName(documentName);

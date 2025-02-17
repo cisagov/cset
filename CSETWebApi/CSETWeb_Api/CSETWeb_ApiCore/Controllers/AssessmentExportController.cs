@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -36,7 +36,7 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Controller
         /// </summary>
-        public AssessmentExportController(ITokenManager token, CSETContext context, 
+        public AssessmentExportController(ITokenManager token, CSETContext context,
             IHttpContextAccessor http, IConfiguration configuration)
         {
             _token = token;
@@ -70,7 +70,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok();
         }
-        
+
         /// <summary>
         /// export assessment and send it to enterprise using enterprise token
         /// </summary>
@@ -84,7 +84,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 var assessmentId = _token.AssessmentForUser();
                 _token.SetEnterpriseToken(token);
-                
+
                 string url = _configuration["AssessmentUploadUrl"];
                 // Export the assessment
                 if (!string.IsNullOrEmpty(url))
@@ -137,9 +137,7 @@ namespace CSETWebCore.Api.Controllers
 
                 string ext = ".json";
 
-               
-
-                AssessmentExportFile result = new AssessmentExportManager(_context).ExportAssessment(assessmentId, ext, password, passwordHint, true, scrubData: true);
+                AssessmentExportFile result = new AssessmentExportManager(_context).ExportAssessment(assessmentId, ext, password, passwordHint, true, scrubData ?? false);
 
                 return File(result.FileContents, "application/octet-stream", result.FileName);
             }
@@ -150,7 +148,7 @@ namespace CSETWebCore.Api.Controllers
 
             return null;
         }
-        
+
         /// <summary>
         /// Send file to external API
         /// </summary>
@@ -162,15 +160,15 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                
-                using(var client = new HttpClient())
-                using(var content = new MultipartFormDataContent())
+
+                using (var client = new HttpClient())
+                using (var content = new MultipartFormDataContent())
                 using (var byteContent = new ByteArrayContent(fileContents))
                 {
                     client.DefaultRequestHeaders.Authorization =
                         new AuthenticationHeaderValue("Bearer", _token.GetEnterpriseToken());
                     byteContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
-                    
+
                     content.Add(byteContent, "file", "assessment.csetw");
                     var response = await client.PostAsync(targetUrl, content);
                     return response.IsSuccessStatusCode;

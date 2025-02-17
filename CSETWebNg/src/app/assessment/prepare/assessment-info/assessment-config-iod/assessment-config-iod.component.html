@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,9 @@
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
     <h3 class="mb-3">{{t('titles.assessment configuration')}}</h3>
 
+    <div *ngIf="this.showUpgrade">
+      <app-upgrade [data]="this.targetModel"></app-upgrade>
+    </div>
 
     <div class="row">
       <div class="col">
@@ -77,7 +80,8 @@
             </label>
             <label class="btn btn-level btn-rounded form-check-label" [class.active]="!assessment.is_PCII">
               <input class="btn-check" name="standardNo" id="standardNo" type="radio" autocomplete="off"
-                (change)="changeIsPCII(false)" tabindex="0" [ngModel]="!assessment.is_PCII" (ngModelChange)="assessment.is_PCII = $event" />
+                (change)="changeIsPCII(false)" tabindex="0" [ngModel]="!assessment.is_PCII"
+                (ngModelChange)="assessment.is_PCII = $event" />
               No
             </label>
           </div>

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -135,23 +135,23 @@ export class NCUAService {
   // This is used to easily "remove" things that Jon decides he doesn't want (but then later decides he does want).
   unwantedQuestionIds: number[] = [
   ];
-  
+
 
   // Dummy questions are used when an older version of ISE had a question that no longer exists in the current ISE version.
   // Jon requested that the JSON schema not change, so we have to add "fake questions" to fill out the space.
   dummyQuestionMap: Map<number, any[]> = new Map([
-    [7718, [{"examLevel": "CORE+", "title": "Stmt 3.13", "response": 2}]]
-    ,[7730, [{"examLevel": "CORE+", "title": "Stmt 4.17", "response": 2}]]
-    ,[7735, [{"examLevel": "CORE+", "title": "Stmt 5.12", "response": 2}]]
-    ,[7790, [{"examLevel": "CORE+", "title": "Stmt 11.14", "response": 2}]]
-    ,[7802, [{"examLevel": "CORE+", "title": "Stmt 12.15", "response": 2}]]
-    ,[7821, [{"examLevel": "CORE+", "title": "Stmt 13.21", "response": 2}
-          , {"examLevel": "CORE+", "title": "Stmt 13.22", "response": 2}]]
-    ,[7850, [{"examLevel": "CORE+", "title": "Stmt 16.15", "response": 2}]]
-    ,[7889, [{"examLevel": "CORE+", "title": "Stmt 19.15", "response": 2}]]
+    [7718, [{ "examLevel": "CORE+", "title": "Stmt 3.13", "response": 2 }]]
+    , [7730, [{ "examLevel": "CORE+", "title": "Stmt 4.17", "response": 2 }]]
+    , [7735, [{ "examLevel": "CORE+", "title": "Stmt 5.12", "response": 2 }]]
+    , [7790, [{ "examLevel": "CORE+", "title": "Stmt 11.14", "response": 2 }]]
+    , [7802, [{ "examLevel": "CORE+", "title": "Stmt 12.15", "response": 2 }]]
+    , [7821, [{ "examLevel": "CORE+", "title": "Stmt 13.21", "response": 2 }
+      , { "examLevel": "CORE+", "title": "Stmt 13.22", "response": 2 }]]
+    , [7850, [{ "examLevel": "CORE+", "title": "Stmt 16.15", "response": 2 }]]
+    , [7889, [{ "examLevel": "CORE+", "title": "Stmt 19.15", "response": 2 }]]
 
   ]);
-  
+
 
   constructor(
     private http: HttpClient,
@@ -547,7 +547,7 @@ export class NCUAService {
                   return a.title > b.title ? 1 : ((b.title > a.title ? -1 : 0));
                 }
                 return a.title.length > b.title.length ? 1 : ((b.title.length > a.title.length ? -1 : 0));
-            });
+              });
 
             // goes through questions
             for (let k = 0; k < questions.length; k++) {
@@ -560,7 +560,7 @@ export class NCUAService {
                   if (this.examLevel === 'SCUEP' && question.maturityLevel !== 'SCUEP') {
                     question.answerText = 'U';
                   }
-  
+
                   else if (this.examLevel === 'CORE' || this.examLevel === 'CORE+') {
                     if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
                       this.examLevel = 'CORE+';
@@ -569,9 +569,9 @@ export class NCUAService {
                       question.answerText = 'U';
                     }
                   }
-  
+
                   childResponses.children.push({
-                    "examLevel": question.maturityLevel, 
+                    "examLevel": question.maturityLevel,
                     "title": question.title,
                     "response": this.answerTextToNumber(question.answerText)
                   });
@@ -583,13 +583,13 @@ export class NCUAService {
 
                   for (let dummy of dummyQuestions) {
                     childResponses.children.push({
-                      "examLevel": dummy.examLevel, 
+                      "examLevel": dummy.examLevel,
                       "title": dummy.title,
                       "response": dummy.response
                     });
                   }
                 }
-                
+
               } else { //if it's a parent question, deal with possible issues (their term for 'findings')
                 for (let m = 0; m < findings?.length; m++) {
                   if (findings[m]?.question?.mat_Question_Id == question.matQuestionId
@@ -667,8 +667,8 @@ export class NCUAService {
       "creditUnionName": this.information.credit_Union_Name,
       "charter": this.information.charter,
       "examiner": this.information.assessor_Name.trim(),
-      "effectiveDate":  this.reportSvc.applyJwtOffset(this.information.assessment_Effective_Date, 'date'), //DateTime.fromISO(this.information.assessment_Effective_Date),
-      "creationDate": this.reportSvc.applyJwtOffset(this.information.assessment_Creation_Date, 'datetime').replace(',',''),
+      "effectiveDate": this.reportSvc.applyJwtOffset(this.information.assessment_Effective_Date, 'date'), //DateTime.fromISO(this.information.assessment_Effective_Date),
+      "creationDate": this.reportSvc.applyJwtOffset(this.information.assessment_Creation_Date, 'datetime').replace(',', ''),
       "stateLed": this.assessmentSvc.assessment.isE_StateLed,
       "examLevel": this.examLevel,
       "region": this.assessmentSvc.assessment.regionCode,

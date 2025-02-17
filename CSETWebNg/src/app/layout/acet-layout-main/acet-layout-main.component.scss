@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2024 Battelle Energy Alliance, LLC
+  Copyright 2025 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -488,7 +488,7 @@ label[required]::after {
 }
 
 .footer .bg-primary {
-  background-color: $primary-900  !important;
+  background-color: $primary-900 !important;
 }
 
 .footer .card-header:first-child {
@@ -619,15 +619,18 @@ table.assessment-summary th {
   padding: .5rem;
 }
 
-.table.table-td-p1 th, .table.table-td-p1 td {
+.table.table-td-p1 th,
+.table.table-td-p1 td {
   padding: .25rem !important;
 }
 
-.table.table-td-p2 th, .table.table-td-p2 td {
+.table.table-td-p2 th,
+.table.table-td-p2 td {
   padding: .5rem !important;
 }
 
-.table.table-td-small th, .table.table-td-small td {
+.table.table-td-small th,
+.table.table-td-small td {
   font-size: .875em;
 }
 
@@ -701,7 +704,7 @@ table.td-align-top td {
 }
 
 .btn-primary:hover {
-  background-color: $primary-color!important;
+  background-color: $primary-color !important;
   border-color: $secondary-color !important;
   color: $active-text-color !important;
 }
@@ -714,7 +717,7 @@ table.td-align-top td {
 .btn-outline-primary:hover {
   background-color: $primary-color;
   border-color: $secondary-color;
-  color: $gray-100  !important;
+  color: $gray-100 !important;
 }
 
 .btn.disabled.btn-primary,
@@ -1124,15 +1127,15 @@ table.td-align-top td {
 
 .ngx-slider .ngx-slider-pointer,
 .ngx-slider .ngx-slider-selection {
-  background-color: $secondary-color  !important;
+  background-color: $secondary-color !important;
 }
 
 .ngx-slider .ngx-slider-tick.ngx-slider-selected {
-  background: $secondary-color  !important;
+  background: $secondary-color !important;
 }
 
 .ngx-slider .ngx-slider-active::after {
-  background: $primary-250  !important;
+  background: $primary-250 !important;
 }
 
 .ngx-slider .ngx-slider-tick-legend {
@@ -1183,8 +1186,8 @@ table.td-align-top td {
 
 .mdc-tooltip__surface {
   font-size: 1em !important;
-  background-color: $gray-200  !important;
-  color: $gray-900  !important;
+  background-color: $gray-200 !important;
+  color: $gray-900 !important;
   letter-spacing: normal !important;
   border: 1px solid $gray-100 !important;
   line-height: 1.5em !important;
@@ -1397,7 +1400,7 @@ ul.mat-tree-node mat-tree-node {
 
 table.data-table {
   width: 100%;
-  border: 2px solid $black  !important;
+  border: 2px solid $black !important;
 }
 
 tr.data-table:nth-child(even) {
@@ -1456,7 +1459,7 @@ th.data-table {
 // Header / Navbar
 /////////////////////////////////////////////
 .ncua-header {
-  background-color: $primary-color  !important;
+  background-color: $primary-color !important;
   height: 62.4px;
 }
 
@@ -1632,7 +1635,9 @@ ul.nav-tabs li.active button .tab-icon {
 
 .menu-divider {
   background-color: $gray-150;
+  color: $gray-150;
   margin: 8px 0;
+  opacity: .8;
 }
 
 .navbar-menu-header,
@@ -1684,7 +1689,8 @@ ul.nav-tabs li.active button .tab-icon {
   color: $primary-250;
 }
 
-.mat-mdc-button-base, .mdc-list-item__primary-text {
+.mat-mdc-button-base,
+.mdc-list-item__primary-text {
   letter-spacing: normal !important;
 }
 
@@ -2029,7 +2035,7 @@ input[type="checkbox"]+label {
 }
 
 .mat-pseudo-checkbox-checked {
-  background: $primary-900  !important;
+  background: $primary-900 !important;
 }
 
 // Questions Block
@@ -2213,7 +2219,7 @@ tooltip.glossary-definition.tooltip-bottom::after {
 }
 
 tooltip.glossary-definition.tooltip-left::after {
-  border-color: transparent transparent transparent $glossary-background  !important;
+  border-color: transparent transparent transparent $glossary-background !important;
 }
 
 // Question Extras
@@ -2860,11 +2866,13 @@ table.assessment-documents th {
   font-weight: bold;
 }
 
-.nested-question-text, .nested-question-text p {
+.nested-question-text,
+.nested-question-text p {
   margin-bottom: 1rem;
 }
 
-.nested-option-block, .nested-option-block p {
+.nested-option-block,
+.nested-option-block p {
   margin-bottom: 1rem !important;
 }
 
@@ -3691,7 +3699,7 @@ table.td-text-start td {
 /////////////////// Tutorial pages ///////////////
 div.tutorial h5,
 .tutorial h6 {
-  color: $primary-600  !important;
+  color: $primary-600 !important;
 }
 
 div.tutorial h6 {
@@ -3843,9 +3851,11 @@ h6.dropdown-header {
   padding: 0px 20px !important;
   border-radius: 5px;
 }
+
 .swiper-button-prev {
   margin-left: 5px;
 }
+
 .swiper-button-next {
   margin-right: 5px;
 }
@@ -3988,18 +3998,18 @@ h6.dropdown-header {
 
 }
 
-.card-footer{
+.card-footer {
   background-color: #fff;
   border: none;
-  min-height:50px;
-  max-height:50px;
+  min-height: 50px;
+  max-height: 50px;
   padding: .5rem .75rem;
 }
 
 .gallery-btn-play {
-  color: $secondary-color  !important;
+  color: $secondary-color !important;
 }
 
 .gallery-btn-info:hover {
-  color: $secondary-color  !important;
+  color: $secondary-color !important;
 }

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 -------------------------->
 <div *transloco="let t" class="question-group mb-3" style="margin-bottom: 0;">
     <ng-container *ngIf="myGrouping != null && myGrouping.title != 'General'">
-        <div *ngIf="assessSvc.applicationMode == 'F'"  [id]="'maturity-questions-cie-' + myGrouping.groupingID"
+        <div *ngIf="assessSvc.applicationMode == 'F'" [id]="'maturity-questions-cie-' + myGrouping.groupingID"
             class="subcat-header" [class.flat-bottom]="myGrouping.expanded" (click)="toggleExpansion()"
             (keydown.Spacebar)="toggleExpansion()" (keydown.Enter)="toggleExpansion()"
             [attr.aria-expanded]="myGrouping.expanded">
@@ -69,23 +69,25 @@
         <div class="subcat-question-list" style="padding: 1em;"
             [class.display-none]="!myGrouping.expanded && assessSvc.applicationMode == 'F'">
             <div *ngFor="let q of myGrouping.questions" id="{{'question-' + q.questionId}}" class="mb-3"
-                [class.div-shield]="!shouldIShow(q)" 
-                [class.display-none]="isParentNA(q.parentQuestionId)"
+                [class.div-shield]="!shouldIShow(q)" [class.display-none]="isParentNA(q.parentQuestionId)"
                 [style.padding-left]="findChildQuestionIndention(q)">
-                
+
                 <div *ngIf="q.parentQuestionId == null && q.sequence != 1">
-                    <br/>
+                    <br />
                 </div>
                 <div *ngIf="myGrouping.title == 'Controlling Processes'">
-                    <div *ngIf="q.maturityLevelName == 'Level 2' && q.displayNumber == 'Question 1'" style="font-size: large;">
+                    <div *ngIf="q.maturityLevelName == 'Level 2' && q.displayNumber == 'Question 1'"
+                        style="font-size: large;">
                         <strong>Project Management</strong>
                     </div>
 
-                    <div *ngIf="q.maturityLevelName == 'Level 3' && q.displayNumber == 'Question 1'" style="font-size: large;">
+                    <div *ngIf="q.maturityLevelName == 'Level 3' && q.displayNumber == 'Question 1'"
+                        style="font-size: large;">
                         <strong>Change/Configuration Management</strong>
                     </div>
 
-                    <div *ngIf="q.maturityLevelName == 'Level 4' && q.displayNumber == 'Question 1'" style="font-size: large;">
+                    <div *ngIf="q.maturityLevelName == 'Level 4' && q.displayNumber == 'Question 1'"
+                        style="font-size: large;">
                         <strong>Risk Management</strong>
                     </div>
                 </div>
@@ -112,7 +114,8 @@
                         </span> -->
 
 
-                        <span *ngIf="q.failedIntegrityCheckOptions?.length" class="ms-1 fs-base-8 cset-icons-exclamation-triangle"
+                        <span *ngIf="q.failedIntegrityCheckOptions?.length"
+                            class="ms-1 fs-base-8 cset-icons-exclamation-triangle"
                             style="vertical-align: middle; color: #856404;"
                             [matTooltip]="getIntegrityCheckErrors(q.failedIntegrityCheckOptions)"></span>
                         <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
@@ -122,18 +125,19 @@
                                 <app-question-extras [myQuestion]="q" [myOptions]="options"></app-question-extras>
 
                             </div>
-                            
+
                             <textarea id="{{'freeResponse-q-' + q.questionId}}" class="form-control mb-2"
                                 [style]="('width: 100%; min-height: 40px; max-height: ' + summaryBoxMax + 'px')"
-                                [value]="freeResponseAnswers.get(q.questionId) != null ? freeResponseAnswers.get(q.questionId) : ''" 
+                                [value]="freeResponseAnswers.get(q.questionId) != null ? freeResponseAnswers.get(q.questionId) : ''"
                                 [placeholder]="(q.answer != 'NA' ? textPlaceholderEmpty : textPlaceholderNA)"
                                 (focus)="autoResize(q.questionId)" (keydown)="autoResize(q.questionId)"
                                 (change)="changeText(q, $event)" spellcheck="true"></textarea>
-                            
+
                         </div>
-                        <input #rb class="checkbox-custom" type="checkbox" [name]="optionGroupName" [id]="'answer-option-' + q.questionId"
-                            (click)="storeAnswer(q, 'NA')" [checked]="q.answer == 'NA'">
-                            <!-- (keydown.Space)="catchSpace($event, optionGroupName + '-' + o.optionId)"> -->
+                        <input #rb class="checkbox-custom" type="checkbox" [name]="optionGroupName"
+                            [id]="'answer-option-' + q.questionId" (click)="storeAnswer(q, 'NA')"
+                            [checked]="q.answer == 'NA'">
+                        <!-- (keydown.Space)="catchSpace($event, optionGroupName + '-' + o.optionId)"> -->
 
                         <label class="checkbox-custom-label" [for]="'answer-option-' + q.questionId">
                             <div style="white-space: normal">
