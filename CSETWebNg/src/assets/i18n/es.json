@@ -881,7 +881,7 @@
     "assessment upgrade": {
         "upgrade available": "Actualización de evaluación disponible",
         "from to": "Evaluación de actualización de '{{originalType}}' a '{{newType}}'",
-        "p1": "Hay una nueva versión de esta evaluación disponible. Si desea actualizarla, se transferirán la información de la evaluación y los datos demográficos. Las preguntas respondidas se transferirán a la nueva versión lo mejor posible. Este proceso no se puede deshacer.",
+        "p1": "Está disponible una nueva versión de esta evaluación. Si deseas actualizar, la información de la evaluación y los datos demográficos serán transferidos. Las preguntas respondidas se transferirán a la nueva versión lo más completamente posible. La evaluación original se conservará.",
         "converting": "Convertir su evaluación, esto puede tomar unos momentos.",
         "upgrade button": "Actualizar"
     },

@@ -74,7 +74,9 @@ export class UpgradeComponent implements OnInit {
   serviceComposition: CsiServiceComposition = {};
 
 
-
+  /**
+   * 
+   */
   constructor(
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
@@ -141,6 +143,9 @@ export class UpgradeComponent implements OnInit {
     }
   }
 
+  /**
+   * 
+   */
   updateLevel() {
     this.maturitySvc.saveLevel(this.selectedLevel).subscribe(() => {
       this.navSvc.buildTree();
@@ -148,7 +153,9 @@ export class UpgradeComponent implements OnInit {
     });
   }
 
-  // Get details from original assessment
+  /**
+   * Get details from original assessment
+   */
   getOriginalData() {
     let draftDetails = this.assessSvc.assessment
     this.demoSvc.getDemographic().subscribe((data: any) => {
@@ -171,7 +178,9 @@ export class UpgradeComponent implements OnInit {
     this.selectedLevel = this.assessSvc.assessment.maturityModel.maturityTargetLevel
   }
 
-  // Update new assessment with values 
+  /**
+   * Update new assessment with values 
+   */
   fillNewAssessment() {
     this.assessSvc.assessment = this.assessment
     this.demoSvc.updateDemographic(this.demographicData);
@@ -184,6 +193,4 @@ export class UpgradeComponent implements OnInit {
     this.assessSvc.refreshAssessment();
     this.updateLevel();
   }
-
-
 }

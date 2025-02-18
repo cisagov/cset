@@ -1020,7 +1020,7 @@
   "assessment upgrade": {
     "upgrade available": "Assessment Upgrade Available",
     "from to": "Upgrade assessment from '{{originalType}}' to '{{newType}}'",
-    "p1": "A new version of this assessment is available. If you wish to upgrade, assessment information and demographics will be transferred. Answered questions will be transferred to the new version as best as possible. This process cannot be undone.",
+    "p1": "A new version of this assessment is available. If you wish to upgrade, assessment information and demographics will be transferred. Answered questions will be transferred to the new version as completely as possible. The original assessment will be retained.",
     "converting": "Converting your assessment, this may take a few moments.",
     "upgrade button": "Upgrade"
   },
