@@ -1181,12 +1181,6 @@ namespace CSETWebCore.Business.Assessment
                     var mb = new MaturityBusiness(_context, _assessmentUtil, adminTabBusiness);
                     mb.StoreAnswer(assessment_id, answer);
                 }
-                // Hide draft assessment
-                var draft = _context.ASSESSMENT_CONTACTS
-                    .Where(x => x.Assessment_Id == original_id)
-                    .FirstOrDefault();
-                draft.UserId = null;
-                _context.SaveChanges();
             }
             catch (Exception exc)
             {
