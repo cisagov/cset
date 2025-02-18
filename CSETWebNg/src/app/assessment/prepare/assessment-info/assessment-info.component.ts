@@ -51,12 +51,11 @@ export class AssessmentInfoComponent implements OnInit {
   ngOnInit(): void {
     if (this.configSvc.config.debug.showCmmcConversion ?? false) {
       this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
-        if (data.maturityModel.modelName == "CMMC2") {
+        if (data.maturityModel.modelName == 'CMMC2' || data.maturityModel.modelName == 'CMMC') {
           this.showUpgrade = true;
-          this.targetModel = "CMMC2F"
+          this.targetModel = 'CMMC2F'
         }
       });
     }
-
   }
 }

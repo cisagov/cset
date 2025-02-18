@@ -546,8 +546,8 @@
     "dialogs": {
         "alert": "Alerta",
         "please confirm": "Confirme, por favor",
-        "remove contact": "¿Estás seguro de que quieres eliminar a {{firstName}} {{lastName}} de esta evaluación?",
-        "remove assessment": "¿Estás seguro de que quieres eliminar {{assessmentName}}?",
+        "remove contact": "¿Estás seguro de que quieres eliminar a '{{firstName}} {{lastName}}' de esta evaluación?",
+        "remove assessment": "¿Estás seguro de que quieres eliminar '{{assessmentName}}?'",
         "confirm create new assessment": "¿Está seguro de que desea crear una nueva evaluación?",
         "export assessment title": "Opciones de evaluación de exportación",
         "export excel dialog title": "Exportar evaluación a Excel",
@@ -630,7 +630,7 @@
             "enable protected features": "Habilitar funciones protegidas",
             "assessment documents": "Documentos de evaluación",
             "parameter editor": "Editor de parámetros",
-            "export assessment to excel": "Exportar evaluación a excel",
+            "export assessment to excel": "Exportar evaluación a Excel",
             "import modules": "Importar módulos",
             "module builder": "Constructor de módulos",
             "module content report": "Informe de contenido del módulo",
@@ -878,11 +878,12 @@
         "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> es parte del <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Departamento de Seguridad Nacional</a>",
         "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Sitio Web</a>"
     },
-    "upgrade": {
-        "upgrade": "Actualizar",
-        "final": "a la versión final",
-        "convert": "Convirtiendo su evaluación, esto puede tardar unos momentos.",
-        "p1": "La versión final de esta evaluación ya está disponible. Todas sus preguntas respondidas, junto con la información de la evaluación y la demografía, serán transferidas. Tenga en cuenta que este proceso es irreversible."
+    "assessment upgrade": {
+        "upgrade available": "Actualización de evaluación disponible",
+        "from to": "Evaluación de actualización de '{{originalType}}' a '{{newType}}'",
+        "p1": "Hay una nueva versión de esta evaluación disponible. Si desea actualizarla, se transferirán la información de la evaluación y los datos demográficos. Las preguntas respondidas se transferirán a la nueva versión lo mejor posible. Este proceso no se puede deshacer.",
+        "converting": "Convertir su evaluación, esto puede tomar unos momentos.",
+        "upgrade button": "Actualizar"
     },
     "modules": {
         "cpg": {

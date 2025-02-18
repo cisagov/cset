@@ -500,8 +500,8 @@
   "dialogs": {
     "alert": "Попередження",
     "please confirm": "Підтвердження",
-    "remove contact": "Ви впевнені, що хочете видалити {{firstName}} {{lastName}} з цього оцінювання?",
-    "remove assessment": "Ви впевнені, що хочете видалити {{assessmentName}}?",
+    "remove contact": "Ви впевнені, що хочете видалити '{{firstName}} {{lastName}}' з цього оцінювання?",
+    "remove assessment": "Ви впевнені, що хочете видалити '{{assessmentName}}?'",
     "confirm create new assessment": "Ви впевнені, що хочете створити нове оцінювання?",
     "export assessment title": "Параметри експортної оцінки",
     "export excel dialog title": "Експорт оцінки в Excel",
@@ -809,11 +809,12 @@
     "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> є частиною <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Департамент державної безпеки Сполучених Штатів</a>",
     "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Веб-сайт</a>"
   },
-  "upgrade": {
-    "upgrade": "Оновити",
-    "final": "до фінальної версії",
-    "convert": "Конвертування вашої оцінки, це може зайняти кілька хвилин.",
-    "p1": "Фінальна версія цієї оцінки тепер доступна. Всі ваші відповіді на питання, разом з інформацією про оцінку та демографічні дані, будуть передані. Зверніть увагу, що цей процес є незворотним."
+  "assessment upgrade": {
+    "upgrade available": "Доступне оновлення оцінювання",
+    "from to": "Оновити оцінювання з '{{originalType}}' на '{{newType}}'",
+    "p1": "Доступна нова версія цього оцінювання. Якщо ви бажаєте оновити, інформацію про оцінку та демографічні дані буде передано. Відповіді на запитання будуть якнайкраще перенесені в нову версію. Цей процес не можна скасувати.",
+    "converting": "Перетворення вашої оцінки, це може зайняти кілька хвилин.",
+    "upgrade button": "Оновлення"
   },
   "modules": {
     "cpg": {
