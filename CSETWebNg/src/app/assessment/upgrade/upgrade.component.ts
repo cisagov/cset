@@ -54,7 +54,10 @@ interface GalleryItem {
 })
 export class UpgradeComponent implements OnInit {
 
-  @Input() data: any;
+  @Input() targetModel: any;
+
+  targetModelTitle: string;
+
   galleryItem: GalleryItem;
   contacts: User[];
   demographicData: Demographic = {};
@@ -84,14 +87,24 @@ export class UpgradeComponent implements OnInit {
     public iodDemoSvc: DemographicIodService,
     public csiSvc: CsiService
   ) { }
+
+  /**
+   * 
+   */
   ngOnInit() {
+    this.targetModelTitle = AssessmentService.allMaturityModels.find(x => x.modelName === this.targetModel)?.modelTitle;
   }
 
+  /**
+   * 
+   */
   hideAlert() {
     this.assessSvc.hideUpgradeAlert = true;
   }
 
-  // // Convert draft versions of assessments to final versions 
+  /**
+   * Convert old versions of assessments to final versions 
+   */
   async upgrade() {
     this.loading = true;
     this.getOriginalData()
@@ -103,7 +116,7 @@ export class UpgradeComponent implements OnInit {
             items: for (const item of row.galleryItems) {
               try {
                 const configSetup = JSON.parse(item.configuration_Setup);
-                if (configSetup.Model && configSetup.Model.ModelName == this.data) {
+                if (configSetup.Model && configSetup.Model.ModelName == this.targetModel) {
                   this.galleryItem = item;
                   break rows;
                 }
@@ -117,7 +130,7 @@ export class UpgradeComponent implements OnInit {
           this.assessment.id = newId
           this.fillNewAssessment()
           // Fill answers into new assessment from original and then navigate to the new assesment 
-          this.assessSvc.convertAssesment(this.originalId, this.data).subscribe((data: any) => {
+          this.assessSvc.convertAssesment(this.originalId, this.targetModel).subscribe((data: any) => {
             this.navSvc.beginAssessment(newId)
             this.loading = false;
           })

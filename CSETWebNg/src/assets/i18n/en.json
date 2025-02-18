@@ -685,8 +685,8 @@
   "dialogs": {
     "alert": "Alert",
     "please confirm": "Please Confirm",
-    "remove contact": "Are you sure you want to remove {{firstName}} {{lastName}} from this assessment?",
-    "remove assessment": "Are you sure you want to remove {{assessmentName}}?",
+    "remove contact": "Are you sure you want to remove '{{firstName}} {{lastName}}' from this assessment?",
+    "remove assessment": "Are you sure you want to remove '{{assessmentName}}?'",
     "confirm create new assessment": "Are you sure you want to create a new assessment?",
     "export assessment title": "Export Assessment Options",
     "export excel dialog title": "Export Assessment to Excel",
@@ -1017,11 +1017,12 @@
     "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> is part of the <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Department of Homeland Security</a>",
     "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Website</a>"
   },
-  "upgrade": {
-    "upgrade": "Upgrade",
-    "final": "to final version",
-    "convert": "Converting your assessment, this may take a few moments.",
-    "p1": "The final version of this assessment is now available. All your answered questions, along with assessment information and demographics, will be transferred. Please note that this process is irreversible."
+  "assessment upgrade": {
+    "upgrade available": "Assessment Upgrade Available",
+    "from to": "Upgrade assessment from '{{originalType}}' to '{{newType}}'",
+    "p1": "A new version of this assessment is available. If you wish to upgrade, assessment information and demographics will be transferred. Answered questions will be transferred to the new version as best as possible. This process cannot be undone.",
+    "converting": "Converting your assessment, this may take a few moments.",
+    "upgrade button": "Upgrade"
   },
   "modules": {
     "cpg": {

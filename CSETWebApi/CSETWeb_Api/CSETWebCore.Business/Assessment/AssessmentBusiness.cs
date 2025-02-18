@@ -1111,15 +1111,33 @@ namespace CSETWebCore.Business.Assessment
 
             return documentsPerAssessment;
         }
+
+
+        /// <summary>
+        /// Creates a new set of answers based on the original assessment's answers
+        /// and a mapping defined in App_Data/AssessmentConversion
+        /// </summary>
+        /// <param name="assessment_id">The new assessment's ID</param>
+        /// <param name="original_id">The old 'source' assessment's ID</param>
+        /// <param name="targetAssessment">The model name being converted to</param>
         public void ConvertAssessment(int assessment_id, int original_id, string targetAssessment)
         {
             try
             {
+                var amm = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == original_id).FirstOrDefault();
+                if (amm == null)
+                {
+                    return;
+                }
+
+                var oldModel = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == amm.model_id).FirstOrDefault();
+
+
                 JArray questionIds = null;
 
                 var rh = new ResourceHelper();
                 var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "AssessmentConversion",
-                    $"{targetAssessment}.json"));
+                    $"{oldModel.Model_Name}-{targetAssessment}.json"));
 
                 if (json == null)
                 {

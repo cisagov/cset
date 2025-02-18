@@ -23,9 +23,9 @@
 <div *transloco="let t" class="alert alert-warning" [hidden]="this.assessSvc.hideUpgradeAlert">
   <div class="d-flex justify-content-between">
     <div class="d-flex align-items-center">
-      <span class="p-2 fs-large cset-icons-exclamation-triangle"></span>
-      <span class="fs-base-2 p-2 justify-content-center flex-11a">
-        {{t('upgrade.upgrade')}} {{ this.assessSvc.assessment.maturityModel.modelTitle }} {{t('upgrade.final')}}
+      <span class="p-1 fs-large cset-icons-exclamation-triangle"></span>
+      <span class="fs-base-2 p-1 justify-content-center flex-11a">
+        {{ t('assessment upgrade.upgrade available') }}
       </span>
     </div>
     <div class="align-items-start">
@@ -34,20 +34,23 @@
       </button>
     </div>
   </div>
-  <div class="p-2">
+  <div class="p-1">
     <div *ngIf="loading; else content">
-      {{t('upgrade.convert')}}
+      {{t('assessment upgrade.converting')}}
     </div>
     <ng-template #content>
       <div>
-        <div>
-          {{t('upgrade.p1')}}
-        </div>
+        <p>
+          {{ t('assessment upgrade.from to', {originalType: this.assessSvc.assessment.maturityModel.modelTitle, newType: targetModelTitle}) }}
+        </p>
+        <p>
+          {{t('assessment upgrade.p1')}}
+        </p>
       </div>
     </ng-template>
     <div *ngIf="!loading" class="mb-0 d-flex justify-content-end flex-00a">
       <button (click)="upgrade()" class="btn btn-outline m-0"
-        style="border-color: #664d03; color: #664d03;">{{t('upgrade.upgrade')}}</button>
+        style="border-color: #664d03; color: #664d03;">{{t('assessment upgrade.upgrade button')}}</button>
     </div>
   </div>
 </div>
