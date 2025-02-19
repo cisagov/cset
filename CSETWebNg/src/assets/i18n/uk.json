@@ -583,6 +583,7 @@
       "tools": "Інструменти",
       "enable protected features": "Увімкнути захищені функції",
       "assessment documents": "Документи оцінки",
+      "has no documents": "До цієї оцінки не додаються документи.",
       "parameter editor": "Редактор параметрів",
       "export assessment to excel": "Експорт оцінки в Excel",
       "import modules": "Імпортувати модулі",
