@@ -317,17 +317,17 @@
           "cpg": {
                "report title": "Objetivos de Rendimiento Cibernético de CISA (CPG)",
                "report": {
-                    "cpg report": "[ES]CPG Report",
+                    "cpg report": "Informe CPG",
                     "performance summary": "Resumen de rendimiento",
-                    "chart detail": "[ES]Chart Detail",
-                    "security practice checklist": "[ES]Security Practice Checklist",
+                    "chart detail": "Detalle del Gráfico",
+                    "security practice checklist": "Lista de Verificación de Prácticas de Seguridad",
                     "p": {
-                         "1": "[ES]This chart shows the answer distribution for each of the Security Practice categories.",
-                         "2": "[ES]This table indicates the answer distribution percentages for each category as indicated in the chart above."
+                         "1": "Este gráfico muestra la distribución de respuestas para cada una de las categorías de Prácticas de Seguridad.",
+                         "2": "Esta tabla indica los porcentajes de distribución de respuestas para cada categoría, como se muestra en el gráfico anterior."
                     },
-                    "current assessment": "[ES]Evaluacion corriente",
+                    "current assessment": "Evaluacion corriente",
                     "notes": "Notas",
-                    "ttp or risk addressed": "[ES]TTP or Risk Addressed",
+                    "ttp or risk addressed": "TTP o Riesgo Abordad",
                     "cost": "Costo",
                     "impact": "Impacto",
                     "complexity": "Complejidad",

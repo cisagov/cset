@@ -53,7 +53,7 @@ namespace CSETWebCore.Interfaces.Reports
         List<QuestionsMarkedForReview> GetQuestionsMarkedForReview();
         List<QuestionsMarkedForReview> GetQuestionsReviewed();
         List<RankedQuestions> GetRankedQuestions();
-        List<DocumentLibraryTable> GetDocumentLibrary();
+        List<DocumentLibraryEntry> GetDocumentLibrary();
         BasicReportData.OverallSALTable GetNistSals();
         List<BasicReportData.CNSSSALJustificationsTable> GetNistInfoTypes();
         BasicReportData.OverallSALTable GetSals();

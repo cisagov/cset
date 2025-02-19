@@ -282,7 +282,9 @@
         "goal performance": "Rendimiento de metas",
         "assessment tiers": "Niveles de evaluación",
         "ssg": {
-            "chemical": "Metas del sector químico"
+            "chemical": "Objetivos del sector químico",
+            "it": "Objetivos de Tecnología de la Información",
+            "other": "Objetivos de Otros Sectores"
         }
     },
     "buttons": {
