@@ -768,6 +768,7 @@
       "tools": "Tools",
       "enable protected features": "Enable Protected Features",
       "assessment documents": "Assessment Documents",
+      "has no documents": "This assessment has no attached documents.",
       "parameter editor": "Parameter Editor",
       "export assessment to excel": "Export Assessment to Excel",
       "import modules": "Import Modules",
