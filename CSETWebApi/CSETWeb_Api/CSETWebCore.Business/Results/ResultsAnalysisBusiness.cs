@@ -83,6 +83,7 @@ namespace CSETWebCore.Business.Results
 
                         var sets = (from usp_getStandardsResultsByCategory an in result
                                     select new { an.Set_Name, an.Short_Name }).Distinct();
+
                         foreach (var set in sets)
                         {
                             ChartData nextChartData = new ChartData();
@@ -141,8 +142,11 @@ namespace CSETWebCore.Business.Results
                     var r = result.Where(x => x.Question_Group_Heading == item).FirstOrDefault();
                     var l = labels.Where(x => x.Question_Group_Heading == item).FirstOrDefault();
 
-                    newResult.Add(r);
-                    newLabels.Add(l);
+                    if (r != null || l != null)
+                    {
+                        newResult.Add(r);
+                        newLabels.Add(l);
+                    }
                 }
             }
 
