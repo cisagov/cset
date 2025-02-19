@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 2/17/2025 4:31:01 PM
+Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 2/18/2025 4:37:22 PM
 
 */
 		
@@ -10700,8 +10700,8 @@ UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 01-CU-20: Due Diligence Over Third Pa
 UPDATE [dbo].[GEN_FILE] SET [Title]=N'12 CFR Part 748 Appendix B' WHERE [Gen_File_Id] = 7069
 UPDATE [dbo].[GEN_FILE] SET [Title]=N'12 CFR Part 748 Appendix A' WHERE [Gen_File_Id] = 7070
 UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 23-CU-07: Cyber Incident Notification Requirements' WHERE [Gen_File_Id] = 7073
-UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 24-CU-02: Board of Director Engagement in Cybersecurity Oversight' WHERE [Gen_File_Id] = 7078
-UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 25-CU-02: Cyber Incident Notification Requirements Update' WHERE [Gen_File_Id] = 7079
+UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 24-CU-02: Board of Director Engagement in Cybersecurity Oversight', [Name]=N'LTCU 24-CU-02: Board of Director Engagement in Cybersecurity Oversight', [Short_Name]=N'LTCU 24-CU-02: Director Engagement in Cybersecurity' WHERE [Gen_File_Id] = 7078
+UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 25-CU-02: Cyber Incident Notification Requirements Update', [Name]=N'LTCU 25-CU-02: Cyber Incident Notification Requirements Update', [Short_Name]=N'LTCU 25-CU-02: Cyber Incident Requirements Update' WHERE [Gen_File_Id] = 7079
 UPDATE [dbo].[GEN_FILE] SET [Title]=N'12 CFR 748.1', [Name]=N'12 CFR 748.1' WHERE [Gen_File_Id] = 7082
 UPDATE [dbo].[GEN_FILE] SET [Title]=N'12 CFR Part 749 Appendix B' WHERE [Gen_File_Id] = 7083
 PRINT(N'Operation applied to 11 rows out of 11')
