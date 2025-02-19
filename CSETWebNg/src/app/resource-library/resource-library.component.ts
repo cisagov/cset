@@ -61,7 +61,7 @@ interface LibrarySearchResponse {
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class ResourceLibraryComponent implements OnInit, AfterViewInit {
+export class ResourceLibraryComponent implements OnInit {
   results: LibrarySearchResponse[];
   searchTerm: string;
   searchString: string;
@@ -77,8 +77,22 @@ export class ResourceLibraryComponent implements OnInit, AfterViewInit {
   children?: LibrarySearchResponse[];
   filter: string = '';
   setFilterDebounced = new Subject<string>();
-  @ViewChild('tabs') tabsElementRef: ElementRef;
   devMode: boolean = isDevMode();
+  private _tabsElementRef: ElementRef;
+
+  @ViewChild('tabs') set tabsElementRef(element: ElementRef) {
+    this._tabsElementRef = element;
+
+    if (this._tabsElementRef) {
+      const tabsEl = this._tabsElementRef.nativeElement;
+      tabsEl.classList.add('sticky-tabs');
+      if (this.authSvc.isLocal && this.devMode) {
+        tabsEl.style.top = '81px';
+      } else {
+        tabsEl.style.top = '62px';
+      }
+    }
+  }
 
   constructor(private configSvc: ConfigService,
     private http: HttpClient,
@@ -114,18 +128,6 @@ export class ResourceLibraryComponent implements OnInit, AfterViewInit {
         this.isLoading = false;
       }
     );
-  }
-
-  ngAfterViewInit(): void {
-    if (!!this.tabsElementRef) {
-      const tabsEl = this.tabsElementRef.nativeElement;
-      tabsEl.classList.add('sticky-tabs');
-      if (this.authSvc.isLocal && this.devMode) {
-        tabsEl.style.top = '81px';
-      } else {
-        tabsEl.style.top = '62px';
-      }
-    }
   }
 
   setFilter(filter: string) {
