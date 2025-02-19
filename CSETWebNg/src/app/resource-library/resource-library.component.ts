@@ -195,9 +195,13 @@ export class ResourceLibraryComponent implements OnInit {
 
           // Cull out any entries whose HeadingTitle is null
 
-          while (this.results.findIndex(r => r.headingText === null) >= 0) {
-            this.results.splice(this.results.findIndex(r => r.headingText === null), 1);
-          }
+          // NOTE: I am commenting this out because I do not see any reason to filter out docs
+          // that don't have summaries. Searching for them in the browse tab works, so it should
+          // also work in the search tab.
+
+          // while (this.results.findIndex(r => r.headingText === null) >= 0) {
+          //   this.results.splice(this.results.findIndex(r => r.headingText === null), 1);
+          // }
         });
   }
 
