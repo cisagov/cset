@@ -595,7 +595,7 @@ namespace CSETWebCore.Api.Controllers
             data.nistTypes = _report.GetNistInfoTypes();
             data.nistSalTable = _report.GetNistSals();
 
-            data.DocumentLibraryTable = _report.GetDocumentLibrary();
+            data.DocumentLibraryEntries = _report.GetDocumentLibrary();
             data.RankedQuestionsTable = _report.GetRankedQuestions();
             data.FinancialQuestionsTable = _report.GetFinancialQuestions();
             data.QuestionsWithComments = _report.GetQuestionsWithComments();
@@ -636,7 +636,7 @@ namespace CSETWebCore.Api.Controllers
             data.nistTypes = _report.GetNistInfoTypes();
             data.nistSalTable = _report.GetNistSals();
 
-            data.DocumentLibraryTable = _report.GetDocumentLibrary();
+            data.DocumentLibraryEntries = _report.GetDocumentLibrary();
             data.RankedQuestionsTable = _report.GetRankedQuestions();
             data.QuestionsWithComments = _report.GetQuestionsWithComments();
             data.QuestionsMarkedForReview = _report.GetQuestionsMarkedForReview();
@@ -657,7 +657,7 @@ namespace CSETWebCore.Api.Controllers
         {
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();
-            response.DocumentLibraryTable = new List<DocumentLibraryTable>();
+            response.DocumentLibraryEntries = new List<DocumentLibraryEntry>();
 
             var assessmentList = _aggregation.GetAssessmentsForAggregation((int)aggregationID);
 
@@ -696,11 +696,11 @@ namespace CSETWebCore.Api.Controllers
 
 
                 // Document Library 
-                var documentLibraryTable = _report.GetDocumentLibrary();
-                foreach (var docEntry in documentLibraryTable)
+                var documentLibraryEntries = _report.GetDocumentLibrary();
+                foreach (var docEntry in documentLibraryEntries)
                 {
                     docEntry.Alias = a.Alias;
-                    response.DocumentLibraryTable.Add(docEntry);
+                    response.DocumentLibraryEntries.Add(docEntry);
                 }
             }
 
@@ -717,7 +717,7 @@ namespace CSETWebCore.Api.Controllers
         {
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();
-            response.DocumentLibraryTable = new List<DocumentLibraryTable>();
+            response.DocumentLibraryEntries = new List<DocumentLibraryEntry>();
 
 
             var assessmentList = _aggregation.GetAssessmentsForAggregation((int)aggregationID);
@@ -755,11 +755,11 @@ namespace CSETWebCore.Api.Controllers
 
 
                 // Document Library 
-                var documentLibraryTable = _report.GetDocumentLibrary();
-                foreach (var docEntry in documentLibraryTable)
+                var documentLibraryEntries = _report.GetDocumentLibrary();
+                foreach (var docEntry in documentLibraryEntries)
                 {
                     docEntry.Alias = a.Alias;
-                    response.DocumentLibraryTable.Add(docEntry);
+                    response.DocumentLibraryEntries.Add(docEntry);
                 }
             }
 

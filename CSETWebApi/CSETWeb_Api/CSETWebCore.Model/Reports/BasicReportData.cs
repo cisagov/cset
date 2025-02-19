@@ -29,7 +29,7 @@ namespace CSETWebCore.Business.Reports
         public List<CNSSSALJustificationsTable> nistTypes { get; set; }
         public List<RequirementControl> ControlList { get; set; }
         public List<Individual> Individuals { get; set; }
-        public List<DocumentLibraryTable> DocumentLibraryTable { get; set; }
+        public List<DocumentLibraryEntry> DocumentLibraryEntries { get; set; }
         public List<RankedQuestions> RankedQuestionsTable { get; set; }
         public List<QuestionsWithComments> QuestionsWithComments { get; set; }
         public List<QuestionsMarkedForReview> QuestionsMarkedForReview { get; set; }
@@ -132,7 +132,7 @@ namespace CSETWebCore.Business.Reports
         public string Assignees { get; set; }
     }
 
-    public class DocumentLibraryTable
+    public class DocumentLibraryEntry
     {
         public string Alias { get; set; }
         public string DocumentTitle { get; set; }
