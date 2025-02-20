@@ -177,7 +177,7 @@ ul {
 
 div.disclaimer-blurb {
   width: 80%;
-  border: 1px solid #000;
+  border: 1px solid #dee2e6;
   border-radius: 1em;
   padding: 1em;
   background-color: #f2f2f2;
@@ -360,9 +360,8 @@ table.cset-table-2 {
 
 table.cset-table-2 th,
 table.cset-table-2 td {
-  border: 1px solid #000;
-  border: 1px solid #999;
-  padding: 5px;
+  border: 1px solid #c1c1c1;
+  padding: .8rem;
   page-break-inside: avoid;
   break-inside: avoid;
 }
@@ -382,9 +381,8 @@ table.cset-table-3 {
 
 table.cset-table-3 th,
 table.cset-table-3 td {
-  border: 1px solid #999;
-  ;
-  padding: 5px;
+  border: 1px solid #c1c1c1;
+  padding: .8rem;
   page-break-inside: avoid;
   break-inside: avoid;
 }
@@ -453,7 +451,7 @@ table.finding-table {
 table.finding-table td {
   vertical-align: top;
   ;
-  border: 1px solid #222;
+  border: 1px solid #c1c1c1;
   padding: 5px;
 }
 

@@ -171,6 +171,4 @@ export class UpgradeComponent implements OnInit {
     this.assessSvc.refreshAssessment();
     this.updateLevel();
   }
-
-
 }
