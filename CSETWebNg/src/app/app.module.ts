@@ -337,7 +337,7 @@ import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-com
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
 import { MaturityQuestionsIseComponent } from './assessment/questions/maturity-questions/maturity-questions-ise.component';
 import { EdmComponent } from './reports/edm/edm.component';
-import { TooltipModule } from '@cloudfactorydk/ng2-tooltip-directive';
+import { TooltipModule } from './tooltip/tooltip.module';
 import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
 import { QuestionTextCpgComponent } from './assessment/questions/question-text/question-text-cpg/question-text-cpg.component';
 import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';

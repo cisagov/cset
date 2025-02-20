@@ -1,0 +1,126 @@
+\:host
+  max-width: 200px
+  background-color: black
+  color: #fff
+  text-align: center
+  border-radius: 6px
+  padding: 5px 8px
+  position: absolute
+  pointer-events: none
+  z-index: 1000
+  display: block
+  opacity: 0
+  -webkit-transition: opacity 300ms
+  -moz-transition: opacity 300ms
+  -o-transition: opacity 300ms
+  transition: opacity 300ms
+  top: 0
+  left: 0
+
+\:host.tooltip-show
+  opacity: 1
+
+\:host.tooltip-shadow
+  box-shadow: 0 7px 15px -5px rgba(0, 0, 0, 0.4)
+\:host.tooltip-light.tooltip-shadow
+  box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.4)
+
+\:host.tooltip::after
+  content: ""
+  position: absolute
+  border-style: solid
+
+\:host.tooltip-top::after 
+  top: 100%
+  left: 50%
+  margin-left: -5px
+  border-width: 5px
+  border-color: black transparent transparent transparent
+
+\:host.tooltip-bottom::after
+  bottom: 100%
+  left: 50%
+  margin-left: -5px
+  border-width: 5px
+  border-color: transparent transparent black transparent
+
+\:host.tooltip-left::after
+  top: 50%
+  left: 100%
+  margin-top: -5px
+  border-width: 5px
+  border-color: transparent transparent transparent black
+
+\:host.tooltip-right::after 
+  top: 50%
+  right: 100%
+  margin-top: -5px
+  border-width: 5px
+  border-color: transparent black transparent transparent
+
+// Light
+\:host.tooltip-light::after
+  display: none 
+  
+\:host.tooltip-light
+  border: 1px solid rgba(0,0,0,.06)
+  background-color: #fff 
+  color: black
+  .tooltip-arrow
+    position: absolute
+    width: 10px
+    height: 10px
+    transform: rotate(135deg)
+    background-color: rgba(0,0,0,.07)
+  .tooltip-arrow::after 
+    background-color: #fff 
+    content: ''
+    display: block 
+    position: absolute
+    width: 10px
+    height: 10px
+
+\:host.tooltip-top.tooltip-light
+  margin-top: -2px
+  .tooltip-arrow
+    top: 100%
+    left: 50%
+    margin-top: -4px
+    margin-left: -5px
+    background: linear-gradient(to bottom left,rgba(0,0,0,.07) 50%,transparent 50%)
+  .tooltip-arrow::after 
+    top: 1px
+    right: 1px
+
+\:host.tooltip-bottom.tooltip-light
+  .tooltip-arrow
+    bottom: 100%
+    left: 50%
+    margin-bottom: -4px
+    margin-left: -5px
+    background: linear-gradient(to top right,rgba(0,0,0,.1) 50%,transparent 50%)
+  .tooltip-arrow::after 
+    top: -1px
+    right: -1px
+
+\:host.tooltip-left.tooltip-light
+  .tooltip-arrow
+    top: 50%
+    left: 100%
+    margin-top: -5px
+    margin-left: -4px
+    background: linear-gradient(to bottom right,rgba(0,0,0,.07) 50%,transparent 50%)
+  .tooltip-arrow::after 
+    top: 1px
+    right: -1px
+
+\:host.tooltip-right.tooltip-light
+  .tooltip-arrow
+    top: 50%
+    right: 100%
+    margin-top: -5px
+    margin-right: -4px 
+    background: linear-gradient(to top left,rgba(0,0,0,.07) 50%,transparent 50%)
+  .tooltip-arrow::after 
+    top: -1px
+    right: 1px
