@@ -565,6 +565,7 @@ import { StandardsComplianceComponent } from './reports/standards-compliance/sta
 import { ComponentComplianceComponent } from './reports/component-compliance/component-compliance.component';
 import { OverallComplianceComponent } from './reports/overall-compliance/overall-compliance.component';
 import { RankedSubjectAreasComponent } from './reports/ranked-subject-areas/ranked-subject-areas.component';
+import { DocumentLibraryComponent } from './reports/document-library/document-library.component';
 import { ComponentQuestionListComponent } from './reports/component-question-list/component-question-list.component';
 import { C2m2ReportComponent } from './reports/c2m2/c2m2-report/c2m2-report.component';
 import { C2m2CoverSheetComponent } from './reports/c2m2/c2m2-report/c2m2-cover-sheet/c2m2-cover-sheet.component';
@@ -1115,6 +1116,7 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         ComponentComplianceComponent,
         OverallComplianceComponent,
         RankedSubjectAreasComponent,
+        DocumentLibraryComponent,
         ComponentQuestionListComponent,
         C2m2ReportComponent,
         C2m2CoverSheetComponent,
