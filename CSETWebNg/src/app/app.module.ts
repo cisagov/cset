@@ -486,7 +486,7 @@ import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/ir
 import { SwiperModule } from 'swiper/angular';
 import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { GalleryService } from './services/gallery.service';
-import { EllipsisModule } from './modules/ellipsis/ellipsis.module';
+import { EllipsisModule } from './modules/ngx-ellipsis/ellipsis.module';
 import { CrrReportComponent } from './reports/crr/crr-report/crr-report.component';
 import { CrrCoverSheetComponent } from './reports/crr/crr-report/crr-cover-sheet/crr-cover-sheet.component';
 import { CrrCoverSheet2Component } from './reports/crr/crr-report/crr-cover-sheet2/crr-cover-sheet2.component';
