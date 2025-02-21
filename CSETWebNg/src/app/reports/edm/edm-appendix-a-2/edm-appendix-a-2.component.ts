@@ -27,9 +27,10 @@ import { MaturityService } from '../../../services/maturity.service';
 
 
 @Component({
-  selector: 'edm-appendix-a-2',
-  templateUrl: './edm-appendix-a-2.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'edm-appendix-a-2',
+    templateUrl: './edm-appendix-a-2.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class EDMAppendixASectionTwo implements OnInit {
 

@@ -26,9 +26,10 @@ import { ConfigService } from './../../../../services/config.service';
 import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
-  selector: 'app-crr-cover-sheet',
-  templateUrl: './crr-cover-sheet.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+    selector: 'app-crr-cover-sheet',
+    templateUrl: './crr-cover-sheet.component.html',
+    styleUrls: ['./../crr-report.component.scss'],
+    standalone: false
 })
 export class CrrCoverSheetComponent implements OnInit {
   @Input() model: CmuReportModel;

@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { MaturityService } from '../../../services/maturity.service';
 
 @Component({
-  selector: 'app-edm-glossary',
-  templateUrl: './edm-glossary.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'app-edm-glossary',
+    templateUrl: './edm-glossary.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class EdmGlossaryComponent implements OnInit {
 

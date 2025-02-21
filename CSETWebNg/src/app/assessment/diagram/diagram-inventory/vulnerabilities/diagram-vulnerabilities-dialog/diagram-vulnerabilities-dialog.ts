@@ -33,9 +33,10 @@ interface cveWarning {
 }
 
 @Component({
-  selector: 'app-diagram-vulnerabilities-dialog',
-  templateUrl: './diagram-vulnerabilities-dialog.component.html',
-  styleUrls: ['./diagram-vulnerabilities-dialog.component.scss']
+    selector: 'app-diagram-vulnerabilities-dialog',
+    templateUrl: './diagram-vulnerabilities-dialog.component.html',
+    styleUrls: ['./diagram-vulnerabilities-dialog.component.scss'],
+    standalone: false
 })
 export class DiagramVulnerabilitiesDialogComponent implements OnInit {
 

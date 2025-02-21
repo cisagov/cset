@@ -34,8 +34,9 @@ import { ModuleBehavior } from '../../../models/module-config.model';
 
 
 @Component({
-  selector: 'app-grouping-block',
-  templateUrl: './grouping-block.component.html'
+    selector: 'app-grouping-block',
+    templateUrl: './grouping-block.component.html',
+    standalone: false
 })
 export class GroupingBlockComponent implements OnInit {
   @Input('grouping') grouping: QuestionGrouping;

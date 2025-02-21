@@ -4,9 +4,10 @@ import { NCUAService } from '../../../../services/ncua.service';
 
 
 @Component({
-  selector: 'app-ise-warnings',
-  templateUrl: './ise-warnings.component.html',
-  styleUrls: ['./ise-warnings.component.scss']
+    selector: 'app-ise-warnings',
+    templateUrl: './ise-warnings.component.html',
+    styleUrls: ['./ise-warnings.component.scss'],
+    standalone: false
 })
 export class IseWarningsComponent {
   @Input() iseHasBeenSubmitted;

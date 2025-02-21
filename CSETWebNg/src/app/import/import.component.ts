@@ -42,10 +42,11 @@ export class ImportFormData {
 }
 
 @Component({
-  selector: 'app-import',
-  templateUrl: './import.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-11a w-100' }
+    selector: 'app-import',
+    templateUrl: './import.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-11a w-100' },
+    standalone: false
 })
 export class ImportComponent implements OnInit, OnDestroy {
   public uploader: FileUploader;

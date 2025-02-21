@@ -32,9 +32,10 @@ import { ReportService } from '../../services/report.service';
 import { saveAs } from "file-saver";
 
 @Component({
-  selector: 'edm',
-  templateUrl: './edm.component.html',
-  styleUrls: ['../reports.scss', 'edm.component.scss']
+    selector: 'edm',
+    templateUrl: './edm.component.html',
+    styleUrls: ['../reports.scss', 'edm.component.scss'],
+    standalone: false
 })
 export class EdmComponent implements OnInit, AfterContentInit {
 

@@ -26,9 +26,10 @@ import { MaturityService } from '../../../../services/maturity.service';
 import { MaturityQuestionResponse } from '../../../../models/questions.model';
 
 @Component({
-  selector: 'app-relationship-management',
-  templateUrl: './relationship-management.component.html',
-  styleUrls: ['./relationship-management.component.scss']
+    selector: 'app-relationship-management',
+    templateUrl: './relationship-management.component.html',
+    styleUrls: ['./relationship-management.component.scss'],
+    standalone: false
 })
 export class RelationshipManagementComponent implements OnInit {
 

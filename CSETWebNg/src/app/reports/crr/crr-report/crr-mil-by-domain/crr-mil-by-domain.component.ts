@@ -25,9 +25,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
-  selector: 'app-crr-mil-by-domain',
-  templateUrl: './crr-mil-by-domain.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+    selector: 'app-crr-mil-by-domain',
+    templateUrl: './crr-mil-by-domain.component.html',
+    styleUrls: ['./../crr-report.component.scss'],
+    standalone: false
 })
 export class CrrMilByDomainComponent implements OnInit {
 

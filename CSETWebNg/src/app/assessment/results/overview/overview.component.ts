@@ -28,10 +28,11 @@ import { AssessmentDetail } from '../../../models/assessment-info.model';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-overview',
-  templateUrl: './overview.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-overview',
+    templateUrl: './overview.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class OverviewComponent implements OnInit {
 

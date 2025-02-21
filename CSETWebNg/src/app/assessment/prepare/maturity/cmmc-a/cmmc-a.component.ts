@@ -26,8 +26,9 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import { AssessmentService } from '../../../../services/assessment.service';
 
 @Component({
-  selector: 'app-cmmc-a',
-  templateUrl: './cmmc-a.component.html'
+    selector: 'app-cmmc-a',
+    templateUrl: './cmmc-a.component.html',
+    standalone: false
 })
 export class CmmcAComponent implements OnInit {
 

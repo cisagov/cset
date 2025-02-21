@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { CisService } from '../../../../services/cis.service';
 
 @Component({
-  selector: 'app-ranked-deficiency',
-  templateUrl: './ranked-deficiency.component.html',
-  styleUrls: ['./ranked-deficiency.component.scss']
+    selector: 'app-ranked-deficiency',
+    templateUrl: './ranked-deficiency.component.html',
+    styleUrls: ['./ranked-deficiency.component.scss'],
+    standalone: false
 })
 export class RankedDeficiencyComponent implements OnInit {
 

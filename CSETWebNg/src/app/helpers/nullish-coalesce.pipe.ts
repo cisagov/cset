@@ -33,7 +33,8 @@ import { Pipe, PipeTransform } from '@angular/core';
  *   formats to: 'some fallback value'
  */
 @Pipe({
-  name: 'nullishCoalesce',
+    name: 'nullishCoalesce',
+    standalone: false
 })
 export class NullishCoalescePipe implements PipeTransform {
   transform<T, K>(value: T, fallbackValue: K): NonNullable<T> | K {

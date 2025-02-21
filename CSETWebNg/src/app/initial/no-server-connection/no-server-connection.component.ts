@@ -6,8 +6,9 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
-  selector: 'app-no-server-connection',
-  templateUrl: './no-server-connection.component.html'
+    selector: 'app-no-server-connection',
+    templateUrl: './no-server-connection.component.html',
+    standalone: false
 })
 export class NoServerConnectionComponent implements OnInit {
 

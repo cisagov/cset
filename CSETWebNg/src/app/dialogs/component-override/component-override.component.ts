@@ -29,11 +29,11 @@ import { QuestionsService } from '../../services/questions.service';
 import { Utilities } from '../../services/utilities.service';
 
 @Component({
-  selector: 'component-override',
-  templateUrl: './component-override.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' },
-  // styleUrls: ['./component-override.component.scss']
+    selector: 'component-override',
+    templateUrl: './component-override.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class ComponentOverrideComponent {
 

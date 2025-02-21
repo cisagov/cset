@@ -28,9 +28,10 @@ import { Comparer } from '../../../../helpers/comparer';
 
 
 @Component({
-  selector: 'shapes',
-  templateUrl: './shapes.component.html',
-  styleUrls: ['./shapes.component.scss']
+    selector: 'shapes',
+    templateUrl: './shapes.component.html',
+    styleUrls: ['./shapes.component.scss'],
+    standalone: false
 })
 export class ShapesComponent implements OnInit {
   shapes = [];

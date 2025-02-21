@@ -30,11 +30,12 @@ import * as $ from 'jquery';
 import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
-  selector: 'app-cmmc-gaps',
-  templateUrl: './cmmc-gaps.component.html',
-  styleUrls: ['../../../../../sass/cmmc-results.scss'],
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-cmmc-gaps',
+    templateUrl: './cmmc-gaps.component.html',
+    styleUrls: ['../../../../../sass/cmmc-results.scss'],
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class CmmcGapsComponent implements OnInit {
 

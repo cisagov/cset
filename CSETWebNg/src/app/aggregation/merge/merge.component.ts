@@ -28,8 +28,9 @@ import { MergeQuestionDetailComponent } from '../../dialogs/merge-question-detai
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-merge',
-  templateUrl: './merge.component.html'
+    selector: 'app-merge',
+    templateUrl: './merge.component.html',
+    standalone: false
 })
 export class MergeComponent implements OnInit {
 

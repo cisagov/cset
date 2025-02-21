@@ -25,8 +25,9 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-analytics-compare',
-  templateUrl: './analytics-compare.component.html'
+    selector: 'app-analytics-compare',
+    templateUrl: './analytics-compare.component.html',
+    standalone: false
 })
 export class AnalyticsCompareComponent implements OnInit {
 

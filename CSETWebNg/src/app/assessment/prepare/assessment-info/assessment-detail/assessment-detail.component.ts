@@ -33,10 +33,11 @@ import { AwwaService } from '../../../../services/awwa.service';
 
 
 @Component({
-  selector: 'app-assessment-detail',
-  templateUrl: './assessment-detail.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-assessment-detail',
+    templateUrl: './assessment-detail.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class AssessmentDetailComponent implements OnInit {
 

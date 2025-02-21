@@ -28,10 +28,11 @@ import { Frameworks, SelectedTier } from '../../../models/frameworks.model';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-framework',
-  templateUrl: './framework.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-framework',
+    templateUrl: './framework.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class FrameworkComponent implements OnInit {
   frameworks: Frameworks;

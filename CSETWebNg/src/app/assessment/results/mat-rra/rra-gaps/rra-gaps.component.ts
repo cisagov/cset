@@ -29,11 +29,12 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import * as $ from 'jquery';
 
 @Component({
-  selector: 'app-rra-gaps',
-  templateUrl: './rra-gaps.component.html',
-  // eslint-disable-next-line
-  styleUrls: ['./rra-gaps.component.scss'],
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-rra-gaps',
+    templateUrl: './rra-gaps.component.html',
+    // eslint-disable-next-line
+    styleUrls: ['./rra-gaps.component.scss'],
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class RraGapsComponent implements OnInit {
 

@@ -1,9 +1,10 @@
 import { Component, Input, OnInit, ViewChild} from '@angular/core';
 
 @Component({
-  selector: 'app-hydro-bar-chart',
-  templateUrl: './hydro-bar-chart.component.html',
-  styleUrls: ['./hydro-bar-chart.component.scss']
+    selector: 'app-hydro-bar-chart',
+    templateUrl: './hydro-bar-chart.component.html',
+    styleUrls: ['./hydro-bar-chart.component.scss'],
+    standalone: false
 })
 export class HydroBarChartComponent implements OnInit {
 

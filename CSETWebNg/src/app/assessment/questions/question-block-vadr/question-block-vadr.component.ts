@@ -33,9 +33,10 @@ import { CompletionService } from '../../../services/completion.service';
 
 
 @Component({
-  selector: 'app-question-block-vadr',
-  templateUrl: './question-block-vadr.component.html',
-  styleUrls: ['./question-block-vadr.component.scss']
+    selector: 'app-question-block-vadr',
+    templateUrl: './question-block-vadr.component.html',
+    styleUrls: ['./question-block-vadr.component.scss'],
+    standalone: false
 })
 export class QuestionBlockVadrComponent implements OnInit {
   @Input() myGrouping: QuestionGrouping;

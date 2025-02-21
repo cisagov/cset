@@ -33,8 +33,9 @@ import { MaturityService } from '../../../../services/maturity.service';
  * parsed to determine which page the user requested.
  */
 @Component({
-  selector: 'app-crr-results-page',
-  templateUrl: './crr-results-page.component.html'
+    selector: 'app-crr-results-page',
+    templateUrl: './crr-results-page.component.html',
+    standalone: false
 })
 export class CrrResultsPage implements OnInit {
 

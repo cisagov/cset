@@ -37,8 +37,9 @@ interface UserAssessment {
 }
 
 @Component({
-  selector: 'app-trend-compare-compatibility',
-  templateUrl: './trend-compare-compatibility.component.html'
+    selector: 'app-trend-compare-compatibility',
+    templateUrl: './trend-compare-compatibility.component.html',
+    standalone: false
 })
 export class TrendCompareCompatibilityComponent implements OnInit {
 

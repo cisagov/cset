@@ -24,9 +24,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-crr-side-toc',
-  templateUrl: './crr-side-toc.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+    selector: 'app-crr-side-toc',
+    templateUrl: './crr-side-toc.component.html',
+    styleUrls: ['./../crr-report.component.scss'],
+    standalone: false
 })
 export class CrrSideTocComponent implements OnInit {
 

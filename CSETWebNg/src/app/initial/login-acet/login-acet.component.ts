@@ -33,9 +33,10 @@ import { EmailService } from '../../services/email.service';
 
 
 @Component({
-  selector: 'app-login-acet',
-  templateUrl: './login-acet.component.html',
-  styleUrls: ['./login-acet.component.scss']
+    selector: 'app-login-acet',
+    templateUrl: './login-acet.component.html',
+    styleUrls: ['./login-acet.component.scss'],
+    standalone: false
 })
 export class LoginAcetComponent implements OnInit {
   /**

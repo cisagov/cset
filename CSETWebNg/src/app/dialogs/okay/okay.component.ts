@@ -25,10 +25,11 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-okay',
-  templateUrl: './okay.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-okay',
+    templateUrl: './okay.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class OkayComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<OkayComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }

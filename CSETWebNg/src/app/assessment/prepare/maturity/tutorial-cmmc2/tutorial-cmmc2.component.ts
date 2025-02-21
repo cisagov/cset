@@ -28,8 +28,9 @@ import { ResourceLibraryService } from '../../../../services/resource-library.se
 import { AssessmentService } from '../../../../services/assessment.service';
 
 @Component({
-  selector: 'app-tutorial-cmmc2',
-  templateUrl: './tutorial-cmmc2.component.html'
+    selector: 'app-tutorial-cmmc2',
+    templateUrl: './tutorial-cmmc2.component.html',
+    standalone: false
 })
 export class TutorialCmmc2Component {
 

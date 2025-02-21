@@ -30,10 +30,11 @@ import { ACETService } from '../../../services/acet.service';
 import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
-  selector: 'app-assessment-info',
-  templateUrl: './assessment-info.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-assessment-info',
+    templateUrl: './assessment-info.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class AssessmentInfoComponent implements OnInit {
 

@@ -28,9 +28,10 @@ import { CisService } from '../../../services/cis.service';
 import { MaturityService } from '../../../services/maturity.service';
 
 @Component({
-  selector: 'app-cis-section-scoring',
-  templateUrl: './cis-section-scoring.component.html',
-  styleUrls: ['../../../reports/reports.scss']
+    selector: 'app-cis-section-scoring',
+    templateUrl: './cis-section-scoring.component.html',
+    styleUrls: ['../../../reports/reports.scss'],
+    standalone: false
 })
 export class CisSectionScoringComponent implements OnInit {
 

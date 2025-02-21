@@ -26,9 +26,10 @@ import { VadrDataService } from '../../../../services/vadr-data.service';
 
 
 @Component({
-  selector: 'app-vadr-answer-compliance',
-  templateUrl: './vadr-answer-compliance.component.html',
-  styleUrls: ['./vadr-answer-compliance.component.scss']
+    selector: 'app-vadr-answer-compliance',
+    templateUrl: './vadr-answer-compliance.component.html',
+    styleUrls: ['./vadr-answer-compliance.component.scss'],
+    standalone: false
 })
 export class VadrAnswerComplianceComponent implements OnInit {
   complianceByGoal = [];
