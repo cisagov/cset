@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 
 
 @Component({
-  selector: 'edm-goal-question-legend',
-  templateUrl: './edm-goal-question-legend.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'edm-goal-question-legend',
+    templateUrl: './edm-goal-question-legend.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 
 export class EDMGoalQuestionLegend implements OnInit {

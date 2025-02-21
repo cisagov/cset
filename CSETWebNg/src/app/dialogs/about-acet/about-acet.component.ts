@@ -28,10 +28,11 @@ import { VersionService } from '../../services/version.service';
 
 
 @Component({
-  selector: 'app-about-acet',
-  templateUrl: './about-acet.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-about-acet',
+    templateUrl: './about-acet.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 
 

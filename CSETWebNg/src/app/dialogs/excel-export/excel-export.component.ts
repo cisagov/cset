@@ -27,10 +27,11 @@ import { ConfigService } from '../../services/config.service';
 import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
-  selector: 'excel-export',
-  templateUrl: './excel-export.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'excel-export',
+    templateUrl: './excel-export.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class ExcelExportComponent {
 

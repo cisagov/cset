@@ -25,9 +25,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ReportService } from '../../../../services/report.service';
 
 @Component({
-  selector: 'app-c2m2-summary-results',
-  templateUrl: './c2m2-summary-results.component.html',
-  styleUrls: ['../c2m2-report.component.scss', '../../../reports.scss']
+    selector: 'app-c2m2-summary-results',
+    templateUrl: './c2m2-summary-results.component.html',
+    styleUrls: ['../c2m2-report.component.scss', '../../../reports.scss'],
+    standalone: false
 })
 export class C2m2SummaryResultsComponent implements OnInit {
 

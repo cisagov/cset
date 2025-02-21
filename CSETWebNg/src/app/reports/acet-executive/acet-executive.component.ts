@@ -32,9 +32,10 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
-  selector: 'app-acet-executive',
-  templateUrl: './acet-executive.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss', '../../assessment/results/acet-detail/acet-detail.component.scss']
+    selector: 'app-acet-executive',
+    templateUrl: './acet-executive.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss', '../../assessment/results/acet-detail/acet-detail.component.scss'],
+    standalone: false
 })
 export class AcetExecutiveComponent implements OnInit {
   response: any = null;

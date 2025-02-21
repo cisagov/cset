@@ -29,11 +29,12 @@ import { QuestionFilterService } from '../../services/filtering/question-filter.
 import { QuestionsService } from '../../services/questions.service';
 
 @Component({
-  selector: 'app-question-filters-reports',
-  templateUrl: './question-filters-reports.component.html',
-  // eslint-disable-next-line
-  styleUrls: ['../../reports/reports.scss', '../../reports/acet-reports.scss'],
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-question-filters-reports',
+    templateUrl: './question-filters-reports.component.html',
+    // eslint-disable-next-line
+    styleUrls: ['../../reports/reports.scss', '../../reports/acet-reports.scss'],
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class QuestionFiltersReportsComponent implements OnInit {
 

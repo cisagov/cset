@@ -28,9 +28,10 @@ import { BehaviorSubject } from 'rxjs';
 import { AssessmentService } from '../../../../services/assessment.service';
 import * as $ from 'jquery';
 @Component({
-  selector: 'app-vadr-gaps',
-  templateUrl: './vadr-gaps.component.html',
-  styleUrls: ['./vadr-gaps.component.scss']
+    selector: 'app-vadr-gaps',
+    templateUrl: './vadr-gaps.component.html',
+    styleUrls: ['./vadr-gaps.component.scss'],
+    standalone: false
 })
 export class VadrGapsComponent implements OnInit {
   initialized = false;

@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -1335,9 +1335,8 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         provideTranslocoScope('tutorial', 'reports'),
         ConfigService,
         AuthenticationService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: (configSvc: ConfigService, authSvc: AuthenticationService, tSvc: TranslocoService) => {
+        provideAppInitializer(() => {
+        const initializerFn = ((configSvc: ConfigService, authSvc: AuthenticationService, tSvc: TranslocoService) => {
                 return () => {
                     return configSvc.loadConfig().then(() => {
                         // Load and set the language based on config
@@ -1350,10 +1349,9 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
                         });
                     });
                 };
-            },
-            deps: [ConfigService, AuthenticationService, TranslocoService],
-            multi: true
-        },
+            })(inject(ConfigService), inject(AuthenticationService), inject(TranslocoService));
+        return initializerFn();
+      }),
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,

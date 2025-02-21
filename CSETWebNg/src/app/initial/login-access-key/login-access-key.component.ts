@@ -35,9 +35,10 @@ import { ChangePasswordComponent } from '../../dialogs/change-password/change-pa
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 
 @Component({
-  selector: 'app-login-access-key',
-  templateUrl: './login-access-key.component.html',
-  styleUrls: ['./login-access-key.component.scss']
+    selector: 'app-login-access-key',
+    templateUrl: './login-access-key.component.html',
+    styleUrls: ['./login-access-key.component.scss'],
+    standalone: false
 })
 export class LoginAccessKeyComponent implements OnInit {
   skin: string = 'CSET';

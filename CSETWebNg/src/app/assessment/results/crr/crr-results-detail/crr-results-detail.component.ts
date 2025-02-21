@@ -29,9 +29,10 @@ import { MaturityService } from '../../../../services/maturity.service';
 import { ReportService } from '../../../../services/report.service';
 
 @Component({
-  selector: 'app-crr-results-detail',
-  templateUrl: './crr-results-detail.component.html',
-  styleUrls: ['../../../../reports/reports.scss']
+    selector: 'app-crr-results-detail',
+    templateUrl: './crr-results-detail.component.html',
+    styleUrls: ['../../../../reports/reports.scss'],
+    standalone: false
 })
 export class CrrResultsDetailComponent implements OnInit {
 

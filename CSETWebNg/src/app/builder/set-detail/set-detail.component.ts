@@ -30,10 +30,11 @@ import { ModuleAddCloneComponent } from '../module-add-clone/module-add-clone.co
 import { OkayComponent } from '../../dialogs/okay/okay.component';
 
 @Component({
-  selector: 'app-set-detail',
-  templateUrl: './set-detail.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-set-detail',
+    templateUrl: './set-detail.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
 export class CustomSetComponent implements OnInit {
 

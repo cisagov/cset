@@ -6,7 +6,8 @@ import {Component, ElementRef, HostListener, HostBinding, Input, OnInit, EventEm
     host: {
         'class': 'tooltip'
     },
-    styleUrls: ['./tooltip.component.sass']
+    styleUrls: ['./tooltip.component.sass'],
+    standalone: false
 })
 
 export class TooltipComponent {

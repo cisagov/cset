@@ -34,9 +34,10 @@ import { JwtParser } from '../../helpers/jwt-parser';
 import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
 
 @Component({
-  selector: 'app-login-cset',
-  templateUrl: './login-cset.component.html',
-  styleUrls: ['./login-cset.component.scss']
+    selector: 'app-login-cset',
+    templateUrl: './login-cset.component.html',
+    styleUrls: ['./login-cset.component.scss'],
+    standalone: false
 })
 export class LoginCsetComponent implements OnInit {
 

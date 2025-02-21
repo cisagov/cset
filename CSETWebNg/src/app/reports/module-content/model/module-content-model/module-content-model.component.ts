@@ -29,9 +29,10 @@ import { Title } from '@angular/platform-browser';
  * The page-level wrapper for a Module Content Report containing a (Maturity) Model.
  */
 @Component({
-  selector: 'app-module-content-model',
-  templateUrl: './module-content-model.component.html',
-  styleUrls: ['./module-content-model.component.scss']
+    selector: 'app-module-content-model',
+    templateUrl: './module-content-model.component.html',
+    styleUrls: ['./module-content-model.component.scss'],
+    standalone: false
 })
 export class ModuleContentModelComponent implements OnInit {
 

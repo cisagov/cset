@@ -31,10 +31,11 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
-  selector: 'app-standards-results',
-  templateUrl: './standards-results.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-standards-results',
+    templateUrl: './standards-results.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class StandardsResultsComponent implements OnInit {
 

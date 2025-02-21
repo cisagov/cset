@@ -31,10 +31,10 @@ import * as $ from 'jquery';
 import { BehaviorSubject } from 'rxjs';
 import { ChartService } from '../../../services/chart.service';
 @Component({
-  selector: 'sitesummary',
-  templateUrl: './sitesummary-cmmc.component.html',
-  styleUrls: ['../../reports.scss'],
-  // providers: [CmmcStyleService]
+    selector: 'sitesummary',
+    templateUrl: './sitesummary-cmmc.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, AfterViewInit {
 

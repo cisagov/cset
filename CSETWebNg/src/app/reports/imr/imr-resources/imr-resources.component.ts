@@ -25,9 +25,10 @@ import { Component, Input } from '@angular/core';
 
 
 @Component({
-  selector: 'app-imr-resources',
-  templateUrl: './imr-resources.component.html',
-  styleUrls: ['../imr-report/imr-report.component.scss', '../../reports.scss']
+    selector: 'app-imr-resources',
+    templateUrl: './imr-resources.component.html',
+    styleUrls: ['../imr-report/imr-report.component.scss', '../../reports.scss'],
+    standalone: false
 })
 export class ImrResourcesComponent {
 

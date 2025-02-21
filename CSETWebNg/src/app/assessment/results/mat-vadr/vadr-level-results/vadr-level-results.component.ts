@@ -27,10 +27,11 @@ import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
-  selector: 'app-vadr-level-results',
-  templateUrl: './vadr-level-results.component.html',
-  styleUrls: ['./vadr-level-results.component.scss'],
-  host: { class: 'd-flex flex-column flex-11a' },
+    selector: 'app-vadr-level-results',
+    templateUrl: './vadr-level-results.component.html',
+    styleUrls: ['./vadr-level-results.component.scss'],
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class VadrLevelResultsComponent implements OnInit {
   initialized = false;

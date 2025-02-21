@@ -32,9 +32,10 @@ import { QuestionsService } from '../../../services/questions.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-cpg-deficiency',
-  templateUrl: './cpg-deficiency.component.html',
-  styleUrls: ['./cpg-deficiency.component.scss', '../../reports.scss']
+    selector: 'app-cpg-deficiency',
+    templateUrl: './cpg-deficiency.component.html',
+    styleUrls: ['./cpg-deficiency.component.scss', '../../reports.scss'],
+    standalone: false
 })
 export class CpgDeficiencyComponent implements OnInit {
 

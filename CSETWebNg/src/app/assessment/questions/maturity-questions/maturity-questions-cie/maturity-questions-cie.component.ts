@@ -44,9 +44,10 @@ import { CieService } from '../../../../services/cie.service';
 
 
 @Component({
-  selector: 'app-maturity-questions-cie',
-  templateUrl: './maturity-questions-cie.component.html',
-  styleUrls: ['./maturity-questions-cie.component.scss']
+    selector: 'app-maturity-questions-cie',
+    templateUrl: './maturity-questions-cie.component.html',
+    styleUrls: ['./maturity-questions-cie.component.scss'],
+    standalone: false
 })
 export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
 

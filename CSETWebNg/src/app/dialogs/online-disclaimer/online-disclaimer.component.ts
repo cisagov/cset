@@ -25,8 +25,9 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-online-disclaimer',
-  templateUrl: './online-disclaimer.component.html'
+    selector: 'app-online-disclaimer',
+    templateUrl: './online-disclaimer.component.html',
+    standalone: false
 })
 export class OnlineDisclaimerComponent {
 

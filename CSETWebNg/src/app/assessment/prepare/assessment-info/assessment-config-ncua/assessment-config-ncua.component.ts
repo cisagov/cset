@@ -31,8 +31,9 @@ import { NCUAService } from '../../../../services/ncua.service';
 import { FeatureOptionNcuaComponent } from './feature-option-ncua/feature-option-ncua.component';
 
 @Component({
-  selector: 'app-assessment-config-ncua',
-  templateUrl: './assessment-config-ncua.component.html'
+    selector: 'app-assessment-config-ncua',
+    templateUrl: './assessment-config-ncua.component.html',
+    standalone: false
 })
 export class AssessmentConfigNcuaComponent implements OnInit, AfterViewInit {
 

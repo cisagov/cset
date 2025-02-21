@@ -38,8 +38,9 @@ import { TranslocoService } from '@jsverse/transloco';
  * question vs the selected level of this control.
  */
 @Component({
-  selector: 'app-domain-maturity-filter',
-  templateUrl: './domain-maturity-filter.component.html'
+    selector: 'app-domain-maturity-filter',
+    templateUrl: './domain-maturity-filter.component.html',
+    standalone: false
 })
 export class DomainMaturityFilterComponent implements OnInit {
 

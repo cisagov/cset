@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { SsgService } from '../../../../services/ssg.service';
 
 @Component({
-  selector: 'app-cpg-practices',
-  templateUrl: './cpg-practices.component.html',
-  styleUrls: ['./cpg-practices.component.scss']
+    selector: 'app-cpg-practices',
+    templateUrl: './cpg-practices.component.html',
+    styleUrls: ['./cpg-practices.component.scss'],
+    standalone: false
 })
 export class CpgPracticesComponent implements OnInit {
 

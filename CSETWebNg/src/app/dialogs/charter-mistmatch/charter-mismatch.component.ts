@@ -25,8 +25,9 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'charter-mismatch',
-  templateUrl: 'charter-mismatch.component.html',
+    selector: 'charter-mismatch',
+    templateUrl: 'charter-mismatch.component.html',
+    standalone: false
 })
 export class CharterMismatchComponent {
 

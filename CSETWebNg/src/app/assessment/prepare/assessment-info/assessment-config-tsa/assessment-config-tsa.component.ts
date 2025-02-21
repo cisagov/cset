@@ -31,9 +31,10 @@ import { TsaService } from '../../../../services/tsa.service';
 
 
 @Component({
-  selector: 'app-assessment-config-tsa',
-  templateUrl: './assessment-config-tsa.component.html',
-  styleUrls: ['./assessment-config-tsa.component.scss']
+    selector: 'app-assessment-config-tsa',
+    templateUrl: './assessment-config-tsa.component.html',
+    styleUrls: ['./assessment-config-tsa.component.scss'],
+    standalone: false
 })
 export class AssessmentConfigTsaComponent implements OnInit {
 

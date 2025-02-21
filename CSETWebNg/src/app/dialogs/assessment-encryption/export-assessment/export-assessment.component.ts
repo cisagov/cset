@@ -26,9 +26,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
-  selector: 'app-export-assessment',
-  templateUrl: './export-assessment.component.html',
-  styleUrls: ['./export-assessment.component.scss']
+    selector: 'app-export-assessment',
+    templateUrl: './export-assessment.component.html',
+    styleUrls: ['./export-assessment.component.scss'],
+    standalone: false
 })
 export class ExportAssessmentComponent {
   preventEncrypt: any;

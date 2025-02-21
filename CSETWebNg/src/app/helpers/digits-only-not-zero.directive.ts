@@ -25,7 +25,8 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[digitsOnlyNotZero]'
+    selector: '[digitsOnlyNotZero]',
+    standalone: false
 })
 export class DigitsOnlyNotZeroDirective {
 

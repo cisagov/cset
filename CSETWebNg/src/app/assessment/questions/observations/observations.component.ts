@@ -30,11 +30,12 @@ import * as _ from 'lodash';
 import { ConfigService } from '../../../services/config.service';
 
 @Component({
-  selector: 'app-observations',
-  templateUrl: './observations.component.html',
-  host: {
-    'style': 'max-width: 100%'
-  }
+    selector: 'app-observations',
+    templateUrl: './observations.component.html',
+    host: {
+        'style': 'max-width: 100%'
+    },
+    standalone: false
 })
 export class ObservationsComponent implements OnInit {
 

@@ -27,10 +27,11 @@ import { ConfigService } from '../../services/config.service';
 import { VersionService } from '../../services/version.service';
 
 @Component({
-  selector: 'app-about-cset',
-  templateUrl: './about-cset.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-about-cset',
+    templateUrl: './about-cset.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class AboutCsetComponent implements OnInit {
   version: any;

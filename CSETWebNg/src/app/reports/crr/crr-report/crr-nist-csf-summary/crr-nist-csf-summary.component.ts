@@ -26,9 +26,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
-  selector: 'app-crr-nist-csf-summary',
-  templateUrl: './crr-nist-csf-summary.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+    selector: 'app-crr-nist-csf-summary',
+    templateUrl: './crr-nist-csf-summary.component.html',
+    styleUrls: ['./../crr-report.component.scss'],
+    standalone: false
 })
 export class CrrNistCsfSummaryComponent implements OnInit {
   @Input() model: CmuReportModel;

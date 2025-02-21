@@ -32,9 +32,10 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
-  selector: 'executive',
-  templateUrl: './executive-cmmc2.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'executive',
+    templateUrl: './executive-cmmc2.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
   loadingLevels = true;

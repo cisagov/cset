@@ -32,7 +32,8 @@ import { TranslocoService } from '@jsverse/transloco';
     templateUrl: './accessibility-statement.component.html',
     styleUrls: ['./accessibility-statement.component.scss'],
     // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' }
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class AccessibilityStatementComponent {
 

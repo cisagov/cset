@@ -30,11 +30,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { Aggregation } from '../../models/aggregation.model';
 
 @Component({
-  selector: 'app-aggregation-home',
-  templateUrl: './aggregation-home.component.html',
-  styleUrls: ['./aggregation-home.component.scss'],
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a trend-table-width' }
+    selector: 'app-aggregation-home',
+    templateUrl: './aggregation-home.component.html',
+    styleUrls: ['./aggregation-home.component.scss'],
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a trend-table-width' },
+    standalone: false
 })
 export class AggregationHomeComponent implements OnInit {
 

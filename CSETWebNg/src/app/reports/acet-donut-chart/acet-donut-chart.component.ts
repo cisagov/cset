@@ -30,9 +30,10 @@ import { ACETService } from '../../services/acet.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-acet-donut-chart',
-  templateUrl: './acet-donut-chart.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-acet-donut-chart',
+    templateUrl: './acet-donut-chart.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class AcetDonutChartComponent implements OnInit, OnChanges {
   @Input()

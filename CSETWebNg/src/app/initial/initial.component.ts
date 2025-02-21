@@ -24,10 +24,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-initial',
-  templateUrl: './initial.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-initial',
+    templateUrl: './initial.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
 export class InitialComponent implements OnInit {
 

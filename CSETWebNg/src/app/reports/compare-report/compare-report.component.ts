@@ -33,9 +33,10 @@ import { ColorService } from '../../services/color.service';
 
 
 @Component({
-  selector: 'compare-report',
-  templateUrl: './compare-report.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'compare-report',
+    templateUrl: './compare-report.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 
 export class CompareReportComponent implements OnInit, AfterViewChecked {

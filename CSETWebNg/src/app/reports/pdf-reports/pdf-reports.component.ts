@@ -27,9 +27,10 @@ import { HttpClient } from '@angular/common/http';
 
 
 @Component({
-  selector: 'app-pdf-reports',
-  templateUrl: './pdf-reports.component.html',
-  styleUrls: ['./pdf-reports.component.scss']
+    selector: 'app-pdf-reports',
+    templateUrl: './pdf-reports.component.html',
+    styleUrls: ['./pdf-reports.component.scss'],
+    standalone: false
 })
 
 export class PdfReportsComponent implements OnInit, AfterViewInit {

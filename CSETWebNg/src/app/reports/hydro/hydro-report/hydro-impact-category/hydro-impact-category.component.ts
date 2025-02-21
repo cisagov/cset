@@ -7,9 +7,10 @@ import { QuestionsService } from '../../../../services/questions.service';
 import { ReportService } from '../../../../services/report.service';
 
 @Component({
-  selector: 'app-hydro-impact-category',
-  templateUrl: './hydro-impact-category.component.html',
-  styleUrls: ['./hydro-impact-category.component.scss']
+    selector: 'app-hydro-impact-category',
+    templateUrl: './hydro-impact-category.component.html',
+    styleUrls: ['./hydro-impact-category.component.scss'],
+    standalone: false
 })
 export class HydroImpactCategoryComponent implements OnInit {
   facilityName: string = 'My Facility';

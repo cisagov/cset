@@ -33,10 +33,12 @@ import { VadrDataService } from '../../../services/vadr-data.service';
 import { MaturityService } from '../../../services/maturity.service';
 
 @Component({
-  selector: 'app-vadr-report',
-  templateUrl: './vadr-report.component.html',
-  styleUrls: ['../../reports.scss']
-  // styleUrls: ['./vadr-report.component.scss']
+    selector: 'app-vadr-report',
+    templateUrl: './vadr-report.component.html',
+    styleUrls: ['../../reports.scss']
+    // styleUrls: ['./vadr-report.component.scss']
+    ,
+    standalone: false
 })
 export class VadrReportComponent implements OnInit {
   mainResponse: any;

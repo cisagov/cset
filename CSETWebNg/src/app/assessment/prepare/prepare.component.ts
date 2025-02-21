@@ -28,10 +28,11 @@ import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { NavigationService } from "../../services/navigation/navigation.service";
 
 @Component({
-  selector: "app-prepare",
-  templateUrl: "./prepare.component.html",
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: "app-prepare",
+    templateUrl: "./prepare.component.html",
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class PrepareComponent implements OnInit {
 

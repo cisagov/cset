@@ -28,8 +28,9 @@ import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
-  selector: 'app-builder-breadcrumbs',
-  templateUrl: './builder-breadcrumbs.component.html'
+    selector: 'app-builder-breadcrumbs',
+    templateUrl: './builder-breadcrumbs.component.html',
+    standalone: false
 })
 export class BuilderBreadcrumbsComponent implements AfterContentInit {
 

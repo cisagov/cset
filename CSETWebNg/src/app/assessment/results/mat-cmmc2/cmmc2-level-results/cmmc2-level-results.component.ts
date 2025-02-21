@@ -29,10 +29,11 @@ import { ChartService } from '../../../../services/chart.service';
 import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
-  selector: 'app-cmmc2-level-results',
-  templateUrl: './cmmc2-level-results.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-cmmc2-level-results',
+    templateUrl: './cmmc2-level-results.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class Cmmc2LevelResultsComponent implements OnInit, AfterContentInit {
 

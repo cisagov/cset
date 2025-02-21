@@ -25,8 +25,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogActions } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-malcolm-upload-error',
-  templateUrl: './malcolm-upload-error.component.html'
+    selector: 'app-malcolm-upload-error',
+    templateUrl: './malcolm-upload-error.component.html',
+    standalone: false
 })
 export class MalcolmUploadErrorComponent implements OnInit {
   isFileMode: boolean = true;

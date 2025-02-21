@@ -26,9 +26,10 @@ import { CmuReportModel } from '../../../../models/reports.model';
 import { CmuService } from './../../../../services/cmu.service';
 
 @Component({
-  selector: 'app-crr-nist-csf-cat-summary',
-  templateUrl: './crr-nist-csf-cat-summary.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+    selector: 'app-crr-nist-csf-cat-summary',
+    templateUrl: './crr-nist-csf-cat-summary.component.html',
+    styleUrls: ['./../crr-report.component.scss'],
+    standalone: false
 })
 export class CrrNistCsfCatSummaryComponent implements OnInit {
   @Input() model: CmuReportModel;

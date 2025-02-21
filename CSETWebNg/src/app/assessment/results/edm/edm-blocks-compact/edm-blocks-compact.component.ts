@@ -25,9 +25,10 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
-  selector: 'app-edm-blocks-compact',
-  templateUrl: './edm-blocks-compact.component.html',
-  styleUrls: ['./edm-blocks-compact.component.scss', '../../../../reports/reports.scss']
+    selector: 'app-edm-blocks-compact',
+    templateUrl: './edm-blocks-compact.component.html',
+    styleUrls: ['./edm-blocks-compact.component.scss', '../../../../reports/reports.scss'],
+    standalone: false
 })
 export class EdmBlocksCompactComponent implements OnInit, OnChanges {
 

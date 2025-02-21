@@ -36,9 +36,10 @@ import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'physical-summary',
-  templateUrl: './physical-summary.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'physical-summary',
+    templateUrl: './physical-summary.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class PhysicalSummaryComponent implements OnInit, AfterViewInit {
   chartStandardsSummary: Chart;

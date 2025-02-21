@@ -24,8 +24,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-acet-origin',
-  templateUrl: './acet-origin.component.html'
+    selector: 'app-acet-origin',
+    templateUrl: './acet-origin.component.html',
+    standalone: false
 })
 export class AcetOriginComponent implements OnInit {
 

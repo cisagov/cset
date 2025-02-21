@@ -24,8 +24,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'layout-blank',
-  templateUrl: './layout-blank.component.html'
+    selector: 'layout-blank',
+    templateUrl: './layout-blank.component.html',
+    standalone: false
 })
 export class LayoutBlankComponent {
 

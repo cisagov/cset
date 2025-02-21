@@ -24,9 +24,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-cmmc2-level3-score',
-  templateUrl: './cmmc2-level3-score.component.html',
-  styleUrl: './cmmc2-level3-score.component.scss'
+    selector: 'app-cmmc2-level3-score',
+    templateUrl: './cmmc2-level3-score.component.html',
+    styleUrl: './cmmc2-level3-score.component.scss',
+    standalone: false
 })
 export class Cmmc2Level3ScoreComponent {
 

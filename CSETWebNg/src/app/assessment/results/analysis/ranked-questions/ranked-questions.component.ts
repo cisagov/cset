@@ -29,10 +29,11 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import { QuestionsService } from '../../../../services/questions.service';
 
 @Component({
-  selector: 'app-ranked-questions',
-  templateUrl: './ranked-questions.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-ranked-questions',
+    templateUrl: './ranked-questions.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class RankedQuestionsComponent implements OnInit {
   dataRows: {
