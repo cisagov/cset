@@ -22,6 +22,7 @@ SOFTWARE.
 
 */
 @charset "UTF-8";
+@use "sass:color";
 @use "../../../sass/mixins";
 @use "../../../sass/sal";
 @use "@angular/material/prebuilt-themes/indigo-pink.css";
@@ -255,12 +256,12 @@ a {
 
 .checkbox-custom:disabled+.checkbox-custom-label:before,
 .radio-custom:disabled+.radio-custom-label:before {
-  border-color: lighten($secondary-color, 35%);
+  border-color: color.adjust($secondary-color, $lightness: 35%);
 }
 
 .checkbox-custom:disabled:checked+.checkbox-custom-label:before,
 .radio-custom:disabled+.radio-custom-label:before {
-  background-color: lighten($secondary-color, 35%);
+  background-color: color.adjust($secondary-color, $lightness: 35%);
 }
 
 //////////////////////////////////////////////////////////////////
