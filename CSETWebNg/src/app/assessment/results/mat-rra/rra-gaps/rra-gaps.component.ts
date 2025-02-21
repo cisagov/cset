@@ -26,15 +26,15 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import { MaturityService } from '../../../../services/maturity.service';
 import { BehaviorSubject } from 'rxjs';
 import { AssessmentService } from '../../../../services/assessment.service';
-import * as $ from 'jquery';
+import $ from 'jquery';
 
 @Component({
-    selector: 'app-rra-gaps',
-    templateUrl: './rra-gaps.component.html',
-    // eslint-disable-next-line
-    styleUrls: ['./rra-gaps.component.scss'],
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-rra-gaps',
+  templateUrl: './rra-gaps.component.html',
+  // eslint-disable-next-line
+  styleUrls: ['./rra-gaps.component.scss'],
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class RraGapsComponent implements OnInit {
 

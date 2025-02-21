@@ -26,12 +26,12 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import { MaturityService } from '../../../../services/maturity.service';
 import { BehaviorSubject } from 'rxjs';
 import { AssessmentService } from '../../../../services/assessment.service';
-import * as $ from 'jquery';
+import $ from 'jquery';
 @Component({
-    selector: 'app-vadr-gaps',
-    templateUrl: './vadr-gaps.component.html',
-    styleUrls: ['./vadr-gaps.component.scss'],
-    standalone: false
+  selector: 'app-vadr-gaps',
+  templateUrl: './vadr-gaps.component.html',
+  styleUrls: ['./vadr-gaps.component.scss'],
+  standalone: false
 })
 export class VadrGapsComponent implements OnInit {
   initialized = false;

@@ -27,14 +27,14 @@ import { ReportService } from '../../../services/report.service';
 import { ConfigService } from '../../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { CmmcStyleService } from '../../../services/cmmc-style.service';
-import * as $ from 'jquery';
+import $ from 'jquery';
 import { BehaviorSubject } from 'rxjs';
 import { ChartService } from '../../../services/chart.service';
 @Component({
-    selector: 'sitesummary',
-    templateUrl: './sitesummary-cmmc.component.html',
-    styleUrls: ['../../reports.scss'],
-    standalone: false
+  selector: 'sitesummary',
+  templateUrl: './sitesummary-cmmc.component.html',
+  styleUrls: ['../../reports.scss'],
+  standalone: false
 })
 export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, AfterViewInit {
 
