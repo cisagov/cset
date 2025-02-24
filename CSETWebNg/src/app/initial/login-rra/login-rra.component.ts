@@ -32,9 +32,10 @@ import { ConfigService } from '../../services/config.service';
 import { EmailService } from '../../services/email.service';
 
 @Component({
-  selector: 'app-login-rra',
-  templateUrl: './login-rra.component.html',
-  styleUrls: ['./login-rra.component.scss', '../../layout/styles-rra.scss']
+    selector: 'app-login-rra',
+    templateUrl: './login-rra.component.html',
+    styleUrls: ['./login-rra.component.scss', '../../layout/styles-rra.scss'],
+    standalone: false
 })
 export class LoginRraComponent implements OnInit {
 

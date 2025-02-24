@@ -31,9 +31,10 @@ import { QuestionsService } from '../../../services/questions.service';
 
 
 @Component({
-  selector: 'app-vadr-deficiency',
-  templateUrl: './vadr-deficiency.component.html',
-  styleUrls: ['../../reports.scss', '../../acet-reports.scss']
+    selector: 'app-vadr-deficiency',
+    templateUrl: './vadr-deficiency.component.html',
+    styleUrls: ['../../reports.scss', '../../acet-reports.scss'],
+    standalone: false
 })
 export class VadrDeficiencyComponent implements OnInit {
 

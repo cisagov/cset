@@ -14,9 +14,10 @@ import { QuestionFiltersReportsComponent } from '../../../dialogs/question-filte
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 
 @Component({
-  selector: 'app-cie-not-applicable',
-  templateUrl: './cie-not-applicable.component.html',
-  styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-not-applicable.component.scss']
+    selector: 'app-cie-not-applicable',
+    templateUrl: './cie-not-applicable.component.html',
+    styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-not-applicable.component.scss'],
+    standalone: false
 })
 export class CieNotApplicableComponent {
 

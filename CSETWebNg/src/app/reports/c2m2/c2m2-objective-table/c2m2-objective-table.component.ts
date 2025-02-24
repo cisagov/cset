@@ -24,9 +24,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-c2m2-objective-table',
-  templateUrl: './c2m2-objective-table.component.html',
-  styleUrls: ['./c2m2-objective-table.component.scss']
+    selector: 'app-c2m2-objective-table',
+    templateUrl: './c2m2-objective-table.component.html',
+    styleUrls: ['./c2m2-objective-table.component.scss'],
+    standalone: false
 })
 export class C2m2ObjectiveTableComponent implements OnInit {
 

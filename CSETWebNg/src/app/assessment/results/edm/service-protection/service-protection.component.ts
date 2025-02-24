@@ -26,9 +26,10 @@ import { MaturityService } from '../../../../services/maturity.service';
 import { MaturityQuestionResponse } from '../../../../models/questions.model';
 
 @Component({
-  selector: 'app-service-protection',
-  templateUrl: './service-protection.component.html',
-  styleUrls: ['./service-protection.component.scss']
+    selector: 'app-service-protection',
+    templateUrl: './service-protection.component.html',
+    styleUrls: ['./service-protection.component.scss'],
+    standalone: false
 })
 export class ServiceProtectionComponent implements OnInit {
 

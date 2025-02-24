@@ -24,9 +24,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-edm-acronyms',
-  templateUrl: './edm-acronyms.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'app-edm-acronyms',
+    templateUrl: './edm-acronyms.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class EdmAcronymsComponent implements OnInit {
 

@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { VadrDataService } from '../../../../services/vadr-data.service';
 
 @Component({
-  selector: 'app-vadr-questions-scoring',
-  templateUrl: './vadr-questions-scoring.component.html',
-  styleUrls: ['./vadr-questions-scoring.component.scss']
+    selector: 'app-vadr-questions-scoring',
+    templateUrl: './vadr-questions-scoring.component.html',
+    styleUrls: ['./vadr-questions-scoring.component.scss'],
+    standalone: false
 })
 export class VadrQuestionsScoringComponent implements OnInit {
 

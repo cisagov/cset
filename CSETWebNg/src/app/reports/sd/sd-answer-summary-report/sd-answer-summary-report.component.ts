@@ -27,9 +27,10 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { QuestionsNestedService } from '../../../services/questions-nested.service';
 
 @Component({
-  selector: 'app-sd-answer-summary-report',
-  templateUrl: './sd-answer-summary-report.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'app-sd-answer-summary-report',
+    templateUrl: './sd-answer-summary-report.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class SdAnswerSummaryReportComponent implements OnInit {
   domains: any[] = [];

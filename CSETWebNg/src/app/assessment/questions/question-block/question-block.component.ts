@@ -39,9 +39,10 @@ import { LinebreakPipe } from '../../../helpers/linebreak.pipe';
  * Represents the display container of a single subcategory with its member questions.
  */
 @Component({
-  selector: 'app-question-block',
-  templateUrl: './question-block.component.html',
-  styleUrls: ['./question-block.component.css']
+    selector: 'app-question-block',
+    templateUrl: './question-block.component.html',
+    styleUrls: ['./question-block.component.css'],
+    standalone: false
 })
 export class QuestionBlockComponent implements OnInit {
 

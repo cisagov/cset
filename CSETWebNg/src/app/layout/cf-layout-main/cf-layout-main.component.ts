@@ -33,12 +33,13 @@ import { FileUploadClientService } from '../../services/file-client.service';
 import { LayoutService } from '../../services/layout.service';
 
 @Component({
-  selector: 'cf-layout-main',
-  templateUrl: './cf-layout-main.component.html',
-  styleUrls: ['./cf-layout-main.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
+    selector: 'cf-layout-main',
+    templateUrl: './cf-layout-main.component.html',
+    styleUrls: ['./cf-layout-main.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
+    standalone: false
 })
 export class CfLayoutMainComponent {
 

@@ -27,9 +27,10 @@ import { ConfigService } from '../../services/config.service';
 import { VersionService } from '../../services/version.service';
 
 @Component({
-  selector: 'app-about-cie',
-  templateUrl: './about-cie.component.html',
-  styleUrls: ['./about-cie.component.scss']
+    selector: 'app-about-cie',
+    templateUrl: './about-cie.component.html',
+    styleUrls: ['./about-cie.component.scss'],
+    standalone: false
 })
 export class AboutCieComponent {
   version: any;

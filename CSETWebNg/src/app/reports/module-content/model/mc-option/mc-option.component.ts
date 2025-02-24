@@ -24,9 +24,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-mc-option',
-  templateUrl: './mc-option.component.html',
-  styleUrls: ['./mc-option.component.scss']
+    selector: 'app-mc-option',
+    templateUrl: './mc-option.component.html',
+    styleUrls: ['./mc-option.component.scss'],
+    standalone: false
 })
 export class McOptionComponent implements OnInit {
 

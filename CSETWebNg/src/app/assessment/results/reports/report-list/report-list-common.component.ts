@@ -7,8 +7,9 @@ import { ReportService } from '../../../../services/report.service';
 
 
 @Component({
-  selector: 'app-report-list-common',
-  templateUrl: './report-list-common.component.html'
+    selector: 'app-report-list-common',
+    templateUrl: './report-list-common.component.html',
+    standalone: false
 })
 
 export class ReportListCommonComponent implements OnChanges {

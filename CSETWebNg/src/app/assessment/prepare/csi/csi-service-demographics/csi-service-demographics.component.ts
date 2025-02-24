@@ -34,10 +34,11 @@ import { ConfigService } from './../../../../services/config.service';
 import { DemographicService } from '../../../../services/demographic.service';
 
 @Component({
-  selector: 'app-csi-service-demographics',
-  templateUrl: './csi-service-demographics.component.html',
-  host: { class: 'd-flex flex-column flex-11a' },
-  styleUrls: ['./csi-service-demographics.component.scss']
+    selector: 'app-csi-service-demographics',
+    templateUrl: './csi-service-demographics.component.html',
+    host: { class: 'd-flex flex-column flex-11a' },
+    styleUrls: ['./csi-service-demographics.component.scss'],
+    standalone: false
 })
 export class CsiServiceDemographicsComponent implements OnInit {
   csiServiceDemographic: CsiServiceDemographic = {};

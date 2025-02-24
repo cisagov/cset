@@ -5,9 +5,10 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { MaturityLevel } from '../../../../models/maturity.model';
 
 @Component({
-  selector: 'app-cmmc2-levels',
-  templateUrl: './cmmc2-levels.component.html',
-  styleUrls: ['./cmmc2-levels.component.scss']
+    selector: 'app-cmmc2-levels',
+    templateUrl: './cmmc2-levels.component.html',
+    styleUrls: ['./cmmc2-levels.component.scss'],
+    standalone: false
 })
 export class Cmmc2LevelsComponent {
 

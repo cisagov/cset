@@ -39,10 +39,11 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { QuestionFiltersReportsComponent } from '../../../dialogs/question-filters-reports/question-filters-reports.component';
 
 @Component({
-  selector: 'app-cie-mfr-report',
-  templateUrl: './cie-mfr-report.component.html',
-  styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-mfr-report.component.scss'],
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-cie-mfr-report',
+    templateUrl: './cie-mfr-report.component.html',
+    styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-mfr-report.component.scss'],
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 
 export class CieMfrReportComponent implements OnInit {

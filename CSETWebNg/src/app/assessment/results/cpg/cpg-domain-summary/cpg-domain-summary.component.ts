@@ -24,9 +24,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-cpg-domain-summary',
-  templateUrl: './cpg-domain-summary.component.html',
-  styleUrls: ['./cpg-domain-summary.component.scss']
+    selector: 'app-cpg-domain-summary',
+    templateUrl: './cpg-domain-summary.component.html',
+    styleUrls: ['./cpg-domain-summary.component.scss'],
+    standalone: false
 })
 export class CpgDomainSummaryComponent implements OnInit {
 

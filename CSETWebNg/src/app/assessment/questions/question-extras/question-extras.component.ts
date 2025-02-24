@@ -45,12 +45,13 @@ import { CieService } from '../../../services/cie.service';
 
 
 @Component({
-  selector: 'app-question-extras',
-  templateUrl: './question-extras.component.html',
-  styleUrls: ['./question-extras.component.css'],
-  encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-question-extras',
+    templateUrl: './question-extras.component.html',
+    styleUrls: ['./question-extras.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class QuestionExtrasComponent implements OnInit {
 

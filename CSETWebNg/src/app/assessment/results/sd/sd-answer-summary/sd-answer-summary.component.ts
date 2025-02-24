@@ -3,9 +3,10 @@ import { QuestionsNestedService } from '../../../../services/questions-nested.se
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
-  selector: 'app-sd-answer-summary',
-  templateUrl: './sd-answer-summary.component.html',
-  styleUrls: ['./sd-answer-summary.component.scss']
+    selector: 'app-sd-answer-summary',
+    templateUrl: './sd-answer-summary.component.html',
+    styleUrls: ['./sd-answer-summary.component.scss'],
+    standalone: false
 })
 export class SdAnswerSummaryComponent implements OnInit {
 

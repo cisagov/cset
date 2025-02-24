@@ -26,10 +26,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
 import { VersionService } from '../../services/version.service';
 @Component({
-  selector: 'app-about-tsa',
-  templateUrl: './about-tsa.component.html',
-  // styleUrls: ['./about-tsa.component.scss'],
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-about-tsa',
+    templateUrl: './about-tsa.component.html',
+    // styleUrls: ['./about-tsa.component.scss'],
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class AboutTsaComponent implements OnInit {
 

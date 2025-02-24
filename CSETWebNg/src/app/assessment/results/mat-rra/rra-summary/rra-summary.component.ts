@@ -27,9 +27,10 @@ import { RraDataService } from '../../../../services/rra-data.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-rra-summary',
-  templateUrl: './rra-summary.component.html',
-  styleUrls: ['./rra-summary.component.scss']
+    selector: 'app-rra-summary',
+    templateUrl: './rra-summary.component.html',
+    styleUrls: ['./rra-summary.component.scss'],
+    standalone: false
 })
 export class RraSummaryComponent implements OnInit {
   @Input() title = "Summary";

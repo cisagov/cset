@@ -29,10 +29,11 @@ import { ChartService } from '../../../../services/chart.service';
 
 
 @Component({
-  selector: 'app-cmmc2-domain-results',
-  templateUrl: './cmmc2-domain-results.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-cmmc2-domain-results',
+    templateUrl: './cmmc2-domain-results.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class Cmmc2DomainResultsComponent implements OnInit, AfterContentInit {
 

@@ -29,8 +29,9 @@ import { MaturityService } from '../../../../services/maturity.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-assessment-config',
-  templateUrl: './assessment-config.component.html'
+    selector: 'app-assessment-config',
+    templateUrl: './assessment-config.component.html',
+    standalone: false
 })
 export class AssessmentConfigComponent implements OnInit {
 

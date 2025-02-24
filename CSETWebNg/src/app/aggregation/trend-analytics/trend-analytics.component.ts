@@ -31,10 +31,11 @@ import { ConfigService } from '../../services/config.service';
 import Chart from 'chart.js/auto';
 
 @Component({
-  selector: 'app-trend-analytics',
-  templateUrl: './trend-analytics.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-trend-analytics',
+    templateUrl: './trend-analytics.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class TrendAnalyticsComponent implements OnInit {
 

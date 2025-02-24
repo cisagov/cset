@@ -32,10 +32,11 @@ import { NCUAService } from '../../services/ncua.service';
 import { ImportDemographicService } from './../../services/import-demographic.service';
 
 @Component({
-  selector: 'app-import-demographics',
-  templateUrl: './import-demographics.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
+    selector: 'app-import-demographics',
+    templateUrl: './import-demographics.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
+    standalone: false
 })
 export class UploadDemographicsComponent implements OnInit {
 

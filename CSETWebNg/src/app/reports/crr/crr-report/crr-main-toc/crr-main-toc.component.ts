@@ -25,9 +25,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
-  selector: 'app-crr-main-toc',
-  templateUrl: './crr-main-toc.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+    selector: 'app-crr-main-toc',
+    templateUrl: './crr-main-toc.component.html',
+    styleUrls: ['./../crr-report.component.scss'],
+    standalone: false
 })
 export class CrrMainTocComponent implements OnInit {
   @Input() model: CmuReportModel;

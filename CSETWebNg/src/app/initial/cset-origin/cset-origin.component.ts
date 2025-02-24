@@ -24,8 +24,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-cset-origin',
-  templateUrl: './cset-origin.component.html'
+    selector: 'app-cset-origin',
+    templateUrl: './cset-origin.component.html',
+    standalone: false
 })
 export class CsetOriginComponent {
 

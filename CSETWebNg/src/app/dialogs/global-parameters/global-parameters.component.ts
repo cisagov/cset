@@ -27,10 +27,11 @@ import { QuestionsService } from '../../services/questions.service';
 import { DefaultParameter } from '../../models/questions.model';
 
 @Component({
-  selector: 'app-global-parameters',
-  templateUrl: './global-parameters.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-global-parameters',
+    templateUrl: './global-parameters.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class GlobalParametersComponent implements OnInit {
 

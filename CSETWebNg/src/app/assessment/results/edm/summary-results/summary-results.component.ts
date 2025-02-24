@@ -24,9 +24,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-summary-results',
-  templateUrl: './summary-results.component.html',
-  styleUrls: ['./summary-results.component.scss']
+    selector: 'app-summary-results',
+    templateUrl: './summary-results.component.html',
+    styleUrls: ['./summary-results.component.scss'],
+    standalone: false
 })
 export class SummaryResultsComponent implements OnInit {
 

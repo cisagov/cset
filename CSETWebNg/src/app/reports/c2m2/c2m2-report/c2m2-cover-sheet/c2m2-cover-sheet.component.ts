@@ -24,9 +24,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-c2m2-cover-sheet',
-  templateUrl: './c2m2-cover-sheet.component.html',
-  styleUrls: ['../c2m2-report.component.scss', '../../../reports.scss']
+    selector: 'app-c2m2-cover-sheet',
+    templateUrl: './c2m2-cover-sheet.component.html',
+    styleUrls: ['../c2m2-report.component.scss', '../../../reports.scss'],
+    standalone: false
 })
 export class C2m2CoverSheetComponent implements OnInit {
 

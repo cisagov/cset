@@ -27,9 +27,10 @@ import { ConfigService } from '../../services/config.service';
 import { VersionService } from '../../services/version.service';
 
 @Component({
-  selector: 'app-about-renew',
-  templateUrl: './about-renew.component.html',
-  styleUrls: ['./about-renew.component.scss']
+    selector: 'app-about-renew',
+    templateUrl: './about-renew.component.html',
+    styleUrls: ['./about-renew.component.scss'],
+    standalone: false
 })
 export class AboutRenewComponent implements OnInit {
   version: any;

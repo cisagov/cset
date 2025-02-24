@@ -29,8 +29,9 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import Chart from 'chart.js/auto';
 
 @Component({
-  selector: 'app-components-ranked',
-  templateUrl: './components-ranked.component.html'
+    selector: 'app-components-ranked',
+    templateUrl: './components-ranked.component.html',
+    standalone: false
 })
 export class ComponentsRankedComponent implements OnInit {
   canvasComponentRank: Chart;

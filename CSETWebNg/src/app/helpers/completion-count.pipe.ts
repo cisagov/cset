@@ -11,7 +11,10 @@ import { TranslocoService } from '@jsverse/transloco';
  * The pipe can be defined as pure as long as the source object includes the current language
  * so that a language change in the Transloco service will trigger the pipe.
  */
-@Pipe({ name: 'completionCount' })
+@Pipe({
+    name: 'completionCount',
+    standalone: false
+})
 export class CompletionCountPipe implements PipeTransform {
 
     constructor(private tSvc: TranslocoService) { }

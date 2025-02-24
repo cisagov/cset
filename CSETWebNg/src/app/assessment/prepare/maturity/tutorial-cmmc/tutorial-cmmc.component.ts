@@ -28,9 +28,10 @@ import { ResourceLibraryService } from '../../../../services/resource-library.se
 
 
 @Component({
-  selector: 'app-tutorial-cmmc',
-  templateUrl: './tutorial-cmmc.component.html',
-  styleUrls: ['./tutorial-cmmc.component.scss']
+    selector: 'app-tutorial-cmmc',
+    templateUrl: './tutorial-cmmc.component.html',
+    styleUrls: ['./tutorial-cmmc.component.scss'],
+    standalone: false
 })
 export class TutorialCmmcComponent {
 

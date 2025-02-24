@@ -26,8 +26,9 @@ import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
-  selector: 'app-tutorial-edm',
-  templateUrl: './tutorial-edm.component.html'
+    selector: 'app-tutorial-edm',
+    templateUrl: './tutorial-edm.component.html',
+    standalone: false
 })
 export class TutorialEdmComponent implements OnInit {
 

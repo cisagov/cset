@@ -32,7 +32,8 @@ import { NCUAService } from '../../../services/ncua.service';
 
 @Component({
     selector: 'app-irp-ise-summary',
-    templateUrl: './irp-ise-summary.component.html'
+    templateUrl: './irp-ise-summary.component.html',
+    standalone: false
 })
 export class ExamProfileSummaryComponent implements OnInit {
 

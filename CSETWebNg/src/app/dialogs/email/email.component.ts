@@ -30,10 +30,11 @@ import { ConfigService } from '../../services/config.service';
 import { EmailService } from '../../services/email.service';
 
 @Component({
-  selector: 'app-email',
-  templateUrl: './email.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-email',
+    templateUrl: './email.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class EmailComponent implements OnInit {
   showContacts = true;

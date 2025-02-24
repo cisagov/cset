@@ -31,10 +31,11 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 
 export class RegisterComponent implements OnInit {
