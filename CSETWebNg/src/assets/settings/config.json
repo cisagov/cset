@@ -30,7 +30,7 @@
   "debug": {
     "showCmmcConversion": true,
     "showBuildTime": false,
-    "showQuestionAndRequirementIDs": true,
+    "showQuestionAndRequirementIDs": false,
     "canDeleteCustomModules": true,
     "showExportAllButton": false
   },
