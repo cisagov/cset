@@ -35,9 +35,10 @@ import { JwtParser } from '../../helpers/jwt-parser';
 
 
 @Component({
-  selector: 'app-login-cf',
-  templateUrl: './login-cf.component.html',
-  styleUrls: ['./login-cf.component.scss']
+    selector: 'app-login-cf',
+    templateUrl: './login-cf.component.html',
+    styleUrls: ['./login-cf.component.scss'],
+    standalone: false
 })
 export class LoginCfComponent implements OnInit {
 

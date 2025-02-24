@@ -24,9 +24,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-edm-source-references',
-  templateUrl: './edm-source-references.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'app-edm-source-references',
+    templateUrl: './edm-source-references.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class EdmSourceReferencesComponent implements OnInit {
 

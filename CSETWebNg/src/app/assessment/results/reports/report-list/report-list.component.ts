@@ -16,9 +16,10 @@ import { MaturityService } from '../../../../services/maturity.service';
  * property.
  */
 @Component({
-  selector: 'app-report-list',
-  templateUrl: './report-list.component.html',
-  styleUrls: ['./report-list.component.scss']
+    selector: 'app-report-list',
+    templateUrl: './report-list.component.html',
+    styleUrls: ['./report-list.component.scss'],
+    standalone: false
 })
 export class ReportListComponent implements OnInit {
 

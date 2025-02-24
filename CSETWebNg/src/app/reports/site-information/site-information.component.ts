@@ -3,9 +3,10 @@ import { ReportService } from '../../services/report.service';
 import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
-  selector: 'app-site-information',
-  templateUrl: './site-information.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-site-information',
+    templateUrl: './site-information.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class SiteInformationComponent {
 

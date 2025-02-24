@@ -24,8 +24,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-glossary-term',
-  templateUrl: './glossary-term.component.html'
+    selector: 'app-glossary-term',
+    templateUrl: './glossary-term.component.html',
+    standalone: false
 })
 export class GlossaryTermComponent implements OnInit {
 

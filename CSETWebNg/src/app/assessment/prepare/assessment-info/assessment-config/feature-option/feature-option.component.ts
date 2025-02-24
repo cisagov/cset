@@ -28,9 +28,10 @@ import { MaturityService } from '../../../../../services/maturity.service';
 import { NavigationService } from '../../../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-feature-option',
-  templateUrl: './feature-option.component.html',
-  styleUrls: ['./feature-option.component.scss']
+    selector: 'app-feature-option',
+    templateUrl: './feature-option.component.html',
+    styleUrls: ['./feature-option.component.scss'],
+    standalone: false
 })
 export class FeatureOptionComponent implements OnInit {
 

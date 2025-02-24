@@ -34,7 +34,8 @@ import { NavigationService } from '../../../services/navigation/navigation.servi
 @Component({
     selector: 'app-admin',
     templateUrl: './admin.component.html',
-    styleUrls: ['./admin.component.scss']
+    styleUrls: ['./admin.component.scss'],
+    standalone: false
 })
 export class AdminComponent implements OnInit {
     constructor(private router: Router,

@@ -28,9 +28,10 @@ import { ReportService } from '../../services/report.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'observations',
-  templateUrl: './observation-tearouts.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'observations',
+    templateUrl: './observation-tearouts.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class ObservationTearoutsComponent implements OnInit {
 

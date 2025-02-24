@@ -24,8 +24,9 @@
 import { Directive, Input, OnChanges, ElementRef } from '@angular/core';
 
 @Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
-  selector: '[focusOnInit]'
+    // eslint-disable-next-line @angular-eslint/directive-selector
+    selector: '[focusOnInit]',
+    standalone: false
 })
 export class FocusDirective implements OnChanges {
 

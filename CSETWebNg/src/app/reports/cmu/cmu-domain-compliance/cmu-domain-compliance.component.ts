@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-cmu-domain-compliance',
-  templateUrl: './cmu-domain-compliance.component.html',
-  styleUrls: ['./cmu-domain-compliance.component.scss']
+    selector: 'app-cmu-domain-compliance',
+    templateUrl: './cmu-domain-compliance.component.html',
+    styleUrls: ['./cmu-domain-compliance.component.scss'],
+    standalone: false
 })
 export class CmuDomainComplianceComponent implements OnChanges {
 

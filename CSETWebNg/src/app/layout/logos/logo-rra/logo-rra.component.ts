@@ -24,9 +24,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-logo-rra',
-  templateUrl: './logo-rra.component.html',
-  styleUrls: ['./logo-rra.component.scss']
+    selector: 'app-logo-rra',
+    templateUrl: './logo-rra.component.html',
+    styleUrls: ['./logo-rra.component.scss'],
+    standalone: false
 })
 export class LogoRraComponent {
 

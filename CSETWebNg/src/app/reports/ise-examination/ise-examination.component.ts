@@ -33,9 +33,10 @@ import { ObservationsService } from '../../services/observations.service';
 import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
-  selector: 'app-ise-examination',
-  templateUrl: './ise-examination.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-ise-examination',
+    templateUrl: './ise-examination.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class IseExaminationComponent implements OnInit {
   response: any = {};

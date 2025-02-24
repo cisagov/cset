@@ -26,8 +26,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
-  selector: 'app-tutorial-rra',
-  templateUrl: './tutorial-rra.component.html'
+    selector: 'app-tutorial-rra',
+    templateUrl: './tutorial-rra.component.html',
+    standalone: false
 })
 export class TutorialRraComponent implements OnInit {
 

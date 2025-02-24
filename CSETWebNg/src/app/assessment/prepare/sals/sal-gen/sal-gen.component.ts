@@ -32,10 +32,11 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
-  selector: 'app-sal-gen',
-  templateUrl: './sal-gen.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-sal-gen',
+    templateUrl: './sal-gen.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class SalGenComponent implements OnInit {
 

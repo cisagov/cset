@@ -26,9 +26,10 @@ import { CmuReportModel } from '../../../../models/reports.model';
 import { CmuService } from '../../../../services/cmu.service';
 
 @Component({
-  selector: 'app-crr-performance-summary',
-  templateUrl: './crr-performance-summary.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+    selector: 'app-crr-performance-summary',
+    templateUrl: './crr-performance-summary.component.html',
+    styleUrls: ['./../crr-report.component.scss'],
+    standalone: false
 })
 export class CrrPerformanceSummaryComponent implements OnInit {
   @Input() model: CmuReportModel;

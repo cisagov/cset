@@ -30,9 +30,10 @@ import { SsgService } from '../../../services/ssg.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-cpg-report',
-  templateUrl: './cpg-report.component.html',
-  styleUrls: ['./cpg-report.component.scss', '../../reports.scss']
+    selector: 'app-cpg-report',
+    templateUrl: './cpg-report.component.html',
+    styleUrls: ['./cpg-report.component.scss', '../../reports.scss'],
+    standalone: false
 })
 export class CpgReportComponent implements OnInit {
   loading = false;

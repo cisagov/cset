@@ -8,7 +8,8 @@ import { DiagramService } from '../../../services/diagram.service';
 @Component({
     selector: 'app-malcolm-instructions',
     templateUrl: './malcolm-instructions.component.html',
-    styleUrls: ['./malcolm-instructions.component.scss']
+    styleUrls: ['./malcolm-instructions.component.scss'],
+    standalone: false
 })
 export class MalcolmInstructionsComponent {
     iperror: boolean;

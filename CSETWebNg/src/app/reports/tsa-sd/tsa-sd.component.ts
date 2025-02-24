@@ -4,9 +4,10 @@ import { AssessmentService } from '../../services/assessment.service';
 import { MaturityService } from '../../services/maturity.service';
 
 @Component({
-  selector: 'app-tsa-sd',
-  templateUrl: './tsa-sd.component.html',
-  styleUrls: ['./tsa-sd.component.scss', '../reports.scss']
+    selector: 'app-tsa-sd',
+    templateUrl: './tsa-sd.component.html',
+    styleUrls: ['./tsa-sd.component.scss', '../reports.scss'],
+    standalone: false
 })
 export class TsaSdComponent implements OnInit {
 

@@ -27,9 +27,10 @@ import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
 
 @Component({
-  selector: 'links',
-  templateUrl: './links.component.html',
-  styleUrls: ['./links.component.scss']
+    selector: 'links',
+    templateUrl: './links.component.html',
+    styleUrls: ['./links.component.scss'],
+    standalone: false
 })
 export class LinksComponent implements OnInit {
   links = [];

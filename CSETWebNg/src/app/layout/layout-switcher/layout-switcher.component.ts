@@ -25,11 +25,12 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
-  selector: 'layout-switcher',
-  templateUrl: './layout-switcher.component.html',
-  encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line
-  host: { class: 'h-100' }
+    selector: 'layout-switcher',
+    templateUrl: './layout-switcher.component.html',
+    encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line
+    host: { class: 'h-100' },
+    standalone: false
 })
 
 export class LayoutSwitcherComponent implements OnInit {

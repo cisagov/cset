@@ -35,8 +35,9 @@ import { MalcolmService } from '../../../../../services/malcolm.service';
 
 
 @Component({
-  selector: 'app-question-block-nested',
-  templateUrl: './question-block-nested.component.html'
+    selector: 'app-question-block-nested',
+    templateUrl: './question-block-nested.component.html',
+    standalone: false
 })
 export class QuestionBlockNestedComponent implements OnInit {
 

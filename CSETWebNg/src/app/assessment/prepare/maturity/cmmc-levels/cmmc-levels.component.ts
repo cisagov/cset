@@ -29,8 +29,9 @@ import { MaturityLevel } from '../../../../models/maturity.model';
 
 
 @Component({
-  selector: 'app-cmmc-levels',
-  templateUrl: './cmmc-levels.component.html'
+    selector: 'app-cmmc-levels',
+    templateUrl: './cmmc-levels.component.html',
+    standalone: false
 })
 export class CmmcLevelsComponent implements OnInit {
 

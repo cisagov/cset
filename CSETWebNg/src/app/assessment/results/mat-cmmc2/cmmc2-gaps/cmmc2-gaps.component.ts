@@ -26,7 +26,7 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import { MaturityService } from '../../../../../app/services/maturity.service';
 import { BehaviorSubject } from 'rxjs';
 import { AssessmentService } from '../../../../services/assessment.service';
-import * as $ from 'jquery';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-cmmc-gaps',

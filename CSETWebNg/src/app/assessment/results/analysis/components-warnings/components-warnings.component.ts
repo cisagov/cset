@@ -28,8 +28,9 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-components-warnings',
-  templateUrl: './components-warnings.component.html'
+    selector: 'app-components-warnings',
+    templateUrl: './components-warnings.component.html',
+    standalone: false
 })
 export class ComponentsWarningsComponent implements OnInit {
 

@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { CmmcStyleService } from '../../../../../services/cmmc-style.service';
 
 @Component({
-  selector: 'app-compliance-score',
-  templateUrl: './compliance-score.component.html',
-  styleUrls: ['../../../../../../sass/cmmc-results.scss']
+    selector: 'app-compliance-score',
+    templateUrl: './compliance-score.component.html',
+    styleUrls: ['../../../../../../sass/cmmc-results.scss'],
+    standalone: false
 })
 export class ComplianceScoreComponent implements OnInit {
 

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-hydro-acronyms',
-  templateUrl: './hydro-acronyms.component.html',
-  styleUrls: ['./hydro-acronyms.component.scss']
+    selector: 'app-hydro-acronyms',
+    templateUrl: './hydro-acronyms.component.html',
+    styleUrls: ['./hydro-acronyms.component.scss'],
+    standalone: false
 })
 export class HydroAcronymsComponent {
 

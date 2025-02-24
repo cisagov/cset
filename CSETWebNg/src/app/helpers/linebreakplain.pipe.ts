@@ -27,7 +27,10 @@ import { Pipe, PipeTransform } from '@angular/core';
  * Converts linefeed characters to HTML '<br />' tags
  * without trying to preserve any HTML in the string.
  */
-@Pipe({ name: 'linebreakplain' })
+@Pipe({
+    name: 'linebreakplain',
+    standalone: false
+})
 export class LinebreakPlaintextPipe implements PipeTransform {
    transform(text: string): string {
       return text?.replace(/(?:\r\n|\r|\n)/g, '<br />');

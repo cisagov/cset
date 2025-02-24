@@ -24,9 +24,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-c2m2-model-architecture',
-  templateUrl: './c2m2-model-architecture.component.html',
-  styleUrls: ['../c2m2-report.component.scss', '../../../reports.scss']
+    selector: 'app-c2m2-model-architecture',
+    templateUrl: './c2m2-model-architecture.component.html',
+    styleUrls: ['../c2m2-report.component.scss', '../../../reports.scss'],
+    standalone: false
 })
 export class C2m2ModelArchitectureComponent implements OnInit {
 

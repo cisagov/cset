@@ -28,9 +28,10 @@ import { LayoutService } from '../../../../services/layout.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-tutorial-cis',
-  templateUrl: './tutorial-cis.component.html',
-  styleUrls: ['./tutorial-cis.component.scss']
+    selector: 'app-tutorial-cis',
+    templateUrl: './tutorial-cis.component.html',
+    styleUrls: ['./tutorial-cis.component.scss'],
+    standalone: false
 })
 export class TutorialCisComponent implements OnInit {
 

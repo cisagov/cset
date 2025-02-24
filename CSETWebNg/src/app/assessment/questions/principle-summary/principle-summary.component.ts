@@ -15,9 +15,10 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-principle-summary',
-  templateUrl: './principle-summary.component.html',
-  styleUrls: ['./principle-summary.component.scss']
+    selector: 'app-principle-summary',
+    templateUrl: './principle-summary.component.html',
+    styleUrls: ['./principle-summary.component.scss'],
+    standalone: false
 })
 export class PrincipleSummaryComponent implements OnInit {
   http: any;

@@ -26,10 +26,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../../services/config.service';
 
 @Component({
-  selector: 'ncua-excel-export',
-  templateUrl: './ncua-excel-export.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'ncua-excel-export',
+    templateUrl: './ncua-excel-export.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class NcuaExcelExportComponent {
 

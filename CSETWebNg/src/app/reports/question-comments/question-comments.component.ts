@@ -27,9 +27,10 @@ import { ReportService } from '../../services/report.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-question-comments',
-  templateUrl: './question-comments.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-question-comments',
+    templateUrl: './question-comments.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class QuestionCommentsComponent {
 

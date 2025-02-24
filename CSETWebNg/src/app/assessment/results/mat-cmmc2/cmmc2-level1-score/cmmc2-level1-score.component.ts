@@ -26,9 +26,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { TsaService } from '../../../../services/tsa.service';
 
 @Component({
-  selector: 'app-cmmc2-level1-score',
-  templateUrl: './cmmc2-level1-score.component.html',
-  styleUrl: './cmmc2-level1-score.component.scss'
+    selector: 'app-cmmc2-level1-score',
+    templateUrl: './cmmc2-level1-score.component.html',
+    styleUrl: './cmmc2-level1-score.component.scss',
+    standalone: false
 })
 export class Cmmc2Level1ScoreComponent {
 

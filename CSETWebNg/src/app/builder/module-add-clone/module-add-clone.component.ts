@@ -31,9 +31,10 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'app-module-add-clone',
-  templateUrl: './module-add-clone.component.html',
-  styleUrls: ['./module-add-clone.component.scss']
+    selector: 'app-module-add-clone',
+    templateUrl: './module-add-clone.component.html',
+    styleUrls: ['./module-add-clone.component.scss'],
+    standalone: false
 })
 export class ModuleAddCloneComponent implements OnInit {
   warning: boolean = false;

@@ -29,9 +29,10 @@ import { ConfigService } from '../../services/config.service';
 import { ACETService } from '../../services/acet.service';
 
 @Component({
-  selector: 'app-irp-section',
-  templateUrl: './irp.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-irp-section',
+    templateUrl: './irp.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class IrpSectionComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @Input()

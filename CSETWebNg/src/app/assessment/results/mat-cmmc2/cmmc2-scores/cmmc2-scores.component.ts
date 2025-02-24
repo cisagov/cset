@@ -26,9 +26,10 @@ import { MaturityService } from '../../../../services/maturity.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 
 @Component({
-  selector: 'app-cmmc2-scores',
-  templateUrl: './cmmc2-scores.component.html',
-  styleUrl: './cmmc2-scores.component.scss'
+    selector: 'app-cmmc2-scores',
+    templateUrl: './cmmc2-scores.component.html',
+    styleUrl: './cmmc2-scores.component.scss',
+    standalone: false
 })
 export class Cmmc2ScoresComponent implements OnInit {
 

@@ -38,10 +38,11 @@ import { DateTime } from 'luxon';
 
 
 @Component({
-  selector: 'app-assessment-detail-ncua',
-  templateUrl: './assessment-detail-ncua.component.html',
-  styleUrls: ['./assessment-detail-ncua.component.scss'],
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-assessment-detail-ncua',
+    templateUrl: './assessment-detail-ncua.component.html',
+    styleUrls: ['./assessment-detail-ncua.component.scss'],
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 
 /**

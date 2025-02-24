@@ -28,8 +28,9 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import Chart from 'chart.js/auto';
 @Component({
-  selector: 'app-components-results',
-  templateUrl: './components-results.component.html'
+    selector: 'app-components-results',
+    templateUrl: './components-results.component.html',
+    standalone: false
 })
 export class ComponentsResultsComponent implements OnInit {
   canvasComponentCompliance: Chart;

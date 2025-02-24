@@ -29,9 +29,10 @@ import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component'
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-diagram-components',
-  templateUrl: './diagram-components.component.html',
-  styleUrls: ['./diagram-components.component.scss']
+    selector: 'app-diagram-components',
+    templateUrl: './diagram-components.component.html',
+    styleUrls: ['./diagram-components.component.scss'],
+    standalone: false
 })
 export class DiagramComponentsComponent implements OnInit {
 
