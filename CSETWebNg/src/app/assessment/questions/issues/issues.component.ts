@@ -93,43 +93,43 @@ export class IssuesComponent implements OnInit {
 
     this.questionsSvc.getDetails(this.questionID, questionType).subscribe((details) => {
       this.suppGuidance = this.cleanText(details.listTabs[0].requirementsData.supplementalFact);
-    });
 
-    // Grab the finding from the db if there is one.
-    this.observationSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, questionType).subscribe((response: Observation) => {
+      // Grab the finding from the db if there is one.
+      this.observationSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, questionType).subscribe((response: Observation) => {
 
-      this.observation = response;
-      this.observation.title = this.issueTitle; // using the temp name we set earlier so it's not "overriden" for the user
+        this.observation = response;
+        this.observation.title = this.issueTitle; // using the temp name we set earlier so it's not "overriden" for the user
 
-      this.questionsSvc.getActionItems(this.questionID, this.observation.observation_Id).subscribe(
-        (data: any) => {
-          this.actionItems = data;
+        this.questionsSvc.getActionItems(this.questionID, this.observation.observation_Id).subscribe(
+          (data: any) => {
+            this.actionItems = data;
 
-          this.observation.risk_Area = this.risk;
-          this.observation.sub_Risk = this.subRisk;
+            this.observation.risk_Area = this.risk;
+            this.observation.sub_Risk = this.subRisk;
 
-          if (this.autoGen === 1) {
-            this.observation.auto_Generated = 1;
-          } else if (this.autoGen === 0 && this.observation.auto_Generated !== 1) {
-            this.observation.auto_Generated = 0;
-          }
+            if (this.autoGen === 1) {
+              this.observation.auto_Generated = 1;
+            } else if (this.autoGen === 0 && this.observation.auto_Generated !== 1) {
+              this.observation.auto_Generated = 0;
+            }
 
-          if (this.observation.title === null) {
-            this.observation.title = this.issueTitle;
-          }
+            if (this.observation.title === null) {
+              this.observation.title = this.issueTitle;
+            }
 
-          if (this.observation.auto_Generated === 1 && this.observation.description === '') {
-            this.observation.description = this.actionItems[0]?.description;
-          }
+            if (this.observation.auto_Generated === 1 && this.observation.description === '') {
+              this.observation.description = this.actionItems[0]?.description;
+            }
 
-          if (this.observation.supp_Guidance === null) {
-            this.observation.supp_Guidance = this.suppGuidance;
-          }
+            if (this.observation.supp_Guidance === null) {
+              this.observation.supp_Guidance = this.suppGuidance;
+            }
 
-          this.answerID = this.observation.answer_Id;
-          this.questionID = this.observation.question_Id;
+            this.answerID = this.observation.answer_Id;
+            this.questionID = this.observation.question_Id;
 
-          this.loading = false;
+            this.loading = false;
+          });
         });
     });
   }
