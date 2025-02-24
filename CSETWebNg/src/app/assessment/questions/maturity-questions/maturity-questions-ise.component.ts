@@ -40,8 +40,9 @@ import { CompletionService } from '../../../services/completion.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-maturity-questions-ise',
-  templateUrl: './maturity-questions-ise.component.html'
+    selector: 'app-maturity-questions-ise',
+    templateUrl: './maturity-questions-ise.component.html',
+    standalone: false
 })
 export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
 

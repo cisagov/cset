@@ -28,8 +28,9 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-components-summary',
-  templateUrl: './components-summary.component.html'
+    selector: 'app-components-summary',
+    templateUrl: './components-summary.component.html',
+    standalone: false
 })
 export class ComponentsSummaryComponent implements OnInit {
 

@@ -26,8 +26,9 @@ import { CisService } from '../../../../services/cis.service';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
-  selector: 'app-section-scoring',
-  templateUrl: './section-scoring.component.html'
+    selector: 'app-section-scoring',
+    templateUrl: './section-scoring.component.html',
+    standalone: false
 })
 export class SectionScoringComponent implements OnInit {
 

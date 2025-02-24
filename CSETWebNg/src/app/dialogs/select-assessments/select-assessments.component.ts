@@ -42,8 +42,9 @@ interface UserAssessment {
 }
 
 @Component({
-  selector: 'app-select-assessments',
-  templateUrl: './select-assessments.component.html'
+    selector: 'app-select-assessments',
+    templateUrl: './select-assessments.component.html',
+    standalone: false
 })
 export class SelectAssessmentsComponent implements OnInit {
 

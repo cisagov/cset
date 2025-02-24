@@ -33,9 +33,10 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
-  selector: 'securityplan',
-  templateUrl: './securityplan.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'securityplan',
+    templateUrl: './securityplan.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class SecurityplanComponent implements OnInit {
   translationSub: any;

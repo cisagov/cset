@@ -30,9 +30,10 @@ import { ReportService } from '../../../services/report.service';
 import { CmuService } from '../../../services/cmu.service';
 
 @Component({
-  selector: 'app-cmu-domain-detail-table',
-  templateUrl: './cmu-domain-detail-table.component.html',
-  styleUrls: ['./cmu-domain-detail-table.component.scss', '../../reports.scss']
+    selector: 'app-cmu-domain-detail-table',
+    templateUrl: './cmu-domain-detail-table.component.html',
+    styleUrls: ['./cmu-domain-detail-table.component.scss', '../../reports.scss'],
+    standalone: false
 })
 export class CmuResultsDetailComponent implements OnChanges {
   @Input()

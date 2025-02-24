@@ -26,8 +26,9 @@ import { CmuService } from '../../../../services/cmu.service';
 import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
-  selector: 'app-crr-summary-results',
-  templateUrl: './crr-summary-results.component.html'
+    selector: 'app-crr-summary-results',
+    templateUrl: './crr-summary-results.component.html',
+    standalone: false
 })
 export class CrrSummaryResultsComponent implements OnInit {
   summaryResult: any = '';

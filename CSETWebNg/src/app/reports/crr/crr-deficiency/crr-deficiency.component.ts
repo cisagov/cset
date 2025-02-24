@@ -29,9 +29,10 @@ import { QuestionsService } from '../../../services/questions.service';
 import { CmuService } from './../../../services/cmu.service';
 
 @Component({
-  selector: 'app-crr-deficiency',
-  templateUrl: './crr-deficiency.component.html',
-  styleUrls: ['./../crr-report/crr-report.component.scss']
+    selector: 'app-crr-deficiency',
+    templateUrl: './crr-deficiency.component.html',
+    styleUrls: ['./../crr-report/crr-report.component.scss'],
+    standalone: false
 })
 export class CrrDeficiencyComponent implements OnInit {
   crrModel: CmuReportModel;

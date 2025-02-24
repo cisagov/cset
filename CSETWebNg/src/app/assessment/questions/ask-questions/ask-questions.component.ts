@@ -24,9 +24,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-ask-questions',
-  templateUrl: './ask-questions.component.html',
-  styleUrls: ['./ask-questions.component.scss']
+    selector: 'app-ask-questions',
+    templateUrl: './ask-questions.component.html',
+    styleUrls: ['./ask-questions.component.scss'],
+    standalone: false
 })
 export class AskQuestionsComponent implements OnInit {
 

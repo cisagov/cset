@@ -31,10 +31,10 @@ import Chart from 'chart.js/auto';
 import { ChartService } from '../../../services/chart.service';
 import { ConfigService } from '../../../services/config.service';
 @Component({
-  selector: 'executive',
-  templateUrl: './executive-cmmc.component.html',
-  styleUrls: ['../../reports.scss'],
-  // providers:  [ CmmcStyleService ]
+    selector: 'executive',
+    templateUrl: './executive-cmmc.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class ExecutiveCMMCComponent implements OnInit, AfterViewChecked {
   response: any;

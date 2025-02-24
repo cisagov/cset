@@ -31,12 +31,13 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
-  selector: 'app-change-password',
-  templateUrl: './change-password.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' },
-  styleUrls: ['./change-password.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-change-password',
+    templateUrl: './change-password.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    styleUrls: ['./change-password.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ChangePasswordComponent implements OnInit {
   message = '';

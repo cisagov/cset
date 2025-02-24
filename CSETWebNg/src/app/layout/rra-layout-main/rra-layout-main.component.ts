@@ -33,12 +33,13 @@ import { LayoutService } from '../../services/layout.service';
 
 
 @Component({
-  selector: 'rra-layout-main',
-  templateUrl: './rra-layout-main.component.html',
-  styleUrls: ['./rra-layout-main.component.scss', '../styles-rra.scss'],
-  encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
+    selector: 'rra-layout-main',
+    templateUrl: './rra-layout-main.component.html',
+    styleUrls: ['./rra-layout-main.component.scss', '../styles-rra.scss'],
+    encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
+    standalone: false
 })
 export class RraLayoutMainComponent {
 

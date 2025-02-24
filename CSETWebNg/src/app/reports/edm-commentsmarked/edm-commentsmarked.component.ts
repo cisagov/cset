@@ -30,9 +30,10 @@ import { Title, DomSanitizer } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 
 @Component({
-  selector: 'app-edm-commentsmarked',
-  templateUrl: './edm-commentsmarked.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-edm-commentsmarked',
+    templateUrl: './edm-commentsmarked.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class EdmCommentsmarkedComponent implements OnInit {
   response: any = null;

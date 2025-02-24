@@ -27,8 +27,9 @@ import { LayoutService } from '../../../../services/layout.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-tutorial-cpg',
-  templateUrl: './tutorial-cpg.component.html'
+    selector: 'app-tutorial-cpg',
+    templateUrl: './tutorial-cpg.component.html',
+    standalone: false
 })
 export class TutorialCpgComponent implements OnInit {
 

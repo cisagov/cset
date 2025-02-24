@@ -65,7 +65,8 @@ interface ImportExportData {
     selector: 'app-assessment-demographics',
     templateUrl: './assessment-demographics.component.html',
     // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' }
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class AssessmentDemographicsComponent implements OnInit {
     @ViewChild('assetValueSelect') assetValueSelect: ElementRef;

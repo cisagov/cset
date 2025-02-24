@@ -31,10 +31,11 @@ import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 
 
 @Component({
-  selector: 'app-requirement-detail',
-  templateUrl: './requirement-detail.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-requirement-detail',
+    templateUrl: './requirement-detail.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
 export class RequirementDetailComponent implements OnInit {
 

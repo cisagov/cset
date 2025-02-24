@@ -24,9 +24,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-logo-tsa',
-  templateUrl: './logo-tsa.component.html',
-  styleUrls: ['./logo-tsa.component.scss']
+    selector: 'app-logo-tsa',
+    templateUrl: './logo-tsa.component.html',
+    styleUrls: ['./logo-tsa.component.scss'],
+    standalone: false
 })
 export class LogoTsaComponent implements OnInit {
 

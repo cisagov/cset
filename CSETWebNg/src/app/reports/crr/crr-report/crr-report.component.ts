@@ -30,9 +30,10 @@ import { ReportService } from '../../../services/report.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-crr-report',
-  templateUrl: './crr-report.component.html',
-  styleUrls: ['./crr-report.component.scss']
+    selector: 'app-crr-report',
+    templateUrl: './crr-report.component.html',
+    styleUrls: ['./crr-report.component.scss'],
+    standalone: false
 })
 export class CrrReportComponent implements OnInit {
   cmuModel: CmuReportModel;

@@ -6,8 +6,9 @@ import { TranslocoService } from '@jsverse/transloco';
  * one or more of the required fields are not complete.
  */
 @Component({
-  selector: 'app-cisa-workflow-warnings',
-  templateUrl: './cisa-workflow-warnings.component.html'
+    selector: 'app-cisa-workflow-warnings',
+    templateUrl: './cisa-workflow-warnings.component.html',
+    standalone: false
 })
 export class CisaWorkflowWarningsComponent {
 

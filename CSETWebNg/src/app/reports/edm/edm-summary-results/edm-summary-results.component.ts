@@ -26,9 +26,10 @@ import { MaturityService } from '../../../services/maturity.service';
 
 
 @Component({
-  selector: 'app-edm-summary-results',
-  templateUrl: './edm-summary-results.component.html',
-  styleUrls: ['./edm-summary-results.component.scss']
+    selector: 'app-edm-summary-results',
+    templateUrl: './edm-summary-results.component.html',
+    styleUrls: ['./edm-summary-results.component.scss'],
+    standalone: false
 })
 export class EdmSummaryResultsComponent implements OnInit {
 

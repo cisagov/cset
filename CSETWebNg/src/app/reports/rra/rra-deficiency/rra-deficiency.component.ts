@@ -32,9 +32,10 @@ import { RraDataService } from '../../../services/rra-data.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-rra-deficiency',
-  templateUrl: './rra-deficiency.component.html',
-  styleUrls: ['../../reports.scss', '../../acet-reports.scss']
+    selector: 'app-rra-deficiency',
+    templateUrl: './rra-deficiency.component.html',
+    styleUrls: ['../../reports.scss', '../../acet-reports.scss'],
+    standalone: false
 })
 export class RraDeficiencyComponent implements OnInit {
   response: any;

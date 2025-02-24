@@ -25,10 +25,11 @@ import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../../../services/aggregation.service';
 
 @Component({
-  selector: 'app-compare-missed',
-  templateUrl: './compare-missed.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-compare-missed',
+    templateUrl: './compare-missed.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class CompareMissedComponent implements OnInit {
 

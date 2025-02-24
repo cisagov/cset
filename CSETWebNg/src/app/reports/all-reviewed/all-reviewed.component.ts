@@ -29,9 +29,10 @@ import { QuestionsService } from '../../services/questions.service';
 import { ReportService } from '../../services/report.service';
 
 @Component({
-  selector: 'app-all-reviewed',
-  templateUrl: './all-reviewed.component.html',
-  styleUrls: ['../reports.scss', './all-reviewed.component.scss']
+    selector: 'app-all-reviewed',
+    templateUrl: './all-reviewed.component.html',
+    styleUrls: ['../reports.scss', './all-reviewed.component.scss'],
+    standalone: false
 })
 export class AllReviewedComponent {
   response: any;

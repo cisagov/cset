@@ -14,9 +14,10 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { QuestionFiltersReportsComponent } from '../../../dialogs/question-filters-reports/question-filters-reports.component';
 
 @Component({
-  selector: 'app-cie-principle-phase',
-  templateUrl: './cie-principle-phase.component.html',
-  styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-principle-phase.component.scss']
+    selector: 'app-cie-principle-phase',
+    templateUrl: './cie-principle-phase.component.html',
+    styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-principle-phase.component.scss'],
+    standalone: false
 })
 export class CiePrinciplePhaseComponent {
 

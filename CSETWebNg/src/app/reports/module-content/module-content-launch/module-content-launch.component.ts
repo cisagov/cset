@@ -26,10 +26,11 @@ import { SetBuilderService } from '../../../services/set-builder.service';
 import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
-  selector: 'app-module-content-launch',
-  templateUrl: './module-content-launch.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-module-content-launch',
+    templateUrl: './module-content-launch.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class ModuleContentLaunchComponent implements OnInit {
 

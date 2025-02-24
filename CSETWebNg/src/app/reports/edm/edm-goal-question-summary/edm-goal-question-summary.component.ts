@@ -24,9 +24,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'edm-goal-question-summary',
-  templateUrl: './edm-goal-question-summary.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'edm-goal-question-summary',
+    templateUrl: './edm-goal-question-summary.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class EDMGoalQuestionSummary implements OnInit {
 

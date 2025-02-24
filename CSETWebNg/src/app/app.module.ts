@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -337,7 +337,7 @@ import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-com
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
 import { MaturityQuestionsIseComponent } from './assessment/questions/maturity-questions/maturity-questions-ise.component';
 import { EdmComponent } from './reports/edm/edm.component';
-import { TooltipModule } from './tooltip/tooltip.module';
+import { TooltipModule } from './modules/tooltip/tooltip.module';
 import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
 import { QuestionTextCpgComponent } from './assessment/questions/question-text/question-text-cpg/question-text-cpg.component';
 import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';
@@ -486,7 +486,7 @@ import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/ir
 import { SwiperModule } from 'swiper/angular';
 import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { GalleryService } from './services/gallery.service';
-import { EllipsisModule } from 'ngx-ellipsis';
+import { EllipsisModule } from './modules/ngx-ellipsis/ellipsis.module';
 import { CrrReportComponent } from './reports/crr/crr-report/crr-report.component';
 import { CrrCoverSheetComponent } from './reports/crr/crr-report/crr-cover-sheet/crr-cover-sheet.component';
 import { CrrCoverSheet2Component } from './reports/crr/crr-report/crr-cover-sheet2/crr-cover-sheet2.component';
@@ -1335,9 +1335,8 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         provideTranslocoScope('tutorial', 'reports'),
         ConfigService,
         AuthenticationService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: (configSvc: ConfigService, authSvc: AuthenticationService, tSvc: TranslocoService) => {
+        provideAppInitializer(() => {
+            const initializerFn = ((configSvc: ConfigService, authSvc: AuthenticationService, tSvc: TranslocoService) => {
                 return () => {
                     return configSvc.loadConfig().then(() => {
                         // Load and set the language based on config
@@ -1350,10 +1349,9 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
                         });
                     });
                 };
-            },
-            deps: [ConfigService, AuthenticationService, TranslocoService],
-            multi: true
-        },
+            })(inject(ConfigService), inject(AuthenticationService), inject(TranslocoService));
+            return initializerFn();
+        }),
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,

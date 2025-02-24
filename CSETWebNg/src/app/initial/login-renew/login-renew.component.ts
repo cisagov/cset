@@ -35,9 +35,10 @@ import { JwtParser } from '../../helpers/jwt-parser';
 
 
 @Component({
-  selector: 'app-login-renew',
-  templateUrl: './login-renew.component.html',
-  styleUrls: ['./login-renew.component.scss']
+    selector: 'app-login-renew',
+    templateUrl: './login-renew.component.html',
+    styleUrls: ['./login-renew.component.scss'],
+    standalone: false
 })
 export class LoginRenewComponent implements OnInit {
   /**

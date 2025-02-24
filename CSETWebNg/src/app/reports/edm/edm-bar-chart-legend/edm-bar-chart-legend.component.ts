@@ -25,9 +25,10 @@ import { Component, Input, OnInit } from '@angular/core';
 
 
 @Component({
-  selector: 'edm-bar-chart-legend',
-  templateUrl: './edm-bar-chart-legend.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'edm-bar-chart-legend',
+    templateUrl: './edm-bar-chart-legend.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 
 export class EDMBarChartLegend implements OnInit {

@@ -25,9 +25,10 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
-  selector: 'app-edm-heatmap',
-  templateUrl: './edm-heatmap.component.html',
-  styleUrls: ['./edm-heatmap.component.scss', '../../../../reports/reports.scss']
+    selector: 'app-edm-heatmap',
+    templateUrl: './edm-heatmap.component.html',
+    styleUrls: ['./edm-heatmap.component.scss', '../../../../reports/reports.scss'],
+    standalone: false
 })
 export class EdmHeatmapComponent implements OnInit, OnChanges {
   @Input() section: string;

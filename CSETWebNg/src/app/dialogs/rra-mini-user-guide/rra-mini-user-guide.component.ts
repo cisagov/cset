@@ -33,10 +33,11 @@ import { LayoutService } from '../../services/layout.service';
  * 
  */
 @Component({
-  selector: 'app-rra-mini-user-guide',
-  templateUrl: './rra-mini-user-guide.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-rra-mini-user-guide',
+    templateUrl: './rra-mini-user-guide.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class RraMiniUserGuideComponent {
 

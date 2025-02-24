@@ -25,9 +25,10 @@ interface listSectors {
   optionText: string;
 }
 @Component({
-  selector: 'app-analytics-results',
-  templateUrl: './analytics-results.component.html',
-  styleUrls: ['./analytics-results.component.scss']
+    selector: 'app-analytics-results',
+    templateUrl: './analytics-results.component.html',
+    styleUrls: ['./analytics-results.component.scss'],
+    standalone: false
 })
 export class AnalyticsResultsComponent implements OnInit {
 

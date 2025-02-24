@@ -7,9 +7,10 @@ import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
 
 @Component({
-  selector: 'app-cmmc2-scorecard-report',
-  templateUrl: './cmmc2-scorecard-report.component.html',
-  styleUrls: ['../../../reports/reports.scss']
+    selector: 'app-cmmc2-scorecard-report',
+    templateUrl: './cmmc2-scorecard-report.component.html',
+    styleUrls: ['../../../reports/reports.scss'],
+    standalone: false
 })
 export class Cmmc2ScorecardReportComponent {
 

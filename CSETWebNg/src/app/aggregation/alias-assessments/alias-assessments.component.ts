@@ -30,10 +30,11 @@ import { NavigationAggregService } from '../../services/navigationAggreg.service
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 
 @Component({
-  selector: 'app-alias-assessments',
-  templateUrl: './alias-assessments.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a trend-table-width' }
+    selector: 'app-alias-assessments',
+    templateUrl: './alias-assessments.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a trend-table-width' },
+    standalone: false
 })
 export class AliasAssessmentsComponent implements OnInit {
 

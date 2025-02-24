@@ -24,9 +24,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-c2m2-self-evaluation-notes',
-  templateUrl: './c2m2-self-evaluation-notes.component.html',
-  styleUrls: ['../c2m2-report.component.scss', '../../../reports.scss']
+    selector: 'app-c2m2-self-evaluation-notes',
+    templateUrl: './c2m2-self-evaluation-notes.component.html',
+    styleUrls: ['../c2m2-report.component.scss', '../../../reports.scss'],
+    standalone: false
 })
 export class C2m2SelfEvaluationNotesComponent implements OnInit {
 

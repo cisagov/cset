@@ -25,9 +25,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CmuService } from '../../../services/cmu.service';
 
 @Component({
-  selector: 'app-cmu-nist-csf-cat-performance',
-  templateUrl: './cmu-nist-csf-cat-performance.component.html',
-  styleUrls: ['./cmu-nist-csf-cat-performance.component.scss']
+    selector: 'app-cmu-nist-csf-cat-performance',
+    templateUrl: './cmu-nist-csf-cat-performance.component.html',
+    styleUrls: ['./cmu-nist-csf-cat-performance.component.scss'],
+    standalone: false
 })
 export class CmuNistCsfCatPerformanceComponent implements OnInit {
   @Input() moduleName: string;

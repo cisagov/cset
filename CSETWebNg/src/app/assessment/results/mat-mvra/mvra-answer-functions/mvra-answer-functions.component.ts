@@ -24,8 +24,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
-  selector: 'app-mvra-answer-functions',
-  templateUrl: './mvra-answer-functions.component.html'
+    selector: 'app-mvra-answer-functions',
+    templateUrl: './mvra-answer-functions.component.html',
+    standalone: false
 })
 export class MvraAnswerFunctionsComponent implements OnChanges {
 

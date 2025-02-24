@@ -24,8 +24,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-mvra-gaps-page',
-  templateUrl: './mvra-gaps-page.component.html'
+    selector: 'app-mvra-gaps-page',
+    templateUrl: './mvra-gaps-page.component.html',
+    standalone: false
 })
 export class MvraGapsPageComponent implements OnInit {
 

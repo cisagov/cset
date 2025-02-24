@@ -4,9 +4,10 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
 
 @Component({
-  selector: 'app-sd-owner-deficiency',
-  templateUrl: './sd-owner-deficiency.component.html',
-  styleUrls: ['../../reports.scss', './sd-owner-deficiency.component.scss']
+    selector: 'app-sd-owner-deficiency',
+    templateUrl: './sd-owner-deficiency.component.html',
+    styleUrls: ['../../reports.scss', './sd-owner-deficiency.component.scss'],
+    standalone: false
 })
 
 export class SdOwnerDeficiencyComponent {

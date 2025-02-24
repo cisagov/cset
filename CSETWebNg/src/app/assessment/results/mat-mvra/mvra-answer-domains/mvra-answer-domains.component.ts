@@ -24,9 +24,10 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
-  selector: 'app-mvra-answer-domains',
-  templateUrl: './mvra-answer-domains.component.html',
-  styleUrls: ['./mvra-answer-domains.component.scss', '../../../../reports/reports.scss']
+    selector: 'app-mvra-answer-domains',
+    templateUrl: './mvra-answer-domains.component.html',
+    styleUrls: ['./mvra-answer-domains.component.scss', '../../../../reports/reports.scss'],
+    standalone: false
 })
 export class MvraAnswerDomainsComponent implements OnChanges {
 

@@ -30,9 +30,10 @@ import { NavigationService } from '../../../../../services/navigation/navigation
 import { StandardService } from '../../../../../services/standard.service';
 import { TsaService } from '../../../../../services/tsa.service';
 @Component({
-  selector: 'app-feature-option-tsa',
-  templateUrl: './feature-option-tsa.component.html',
-  styleUrls: ['./feature-option-tsa.component.scss']
+    selector: 'app-feature-option-tsa',
+    templateUrl: './feature-option-tsa.component.html',
+    styleUrls: ['./feature-option-tsa.component.scss'],
+    standalone: false
 })
 export class FeatureOptionTsaComponent implements OnInit {
   modelSelected: string;

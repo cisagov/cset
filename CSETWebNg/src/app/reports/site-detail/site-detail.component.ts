@@ -35,9 +35,10 @@ import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'site-detail',
-  templateUrl: './site-detail.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'site-detail',
+    templateUrl: './site-detail.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class SiteDetailComponent implements OnInit {
   response: any = null;

@@ -25,10 +25,11 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-license',
-  templateUrl: './license.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-license',
+    templateUrl: './license.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class LicenseComponent {
   constructor(private dialog: MatDialogRef<LicenseComponent>) { }

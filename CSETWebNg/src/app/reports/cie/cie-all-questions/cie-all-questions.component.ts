@@ -39,9 +39,10 @@ import { QuestionFiltersReportsComponent } from '../../../dialogs/question-filte
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 
 @Component({
-  selector: 'app-cie-all-questions',
-  templateUrl: './cie-all-questions.component.html',
-  styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-all-questions.component.scss']
+    selector: 'app-cie-all-questions',
+    templateUrl: './cie-all-questions.component.html',
+    styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-all-questions.component.scss'],
+    standalone: false
 })
 export class CieAllQuestionsComponent {
 

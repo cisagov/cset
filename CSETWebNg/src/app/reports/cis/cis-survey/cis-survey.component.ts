@@ -27,9 +27,10 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { CisService } from '../../../services/cis.service';
 
 @Component({
-  selector: 'app-cis-survey',
-  templateUrl: './cis-survey.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'app-cis-survey',
+    templateUrl: './cis-survey.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class CisSurveyComponent implements OnInit {
 

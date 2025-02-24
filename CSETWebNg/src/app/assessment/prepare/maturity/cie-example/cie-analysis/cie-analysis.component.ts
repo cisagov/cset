@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-cie-analysis',
-  templateUrl: './cie-analysis.component.html',
-  styleUrls: ['./cie-analysis.component.scss']
+    selector: 'app-cie-analysis',
+    templateUrl: './cie-analysis.component.html',
+    styleUrls: ['./cie-analysis.component.scss'],
+    standalone: false
 })
 export class CieAnalysisComponent {
 

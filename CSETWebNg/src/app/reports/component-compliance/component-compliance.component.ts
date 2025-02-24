@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 
 @Component({
-  selector: 'app-component-compliance',
-  templateUrl: './component-compliance.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-component-compliance',
+    templateUrl: './component-compliance.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class ComponentComplianceComponent implements OnInit {
 
