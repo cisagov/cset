@@ -637,7 +637,6 @@ import { MalcolmUploadErrorComponent } from './dialogs/malcolm/malcolm-upload-er
 import { FooterService } from './services/footer.service';
 import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-info/assessment-convert-cf/assessment-convert-cf.component';
 import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/ise-warnings.component';
-//   import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytics/trend-compare-compatibility/trend-compare-compatibility.component';
 import { QuestionBlockCieComponent } from './assessment/questions/question-block-cie/question-block-cie.component';
 import { PrincipleSummaryComponent } from './assessment/questions/principle-summary/principle-summary.component';
@@ -1239,7 +1238,6 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         FormsModule,
         CommonModule,
         AppRoutingModule,
-        // Material
         A11yModule,
         CdkAccordionModule,
         ClipboardModule,
@@ -1285,36 +1283,8 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         OverlayModule,
         PortalModule,
         ScrollingModule,
-        // AutosizeModule,
-        // NgChartsModule,
-        // MatButtonModule,
-        // MatToolbarModule,
-        // MatChipsModule,
-        // MatSlideToggleModule,
-        // MatInputModule,
-        // MatCardModule,
-        // MatSliderModule,
-        // MatDatepickerModule,
-        // MatNativeDateModule,
-        // MatFormFieldModule,
-        // MatSortModule,
-        // MatExpansionModule,
-        // MatAutocompleteModule,
-        // MatDialogModule,
-        // MatTooltipModule,
-        // MatSnackBarModule,
-        // MatSidenavModule,
-        // MatTreeModule,
-        // MatIconModule,
-        // MatDividerModule,
-        // MatProgressSpinnerModule,
-        // MatProgressBarModule,
-        // MatListModule,
-        // MatMenuModule,
-        // MatTabsModule,
         ReactiveFormsModule,
         NgxSliderModule,
-        // TextareaAutosizeModule,
         FileUploadModule,
         AngularEditorModule,
         RouterModule,
