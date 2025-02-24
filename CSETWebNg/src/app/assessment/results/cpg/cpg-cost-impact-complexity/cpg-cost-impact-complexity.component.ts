@@ -25,9 +25,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-cpg-cost-impact-complexity',
-  templateUrl: './cpg-cost-impact-complexity.component.html',
-  styleUrls: ['./cpg-cost-impact-complexity.component.scss']
+    selector: 'app-cpg-cost-impact-complexity',
+    templateUrl: './cpg-cost-impact-complexity.component.html',
+    styleUrls: ['./cpg-cost-impact-complexity.component.scss'],
+    standalone: false
 })
 export class CpgCostImpactComplexityComponent implements OnInit {
 

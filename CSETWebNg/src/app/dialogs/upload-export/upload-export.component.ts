@@ -32,10 +32,11 @@ import { ConfigService } from '../../services/config.service';
 import { NCUAService } from '../../services/ncua.service';
 
 @Component({
-  selector: 'app-upload-export',
-  templateUrl: './upload-export.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
+    selector: 'app-upload-export',
+    templateUrl: './upload-export.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
+    standalone: false
 })
 export class UploadExportComponent implements OnInit {
 

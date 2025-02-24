@@ -30,9 +30,10 @@ import { Title } from '@angular/platform-browser';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-acet-compensatingcontrols',
-  templateUrl: './acet-compensatingcontrols.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-acet-compensatingcontrols',
+    templateUrl: './acet-compensatingcontrols.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class AcetCompensatingcontrolsComponent implements OnInit {
   response: any = null;

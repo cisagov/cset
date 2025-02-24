@@ -31,9 +31,10 @@ import { Vendor, Product } from '../../../../models/diagram-vulnerabilities.mode
 import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
 
 @Component({
-  selector: 'app-diagram-vulnerabilities',
-  templateUrl: './diagram-vulnerabilities.component.html',
-  styleUrls: ['./diagram-vulnerabilities.component.scss']
+    selector: 'app-diagram-vulnerabilities',
+    templateUrl: './diagram-vulnerabilities.component.html',
+    styleUrls: ['./diagram-vulnerabilities.component.scss'],
+    standalone: false
 })
 export class DiagramVulnerabilitiesComponent implements OnInit {
 

@@ -24,9 +24,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-disclaimer-blurb-a',
-  templateUrl: './disclaimer-blurb-a.component.html',
-  styleUrls: ['../../../../reports/reports.scss']
+    selector: 'app-disclaimer-blurb-a',
+    templateUrl: './disclaimer-blurb-a.component.html',
+    styleUrls: ['../../../../reports/reports.scss'],
+    standalone: false
 })
 export class DisclaimerBlurbAComponent implements OnInit {
 

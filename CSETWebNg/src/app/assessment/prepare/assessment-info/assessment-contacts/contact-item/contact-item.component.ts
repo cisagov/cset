@@ -38,10 +38,11 @@ import { AssessmentContactsResponse } from "../../../../../models/assessment-inf
 import { RolesChangedComponent } from "../../../../../dialogs/roles-changed/roles-changed.component";
 
 @Component({
-  selector: "app-contact-item",
-  templateUrl: "./contact-item.component.html",
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: "app-contact-item",
+    templateUrl: "./contact-item.component.html",
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class ContactItemComponent implements OnInit {
   @Input()

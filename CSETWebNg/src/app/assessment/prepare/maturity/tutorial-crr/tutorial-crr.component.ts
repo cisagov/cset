@@ -25,8 +25,9 @@ import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../../../services/config.service';
 
 @Component({
-  selector: 'app-tutorial-crr',
-  templateUrl: './tutorial-crr.component.html'
+    selector: 'app-tutorial-crr',
+    templateUrl: './tutorial-crr.component.html',
+    standalone: false
 })
 export class TutorialCrrComponent implements OnInit {
 

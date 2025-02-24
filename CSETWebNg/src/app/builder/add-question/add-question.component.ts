@@ -26,10 +26,11 @@ import { SetBuilderService } from '../../services/set-builder.service';
 import { CategoryEntry, Question } from '../../models/set-builder.model';
 
 @Component({
-  selector: 'app-add-question',
-  templateUrl: './add-question.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-add-question',
+    templateUrl: './add-question.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
 export class AddQuestionComponent implements OnInit {
 

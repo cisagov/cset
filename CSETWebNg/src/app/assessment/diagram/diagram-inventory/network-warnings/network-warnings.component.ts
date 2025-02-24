@@ -27,9 +27,10 @@ import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
 
 @Component({
-  selector: 'networkwarnings',
-  templateUrl: './network-warnings.component.html',
-  styleUrls: ['./network-warnings.component.scss']
+    selector: 'networkwarnings',
+    templateUrl: './network-warnings.component.html',
+    styleUrls: ['./network-warnings.component.scss'],
+    standalone: false
 })
 export class NetworkWarningsComponent implements OnInit {
   warnings = [];

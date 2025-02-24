@@ -26,9 +26,10 @@ import { EDMBarChartModel } from '../edm-bar-chart.model';
 
 
 @Component({
-  selector: 'edm-horizontal-bar-chart',
-  templateUrl: './horizontal-bar-chart.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'edm-horizontal-bar-chart',
+    templateUrl: './horizontal-bar-chart.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class EDMHorizontalBarChart implements OnInit {
 

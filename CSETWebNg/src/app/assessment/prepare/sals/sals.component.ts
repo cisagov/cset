@@ -29,9 +29,9 @@ import { LayoutService } from '../../../services/layout.service';
 
 
 @Component({
-  selector: 'app-sals',
-  templateUrl: './sals.component.html',
-  // eslint-disable-next-line
+    selector: 'app-sals',
+    templateUrl: './sals.component.html',
+    standalone: false
 })
 export class SalsComponent implements OnInit {
 

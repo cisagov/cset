@@ -27,9 +27,10 @@ import { AssessmentService } from '../../services/assessment.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-new-assessment-dialog',
-  templateUrl: './new-assessment-dialog.component.html',
-  styleUrls: ['./new-assessment-dialog.component.scss']
+    selector: 'app-new-assessment-dialog',
+    templateUrl: './new-assessment-dialog.component.html',
+    styleUrls: ['./new-assessment-dialog.component.scss'],
+    standalone: false
 })
 export class NewAssessmentDialogComponent implements OnInit {
 

@@ -24,9 +24,10 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 
 @Component({
-  selector: 'app-cover-sheet-a',
-  templateUrl: './cover-sheet-a.component.html',
-  styleUrls: ['./cover-sheet-a.component.scss', '../../../../reports/reports.scss']
+    selector: 'app-cover-sheet-a',
+    templateUrl: './cover-sheet-a.component.html',
+    styleUrls: ['./cover-sheet-a.component.scss', '../../../../reports/reports.scss'],
+    standalone: false
 })
 export class CoverSheetAComponent implements OnInit, OnChanges {
 

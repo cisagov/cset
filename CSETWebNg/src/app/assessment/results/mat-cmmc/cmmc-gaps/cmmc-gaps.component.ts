@@ -26,7 +26,7 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import { MaturityService } from '../../../../../app/services/maturity.service';
 import { BehaviorSubject } from 'rxjs';
 import { AssessmentService } from '../../../../services/assessment.service';
-import * as $ from 'jquery';
+import $ from 'jquery';
 import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
@@ -34,7 +34,8 @@ import { LayoutService } from '../../../../services/layout.service';
   templateUrl: './cmmc-gaps.component.html',
   styleUrls: ['../../../../../sass/cmmc-results.scss'],
   // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class CmmcGapsComponent implements OnInit {
 

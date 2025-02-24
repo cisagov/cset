@@ -30,9 +30,10 @@ import { MaturityService } from '../../services/maturity.service';
 import { QuestionsService } from '../../services/questions.service';
 
 @Component({
-  selector: 'app-edm-deficiency',
-  templateUrl: './edm-deficiency.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-edm-deficiency',
+    templateUrl: './edm-deficiency.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class EdmDeficiencyComponent implements OnInit {
   response: any;

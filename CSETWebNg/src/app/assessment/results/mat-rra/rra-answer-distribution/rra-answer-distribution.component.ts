@@ -26,9 +26,10 @@ import { RraDataService } from '../../../../services/rra-data.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-rra-answer-distribution',
-  templateUrl: './rra-answer-distribution.component.html',
-  styleUrls: ['./rra-answer-distribution.component.scss']
+    selector: 'app-rra-answer-distribution',
+    templateUrl: './rra-answer-distribution.component.html',
+    styleUrls: ['./rra-answer-distribution.component.scss'],
+    standalone: false
 })
 export class RraAnswerDistributionComponent implements OnInit {
   answerDistribByLevel = [];

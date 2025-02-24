@@ -35,12 +35,13 @@ import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/onlin
 
 
 @Component({
-  selector: 'tsa-layout-main',
-  templateUrl: './tsa-layout-main.component.html',
-  styleUrls: ['./tsa-layout-main.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
+    selector: 'tsa-layout-main',
+    templateUrl: './tsa-layout-main.component.html',
+    styleUrls: ['./tsa-layout-main.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
+    standalone: false
 })
 export class TsaLayoutMainComponent {
   docUrl: string;

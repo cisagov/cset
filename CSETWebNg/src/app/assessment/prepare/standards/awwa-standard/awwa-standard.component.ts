@@ -27,8 +27,9 @@ import { FileUploadClientService } from '../../../../services/file-client.servic
 import { AwwaService } from '../../../../services/awwa.service';
 
 @Component({
-  selector: 'app-awwa-standard',
-  templateUrl: './awwa-standard.component.html'
+    selector: 'app-awwa-standard',
+    templateUrl: './awwa-standard.component.html',
+    standalone: false
 })
 export class AwwaStandardComponent implements OnInit {
 

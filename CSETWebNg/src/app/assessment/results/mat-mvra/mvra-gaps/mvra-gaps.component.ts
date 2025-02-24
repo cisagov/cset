@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
-  selector: 'app-mvra-gaps',
-  templateUrl: './mvra-gaps.component.html',
-  styleUrls: ['../../../../reports/reports.scss']
+    selector: 'app-mvra-gaps',
+    templateUrl: './mvra-gaps.component.html',
+    styleUrls: ['../../../../reports/reports.scss'],
+    standalone: false
 })
 export class MvraGapsComponent implements OnInit {
   model: any = [];

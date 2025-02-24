@@ -32,10 +32,11 @@ import { AwwaStandardComponent } from '../../standards/awwa-standard/awwa-standa
 
 
 @Component({
-  selector: 'app-assessment-detail-cie',
-  templateUrl: './assessment-detail-cie.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-assessment-detail-cie',
+    templateUrl: './assessment-detail-cie.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class AssessmentDetailCieComponent implements OnInit {
 

@@ -26,9 +26,10 @@ import { MaturityService } from '../../../../services/maturity.service';
 import { MaturityQuestionResponse } from '../../../../models/questions.model';
 
 @Component({
-  selector: 'app-maturity-indicator-levels',
-  templateUrl: './maturity-indicator-levels.component.html',
-  styleUrls: ['./maturity-indicator-levels.component.scss']
+    selector: 'app-maturity-indicator-levels',
+    templateUrl: './maturity-indicator-levels.component.html',
+    styleUrls: ['./maturity-indicator-levels.component.scss'],
+    standalone: false
 })
 export class MaturityIndicatorLevelsComponent implements OnInit {
 

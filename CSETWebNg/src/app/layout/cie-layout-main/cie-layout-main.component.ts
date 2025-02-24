@@ -12,12 +12,13 @@ import { LayoutService } from '../../services/layout.service';
 
 
 @Component({
-  selector: 'app-cie-layout-main',
-  templateUrl: './cie-layout-main.component.html',
-  styleUrls: ['./cie-layout-main.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
+    selector: 'app-cie-layout-main',
+    templateUrl: './cie-layout-main.component.html',
+    styleUrls: ['./cie-layout-main.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
+    standalone: false
 })
 export class CieLayoutMainComponent {
   docUrl: string;

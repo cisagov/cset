@@ -25,10 +25,11 @@ import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class LoginComponent implements OnInit {
 

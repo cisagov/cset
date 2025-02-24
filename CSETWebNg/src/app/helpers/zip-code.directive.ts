@@ -30,7 +30,8 @@ import { NgControl } from '@angular/forms';
  */
 
 @Directive({
-    selector: '[zipCode]'
+    selector: '[zipCode]',
+    standalone: false
 })
 export class ZipCodeDirective {
 

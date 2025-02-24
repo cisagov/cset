@@ -26,9 +26,10 @@ import { ScaleType, Color, ColorHelper } from '@swimlane/ngx-charts';
 import { VadrDataService } from '../../../../services/vadr-data.service';
 
 @Component({
-  selector: 'app-vadr-summary',
-  templateUrl: './vadr-summary.component.html',
-  styleUrls: ['./vadr-summary.component.scss']
+    selector: 'app-vadr-summary',
+    templateUrl: './vadr-summary.component.html',
+    styleUrls: ['./vadr-summary.component.scss'],
+    standalone: false
 })
 export class VadrSummaryComponent implements OnInit {
   @Input() title = "Summary";

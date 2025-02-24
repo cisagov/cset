@@ -27,8 +27,9 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-tsa-assessment-complete',
-  templateUrl: './tsa-assessment-complete.component.html'
+    selector: 'app-tsa-assessment-complete',
+    templateUrl: './tsa-assessment-complete.component.html',
+    standalone: false
 })
 export class TsaAssessmentCompleteComponent implements OnInit {
 

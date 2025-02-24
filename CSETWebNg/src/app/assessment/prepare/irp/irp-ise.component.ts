@@ -32,7 +32,8 @@ import { NCUAService } from '../../../services/ncua.service';
 @Component({
     selector: 'app-irp-ise',
     templateUrl: './irp-ise.component.html',
-    styleUrls: ['./irp.component.scss']
+    styleUrls: ['./irp.component.scss'],
+    standalone: false
 })
 export class ExamProfileComponent implements OnInit {
     irps: IRPResponse;

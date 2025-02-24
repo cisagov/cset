@@ -39,8 +39,9 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
-  selector: 'app-maturity-questions-acet',
-  templateUrl: './maturity-questions-acet.component.html'
+    selector: 'app-maturity-questions-acet',
+    templateUrl: './maturity-questions-acet.component.html',
+    standalone: false
 })
 export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
 

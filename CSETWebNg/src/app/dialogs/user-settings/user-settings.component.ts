@@ -10,8 +10,9 @@ import { AssessmentService } from '../../services/assessment.service';
 import { NCUAService } from '../../services/ncua.service';
 
 @Component({
-  selector: 'app-user-settings',
-  templateUrl: './user-settings.component.html'
+    selector: 'app-user-settings',
+    templateUrl: './user-settings.component.html',
+    standalone: false
 })
 export class UserSettingsComponent implements OnInit {
 

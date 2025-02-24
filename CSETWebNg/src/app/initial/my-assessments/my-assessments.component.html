@@ -239,7 +239,7 @@
                                 *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">
                                 <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
                                     {{ { c: assessment.completedQuestionsCount, t:
-                                    assessment.totalAvailableQuestionsCount, qa: this.assessment.questionAlias, l:
+                                    assessment.totalAvailableQuestionsCount, qa: assessment.questionAlias, l:
                                     tSvc.getActiveLang() } | completionCount }}
                                 </span>
                                 <ng-template #blankAssessment>

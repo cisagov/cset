@@ -35,10 +35,11 @@ import { ACETService } from '../../services/acet.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-questions',
-  templateUrl: './questions.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-questions',
+    templateUrl: './questions.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewInit {
   @ViewChild('questionBlock') questionBlock;

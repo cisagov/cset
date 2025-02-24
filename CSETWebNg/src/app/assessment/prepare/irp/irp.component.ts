@@ -33,7 +33,8 @@ import { TranslocoService } from '@jsverse/transloco';
 @Component({
     selector: 'app-irp',
     templateUrl: './irp.component.html',
-    styleUrls: ['./irp.component.scss']
+    styleUrls: ['./irp.component.scss'],
+    standalone: false
 })
 export class IRPComponent implements OnInit {
     irps: IRPResponse;

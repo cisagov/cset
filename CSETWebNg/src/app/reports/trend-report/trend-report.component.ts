@@ -31,9 +31,10 @@ import { ConfigService } from '../../services/config.service';
 
 
 @Component({
-  selector: 'trend-report',
-  templateUrl: './trend-report.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'trend-report',
+    templateUrl: './trend-report.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 
 export class TrendReportComponent implements OnInit, AfterViewChecked {

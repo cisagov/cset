@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
+@use "sass:color";
 @use '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 /* ---- Report styles ---- */
 
@@ -2337,12 +2338,12 @@ ol.alpha-bracket li::before {
 
 .checkbox-custom:disabled+.checkbox-custom-label:before,
 .radio-custom:disabled+.radio-custom-label:before {
-  border-color: lighten($secondary-color, 35%);
+  border-color: color.adjust($secondary-color, $lightness: 35%);
 }
 
 .checkbox-custom:disabled:checked+.checkbox-custom-label:before,
 .radio-custom:disabled+.radio-custom-label:before {
-  background-color: lighten($secondary-color, 35%);
+  background-color: color.adjust($secondary-color, $lightness: 35%);
 }
 
 //

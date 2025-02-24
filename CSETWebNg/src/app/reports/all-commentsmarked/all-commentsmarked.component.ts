@@ -29,9 +29,10 @@ import { QuestionsService } from '../../services/questions.service';
 import { ReportService } from '../../services/report.service';
 
 @Component({
-  selector: 'app-all-commentsmarked',
-  templateUrl: './all-commentsmarked.component.html',
-  styleUrls: ['../reports.scss', './all-commentsmarked.component.scss']
+    selector: 'app-all-commentsmarked',
+    templateUrl: './all-commentsmarked.component.html',
+    styleUrls: ['../reports.scss', './all-commentsmarked.component.scss'],
+    standalone: false
 })
 export class AllCommentsmarkedComponent {
 

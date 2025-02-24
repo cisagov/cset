@@ -32,7 +32,8 @@ import { TranslocoService } from '@jsverse/transloco';
 @Component({
     selector: 'app-acet-dashboard',
     templateUrl: './acet-dashboard.component.html',
-    styleUrls: ['./acet-dashboard.component.scss']
+    styleUrls: ['./acet-dashboard.component.scss'],
+    standalone: false
 })
 export class AcetDashboardComponent implements OnInit {
     acetDashboard: AcetDashboard;

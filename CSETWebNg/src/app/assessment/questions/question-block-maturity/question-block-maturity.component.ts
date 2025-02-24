@@ -42,9 +42,10 @@ import { TranslocoService } from '@jsverse/transloco';
  * of the question block can eventually replace the original.
  */
 @Component({
-  selector: 'app-question-block-maturity',
-  templateUrl: './question-block-maturity.component.html',
-  styleUrls: ['./question-block-maturity.component.scss']
+    selector: 'app-question-block-maturity',
+    templateUrl: './question-block-maturity.component.html',
+    styleUrls: ['./question-block-maturity.component.scss'],
+    standalone: false
 })
 export class QuestionBlockMaturityComponent implements OnInit {
 

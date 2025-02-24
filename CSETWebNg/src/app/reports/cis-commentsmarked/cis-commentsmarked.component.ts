@@ -29,9 +29,10 @@ import { Title, DomSanitizer } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 
 @Component({
-  selector: 'app-cis-commentsmarked',
-  templateUrl: './cis-commentsmarked.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-cis-commentsmarked',
+    templateUrl: './cis-commentsmarked.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class CisCommentsmarkedComponent implements OnInit {
   response: any = null;

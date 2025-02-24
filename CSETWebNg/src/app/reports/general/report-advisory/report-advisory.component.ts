@@ -26,9 +26,10 @@ import { ConfigService } from '../../../services/config.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-report-advisory',
-  templateUrl: './report-advisory.component.html',
-  styleUrls: ['./report-advisory.component.scss', '../../reports.scss']
+    selector: 'app-report-advisory',
+    templateUrl: './report-advisory.component.html',
+    styleUrls: ['./report-advisory.component.scss', '../../reports.scss'],
+    standalone: false
 })
 export class ReportAdvisoryComponent {
 
