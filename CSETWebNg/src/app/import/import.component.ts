@@ -27,7 +27,7 @@ import { saveAs } from 'file-saver';
 import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import * as screenfull from "screenfull";
+import screenfull from 'screenfull';
 import { Screenfull } from "screenfull";
 import { FileItem, FileUploader } from 'ng2-file-upload';
 import { XmlCompletionItemProvider } from '../models/xmlCompletionItemProvider.model';
@@ -36,17 +36,18 @@ import { FileUploadClientService, LinkedSet } from '../services/file-client.serv
 import { XmlFormatterFactory } from './formatting/xml-formatter';
 import { XmlFormattingEditProvider } from './formatting/xml-formatting-edit-provider';
 
+
 export class ImportFormData {
   public name: string;
   public shortName: string;
 }
 
 @Component({
-    selector: 'app-import',
-    templateUrl: './import.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-11a w-100' },
-    standalone: false
+  selector: 'app-import',
+  templateUrl: './import.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-11a w-100' },
+  standalone: false
 })
 export class ImportComponent implements OnInit, OnDestroy {
   public uploader: FileUploader;
