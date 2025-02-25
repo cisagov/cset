@@ -69,7 +69,7 @@
         "screenfull": "^5.2.0",
         "style-loader": "^4.0.0",
         "swiper": "^8.4.7",
-        "typescript": "5.5",
+        "typescript": "5.7",
         "zone.js": "^0.15.0"
     },
     "devDependencies": {
