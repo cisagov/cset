@@ -22,19 +22,21 @@
 //
 ////////////////////////////////
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CodeEditorComponent, CodeEditorService, CodeModel } from '@ngstack/code-editor';
+import { CodeEditorComponent, CodeEditorService, CodeModel, provideCodeEditor } from '@ngstack/code-editor';
 import { saveAs } from 'file-saver';
 import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import screenfull from 'screenfull';
 import { Screenfull } from "screenfull";
-import { FileItem, FileUploader } from 'ng2-file-upload';
+import { FileItem, FileUploader, FileUploadModule } from 'ng2-file-upload';
 import { XmlCompletionItemProvider } from '../models/xmlCompletionItemProvider.model';
 import { ConfigService } from '../services/config.service';
 import { FileUploadClientService, LinkedSet } from '../services/file-client.service';
 import { XmlFormatterFactory } from './formatting/xml-formatter';
 import { XmlFormattingEditProvider } from './formatting/xml-formatting-edit-provider';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 
 export class ImportFormData {
@@ -47,7 +49,12 @@ export class ImportFormData {
   templateUrl: './import.component.html',
   // eslint-disable-next-line
   host: { class: 'd-flex flex-11a w-100' },
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, CodeEditorComponent, FormsModule, FileUploadModule],
+  providers: [provideCodeEditor({
+    typingsWorkerUrl: 'assets/workers/typings-worker.js',
+    baseUrl: 'assets/monaco'
+  })]
 })
 export class ImportComponent implements OnInit, OnDestroy {
   public uploader: FileUploader;
@@ -364,19 +371,21 @@ export class ImportComponent implements OnInit, OnDestroy {
           uri: 'http://custom/schema.xsd',
           schema: s
         });
-        this.monaco = t.monaco;
-        t.monaco.languages.registerCompletionItemProvider(
-          'xml',
-          new XmlCompletionItemProvider(t, s)
-        );
-        t.monaco.languages.registerDocumentFormattingEditProvider(
-          'xml',
-          new XmlFormattingEditProvider(XmlFormatterFactory.getXmlFormatter())
-        );
-        t.monaco.languages.registerDocumentRangeFormattingEditProvider(
-          'xml',
-          new XmlFormattingEditProvider(XmlFormatterFactory.getXmlFormatter())
-        );
+        if (t?.monaco?.languages) {
+          this.monaco = t.monaco;
+          t.monaco.languages.registerCompletionItemProvider(
+            'xml',
+            new XmlCompletionItemProvider(t, s)
+          );
+          t.monaco.languages.registerDocumentFormattingEditProvider(
+            'xml',
+            new XmlFormattingEditProvider(XmlFormatterFactory.getXmlFormatter())
+          );
+          t.monaco.languages.registerDocumentRangeFormattingEditProvider(
+            'xml',
+            new XmlFormattingEditProvider(XmlFormatterFactory.getXmlFormatter())
+          );
+        }
       });
     });
 
@@ -389,7 +398,11 @@ export class ImportComponent implements OnInit, OnDestroy {
     });
   }
 
-  public showError() {
-    return this.state != 'Processing' && editor && editor.getModelMarkers({}).length || this.errors.length;
+  public showError(): boolean {
+    if (this.state === 'Processing') {
+      return false;
+    }
+    const markers = this.monaco && this.monaco.editor ? this.monaco.editor.getModelMarkers({}) : [];
+    return markers.length > 0 || this.errors.length > 0;
   }
 }
