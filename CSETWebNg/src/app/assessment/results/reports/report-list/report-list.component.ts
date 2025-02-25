@@ -35,10 +35,6 @@ export class ReportListComponent implements OnInit {
   @Input()
   list: any[];
 
-  /**
-   * Used to disable report link
-   */
-  cmmcLevel1Achieved = false;
 
   /**
    * 
@@ -60,9 +56,6 @@ export class ReportListComponent implements OnInit {
 
     const key = 'reports.launch.' + this.sectionId.toLowerCase() + '.sectionTitle';
     this.sectionTitle = this.tSvc.translate(key);
-
-    // get CMMC scores if appropriate
-    this.setCmmcLevelAchievement();
   }
 
   /**
@@ -83,30 +76,10 @@ export class ReportListComponent implements OnInit {
   }
 
   /**
-   * If this is a CMMC assessment and the target level is 
-   * higher than Level 1, check the score for Level 1.
-   */
-  setCmmcLevelAchievement() {
-    const a = this.assessSvc.assessment;
-    const cmmcModels = ['CMMC', 'CMMC2', 'CMMC2F'];
-
-    if (a.maturityModel?.maturityTargetLevel > 1 &&
-      cmmcModels.indexOf(a.maturityModel?.modelName) >= 0) {
-      this.maturitySvc.getCmmcScores().subscribe((scores: any) => {
-        this.cmmcLevel1Achieved = scores.level1Score >= scores.level1MaxScore;
-      });
-    }
-  }
-
-  /**
    * Evaluates certain conditions to indicate if a report link
    * should be disabled.
    */
   isDisabled(condition: string) {
-    if (condition == 'cmmc level 1 not achieved') {
-      return !this.cmmcLevel1Achieved;
-    }
-
     return false;
   }
 }
