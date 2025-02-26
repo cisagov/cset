@@ -184,7 +184,6 @@ import { LinebreakPlaintextPipe } from './helpers/linebreakplain.pipe';
 import { NullishCoalescePipe } from './helpers/nullish-coalesce.pipe';
 import { CompletionCountPipe } from './helpers/completion-count.pipe';
 import { LocalizeDatePipe } from './helpers/date-localize.pipe';
-import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
 import { MyAssessmentsComponent } from './initial/my-assessments/my-assessments.component';
 import { LoginComponent } from './initial/login/login.component';
@@ -205,7 +204,6 @@ import { NavigationService } from './services/navigation/navigation.service';
 import { QuestionsService } from './services/questions.service';
 import { SalService } from './services/sal.service';
 import { StandardService } from './services/standard.service';
-import { CodeEditorModule } from '@ngstack/code-editor';
 import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
 import { SetBuilderService } from './services/set-builder.service';
 import { CustomSetComponent } from './builder/set-detail/set-detail.component';
@@ -690,6 +688,8 @@ import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.com
 import { AnalyticsResultsComponent } from './assessment/results/analytics-results/analytics-results.component';
 import { firstValueFrom } from 'rxjs';
 import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
+import { CodeEditorModule } from '@ngstack/code-editor';
+import { ImportComponent } from './import/import.component';
 
 @NgModule({
     declarations: [
@@ -775,7 +775,6 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         AssessmentDocumentsComponent,
         InlineParameterComponent,
         GlobalParametersComponent,
-        ImportComponent,
         UploadExportComponent,
         UploadDemographicsComponent,
         KeyboardShortcutsComponent,
@@ -1231,7 +1230,8 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         QuestionsReviewedComponent,
         RolesChangedComponent,
         AnalyticsResultsComponent,
-        UpgradeComponent
+        UpgradeComponent,
+        ImportComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
@@ -1379,6 +1379,6 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         FooterService,
         AnalyticsService,
         provideHttpClient(withInterceptorsFromDi())
-    ]
+    ],
 })
 export class AppModule { }
