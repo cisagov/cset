@@ -47,7 +47,7 @@ export class ImportFormData {
   templateUrl: './import.component.html',
   // eslint-disable-next-line
   host: { class: 'd-flex flex-11a w-100' },
-  standalone: false
+  standalone: false,
 })
 export class ImportComponent implements OnInit, OnDestroy {
   public uploader: FileUploader;
@@ -364,19 +364,13 @@ export class ImportComponent implements OnInit, OnDestroy {
           uri: 'http://custom/schema.xsd',
           schema: s
         });
-        this.monaco = t.monaco;
-        t.monaco.languages.registerCompletionItemProvider(
-          'xml',
-          new XmlCompletionItemProvider(t, s)
-        );
-        t.monaco.languages.registerDocumentFormattingEditProvider(
-          'xml',
-          new XmlFormattingEditProvider(XmlFormatterFactory.getXmlFormatter())
-        );
-        t.monaco.languages.registerDocumentRangeFormattingEditProvider(
-          'xml',
-          new XmlFormattingEditProvider(XmlFormatterFactory.getXmlFormatter())
-        );
+
+        if (t?.monaco) {
+          this.monaco = t.monaco;
+          this.registerXmlProviders(s);
+        } else {
+          console.warn("Monaco not fully initialized");
+        }
       });
     });
 
@@ -389,7 +383,32 @@ export class ImportComponent implements OnInit, OnDestroy {
     });
   }
 
-  public showError() {
-    return this.state != 'Processing' && editor && editor.getModelMarkers({}).length || this.errors.length;
+  private registerXmlProviders(schemaContent: string) {
+    try {
+      if (this.monaco?.languages) {
+        this.monaco.languages.registerCompletionItemProvider(
+          'xml',
+          new XmlCompletionItemProvider(this.monaco, schemaContent)
+        );
+        this.monaco.languages.registerDocumentFormattingEditProvider(
+          'xml',
+          new XmlFormattingEditProvider(XmlFormatterFactory.getXmlFormatter())
+        );
+        this.monaco.languages.registerDocumentRangeFormattingEditProvider(
+          'xml',
+          new XmlFormattingEditProvider(XmlFormatterFactory.getXmlFormatter())
+        );
+      }
+    } catch (err) {
+      console.error('Failed to register XML providers:', err);
+    }
+  }
+
+  public showError(): boolean {
+    if (this.state === 'Processing') {
+      return false;
+    }
+    const markers = this.monaco && this.monaco.editor ? this.monaco.editor.getModelMarkers({}) : [];
+    return markers.length > 0 || this.errors.length > 0;
   }
 }
