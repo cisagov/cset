@@ -63,13 +63,13 @@
         "ng2-file-upload": "^8.0.0",
         "ngx-csv": "^0.3.2",
         "pdfmake": "^0.2.18",
-        "rxjs": "^7.8.1",
+        "rxjs": "^7.8.2",
         "sanitize-html": "^2.14.0",
-        "sass": "^1.83.4",
+        "sass": "^1.85.1",
         "screenfull": "^5.2.0",
         "style-loader": "^4.0.0",
         "swiper": "^8.4.7",
-        "typescript": "5.5",
+        "typescript": "^5.7.3",
         "zone.js": "^0.15.0"
     },
     "devDependencies": {
