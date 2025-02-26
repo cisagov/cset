@@ -108,7 +108,7 @@ export class CmmcStyleService {
           this.complianceLevelAcheivedData = this.getComplianceLevelAcheivedData(this.statsByLevel);
           this.referenceTable = this.generateReferenceList(this.cmmcModel.maturityQuestions, this.cmmcModel.targetLevel);
 
-          observer.next();
+          observer.next(this.cmmcModel);
 
           window.dispatchEvent(new Event('resize'));
         }
