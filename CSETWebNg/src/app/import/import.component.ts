@@ -22,21 +22,19 @@
 //
 ////////////////////////////////
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CodeEditorComponent, CodeEditorService, CodeModel, provideCodeEditor } from '@ngstack/code-editor';
+import { CodeEditorComponent, CodeEditorService, CodeModel } from '@ngstack/code-editor';
 import { saveAs } from 'file-saver';
 import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import screenfull from 'screenfull';
 import { Screenfull } from "screenfull";
-import { FileItem, FileUploader, FileUploadModule } from 'ng2-file-upload';
+import { FileItem, FileUploader } from 'ng2-file-upload';
 import { XmlCompletionItemProvider } from '../models/xmlCompletionItemProvider.model';
 import { ConfigService } from '../services/config.service';
 import { FileUploadClientService, LinkedSet } from '../services/file-client.service';
 import { XmlFormatterFactory } from './formatting/xml-formatter';
 import { XmlFormattingEditProvider } from './formatting/xml-formatting-edit-provider';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 
 export class ImportFormData {
@@ -49,12 +47,7 @@ export class ImportFormData {
   templateUrl: './import.component.html',
   // eslint-disable-next-line
   host: { class: 'd-flex flex-11a w-100' },
-  standalone: true,
-  imports: [CommonModule, CodeEditorComponent, FormsModule, FileUploadModule],
-  providers: [provideCodeEditor({
-    typingsWorkerUrl: 'assets/workers/typings-worker.js',
-    baseUrl: 'assets/monaco'
-  })]
+  standalone: false,
 })
 export class ImportComponent implements OnInit, OnDestroy {
   public uploader: FileUploader;
@@ -371,20 +364,12 @@ export class ImportComponent implements OnInit, OnDestroy {
           uri: 'http://custom/schema.xsd',
           schema: s
         });
-        if (t?.monaco?.languages) {
+
+        if (t?.monaco) {
           this.monaco = t.monaco;
-          t.monaco.languages.registerCompletionItemProvider(
-            'xml',
-            new XmlCompletionItemProvider(t, s)
-          );
-          t.monaco.languages.registerDocumentFormattingEditProvider(
-            'xml',
-            new XmlFormattingEditProvider(XmlFormatterFactory.getXmlFormatter())
-          );
-          t.monaco.languages.registerDocumentRangeFormattingEditProvider(
-            'xml',
-            new XmlFormattingEditProvider(XmlFormatterFactory.getXmlFormatter())
-          );
+          this.registerXmlProviders(s);
+        } else {
+          console.warn("Monaco not fully initialized");
         }
       });
     });
@@ -396,6 +381,27 @@ export class ImportComponent implements OnInit, OnDestroy {
     this.fileOverStateObservable.pipe(debounceTime(10)).subscribe(t => {
       this.hasBaseDropZoneOver = t;
     });
+  }
+
+  private registerXmlProviders(schemaContent: string) {
+    try {
+      if (this.monaco?.languages) {
+        this.monaco.languages.registerCompletionItemProvider(
+          'xml',
+          new XmlCompletionItemProvider(this.monaco, schemaContent)
+        );
+        this.monaco.languages.registerDocumentFormattingEditProvider(
+          'xml',
+          new XmlFormattingEditProvider(XmlFormatterFactory.getXmlFormatter())
+        );
+        this.monaco.languages.registerDocumentRangeFormattingEditProvider(
+          'xml',
+          new XmlFormattingEditProvider(XmlFormatterFactory.getXmlFormatter())
+        );
+      }
+    } catch (err) {
+      console.error('Failed to register XML providers:', err);
+    }
   }
 
   public showError(): boolean {

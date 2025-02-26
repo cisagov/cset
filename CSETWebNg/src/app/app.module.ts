@@ -688,6 +688,8 @@ import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.com
 import { AnalyticsResultsComponent } from './assessment/results/analytics-results/analytics-results.component';
 import { firstValueFrom } from 'rxjs';
 import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
+import { CodeEditorModule } from '@ngstack/code-editor';
+import { ImportComponent } from './import/import.component';
 
 @NgModule({
     declarations: [
@@ -1228,7 +1230,8 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         QuestionsReviewedComponent,
         RolesChangedComponent,
         AnalyticsResultsComponent,
-        UpgradeComponent
+        UpgradeComponent,
+        ImportComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
@@ -1292,7 +1295,11 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         TooltipModule,
         SwiperModule,
         EllipsisModule,
-        HotkeyModule.forRoot(),],
+        HotkeyModule.forRoot(),
+        CodeEditorModule.forRoot({
+            typingsWorkerUrl: 'assets/workers/typings-worker.js',
+            baseUrl: 'assets/monaco'
+        })],
     providers: [
         TranslocoService,
         provideTranslocoScope('tutorial', 'reports'),
