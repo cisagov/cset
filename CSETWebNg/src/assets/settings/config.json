@@ -23,7 +23,7 @@
     "apiIdentifier": "api"
   },
   "csetGithubApiUrl": "https://api.github.com/repos/cisagov/cset/releases/latest",
-  "helpContactEmail": "CSET_PMO@mail.dhs.cisa.gov",
+  "helpContactEmail": "CSET_PMO@cisa.dhs.gov",
   "helpContactPhone": "",
   "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
   "supplementalAutoloadInitialValue": false,
