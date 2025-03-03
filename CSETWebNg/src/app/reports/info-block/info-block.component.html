@@ -1,4 +1,4 @@
-<div style="line-height: 150%; padding-right: 2em" class="flex-column me-4 text-start">
+<div style="line-height: 150%; padding-right: 2em" class="flex-column me-4 text-start" *transloco="let t">
     <div>{{response?.information?.assessment_Name}}</div>
     <div>
         {{response?.information?.assessment_Date | localizeDate}}
@@ -8,5 +8,8 @@
     </div>
     <div>
         {{response?.information?.assessor_Name}}
+    </div>
+    <div *ngIf="response?.information?.selfAssessment">
+        {{ t('reports.self assessment indicator') }}
     </div>
 </div>

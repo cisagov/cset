@@ -48,7 +48,7 @@
         </div>
     </div>
     <form>
-        <div class="row">
+        <div class="row mb-3">
             <div class="col">
                 <label class="form-label" for="sector">{{t('sector')}}</label>
                 <select class="form-select" id="sector" name="sector" tabindex="0"
@@ -68,7 +68,8 @@
                 </select>
             </div>
         </div>
-        <div>
+
+        <div class="mb-3">
             <label class="form-label" for="assetValue">{{t('asset gross value')}}</label>
             <select #assetValueSelect class="form-select" id="assetValue" tabindex="0" name="assetValue"
                 (change)="update($event)" [(ngModel)]="demographicData.assetValue">
@@ -78,7 +79,7 @@
             </select>
         </div>
 
-        <div>
+        <div class="mb-3">
             <label class="form-label" for="size">{{t('expected effort')}}</label>
             <select class="form-select" id="size" tabindex="0" name="size" (change)="update($event)"
                 [(ngModel)]="demographicData.size">
@@ -86,19 +87,38 @@
                 <option *ngFor="let s of sizeList" [value]="s.demographicId">{{s.description}}</option>
             </select>
         </div>
-        <div *ngIf="showOrganizationName()">
+
+        <div *ngIf="showFacilitator()" class="mb-3">
+            <label class="form-label" for="facilitator">{{t('contact.facilitator')}}</label>
+            <select class="form-select" id="facilitator" tabindex="0" name="facilitator" (change)="update($event)"
+                [(ngModel)]="demographicData.facilitatorId">
+                <option [ngValue]="null">-- {{t('select facilitator')}} --</option>
+                <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}}
+                    {{contact.lastName}}</option>
+            </select>
+            <div class="mt-2">
+                <input type="checkbox" name="self-assessment" id="self-assessment" class="checkbox-custom mt-1"
+                    [(ngModel)]="demographicData.selfAssessment" [checked]="demographicData.selfAssessment" (change)="update($event)">
+                <label for="self-assessment" class="checkbox-custom-label d-inline">Self
+                    Assessment</label>
+            </div>
+        </div>
+
+        <div *ngIf="showOrganizationName()" class="mb-3">
             <label class="form-label" for="edmOrganizationName">{{t('org name')}}</label>
             <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150"
                 name="edmOrganizationName" id="edmOrganizationName" [(ngModel)]="demographicData.organizationName"
                 #edmOrganizationName="ngModel" placeholder="{{t('org name')}}" (blur)="update($event)">
         </div>
-        <div *ngIf="showBusinessAgencyName()">
+
+        <div *ngIf="showBusinessAgencyName()" class="mb-3">
             <label class="form-label" for="edmAgency">{{t('business unit agency')}}</label>
             <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150" name="edmAgency"
                 id="edmAgency" [(ngModel)]="demographicData.agency" #edmAgancy="ngModel"
                 placeholder="{{t('business unit agency')}}" (blur)="update($event)">
         </div>
-        <div>
+
+        <div class="mb-3">
             <label class="form-label" for="edmOrganizationType">{{t('org type')}}</label>
             <select *ngIf="isSLTT" class="form-select" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
                 (change)="update($event)" [(ngModel)]="demographicData.organizationType">
@@ -114,7 +134,8 @@
                 </ng-container>
             </select>
         </div>
-        <div *ngIf="true">
+
+        <div *ngIf="true" class="mb-3">
             <label class="form-label" for="orgPointOfContact">{{t('org poc')}}</label>
             <select class="form-select" id="orgPointOfContact" tabindex="0" name="orgPointOfContact"
                 (change)="update($event)" [(ngModel)]="demographicData.orgPointOfContact">
@@ -123,16 +144,8 @@
                     {{contact.lastName}}</option>
             </select>
         </div>
-        <div *ngIf="showFacilitator()">
-            <label class="form-label" for="edmFacilitator">{{t('contact.facilitator')}}</label>
-            <select class="form-select" id="edmFacilitator" tabindex="0" name="edmFacilitator" (change)="update($event)"
-                [(ngModel)]="demographicData.facilitator">
-                <option [ngValue]="null">-- {{t('select facilitator')}} --</option>
-                <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}}
-                    {{contact.lastName}}</option>
-            </select>
-        </div>
-        <div class="row" *ngIf="showCriticalService()">
+
+        <div class="row mb-3" *ngIf="showCriticalService()">
             <div class="col">
                 <label class="form-label" for="criticalService">{{t('critical service name')}}</label>
                 <textarea appAutoSize class="form-control" autocomplete="off" tabindex="0" maxlength="100"
