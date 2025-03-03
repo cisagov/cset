@@ -117,7 +117,7 @@ export interface Demographic {
     organizationName?: string;
     agency?: string;
     organizationType?: string;
-    facilitator?: number;
+    facilitatorId?: number;
 
     // Organiztion POC
     orgPointOfContact?: number;
@@ -216,7 +216,7 @@ export interface CriticalServiceInfo {
     assetValue?: any;
     cisaRegion?: number;
     criticalService?: string;
-    facilitator?: null;
+    facilitatorId?: number;
     id?: number;
     industryId?: any;
     isScoped?: boolean;

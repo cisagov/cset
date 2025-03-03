@@ -48,6 +48,7 @@ namespace CSETWebCore.Business.Reports
             public string Assessment_Name { get; set; }
             public DateTime? Assessment_Date { get; set; }
             public string Assessor_Name { get; set; }
+            public bool SelfAssessment { get; set; } = false;
             public string Facility_Name { get; set; }
             public string City_Or_Site_Name { get; set; }
             public string State_Province_Or_Region { get; set; }
