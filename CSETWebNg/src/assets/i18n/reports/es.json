@@ -20,6 +20,7 @@
                }
           }
      },
+     "self assessment indicator": "Autoevaluación",
      "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el {date}.",
      "reports run prior message": " Los informes generados antes de esa actualización pueden no reflejar el estado actual de la evaluación.",
      "printing report instructions button": "Instrucciones para imprimir informes",

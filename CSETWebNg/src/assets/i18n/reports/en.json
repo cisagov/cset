@@ -318,7 +318,7 @@
                }
           }
      },
-     "self assessment indicator": "SELF ASSESSMENT",
+     "self assessment indicator": "Self Assessment",
      "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated {date}.",
      "reports run prior message": "Any reports run prior to that update may not reflect the current state of the assessment.",
      "printing report instructions button": "Printing Reports Instructions",

@@ -99,8 +99,7 @@
             <div class="mt-2">
                 <input type="checkbox" name="self-assessment" id="self-assessment" class="checkbox-custom mt-1"
                     [(ngModel)]="demographicData.selfAssessment" [checked]="demographicData.selfAssessment" (change)="update($event)">
-                <label for="self-assessment" class="checkbox-custom-label d-inline">Self
-                    Assessment</label>
+                <label for="self-assessment" class="checkbox-custom-label d-inline">{{ t('self assessment') }}</label>
             </div>
         </div>
 
