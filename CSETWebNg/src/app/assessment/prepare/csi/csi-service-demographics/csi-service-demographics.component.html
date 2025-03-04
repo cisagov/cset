@@ -25,14 +25,15 @@
 
   <form class="mb-3">
     <ng-container *ngIf="showCriticalServiceIdentifyingInfo()">
-      <div>
+      <div class="mb-3">
         <label for="criticalServiceName" class="form-label">{{t('critical service name')}}</label>
         <input [ngClass]="{ 'alert-danger': !demographics.criticalService && showErrors() }" class="form-control"
           tabindex="0" type="text" maxlength="50" name="criticalServiceName" id="criticalServiceName"
           [(ngModel)]="demographics.criticalService" placeholder="{{t('critical service name')}}"
           (change)="updateBaseDemographics()" />
       </div>
-      <div>
+
+      <div class="mb-3">
         <label for="criticalServiceDescription" class="form-label">{{t('critical service description')}}</label>
         <input [ngClass]="{
           'alert-danger': !csiServiceDemographic.criticalServiceDescription && showErrors()
@@ -40,14 +41,16 @@
           id="criticalServiceDescription" [(ngModel)]="csiServiceDemographic.criticalServiceDescription"
           placeholder="{{t('critical service description')}}" (change)="update()" />
       </div>
-      <div>
+
+      <div class="mb-3">
         <label for="itIcsName" class="form-label">Name of IT/ICS System (supporting the Critical Service)</label>
         <input [ngClass]="{ 'alert-danger': !csiServiceDemographic.itIcsName && showErrors() }" class="form-control"
           tabindex="0" type="text" maxlength="50" name="itIcsName" id="itIcsName"
           [(ngModel)]="csiServiceDemographic.itIcsName"
           placeholder="Name of IT/ICS System (supporting the Critical Service)" (change)="update()" />
       </div>
-      <div>
+
+      <div class="mb-3">
         <label class="form-label" for="multisiteService">Multi-site Service?</label>
         <div class="btn-group btn-group-toggle d-block mb-2" id="multisiteService" data-toggle="buttons" ngbRadioGroup>
           <label ngbButtonLabel class="btn btn-level border-2 mb-1" [class.active]="csiServiceDemographic.multiSite">
