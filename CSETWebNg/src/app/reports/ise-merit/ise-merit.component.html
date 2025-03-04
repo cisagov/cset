@@ -295,15 +295,15 @@
                                     <strong> Sub-Risk Area: </strong> {{ observation?.finding?.sub_Risk }}
 
                                     <br>
-                                    <strong>Regulatory Citation: </strong>
+                                    <strong>Regulatory Citations: </strong>
                                     <br>
                                     <span *ngIf="regCitationsMap.has(observation?.question?.mat_Question_Id)">
                                         <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
                                             flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                            [cdkCopyToClipboard]="getReferenceCopyText(observation?.question?.mat_Question_Id)">
+                                            [cdkCopyToClipboard]="getReferenceCopyText(observation?.question?.mat_Question_Id, observation?.finding?.citations)">
                                             <span class="cset-icons-copy"></span>
                                         </label>
-                                        {{ regCitationsMap.get(observation?.question?.mat_Question_Id) }}
+                                        {{ regCitationsMap.get(observation?.question?.mat_Question_Id) }}<span *ngIf="observation?.finding?.citations">, {{ observation?.finding?.citations }}</span>
                                     </span>
                                     <span *ngIf="!regCitationsMap.has(observation?.question?.mat_Question_Id)">(No
                                         Regulatory Citations available)</span>
@@ -344,8 +344,7 @@
                                             {{ file.title }} (<strong>Section:</strong> {{ file.sectionRef }})
                                         </div>
                                     </span>
-                                    <span *ngIf="!sourceFilesMap.has(observation?.finding?.finding_Id)">(No Resources
-                                        available)</span>
+                                    <span *ngIf="!sourceFilesMap.has(observation?.finding?.finding_Id)">(No Resources available)</span>
 
                                     <br>
 
@@ -359,8 +358,7 @@
                                         </label>
                                         {{ regCitationsMap.get(observation?.question?.mat_Question_Id) }}
                                     </span>
-                                    <span *ngIf="!regCitationsMap.has(observation?.question?.mat_Question_Id)">(No
-                                        Regulatory Citations available)</span>
+                                    <span *ngIf="!regCitationsMap.has(observation?.question?.mat_Question_Id)">(No Regulatory Citations available)</span>
                                     <br>
                                 </div>
 
