@@ -16,7 +16,7 @@
                },
                "4": {
                     "title": "Exportar POAM a Excel",
-                    "desc": "Este informe genera una plantilla de Plan de acción e hitos (POA&M) que incluye una lista de prácticas no cumplidas que pueden remediarse. Este POA&M excluirá cualquier práctica de CMMC que no sea elegible para su inclusión según la resolución de CMMC. Está disponible para evaluaciones que apuntan a un Nivel 2 o 3 y han alcanzado el Nivel 1."
+                    "desc": "Este informe genera una plantilla de Plan de acción e hitos (POA&M) que incluye una lista de prácticas no cumplidas que pueden remediarse. Este POA&M excluirá cualquier práctica de CMMC que no sea elegible para su inclusión según la resolución de CMMC."
                }
           }
      },
