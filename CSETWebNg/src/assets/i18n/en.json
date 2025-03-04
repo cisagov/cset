@@ -942,7 +942,7 @@
     "build date": "Build Date",
     "contact": "Contact",
     "learn more": "To learn more about cyber vulnerabilities, training, standards, and references, visit the <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">CISA Vulnerability Management website</a> or contact <a class=\"wrap-text\" href=\"mailto:{{dhsEmail}}\" class=\"mailto\">{{dhsEmail}}</a>.",
-    "encourage reporting": "CISA — Cybersecurity and Infrastructure Security Agency — encourages you to report suspicious cyber activity, incidents, and vulnerabilities affecting critical infrastructure control systems.",
+    "encourage reporting": "CISA — Cybersecurity & Infrastructure Security Agency — encourages you to report suspicious cyber activity, incidents, and vulnerabilities affecting critical infrastructure control systems.",
     "cset training resources": "Training Resources",
     "training available": "Training is available through the following resources",
     "cset user guide": "CSET User Guide",
@@ -953,7 +953,7 @@
     "training website": "ICS Training Website",
     "training calendar": "ICS Training Calendar",
     "aes training": "AES Training",
-    "aes training description": "The Assessment Evaluation and Standardization (AES) Program qualifies individuals to conduct Cybersecurity and Infrastructure Security Agency (CISA) cyber assessments.",
+    "aes training description": "The Assessment Evaluation and Standardization (AES) Program qualifies individuals to conduct Cybersecurity & Infrastructure Security Agency (CISA) cyber assessments.",
     "aes link": "Assessment Evaluation and Standardization Program - CISA",
     "acet": {
       "we ensure financial stability": "We Ensure Financial Stability",
