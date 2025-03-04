@@ -17,6 +17,7 @@ export class SdOwnerDeficiencyComponent {
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
+  selfAssessment: boolean;
 
   responseYes: any;
   responseNo: any;
@@ -64,8 +65,9 @@ export class SdOwnerDeficiencyComponent {
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.creatorName;
+      this.assessorName = assessmentDetail.facilitatorName;
       this.facilityName = assessmentDetail.facilityName;
+      this.selfAssessment = assessmentDetail.selfAssessment;
     });
   }
 
