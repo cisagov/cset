@@ -29,10 +29,11 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
-  selector: 'app-terms-of-use',
-  templateUrl: './terms-of-use.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-terms-of-use',
+    templateUrl: './terms-of-use.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class TermsOfUseComponent {
 

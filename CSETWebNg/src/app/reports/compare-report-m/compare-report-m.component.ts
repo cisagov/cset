@@ -34,9 +34,10 @@ import { QuestionsService } from '../../services/questions.service';
 
 
 @Component({
-  selector: 'compare-report-m',
-  templateUrl: './compare-report-m.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'compare-report-m',
+    templateUrl: './compare-report-m.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 
 export class CompareReportMComponent implements OnInit, AfterViewChecked {

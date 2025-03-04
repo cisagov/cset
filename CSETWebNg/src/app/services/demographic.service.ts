@@ -92,7 +92,7 @@ export class DemographicService {
 
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
       .subscribe(() => {
-        if (this.configSvc.cisaAssessorWorkflow) {
+        if (this.configSvc.cisaAssessorWorkflow) {  
 
         }
       });
@@ -103,7 +103,6 @@ export class DemographicService {
       .subscribe(() => {
 
       });
-
   }
 
   exportDemographics() {
@@ -111,5 +110,4 @@ export class DemographicService {
     let url = this.apiUrl + 'export' + "?token=" + token;
     window.location.href = url;
   }
-
 }

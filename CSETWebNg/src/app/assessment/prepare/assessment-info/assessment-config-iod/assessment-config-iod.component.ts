@@ -8,9 +8,10 @@ import { DemographicIodService } from '../../../../services/demographic-iod.serv
 import { DemographicService } from '../../../../services/demographic.service';
 
 @Component({
-  selector: 'app-assessment-config-iod',
-  templateUrl: './assessment-config-iod.component.html',
-  styleUrls: ['./assessment-config-iod.component.scss']
+    selector: 'app-assessment-config-iod',
+    templateUrl: './assessment-config-iod.component.html',
+    styleUrls: ['./assessment-config-iod.component.scss'],
+    standalone: false
 })
 export class AssessmentConfigIodComponent implements OnInit {
   iodDemographics: DemographicsIod = {};

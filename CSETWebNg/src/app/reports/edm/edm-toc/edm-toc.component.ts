@@ -24,9 +24,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-edm-toc',
-  templateUrl: './edm-toc.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'app-edm-toc',
+    templateUrl: './edm-toc.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class EdmTocComponent implements OnInit {
 

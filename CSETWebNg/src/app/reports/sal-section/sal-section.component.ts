@@ -27,9 +27,10 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
-  selector: 'app-sal-section',
-  templateUrl: './sal-section.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-sal-section',
+    templateUrl: './sal-section.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class SalSectionComponent implements OnInit {
 

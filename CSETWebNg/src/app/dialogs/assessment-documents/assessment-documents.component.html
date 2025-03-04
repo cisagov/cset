@@ -23,7 +23,7 @@
 <div class="d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="cset-icons-books-stack-1 fs-base-6 me-3"></span>
-    <span>Assessment Documents</span>
+    <span>{{t('menu.tools.assessment documents')}}</span>
   </div>
 
   <mat-dialog-content class="p-3 pb-0 pe-0 mt-2 oy-auto d-flex flex-column flex-11a">
@@ -32,29 +32,33 @@
         <div style="max-width: 30px; max-height: 30px;"></div>
       </div>
       <div *ngIf="documents?.length === 0" class="d-flex flex-11a">
-        This assessment has no documents.
+        {{t('menu.tools.has no documents')}}
       </div>
       <div *ngIf="documents?.length > 0" class="pe-3 d-flex flex-11a">
-        <table class="assessment-documents">
-          <tr>
-            <th style="width:50%;">Document Title</th>
-            <th style="width:40%;">{{t('extras.file name')}}</th>
-            <th style="width:10%;"></th>
-          </tr>
-          <tr *ngFor="let doc of documents">
-            <td>
-              <div>
-                <label>{{doc.title}}</label>
-              </div>
-            </td>
-            <td>
-              <div>{{doc.fileName}}</div>
-            </td>
-            <td>
-              <button (click)="download(doc)" class="fs-base-6 cset-icons-export-up c-primary cursor-pointer btn-link"
-                matTooltip="Copy this document to another location."></button>
-            </td>
-          </tr>
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width:50%;">{{t('extras.artifact title')}}</th>
+              <th style="width:40%;">{{t('extras.file name')}}</th>
+              <th style="width:10%;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let doc of documents">
+              <td>
+                <div>
+                  <label>{{doc.title}}</label>
+                </div>
+              </td>
+              <td>
+                <div>{{doc.fileName}}</div>
+              </td>
+              <td>
+                <button (click)="download(doc)" class="fs-base-6 cset-icons-export-up c-primary cursor-pointer btn-link bg-transparent"
+                  [matTooltip]="t('tooltip.copy document')"></button>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>

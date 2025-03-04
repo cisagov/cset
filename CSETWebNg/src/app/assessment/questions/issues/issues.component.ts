@@ -29,9 +29,10 @@ import { ObservationsService } from '../../../services/observations.service';
 import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
-  selector: 'app-issues',
-  templateUrl: './issues.component.html',
-  styleUrls: ['./issues.component.scss']
+    selector: 'app-issues',
+    templateUrl: './issues.component.html',
+    styleUrls: ['./issues.component.scss'],
+    standalone: false
 })
 
 export class IssuesComponent implements OnInit {

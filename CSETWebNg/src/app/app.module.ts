@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -184,7 +184,6 @@ import { LinebreakPlaintextPipe } from './helpers/linebreakplain.pipe';
 import { NullishCoalescePipe } from './helpers/nullish-coalesce.pipe';
 import { CompletionCountPipe } from './helpers/completion-count.pipe';
 import { LocalizeDatePipe } from './helpers/date-localize.pipe';
-import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
 import { MyAssessmentsComponent } from './initial/my-assessments/my-assessments.component';
 import { LoginComponent } from './initial/login/login.component';
@@ -205,7 +204,6 @@ import { NavigationService } from './services/navigation/navigation.service';
 import { QuestionsService } from './services/questions.service';
 import { SalService } from './services/sal.service';
 import { StandardService } from './services/standard.service';
-import { CodeEditorModule } from '@ngstack/code-editor';
 import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
 import { SetBuilderService } from './services/set-builder.service';
 import { CustomSetComponent } from './builder/set-detail/set-detail.component';
@@ -337,7 +335,7 @@ import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-com
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
 import { MaturityQuestionsIseComponent } from './assessment/questions/maturity-questions/maturity-questions-ise.component';
 import { EdmComponent } from './reports/edm/edm.component';
-import { TooltipModule } from '@cloudfactorydk/ng2-tooltip-directive';
+import { TooltipModule } from './modules/tooltip/tooltip.module';
 import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
 import { QuestionTextCpgComponent } from './assessment/questions/question-text/question-text-cpg/question-text-cpg.component';
 import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';
@@ -486,7 +484,7 @@ import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/ir
 import { SwiperModule } from 'swiper/angular';
 import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { GalleryService } from './services/gallery.service';
-import { EllipsisModule } from 'ngx-ellipsis';
+import { EllipsisModule } from './modules/ngx-ellipsis/ellipsis.module';
 import { CrrReportComponent } from './reports/crr/crr-report/crr-report.component';
 import { CrrCoverSheetComponent } from './reports/crr/crr-report/crr-cover-sheet/crr-cover-sheet.component';
 import { CrrCoverSheet2Component } from './reports/crr/crr-report/crr-cover-sheet2/crr-cover-sheet2.component';
@@ -565,6 +563,7 @@ import { StandardsComplianceComponent } from './reports/standards-compliance/sta
 import { ComponentComplianceComponent } from './reports/component-compliance/component-compliance.component';
 import { OverallComplianceComponent } from './reports/overall-compliance/overall-compliance.component';
 import { RankedSubjectAreasComponent } from './reports/ranked-subject-areas/ranked-subject-areas.component';
+import { DocumentLibraryComponent } from './reports/document-library/document-library.component';
 import { ComponentQuestionListComponent } from './reports/component-question-list/component-question-list.component';
 import { C2m2ReportComponent } from './reports/c2m2/c2m2-report/c2m2-report.component';
 import { C2m2CoverSheetComponent } from './reports/c2m2/c2m2-report/c2m2-cover-sheet/c2m2-cover-sheet.component';
@@ -581,7 +580,6 @@ import { C2m2ObjectiveTableComponent } from './reports/c2m2/c2m2-objective-table
 import { CpgDomainSummaryTableComponent } from './assessment/results/cpg/cpg-domain-summary-table/cpg-domain-summary-table.component';
 import { C2m2DomainMilBarChartComponent } from './reports/c2m2/c2m2-report/c2m2-summary-results/c2m2-domain-mil-bar-chart/c2m2-domain-mil-bar-chart.component';
 import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficiency.component';
-import { PdfReportsComponent } from './reports/pdf-reports/pdf-reports.component';
 import { InfoBlockComponent } from './reports/info-block/info-block.component';
 import { SiteInformationComponent } from './reports/site-information/site-information.component';
 import { AboutRenewComponent } from './dialogs/about-renew/about-renew.component';
@@ -636,7 +634,6 @@ import { MalcolmUploadErrorComponent } from './dialogs/malcolm/malcolm-upload-er
 import { FooterService } from './services/footer.service';
 import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-info/assessment-convert-cf/assessment-convert-cf.component';
 import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/ise-warnings.component';
-//   import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytics/trend-compare-compatibility/trend-compare-compatibility.component';
 import { QuestionBlockCieComponent } from './assessment/questions/question-block-cie/question-block-cie.component';
 import { PrincipleSummaryComponent } from './assessment/questions/principle-summary/principle-summary.component';
@@ -690,6 +687,8 @@ import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.com
 import { AnalyticsResultsComponent } from './assessment/results/analytics-results/analytics-results.component';
 import { firstValueFrom } from 'rxjs';
 import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
+import { CodeEditorModule } from '@ngstack/code-editor';
+import { ImportComponent } from './import/import.component';
 
 @NgModule({
     declarations: [
@@ -775,7 +774,6 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         AssessmentDocumentsComponent,
         InlineParameterComponent,
         GlobalParametersComponent,
-        ImportComponent,
         UploadExportComponent,
         UploadDemographicsComponent,
         KeyboardShortcutsComponent,
@@ -1115,6 +1113,7 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         ComponentComplianceComponent,
         OverallComplianceComponent,
         RankedSubjectAreasComponent,
+        DocumentLibraryComponent,
         ComponentQuestionListComponent,
         C2m2ReportComponent,
         C2m2CoverSheetComponent,
@@ -1131,7 +1130,6 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         CpgDomainSummaryTableComponent,
         CpgDeficiencyComponent,
         C2m2DomainMilBarChartComponent,
-        PdfReportsComponent,
         InfoBlockComponent,
         SiteInformationComponent,
         AboutRenewComponent,
@@ -1230,14 +1228,14 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         QuestionsReviewedComponent,
         RolesChangedComponent,
         AnalyticsResultsComponent,
-        UpgradeComponent
+        UpgradeComponent,
+        ImportComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
         CommonModule,
         AppRoutingModule,
-        // Material
         A11yModule,
         CdkAccordionModule,
         ClipboardModule,
@@ -1283,36 +1281,8 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         OverlayModule,
         PortalModule,
         ScrollingModule,
-        // AutosizeModule,
-        // NgChartsModule,
-        // MatButtonModule,
-        // MatToolbarModule,
-        // MatChipsModule,
-        // MatSlideToggleModule,
-        // MatInputModule,
-        // MatCardModule,
-        // MatSliderModule,
-        // MatDatepickerModule,
-        // MatNativeDateModule,
-        // MatFormFieldModule,
-        // MatSortModule,
-        // MatExpansionModule,
-        // MatAutocompleteModule,
-        // MatDialogModule,
-        // MatTooltipModule,
-        // MatSnackBarModule,
-        // MatSidenavModule,
-        // MatTreeModule,
-        // MatIconModule,
-        // MatDividerModule,
-        // MatProgressSpinnerModule,
-        // MatProgressBarModule,
-        // MatListModule,
-        // MatMenuModule,
-        // MatTabsModule,
         ReactiveFormsModule,
         NgxSliderModule,
-        // TextareaAutosizeModule,
         FileUploadModule,
         AngularEditorModule,
         RouterModule,
@@ -1333,9 +1303,8 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         provideTranslocoScope('tutorial', 'reports'),
         ConfigService,
         AuthenticationService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: (configSvc: ConfigService, authSvc: AuthenticationService, tSvc: TranslocoService) => {
+        provideAppInitializer(() => {
+            const initializerFn = ((configSvc: ConfigService, authSvc: AuthenticationService, tSvc: TranslocoService) => {
                 return () => {
                     return configSvc.loadConfig().then(() => {
                         // Load and set the language based on config
@@ -1348,10 +1317,9 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
                         });
                     });
                 };
-            },
-            deps: [ConfigService, AuthenticationService, TranslocoService],
-            multi: true
-        },
+            })(inject(ConfigService), inject(AuthenticationService), inject(TranslocoService));
+            return initializerFn();
+        }),
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,
@@ -1409,6 +1377,6 @@ import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
         FooterService,
         AnalyticsService,
         provideHttpClient(withInterceptorsFromDi())
-    ]
+    ],
 })
 export class AppModule { }

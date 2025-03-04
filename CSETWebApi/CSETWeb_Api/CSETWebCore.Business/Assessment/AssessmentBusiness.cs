@@ -524,6 +524,26 @@ namespace CSETWebCore.Business.Assessment
                 }
 
 
+                // facilitator
+                assessment.SelfAssessment = (bool)(d2.GetX(assessmentId, "SELF-ASSESS") ?? false);
+                assessment.FacilitatorName = assessment.CreatorName;
+
+                var demo = d1.GetDemographics(assessmentId);
+                if (demo != null)
+                {
+                    var acFacilitator = _context.ASSESSMENT_CONTACTS.FirstOrDefault(x => x.Assessment_Contact_Id == demo.FacilitatorId);
+                    if (acFacilitator != null)
+                    {
+                        var userFacilitator = _context.USERS.FirstOrDefault(x => x.UserId == acFacilitator.UserId);
+                        if (userFacilitator != null)
+                        {
+
+                            assessment.FacilitatorName = $"{userFacilitator.FirstName} {userFacilitator.LastName}".Trim();
+                        }
+                    }
+                }
+
+
                 bool defaultAcet = (app_code == "ACET");
                 assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
 

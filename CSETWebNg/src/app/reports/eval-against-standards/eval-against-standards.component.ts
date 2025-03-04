@@ -35,9 +35,10 @@ import Chart from 'chart.js/auto';
  * to work in the future.
  */
 @Component({
-  selector: 'app-eval-against-standards',
-  templateUrl: './eval-against-standards.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-eval-against-standards',
+    templateUrl: './eval-against-standards.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class EvalAgainstStandardsComponent implements OnInit {
 

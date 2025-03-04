@@ -24,9 +24,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-vadr-summary-all',
-  templateUrl: './vadr-summary-all.component.html',
-  styleUrls: ['./vadr-summary-all.component.scss']
+    selector: 'app-vadr-summary-all',
+    templateUrl: './vadr-summary-all.component.html',
+    styleUrls: ['./vadr-summary-all.component.scss'],
+    standalone: false
 })
 export class VadrSummaryAllComponent {
   @Input() title = "RRA Performance Summary";

@@ -29,9 +29,10 @@ import { NavigationAggregService } from '../../services/navigationAggreg.service
 import { ConfigService } from '../../services/config.service';
 
 @Component({
-  selector: 'app-compare-analytics',
-  templateUrl: './compare-analytics.component.html',
-  host: { class: 'd-flex flex-column flex-11a trend-table-width' }
+    selector: 'app-compare-analytics',
+    templateUrl: './compare-analytics.component.html',
+    host: { class: 'd-flex flex-column flex-11a trend-table-width' },
+    standalone: false
 })
 export class CompareAnalyticsComponent implements OnInit {
   type: string;

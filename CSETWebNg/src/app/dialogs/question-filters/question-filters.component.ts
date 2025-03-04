@@ -29,10 +29,11 @@ import { QuestionFilterService } from '../../services/filtering/question-filter.
 import { QuestionsService } from '../../services/questions.service';
 
 @Component({
-  selector: 'app-question-filters',
-  templateUrl: './question-filters.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-question-filters',
+    templateUrl: './question-filters.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class QuestionFiltersComponent implements OnInit {
 

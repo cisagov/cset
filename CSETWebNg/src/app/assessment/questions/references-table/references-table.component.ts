@@ -36,9 +36,10 @@ import { ResourceLibraryService } from '../../../services/resource-library.servi
  * in 800-53.
  */
 @Component({
-  selector: 'app-references-table',
-  templateUrl: './references-table.component.html',
-  styleUrls: ['./references-table.component.scss']
+    selector: 'app-references-table',
+    templateUrl: './references-table.component.html',
+    styleUrls: ['./references-table.component.scss'],
+    standalone: false
 })
 export class ReferencesTableComponent {
 

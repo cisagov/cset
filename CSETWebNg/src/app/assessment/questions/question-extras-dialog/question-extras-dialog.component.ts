@@ -30,8 +30,9 @@ import { Question } from '../../../models/questions.model';
  * hosted in a dialog.
  */
 @Component({
-  selector: 'app-question-extras-dialog',
-  templateUrl: './question-extras-dialog.component.html'
+    selector: 'app-question-extras-dialog',
+    templateUrl: './question-extras-dialog.component.html',
+    standalone: false
 })
 export class QuestionExtrasDialogComponent implements OnInit {
 

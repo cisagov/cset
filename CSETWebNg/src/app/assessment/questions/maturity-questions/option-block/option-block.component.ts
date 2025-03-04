@@ -24,8 +24,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-option-block',
-  templateUrl: './option-block.component.html'
+    selector: 'app-option-block',
+    templateUrl: './option-block.component.html',
+    standalone: false
 })
 export class OptionBlockComponent implements OnInit {
 

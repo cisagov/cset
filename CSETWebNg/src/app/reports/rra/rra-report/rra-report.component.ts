@@ -32,9 +32,10 @@ import { ConfigService } from '../../../services/config.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'rra-report',
-  templateUrl: './rra-report.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'rra-report',
+    templateUrl: './rra-report.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class RraReportComponent implements OnInit {
   response: any;

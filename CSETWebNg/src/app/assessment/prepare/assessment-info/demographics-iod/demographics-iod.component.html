@@ -26,7 +26,7 @@
     to access reports and assessment exports.
   </h6>
 
-  <div>
+  <div class="mb-4">
     <label for="orgType" class="form-label">Organization Type</label>
     <select [ngClass]="{ 'alert-danger' : !demographicData.organizationType }" class="form-select" id="orgType"
       tabindex="0" name="orgType" (change)="onChangeOrgType($event)" [ngModel]="demographicData.organizationType">
@@ -37,14 +37,14 @@
     </select>
   </div>
 
-  <div>
+  <div class="mb-4">
     <label for="orgName" class="form-label">Name of Organization</label>
     <input [ngClass]="{ 'alert-danger' : !demographicData.organizationName }" class="form-control" autocomplete="off"
       tabindex="0" type="text" maxlength="150" name="orgName" id="orgName"
       [(ngModel)]="demographicData.organizationName" placeholder="Name of Organization" (blur)="update($event)" />
   </div>
 
-  <div>
+  <div class="mb-4">
     <label for="businessUnit" class="form-label">Business Unit</label>
     <input [ngClass]="{ 'alert-danger' : !demographicData.businessUnit }" class="form-control" autocomplete="off"
       tabindex="0" type="text" maxlength="150" name="businessUnit" id="businessUnit"
@@ -52,7 +52,7 @@
       (blur)="newUpdate('BUSINESS-UNIT', $event, 'string')" />
   </div>
 
-  <div class="row">
+  <div class="row mb-4">
     <div class="col">
       <label for="sector" class="form-label">Sector</label>
       <select [ngClass]="{ 'alert-danger' : !demographicData.sector}" class="form-select" id="sector" tabindex="0"
@@ -79,7 +79,7 @@
   </div>
 
   <!-- #1 -->
-  <div>
+  <div class="mb-4">
     <label for="numberEmployeesTotal" class="form-label" *ngIf="demographicData.organizationType == 1">
       Number of employees in the organization?
     </label>
@@ -97,7 +97,7 @@
   </div>
 
   <!-- #2 -->
-  <div class="mb-3">
+  <div class="mb-4">
     <label for="numberEmployeesUnit" *ngIf="demographicData.organizationType == 1" class="form-label"> Number of
       employees in the business unit? </label>
     <label for="numberEmployeesUnit" *ngIf="demographicData.organizationType != 1" class="form-label"> Number of

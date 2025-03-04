@@ -32,10 +32,11 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
-  selector: 'app-custom-set-list',
-  templateUrl: './custom-set-list.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-custom-set-list',
+    templateUrl: './custom-set-list.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
 export class SetListComponent implements OnInit {
 

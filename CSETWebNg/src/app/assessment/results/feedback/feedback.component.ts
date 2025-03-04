@@ -33,11 +33,12 @@ import { AssessmentService } from '../../../services/assessment.service';
 
 
 @Component({
-  selector: 'app-feedback',
-  templateUrl: './feedback.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' },
-  styleUrls: ['./feedback.component.css']
+    selector: 'app-feedback',
+    templateUrl: './feedback.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    styleUrls: ['./feedback.component.css'],
+    standalone: false
 })
 
 export class FeedbackComponent implements OnInit {

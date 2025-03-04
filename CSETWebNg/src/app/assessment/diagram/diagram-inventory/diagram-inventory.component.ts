@@ -30,9 +30,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { Vendor } from '../../../models/diagram-vulnerabilities.model';
 
 @Component({
-  selector: 'app-diagram-inventory',
-  templateUrl: './diagram-inventory.component.html',
-  styleUrls: ['./diagram-inventory.component.scss']
+    selector: 'app-diagram-inventory',
+    templateUrl: './diagram-inventory.component.html',
+    styleUrls: ['./diagram-inventory.component.scss'],
+    standalone: false
 })
 export class DiagramInventoryComponent implements OnInit {
 

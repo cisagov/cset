@@ -30,8 +30,9 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { CisService } from '../../../../services/cis.service';
 
 @Component({
-  selector: 'app-config-cis',
-  templateUrl: './config-cis.component.html'
+    selector: 'app-config-cis',
+    templateUrl: './config-cis.component.html',
+    standalone: false
 })
 export class ConfigCisComponent implements OnInit {
 

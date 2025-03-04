@@ -29,11 +29,12 @@ import { LayoutService } from '../../../../services/layout.service';
 import { Chart } from 'chart.js';
 
 @Component({
-  selector: 'app-cmmc-level-drilldown',
-  templateUrl: './cmmc-level-drilldown.component.html',
-  styleUrls: ['../../../../../sass/cmmc-results.scss'],
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-cmmc-level-drilldown',
+    templateUrl: './cmmc-level-drilldown.component.html',
+    styleUrls: ['../../../../../sass/cmmc-results.scss'],
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class CmmcLevelDrilldownComponent implements OnInit {
 

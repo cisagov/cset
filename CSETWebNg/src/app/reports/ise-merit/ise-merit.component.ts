@@ -32,9 +32,10 @@ import { QuestionsService } from '../../services/questions.service';
 import { NCUAService } from '../../services/ncua.service';
 
 @Component({
-  selector: 'app-ise-merit',
-  templateUrl: './ise-merit.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss', '../../../assets/sass/cset-font-styles.css']
+    selector: 'app-ise-merit',
+    templateUrl: './ise-merit.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss', '../../../assets/sass/cset-font-styles.css'],
+    standalone: false
 })
 export class IseMeritComponent implements OnInit {
   response: any = null;

@@ -4,9 +4,10 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
 
 @Component({
-  selector: 'app-sd-owner-deficiency',
-  templateUrl: './sd-owner-deficiency.component.html',
-  styleUrls: ['../../reports.scss', './sd-owner-deficiency.component.scss']
+    selector: 'app-sd-owner-deficiency',
+    templateUrl: './sd-owner-deficiency.component.html',
+    styleUrls: ['../../reports.scss', './sd-owner-deficiency.component.scss'],
+    standalone: false
 })
 
 export class SdOwnerDeficiencyComponent {
@@ -16,6 +17,7 @@ export class SdOwnerDeficiencyComponent {
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
+  selfAssessment: boolean;
 
   responseYes: any;
   responseNo: any;
@@ -63,8 +65,9 @@ export class SdOwnerDeficiencyComponent {
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.creatorName;
+      this.assessorName = assessmentDetail.facilitatorName;
       this.facilityName = assessmentDetail.facilityName;
+      this.selfAssessment = assessmentDetail.selfAssessment;
     });
   }
 

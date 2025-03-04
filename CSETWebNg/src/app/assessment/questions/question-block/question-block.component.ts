@@ -31,17 +31,18 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 import { LayoutService } from '../../../services/layout.service';
 import { CompletionService } from '../../../services/completion.service';
-import { ConversionService } from '../../../services/conversion.service';
 import { MalcolmService } from '../../../services/malcolm.service';
+import { LinebreakPipe } from '../../../helpers/linebreak.pipe';
 
 
 /**
  * Represents the display container of a single subcategory with its member questions.
  */
 @Component({
-  selector: 'app-question-block',
-  templateUrl: './question-block.component.html',
-  styleUrls: ['./question-block.component.css']
+    selector: 'app-question-block',
+    templateUrl: './question-block.component.html',
+    styleUrls: ['./question-block.component.css'],
+    standalone: false
 })
 export class QuestionBlockComponent implements OnInit {
 
@@ -83,15 +84,13 @@ export class QuestionBlockComponent implements OnInit {
     public assessSvc: AssessmentService,
     public layoutSvc: LayoutService,
     public malcolmSvc: MalcolmService,
-    private convertSvc: ConversionService
+    public linebreakPipe: LinebreakPipe
   ) {
     this.matLevelMap.set("B", "Baseline");
     this.matLevelMap.set("E", "Evolving");
     this.matLevelMap.set("Int", "Intermediate");
     this.matLevelMap.set("A", "Advanced");
     this.matLevelMap.set("Inn", "Innovative");
-
-
   }
 
   /**
@@ -115,11 +114,13 @@ export class QuestionBlockComponent implements OnInit {
    * @param q
    */
   applyTokensToText(q: Question) {
-    if (!q.parmSubs) {
-      return q.questionText;
-    }
-
     let text = q.questionText;
+
+    text = this.linebreakPipe.transform(text);
+
+    if (!q.parmSubs) {
+      return text;
+    }
 
     q.parmSubs.forEach(t => {
       let s = t.substitution;

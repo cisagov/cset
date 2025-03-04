@@ -7,15 +7,17 @@ import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
 
 @Component({
-  selector: 'app-cmmc2-scorecard-report',
-  templateUrl: './cmmc2-scorecard-report.component.html',
-  styleUrls: ['../../../reports/reports.scss']
+    selector: 'app-cmmc2-scorecard-report',
+    templateUrl: './cmmc2-scorecard-report.component.html',
+    styleUrls: ['../../../reports/reports.scss'],
+    standalone: false
 })
 export class Cmmc2ScorecardReportComponent {
 
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
+  selfAssessment: boolean;
 
   @Input()
   scorecards: any[];
@@ -47,6 +49,7 @@ export class Cmmc2ScorecardReportComponent {
       this.assessmentDate = info.assessment_Date;
       this.assessorName = info.assessor_Name;
       this.facilityName = info.facility_Name;
+      this.selfAssessment = info.selfAssessment;
     });
 
     this.maturitySvc.getCmmcScorecards().subscribe((x: any) => {

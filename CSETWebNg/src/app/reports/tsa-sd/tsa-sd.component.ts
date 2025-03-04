@@ -4,9 +4,10 @@ import { AssessmentService } from '../../services/assessment.service';
 import { MaturityService } from '../../services/maturity.service';
 
 @Component({
-  selector: 'app-tsa-sd',
-  templateUrl: './tsa-sd.component.html',
-  styleUrls: ['./tsa-sd.component.scss', '../reports.scss']
+    selector: 'app-tsa-sd',
+    templateUrl: './tsa-sd.component.html',
+    styleUrls: ['./tsa-sd.component.scss', '../reports.scss'],
+    standalone: false
 })
 export class TsaSdComponent implements OnInit {
 
@@ -20,6 +21,7 @@ export class TsaSdComponent implements OnInit {
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
+  selfAssessment: boolean;
 
   constructor(
     public maturitySvc: MaturityService,
@@ -37,13 +39,13 @@ export class TsaSdComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.creatorName;
+      this.assessorName = assessmentDetail.facilitatorName;
       this.facilityName = assessmentDetail.facilityName;
+      this.selfAssessment = assessmentDetail.selfAssessment;
     });
 
     this.maturitySvc.getMaturityDeficiencySd().subscribe(
       (r: any) => {
-        console.log(r);
         this.loading = false;
         this.responseU = r.unanswered;
         this.responseS = r.no;

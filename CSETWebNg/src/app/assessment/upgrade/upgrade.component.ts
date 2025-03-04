@@ -49,8 +49,9 @@ interface GalleryItem {
   custom_Set_Name: string | null;
 }
 @Component({
-  selector: 'app-upgrade',
-  templateUrl: './upgrade.component.html'
+    selector: 'app-upgrade',
+    templateUrl: './upgrade.component.html',
+    standalone: false
 })
 export class UpgradeComponent implements OnInit {
 
@@ -171,6 +172,4 @@ export class UpgradeComponent implements OnInit {
     this.assessSvc.refreshAssessment();
     this.updateLevel();
   }
-
-
 }

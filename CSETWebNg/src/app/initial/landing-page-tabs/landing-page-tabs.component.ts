@@ -31,10 +31,11 @@ import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-landing-page-tabs',
-  templateUrl: './landing-page-tabs.component.html',
-  styleUrls: ['./landing-page-tabs.component.scss'],
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-landing-page-tabs',
+    templateUrl: './landing-page-tabs.component.html',
+    styleUrls: ['./landing-page-tabs.component.scss'],
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
 export class LandingPageTabsComponent implements OnInit {
   currentTab: string;

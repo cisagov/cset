@@ -54,7 +54,8 @@ interface AssessmentSize {
     selector: 'app-assessment-demographics-tsa',
     templateUrl: './assessment-demographics-tsa.component.html',
     styleUrls: ['./assessment-demographics-tsa.component.scss'],
-    host: { class: 'd-flex flex-column flex-11a' }
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class AssessmentDemographicsTsaComponent implements OnInit {
     sectorsList: Sector[];
@@ -168,7 +169,7 @@ export class AssessmentDemographicsTsaComponent implements OnInit {
     }
 
     changeFacilitator(event: any) {
-        this.demographicData.facilitator = event.target.value;
+        this.demographicData.facilitatorId = event.target.value;
         this.updateDemographics();
     }
 

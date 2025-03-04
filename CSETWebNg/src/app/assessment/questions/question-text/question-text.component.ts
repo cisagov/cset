@@ -26,8 +26,9 @@ import { GlossaryService } from '../../../services/glossary.service';
 import { GlossaryTermComponent } from './glossary-term/glossary-term.component';
 
 @Component({
-  selector: 'app-question-text',
-  templateUrl: './question-text.component.html'
+    selector: 'app-question-text',
+    templateUrl: './question-text.component.html',
+    standalone: false
 })
 export class QuestionTextComponent implements OnInit {
 

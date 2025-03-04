@@ -27,9 +27,10 @@ import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
 
 @Component({
-  selector: 'zones',
-  templateUrl: './zones.component.html',
-  styleUrls: ['./zones.component.scss']
+    selector: 'zones',
+    templateUrl: './zones.component.html',
+    styleUrls: ['./zones.component.scss'],
+    standalone: false
 })
 export class ZonesComponent implements OnInit {
   zones = [];

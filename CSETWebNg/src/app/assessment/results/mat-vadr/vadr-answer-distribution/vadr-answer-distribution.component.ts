@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { VadrDataService } from '../../../../services/vadr-data.service';
 
 @Component({
-  selector: 'app-vadr-answer-distribution',
-  templateUrl: './vadr-answer-distribution.component.html',
-  styleUrls: ['./vadr-answer-distribution.component.scss']
+    selector: 'app-vadr-answer-distribution',
+    templateUrl: './vadr-answer-distribution.component.html',
+    styleUrls: ['./vadr-answer-distribution.component.scss'],
+    standalone: false
 })
 export class VadrAnswerDistributionComponent implements OnInit {
   answerDistribByLevel = [];

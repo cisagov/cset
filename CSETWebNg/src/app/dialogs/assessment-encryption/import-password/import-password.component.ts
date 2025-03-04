@@ -25,9 +25,10 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-import-password',
-  templateUrl: './import-password.component.html',
-  styleUrls: ['./import-password.component.scss']
+    selector: 'app-import-password',
+    templateUrl: './import-password.component.html',
+    styleUrls: ['./import-password.component.scss'],
+    standalone: false
 })
 export class ImportPasswordComponent {
 

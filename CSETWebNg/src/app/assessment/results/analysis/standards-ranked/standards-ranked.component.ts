@@ -30,10 +30,11 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-standards-ranked',
-  templateUrl: './standards-ranked.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-standards-ranked',
+    templateUrl: './standards-ranked.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class StandardsRankedComponent implements OnInit {
   chartIsVisible = false;

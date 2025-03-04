@@ -35,6 +35,7 @@ import { NavigationService } from '../../../services/navigation/navigation.servi
     // eslint-disable-next-line
     // host: { class: 'd-flex flex-column flex-11a' }
     styleUrls: ['./required.component.scss'],
+    standalone: false
 })
 export class RequiredDocsComponent implements OnInit {
     documents: RequiredDocumentsResponse;

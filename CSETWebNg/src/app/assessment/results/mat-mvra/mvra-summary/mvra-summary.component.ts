@@ -25,8 +25,9 @@ import { Component, OnInit } from '@angular/core';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
-  selector: 'app-mvra-summary',
-  templateUrl: './mvra-summary.component.html'
+    selector: 'app-mvra-summary',
+    templateUrl: './mvra-summary.component.html',
+    standalone: false
 })
 export class MvraSummaryComponent implements OnInit {
 

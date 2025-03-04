@@ -31,9 +31,10 @@ import { QuestionsService } from '../../services/questions.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-general-deficiency',
-  templateUrl: './general-deficiency.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-general-deficiency',
+    templateUrl: './general-deficiency.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class GeneralDeficiencyComponent implements OnInit {
 

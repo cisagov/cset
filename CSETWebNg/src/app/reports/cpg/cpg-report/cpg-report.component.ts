@@ -30,9 +30,10 @@ import { SsgService } from '../../../services/ssg.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-cpg-report',
-  templateUrl: './cpg-report.component.html',
-  styleUrls: ['./cpg-report.component.scss', '../../reports.scss']
+    selector: 'app-cpg-report',
+    templateUrl: './cpg-report.component.html',
+    styleUrls: ['./cpg-report.component.scss', '../../reports.scss'],
+    standalone: false
 })
 export class CpgReportComponent implements OnInit {
   loading = false;
@@ -41,6 +42,7 @@ export class CpgReportComponent implements OnInit {
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
+  selfAssessment: boolean;
 
   answerDistribByDomain: any;
 
@@ -71,8 +73,9 @@ export class CpgReportComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.creatorName;
+      this.assessorName = assessmentDetail.facilitatorName;
       this.facilityName = assessmentDetail.facilityName;
+      this.selfAssessment = assessmentDetail.selfAssessment;
 
       this.assessSvc.assessment = assessmentDetail;
       this.isSsgApplicable = this.ssgSvc.doesSsgApply();

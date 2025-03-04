@@ -24,8 +24,9 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
-  selector: 'app-progress',
-  templateUrl: './progress.component.html'
+    selector: 'app-progress',
+    templateUrl: './progress.component.html',
+    standalone: false
 })
 export class ProgressComponent implements OnInit, OnChanges {
   @Input() value: number;

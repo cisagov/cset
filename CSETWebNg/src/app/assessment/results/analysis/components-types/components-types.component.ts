@@ -29,8 +29,9 @@ import Chart from 'chart.js/auto';
 import { QuestionsService } from '../../../../services/questions.service';
 
 @Component({
-  selector: 'app-components-types',
-  templateUrl: './components-types.component.html'
+    selector: 'app-components-types',
+    templateUrl: './components-types.component.html',
+    standalone: false
 })
 export class ComponentsTypesComponent implements OnInit {
   chart: Chart;

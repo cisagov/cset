@@ -35,7 +35,8 @@ import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
     selector: 'app-irp-summary',
-    templateUrl: './irp-summary.component.html'
+    templateUrl: './irp-summary.component.html',
+    standalone: false
 })
 export class IrpSummaryComponent implements OnInit {
 

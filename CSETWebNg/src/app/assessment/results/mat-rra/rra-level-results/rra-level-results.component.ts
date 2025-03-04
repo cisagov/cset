@@ -27,11 +27,12 @@ import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
-  selector: 'app-rra-level-results',
-  templateUrl: './rra-level-results.component.html',
-  styleUrls: ['rra-level-results.component.scss'],
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' },
+    selector: 'app-rra-level-results',
+    templateUrl: './rra-level-results.component.html',
+    styleUrls: ['rra-level-results.component.scss'],
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class RraLevelResultsComponent implements OnInit {
 

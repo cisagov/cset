@@ -46,9 +46,10 @@ import { CompletionService } from '../../../services/completion.service';
  * of the question block can eventually replace the original.
  */
 @Component({
-  selector: 'app-question-block-ise',
-  templateUrl: './question-block-ise.component.html',
-  styleUrls: ['./question-block-ise.component.scss']
+    selector: 'app-question-block-ise',
+    templateUrl: './question-block-ise.component.html',
+    styleUrls: ['./question-block-ise.component.scss'],
+    standalone: false
 })
 export class QuestionBlockIseComponent implements OnInit {
 

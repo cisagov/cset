@@ -30,10 +30,11 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { CieService } from '../../services/cie.service';
 
 @Component({
-  selector: 'app-cie-documents',
-  templateUrl: './cie-documents.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-cie-documents',
+    templateUrl: './cie-documents.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class CieDocumentsComponent implements OnInit {
 

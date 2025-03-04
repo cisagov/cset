@@ -35,9 +35,10 @@ import { ConfigService } from '../../services/config.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-search-page',
-  templateUrl: './search-page.component.html',
-  styleUrls: ['./search-page.component.scss']
+    selector: 'app-search-page',
+    templateUrl: './search-page.component.html',
+    styleUrls: ['./search-page.component.scss'],
+    standalone: false
 })
 export class SearchPageComponent implements OnInit, AfterViewInit {
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;

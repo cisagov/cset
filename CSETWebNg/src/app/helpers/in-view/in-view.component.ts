@@ -31,12 +31,13 @@ import { isPlatformBrowser } from '@angular/common';
  * Emits events when it is scrolled into and out of view in the browser viewport.
  */
 @Component({
-  selector: 'app-in-view',
-  template: `
+    selector: 'app-in-view',
+    template: `
     <ng-container *ngIf="inView" [ngTemplateOutlet]="template">
     </ng-container>
   `,
-  styles: [':host {display: block;}']
+    styles: [':host {display: block;}'],
+    standalone: false
 })
 export class InViewComponent implements OnInit, OnDestroy {
   observer: IntersectionObserver;

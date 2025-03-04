@@ -77,10 +77,11 @@ interface UserAssessment {
 }
 
 @Component({
-  selector: "app-my-assessments",
-  templateUrl: "my-assessments.component.html",
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: "app-my-assessments",
+    templateUrl: "my-assessments.component.html",
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class MyAssessmentsComponent implements OnInit {
   comparer: Comparer = new Comparer();
