@@ -46,6 +46,10 @@ export class CoverSheetAComponent implements OnInit, OnChanges {
   @Input()
   facilityName: string;
 
+  @Input()
+  selfAssessment: boolean;
+
+
   infoParent: any;
 
   constructor() { }
@@ -60,7 +64,8 @@ export class CoverSheetAComponent implements OnInit, OnChanges {
         assessment_Name: this.assessmentName,
         assessor_Name: this.assessorName,
         facility_Name: this.facilityName,
-        assessment_Date: this.assessmentDate
+        assessment_Date: this.assessmentDate,
+        selfAssessment: this.selfAssessment
       }
     }
   }

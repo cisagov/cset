@@ -41,6 +41,8 @@ export class CisSectionScoringComponent implements OnInit {
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
+  selfAssessment: boolean;
+
 
   baselineAssessmentName: string;
 
@@ -66,8 +68,9 @@ export class CisSectionScoringComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.creatorName;
+      this.assessorName = assessmentDetail.facilitatorName;
       this.facilityName = assessmentDetail.facilityName;
+      this.selfAssessment = assessmentDetail.selfAssessment;
     });
 
     this.cisSvc.getCisSectionScoring().subscribe((resp: any) => {

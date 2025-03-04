@@ -17,6 +17,7 @@ export class Cmmc2ScorecardReportComponent {
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
+  selfAssessment: boolean;
 
   @Input()
   scorecards: any[];
@@ -48,6 +49,7 @@ export class Cmmc2ScorecardReportComponent {
       this.assessmentDate = info.assessment_Date;
       this.assessorName = info.assessor_Name;
       this.facilityName = info.facility_Name;
+      this.selfAssessment = info.selfAssessment;
     });
 
     this.maturitySvc.getCmmcScorecards().subscribe((x: any) => {
