@@ -29,9 +29,10 @@ import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
-  selector: 'app-crr-comments-marked',
-  templateUrl: './crr-comments-marked.component.html',
-  styleUrls: ['./../crr-report/crr-report.component.scss']
+    selector: 'app-crr-comments-marked',
+    templateUrl: './crr-comments-marked.component.html',
+    styleUrls: ['./../crr-report/crr-report.component.scss'],
+    standalone: false
 })
 export class CrrCommentsMarkedComponent implements OnInit {
   crrModel: CmuReportModel;

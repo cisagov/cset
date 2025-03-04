@@ -25,9 +25,10 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
-  selector: 'edm-q-blocks-horizontal',
-  templateUrl: './edm-q-blocks-horizontal.component.html',
-  styleUrls: ['./edm-q-blocks-horizontal.component.scss', '../../../../reports/reports.scss']
+    selector: 'edm-q-blocks-horizontal',
+    templateUrl: './edm-q-blocks-horizontal.component.html',
+    styleUrls: ['./edm-q-blocks-horizontal.component.scss', '../../../../reports/reports.scss'],
+    standalone: false
 })
 export class EdmQBlocksHorizontalComponent implements OnChanges {
 

@@ -31,8 +31,9 @@ import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-assessment-detail-tsa',
-  templateUrl: './assessment-detail-tsa.component.html'
+    selector: 'app-assessment-detail-tsa',
+    templateUrl: './assessment-detail-tsa.component.html',
+    standalone: false
 })
 export class AssessmentDetailTsaComponent implements OnInit {
   assessment: AssessmentDetail = {

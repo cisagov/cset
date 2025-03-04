@@ -35,12 +35,13 @@ import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/onlin
 
 
 @Component({
-  selector: 'renew-layout-main',
-  templateUrl: './renew-layout-main.component.html',
-  styleUrls: ['./renew-layout-main.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
+    selector: 'renew-layout-main',
+    templateUrl: './renew-layout-main.component.html',
+    styleUrls: ['./renew-layout-main.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
+    standalone: false
 })
 export class RenewLayoutMainComponent {
   docUrl: string;

@@ -27,9 +27,10 @@ import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-placeholder-questions',
-  templateUrl: './placeholder-questions.component.html',
-  styleUrls: ['./placeholder-questions.component.scss']
+    selector: 'app-placeholder-questions',
+    templateUrl: './placeholder-questions.component.html',
+    styleUrls: ['./placeholder-questions.component.scss'],
+    standalone: false
 })
 export class PlaceholderQuestionsComponent implements OnInit {
 

@@ -26,9 +26,10 @@ import { RraDataService } from '../../../../services/rra-data.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-rra-answer-counts',
-  templateUrl: './rra-answer-counts.component.html',
-  styleUrls: ['./rra-answer-counts.component.scss']
+    selector: 'app-rra-answer-counts',
+    templateUrl: './rra-answer-counts.component.html',
+    styleUrls: ['./rra-answer-counts.component.scss'],
+    standalone: false
 })
 export class RraAnswerCountsComponent implements OnInit {
 

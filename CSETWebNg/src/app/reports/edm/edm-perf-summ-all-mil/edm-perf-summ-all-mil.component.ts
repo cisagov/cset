@@ -26,9 +26,10 @@ import { MaturityService } from '../../../services/maturity.service';
 import { ReportService } from '../../../services/report.service';
 
 @Component({
-  selector: 'app-edm-perf-summ-all-mil',
-  templateUrl: './edm-perf-summ-all-mil.component.html',
-  styleUrls: ['./edm-perf-summ-all-mil.component.scss', '../../reports.scss']
+    selector: 'app-edm-perf-summ-all-mil',
+    templateUrl: './edm-perf-summ-all-mil.component.html',
+    styleUrls: ['./edm-perf-summ-all-mil.component.scss', '../../reports.scss'],
+    standalone: false
 })
 export class EdmPerfSummAllMilComponent implements OnInit, OnChanges {
 

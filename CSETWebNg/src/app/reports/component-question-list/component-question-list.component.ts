@@ -27,9 +27,10 @@ import { Utilities } from '../../services/utilities.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-component-question-list',
-  templateUrl: './component-question-list.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-component-question-list',
+    templateUrl: './component-question-list.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class ComponentQuestionListComponent implements OnInit, OnChanges {
 

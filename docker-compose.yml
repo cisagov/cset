@@ -1,5 +1,19 @@
 ---
 services:
+  api:
+    container_name: cset-api
+    hostname: api
+    build:
+      context: CSETWebApi
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./CSETWebApi:/app
+    depends_on:
+      - sqlserver
   sqlserver:
     container_name: cset-mssql
     hostname: mssql

@@ -25,8 +25,9 @@ import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
-  selector: 'app-logo-for-reports',
-  templateUrl: './logo-for-reports.component.html'
+    selector: 'app-logo-for-reports',
+    templateUrl: './logo-for-reports.component.html',
+    standalone: false
 })
 export class LogoForReportsComponent implements OnInit {
   sourceImage = '';

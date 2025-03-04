@@ -38,11 +38,12 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../services/config.service';
 
 @Component({
-  selector: 'app-assessment',
-  styleUrls: ['./assessment.component.scss'],
-  templateUrl: './assessment.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-assessment',
+    styleUrls: ['./assessment.component.scss'],
+    templateUrl: './assessment.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
 export class AssessmentComponent implements OnInit {
   innerWidth: number;

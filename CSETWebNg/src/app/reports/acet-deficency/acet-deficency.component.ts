@@ -32,9 +32,10 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
-  selector: 'app-acet-deficency',
-  templateUrl: './acet-deficency.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-acet-deficency',
+    templateUrl: './acet-deficency.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class AcetDeficencyComponent implements OnInit {
   response: any;

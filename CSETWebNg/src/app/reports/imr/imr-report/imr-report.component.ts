@@ -29,9 +29,10 @@ import { ConfigService } from '../../../services/config.service';
 import { CmuService } from '../../../services/cmu.service';
 
 @Component({
-  selector: 'app-imr-report',
-  templateUrl: './imr-report.component.html',
-  styleUrls: ['./imr-report.component.scss']
+    selector: 'app-imr-report',
+    templateUrl: './imr-report.component.html',
+    styleUrls: ['./imr-report.component.scss'],
+    standalone: false
 })
 export class ImrReportComponent implements OnInit {
   model: CmuReportModel = {};

@@ -27,8 +27,9 @@ import { EditUserComponent } from '../edit-user/edit-user.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-merge-question-detail',
-  templateUrl: './merge-question-detail.component.html'
+    selector: 'app-merge-question-detail',
+    templateUrl: './merge-question-detail.component.html',
+    standalone: false
 })
 export class MergeQuestionDetailComponent implements OnInit {
 

@@ -30,8 +30,9 @@ import { AssessmentDemographicsComponent } from '../assessment-demographics/asse
 import { NCUAService } from '../../../../services/ncua.service';
 
 @Component({
-  selector: 'app-assessment-info-cie',
-  templateUrl: './assessment-info-cie.component.html'
+    selector: 'app-assessment-info-cie',
+    templateUrl: './assessment-info-cie.component.html',
+    standalone: false
 })
 export class AssessmentInfoCieComponent implements OnInit {
 

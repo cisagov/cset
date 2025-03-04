@@ -26,9 +26,10 @@ import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-alt-justification-comments',
-  templateUrl: './alt-justification-comments.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-alt-justification-comments',
+    templateUrl: './alt-justification-comments.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class AltJustificationCommentsComponent {
 

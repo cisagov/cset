@@ -33,7 +33,8 @@ import { TranslocoService } from '@jsverse/transloco';
     templateUrl: './reset-pass.component.html',
     // eslint-disable-next-line
     host: { class: 'd-flex flex-column flex-11a' },
-    styleUrls: ['./reset-pass.component.scss']
+    styleUrls: ['./reset-pass.component.scss'],
+    standalone: false
 })
 
 export class ResetPassComponent implements OnInit {

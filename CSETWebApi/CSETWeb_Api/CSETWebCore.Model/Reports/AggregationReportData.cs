@@ -12,7 +12,7 @@ namespace CSETWebCore.Business.Reports
     {
         public string AggregationName { get; set; }
         public List<BasicReportData.OverallSALTable> SalList { get; set; }
-        public List<DocumentLibraryTable> DocumentLibraryTable { get; set; }
+        public List<DocumentLibraryEntry> DocumentLibraryEntries { get; set; }
         public AggInformation Information { get; set; }
     }
 }

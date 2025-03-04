@@ -34,9 +34,10 @@ import { VersionService } from '../../services/version.service';
 
 
 @Component({
-  selector: 'app-ise-data',
-  templateUrl: './ise-data.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-ise-data',
+    templateUrl: './ise-data.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class IseDataComponent implements OnInit {
   response: any = {};

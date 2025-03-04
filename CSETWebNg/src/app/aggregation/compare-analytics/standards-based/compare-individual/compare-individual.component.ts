@@ -28,10 +28,11 @@ import { Chart } from 'chart.js';
 import { ColorService } from '../../../../services/color.service';
 
 @Component({
-  selector: 'app-compare-individual',
-  templateUrl: './compare-individual.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-compare-individual',
+    templateUrl: './compare-individual.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class CompareIndividualComponent implements OnInit {
 

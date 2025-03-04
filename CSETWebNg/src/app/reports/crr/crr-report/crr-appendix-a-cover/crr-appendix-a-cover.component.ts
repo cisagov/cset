@@ -25,9 +25,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
-  selector: 'app-crr-appendix-a-cover',
-  templateUrl: './crr-appendix-a-cover.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+    selector: 'app-crr-appendix-a-cover',
+    templateUrl: './crr-appendix-a-cover.component.html',
+    styleUrls: ['./../crr-report.component.scss'],
+    standalone: false
 })
 export class CrrAppendixACoverComponent implements OnInit {
   @Input() model: CmuReportModel;

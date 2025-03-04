@@ -45,8 +45,9 @@ import { SsgService } from '../../../services/ssg.service';
 import { ModuleBehavior } from '../../../models/module-config.model';
 
 @Component({
-  selector: 'app-maturity-questions',
-  templateUrl: './maturity-questions.component.html'
+    selector: 'app-maturity-questions',
+    templateUrl: './maturity-questions.component.html',
+    standalone: false
 })
 export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 

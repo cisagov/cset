@@ -26,9 +26,10 @@ import { ColorService } from '../../../../services/color.service';
 import { CpgService } from '../../../../services/cpg.service';
 
 @Component({
-  selector: 'app-cpg-practice-table',
-  templateUrl: './cpg-practice-table.component.html',
-  styleUrls: ['./cpg-practice-table.component.scss', '../../../../reports/reports.scss']
+    selector: 'app-cpg-practice-table',
+    templateUrl: './cpg-practice-table.component.html',
+    styleUrls: ['./cpg-practice-table.component.scss', '../../../../reports/reports.scss'],
+    standalone: false
 })
 export class CpgPracticeTableComponent implements OnInit {
 

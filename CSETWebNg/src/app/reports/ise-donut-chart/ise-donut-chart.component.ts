@@ -28,9 +28,10 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, OnChanges, OnInit, } from '@angular/core';
 
 @Component({
-  selector: 'app-ise-donut-chart',
-  templateUrl: './ise-donut-chart.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-ise-donut-chart',
+    templateUrl: './ise-donut-chart.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class IseDonutChartComponent implements OnInit, OnChanges {
   @Input()

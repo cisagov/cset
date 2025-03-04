@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using CSETWebCore.Business.Aggregation;
@@ -62,7 +63,7 @@ namespace CSETWebCore.Business.Demographic
                 demographics.CriticalService = hit.ddd?.CriticalService;
                 demographics.PointOfContact = hit.ddd?.PointOfContact;
                 demographics.Agency = hit.ddd?.Agency;
-                demographics.Facilitator = hit.ddd?.Facilitator;
+                demographics.FacilitatorId = hit.ddd?.Facilitator;
                 demographics.IsScoped = hit.ddd?.IsScoped != false;
                 demographics.OrganizationName = hit.ddd?.OrganizationName;
                 demographics.OrganizationType = hit.ddd?.OrganizationType;
@@ -73,6 +74,8 @@ namespace CSETWebCore.Business.Demographic
             var extBiz = new DemographicExtBusiness(_context);
             demographics.CisaRegion = (int?)extBiz.GetX(assessmentId, "CISA-REGION");
             demographics.OrgPointOfContact = (int?)extBiz.GetX(assessmentId, "ORG-POC");
+
+            demographics.SelfAssessment = ((bool?)extBiz.GetX(assessmentId, "SELF-ASSESS")) ?? false;
 
 
             return demographics;
@@ -164,7 +167,7 @@ namespace CSETWebCore.Business.Demographic
             dbDemographics.SectorId = demographics.SectorId;
             dbDemographics.Size = assetSize;
             dbDemographics.AssetValue = assetValue;
-            dbDemographics.Facilitator = demographics.Facilitator == 0 ? null : demographics.Facilitator;
+            dbDemographics.Facilitator = demographics.FacilitatorId == 0 ? null : demographics.FacilitatorId;
             dbDemographics.CriticalService = demographics.CriticalService;
             dbDemographics.PointOfContact = demographics.PointOfContact == 0 ? null : demographics.PointOfContact;
             dbDemographics.IsScoped = demographics.IsScoped;
@@ -184,6 +187,7 @@ namespace CSETWebCore.Business.Demographic
             extBiz.SaveX(demographics.AssessmentId, "CISA-REGION", demographics.CisaRegion);
             extBiz.SaveX(demographics.AssessmentId, "ORG-POC", demographics.OrgPointOfContact);
 
+            extBiz.SaveX(demographics.AssessmentId, "SELF-ASSESS", demographics.SelfAssessment);
 
 
             _assessmentUtil.TouchAssessment(dbDemographics.Assessment_Id);

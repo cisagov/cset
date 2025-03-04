@@ -26,7 +26,8 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'report-test',
     templateUrl: './report-test.component.html',
-    preserveWhitespaces: true
+    preserveWhitespaces: true,
+    standalone: false
 })
 
 export class ReportTestComponent {

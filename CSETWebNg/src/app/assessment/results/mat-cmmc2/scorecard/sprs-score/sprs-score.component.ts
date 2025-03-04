@@ -28,8 +28,9 @@ import { MaturityService } from '../../../../../services/maturity.service';
 import { NavigationService } from '../../../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-sprs-score',
-  templateUrl: './sprs-score.component.html'
+    selector: 'app-sprs-score',
+    templateUrl: './sprs-score.component.html',
+    standalone: false
 })
 export class SprsScoreComponent implements OnInit {
   response: any;

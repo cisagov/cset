@@ -28,9 +28,10 @@ import { ReportService } from '../../../services/report.service';
 import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
-  selector: 'app-edm-domain-detail',
-  templateUrl: './edm-domain-detail.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'app-edm-domain-detail',
+    templateUrl: './edm-domain-detail.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class EdmDomainDetailComponent implements OnInit {
 

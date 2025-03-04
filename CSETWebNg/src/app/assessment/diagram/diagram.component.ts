@@ -31,7 +31,8 @@ import { NavigationService } from '../../services/navigation/navigation.service'
 
 @Component({
     selector: 'app-diagram',
-    templateUrl: './diagram.component.html'
+    templateUrl: './diagram.component.html',
+    standalone: false
 })
 export class DiagramComponent implements OnInit {
 

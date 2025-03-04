@@ -30,9 +30,10 @@ import { NCUAService } from '../../services/ncua.service';
 import { QuestionsService } from '../../services/questions.service';
 
 @Component({
-  selector: 'app-ise-answeredquestions',
-  templateUrl: './ise-answeredquestions.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-ise-answeredquestions',
+    templateUrl: './ise-answeredquestions.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class IseAnsweredQuestionsComponent implements OnInit {
   response: any = {};

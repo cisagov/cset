@@ -26,8 +26,9 @@ import { GlossaryService } from '../../../services/glossary.service';
 import { GlossaryTermComponent } from '../question-text/glossary-term/glossary-term.component';
 
 @Component({
-  selector: 'app-grouping-description',
-  templateUrl: './grouping-description.component.html'
+    selector: 'app-grouping-description',
+    templateUrl: './grouping-description.component.html',
+    standalone: false
 })
 export class GroupingDescriptionComponent implements AfterViewInit {
 

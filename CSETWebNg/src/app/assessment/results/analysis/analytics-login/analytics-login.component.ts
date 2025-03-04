@@ -19,10 +19,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 }
 
 @Component({
-  selector: 'app-analytics-login',
-  templateUrl: './analytics-login.component.html',
-  styleUrls: ['./analytics-login.component.scss'],
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-analytics-login',
+    templateUrl: './analytics-login.component.html',
+    styleUrls: ['./analytics-login.component.scss'],
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class AnalyticsloginComponent implements OnInit {
 

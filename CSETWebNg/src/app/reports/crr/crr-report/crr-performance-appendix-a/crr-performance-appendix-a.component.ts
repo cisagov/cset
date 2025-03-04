@@ -26,9 +26,10 @@ import { CmuReportModel } from '../../../../models/reports.model';
 import { CmuService } from '../../../../services/cmu.service';
 
 @Component({
-  selector: 'app-crr-performance-appendix-a',
-  templateUrl: './crr-performance-appendix-a.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+    selector: 'app-crr-performance-appendix-a',
+    templateUrl: './crr-performance-appendix-a.component.html',
+    styleUrls: ['./../crr-report.component.scss'],
+    standalone: false
 })
 export class CrrPerformanceAppendixAComponent implements OnInit {
   @Input() model: CmuReportModel;

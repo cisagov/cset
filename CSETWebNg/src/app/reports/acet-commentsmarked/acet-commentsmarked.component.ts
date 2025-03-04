@@ -31,9 +31,10 @@ import { MaturityService } from '../../services/maturity.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-acet-commentsmarked',
-  templateUrl: './acet-commentsmarked.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-acet-commentsmarked',
+    templateUrl: './acet-commentsmarked.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class AcetCommentsmarkedComponent implements OnInit {
   response: any = null;

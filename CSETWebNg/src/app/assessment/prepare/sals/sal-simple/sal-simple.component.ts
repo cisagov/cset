@@ -27,10 +27,11 @@ import { Sal } from '../../../../models/sal.model';
 import { SalService } from '../../../../services/sal.service';
 
 @Component({
-  selector: 'app-sal-simple',
-  templateUrl: './sal-simple.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-sal-simple',
+    templateUrl: './sal-simple.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 
 export class SalSimpleComponent implements OnInit {

@@ -24,9 +24,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-rra-levels',
-  templateUrl: './rra-levels.component.html',
-  styleUrls: ['./rra-levels.component.scss', '../../../../reports/reports.scss']
+    selector: 'app-rra-levels',
+    templateUrl: './rra-levels.component.html',
+    styleUrls: ['./rra-levels.component.scss', '../../../../reports/reports.scss'],
+    standalone: false
 })
 export class RraLevelsComponent implements OnInit {
 

@@ -27,9 +27,10 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { CisService } from '../../../services/cis.service';
 
 @Component({
-  selector: 'app-cis-ranked-deficiency',
-  templateUrl: './cis-ranked-deficiency.component.html',
-  styleUrls: ['./cis-ranked-deficiency.component.scss', '../../../reports/reports.scss']
+    selector: 'app-cis-ranked-deficiency',
+    templateUrl: './cis-ranked-deficiency.component.html',
+    styleUrls: ['./cis-ranked-deficiency.component.scss', '../../../reports/reports.scss'],
+    standalone: false
 })
 export class CisRankedDeficiencyComponent implements OnInit {
 
@@ -53,7 +54,7 @@ export class CisRankedDeficiencyComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.creatorName;
+      this.assessorName = assessmentDetail.facilitatorName;
       this.facilityName = assessmentDetail.facilityName;
     });
   }

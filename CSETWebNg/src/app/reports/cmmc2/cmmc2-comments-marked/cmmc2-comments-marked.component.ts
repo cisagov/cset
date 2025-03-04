@@ -29,9 +29,10 @@ import { QuestionsService } from '../../../services/questions.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-cmmc2-comments-marked',
-  templateUrl: './cmmc2-comments-marked.component.html',
-  styleUrls: ['./../../crr/crr-report/crr-report.component.scss']
+    selector: 'app-cmmc2-comments-marked',
+    templateUrl: './cmmc2-comments-marked.component.html',
+    styleUrls: ['./../../crr/crr-report/crr-report.component.scss'],
+    standalone: false
 })
 export class Cmmc2CommentsMarkedComponent implements OnInit {
 

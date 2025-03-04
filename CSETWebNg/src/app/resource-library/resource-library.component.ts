@@ -55,11 +55,12 @@ interface LibrarySearchResponse {
 }
 
 @Component({
-  selector: 'app-resource-library',
-  templateUrl: './resource-library.component.html',
-  styleUrls: ['./resource-library.component.scss'],
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-resource-library',
+    templateUrl: './resource-library.component.html',
+    styleUrls: ['./resource-library.component.scss'],
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
 export class ResourceLibraryComponent implements OnInit {
   results: LibrarySearchResponse[];

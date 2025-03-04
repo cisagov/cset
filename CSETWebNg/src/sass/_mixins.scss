@@ -22,6 +22,8 @@ SOFTWARE.
 
 */
 @use 'sass:math';
+@use "sass:map";
+@use "sass:string";
 
 @function _buildIcon($icon) {
   $icon: '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 70 70" width="25" height="25">#{$icon}</svg>';
@@ -39,10 +41,10 @@ SOFTWARE.
   $encoded: '';
   $slice: 2000;
   $index: 0;
-  $loops: ceil(math.div(str-length($svg), $slice));
+  $loops: math.ceil(math.div(string.length($svg), $slice));
 
   @for $i from 1 through $loops {
-    $chunk: str-slice($svg, $index, $index + $slice - 1);
+    $chunk: string.slice($svg, $index, $index + $slice - 1);
     $chunk: str-replace($chunk, '"', "'");
     $chunk: str-replace($chunk, '<', '%3C');
     $chunk: str-replace($chunk, '>', '%3E');
@@ -64,10 +66,10 @@ SOFTWARE.
 /// @param {String} $replace ('') - New value
 /// @return {String} - Updated string
 @function str-replace($string, $search, $replace: '') {
-  $index: str-index($string, $search);
+  $index: string.index($string, $search);
 
   @if $index {
-    @return str-slice($string, 1, $index - 1)+$replace +str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    @return string.slice($string, 1, $index - 1) + $replace + str-replace(string.slice($string, $index + string.length($search)), $search, $replace);
   }
 
   @return $string;
@@ -324,7 +326,7 @@ SOFTWARE.
     youtubeicon2: '<path fill="#{$color}" stroke="#{$stroke-color}" stroke-width="#{$stroke-width}" style="#{$css}" d="M38.516,5.903C38.516,5.903 38.136,3.222 36.97,2.041 35.491,0.492 33.832,0.484 33.071,0.393 27.628,0 19.461,0 19.461,0L19.444,0C19.444,0 11.278,0 5.833,0.393 5.073,0.484 3.415,0.492 1.935,2.041 0.769,3.222 0.389,5.903 0.389,5.903 0.389,5.903 0,9.051 0,12.2L0,15.152C0,18.3 0.389,21.448 0.389,21.448 0.389,21.448 0.769,24.128 1.935,25.31 3.415,26.858 5.359,26.81 6.225,26.972 9.337,27.27 19.452,27.364 19.452,27.364 19.452,27.364 27.628,27.352 33.071,26.958 33.832,26.866 35.491,26.858 36.97,25.31 38.136,24.128 38.516,21.448 38.516,21.448 38.516,21.448 38.905,18.3 38.905,15.152L38.905,12.2C38.905,9.051,38.516,5.903,38.516,5.903 M15.436,18.728L15.434,7.797 25.946,13.282z"/>'
   );
 
-$icon: _buildIcon(map-get($icons, $icon-name));
+$icon: _buildIcon(map.get($icons, $icon-name));
 @return #{$icon};
 }
 

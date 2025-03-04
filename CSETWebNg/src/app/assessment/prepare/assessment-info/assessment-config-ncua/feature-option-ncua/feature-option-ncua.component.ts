@@ -29,8 +29,9 @@ import { NavigationService } from '../../../../../services/navigation/navigation
 import { NCUAService } from '../../../../../services/ncua.service';
 
 @Component({
-  selector: 'app-feature-option-ncua',
-  templateUrl: './feature-option-ncua.component.html'
+    selector: 'app-feature-option-ncua',
+    templateUrl: './feature-option-ncua.component.html',
+    standalone: false
 })
 export class FeatureOptionNcuaComponent implements OnInit {
 

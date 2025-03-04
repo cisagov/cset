@@ -35,8 +35,9 @@ import { QuestionFilterService } from '../../../services/filtering/question-filt
 import { ConfigService } from '../../../services/config.service';
 
 @Component({
-  selector: 'app-diagram-questions',
-  templateUrl: './diagram-questions.component.html'
+    selector: 'app-diagram-questions',
+    templateUrl: './diagram-questions.component.html',
+    standalone: false
 })
 export class DiagramQuestionsComponent implements OnInit {
 

@@ -36,18 +36,19 @@ import { TranslocoService } from '@jsverse/transloco';
 
 SwiperCore.use([Navigation, Pagination, Virtual]);
 @Component({
-  selector: 'app-new-assessment',
-  templateUrl: './new-assessment.component.html',
-  styleUrls: ['./new-assessment.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  animations: [
-    trigger('enterAnimation', [
-      state('false', style({ overflow: 'hidden', height: '0px', padding: '0 10px 0 0' })),
-      state('true', style({ overflow: 'hidden', height: '*', padding: '0 10px 10px 0' })),
-      transition('false => true', animate('200ms ease-in')),
-      transition('true => false', animate('200ms ease-out'))
-    ]),
-  ]
+    selector: 'app-new-assessment',
+    templateUrl: './new-assessment.component.html',
+    styleUrls: ['./new-assessment.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    animations: [
+        trigger('enterAnimation', [
+            state('false', style({ overflow: 'hidden', height: '0px', padding: '0 10px 0 0' })),
+            state('true', style({ overflow: 'hidden', height: '*', padding: '0 10px 10px 0' })),
+            transition('false => true', animate('200ms ease-in')),
+            transition('true => false', animate('200ms ease-out'))
+        ]),
+    ],
+    standalone: false
 })
 export class NewAssessmentComponent implements OnInit, AfterViewInit {
 

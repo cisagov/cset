@@ -37,9 +37,10 @@ import { QuestionsService } from '../../services/questions.service';
 import { ActionItemText } from '../questions/observations/observations.model';
 
 @Component({
-  selector: 'merge-examinations',
-  templateUrl: './merge-examinations.component.html',
-  styleUrls: ['./merge-examinations.component.scss']
+    selector: 'merge-examinations',
+    templateUrl: './merge-examinations.component.html',
+    styleUrls: ['./merge-examinations.component.scss'],
+    standalone: false
 })
 
 export class MergeExaminationsComponent implements OnInit {

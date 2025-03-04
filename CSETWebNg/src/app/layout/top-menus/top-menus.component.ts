@@ -53,9 +53,10 @@ import { UserSettingsComponent } from '../../dialogs/user-settings/user-settings
 import { translate } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-top-menus',
-  templateUrl: './top-menus.component.html',
-  styleUrls: ['./top-menus.component.scss']
+    selector: 'app-top-menus',
+    templateUrl: './top-menus.component.html',
+    styleUrls: ['./top-menus.component.scss'],
+    standalone: false
 })
 export class TopMenusComponent implements OnInit {
   docUrl: string;

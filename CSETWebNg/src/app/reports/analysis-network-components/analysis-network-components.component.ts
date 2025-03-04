@@ -26,9 +26,10 @@ import { ReportAnalysisService } from '../../services/report-analysis.service';
 import Chart from 'chart.js/auto';
 
 @Component({
-  selector: 'app-analysis-network-components',
-  templateUrl: './analysis-network-components.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-analysis-network-components',
+    templateUrl: './analysis-network-components.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class AnalysisNetworkComponentsComponent implements OnInit {
 

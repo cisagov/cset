@@ -26,9 +26,10 @@ import { ReportAnalysisService } from '../../services/report-analysis.service';
 import Chart from 'chart.js/auto';
 
 @Component({
-  selector: 'app-overall-compliance',
-  templateUrl: './overall-compliance.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-overall-compliance',
+    templateUrl: './overall-compliance.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class OverallComplianceComponent implements OnInit {
 
