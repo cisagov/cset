@@ -2604,17 +2604,14 @@ mat-sidenav.mat-sidenav {
 
 // About
 .about article {
-  //width: 33.33%;
-  margin-right: $spacer * 3;
+  flex: 1 1 50%;
+  box-sizing: border-box;
+  padding: .8rem;
 }
 
-.about article:nth-child(3) {
-  margin-right: 0rem;
-}
-
-@media only screen and (max-width: 360px) {
+@media only screen and (max-width: 800px) {
   .about article {
-    margin-right: 0rem;
+    flex: 1 1 100%;
   }
 }
 
@@ -2633,10 +2630,6 @@ mat-sidenav.mat-sidenav {
 .about .nccic {
   font-family: "ITC Franklin Gothic", Arial, Times, serif;
   font-size: 30px;
-}
-
-.about article {
-  max-width: 300px;
 }
 
 // Component Override
