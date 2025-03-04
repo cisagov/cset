@@ -1,5 +1,4 @@
 #!/bin/bash
 
 # Run the API
-cd /app/publish
-dotnet CSETWeb_ApiCore.dll
+dotnet run --project CSETWeb_Api/CSETWeb_ApiCore
