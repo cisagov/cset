@@ -96,8 +96,8 @@ namespace CSETWebCore.Business.Reports
                     {
                         foreach (var question in subgrouping.Questions)
                         {
-                            // Skip maturity level 1 questions and questions that have been met.
-                            if (question.Answer == "Y" || question.MaturityLevel == 1 || isUnpardonable(question.DisplayNumber))
+                            // Skip questions that have been met.
+                            if (question.Answer == "Y" || isUnpardonable(question.DisplayNumber))
                             {
                                 continue;
                             }
