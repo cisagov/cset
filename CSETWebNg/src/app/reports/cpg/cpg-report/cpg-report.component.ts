@@ -42,6 +42,7 @@ export class CpgReportComponent implements OnInit {
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
+  selfAssessment: boolean;
 
   answerDistribByDomain: any;
 
@@ -72,8 +73,9 @@ export class CpgReportComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.creatorName;
+      this.assessorName = assessmentDetail.facilitatorName;
       this.facilityName = assessmentDetail.facilityName;
+      this.selfAssessment = assessmentDetail.selfAssessment;
 
       this.assessSvc.assessment = assessmentDetail;
       this.isSsgApplicable = this.ssgSvc.doesSsgApply();

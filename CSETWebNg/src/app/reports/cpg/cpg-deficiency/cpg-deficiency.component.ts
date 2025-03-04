@@ -47,6 +47,7 @@ export class CpgDeficiencyComponent implements OnInit {
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
+  selfAssessment: boolean;
 
   info: any;
 
@@ -103,6 +104,7 @@ export class CpgDeficiencyComponent implements OnInit {
       this.assessmentName = this.info.assessment_Name;
       this.assessmentDate = this.info.assessment_Date;
       this.assessorName = this.info.assessor_Name;
+      this.selfAssessment = this.info.selfAssessment;
       this.facilityName = this.info.facility_Name;
 
       this.def = resp.deficienciesList;

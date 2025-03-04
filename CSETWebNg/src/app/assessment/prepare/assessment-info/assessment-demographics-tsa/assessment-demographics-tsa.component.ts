@@ -169,7 +169,7 @@ export class AssessmentDemographicsTsaComponent implements OnInit {
     }
 
     changeFacilitator(event: any) {
-        this.demographicData.facilitator = event.target.value;
+        this.demographicData.facilitatorId = event.target.value;
         this.updateDemographics();
     }
 
