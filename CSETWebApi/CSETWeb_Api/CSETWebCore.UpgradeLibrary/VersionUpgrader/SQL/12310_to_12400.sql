@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.10.9.22680 from Red Gate Software Ltd at 2/19/2025 10:43:13 AM
+Script created by SQL Compare version 14.10.9.22680 from Red Gate Software Ltd at 3/5/2025 9:20:48 AM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -21,6 +21,14 @@ GO
 SET TRANSACTION ISOLATION LEVEL Serializable
 GO
 BEGIN TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Altering [dbo].[ISE_ACTIONS]'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+ALTER TABLE [dbo].[ISE_ACTIONS] ALTER COLUMN [Regulatory_Citation] [nvarchar] (1000) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
