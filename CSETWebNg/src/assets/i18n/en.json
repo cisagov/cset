@@ -1027,7 +1027,7 @@
     "upgrade": "Upgrade",
     "final": "to final version",
     "convert": "Converting your assessment, this may take a few moments.",
-    "p1": "The final version of this assessment is now available. All your answered questions, along with assessment information and demographics, will be transferred. Please note that this process is irreversible."
+    "p1": "The final version of this assessment is now available. Questions present in both the draft and final versions will be transferred, along with their observations, attached documents, feedback, and comments. Additionally, all demographic information and contacts will be transferred. The original draft version will remain accessible, and this upgrade will generate a new assessment."
   },
   "modules": {
     "cpg": {
