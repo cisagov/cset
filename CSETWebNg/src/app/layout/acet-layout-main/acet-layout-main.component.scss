@@ -1674,17 +1674,17 @@ ul.nav-tabs li.active button .tab-icon {
 }
 
 .menu-panel [mat-menu-item] .mat-menu-submenu-icon {
-  color: $gray-150;
+  color: $gray-150 !important;
 }
 
 .menu-panel [mat-menu-item]:focus .mat-mdc-menu-submenu-icon,
 .menu-panel [mat-menu-item]:hover .mat-mdc-menu-submenu-icon {
-  color: $primary-color;
+  color: $primary-color !important;
 }
 
 .mat-mdc-menu-item:not(:hover):not([disabled]) .mdc-list-item__primary-text,
 .mat-mdc-menu-submenu-icon {
-  color: $gray-150;
+  color: $gray-150 !important;
 }
 
 .mat-mdc-menu-item[disabled] .mdc-list-item__primary-text {
