@@ -890,7 +890,7 @@
         "upgrade": "Actualizar",
         "final": "a la versión final",
         "convert": "Convirtiendo su evaluación, esto puede tardar unos momentos.",
-        "p1": "La versión final de esta evaluación ya está disponible. Todas sus preguntas respondidas, junto con la información de la evaluación y la demografía, serán transferidas. Tenga en cuenta que este proceso es irreversible."
+        "p1": "La versión final de esta evaluación ya está disponible. Las preguntas presentes tanto en la versión preliminar como en la versión final se transferirán, junto con sus observaciones, documentos adjuntos, comentarios y retroalimentación. Además, se transferirá toda la información demográfica y los contactos. La versión preliminar original seguirá siendo accesible y esta actualización generará una nueva evaluación."
     },
     "modules": {
         "cpg": {
