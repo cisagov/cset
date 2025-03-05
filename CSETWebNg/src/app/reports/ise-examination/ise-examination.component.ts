@@ -259,13 +259,11 @@ export class IseExaminationComponent implements OnInit {
             }
 
             if (this.relaventIssues) {
-
               this.summaryForCopy += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
               this.categoryBuilder(this.dors);
 
               this.summaryForCopy += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
               this.categoryBuilder(this.examinerFindings);
-
 
               this.summaryForCopy += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
               this.categoryBuilder(this.supplementalFacts);
@@ -280,8 +278,6 @@ export class IseExaminationComponent implements OnInit {
           },
           error => console.log('Observations Error: ' + (<Error>error).message)
         );
-
-
       },
       error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
     );
