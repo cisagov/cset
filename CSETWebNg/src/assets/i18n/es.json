@@ -886,11 +886,12 @@
         "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> es parte del <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Departamento de Seguridad Nacional</a>",
         "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Sitio Web</a>"
     },
-    "upgrade": {
-        "upgrade": "Actualizar",
-        "final": "a la versión final",
-        "convert": "Convirtiendo su evaluación, esto puede tardar unos momentos.",
-        "p1": "La versión final de esta evaluación ya está disponible. Las preguntas presentes tanto en la versión preliminar como en la versión final se transferirán, junto con sus observaciones, documentos adjuntos, comentarios y retroalimentación. Además, se transferirá toda la información demográfica y los contactos. La versión preliminar original seguirá siendo accesible y esta actualización generará una nueva evaluación."
+    "assessment upgrade": {
+        "upgrade available": "Actualización de Evaluación Disponible",
+        "from to": "Actualizar evaluación de '{{originalType}}' a '{{newType}}'",
+        "p1": "Una versión más reciente de este tipo de evaluación está ahora disponible. Las preguntas presentes tanto en la versión antigua como en la nueva serán transferidas, junto con sus observaciones, documentos adjuntos, retroalimentación y comentarios. Además, toda la información demográfica y contactos serán transferidos. Su evaluación original permanecerá accesible, y esta actualización generará una nueva evaluación.",
+        "converting": "Convirtiendo su evaluación, esto puede tardar unos momentos.",
+        "upgrade button": "Actualizar"
     },
     "modules": {
         "cpg": {
