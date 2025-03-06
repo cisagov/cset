@@ -26,10 +26,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { NCUAService } from '../../services/ncua.service';
 
 @Component({
-  selector: 'app-global-configuration',
-  templateUrl: './global-configuration.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-global-configuration',
+    templateUrl: './global-configuration.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 
 export class GlobalConfigurationComponent implements OnInit {

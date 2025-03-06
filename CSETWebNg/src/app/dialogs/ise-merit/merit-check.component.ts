@@ -25,9 +25,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-merit-check',
-
-  templateUrl: './merit-check.component.html',
+    selector: 'app-merit-check',
+    templateUrl: './merit-check.component.html',
+    standalone: false
 })
 
 export class MeritCheckComponent implements OnInit {

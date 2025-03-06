@@ -32,9 +32,10 @@ import { QuestionsService } from '../../services/questions.service';
 import { NCUAService } from '../../services/ncua.service';
 
 @Component({
-  selector: 'app-ise-merit',
-  templateUrl: './ise-merit.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss', '../../../assets/sass/cset-font-styles.css']
+    selector: 'app-ise-merit',
+    templateUrl: './ise-merit.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss', '../../../assets/sass/cset-font-styles.css'],
+    standalone: false
 })
 export class IseMeritComponent implements OnInit {
   response: any = null;
@@ -173,39 +174,40 @@ export class IseMeritComponent implements OnInit {
 
                 this.questionsSvc.getRegulatoryCitations(observation.question.mat_Question_Id).subscribe((result: any) => {
                   this.regCitationsMap.set(observation.question.mat_Question_Id, result.regulatory_Citation);
+                });
 
-                  this.questionsSvc.getDetails(observation.question.mat_Question_Id, 'Maturity').subscribe((r: any) => {
-                    this.files = r;
+                this.questionsSvc.getDetails(observation.question.mat_Question_Id, 'Maturity').subscribe(
+                  (r: any) => {
+                  this.files = r;
 
                     let sourceDocList = this.files?.listTabs[0]?.sourceDocumentsList;
 
                     for (let i = 0; i < sourceDocList?.length; i++) {
                       if (!this.sourceFilesMap.has(observation.finding.finding_Id)) {
                         this.sourceFilesMap.set(observation.finding.finding_Id, [sourceDocList[i]]);
-                      }
-                      else {
+                      } else {
                         let tempFileArray = this.sourceFilesMap.get(observation.finding.finding_Id);
+                        
                         tempFileArray.push(sourceDocList[i]);
+                        
                         this.sourceFilesMap.set(observation.finding.finding_Id, tempFileArray);
                       }
                     }
-                  });
-
-                  if (observation.finding.type === 'Examiner Finding') {
-                    this.addExaminerFinding(observation.category.title);
                   }
-                  if (observation.finding.type === 'DOR') {
-                    this.addDOR(observation.category.title);
-                  }
-                  if (observation.finding.type === 'Supplemental Fact') {
-                    this.addSupplementalFact(observation.category.title);
-                  }
-                  if (observation.finding.type === 'Non-reportable') {
-                    this.addNonReportable(observation.category.title);
-                  }
-                  this.relaventIssues = true;
-
-                })
+                );
+                if (observation.finding.type === 'Examiner Finding') {
+                  this.addExaminerFinding(observation.category.title);
+                }
+                if (observation.finding.type === 'DOR') {
+                  this.addDOR(observation.category.title);
+                }
+                if (observation.finding.type === 'Supplemental Fact') {
+                  this.addSupplementalFact(observation.category.title);
+                }
+                if (observation.finding.type === 'Non-reportable') {
+                  this.addNonReportable(observation.category.title);
+                }
+                this.relaventIssues = true;
               }
             }
 
@@ -221,8 +223,7 @@ export class IseMeritComponent implements OnInit {
 
               this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
               this.categoryBuilder(this.nonReportables);
-            }
-            else {
+            } else {
               this.resultsOfReviewString += 'No Issues were noted.';
             }
 
@@ -230,7 +231,9 @@ export class IseMeritComponent implements OnInit {
           },
           error => console.log('MERIT Report Error: ' + (<Error>error).message)
         );
-      });
+      },
+      error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
+    );
   }
 
 
@@ -246,8 +249,14 @@ export class IseMeritComponent implements OnInit {
     return combinedText;
   }
 
-  getReferenceCopyText(parentId: number) {
-    return (this.regCitationsMap.get(parentId));
+  getReferenceCopyText(parentId: number, citations: string) {
+    let copyText = this.regCitationsMap.get(parentId);
+
+    if (citations != null && citations != "") {
+      copyText += ", " + citations;
+    }
+
+    return (copyText);
   }
 
   addExaminerFinding(title: any) {

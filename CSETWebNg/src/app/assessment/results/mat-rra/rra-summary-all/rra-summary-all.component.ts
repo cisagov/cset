@@ -25,9 +25,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-rra-summary-all',
-  templateUrl: './rra-summary-all.component.html',
-  styleUrls: ['./rra-summary-all.component.scss']
+    selector: 'app-rra-summary-all',
+    templateUrl: './rra-summary-all.component.html',
+    styleUrls: ['./rra-summary-all.component.scss'],
+    standalone: false
 })
 export class RraSummaryAllComponent implements OnInit {
   @Input() title = this.tSvc.translate('reports.core.rra.report.rra performance summary');

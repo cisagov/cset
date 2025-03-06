@@ -193,6 +193,15 @@
     <None Update="App_Data\LanguagePacks\ES\SECURITY_QUESTION.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="App_Data\LanguagePacks\JP\GALLERY_ITEM.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\JP\SECTOR.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\JP\SECTOR_INDUSTRY.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="App_Data\LanguagePacks\UK\DEMOGRAPHICS_ORGANIZATION_TYPE.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

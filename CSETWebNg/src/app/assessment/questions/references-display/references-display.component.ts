@@ -32,8 +32,9 @@ import { TranslocoService } from '@jsverse/transloco';
  * the old table.
  */
 @Component({
-  selector: 'app-references-display',
-  templateUrl: './references-display.component.html'
+    selector: 'app-references-display',
+    templateUrl: './references-display.component.html',
+    standalone: false
 })
 export class ReferencesDisplayComponent implements OnInit {
 

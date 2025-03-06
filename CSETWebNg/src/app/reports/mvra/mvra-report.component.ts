@@ -27,9 +27,10 @@ import { ConfigService } from '../../services/config.service';
 import { ReportService } from '../../services/report.service';
 
 @Component({
-  selector: 'app-mvra-report',
-  templateUrl: './mvra-report.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-mvra-report',
+    templateUrl: './mvra-report.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class MvraReportComponent implements OnInit {
 

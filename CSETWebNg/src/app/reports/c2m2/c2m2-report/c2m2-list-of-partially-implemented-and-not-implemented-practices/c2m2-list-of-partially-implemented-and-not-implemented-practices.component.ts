@@ -24,9 +24,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-c2m2-list-of-partially-implemented-and-not-implemented-practices',
-  templateUrl: './c2m2-list-of-partially-implemented-and-not-implemented-practices.component.html',
-  styleUrls: ['../c2m2-report.component.scss', '../../../reports.scss']
+    selector: 'app-c2m2-list-of-partially-implemented-and-not-implemented-practices',
+    templateUrl: './c2m2-list-of-partially-implemented-and-not-implemented-practices.component.html',
+    styleUrls: ['../c2m2-report.component.scss', '../../../reports.scss'],
+    standalone: false
 })
 export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent implements OnInit {
 

@@ -25,10 +25,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-ejection',
-  templateUrl: './ejection.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-ejection',
+    templateUrl: './ejection.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class EjectionComponent implements OnInit {
   constructor(private dialog: MatDialogRef<EjectionComponent>) { }

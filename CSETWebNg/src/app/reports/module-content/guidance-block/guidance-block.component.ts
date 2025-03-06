@@ -24,9 +24,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-guidance-block',
-  templateUrl: './guidance-block.component.html',
-  styleUrls: ['./guidance-block.component.scss']
+    selector: 'app-guidance-block',
+    templateUrl: './guidance-block.component.html',
+    styleUrls: ['./guidance-block.component.scss'],
+    standalone: false
 })
 export class GuidanceBlockComponent implements OnInit {
 

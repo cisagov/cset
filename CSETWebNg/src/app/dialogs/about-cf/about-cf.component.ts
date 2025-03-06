@@ -27,9 +27,10 @@ import { ConfigService } from '../../services/config.service';
 import { VersionService } from '../../services/version.service';
 
 @Component({
-  selector: 'app-about-cf',
-  templateUrl: './about-cf.component.html',
-  styleUrls: ['./about-cf.component.scss']
+    selector: 'app-about-cf',
+    templateUrl: './about-cf.component.html',
+    styleUrls: ['./about-cf.component.scss'],
+    standalone: false
 })
 export class AboutCfComponent implements OnInit {
   version: any;

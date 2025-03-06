@@ -25,9 +25,10 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { EDMBarChartModel } from '../edm-bar-chart.model';
 
 @Component({
-  selector: 'app-edm-perf-summ-mil1',
-  templateUrl: './edm-perf-summ-mil1.component.html',
-  styleUrls: ['./edm-perf-summ-mil1.component.scss', '../../reports.scss']
+    selector: 'app-edm-perf-summ-mil1',
+    templateUrl: './edm-perf-summ-mil1.component.html',
+    styleUrls: ['./edm-perf-summ-mil1.component.scss', '../../reports.scss'],
+    standalone: false
 })
 export class EdmPerfSummMil1Component implements OnInit, OnChanges {
 

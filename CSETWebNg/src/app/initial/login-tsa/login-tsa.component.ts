@@ -37,9 +37,10 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 
 @Component({
-  selector: 'app-login-tsa',
-  templateUrl: './login-tsa.component.html',
-  styleUrls: ['./login-tsa.component.scss']
+    selector: 'app-login-tsa',
+    templateUrl: './login-tsa.component.html',
+    styleUrls: ['./login-tsa.component.scss'],
+    standalone: false
 })
 export class LoginTsaComponent implements OnInit {
 

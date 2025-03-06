@@ -24,9 +24,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-edm-intro-text',
-  templateUrl: './edm-intro-text.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'app-edm-intro-text',
+    templateUrl: './edm-intro-text.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class EdmIntroTextComponent implements OnInit {
 

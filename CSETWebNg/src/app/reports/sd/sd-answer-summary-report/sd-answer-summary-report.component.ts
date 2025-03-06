@@ -27,9 +27,10 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { QuestionsNestedService } from '../../../services/questions-nested.service';
 
 @Component({
-  selector: 'app-sd-answer-summary-report',
-  templateUrl: './sd-answer-summary-report.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'app-sd-answer-summary-report',
+    templateUrl: './sd-answer-summary-report.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class SdAnswerSummaryReportComponent implements OnInit {
   domains: any[] = [];
@@ -40,6 +41,7 @@ export class SdAnswerSummaryReportComponent implements OnInit {
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
+  selfAssessment: boolean;
 
 
   constructor(
@@ -58,8 +60,9 @@ export class SdAnswerSummaryReportComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.creatorName;
+      this.assessorName = assessmentDetail.facilitatorName;
       this.facilityName = assessmentDetail.facilityName;
+      this.selfAssessment = assessmentDetail.selfAssessment;
     });
 
     this.questionsNestedSvc.getSection(0).subscribe((resp: any) => {

@@ -7,9 +7,10 @@ import { QuestionsService } from '../../../../../services/questions.service';
 import { ReportService } from '../../../../../services/report.service';
 
 @Component({
-  selector: 'app-hydro-action-item',
-  templateUrl: './hydro-action-item.component.html',
-  styleUrls: ['./hydro-action-item.component.scss','../hydro-actions.component.scss']
+    selector: 'app-hydro-action-item',
+    templateUrl: './hydro-action-item.component.html',
+    styleUrls: ['./hydro-action-item.component.scss', '../hydro-actions.component.scss'],
+    standalone: false
 })
 export class HydroActionItemComponent implements OnInit {
 

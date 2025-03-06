@@ -29,10 +29,11 @@ import { FileUploadClientService } from '../../services/file-client.service';
 import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
-  selector: 'app-assessment-documents',
-  templateUrl: './assessment-documents.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-assessment-documents',
+    templateUrl: './assessment-documents.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class AssessmentDocumentsComponent implements OnInit {
 

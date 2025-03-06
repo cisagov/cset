@@ -26,8 +26,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../services/layout.service';
 
 @Component({
-  selector: 'app-tutorial-mvra',
-  templateUrl: './tutorial-mvra.component.html'
+    selector: 'app-tutorial-mvra',
+    templateUrl: './tutorial-mvra.component.html',
+    standalone: false
 })
 export class TutorialMvraComponent implements OnInit {
 

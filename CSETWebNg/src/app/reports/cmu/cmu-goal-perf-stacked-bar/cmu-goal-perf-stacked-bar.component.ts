@@ -3,9 +3,10 @@ import { CmuReportModel } from '../../../models/reports.model';
 import { CmuService } from '../../../services/cmu.service';
 
 @Component({
-  selector: 'app-cmu-goal-perf-stacked-bar',
-  templateUrl: './cmu-goal-perf-stacked-bar.component.html',
-  styleUrls: ['./cmu-goal-perf-stacked-bar.component.scss']
+    selector: 'app-cmu-goal-perf-stacked-bar',
+    templateUrl: './cmu-goal-perf-stacked-bar.component.html',
+    styleUrls: ['./cmu-goal-perf-stacked-bar.component.scss'],
+    standalone: false
 })
 export class CmuGoalPerfStackedBarComponent {
   @Input() moduleName: string;

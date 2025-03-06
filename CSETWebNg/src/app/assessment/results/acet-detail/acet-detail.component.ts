@@ -34,7 +34,8 @@ import { TranslocoService } from '@jsverse/transloco';
 @Component({
     selector: 'app-mat-detail',
     templateUrl: './acet-detail.component.html',
-    styleUrls: ['./acet-detail.component.scss', '../../../reports/acet-reports.scss']
+    styleUrls: ['./acet-detail.component.scss', '../../../reports/acet-reports.scss'],
+    standalone: false
 })
 export class AcetDetailComponent implements OnInit {
     readonly expandAll = "Expand All";

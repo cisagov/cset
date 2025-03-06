@@ -1,9 +1,10 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-hydro-bar-vertical',
-  templateUrl: './hydro-bar-vertical.component.html',
-  styleUrls: ['./hydro-bar-vertical.component.scss']
+    selector: 'app-hydro-bar-vertical',
+    templateUrl: './hydro-bar-vertical.component.html',
+    styleUrls: ['./hydro-bar-vertical.component.scss'],
+    standalone: false
 })
 export class HydroBarVerticalComponent implements OnInit {
   @ViewChild('barChart') barChart;

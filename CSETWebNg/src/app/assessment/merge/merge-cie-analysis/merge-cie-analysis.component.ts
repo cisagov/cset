@@ -38,9 +38,10 @@ import { ActionItemText } from '../../questions/observations/observations.model'
 import { ReportService } from '../../../services/report.service';
 
 @Component({
-  selector: 'app-merge-cie-analysis',
-  templateUrl: './merge-cie-analysis.component.html',
-  styles: ['tr { border-bottom: 1px solid black; text-align: center; }']
+    selector: 'app-merge-cie-analysis',
+    templateUrl: './merge-cie-analysis.component.html',
+    styles: ['tr { border-bottom: 1px solid black; text-align: center; }'],
+    standalone: false
 })
 export class MergeCieAnalysisComponent implements OnInit {
   // Show a spinner on the frontend if the "behind the scenes" code is still running.

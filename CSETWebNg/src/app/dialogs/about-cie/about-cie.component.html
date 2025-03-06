@@ -27,7 +27,7 @@
   </div>
   <mat-dialog-content class="p-4 pb-0 pe-0 oy-auto d-flex flex-column flex-11a">
     <section class="pe-4 d-flex flex-11a flex-row flex-wrap">
-      <article class="mb-4 d-flex flex-column flex-11a w-100">
+      <article class="mb-4 w-100">
         <div class="d-flex flex-column justify-content-start flex-00a">
           <img src="assets/images/CIE/CIE_Logo_Blue_Standard.png" alt="CIE LOGO" class="img-fluid">
 
@@ -52,15 +52,18 @@
         <h3 class="mt-4">{{t('about.cie.ceser title')}}</h3>
         <p class="mb-3 wrap-text" [innerHTML]="t('about.cie.ceser')"></p>
       </article>
-      <article class="mb-4 d-flex flex-column flex-11a w-100">
+      <article class="mb-4 w-100">
         <h3 class="wrap-text">{{ t('about.cset training resources') }}</h3>
         <p class="wrap-text">{{ t('about.training available') }}:</p>
-        <h5 class="fw-600"><a target="_blank" rel="noopener noreferrer"
-            href="{{this.configSvc.docUrl}}htmlhelp/index.htm">{{ t('menu.help.cset user guide') }}</a></h5>
+        <p>
+          <a target="_blank" rel="noopener noreferrer" href="{{this.configSvc.docUrl}}htmlhelp/index.htm">{{
+            t('about.cset user guide') }}</a>
+        </p>
 
-        <h5 class="fw-600">{{ t('about.video tutorials') }}</h5>
-        <a class="wrap-text" target="_blank" rel="noopener noreferrer"
-          href="https://www.youtube.com/c/CSETCyberSecurityEvaluationTool">https://www.youtube.com/c/CSETCyberSecurityEvaluationTool</a>
+        <p>
+          <a class="wrap-text" target="_blank" rel="noopener noreferrer"
+            href="https://www.youtube.com/c/CSETCyberSecurityEvaluationTool">{{ t('about.video tutorials') }}</a>
+        </p>
 
         <h3 class="mt-4 wrap-text">{{ t('about.cie.cie tutorial title') }}</h3>
         <p class="wrap-text">

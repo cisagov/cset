@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { CmuService } from '../../../services/cmu.service';
 
 @Component({
-  selector: 'app-cmu-nist-csf-cat-summary',
-  templateUrl: './cmu-nist-csf-cat-summary.component.html',
-  styleUrls: ['./cmu-nist-csf-cat-summary.component.scss']
+    selector: 'app-cmu-nist-csf-cat-summary',
+    templateUrl: './cmu-nist-csf-cat-summary.component.html',
+    styleUrls: ['./cmu-nist-csf-cat-summary.component.scss'],
+    standalone: false
 })
 export class CmuNistCsfCatSummaryComponent implements OnInit {
   csfData: any;

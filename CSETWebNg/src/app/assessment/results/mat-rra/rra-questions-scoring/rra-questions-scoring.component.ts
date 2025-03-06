@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { RraDataService } from '../../../../services/rra-data.service';
 
 @Component({
-  selector: 'app-rra-questions-scoring',
-  templateUrl: './rra-questions-scoring.component.html',
-  styleUrls: ['./rra-questions-scoring.component.scss', '../../../../reports/reports.scss']
+    selector: 'app-rra-questions-scoring',
+    templateUrl: './rra-questions-scoring.component.html',
+    styleUrls: ['./rra-questions-scoring.component.scss', '../../../../reports/reports.scss'],
+    standalone: false
 })
 
 export class RraQuestionsScoringComponent implements OnInit {

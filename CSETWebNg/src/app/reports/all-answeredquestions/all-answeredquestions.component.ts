@@ -29,9 +29,10 @@ import { QuestionsService } from '../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
-  selector: 'app-all-answeredquestions',
-  templateUrl: './all-answeredquestions.component.html',
-  styleUrls: ['../reports.scss', './all-answeredquestions.component.scss']
+    selector: 'app-all-answeredquestions',
+    templateUrl: './all-answeredquestions.component.html',
+    styleUrls: ['../reports.scss', './all-answeredquestions.component.scss'],
+    standalone: false
 })
 export class AllAnsweredquestionsComponent implements OnInit {
 

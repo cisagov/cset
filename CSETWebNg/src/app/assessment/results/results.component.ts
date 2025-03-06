@@ -27,10 +27,11 @@ import { AssessmentService } from '../../services/assessment.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-results',
-  templateUrl: './results.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-results',
+    templateUrl: './results.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class ResultsComponent implements OnInit {
 

@@ -199,7 +199,7 @@ namespace CSETWebCore.Business.Question
                 {
                     DisplayNumber = dbR.Requirement_Title,
                     QuestionId = dbR.Requirement_Id,
-                    QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                    QuestionText = dbR.Requirement_Text,
                     Answer = answer?.a.Answer_Text,
                     AltAnswerText = answer?.a.Alternate_Justification,
                     FreeResponseAnswer = answer?.a.Free_Response_Answer,

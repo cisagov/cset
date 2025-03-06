@@ -32,9 +32,10 @@ import { QuestionsService } from '../../../services/questions.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-cpg-deficiency',
-  templateUrl: './cpg-deficiency.component.html',
-  styleUrls: ['./cpg-deficiency.component.scss', '../../reports.scss']
+    selector: 'app-cpg-deficiency',
+    templateUrl: './cpg-deficiency.component.html',
+    styleUrls: ['./cpg-deficiency.component.scss', '../../reports.scss'],
+    standalone: false
 })
 export class CpgDeficiencyComponent implements OnInit {
 
@@ -46,6 +47,7 @@ export class CpgDeficiencyComponent implements OnInit {
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
+  selfAssessment: boolean;
 
   info: any;
 
@@ -102,6 +104,7 @@ export class CpgDeficiencyComponent implements OnInit {
       this.assessmentName = this.info.assessment_Name;
       this.assessmentDate = this.info.assessment_Date;
       this.assessorName = this.info.assessor_Name;
+      this.selfAssessment = this.info.selfAssessment;
       this.facilityName = this.info.facility_Name;
 
       this.def = resp.deficienciesList;

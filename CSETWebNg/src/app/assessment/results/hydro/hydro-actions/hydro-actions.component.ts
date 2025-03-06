@@ -7,9 +7,10 @@ import { HydroService } from '../../../../services/hydro.service';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
-  selector: 'app-hydro-actions',
-  templateUrl: './hydro-actions.component.html',
-  styleUrls: ['./hydro-actions.component.scss']
+    selector: 'app-hydro-actions',
+    templateUrl: './hydro-actions.component.html',
+    styleUrls: ['./hydro-actions.component.scss'],
+    standalone: false
 })
 export class HydroActionsComponent implements OnInit {
 

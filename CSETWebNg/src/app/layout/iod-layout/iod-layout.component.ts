@@ -35,13 +35,13 @@ import { LayoutService } from '../../services/layout.service';
 
 
 @Component({
-  selector: 'iod-layout',
-  templateUrl: './iod-layout.component.html',
-  styleUrls: ['./iod-layout.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
-
+    selector: 'iod-layout',
+    templateUrl: './iod-layout.component.html',
+    styleUrls: ['./iod-layout.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
+    standalone: false
 })
 export class IodLayoutComponent {
   docUrl: string;

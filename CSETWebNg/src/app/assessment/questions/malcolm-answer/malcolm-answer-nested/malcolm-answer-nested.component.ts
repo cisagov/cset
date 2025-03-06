@@ -3,9 +3,10 @@ import { QuestionsService } from '../../../../services/questions.service';
 import { MalcolmService } from '../../../../services/malcolm.service';
 
 @Component({
-  selector: 'app-malcolm-answer-nested',
-  templateUrl: './malcolm-answer-nested.component.html',
-  styleUrls: ['./malcolm-answer-nested.component.scss']
+    selector: 'app-malcolm-answer-nested',
+    templateUrl: './malcolm-answer-nested.component.html',
+    styleUrls: ['./malcolm-answer-nested.component.scss'],
+    standalone: false
 })
 export class MalcolmAnswerNestedComponent {
   @Input() optRadio: any;

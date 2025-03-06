@@ -28,10 +28,11 @@ import { ColorService } from '../../../../services/color.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 
 @Component({
-  selector: 'app-compare-summary',
-  templateUrl: './compare-summary.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-compare-summary',
+    templateUrl: './compare-summary.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class CompareSummaryComponent implements OnInit {
 

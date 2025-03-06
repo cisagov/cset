@@ -44,12 +44,12 @@ import { CieDocumentsComponent } from '../../../dialogs/cie-documents/cie-docume
 import { ExportAssessmentComponent } from '../../../dialogs/assessment-encryption/export-assessment/export-assessment.component';
 
 @Component({
-  selector: 'app-reports',
-  templateUrl: './reports.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' },
-  styleUrls: ['./reports.component.scss']
-
+    selector: 'app-reports',
+    templateUrl: './reports.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    styleUrls: ['./reports.component.scss'],
+    standalone: false
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
   /**
@@ -429,10 +429,10 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 }
 
 @Component({
-  selector: 'snack-bar-component-example-snack',
-  template:
-    '<span>{{ tSvc.translate(printInstructions) }}</span><button (click)="snackBarRef.dismiss()">{{ tSvc.translate(\'buttons.close\') }}</button>',
-  styles: ['']
+    selector: 'snack-bar-component-example-snack',
+    template: '<span>{{ tSvc.translate(printInstructions) }}</span><button (click)="snackBarRef.dismiss()">{{ tSvc.translate(\'buttons.close\') }}</button>',
+    styles: [''],
+    standalone: false
 })
 export class PrintSnackComponent implements OnInit {
   constructor(public snackBarRef: MatSnackBarRef<PrintSnackComponent>,

@@ -34,8 +34,9 @@ import { HydroService } from '../../../../../services/hydro.service';
 import { MalcolmService } from '../../../../../services/malcolm.service';
 
 @Component({
-  selector: 'app-option-block-nested',
-  templateUrl: './option-block-nested.component.html'
+    selector: 'app-option-block-nested',
+    templateUrl: './option-block-nested.component.html',
+    standalone: false
 })
 export class OptionBlockNestedComponent implements OnInit {
 

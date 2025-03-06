@@ -15,9 +15,10 @@ import { QuestionsService } from '../../../../../../services/questions.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
-  selector: 'app-principle-analysis-cie',
-  templateUrl: './principle-analysis-cie.component.html',
-  styleUrls: ['./principle-analysis-cie.component.scss']
+    selector: 'app-principle-analysis-cie',
+    templateUrl: './principle-analysis-cie.component.html',
+    styleUrls: ['./principle-analysis-cie.component.scss'],
+    standalone: false
 })
 export class PrincipleAnalysisCieComponent implements OnInit {
   //@Input() myGrouping: QuestionGrouping;

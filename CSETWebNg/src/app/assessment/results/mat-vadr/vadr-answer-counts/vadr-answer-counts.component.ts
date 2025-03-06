@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { VadrDataService } from '../../../../services/vadr-data.service';
 
 @Component({
-  selector: 'app-vadr-answer-counts',
-  templateUrl: './vadr-answer-counts.component.html',
-  styleUrls: ['./vadr-answer-counts.component.scss']
+    selector: 'app-vadr-answer-counts',
+    templateUrl: './vadr-answer-counts.component.html',
+    styleUrls: ['./vadr-answer-counts.component.scss'],
+    standalone: false
 })
 export class VadrAnswerCountsComponent implements OnInit {
 

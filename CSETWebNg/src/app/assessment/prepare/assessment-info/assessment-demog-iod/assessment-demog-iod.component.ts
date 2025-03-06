@@ -14,9 +14,10 @@ interface ImportExportData {
 }
 
 @Component({
-  selector: 'app-assessment-demog-iod',
-  templateUrl: './assessment-demog-iod.component.html',
-  styleUrls: ['./assessment-demog-iod.component.scss']
+    selector: 'app-assessment-demog-iod',
+    templateUrl: './assessment-demog-iod.component.html',
+    styleUrls: ['./assessment-demog-iod.component.scss'],
+    standalone: false
 })
 
 

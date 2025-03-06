@@ -28,10 +28,11 @@ import { EmailService } from '../services/email.service';
 @Directive({
     selector: '[appEmailValidator]',
     providers: [{
-        provide: NG_VALIDATORS,
-        useExisting: EmailValidatorDirective,
-        multi: true
-    }]
+            provide: NG_VALIDATORS,
+            useExisting: EmailValidatorDirective,
+            multi: true
+        }],
+    standalone: false
 })
 export class EmailValidatorDirective implements Validator {
     constructor(private emailSvc: EmailService) { }

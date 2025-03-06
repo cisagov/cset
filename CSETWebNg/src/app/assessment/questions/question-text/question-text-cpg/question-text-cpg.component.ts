@@ -28,8 +28,9 @@ import { Component, Input } from '@angular/core';
  * Instead, they display Security Practice and Outcome in the same space.
  */
 @Component({
-  selector: 'app-question-text-cpg',
-  templateUrl: './question-text-cpg.component.html'
+    selector: 'app-question-text-cpg',
+    templateUrl: './question-text-cpg.component.html',
+    standalone: false
 })
 export class QuestionTextCpgComponent {
 

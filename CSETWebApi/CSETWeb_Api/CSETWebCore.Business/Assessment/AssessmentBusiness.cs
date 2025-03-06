@@ -524,6 +524,26 @@ namespace CSETWebCore.Business.Assessment
                 }
 
 
+                // facilitator
+                assessment.SelfAssessment = (bool)(d2.GetX(assessmentId, "SELF-ASSESS") ?? false);
+                assessment.FacilitatorName = assessment.CreatorName;
+
+                var demo = d1.GetDemographics(assessmentId);
+                if (demo != null)
+                {
+                    var acFacilitator = _context.ASSESSMENT_CONTACTS.FirstOrDefault(x => x.Assessment_Contact_Id == demo.FacilitatorId);
+                    if (acFacilitator != null)
+                    {
+                        var userFacilitator = _context.USERS.FirstOrDefault(x => x.UserId == acFacilitator.UserId);
+                        if (userFacilitator != null)
+                        {
+
+                            assessment.FacilitatorName = $"{userFacilitator.FirstName} {userFacilitator.LastName}".Trim();
+                        }
+                    }
+                }
+
+
                 bool defaultAcet = (app_code == "ACET");
                 assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
 
@@ -1133,6 +1153,7 @@ namespace CSETWebCore.Business.Assessment
                 var oldModel = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == amm.model_id).FirstOrDefault();
 
 
+                ConvertContacts(assessment_id, original_id);
                 JArray questionIds = null;
 
                 var rh = new ResourceHelper();
@@ -1174,17 +1195,128 @@ namespace CSETWebCore.Business.Assessment
                         ComponentGuid = original_record.Component_Guid,
                         Reviewed = original_record.Reviewed,
                         QuestionType = original_record.Question_Type,
-                        Is_Maturity = original_record.Is_Maturity ?? true
+                        Is_Maturity = original_record.Is_Maturity ?? true, 
+                        Comment = original_record.Comment
                     };
+                  
 
                     var adminTabBusiness = new AdminTabBusiness(_context);
                     var mb = new MaturityBusiness(_context, _assessmentUtil, adminTabBusiness);
                     mb.StoreAnswer(assessment_id, answer);
+                    
+                    var newAnswer = _context.ANSWER
+                        .Where(x => x.Assessment_Id == assessment_id &&
+                                    x.Question_Or_Requirement_Id == newQuestionId)
+                        .FirstOrDefault();
+                    
+                    ConvertFindings(original_record.Answer_Id, newAnswer.Answer_Id, assessment_id);
+                    ConvertDocuments(original_record.Answer_Id, newAnswer.Answer_Id);
+                    
                 }
             }
             catch (Exception exc)
             {
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+        }
+
+        public void ConvertFindings(int originalAnswerId, int answerId, int assessmentId)
+        {
+            var originalObservationList = _context.FINDING.Where(x => x.Answer_Id == originalAnswerId).ToList();
+          
+            foreach (var finding in originalObservationList)
+            {
+                var newFinding = new FINDING()
+                {
+                    Answer_Id = answerId,
+                    Summary = finding.Summary,
+                    Impact = finding.Impact,
+                    Issue = finding.Issue,
+                    Recommendations = finding.Recommendations,
+                    Vulnerabilities = finding.Vulnerabilities,
+                    Resolution_Date = finding.Resolution_Date,
+                    Title = finding.Title,
+                    Type = finding.Type,
+                    Risk_Area = finding.Risk_Area,
+                    Sub_Risk = finding.Sub_Risk,
+                    Description = finding.Description,
+                    Citations = finding.Citations,
+                    ActionItems = finding.ActionItems,
+                    Supp_Guidance = finding.Supp_Guidance
+                };
+                _context.FINDING.Add(newFinding);
+                _context.SaveChanges();
+
+                var findingId = newFinding.Finding_Id; 
+                ConvertFindingContacts(finding.Finding_Id, findingId, assessmentId);
+            }
+        }
+
+        public void ConvertFindingContacts(int originalFindingId, int newFindingId, int assessmentId)
+        {
+            var originalObservationContacts = _context.FINDING_CONTACT.Where(x => x.Finding_Id == originalFindingId).ToList();
+            
+            if (originalObservationContacts.Any())
+            {
+                foreach (var findingContact in originalObservationContacts)
+                {
+                    var assessmentContact = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Contact_Id == findingContact.Assessment_Contact_Id).FirstOrDefault();
+                    var newAssessmentContact = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == assessmentContact.UserId && x.Assessment_Id == assessmentId).FirstOrDefault();
+                    _context.FINDING_CONTACT.Add(new FINDING_CONTACT()
+                    {
+                        Finding_Id = newFindingId, 
+                        Assessment_Contact_Id = newAssessmentContact.Assessment_Contact_Id
+                    });
+                }
+            }
+        }
+
+        public void ConvertDocuments(int originalAnswerId, int answerId)
+        {
+            var documentRecord = _context.DOCUMENT_ANSWERS.Where(x => x.Answer_Id == originalAnswerId).ToList();
+            foreach (var document in documentRecord)
+            {
+                _context.DOCUMENT_ANSWERS.Add(new DOCUMENT_ANSWERS()
+                {
+                    Document_Id = document.Document_Id,
+                    Answer_Id = answerId
+                });
+                _context.SaveChanges();
+            }
+        }
+
+        public void ConvertContacts(int assessmentId, int originalId)
+        {
+            //Grab contact record from auto generated new assessment contact 
+            var contactRecord = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            //Grab original contacts for assessment 
+            var originalContactRecord = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == originalId).ToList();
+            foreach (var contact in originalContactRecord)
+            {
+                if (contact.UserId != contactRecord.UserId)
+                {
+                    _context.ASSESSMENT_CONTACTS.Add(new ASSESSMENT_CONTACTS()
+                    {
+                        FirstName = contact.FirstName,
+                        LastName = contact.LastName,
+                        PrimaryEmail = contact.PrimaryEmail,
+                        Assessment_Id = assessmentId,
+                        AssessmentRoleId = contact.AssessmentRoleId,
+                        Title = contact.Title,
+                        Phone = contact.Phone,
+                        Cell_Phone = contact.Cell_Phone,
+                        Reports_To = contact.Reports_To,
+                        Organization_Name = contact.Organization_Name,
+                        Site_Name = contact.Site_Name,
+                        Emergency_Communications_Protocol = contact.Emergency_Communications_Protocol,
+                        Is_Site_Participant = contact.Is_Site_Participant,
+                        Is_Primary_POC = contact.Is_Primary_POC,
+                        Last_Q_Answered = contact.Last_Q_Answered,
+                        UserId = contact.UserId,
+                        Invited = contact.Invited
+                    });
+                    _context.SaveChanges();
+                }
             }
         }
     }

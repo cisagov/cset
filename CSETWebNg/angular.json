@@ -80,8 +80,7 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/@fortawesome/fontawesome-free/js/all.min.js",
               "src/assets/cset.js",
-              "src/assets/shim.min.js",
-              "src/assets/zone.js"
+              "src/assets/shim.min.js"
             ]
           },
           "configurations": {

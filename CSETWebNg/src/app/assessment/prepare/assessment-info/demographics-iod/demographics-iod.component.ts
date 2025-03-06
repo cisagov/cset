@@ -12,9 +12,10 @@ import { CsiService } from '../../../../services/cis-csi.service';
 
 
 @Component({
-  selector: 'app-demographics-iod',
-  templateUrl: './demographics-iod.component.html',
-  styleUrls: ['./demographics-iod.component.scss']
+    selector: 'app-demographics-iod',
+    templateUrl: './demographics-iod.component.html',
+    styleUrls: ['./demographics-iod.component.scss'],
+    standalone: false
 })
 export class DemographicsIodComponent implements OnInit {
 

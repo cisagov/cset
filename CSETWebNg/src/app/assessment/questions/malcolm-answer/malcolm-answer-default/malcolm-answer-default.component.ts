@@ -3,9 +3,10 @@ import { QuestionsService } from '../../../../services/questions.service';
 import { MalcolmService } from '../../../../services/malcolm.service';
 
 @Component({
-  selector: 'app-malcolm-answer-default',
-  templateUrl: './malcolm-answer-default.component.html',
-  styleUrls: ['./malcolm-answer-default.component.scss']
+    selector: 'app-malcolm-answer-default',
+    templateUrl: './malcolm-answer-default.component.html',
+    styleUrls: ['./malcolm-answer-default.component.scss'],
+    standalone: false
 })
 export class MalcolmAnswerDefaultComponent {
   @Input() userAnswer: string;

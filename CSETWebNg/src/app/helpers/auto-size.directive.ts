@@ -24,7 +24,8 @@
 import { ElementRef, HostListener, Directive, OnInit } from '@angular/core';
 
 @Directive({
-    selector: '[appAutoSize]'
+    selector: '[appAutoSize]',
+    standalone: false
 })
 export class AutoSizeDirective implements OnInit {
 

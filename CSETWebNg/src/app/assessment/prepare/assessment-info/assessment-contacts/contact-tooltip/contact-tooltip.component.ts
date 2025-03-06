@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-contact-tooltip',
-  templateUrl: './contact-tooltip.component.html',
-  styleUrls: ['./contact-tooltip.component.scss']
+    selector: 'app-contact-tooltip',
+    templateUrl: './contact-tooltip.component.html',
+    styleUrls: ['./contact-tooltip.component.scss'],
+    standalone: false
 })
 export class ContactTooltipComponent {
   @Input() firstName: string;

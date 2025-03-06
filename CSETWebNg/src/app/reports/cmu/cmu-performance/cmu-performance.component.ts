@@ -25,9 +25,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CmuService } from '../../../services/cmu.service';
 
 @Component({
-  selector: 'app-cmu-performance',
-  templateUrl: './cmu-performance.component.html',
-  styleUrls: ['./cmu-performance.component.scss']
+    selector: 'app-cmu-performance',
+    templateUrl: './cmu-performance.component.html',
+    styleUrls: ['./cmu-performance.component.scss'],
+    standalone: false
 })
 export class CmuPerformanceComponent implements OnInit {
   @Input() model: any;

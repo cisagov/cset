@@ -34,9 +34,10 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
-  selector: 'executive-summary',
-  templateUrl: './executive-summary.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'executive-summary',
+    templateUrl: './executive-summary.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class ExecutiveSummaryComponent implements OnInit {
   response: any;

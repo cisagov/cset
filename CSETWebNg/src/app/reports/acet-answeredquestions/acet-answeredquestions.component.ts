@@ -32,9 +32,10 @@ import { MaturityService } from '../../services/maturity.service';
 
 
 @Component({
-  selector: 'app-acet-answeredquestions',
-  templateUrl: './acet-answeredquestions.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-acet-answeredquestions',
+    templateUrl: './acet-answeredquestions.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class AcetAnsweredQuestionsComponent implements OnInit {
   response: any = {};
