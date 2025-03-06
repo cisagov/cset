@@ -31,7 +31,7 @@
   "supplementalAutoloadInitialValue": false,
   "debug": {
     "showBuildTime": false,
-    "showQuestionAndRequirementIDs": true,
+    "showQuestionAndRequirementIDs": false,
     "canDeleteCustomModules": true,
     "showExportAllButton": false
   },
