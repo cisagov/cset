@@ -30,11 +30,11 @@ import { ACETService } from '../../../services/acet.service';
 import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
-    selector: 'app-assessment-info',
-    templateUrl: './assessment-info.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-assessment-info',
+  templateUrl: './assessment-info.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class AssessmentInfoComponent implements OnInit {
 
@@ -50,13 +50,13 @@ export class AssessmentInfoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.configSvc.config.debug.showCmmcConversion ?? false) {
-      this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
-        if (data.maturityModel?.modelName == "CMMC2") {
-          this.showUpgrade = true;
-          this.targetModel = "CMMC2F"
-        }
-      });
-    }
+
+    this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
+      if (data.maturityModel?.modelName == "CMMC2") {
+        this.showUpgrade = true;
+        this.targetModel = "CMMC2F"
+      }
+    });
+
   }
 }
