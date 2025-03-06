@@ -1211,7 +1211,6 @@ namespace CSETWebCore.Business.Assessment
                     
                     ConvertFindings(original_record.Answer_Id, newAnswer.Answer_Id, assessment_id);
                     ConvertDocuments(original_record.Answer_Id, newAnswer.Answer_Id);
-                    
                 }
             }
             catch (Exception exc)
