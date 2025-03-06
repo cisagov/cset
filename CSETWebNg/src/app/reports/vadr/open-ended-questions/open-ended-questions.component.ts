@@ -40,13 +40,14 @@ import { MaturityFilteringService } from "../../../services/filtering/maturity-f
 import { ngxCsv } from "ngx-csv/ngx-csv";
 
 @Component({
-  selector: "app-open-ended-questions",
-  templateUrl: "./open-ended-questions.component.html",
-  styleUrls: [
-    "../../reports.scss",
-    "../../acet-reports.scss",
-    "./open-ended-questions.component.scss",
-  ],
+    selector: "app-open-ended-questions",
+    templateUrl: "./open-ended-questions.component.html",
+    styleUrls: [
+        "../../reports.scss",
+        "../../acet-reports.scss",
+        "./open-ended-questions.component.scss",
+    ],
+    standalone: false
 })
 export class OpenEndedQuestionsComponent implements OnInit {
   groupings: QuestionGrouping[];

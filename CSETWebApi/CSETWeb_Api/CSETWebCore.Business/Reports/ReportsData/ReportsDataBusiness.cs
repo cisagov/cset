@@ -4,6 +4,9 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Business.Contact;
+using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Maturity.Configuration;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
@@ -13,6 +16,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Reports;
+using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
@@ -1039,9 +1043,33 @@ namespace CSETWebCore.Business.Reports
             info.Assessment_Effective_Date = assessment.AssessmentEffectiveDate;
             info.Assessment_Creation_Date = assessment.AssessmentCreatedDate;
 
-            // Primary Assessor
-            var user = _context.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
-            info.Assessor_Name = user != null ? FormatName(user.FirstName, user.LastName) : string.Empty;
+
+            // Facilitator or Primary Assessor (Creator)
+            USERS userCreator = _context.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
+            USERS userFacilitator = null;
+
+            var demographics = _context.DEMOGRAPHICS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
+            if (demographics != null)
+            {
+                var acFacilitator = _context.ASSESSMENT_CONTACTS.FirstOrDefault(x => x.Assessment_Contact_Id == demographics.Facilitator);
+                if (acFacilitator != null)
+                {
+                    userFacilitator = _context.USERS.FirstOrDefault(x => x.UserId == acFacilitator.UserId);
+                }
+            }
+
+            if (userFacilitator != null)
+            {
+                info.Assessor_Name = userFacilitator != null ? FormatName(userFacilitator.FirstName, userFacilitator.LastName) : string.Empty;
+            }
+            else
+            {
+                info.Assessor_Name = userCreator != null ? FormatName(userCreator.FirstName, userCreator.LastName) : string.Empty;
+            }
+
+
+            var demoExtBiz = new DemographicExtBusiness(_context);
+            info.SelfAssessment = ((bool?)demoExtBiz.GetX(_assessmentId, "SELF-ASSESS")) ?? false;
 
 
             // Other Contacts
@@ -1115,13 +1143,15 @@ namespace CSETWebCore.Business.Reports
                                 join i in _context.IMPORTANCE on f.Importance_Id equals i.Importance_Id into i1
                                 from i in i1.DefaultIfEmpty()
                                 where a.Assessment_Id == _assessmentId
-                                select new ObservationIngredients() { 
-                                    Finding = f, 
+                                select new ObservationIngredients()
+                                {
+                                    Finding = f,
                                     FC = fc,
-                                    Answer = a, 
-                                    MaturityQuestion = mq, 
-                                    NewRequirement = nr, 
-                                    Importance = i }).ToList();
+                                    Answer = a,
+                                    MaturityQuestion = mq,
+                                    NewRequirement = nr,
+                                    Importance = i
+                                }).ToList();
 
             var acc = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == _assessmentId).OrderBy(x => x.Assessment_Contact_Id).ToList();
 
@@ -1131,7 +1161,7 @@ namespace CSETWebCore.Business.Reports
             var componentQuestions = GetComponentQuestions();
 
 
-            
+
             // First handle the 'assigned' Observations
             foreach (var contact in acc)
             {

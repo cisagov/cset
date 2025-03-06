@@ -75,3 +75,5 @@ CSETWebApi/NCUA-EXAMINER-TOOL
 /CSETWebApi/CSETWeb_Api/CSETWebCore.DatabaseManagerTests1/Data/CSETWeb_log.ldf
 /CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/Diagram-orig
 /gallery-editor
+
+CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/appsettings.Development.json

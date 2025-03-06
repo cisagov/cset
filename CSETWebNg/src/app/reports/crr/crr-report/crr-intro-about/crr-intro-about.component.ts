@@ -25,9 +25,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
-  selector: 'app-crr-intro-about',
-  templateUrl: './crr-intro-about.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+    selector: 'app-crr-intro-about',
+    templateUrl: './crr-intro-about.component.html',
+    styleUrls: ['./../crr-report.component.scss'],
+    standalone: false
 })
 export class CrrIntroAboutComponent implements OnInit {
   @Input() model: CmuReportModel;

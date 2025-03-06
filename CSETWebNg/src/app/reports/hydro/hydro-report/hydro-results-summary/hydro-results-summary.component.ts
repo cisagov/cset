@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-hydro-results-summary',
-  templateUrl: './hydro-results-summary.component.html',
-  styleUrls: ['./hydro-results-summary.component.scss']
+    selector: 'app-hydro-results-summary',
+    templateUrl: './hydro-results-summary.component.html',
+    styleUrls: ['./hydro-results-summary.component.scss'],
+    standalone: false
 })
 export class HydroResultsSummaryComponent {
   facilityName: string = 'My Facility';

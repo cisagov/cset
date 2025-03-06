@@ -24,9 +24,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-grouping-block-nested-report',
-  templateUrl: './grouping-block-nested-report.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'app-grouping-block-nested-report',
+    templateUrl: './grouping-block-nested-report.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class GroupingBlockNestedReportComponent implements OnInit {
 

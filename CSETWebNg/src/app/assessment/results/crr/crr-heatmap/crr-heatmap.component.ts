@@ -25,8 +25,9 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
-  selector: 'app-crr-heatmap',
-  templateUrl: './crr-heatmap.component.html'
+    selector: 'app-crr-heatmap',
+    templateUrl: './crr-heatmap.component.html',
+    standalone: false
 })
 export class CrrHeatmapComponent implements OnChanges {
   @Input()

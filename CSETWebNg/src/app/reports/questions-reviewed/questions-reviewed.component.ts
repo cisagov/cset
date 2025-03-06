@@ -26,9 +26,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { QuestionsService } from '../../services/questions.service';
 
 @Component({
-  selector: 'app-questions-reviewed',
-  templateUrl: './questions-reviewed.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-questions-reviewed',
+    templateUrl: './questions-reviewed.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class QuestionsReviewedComponent {
   @Input('data')

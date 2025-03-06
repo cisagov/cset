@@ -27,10 +27,11 @@ import { ChartService } from '../../../../services/chart.service';
 import Chart from 'chart.js/auto';
 
 @Component({
-  selector: 'app-compare-bestworst',
-  templateUrl: './compare-bestworst.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-compare-bestworst',
+    templateUrl: './compare-bestworst.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class CompareBestworstComponent implements OnInit {
 

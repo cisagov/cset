@@ -60,10 +60,11 @@ interface StandardsNames {
 }
 
 @Component({
-  selector: "app-assessment-comparison-analytics",
-  templateUrl: "./assessment-comparison-analytics.component.html",
-  styleUrls: ["./assessment-comparison-analytics.component.scss"],
-  host: { class: "d-flex flex-column flex-11a" },
+    selector: "app-assessment-comparison-analytics",
+    templateUrl: "./assessment-comparison-analytics.component.html",
+    styleUrls: ["./assessment-comparison-analytics.component.scss"],
+    host: { class: "d-flex flex-column flex-11a" },
+    standalone: false
 })
 export class AssessmentComparisonAnalyticsComponent implements OnInit {
   assessment: AssessmentDetail = {};

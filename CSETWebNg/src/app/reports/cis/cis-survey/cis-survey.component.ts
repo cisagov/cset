@@ -27,9 +27,10 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { CisService } from '../../../services/cis.service';
 
 @Component({
-  selector: 'app-cis-survey',
-  templateUrl: './cis-survey.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'app-cis-survey',
+    templateUrl: './cis-survey.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class CisSurveyComponent implements OnInit {
 
@@ -44,6 +45,7 @@ export class CisSurveyComponent implements OnInit {
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
+  selfAssessment: boolean;
 
   baselineAssessmentId?: number;
   baselineAssessmentName: string;
@@ -64,8 +66,9 @@ export class CisSurveyComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.creatorName;
+      this.assessorName = assessmentDetail.facilitatorName;
       this.facilityName = assessmentDetail.facilityName;
+      this.selfAssessment = assessmentDetail.selfAssessment;
 
       this.baselineAssessmentId = assessmentDetail.baselineAssessmentId;
       this.baselineAssessmentName = assessmentDetail.baselineAssessmentName;

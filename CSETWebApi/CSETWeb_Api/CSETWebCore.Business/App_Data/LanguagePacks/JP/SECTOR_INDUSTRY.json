@@ -1,0 +1,1282 @@
+﻿[
+  {
+    "key": "1",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "78",
+    "value": "基礎化学品",
+    "valueEN": "Basic Chemicals"
+  },
+  {
+    "key": "79",
+    "value": "特殊製品",
+    "valueEN": "Specialty Products"
+  },
+  {
+    "key": "80",
+    "value": "医薬品",
+    "valueEN": "Pharmaceutical Products"
+  },
+  {
+    "key": "81",
+    "value": "消費者製品",
+    "valueEN": "Consumer Products"
+  },
+  {
+    "key": "82",
+    "value": "農産物",
+    "valueEN": "Agricultural Products"
+  },
+  {
+    "key": "2",
+    "value": "エンターテイメントとメディア",
+    "valueEN": "Entertainment and Media"
+  },
+  {
+    "key": "3",
+    "value": "ゲーム",
+    "valueEN": "Gaming"
+  },
+  {
+    "key": "4",
+    "value": "宿泊",
+    "valueEN": "Lodging"
+  },
+  {
+    "key": "5",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "6",
+    "value": "屋外イベント",
+    "valueEN": "Outdoor Events"
+  },
+  {
+    "key": "7",
+    "value": "公共集会",
+    "valueEN": "Public Assembly"
+  },
+  {
+    "key": "8",
+    "value": "不動産",
+    "valueEN": "Real Estate"
+  },
+  {
+    "key": "9",
+    "value": "小売",
+    "valueEN": "Retail"
+  },
+  {
+    "key": "10",
+    "value": "スポーツリーグ",
+    "valueEN": "Sports Leagues"
+  },
+  {
+    "key": "11",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "12",
+    "value": "通信",
+    "valueEN": "Telecommunications"
+  },
+  {
+    "key": "13",
+    "value": "無線通信サービスプロバイダー",
+    "valueEN": "Wireless Communications Service Providers"
+  },
+  {
+    "key": "83",
+    "value": "放送",
+    "valueEN": "Broadcasting"
+  },
+  {
+    "key": "84",
+    "value": "ケーブル",
+    "valueEN": "Cable"
+  },
+  {
+    "key": "85",
+    "value": "衛星",
+    "valueEN": "Satellite"
+  },
+  {
+    "key": "86",
+    "value": "有線",
+    "valueEN": "Wireline"
+  },
+  {
+    "key": "14",
+    "value": "電気機器、家電および部品製造",
+    "valueEN": "Electrical Equipment, Appliance and Component Manufacturing"
+  },
+  {
+    "key": "15",
+    "value": "機械製造",
+    "valueEN": "Machinery Manufacturing"
+  },
+  {
+    "key": "16",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "17",
+    "value": "一次金属製造",
+    "valueEN": "Primary Metal Manufacturing"
+  },
+  {
+    "key": "18",
+    "value": "輸送および重機製造",
+    "valueEN": "Transportation and Heavy Equipment Manufacturing"
+  },
+  {
+    "key": "87",
+    "value": "製造",
+    "valueEN": "Manufacturing"
+  },
+  {
+    "key": "88",
+    "value": "重機製造",
+    "valueEN": "Heavy Machinery Manufacturing"
+  },
+  {
+    "key": "19",
+    "value": "ダム",
+    "valueEN": "Dams"
+  },
+  {
+    "key": "20",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "21",
+    "value": "米国の民間水力発電所",
+    "valueEN": "Private Hydropower Facilities in the US"
+  },
+  {
+    "key": "89",
+    "value": "堤防",
+    "valueEN": "Levees"
+  },
+  {
+    "key": "90",
+    "value": "航行ロック",
+    "valueEN": "Navigation Locks"
+  },
+  {
+    "key": "91",
+    "value": "尾鉱および廃棄物貯蔵池",
+    "valueEN": "Tailings and Waste Impoundments"
+  },
+  {
+    "key": "22",
+    "value": "航空機産業",
+    "valueEN": "Aircraft Industry"
+  },
+  {
+    "key": "23",
+    "value": "弾薬",
+    "valueEN": "Ammunition"
+  },
+  {
+    "key": "24",
+    "value": "戦闘車両",
+    "valueEN": "Combat Vehicle"
+  },
+  {
+    "key": "25",
+    "value": "通信",
+    "valueEN": "Communications"
+  },
+  {
+    "key": "26",
+    "value": "防衛請負業者",
+    "valueEN": "Defense Contractors"
+  },
+  {
+    "key": "27",
+    "value": "電気産業のコモディティ",
+    "valueEN": "Electrical Industry Commodities"
+  },
+  {
+    "key": "28",
+    "value": "エレクトロニクス",
+    "valueEN": "Electronics"
+  },
+  {
+    "key": "29",
+    "value": "機械産業のコモディティ",
+    "valueEN": "Mechanical Industry Commodities"
+  },
+  {
+    "key": "30",
+    "value": "ミサイル産業",
+    "valueEN": "Missile Industry"
+  },
+  {
+    "key": "31",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "32",
+    "value": "研究開発施設",
+    "valueEN": "Research and Development Facilities"
+  },
+  {
+    "key": "33",
+    "value": "造船産業",
+    "valueEN": "Shipbuilding Industry"
+  },
+  {
+    "key": "34",
+    "value": "宇宙",
+    "valueEN": "Space"
+  },
+  {
+    "key": "35",
+    "value": "構造産業のコモディティ",
+    "valueEN": "Structural Industry Commodities"
+  },
+  {
+    "key": "36",
+    "value": "部隊支援",
+    "valueEN": "Troop Support"
+  },
+  {
+    "key": "37",
+    "value": "兵器",
+    "valueEN": "Weapons"
+  },
+  {
+    "key": "38",
+    "value": "緊急管理",
+    "valueEN": "Emergency Management"
+  },
+  {
+    "key": "39",
+    "value": "緊急医療サービス",
+    "valueEN": "Emergency Medical Services"
+  },
+  {
+    "key": "40",
+    "value": "消防救助サービス",
+    "valueEN": "Fire and Rescue Services"
+  },
+  {
+    "key": "41",
+    "value": "法執行",
+    "valueEN": "Law Enforcement"
+  },
+  {
+    "key": "42",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "43",
+    "value": "公共事業",
+    "valueEN": "Public Works"
+  },
+  {
+    "key": "44",
+    "value": "電力の発電、送電、配電",
+    "valueEN": "Electric Power Generation, Transmission and Distribution"
+  },
+  {
+    "key": "45",
+    "value": "天然ガス",
+    "valueEN": "Natural Gas"
+  },
+  {
+    "key": "46",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "47",
+    "value": "石油精製所",
+    "valueEN": "Petroleum Refineries"
+  },
+  {
+    "key": "92",
+    "value": "石油と天然ガス",
+    "valueEN": "Oil and Natural Gas"
+  },
+  {
+    "key": "48",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "49",
+    "value": "米国の銀行",
+    "valueEN": "US Banks"
+  },
+  {
+    "key": "50",
+    "value": "米国の信用組合",
+    "valueEN": "US Credit Unions"
+  },
+  {
+    "key": "93",
+    "value": "消費者サービス",
+    "valueEN": "Consumer Services"
+  },
+  {
+    "key": "94",
+    "value": "信用および流動性商品",
+    "valueEN": "Credit and Liquidity Products"
+  },
+  {
+    "key": "95",
+    "value": "投資商品",
+    "valueEN": "Investment Products"
+  },
+  {
+    "key": "96",
+    "value": "リスク転送商品",
+    "valueEN": "Risk Transfer Products"
+  },
+  {
+    "key": "51",
+    "value": "飲料製造工場",
+    "valueEN": "Beverage Manufacturing Plants"
+  },
+  {
+    "key": "52",
+    "value": "食品製造工場",
+    "valueEN": "Food Manufacturing Plants"
+  },
+  {
+    "key": "53",
+    "value": "フードサービス",
+    "valueEN": "Food Services"
+  },
+  {
+    "key": "54",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "97",
+    "value": "供給",
+    "valueEN": "Supply"
+  },
+  {
+    "key": "98",
+    "value": "加工、包装、および生産",
+    "valueEN": "Processing, Packaging, and Production"
+  },
+  {
+    "key": "99",
+    "value": "製品の保管",
+    "valueEN": "Product Storage"
+  },
+  {
+    "key": "100",
+    "value": "製品の輸送",
+    "valueEN": "Product Transportation"
+  },
+  {
+    "key": "101",
+    "value": "製品の配布",
+    "valueEN": "Product Distribution"
+  },
+  {
+    "key": "102",
+    "value": "支援施設",
+    "valueEN": "Supporting Facilities"
+  },
+  {
+    "key": "55",
+    "value": "地方政府",
+    "valueEN": "Local Governments"
+  },
+  {
+    "key": "56",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "57",
+    "value": "州政府",
+    "valueEN": "State Governments"
+  },
+  {
+    "key": "58",
+    "value": "地域政府",
+    "valueEN": "Territorial Governments"
+  },
+  {
+    "key": "59",
+    "value": "部族政府",
+    "valueEN": "Tribal Governments"
+  },
+  {
+    "key": "103",
+    "value": "公共施設",
+    "valueEN": "Public Facilities"
+  },
+  {
+    "key": "104",
+    "value": "非公共施設",
+    "valueEN": "Non-Public Facilities"
+  },
+  {
+    "key": "60",
+    "value": "病院",
+    "valueEN": "Hospitals"
+  },
+  {
+    "key": "61",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "62",
+    "value": "住宅ケア施設",
+    "valueEN": "Residential Care Facilities"
+  },
+  {
+    "key": "105",
+    "value": "直接患者ケア",
+    "valueEN": "Direct Patient Care"
+  },
+  {
+    "key": "106",
+    "value": "ヘルスIT",
+    "valueEN": "Health IT"
+  },
+  {
+    "key": "107",
+    "value": "健康保険および支払者",
+    "valueEN": "Health Plans and Payers"
+  },
+  {
+    "key": "108",
+    "value": "死亡管理サービス",
+    "valueEN": "Fatality Management Services"
+  },
+  {
+    "key": "109",
+    "value": "医療材料",
+    "valueEN": "Medical Materials"
+  },
+  {
+    "key": "110",
+    "value": "サポートサービス",
+    "valueEN": "Support Services"
+  },
+  {
+    "key": "63",
+    "value": "情報技術",
+    "valueEN": "Information Technology"
+  },
+  {
+    "key": "64",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "111",
+    "value": "IT生産",
+    "valueEN": "IT Production"
+  },
+  {
+    "key": "112",
+    "value": "DNSサービス",
+    "valueEN": "DNS Services"
+  },
+  {
+    "key": "113",
+    "value": "アイデンティティおよび信頼サポートの管理",
+    "valueEN": "Identity and Trust Support Management"
+  },
+  {
+    "key": "114",
+    "value": "インターネットコンテンツおよびサービスプロバイダー",
+    "valueEN": "Internet Content and Service Providers"
+  },
+  {
+    "key": "115",
+    "value": "インターネットルーティングと接続",
+    "valueEN": "Internet Routing and Connection"
+  },
+  {
+    "key": "116",
+    "value": "インシデント管理",
+    "valueEN": "Incident Management"
+  },
+  {
+    "key": "65",
+    "value": "原子力発電所の運転",
+    "valueEN": "Operating Nuclear Power Plants"
+  },
+  {
+    "key": "66",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "117",
+    "value": "燃料サイクル施設",
+    "valueEN": "Fuel Cycle Facilities"
+  },
+  {
+    "key": "118",
+    "value": "核材料輸送",
+    "valueEN": "Nuclear Materials Transport"
+  },
+  {
+    "key": "119",
+    "value": "放射性廃棄物",
+    "valueEN": "Radioactive Waste"
+  },
+  {
+    "key": "120",
+    "value": "放射性物質",
+    "valueEN": "Radioactive Materials"
+  },
+  {
+    "key": "67",
+    "value": "航空",
+    "valueEN": "Aviation"
+  },
+  {
+    "key": "68",
+    "value": "貨物鉄道",
+    "valueEN": "Freight Rail"
+  },
+  {
+    "key": "69",
+    "value": "高速道路（トラック輸送）",
+    "valueEN": "Highway (truck transportation)"
+  },
+  {
+    "key": "70",
+    "value": "海事",
+    "valueEN": "Maritime"
+  },
+  {
+    "key": "71",
+    "value": "大量輸送および旅客鉄道",
+    "valueEN": "Mass Transit and Passenger Rail"
+  },
+  {
+    "key": "72",
+    "value": "交通制御システムを有する自治体",
+    "valueEN": "Municipalities with Traffic Control Systems"
+  },
+  {
+    "key": "73",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "74",
+    "value": "パイプライン（天然ガス、危険液体、およびさまざまな化学物質を輸送）",
+    "valueEN": "Pipelines (carries natural gas, hazardous liquids, and various chemicals.)"
+  },
+  {
+    "key": "75",
+    "value": "その他",
+    "valueEN": "Other"
+  },
+  {
+    "key": "76",
+    "value": "公共水道システム",
+    "valueEN": "Public Water Systems"
+  },
+  {
+    "key": "77",
+    "value": "公営処理施設",
+    "valueEN": "Publicly Owned Treatment Works"
+  },
+  {
+    "key": "121",
+    "value": "農業および食品製品の流通",
+    "valueEN": "Agricultural and Food Product Distribution"
+  },
+  {
+    "key": "122",
+    "value": "農業および食品製品の輸送",
+    "valueEN": "Agricultural and Food Product Transportation"
+  },
+  {
+    "key": "123",
+    "value": "農業および食品製品の保管および流通倉庫",
+    "valueEN": "Agriculture and Food Product Storage and Distribution Warehouse"
+  },
+  {
+    "key": "124",
+    "value": "農業および食品支援施設",
+    "valueEN": "Agriculture and Food Supporting Facility"
+  },
+  {
+    "key": "125",
+    "value": "その他の農業および食品",
+    "valueEN": "Other Agriculture and Food"
+  },
+  {
+    "key": "126",
+    "value": "加工、包装、および生産",
+    "valueEN": "Processing, Packaging, and Production"
+  },
+  {
+    "key": "127",
+    "value": "規制、監督、または業界組織",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "128",
+    "value": "供給",
+    "valueEN": "Supply"
+  },
+  {
+    "key": "129",
+    "value": "銀行業務および信用",
+    "valueEN": "Banking and Credit"
+  },
+  {
+    "key": "130",
+    "value": "保険会社",
+    "valueEN": "Insurance Company"
+  },
+  {
+    "key": "131",
+    "value": "証券、商品、または金融投資",
+    "valueEN": "Securities, Commodities, or Financial Investment"
+  },
+  {
+    "key": "132",
+    "value": "化学製造または加工工場",
+    "valueEN": "Chemical Manufacturing or Processing Plant"
+  },
+  {
+    "key": "133",
+    "value": "危険な化学物質の保管/在庫/利用/流通",
+    "valueEN": "Hazardous Chemical Storage/Stockpile/Utilization/Distribution"
+  },
+  {
+    "key": "134",
+    "value": "危険な化学物質の輸送",
+    "valueEN": "Hazardous Chemical Transport"
+  },
+  {
+    "key": "135",
+    "value": "その他の化学物質および危険物質",
+    "valueEN": "Other Chemical and Hazardous Material"
+  },
+  {
+    "key": "136",
+    "value": "規制、監督、または業界組織",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "137",
+    "value": "エンターテインメントまたはメディア施設",
+    "valueEN": "Entertainment or Media Facility"
+  },
+  {
+    "key": "138",
+    "value": "ギャンブル施設/カジノ",
+    "valueEN": "Gaming Facility/Casino"
+  },
+  {
+    "key": "139",
+    "value": "宿泊施設",
+    "valueEN": "Lodging Facility"
+  },
+  {
+    "key": "140",
+    "value": "その他の商業施設",
+    "valueEN": "Other Commercial Facility"
+  },
+  {
+    "key": "141",
+    "value": "公共集会",
+    "valueEN": "Public Assembly"
+  },
+  {
+    "key": "142",
+    "value": "不動産施設",
+    "valueEN": "Real Estate Facility"
+  },
+  {
+    "key": "143",
+    "value": "小売施設",
+    "valueEN": "Retail Facility"
+  },
+  {
+    "key": "144",
+    "value": "情報サービス",
+    "valueEN": "Information Services"
+  },
+  {
+    "key": "145",
+    "value": "インターネット",
+    "valueEN": "Internet"
+  },
+  {
+    "key": "146",
+    "value": "次世代ネットワーク",
+    "valueEN": "Next Generation Network"
+  },
+  {
+    "key": "147",
+    "value": "その他の通信施設",
+    "valueEN": "Other Communication Facility"
+  },
+  {
+    "key": "148",
+    "value": "規制、監督、または業界組織",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "149",
+    "value": "衛星通信",
+    "valueEN": "Satellite Communication"
+  },
+  {
+    "key": "150",
+    "value": "テレコムホテル",
+    "valueEN": "Telecomm Hotel"
+  },
+  {
+    "key": "151",
+    "value": "有線通信",
+    "valueEN": "Wired Communication"
+  },
+  {
+    "key": "152",
+    "value": "無線通信",
+    "valueEN": "Wireless Communication"
+  },
+  {
+    "key": "153",
+    "value": "ダムプロジェクト",
+    "valueEN": "Dam Project"
+  },
+  {
+    "key": "154",
+    "value": "洪水被害軽減システム",
+    "valueEN": "Flood Damage Reduction System"
+  },
+  {
+    "key": "155",
+    "value": "ハリケーンまたは嵐の高潮防護システム",
+    "valueEN": "Hurricane or Storm Surge Protection System"
+  },
+  {
+    "key": "156",
+    "value": "鉱山の尾鉱および産業廃棄物の貯留",
+    "valueEN": "Mine Tailings and Industrial Waste Impoundment"
+  },
+  {
+    "key": "157",
+    "value": "規制、監督、または業界組織",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "158",
+    "value": "航空機産業",
+    "valueEN": "Aircraft Industry"
+  },
+  {
+    "key": "159",
+    "value": "弾薬産業",
+    "valueEN": "Ammunition Industry"
+  },
+  {
+    "key": "160",
+    "value": "戦闘車両産業",
+    "valueEN": "Combat Vehicle Industry"
+  },
+  {
+    "key": "161",
+    "value": "電気産業の製品製造",
+    "valueEN": "Electrical Industry Commodity Manufacturing"
+  },
+  {
+    "key": "162",
+    "value": "電子産業の製品製造",
+    "valueEN": "Electronic Industry Commodity Manufacturing"
+  },
+  {
+    "key": "163",
+    "value": "電子産業",
+    "valueEN": "Electronics Industry"
+  },
+  {
+    "key": "164",
+    "value": "情報技術産業",
+    "valueEN": "Information Technology Industry"
+  },
+  {
+    "key": "165",
+    "value": "機械産業の製品製造",
+    "valueEN": "Mechanical Industry Commodity Manufacturing"
+  },
+  {
+    "key": "166",
+    "value": "ミサイル産業",
+    "valueEN": "Missile Industry"
+  },
+  {
+    "key": "167",
+    "value": "研究開発施設",
+    "valueEN": "Research & Development Facility"
+  },
+  {
+    "key": "168",
+    "value": "造船産業",
+    "valueEN": "Shipbuilding Industry"
+  },
+  {
+    "key": "169",
+    "value": "宇宙産業",
+    "valueEN": "Space Industry"
+  },
+  {
+    "key": "170",
+    "value": "構造産業の製品製造",
+    "valueEN": "Structural Industry Commodity Manufacturing"
+  },
+  {
+    "key": "171",
+    "value": "兵站支援産業",
+    "valueEN": "Troop Support Industry"
+  },
+  {
+    "key": "172",
+    "value": "兵器産業",
+    "valueEN": "Weapons Industry"
+  },
+  {
+    "key": "173",
+    "value": "緊急管理",
+    "valueEN": "Emergency Management"
+  },
+  {
+    "key": "174",
+    "value": "救急医療サービス（EMS）",
+    "valueEN": "Emergency Medical Services (EMS)"
+  },
+  {
+    "key": "175",
+    "value": "消防および緊急サービス",
+    "valueEN": "Fire and Emergency Services"
+  },
+  {
+    "key": "176",
+    "value": "法執行",
+    "valueEN": "Law Enforcement"
+  },
+  {
+    "key": "177",
+    "value": "その他の緊急サービス施設",
+    "valueEN": "Other Emergency Services Facility"
+  },
+  {
+    "key": "178",
+    "value": "公共事業",
+    "valueEN": "Public Works"
+  },
+  {
+    "key": "179",
+    "value": "バイオディーゼル",
+    "valueEN": "Biodiesel"
+  },
+  {
+    "key": "180",
+    "value": "石炭",
+    "valueEN": "Coal"
+  },
+  {
+    "key": "181",
+    "value": "電力",
+    "valueEN": "Electricity"
+  },
+  {
+    "key": "182",
+    "value": "エタノール",
+    "valueEN": "Ethanol"
+  },
+  {
+    "key": "183",
+    "value": "水素",
+    "valueEN": "Hydrogen"
+  },
+  {
+    "key": "184",
+    "value": "天然ガス",
+    "valueEN": "Natural Gas"
+  },
+  {
+    "key": "185",
+    "value": "その他のエネルギー変換システム",
+    "valueEN": "Other Energy Conversion System"
+  },
+  {
+    "key": "186",
+    "value": "石油",
+    "valueEN": "Petroleum"
+  },
+  {
+    "key": "187",
+    "value": "規制、監督、または業界組織",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "188",
+    "value": "教育施設",
+    "valueEN": "Education Facility"
+  },
+  {
+    "key": "189",
+    "value": "選挙インフラ",
+    "valueEN": "Election Infrastructure"
+  },
+  {
+    "key": "190",
+    "value": "政府の研究施設",
+    "valueEN": "Government Research Facility"
+  },
+  {
+    "key": "191",
+    "value": "政府のセンサーまたは監視システム",
+    "valueEN": "Government Sensor or Monitoring System"
+  },
+  {
+    "key": "192",
+    "value": "政府の宇宙システム",
+    "valueEN": "Government Space System"
+  },
+  {
+    "key": "193",
+    "value": "政府の保管または保存施設",
+    "valueEN": "Government Storage or Preservation Facility"
+  },
+  {
+    "key": "194",
+    "value": "軍事施設",
+    "valueEN": "Military Facility"
+  },
+  {
+    "key": "195",
+    "value": "その他の政府機関",
+    "valueEN": "Other Government Facility"
+  },
+  {
+    "key": "196",
+    "value": "人員指向の政府施設",
+    "valueEN": "Personnel-Oriented Government Facility"
+  },
+  {
+    "key": "197",
+    "value": "サービス指向の政府施設",
+    "valueEN": "Service-Oriented Government Facility"
+  },
+  {
+    "key": "198",
+    "value": "直接患者医療",
+    "valueEN": "Direct Patient Healthcare"
+  },
+  {
+    "key": "199",
+    "value": "死亡施設/モルグ",
+    "valueEN": "Fatality/Mortuary Facility"
+  },
+  {
+    "key": "200",
+    "value": "健康支援施設",
+    "valueEN": "Health Supporting Facility"
+  },
+  {
+    "key": "201",
+    "value": "医療教育施設",
+    "valueEN": "Healthcare Educational Facility"
+  },
+  {
+    "key": "202",
+    "value": "その他の医療および公衆衛生機関",
+    "valueEN": "Other Healthcare and Public Health Entity"
+  },
+  {
+    "key": "203",
+    "value": "公衆衛生機関",
+    "valueEN": "Public Health Agency"
+  },
+  {
+    "key": "204",
+    "value": "規制、監督、または業界組織",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "205",
+    "value": "ハードウェア生産",
+    "valueEN": "Hardware Production"
+  },
+  {
+    "key": "206",
+    "value": "インターネットベースのコンテンツ、情報、および通信サービス",
+    "valueEN": "Internet-Based Content, Information, and Communications Services"
+  },
+  {
+    "key": "207",
+    "value": "その他のハードウェア生産施設",
+    "valueEN": "Other Hardware Production Facility"
+  },
+  {
+    "key": "208",
+    "value": "その他の情報技術施設",
+    "valueEN": "Other Information Technology Facility"
+  },
+  {
+    "key": "209",
+    "value": "規制、監督、または業界組織",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "210",
+    "value": "ソフトウェア生産",
+    "valueEN": "Software Production"
+  },
+  {
+    "key": "211",
+    "value": "飲料製造",
+    "valueEN": "Beverage Manufacturing"
+  },
+  {
+    "key": "212",
+    "value": "化学製造",
+    "valueEN": "Chemical Manufacturing"
+  },
+  {
+    "key": "213",
+    "value": "コンピュータおよび電子製品製造",
+    "valueEN": "Computer and Electronic Product Manufacturing"
+  },
+  {
+    "key": "214",
+    "value": "重要な製造",
+    "valueEN": "Critical Manufacturing"
+  },
+  {
+    "key": "215",
+    "value": "金属製品の製造",
+    "valueEN": "Fabricated Metal Product Manufacturing"
+  },
+  {
+    "key": "216",
+    "value": "食品製造",
+    "valueEN": "Food Manufacturing"
+  },
+  {
+    "key": "217",
+    "value": "家具および関連製品の製造",
+    "valueEN": "Furniture And Related Product Manufacturing"
+  },
+  {
+    "key": "218",
+    "value": "採鉱、採石または石油およびガスの抽出",
+    "valueEN": "Mining, Quarrying, or Oil and Gas Extraction"
+  },
+  {
+    "key": "219",
+    "value": "非金属鉱物製品の製造",
+    "valueEN": "Non-Metallic Mineral Products Manufacturing"
+  },
+  {
+    "key": "220",
+    "value": "その他の製造",
+    "valueEN": "Other Manufacturing"
+  },
+  {
+    "key": "221",
+    "value": "紙の製造",
+    "valueEN": "Paper Manufacturing"
+  },
+  {
+    "key": "222",
+    "value": "石油および石炭製品の製造",
+    "valueEN": "Petroleum and Coal Products Manufacturing"
+  },
+  {
+    "key": "223",
+    "value": "プラスチックおよびゴム製品の製造",
+    "valueEN": "Plastics And Rubber Products Manufacturing"
+  },
+  {
+    "key": "224",
+    "value": "印刷および関連サポート",
+    "valueEN": "Printing and Related Support"
+  },
+  {
+    "key": "225",
+    "value": "繊維、繊維製品、アパレル、革製品の製造",
+    "valueEN": "Textile, Textile Product, Apparel, Leather Manufacturing"
+  },
+  {
+    "key": "226",
+    "value": "タバコ製品の製造",
+    "valueEN": "Tobacco Product Manufacturing"
+  },
+  {
+    "key": "227",
+    "value": "木製品の製造",
+    "valueEN": "Wood Product Manufacturing"
+  },
+  {
+    "key": "228",
+    "value": "国定記念物/アイコン ドキュメントまたはオブジェクト",
+    "valueEN": "National Monument/Icon Document or Object"
+  },
+  {
+    "key": "229",
+    "value": "国定記念物/アイコン 地理的地域",
+    "valueEN": "National Monument/Icon Geographic Area"
+  },
+  {
+    "key": "230",
+    "value": "国定記念物/アイコン 構造",
+    "valueEN": "National Monument/Icon Structure"
+  },
+  {
+    "key": "231",
+    "value": "その他の国定記念物とアイコン",
+    "valueEN": "Other National Monuments and Icons"
+  },
+  {
+    "key": "232",
+    "value": "核施設",
+    "valueEN": "Nuclear Facility"
+  },
+  {
+    "key": "233",
+    "value": "核物質",
+    "valueEN": "Nuclear Material"
+  },
+  {
+    "key": "234",
+    "value": "核廃棄物",
+    "valueEN": "Nuclear Waste"
+  },
+  {
+    "key": "235",
+    "value": "その他の核施設",
+    "valueEN": "Other Nuclear Facility"
+  },
+  {
+    "key": "236",
+    "value": "規制、監督、または業界組織",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "237",
+    "value": "宅配便",
+    "valueEN": "Courier"
+  },
+  {
+    "key": "238",
+    "value": "その他の郵便および配送施設",
+    "valueEN": "Other Postal and Shipping Facility"
+  },
+  {
+    "key": "239",
+    "value": "アメリカ合衆国郵便公社",
+    "valueEN": "United States Postal Service"
+  },
+  {
+    "key": "240",
+    "value": "航空",
+    "valueEN": "Aviation"
+  },
+  {
+    "key": "241",
+    "value": "海事",
+    "valueEN": "Maritime"
+  },
+  {
+    "key": "242",
+    "value": "大量輸送",
+    "valueEN": "Mass Transit"
+  },
+  {
+    "key": "243",
+    "value": "パイプライン",
+    "valueEN": "Pipeline"
+  },
+  {
+    "key": "244",
+    "value": "鉄道",
+    "valueEN": "Railroad"
+  },
+  {
+    "key": "245",
+    "value": "規制、監督、または業界組織",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "246",
+    "value": "道路",
+    "valueEN": "Road"
+  },
+  {
+    "key": "247",
+    "value": "原水の貯蔵",
+    "valueEN": "Raw Water Storage"
+  },
+  {
+    "key": "248",
+    "value": "原水供給",
+    "valueEN": "Raw Water Supply"
+  },
+  {
+    "key": "249",
+    "value": "原水の輸送",
+    "valueEN": "Raw Water Transmission"
+  },
+  {
+    "key": "250",
+    "value": "規制、監督、または業界組織",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "251",
+    "value": "処理済み（完成済み）水の貯蔵",
+    "valueEN": "Treated (Finished) Water Storage"
+  },
+  {
+    "key": "252",
+    "value": "処理済み水の配水制御センター",
+    "valueEN": "Treated Water Distribution Control Center"
+  },
+  {
+    "key": "253",
+    "value": "処理済み水の配水システム",
+    "valueEN": "Treated Water Distribution System"
+  },
+  {
+    "key": "254",
+    "value": "処理済み水の監視システム",
+    "valueEN": "Treated Water Monitoring System"
+  },
+  {
+    "key": "255",
+    "value": "下水処理施設",
+    "valueEN": "Wastewater Facility"
+  },
+  {
+    "key": "256",
+    "value": "浄水施設",
+    "valueEN": "Water Treatment Facility"
+  }
+]

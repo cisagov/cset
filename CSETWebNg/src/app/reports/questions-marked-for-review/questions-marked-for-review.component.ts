@@ -26,9 +26,10 @@ import { QuestionsService } from '../../services/questions.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-questions-marked-for-review',
-  templateUrl: './questions-marked-for-review.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-questions-marked-for-review',
+    templateUrl: './questions-marked-for-review.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class QuestionsMarkedForReviewComponent {
 

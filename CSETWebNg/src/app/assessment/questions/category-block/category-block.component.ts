@@ -26,8 +26,9 @@ import { Category } from '../../../models/questions.model';
 import { NavTreeNode } from '../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-category-block',
-  templateUrl: './category-block.component.html'
+    selector: 'app-category-block',
+    templateUrl: './category-block.component.html',
+    standalone: false
 })
 export class CategoryBlockComponent implements OnInit {
 

@@ -31,7 +31,10 @@ import { AuthenticationService } from '../services/authentication.service';
  * Formats a date to the 'local' style, based on the locale
  * currently set in the TranslocoService.
  */
-@Pipe({ name: 'localizeDate' })
+@Pipe({
+    name: 'localizeDate',
+    standalone: false
+})
 export class LocalizeDatePipe implements PipeTransform {
 
     constructor(

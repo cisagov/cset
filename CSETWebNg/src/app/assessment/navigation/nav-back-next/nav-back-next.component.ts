@@ -26,8 +26,9 @@ import { Subscription } from 'rxjs';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-nav-back-next',
-  templateUrl: './nav-back-next.component.html'
+    selector: 'app-nav-back-next',
+    templateUrl: './nav-back-next.component.html',
+    standalone: false
 })
 export class NavBackNextComponent implements OnInit {
 

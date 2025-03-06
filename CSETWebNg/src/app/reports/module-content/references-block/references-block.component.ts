@@ -24,9 +24,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-references-block',
-  templateUrl: './references-block.component.html',
-  styleUrls: ['./references-block.component.scss']
+    selector: 'app-references-block',
+    templateUrl: './references-block.component.html',
+    styleUrls: ['./references-block.component.scss'],
+    standalone: false
 })
 export class ReferencesBlockComponent implements OnInit {
 

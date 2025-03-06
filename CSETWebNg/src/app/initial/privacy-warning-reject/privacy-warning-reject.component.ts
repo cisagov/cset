@@ -25,10 +25,11 @@ import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../../services/layout.service';
 
 @Component({
-  selector: 'app-privacy-warning-reject',
-  templateUrl: './privacy-warning-reject.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-privacy-warning-reject',
+    templateUrl: './privacy-warning-reject.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class PrivacyWarningRejectComponent implements OnInit {
 

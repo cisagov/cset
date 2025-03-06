@@ -27,10 +27,11 @@ import { ConfigService } from '../../services/config.service';
 import { LayoutService } from '../../services/layout.service';
 
 @Component({
-  selector: 'app-privacy-warning',
-  templateUrl: './privacy-warning.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-privacy-warning',
+    templateUrl: './privacy-warning.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class PrivacyWarningComponent implements OnInit {
   BannerText: string;

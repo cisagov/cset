@@ -21,12 +21,16 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Pipe, PipeTransform } from '@angular/core';
+import { Injectable, Pipe, PipeTransform } from '@angular/core';
 
 /**
  * Converts linefeed characters to HTML '<br />' tags
  */
-@Pipe({ name: 'linebreak' })
+
+@Pipe({
+    name: 'linebreak', standalone: false
+})
+@Injectable({ providedIn: 'root' })
 export class LinebreakPipe implements PipeTransform {
    transform(text: string): string {
       // if we detect HTML already in the string, do nothing

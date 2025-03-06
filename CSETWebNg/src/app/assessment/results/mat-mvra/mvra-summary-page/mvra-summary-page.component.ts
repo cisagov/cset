@@ -24,8 +24,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-mvra-summary-page',
-  templateUrl: './mvra-summary-page.component.html'
+    selector: 'app-mvra-summary-page',
+    templateUrl: './mvra-summary-page.component.html',
+    standalone: false
 })
 export class MvraSummaryPageComponent implements OnInit {
 

@@ -32,10 +32,11 @@ import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component'
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-sal-nist',
-  templateUrl: './sal-nist.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-sal-nist',
+    templateUrl: './sal-nist.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class SalNistComponent implements OnInit {
 

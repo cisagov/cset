@@ -27,10 +27,11 @@ import { Question, ParameterForAnswer } from '../../models/questions.model';
 import { QuestionsService } from '../../services/questions.service';
 
 @Component({
-  selector: 'app-inline-parameter',
-  templateUrl: './inline-parameter.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-inline-parameter',
+    templateUrl: './inline-parameter.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class InlineParameterComponent implements OnInit {
 

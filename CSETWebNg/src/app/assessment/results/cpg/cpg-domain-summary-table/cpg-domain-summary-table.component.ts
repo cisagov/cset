@@ -24,8 +24,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-cpg-domain-summary-table',
-  templateUrl: './cpg-domain-summary-table.component.html'
+    selector: 'app-cpg-domain-summary-table',
+    templateUrl: './cpg-domain-summary-table.component.html',
+    standalone: false
 })
 export class CpgDomainSummaryTableComponent implements OnInit {
 

@@ -59,7 +59,6 @@ import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './initial/login/login.component';
 import { ResetPassComponent } from './initial/reset-pass/reset-pass.component';
 import { ResourceLibraryComponent } from './resource-library/resource-library.component';
-import { ImportComponent } from './import/import.component';
 import { AcetDetailComponent } from './assessment/results/acet-detail/acet-detail.component';
 import { AcetDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
 import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
@@ -300,7 +299,7 @@ const appRoutes: Routes = [
       { path: 'compare-analytics/:id/:type', component: CompareAnalyticsComponent },
       { path: 'trend-analytics/:id', component: TrendAnalyticsComponent },
 
-      { path: 'importModule', component: ImportComponent },
+      { path: 'importModule', loadChildren: () => import('./import-routing.module').then(m => m.ImportRoutingModule) },
 
       { path: 'module-content-launch', component: ModuleContentLaunchComponent },
 

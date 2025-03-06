@@ -38,10 +38,11 @@ import { LayoutService } from "../../../../services/layout.service";
 import { ContactItemComponent } from "./contact-item/contact-item.component";
 
 @Component({
-  selector: "app-assessment-contacts",
-  templateUrl: "./assessment-contacts.component.html",
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: "app-assessment-contacts",
+    templateUrl: "./assessment-contacts.component.html",
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class AssessmentContactsComponent implements OnInit {
   @Output() triggerChange = new EventEmitter();

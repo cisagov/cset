@@ -32,9 +32,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-sd-owner-comments-mfr',
-  templateUrl: './sd-owner-comments-mfr.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'app-sd-owner-comments-mfr',
+    templateUrl: './sd-owner-comments-mfr.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 
 export class SdOwnerCommentsMfrComponent {

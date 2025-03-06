@@ -29,8 +29,9 @@ import { FileUploadClientService } from '../../../services/file-client.service';
 
 
 @Component({
-  selector: 'app-status-create',
-  templateUrl: './status-create.component.html'
+    selector: 'app-status-create',
+    templateUrl: './status-create.component.html',
+    standalone: false
 })
 export class StatusCreateComponent implements OnInit, OnDestroy {
   statusCreateForm: UntypedFormGroup;

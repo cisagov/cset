@@ -20,7 +20,8 @@ namespace CSETWebCore.Model.Assessment
         public string Agency { get; set; }
         public int? OrganizationType { get; set; }
         public int? OrgPointOfContact { get; set; }
-        public int? Facilitator { get; set; }
+        public int? FacilitatorId { get; set; }
+        public bool SelfAssessment { get; set; }
         public string CriticalService { get; set; }
         public int? PointOfContact { get; set; }
         public bool IsScoped { get; set; }

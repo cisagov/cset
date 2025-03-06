@@ -25,9 +25,10 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { RraDataService } from '../../../../services/rra-data.service';
 import { TranslocoService } from '@jsverse/transloco';
 @Component({
-  selector: 'app-rra-answer-compliance',
-  templateUrl: './rra-answer-compliance.component.html',
-  styleUrls: ['./rra-answer-compliance.component.scss']
+    selector: 'app-rra-answer-compliance',
+    templateUrl: './rra-answer-compliance.component.html',
+    styleUrls: ['./rra-answer-compliance.component.scss'],
+    standalone: false
 })
 export class RraAnswerComplianceComponent implements OnInit {
   complianceByGoal = [];

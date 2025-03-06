@@ -27,10 +27,11 @@ import { SetBuilderService } from '../../services/set-builder.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-ref-document',
-  templateUrl: './ref-document.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-ref-document',
+    templateUrl: './ref-document.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
 export class RefDocumentComponent implements OnInit {
 

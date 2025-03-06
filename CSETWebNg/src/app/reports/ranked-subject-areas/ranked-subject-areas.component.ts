@@ -26,9 +26,10 @@ import { ReportAnalysisService } from '../../services/report-analysis.service';
 import Chart from 'chart.js/auto';
 
 @Component({
-  selector: 'app-ranked-subject-areas',
-  templateUrl: './ranked-subject-areas.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-ranked-subject-areas',
+    templateUrl: './ranked-subject-areas.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class RankedSubjectAreasComponent implements OnInit {
 

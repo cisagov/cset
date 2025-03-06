@@ -8,9 +8,10 @@ import { DemographicService } from '../../../../services/demographic.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-key-report',
-  templateUrl: './key-report.component.html',
-  styleUrls: ['./key-report.component.scss']
+    selector: 'app-key-report',
+    templateUrl: './key-report.component.html',
+    styleUrls: ['./key-report.component.scss'],
+    standalone: false
 })
 export class KeyReportComponent {
   assessment: AssessmentDetail = {};

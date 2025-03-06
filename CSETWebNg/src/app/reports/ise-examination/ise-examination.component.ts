@@ -33,9 +33,10 @@ import { ObservationsService } from '../../services/observations.service';
 import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
-  selector: 'app-ise-examination',
-  templateUrl: './ise-examination.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-ise-examination',
+    templateUrl: './ise-examination.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class IseExaminationComponent implements OnInit {
   response: any = {};
@@ -258,13 +259,11 @@ export class IseExaminationComponent implements OnInit {
             }
 
             if (this.relaventIssues) {
-
               this.summaryForCopy += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
               this.categoryBuilder(this.dors);
 
               this.summaryForCopy += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
               this.categoryBuilder(this.examinerFindings);
-
 
               this.summaryForCopy += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
               this.categoryBuilder(this.supplementalFacts);
@@ -279,8 +278,6 @@ export class IseExaminationComponent implements OnInit {
           },
           error => console.log('Observations Error: ' + (<Error>error).message)
         );
-
-
       },
       error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
     );

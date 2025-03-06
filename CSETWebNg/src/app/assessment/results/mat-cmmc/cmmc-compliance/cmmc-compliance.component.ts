@@ -28,11 +28,12 @@ import { MaturityService } from '../../../../../app/services/maturity.service';
 import { CmmcStyleService } from '../../../../services/cmmc-style.service';
 
 @Component({
-  selector: 'app-cmmc-compliance',
-  templateUrl: './cmmc-compliance.component.html',
-  styleUrls: ['../../../../../sass/cmmc-results.scss'],
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-cmmc-compliance',
+    templateUrl: './cmmc-compliance.component.html',
+    styleUrls: ['../../../../../sass/cmmc-results.scss'],
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class CmmcComplianceComponent implements OnInit {
 

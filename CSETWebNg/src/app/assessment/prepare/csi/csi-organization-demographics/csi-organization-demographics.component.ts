@@ -28,9 +28,10 @@ import { CsiService } from '../../../../services/cis-csi.service';
 import { AssessmentService } from './../../../../services/assessment.service';
 
 @Component({
-  selector: 'app-csi-organization-demographics',
-  templateUrl: './csi-organization-demographics.component.html',
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-csi-organization-demographics',
+    templateUrl: './csi-organization-demographics.component.html',
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class CsiOrganizationDemographicsComponent implements OnInit {
 

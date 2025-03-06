@@ -32,9 +32,10 @@ import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-commentsmfr',
-  templateUrl: './commentsmfr.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-commentsmfr',
+    templateUrl: './commentsmfr.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class CommentsMfrComponent implements OnInit {
   response: any = null;

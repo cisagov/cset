@@ -77,10 +77,11 @@ interface UserAssessment {
 }
 
 @Component({
-  selector: "app-my-assessments",
-  templateUrl: "my-assessments.component.html",
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: "app-my-assessments",
+    templateUrl: "my-assessments.component.html",
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class MyAssessmentsComponent implements OnInit {
   comparer: Comparer = new Comparer();
@@ -252,7 +253,16 @@ export class MyAssessmentsComponent implements OnInit {
                 (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
                 (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
                 (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
+
+              if (item.type == "ISE") {
+                item.type = "ISE (SCUEP)";
+                if (item.totalAvailableQuestionsCount == 71) {
+                  item.type = "ISE (CORE)";
+                }
+              }
+
             });
+
             if (this.isCF) {
               this.conversionSvc.isEntryCfAssessments(assessmentiDs).subscribe(
                 (result: any) => {
@@ -271,6 +281,11 @@ export class MyAssessmentsComponent implements OnInit {
             }
             else {
               this.sortedAssessments = assessments;
+              
+              // NCUA want assessments sorted by "last modified"
+              if (this.ncuaSvc.switchStatus) {
+                this.sortedAssessments.sort((a, b) => new Date(b.lastModifiedDate).getTime() - new Date(a.lastModifiedDate).getTime());
+              }
             }
           },
             error => {

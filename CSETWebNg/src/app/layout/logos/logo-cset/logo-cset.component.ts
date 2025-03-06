@@ -24,9 +24,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-logo-cset',
-  templateUrl: './logo-cset.component.html',
-  styleUrls: ['./logo-cset.component.scss']
+    selector: 'app-logo-cset',
+    templateUrl: './logo-cset.component.html',
+    styleUrls: ['./logo-cset.component.scss'],
+    standalone: false
 })
 export class LogoCsetComponent implements OnInit {
 

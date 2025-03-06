@@ -25,9 +25,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ChartService } from '../../../../services/chart.service';
 
 @Component({
-  selector: 'app-cis-scoring-chart',
-  templateUrl: './cis-scoring-chart.component.html',
-  styleUrls: ['../../../../reports/reports.scss']
+    selector: 'app-cis-scoring-chart',
+    templateUrl: './cis-scoring-chart.component.html',
+    styleUrls: ['../../../../reports/reports.scss'],
+    standalone: false
 })
 export class CisScoringChartComponent implements OnInit {
 

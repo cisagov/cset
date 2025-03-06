@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-imr-side-toc',
-  templateUrl: './imr-side-toc.component.html',
-  styleUrls: ['../imr-report/imr-report.component.scss']
+    selector: 'app-imr-side-toc',
+    templateUrl: './imr-side-toc.component.html',
+    styleUrls: ['../imr-report/imr-report.component.scss'],
+    standalone: false
 })
 export class ImrSideTocComponent {
 

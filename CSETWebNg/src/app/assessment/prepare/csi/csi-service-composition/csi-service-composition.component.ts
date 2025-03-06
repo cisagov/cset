@@ -29,9 +29,10 @@ import { CsiServiceComposition } from './../../../../models/csi.model';
 import { ConfigService } from './../../../../services/config.service';
 
 @Component({
-  selector: 'app-csi-service-composition',
-  templateUrl: './csi-service-composition.component.html',
-  styleUrls: ['./csi-service-composition.component.scss']
+    selector: 'app-csi-service-composition',
+    templateUrl: './csi-service-composition.component.html',
+    styleUrls: ['./csi-service-composition.component.scss'],
+    standalone: false
 })
 export class CsiServiceCompositionComponent implements OnInit {
   serviceComposition: CsiServiceComposition = {};

@@ -27,8 +27,9 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { IRPService } from '../../../../services/irp.service';
 
 @Component({
-  selector: 'app-irp-tabs',
-  templateUrl: './irp-tabs.component.html'
+    selector: 'app-irp-tabs',
+    templateUrl: './irp-tabs.component.html',
+    standalone: false
 })
 export class IrpTabsComponent implements OnInit {
 

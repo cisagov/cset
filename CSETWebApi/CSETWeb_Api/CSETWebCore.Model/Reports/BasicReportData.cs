@@ -29,7 +29,7 @@ namespace CSETWebCore.Business.Reports
         public List<CNSSSALJustificationsTable> nistTypes { get; set; }
         public List<RequirementControl> ControlList { get; set; }
         public List<Individual> Individuals { get; set; }
-        public List<DocumentLibraryTable> DocumentLibraryTable { get; set; }
+        public List<DocumentLibraryEntry> DocumentLibraryEntries { get; set; }
         public List<RankedQuestions> RankedQuestionsTable { get; set; }
         public List<QuestionsWithComments> QuestionsWithComments { get; set; }
         public List<QuestionsMarkedForReview> QuestionsMarkedForReview { get; set; }
@@ -48,6 +48,7 @@ namespace CSETWebCore.Business.Reports
             public string Assessment_Name { get; set; }
             public DateTime? Assessment_Date { get; set; }
             public string Assessor_Name { get; set; }
+            public bool SelfAssessment { get; set; } = false;
             public string Facility_Name { get; set; }
             public string City_Or_Site_Name { get; set; }
             public string State_Province_Or_Region { get; set; }
@@ -132,7 +133,7 @@ namespace CSETWebCore.Business.Reports
         public string Assignees { get; set; }
     }
 
-    public class DocumentLibraryTable
+    public class DocumentLibraryEntry
     {
         public string Alias { get; set; }
         public string DocumentTitle { get; set; }

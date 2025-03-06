@@ -31,14 +31,15 @@ import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin
 import { ACETService } from '../../services/acet.service';
 import { MaturityService } from '../../services/maturity.service';
 import { QuestionsService } from '../../services/questions.service';
-import Chart from 'chart.js/auto';
 import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
+import Chart from 'chart.js/auto';
 
 @Component({
-  selector: 'site-summary',
-  templateUrl: './site-summary.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'site-summary',
+    templateUrl: './site-summary.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class SiteSummaryComponent implements OnInit, AfterViewInit {
   chartStandardsSummary: Chart;
@@ -92,9 +93,11 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
         this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.isCmmc = this.maturitySvc.maturityModelIsCMMC();
+
     this.reportSvc.getReport('sitesummary').subscribe(
       (r: any) => {
         this.response = r;
+        console.log(r);
       },
       error => console.log('Site Summary report load Error: ' + (<Error>error).message)
     );

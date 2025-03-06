@@ -33,8 +33,9 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 
 
 @Component({
-  selector: 'app-demographics-extended',
-  templateUrl: './demographics-extended.component.html'
+    selector: 'app-demographics-extended',
+    templateUrl: './demographics-extended.component.html',
+    standalone: false
 })
 export class DemographicsExtendedComponent implements OnInit {
 

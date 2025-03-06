@@ -24,9 +24,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-vadr-levels',
-  templateUrl: './vadr-levels.component.html',
-  styleUrls: ['./vadr-levels.component.scss', '../../../../reports/reports.scss']
+    selector: 'app-vadr-levels',
+    templateUrl: './vadr-levels.component.html',
+    styleUrls: ['./vadr-levels.component.scss', '../../../../reports/reports.scss'],
+    standalone: false
 })
 export class VadrLevelsComponent {
 

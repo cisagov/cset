@@ -218,15 +218,15 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<DocumentLibraryTable> GetDocumentLibrary()
+        public List<DocumentLibraryEntry> GetDocumentLibrary()
         {
-            List<DocumentLibraryTable> list = new List<DocumentLibraryTable>();
+            List<DocumentLibraryEntry> list = new List<DocumentLibraryEntry>();
             var docs = from a in _context.DOCUMENT_FILE
                        where a.Assessment_Id == _assessmentId
                        select a;
             foreach (var doc in docs)
             {
-                var dlt = new DocumentLibraryTable()
+                var dlt = new DocumentLibraryEntry()
                 {
                     DocumentTitle = doc.Title,
                     FileName = doc.Path

@@ -27,10 +27,11 @@ import { ReportService } from '../../../services/report.service';
 
 
 @Component({
-  selector: 'app-module-content',
-  templateUrl: './module-content.component.html',
-  styleUrls: ['../../../reports/reports.scss', './module-content.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-module-content',
+    templateUrl: './module-content.component.html',
+    styleUrls: ['../../../reports/reports.scss', './module-content.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ModuleContentComponent implements OnInit {
 

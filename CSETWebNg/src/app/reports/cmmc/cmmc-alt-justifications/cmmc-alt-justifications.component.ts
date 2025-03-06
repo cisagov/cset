@@ -28,9 +28,10 @@ import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
-  selector: 'app-cmmc-alt-justifications',
-  templateUrl: './cmmc-alt-justifications.component.html',
-  styleUrls: ['./../../crr/crr-report/crr-report.component.scss']
+    selector: 'app-cmmc-alt-justifications',
+    templateUrl: './cmmc-alt-justifications.component.html',
+    styleUrls: ['./../../crr/crr-report/crr-report.component.scss'],
+    standalone: false
 })
 export class CmmcAltJustificationsComponent implements OnInit {
 

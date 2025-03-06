@@ -24,9 +24,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-tutorial-imr',
-  templateUrl: './tutorial-imr.component.html',
-  styleUrls: ['./tutorial-imr.component.scss']
+    selector: 'app-tutorial-imr',
+    templateUrl: './tutorial-imr.component.html',
+    styleUrls: ['./tutorial-imr.component.scss'],
+    standalone: false
 })
 export class TutorialImrComponent {
 

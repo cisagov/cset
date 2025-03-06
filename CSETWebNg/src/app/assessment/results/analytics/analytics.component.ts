@@ -13,7 +13,8 @@ import { AnalyticsloginComponent } from '../analysis/analytics-login/analytics-l
 @Component({
     selector: 'app-analytics',
     templateUrl: './analytics.component.html',
-    styleUrls: ['./analytics.component.scss']
+    styleUrls: ['./analytics.component.scss'],
+    standalone: false
 })
 export class AnalyticsComponent implements OnInit {
 

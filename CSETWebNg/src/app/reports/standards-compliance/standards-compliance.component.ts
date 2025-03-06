@@ -26,9 +26,10 @@ import { ReportAnalysisService } from '../../services/report-analysis.service';
 import Chart from 'chart.js/auto';
 
 @Component({
-  selector: 'app-standards-compliance',
-  templateUrl: './standards-compliance.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-standards-compliance',
+    templateUrl: './standards-compliance.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class StandardsComplianceComponent implements OnInit, AfterViewChecked {
 
