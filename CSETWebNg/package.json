@@ -68,7 +68,7 @@
         "sass": "^1.85.1",
         "screenfull": "^5.2.0",
         "style-loader": "^4.0.0",
-        "swiper": "^8.4.7",
+        "swiper": "^9.4.1",
         "typescript": "^5.7.3",
         "zone.js": "^0.15.0"
     },
