@@ -41,6 +41,7 @@ import { ComponentOverrideComponent } from '../../../dialogs/component-override/
 import { LayoutService } from '../../../services/layout.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { CieService } from '../../../services/cie.service';
+import { FileExportService } from '../../../services/file-export.service';
 
 
 
@@ -89,6 +90,7 @@ export class QuestionExtrasComponent implements OnInit {
   constructor(
     public questionsSvc: QuestionsService,
     private observationSvc: ObservationsService,
+    public fileExportSvc: FileExportService,
     public fileSvc: FileUploadClientService,
     public dialog: MatDialog,
     public configSvc: ConfigService,
@@ -610,30 +612,12 @@ export class QuestionExtrasComponent implements OnInit {
   /**
    *
    */
-  downloadFile(document) {
-    this.fileSvc.downloadFile(document.document_Id).subscribe((data: Response) => {
-      // this.downloadFileData(data),
-    },
-      error => console.log(error)
-    );
-  }
-
-  /**
-   *
-   */
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
-      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.location.href = url;
+      this.fileExportSvc.fetchAndSaveFile(this.fileSvc.downloadUrl + doc.document_Id, response.token);
     });
   }
-
-  // downloadFileData(data: Response) {
-  //   const blob = new Blob([data], { type: 'text/csv' });
-  //   const url = window.URL.createObjectURL(blob);
-  //   window.open(url);
-  // }
 
   autoLoadSupplemental() {
     return this.questionsSvc.autoLoadSupplemental(this.assessSvc.assessment.maturityModel);

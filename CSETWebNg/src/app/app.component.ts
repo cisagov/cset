@@ -228,25 +228,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.dialogRef = this.dialog.open(KeyboardShortcutsComponent);
   }
 
-  showExcelExportDialog() {
-    const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
-    const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
-    if (this.dialog.openDialogs[0] || doNotShow) {
-      this.exportToExcel();
-      return;
-    }
-    this.dialogRef = this.dialog.open(ExcelExportComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
-  }
-
-  exportToExcel() {
-    const url = this.configSvc.apiUrl + 'assessment/export/excel?token=' + localStorage.getItem('userToken');
-    window.open(url);
-  }
-
-
   navigateTrend() {
     this.aggregationSvc.mode = 'TREND';
     this.router.navigate(['/trend']);

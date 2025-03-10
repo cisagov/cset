@@ -8,6 +8,7 @@ using CSETWebCore.DataLayer.Model;
 using Nelibur.ObjectMapper;
 using Newtonsoft.Json;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using ICSharpCode.SharpZipLib.Zip;
@@ -91,24 +92,22 @@ namespace CSETWebCore.Business.Demographic.Export
 
 
         /// <summary>
-        /// Gathers the data for an assessment demographic and returns a model.json file.
-        /// If desired, only the model.json will be returned, named to match the assessment name.
+        /// Gathers the data for an assessment demographic and returns a .json file.
+        /// The filename will be that of the Facility Name, if known.
         /// </summary>
         private Stream ArchiveStream(int assessmentId)
         {
+            var model = CopyForExport(assessmentId);            
+            var json = JsonConvert.SerializeObject(model, Formatting.Indented);
+
+            // Write the JSON content to the MemoryStream
+            byte[] bytes = Encoding.UTF8.GetBytes(json);
             var archiveStream = new MemoryStream();
-            var model = CopyForExport(assessmentId);
+            archiveStream.Write(bytes, 0, bytes.Length);
 
-            using (var archive = new ZipOutputStream(archiveStream))
-            {
-                var json = JsonConvert.SerializeObject(model, Formatting.Indented);
-
-                // Write only the JSON portion as a stand-alone file to the stream
-                byte[] bytes = Encoding.UTF8.GetBytes(json);
-                archiveStream.Write(bytes, 0, bytes.Length);
-
-            }
+            // Reset the position of the stream to the beginning
             archiveStream.Seek(0, SeekOrigin.Begin);
+
             return archiveStream;
         }
 
@@ -119,14 +118,16 @@ namespace CSETWebCore.Business.Demographic.Export
         /// <param name="assessmentId">The ID of the assessment to export</param>
         /// <param name="fileExtension">The extension of the export file</param>
         /// <returns>An DemographicsExportFile object containing the file name and the file contents</returns>
-        public DemographicsExportFile ExportDemographics(int assessmentId, string fileExtension)
+        public DemographicsExportFile ExportDemographics(int assessmentId)
         {
+            var fileExtension = ".json";
+
             // determine file name
-            var fileName = $"{assessmentId}{fileExtension}";
+            var fileName = $"{assessmentId} - demographics{fileExtension}";
             var facilityName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Facility_Name;
             if (!string.IsNullOrEmpty(facilityName))
             {
-                fileName = $"{facilityName}{fileExtension}";
+                fileName = $"{facilityName} - demographics{fileExtension}";
             }
 
             // export the assessment

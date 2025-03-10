@@ -42,6 +42,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ConversionService } from '../../../services/conversion.service';
 import { CieDocumentsComponent } from '../../../dialogs/cie-documents/cie-documents.component';
 import { ExportAssessmentComponent } from '../../../dialogs/assessment-encryption/export-assessment/export-assessment.component';
+import { FileExportService } from '../../../services/file-export.service';
 
 @Component({
     selector: 'app-reports',
@@ -102,6 +103,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     public demoSvc: DemographicExtendedService,
     private cdr: ChangeDetectorRef,
     private reportSvc: ReportService,
+    private fileExportSvc: FileExportService,
     private convertSvc: ConversionService,
     public dialog: MatDialog
   ) {
@@ -228,6 +230,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   clickReportLink(reportType: string) {
     const url = '/index.html?returnPath=report/' + reportType;
     localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
+
     window.open(url, '_blank');
   }
 
@@ -262,42 +265,28 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     this.confidentiality = val;
   }
 
-  showExcelExportDialog() {
-    const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
-    const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
-    if (this.dialog.openDialogs[0] || doNotShow) {
-      this.exportToExcel();
-      return;
-    }
-    this.dialogRef = this.dialog.open(ExcelExportComponent);
-    this.dialogRef.afterClosed().subscribe();
-  }
-
-  exportToExcel() {
-    const url = this.configSvc.apiUrl + 'assessment/export/excel?token=' + localStorage.getItem('userToken');
-    window.open(url);
-  }
-
   /**
    *
    */
   clickExport(jsonOnly: boolean = false) {
+    let ext = '.csetw';
+
     if (jsonOnly) {
       let dialogRef = this.dialog.open(ExportAssessmentComponent, {
         data: { jsonOnly }
       });
+      
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-
+          
           // get short-term JWT from API
           this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
-            let url = this.fileSvc.exportUrl + "?token=" + response.token;
-
-
+            let url = this.fileSvc.exportUrl + '?';
+            
             if (jsonOnly) {
-              url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
+              url = this.fileSvc.exportJsonUrl;
+              ext = '.json';
             }
-
 
             if (result.scrubData) {
               url = url + "&scrubData=" + result.scrubData;
@@ -311,17 +300,16 @@ export class ReportsComponent implements OnInit, AfterViewInit {
               url = url + "&passwordHint=" + result.encryptionData.hint;
             }
 
-            //if electron
-            window.location.href = url;
-
+            this.fileExportSvc.fetchAndSaveFile(url, response.token);
           });
         }
       });
     } else {
       // If encryption is turned off
       this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
-        let url = this.fileSvc.exportUrl + "?token=" + response.token;
-        window.location.href = url;
+        let url = this.fileSvc.exportUrl;
+
+        this.fileExportSvc.fetchAndSaveFile(url, response.token);
       })
     }
   }
