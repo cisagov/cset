@@ -66,7 +66,7 @@ export class DiagramInfoComponent implements OnInit {
      * 
      */
     ngOnInit() {
-        this.diagramSvc.refresh$.subscribe(value => {
+        this.diagramSvc.refresh$.subscribe(() => {
             this.hasDiagram = this.diagramSvc.diagramModel?.components.length > 0;
             this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
         });
