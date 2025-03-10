@@ -686,8 +686,8 @@
   "dialogs": {
     "alert": "Alert",
     "please confirm": "Please Confirm",
-    "remove contact": "Are you sure you want to remove {{firstName}} {{lastName}} from this assessment?",
-    "remove assessment": "Are you sure you want to remove {{assessmentName}}?",
+    "remove contact": "Are you sure you want to remove '{{firstName}} {{lastName}}' from this assessment?",
+    "remove assessment": "Are you sure you want to remove '{{assessmentName}}?'",
     "confirm create new assessment": "Are you sure you want to create a new assessment?",
     "export assessment title": "Export Assessment Options",
     "export excel dialog title": "Export Assessment to Excel",
@@ -1023,11 +1023,12 @@
     "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> is part of the <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Department of Homeland Security</a>",
     "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Website</a>"
   },
-  "upgrade": {
-    "upgrade": "Upgrade",
-    "final": "to final version",
-    "convert": "Converting your assessment, this may take a few moments.",
-    "p1": "The final version of this assessment is now available. Questions present in both the draft and final versions will be transferred, along with their observations, attached documents, feedback, and comments. Additionally, all demographic information and contacts will be transferred. The original draft version will remain accessible, and this upgrade will generate a new assessment."
+  "assessment upgrade": {
+    "upgrade available": "Assessment Upgrade Available",
+    "from to": "Upgrade assessment from '{{originalType}}' to '{{newType}}'",
+    "p1": "A newer version of this assessment type is now available.  Questions present in both the old and newer versions will be transferred, along with their observations, attached documents, feedback, and comments. Additionally, all demographic information and contacts will be transferred. Your original assessment will remain accessible, and this upgrade will generate a new assessment.",
+    "converting": "Converting your assessment, this may take a few moments.",
+    "upgrade button": "Upgrade"
   },
   "modules": {
     "cpg": {
