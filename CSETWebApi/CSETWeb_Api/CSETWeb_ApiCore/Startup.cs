@@ -101,7 +101,8 @@ namespace CSETWeb_ApiCore
                     {
                         builder.AllowAnyOrigin()
                             .AllowAnyMethod()
-                            .AllowAnyHeader();
+                            .AllowAnyHeader()
+                            .WithExposedHeaders("Content-Disposition");
                     });
             });
 

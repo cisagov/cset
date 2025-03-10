@@ -37,6 +37,7 @@ import { FileUploadClientService } from '../../../services/file-client.service';
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { QuestionFiltersReportsComponent } from '../../../dialogs/question-filters-reports/question-filters-reports.component';
+import { FileExportService } from '../../../services/file-export.service';
 
 @Component({
     selector: 'app-cie-mfr-report',
@@ -75,6 +76,7 @@ export class CieMfrReportComponent implements OnInit {
     public questionsSvc: QuestionsService,
     private titleService: Title,
     public cieSvc: CieService,
+    private fileExportSvc: FileExportService,
     public configSvc: ConfigService,
     public observationSvc: ObservationsService,
     private authSvc: AuthenticationService,
@@ -128,20 +130,8 @@ export class CieMfrReportComponent implements OnInit {
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
-      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.location.href = url;
+      this.fileExportSvc.fetchAndSaveFile(this.fileSvc.downloadUrl + doc.document_Id, response.token);
     });
-  }
-
-  /**
-   *
-   */
-  downloadFile(document) {
-    this.fileSvc.downloadFile(document.document_Id).subscribe((data: Response) => {
-      // this.downloadFileData(data),
-    },
-      error => console.log(error)
-    );
   }
 
   /**

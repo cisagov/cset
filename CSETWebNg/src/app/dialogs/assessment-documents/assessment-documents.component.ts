@@ -27,6 +27,7 @@ import { ConfigService } from '../../services/config.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { FileExportService } from '../../services/file-export.service';
 
 @Component({
     selector: 'app-assessment-documents',
@@ -43,20 +44,20 @@ export class AssessmentDocumentsComponent implements OnInit {
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
     public assessSvc: AssessmentService,
+    public fileExportSvc: FileExportService,
     public fileSvc: FileUploadClientService) { }
 
   ngOnInit() {
     this.assessSvc.getAssessmentDocuments().subscribe((response: any) => {
       this.documents = response;
-      console.log(this.documents)
     });
   }
 
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
-      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.location.href = url;
+      const url = this.fileSvc.downloadUrl + doc.document_Id;
+      this.fileExportSvc.fetchAndSaveFile(url, response.token);
     });
   }
 

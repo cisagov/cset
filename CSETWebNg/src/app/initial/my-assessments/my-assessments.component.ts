@@ -51,6 +51,7 @@ import { DateAdapter } from '@angular/material/core';
 import { HydroService } from "../../services/hydro.service";
 import { CieService } from "../../services/cie.service";
 import { ConversionService } from "../../services/conversion.service";
+import { FileExportService } from "../../services/file-export.service";
 
 
 interface UserAssessment {
@@ -115,6 +116,7 @@ export class MyAssessmentsComponent implements OnInit {
     public assessSvc: AssessmentService,
     public dialog: MatDialog,
     public importSvc: ImportAssessmentService,
+    public fileExportSvc: FileExportService,
     public fileSvc: FileUploadClientService,
     public titleSvc: Title,
     public navSvc: NavigationService,
@@ -430,15 +432,13 @@ export class MyAssessmentsComponent implements OnInit {
    * 
    */
   async clickDownloadLink(ment_id: number, jsonOnly: boolean = false) {
-    // this.assessSvc.getEncryptPreference().subscribe((result: boolean) => {
     const obs = this.assessSvc.getEncryptPreference()
     const prom = firstValueFrom(obs);
     prom.then((response: boolean) => {
-      let preventEncrypt = response
-
-
+      let preventEncrypt = response;
       let encryption = preventEncrypt;
-      console.log("export", preventEncrypt);
+
+      let ext = '.csetw';
 
       if (!preventEncrypt || jsonOnly) {
         let dialogRef = this.dialog.open(ExportAssessmentComponent, {
@@ -449,10 +449,11 @@ export class MyAssessmentsComponent implements OnInit {
           if (result) {
             // get short-term JWT from API
             this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-              let url = this.fileSvc.exportUrl + "?token=" + response.token;
+              let url = this.fileSvc.exportUrl + '?';
 
               if (jsonOnly) {
-                url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
+                url = this.fileSvc.exportJsonUrl;
+                ext = '.json';
               }
 
               if (result.scrubData) {
@@ -467,16 +468,16 @@ export class MyAssessmentsComponent implements OnInit {
                 url = url + "&passwordHint=" + result.encryptionData.hint;
               }
 
-              // if electron
-              window.location.href = url;
+              this.fileExportSvc.fetchAndSaveFile(url, response.token);
             });
           }
         });
       } else {
         // If encryption is turned off
         this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-          let url = this.fileSvc.exportUrl + "?token=" + response.token;
-          window.location.href = url;
+          let url = this.fileSvc.exportUrl;
+
+          this.fileExportSvc.fetchAndSaveFile(url, response.token);
         });
       }
     });
@@ -516,7 +517,8 @@ export class MyAssessmentsComponent implements OnInit {
    *
    */
   exportToExcelAllAcet() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken');
+    const url = this.configSvc.apiUrl + 'ExcelExportAllNCUA';
+    this.fileExportSvc.fetchAndSaveFile(url);
   }
 
   openExportDecisionDialog() {
@@ -528,7 +530,8 @@ export class MyAssessmentsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
-        window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken') + '&type=' + result;
+        const url = this.configSvc.apiUrl + 'ExcelExportAllNCUA?type=' + result;
+        this.fileExportSvc.fetchAndSaveFile(url);
       }
     });
   }
@@ -563,7 +566,6 @@ export class MyAssessmentsComponent implements OnInit {
     this.exportAllInProgress = true;
     this.exportAllLoop();
   }
-
 
   async exportAllLoop() { // allows for multiple api calls
     for (let i = 0; i < this.sortedAssessments.length; i++) {

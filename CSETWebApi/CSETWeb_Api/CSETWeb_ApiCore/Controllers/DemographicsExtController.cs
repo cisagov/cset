@@ -113,17 +113,12 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/demographics/export")]
-        public IActionResult ExportDemographic([FromQuery] string token)
+        public IActionResult ExportDemographic()
         {
             try
             {
-                _token.SetToken(token);
-
-                int assessmentId = _token.AssessmentForUser(token);
-
-                string ext = ".json";
-
-                DemographicsExportFile result = new DemographicsExportManager(_context).ExportDemographics(assessmentId, ext);
+                int assessmentId = _token.AssessmentForUser();
+                DemographicsExportFile result = new DemographicsExportManager(_context).ExportDemographics(assessmentId);
 
                 return File(result.FileContents, "application/octet-stream", result.FileName);
             }
