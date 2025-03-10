@@ -29,6 +29,7 @@ import { AuthenticationService } from './authentication.service';
 import { FileUploadClientService } from './file-client.service';
 import { AssessmentService } from './assessment.service';
 import { BehaviorSubject } from 'rxjs';
+import { FileExportService } from './file-export.service';
 
 
 const headers = {
@@ -46,8 +47,8 @@ export class DemographicService {
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    private authSvc: AuthenticationService,
     public fileSvc: FileUploadClientService,
+    private fileExportSvc: FileExportService,
     public assessSvc: AssessmentService
   ) {
     this.apiUrl = this.configSvc.apiUrl + 'Demographics/';
@@ -106,8 +107,6 @@ export class DemographicService {
   }
 
   exportDemographics() {
-    let token = localStorage.getItem('userToken')
-    let url = this.apiUrl + 'export' + "?token=" + token;
-    window.location.href = url;
+    this.fileExportSvc.fetchAndSaveFile(this.apiUrl + 'export');
   }
 }

@@ -400,10 +400,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/poam/excelexport")]
-        public IActionResult GetExcelExport(string token)
+        public IActionResult GetExcelExport()
         {
-
-            int assessmentId = _token.AssessmentForUser(token);
+            int assessmentId = _token.AssessmentForUser();
             string lang = _token.GetCurrentLanguage();
 
             // Create a memory stream to hold the Excel file
@@ -554,12 +553,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/reports/observations/excel")]
-        public IActionResult ExportObservationsCsv(string token)
+        public IActionResult ExportObservationsCsv()
         {
-            _token.SetToken(token);
             _report.SetToken(_token);
 
-            int assessmentId = _token.AssessmentForUser(token);
+            int assessmentId = _token.AssessmentForUser();
             string lang = _token.GetCurrentLanguage();
 
             var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
