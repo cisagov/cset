@@ -481,7 +481,6 @@ import { McOptionComponent } from './reports/module-content/model/mc-option/mc-o
 import { GuidanceBlockComponent } from './reports/module-content/guidance-block/guidance-block.component';
 import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
 import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/irp-ise-summary.component';
-import { SwiperModule } from 'swiper/angular';
 import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { GalleryService } from './services/gallery.service';
 import { EllipsisModule } from './modules/ngx-ellipsis/ellipsis.module';
@@ -1291,7 +1290,6 @@ import { ImportComponent } from './import/import.component';
         NgbModule,
         NgxChartsModule,
         TooltipModule,
-        SwiperModule,
         EllipsisModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
