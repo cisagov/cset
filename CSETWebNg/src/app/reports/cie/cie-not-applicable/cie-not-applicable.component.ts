@@ -12,6 +12,7 @@ import { FileUploadClientService } from '../../../services/file-client.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { QuestionFiltersReportsComponent } from '../../../dialogs/question-filters-reports/question-filters-reports.component';
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
+import { FileExportService } from '../../../services/file-export.service';
 
 @Component({
     selector: 'app-cie-not-applicable',
@@ -46,6 +47,7 @@ export class CieNotApplicableComponent {
     private titleService: Title,
     public cieSvc: CieService,
     public configSvc: ConfigService,
+     public fileExportSvc: FileExportService,
     public observationSvc: ObservationsService,
     public authSvc: AuthenticationService,
     public fileSvc: FileUploadClientService,
@@ -149,20 +151,8 @@ export class CieNotApplicableComponent {
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
-      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.location.href = url;
+      this.fileExportSvc.fetchAndSaveFile(this.fileSvc.downloadUrl + doc.document_Id, response.token);
     });
-  }
-
-  /**
-   *
-   */
-  downloadFile(document) {
-    this.fileSvc.downloadFile(document.document_Id).subscribe((data: Response) => {
-      // this.downloadFileData(data),
-    },
-      error => console.log(error)
-    );
   }
 
   /**
