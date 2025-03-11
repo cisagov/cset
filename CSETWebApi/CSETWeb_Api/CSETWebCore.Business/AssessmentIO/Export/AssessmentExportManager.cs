@@ -584,7 +584,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                     DocObject docObject = new DocObject()
                     {
-                        Doc = $"{doc.ShortName}.json",
+                        DocName = $"{doc.ShortName}.json",
                         Json = jsonDoc
                     };
         
@@ -599,14 +599,14 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
                 ModelObject modelObject = new ModelObject()
                     {
-                        SetName = "model.json",
+                        ModelName = "model.json",
                         Json = json
                     };
             
                exportModel.ModelObj = modelObject;
                PasswordObject passwordObject = new PasswordObject()
                {
-                   Password = $"{passwordHint}.hint",
+                   PasswordName = $"{passwordHint}.hint",
                    Hint = passwordHint
                };
               
@@ -648,18 +648,18 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                 if (exportFile.DocObj != null)
                 {
-                    zipWrapper.AddEntry(exportFile.DocObj.Doc, exportFile.DocObj.Json);
+                    zipWrapper.AddEntry(exportFile.DocObj.DocName, exportFile.DocObj.Json);
 
                 }
 
                 if (exportFile.ModelObj != null)
                 {
-                    zipWrapper.AddEntry(exportFile.ModelObj.SetName, exportFile.ModelObj.Json);
+                    zipWrapper.AddEntry(exportFile.ModelObj.ModelName, exportFile.ModelObj.Json);
                 }
 
                 if (exportFile.PasswordObj != null)
                 {
-                    zipWrapper.AddEntry(exportFile.PasswordObj.Password, exportFile.PasswordObj.Hint);
+                    zipWrapper.AddEntry(exportFile.PasswordObj.PasswordName, exportFile.PasswordObj.Hint);
                 }
                 
                 zipWrapper.Save();
