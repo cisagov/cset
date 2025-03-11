@@ -449,7 +449,7 @@ export class MyAssessmentsComponent implements OnInit {
           if (result) {
             // get short-term JWT from API
             this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-              let url = this.fileSvc.exportUrl + '?';
+              let url = this.fileSvc.exportUrl;
 
               if (jsonOnly) {
                 url = this.fileSvc.exportJsonUrl;
@@ -481,9 +481,7 @@ export class MyAssessmentsComponent implements OnInit {
       } else {
         // If encryption is turned off
         this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-          let url = this.fileSvc.exportUrl;
-
-          this.fileExportSvc.fetchAndSaveFile(url, response.token);
+          this.fileExportSvc.fetchAndSaveFile(this.fileSvc.exportUrl, response.token);
         });
       }
     });
@@ -523,8 +521,7 @@ export class MyAssessmentsComponent implements OnInit {
    *
    */
   exportToExcelAllAcet() {
-    const url = this.configSvc.apiUrl + 'ExcelExportAllNCUA';
-    this.fileExportSvc.fetchAndSaveFile(url);
+    this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'ExcelExportAllNCUA');
   }
 
   openExportDecisionDialog() {
@@ -536,8 +533,7 @@ export class MyAssessmentsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
-        const url = this.configSvc.apiUrl + 'ExcelExportAllNCUA?type=' + result;
-        this.fileExportSvc.fetchAndSaveFile(url);
+        this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'ExcelExportAllNCUA?type=' + result);
       }
     });
   }
