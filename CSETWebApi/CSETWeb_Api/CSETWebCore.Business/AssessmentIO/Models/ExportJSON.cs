@@ -17,19 +17,19 @@ namespace CSETWebCore.Business.AssessmentIO.Models
 
     public class DocObject
     {
-        public string Doc { get; set; }
+        public string DocName { get; set; }
         public string Json { get; set; }
     }
     
     public class ModelObject
     {
-        public string SetName { get; set; }
+        public string ModelName { get; set; }
         public string Json { get; set; }
     }
 
     public class PasswordObject
     {
-        public string Password { get; set; }
+        public string PasswordName { get; set; }
         public string Hint { get; set; }
     }
     
