@@ -15,6 +15,7 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
@@ -129,8 +130,8 @@ namespace CSETWebCore.Api.Controllers
                 string ext = ".json";
 
                 AssessmentExportFileJson result = new AssessmentExportManager(_context).ExportAssessmentJson(assessmentId, ext, password, passwordHint, scrubData ?? false);
-
-                return File(result.JSON, "application/json", result.FileName);
+                byte[] contents = Encoding.UTF8.GetBytes(result.JSON);
+                return  File(contents, "application/json", result.FileName);
             }
             catch (Exception exc)
             {
