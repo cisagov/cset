@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,9 +30,10 @@ import { ACETService } from '../../services/acet.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-acet-donut-chart',
-  templateUrl: './acet-donut-chart.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-acet-donut-chart',
+    templateUrl: './acet-donut-chart.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class AcetDonutChartComponent implements OnInit, OnChanges {
   @Input()

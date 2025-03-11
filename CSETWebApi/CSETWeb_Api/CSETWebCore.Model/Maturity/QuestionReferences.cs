@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -16,7 +16,7 @@ namespace CSETWebCore.Model.Maturity
     public class QuestionReferences
     {
         public List<RefDocument> SourceDocuments { get; set; } = new List<RefDocument>();
-        public List<RefDocument> AddtionalDocuments { get; set; } = new List<RefDocument>();
+        public List<RefDocument>  v { get; set; } = new List<RefDocument>();
     }
 
     public class RefDocument

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -96,7 +96,6 @@ export class QuestionsService {
    * Retrieves the list of questions.
    */
   getQuestionsList() {
-    console.log('getQuestionsList');
     return this.http.get(this.configSvc.apiUrl + 'questionlist', headers);
   }
 
@@ -118,8 +117,8 @@ export class QuestionsService {
    * Grab all the child question's answers for a specific parent question.
    * Currently set up for use in an ISE assessment.
   */
-  getChildAnswers(parentId: number, assessId: number) {
-    headers.params = headers.params.set('parentId', parentId).set('assessId', assessId);
+  getChildAnswers(parentId: number) {
+    headers.params = headers.params.set('parentId', parentId);
     return this.http.get(this.configSvc.apiUrl + 'GetChildAnswers', headers);
   }
 
@@ -142,15 +141,15 @@ export class QuestionsService {
     }
 
     // find the configuration for the model
-    const moduleConfig = this.configSvc.getModuleConfig(modelId);
+    const moduleBehavior = this.configSvc.getModuleBehavior(modelId);
 
 
     // standards (modelid is null) - check the checkbox state
-    if (!moduleConfig) {
+    if (!moduleBehavior) {
       return this.autoLoadSuppCheckboxState;
     }
 
-    return moduleConfig.autoLoadSupplemental ?? false;
+    return moduleBehavior.autoLoadSupplemental ?? false;
   }
 
   /**
@@ -203,7 +202,7 @@ export class QuestionsService {
    * Deletes a document.
    */
   deleteDocument(id: number, questionId: number) {
-    return this.http.post(this.configSvc.apiUrl + 'deletedocument?id=' + id + "&questionId=" + questionId + "&assessId=" + localStorage.getItem('assessmentId'), headers);
+    return this.http.post(this.configSvc.apiUrl + 'deletedocument?id=' + id + "&questionId=" + questionId, headers);
   }
 
   /**
@@ -392,10 +391,7 @@ export class QuestionsService {
     if (!!model && String(model).trim().length > 0) {
 
       // first try to find the model configuration using its model name
-      let modelConfiguration =
-        this.configSvc.config.moduleBehaviors.find(x => x.modelId == model) ||
-        this.configSvc.config.moduleBehaviors.find(x => x.moduleName == model);
-
+      let modelConfiguration = this.configSvc.getModuleBehavior(model);
 
       if (!!modelConfiguration) {
         // first look for a skin-specific answer option
@@ -433,4 +429,12 @@ export class QuestionsService {
     //then when the list is complete enable the navigation
     this.assessmentSvc.updateAnswer(answer);
   }
+
+  /**
+   * 
+   */
+  getRegulatoryCitations(questionId: number) {
+    return this.http.get(this.configSvc.apiUrl + 'getRegulatoryCitations?questionId=' + questionId)
+  }
+
 }

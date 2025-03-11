@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -15,7 +15,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Api.Controllers
-{
+{   [Obsolete("No longer in use")]
     [ApiController]
     public class GalleryEditorController : ControllerBase
     {

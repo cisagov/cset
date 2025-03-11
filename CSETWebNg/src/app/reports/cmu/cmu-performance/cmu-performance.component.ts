@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CmuService } from '../../../services/cmu.service';
 
 @Component({
-  selector: 'app-cmu-performance',
-  templateUrl: './cmu-performance.component.html',
-  styleUrls: ['./cmu-performance.component.scss']
+    selector: 'app-cmu-performance',
+    templateUrl: './cmu-performance.component.html',
+    styleUrls: ['./cmu-performance.component.scss'],
+    standalone: false
 })
 export class CmuPerformanceComponent implements OnInit {
   @Input() model: any;
@@ -41,7 +42,7 @@ export class CmuPerformanceComponent implements OnInit {
 
   fullAnswerDistribChart: string = '';
 
-  constructor(private cmuSvc: CmuService) {}
+  constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
     this.cmuSvc.getFullAnswerDistribWidget().subscribe((resp: string) => {

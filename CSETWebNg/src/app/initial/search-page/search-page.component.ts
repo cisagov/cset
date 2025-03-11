@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,9 +35,10 @@ import { ConfigService } from '../../services/config.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-search-page',
-  templateUrl: './search-page.component.html',
-  styleUrls: ['./search-page.component.scss']
+    selector: 'app-search-page',
+    templateUrl: './search-page.component.html',
+    styleUrls: ['./search-page.component.scss'],
+    standalone: false
 })
 export class SearchPageComponent implements OnInit, AfterViewInit {
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
@@ -260,15 +261,16 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
 
   onHoverOut(i: number, cardId: number) {
     this.hoverIndex = i;
-
-    var el = document.getElementById('c' + cardId.toString()).parentElement;
-    el.style.removeProperty('right');
+    if (document.getElementById('c' + cardId.toString())) {
+      var el = document.getElementById('c' + cardId.toString()).parentElement;
+      el.style.removeProperty('right');
+    }
   }
 
   getImageSrc(src: string) {
     let path = "assets/images/cards/";
     if (src) {
-      return path + src;
+      return path + src.toLowerCase();
     }
     return path + 'default.jpeg';
   }

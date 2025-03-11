@@ -13,7 +13,8 @@ import { AnalyticsloginComponent } from '../analysis/analytics-login/analytics-l
 @Component({
     selector: 'app-analytics',
     templateUrl: './analytics.component.html',
-    styleUrls: ['./analytics.component.scss']
+    styleUrls: ['./analytics.component.scss'],
+    standalone: false
 })
 export class AnalyticsComponent implements OnInit {
 
@@ -73,9 +74,7 @@ export class AnalyticsComponent implements OnInit {
         }).afterClosed().subscribe(info => {
             if (!!info && info.cancel) {
                 // user canceled, do nothing
-            } else {
-                window.open(this.config.analyticsUrl + "index.html", "_blank");
-            }
+            } 
         });
     }
 

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,10 @@ import { ObservationsService } from '../../../services/observations.service';
 import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
-  selector: 'app-issues',
-  templateUrl: './issues.component.html',
-  styleUrls: ['./issues.component.scss']
+    selector: 'app-issues',
+    templateUrl: './issues.component.html',
+    styleUrls: ['./issues.component.scss'],
+    standalone: false
 })
 
 export class IssuesComponent implements OnInit {
@@ -86,7 +87,7 @@ export class IssuesComponent implements OnInit {
         this.update();
       });
 
-    this.questionsSvc.getChildAnswers(this.questionID, this.assessmentId).subscribe(
+    this.questionsSvc.getChildAnswers(this.questionID).subscribe(
       (data: any) => {
         this.questionData = data;
       });
@@ -99,6 +100,7 @@ export class IssuesComponent implements OnInit {
     this.observationSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, questionType).subscribe((response: Observation) => {
 
       this.observation = response;
+      this.observation.title = this.issueTitle; // using the temp name we set earlier so it's not "overriden" for the user
 
       this.questionsSvc.getActionItems(this.questionID, this.observation.observation_Id).subscribe(
         (data: any) => {

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
-  selector: 'app-mvra-gaps',
-  templateUrl: './mvra-gaps.component.html',
-  styleUrls: ['../../../../reports/reports.scss']
+    selector: 'app-mvra-gaps',
+    templateUrl: './mvra-gaps.component.html',
+    styleUrls: ['../../../../reports/reports.scss'],
+    standalone: false
 })
 export class MvraGapsComponent implements OnInit {
   model: any = [];

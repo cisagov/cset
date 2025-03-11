@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -15,9 +15,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using CSETWebCore.Business.Authorization;
 
 namespace CSETWebCore.Api.Controllers
-{
+{   [CsetAuthorize]
     [ApiController]
     public class ReportsCmmcController : ControllerBase
     {

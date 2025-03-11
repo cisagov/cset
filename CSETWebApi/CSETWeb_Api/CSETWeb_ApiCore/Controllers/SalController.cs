@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -15,11 +15,12 @@ using Nelibur.ObjectMapper;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Standards;
 
 namespace CSETWebCore.Api.Controllers
-{
+{   [CsetAuthorize]
     [ApiController]
     public class SalController : ControllerBase
     {

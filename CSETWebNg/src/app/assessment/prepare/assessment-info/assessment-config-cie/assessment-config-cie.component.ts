@@ -10,9 +10,10 @@ import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component'
 import { AlertComponent } from '../../../../dialogs/alert/alert.component';
 
 @Component({
-  selector: 'app-assessment-config-cie',
-  templateUrl: './assessment-config-cie.component.html',
-  styleUrls: ['./assessment-config-cie.component.scss']
+    selector: 'app-assessment-config-cie',
+    templateUrl: './assessment-config-cie.component.html',
+    styleUrls: ['./assessment-config-cie.component.scss'],
+    standalone: false
 })
 export class AssessmentConfigCieComponent {
   assessment: any;

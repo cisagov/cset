@@ -1,9 +1,11 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
+
+using CSETWebCore.Business.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
@@ -13,7 +15,8 @@ using CSETWebCore.Interfaces.Reports;
 
 
 namespace CSETWebCore.Api.Controllers
-{
+{   [CsetAuthorize]
+    
     /// <summary>
     /// 
     /// </summary>

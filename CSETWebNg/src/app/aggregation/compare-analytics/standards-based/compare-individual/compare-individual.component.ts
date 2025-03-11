@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,11 @@ import { Chart } from 'chart.js';
 import { ColorService } from '../../../../services/color.service';
 
 @Component({
-  selector: 'app-compare-individual',
-  templateUrl: './compare-individual.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-compare-individual',
+    templateUrl: './compare-individual.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class CompareIndividualComponent implements OnInit {
 
@@ -54,7 +55,7 @@ export class CompareIndividualComponent implements OnInit {
     const aggregationId = this.aggregationSvc.id();
     var aggId: number = +localStorage.getItem("aggregationId");
     // Assessment Answer Summary - tabular data
-    this.aggregationSvc.getAnswerTotals(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getAnswerTotals().subscribe((x: any) => {
       // 
       this.answerCounts = x;
     });
@@ -80,7 +81,7 @@ export class CompareIndividualComponent implements OnInit {
 
 
     // Category Percentage Comparison
-    this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
       this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
       (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });

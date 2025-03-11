@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
@@ -21,7 +22,7 @@ using Microsoft.AspNetCore.Authorization;
 using CSETWebCore.Business.Demographic;
 
 namespace CSETWebCore.Api.Controllers
-{
+{   [CsetAuthorize]
     [ApiController]
     public class DemographicsExtendedController : ControllerBase
     {

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -39,10 +39,11 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { QuestionFiltersReportsComponent } from '../../../dialogs/question-filters-reports/question-filters-reports.component';
 
 @Component({
-  selector: 'app-cie-mfr-report',
-  templateUrl: './cie-mfr-report.component.html',
-  styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-mfr-report.component.scss'],
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-cie-mfr-report',
+    templateUrl: './cie-mfr-report.component.html',
+    styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-mfr-report.component.scss'],
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 
 export class CieMfrReportComponent implements OnInit {
@@ -109,7 +110,7 @@ export class CieMfrReportComponent implements OnInit {
             for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
               this.expandedOptions.set('Phase_' + domain?.title + '_' + subcat?.title, false);
-                this.phaseTitleList.push('Phase_' + domain?.title + '_' + subcat?.title);
+              this.phaseTitleList.push('Phase_' + domain?.title + '_' + subcat?.title);
               //this.expandedOptions.set(domain?.title + '_' + subcat?.title, false);
 
             }
@@ -176,7 +177,7 @@ export class CieMfrReportComponent implements OnInit {
         combinedClass += 'top-half-border';
       }
     }
-    else{
+    else {
       combinedClass += 'bottom-half-border';
     }
     return combinedClass;
@@ -188,12 +189,12 @@ export class CieMfrReportComponent implements OnInit {
    */
   expandAll(mode: boolean, principleOrPhase: string) {
     if (principleOrPhase == 'Principle') {
-      for(let i = 0; i < this.principleTitleList.length; i++ ) {
+      for (let i = 0; i < this.principleTitleList.length; i++) {
         this.expandedOptions.set(this.principleTitleList[i], mode);
       }
     }
     if (principleOrPhase == 'Phase') {
-      for(let i = 0; i < this.phaseTitleList.length; i++ ) {
+      for (let i = 0; i < this.phaseTitleList.length; i++) {
         this.expandedOptions.set(this.phaseTitleList[i], mode);
       }
     }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,8 @@ import { NavigationService } from '../../../services/navigation/navigation.servi
 @Component({
     selector: 'app-admin',
     templateUrl: './admin.component.html',
-    styleUrls: ['./admin.component.scss']
+    styleUrls: ['./admin.component.scss'],
+    standalone: false
 })
 export class AdminComponent implements OnInit {
     constructor(private router: Router,

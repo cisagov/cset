@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -10,13 +10,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CSETWebCore.Business.Authorization;
 using CSETWebCore.Interfaces.ModuleBuilder;
 using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Set;
 using CSETWebCore.Helpers;
 
 namespace CSETWebCore.Api.Controllers
-{
+{   [CsetAuthorize]
     [ApiController]
     public class ModuleBuilderController : ControllerBase
     {

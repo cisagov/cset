@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,10 @@ import { ConfigService } from '../../services/config.service';
 
 
 @Component({
-  selector: 'trend-report',
-  templateUrl: './trend-report.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'trend-report',
+    templateUrl: './trend-report.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 
 export class TrendReportComponent implements OnInit, AfterViewChecked {
@@ -99,27 +100,27 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
 
     // Populate charts
     // Overall Compliance
-    this.aggregationSvc.getOverallComplianceScores(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getOverallComplianceScores().subscribe((x: any) => {
       this.chartOverallCompl = this.chartSvc.buildLineChart('canvasOverallCompliance', x);
     });
 
     // Assessment Answer Summary - tabular data
-    this.aggregationSvc.getAnswerTotals(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getAnswerTotals().subscribe((x: any) => {
       this.answerCounts = x;
     });
 
     // Top 5
-    this.aggregationSvc.getTrendTop5(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getTrendTop5().subscribe((x: any) => {
       this.chartTop5 = this.chartSvc.buildLineChart('canvasTop5', x);
     });
 
     // Bottom 5
-    this.aggregationSvc.getTrendBottom5(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getTrendBottom5().subscribe((x: any) => {
       this.chartBottom5 = this.chartSvc.buildLineChart('canvasBottom5', x);
     });
 
     // Category Percentage Comparison
-    this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
       this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
       (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });

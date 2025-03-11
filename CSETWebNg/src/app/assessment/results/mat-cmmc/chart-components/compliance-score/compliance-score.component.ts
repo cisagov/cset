@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { CmmcStyleService } from '../../../../../services/cmmc-style.service';
 
 @Component({
-  selector: 'app-compliance-score',
-  templateUrl: './compliance-score.component.html',
-  styleUrls: ['../../../../../../sass/cmmc-results.scss']
+    selector: 'app-compliance-score',
+    templateUrl: './compliance-score.component.html',
+    styleUrls: ['../../../../../../sass/cmmc-results.scss'],
+    standalone: false
 })
 export class ComplianceScoreComponent implements OnInit {
 

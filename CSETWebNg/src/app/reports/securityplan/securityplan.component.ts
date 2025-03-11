@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -33,9 +33,10 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
-  selector: 'securityplan',
-  templateUrl: './securityplan.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'securityplan',
+    templateUrl: './securityplan.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class SecurityplanComponent implements OnInit {
   translationSub: any;
@@ -59,17 +60,16 @@ export class SecurityplanComponent implements OnInit {
     private assessmentSvc: AssessmentService,
     private sanitizer: DomSanitizer,
     public tSvc: TranslocoService,
-    private translocoService: TranslocoService
   ) { }
 
   /**
    *
    */
   ngOnInit() {
-    
-    this.translationSub = this.translocoService.selectTranslate('reports.core.security plan.report title')
-      .subscribe(value =>
-        this.titleService.setTitle(this.tSvc.translate('reports.core.security plan.report title') + ' - ' + this.configSvc.behaviors.defaultTitle));
+    this.tSvc.selectTranslate('core.security plan.report title', {}, { scope: 'reports' })
+      .subscribe(title => {
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle)
+      });
 
     this.reportSvc.getReport('securityplan').subscribe(
       (r: any) => {

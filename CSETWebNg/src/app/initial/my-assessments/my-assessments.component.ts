@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,8 @@ import { Title } from "@angular/platform-browser";
 import { NavigationService } from "../../services/navigation/navigation.service";
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
-import { concatMap, map } from "rxjs/operators";
+import { firstValueFrom, of } from "rxjs";
+import { concatMap, map, tap, catchError } from "rxjs/operators";
 import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
@@ -76,10 +77,11 @@ interface UserAssessment {
 }
 
 @Component({
-  selector: "app-my-assessments",
-  templateUrl: "my-assessments.component.html",
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: "app-my-assessments",
+    templateUrl: "my-assessments.component.html",
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class MyAssessmentsComponent implements OnInit {
   comparer: Comparer = new Comparer();
@@ -102,9 +104,6 @@ export class MyAssessmentsComponent implements OnInit {
   prepForMerge: boolean = false;
 
   exportAllInProgress: boolean = false;
-
-  preventEncrypt: boolean = true;
-  disabledEncrypt: boolean = false;
 
   timer = ms => new Promise(res => setTimeout(res, ms));
 
@@ -142,8 +141,6 @@ export class MyAssessmentsComponent implements OnInit {
     this.appName = 'CSET';
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
-        this.preventEncrypt = true;
-        this.updateEncryptPreference();
         this.ncuaSvc.reset();
         break;
       case 'TSA':
@@ -169,8 +166,6 @@ export class MyAssessmentsComponent implements OnInit {
 
     this.ncuaSvc.assessmentsToMerge = [];
     this.cieSvc.assessmentsToMerge = [];
-
-    this.assessSvc.getEncryptPreference().subscribe((result: boolean) => this.preventEncrypt = result);
 
     this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.cisaAssessorWorkflow = resp);
   }
@@ -247,18 +242,11 @@ export class MyAssessmentsComponent implements OnInit {
                 assessmentiDs.push(item.assessmentId);
                 item.isEntry = false;
               }
-              let type = '';
-              if (item.useDiagram) type += ', Diagram';
-              item.questionAlias = 'questions';
-              if (item.useMaturity) {
-                type += ', ' + item.selectedMaturityModel;
-                if (item.selectedMaturityModel === 'ISE') {
-                  item.questionAlias = 'statements';
-                }
-              }
-              if (item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;
-              if (type.length > 0) type = type.substring(2);
-              item.type = type;
+
+              // determine assessment type display
+              item.type = this.determineAssessmentType(item);
+
+
               let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
               item.completedQuestionsCount = currentAssessmentStats?.completedCount;
               item.totalAvailableQuestionsCount =
@@ -298,6 +286,43 @@ export class MyAssessmentsComponent implements OnInit {
         ))).subscribe();
   }
 
+  /**
+   * 
+   */
+  determineAssessmentType(item: UserAssessment) {
+    let type = '';
+
+    if (item.useDiagram) type += ', Diagram';
+    item.questionAlias = 'questions';
+
+    if (item.useMaturity) {
+      type += ', ' + this.getMaturityModelShortName(item);
+      if (item.selectedMaturityModel === 'ISE') {
+        item.questionAlias = 'statements';
+      }
+    }
+    if (item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;
+    if (type.length > 0) type = type.substring(2);
+
+    return type;
+  }
+
+  /**
+   * Tries to find a "model short title" in the language files.
+   * If it can't find a defintion, just use the selected model's title.
+   */
+  getMaturityModelShortName(a: UserAssessment) {
+    const key = `modules.${a.selectedMaturityModel.toLowerCase()}.model short title`;
+    const val = this.tSvc.translate(key);
+    if (key == val) {
+      return a.selectedMaturityModel;
+    }
+    return val;
+  }
+
+  /**
+   * 
+   */
   hasPath(rpath: string) {
     if (rpath != null) {
       localStorage.removeItem("returnPath");
@@ -305,48 +330,57 @@ export class MyAssessmentsComponent implements OnInit {
     }
   }
 
+  /**
+   * "Deletes" an assessment by removing the current user from it.  The assessment
+   * is not deleted, but will no longer appear in the current user's list.
+   */
   removeAssessment(assessment: UserAssessment, assessmentIndex: number) {
-    // first, call the API to see if this is a legal move
-    this.assessSvc
-      .isDeletePermitted(assessment.assessmentId)
-      .subscribe(canDelete => {
-        if (!canDelete) {
-          this.dialog.open(AlertComponent, {
-            data: {
-              messageText:
-                "You cannot remove an assessment that has other users."
+    // first, get a token branded for the target assessment
+    this.assessSvc.getAssessmentToken(assessment.assessmentId).then(() => {
+
+      // next, call the API to see if this is a legal move
+      this.assessSvc
+        .isDeletePermitted()
+        .subscribe(canDelete => {
+          if (!canDelete) {
+            this.dialog.open(AlertComponent, {
+              data: {
+                messageText:
+                  "You cannot remove an assessment that has other users."
+              }
+            });
+            return;
+          }
+
+          // if it's legal, see if they really want to
+          const dialogRef = this.dialog.open(ConfirmComponent);
+          dialogRef.componentInstance.confirmMessage =
+            this.tSvc.translate('dialogs.remove assessment', { assessmentName: assessment.assessmentName });
+
+          dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+              this.assessSvc.removeMyContact(assessment.assessmentId).pipe(
+                tap(() => {
+                  this.sortedAssessments.splice(assessmentIndex, 1);
+                }),
+                catchError(error => {
+                  this.dialog.open(AlertComponent, {
+                    data: { messageText: error.statusText }
+                  });
+                  return of(null);
+                })
+              ).subscribe();
             }
           });
-          return;
-        }
-
-        // if it's legal, see if they really want to
-        const dialogRef = this.dialog.open(ConfirmComponent);
-        dialogRef.componentInstance.confirmMessage =
-          // "Are you sure you want to remove '" +
-          // assessment.assessmentName +
-          // "'?";
-          this.tSvc.translate('dialogs.remove assessment', { assessmentName: assessment.assessmentName });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            this.assessSvc.removeMyContact(assessment.assessmentId).subscribe(
-              x => {
-                this.sortedAssessments.splice(assessmentIndex, 1);
-              },
-              x => {
-                this.dialog.open(AlertComponent, {
-                  data: { messageText: x.statusText }
-                });
-              });
-          }
         });
-      });
+    });
   }
 
+  /**
+   * 
+   */
   sortData(sort: Sort) {
-
     if (!sort.active || sort.direction === "") {
-      // this.sortedAssessments = data;
       return;
     }
 
@@ -371,56 +405,67 @@ export class MyAssessmentsComponent implements OnInit {
     });
   }
 
+  /**
+   * 
+   */
   logout() {
     this.authSvc.logout();
   }
 
-  clickDownloadLink(ment_id: number, jsonOnly: boolean = false) {
-    let encryption = this.preventEncrypt;
-    // Only allow encryption on .csetw files and only allow PCII scrubbing on JSON files
-    if (!this.preventEncrypt || jsonOnly) {
-      let dialogRef = this.dialog.open(ExportAssessmentComponent, {
-        data: { jsonOnly, encryption }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-
-          // get short-term JWT from API
-          this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-            let url = this.fileSvc.exportUrl + "?token=" + response.token;
+  /**
+   * 
+   */
+  async clickDownloadLink(ment_id: number, jsonOnly: boolean = false) {
+    // this.assessSvc.getEncryptPreference().subscribe((result: boolean) => {
+    const obs = this.assessSvc.getEncryptPreference()
+    const prom = firstValueFrom(obs);
+    prom.then((response: boolean) => {
+      let preventEncrypt = response
 
 
-            if (jsonOnly) {
-              url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
-            }
+      let encryption = preventEncrypt;
+      console.log("export", preventEncrypt);
 
+      if (!preventEncrypt || jsonOnly) {
+        let dialogRef = this.dialog.open(ExportAssessmentComponent, {
+          data: { jsonOnly, encryption }
+        });
 
-            if (result.scrubData) {
-              url = url + "&scrubData=" + result.scrubData;
-            }
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            // get short-term JWT from API
+            this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
+              let url = this.fileSvc.exportUrl + "?token=" + response.token;
 
-            if (result.encryptionData.password != null && result.encryptionData.password != "") {
-              url = url + "&password=" + result.encryptionData.password;
-            }
+              if (jsonOnly) {
+                url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
+              }
 
-            if (result.encryptionData.hint != null && result.encryptionData.hint != "") {
-              url = url + "&passwordHint=" + result.encryptionData.hint;
-            }
+              if (result.scrubData) {
+                url = url + "&scrubData=" + result.scrubData;
+              }
 
+              if (result.encryptionData.password != null && result.encryptionData.password !== "") {
+                url = url + "&password=" + result.encryptionData.password;
+              }
 
-            //if electron
-            window.location.href = url;
+              if (result.encryptionData.hint != null && result.encryptionData.hint !== "") {
+                url = url + "&passwordHint=" + result.encryptionData.hint;
+              }
 
-          });
-        }
-      });
-    } else {
-      // If encryption is turned off
-      this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-        let url = this.fileSvc.exportUrl + "?token=" + response.token;
-        window.location.href = url;
-      })
-    }
+              // if electron
+              window.location.href = url;
+            });
+          }
+        });
+      } else {
+        // If encryption is turned off
+        this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
+          let url = this.fileSvc.exportUrl + "?token=" + response.token;
+          window.location.href = url;
+        });
+      }
+    });
   }
 
   /**
@@ -514,12 +559,6 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
     this.exportAllInProgress = false;
-  }
-
-  updateEncryptPreference() {
-    this.disabledEncrypt = true;
-    this.assessSvc.persistEncryptPreference(this.preventEncrypt);
-    this.disabledEncrypt = false;
   }
 
   temp() {

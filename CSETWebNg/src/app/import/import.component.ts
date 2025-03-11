@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ import { saveAs } from 'file-saver';
 import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import * as screenfull from "screenfull";
+import screenfull from 'screenfull';
 import { Screenfull } from "screenfull";
 import { FileItem, FileUploader } from 'ng2-file-upload';
 import { XmlCompletionItemProvider } from '../models/xmlCompletionItemProvider.model';
@@ -35,6 +35,7 @@ import { ConfigService } from '../services/config.service';
 import { FileUploadClientService, LinkedSet } from '../services/file-client.service';
 import { XmlFormatterFactory } from './formatting/xml-formatter';
 import { XmlFormattingEditProvider } from './formatting/xml-formatting-edit-provider';
+
 
 export class ImportFormData {
   public name: string;
@@ -45,7 +46,8 @@ export class ImportFormData {
   selector: 'app-import',
   templateUrl: './import.component.html',
   // eslint-disable-next-line
-  host: { class: 'd-flex flex-11a w-100' }
+  host: { class: 'd-flex flex-11a w-100' },
+  standalone: false
 })
 export class ImportComponent implements OnInit, OnDestroy {
   public uploader: FileUploader;
@@ -88,7 +90,7 @@ export class ImportComponent implements OnInit, OnDestroy {
     schemas: []
   };
 
- 
+
 
   public fileOverModuleBase(e: any): void {
     this.fileOverModuleStateObservable.next(e);

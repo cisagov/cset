@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2024 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -21,9 +21,11 @@
   SOFTWARE. 
 -------------------------->
 <div class="text-start" *transloco="let t">
+
   <div class="mb-3">
-    {{t('aggregation.compare.lists questions answered no')}}
+    {{t('aggregation.compare.para 11')}}
   </div>
+
   <table class="table table-bordered table-td-p2 mb-5">
     <tr>
       <th class="pe-5">{{t('aggregation.compare.category')}}</th>
@@ -42,7 +44,7 @@
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  
+
   <div *ngIf="missedQuestions?.length === 0" class="mb-5 alert-warning p-3 font-weight-bold text-center">
     {{t('aggregation.compare.no missed questions')}}
   </div>

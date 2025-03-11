@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,9 +35,10 @@ import { ChangePasswordComponent } from '../../dialogs/change-password/change-pa
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 
 @Component({
-  selector: 'app-login-access-key',
-  templateUrl: './login-access-key.component.html',
-  styleUrls: ['./login-access-key.component.scss']
+    selector: 'app-login-access-key',
+    templateUrl: './login-access-key.component.html',
+    styleUrls: ['./login-access-key.component.scss'],
+    standalone: false
 })
 export class LoginAccessKeyComponent implements OnInit {
   skin: string = 'CSET';

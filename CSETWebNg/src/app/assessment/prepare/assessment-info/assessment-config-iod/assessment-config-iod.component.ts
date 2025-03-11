@@ -8,9 +8,10 @@ import { DemographicIodService } from '../../../../services/demographic-iod.serv
 import { DemographicService } from '../../../../services/demographic.service';
 
 @Component({
-  selector: 'app-assessment-config-iod',
-  templateUrl: './assessment-config-iod.component.html',
-  styleUrls: ['./assessment-config-iod.component.scss']
+    selector: 'app-assessment-config-iod',
+    templateUrl: './assessment-config-iod.component.html',
+    styleUrls: ['./assessment-config-iod.component.scss'],
+    standalone: false
 })
 export class AssessmentConfigIodComponent implements OnInit {
   iodDemographics: DemographicsIod = {};
@@ -18,6 +19,8 @@ export class AssessmentConfigIodComponent implements OnInit {
   contacts: User[];
   assessment: AssessmentDetail = {};
   IsPCII: boolean = false;
+  showUpgrade: boolean = false;
+  targetModel: string = '';
 
   constructor(
     private assessSvc: AssessmentService,
@@ -37,6 +40,15 @@ export class AssessmentConfigIodComponent implements OnInit {
     });
 
     this.getAssessmentDetail();
+
+    if (this.configSvc.config.debug.showCmmcConversion ?? false) {
+      this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
+        if (data.maturityModel.modelName == "CMMC2") {
+          this.showUpgrade = true;
+          this.targetModel = "CMMC2F"
+        }
+      })
+    };
 
   }
 

@@ -1,7 +1,7 @@
 import { ResourceLibraryService } from './../../../services/resource-library.service';
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -45,12 +45,13 @@ import { CieService } from '../../../services/cie.service';
 
 
 @Component({
-  selector: 'app-question-extras',
-  templateUrl: './question-extras.component.html',
-  styleUrls: ['./question-extras.component.css'],
-  encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-question-extras',
+    templateUrl: './question-extras.component.html',
+    styleUrls: ['./question-extras.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class QuestionExtrasComponent implements OnInit {
 
@@ -101,7 +102,7 @@ export class QuestionExtrasComponent implements OnInit {
 
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
@@ -154,7 +155,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   scrollToExtras() {
     setTimeout(() => {
@@ -164,43 +165,44 @@ export class QuestionExtrasComponent implements OnInit {
     })
   }
 
+  async fetchDetails(): Promise<QuestionDetailsContentViewModel> {
+    const details = this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType).toPromise();
+    return details;
+  }
+
   /**
    * Gets all of the extra content for the question from the API.
    */
-  show() {
+  async show() {
     // we already have content - don't make another server call
     if (this.tab != null) {
       return;
     }
 
     // Call the API for content
-    this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType)
-      .subscribe((details) => {
-        this.extras = details;
-        if (details.is_Component === true) {
-          this.myQuestion.is_Component = true;
-          this.toggleComponent = true;
-        }
+    this.extras = await this.fetchDetails();
+    this.extras.questionId = this.myQuestion.questionId;
 
-        this.extras.questionId = this.myQuestion.questionId;
+    // populate my details with the first "non-null" tab
+    this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras.listTabs[0];
 
-        // populate my details with the first "non-null" tab
-        this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras.listTabs[0];
-
-        // add questionIDs to related questions for debug if configured to do so
-        if (this.showQuestionIds) {
-          if (this.tab) {
-            if (this.tab.isComponent) {
-            } else {
-              if (!!this.tab.questionsList) {
-                this.tab.questionsList.forEach((q: any) => {
-                  q.questionText += '<span class="debug-highlight">' + q.questionID + '</span>';
-                });
-              }
-            }
+    // add questionIDs to related questions for debug if configured to do so
+    if (this.showQuestionIds) {
+      if (this.tab) {
+        if (!this.tab.isComponent) {
+          if (!!this.tab.questionsList) {
+            this.tab.questionsList.forEach((q: any) => {
+              q.questionText += '<span class="debug-highlight">' + q.questionID + '</span>';
+            });
           }
         }
-      });
+      }
+    }
+    if (this.extras.is_Component) {
+      this.myQuestion.is_Component = true;
+      this.toggleComponent = true;
+      this.mode = 'COMPONENT'
+    }
   }
 
   /**
@@ -689,7 +691,7 @@ export class QuestionExtrasComponent implements OnInit {
       return result;
     }
 
-    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName)
+    const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment.maturityModel?.modelName);
 
     if (mode == 'DETAIL') {
       return behavior?.questionIcons?.showDetails ?? true;
@@ -748,7 +750,7 @@ export class QuestionExtrasComponent implements OnInit {
    * @returns
    */
   whichSupplementalIcon() {
-    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName);
+    const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment.maturityModel?.modelName);
     if (!!behavior && behavior.questionIcons?.guidanceIcon?.toLowerCase() == 'g') {
       return "G";
     } else {
@@ -812,8 +814,8 @@ export class QuestionExtrasComponent implements OnInit {
    * independent from Examination Approach or not
    * @returns
    */
-  seperateGuidanceFromApproach() {
-    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName);
+  separateGuidanceFromApproach() {
+    const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment.maturityModel?.modelName);
     return behavior?.independentSuppGuidance;
   }
 

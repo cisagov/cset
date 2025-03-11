@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,10 @@ import { ColorService } from '../../../../services/color.service';
 import { CpgService } from '../../../../services/cpg.service';
 
 @Component({
-  selector: 'app-cpg-practice-table',
-  templateUrl: './cpg-practice-table.component.html',
-  styleUrls: ['./cpg-practice-table.component.scss', '../../../../reports/reports.scss']
+    selector: 'app-cpg-practice-table',
+    templateUrl: './cpg-practice-table.component.html',
+    styleUrls: ['./cpg-practice-table.component.scss', '../../../../reports/reports.scss'],
+    standalone: false
 })
 export class CpgPracticeTableComponent implements OnInit {
 
@@ -69,11 +70,35 @@ export class CpgPracticeTableComponent implements OnInit {
    * Returns the color for the CSF function of the group.
    * This is specific to CPG grouping IDs.
    * 
+   * The colors were slightly modified in CSF 2.0.
+   * 
    * As SSG models are added to CSET the new grouping codes will be
    * added to this logic.
    */
   backgroundColor(groupId: number): string {
+
+    // CPG 2.0
     switch (groupId) {
+      case 567:
+        // govern
+        return this.colorSvc.nistCsfFuncColor('GV-2');
+      case 568:
+        // identify
+        return this.colorSvc.nistCsfFuncColor('ID-2');
+      case 569:
+        // protect
+        return this.colorSvc.nistCsfFuncColor('PR-2');
+      case 570:
+        return this.colorSvc.nistCsfFuncColor('DE-2');
+      case 571:
+        // respond
+        return this.colorSvc.nistCsfFuncColor('RS-2');
+      case 572:
+        // recover
+        return this.colorSvc.nistCsfFuncColor('RC-2');
+
+
+      // CPG 1.0
       case 200:
       case 560:
         // identify
@@ -94,6 +119,17 @@ export class CpgPracticeTableComponent implements OnInit {
       case 564:
         // recover
         return this.colorSvc.nistCsfFuncColor('RC');
+
+
+      // SSG - IT
+      case 565:
+        // SSG - IT Software Development
+        return '#305496';
+      case 566:
+        // SSG - IT Product Design
+        return '#548235';
+
+
       default:
         return '#6BA443';
     }

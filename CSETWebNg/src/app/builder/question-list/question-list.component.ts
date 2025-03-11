@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { Question, BasicResponse } from '../../models/set-builder.model';
 
 @Component({
-  selector: 'app-question-list',
-  templateUrl: './question-list.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-question-list',
+    templateUrl: './question-list.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
 export class QuestionListComponent implements OnInit {
 

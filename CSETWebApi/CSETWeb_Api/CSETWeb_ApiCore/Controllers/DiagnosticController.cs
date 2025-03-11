@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -63,7 +63,7 @@ namespace CSETWebCore.Api.Controllers
             var logToFile = LogManager.GetLogger("DBManager");
             logToFile.Info(text);
 
-            return Ok();
+            return Ok($"Complete at {DateTime.UtcNow} UTC");
         }
     }
 }

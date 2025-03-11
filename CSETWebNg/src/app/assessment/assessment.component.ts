@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,11 +23,11 @@
 ////////////////////////////////
 
 import {
-    Component,
-    EventEmitter,
-    OnInit,
-    Output, HostListener,
-    ApplicationRef
+  Component,
+  EventEmitter,
+  OnInit,
+  Output, HostListener,
+  ApplicationRef
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
@@ -38,11 +38,12 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../services/config.service';
 
 @Component({
-  selector: 'app-assessment',
-  styleUrls: ['./assessment.component.scss'],
-  templateUrl: './assessment.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-assessment',
+    styleUrls: ['./assessment.component.scss'],
+    templateUrl: './assessment.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
 export class AssessmentComponent implements OnInit {
   innerWidth: number;
@@ -88,14 +89,14 @@ export class AssessmentComponent implements OnInit {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
     this.setTab('prepare');
-    this.navSvc.activeResultsView = null;    
-    this.isSet=false;
+    this.navSvc.activeResultsView = null;
+    this.isSet = false;
   }
 
   ngOnInit(): void {
     //This is a hack to force the app to update the view after the assessment is loaded
     //but not the first time.
-    if(this.isSet){
+    if (this.isSet) {
       this.isSet = true;
       this.appRef.tick();
     }
@@ -109,7 +110,7 @@ export class AssessmentComponent implements OnInit {
       this.navSvc.buildTree();
     });
   }
- 
+
   setTab(tab) {
     this.assessSvc.currentTab = tab;
   }

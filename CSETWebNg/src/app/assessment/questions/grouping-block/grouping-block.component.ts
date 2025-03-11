@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,16 +30,19 @@ import { MaturityFilteringService } from '../../../services/filtering/maturity-f
 import { MaturityService } from '../../../services/maturity.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { QuestionsService } from '../../../services/questions.service';
+import { ModuleBehavior } from '../../../models/module-config.model';
 
 
 @Component({
-  selector: 'app-grouping-block',
-  templateUrl: './grouping-block.component.html'
+    selector: 'app-grouping-block',
+    templateUrl: './grouping-block.component.html',
+    standalone: false
 })
 export class GroupingBlockComponent implements OnInit {
   @Input('grouping') grouping: QuestionGrouping;
 
   modelId: number;
+  moduleBehavior: ModuleBehavior;
 
   /**
    *
@@ -59,6 +62,7 @@ export class GroupingBlockComponent implements OnInit {
    */
   ngOnInit(): void {
     this.modelId = this.maturityFilteringService.assesmentSvc.assessment.maturityModel.modelId;
+    this.moduleBehavior = this.configSvc.getModuleBehavior(this.modelId);
   }
 
   /**
@@ -83,19 +87,12 @@ export class GroupingBlockComponent implements OnInit {
   }
 
   /**
-   * Indicates if the domain label should be shown
+   * Indicates if the domain label headers should be shown.
+   * Invisible domains stay invisible.
+   * If the moduleBehavior.showDomainHeaders is not defined, it defaults to true.
    */
   isDomainVisible(): boolean {
     if (!this.isDomain()) {
-      return false;
-    }
-
-    // ACET domains are always visible
-    if (this.maturityFilteringService.assesmentSvc.assessment.maturityModel.modelName == 'ACET') {
-      return true;
-    }
-
-    if (this.maturityFilteringService.assesmentSvc.assessment.maturityModel.modelName == 'ISE') {
       return false;
     }
 
@@ -104,7 +101,7 @@ export class GroupingBlockComponent implements OnInit {
       return false;
     }
 
-    return true;
+    return this.moduleBehavior?.showDomainHeaders ?? true;
   }
 
   /**

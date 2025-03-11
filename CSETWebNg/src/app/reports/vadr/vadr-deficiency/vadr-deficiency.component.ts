@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,10 @@ import { QuestionsService } from '../../../services/questions.service';
 
 
 @Component({
-  selector: 'app-vadr-deficiency',
-  templateUrl: './vadr-deficiency.component.html',
-  styleUrls: ['../../reports.scss', '../../acet-reports.scss']
+    selector: 'app-vadr-deficiency',
+    templateUrl: './vadr-deficiency.component.html',
+    styleUrls: ['../../reports.scss', '../../acet-reports.scss'],
+    standalone: false
 })
 export class VadrDeficiencyComponent implements OnInit {
 

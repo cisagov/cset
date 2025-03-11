@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -37,7 +37,7 @@ namespace CSETWebCore.Business.Merit
         public const string MeritExportPathName = "NCUAMeritExportPath";
         public void SendFileToMerit(string filename, string data, string uncPath)
         {
-            long minimumFileSize = 28000; // hardcoded value, change if file changes size (sorry)
+            long minimumFileSize = 25000; // hardcoded value, change if file changes size (sorry)
             if (!DoesDirectoryExist(uncPath))
             {
                 throw new ApplicationException("the directory Path is not available or does not exist");

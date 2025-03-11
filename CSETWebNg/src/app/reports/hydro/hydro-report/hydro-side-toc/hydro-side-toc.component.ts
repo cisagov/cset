@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-hydro-side-toc',
-  templateUrl: './hydro-side-toc.component.html',
-  styleUrls: ['../hydro-report.component.scss', '../../../reports.scss']
+    selector: 'app-hydro-side-toc',
+    templateUrl: './hydro-side-toc.component.html',
+    styleUrls: ['../hydro-report.component.scss', '../../../reports.scss'],
+    standalone: false
 })
 export class HydroSideTocComponent {
   scrollToElement(element) {

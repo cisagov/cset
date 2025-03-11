@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,11 @@ import { Question, ParameterForAnswer } from '../../models/questions.model';
 import { QuestionsService } from '../../services/questions.service';
 
 @Component({
-  selector: 'app-inline-parameter',
-  templateUrl: './inline-parameter.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-inline-parameter',
+    templateUrl: './inline-parameter.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class InlineParameterComponent implements OnInit {
 
@@ -55,6 +56,10 @@ export class InlineParameterComponent implements OnInit {
    * Push the new value to the API and close the dialog.
    */
   save() {
+
+    if (this.parameterValue.trim() == "") {
+      this.parameterValue = this.originalValue;
+    }
     const answerParm: ParameterForAnswer = {
       requirementId: this.question.questionId,
       answerId: this.question.answer_Id,

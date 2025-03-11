@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2024 Battelle Energy Alliance, LLC
+  Copyright 2025 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,13 +21,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
+@use "sass:color";
 @use '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 /* ---- Report styles ---- */
 
 $primary-color: #052637;
 $secondary-color: #094997;
+
 $gray-50: #fafafa;
 $gray-100: #f2f2f2;
+
+$primary-550: $primary-color;
+$primary-900: $secondary-color;
 
 
 * {
@@ -173,7 +178,7 @@ ul {
 
 div.disclaimer-blurb {
   width: 80%;
-  border: 1px solid #000;
+  border: 1px solid #dee2e6;
   border-radius: 1em;
   padding: 1em;
   background-color: #f2f2f2;
@@ -356,9 +361,8 @@ table.cset-table-2 {
 
 table.cset-table-2 th,
 table.cset-table-2 td {
-  border: 1px solid #000;
-  border: 1px solid #999;
-  padding: 5px;
+  border: 1px solid #c1c1c1;
+  padding: .8rem;
   page-break-inside: avoid;
   break-inside: avoid;
 }
@@ -378,9 +382,8 @@ table.cset-table-3 {
 
 table.cset-table-3 th,
 table.cset-table-3 td {
-  border: 1px solid #999;
-  ;
-  padding: 5px;
+  border: 1px solid #c1c1c1;
+  padding: .8rem;
   page-break-inside: avoid;
   break-inside: avoid;
 }
@@ -449,7 +452,7 @@ table.finding-table {
 table.finding-table td {
   vertical-align: top;
   ;
-  border: 1px solid #222;
+  border: 1px solid #c1c1c1;
   padding: 5px;
 }
 
@@ -525,8 +528,19 @@ table.assessment-summary th {
   padding: .5rem;
 }
 
-.table.table-td-p2 th, .table.table-td-p2 td {
+.table.table-td-p1 th,
+.table.table-td-p1 td {
+  padding: .25rem !important;
+}
+
+.table.table-td-p2 th,
+.table.table-td-p2 td {
   padding: .5rem !important;
+}
+
+.table.table-td-small th,
+.table.table-td-small td {
+  font-size: .875em !important;
 }
 
 // force transparent
@@ -1917,14 +1931,33 @@ div.spinner-size-50 {
 
 
 
-///   CPG Styles ////////////////////////////////////////////////
+///   Supplemental Guidance Styles ////////////////////////////////////////////////
+
 .sub-header-1 {
   font-weight: bold;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
+  color: $primary-550;
 }
 
+.sub-header-2 {
+  font-weight: bold;
+  font-size: 1rem;
+  color: $primary-900;
+}
 
+ol.alpha-bracket {
+  list-style-type: none;
+  counter-reset: list-counter;
+}
 
+ol.alpha-bracket li {
+  counter-increment: list-counter;
+  margin-bottom: 5px;
+}
+
+ol.alpha-bracket li::before {
+  content: "[" counter(list-counter, lower-alpha) "] ";
+}
 
 
 
@@ -2215,6 +2248,7 @@ div.spinner-size-50 {
   border-radius: 4px;
   padding: .3em;
   margin: 4px 0;
+  text-align: center;
 }
 
 .score-container div:nth-child(1) {
@@ -2304,12 +2338,12 @@ div.spinner-size-50 {
 
 .checkbox-custom:disabled+.checkbox-custom-label:before,
 .radio-custom:disabled+.radio-custom-label:before {
-  border-color: lighten($secondary-color, 35%);
+  border-color: color.adjust($secondary-color, $lightness: 35%);
 }
 
 .checkbox-custom:disabled:checked+.checkbox-custom-label:before,
 .radio-custom:disabled+.radio-custom-label:before {
-  background-color: lighten($secondary-color, 35%);
+  background-color: color.adjust($secondary-color, $lightness: 35%);
 }
 
 //

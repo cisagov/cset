@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,10 @@ import { ReportService } from '../../services/report.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'observations',
-  templateUrl: './observation-tearouts.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'observations',
+    templateUrl: './observation-tearouts.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class ObservationTearoutsComponent implements OnInit {
 
@@ -64,6 +65,6 @@ export class ObservationTearoutsComponent implements OnInit {
    * @param individual
    */
   private buildTocEntry(individual: any) {
-    return "#indiv_" + individual.INDIVIDUALFULLNAME.replace(' ', '_');
+    return "#indiv_" + individual.fullName.replace(' ', '_');
   }
 }

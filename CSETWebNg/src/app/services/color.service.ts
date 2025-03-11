@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -95,6 +95,28 @@ export class ColorService {
    * anywhere CSF colors are displayed in CSET.
    */
   nistCsfFuncColor(func: string) {
+
+    // CSF 2.0 colors
+    if (func.endsWith('-2')) {
+      switch (func) {
+        case 'GV-2':
+          return '#f9f39b';
+        case 'ID-2':
+          return '#4cb3e0';
+        case 'PR-2':
+          return '#918cea';
+        case 'DE-2':
+          return '#fab647';
+        case 'RS-2':
+          return '#e47677';
+        case 'RC-2':
+          return '#7ef49e';
+        default:
+          return '#FFFFFF';
+      }
+    }
+
+    // CSF 1.0 colors
     switch (func) {
       case 'ID':
         return '#355C9B';

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-mc-grouping',
-  templateUrl: './mc-grouping.component.html',
-  styleUrls: ['./mc-grouping.component.scss']
+    selector: 'app-mc-grouping',
+    templateUrl: './mc-grouping.component.html',
+    styleUrls: ['./mc-grouping.component.scss'],
+    standalone: false
 })
 export class McGroupingComponent implements OnInit {
 

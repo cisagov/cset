@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2024 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -21,14 +21,14 @@
   SOFTWARE. 
 -------------------------->
 <div *transloco="let t; read: 'advisory'">
-    <h1>{{ t('title') }}</h1>
+  <h1>{{ t('title') }}</h1>
 
-    <p [innerHTML]="t('advisory 1', {'appLongName': appLongName, 'appShortName': appShortName})">
-    </p>
-    <p [innerHTML]="t('advisory 2', {'appLongName': appLongName, 'appShortName': appShortName})">
-    </p>
-    <p [innerHTML]="t('advisory 3', {'appShortName': appShortName})">
-    </p>
-    <p [innerHTML]="t('advisory 4')">
-    </p>
+  <p [innerHTML]="t('advisory 1', {'appLongName': appLongName, 'appShortName': appShortName})">
+  </p>
+  <p [innerHTML]="t('advisory 2', {'appLongName': appLongName, 'appShortName': appShortName})">
+  </p>
+  <p [innerHTML]="t('advisory 3', {'appShortName': appShortName})">
+  </p>
+  <p [innerHTML]="t('advisory 4')">
+  </p>
 </div>

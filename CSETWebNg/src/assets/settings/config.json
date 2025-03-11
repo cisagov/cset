@@ -23,13 +23,14 @@
     "apiIdentifier": "api"
   },
   "csetGithubApiUrl": "https://api.github.com/repos/cisagov/cset/releases/latest",
-  "helpContactEmail": "CSET_PMO@cisa.dhs.gov",
+  "helpContactEmail": "CSET_PMO@mail.dhs.cisa.gov",
   "helpContactPhone": "",
   "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
   "supplementalAutoloadInitialValue": false,
   "debug": {
+    "showCmmcConversion": true,
     "showBuildTime": false,
-    "showQuestionAndRequirementIDs": false,
+    "showQuestionAndRequirementIDs": true,
     "canDeleteCustomModules": true,
     "showExportAllButton": false
   },
@@ -38,6 +39,7 @@
   "mobileEnvironment": "",
   "behaviors": {
     "defaultTitle": "CSET",
+    "clientCode": "DHS",
     "showDisclaimer": true,
     "showModuleBuilder": true,
     "showModuleImport": true,
@@ -75,6 +77,7 @@
     "showUpdateDiagramCsafVulnerabilitiesButton": false,
     "showVulnerabilitiesDiagramInventoryTab": false,
     "additionalUserGuides": [],
+    "showMalcolmImport": true,
     "showMalcolmAnswerComparison": false,
     "replaceAssessmentWithAnalysis": false,
     "showPostalCode": false
@@ -118,6 +121,7 @@
   "moduleBehaviors": [
     {
       "moduleName": "EDM",
+      "modelId": "3",
       "questionIcons": {
         "showDetails": false,
         "guidanceIcon": "G",
@@ -126,6 +130,7 @@
     },
     {
       "moduleName": "CRR",
+      "modelId": "4",
       "questionIcons": {
         "showDetails": false,
         "guidanceIcon": "G",
@@ -134,6 +139,7 @@
     },
     {
       "moduleName": "IMR",
+      "modelId": "15",
       "showMaturityLevelBadge": false,
       "showCriticalServiceDemog": false,
       "questionIcons": {
@@ -145,6 +151,8 @@
     {
       "moduleName": "RRA",
       "modelId": "5",
+      "displayNameKey": "modules.rra.display-name",
+      "showDomainHeaders": false,
       "questionIcons": {
         "showDetails": false,
         "guidanceIcon": "G",
@@ -169,6 +177,7 @@
     },
     {
       "moduleName": "CIS",
+      "modelId": "8",
       "questionIcons": {
         "showDetails": false,
         "showObservations": false,
@@ -178,6 +187,7 @@
     },
     {
       "moduleName": "SD02 Series",
+      "modelId": "14",
       "questionIcons": {
         "showDetails": false
       }
@@ -185,6 +195,48 @@
     {
       "moduleName": "CPG",
       "modelId": "11",
+      "displayNameKey": "modules.cpg.display-name",
+      "showDomainHeaders": false,
+      "autoLoadSupplemental": true,
+      "showMaturityLevelBadge": false,
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
+        },
+        {
+          "code": "I",
+          "buttonLabelKey": "Prog-CPG",
+          "buttonCss": "btn-na",
+          "chartSegmentColor": "#0a4b6e"
+        },
+        {
+          "code": "S",
+          "buttonLabelKey": "Scoped-CPG",
+          "buttonCss": "btn-alt",
+          "chartSegmentColor": "#b17300"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "consideredMissed": true
+        }
+      ]
+    },
+    {
+      "moduleName": "CPG2",
+      "modelId": "21",
+      "displayNameKey": "modules.cpg2.display-name",
+      "showDomainHeaders": false,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {
@@ -253,7 +305,78 @@
       ]
     },
     {
+      "moduleName": "SSG IT",
+      "modelId": "20",
+      "autoLoadSupplemental": true,
+      "showMaturityLevelBadge": false,
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes"
+        },
+        {
+          "code": "I",
+          "buttonLabelKey": "Prog-CPG",
+          "buttonCss": "btn-na"
+        },
+        {
+          "code": "S",
+          "buttonLabelKey": "Scoped-CPG",
+          "buttonCss": "btn-alt"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no"
+        }
+      ]
+    },
+    {
+      "moduleName": "CMMC2F",
+      "modelId": "19",
+      "displayNameKey": "modules.cmmc2f.display-name",
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "yes-cmmc",
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "no-cmmc",
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "consideredMissed": true
+        },
+        {
+          "code": "NA",
+          "buttonLabelKey": "na",
+          "buttonCss": "btn-na",
+          "chartSegmentColor": "#0a4b6e",
+          "consideredMissed": true
+        },
+        {
+          "code": "I",
+          "buttonLabelKey": "inc",
+          "buttonCss": "btn-inc",
+          "consideredMissed": true
+        }
+      ]
+    },
+    {
       "moduleName": "C2M2",
+      "modelId": "12",
       "questionIcons": {
         "showReviewed": false
       },
@@ -282,7 +405,9 @@
     },
     {
       "moduleName": "ACET",
+      "modelId": "1",
       "independentSuppGuidance": true,
+      "showDomainHeaders": true,
       "answerOptions": [
         {
           "skin": "ACET",
@@ -295,6 +420,8 @@
     },
     {
       "moduleName": "ISE",
+      "modelId": 10,
+      "showDomainHeaders": false,
       "questionIcons": {
         "showObservations": false
       },
@@ -317,6 +444,7 @@
     },
     {
       "moduleName": "HYDRO",
+      "modelId": "13",
       "questionIcons": {
         "showDetails": false,
         "showGuidance": false,
@@ -326,6 +454,7 @@
     },
     {
       "moduleName": "CIE",
+      "modelId": "17",
       "questionIcons": {
         "showDetails": false,
         "showGuidance": false,
@@ -351,6 +480,7 @@
     },
     {
       "moduleName": "MVRA",
+      "modelId": "9",
       "answerOptions": [
         {
           "code": "Y",
@@ -382,6 +512,10 @@
     {
       "value": "uk",
       "name": "українська"
+    },
+    {
+      "value": "jp",
+      "name": "日本語"
     }
   ]
 }

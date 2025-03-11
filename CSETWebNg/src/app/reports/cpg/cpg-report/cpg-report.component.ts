@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,15 +30,14 @@ import { SsgService } from '../../../services/ssg.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-cpg-report',
-  templateUrl: './cpg-report.component.html',
-  styleUrls: ['./cpg-report.component.scss', '../../reports.scss']
+    selector: 'app-cpg-report',
+    templateUrl: './cpg-report.component.html',
+    styleUrls: ['./cpg-report.component.scss', '../../reports.scss'],
+    standalone: false
 })
 export class CpgReportComponent implements OnInit {
-  translationTabTitle: any;
-
   loading = false;
-  
+
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
@@ -66,9 +65,9 @@ export class CpgReportComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.translationTabTitle = this.tSvc.selectTranslate('reports.core.cpg.report.cpg report')
-      .subscribe(value =>
-        this.titleSvc.setTitle(this.tSvc.translate('reports.core.cpg.report.cpg report') + ' - ' + this.configSvc.behaviors.defaultTitle));
+    this.tSvc.selectTranslate('core.cpg.report.cpg report', {}, { scope: 'reports' })
+      .subscribe(title =>
+        this.titleSvc.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
@@ -82,7 +81,7 @@ export class CpgReportComponent implements OnInit {
     });
 
     this.cpgSvc.getAnswerDistrib().subscribe((resp: any) => {
-      const cpgAnswerOptions = this.configSvc.config.moduleBehaviors.find(b => b.moduleName == 'CPG').answerOptions;
+      const cpgAnswerOptions = this.configSvc.getModuleBehavior('CPG').answerOptions;
 
       resp.forEach(r => {
         r.series.forEach(element => {

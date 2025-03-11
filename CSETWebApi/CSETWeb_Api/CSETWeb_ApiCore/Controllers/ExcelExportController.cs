@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -50,11 +50,16 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/ExcelExport")]
+        [Route("api/assessment/export/excel")]
         public IActionResult GetExcelExport(string token)
         {
             int assessmentId = _token.AssessmentForUser(token);
             string appName = _token.Payload(Constants.Constants.Token_Scope);
+
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+            _context.FillEmptyQuestionsForAnalysis(assessmentId);
+            _context.FillNetworkDiagramQuestions(assessmentId);
+
 
             var stream = _exporter.ExportToCSV(assessmentId);
             stream.Flush();

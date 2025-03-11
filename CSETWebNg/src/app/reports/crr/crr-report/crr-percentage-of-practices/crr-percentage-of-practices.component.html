@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -26,19 +26,14 @@
             size: letter landscape
         }
     }
-
-    .depiction-title {
-        font-family: Arial;
-        font-weight: bold;
-        font-size: 18pt;
-        line-height: 90%;
-        margin: 0;
-    }
 </style>
-<div class="container-fluid">
-    <div>
-        <h3 class="depiction-title">Percentage of Practices Completed by Domain</h3>
-    </div>
+<div *transloco="let t">
+    <h4>{{t('reports.core.crr.summary results.percent by domain')}}</h4>
+
+    <p>
+        {{t('reports.core.crr.summary results.para 3')}}
+    </p>
+
     <div id="chartContainer" class="container" style="top: 0; margin-top: 0; padding-top: 0; max-width: 860px;">
         <canvas id="barChart">{{ chart }}</canvas>
     </div>

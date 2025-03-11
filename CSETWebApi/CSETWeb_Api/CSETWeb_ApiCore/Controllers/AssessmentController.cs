@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -267,6 +267,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/getAssessmentById")]
+        [Obsolete("Method no longer in use.")]
         public IActionResult GetAssessmentById(int assessmentId)
         {
             var assessment = _assessmentBusiness.GetAssessmentById(assessmentId);
@@ -507,5 +508,24 @@ namespace CSETWebCore.Api.Controllers
 
             return null;
         }
+        
+        [HttpPost]
+        [Route("api/conversion")]
+        public IActionResult AssessmentConversion([FromQuery] int originalAssessmentId, [FromQuery] string targetModelName)
+        {
+            try
+            {
+                int assessmentId = _tokenManager.AssessmentForUser();
+               _assessmentBusiness.ConvertAssessment(assessmentId, originalAssessmentId, targetModelName);
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok();
+        }
+        
+        
     }
 }

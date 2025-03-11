@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,10 @@ import { EDMBarChartModel } from '../edm-bar-chart.model';
 
 
 @Component({
-  selector: 'edm-horizontal-bar-chart',
-  templateUrl: './horizontal-bar-chart.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'edm-horizontal-bar-chart',
+    templateUrl: './horizontal-bar-chart.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class EDMHorizontalBarChart implements OnInit {
 

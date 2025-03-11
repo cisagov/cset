@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,15 +21,17 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReportService } from '../../../services/report.service';
 
 
 @Component({
-  selector: 'app-module-content',
-  templateUrl: './module-content.component.html',
-  styleUrls: ['./module-content.component.scss', '../../../reports/reports.scss']
+    selector: 'app-module-content',
+    templateUrl: './module-content.component.html',
+    styleUrls: ['../../../reports/reports.scss', './module-content.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class ModuleContentComponent implements OnInit {
 

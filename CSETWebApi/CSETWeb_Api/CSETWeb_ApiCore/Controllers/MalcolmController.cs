@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -68,16 +68,16 @@ namespace CSETWebCore.Api.Controllers
                 _diagramManager.CreateMalcolmDiagram(assessmentId, processedData);
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                if(ex.InnerException == null)
+                if (ex.InnerException == null)
                 {
                     List<MalcolmUploadError> errors = new List<MalcolmUploadError>();
                     MalcolmUploadError error = new MalcolmUploadError(IPAddress, 400, ex.Message);
                     errors.Add(error);
                     return Ok(errors);
                 }
-                else if(ex.InnerException.Message== "A task was canceled.")
+                else if (ex.InnerException.Message == "A task was canceled.")
                 {
                     List<MalcolmUploadError> errors = new List<MalcolmUploadError>();
                     MalcolmUploadError error = new MalcolmUploadError(IPAddress, 400, "Could not contact the Malcolm host.\nCheck to see that Malcolm is available to and can be connected to from this computer.");
@@ -91,7 +91,7 @@ namespace CSETWebCore.Api.Controllers
                     errors.Add(error);
                     return Ok(errors);
                 }
-        
+
 
             }
         }
@@ -159,7 +159,7 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
-        
+
 
         [HttpGet]
         [Route("api/getMalcolmAnswers")]

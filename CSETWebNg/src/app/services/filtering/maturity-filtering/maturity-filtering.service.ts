@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -58,7 +58,7 @@ export class MaturityFilteringService {
   /**
    * The allowable filter values.  Used for "select all"
    */
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'O', 'FB', 'MT', 'MT+', 'FR', 'FI', 'LI', 'PI', 'NI'];
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'MT', 'MT+', 'FR', 'FI', 'LI', 'PI', 'NI'];
 
   /**
    * The allowable maturity filter values.  Only applicable on maturity questions page.
@@ -77,7 +77,7 @@ export class MaturityFilteringService {
   /**
    * Filters that are turned on at the start.
    */
-  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'O', 'FB', 'MT', 'FR', 'FI', 'LI', 'PI', 'NI'];
+  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'MT', 'FR', 'FI', 'LI', 'PI', 'NI'];
 
   /**
    * If the user enters characters into the box, only questions containing that string
@@ -88,7 +88,7 @@ export class MaturityFilteringService {
   /**
    * Valid 'answer'-type filter values
    */
-  public answerOptions: string[] = ['Y', 'N', 'NA', 'A', 'U', 'FI', 'LI', 'PI', 'NI'];
+  public answerOptions: string[] = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'FI', 'LI', 'PI', 'NI'];
 
 
 
@@ -256,7 +256,6 @@ export class MaturityFilteringService {
 
     if (g.groupingType == 'Domain') {
       this.currentDomainName = g.title;
-
     }
 
     g.visible = true;
@@ -265,30 +264,35 @@ export class MaturityFilteringService {
       // start with false, then set true if the question should be shown
       q.visible = false;
 
-
       // Check maturity level filtering first.  If the question is not visible the rest of the
       // conditions can be avoided.
       switch (this.assesmentSvc.assessment.maturityModel.modelName) {
         case 'ACET':
           this.acetFilteringSvc.setQuestionVisibility(q, this.currentDomainName);
           break;
+
         case 'ISE':
           this.acetFilteringSvc.setIseQuestionVisibility(q, this.currentDomainName);
           break;
+
         case 'CMMC':
         case 'CMMC2':
+        case 'CMMC2F':
           this.cmmcFilteringSvc.setQuestionVisibility(q);
           break;
 
         case 'EDM':
           this.edmFilteringSvc.setQuestionVisibility(q);
           break;
+
         case 'CRR':
           this.crrFilteringSvc.setQuestionVisibility(q);
           break;
+
         case 'RRA':
           this.rraFilteringSvc.setQuestionVisibility(q);
           break;
+
         default:
           this.basicFilteringSvc.setQuestionVisibility(q);
       }
@@ -307,6 +311,14 @@ export class MaturityFilteringService {
         && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
         return;
       }
+
+      // add any question-specific answer options to the filter service
+      q.answerOptions?.forEach(opt => {
+        if (!filterSvc.answerOptions.includes(opt)) {
+          filterSvc.answerOptions.push(opt);
+        }
+      });
+
 
       // evaluate answers
       if (filterSvc.answerOptions.includes(q.answer) && filterSvc.showFilters.includes(q.answer)) {

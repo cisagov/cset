@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -33,9 +33,10 @@ import { ColorService } from '../../services/color.service';
 
 
 @Component({
-  selector: 'compare-report',
-  templateUrl: './compare-report.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'compare-report',
+    templateUrl: './compare-report.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 
 export class CompareReportComponent implements OnInit, AfterViewChecked {
@@ -79,7 +80,7 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
   populateCharts(aggId: number) {
 
     // Overall Average
-    this.aggregationSvc.getOverallAverageSummary(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getOverallAverageSummary().subscribe((x: any) => {
 
       // Makes the Compliance Summary chart a light blue color instead of grey
       const chartColors = new ChartColors();
@@ -91,12 +92,12 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     });
 
     // Assessment Answer Summary - tabular data
-    this.aggregationSvc.getAnswerTotals(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getAnswerTotals().subscribe((x: any) => {
       this.answerCounts = x;
     });
 
     // Category Averages
-    this.aggregationSvc.getCategoryAverages(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getCategoryAverages().subscribe((x: any) => {
 
       // Makes the Category Average chart a nice green color instead of grey
       x.datasets.forEach(ds => {
@@ -114,7 +115,7 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     });
 
     // Category Percentage Comparison
-    this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
       this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
       (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });

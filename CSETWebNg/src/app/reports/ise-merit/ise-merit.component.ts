@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +32,10 @@ import { QuestionsService } from '../../services/questions.service';
 import { NCUAService } from '../../services/ncua.service';
 
 @Component({
-  selector: 'app-ise-merit',
-  templateUrl: './ise-merit.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss', '../../../assets/sass/cset-font-styles.css']
+    selector: 'app-ise-merit',
+    templateUrl: './ise-merit.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss', '../../../assets/sass/cset-font-styles.css'],
+    standalone: false
 })
 export class IseMeritComponent implements OnInit {
   response: any = null;
@@ -67,18 +68,25 @@ export class IseMeritComponent implements OnInit {
 
   masterActionItemsMap: Map<number, any[]> = new Map<number, any[]>();
 
+  // 12/3/24: Jon wants the action items all combined into one big paragraph. If he decided he doesn't want this
+  // in the future, just remove any code that references "combinedActionItems" it'll go back to the way it was.
+  // 12/12/24: Jon changed his mind. Leaving this here for now in case he changes his mind again.
+  //combinedActionItems: Map<number, string> = new Map<number, string>();
+
+
   // actionItemsMap: Map<number, Map<number, any[]>> = new Map<number, Map<number, any[]>>();
   //                 finding_Id, <question_Id, [action_Items]>
   // manualOrAutoMap: Map<number, string> = new Map<number, string>();
 
   sourceFilesMap: Map<number, any[]> = new Map<number, any[]>();
-  regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
+  regCitationsMap: Map<number, string> = new Map<number, string>();
   showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action items to show (answered 'No')
 
   examLevel: string = '';
 
   relaventIssues: boolean = false;
   loadingCounter: number = 0;
+  loading: boolean = false;
 
 
   constructor(
@@ -93,6 +101,7 @@ export class IseMeritComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.titleService.setTitle("MERIT Scope Report - ISE");
 
     this.acetSvc.getIseAnsweredQuestions().subscribe(
@@ -122,24 +131,26 @@ export class IseMeritComponent implements OnInit {
 
         this.acetSvc.getActionItemsReport(this.ncuaSvc.translateExamLevelToInt(examLevelString)).subscribe((findingData: any) => {
           this.actionData = findingData;
+
+          let combinedCount = 1;
           for (let i = 0; i < this.actionData?.length; i++) {
             let actionItemRow = this.actionData[i];
 
-            if (actionItemRow.action_Items != '') { //filters out 'deleted' action items
+            // filters out 'deleted' action items
+            if (actionItemRow.action_Items != '') {
               if (!this.masterActionItemsMap.has(actionItemRow.observation_Id)) {
-
                 this.masterActionItemsMap.set(actionItemRow.observation_Id, [actionItemRow]);
-              } else {
+                combinedCount = 1;
+              }
+              else {
                 let tempActionArray = this.masterActionItemsMap.get(actionItemRow.observation_Id);
-
                 tempActionArray.push(actionItemRow);
-
                 this.masterActionItemsMap.set(actionItemRow.observation_Id, tempActionArray);
               }
             }
           }
-          this.loadingCounter++;
 
+          this.loadingCounter++;
         });
 
         this.loadingCounter++;
@@ -159,45 +170,47 @@ export class IseMeritComponent implements OnInit {
 
             for (let i = 0; i < this.response?.length; i++) {
               if (this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
-
                 let observation = this.response[i];
-                this.questionsSvc.getDetails(observation.question.mat_Question_Id, 'Maturity').subscribe(
-                  (r: any) => {
+
+                this.questionsSvc.getRegulatoryCitations(observation.question.mat_Question_Id).subscribe((result: any) => {
+                  this.regCitationsMap.set(observation.question.mat_Question_Id, result.regulatory_Citation);
+
+                  this.questionsSvc.getDetails(observation.question.mat_Question_Id, 'Maturity').subscribe((r: any) => {
                     this.files = r;
 
                     let sourceDocList = this.files?.listTabs[0]?.sourceDocumentsList;
 
                     for (let i = 0; i < sourceDocList?.length; i++) {
                       if (!this.sourceFilesMap.has(observation.finding.finding_Id)) {
-
                         this.sourceFilesMap.set(observation.finding.finding_Id, [sourceDocList[i]]);
-                      } else {
+                      }
+                      else {
                         let tempFileArray = this.sourceFilesMap.get(observation.finding.finding_Id);
-
                         tempFileArray.push(sourceDocList[i]);
-
                         this.sourceFilesMap.set(observation.finding.finding_Id, tempFileArray);
                       }
                     }
+                  });
+
+                  if (observation.finding.type === 'Examiner Finding') {
+                    this.addExaminerFinding(observation.category.title);
                   }
-                );
-                if (observation.finding.type === 'Examiner Finding') {
-                  this.addExaminerFinding(observation.category.title);
-                }
-                if (observation.finding.type === 'DOR') {
-                  this.addDOR(observation.category.title);
-                }
-                if (observation.finding.type === 'Supplemental Fact') {
-                  this.addSupplementalFact(observation.category.title);
-                }
-                if (observation.finding.type === 'Non-reportable') {
-                  this.addNonReportable(observation.category.title);
-                }
-                this.relaventIssues = true;
+                  if (observation.finding.type === 'DOR') {
+                    this.addDOR(observation.category.title);
+                  }
+                  if (observation.finding.type === 'Supplemental Fact') {
+                    this.addSupplementalFact(observation.category.title);
+                  }
+                  if (observation.finding.type === 'Non-reportable') {
+                    this.addNonReportable(observation.category.title);
+                  }
+                  this.relaventIssues = true;
+
+                })
               }
             }
-            if (this.relaventIssues) {
 
+            if (this.relaventIssues) {
               this.resultsOfReviewString += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
               this.categoryBuilder(this.dors);
 
@@ -209,7 +222,8 @@ export class IseMeritComponent implements OnInit {
 
               this.resultsOfReviewString += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
               this.categoryBuilder(this.nonReportables);
-            } else {
+            }
+            else {
               this.resultsOfReviewString += 'No Issues were noted.';
             }
 
@@ -218,16 +232,23 @@ export class IseMeritComponent implements OnInit {
           error => console.log('MERIT Report Error: ' + (<Error>error).message)
         );
       });
+  }
 
 
+  getActionItemsToCopy(findingId: any) {
+    let combinedText = "";
 
-    // this.acetSvc.getIseSourceFiles().subscribe(
-    //   (r: any) => {
-    //     this.files = r;
-    //     console.log(r)
-    //   },
-    //   error => console.log('Assessment Information Error: ' + (<Error>error).message)
-    // )
+    if (this.masterActionItemsMap.get(findingId) != undefined) {
+      this.masterActionItemsMap.get(findingId).forEach(item => {
+        combinedText += (item.action_Items + "\n");
+      });
+    }
+
+    return combinedText;
+  }
+
+  getReferenceCopyText(parentId: number) {
+    return (this.regCitationsMap.get(parentId));
   }
 
   addExaminerFinding(title: any) {
@@ -334,7 +355,7 @@ export class IseMeritComponent implements OnInit {
         }
       }
       if (array?.length == 0) {
-        return "(no Action Items available)";
+        return "(no actions available)";
       }
 
       let formattedItems = array.join("");

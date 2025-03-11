@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ import { ObservationsService } from '../../../services/observations.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observation, Importance } from './observations.model';
-import * as _ from 'lodash';
+import { map as lodash_map, filter as lodash_filter } from 'lodash';
 import { ConfigService } from '../../../services/config.service';
 
 @Component({
@@ -34,7 +34,8 @@ import { ConfigService } from '../../../services/config.service';
   templateUrl: './observations.component.html',
   host: {
     'style': 'max-width: 100%'
-  }
+  },
+  standalone: false
 })
 export class ObservationsComponent implements OnInit {
 
@@ -72,7 +73,7 @@ export class ObservationsComponent implements OnInit {
           this.observation = response;
           this.answerId = this.observation.answer_Id;
           this.questionId = this.observation.question_Id;
-          this.contactsModel = _.map(_.filter(this.observation.observation_Contacts,
+          this.contactsModel = lodash_map(lodash_filter(this.observation.observation_Contacts,
             { 'selected': true }),
             'Assessment_Contact_Id');
           this.data.answer_Id = this.answerId;
@@ -99,13 +100,14 @@ export class ObservationsComponent implements OnInit {
     this.observation.question_Id = this.questionId;
     this.observationsSvc.saveObservation(this.observation).subscribe(() => {
       this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.questionType)
-      .subscribe((response: Observation) => {
-        this.observation = response;
-        this.contactsModel = _.map(_.filter(this.observation.observation_Contacts,
-          { 'selected': true }),
-          'Assessment_Contact_Id');
-      });    });
-    
+        .subscribe((response: Observation) => {
+          this.observation = response;
+          this.contactsModel = lodash_map(lodash_filter(this.observation.observation_Contacts,
+            { 'selected': true }),
+            'Assessment_Contact_Id');
+        });
+    });
+
   }
 
   /**

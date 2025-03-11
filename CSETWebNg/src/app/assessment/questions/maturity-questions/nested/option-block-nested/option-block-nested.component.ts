@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -34,8 +34,9 @@ import { HydroService } from '../../../../../services/hydro.service';
 import { MalcolmService } from '../../../../../services/malcolm.service';
 
 @Component({
-  selector: 'app-option-block-nested',
-  templateUrl: './option-block-nested.component.html'
+    selector: 'app-option-block-nested',
+    templateUrl: './option-block-nested.component.html',
+    standalone: false
 })
 export class OptionBlockNestedComponent implements OnInit {
 

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,10 @@ import { ConfigService } from '../../../services/config.service';
 import { CmuService } from '../../../services/cmu.service';
 
 @Component({
-  selector: 'app-imr-report',
-  templateUrl: './imr-report.component.html',
-  styleUrls: ['./imr-report.component.scss']
+    selector: 'app-imr-report',
+    templateUrl: './imr-report.component.html',
+    styleUrls: ['./imr-report.component.scss'],
+    standalone: false
 })
 export class ImrReportComponent implements OnInit {
   model: CmuReportModel = {};

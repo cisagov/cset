@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,14 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *ngIf="userAnswer != null && userAnswer != 'U' && malcolmAnswer != null && userAnswer != malcolmAnswer.answer_Text" class="btn-group btn-group-toggle answer-group" 
+<div *ngIf="userAnswer != null && userAnswer != 'U' && malcolmAnswer != null && userAnswer != malcolmAnswer.answer_Text"
+    class="btn-group btn-group-toggle answer-group"
     style="border-radius: 4px; align-items: center; background-color: #FBE1C2; padding: 4px">
     <span style="margin-right: 8px">
-        Malcolm detected answer: 
+        Malcolm detected answer:
     </span>
-    <label class="btn form-check-label" [class]="questionsSvc.answerOptionCss('', malcolmAnswer.answer_Text)" [class.answer-selected]="true">                
+    <label class="btn form-check-label" [class]="questionsSvc.answerOptionCss('', malcolmAnswer.answer_Text)"
+        [class.answer-selected]="true">
         {{questionsSvc.answerButtonLabel(maturityModelName, malcolmAnswer.answer_Text)}}
     </label>
 </div>

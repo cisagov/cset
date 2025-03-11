@@ -5,12 +5,13 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ResourceLibraryService } from '../../../services/resource-library.service';
 
 @Component({
-  selector: 'app-references-section',
-  templateUrl: './references-section.component.html'
+    selector: 'app-references-section',
+    templateUrl: './references-section.component.html',
+    standalone: false
 })
 export class ReferencesSectionComponent {
 
-  @Input() documents;
+  @Input() documents: any[];
 
   @Input('q')
   question: any;

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import { AssessmentService } from './assessment.service';
 import {
   AssessmentDetail
 } from '../models/assessment-info.model';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
@@ -48,13 +48,14 @@ export class AssessCompareAnalyticsService {
     private router: Router
   ) { }
 
-  analyticsAssessment(assessId: number) {
-    this.http.get(
-      this.configSvc.apiUrl + "tsa/getAssessmentById",
-      headers,
-    )
-    this.router.navigate(["/assessment-comparison-analytics"], { queryParamsHandling: 'preserve' });
-  }
+  // Method no longer in use
+  // analyticsAssessment(assessId: number) {
+  //   this.http.get(
+  //     this.configSvc.apiUrl + "tsa/getAssessmentById",
+  //     headers,
+  //   )
+  //   this.router.navigate(["/assessment-comparison-analytics"], { queryParamsHandling: 'preserve' });
+  // }
 
   loadAssessment(id: number) {
     this.getAssessmentToken(id).then(() => {
@@ -68,20 +69,20 @@ export class AssessCompareAnalyticsService {
   }
 
   getAssessmentToken(assessId: number) {
-    return this.http
-      .get(this.configSvc.apiUrl + 'auth/token?assessmentId=' + assessId)
-      .toPromise()
-      .then((response: { token: string }) => {
-        localStorage.removeItem('userToken');
-        localStorage.setItem('userToken', response.token);
-        if (assessId) {
-          localStorage.removeItem('assessmentId');
-          localStorage.setItem(
-            'assessmentId',
-            assessId ? assessId.toString() : ''
-          );
-        }
-      });
+    const obs = this.http.get(this.configSvc.apiUrl + 'auth/token?assessmentId=' + assessId);
+    const prom = firstValueFrom(obs);
+
+    return prom.then((response: { token: string }) => {
+      localStorage.removeItem('userToken');
+      localStorage.setItem('userToken', response.token);
+      if (assessId) {
+        localStorage.removeItem('assessmentId');
+        localStorage.setItem(
+          'assessmentId',
+          assessId ? assessId.toString() : ''
+        );
+      }
+    });
   }
 
   getAssessmentDetail() {

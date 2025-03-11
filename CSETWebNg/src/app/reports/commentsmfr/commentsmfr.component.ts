@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,12 +32,12 @@ import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-commentsmfr',
-  templateUrl: './commentsmfr.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-commentsmfr',
+    templateUrl: './commentsmfr.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class CommentsMfrComponent implements OnInit {
-  translationTabTitle: any;
   response: any = null;
   remarks: string;
 
@@ -66,11 +66,11 @@ export class CommentsMfrComponent implements OnInit {
    */
   ngOnInit(): void {
     this.loading = true;
-    
-    this.translationTabTitle = this.tSvc.selectTranslate('reports.core.rra.cmfr.report title')
-    .subscribe(value =>
-      this.titleService.setTitle(this.tSvc.translate('reports.core.rra.cmfr.report title') + ' - ' + this.configSvc.behaviors.defaultTitle));
-  
+
+    this.tSvc.selectTranslate('comments and marked for review', {}, { scope: 'reports' })
+      .subscribe(title =>
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
+
 
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {

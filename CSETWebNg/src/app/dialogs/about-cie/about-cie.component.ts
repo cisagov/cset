@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,9 +27,10 @@ import { ConfigService } from '../../services/config.service';
 import { VersionService } from '../../services/version.service';
 
 @Component({
-  selector: 'app-about-cie',
-  templateUrl: './about-cie.component.html',
-  styleUrls: ['./about-cie.component.scss']
+    selector: 'app-about-cie',
+    templateUrl: './about-cie.component.html',
+    styleUrls: ['./about-cie.component.scss'],
+    standalone: false
 })
 export class AboutCieComponent {
   version: any;
@@ -40,13 +41,13 @@ export class AboutCieComponent {
     public configSvc: ConfigService,
     public versionSvc: VersionService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.versionSvc.localVersionObservable$.subscribe(localVersion => {
-        this.version = localVersion;
-      });
+    this.versionSvc.localVersionObservable$.subscribe(localVersion => {
+      this.version = localVersion;
+    });
   }
 
   ngOnInit(): void {
-   };
+  };
 
   close() {
     return this.dialog.close();

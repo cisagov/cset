@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -36,9 +36,10 @@ import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'physical-summary',
-  templateUrl: './physical-summary.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'physical-summary',
+    templateUrl: './physical-summary.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class PhysicalSummaryComponent implements OnInit, AfterViewInit {
   chartStandardsSummary: Chart;
@@ -57,16 +58,16 @@ export class PhysicalSummaryComponent implements OnInit, AfterViewInit {
     public reportSvc: ReportService,
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
-    private titleService: Title,    
+    private titleService: Title,
     private sanitizer: DomSanitizer,
-    private maturitySvc: MaturityService,    
+    private maturitySvc: MaturityService,
     public tSvc: TranslocoService
   ) { }
 
   ngOnInit() {
-    this.translationSub = this.tSvc.selectTranslate('reports.core.physical summary.report title')
-      .subscribe(value =>
-        this.titleService.setTitle(this.tSvc.translate('reports.core.physical summary.report title') + ' - ' + this.configSvc.behaviors.defaultTitle));
+    this.tSvc.selectTranslate('core.physical summary.report title', {}, { scope: 'reports' })
+      .subscribe(title =>
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.reportSvc.getReport('physicalsummary').subscribe(
       (r: any) => {
@@ -83,7 +84,7 @@ export class PhysicalSummaryComponent implements OnInit, AfterViewInit {
 
   }
 
-  
+
   ngOnDestroy() {
     this.translationSub.unsubscribe()
   }

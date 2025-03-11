@@ -2,7 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <AssemblyVersion>12.3.0.0</AssemblyVersion>
+    <AssemblyVersion>12.3.1.0</AssemblyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>EXCLUDE_FROM_PUBLISH</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'CSETWeb_ApiCore' " />
@@ -18,12 +22,13 @@
     <PackageReference Include="NJsonSchema" Version="11.0.2" />
     <PackageReference Include="NJsonSchema.NewtonsoftJson" Version="11.0.2" />
     <PackageReference Include="NLog.Database" Version="5.3.4" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.14" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.15" />
     <PackageReference Include="NodaTime" Version="3.2.0" />
     <PackageReference Include="Snickler.EFCore" Version="3.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.10" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
+    <PackageReference Include="System.Runtime.Caching" Version="9.0.1" />
   </ItemGroup>
 
   <ItemGroup>

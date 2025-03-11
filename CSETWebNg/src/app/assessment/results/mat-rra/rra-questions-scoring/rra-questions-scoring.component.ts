@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { RraDataService } from '../../../../services/rra-data.service';
 
 @Component({
-  selector: 'app-rra-questions-scoring',
-  templateUrl: './rra-questions-scoring.component.html',
-  styleUrls: ['./rra-questions-scoring.component.scss', '../../../../reports/reports.scss']
+    selector: 'app-rra-questions-scoring',
+    templateUrl: './rra-questions-scoring.component.html',
+    styleUrls: ['./rra-questions-scoring.component.scss', '../../../../reports/reports.scss'],
+    standalone: false
 })
 
 export class RraQuestionsScoringComponent implements OnInit {

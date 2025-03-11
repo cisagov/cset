@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@ import { HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
 import { Aggregation } from '../models/aggregation.model';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class AggregationService {
@@ -110,20 +111,20 @@ export class AggregationService {
    * @param aggId
    */
   getAggregationToken(aggId: number) {
-    return this.http
-      .get(this.configSvc.apiUrl + 'auth/token?aggregationId=' + aggId)
-      .toPromise()
-      .then((response: { token: string }) => {
-        localStorage.removeItem('userToken');
-        localStorage.setItem('userToken', response.token);
-        if (aggId) {
-          localStorage.removeItem('aggregationId');
-          localStorage.setItem(
-            'aggregationId',
-            aggId ? aggId.toString() : ''
-          );
-        }
-      });
+    const obs = this.http.get(this.configSvc.apiUrl + 'auth/token?aggregationId=' + aggId);
+    const prom = firstValueFrom(obs);
+
+    return prom.then((response: { token: string }) => {
+      localStorage.removeItem('userToken');
+      localStorage.setItem('userToken', response.token);
+      if (aggId) {
+        localStorage.removeItem('aggregationId');
+        localStorage.setItem(
+          'aggregationId',
+          aggId ? aggId.toString() : ''
+        );
+      }
+    });
   }
 
 
@@ -164,60 +165,60 @@ export class AggregationService {
       { aliasAssessment: assessment, assessmentList: aliasData }, { responseType: 'text' });
   }
 
-  getAnswerTotals(aggId) {
-    return this.http.post(this.apiUrl + 'analysis/getanswertotals?aggregationID=' + aggId, '');
+  getAnswerTotals() {
+    return this.http.post(this.apiUrl + 'analysis/getanswertotals', null);
   }
 
-  getMaturityAnswerTotals(aggId) {
-    return this.http.post(this.apiUrl + 'analysis/maturity/answertotals?aggregationID=' + aggId, '');
+  getMaturityAnswerTotals() {
+    return this.http.post(this.apiUrl + 'analysis/maturity/answertotals', null);
   }
 
 
 
   ////////////////////////////////  Trend  //////////////////////////////////
 
-  getOverallComplianceScores(aggId) {
-    return this.http.post(this.apiUrl + 'analysis/overallcompliancescore', { aggregationID: aggId });
+  getOverallComplianceScores() {
+    return this.http.post(this.apiUrl + 'analysis/overallcompliancescore', null);
   }
 
-  getTrendTop5(aggId) {
-    return this.http.post(this.apiUrl + 'analysis/top5', { aggregationID: aggId });
+  getTrendTop5() {
+    return this.http.post(this.apiUrl + 'analysis/top5', null);
   }
 
-  getTrendBottom5(aggId) {
-    return this.http.post(this.apiUrl + 'analysis/bottom5', { aggregationID: aggId });
+  getTrendBottom5() {
+    return this.http.post(this.apiUrl + 'analysis/bottom5', null);
   }
 
-  getCategoryPercentageComparisons(aggId) {
-    return this.http.post(this.apiUrl + 'analysis/categorypercentcompare?aggregationID=' + aggId, {});
+  getCategoryPercentageComparisons() {
+    return this.http.post(this.apiUrl + 'analysis/categorypercentcompare', null);
   }
 
 
 
   ////////////////////////////////  Compare  //////////////////////////////////
 
-  getOverallAverageSummary(aggId: number) {
-    return this.http.post(this.apiUrl + 'analysis/overallaverages?aggregationID=' + aggId, {});
+  getOverallAverageSummary() {
+    return this.http.post(this.apiUrl + 'analysis/overallaverages', null);
   }
 
   getOverallComparison() {
-    return this.http.post(this.apiUrl + 'analysis/overallcomparison', {});
+    return this.http.post(this.apiUrl + 'analysis/overallcomparison', null);
   }
 
   getStandardsAnswers() {
-    return this.http.post(this.apiUrl + 'analysis/standardsanswers', {});
+    return this.http.post(this.apiUrl + 'analysis/standardsanswers', null);
   }
 
   getComponentsAnswers() {
-    return this.http.post(this.apiUrl + 'analysis/componentsanswers', {});
+    return this.http.post(this.apiUrl + 'analysis/componentsanswers', null);
   }
 
-  getCategoryAverages(aggId) {
-    return this.http.post(this.apiUrl + 'analysis/categoryaverages?aggregationID=' + aggId, {});
+  getCategoryAverages() {
+    return this.http.post(this.apiUrl + 'analysis/categoryaverages', null);
   }
 
-  getAggregationCompliance(aggId) {
-    return this.http.get(this.apiUrl + 'analysis/maturity/compliance?aggregationId=' + aggId, {});
+  getAggregationCompliance() {
+    return this.http.get(this.apiUrl + 'analysis/maturity/compliance', null);
   }
 
 
@@ -226,11 +227,11 @@ export class AggregationService {
   }
 
   getSalComparison() {
-    return this.http.post(this.apiUrl + 'analysis/salcomparison', {});
+    return this.http.post(this.apiUrl + 'analysis/salcomparison', null);
   }
 
   getBestToWorst() {
-    return this.http.post(this.apiUrl + 'analysis/getbesttoworst', '');
+    return this.http.post(this.apiUrl + 'analysis/getbesttoworst', null);
   }
 
   /**
@@ -244,7 +245,7 @@ export class AggregationService {
    * Get the maturity "best to worst" model 
    */
   getMaturityBestToWorst() {
-    return this.http.post(this.apiUrl + 'analysis/maturity/besttoworst', '');
+    return this.http.post(this.apiUrl + 'analysis/maturity/besttoworst', null);
   }
 
 

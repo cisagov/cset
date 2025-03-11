@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Vendor } from '../models/diagram-vulnerabilities.model';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 const headers = {
   headers: new HttpHeaders()
@@ -38,42 +39,56 @@ export class DiagramService {
   id: number;
   csafVendors: Vendor[] = [];
 
+  private diagramRefreshSubject = new BehaviorSubject<any>(null);
+  refresh$ = this.diagramRefreshSubject.asObservable();
+
+  /**
+   * The full result containing diagram data
+   */
+  diagramModel: any = null;
+
+
+  /**
+   * 
+   */
   constructor(private http: HttpClient, private configSvc: ConfigService) {
     this.apiUrl = this.configSvc.apiUrl + 'diagram/';
   }
 
-  // calls to retrieve static data
-  getSymbols() {
-    return this.http.get(this.apiUrl + 'symbols/get');
+  /**
+   * Broadcast to all subscribers that the diagram is ready
+   * @param s 
+   */
+  broadcastDiagramChange(s: string) {
+    //this.refreshSubject.next(s);
   }
 
   saveComponent(component) {
     return this.http.post(this.apiUrl + 'saveComponent', component, headers)
   }
 
-  getAllSymbols() {
-    return this.http.get(this.apiUrl + 'symbols/getAll');
+  // flipped to 'true' while waiting for a diagram to be fetched
+  fetchingDiagram: boolean = false;
+
+  /**
+   * Get diagram from API and update my model
+   */
+  obtainDiagram() {
+    this.fetchingDiagram = true;
+    this.diagramModel = null;
+
+    this.callDiagramEndpoint().subscribe(x => {
+      this.fetchingDiagram = false;
+      this.diagramModel = x;
+
+      this.diagramRefreshSubject.next('');
+    });
   }
 
-  // get diagram components
-  getDiagramComponents() {
-    return this.http.get(this.apiUrl + 'getComponents');
-  }
-
-  getDiagramZones() {
-    return this.http.get(this.apiUrl + 'getZones');
-  }
-
-  getDiagramShapes() {
-    return this.http.get(this.apiUrl + 'getShapes');
-  }
-
-  getDiagramText() {
-    return this.http.get(this.apiUrl + 'getTexts');
-  }
-
-  getDiagramLinks() {
-    return this.http.get(this.apiUrl + 'getLinks');
+  // replaces all the previous separate calls
+  // to eliminate the current deadlock on the server
+  callDiagramEndpoint(): Observable<any> {
+    return this.http.get(this.apiUrl + 'getAllDiagram');
   }
 
   getDiagramWarnings() {

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,9 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ConfigService } from '../../../../services/config.service';
 import { MaturityService } from '../../../../services/maturity.service';
-import { filter } from 'rxjs/operators';
 
 
 /**
@@ -34,16 +33,16 @@ import { filter } from 'rxjs/operators';
  * parsed to determine which page the user requested.
  */
 @Component({
-  selector: 'app-crr-results-page',
-  templateUrl: './crr-results-page.component.html',
-  styleUrls: ['../../../../reports/reports.scss']
+    selector: 'app-crr-results-page',
+    templateUrl: './crr-results-page.component.html',
+    standalone: false
 })
 export class CrrResultsPage implements OnInit {
 
   public domain: any;
   public loaded = false;
 
-  public pageName = "";
+  public pageName: string = "";
   public domainAbbrev = "";
   public domainName;
 
@@ -58,18 +57,17 @@ export class CrrResultsPage implements OnInit {
   constructor(
     private maturitySvc: MaturityService,
     public configSvc: ConfigService,
-    private router: Router
+    public activatedRoute: ActivatedRoute
   ) {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((e: any) => {
-      var url: string = e.url;
-      var slash = url.lastIndexOf('/');
-      this.pageName = url.substr(slash + 1);
-      this.domainAbbrev = this.pageName.substr(this.pageName.indexOf('crr-domain-') + 11).toUpperCase();
-    });
+    this.manualNav();
   }
-
+  /**
+   * We are reusing crr results component for multiple routes and must handle routing manually. 
+   */
+  manualNav(): void {
+    this.pageName = this.activatedRoute.snapshot.url.join('/');
+    this.domainAbbrev = this.pageName.substring(this.pageName.indexOf('crr-domain-') + 11).toUpperCase();
+  }
 
   /**
    * 

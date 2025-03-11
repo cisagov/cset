@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -33,9 +33,10 @@ import { ObservationsService } from '../../services/observations.service';
 import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
-  selector: 'app-ise-examination',
-  templateUrl: './ise-examination.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-ise-examination',
+    templateUrl: './ise-examination.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class IseExaminationComponent implements OnInit {
   response: any = {};
@@ -51,8 +52,8 @@ export class IseExaminationComponent implements OnInit {
   masterActionItemsMap: Map<number, any[]> = new Map<number, any[]>();
 
   sourceFilesMap: Map<number, any[]> = new Map<number, any[]>();
-  regCitationsMap: Map<number, any[]> = new Map<number, any[]>();
-  showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action items to show (answered 'No')
+  regCitationsMap: Map<number, string> = new Map<number, string>();
+  showActionItemsMap: Map<string, any[]> = new Map<string, any[]>(); //stores what action required to show (answered 'No')
 
   examinerFindings: string[] = [];
   examinerFindingsTotal: number = 0;
@@ -119,8 +120,38 @@ export class IseExaminationComponent implements OnInit {
             }
 
             // goes through questions
+            let scuepQuestions = [];
+            let coreQuestions = [];
+            let corePlusQuestions = [];
+            let questionsInCorrectOrder = [];
+
             for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
+
+              // Sorts questions into specific categories
+              if (question.maturityLevel == "SCUEP") {
+                scuepQuestions.push(question);
+              } else if (question.maturityLevel == "CORE") {
+                coreQuestions.push(question);
+              } else if (question.maturityLevel == "CORE+") {
+                corePlusQuestions.push(question);
+              }
+
+              // Ensures correct question order even if CORE questions have a higher id than a CORE+
+              if (k === subcat?.questions?.length - 1) {
+                questionsInCorrectOrder = (coreQuestions.concat(corePlusQuestions));
+
+                if (this.examLevel != "SCUEP") {
+                  subcat.questions = questionsInCorrectOrder;
+                } else {
+                  subcat.questions = scuepQuestions;
+                }
+
+                scuepQuestions = [];
+                coreQuestions = [];
+                corePlusQuestions = [];
+                questionsInCorrectOrder = [];
+              }
 
               if (k === 0) {
                 this.expandedOptions.set(question.title, true);
@@ -187,6 +218,11 @@ export class IseExaminationComponent implements OnInit {
             for (let i = 0; i < this.observationResponse?.length; i++) {
               if (this.ncuaSvc.translateExamLevel(this.observationResponse[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
                 let observation = this.observationResponse[i];
+
+                this.questionsSvc.getRegulatoryCitations(observation.question.mat_Question_Id).subscribe((result: any) => {
+                  this.regCitationsMap.set(observation.question.mat_Question_Id, result.regulatory_Citation);
+                });
+
                 this.questionsSvc.getDetails(observation.question.mat_Question_Id, 'Maturity').subscribe(
                   (r: any) => {
                     this.files = r;
@@ -194,15 +230,14 @@ export class IseExaminationComponent implements OnInit {
                     let sourceDocList = this.files?.listTabs[0]?.sourceDocumentsList;
 
                     for (let i = 0; i < sourceDocList?.length; i++) {
-                      if (!this.sourceFilesMap.has(observation.finding.observation_Id)) {
-
-                        this.sourceFilesMap.set(observation.finding.observation_Id, [sourceDocList[i]]);
+                      if (!this.sourceFilesMap.has(observation.finding.finding_Id)) {
+                        this.sourceFilesMap.set(observation.finding.finding_Id, [sourceDocList[i]]);
                       } else {
-                        let tempFileArray = this.sourceFilesMap.get(observation.finding.observation_Id);
+                        let tempFileArray = this.sourceFilesMap.get(observation.finding.finding_Id);
 
                         tempFileArray.push(sourceDocList[i]);
 
-                        this.sourceFilesMap.set(observation.finding.observation_Id, tempFileArray);
+                        this.sourceFilesMap.set(observation.finding.finding_Id, tempFileArray);
                       }
                     }
                   }
@@ -250,7 +285,6 @@ export class IseExaminationComponent implements OnInit {
       },
       error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
     );
-
   }
 
   /**
@@ -361,4 +395,7 @@ export class IseExaminationComponent implements OnInit {
     return false;
   }
 
+  getReferenceCopyText(parentId: number) {
+    return (this.regCitationsMap.get(parentId));
+  }
 }

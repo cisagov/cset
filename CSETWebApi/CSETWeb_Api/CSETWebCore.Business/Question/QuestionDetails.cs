@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -39,6 +39,8 @@ namespace CSETWebCore.Business.Question
 
 
         public bool IsDetailAndInfo { get; set; }
+        
+        public bool? overRide { get; set; }
 
 
         /// <summary>

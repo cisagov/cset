@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -42,20 +42,24 @@ import { TranslocoService } from '@jsverse/transloco';
 import { DemographicService } from '../../../services/demographic.service';
 import { DemographicIodService } from '../../../services/demographic-iod.service';
 import { SsgService } from '../../../services/ssg.service';
+import { ModuleBehavior } from '../../../models/module-config.model';
 
 @Component({
-  selector: 'app-maturity-questions',
-  templateUrl: './maturity-questions.component.html'
+    selector: 'app-maturity-questions',
+    templateUrl: './maturity-questions.component.html',
+    standalone: false
 })
 export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   groupings: QuestionGrouping[] = [];
   pageTitle: string = '';
+  moduleBehavior: ModuleBehavior;
   modelId: number;
   modelName: string = '';
   groupingTitle: string = '';
   questionsAlias: string = '';
   showTargetLevel = false;    // TODO: set this from a new column in the DB
+  modelSupportsTargetLevel = false;
 
   loaded = false;
 
@@ -185,21 +189,24 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     obsGetQ.subscribe(
       (response: MaturityQuestionResponse) => {
         this.modelId = response.modelId;
+
+        this.moduleBehavior = this.configSvc.getModuleBehavior(this.modelId);
+
+
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
         this.groupings = response.groupings;
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
-        
+
+        // 100 is the default level if the model does not support a target
+        this.modelSupportsTargetLevel = response.maturityTargetLevel < 100;
+
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
-        this.filterSvc.answerOptions = response.answerOptions;
+        this.filterSvc.answerOptions = response.answerOptions.slice();
         this.filterSvc.maturityModelId = response.modelId;
         this.filterSvc.maturityModelName = response.modelName;
 
-        if (this.groupingId?.toLowerCase() == 'bonus') {
-          this.pageTitle = this.tSvc.translate(`titles.ssg.${this.ssgSvc.ssgSimpleSectorLabel()}`);
-        } else {
-          this.pageTitle = this.tSvc.translate('titles.' + this.questionsAlias.toLowerCase().trim()) + ' - ' + this.modelName;
-        }
+        this.displayTitle();
 
 
         this.glossarySvc.glossaryEntries = response.glossary;
@@ -235,9 +242,9 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     }
 
     this.completionSvc.reset();
+    this.groupings = null;
 
     this.maturitySvc.getGroupingQuestions(groupingId).subscribe((response: MaturityQuestionResponse) => {
-
       this.modelId = response.modelId;
       this.modelName = response.modelName;
       this.questionsAlias = response.questionsAlias;
@@ -245,11 +252,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
 
       this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
-      this.filterSvc.answerOptions = response.answerOptions;
+      this.filterSvc.answerOptions = response.answerOptions.slice();
       this.filterSvc.maturityModelId = response.modelId;
 
       this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
-      this.groupingTitle = response.title;
+
       this.glossarySvc.glossaryEntries = response.glossary;
 
       this.loaded = true;
@@ -266,6 +273,25 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         );
         console.log('Error getting questions: ' + (<Error>error).stack);
       });
+  }
+
+  /**
+   *
+   */
+  displayTitle() {
+    // Bonus questions are for SSGs.
+    if (this.groupingId?.toLowerCase() == 'bonus') {
+      this.pageTitle = this.tSvc.translate(`titles.ssg.${this.ssgSvc.ssgSimpleSectorLabel()}`);
+      return;
+    }
+
+    let displayName = this.modelName;
+
+    if (this.moduleBehavior?.displayNameKey != null) {
+      displayName = this.tSvc.translate(this.moduleBehavior.displayNameKey);
+    }
+
+    this.pageTitle = this.tSvc.translate('titles.' + this.questionsAlias.toLowerCase().trim()) + ' - ' + displayName;
   }
 
   /**
@@ -366,6 +392,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    * @returns
    */
   areGroupingsVisible() {
-    return this.groupings.some(g => g.visible);
+    return this.groupings?.some(g => g.visible);
   }
 }

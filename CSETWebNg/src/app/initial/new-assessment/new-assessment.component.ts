@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -36,18 +36,19 @@ import { TranslocoService } from '@jsverse/transloco';
 
 SwiperCore.use([Navigation, Pagination, Virtual]);
 @Component({
-  selector: 'app-new-assessment',
-  templateUrl: './new-assessment.component.html',
-  styleUrls: ['./new-assessment.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  animations: [
-    trigger('enterAnimation', [
-      state('false', style({ overflow: 'hidden', height: '0px', padding: '0 10px 0 0' })),
-      state('true', style({ overflow: 'hidden', height: '*', padding: '0 10px 10px 0' })),
-      transition('false => true', animate('200ms ease-in')),
-      transition('true => false', animate('200ms ease-out'))
-    ]),
-  ]
+    selector: 'app-new-assessment',
+    templateUrl: './new-assessment.component.html',
+    styleUrls: ['./new-assessment.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    animations: [
+        trigger('enterAnimation', [
+            state('false', style({ overflow: 'hidden', height: '0px', padding: '0 10px 0 0' })),
+            state('true', style({ overflow: 'hidden', height: '*', padding: '0 10px 10px 0' })),
+            transition('false => true', animate('200ms ease-in')),
+            transition('true => false', animate('200ms ease-out'))
+        ]),
+    ],
+    standalone: false
 })
 export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
@@ -94,7 +95,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     public navSvc: NavigationService,
     public configSvc: ConfigService,
     public tSvc: TranslocoService,
-    ) {
+  ) {
   }
 
   ngOnInit(): void {
@@ -162,9 +163,9 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   getImageSrc(src: string) {
     let path = "assets/images/cards/";
     if (src) {
-      return path + src;
+      return path + src.toLowerCase();
     }
-    return path + 'default.jpeg';
+    return path + 'default.png';
   }
 
   openDialog(data: any) {

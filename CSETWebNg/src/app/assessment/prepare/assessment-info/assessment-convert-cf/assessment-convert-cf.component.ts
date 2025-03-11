@@ -8,8 +8,9 @@ import { TranslocoService } from '@jsverse/transloco';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-assessment-convert-cf',
-  templateUrl: './assessment-convert-cf.component.html'
+    selector: 'app-assessment-convert-cf',
+    templateUrl: './assessment-convert-cf.component.html',
+    standalone: false
 })
 export class AssessmentConvertCfComponent implements OnInit {
 

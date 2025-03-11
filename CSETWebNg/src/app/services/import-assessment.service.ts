@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -89,7 +89,6 @@ export class ImportAssessmentService {
       // Make sure our assessment hints are empty ahead of time
 
       this.hintMap.clear();
-
       // send the http-request and subscribe for progress-updates
       this.http.request(req).subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
@@ -122,7 +121,7 @@ export class ImportAssessmentService {
             };
             progress.error(errObj);
           }
-          
+
           // Close the progress-stream if we get an answer form the API
           // The upload is complete
           else progress.complete();
@@ -159,10 +158,6 @@ export class ImportAssessmentService {
    */
   postAssessmentImport(assessmentModel: any) {
     return this.http.post(this.configSvc.apiUrl + 'assessment/import', assessmentModel, headers);
-  }
-
-  legacyAssessmentImport(importFilepath: string) {
-    return this.http.post(this.configSvc.apiUrl + 'assessment/legacy/import', importFilepath, headers);
   }
 
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -37,9 +37,10 @@ import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { HydroService } from '../../../../../services/hydro.service';
 @Component({
-  selector: 'app-maturity-questions-nested',
-  templateUrl: './maturity-questions-nested.component.html',
-  styleUrls: ['./maturity-questions-nested.component.scss']
+    selector: 'app-maturity-questions-nested',
+    templateUrl: './maturity-questions-nested.component.html',
+    styleUrls: ['./maturity-questions-nested.component.scss'],
+    standalone: false
 })
 export class MaturityQuestionsNestedComponent implements OnInit, AfterViewInit, OnDestroy {
 

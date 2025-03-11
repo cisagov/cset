@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,10 @@ import { CsiServiceComposition } from './../../../../models/csi.model';
 import { ConfigService } from './../../../../services/config.service';
 
 @Component({
-  selector: 'app-csi-service-composition',
-  templateUrl: './csi-service-composition.component.html',
-  styleUrls: ['./csi-service-composition.component.scss']
+    selector: 'app-csi-service-composition',
+    templateUrl: './csi-service-composition.component.html',
+    styleUrls: ['./csi-service-composition.component.scss'],
+    standalone: false
 })
 export class CsiServiceCompositionComponent implements OnInit {
   serviceComposition: CsiServiceComposition = {};

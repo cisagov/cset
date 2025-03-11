@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -34,9 +34,10 @@ import { QuestionsService } from '../../services/questions.service';
 
 
 @Component({
-  selector: 'compare-report-m',
-  templateUrl: './compare-report-m.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'compare-report-m',
+    templateUrl: './compare-report-m.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 
 export class CompareReportMComponent implements OnInit, AfterViewChecked {
@@ -79,14 +80,14 @@ export class CompareReportMComponent implements OnInit, AfterViewChecked {
       error => console.log('Compare report load Error: ' + (<Error>error).message)
     );
 
-    this.populateCharts(aggId);
+    this.populateCharts();
   }
 
 
-  populateCharts(aggId: number) {
+  populateCharts() {
 
     // Overall Average
-    this.aggregationSvc.getOverallAverageSummary(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getOverallAverageSummary().subscribe((x: any) => {
 
       // Makes the Compliance Summary chart a light blue color instead of grey
       const chartColors = new ChartColors();
@@ -98,7 +99,7 @@ export class CompareReportMComponent implements OnInit, AfterViewChecked {
     });
 
     // Assessment Answer Summary - tabular data
-    this.aggregationSvc.getMaturityAnswerTotals(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getMaturityAnswerTotals().subscribe((x: any) => {
       // 
       this.answerCounts = x;
 
@@ -112,7 +113,7 @@ export class CompareReportMComponent implements OnInit, AfterViewChecked {
 
 
     // Maturity Compliance By Model/Domain
-    this.aggregationSvc.getAggregationCompliance(aggId).subscribe((resp: any) => {
+    this.aggregationSvc.getAggregationCompliance().subscribe((resp: any) => {
       let showLegend = true;
 
       if (!resp.length) {
@@ -132,7 +133,7 @@ export class CompareReportMComponent implements OnInit, AfterViewChecked {
       });
     });
     // Category Percentage Comparison
-    this.aggregationSvc.getCategoryPercentageComparisons(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getCategoryPercentageComparisons().subscribe((x: any) => {
       this.chartCategoryPercent = this.chartSvc.buildCategoryPercentChart('canvasCategoryPercent', x);
       (<HTMLElement>this.chartCategoryPercent.canvas.parentNode).style.height = this.chartSvc.calcHbcHeightPixels(x);
     });

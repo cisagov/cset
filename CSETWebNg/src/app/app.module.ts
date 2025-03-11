@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -76,9 +76,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import {
-  MAT_DATE_LOCALE,
-  MatNativeDateModule,
-  MatRippleModule
+    MAT_DATE_LOCALE,
+    MatNativeDateModule,
+    MatRippleModule
 } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -283,6 +283,7 @@ import { CompareReportMComponent } from './reports/compare-report-m/compare-repo
 import { AwwaStandardComponent } from './assessment/prepare/standards/awwa-standard/awwa-standard.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
+import { Cmmc2LevelsComponent } from './assessment/prepare/maturity/cmmc2-levels/cmmc2-levels.component';
 import { CmmcAComponent } from './assessment/prepare/maturity/cmmc-a/cmmc-a.component';
 import { CategoryBlockComponent } from './assessment/questions/category-block/category-block.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
@@ -294,6 +295,12 @@ import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-le
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
 import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
 import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
+import { Cmmc2ScoresComponent } from './assessment/results/mat-cmmc2/cmmc2-scores/cmmc2-scores.component';
+import { Cmmc2Level1ScoreComponent } from './assessment/results/mat-cmmc2/cmmc2-level1-score/cmmc2-level1-score.component';
+import { Cmmc2Level2ScoreComponent } from './assessment/results/mat-cmmc2/cmmc2-level2-score/cmmc2-level2-score.component';
+import { Cmmc2Level3ScoreComponent } from './assessment/results/mat-cmmc2/scorecard/cmmc2-level3-score/cmmc2-level3-score.component';
+import { Cmmc2ScorecardPageComponent } from './assessment/results/mat-cmmc2/scorecard/cmmc2-scorecard/cmmc2-scorecard-page.component';
+import { LevelScorecardComponent } from './assessment/results/mat-cmmc2/scorecard/level-scorecard/level-scorecard.component';
 import { Cmmc2LevelResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-level-results/cmmc2-level-results.component';
 import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-domain-results/cmmc2-domain-results.component';
 import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
@@ -301,6 +308,8 @@ import { CommonModule } from '@angular/common';
 import { NavBackNextComponent } from './assessment/navigation/nav-back-next/nav-back-next.component';
 import { CsetOriginComponent } from './initial/cset-origin/cset-origin.component';
 import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-components/compliance-score/compliance-score.component';
+import { ScoreRangeComponent } from './assessment/results/score-range/score-range.component';
+import { ScoreRangesComponent } from './assessment/results/score-ranges/score-ranges.component';
 import { CmmcStyleService } from './services/cmmc-style.service';
 import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
 import { IrpSectionComponent } from './reports/irp/irp.component';
@@ -328,7 +337,7 @@ import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-com
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
 import { MaturityQuestionsIseComponent } from './assessment/questions/maturity-questions/maturity-questions-ise.component';
 import { EdmComponent } from './reports/edm/edm.component';
-import { TooltipModule } from '@cloudfactorydk/ng2-tooltip-directive';
+import { TooltipModule } from './modules/tooltip/tooltip.module';
 import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
 import { QuestionTextCpgComponent } from './assessment/questions/question-text/question-text-cpg/question-text-cpg.component';
 import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';
@@ -339,7 +348,7 @@ import { RraFilteringService } from './services/filtering/maturity-filtering/rra
 import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 import { FeatureOptionComponent } from './assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component';
-import { EdmRelationshipComponent } from './assessment/results/edm/edm-relationship/edm-relationship.component';
+import { EdmHeatmapComponent } from './assessment/results/edm/edm-heatmap/edm-heatmap.component';
 import { EdmGlossaryComponent } from './reports/edm/edm-glossary/edm-glossary.component';
 import { EdmIntroTextComponent } from './reports/edm/edm-intro-text/edm-intro-text.component';
 import { EdmTocComponent } from './reports/edm/edm-toc/edm-toc.component';
@@ -408,7 +417,7 @@ import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessm
 import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
 import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/feature-option-tsa/feature-option-tsa.component';
 import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
-import { SprsScoreComponent } from './assessment/results/mat-cmmc2/sprs-score/sprs-score.component';
+import { SprsScoreComponent } from './assessment/results/mat-cmmc2/scorecard/sprs-score/sprs-score.component';
 import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
@@ -456,7 +465,7 @@ import { CoverSheetAComponent } from './reports/cis/shared/cover-sheet-a/cover-s
 import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb-a/disclaimer-blurb-a.component';
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
 import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
-import { RankedDeficienctyChartComponent } from './assessment/results/cis/ranked-deficiencty-chart/ranked-deficiencty-chart.component';
+import { RankedDeficiencyChartComponent } from './assessment/results/cis/ranked-deficiency-chart/ranked-deficiency-chart.component';
 import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
 import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
 import { CisScoringChartComponent } from './reports/cis/cis-section-scoring/cis-scoring-chart/cis-scoring-chart.component';
@@ -477,7 +486,7 @@ import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/ir
 import { SwiperModule } from 'swiper/angular';
 import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { GalleryService } from './services/gallery.service';
-import { EllipsisModule } from 'ngx-ellipsis';
+import { EllipsisModule } from './modules/ngx-ellipsis/ellipsis.module';
 import { CrrReportComponent } from './reports/crr/crr-report/crr-report.component';
 import { CrrCoverSheetComponent } from './reports/crr/crr-report/crr-cover-sheet/crr-cover-sheet.component';
 import { CrrCoverSheet2Component } from './reports/crr/crr-report/crr-cover-sheet2/crr-cover-sheet2.component';
@@ -486,7 +495,7 @@ import { CrrMil1PerformanceSummaryComponent } from './reports/crr/crr-report/crr
 import { CrrPerformanceSummaryComponent } from './reports/crr/crr-report/crr-performance-summary/crr-performance-summary.component';
 import { CrrNistCsfSummaryComponent } from './reports/crr/crr-report/crr-nist-csf-summary/crr-nist-csf-summary.component';
 import { CrrMil1PerformanceComponent } from './reports/crr/crr-report/crr-mil1-performance/crr-mil1-performance.component';
-import { CrrResultsSummaryComponent } from './reports/crr/crr-report/crr-results-summary/crr-results-summary.component';
+import { CrrMilByDomainComponent } from './reports/crr/crr-report/crr-mil-by-domain/crr-mil-by-domain.component';
 import { CrrPercentageOfPracticesComponent } from './reports/crr/crr-report/crr-percentage-of-practices/crr-percentage-of-practices.component';
 import { CrrDomainDetailComponent } from './reports/crr/crr-report/crr-domain-detail/crr-domain-detail.component';
 import { CrrResourcesComponent } from './reports/crr/crr-report/crr-resources/crr-resources.component';
@@ -501,6 +510,7 @@ import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-s
 import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-main-toc.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
 import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
+import { Cmmc2ScorecardReportComponent } from './reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
 import { IseAnsweredQuestionsComponent } from './reports/ise-answeredquestions/ise-answeredquestions.component';
 import { IseMeritComponent } from './reports/ise-merit/ise-merit.component';
 import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-chart.component';
@@ -555,6 +565,7 @@ import { StandardsComplianceComponent } from './reports/standards-compliance/sta
 import { ComponentComplianceComponent } from './reports/component-compliance/component-compliance.component';
 import { OverallComplianceComponent } from './reports/overall-compliance/overall-compliance.component';
 import { RankedSubjectAreasComponent } from './reports/ranked-subject-areas/ranked-subject-areas.component';
+import { DocumentLibraryComponent } from './reports/document-library/document-library.component';
 import { ComponentQuestionListComponent } from './reports/component-question-list/component-question-list.component';
 import { C2m2ReportComponent } from './reports/c2m2/c2m2-report/c2m2-report.component';
 import { C2m2CoverSheetComponent } from './reports/c2m2/c2m2-report/c2m2-cover-sheet/c2m2-cover-sheet.component';
@@ -620,7 +631,8 @@ import { OtherRemarksComponent } from './assessment/questions/other-remarks/othe
 import { CmuOtherRemarksComponent } from './reports/cmu/cmu-other-remarks/cmu-other-remarks.component';
 import { TranslocoRootModule } from './transloco-root.module';
 import { TranslocoService } from '@jsverse/transloco';
-import { UserLanguageComponent } from './dialogs/user-language/user-language.component';
+import { provideTranslocoScope } from '@jsverse/transloco';
+import { UserSettingsComponent } from './dialogs/user-settings/user-settings.component';
 import { MalcolmUploadErrorComponent } from './dialogs/malcolm/malcolm-upload-error.component';
 import { FooterService } from './services/footer.service';
 import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-info/assessment-convert-cf/assessment-convert-cf.component';
@@ -676,11 +688,14 @@ import { AllCommentsmarkedComponent } from './reports/all-commentsmarked/all-com
 import { AllReviewedComponent } from './reports/all-reviewed/all-reviewed.component';
 import { QuestionsReviewedComponent } from './reports/questions-reviewed/questions-reviewed.component';
 import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.component';
+import { AnalyticsResultsComponent } from './assessment/results/analytics-results/analytics-results.component';
+import { firstValueFrom } from 'rxjs';
+import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
 import { HydroGapReportComponent } from './reports/hydro/hydro-gap-report/hydro-gap-report.component';
 import { HydroReportDeficiencyComponent } from './reports/hydro/hydro-gap-report/hydro-report-deficiency/hydro-report-deficiency.component';
 
-
-@NgModule({ declarations: [
+@NgModule({
+    declarations: [
         AppComponent,
         InitialComponent,
         LoginComponent,
@@ -831,14 +846,23 @@ import { HydroReportDeficiencyComponent } from './reports/hydro/hydro-gap-report
         AssessmentConfigComponent,
         CmmcAComponent,
         CmmcLevelsComponent,
+        Cmmc2LevelsComponent,
         CmmcLevelResultsComponent,
         CmmcLevelDrilldownComponent,
         CmmcComplianceComponent,
         CmmcGapsComponent,
+        Cmmc2ScoresComponent,
+        Cmmc2Level1ScoreComponent,
+        Cmmc2Level2ScoreComponent,
+        Cmmc2Level3ScoreComponent,
+        Cmmc2ScorecardPageComponent,
+        LevelScorecardComponent,
         Cmmc2LevelResultsComponent,
         Cmmc2DomainResultsComponent,
         SprsScoreComponent,
         ComplianceScoreComponent,
+        ScoreRangeComponent,
+        ScoreRangesComponent,
         ModelSelectComponent,
         CategoryBlockComponent,
         AskQuestionsComponent,
@@ -891,7 +915,7 @@ import { HydroReportDeficiencyComponent } from './reports/hydro/hydro-gap-report
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
         FeatureOptionComponent,
-        EdmRelationshipComponent,
+        EdmHeatmapComponent,
         EdmGlossaryComponent,
         EdmIntroTextComponent,
         EdmTocComponent,
@@ -1002,7 +1026,7 @@ import { HydroReportDeficiencyComponent } from './reports/hydro/hydro-gap-report
         DisclaimerBlurbAComponent,
         ConfigCisComponent,
         CisRankedDeficiencyComponent,
-        RankedDeficienctyChartComponent,
+        RankedDeficiencyChartComponent,
         CisCommentsmarkedComponent,
         RankedDeficiencyComponent,
         CisSectionScoringComponent,
@@ -1028,7 +1052,7 @@ import { HydroReportDeficiencyComponent } from './reports/hydro/hydro-gap-report
         CrrPerformanceSummaryComponent,
         CrrNistCsfSummaryComponent,
         CrrMil1PerformanceComponent,
-        CrrResultsSummaryComponent,
+        CrrMilByDomainComponent,
         CrrPercentageOfPracticesComponent,
         CrrDomainDetailComponent,
         CrrResourcesComponent,
@@ -1047,6 +1071,7 @@ import { HydroReportDeficiencyComponent } from './reports/hydro/hydro-gap-report
         CrrMainTocComponent,
         Cmmc2CommentsMarkedComponent,
         Cmmc2DeficiencyComponent,
+        Cmmc2ScorecardReportComponent,
         PrivacyWarningComponent,
         PrivacyWarningRejectComponent,
         SearchPageComponent,
@@ -1093,6 +1118,7 @@ import { HydroReportDeficiencyComponent } from './reports/hydro/hydro-gap-report
         ComponentComplianceComponent,
         OverallComplianceComponent,
         RankedSubjectAreasComponent,
+        DocumentLibraryComponent,
         ComponentQuestionListComponent,
         C2m2ReportComponent,
         C2m2CoverSheetComponent,
@@ -1154,7 +1180,7 @@ import { HydroReportDeficiencyComponent } from './reports/hydro/hydro-gap-report
         CmuAppendixCoverComponent,
         OtherRemarksComponent,
         CmuOtherRemarksComponent,
-        UserLanguageComponent,
+        UserSettingsComponent,
         MalcolmUploadErrorComponent,
         AssessmentConvertCfComponent,
         IseWarningsComponent,
@@ -1205,10 +1231,12 @@ import { HydroReportDeficiencyComponent } from './reports/hydro/hydro-gap-report
         AllAnsweredquestionsComponent,
         AllCommentsmarkedComponent,
         AllReviewedComponent,
-        QuestionsReviewedComponent, 
+        QuestionsReviewedComponent,
         RolesChangedComponent,
         HydroGapReportComponent,
-        HydroReportDeficiencyComponent
+        HydroReportDeficiencyComponent,
+        AnalyticsResultsComponent,
+        UpgradeComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
@@ -1305,29 +1333,29 @@ import { HydroReportDeficiencyComponent } from './reports/hydro/hydro-gap-report
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
             baseUrl: 'assets/monaco'
-        })], providers: [
+        })],
+    providers: [
         TranslocoService,
+        provideTranslocoScope('tutorial', 'reports'),
         ConfigService,
         AuthenticationService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: (configSvc: ConfigService, authSvc: AuthenticationService, tSvc: TranslocoService) => {
+        provideAppInitializer(() => {
+            const initializerFn = ((configSvc: ConfigService, authSvc: AuthenticationService, tSvc: TranslocoService) => {
                 return () => {
                     return configSvc.loadConfig().then(() => {
                         // Load and set the language based on config
-                        return tSvc
-                            .load(configSvc.config.defaultLang)
-                            .toPromise()
-                            .then(() => {
+
+                        const obs = tSvc.load(configSvc.config.defaultLang);
+                        const prom = firstValueFrom(obs);
+                        return prom.then(() => {
                             tSvc.setActiveLang(configSvc.config.defaultLang);
                             return authSvc.checkLocal();
                         });
                     });
                 };
-            },
-            deps: [ConfigService, AuthenticationService, TranslocoService],
-            multi: true
-        },
+            })(inject(ConfigService), inject(AuthenticationService), inject(TranslocoService));
+            return initializerFn();
+        }),
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,
@@ -1385,5 +1413,6 @@ import { HydroReportDeficiencyComponent } from './reports/hydro/hydro-gap-report
         FooterService,
         AnalyticsService,
         provideHttpClient(withInterceptorsFromDi())
-    ] })
+    ]
+})
 export class AppModule { }

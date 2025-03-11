@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,9 +27,10 @@ import { HttpClient } from '@angular/common/http';
 
 
 @Component({
-  selector: 'app-pdf-reports',
-  templateUrl: './pdf-reports.component.html',
-  styleUrls: ['./pdf-reports.component.scss']
+    selector: 'app-pdf-reports',
+    templateUrl: './pdf-reports.component.html',
+    styleUrls: ['./pdf-reports.component.scss'],
+    standalone: false
 })
 
 export class PdfReportsComponent implements OnInit, AfterViewInit {
@@ -556,7 +557,7 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
       layout: 'noBorders'
     }
 
-    // A seperate table for the table key
+    // A separate table for the table key
     let tableLegend = {
       layout: 'noBorders',
       table: {

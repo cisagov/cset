@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,10 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { RraDataService } from '../../../../services/rra-data.service';
 import { TranslocoService } from '@jsverse/transloco';
 @Component({
-  selector: 'app-rra-answer-compliance',
-  templateUrl: './rra-answer-compliance.component.html',
-  styleUrls: ['./rra-answer-compliance.component.scss']
+    selector: 'app-rra-answer-compliance',
+    templateUrl: './rra-answer-compliance.component.html',
+    styleUrls: ['./rra-answer-compliance.component.scss'],
+    standalone: false
 })
 export class RraAnswerComplianceComponent implements OnInit {
   complianceByGoal = [];
@@ -40,9 +41,9 @@ export class RraAnswerComplianceComponent implements OnInit {
   animation: boolean = false;
 
   constructor(
-    public rraDataSvc: RraDataService, 
+    public rraDataSvc: RraDataService,
     public tSvc: TranslocoService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.rraDataSvc.getRRADetail().subscribe((r: any) => {
@@ -114,7 +115,7 @@ export class RraAnswerComplianceComponent implements OnInit {
 
   @HostListener('window:beforeprint')
   beforePrint() {
-    this.view = [1300, 600];
+    this.view = [700, 350];
   }
 
   @HostListener('window:afterprint')

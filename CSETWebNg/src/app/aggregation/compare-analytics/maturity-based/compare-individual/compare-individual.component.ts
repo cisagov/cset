@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,17 +28,18 @@ import { ColorService } from '../../../../services/color.service';
 import { QuestionsService } from '../../../../services/questions.service';
 
 @Component({
-  selector: 'app-compare-individual-maturity',
-  templateUrl: './compare-individual.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-compare-individual-maturity',
+    templateUrl: './compare-individual.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class CompareMaturityIndividualComponent implements OnInit {
 
   answerCounts: any[] = null;
   answerLabels: string[] = [];
   chartsMaturityCompliance: any[];
-  
+
 
   constructor(
     public aggregationSvc: AggregationService,
@@ -56,10 +57,8 @@ export class CompareMaturityIndividualComponent implements OnInit {
    * 
    */
   populateCharts() {
-    const aggId: number = +localStorage.getItem("aggregationId");
-
     // Assessment Answer Summary - tabular data
-    this.aggregationSvc.getMaturityAnswerTotals(aggId).subscribe((x: any) => {
+    this.aggregationSvc.getMaturityAnswerTotals().subscribe((x: any) => {
       // 
       this.answerCounts = x;
 
@@ -71,9 +70,8 @@ export class CompareMaturityIndividualComponent implements OnInit {
       });
     });
 
-
     // Maturity Compliance By Model/Domain
-    this.aggregationSvc.getAggregationCompliance(aggId).subscribe((resp: any) => {
+    this.aggregationSvc.getAggregationCompliance().subscribe((resp: any) => {
       let showLegend = true;
 
       if (!resp.length) {

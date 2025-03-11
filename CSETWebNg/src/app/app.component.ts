@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -50,11 +50,12 @@ import { translate } from '@jsverse/transloco';
 declare var $: any;
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
 export class AppComponent implements OnInit, AfterViewInit {
   docUrl: string;
@@ -241,7 +242,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+    const url = this.configSvc.apiUrl + 'assessment/export/excel?token=' + localStorage.getItem('userToken');
+    window.open(url);
   }
 
 

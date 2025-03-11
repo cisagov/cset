@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,11 @@ import { ConfigService } from '../../services/config.service';
 import { VersionService } from '../../services/version.service';
 
 @Component({
-  selector: 'app-about',
-  templateUrl: './about.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-about',
+    templateUrl: './about.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class AboutComponent {
   version: any;
@@ -40,16 +41,16 @@ export class AboutComponent {
   constructor(private dialog: MatDialogRef<AboutComponent>,
     public configSvc: ConfigService,
     public versionSvc: VersionService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
-      this.versionSvc.localVersionObservable$.subscribe(localVersion => {
-        this.version = localVersion;
-      });
-    }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.versionSvc.localVersionObservable$.subscribe(localVersion => {
+      this.version = localVersion;
+    });
+  }
 
-    ngOnInit() {
-    }
+  ngOnInit() {
+  }
 
-    close() {
+  close() {
     return this.dialog.close();
-    }
+  }
 }

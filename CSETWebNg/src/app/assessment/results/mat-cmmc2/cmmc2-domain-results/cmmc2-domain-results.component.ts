@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,17 +23,17 @@
 ////////////////////////////////
 import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
-import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../../../services/maturity.service';
 import { CmmcStyleService } from '../../../../services/cmmc-style.service';
 import { ChartService } from '../../../../services/chart.service';
 
 
 @Component({
-  selector: 'app-cmmc2-domain-results',
-  templateUrl: './cmmc2-domain-results.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-cmmc2-domain-results',
+    templateUrl: './cmmc2-domain-results.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class Cmmc2DomainResultsComponent implements OnInit, AfterContentInit {
 
@@ -48,7 +48,6 @@ export class Cmmc2DomainResultsComponent implements OnInit, AfterContentInit {
   constructor(
     public navSvc: NavigationService,
     public maturitySvc: MaturityService,
-    private titleService: Title,
     public cmmcStyleSvc: CmmcStyleService,
     public chartSvc: ChartService
   ) { }
@@ -63,7 +62,6 @@ export class Cmmc2DomainResultsComponent implements OnInit, AfterContentInit {
         this.targetLevel = r.toString();
       }
     });
-
   }
 
   ngAfterContentInit(): void {

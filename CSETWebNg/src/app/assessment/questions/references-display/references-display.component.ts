@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,8 +32,9 @@ import { TranslocoService } from '@jsverse/transloco';
  * the old table.
  */
 @Component({
-  selector: 'app-references-display',
-  templateUrl: './references-display.component.html'
+    selector: 'app-references-display',
+    templateUrl: './references-display.component.html',
+    standalone: false
 })
 export class ReferencesDisplayComponent implements OnInit {
 
@@ -73,13 +74,17 @@ export class ReferencesDisplayComponent implements OnInit {
     const list: ReferenceDocLink[] = [];
 
     docList?.forEach(ref => {
+      ref.fileName = ref.fileName?.trim();
+      ref.title = ref.title?.trim();
+      ref.url = ref.url?.trim();
+
       let listDoc: ReferenceDocLink = list.find(d => d.fileName == ref.fileName && d.title == ref.title);
       if (!listDoc) {
         listDoc = {
           fileId: ref.fileId,
-          fileName: ref.fileName?.trim(),
-          title: ref.title?.trim(),
-          url: ref.url?.trim(),
+          fileName: ref.fileName,
+          title: ref.title,
+          url: ref.url,
           isUploaded: ref.isUploaded,
           bookmarks: []
         };

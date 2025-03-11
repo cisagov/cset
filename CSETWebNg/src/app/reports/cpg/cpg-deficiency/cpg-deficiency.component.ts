@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +32,10 @@ import { QuestionsService } from '../../../services/questions.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-cpg-deficiency',
-  templateUrl: './cpg-deficiency.component.html',
-  styleUrls: ['./cpg-deficiency.component.scss', '../../reports.scss']
+    selector: 'app-cpg-deficiency',
+    templateUrl: './cpg-deficiency.component.html',
+    styleUrls: ['./cpg-deficiency.component.scss', '../../reports.scss'],
+    standalone: false
 })
 export class CpgDeficiencyComponent implements OnInit {
 
@@ -76,14 +77,17 @@ export class CpgDeficiencyComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
 
-    this.titleSvc.setTitle(this.tSvc.translate('reports.core.cpg.deficiency.cpg deficiency') + " - " + this.configSvc.behaviors.defaultTitle);
+    this.tSvc.selectTranslate('core.cpg.deficiency.cpg deficiency', {}, { scope: 'reports' })
+      .subscribe(title => {
+        this.titleSvc.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle)
+      });
 
     // make sure that the assessSvc has the assessment loaded so that we can determine any SSG model applicable
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessSvc.assessment = assessmentDetail;
 
       var ssgModelId = this.ssgSvc.ssgBonusModel();
-  
+
       // get any deficient answers for the SSG model
       if (!!ssgModelId) {
         this.ssgIncluded = true;

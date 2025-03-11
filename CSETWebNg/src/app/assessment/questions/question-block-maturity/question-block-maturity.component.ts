@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -42,9 +42,10 @@ import { TranslocoService } from '@jsverse/transloco';
  * of the question block can eventually replace the original.
  */
 @Component({
-  selector: 'app-question-block-maturity',
-  templateUrl: './question-block-maturity.component.html',
-  styleUrls: ['./question-block-maturity.component.scss']
+    selector: 'app-question-block-maturity',
+    templateUrl: './question-block-maturity.component.html',
+    styleUrls: ['./question-block-maturity.component.scss'],
+    standalone: false
 })
 export class QuestionBlockMaturityComponent implements OnInit {
 
@@ -55,7 +56,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   private _timeoutId: NodeJS.Timeout;
 
   percentAnswered = 0;
-  answerOptions = [];
+  modelAnswerOptions = [];
 
   // tokenized placeholder for transloco, made this variable a switch between the different placeholders
   altTextPlaceholder = "alt cset";
@@ -88,7 +89,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
    */
   ngOnInit(): void {
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
-      this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
+      this.modelAnswerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
       this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
       this.maturityModelName = this.assessSvc.assessment.maturityModel.modelName;
     }
@@ -139,7 +140,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * hidden.  Use config moduleBehavior to define this.
    */
   showLevelIndicator(q): boolean {
-    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel.modelName)
+    const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment.maturityModel.modelName);
     if (!!behavior) {
       return behavior.showMaturityLevelBadge ?? true;
     }
@@ -238,12 +239,10 @@ export class QuestionBlockMaturityComponent implements OnInit {
         return;
       }
       if (q.visible) {
-
         totalCount++;
         if (q.answer && q.answer !== "U") {
           answeredCount++;
         }
-
       }
     });
     this.percentAnswered = (answeredCount / totalCount) * 100;
@@ -300,7 +299,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
         this.storeAnswer(q, newAnswerValue);
       }
     }
-
   }
 
   checkReviewKeyPress(event: any, q: Question) {
@@ -310,6 +308,4 @@ export class QuestionBlockMaturityComponent implements OnInit {
       }
     }
   }
-
-
 }

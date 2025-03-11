@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,11 @@ import { EmailService } from '../services/email.service';
 @Directive({
     selector: '[appEmailValidator]',
     providers: [{
-        provide: NG_VALIDATORS,
-        useExisting: EmailValidatorDirective,
-        multi: true
-    }]
+            provide: NG_VALIDATORS,
+            useExisting: EmailValidatorDirective,
+            multi: true
+        }],
+    standalone: false
 })
 export class EmailValidatorDirective implements Validator {
     constructor(private emailSvc: EmailService) { }

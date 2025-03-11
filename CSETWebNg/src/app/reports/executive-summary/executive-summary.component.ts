@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -34,9 +34,10 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
-  selector: 'executive-summary',
-  templateUrl: './executive-summary.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'executive-summary',
+    templateUrl: './executive-summary.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class ExecutiveSummaryComponent implements OnInit {
   response: any;
@@ -45,7 +46,6 @@ export class ExecutiveSummaryComponent implements OnInit {
   chartStandardsSummary: Chart;
   //canvasStandardResultsByCategory: Chart;
   responseResultsByCategory: any;
-  translationSub: any; 
 
   // Charts for Components
   componentCount = 0;
@@ -69,17 +69,16 @@ export class ExecutiveSummaryComponent implements OnInit {
     public acetSvc: ACETService,
     private assessmentSvc: AssessmentService,
     public configSvc: ConfigService,
-    public tSvc: TranslocoService, 
-    private translocoService: TranslocoService
+    public tSvc: TranslocoService,
   ) { }
 
   ngOnInit() {
 
     this.titleService.setTitle("Executive Summary - " + this.configSvc.behaviors.defaultTitle);
 
-    this.translationSub = this.translocoService.selectTranslate('')
-        .subscribe(value => 
-        this.titleService.setTitle(this.tSvc.translate('reports.core.executive summary.report title') + ' - ' + this.configSvc.behaviors.defaultTitle));
+    this.tSvc.selectTranslate('core.executive summary.report title', {}, { scope: 'reports' })
+      .subscribe(title =>
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.reportSvc.getReport('executive').subscribe(
       (r: any) => {
@@ -121,9 +120,4 @@ export class ExecutiveSummaryComponent implements OnInit {
   usesRAC() {
     return !!this.responseResultsByCategory?.dataSets.find(e => e.label === 'RAC');
   }
-
-  ngOnDestroy() {
-    this.translationSub.unsubscribe()
-}
-
 }

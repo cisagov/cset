@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -243,6 +243,10 @@ namespace CSETWebCore.Helpers
                     question.Cost = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "COST")?.PropertyValue;
                     question.Impact = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "IMPACT")?.PropertyValue;
                     question.Complexity = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "COMPLEXITY")?.PropertyValue;
+
+
+                    question.Measurement = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "MEASUREMENT")?.PropertyValue;
+                    question.Attestation = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "ATTESTATION")?.PropertyValue;
 
 
                     // overlay

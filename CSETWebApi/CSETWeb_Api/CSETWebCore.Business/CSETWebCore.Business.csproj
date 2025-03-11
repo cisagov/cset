@@ -39,6 +39,9 @@
     <None Remove="Demographic\DemographicIO\Export\" />
     <None Remove="Demographic\DemographicIO\Import\" />
     <None Remove="Demographic\DemographicIO\Models\" />
+    <None Update="App_Data\AssessmentConversion\CMMC2F.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -118,7 +121,6 @@
   <ItemGroup>
     <PackageReference Include="CsvHelper.Excel.Core" Version="27.2.1" />
     <PackageReference Include="DocumentFormat.OpenXml" Version="3.1.0" />
-    <PackageReference Include="DotNetZip" Version="1.16.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.67" />
     <PackageReference Include="Lucene.Net" Version="4.8.0-beta00016" />
     <PackageReference Include="Lucene.Net.Analysis.Common" Version="4.8.0-beta00016" />
@@ -129,8 +131,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NJsonSchema" Version="11.0.2" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.14" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.15" />
     <PackageReference Include="Npoi.Mapper" Version="6.2.1" />
+    <PackageReference Include="SharpZipLib" Version="1.4.2" />
     <PackageReference Include="System.Data.OleDb" Version="8.0.1" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.10" />
     <PackageReference Include="TinyMapper" Version="3.0.3" />
@@ -185,6 +188,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\ES\SECURITY_QUESTION.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\JP\GALLERY_ITEM.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\JP\SECTOR.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\JP\SECTOR_INDUSTRY.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\UK\DEMOGRAPHICS_ORGANIZATION_TYPE.json">

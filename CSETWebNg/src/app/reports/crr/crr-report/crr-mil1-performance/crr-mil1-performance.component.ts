@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
-  selector: 'app-crr-mil1-performance',
-  templateUrl: './crr-mil1-performance.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+    selector: 'app-crr-mil1-performance',
+    templateUrl: './crr-mil1-performance.component.html',
+    styleUrls: ['./../crr-report.component.scss'],
+    standalone: false
 })
 export class CrrMil1PerformanceComponent implements OnInit {
   @Input() model: CmuReportModel;
@@ -37,7 +38,7 @@ export class CrrMil1PerformanceComponent implements OnInit {
   scoreBarCharts: string[] = [];
   heatMaps: any[] = [];
 
-  constructor(private cmuSvc: CmuService) {}
+  constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
     this.cmuSvc.getMil1FullAnswerDistribWidget().subscribe((resp: string) => {

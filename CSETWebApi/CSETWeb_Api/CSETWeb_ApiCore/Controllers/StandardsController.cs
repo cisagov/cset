@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -11,9 +11,10 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using CSETWebCore.Business.Authorization;
 
 namespace CSETWebCore.Api.Controllers
-{
+{   [CsetAuthorize]
     public class StandardsController : ControllerBase
     {
         private readonly ITokenManager _tokenManager;
