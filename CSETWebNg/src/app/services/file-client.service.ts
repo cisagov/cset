@@ -59,18 +59,6 @@ export class FileUploadClientService {
   /**
    *
    */
-  downloadFile(id: number) {
-    const headers = {
-      headers: new HttpHeaders()
-        .set('Content-Type', 'application/json'),
-      params: new HttpParams()
-    };
-    return this.http.get(this.downloadUrl + '' + id, headers);
-  }
-
-  /**
-   *
-   */
   download(url: string): Observable<Blob> {
     return this.http.get(url, { responseType: 'blob' });
   }

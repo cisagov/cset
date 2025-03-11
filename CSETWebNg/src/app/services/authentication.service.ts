@@ -294,11 +294,11 @@ export class AuthenticationService {
    * Requests a JWT with a short lifespan.
    */
   getShortLivedToken() {
-    return this.http.get(this.configSvc.apiUrl + 'auth/token?expSeconds=30000');
+    return this.http.get(this.configSvc.apiUrl + 'auth/token?expSeconds=60');
   }
 
   getShortLivedTokenForAssessment(assessment_id: number) {
-    return this.http.get(this.configSvc.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=30000');
+    return this.http.get(this.configSvc.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=60');
   }
 
   changePassword(data: ChangePassword) {
