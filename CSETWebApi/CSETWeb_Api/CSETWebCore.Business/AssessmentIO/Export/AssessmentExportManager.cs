@@ -641,10 +641,27 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     zipWrapper.Password = password;
                 }
                 ExportJson exportFile = CreateJson(assessmentId, password, passwordHint, scrubData);
-                zipWrapper.AddEntry(exportFile.SetObj.SetName, exportFile.SetObj.Json);
-                zipWrapper.AddEntry(exportFile.DocObj.Doc, exportFile.DocObj.Json);
-                zipWrapper.AddEntry(exportFile.ModelObj.SetName, exportFile.ModelObj.Json);
-                zipWrapper.AddEntry(exportFile.PasswordObj.Password, exportFile.PasswordObj.Hint);
+                if (exportFile.SetObj != null)
+                {
+                    zipWrapper.AddEntry(exportFile.SetObj.SetName, exportFile.SetObj.Json);
+                }
+
+                if (exportFile.DocObj != null)
+                {
+                    zipWrapper.AddEntry(exportFile.DocObj.Doc, exportFile.DocObj.Json);
+
+                }
+
+                if (exportFile.ModelObj != null)
+                {
+                    zipWrapper.AddEntry(exportFile.ModelObj.SetName, exportFile.ModelObj.Json);
+                }
+
+                if (exportFile.PasswordObj != null)
+                {
+                    zipWrapper.AddEntry(exportFile.PasswordObj.Password, exportFile.PasswordObj.Hint);
+                }
+                
                 zipWrapper.Save();
                 zipWrapper.CloseStream();
             }
