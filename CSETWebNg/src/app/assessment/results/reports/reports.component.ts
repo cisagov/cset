@@ -281,23 +281,29 @@ export class ReportsComponent implements OnInit, AfterViewInit {
           
           // get short-term JWT from API
           this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
-            let url = this.fileSvc.exportUrl + '?';
+            let url = this.fileSvc.exportUrl;
             
             if (jsonOnly) {
               url = this.fileSvc.exportJsonUrl;
               ext = '.json';
             }
 
+            let params = '';
+
             if (result.scrubData) {
-              url = url + "&scrubData=" + result.scrubData;
+              params = params + "&scrubData=" + result.scrubData;
             }
 
             if (result.encryptionData.password != null && result.encryptionData.password != "") {
-              url = url + "&password=" + result.encryptionData.password;
+              params = params + "&password=" + result.encryptionData.password;
             }
 
             if (result.encryptionData.hint != null && result.encryptionData.hint != "") {
-              url = url + "&passwordHint=" + result.encryptionData.hint;
+              params = params + "&passwordHint=" + result.encryptionData.hint;
+            }
+
+            if (params.length > 0) {
+              url = url + '?' + params.replace(/^&/, '');
             }
 
             this.fileExportSvc.fetchAndSaveFile(url, response.token);
