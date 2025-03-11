@@ -128,9 +128,9 @@ namespace CSETWebCore.Api.Controllers
 
                 string ext = ".json";
 
-                AssessmentExportFile result = new AssessmentExportManager(_context).ExportAssessment(assessmentId, ext, password, passwordHint, true, scrubData ?? false);
+                AssessmentExportFileJson result = new AssessmentExportManager(_context).ExportAssessmentJson(assessmentId, ext, password, passwordHint, scrubData ?? false);
 
-                return File(result.FileContents, "application/octet-stream", result.FileName);
+                return File(result.JSON, "application/json", result.FileName);
             }
             catch (Exception exc)
             {
