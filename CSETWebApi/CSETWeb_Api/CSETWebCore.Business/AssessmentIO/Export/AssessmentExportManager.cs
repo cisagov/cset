@@ -20,7 +20,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 
-
 //using CSETWebCore.Business.ImportAssessment.Models.Version_10_1;
 
 namespace CSETWebCore.Business.AssessmentIO.Export
@@ -493,7 +492,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         /// Gathers the data for an assessment and returns a model.json file, along with any attached documents.
         /// If desired, only the model.json will be returned, named to match the assessment name.
         /// </summary>
-        private Stream ArchiveStream(int assessmentId, string password, string passwordHint, bool jsonOnly = false, bool scrubData = false)
+        private Stream ArchiveStream(int assessmentId, string password, string passwordHint, bool scrubData = false)
         {
 
             var model = CopyForExport(assessmentId, scrubData);
@@ -579,26 +578,19 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                     model.CustomStandards.Add(extStandard.shortName);
 
-
-
-
-
-                    // if doing a full export, include documents/artifacts
-                    if (!jsonOnly)
+                    
+                    var files = extStandard.requirements.SelectMany(s => s.references.Concat(new ExternalResource[] { s.source })).OfType<ExternalResource>().Distinct();
+                    foreach (var file in files)
                     {
-                        var files = extStandard.requirements.SelectMany(s => s.references.Concat(new ExternalResource[] { s.source })).OfType<ExternalResource>().Distinct();
-                        foreach (var file in files)
-                        {
-                            var genFile = _context.GEN_FILE.FirstOrDefault(s => s.File_Name == file.fileName && (s.Is_Uploaded));
-                            if (genFile == null || model.CustomStandardDocs.Contains(file.fileName))
-                                continue;
+                        var genFile = _context.GEN_FILE.FirstOrDefault(s => s.File_Name == file.fileName && (s.Is_Uploaded));
+                        if (genFile == null || model.CustomStandardDocs.Contains(file.fileName))
+                            continue;
 
-                            var doc = genFile.ToExternalDocument();
-                            var jsonDoc = JsonConvert.SerializeObject(doc, Formatting.Indented);
+                        var doc = genFile.ToExternalDocument();
+                        var jsonDoc = JsonConvert.SerializeObject(doc, Formatting.Indented);
 
-                            zipWrapper.AddEntry($"{doc.ShortName}.json", jsonDoc);
-                            model.CustomStandardDocs.Add(file.fileName);
-                        }
+                        zipWrapper.AddEntry($"{doc.ShortName}.json", jsonDoc);
+                        model.CustomStandardDocs.Add(file.fileName);
                     }
                 }
 
@@ -607,26 +599,94 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 model.ExportDateTime = DateTime.UtcNow;
 
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
-
-
-                if (jsonOnly)
-                {
-                    // Write only the JSON portion as a stand-alone file to the stream
-                    byte[] bytes = Encoding.UTF8.GetBytes(json);
-                    archiveStream.Write(bytes, 0, bytes.Length);
-                }
-                else
-                {
-                    zipWrapper.AddEntry("model.json", json);
-                    zipWrapper.AddEntry($"{passwordHint}.hint", passwordHint);
-                }
-
+                
+                zipWrapper.AddEntry("model.json", json);
+                zipWrapper.AddEntry($"{passwordHint}.hint", passwordHint);
                 zipWrapper.Save();
                 zipWrapper.CloseStream();
+                
             }
-
             archiveStream.Seek(0, SeekOrigin.Begin);
             return archiveStream;
+        }
+        
+        /// <summary>
+        /// Gathers the data for an assessment and returns a model.json file, along with any attached documents.
+        /// If desired, only the model.json will be returned, named to match the assessment name.
+        /// </summary>
+        private Stream ArchiveStreamJSON(int assessmentId, bool scrubData = false)
+        {
+
+            var model = CopyForExport(assessmentId, scrubData);
+            var jsonStream = new MemoryStream();
+
+                foreach (var standard in model.jAVAILABLE_STANDARDS)
+                {
+                    if (!standard.Selected)
+                    {
+                        continue;
+                    }
+
+                    var set = _context.SETS
+                        .Include(s => s.Set_Category)
+                        .Where(s => s.Set_Name == standard.Set_Name).FirstOrDefault();
+                    if (set == null)
+                    {
+                        continue;
+                    }
+
+
+                    var qq = from nq in _context.NEW_QUESTION
+                             join nqs in _context.NEW_QUESTION_SETS on nq.Question_Id equals nqs.Question_Id
+                             where nqs.Set_Name == standard.Set_Name
+                             select nq;
+
+                    var questions = qq.ToList();
+                    set.NEW_QUESTION = new List<NEW_QUESTION>(questions);
+
+
+                    var rq = _context.REQUIREMENT_SETS
+                        .Include(s => s.Requirement)
+                        .ThenInclude(s => s.REQUIREMENT_LEVELS)
+                        .Where(s => s.Set_Name == standard.Set_Name)
+                        .Select(s => s.Requirement);
+
+                    set.NEW_REQUIREMENT = new List<NEW_REQUIREMENT>(rq.ToList());
+                    
+
+                    var extStandard = StandardConverter.ToExternalStandard(set, _context);
+
+
+                    //Set the GUID at time of export so we are sure it's right!!!
+                    model.jANSWER = model.jANSWER.Where(s => s.Is_Requirement ?? false).GroupJoin(set.NEW_REQUIREMENT, s => s.Question_Or_Requirement_Id, s => s.Requirement_Id, (t, s) =>
+                    {
+                        var req = s.FirstOrDefault();
+                        if (req != null)
+                        {
+                            var buffer = Encoding.Default.GetBytes($"{extStandard.shortName}|||{req.Requirement_Title}|||{req.Requirement_Text}");
+                            t.Custom_Question_Guid = new Guid(MD5.Create().ComputeHash(buffer)).ToString();
+                        }
+                        return t;
+                    }).Concat(model.jANSWER.Where(s => !s.Is_Requirement ?? false).GroupJoin(questions, s => s.Question_Or_Requirement_Id, s => s.Question_Id, (t, s) =>
+                    {
+                        var req = s.FirstOrDefault();
+                        if (req != null)
+                        {
+                            var buffer = Encoding.Default.GetBytes(req.Simple_Question);
+                            t.Custom_Question_Guid = new Guid(MD5.Create().ComputeHash(buffer)).ToString();
+                        }
+                        return t;
+                    })).ToList();
+
+                    model.CustomStandards.Add(extStandard.shortName);
+                }
+                
+                model.ExportDateTime = DateTime.UtcNow;
+                var json = JsonConvert.SerializeObject(model, Formatting.Indented);
+                byte[] bytes = Encoding.UTF8.GetBytes(json);
+                jsonStream.Write(bytes, 0, bytes.Length);
+                jsonStream.Seek(0, SeekOrigin.Begin);
+                return jsonStream;
         }
 
 
@@ -651,7 +711,15 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             }
 
             // export the assessment
-            Stream assessmentFileContents = ArchiveStream(assessmentId, password, passwordHint, jsonOnly, scrubData);
+            Stream assessmentFileContents = null;
+            if (jsonOnly)
+            {
+              assessmentFileContents = ArchiveStreamJSON(assessmentId, scrubData);
+            }
+            else
+            {
+              assessmentFileContents = ArchiveStream(assessmentId, password, passwordHint, scrubData);
+            }
 
             // mark the assessment as clean after export
             var assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
