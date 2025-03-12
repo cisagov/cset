@@ -193,18 +193,17 @@ export class IseExaminationComponent implements OnInit {
           this.actionData = observationData;
 
           for (let i = 0; i < this.actionData?.length; i++) {
-            let actionItemRow = this.actionData[i];
+            let item = this.actionData[i];
 
-            if (actionItemRow.action_Items != '') { //filters out 'deleted' action items
-              if (!this.masterActionItemsMap.has(actionItemRow.observation_Id)) {
-
-                this.masterActionItemsMap.set(actionItemRow.observation_Id, [actionItemRow]);
+            //filters out 'deleted' action items
+            if (item.action_Items != '') {
+              // Observation_Id will be the same for "grouped" actions. If the id changes, it's a new thing
+              if (!this.masterActionItemsMap.has(item.observation_Id)) {
+                this.masterActionItemsMap.set(item.observation_Id, [item]);
               } else {
-                let tempActionArray = this.masterActionItemsMap.get(actionItemRow.observation_Id);
-
-                tempActionArray.push(actionItemRow);
-
-                this.masterActionItemsMap.set(actionItemRow.observation_Id, tempActionArray);
+                let tempActionArray = this.masterActionItemsMap.get(item.observation_Id);
+                tempActionArray.push(item);
+                this.masterActionItemsMap.set(item.observation_Id, tempActionArray);
               }
             }
           }
