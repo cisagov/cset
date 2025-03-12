@@ -15,6 +15,7 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
@@ -120,17 +121,15 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/assessment/export/json")]
-        public IActionResult ExportAssessmentAsJson([FromQuery] bool? scrubData, [FromQuery] string password = "", [FromQuery] string passwordHint = "")
+        public IActionResult ExportAssessmentAsJson([FromQuery] bool? scrubData)
         {
             try
             {
                 int assessmentId = _token.AssessmentForUser();
 
-                string ext = ".json";
-
-                AssessmentExportFile result = new AssessmentExportManager(_context).ExportAssessment(assessmentId, ext, password, passwordHint, true, scrubData ?? false);
-
-                return File(result.FileContents, "application/octet-stream", result.FileName);
+                AssessmentExportFileJson result = new AssessmentExportManager(_context).ExportAssessmentJson(assessmentId, scrubData ?? false);
+                byte[] contents = Encoding.UTF8.GetBytes(result.JSON);
+                return  File(contents, "application/json", result.FileName);
             }
             catch (Exception exc)
             {
