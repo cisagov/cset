@@ -121,15 +121,13 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/assessment/export/json")]
-        public IActionResult ExportAssessmentAsJson([FromQuery] bool? scrubData, [FromQuery] string password = "", [FromQuery] string passwordHint = "")
+        public IActionResult ExportAssessmentAsJson([FromQuery] bool? scrubData)
         {
             try
             {
                 int assessmentId = _token.AssessmentForUser();
 
-                string ext = ".json";
-
-                AssessmentExportFileJson result = new AssessmentExportManager(_context).ExportAssessmentJson(assessmentId, ext, password, passwordHint, scrubData ?? false);
+                AssessmentExportFileJson result = new AssessmentExportManager(_context).ExportAssessmentJson(assessmentId, scrubData ?? false);
                 byte[] contents = Encoding.UTF8.GetBytes(result.JSON);
                 return  File(contents, "application/json", result.FileName);
             }

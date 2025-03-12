@@ -493,7 +493,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         /// Gathers the data for an assessment and returns a model.json file, along with any attached documents.
         /// If desired, only the model.json will be returned, named to match the assessment name.
         /// </summary>
-        private ExportJson CreateJson(int assessmentId, string password, string passwordHint, bool scrubData = false)
+        private ExportJson CreateJson(int assessmentId, bool scrubData = false)
         {
 
            var model = CopyForExport(assessmentId, scrubData);
@@ -604,13 +604,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     };
             
                exportModel.ModelObj = modelObject;
-               PasswordObject passwordObject = new PasswordObject()
-               {
-                   PasswordName = $"{passwordHint}.hint",
-                   Hint = passwordHint
-               };
-              
-            
             return exportModel;
         }
         
@@ -640,7 +633,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 {
                     zipWrapper.Password = password;
                 }
-                ExportJson exportFile = CreateJson(assessmentId, password, passwordHint, scrubData);
+                ExportJson exportFile = CreateJson(assessmentId, scrubData);
                 if (exportFile.SetObj != null)
                 {
                     zipWrapper.AddEntry(exportFile.SetObj.SetName, exportFile.SetObj.Json);
@@ -659,7 +652,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                 if (exportFile.PasswordObj != null)
                 {
-                    zipWrapper.AddEntry(exportFile.PasswordObj.PasswordName, exportFile.PasswordObj.Hint);
+                    zipWrapper.AddEntry($"{passwordHint}.hint", passwordHint);
                 }
                 
                 zipWrapper.Save();
@@ -675,18 +668,18 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             return new AssessmentExportFile(fileName, archiveStream);
         }
         
-        public AssessmentExportFileJson ExportAssessmentJson(int assessmentId, string fileExtension, string password = "", string passwordHint = "", bool jsonOnly = false, bool scrubData = false)
+        public AssessmentExportFileJson ExportAssessmentJson(int assessmentId, bool scrubData = false)
         {
             // determine file name
-            var fileName = $"{assessmentId}{fileExtension}";
+            var fileName = $"{assessmentId}.json";
             var assessmentName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Assessment_Name;
             if (!string.IsNullOrEmpty(assessmentName))
             {
-                fileName = $"{assessmentName}{fileExtension}";
+                fileName = $"{assessmentName}.json";
             }
 
             // export the assessment
-            ExportJson exportFile = CreateJson(assessmentId, password, passwordHint, scrubData);
+            ExportJson exportFile = CreateJson(assessmentId, scrubData);
            
 
             // mark the assessment as clean after export
