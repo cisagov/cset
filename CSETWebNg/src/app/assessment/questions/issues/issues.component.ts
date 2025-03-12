@@ -156,7 +156,7 @@ export class IssuesComponent implements OnInit {
   cleanText(input: string) {
     let text = input;
     
-    if (text != null && text != undefined) {
+    if (text) {
       text = text.replace(/<.*?>/g, '');
       text = text.replace(/&#10;/g, ' ');
       text = text.replace(/&#8217;/g, '\'');
