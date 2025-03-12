@@ -19,7 +19,7 @@ namespace CSETWebCore.DatabaseManager.Tests
         {
             string clientCode = "DHS";
             string appCode = "CSET";
-            DbManager manager = new DbManager(new Version("12.4.0.1"), clientCode, appCode);
+            DbManager manager = new DbManager(new Version("12.4.0.2"), clientCode, appCode);
             //TODO finish this.
             //manager.CopyDBAcrossServers();
         }
