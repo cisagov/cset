@@ -313,9 +313,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     } else {
       // If encryption is turned off
       this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
-        let url = this.fileSvc.exportUrl;
-
-        this.fileExportSvc.fetchAndSaveFile(url, response.token);
+        this.fileExportSvc.fetchAndSaveFile(this.fileSvc.exportUrl, response.token);
       })
     }
   }

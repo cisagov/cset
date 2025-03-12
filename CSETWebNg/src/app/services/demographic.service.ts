@@ -41,7 +41,6 @@ const headers = {
 export class DemographicService {
   apiUrl: string;
   id: number;
-  shortLivedToken: any;
 
 
   constructor(
