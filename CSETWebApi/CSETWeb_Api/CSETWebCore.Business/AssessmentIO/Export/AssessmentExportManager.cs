@@ -490,8 +490,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
 
         /// <summary>
-        /// Gathers the data for an assessment and returns a model.json file, along with any attached documents.
-        /// If desired, only the model.json will be returned, named to match the assessment name.
+        /// Gathers the data for an assessment and returns a ExportJson object.
         /// </summary>
         private ExportJson CreateJson(int assessmentId, bool scrubData = false)
         {
@@ -668,6 +667,12 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             return new AssessmentExportFile(fileName, archiveStream);
         }
         
+        /// <summary>
+        /// Export an assessment by its ID. 
+        /// </summary>
+        /// <param name="assessmentId">The ID of the assessment to export</param>
+        /// <param name="scrubData">An optional removal of PCII from export</param>
+        /// <returns>An AssessmentExportFileJson object containing the file name and the file contents</returns>
         public AssessmentExportFileJson ExportAssessmentJson(int assessmentId, bool scrubData = false)
         {
             // determine file name
