@@ -22,69 +22,37 @@
 //
 ////////////////////////////////
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import SwiperCore, { SwiperOptions, Navigation, Pagination, Virtual } from 'swiper';
 import { MatDialog } from '@angular/material/dialog';
 import { NewAssessmentDialogComponent } from '../../dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { AssessmentService } from '../../services/assessment.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { SwiperComponent } from 'swiper/angular';
 import { GalleryService } from '../../services/gallery.service';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import { ConfigService } from '../../services/config.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { register as registerSwiper } from 'swiper/element/bundle';
+import { SwiperOptions } from 'swiper/types';
 
-SwiperCore.use([Navigation, Pagination, Virtual]);
+registerSwiper()
+
 @Component({
-    selector: 'app-new-assessment',
-    templateUrl: './new-assessment.component.html',
-    styleUrls: ['./new-assessment.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    animations: [
-        trigger('enterAnimation', [
-            state('false', style({ overflow: 'hidden', height: '0px', padding: '0 10px 0 0' })),
-            state('true', style({ overflow: 'hidden', height: '*', padding: '0 10px 10px 0' })),
-            transition('false => true', animate('200ms ease-in')),
-            transition('true => false', animate('200ms ease-out'))
-        ]),
-    ],
-    standalone: false
+  selector: 'app-new-assessment',
+  templateUrl: './new-assessment.component.html',
+  styleUrls: ['./new-assessment.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('enterAnimation', [
+      state('false', style({ overflow: 'hidden', height: '0px', padding: '0 10px 0 0' })),
+      state('true', style({ overflow: 'hidden', height: '*', padding: '0 10px 10px 0' })),
+      transition('false => true', animate('200ms ease-in')),
+      transition('true => false', animate('200ms ease-out'))
+    ]),
+  ],
+  standalone: false
 })
 export class NewAssessmentComponent implements OnInit, AfterViewInit {
-
-  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
-
   hoverIndex = -1;
-  config: SwiperOptions = {
-    slidesPerView: 1,
-    spaceBetween: 7,
-    slidesPerGroup: 1,
-    //loop:true,
-    navigation: true,
-    breakpoints: {
-      200: {
-        slidesPerView: 1,
-      },
-      620: {
-        slidesPerView: 2,
-      },
-      800: {
-        slidesPerView: 3,
-      },
-      1220: {
-        slidesPerView: 4,
-      },
-      1460: {
-        slidesPerView: 5
-      }
-    },
-    on: {
-      resize: () => {
-        this.checkNavigation();
-      }
-    }
-  };
-
   pageTitle: string;
   show: boolean = false;
 
@@ -105,7 +73,64 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.checkNavigation();
+    // Set a longer timeout to ensure DOM is fully rendered including dynamic content
+    setTimeout(() => {
+      this.initializeSwipers();
+    }, 100);
+
+    // Listen for changes to the DOM that might affect swiper containers
+    const observer = new MutationObserver(() => {
+      this.initializeSwipers();
+    });
+
+    // Start observing the document for added nodes
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  private initializeSwipers(): void {
+    // Use querySelectorAll to get all swiper containers
+    const swiperEls = document.querySelectorAll('swiper-container');
+    const swiperConfig: SwiperOptions = {
+      slidesPerView: "auto",
+      spaceBetween: 7,
+      navigation: true,
+      loop: false,
+      breakpoints: {
+        320: {
+          slidesPerView: 1,
+        },
+        620: {
+          slidesPerView: 2,
+        },
+        800: {
+          slidesPerView: 3,
+        },
+        1220: {
+          slidesPerView: 4,
+        },
+        1460: {
+          slidesPerView: 5,
+        }
+      },
+    }
+
+    // Configure each swiper instance
+    swiperEls.forEach(swiperEl => {
+      // Skip already initialized swipers
+      if (swiperEl.hasAttribute('data-initialized')) {
+        return;
+      }
+
+      // Apply configuration to each swiper element
+      Object.assign(swiperEl, swiperConfig);
+
+      // Mark as initialized
+      swiperEl.setAttribute('data-initialized', 'true');
+
+      // Initialize this particular swiper instance
+      // @ts-ignore - initialize method exists in Swiper web components but might not be in typings
+      swiperEl.initialize();
+    });
   }
 
   checkNavigation() {

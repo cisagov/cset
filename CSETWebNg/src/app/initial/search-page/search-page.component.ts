@@ -22,17 +22,16 @@
 //
 ////////////////////////////////
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NewAssessmentDialogComponent } from '../../dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { AssessmentService } from '../../services/assessment.service';
 import { GalleryService } from '../../services/gallery.service';
-import { SwiperComponent } from 'swiper/angular';
-import { SwiperOptions } from 'swiper';
 import Fuse from 'fuse.js';
 import { map } from 'lodash';
 import { ConfigService } from '../../services/config.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
+import Swiper from 'swiper';
 
 @Component({
     selector: 'app-search-page',
@@ -41,9 +40,12 @@ import { NavigationService } from '../../services/navigation/navigation.service'
     standalone: false
 })
 export class SearchPageComponent implements OnInit, AfterViewInit {
-  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
+  @ViewChild('swiper', { static: false }) swiperElRef?: ElementRef;
 
   @Input() searchQuery: string;
+
+  swiperInstance: any;
+
   hoverIndex = -1;
 
   show: boolean = false;
@@ -67,7 +69,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   searcher: any;
   cardsPerView: number = 1;
   rows = [];
-  config: SwiperOptions = {
+  swiperParams = {
     slidesPerView: 1,
     spaceBetween: 7,
     slidesPerGroup: 1,
@@ -105,7 +107,9 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterInit() {
-
+    if (this.swiperElRef) {
+      this.swiperInstance = new Swiper(this.swiperElRef.nativeElement, this.swiperParams);
+    }
   }
 
   ngOnChanges() {
