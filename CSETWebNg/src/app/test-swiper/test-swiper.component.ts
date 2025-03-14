@@ -1,46 +1,27 @@
-////////////////////////////////
-//
-//   Copyright 2025 Battelle Energy Alliance, LLC
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in all
-//  copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-//  SOFTWARE.
-//
-////////////////////////////////
-import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { SwiperOptions } from 'swiper/types';
+import { CommonModule } from '@angular/common';
+import { GalleryService } from '../services/gallery.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { NewAssessmentDialogComponent } from '../dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { NewAssessmentDialogComponent } from '../../dialogs/new-assessment-dialog/new-assessment-dialog.component';
-import { AssessmentService } from '../../services/assessment.service';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { GalleryService } from '../../services/gallery.service';
-import { trigger, style, animate, transition, state } from '@angular/animations';
-import { ConfigService } from '../../services/config.service';
-import { NavigationService } from '../../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { register as registerSwiper } from 'swiper/element/bundle';
-import { SwiperOptions } from 'swiper/types';
+import { NavigationService } from '../services/navigation/navigation.service';
+import { TranslocoRootModule } from '../transloco-root.module';
+import { EllipsisModule } from '../modules/ngx-ellipsis/ellipsis.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 registerSwiper()
 
 @Component({
-  selector: 'app-new-assessment',
-  templateUrl: './new-assessment.component.html',
-  styleUrls: ['./new-assessment.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  selector: 'app-test-swiper',
+  standalone: true,
+  imports: [CommonModule, TranslocoRootModule, EllipsisModule, MatTooltipModule, MatToolbarModule],
+  templateUrl: './test-swiper.component.html',
+  styleUrl: './test-swiper.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   animations: [
     trigger('enterAnimation', [
       state('false', style({ overflow: 'hidden', height: '0px', padding: '0 10px 0 0' })),
@@ -49,30 +30,23 @@ registerSwiper()
       transition('true => false', animate('200ms ease-out'))
     ]),
   ],
-  standalone: false
 })
-export class NewAssessmentComponent implements OnInit, AfterViewInit {
+export class TestSwiperComponent implements OnInit, AfterViewInit {
   hoverIndex = -1;
-  pageTitle: string;
-  show: boolean = false;
 
-  constructor(public dialog: MatDialog,
-    public breakpointObserver: BreakpointObserver,
+  constructor(
+    public dialog: MatDialog,
     public gallerySvc: GalleryService,
-    public assessSvc: AssessmentService,
     public navSvc: NavigationService,
-    public configSvc: ConfigService,
     public tSvc: TranslocoService,
   ) {
   }
 
   ngOnInit(): void {
-    this.pageTitle = this.tSvc.translate('to start an assessment').replace('{icon}', '<i class="fa-solid fa-circle-info" style="font-size: 1.3rem;"></i>');
     this.gallerySvc.refreshCards();
-    this.checkNavigation();
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit() {
     // Set a longer timeout to ensure DOM is fully rendered including dynamic content
     setTimeout(() => {
       this.initializeSwipers();
@@ -133,24 +107,12 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     });
   }
 
-  checkNavigation() {
-    /*let swiperPrev = document.getElementsByClassName('swiper-button-prev');
-    let swiperNext = document.getElementsByClassName('swiper-button-next');
-    if (window.innerWidth < 620) {
-      if (swiperPrev != null && swiperNext != null) {
-        for (var i = 0; i < swiperPrev.length; i++) {
-          swiperPrev[i].setAttribute('style', 'display:none');
-          swiperNext[i].setAttribute('style', 'display:none');
-        }
-      }
-    } else {
-      if (swiperPrev != null && swiperNext != null) {
-        for (var i = 0; i < swiperPrev.length; i++) {
-          swiperPrev[i].removeAttribute('style');
-          swiperNext[i].removeAttribute('style');
-        }
-      }
-    }*/
+  getImageSrc(src: string) {
+    let path = "assets/images/cards/";
+    if (src) {
+      return path + src.toLowerCase();
+    }
+    return path + 'default.png';
   }
 
   onHover(i: number) {
@@ -179,20 +141,6 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     el.style.removeProperty('right');
   }
 
-  showButtons(show: boolean) {
-    this.show = show;
-  }
-
-  onSlideChange() { }
-
-  getImageSrc(src: string) {
-    let path = "assets/images/cards/";
-    if (src) {
-      return path + src.toLowerCase();
-    }
-    return path + 'default.png';
-  }
-
   openDialog(data: any) {
     data.path = this.getImageSrc(data.icon_File_Name_Small);
     this.dialog.open(NewAssessmentDialogComponent, {
@@ -200,5 +148,4 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       data: data
     });
   }
-
 }
