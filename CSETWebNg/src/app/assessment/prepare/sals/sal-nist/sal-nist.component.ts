@@ -73,41 +73,9 @@ export class SalNistComponent implements OnInit {
       });
   }
 
-  saveLevel(level: string, ltype: string) {
-    this.salsSvc.selectedSAL.methodology = 'NIST';
-    switch (ltype) {
-      case 'C': {
-        this.salsSvc.selectedSAL.selectedSALOverride = false;
-        this.salsSvc.selectedSAL.cLevel = level;
-        break;
-      }
-      case 'I': {
-        this.salsSvc.selectedSAL.selectedSALOverride = false;
-        this.salsSvc.selectedSAL.iLevel = level;
-        break;
-      }
-      case 'A': {
-        this.salsSvc.selectedSAL.selectedSALOverride = false;
-        this.salsSvc.selectedSAL.aLevel = level;
-        break;
-      }
-      default: {
-        this.salsSvc.selectedSAL.selectedSALOverride = true;
-        this.salsSvc.selectedSAL.selected_Sal_Level = level;
-        break;
-      }
-    }
-
-    this.salsSvc.updateStandardSelection(this.salsSvc.selectedSAL).subscribe(
-      (data: Sal) => {
-        this.salsSvc.selectedSAL = data;
-      },
-      error => {
-        console.log('Error setting sal level: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error setting sal level: ' + (<Error>error).stack);
-      });
-  }
-
+  /**
+   * 
+   */
   changeSpecialFactor(model: NistSalModel, ciaType: string) {
     const cToFullType = { 'C': 'Confidentiality', 'I': 'Integrity', 'A': 'Availability' };
 

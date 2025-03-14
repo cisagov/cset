@@ -29,9 +29,9 @@ import { LayoutService } from '../../../services/layout.service';
 
 
 @Component({
-    selector: 'app-sals',
-    templateUrl: './sals.component.html',
-    standalone: false
+  selector: 'app-sals',
+  templateUrl: './sals.component.html',
+  standalone: false
 })
 export class SalsComponent implements OnInit {
 
@@ -50,6 +50,9 @@ export class SalsComponent implements OnInit {
   ) {
   }
 
+  /**
+   * 
+   */
   ngOnInit() {
     this.salsSvc.selectedSAL = new Sal();
 
@@ -73,6 +76,9 @@ export class SalsComponent implements OnInit {
       });
   }
 
+  /**
+   * 
+   */
   continue() { }
 
   /**
