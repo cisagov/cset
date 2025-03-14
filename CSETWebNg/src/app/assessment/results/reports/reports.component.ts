@@ -45,12 +45,12 @@ import { ExportAssessmentComponent } from '../../../dialogs/assessment-encryptio
 import { FileExportService } from '../../../services/file-export.service';
 
 @Component({
-    selector: 'app-reports',
-    templateUrl: './reports.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    styleUrls: ['./reports.component.scss'],
-    standalone: false
+  selector: 'app-reports',
+  templateUrl: './reports.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  styleUrls: ['./reports.component.scss'],
+  standalone: false
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
   /**
@@ -266,7 +266,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   *
+   * 
    */
   clickExport(jsonOnly: boolean = false) {
     let ext = '.csetw';
@@ -275,46 +275,40 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       let dialogRef = this.dialog.open(ExportAssessmentComponent, {
         data: { jsonOnly }
       });
-      
+
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          
-          // get short-term JWT from API
-          this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
-            let url = this.fileSvc.exportUrl;
-            
-            if (jsonOnly) {
-              url = this.fileSvc.exportJsonUrl;
-              ext = '.json';
-            }
+          let url = this.fileSvc.exportUrl;
 
-            let params = '';
+          if (jsonOnly) {
+            url = this.fileSvc.exportJsonUrl;
+            ext = '.json';
+          }
 
-            if (result.scrubData) {
-              params = params + "&scrubData=" + result.scrubData;
-            }
+          let params = '';
 
-            if (result.encryptionData.password != null && result.encryptionData.password != "") {
-              params = params + "&password=" + result.encryptionData.password;
-            }
+          if (result.scrubData) {
+            params = params + "&scrubData=" + result.scrubData;
+          }
 
-            if (result.encryptionData.hint != null && result.encryptionData.hint != "") {
-              params = params + "&passwordHint=" + result.encryptionData.hint;
-            }
+          if (result.encryptionData.password != null && result.encryptionData.password != "") {
+            params = params + "&password=" + result.encryptionData.password;
+          }
 
-            if (params.length > 0) {
-              url = url + '?' + params.replace(/^&/, '');
-            }
+          if (result.encryptionData.hint != null && result.encryptionData.hint != "") {
+            params = params + "&passwordHint=" + result.encryptionData.hint;
+          }
 
-            this.fileExportSvc.fetchAndSaveFile(url, response.token);
-          });
+          if (params.length > 0) {
+            url = url + '?' + params.replace(/^&/, '');
+          }
+
+          this.fileExportSvc.fetchAndSaveFile(url);
         }
       });
     } else {
       // If encryption is turned off
-      this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
-        this.fileExportSvc.fetchAndSaveFile(this.fileSvc.exportUrl, response.token);
-      })
+      this.fileExportSvc.fetchAndSaveFile(this.fileSvc.exportUrl);
     }
   }
 
@@ -421,10 +415,10 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 }
 
 @Component({
-    selector: 'snack-bar-component-example-snack',
-    template: '<span>{{ tSvc.translate(printInstructions) }}</span><button (click)="snackBarRef.dismiss()">{{ tSvc.translate(\'buttons.close\') }}</button>',
-    styles: [''],
-    standalone: false
+  selector: 'snack-bar-component-example-snack',
+  template: '<span>{{ tSvc.translate(printInstructions) }}</span><button (click)="snackBarRef.dismiss()">{{ tSvc.translate(\'buttons.close\') }}</button>',
+  styles: [''],
+  standalone: false
 })
 export class PrintSnackComponent implements OnInit {
   constructor(public snackBarRef: MatSnackBarRef<PrintSnackComponent>,
