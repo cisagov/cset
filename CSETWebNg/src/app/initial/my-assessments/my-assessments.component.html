@@ -363,7 +363,7 @@
                         </span>
                     </td>
                     <td>
-                        <div *ngIf="assessment.type === 'ISE'">
+                        <div *ngIf="assessment.type.includes('ISE')">
                             <input type="checkbox" id="{{assessment.assessmentId}}" name="{{assessment.assessmentId}}"
                                 class="checkbox-custom mt-1" (change)="this.ncuaSvc.modifyMergeList(assessment, $event)"
                                 [checked]="">
