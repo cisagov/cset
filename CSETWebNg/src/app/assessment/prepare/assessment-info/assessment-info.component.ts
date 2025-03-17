@@ -50,13 +50,11 @@ export class AssessmentInfoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
-      if (data.maturityModel?.modelName == "CMMC2") {
-        this.showUpgrade = true;
-        this.targetModel = "CMMC2F"
-      }
-    });
-
+      this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
+        if (data.maturityModel.modelName == 'CMMC2' || data.maturityModel.modelName == 'CMMC') {
+          this.showUpgrade = true;
+          this.targetModel = 'CMMC2F'
+        }
+      });
   }
 }

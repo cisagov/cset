@@ -32,6 +32,7 @@ SOFTWARE.
 @use 'swiper/scss';
 @use 'swiper/scss/navigation';
 @use 'swiper/scss/pagination';
+@use '@angular/material' as mat;
 
 
 $white: #ffffff;
@@ -1133,6 +1134,10 @@ table.td-align-top td {
   color: $white;
 }
 
+.btn-level.primary.active {
+  background-color: $primary-800;
+  color: $white;
+}
 
 .btn-geo {
   background-color: $gray-150;
@@ -3806,10 +3811,6 @@ div.tutorial h6 {
   border: 1px solid $primary-450;
 }
 
-.example-tree-invisible {
-  // display: none;
-}
-
 .example-tree ul,
 .example-tree li {
   margin-top: 0;
@@ -3947,10 +3948,6 @@ h6.dropdown-header {
       transform: none;
     }
 
-    &:first-child:hover {}
-
-    &:last-child:hover {}
-
     &:hover .gallery-card-body {
 
       transform: none;
@@ -3977,8 +3974,6 @@ h6.dropdown-header {
       margin-top: -15px;
       transform: scale(1.1);
     }
-
-    &:only-child {}
 
     &:first-child:hover {
       left: 20px;
@@ -4069,4 +4064,13 @@ h6.dropdown-header {
   border-radius: .8rem;
   padding: 0 1rem 1rem 1rem;
   margin-top: 1rem;
+}
+.notify-snackbar{
+  background-color: default !important;
+}
+
+.mat-mdc-snack-bar-container.notify-snackbar {
+  --mat-snack-bar-button-color: #000 !important;
+  --mdc-snackbar-container-color: #ffc107 !important;
+  --mdc-snackbar-supporting-text-color: #000 !important;
 }

@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
@@ -44,19 +45,20 @@ import { AggregationService } from '../../services/aggregation.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
-import { NavigationService } from '../../services/navigation/navigation.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { GalleryService } from '../../services/gallery.service';
 import { SetBuilderService } from './../../services/set-builder.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { UserSettingsComponent } from '../../dialogs/user-settings/user-settings.component';
 import { translate } from '@jsverse/transloco';
+import { FileExportService } from '../../services/file-export.service';
+
 
 @Component({
-    selector: 'app-top-menus',
-    templateUrl: './top-menus.component.html',
-    styleUrls: ['./top-menus.component.scss'],
-    standalone: false
+  selector: 'app-top-menus',
+  templateUrl: './top-menus.component.html',
+  styleUrls: ['./top-menus.component.scss'],
+  standalone: false
 })
 export class TopMenusComponent implements OnInit {
   docUrl: string;
@@ -77,7 +79,8 @@ export class TopMenusComponent implements OnInit {
     public router: Router,
     private _hotkeysService: HotkeysService,
     private gallerySvc: GalleryService,
-    private navSvc: NavigationService
+    private fileExportSvc: FileExportService,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -402,22 +405,19 @@ export class TopMenusComponent implements OnInit {
     const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
     const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
     if (this.dialog.openDialogs[0] || doNotShow) {
-      this.exportToExcel();
+      this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'assessment/export/excel');
       return;
     }
+
     this.dialogRef = this.dialog.open(ExcelExportComponent);
     this.dialogRef.afterClosed().subscribe();
   }
 
-  exportToExcel() {
-    const url = this.configSvc.apiUrl + 'assessment/export/excel?token=' + localStorage.getItem('userToken');
-    window.open(url);
-  }
-
-
+  /**
+   * 
+   */
   exportToExcelNCUA() {
-    const url = this.configSvc.apiUrl + 'ExcelExportISE?token=' + localStorage.getItem('userToken');
-    window.open(url);
+    this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'ExcelExportISE');
   }
 
   /**

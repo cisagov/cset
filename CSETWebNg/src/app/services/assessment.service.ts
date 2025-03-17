@@ -164,10 +164,14 @@ export class AssessmentService {
   }
 
   /**
-   *
+   * Get a new token that carries the assessmentID as a claim.  This token
+   * should be used for all assessment-specific requests.
    */
   getAssessmentToken(assessId: number) {
-    const obs: Observable<object> = this.http.get(this.apiUrl + 'auth/token?assessmentId=' + assessId);
+    const headers = new HttpHeaders({
+      'AssessmentId': assessId
+    });
+    const obs: Observable<object> = this.http.get(this.apiUrl + 'auth/token', { headers: headers });
     const prom: Promise<object> = firstValueFrom(obs);
 
     return prom.then((response: { token: string }) => {

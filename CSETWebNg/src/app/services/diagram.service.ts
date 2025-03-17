@@ -39,7 +39,7 @@ export class DiagramService {
   id: number;
   csafVendors: Vendor[] = [];
 
-  private diagramRefreshSubject = new BehaviorSubject<any>(null);
+  private diagramRefreshSubject = new Subject<any>();
   refresh$ = this.diagramRefreshSubject.asObservable();
 
   /**
@@ -53,14 +53,6 @@ export class DiagramService {
    */
   constructor(private http: HttpClient, private configSvc: ConfigService) {
     this.apiUrl = this.configSvc.apiUrl + 'diagram/';
-  }
-
-  /**
-   * Broadcast to all subscribers that the diagram is ready
-   * @param s 
-   */
-  broadcastDiagramChange(s: string) {
-    //this.refreshSubject.next(s);
   }
 
   saveComponent(component) {

@@ -15,24 +15,32 @@ export class AnalyticsService {
     params: new HttpParams()
   };
 
-
-
+  /**
+   * 
+   */
   constructor(private http: HttpClient, private configSvc: ConfigService) {
     this.baseUrl = this.configSvc.apiUrl;
     this.apiUrl = this.baseUrl + "analytics/";
     this.analyticsUrl = this.configSvc.analyticsUrl + "api/";
-
   }
 
+  /**
+   * 
+   */
   getAnalytics(): any {
     return this.http.get(this.apiUrl + 'getAggregation');
   }
 
+  /**
+   * 
+   */
   isCisaAssessorMode() {
     return this.configSvc.installationMode == "IOD";
   }
 
-
+  /**
+   * 
+   */
   getAnalyticResults(maturityModelId: number, sectorId?: number): any {
     let url = this.apiUrl + "maturity/bars?"
     if (maturityModelId) {
@@ -44,21 +52,20 @@ export class AnalyticsService {
     return this.http.get(url);
   }
 
+  /**
+   * 
+   */
   getAnalyticsToken(username, password): any {
     return this.http.post(
       this.analyticsUrl + 'auth/login', { "email": username, password }, this.headers
     );
   }
 
-
+  /**
+   * 
+   */
   postAnalyticsWithLogin(token): any {
-
-    return this.http.get(
-      this.baseUrl + 'assessment/exportandsend?token=' + token
-    );
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(this.baseUrl + 'assessment/exportandsend', { headers, observe: 'response', responseType: 'blob' });
   }
-
-  // pingAnalyticsService(): any {
-  // return this.http.get(this.analyticsUrl + 'ping/GetPing');
-  // }
 }

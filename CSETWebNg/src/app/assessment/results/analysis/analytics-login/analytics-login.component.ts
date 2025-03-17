@@ -19,11 +19,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 }
 
 @Component({
-    selector: 'app-analytics-login',
-    templateUrl: './analytics-login.component.html',
-    styleUrls: ['./analytics-login.component.scss'],
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-analytics-login',
+  templateUrl: './analytics-login.component.html',
+  styleUrls: ['./analytics-login.component.scss'],
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class AnalyticsloginComponent implements OnInit {
 
@@ -31,7 +31,7 @@ export class AnalyticsloginComponent implements OnInit {
   matcherpassword = new MyErrorStateMatcher();
   matchalias = new MyErrorStateMatcher();
 
-  dataloginForm = new FormGroup ({
+  dataloginForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required])
   });
@@ -45,38 +45,46 @@ export class AnalyticsloginComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public analytics: any,
-    private dialog: MatDialogRef<AnalyticsloginComponent>, 
+    private dialog: MatDialogRef<AnalyticsloginComponent>,
     private snackBar: MatSnackBar,
     private analyticsSvc: AnalyticsService,
     private config: ConfigService,
     private dialogMat: MatDialog,
-    ) { }
+  ) { }
 
 
+  /**
+   * 
+   */
   ngOnInit() {
   }
 
+  /**
+   * 
+   */
   submit() {
-    this.postAnalyticsWithLogin()
+    this.postAnalyticsWithLogin();
   }
 
+  /**
+   * 
+   */
   postAnalyticsWithLogin() {
-    
-    if(this.dataloginForm.valid){
+    if (this.dataloginForm.valid) {
       this.analyticsSvc.getAnalyticsToken(this.dataloginForm.controls.username.value, this.dataloginForm.controls.password.value).subscribe(
         data => {
           let token = data.token;
           this.analyticsSvc.postAnalyticsWithLogin(token).subscribe(
             (data: any) => {
-                this.dialogMat.open(AlertComponent, {
-                data: { 
-                    title: 'Success',
-                    iconClass: 'cset-icons-check-circle',
-                    messageText: "Assessment has been uploaded"
-                  }
-                });
-                
-                this.dialog.close();
+              this.dialogMat.open(AlertComponent, {
+                data: {
+                  title: 'Success',
+                  iconClass: 'cset-icons-check-circle',
+                  messageText: "Assessment has been uploaded"
+                }
+              });
+
+              this.dialog.close();
             });
         },
         err => {
@@ -95,7 +103,7 @@ export class AnalyticsloginComponent implements OnInit {
             }
           } else {
             this.error = 'We were unable to log you in.  Error with login. Try again.';
-            
+
           }
         });
     } else {
@@ -110,6 +118,9 @@ export class AnalyticsloginComponent implements OnInit {
     return this.dialog.close({ cancel: true });
   }
 
+  /**
+   * 
+   */
   openSnackBar(message) {
     this.snackBar.open(message, "", {
       duration: 4000,

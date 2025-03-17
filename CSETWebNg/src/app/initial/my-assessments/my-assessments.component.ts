@@ -51,6 +51,7 @@ import { DateAdapter } from '@angular/material/core';
 import { HydroService } from "../../services/hydro.service";
 import { CieService } from "../../services/cie.service";
 import { ConversionService } from "../../services/conversion.service";
+import { FileExportService } from "../../services/file-export.service";
 
 
 interface UserAssessment {
@@ -77,11 +78,11 @@ interface UserAssessment {
 }
 
 @Component({
-    selector: "app-my-assessments",
-    templateUrl: "my-assessments.component.html",
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: "app-my-assessments",
+  templateUrl: "my-assessments.component.html",
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class MyAssessmentsComponent implements OnInit {
   comparer: Comparer = new Comparer();
@@ -115,6 +116,7 @@ export class MyAssessmentsComponent implements OnInit {
     public assessSvc: AssessmentService,
     public dialog: MatDialog,
     public importSvc: ImportAssessmentService,
+    public fileExportSvc: FileExportService,
     public fileSvc: FileUploadClientService,
     public titleSvc: Title,
     public navSvc: NavigationService,
@@ -281,7 +283,7 @@ export class MyAssessmentsComponent implements OnInit {
             }
             else {
               this.sortedAssessments = assessments;
-              
+
               // NCUA want assessments sorted by "last modified"
               if (this.ncuaSvc.switchStatus) {
                 this.sortedAssessments.sort((a, b) => new Date(b.lastModifiedDate).getTime() - new Date(a.lastModifiedDate).getTime());
@@ -289,7 +291,7 @@ export class MyAssessmentsComponent implements OnInit {
             }
           },
             error => {
-              console.log(
+              console.error(
                 "Unable to get Assessments for " +
                 this.authSvc.email() +
                 ": " +
@@ -429,16 +431,12 @@ export class MyAssessmentsComponent implements OnInit {
   /**
    * 
    */
-  async clickDownloadLink(ment_id: number, jsonOnly: boolean = false) {
-    // this.assessSvc.getEncryptPreference().subscribe((result: boolean) => {
+  async clickDownloadLink(assessment_id: number, jsonOnly: boolean = false) {
     const obs = this.assessSvc.getEncryptPreference()
     const prom = firstValueFrom(obs);
     prom.then((response: boolean) => {
-      let preventEncrypt = response
-
-
+      let preventEncrypt = response;
       let encryption = preventEncrypt;
-      console.log("export", preventEncrypt);
 
       if (!preventEncrypt || jsonOnly) {
         let dialogRef = this.dialog.open(ExportAssessmentComponent, {
@@ -446,37 +444,35 @@ export class MyAssessmentsComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            // get short-term JWT from API
-            this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-              let url = this.fileSvc.exportUrl + "?token=" + response.token;
+          let url = this.fileSvc.exportUrl;
 
+          this.authSvc.getShortLivedTokenForAssessment(assessment_id).subscribe((response: any) => {
+            if (result) {
               if (jsonOnly) {
-                url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
+                url = this.fileSvc.exportJsonUrl;
               }
 
+              let params = '';
+
               if (result.scrubData) {
-                url = url + "&scrubData=" + result.scrubData;
+                params = params + "&scrubData=" + result.scrubData;
               }
 
               if (result.encryptionData.password != null && result.encryptionData.password !== "") {
-                url = url + "&password=" + result.encryptionData.password;
+                params = params + "&password=" + result.encryptionData.password;
               }
 
               if (result.encryptionData.hint != null && result.encryptionData.hint !== "") {
-                url = url + "&passwordHint=" + result.encryptionData.hint;
+                params = params + "&passwordHint=" + result.encryptionData.hint;
               }
 
-              // if electron
-              window.location.href = url;
-            });
-          }
-        });
-      } else {
-        // If encryption is turned off
-        this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-          let url = this.fileSvc.exportUrl + "?token=" + response.token;
-          window.location.href = url;
+              if (params.length > 0) {
+                url = url + '?' + params.replace(/^&/, '');
+              }
+            }
+
+            this.fileExportSvc.fetchAndSaveFile(url, response.token);
+          });
         });
       }
     });
@@ -516,7 +512,7 @@ export class MyAssessmentsComponent implements OnInit {
    *
    */
   exportToExcelAllAcet() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken');
+    this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'ExcelExportAllNCUA');
   }
 
   openExportDecisionDialog() {
@@ -528,7 +524,7 @@ export class MyAssessmentsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
-        window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken') + '&type=' + result;
+        this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'ExcelExportAllNCUA?type=' + result);
       }
     });
   }
@@ -563,7 +559,6 @@ export class MyAssessmentsComponent implements OnInit {
     this.exportAllInProgress = true;
     this.exportAllLoop();
   }
-
 
   async exportAllLoop() { // allows for multiple api calls
     for (let i = 0; i < this.sortedAssessments.length; i++) {
