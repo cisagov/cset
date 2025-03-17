@@ -21,23 +21,20 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NewAssessmentDialogComponent } from '../../dialogs/new-assessment-dialog/new-assessment-dialog.component';
-import { AssessmentService } from '../../services/assessment.service';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { GalleryService } from '../../services/gallery.service';
 import { trigger, style, animate, transition, state } from '@angular/animations';
-import { ConfigService } from '../../services/config.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
-import { register as registerSwiper } from 'swiper/element/bundle';
 import { SwiperOptions } from 'swiper/types';
 
-registerSwiper()
+
 
 @Component({
   selector: 'app-new-assessment',
+  standalone: false,
   templateUrl: './new-assessment.component.html',
   styleUrls: ['./new-assessment.component.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -49,30 +46,23 @@ registerSwiper()
       transition('true => false', animate('200ms ease-out'))
     ]),
   ],
-  standalone: false
 })
 export class NewAssessmentComponent implements OnInit, AfterViewInit {
   hoverIndex = -1;
-  pageTitle: string;
-  show: boolean = false;
 
-  constructor(public dialog: MatDialog,
-    public breakpointObserver: BreakpointObserver,
+  constructor(
+    public dialog: MatDialog,
     public gallerySvc: GalleryService,
-    public assessSvc: AssessmentService,
     public navSvc: NavigationService,
-    public configSvc: ConfigService,
     public tSvc: TranslocoService,
   ) {
   }
 
   ngOnInit(): void {
-    this.pageTitle = this.tSvc.translate('to start an assessment').replace('{icon}', '<i class="fa-solid fa-circle-info" style="font-size: 1.3rem;"></i>');
     this.gallerySvc.refreshCards();
-    this.checkNavigation();
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit() {
     // Set a longer timeout to ensure DOM is fully rendered including dynamic content
     setTimeout(() => {
       this.initializeSwipers();
@@ -93,7 +83,10 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     const swiperConfig: SwiperOptions = {
       slidesPerView: "auto",
       spaceBetween: 7,
-      navigation: true,
+      navigation: {
+        nextEl: '.swiper-button-next', // selector for external button
+        prevEl: '.swiper-button-prev', // selector for external button
+      },
       loop: false,
       breakpoints: {
         320: {
@@ -133,24 +126,12 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     });
   }
 
-  checkNavigation() {
-    /*let swiperPrev = document.getElementsByClassName('swiper-button-prev');
-    let swiperNext = document.getElementsByClassName('swiper-button-next');
-    if (window.innerWidth < 620) {
-      if (swiperPrev != null && swiperNext != null) {
-        for (var i = 0; i < swiperPrev.length; i++) {
-          swiperPrev[i].setAttribute('style', 'display:none');
-          swiperNext[i].setAttribute('style', 'display:none');
-        }
-      }
-    } else {
-      if (swiperPrev != null && swiperNext != null) {
-        for (var i = 0; i < swiperPrev.length; i++) {
-          swiperPrev[i].removeAttribute('style');
-          swiperNext[i].removeAttribute('style');
-        }
-      }
-    }*/
+  getImageSrc(src: string) {
+    let path = "assets/images/cards/";
+    if (src) {
+      return path + src.toLowerCase();
+    }
+    return path + 'default.png';
   }
 
   onHover(i: number) {
@@ -162,7 +143,6 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
       let cardDimension = { x: bounding.x, y: bounding.y, w: bounding.width, h: bounding.height };
       let viewport = { x: 0, y: 0, w: window.innerWidth, h: window.innerHeight };
-      let cardSize = cardDimension.w * cardDimension.h;
       let xOverlap = Math.max(0, Math.min(cardDimension.x + cardDimension.w, viewport.x + viewport.w) - Math.max(cardDimension.x, viewport.x))
       //let yOverlap = Math.max(0, Math.min(cardDimension.y + cardDimension.y, viewport.y + viewport.h) - Math.max(cardDimension.y, viewport.y))
       let offScreen = cardDimension.w - xOverlap;
@@ -177,20 +157,6 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
 
     var el = document.getElementById('c' + cardId.toString()).parentElement;
     el.style.removeProperty('right');
-  }
-
-  showButtons(show: boolean) {
-    this.show = show;
-  }
-
-  onSlideChange() { }
-
-  getImageSrc(src: string) {
-    let path = "assets/images/cards/";
-    if (src) {
-      return path + src.toLowerCase();
-    }
-    return path + 'default.png';
   }
 
   openDialog(data: any) {
