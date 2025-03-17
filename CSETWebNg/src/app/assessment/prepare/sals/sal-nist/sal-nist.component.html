@@ -32,7 +32,8 @@
         <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
           <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
             <label [attr.csetid]="'Confidentiality' + level.value" class="btn btn-level btn-rounded form-check-label"
-              [class.active]="level.value === this.salsSvc.selectedSAL?.cLevel" (click)="salsSvc.saveSalLevels(level.value,'C')">
+              [class.active]="level.value === this.salsSvc.selectedSAL?.cLevel"
+              (click)="salsSvc.saveSalLevels(level.value,'C')">
               <input class="btn-check" type="radio" autocomplete="off" name="sal_confidentiality"
                 [checked]="level.value === this.salsSvc.selectedSAL?.cLevel"> {{t('titles.sal.level.' +
               level.value.toLowerCase())}}
@@ -51,7 +52,8 @@
         <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
           <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
             <label [attr.csetid]="'Integrity' + level.value" class="btn btn-level btn-rounded form-check-label"
-              [class.active]="level.value === this.salsSvc.selectedSAL?.iLevel" (click)="salsSvc.saveSalLevels(level.value,'I')">
+              [class.active]="level.value === this.salsSvc.selectedSAL?.iLevel"
+              (click)="salsSvc.saveSalLevels(level.value,'I')">
               <input class="btn-check" type="radio" tabindex="0" autocomplete="off" name="sal_integrity"
                 [checked]="level.value === this.salsSvc.selectedSAL?.iLevel"> {{t('titles.sal.level.' +
               level.value.toLowerCase())}}
@@ -70,7 +72,8 @@
         <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
           <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
             <label [attr.csetid]="'Availability' + level.value" class="btn btn-level btn-rounded form-check-label"
-              [class.active]="level.value === this.salsSvc.selectedSAL?.aLevel" (click)="salsSvc.saveSalLevels(level.value,'A')">
+              [class.active]="level.value === this.salsSvc.selectedSAL?.aLevel"
+              (click)="salsSvc.saveSalLevels(level.value,'A')">
               <input class="btn-check" type="radio" tabindex="0" autocomplete="off" name="sal_availability"
                 [checked]="level.value === this.salsSvc.selectedSAL?.aLevel"> {{t('titles.sal.level.' +
               level.value.toLowerCase())}}
@@ -123,7 +126,7 @@
           </td>
           <td>
             <label [for]="'cb_model' + i">
-              {{model.type_Value}} : {{model.nIST_Number}}</label>
+              {{model.type_Value}}<ng-container *ngIf="!!model.nisT_Number">: {{model.nisT_Number}}</ng-container></label>
           </td>
           <td class="text-center">
             <a [attr.csetid]="'ConfidentialitySpecialFactorC' + model.type_Value" class="special-factors-link"
