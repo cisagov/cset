@@ -1,5 +1,7 @@
 <div *transloco="let t">
-    <div class="container m-2" *ngFor="let row of gallerySvc.rows">
+    <div class="m-4" [innerHTML]="pageTitle">
+    </div>
+    <div *ngFor="let row of gallerySvc.rows" class="container m-2" style="height:240px;">
         <div>
             <div>
                 <h4>{{row.group_Title}}</h4>
@@ -7,8 +9,8 @@
             <swiper-container class="gallery-slider">
                 <swiper-slide *ngFor="let c of row.galleryItems; let i = index">
                     <div [attr.id]="'c'+c.gallery_Item_Guid" class="card gallery-card"
-                        style="width: 14rem; height:240px;" (focus)="onHover(c.gallery_Item_Guid)"
-                        (mouseover)="onHover(c.gallery_Item_Guid)" (mouseleave)="onHoverOut(-1, c.gallery_Item_Guid)">
+                        (focus)="onHover(c.gallery_Item_Guid)" (mouseover)="onHover(c.gallery_Item_Guid)"
+                        (mouseleave)="onHoverOut(-1, c.gallery_Item_Guid)">
                         <div class="card-body gallery-card-body cursor-pointer"
                             style="min-height:150px; max-height:150px; z-index:1"
                             (click)="navSvc.beginNewAssessmentGallery(c)">
