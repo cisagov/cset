@@ -67,7 +67,10 @@ export class TestSwiperComponent implements OnInit, AfterViewInit {
     const swiperConfig: SwiperOptions = {
       slidesPerView: "auto",
       spaceBetween: 7,
-      navigation: true,
+      navigation: {  //  <---  navigation settings
+        nextEl: '.swiper-button-next', // selector for external button
+        prevEl: '.swiper-button-prev', // selector for external button
+      },
       loop: false,
       breakpoints: {
         320: {
@@ -124,7 +127,6 @@ export class TestSwiperComponent implements OnInit, AfterViewInit {
 
       let cardDimension = { x: bounding.x, y: bounding.y, w: bounding.width, h: bounding.height };
       let viewport = { x: 0, y: 0, w: window.innerWidth, h: window.innerHeight };
-      let cardSize = cardDimension.w * cardDimension.h;
       let xOverlap = Math.max(0, Math.min(cardDimension.x + cardDimension.w, viewport.x + viewport.w) - Math.max(cardDimension.x, viewport.x))
       //let yOverlap = Math.max(0, Math.min(cardDimension.y + cardDimension.y, viewport.y + viewport.h) - Math.max(cardDimension.y, viewport.y))
       let offScreen = cardDimension.w - xOverlap;
