@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
 import { Aggregation } from '../models/aggregation.model';
@@ -111,7 +111,10 @@ export class AggregationService {
    * @param aggId
    */
   getAggregationToken(aggId: number) {
-    const obs = this.http.get(this.configSvc.apiUrl + 'auth/token?aggregationId=' + aggId);
+    const headers = new HttpHeaders({
+      'AggregationId': aggId
+    });
+    const obs = this.http.get(this.configSvc.apiUrl + 'auth/token', { headers: headers });
     const prom = firstValueFrom(obs);
 
     return prom.then((response: { token: string }) => {
