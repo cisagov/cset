@@ -32,7 +32,7 @@ export interface NistSalModel {
   availability_Value: string;
   availability_Special_Factor: string;
   area: string;
-  nist_Number: string;
+  nisT_Number: string;
 }
 
 export interface NistQuestionsAnswers {
