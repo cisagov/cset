@@ -18,7 +18,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-
+using CSETWebCore.Business.AssessmentIO.Models;
 
 
 //using CSETWebCore.Business.ImportAssessment.Models.Version_10_1;
@@ -490,147 +490,122 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
 
         /// <summary>
-        /// Gathers the data for an assessment and returns a model.json file, along with any attached documents.
-        /// If desired, only the model.json will be returned, named to match the assessment name.
+        /// Gathers the data for an assessment and returns a ExportJson object.
         /// </summary>
-        private Stream ArchiveStream(int assessmentId, string password, string passwordHint, bool jsonOnly = false, bool scrubData = false)
+        private ExportJson CreateJson(int assessmentId, bool scrubData = false)
         {
 
-            var model = CopyForExport(assessmentId, scrubData);
-
-
-            var archiveStream = new MemoryStream();
-            using (var zipWrapper = new SharpZipLibWrapper(archiveStream))
+           var model = CopyForExport(assessmentId, scrubData);
+           ExportJson exportModel = new ExportJson();
+            foreach (var standard in model.jAVAILABLE_STANDARDS)
             {
-                if (!string.IsNullOrEmpty(password))
+                if (!standard.Selected)
                 {
-                    zipWrapper.Password = password;
+                    continue;
+                }
+
+                var set = _context.SETS
+                    .Include(s => s.Set_Category)
+                    .Where(s => s.Set_Name == standard.Set_Name).FirstOrDefault();
+                if (set == null)
+                {
+                    continue;
                 }
 
 
-                foreach (var standard in model.jAVAILABLE_STANDARDS)
+                var qq = from nq in _context.NEW_QUESTION
+                         join nqs in _context.NEW_QUESTION_SETS on nq.Question_Id equals nqs.Question_Id
+                         where nqs.Set_Name == standard.Set_Name
+                         select nq;
+
+                var questions = qq.ToList();
+                set.NEW_QUESTION = new List<NEW_QUESTION>(questions);
+
+
+                var rq = _context.REQUIREMENT_SETS
+                    .Include(s => s.Requirement)
+                    .ThenInclude(s => s.REQUIREMENT_LEVELS)
+                    .Where(s => s.Set_Name == standard.Set_Name)
+                    .Select(s => s.Requirement);
+
+                set.NEW_REQUIREMENT = new List<NEW_REQUIREMENT>(rq.ToList());
+
+
+
+                var extStandard = StandardConverter.ToExternalStandard(set, _context);
+                var setname = Regex.Replace(extStandard.shortName, @"\W", "_");
+
+                
+                var jsonStandard = JsonConvert.SerializeObject(extStandard, Formatting.Indented);
+                
+                SetObject setObject = new SetObject
                 {
-                    if (!standard.Selected)
+                    SetName = $"{setname}.json",
+                    Json = jsonStandard
+                };
+                exportModel.SetObj = setObject;
+                
+
+
+                //Set the GUID at time of export so we are sure it's right!!!
+                model.jANSWER = model.jANSWER.Where(s => s.Is_Requirement ?? false).GroupJoin(set.NEW_REQUIREMENT, s => s.Question_Or_Requirement_Id, s => s.Requirement_Id, (t, s) =>
+                {
+                    var req = s.FirstOrDefault();
+                    if (req != null)
                     {
+                        var buffer = Encoding.Default.GetBytes($"{extStandard.shortName}|||{req.Requirement_Title}|||{req.Requirement_Text}");
+                        t.Custom_Question_Guid = new Guid(MD5.Create().ComputeHash(buffer)).ToString();
+                    }
+                    return t;
+                }).Concat(model.jANSWER.Where(s => !s.Is_Requirement ?? false).GroupJoin(questions, s => s.Question_Or_Requirement_Id, s => s.Question_Id, (t, s) =>
+                {
+                    var req = s.FirstOrDefault();
+                    if (req != null)
+                    {
+                        var buffer = Encoding.Default.GetBytes(req.Simple_Question);
+                        t.Custom_Question_Guid = new Guid(MD5.Create().ComputeHash(buffer)).ToString();
+                    }
+                    return t;
+                })).ToList();
+
+                model.CustomStandards.Add(extStandard.shortName);
+
+                
+                var files = extStandard.requirements.SelectMany(s => s.references.Concat(new ExternalResource[] { s.source })).OfType<ExternalResource>().Distinct();
+                foreach (var file in files)
+                {
+                    var genFile = _context.GEN_FILE.FirstOrDefault(s => s.File_Name == file.fileName && (s.Is_Uploaded));
+                    if (genFile == null || model.CustomStandardDocs.Contains(file.fileName))
                         continue;
-                    }
 
-                    var set = _context.SETS
-                        .Include(s => s.Set_Category)
-                        .Where(s => s.Set_Name == standard.Set_Name).FirstOrDefault();
-                    if (set == null)
+                    var doc = genFile.ToExternalDocument();
+                    var jsonDoc = JsonConvert.SerializeObject(doc, Formatting.Indented);
+
+                    DocObject docObject = new DocObject()
                     {
-                        continue;
-                    }
-
-
-                    var qq = from nq in _context.NEW_QUESTION
-                             join nqs in _context.NEW_QUESTION_SETS on nq.Question_Id equals nqs.Question_Id
-                             where nqs.Set_Name == standard.Set_Name
-                             select nq;
-
-                    var questions = qq.ToList();
-                    set.NEW_QUESTION = new List<NEW_QUESTION>(questions);
-
-
-                    var rq = _context.REQUIREMENT_SETS
-                        .Include(s => s.Requirement)
-                        .ThenInclude(s => s.REQUIREMENT_LEVELS)
-                        .Where(s => s.Set_Name == standard.Set_Name)
-                        .Select(s => s.Requirement);
-
-                    set.NEW_REQUIREMENT = new List<NEW_REQUIREMENT>(rq.ToList());
-
-
-
-                    var extStandard = StandardConverter.ToExternalStandard(set, _context);
-                    var setname = Regex.Replace(extStandard.shortName, @"\W", "_");
-
-                    // Export Set
-                    //var standardEntry = archive.CreateEntry($"{setname}.json");
-                    var jsonStandard = JsonConvert.SerializeObject(extStandard, Formatting.Indented);
-
-                    ////////////////ZipEntry standardEntry = archive.Add$"{setname}.json", jsonStandard);
-
-                    zipWrapper.AddEntry($"{setname}.json", jsonStandard);
-
-
-
-                    //Set the GUID at time of export so we are sure it's right!!!
-                    model.jANSWER = model.jANSWER.Where(s => s.Is_Requirement ?? false).GroupJoin(set.NEW_REQUIREMENT, s => s.Question_Or_Requirement_Id, s => s.Requirement_Id, (t, s) =>
-                    {
-                        var req = s.FirstOrDefault();
-                        if (req != null)
-                        {
-                            var buffer = Encoding.Default.GetBytes($"{extStandard.shortName}|||{req.Requirement_Title}|||{req.Requirement_Text}");
-                            t.Custom_Question_Guid = new Guid(MD5.Create().ComputeHash(buffer)).ToString();
-                        }
-                        return t;
-                    }).Concat(model.jANSWER.Where(s => !s.Is_Requirement ?? false).GroupJoin(questions, s => s.Question_Or_Requirement_Id, s => s.Question_Id, (t, s) =>
-                    {
-                        var req = s.FirstOrDefault();
-                        if (req != null)
-                        {
-                            var buffer = Encoding.Default.GetBytes(req.Simple_Question);
-                            t.Custom_Question_Guid = new Guid(MD5.Create().ComputeHash(buffer)).ToString();
-                        }
-                        return t;
-                    })).ToList();
-
-                    model.CustomStandards.Add(extStandard.shortName);
-
-
-
-
-
-                    // if doing a full export, include documents/artifacts
-                    if (!jsonOnly)
-                    {
-                        var files = extStandard.requirements.SelectMany(s => s.references.Concat(new ExternalResource[] { s.source })).OfType<ExternalResource>().Distinct();
-                        foreach (var file in files)
-                        {
-                            var genFile = _context.GEN_FILE.FirstOrDefault(s => s.File_Name == file.fileName && (s.Is_Uploaded));
-                            if (genFile == null || model.CustomStandardDocs.Contains(file.fileName))
-                                continue;
-
-                            var doc = genFile.ToExternalDocument();
-                            var jsonDoc = JsonConvert.SerializeObject(doc, Formatting.Indented);
-
-                            zipWrapper.AddEntry($"{doc.ShortName}.json", jsonDoc);
-                            model.CustomStandardDocs.Add(file.fileName);
-                        }
-                    }
+                        DocName = $"{doc.ShortName}.json",
+                        Json = jsonDoc
+                    };
+        
+                    exportModel.DocObj = docObject;
+                    model.CustomStandardDocs.Add(file.fileName);
                 }
-
-
-
+                
+            }
+            
                 model.ExportDateTime = DateTime.UtcNow;
 
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
-
-
-                if (jsonOnly)
-                {
-                    // Write only the JSON portion as a stand-alone file to the stream
-                    byte[] bytes = Encoding.UTF8.GetBytes(json);
-                    archiveStream.Write(bytes, 0, bytes.Length);
-                }
-                else
-                {
-                    zipWrapper.AddEntry("model.json", json);
-                    zipWrapper.AddEntry($"{passwordHint}.hint", passwordHint);
-                }
-
-                zipWrapper.Save();
-                zipWrapper.CloseStream();
-            }
-
-            archiveStream.Seek(0, SeekOrigin.Begin);
-            return archiveStream;
+                ModelObject modelObject = new ModelObject()
+                    {
+                        ModelName = "model.json",
+                        Json = json
+                    };
+            
+               exportModel.ModelObj = modelObject;
+            return exportModel;
         }
-
-
-
+        
         /// <summary>
         /// Export an assessment by its ID. 
         /// Can optionally provide a password and password hint that will be used during import process.
@@ -640,7 +615,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         /// <param name="password">If not empty, this password will be required to import the assessment</param>
         /// <param name="passwordHint">An optional password hint</param>
         /// <returns>An AssessmentExportFile object containing the file name and the file contents</returns>
-        public AssessmentExportFile ExportAssessment(int assessmentId, string fileExtension, string password = "", string passwordHint = "", bool jsonOnly = false, bool scrubData = false)
+        public AssessmentExportFile ExportAssessment(int assessmentId, string fileExtension, string password = "", string passwordHint = "", bool scrubData = false)
         {
             // determine file name
             var fileName = $"{assessmentId}{fileExtension}";
@@ -650,15 +625,74 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 fileName = $"{assessmentName}{fileExtension}";
             }
 
-            // export the assessment
-            Stream assessmentFileContents = ArchiveStream(assessmentId, password, passwordHint, jsonOnly, scrubData);
+            var archiveStream = new MemoryStream();
+            using (var zipWrapper = new SharpZipLibWrapper(archiveStream))
+            {
+                if (!string.IsNullOrEmpty(password))
+                {
+                    zipWrapper.Password = password;
+                }
+                ExportJson exportFile = CreateJson(assessmentId, scrubData);
+                if (exportFile.SetObj != null)
+                {
+                    zipWrapper.AddEntry(exportFile.SetObj.SetName, exportFile.SetObj.Json);
+                }
+
+                if (exportFile.DocObj != null)
+                {
+                    zipWrapper.AddEntry(exportFile.DocObj.DocName, exportFile.DocObj.Json);
+
+                }
+
+                if (exportFile.ModelObj != null)
+                {
+                    zipWrapper.AddEntry(exportFile.ModelObj.ModelName, exportFile.ModelObj.Json);
+                }
+
+                if (exportFile.PasswordObj != null)
+                {
+                    zipWrapper.AddEntry($"{passwordHint}.hint", passwordHint);
+                }
+                
+                zipWrapper.Save();
+                zipWrapper.CloseStream();
+            }
+            archiveStream.Seek(0, SeekOrigin.Begin);
 
             // mark the assessment as clean after export
             var assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
             assessment.ModifiedSinceLastExport = false;
             _context.SaveChanges();
 
-            return new AssessmentExportFile(fileName, assessmentFileContents);
+            return new AssessmentExportFile(fileName, archiveStream);
+        }
+        
+        /// <summary>
+        /// Export an assessment by its ID. 
+        /// </summary>
+        /// <param name="assessmentId">The ID of the assessment to export</param>
+        /// <param name="scrubData">An optional removal of PCII from export</param>
+        /// <returns>An AssessmentExportFileJson object containing the file name and the file contents</returns>
+        public AssessmentExportFileJson ExportAssessmentJson(int assessmentId, bool scrubData = false)
+        {
+            // determine file name
+            var fileName = $"{assessmentId}.json";
+            var assessmentName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Assessment_Name;
+            if (!string.IsNullOrEmpty(assessmentName))
+            {
+                fileName = $"{assessmentName}.json";
+            }
+
+            // export the assessment
+            ExportJson exportFile = CreateJson(assessmentId, scrubData);
+           
+
+            // mark the assessment as clean after export
+            var assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
+            assessment.ModifiedSinceLastExport = false;
+            _context.SaveChanges();
+
+            return new AssessmentExportFileJson(fileName, exportFile.ModelObj.Json);
         }
 
 

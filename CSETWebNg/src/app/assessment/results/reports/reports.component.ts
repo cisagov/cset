@@ -42,14 +42,15 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ConversionService } from '../../../services/conversion.service';
 import { CieDocumentsComponent } from '../../../dialogs/cie-documents/cie-documents.component';
 import { ExportAssessmentComponent } from '../../../dialogs/assessment-encryption/export-assessment/export-assessment.component';
+import { FileExportService } from '../../../services/file-export.service';
 
 @Component({
-    selector: 'app-reports',
-    templateUrl: './reports.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    styleUrls: ['./reports.component.scss'],
-    standalone: false
+  selector: 'app-reports',
+  templateUrl: './reports.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  styleUrls: ['./reports.component.scss'],
+  standalone: false
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
   /**
@@ -102,6 +103,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     public demoSvc: DemographicExtendedService,
     private cdr: ChangeDetectorRef,
     private reportSvc: ReportService,
+    private fileExportSvc: FileExportService,
     private convertSvc: ConversionService,
     public dialog: MatDialog
   ) {
@@ -228,6 +230,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   clickReportLink(reportType: string) {
     const url = '/index.html?returnPath=report/' + reportType;
     localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
+
     window.open(url, '_blank');
   }
 
@@ -262,67 +265,50 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     this.confidentiality = val;
   }
 
-  showExcelExportDialog() {
-    const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
-    const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
-    if (this.dialog.openDialogs[0] || doNotShow) {
-      this.exportToExcel();
-      return;
-    }
-    this.dialogRef = this.dialog.open(ExcelExportComponent);
-    this.dialogRef.afterClosed().subscribe();
-  }
-
-  exportToExcel() {
-    const url = this.configSvc.apiUrl + 'assessment/export/excel?token=' + localStorage.getItem('userToken');
-    window.open(url);
-  }
-
   /**
-   *
+   * 
    */
   clickExport(jsonOnly: boolean = false) {
+    let ext = '.csetw';
+
     if (jsonOnly) {
       let dialogRef = this.dialog.open(ExportAssessmentComponent, {
         data: { jsonOnly }
       });
+
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          let url = this.fileSvc.exportUrl;
 
-          // get short-term JWT from API
-          this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
-            let url = this.fileSvc.exportUrl + "?token=" + response.token;
+          if (jsonOnly) {
+            url = this.fileSvc.exportJsonUrl;
+            ext = '.json';
+          }
 
+          let params = '';
 
-            if (jsonOnly) {
-              url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
-            }
+          if (result.scrubData) {
+            params = params + "&scrubData=" + result.scrubData;
+          }
 
+          if (result.encryptionData.password != null && result.encryptionData.password != "") {
+            params = params + "&password=" + result.encryptionData.password;
+          }
 
-            if (result.scrubData) {
-              url = url + "&scrubData=" + result.scrubData;
-            }
+          if (result.encryptionData.hint != null && result.encryptionData.hint != "") {
+            params = params + "&passwordHint=" + result.encryptionData.hint;
+          }
 
-            if (result.encryptionData.password != null && result.encryptionData.password != "") {
-              url = url + "&password=" + result.encryptionData.password;
-            }
+          if (params.length > 0) {
+            url = url + '?' + params.replace(/^&/, '');
+          }
 
-            if (result.encryptionData.hint != null && result.encryptionData.hint != "") {
-              url = url + "&passwordHint=" + result.encryptionData.hint;
-            }
-
-            //if electron
-            window.location.href = url;
-
-          });
+          this.fileExportSvc.fetchAndSaveFile(url);
         }
       });
     } else {
       // If encryption is turned off
-      this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
-        let url = this.fileSvc.exportUrl + "?token=" + response.token;
-        window.location.href = url;
-      })
+      this.fileExportSvc.fetchAndSaveFile(this.fileSvc.exportUrl);
     }
   }
 
@@ -429,10 +415,10 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 }
 
 @Component({
-    selector: 'snack-bar-component-example-snack',
-    template: '<span>{{ tSvc.translate(printInstructions) }}</span><button (click)="snackBarRef.dismiss()">{{ tSvc.translate(\'buttons.close\') }}</button>',
-    styles: [''],
-    standalone: false
+  selector: 'snack-bar-component-example-snack',
+  template: '<span>{{ tSvc.translate(printInstructions) }}</span><button (click)="snackBarRef.dismiss()">{{ tSvc.translate(\'buttons.close\') }}</button>',
+  styles: [''],
+  standalone: false
 })
 export class PrintSnackComponent implements OnInit {
   constructor(public snackBarRef: MatSnackBarRef<PrintSnackComponent>,

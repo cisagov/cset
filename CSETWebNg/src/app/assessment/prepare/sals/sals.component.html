@@ -33,8 +33,8 @@
         {{t('titles.sal.sal intro3')}}
       </div>
 
-      <span class="mt-3 mb-1 fw-600">{{t('titles.sal.current level')}}</span>
-      <div class="d-flex flex-wrap flex-00a sticky-sal" *ngIf="!!this.salsSvc.selectedSAL">
+      <h4>{{t('titles.sal.current level')}}</h4>
+      <div class="d-flex flex-wrap flex-00a sticky-sal mb-4" *ngIf="!!this.salsSvc.selectedSAL">
         <div class="d-flex flex-11a">
           <div class="mb-2 p-2 quick-info-container d-flex justify-content-center flex-column flex-11a">
             <div class="ws-no-wrap d-flex justify-content-center align-items-center flex-11a">
@@ -45,8 +45,8 @@
             </div>
           </div>
         </div>
-        <div class="d-flex flex-nowrap justify-content-center flex-11a mb-2" *ngIf="selectedMethodology != 'GENERAL'">
 
+        <div class="d-flex flex-nowrap justify-content-center flex-11a mb-2" *ngIf="selectedMethodology != 'GENERAL'">
           <div [class.ms-2]="!layoutSvc.hp"
             class="p-2 quick-info-container d-flex justify-content-center flex-column flex-11a">
             <div class="ws-no-wrap d-flex justify-content-center align-items-center flex-11a">
@@ -70,33 +70,51 @@
               {{ salsSvc.selectedSAL?.aLevel != null ? t('titles.sal.level.' + salsSvc.selectedSAL.aLevel.toLowerCase())
               : '' }}</div>
           </div>
-
         </div>
       </div>
 
-      <div class="mt-5 mb-2 d-flex flex-column flex-00a">
-        {{t('titles.sal.choose methodology')}}
+      <div class="d-flex flex-column flex-11a mb-5">
+        <h4>{{t('titles.sal.overall sal')}}</h4>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
+            <label [attr.csetid]="'OverallSAL' + level.value" class="btn btn-level primary btn-rounded"
+              [class.active]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level"
+              (click)="salsSvc.saveSalLevels(level.value, 'std')">
+              <input class="btn-check primary" tabindex="0" type="radio" autocomplete="off" name="sal_main"
+                [checked]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level">
+              {{t('titles.sal.level.' + level.value.toLowerCase())}}
+            </label>
+          </ng-template>
+        </div>
       </div>
-      <div class="btn-group-toggle" data-toggle="buttons">
-        <label csetid="SimpleSalLevelSelector" class="btn btn-sal-select btn-rounded"
-          [class.active]="selectedMethodology === 'Simple'" (click)="changeMethodology('Simple')">
-          <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
-            [checked]="selectedMethodology === 'Simple'">{{t('titles.sal.simple')}}
-        </label>
 
-        <label csetid="GeneralRiskSalLevelSelector" class="btn btn-sal-select btn-rounded"
-          [class.active]="selectedMethodology === 'GENERAL'" (click)="changeMethodology('GENERAL')">
-          <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
-            [checked]="selectedMethodology === 'GENERAL'">{{t('titles.sal.general risk based')}}
-        </label>
+      <div class="d-flex flex-column flex-11a mb-4">
+        <h4>Methodology</h4>
+        <div class="d-flex flex-column flex-00a">
+          {{t('titles.sal.choose methodology')}}
+        </div>
+        <div class="btn-group-toggle" data-toggle="buttons">
+          <label csetid="SimpleSalLevelSelector" class="btn btn-sal-select btn-rounded"
+            [class.active]="selectedMethodology === 'Simple'" (click)="changeMethodology('Simple')">
+            <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
+              [checked]="selectedMethodology === 'Simple'">{{t('titles.sal.simple')}}
+          </label>
 
-        <label csetid="NistSalLevelSelector" class="btn btn-sal-select btn-rounded"
-          [class.active]="selectedMethodology === 'NIST'" (click)="changeMethodology('NIST')">
-          <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
-            [checked]="selectedMethodology === 'NIST'">{{t('titles.sal.nist 60 fips 199')}}
-        </label>
+          <label csetid="GeneralRiskSalLevelSelector" class="btn btn-sal-select btn-rounded"
+            [class.active]="selectedMethodology === 'GENERAL'" (click)="changeMethodology('GENERAL')">
+            <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
+              [checked]="selectedMethodology === 'GENERAL'">{{t('titles.sal.general risk based')}}
+          </label>
+
+          <label csetid="NistSalLevelSelector" class="btn btn-sal-select btn-rounded"
+            [class.active]="selectedMethodology === 'NIST'" (click)="changeMethodology('NIST')">
+            <input class="btn-check" type="radio" autocomplete="off" name="sal_type_selector"
+              [checked]="selectedMethodology === 'NIST'">{{t('titles.sal.nist 60 fips 199')}}
+          </label>
+        </div>
+        <hr class="w-100 hr-sal mt-1" />
       </div>
-      <hr class="w-100 hr-sal mt-1 mb-5" />
+
 
       <div class="mt-0 me-0 d-flex flex-column justify-content-start flex-11a">
         <div [ngSwitch]="selectedMethodology" class="d-flex flex-column justify-content-start flex-00a">
