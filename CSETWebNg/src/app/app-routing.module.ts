@@ -242,13 +242,8 @@ import { Cmmc2LevelsComponent } from './assessment/prepare/maturity/cmmc2-levels
 import { Cmmc2ScoresComponent } from './assessment/results/mat-cmmc2/cmmc2-scores/cmmc2-scores.component';
 import { Cmmc2ScorecardPageComponent } from './assessment/results/mat-cmmc2/scorecard/cmmc2-scorecard/cmmc2-scorecard-page.component';
 import { Cmmc2ScorecardReportComponent } from './reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
-import { TestSwiperComponent } from './test-swiper/test-swiper.component';
 
 const appRoutes: Routes = [
-  {
-    path: "swipertest",
-    component: TestSwiperComponent
-  },
   // reports routing
   {
     path: 'report-test',
