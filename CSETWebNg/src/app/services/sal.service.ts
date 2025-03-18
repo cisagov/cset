@@ -138,6 +138,45 @@ export class SalService {
     return level;
   }
 
+
+  /**
+   * 
+   */
+  saveSalLevels(level: string, ltype: string) {
+    switch (ltype) {
+      case 'C': {
+        this.selectedSAL.selectedSALOverride = false;
+        this.selectedSAL.cLevel = level;
+        break;
+      }
+      case 'I': {
+        this.selectedSAL.selectedSALOverride = false;
+        this.selectedSAL.iLevel = level;
+        break;
+      }
+      case 'A': {
+        this.selectedSAL.selectedSALOverride = false;
+        this.selectedSAL.aLevel = level;
+        break;
+      }
+      default: {
+        this.selectedSAL.selectedSALOverride = true;
+        this.selectedSAL.selected_Sal_Level = level;
+        break;
+      }
+    }
+
+    this.updateStandardSelection(this.selectedSAL).subscribe(
+      (data: Sal) => {
+        this.selectedSAL = data;
+      },
+      error => {
+        console.log('Error setting sal level: ' + (<Error>error).name + (<Error>error).message);
+        console.log('Error setting sal level: ' + (<Error>error).stack);
+      });
+  }
+
+
   /**
  * Primarily used to shorten the word MODERATE on NIST SAL grid
  * because it is too wide to display well on a phone.

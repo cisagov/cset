@@ -78,11 +78,11 @@ interface UserAssessment {
 }
 
 @Component({
-    selector: "app-my-assessments",
-    templateUrl: "my-assessments.component.html",
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: "app-my-assessments",
+  templateUrl: "my-assessments.component.html",
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class MyAssessmentsComponent implements OnInit {
   comparer: Comparer = new Comparer();
@@ -283,7 +283,7 @@ export class MyAssessmentsComponent implements OnInit {
             }
             else {
               this.sortedAssessments = assessments;
-              
+
               // NCUA want assessments sorted by "last modified"
               if (this.ncuaSvc.switchStatus) {
                 this.sortedAssessments.sort((a, b) => new Date(b.lastModifiedDate).getTime() - new Date(a.lastModifiedDate).getTime());
@@ -291,7 +291,7 @@ export class MyAssessmentsComponent implements OnInit {
             }
           },
             error => {
-              console.log(
+              console.error(
                 "Unable to get Assessments for " +
                 this.authSvc.email() +
                 ": " +
@@ -431,14 +431,12 @@ export class MyAssessmentsComponent implements OnInit {
   /**
    * 
    */
-  async clickDownloadLink(ment_id: number, jsonOnly: boolean = false) {
+  async clickDownloadLink(assessment_id: number, jsonOnly: boolean = false) {
     const obs = this.assessSvc.getEncryptPreference()
     const prom = firstValueFrom(obs);
     prom.then((response: boolean) => {
       let preventEncrypt = response;
       let encryption = preventEncrypt;
-
-      let ext = '.csetw';
 
       if (!preventEncrypt || jsonOnly) {
         let dialogRef = this.dialog.open(ExportAssessmentComponent, {
@@ -446,14 +444,12 @@ export class MyAssessmentsComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            // get short-term JWT from API
-            this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-              let url = this.fileSvc.exportUrl;
+          let url = this.fileSvc.exportUrl;
 
+          this.authSvc.getShortLivedTokenForAssessment(assessment_id).subscribe((response: any) => {
+            if (result) {
               if (jsonOnly) {
                 url = this.fileSvc.exportJsonUrl;
-                ext = '.json';
               }
 
               let params = '';
@@ -473,15 +469,10 @@ export class MyAssessmentsComponent implements OnInit {
               if (params.length > 0) {
                 url = url + '?' + params.replace(/^&/, '');
               }
+            }
 
-              this.fileExportSvc.fetchAndSaveFile(url, response.token);
-            });
-          }
-        });
-      } else {
-        // If encryption is turned off
-        this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-          this.fileExportSvc.fetchAndSaveFile(this.fileSvc.exportUrl, response.token);
+            this.fileExportSvc.fetchAndSaveFile(url, response.token);
+          });
         });
       }
     });
