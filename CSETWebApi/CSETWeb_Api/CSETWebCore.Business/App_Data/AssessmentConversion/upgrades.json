@@ -1,10 +1,16 @@
 [
     {
-        "original": "6A463C71-FE29-4189-BD7D-A0B1712B582C", 
-        "target": "C1A1A2F2-4E5D-4C9B-8D9F-1A2B3C4D5E6F"
+        "6A463C71-FE29-4189-BD7D-A0B1712B582C": {
+            "name": "CMMC2F",
+            "target": "C1A1A2F2-4E5D-4C9B-8D9F-1A2B3C4D5E6F"
+        }
+       
     },
     {
-        "original": "588B16E5-AE9A-435E-A6E3-441A7578D64A", 
-        "target": "C1A1A2F2-4E5D-4C9B-8D9F-1A2B3C4D5E6F"
+        "588B16E5-AE9A-435E-A6E3-441A7578D64A": {
+            "name": "CMMC2F",
+            "target": "C1A1A2F2-4E5D-4C9B-8D9F-1A2B3C4D5E6F"
+        }
+        
     }
 ]

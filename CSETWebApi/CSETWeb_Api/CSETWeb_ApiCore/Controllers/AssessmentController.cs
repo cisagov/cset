@@ -535,19 +535,18 @@ namespace CSETWebCore.Api.Controllers
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
                 var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-                JArray possibleUpgrades = null;
 
                 var rh = new ResourceHelper();
                 var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "AssessmentConversion",
                     $"upgrades.json"));
-                possibleUpgrades = JsonConvert.DeserializeObject<JArray>(json);
-                foreach (var upgrade in possibleUpgrades)
+                
+                JArray jsonArray = JArray.Parse(json);
+                foreach (JObject obj in jsonArray)
                 {
-                    if (upgrade.SelectToken("original").ToString().ToLower() == assessment.GalleryItemGuid.ToString())
+                    if (obj.ContainsKey(assessment.GalleryItemGuid.ToString().ToUpper()))
                     {
-                        return Ok(upgrade);
+                        return Ok(obj[assessment.GalleryItemGuid.ToString().ToUpper()]);
                     }
-
                 }
                 
                 return Ok();

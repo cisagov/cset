@@ -95,7 +95,7 @@ export class UpgradeComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    this.targetModelTitle = AssessmentService.allMaturityModels.find(x => x.modelName === this.targetModel)?.modelTitle;
+    this.targetModelTitle = AssessmentService.allMaturityModels.find(x => x.modelName === this.assessSvc.convertToModel)?.modelTitle;
   }
 
   /**
@@ -133,7 +133,7 @@ export class UpgradeComponent implements OnInit {
           this.assessment.id = newId
           this.fillNewAssessment()
           // Fill answers into new assessment from original and then navigate to the new assesment 
-          this.assessSvc.convertAssesment(this.originalId, this.targetModel).subscribe((data: any) => {
+          this.assessSvc.convertAssesment(this.originalId).subscribe((data: any) => {
             this.navSvc.beginAssessment(newId)
             this.loading = false;
           })
