@@ -31,17 +31,16 @@ import Fuse from 'fuse.js';
 import { map } from 'lodash';
 import { ConfigService } from '../../services/config.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
-import Swiper from 'swiper';
+import { SwiperOptions } from 'swiper/types';
+
 
 @Component({
-    selector: 'app-search-page',
-    templateUrl: './search-page.component.html',
-    styleUrls: ['./search-page.component.scss'],
-    standalone: false
+  selector: 'app-search-page',
+  templateUrl: './search-page.component.html',
+  styleUrls: ['./search-page.component.scss'],
+  standalone: false
 })
 export class SearchPageComponent implements OnInit, AfterViewInit {
-  @ViewChild('swiper', { static: false }) swiperElRef?: ElementRef;
-
   @Input() searchQuery: string;
 
   swiperInstance: any;
@@ -69,34 +68,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   searcher: any;
   cardsPerView: number = 1;
   rows = [];
-  swiperParams = {
-    slidesPerView: 1,
-    spaceBetween: 7,
-    slidesPerGroup: 1,
 
-    breakpoints: {
-      200: {
-        slidesPerView: 1,
-      },
-      620: {
-        slidesPerView: 2,
-      },
-      800: {
-        slidesPerView: 3,
-      },
-      1220: {
-        slidesPerView: 4,
-      },
-      1460: {
-        slidesPerView: 5
-      }
-    },
-    on: {
-      resize: () => {
-
-      }
-    }
-  };
   constructor(public dialog: MatDialog,
     public breakpointObserver: BreakpointObserver,
     public gallerySvc: GalleryService,
@@ -104,12 +76,6 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     public navSvc: NavigationService,
     public configSvc: ConfigService) {
 
-  }
-
-  ngAfterInit() {
-    if (this.swiperElRef) {
-      this.swiperInstance = new Swiper(this.swiperElRef.nativeElement, this.swiperParams);
-    }
   }
 
   ngOnChanges() {
@@ -173,7 +139,57 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.initializeSwipers();
     this.checkNavigation();
+  }
+
+  private initializeSwipers(): void {
+    // Use querySelectorAll to get all swiper containers
+    const swiperEls = document.querySelectorAll('swiper-container');
+    const swiperConfig: SwiperOptions = {
+      slidesPerView: 1,
+      spaceBetween: 7,
+      slidesPerGroup: 1,
+      breakpoints: {
+        200: {
+          slidesPerView: 1,
+        },
+        620: {
+          slidesPerView: 2,
+        },
+        800: {
+          slidesPerView: 3,
+        },
+        1220: {
+          slidesPerView: 4,
+        },
+        1460: {
+          slidesPerView: 5
+        }
+      },
+      on: {
+        resize: () => {
+        }
+      }
+    };
+
+    // Configure each swiper instance
+    swiperEls.forEach(swiperEl => {
+      // Skip already initialized swipers
+      if (swiperEl.hasAttribute('data-initialized')) {
+        return;
+      }
+
+      // Apply configuration to each swiper element
+      Object.assign(swiperEl, swiperConfig);
+
+      // Mark as initialized
+      swiperEl.setAttribute('data-initialized', 'true');
+
+      // Initialize this particular swiper instance
+      // @ts-ignore - initialize method exists in Swiper web components but might not be in typings
+      swiperEl.initialize();
+    });
   }
 
   shuffleCards(i: number) {
