@@ -28,7 +28,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { DemographicService } from '../../services/demographic.service';
 import { DemographicIodService } from '../../services/demographic-iod.service';
 import { DemographicsIod } from '../../models/demographics-iod.model';
-import { AssessmentConfig, AssessmentDetail, Demographic } from '../../models/assessment-info.model';
+import { AssessmentDetail, Demographic } from '../../models/assessment-info.model';
 import { User } from '../../models/user.model';
 import { GalleryService } from '../../services/gallery.service';
 import { ConfigService } from '../../services/config.service';
@@ -116,15 +116,14 @@ export class UpgradeComponent implements OnInit {
       this.gallerySvc.getGalleryItems(this.configSvc.galleryLayout).subscribe(
         async (resp: any) => {
           rows: for (const row of resp.rows) {
-            items: for (const item of row.galleryItems) {
+            for (const item of row.galleryItems) {
               try {
-                const configSetup = JSON.parse(item.configuration_Setup);
                 if (item.gallery_Item_Guid == this.assessSvc.galleryItemGuid.toLowerCase()) {
                   this.galleryItem = item;
                   break rows;
                 }
               } catch (error) {
-                console.error("Error parsing configuration_Setup:", error);
+                console.error(error);
               }
             }
           }
@@ -184,14 +183,15 @@ export class UpgradeComponent implements OnInit {
    * Update new assessment with values 
    */
   fillNewAssessment() {
-    this.assessSvc.assessment = this.assessment
+    // this.assessSvc.assessment = this.assessment
+    this.assessment.galleryItemGuid = this.assessSvc.galleryItemGuid.toLowerCase()
     this.demoSvc.updateDemographic(this.demographicData);
     this.iodDemoSvc.updateDemographic(this.iodDemographics);
     if (this.configSvc.cisaAssessorWorkflow == true) {
       this.csiSvc.updateCsiServiceDemographic(this.csiServiceDemographic);
       this.csiSvc.updateCsiServiceComposition(this.serviceComposition);
     }
-    this.assessSvc.updateAssessmentDetails(this.assessment, this.assessSvc.galleryItemGuid.toLowerCase());
+    this.assessSvc.updateAssessmentDetails(this.assessment);
     this.assessSvc.refreshAssessment();
     this.updateLevel();
   }
