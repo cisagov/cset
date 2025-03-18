@@ -214,7 +214,7 @@ export class AssessmentService {
   /**
    *
    */
-  updateAssessmentDetails(assessment: AssessmentDetail, gallery_item_guid?: string) {
+  updateAssessmentDetails(assessment: AssessmentDetail) {
     this.assessment = assessment;
 
     // clean out properties that may contain HTML before posting.
@@ -223,11 +223,6 @@ export class AssessmentService {
     const payload = JSON.parse(JSON.stringify(assessment));
     payload.maturityModel = null;
     payload.typeDescription = null;
-
-    //Assessment upgrade conversion will need new galleryItemGuid replaced in JSON 
-    if (gallery_item_guid) {
-      payload.galleryItemGuid = gallery_item_guid
-    }
 
     return this.http
       .post(
@@ -501,7 +496,7 @@ export class AssessmentService {
     this.hideUpgradeAlert = false;
     return new Promise((resolve, reject) => {
       this.getAssessmentToken(id).then(() => {
-        this.getAssessmentDetail().subscribe(data => {
+        this.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
           this.assessment = data;
 
           this.applicationMode = this.assessment.applicationMode;

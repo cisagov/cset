@@ -42,6 +42,7 @@ export interface AssessmentDetail {
     creditUnion?: string;
     assets?: string;
 
+    galleryItemGuid?: string;
     // a few demographics to track
     sectorId?: number;
     industryId?: number;
