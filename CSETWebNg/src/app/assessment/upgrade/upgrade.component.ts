@@ -49,9 +49,9 @@ interface GalleryItem {
   custom_Set_Name: string | null;
 }
 @Component({
-    selector: 'app-upgrade',
-    templateUrl: './upgrade.component.html',
-    standalone: false
+  selector: 'app-upgrade',
+  templateUrl: './upgrade.component.html',
+  standalone: false
 })
 export class UpgradeComponent implements OnInit {
 
@@ -68,11 +68,11 @@ export class UpgradeComponent implements OnInit {
   };
   selectedLevel: number;
   originalId: number;
-  dataToSend: string = 'Hello from Dialog Component';
   loading = false;
   iodDemographics: DemographicsIod = {};
   csiServiceDemographic: CsiServiceDemographic = {};
   serviceComposition: CsiServiceComposition = {};
+
 
 
   /**
@@ -95,7 +95,7 @@ export class UpgradeComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    this.targetModelTitle = AssessmentService.allMaturityModels.find(x => x.modelName === this.targetModel)?.modelTitle;
+    this.targetModelTitle = AssessmentService.allMaturityModels.find(x => x.modelName === this.assessSvc.convertToModel)?.modelTitle;
   }
 
   /**
@@ -116,15 +116,14 @@ export class UpgradeComponent implements OnInit {
       this.gallerySvc.getGalleryItems(this.configSvc.galleryLayout).subscribe(
         async (resp: any) => {
           rows: for (const row of resp.rows) {
-            items: for (const item of row.galleryItems) {
+            for (const item of row.galleryItems) {
               try {
-                const configSetup = JSON.parse(item.configuration_Setup);
-                if (configSetup.Model && configSetup.Model.ModelName == this.targetModel) {
+                if (item.gallery_Item_Guid == this.assessSvc.galleryItemGuid.toLowerCase()) {
                   this.galleryItem = item;
                   break rows;
                 }
               } catch (error) {
-                console.error("Error parsing configuration_Setup:", error);
+                console.error(error);
               }
             }
           }
@@ -133,7 +132,7 @@ export class UpgradeComponent implements OnInit {
           this.assessment.id = newId
           this.fillNewAssessment()
           // Fill answers into new assessment from original and then navigate to the new assesment 
-          this.assessSvc.convertAssesment(this.originalId, this.targetModel).subscribe((data: any) => {
+          this.assessSvc.convertAssesment(this.originalId).subscribe((data: any) => {
             this.navSvc.beginAssessment(newId)
             this.loading = false;
           })
@@ -174,6 +173,7 @@ export class UpgradeComponent implements OnInit {
           this.serviceComposition = data;
         });
     }
+
     this.assessment = draftDetails;
     this.originalId = this.assessment.id
     this.selectedLevel = this.assessSvc.assessment.maturityModel.maturityTargetLevel
@@ -183,7 +183,8 @@ export class UpgradeComponent implements OnInit {
    * Update new assessment with values 
    */
   fillNewAssessment() {
-    this.assessSvc.assessment = this.assessment
+    // this.assessSvc.assessment = this.assessment
+    this.assessment.galleryItemGuid = this.assessSvc.galleryItemGuid.toLowerCase()
     this.demoSvc.updateDemographic(this.demographicData);
     this.iodDemoSvc.updateDemographic(this.iodDemographics);
     if (this.configSvc.cisaAssessorWorkflow == true) {

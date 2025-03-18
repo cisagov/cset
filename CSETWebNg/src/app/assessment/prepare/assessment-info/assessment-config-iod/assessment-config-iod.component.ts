@@ -6,6 +6,7 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
 import { DemographicIodService } from '../../../../services/demographic-iod.service';
 import { DemographicService } from '../../../../services/demographic.service';
+import { Upgrades } from '../../../../models/assessment-info.model';
 
 @Component({
   selector: 'app-assessment-config-iod',
@@ -41,13 +42,13 @@ export class AssessmentConfigIodComponent implements OnInit {
 
     this.getAssessmentDetail();
 
-    this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
-      if (data.maturityModel?.modelName == "CMMC2") {
-        this.showUpgrade = true;
-        this.targetModel = "CMMC2F"
+    this.assessSvc.checkUpgrades().subscribe((data: Upgrades) => {
+      if (data) {
+        this.showUpgrade = !!data;
+        this.assessSvc.galleryItemGuid = data.target;
+        this.assessSvc.convertToModel = data.name;
       }
     })
-
 
   }
 

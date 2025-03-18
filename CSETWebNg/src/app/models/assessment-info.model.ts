@@ -42,6 +42,7 @@ export interface AssessmentDetail {
     creditUnion?: string;
     assets?: string;
 
+    galleryItemGuid?: string;
     // a few demographics to track
     sectorId?: number;
     industryId?: number;
@@ -226,4 +227,8 @@ export interface CriticalServiceInfo {
     pointOfContact?: number;
     sectorId?: any;
     size?: any;
+}
+export interface Upgrades {
+    name: string;
+    target: string;
 }
