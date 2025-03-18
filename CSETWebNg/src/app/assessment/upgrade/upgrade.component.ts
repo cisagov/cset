@@ -28,7 +28,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { DemographicService } from '../../services/demographic.service';
 import { DemographicIodService } from '../../services/demographic-iod.service';
 import { DemographicsIod } from '../../models/demographics-iod.model';
-import { AssessmentDetail, Demographic } from '../../models/assessment-info.model';
+import { AssessmentConfig, AssessmentDetail, Demographic } from '../../models/assessment-info.model';
 import { User } from '../../models/user.model';
 import { GalleryService } from '../../services/gallery.service';
 import { ConfigService } from '../../services/config.service';
@@ -49,9 +49,9 @@ interface GalleryItem {
   custom_Set_Name: string | null;
 }
 @Component({
-    selector: 'app-upgrade',
-    templateUrl: './upgrade.component.html',
-    standalone: false
+  selector: 'app-upgrade',
+  templateUrl: './upgrade.component.html',
+  standalone: false
 })
 export class UpgradeComponent implements OnInit {
 
@@ -68,11 +68,11 @@ export class UpgradeComponent implements OnInit {
   };
   selectedLevel: number;
   originalId: number;
-  dataToSend: string = 'Hello from Dialog Component';
   loading = false;
   iodDemographics: DemographicsIod = {};
   csiServiceDemographic: CsiServiceDemographic = {};
   serviceComposition: CsiServiceComposition = {};
+
 
 
   /**
@@ -119,7 +119,7 @@ export class UpgradeComponent implements OnInit {
             items: for (const item of row.galleryItems) {
               try {
                 const configSetup = JSON.parse(item.configuration_Setup);
-                if (configSetup.Model && configSetup.Model.ModelName == this.targetModel) {
+                if (item.gallery_Item_Guid == this.assessSvc.galleryItemGuid.toLowerCase()) {
                   this.galleryItem = item;
                   break rows;
                 }
@@ -174,6 +174,7 @@ export class UpgradeComponent implements OnInit {
           this.serviceComposition = data;
         });
     }
+
     this.assessment = draftDetails;
     this.originalId = this.assessment.id
     this.selectedLevel = this.assessSvc.assessment.maturityModel.maturityTargetLevel
@@ -190,7 +191,7 @@ export class UpgradeComponent implements OnInit {
       this.csiSvc.updateCsiServiceDemographic(this.csiServiceDemographic);
       this.csiSvc.updateCsiServiceComposition(this.serviceComposition);
     }
-    this.assessSvc.updateAssessmentDetails(this.assessment);
+    this.assessSvc.updateAssessmentDetails(this.assessment, this.assessSvc.galleryItemGuid.toLowerCase());
     this.assessSvc.refreshAssessment();
     this.updateLevel();
   }

@@ -227,3 +227,7 @@ export interface CriticalServiceInfo {
     sectorId?: any;
     size?: any;
 }
+export interface Upgrades {
+    original: string;
+    target: string;
+}

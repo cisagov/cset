@@ -27,7 +27,9 @@ import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { ACETService } from '../../../services/acet.service';
-import { AssessmentDetail } from '../../../models/assessment-info.model';
+import { GalleryService } from '../../../services/gallery.service';
+import { Upgrades } from '../../../models/assessment-info.model';
+
 
 @Component({
   selector: 'app-assessment-info',
@@ -46,15 +48,17 @@ export class AssessmentInfoComponent implements OnInit {
     public configSvc: ConfigService,
     public navSvc: NavigationService,
     public ncuaSvc: NCUAService,
-    public acetSvc: ACETService
+    public acetSvc: ACETService,
+    public gallerySvc: GalleryService
   ) { }
 
   ngOnInit(): void {
-      this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
-        if (data.maturityModel.modelName == 'CMMC2' || data.maturityModel.modelName == 'CMMC') {
-          this.showUpgrade = true;
-          this.targetModel = 'CMMC2F'
-        }
-      });
+
+    this.assessSvc.checkUpgrades().subscribe((data: Upgrades) => {
+      if (data) {
+        this.showUpgrade = !!data;
+        this.assessSvc.galleryItemGuid = data.target;
+      }
+    })
   }
 }
