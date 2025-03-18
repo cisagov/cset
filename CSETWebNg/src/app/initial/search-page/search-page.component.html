@@ -26,22 +26,22 @@
     {{t('no search results')}}
   </div>
   <div *ngFor="let row of rows" class="m-4" style="height: 240px;">
-    <div #swiper class="swiper gallery-slider">
+    <swiper-container class="gallery-slider">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" *ngFor="let c of row; let i = index">
-          <div [attr.id]="'c'+c.item.gallery_Item_Guid" class="card gallery-card" 
-            (mouseover)="onHover(c.item.gallery_Item_Guid)"
-            (mouseleave)="onHoverOut(-1, c.item.gallery_Item_Guid)">
+        <swiper-slide *ngFor="let c of row; let i = index">
+          <div [attr.id]="'c'+c.item.gallery_Item_Guid" class="card gallery-card"
+            (mouseover)="onHover(c.item.gallery_Item_Guid)" (mouseleave)="onHoverOut(-1, c.item.gallery_Item_Guid)"
+            style="width: 300px;">
 
-            <div class="card-body gallery-card-body cursor-pointer" style="min-height:150px; max-height:150px; z-index:1"
-              (click)="navSvc.beginNewAssessmentGallery(c.item)">
+            <div class="card-body gallery-card-body cursor-pointer"
+              style="min-height:150px; max-height:150px; z-index:1" (click)="navSvc.beginNewAssessmentGallery(c.item)">
               <div class="img-container">
                 <img class="img-cropped-calc" [src]="getImageSrc(c.item.icon_File_Name_Small)">
               </div>
               <h6 class="card-title" ellipsis [ellipsis-content]="c.item.title"
                 style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
             </div>
-            
+
             <div class="card-footer" [class.gallery-card-footer]="c.item.gallery_Item_Guid==hoverIndex"
               style="text-align:right;">
               <button class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c.item)"
@@ -52,11 +52,8 @@
                   class="fa-solid fa-play" style="font-size: 18px; z-index:100"></i></button>
             </div>
           </div>
-        </div>
+        </swiper-slide>
       </div>
-      <!-- Add navigation buttons -->
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-    </div>
+    </swiper-container>
   </div>
 </div>
