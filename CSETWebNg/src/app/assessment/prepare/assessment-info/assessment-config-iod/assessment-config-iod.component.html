@@ -25,7 +25,7 @@
     <h3 class="mb-3">{{t('titles.assessment configuration')}}</h3>
 
     <div *ngIf="this.showUpgrade">
-      <app-upgrade [data]="this.targetModel"></app-upgrade>
+      <app-upgrade [targetModel]="this.targetModel"></app-upgrade>
     </div>
 
     <div class="row mb-3">
@@ -112,17 +112,18 @@
     <div *ngIf="showFacilitator()" class="mb-4">
       <label class="form-label" for="facilitator">{{t('contact.facilitator')}}</label>
       <select class="form-select" id="facilitator" tabindex="0" name="facilitator" (change)="updateDemographics()"
-          [(ngModel)]="demographics.facilitatorId">
-          <option [ngValue]="null">-- {{t('select facilitator')}} --</option>
-          <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}}
-              {{contact.lastName}}</option>
+        [(ngModel)]="demographics.facilitatorId">
+        <option [ngValue]="null">-- {{t('select facilitator')}} --</option>
+        <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}}
+          {{contact.lastName}}</option>
       </select>
       <div class="mt-2">
-          <input type="checkbox" name="self-assessment" id="self-assessment" class="checkbox-custom mt-1"
-              [(ngModel)]="demographics.selfAssessment" [checked]="demographics.selfAssessment" (change)="updateDemographics()">
-          <label for="self-assessment" class="checkbox-custom-label d-inline">{{ t('self assessment') }}</label>
+        <input type="checkbox" name="self-assessment" id="self-assessment" class="checkbox-custom mt-1"
+          [(ngModel)]="demographics.selfAssessment" [checked]="demographics.selfAssessment"
+          (change)="updateDemographics()">
+        <label for="self-assessment" class="checkbox-custom-label d-inline">{{ t('self assessment') }}</label>
       </div>
-  </div>
+    </div>
 
     <div class="row mb-4">
       <div class="col">

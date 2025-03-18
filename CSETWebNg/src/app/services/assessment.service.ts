@@ -85,6 +85,8 @@ export class AssessmentService {
   //Hide upgrade assessment alert
   public hideUpgradeAlert: boolean = false;
 
+  public galleryItemGuid: string = "";
+
   /**
    *
    */
@@ -206,7 +208,7 @@ export class AssessmentService {
   /**
    *
    */
-  updateAssessmentDetails(assessment: AssessmentDetail) {
+  updateAssessmentDetails(assessment: AssessmentDetail, gallery_item_guid?: string) {
     this.assessment = assessment;
 
     // clean out properties that may contain HTML before posting.
@@ -215,6 +217,11 @@ export class AssessmentService {
     const payload = JSON.parse(JSON.stringify(assessment));
     payload.maturityModel = null;
     payload.typeDescription = null;
+
+    //Assessment upgrade conversion will need new galleryItemGuid replaced in JSON 
+    if (gallery_item_guid) {
+      payload.galleryItemGuid = gallery_item_guid
+    }
 
     return this.http
       .post(
@@ -738,6 +745,10 @@ export class AssessmentService {
     return this.http.post(
       this.apiUrl + 'conversion', null, { params: queryParams }
     );
+  }
+
+  checkUpgrades() {
+    return this.http.get(this.apiUrl + 'upgrades');
   }
 
 
