@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { NgModule, inject, provideAppInitializer } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, inject, provideAppInitializer } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -472,7 +472,6 @@ import { MergeExaminationsComponent } from './assessment/merge/merge-examination
 import { CharterMismatchComponent } from './dialogs/charter-mistmatch/charter-mismatch.component';
 import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.directive';
 import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
-import { NewAssessmentComponent } from './initial/new-assessment/new-assessment.component';
 import { ModuleContentStandardComponent } from './reports/module-content/module-content-standard/module-content-standard.component';
 import { ModuleContentModelComponent } from './reports/module-content/model/module-content-model/module-content-model.component';
 import { McGroupingComponent } from './reports/module-content/model/mc-grouping/mc-grouping.component';
@@ -481,7 +480,6 @@ import { McOptionComponent } from './reports/module-content/model/mc-option/mc-o
 import { GuidanceBlockComponent } from './reports/module-content/guidance-block/guidance-block.component';
 import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
 import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/irp-ise-summary.component';
-import { SwiperModule } from 'swiper/angular';
 import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { GalleryService } from './services/gallery.service';
 import { EllipsisModule } from './modules/ngx-ellipsis/ellipsis.module';
@@ -666,7 +664,6 @@ import { CiePrinciplePhaseComponent } from './reports/cie/cie-principle-phase/ci
 import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-not-applicable.component';
 import { SdOwnerDeficiencyComponent } from './reports/sd-owner/sd-owner-deficiency/sd-owner-deficiency.component';
 import { SdOwnerCommentsMfrComponent } from './reports/sd-owner/sd-owner-comments/sd-owner-comments-mfr.component';
-
 import { ReferencesSectionComponent } from './assessment/questions/references-section/references-section.component';
 import { CisaWorkflowWarningsComponent } from './assessment/results/reports/cisa-workflow-warnings/cisa-workflow-warnings.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
@@ -689,6 +686,10 @@ import { firstValueFrom } from 'rxjs';
 import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
 import { CodeEditorModule } from '@ngstack/code-editor';
 import { ImportComponent } from './import/import.component';
+import { NewAssessmentComponent } from './initial/new-assessment/new-assessment.component';
+import { register as registerSwiper } from 'swiper/element/bundle';
+
+registerSwiper();
 
 @NgModule({
     declarations: [
@@ -1031,7 +1032,6 @@ import { ImportComponent } from './import/import.component';
         CharterMismatchComponent,
         DigitsOnlyNotZeroDirective,
         LandingPageTabsComponent,
-        NewAssessmentComponent,
         ModuleContentStandardComponent,
         ModuleContentModelComponent,
         McGroupingComponent,
@@ -1062,6 +1062,7 @@ import { ImportComponent } from './import/import.component';
         CmuNistCsfCatSummaryComponent,
         ImrReportComponent,
         ReferencesBlockComponent,
+        NewAssessmentComponent,
         NewAssessmentDialogComponent,
         CrrMainTocComponent,
         Cmmc2CommentsMarkedComponent,
@@ -1291,13 +1292,13 @@ import { ImportComponent } from './import/import.component';
         NgbModule,
         NgxChartsModule,
         TooltipModule,
-        SwiperModule,
         EllipsisModule,
         HotkeyModule.forRoot(),
         CodeEditorModule.forRoot({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
             baseUrl: 'assets/monaco'
         })],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         TranslocoService,
         provideTranslocoScope('tutorial', 'reports'),
