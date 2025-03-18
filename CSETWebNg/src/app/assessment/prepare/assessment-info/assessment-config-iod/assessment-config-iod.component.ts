@@ -46,6 +46,7 @@ export class AssessmentConfigIodComponent implements OnInit {
       if (data) {
         this.showUpgrade = !!data;
         this.assessSvc.galleryItemGuid = data.target;
+        this.assessSvc.convertToModel = data.name;
       }
     })
 

@@ -27,7 +27,7 @@
   <h3 *ngIf="this.configSvc.installationMode === 'ACET'" class="mb-3">{{ t('demographics') }}</h3>
 
   <div *ngIf="this.showUpgrade">
-    <app-upgrade [targetModel]="this.targetModel"></app-upgrade>
+    <app-upgrade></app-upgrade>
   </div>
 
   <app-assessment-detail *ngIf="configSvc.installationMode != 'CF' && configSvc.installationMode !== 'ACET'"

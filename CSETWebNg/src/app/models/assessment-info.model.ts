@@ -228,6 +228,6 @@ export interface CriticalServiceInfo {
     size?: any;
 }
 export interface Upgrades {
-    original: string;
+    name: string;
     target: string;
 }
