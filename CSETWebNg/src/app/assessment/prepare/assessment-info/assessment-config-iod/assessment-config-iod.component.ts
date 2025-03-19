@@ -94,6 +94,10 @@ export class AssessmentConfigIodComponent implements OnInit {
       this.IsPCII = val;
       this.assessment.is_PCII = val;
 
+      if (!this.assessment.is_PCII) {
+        this.assessment.pciiNumber = null;
+      }
+
       this.configSvc.cisaAssessorWorkflow = true;
       this.assessSvc.updateAssessmentDetails(this.assessment);
     }
