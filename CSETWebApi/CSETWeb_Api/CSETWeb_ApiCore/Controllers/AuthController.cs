@@ -122,7 +122,7 @@ namespace CSETWebCore.Api.Controllers
             // get operating parameters from request header
             int assessmentId = StringToInt(Request.Headers["assessmentid"], -1);
             int expSeconds = StringToInt(Request.Headers["expSeconds"], -1);
-            string refresh = Request.Headers["expSeconds"];
+            string refresh = Request.Headers["refresh"];
             if (string.IsNullOrEmpty(refresh))
             {
                 refresh = "*default*";

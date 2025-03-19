@@ -494,9 +494,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         /// </summary>
         private ExportJson CreateJson(int assessmentId, bool scrubData = false)
         {
-
-           var model = CopyForExport(assessmentId, scrubData);
-           ExportJson exportModel = new ExportJson();
+            var model = CopyForExport(assessmentId, scrubData);
+            ExportJson exportModel = new ExportJson();
             foreach (var standard in model.jAVAILABLE_STANDARDS)
             {
                 if (!standard.Selected)
@@ -531,20 +530,23 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 set.NEW_REQUIREMENT = new List<NEW_REQUIREMENT>(rq.ToList());
 
 
-
                 var extStandard = StandardConverter.ToExternalStandard(set, _context);
-                var setname = Regex.Replace(extStandard.shortName, @"\W", "_");
 
-                
-                var jsonStandard = JsonConvert.SerializeObject(extStandard, Formatting.Indented);
-                
-                SetObject setObject = new SetObject
+                // export custom standards only
+                if (set.Is_Custom)
                 {
-                    SetName = $"{setname}.json",
-                    Json = jsonStandard
-                };
-                exportModel.SetObj = setObject;
-                
+                    var setname = Regex.Replace(extStandard.shortName, @"\W", "_");
+
+                    var jsonStandard = JsonConvert.SerializeObject(extStandard, Formatting.Indented);
+
+                    SetObject setObject = new SetObject
+                    {
+                        SetName = $"{setname}.json",
+                        Json = jsonStandard
+                    };
+                    exportModel.SetObj = setObject;
+                    model.CustomStandards.Add(extStandard.shortName);
+                }
 
 
                 //Set the GUID at time of export so we are sure it's right!!!
@@ -568,14 +570,12 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     return t;
                 })).ToList();
 
-                model.CustomStandards.Add(extStandard.shortName);
 
-                
                 var files = extStandard.requirements.SelectMany(s => s.references.Concat(new ExternalResource[] { s.source })).OfType<ExternalResource>().Distinct();
                 foreach (var file in files)
                 {
-                    var genFile = _context.GEN_FILE.FirstOrDefault(s => s.File_Name == file.fileName && (s.Is_Uploaded));
-                    if (genFile == null || model.CustomStandardDocs.Contains(file.fileName))
+                    var genFile = _context.GEN_FILE.FirstOrDefault(s => s.File_Name == file.FileName && (s.Is_Uploaded));
+                    if (genFile == null || model.CustomStandardDocs.Contains(file.FileName))
                         continue;
 
                     var doc = genFile.ToExternalDocument();
@@ -586,26 +586,25 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                         DocName = $"{doc.ShortName}.json",
                         Json = jsonDoc
                     };
-        
-                    exportModel.DocObj = docObject;
-                    model.CustomStandardDocs.Add(file.fileName);
-                }
-                
-            }
-            
-                model.ExportDateTime = DateTime.UtcNow;
 
-                var json = JsonConvert.SerializeObject(model, Formatting.Indented);
-                ModelObject modelObject = new ModelObject()
-                    {
-                        ModelName = "model.json",
-                        Json = json
-                    };
-            
-               exportModel.ModelObj = modelObject;
+                    exportModel.DocObj = docObject;
+                    model.CustomStandardDocs.Add(file.FileName);
+                }
+            }
+
+            model.ExportDateTime = DateTime.UtcNow;
+
+            var json = JsonConvert.SerializeObject(model, Formatting.Indented);
+            ModelObject modelObject = new ModelObject()
+            {
+                ModelName = "model.json",
+                Json = json
+            };
+
+            exportModel.ModelObj = modelObject;
             return exportModel;
         }
-        
+
         /// <summary>
         /// Export an assessment by its ID. 
         /// Can optionally provide a password and password hint that will be used during import process.
@@ -653,7 +652,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 {
                     zipWrapper.AddEntry($"{passwordHint}.hint", passwordHint);
                 }
-                
+
                 zipWrapper.Save();
                 zipWrapper.CloseStream();
             }
@@ -666,7 +665,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
             return new AssessmentExportFile(fileName, archiveStream);
         }
-        
+
         /// <summary>
         /// Export an assessment by its ID. 
         /// </summary>
@@ -685,7 +684,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
             // export the assessment
             ExportJson exportFile = CreateJson(assessmentId, scrubData);
-           
+
 
             // mark the assessment as clean after export
             var assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
@@ -739,7 +738,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
 
                     zipWrapper.AddEntry(exportFile.FileName, exportFile.FileContents);
-                    
+
                     zipWrapper.Save();
                     zipWrapper.CloseStream();
                 }

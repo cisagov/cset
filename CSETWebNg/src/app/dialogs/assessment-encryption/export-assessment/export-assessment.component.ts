@@ -43,8 +43,6 @@ export class ExportAssessmentComponent {
     dialogRef.disableClose = true;
   }
 
-  dialogTitle: string = "Export Assessment Options";
-
   data = {
     scrubData: false,
     encryptionData: {
@@ -75,5 +73,4 @@ export class ExportAssessmentComponent {
     const checkbox = event.target as HTMLInputElement;
     this.data.scrubData = checkbox.checked;
   }
-
 }
