@@ -12,8 +12,17 @@ namespace CSETWebCore.Model.Assessment
     public class Demographics
     {
         public int AssessmentId { get; set; }
+
+
+        /// <summary>
+        /// Indicates which set of sector values to use:  PPD-21 or NIPP
+        /// </summary>
+        public string? SectorDirective { get; set; }
+
         public int? SectorId { get; set; }
         public int? IndustryId { get; set; }
+
+
         public int? Size { get; set; }
         public int? AssetValue { get; set; }
         public string OrganizationName { get; set; }

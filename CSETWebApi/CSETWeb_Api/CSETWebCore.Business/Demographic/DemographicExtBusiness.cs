@@ -11,8 +11,6 @@ using System.Linq;
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Demographic;
-using DocumentFormat.OpenXml.InkML;
-using DocumentFormat.OpenXml.Spreadsheet;
 
 
 namespace CSETWebCore.Business.Demographic
@@ -397,6 +395,7 @@ namespace CSETWebCore.Business.Demographic
             // for a bit of efficiency, these methods always insert a new record without checking first
 
             SaveInt(demographic.AssessmentId, "ORG-TYPE", demographic.OrganizationType);
+            SaveString(demographic.AssessmentId, "SECTOR-DIRECTIVE", demographic.SectorDirective);
             SaveInt(demographic.AssessmentId, "SECTOR", demographic.Sector);
             SaveInt(demographic.AssessmentId, "SUBSECTOR", demographic.Subsector);
             SaveInt(demographic.AssessmentId, "CISA-REGION", demographic.CisaRegion);
@@ -429,7 +428,6 @@ namespace CSETWebCore.Business.Demographic
 
             _context.SaveChanges();
             AssessmentNaming.ProcessName(_context, userid, demographic.AssessmentId);
-            
         }
 
 
@@ -511,6 +509,42 @@ namespace CSETWebCore.Business.Demographic
 
                 _context.DETAILS_DEMOGRAPHICS.Add(rec);
             }
+        }
+
+
+        /// <summary>
+        /// Some demographics fields are represented in both DEMOGRAPHICS and DETAILS_DEMOGRAPHICS.
+        /// Until we settle on a single place to store the data, this method helps 
+        /// to keep values in sync between the two locations.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <param name="name"></param>
+        /// <param name="val"></param>
+        public void MirrorToDemographicsRecord(int assessmentId, string name, string val)
+        {
+            var dbDemographics = _context.DEMOGRAPHICS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
+
+            if (name == "BUSINESS-UNIT")
+            {
+                dbDemographics.Agency = val;
+            }
+
+            if (name == "SECTOR")
+            {
+                dbDemographics.SectorId = int.Parse(val);
+            }
+
+            if (name == "SUBSECTOR")
+            {
+                dbDemographics.IndustryId = int.Parse(val);
+            }
+
+            if (name == "ORG-TYPE")
+            {
+                dbDemographics.OrganizationType = int.Parse(val);
+            }
+
+            _context.SaveChanges();
         }
     }
 }

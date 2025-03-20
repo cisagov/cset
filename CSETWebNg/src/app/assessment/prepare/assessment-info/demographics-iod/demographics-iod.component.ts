@@ -68,6 +68,7 @@ export class DemographicsIodComponent implements OnInit {
     this.demographicData.subsector = null;
     this.demoSvc.updateIndividualDemographics('SECTOR', this.demographicData.sector, 'int');
     this.demoSvc.updateIndividualDemographics('SUBSECTOR', this.demographicData.subsector, 'int');
+    this.demoSvc.updateIndividualDemographics('SECTOR-DIRECTIVE', 'NIPP', 'string');
 
     //Check if user selected null for sector and reset subsectors 
     if (this.demographicData.sector.toString() == "null") {
@@ -127,6 +128,7 @@ export class DemographicsIodComponent implements OnInit {
 
   updateDemographics() {
     this.configSvc.cisaAssessorWorkflow = true;
+    this.demographicData.sectorDirective = 'NIPP';
     this.demoSvc.updateDemographic(this.demographicData);
   }
 
@@ -140,5 +142,4 @@ export class DemographicsIodComponent implements OnInit {
 
     this.demoSvc.updateIndividualDemographics(name, val, type)
   }
-
 } 
