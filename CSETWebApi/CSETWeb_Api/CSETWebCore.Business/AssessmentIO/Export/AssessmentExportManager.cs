@@ -19,9 +19,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using CSETWebCore.Business.AssessmentIO.Models;
+using CSETWebCore.Interfaces.Helpers;
 
-
-//using CSETWebCore.Business.ImportAssessment.Models.Version_10_1;
 
 namespace CSETWebCore.Business.AssessmentIO.Export
 {
@@ -30,8 +29,14 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         private readonly CSETContext _context;
         private readonly IDictionary<int, string> questionGroupHeadings;
         private readonly IDictionary<int, string> universalSubHeadings;
+        private readonly bool _cisaAssessorWorkflow = false;
 
-        public AssessmentExportManager(CSETContext context)
+
+        /// <summary>
+        /// CTOR
+        /// </summary>
+        /// <param name="context"></param>
+        public AssessmentExportManager(CSETContext context, ITokenManager token)
         {
             this._context = context;
 
@@ -44,6 +49,10 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             SetupBindings();
         }
 
+
+        /// <summary>
+        /// Set up all the TinyMapper bindings.
+        /// </summary>
         private void SetupBindings()
         {
             TinyMapper.Bind<ACCESS_KEY_ASSESSMENT, jACCESS_KEY_ASSESSMENT>();
@@ -107,7 +116,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
 
         /// <summary>
-        /// 
+        /// Maps and moves the assessment data into an instance of UploadAssessmentModel.
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
@@ -115,75 +124,83 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         {
             var assessmentDate = DateTime.MinValue;
             var model = new UploadAssessmentModel();
+
             foreach (var item in _context.ANSWER_PROFILE.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jANSWER_PROFILE.Add(TinyMapper.Map<ANSWER_PROFILE, jANSWER_PROFILE>(item));
-
             }
 
             foreach (var item in _context.CIS_CSI_ORGANIZATION_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jCIS_CSI_ORGANIZATION_DEMOGRAPHICS.Add(TinyMapper.Map<CIS_CSI_ORGANIZATION_DEMOGRAPHICS, jCIS_CSI_ORGANIZATION_DEMOGRAPHICS>(item));
-
             }
 
             foreach (var item in _context.CIS_CSI_SERVICE_COMPOSITION.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jCIS_CSI_SERVICE_COMPOSITION.Add(TinyMapper.Map<CIS_CSI_SERVICE_COMPOSITION, jCIS_CSI_SERVICE_COMPOSITION>(item));
-
             }
+
             foreach (var item in _context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jCIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Add(TinyMapper.Map<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS, jCIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>(item));
-
             }
+
             foreach (var item in _context.CIS_CSI_SERVICE_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jCIS_CSI_SERVICE_DEMOGRAPHICS.Add(TinyMapper.Map<CIS_CSI_SERVICE_DEMOGRAPHICS, jCIS_CSI_SERVICE_DEMOGRAPHICS>(item));
-
             }
+
             var userCount = _context.CIS_CSI_USER_COUNTS.ToList();
             foreach (var item in userCount)
             {
                 model.jCIS_CSI_USER_COUNTS.Add(TinyMapper.Map<CIS_CSI_USER_COUNTS, jCIS_CSI_USER_COUNTS>(item));
             }
+
             foreach (var item in _context.COUNTY_ANSWERS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jCOUNTY_ANSWERS.Add(TinyMapper.Map<COUNTY_ANSWERS, jCOUNTY_ANSWERS>(item));
-
             }
+
             foreach (var item in _context.CSAF_FILE)
             {
                 model.jCSAF_FILE.Add(TinyMapper.Map<CSAF_FILE, jCSAF_FILE>(item));
-
             }
+
             foreach (var item in _context.DEMOGRAPHIC_ANSWERS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jDEMOGRAPHIC_ANSWERS.Add(TinyMapper.Map<DEMOGRAPHIC_ANSWERS, jDEMOGRAPHIC_ANSWERS>(item));
-
             }
+
             foreach (var item in _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jDETAILS_DEMOGRAPHICS.Add(TinyMapper.Map<DETAILS_DEMOGRAPHICS, jDETAILS_DEMOGRAPHICS>(item));
             }
+
+            foreach (var item in _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId))
+            {
+                model.jDEMOGRAPHICS.Add(TinyMapper.Map<DEMOGRAPHICS, jDEMOGRAPHICS>(item));
+            }
+
             foreach (var item in _context.METRO_ANSWERS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jMETRO_ANSWERS.Add(TinyMapper.Map<METRO_ANSWERS, jMETRO_ANSWERS>(item));
-
             }
+
             foreach (var item in _context.NETWORK_WARNINGS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jNETWORK_WARNINGS.Add(TinyMapper.Map<NETWORK_WARNINGS, jNETWORK_WARNINGS>(item));
-
             }
+
             foreach (var item in _context.REGION_ANSWERS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jREGION_ANSWERS.Add(TinyMapper.Map<REGION_ANSWERS, jREGION_ANSWERS>(item));
             }
+
             foreach (var item in _context.REPORT_DETAIL_SECTION_SELECTION.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jREPORT_DETAIL_SECTION_SELECTION.Add(TinyMapper.Map<REPORT_DETAIL_SECTION_SELECTION, jREPORT_DETAIL_SECTION_SELECTION>(item));
             }
+
             foreach (var item in _context.REPORT_OPTIONS_SELECTION.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jREPORT_OPTIONS_SELECTION.Add(TinyMapper.Map<REPORT_OPTIONS_SELECTION, jREPORT_OPTIONS_SELECTION>(item));
@@ -194,16 +211,16 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 model.jASSESSMENTS.Add(TinyMapper.Map<ASSESSMENTS, jASSESSMENTS>(item));
             }
 
-
             foreach (var item in _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jASSESSMENT_CONTACTS.Add(TinyMapper.Map<ASSESSMENT_CONTACTS, jASSESSMENT_CONTACTS>(item));
             }
+
             foreach (var accessKey in _context.ACCESS_KEY_ASSESSMENT.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jACCESS_KEY_ASSESSMENT.Add(TinyMapper.Map<ACCESS_KEY_ASSESSMENT, jACCESS_KEY_ASSESSMENT>(accessKey));
-
             }
+
             foreach (var item in _context.ANSWER
                 .Include(x => x.FINDING).ThenInclude(x => x.ISE_ACTIONS_FINDINGS)
                 .Include(x => x.FINDING).ThenInclude(x => x.FINDING_CONTACT)
@@ -270,11 +287,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             foreach (var item in _context.CUSTOM_QUESTIONAIRE_QUESTIONS)
             {
                 model.jCUSTOM_QUESTIONAIRE_QUESTIONS.Add(TinyMapper.Map<CUSTOM_QUESTIONAIRE_QUESTIONS, jCUSTOM_QUESTIONAIRE_QUESTIONS>(item));
-            }
-
-            foreach (var item in _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId))
-            {
-                model.jDEMOGRAPHICS.Add(TinyMapper.Map<DEMOGRAPHICS, jDEMOGRAPHICS>(item));
             }
 
             foreach (var item in _context.DOCUMENT_FILE.Include(x => x.DOCUMENT_ANSWERS).ThenInclude(x => x.Answer).Where(x => x.Assessment_Id == assessmentId))
@@ -389,8 +401,10 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             {
                 model = RemovePcii(model);
             }
+
             return model;
         }
+
 
         /// <summary>
         /// Remove PCII from assessment export
@@ -605,6 +619,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             return exportModel;
         }
 
+
         /// <summary>
         /// Export an assessment by its ID. 
         /// Can optionally provide a password and password hint that will be used during import process.
@@ -665,6 +680,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
             return new AssessmentExportFile(fileName, archiveStream);
         }
+
 
         /// <summary>
         /// Export an assessment by its ID. 
