@@ -10,14 +10,14 @@ import { AssessmentService } from '../../services/assessment.service';
 import { NCUAService } from '../../services/ncua.service';
 
 @Component({
-    selector: 'app-user-settings',
-    templateUrl: './user-settings.component.html',
-    standalone: false
+  selector: 'app-user-settings',
+  templateUrl: './user-settings.component.html',
+  standalone: false
 })
 export class UserSettingsComponent implements OnInit {
 
   languageOptions = [];
-  preventEncrypt: boolean;
+  encryption: boolean;
 
   constructor(
     private dialog: MatDialogRef<EditUserComponent>,
@@ -53,7 +53,7 @@ export class UserSettingsComponent implements OnInit {
     });
 
     this.assessSvc.getEncryptPreference().subscribe((result: boolean) => {
-      this.preventEncrypt = result
+      this.encryption = result
     });
   }
 
@@ -74,13 +74,13 @@ export class UserSettingsComponent implements OnInit {
   }
 
   updateEncryptPreference() {
-    this.preventEncrypt = !this.preventEncrypt
+    this.encryption = !this.encryption
   }
 
   /**
    *
    */
   cancel() {
-    this.dialog.close({ preventEncrypt: this.preventEncrypt });
+    this.dialog.close({ encryption: this.encryption });
   }
 }

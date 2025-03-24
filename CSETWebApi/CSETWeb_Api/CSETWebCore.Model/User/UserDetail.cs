@@ -23,7 +23,7 @@ namespace CSETWebCore.Model.User
         public bool IsSuperUser { get; set; }
         public bool PasswordResetRequired { get; set; }
         public bool IsActive { get; set; }
-        public bool PreventEncrypt { get; set; }
+        public bool Encryption { get; set; }
         public bool CisaAssessorWorkflow { get; set; }
     }
 }
