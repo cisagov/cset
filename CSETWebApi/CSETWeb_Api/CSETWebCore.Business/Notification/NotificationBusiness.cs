@@ -86,7 +86,7 @@ namespace CSETWebCore.Business.Notification
         {
             SetScope();
 
-            string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", @"assessmentInviteTemplate_{{scope}}.html"), this._scope);
+            string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", "EmailTemplates", @"assessmentInviteTemplate_{{scope}}.html"), this._scope);
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
             // Build the name if supplied.  
             string contactName = String.Empty;
@@ -142,7 +142,7 @@ namespace CSETWebCore.Business.Notification
             }
 
 
-            string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", @"passwordCreationTemplate_{{scope}}.html"), appName);
+            string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", "EmailTemplates", @"passwordCreationTemplate_{{scope}}.html"), appName);
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
             bodyHtml = bodyHtml.Replace("{{name}}", firstName + " " + lastName);
             bodyHtml = bodyHtml.Replace("{{password}}", password);
@@ -186,7 +186,7 @@ namespace CSETWebCore.Business.Notification
             }
 
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
-            string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", @"invitedPasswordCreationTemplate_{{scope}}.html"), appName);
+            string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", "EmailTemplates", @"invitedPasswordCreationTemplate_{{scope}}.html"), appName);
             bodyHtml = bodyHtml.Replace("{{name}}", firstName + " " + lastName);
             bodyHtml = bodyHtml.Replace("{{password}}", password);
             bodyHtml = bodyHtml.Replace("{{rootUrl}}", _utilities.GetClientHost());
@@ -231,7 +231,7 @@ namespace CSETWebCore.Business.Notification
 
             SetScope(appName);
 
-            string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", @"passwordResetTemplate_{{scope}}.html"), appName);
+            string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", "EmailTemplates", @"passwordResetTemplate_{{scope}}.html"), appName);
             string name = (firstName + " " + lastName).Trim();
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
             if (string.IsNullOrEmpty(name)) name = email;
@@ -270,21 +270,21 @@ namespace CSETWebCore.Business.Notification
         {
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
             // apply stylesheet
-            string inlineStylesheet = _resourceHelper.GetEmbeddedResource(@"App_Data\inlineStylesheet.html");
+            string inlineStylesheet = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailTemplates\inlineStylesheet.html");
             mail.Body = mail.Body.Replace("{{inline-stylesheet}}", inlineStylesheet);
 
             // apply corresponding footer
 
-            string footerACET = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_ACET.html");
+            string footerACET = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailTemplates\EmailFooter_ACET.html");
             mail.Body = mail.Body.Replace("{{email-footer-ACET}}", footerACET);
 
-            string footerTSA = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_TSA.html");
+            string footerTSA = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailTemplates\EmailFooter_TSA.html");
             mail.Body = mail.Body.Replace("{{email-footer-TSA}}", footerTSA);
 
-            string footerCF = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_CF.html");
+            string footerCF = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailTemplates\EmailFooter_CF.html");
             mail.Body = mail.Body.Replace("{{email-footer-CF}}", footerCF);
 
-            string footer = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter.html");
+            string footer = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailTemplates\EmailFooter.html");
             footer = footer.Replace("{{DHSEmail}}", _configuration.GetValue<string>("Email:DHSEmail"));
             mail.Body = mail.Body.Replace("{{email-footer}}", footer);
 
