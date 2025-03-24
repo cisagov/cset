@@ -610,7 +610,7 @@ const appRoutes: Routes = [
       { path: 'allMfrAndComments', component: AllCommentsmarkedComponent },
       { path: 'allReviewedQuestions', component: AllReviewedComponent },
       { path: 'hydroGapReport', component: HydroGapReportComponent},
-{ path: 'hydroAnsweredQestions', component: HydroAnsweredquestionsComponent}
+      { path: 'hydroAnsweredQuestions', component: HydroAnsweredquestionsComponent}
     ]
   },
   { path: '**', redirectTo: 'home' }

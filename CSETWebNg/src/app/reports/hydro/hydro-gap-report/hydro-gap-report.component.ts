@@ -10,7 +10,8 @@ import { QuestionsNestedService } from '../../../services/questions-nested.servi
 @Component({
   selector: 'app-hydro-gap-report',
   templateUrl: './hydro-gap-report.component.html',
-  styleUrls: ['./hydro-gap-report.component.scss', '../../reports.scss', '../../../../assets/sass/cset-font-styles.css','../../acet-reports.scss']
+  styleUrls: ['./hydro-gap-report.component.scss', '../../reports.scss', '../../../../assets/sass/cset-font-styles.css','../../acet-reports.scss'],
+  standalone: false
 })
 export class HydroGapReportComponent implements OnInit {
 

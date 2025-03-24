@@ -10,7 +10,8 @@ import { ReportService } from '../../../services/report.service';
 @Component({
   selector: 'app-hydro-answeredquestions',
   templateUrl: './hydro-answeredquestions.component.html',
-  styleUrls: ['./hydro-answeredquestions.component.scss', '../../reports.scss', '../../../../assets/sass/cset-font-styles.css','../../acet-reports.scss']
+  styleUrls: ['./hydro-answeredquestions.component.scss', '../../reports.scss', '../../../../assets/sass/cset-font-styles.css','../../acet-reports.scss'],
+  standalone: false
 })
 export class HydroAnsweredquestionsComponent implements OnInit {
 

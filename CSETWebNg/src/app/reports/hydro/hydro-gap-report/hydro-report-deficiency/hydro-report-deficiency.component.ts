@@ -9,7 +9,8 @@ import { MaturityService } from '../../../../services/maturity.service';
 @Component({
   selector: 'app-hydro-report-deficiency',
   templateUrl: './hydro-report-deficiency.component.html',
-  styleUrls: ['./hydro-report-deficiency.component.scss', '../../../acet-reports.scss']
+  styleUrls: ['./hydro-report-deficiency.component.scss', '../../../acet-reports.scss'],
+  standalone: false
 })
 export class HydroReportDeficiencyComponent implements OnInit {
 

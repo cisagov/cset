@@ -693,6 +693,7 @@ import { firstValueFrom } from 'rxjs';
 import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
 import { HydroGapReportComponent } from './reports/hydro/hydro-gap-report/hydro-gap-report.component';
 import { HydroReportDeficiencyComponent } from './reports/hydro/hydro-gap-report/hydro-report-deficiency/hydro-report-deficiency.component';
+import { HydroAnsweredquestionsComponent } from './reports/hydro/hydro-answeredquestions/hydro-answeredquestions.component';
 
 @NgModule({
     declarations: [
@@ -1235,6 +1236,7 @@ import { HydroReportDeficiencyComponent } from './reports/hydro/hydro-gap-report
         RolesChangedComponent,
         HydroGapReportComponent,
         HydroReportDeficiencyComponent,
+        HydroAnsweredquestionsComponent,
         AnalyticsResultsComponent,
         UpgradeComponent
     ],
