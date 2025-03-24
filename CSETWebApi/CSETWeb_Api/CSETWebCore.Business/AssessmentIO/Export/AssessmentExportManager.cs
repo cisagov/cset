@@ -29,14 +29,13 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         private readonly CSETContext _context;
         private readonly IDictionary<int, string> questionGroupHeadings;
         private readonly IDictionary<int, string> universalSubHeadings;
-        private readonly bool _cisaAssessorWorkflow = false;
 
 
         /// <summary>
         /// CTOR
         /// </summary>
         /// <param name="context"></param>
-        public AssessmentExportManager(CSETContext context, ITokenManager token)
+        public AssessmentExportManager(CSETContext context)
         {
             this._context = context;
 
