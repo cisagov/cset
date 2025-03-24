@@ -26,6 +26,7 @@ using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Helpers;
 using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace CSETWebCore.Api.Controllers
@@ -517,6 +518,38 @@ namespace CSETWebCore.Api.Controllers
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
                _assessmentBusiness.ConvertAssessment(assessmentId, originalAssessmentId, targetModelName);
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok();
+        }
+        
+        [HttpGet]
+        [Route("api/upgrades")]
+        public IActionResult PossibleUpgrades()
+        {
+            try
+            {
+                int assessmentId = _tokenManager.AssessmentForUser();
+                var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+                var rh = new ResourceHelper();
+                var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "AssessmentConversion",
+                    $"upgrades.json"));
+                
+                JArray jsonArray = JArray.Parse(json);
+                foreach (JObject obj in jsonArray)
+                {
+                    if (obj.ContainsKey(assessment.GalleryItemGuid.ToString().ToUpper()))
+                    {
+                        return Ok(obj[assessment.GalleryItemGuid.ToString().ToUpper()]);
+                    }
+                }
+                
+                return Ok();
             }
             catch (Exception exc)
             {

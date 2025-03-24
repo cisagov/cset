@@ -117,8 +117,20 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpGet]
         [Route("api/auth/token")]
-        public IActionResult IssueToken([FromQuery] int assessmentId = -1, [FromQuery] int aggregationId = -1, [FromQuery] string refresh = "*default*", [FromQuery] int expSeconds = -1)
+        public IActionResult IssueToken()
         {
+            // get operating parameters from request header
+            int assessmentId = StringToInt(Request.Headers["assessmentid"], -1);
+            int expSeconds = StringToInt(Request.Headers["expSeconds"], -1);
+            string refresh = Request.Headers["refresh"];
+            if (string.IsNullOrEmpty(refresh))
+            {
+                refresh = "*default*";
+            }
+            int aggregationId = StringToInt(Request.Headers["aggregationid"], -1);
+
+
+
             int? currentUserId = _tokenManager.PayloadInt(Constants.Constants.Token_UserId);
             string accessKey = _tokenManager.Payload(Constants.Constants.Token_AccessKey);
             int? currentAssessmentId = _tokenManager.PayloadInt(Constants.Constants.Token_AssessmentId);
@@ -167,6 +179,25 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(resp);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private int StringToInt(string value, int defaultInt = -1)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return defaultInt;
+            }
+
+            if (int.TryParse(value, out int result))
+            {
+                return result;
+            }
+
+            return defaultInt;
+        }
+
 
         [CsetAuthorize]
         [HttpGet]

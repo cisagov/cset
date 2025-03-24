@@ -313,6 +313,10 @@ namespace CSETWebCore.Business.Demographic
             rec.IntValue = null;
             rec.DateTimeValue = null;
             rec.BoolValue = null;
+            if (value == null)
+            {
+                return;
+            }
 
             if (value is string)
             {

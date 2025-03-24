@@ -1082,6 +1082,10 @@ table.td-align-top td {
   color: $white;
 }
 
+.btn-level.primary.active {
+  background-color: $primary-800;
+  color: $white;
+}
 
 .btn-geo {
   background-color: $gray-150;

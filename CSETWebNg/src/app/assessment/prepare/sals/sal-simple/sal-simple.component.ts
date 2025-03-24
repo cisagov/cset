@@ -51,39 +51,4 @@ export class SalSimpleComponent implements OnInit {
         console.log('Error Getting all standards: ' + (<Error>error).stack);
       });
   }
-
-  saveLevel(level: string, ltype: string) {
-    this.salsSvc.selectedSAL.methodology = 'Simple';
-    switch (ltype) {
-      case 'C': {
-        this.salsSvc.selectedSAL.cLevel = level;
-        this.salsSvc.selectedSAL.selectedSALOverride = false;
-        break;
-      }
-      case 'I': {
-        this.salsSvc.selectedSAL.iLevel = level;
-        this.salsSvc.selectedSAL.selectedSALOverride = false;
-        break;
-      }
-      case 'A': {
-        this.salsSvc.selectedSAL.aLevel = level;
-        this.salsSvc.selectedSAL.selectedSALOverride = false;
-        break;
-      }
-      default: {
-        this.salsSvc.selectedSAL.selectedSALOverride = true;
-        this.salsSvc.selectedSAL.selected_Sal_Level = level;
-        break;
-      }
-    }
-
-    this.salsSvc.updateStandardSelection(this.salsSvc.selectedSAL).subscribe(
-      (data: Sal) => {
-        this.salsSvc.selectedSAL = data;
-      },
-      error => {
-        console.log('Error setting sal level: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error setting sal level: ' + (<Error>error).stack);
-      });
-  }
 }

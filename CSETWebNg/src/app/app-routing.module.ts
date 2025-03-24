@@ -244,7 +244,6 @@ import { Cmmc2ScorecardPageComponent } from './assessment/results/mat-cmmc2/scor
 import { Cmmc2ScorecardReportComponent } from './reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
 
 const appRoutes: Routes = [
-
   // reports routing
   {
     path: 'report-test',
