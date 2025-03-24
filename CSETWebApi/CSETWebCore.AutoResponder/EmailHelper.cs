@@ -101,12 +101,12 @@ namespace CSETWebCore.AutoResponder
         {
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
             // apply stylesheet
-            string inlineStylesheet = _resourceHelper.GetEmbeddedResource(@"App_Data\inlineStylesheet.html");
+            string inlineStylesheet = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailTemplates\inlineStylesheet.html");
             mail.Body = mail.Body.Replace("{{inline-stylesheet}}", inlineStylesheet);
 
             // apply corresponding footer
 
-            string footerCF = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_CF.html");
+            string footerCF = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailTemplates\EmailFooter_CF.html");
             mail.Body = mail.Body.Replace("{{email-footer-CF}}", footerCF);
 
             var configSmtpHost = emailConfig.FirstOrDefault(x => x.Key == "Email:SmtpHost");
