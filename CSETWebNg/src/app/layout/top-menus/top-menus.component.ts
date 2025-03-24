@@ -500,7 +500,7 @@ export class TopMenusComponent implements OnInit {
     this.dialogRef = this.dialog.open(UserSettingsComponent);
     this.dialogRef.afterClosed().subscribe((results) => {
       if (results) {
-        this.assessSvc.persistEncryptPreference(results.preventEncrypt).subscribe(() => { });
+        this.assessSvc.persistEncryptPreference(results.encryption).subscribe(() => { });
       }
     });
   }

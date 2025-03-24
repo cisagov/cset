@@ -435,10 +435,9 @@ export class MyAssessmentsComponent implements OnInit {
     const obs = this.assessSvc.getEncryptPreference()
     const prom = firstValueFrom(obs);
     prom.then((response: boolean) => {
-      let preventEncrypt = response;
-      let encryption = preventEncrypt;
+      let encryption = response;
 
-      if (!preventEncrypt || jsonOnly) {
+      if (!encryption || jsonOnly) {
         let dialogRef = this.dialog.open(ExportAssessmentComponent, {
           data: { jsonOnly, encryption }
         });
