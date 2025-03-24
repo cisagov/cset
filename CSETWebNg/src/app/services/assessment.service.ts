@@ -701,15 +701,15 @@ export class AssessmentService {
   * Saves the user's "Prevent Encrypt" toggle option to the database.
   * @param status
   */
-  persistEncryptPreference(preventEncrypt: boolean) {
-    return this.http.post(this.apiUrl + 'savePreventEncrypt', preventEncrypt, headers);
+  persistEncryptPreference(status: boolean) {
+    return this.http.post(this.apiUrl + 'saveEncryptStatus', status, headers);
   }
 
   /**
   * Gets the user's "Prevent Encrypt" toggle option from the database.
   */
   getEncryptPreference() {
-    return this.http.get(this.apiUrl + 'getPreventEncrypt');
+    return this.http.get(this.apiUrl + 'encryptStatus');
   }
 
   isCyberFloridaComplete(): boolean {
