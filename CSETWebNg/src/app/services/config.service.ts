@@ -304,6 +304,15 @@ export class ConfigService {
 
   /**
    * Returns a boolean indicating if the app is configured to show
+   * assessment upgrade conversion. 
+   */
+  showAssessmentUpgrade() {
+    return this.config.debug.showAssessmentUpgrade;
+  }
+
+
+  /**
+   * Returns a boolean indicating if the app is configured to show
    * the API build/link datetime in the CSET help about for debugging purposes.
    * @returns
    */
