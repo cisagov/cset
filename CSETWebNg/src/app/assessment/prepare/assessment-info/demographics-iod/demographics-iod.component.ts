@@ -12,10 +12,10 @@ import { CsiService } from '../../../../services/cis-csi.service';
 
 
 @Component({
-    selector: 'app-demographics-iod',
-    templateUrl: './demographics-iod.component.html',
-    styleUrls: ['./demographics-iod.component.scss'],
-    standalone: false
+  selector: 'app-demographics-iod',
+  templateUrl: './demographics-iod.component.html',
+  styleUrls: ['./demographics-iod.component.scss'],
+  standalone: false
 })
 export class DemographicsIodComponent implements OnInit {
 
@@ -51,7 +51,7 @@ export class DemographicsIodComponent implements OnInit {
   }
 
   populateDemographicsModel() {
-    this.demoSvc.getDemographics().subscribe((data: any) => {
+    this.demoSvc.getDemographics().subscribe((data: DemographicsIod) => {
       this.demographicData = data;
     })
   }
@@ -65,12 +65,9 @@ export class DemographicsIodComponent implements OnInit {
    *
    */
   onChangeSector(evt: any) {
-    this.demographicData.subsector = null;
-    this.demoSvc.updateIndividualDemographics('SECTOR', this.demographicData.sector, 'int');
-    this.demoSvc.updateIndividualDemographics('SUBSECTOR', this.demographicData.subsector, 'int');
-
     //Check if user selected null for sector and reset subsectors 
     if (this.demographicData.sector.toString() == "null") {
+      this.demographicData.sector = null;
       this.demographicData.listSubsectors = null;
     } else {
       this.demoSvc.getSubsectors(this.demographicData.sector).subscribe((data: any[]) => {
@@ -79,32 +76,26 @@ export class DemographicsIodComponent implements OnInit {
     }
 
     this.assessSvc.assessment.sectorId = this.demographicData.sector;
+
+    this.demographicData.sectorDirective = 'NIPP';
+    this.updateDemographics();
+
     this.assessSvc.assessmentStateChanged$.next(126);
   }
 
   onChangeOrgType(evt: any) {
     this.demographicData.organizationType = parseInt(evt.target.value)
-    this.newUpdate('ORG-TYPE', evt, 'int')
-  }
-
-  changeUsesStandard(val: boolean) {
-    this.demographicData.usesStandard = val;
-    this.demoSvc.updateIndividualDemographics('STANDARD-USED', val, 'bool')
-  }
-
-  setRequireComply(val: boolean) {
-    this.demographicData.requiredToComply = val;
-    this.demoSvc.updateIndividualDemographics('REGULATION-REQD', val, 'bool')
+    this.updateDemographics();
   }
 
   changeRegType1(o: any, evt: any) {
     this.demographicData.regulationType1 = o.optionValue;
-    this.demoSvc.updateIndividualDemographics('REG-TYPE1', o.optionValue, 'int');
+    this.updateDemographics();
   }
 
   changeRegType2(o: any, evt: any) {
     this.demographicData.regulationType2 = o.optionValue;
-    this.demoSvc.updateIndividualDemographics('REG-TYPE2', o.optionValue, 'int');
+    this.updateDemographics();
   }
 
   changeShareOrg(org: any, evt: any) {
@@ -121,24 +112,31 @@ export class DemographicsIodComponent implements OnInit {
     return this.demographicData.shareOrgs.includes(org.optionValue);
   }
 
+  /**
+   * Set a boolean property on a model.  
+   */
+  setBool(model: any, prop: string, state: boolean) {
+    model[prop] = state;
+
+    if (prop == 'usesStandard' && !state) {
+      model['standard1'] = null;
+      model['standard2'] = null;
+    }
+
+    if (prop == 'requiredToComply' && !state) {
+      model['regulationType1'] = null;
+      model['regulationType2'] = null;
+    }
+    this.updateDemographics();
+  }
+
   update(event: any) {
     this.updateDemographics();
   }
 
   updateDemographics() {
     this.configSvc.cisaAssessorWorkflow = true;
+    this.demographicData.sectorDirective = 'NIPP';
     this.demoSvc.updateDemographic(this.demographicData);
   }
-
-  newUpdate(name: string, event: any, type: string) {
-    this.configSvc.cisaAssessorWorkflow = true;
-
-    let val = event.target.value;
-    if (val == '0: null') {
-      val = null;
-    }
-
-    this.demoSvc.updateIndividualDemographics(name, val, type)
-  }
-
 } 

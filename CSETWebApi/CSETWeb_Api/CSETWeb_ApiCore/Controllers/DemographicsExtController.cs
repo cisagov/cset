@@ -82,7 +82,6 @@ namespace CSETWebCore.Api.Controllers
             var mgr = new DemographicExtBusiness(_context);
             mgr.SaveDemographics(demographics, userid ?? 0);
 
-
             return Ok();
         }
 
@@ -110,7 +109,6 @@ namespace CSETWebCore.Api.Controllers
         }
 
       
-
         [HttpGet]
         [Route("api/demographics/export")]
         public IActionResult ExportDemographic()

@@ -170,6 +170,10 @@ export class AssessmentDemographicsComponent implements OnInit {
                 if (this.demographicData.organizationType == "3") {
                     this.isSLTT = true;
                 }
+
+                // Currently this screen shows PPD-21 (the original 16 critical infrastructure sector list)
+                this.demographicData.sectorDirective = 'PPD-21';
+                
                 // populate Industry dropdown based on Sector
                 this.populateIndustryOptions(this.demographicData.sectorId);
             },

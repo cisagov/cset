@@ -25,6 +25,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
+import { DemographicsIod } from '../models/demographics-iod.model';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -73,28 +74,12 @@ export class DemographicIodService {
    * POSTs the screen data to the API.
    * @param demographic
    */
-  updateDemographic(demographic: any) {
+  updateDemographic(demographic: DemographicsIod) {
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
       .subscribe(() => {
         if (this.configSvc.cisaAssessorWorkflow) {
           this.assessSvc.updateAssessmentName();
         }
       });
-  }
-
-  /**
-   * POSTs the screen data to the API.
-   * @param demographic
-   */
-  updateIndividualDemographics(name: string, val: any, type: string) {
-
-    // Setting up query parameters
-    let queryParams = new HttpParams()
-      .set('name', name)
-      .set('val', val)
-      .set('t', type);
-
-    this.http.post(this.configSvc.apiUrl + 'demographics/ext3', null, { params: queryParams })
-      .subscribe(() => { })
   }
 }
