@@ -41,16 +41,16 @@
             <div *ngIf="!this.ncuaSvc.switchStatus">
                 <div *ngIf="this.configSvc.installationMode != 'ACET'">
                     <div class="btn-group btn-group-toggle pt-2" data-toggle="buttons">
-                        <label class="btn btn-level btn-rounded form-check-label" [class.active]="!preventEncrypt"
+                        <label class="btn btn-level btn-rounded form-check-label" [class.active]="!encryption"
                             (change)="updateEncryptPreference()">
                             <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
-                                [checked]="!preventEncrypt" />
+                                [checked]="!encryption" />
                             {{t('menu.user.on')}}
                         </label>
-                        <label class="btn btn-level btn-rounded form-check-label" [class.active]="preventEncrypt"
+                        <label class="btn btn-level btn-rounded form-check-label" [class.active]="encryption"
                             (change)="updateEncryptPreference()">
                             <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
-                                [checked]="preventEncrypt" />
+                                [checked]="encryption" />
                             {{t('menu.user.off')}}
                         </label>
                     </div>
