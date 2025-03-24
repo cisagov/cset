@@ -362,8 +362,8 @@ namespace CSETWebCore.Api.Controllers
         /// 
         /// </summary>
         [HttpGet]
-        [Route("api/getPreventEncrypt")]
-        public IActionResult GetPreventEncryptStatus()
+        [Route("api/encryptStatus")]
+        public IActionResult GetEncryptStatus()
         {
             var userId = _tokenManager.GetCurrentUserId();
             var ak = _tokenManager.GetAccessKey();
@@ -373,13 +373,13 @@ namespace CSETWebCore.Api.Controllers
             {
                 query = from u in _context.USERS
                         where u.UserId == userId
-                        select u.PreventEncrypt;
+                        select u.Encryption;
             }
             else if (ak != null)
             {
                 query = from a in _context.ACCESS_KEY
                         where a.AccessKey == ak
-                        select a.PreventEncrypt;
+                        select a.Encryption;
             }
 
             var result = query.ToList().FirstOrDefault();
@@ -388,8 +388,8 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpPost]
-        [Route("api/savePreventEncrypt")]
-        public IActionResult SavePreventEncryptStatus([FromBody] bool status)
+        [Route("api/saveEncryptStatus")]
+        public IActionResult SaveEncryptStatus([FromBody] bool status)
         {
             var userId = _tokenManager.GetCurrentUserId();
             var ak = _tokenManager.GetAccessKey();
@@ -398,14 +398,14 @@ namespace CSETWebCore.Api.Controllers
             {
                 var user = _context.USERS.Where(x => x.UserId == userId).FirstOrDefault();
 
-                user.PreventEncrypt = status;
+                user.Encryption = status;
                 _context.SaveChanges();
             }
             else if (ak != null)
             {
                 var accessKey = _context.ACCESS_KEY.Where(x => x.AccessKey == ak).FirstOrDefault();
 
-                accessKey.PreventEncrypt = status;
+                accessKey.Encryption = status;
                 _context.SaveChanges();
             }
 
