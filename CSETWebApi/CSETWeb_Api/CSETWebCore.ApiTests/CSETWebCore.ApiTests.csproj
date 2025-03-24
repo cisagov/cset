@@ -16,7 +16,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Npoi.Mapper" Version="6.2.1" />
+    <PackageReference Include="Npoi.Mapper" Version="6.2.2" />
   </ItemGroup>
 
   <ItemGroup>
