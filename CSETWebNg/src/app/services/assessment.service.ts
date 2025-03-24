@@ -85,6 +85,10 @@ export class AssessmentService {
   //Hide upgrade assessment alert
   public hideUpgradeAlert: boolean = false;
 
+  //Assessment upgrade conversion galleryItemGuid and target model name 
+  public galleryItemGuid: string = "";
+  public convertToModel: string = "";
+
   /**
    *
    */
@@ -164,10 +168,14 @@ export class AssessmentService {
   }
 
   /**
-   *
+   * Get a new token that carries the assessmentID as a claim.  This token
+   * should be used for all assessment-specific requests.
    */
   getAssessmentToken(assessId: number) {
-    const obs: Observable<object> = this.http.get(this.apiUrl + 'auth/token?assessmentId=' + assessId);
+    const headers = new HttpHeaders({
+      'AssessmentId': assessId
+    });
+    const obs: Observable<object> = this.http.get(this.apiUrl + 'auth/token', { headers: headers });
     const prom: Promise<object> = firstValueFrom(obs);
 
     return prom.then((response: { token: string }) => {
@@ -488,7 +496,7 @@ export class AssessmentService {
     this.hideUpgradeAlert = false;
     return new Promise((resolve, reject) => {
       this.getAssessmentToken(id).then(() => {
-        this.getAssessmentDetail().subscribe(data => {
+        this.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
           this.assessment = data;
 
           this.applicationMode = this.assessment.applicationMode;
@@ -729,15 +737,20 @@ export class AssessmentService {
     }
   }
 
-  convertAssesment(original_id: number, targetModelName: string) {
-    // Setting up query parameters
+  //Assessment upgrade conversion 
+  convertAssesment(original_id: number) {
     let queryParams = new HttpParams()
       .set('originalAssessmentId', original_id)
-      .set('targetModelName', targetModelName)
+      .set('targetModelName', this.convertToModel)
 
     return this.http.post(
       this.apiUrl + 'conversion', null, { params: queryParams }
     );
+  }
+
+  //Check if assessment has an upgrade available 
+  checkUpgrades() {
+    return this.http.get(this.apiUrl + 'upgrades');
   }
 
 

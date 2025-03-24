@@ -234,15 +234,6 @@ export class AuthenticationService {
   }
 
   /**
-   * TODO:  This is not working correctly - the local storage stuff
-   * hangs around even if we are sitting on the login page again
-   */
-  // isAuthenticated() {
-  //     const uid = localStorage.getItem('userId');
-  //     return !!uid;
-  // }
-
-  /**
    * Schedules an HTTP transaction to refresh the JWT.
    * @param http The current HttpClient instance.
    * @param token A JWT string.
@@ -252,7 +243,11 @@ export class AuthenticationService {
     refresh.subscribe((val) => {
       // only schedule a refresh if the user is currently logged on
       if (localStorage.getItem('userToken') != null) {
-        http.get(this.configSvc.apiUrl + 'auth/token?refresh').subscribe(
+        const headers = new HttpHeaders({
+          'refresh': ''
+        });
+
+        http.get(this.configSvc.apiUrl + 'auth/token', { headers: headers }).subscribe(
           (resp: LoginResponse) => {
             localStorage.removeItem('userToken');
             localStorage.setItem('userToken', resp.token);
@@ -294,11 +289,23 @@ export class AuthenticationService {
    * Requests a JWT with a short lifespan.
    */
   getShortLivedToken() {
-    return this.http.get(this.configSvc.apiUrl + 'auth/token?expSeconds=60');
+    const headers = new HttpHeaders({
+      'expSeconds': 60
+    });
+
+    return this.http.get(this.configSvc.apiUrl + 'auth/token', { headers: headers });
   }
 
+  /**
+   * Requests an assessment-specific JWT with a short lifespan.
+   */
   getShortLivedTokenForAssessment(assessment_id: number) {
-    return this.http.get(this.configSvc.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=60');
+    const headers = new HttpHeaders({
+      'assessmentId': assessment_id,
+      'expSeconds': 60
+    });
+    
+    return this.http.get(this.configSvc.apiUrl + 'auth/token', { headers: headers });
   }
 
   changePassword(data: ChangePassword) {

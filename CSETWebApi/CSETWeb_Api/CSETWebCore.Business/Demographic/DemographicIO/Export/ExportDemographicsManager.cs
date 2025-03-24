@@ -120,14 +120,13 @@ namespace CSETWebCore.Business.Demographic.Export
         /// <returns>An DemographicsExportFile object containing the file name and the file contents</returns>
         public DemographicsExportFile ExportDemographics(int assessmentId)
         {
-            var fileExtension = ".json";
-
             // determine file name
-            var fileName = $"{assessmentId} - demographics{fileExtension}";
+            var fileName = $"Organization - CSET demographics.json";
+
             var facilityName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Facility_Name;
             if (!string.IsNullOrEmpty(facilityName))
             {
-                fileName = $"{facilityName} - demographics{fileExtension}";
+                fileName = $"{facilityName} - CSET demographics.json";
             }
 
             // export the assessment

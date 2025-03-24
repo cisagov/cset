@@ -60,8 +60,10 @@ export class FileExportService {
    * Calls an API endpoint and returns an Observable with the blob response.
    */
   getBlobFromApi(url: string, token: string): Observable<HttpResponse<Blob>> {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(url, { headers, observe: 'response', responseType: 'blob' });
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get(url, { headers: headers, observe: 'response', responseType: 'blob' });
   }
 
   /**
