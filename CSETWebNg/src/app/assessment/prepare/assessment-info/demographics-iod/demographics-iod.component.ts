@@ -56,19 +56,13 @@ export class DemographicsIodComponent implements OnInit {
     })
   }
 
-
-  ngOnDestroy() {
-    this.eventsSubscription?.unsubscribe();
-  }
-
   /**
    *
    */
-  onChangeSector(evt: any) {
+  onChangeSector() {
     //Check if user selected null for sector and reset subsectors 
-    if (this.demographicData.sector.toString() == "null") {
-      this.demographicData.sector = null;
-      this.demographicData.listSubsectors = null;
+    if (!this.demographicData.sector) {
+      this.demographicData.listSubsectors = [];
     } else {
       this.demoSvc.getSubsectors(this.demographicData.sector).subscribe((data: any[]) => {
         this.demographicData.listSubsectors = data;
@@ -80,7 +74,7 @@ export class DemographicsIodComponent implements OnInit {
     this.demographicData.sectorDirective = 'NIPP';
     this.updateDemographics();
 
-    this.assessSvc.assessmentStateChanged$.next(126);
+   //this.assessSvc.assessmentStateChanged$.next(126);
   }
 
   onChangeOrgType(evt: any) {
