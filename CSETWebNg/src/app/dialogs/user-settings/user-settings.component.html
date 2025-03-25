@@ -45,13 +45,13 @@
                             (change)="updateEncryptPreference()">
                             <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
                                 [checked]="!encryption" />
-                            {{t('menu.user.on')}}
+                            {{t('menu.user.off')}}
                         </label>
                         <label class="btn btn-level btn-rounded form-check-label" [class.active]="encryption"
                             (change)="updateEncryptPreference()">
                             <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
                                 [checked]="encryption" />
-                            {{t('menu.user.off')}}
+                            {{t('menu.user.on')}}
                         </label>
                     </div>
                 </div>
