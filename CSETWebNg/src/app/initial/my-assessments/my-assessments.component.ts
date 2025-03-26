@@ -437,7 +437,7 @@ export class MyAssessmentsComponent implements OnInit {
     prom.then((response: boolean) => {
       let encryption = response;
 
-      if (!encryption || jsonOnly) {
+      if (encryption || jsonOnly) {
         let dialogRef = this.dialog.open(ExportAssessmentComponent, {
           data: { jsonOnly, encryption }
         });
@@ -468,12 +468,19 @@ export class MyAssessmentsComponent implements OnInit {
               if (params.length > 0) {
                 url = url + '?' + params.replace(/^&/, '');
               }
+              this.fileExportSvc.fetchAndSaveFile(url, response.token);
             }
 
-            this.fileExportSvc.fetchAndSaveFile(url, response.token);
+
           });
         });
       }
+      else {
+        this.authSvc.getShortLivedTokenForAssessment(assessment_id).subscribe((response: any) => {
+          let url = this.fileSvc.exportUrl;
+          this.fileExportSvc.fetchAndSaveFile(url, response.token);
+        })
+      };
     });
   }
 
