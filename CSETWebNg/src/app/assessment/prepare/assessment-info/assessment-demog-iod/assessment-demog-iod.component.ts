@@ -30,7 +30,7 @@ export class AssessmentDemogIodComponent {
     public demoSvc: DemographicService,
     public dialog: MatDialog,
     public authSvc: AuthenticationService,
-    public assessmSvc: AssessmentService
+    public assessmentSvc: AssessmentService
   ) { }
 
   importClick(event) {
@@ -47,8 +47,8 @@ export class AssessmentDemogIodComponent {
 
     if (!this.unsupportedImportFile) {
       dialogRef.afterClosed().subscribe(result => {
-        this.demoIOD.populateDemographicsModel()
-        this.assessmSvc.refreshAssessment()
+        this.demoIOD.populateDemographicsModel();
+        this.assessmentSvc.refreshAssessment();
       });
     }
   }
