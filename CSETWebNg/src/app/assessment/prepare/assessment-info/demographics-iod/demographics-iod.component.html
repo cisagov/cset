@@ -29,9 +29,10 @@
   <div class="mb-4">
     <label for="orgType" class="form-label">Organization Type</label>
     <select [ngClass]="{ 'alert-danger' : !demographicData.organizationType }" class="form-select" id="orgType"
-      tabindex="0" name="orgType" (ngModelChange)="update($event)" [(ngModel)]="demographicData.organizationType">
+      tabindex="0" name="orgType" [(ngModel)]="demographicData.organizationType" (ngModelChange)="update($event)" >
       <option [ngValue]="null">-- Select Type --</option>
-      <option *ngFor="let t of demographicData.listOrgTypes" [ngValue]="t.optionValue">
+      <option *ngFor="let t of demographicData.listOrgTypes" [ngValue]="t.optionValue"
+        [selected]="t.optionValue === demographicData.organizationType">
         {{ t.optionText }}
       </option>
     </select>

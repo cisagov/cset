@@ -29,7 +29,6 @@ import { AssessmentContactsResponse } from "../../../../models/assessment-info.m
 import { User } from '../../../../models/user.model';
 import { ConfigService } from '../../../../services/config.service';
 import { Observable } from 'rxjs';
-import { OkayComponent } from '../../../../dialogs/okay/okay.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadDemographicsComponent } from "../../../../dialogs/import demographics/import-demographics.component";
 
@@ -156,8 +155,8 @@ export class AssessmentDemographicsComponent implements OnInit {
     }
 
 
-    onSelectSector(sectorId: number) {
-        this.populateIndustryOptions(sectorId);
+    changeSector(evt: any) {
+        this.populateIndustryOptions(this.demographicData.sectorId);
         // invalidate the current Industry, as the Sector list has just changed
         this.demographicData.industryId = null;
         this.updateDemographics();
