@@ -52,17 +52,18 @@
             <div class="col">
                 <label class="form-label" for="sector">{{t('sector')}}</label>
                 <select class="form-select" id="sector" name="sector" tabindex="0"
-                    (change)="onSelectSector($event.target.value)" [(ngModel)]="demographicData.sectorId">
+                    [(ngModel)]="demographicData.sectorId" (ngModelChange)="changeSector($event)">
                     <option [ngValue]="null">-- {{ t('select sector') }} --</option>
-                    <option *ngFor="let sector of sectorsList" [value]="sector.sectorId">{{sector.sectorName}}</option>
+                    <option *ngFor="let sector of sectorsList" [ngValue]="sector.sectorId">{{sector.sectorName}}
+                    </option>
                 </select>
             </div>
             <div class="col">
                 <label class="form-label" for="industry">{{t('industry')}}</label>
                 <select class="form-select" id="industry" name="industry" tabindex="0"
-                    [(ngModel)]="demographicData.industryId" (change)="update($event)">
+                    [(ngModel)]="demographicData.industryId" (ngModelChange)="update($event)">
                     <option [ngValue]="null">-- {{ t('select industry') }} --</option>
-                    <option *ngFor="let industry of industryList" [value]="industry.industryId">
+                    <option *ngFor="let industry of industryList" [ngValue]="industry.industryId">
                         {{industry.industryName}}
                     </option>
                 </select>
@@ -72,33 +73,34 @@
         <div class="mb-3">
             <label class="form-label" for="assetValue">{{t('asset gross value')}}</label>
             <select #assetValueSelect class="form-select" id="assetValue" tabindex="0" name="assetValue"
-                (change)="update($event)" [(ngModel)]="demographicData.assetValue">
+                [(ngModel)]="demographicData.assetValue" (ngModelChange)="update($event)">
                 <option [ngValue]="null">-- {{t('select gross value')}} --</option>
-                <option *ngFor="let asset of assetValues" [value]="asset.demographicsAssetId"
+                <option *ngFor="let asset of assetValues" [ngValue]="asset.demographicsAssetId"
                     [selected]="asset.demographicsAssetId === demographicData.assetValue">{{asset.assetValue}}</option>
             </select>
         </div>
 
         <div class="mb-3">
             <label class="form-label" for="size">{{t('expected effort')}}</label>
-            <select class="form-select" id="size" tabindex="0" name="size" (change)="update($event)"
-                [(ngModel)]="demographicData.size">
+            <select class="form-select" id="size" tabindex="0" name="size" [(ngModel)]="demographicData.size"
+                (ngModelChange)="update($event)">
                 <option [ngValue]="null">-- {{t('select effort')}} --</option>
-                <option *ngFor="let s of sizeList" [value]="s.demographicId">{{s.description}}</option>
+                <option *ngFor="let s of sizeList" [ngValue]="s.demographicId">{{s.description}}</option>
             </select>
         </div>
 
         <div *ngIf="showFacilitator()" class="mb-3">
             <label class="form-label" for="facilitator">{{t('contact.facilitator')}}</label>
-            <select class="form-select" id="facilitator" tabindex="0" name="facilitator" (change)="update($event)"
-                [(ngModel)]="demographicData.facilitatorId">
+            <select class="form-select" id="facilitator" tabindex="0" name="facilitator"
+                [(ngModel)]="demographicData.facilitatorId" (ngModelChange)="update($event)">
                 <option [ngValue]="null">-- {{t('select facilitator')}} --</option>
-                <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}}
+                <option *ngFor="let contact of contacts" [ngValue]="contact.assessmentContactId">{{contact.firstName}}
                     {{contact.lastName}}</option>
             </select>
             <div class="mt-2">
                 <input type="checkbox" name="self-assessment" id="self-assessment" class="checkbox-custom mt-1"
-                    [(ngModel)]="demographicData.selfAssessment" [checked]="demographicData.selfAssessment" (change)="update($event)">
+                    [(ngModel)]="demographicData.selfAssessment" [checked]="demographicData.selfAssessment"
+                    (change)="update($event)">
                 <label for="self-assessment" class="checkbox-custom-label d-inline">{{ t('self assessment') }}</label>
             </div>
         </div>
@@ -120,15 +122,15 @@
         <div class="mb-3">
             <label class="form-label" for="edmOrganizationType">{{t('org type')}}</label>
             <select *ngIf="isSLTT" class="form-select" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
-                (change)="update($event)" [(ngModel)]="demographicData.organizationType">
+                [(ngModel)]="demographicData.organizationType" (ngModelChange)="update($event)">
                 <option [ngValue]="null">-- {{t('select type')}} --</option>
-                <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option>
+                <option *ngFor="let t of orgTypes" [ngValue]="t.organizationTypeId">{{t.organizationType}}</option>
             </select>
             <select *ngIf="!isSLTT" class="form-select" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
-                (change)="update($event)" [(ngModel)]="demographicData.organizationType">
+                [(ngModel)]="demographicData.organizationType" (ngModelChange)="update($event)">
                 <option [ngValue]="null">-- {{t('select type')}} --</option>
                 <ng-container *ngFor="let t of orgTypes">
-                    <option *ngIf="t.organizationTypeId!==3" [value]="t.organizationTypeId">{{t.organizationType}}
+                    <option *ngIf="t.organizationTypeId!==3" [ngValue]="t.organizationTypeId">{{t.organizationType}}
                     </option>
                 </ng-container>
             </select>
@@ -137,9 +139,9 @@
         <div *ngIf="true" class="mb-3">
             <label class="form-label" for="orgPointOfContact">{{t('org poc')}}</label>
             <select class="form-select" id="orgPointOfContact" tabindex="0" name="orgPointOfContact"
-                (change)="update($event)" [(ngModel)]="demographicData.orgPointOfContact">
+                [(ngModel)]="demographicData.orgPointOfContact" (ngModelChange)="update($event)">
                 <option [ngValue]="null">-- {{t('select contact')}} --</option>
-                <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}}
+                <option *ngFor="let contact of contacts" [ngValue]="contact.assessmentContactId">{{contact.firstName}}
                     {{contact.lastName}}</option>
             </select>
         </div>
@@ -154,9 +156,10 @@
             <div class="col">
                 <label class="form-label" for="critSvcPointOfContact">{{t('crit svc poc')}}</label>
                 <select class="form-select" id="critSvcPointOfContact" tabindex="0" name="critSvcPointOfContact"
-                    (change)="update($event)" [(ngModel)]="demographicData.pointOfContact">
+                    [(ngModel)]="demographicData.pointOfContact" (ngModelChange)="update($event)">
                     <option [ngValue]="null">-- {{t('select contact')}} --</option>
-                    <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}}
+                    <option *ngFor="let contact of contacts" [ngValue]="contact.assessmentContactId">
+                        {{contact.firstName}}
                         {{contact.lastName}}</option>
                 </select>
             </div>

@@ -1,14 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DemographicIodService } from '../../../../services/demographic-iod.service';
 import { DemographicsIod } from '../../../../models/demographics-iod.model';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
-import { DemographicService } from '../../../../services/demographic.service';
 import { ServiceDemographic, AssessmentConfig, ServiceComposition, CriticalServiceInfo } from '../../../../models/assessment-info.model';
-import { CsiService } from '../../../../services/cis-csi.service';
 
 
 @Component({
@@ -20,8 +17,6 @@ import { CsiService } from '../../../../services/cis-csi.service';
 export class DemographicsIodComponent implements OnInit {
 
   @Input() events: Observable<void>;
-
-  private eventsSubscription: any;
 
   /**
    * The principal model for this page
@@ -35,40 +30,33 @@ export class DemographicsIodComponent implements OnInit {
 
   constructor(public demoSvc: DemographicIodService,
     private assessSvc: AssessmentService,
-    private sanitizer: DomSanitizer,
     public dialog: MatDialog,
     private configSvc: ConfigService,
-    private iodDemoSvc: DemographicIodService,
-    private demoSvc2: DemographicService,
-    private csiSvc: CsiService
   ) { }
 
   /**
    *
    */
   ngOnInit() {
-    this.populateDemographicsModel()
+    this.populateDemographicsModel();
   }
 
+  /**
+   * 
+   */
   populateDemographicsModel() {
     this.demoSvc.getDemographics().subscribe((data: DemographicsIod) => {
       this.demographicData = data;
     })
   }
 
-
-  ngOnDestroy() {
-    this.eventsSubscription?.unsubscribe();
-  }
-
   /**
    *
    */
-  onChangeSector(evt: any) {
-    //Check if user selected null for sector and reset subsectors 
-    if (this.demographicData.sector.toString() == "null") {
-      this.demographicData.sector = null;
-      this.demographicData.listSubsectors = null;
+  onChangeSector() {
+    if (!this.demographicData.sector) {
+      this.demographicData.listSubsectors = [];
+      this.demographicData.subsector = null;
     } else {
       this.demoSvc.getSubsectors(this.demographicData.sector).subscribe((data: any[]) => {
         this.demographicData.listSubsectors = data;
@@ -77,14 +65,6 @@ export class DemographicsIodComponent implements OnInit {
 
     this.assessSvc.assessment.sectorId = this.demographicData.sector;
 
-    this.demographicData.sectorDirective = 'NIPP';
-    this.updateDemographics();
-
-    this.assessSvc.assessmentStateChanged$.next(126);
-  }
-
-  onChangeOrgType(evt: any) {
-    this.demographicData.organizationType = parseInt(evt.target.value)
     this.updateDemographics();
   }
 
@@ -125,7 +105,9 @@ export class DemographicsIodComponent implements OnInit {
 
     if (prop == 'requiredToComply' && !state) {
       model['regulationType1'] = null;
+      model['reg1Other'] = null;
       model['regulationType2'] = null;
+      model['reg2Other'] = null;
     }
     this.updateDemographics();
   }

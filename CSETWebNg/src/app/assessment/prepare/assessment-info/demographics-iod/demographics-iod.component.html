@@ -29,9 +29,10 @@
   <div class="mb-4">
     <label for="orgType" class="form-label">Organization Type</label>
     <select [ngClass]="{ 'alert-danger' : !demographicData.organizationType }" class="form-select" id="orgType"
-      tabindex="0" name="orgType" (change)="onChangeOrgType($event)" [(ngModel)]="demographicData.organizationType">
-      <option [value]=null>-- Select Type --</option>
-      <option *ngFor="let t of demographicData.listOrgTypes" [value]="t.optionValue">
+      tabindex="0" name="orgType" [(ngModel)]="demographicData.organizationType" (ngModelChange)="update($event)" >
+      <option [ngValue]="null">-- Select Type --</option>
+      <option *ngFor="let t of demographicData.listOrgTypes" [ngValue]="t.optionValue"
+        [selected]="t.optionValue === demographicData.organizationType">
         {{ t.optionText }}
       </option>
     </select>
@@ -48,16 +49,16 @@
     <label for="businessUnit" class="form-label">Business Unit</label>
     <input [ngClass]="{ 'alert-danger' : !demographicData.businessUnit }" class="form-control" autocomplete="off"
       tabindex="0" type="text" maxlength="150" name="businessUnit" id="businessUnit"
-      [(ngModel)]="demographicData.businessUnit" placeholder="Business Unit/Agency" (change)="update($event)"/>
+      [(ngModel)]="demographicData.businessUnit" placeholder="Business Unit/Agency" (change)="update($event)" />
   </div>
 
   <div class="row mb-4">
     <div class="col">
       <label for="sector" class="form-label">Sector</label>
       <select [ngClass]="{ 'alert-danger' : !demographicData.sector}" class="form-select" id="sector" tabindex="0"
-        name="sector" [(ngModel)]="demographicData.sector" (change)="onChangeSector($event)">
-        <option [value]=null>-- Select Sector --</option>
-        <option *ngFor="let i of demographicData.listSectors" [value]="i.optionValue"
+        name="sector" [(ngModel)]="demographicData.sector" (ngModelChange)="onChangeSector()">
+        <option [ngValue]="null">-- Select Sector --</option>
+        <option *ngFor="let i of demographicData.listSectors" [ngValue]="i.optionValue"
           [selected]="i.optionValue === demographicData?.sector">
           {{ i.optionText }}
         </option>
@@ -67,9 +68,9 @@
     <div class="col">
       <label for="subsector" class="form-label">Sub-Sector</label>
       <select [ngClass]="{ 'alert-danger' : !demographicData.subsector }" class="form-select" id="subsector"
-        tabindex="0" name="subsector" [(ngModel)]="demographicData.subsector" (change)="update($event)">
+        tabindex="0" name="subsector" [(ngModel)]="demographicData.subsector" (ngModelChange)="update($event)">
         <option [ngValue]="null">-- Select --</option>
-        <option *ngFor="let i of demographicData.listSubsectors" [value]="i.optionValue"
+        <option *ngFor="let i of demographicData.listSubsectors" [ngValue]="i.optionValue"
           [selected]="i.optionValue === demographicData?.subsector">
           {{ i.optionText }}
         </option>
@@ -87,9 +88,9 @@
     </label>
     <select [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesTotal }" class="form-select"
       id="numberEmployeesTotal" tabindex="0" name="numberEmployeesTotal"
-      [(ngModel)]="demographicData.numberEmployeesTotal" (change)="update($event)">
+      [(ngModel)]="demographicData.numberEmployeesTotal" (ngModelChange)="update($event)">
       <option [ngValue]="null">-- Select --</option>
-      <option *ngFor="let i of demographicData.listNumberEmployeeTotal" [value]="i.optionValue">
+      <option *ngFor="let i of demographicData.listNumberEmployeeTotal" [ngValue]="i.optionValue">
         {{ i.optionText }}
       </option>
     </select>
@@ -103,9 +104,10 @@
       employees in the department? </label>
 
     <select [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesUnit }" class="form-select"
-      id="numberEmployeesUnit" tabindex="0" name="numberEmployeesUnit" [(ngModel)]="demographicData.numberEmployeesUnit" (change)="update($event)">
+      id="numberEmployeesUnit" tabindex="0" name="numberEmployeesUnit" [(ngModel)]="demographicData.numberEmployeesUnit"
+      (ngModelChange)="update($event)">
       <option [ngValue]="null">-- Select --</option>
-      <option *ngFor="let i of demographicData.listNumberEmployeeUnit" [value]="i.optionValue"
+      <option *ngFor="let i of demographicData.listNumberEmployeeUnit" [ngValue]="i.optionValue"
         [selected]="i.optionValue === demographicData.numberEmployeesUnit">
         {{ i.optionText }}
       </option>
@@ -129,9 +131,9 @@
     </label>
 
     <select [ngClass]="{ 'alert-danger' : !demographicData.annualRevenue }" class="form-select" id="totalAnnualRevenue"
-      tabindex="0" name="totalAnnualRevenue" [(ngModel)]="demographicData.annualRevenue" (change)="update($event)">
+      tabindex="0" name="totalAnnualRevenue" [(ngModel)]="demographicData.annualRevenue" (ngModelChange)="update($event)">
       <option [ngValue]="null">-- Select --</option>
-      <option *ngFor="let i of demographicData.listRevenueAmounts" [value]="i.optionValue"
+      <option *ngFor="let i of demographicData.listRevenueAmounts" [ngValue]="i.optionValue"
         [selected]="i.optionValue === demographicData.annualRevenue">
         {{ i.optionText }}
       </option>
@@ -151,12 +153,14 @@
     </label>
 
     <div class="btn-group col-4" role="group" data-toggle="buttons">
-      <label class="btn btn-level btn-rounded" [class.active]="demographicData.usesStandard" (change)="setBool(demographicData, 'usesStandard', true)">
+      <label class="btn btn-level btn-rounded" [class.active]="demographicData.usesStandard"
+        (change)="setBool(demographicData, 'usesStandard', true)">
         <input class="btn-check" name="standardYes" id="standardYes" type="radio" autocomplete="off" tabindex="0"
           [checked]="demographicData.usesStandard" />
         Yes
       </label>
-      <label class="btn btn-level btn-rounded" [class.active]="!demographicData.usesStandard" (change)="setBool(demographicData, 'usesStandard', false)">
+      <label class="btn btn-level btn-rounded" [class.active]="!demographicData.usesStandard"
+        (change)="setBool(demographicData, 'usesStandard', false)">
         <input class="btn-check" name="standardNo" id="standardNo" type="radio" autocomplete="off" tabindex="0"
           [checked]="!demographicData.usesStandard" />
         No
@@ -173,13 +177,13 @@
         <label for="standard1" class="form-label">Most important</label>
         <input [ngClass]="{ 'alert-danger' : !demographicData.standard1 }" type="text" maxlength="250"
           class="form-control mb-3" id="standard1" name="standard1" list="listStandards"
-          [(ngModel)]="demographicData.standard1" (change)="update($event)"/>
+          [(ngModel)]="demographicData.standard1" (change)="update($event)" />
       </div>
       <div>
         <label for="standard2" class="form-label">Second most important</label>
         <input [ngClass]="{ 'alert-danger' : !demographicData.standard2 }" type="text" maxlength="250"
           class="form-control mb-3" id="standard2" name="standard2" list="listStandards"
-          [(ngModel)]="demographicData.standard2" (change)="update($event)"/>
+          [(ngModel)]="demographicData.standard2" (change)="update($event)" />
       </div>
       <datalist id="listStandards">
         <option *ngFor="let standard of demographicData.listStandards" [attr.data-value]="standard.optionValue"
@@ -195,12 +199,13 @@
     </label>
 
     <div class="btn-group col-4" role="group" data-toggle="buttons">
-      <label class="btn btn-level btn-rounded" [class.active]="demographicData.requiredToComply" >
-        <input class="btn-check" name="complyYes" id="complyYes" type="radio" autocomplete="off" tabindex="0" (change)="setBool(demographicData, 'requiredToComply', true)"
-          [checked]="demographicData.requiredToComply" />
+      <label class="btn btn-level btn-rounded" [class.active]="demographicData.requiredToComply">
+        <input class="btn-check" name="complyYes" id="complyYes" type="radio" autocomplete="off" tabindex="0"
+          (change)="setBool(demographicData, 'requiredToComply', true)" [checked]="demographicData.requiredToComply" />
         Yes
       </label>
-      <label class="btn btn-level btn-rounded" [class.active]="!demographicData.requiredToComply" (change)="setBool(demographicData, 'requiredToComply', false)">
+      <label class="btn btn-level btn-rounded" [class.active]="!demographicData.requiredToComply"
+        (change)="setBool(demographicData, 'requiredToComply', false)">
         <input class="btn-check" name="complyNo" id="complyNo" type="radio" autocomplete="off" tabindex="0"
           [checked]="!demographicData.requiredToComply" />
         No
@@ -225,7 +230,8 @@
         </div>
 
         <label class="form-label">Regulation 1</label>
-        <input class="form-control" type="text" name="reg1Other" [(ngModel)]="demographicData.reg1Other" (change)="update($event)"/>
+        <input class="form-control" type="text" name="reg1Other" [(ngModel)]="demographicData.reg1Other"
+          (change)="update($event)" />
       </div>
 
       <div>
@@ -240,7 +246,8 @@
         </div>
 
         <label class="form-label">Regulation 2</label>
-        <input class="form-control" type="text" name="reg2Other" [(ngModel)]="demographicData.reg2Other" (change)="update($event)"/>
+        <input class="form-control" type="text" name="reg2Other" [(ngModel)]="demographicData.reg2Other"
+          (change)="update($event)" />
       </div>
     </div>
   </div>
@@ -264,14 +271,15 @@
       </div>
 
       If other, please list:
-      <input type="text" class="form-control" maxlength="150" [(ngModel)]="demographicData.shareOther" (change)="update($event)" name="shareOther" />
+      <input type="text" class="form-control" maxlength="150" [(ngModel)]="demographicData.shareOther"
+        (change)="update($event)" name="shareOther" />
       <p class="fst-italic">Commas should be used to separate more than one entry.</p>
     </div>
   </div>
 
   <!-- #10 -->
   <div>
-    <label for="assetValue" class="form-label"> 
+    <label for="assetValue" class="form-label">
       Please select the two most significant barriers or concerns limiting your organization's participation in
       cybersecurity information sharing groups or initiatives.
     </label>
