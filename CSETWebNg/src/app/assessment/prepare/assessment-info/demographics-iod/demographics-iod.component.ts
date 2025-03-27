@@ -119,6 +119,9 @@ export class DemographicsIodComponent implements OnInit {
   updateDemographics() {
     this.configSvc.cisaAssessorWorkflow = true;
     this.demographicData.sectorDirective = 'NIPP';
+
+    this.assessSvc.assessment.facilityName = this.demographicData.organizationName;
+
     this.demoSvc.updateDemographic(this.demographicData);
   }
 } 
