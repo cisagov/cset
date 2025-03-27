@@ -67,6 +67,7 @@ export class DemographicsIodComponent implements OnInit {
 
     this.assessSvc.assessment.sectorId = this.demographicData.sector;
 
+    this.assessSvc.assessmentStateChanged$.next(126);
     this.updateDemographics();
   }
 
