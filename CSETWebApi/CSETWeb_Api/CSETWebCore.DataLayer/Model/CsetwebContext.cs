@@ -507,8 +507,8 @@ public partial class CsetwebContext : DbContext
     {
         modelBuilder.Entity<ACCESS_KEY>(entity =>
         {
+            entity.Property(e => e.Encryption).HasDefaultValue(true);
             entity.Property(e => e.Lang).HasDefaultValue("en");
-            entity.Property(e => e.PreventEncrypt).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<ACCESS_KEY_ASSESSMENT>(entity =>
@@ -2720,11 +2720,11 @@ public partial class CsetwebContext : DbContext
 
             entity.ToTable(tb => tb.HasComment("A collection of USERS records"));
 
+            entity.Property(e => e.Encryption).HasDefaultValue(true);
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.IsFirstLogin).HasDefaultValue(true);
             entity.Property(e => e.Lang).HasDefaultValue("en");
             entity.Property(e => e.PasswordResetRequired).HasDefaultValue(true);
-            entity.Property(e => e.PreventEncrypt).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<USER_DETAIL_INFORMATION>(entity =>

@@ -11,8 +11,6 @@ using System.Linq;
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Demographic;
-using DocumentFormat.OpenXml.InkML;
-using DocumentFormat.OpenXml.Spreadsheet;
 
 
 namespace CSETWebCore.Business.Demographic
@@ -356,9 +354,9 @@ namespace CSETWebCore.Business.Demographic
                 }
                 if (recName == "ORG-TYPE")
                 {
-                  demo.OrganizationType = null;
+                    demo.OrganizationType = null;
                     demo.IndustryId = null;
-                    
+
                 }
                 if (recName == "BUSINESS-UNIT")
                 {
@@ -378,138 +376,202 @@ namespace CSETWebCore.Business.Demographic
             info.Facility_Name = demographic.OrganizationName;
 
 
-
-            //  Clean out any existing detail records for demographics
-
-            // list data items that we do not want to delete
-            var nonDemographics = new List<string>() { "OTHER-REMARKS" };
-            var oldRecords = _context.DETAILS_DEMOGRAPHICS
-                .Where(x => x.Assessment_Id == demographic.AssessmentId && !nonDemographics.Contains(x.DataItemName))
+            var existingRecords = _context.DETAILS_DEMOGRAPHICS
+                .Where(x => x.Assessment_Id == demographic.AssessmentId)
                 .ToList();
-            if (oldRecords != null)
+
+            SaveInt(demographic.AssessmentId, "ORG-TYPE", demographic.OrganizationType, existingRecords);
+            SaveString(demographic.AssessmentId, "SECTOR-DIRECTIVE", demographic.SectorDirective, existingRecords);
+            SaveInt(demographic.AssessmentId, "SECTOR", demographic.Sector, existingRecords);
+            SaveInt(demographic.AssessmentId, "SUBSECTOR", demographic.Subsector, existingRecords);
+            SaveInt(demographic.AssessmentId, "CISA-REGION", demographic.CisaRegion, existingRecords);
+            SaveInt(demographic.AssessmentId, "NUM-EMP-TOTAL", demographic.NumberEmployeesTotal, existingRecords);
+            SaveInt(demographic.AssessmentId, "NUM-EMP-UNIT", demographic.NumberEmployeesUnit, existingRecords);
+            SaveInt(demographic.AssessmentId, "ANN-REVENUE", demographic.AnnualRevenue, existingRecords);
+            SaveInt(demographic.AssessmentId, "ANN-REVENUE-PERCENT", demographic.CriticalServiceRevenuePercent, existingRecords);
+            SaveInt(demographic.AssessmentId, "NUM-PEOPLE-SERVED", demographic.NumberPeopleServedByCritSvc, existingRecords);
+            SaveInt(demographic.AssessmentId, "DISRUPTED-SECTOR1", demographic.DisruptedSector1, existingRecords);
+            SaveInt(demographic.AssessmentId, "DISRUPTED-SECTOR2", demographic.DisruptedSector2, existingRecords);
+            SaveString(demographic.AssessmentId, "CRIT-DEPEND-INCIDENT-RESPONSE", demographic.CriticalDependencyIncidentResponseSupport, existingRecords);
+            SaveInt(demographic.AssessmentId, "ORG-POC", demographic.OrgPointOfContact, existingRecords);
+
+
+            SaveBool(demographic.AssessmentId, "STANDARD-USED", demographic.UsesStandard, existingRecords);
+            SaveString(demographic.AssessmentId, "STANDARD1", demographic.Standard1, existingRecords);
+            SaveString(demographic.AssessmentId, "STANDARD2", demographic.Standard2, existingRecords);
+            SaveBool(demographic.AssessmentId, "REGULATION-REQD", demographic.RequiredToComply, existingRecords);
+            SaveInt(demographic.AssessmentId, "REG-TYPE1", demographic.RegulationType1, existingRecords);
+            SaveString(demographic.AssessmentId, "REG-1-OTHER", demographic.Reg1Other, existingRecords);
+            SaveInt(demographic.AssessmentId, "REG-TYPE2", demographic.RegulationType2, existingRecords);
+            SaveString(demographic.AssessmentId, "REG-2-OTHER", demographic.Reg2Other, existingRecords);
+
+            SaveIntList(demographic.AssessmentId, "SHARE-ORG", demographic.ShareOrgs, existingRecords);
+            SaveString(demographic.AssessmentId, "SHARE-OTHER", demographic.ShareOther, existingRecords);
+            SaveString(demographic.AssessmentId, "BARRIER1", demographic.Barrier1, existingRecords);
+            SaveString(demographic.AssessmentId, "BARRIER2", demographic.Barrier2, existingRecords);
+            SaveString(demographic.AssessmentId, "BUSINESS-UNIT", demographic.BusinessUnit, existingRecords);
+
+
+
+            // Some demographics fields are represented in both DEMOGRAPHICS and DETAILS_DEMOGRAPHICS.
+            // Until we settle on a single place to store the data, this method helps 
+            // to keep values in sync between the two locations.
+            var dbDemographics = _context.DEMOGRAPHICS.FirstOrDefault(x => x.Assessment_Id == demographic.AssessmentId);
+            if (dbDemographics == null)
             {
-                _context.DETAILS_DEMOGRAPHICS.RemoveRange(oldRecords);
-                _context.SaveChanges();
+                dbDemographics = new DEMOGRAPHICS()
+                {
+                    Assessment_Id = demographic.AssessmentId
+                };
+                _context.DEMOGRAPHICS.Add(dbDemographics);
             }
-           
 
+            dbDemographics.Agency = demographic.BusinessUnit;
+            dbDemographics.SectorId = demographic.Sector;
+            dbDemographics.IndustryId = demographic.Subsector;
+            dbDemographics.OrganizationName = demographic.OrganizationName;
+            dbDemographics.OrganizationType = demographic.OrganizationType;
 
-            // for a bit of efficiency, these methods always insert a new record without checking first
-
-            SaveInt(demographic.AssessmentId, "ORG-TYPE", demographic.OrganizationType);
-            SaveInt(demographic.AssessmentId, "SECTOR", demographic.Sector);
-            SaveInt(demographic.AssessmentId, "SUBSECTOR", demographic.Subsector);
-            SaveInt(demographic.AssessmentId, "CISA-REGION", demographic.CisaRegion);
-            SaveInt(demographic.AssessmentId, "NUM-EMP-TOTAL", demographic.NumberEmployeesTotal);
-            SaveInt(demographic.AssessmentId, "NUM-EMP-UNIT", demographic.NumberEmployeesUnit);
-            SaveInt(demographic.AssessmentId, "ANN-REVENUE", demographic.AnnualRevenue);
-            SaveInt(demographic.AssessmentId, "ANN-REVENUE-PERCENT", demographic.CriticalServiceRevenuePercent);
-            SaveInt(demographic.AssessmentId, "NUM-PEOPLE-SERVED", demographic.NumberPeopleServedByCritSvc);
-            SaveInt(demographic.AssessmentId, "DISRUPTED-SECTOR1", demographic.DisruptedSector1);
-            SaveInt(demographic.AssessmentId, "DISRUPTED-SECTOR2", demographic.DisruptedSector2);
-            SaveString(demographic.AssessmentId, "CRIT-DEPEND-INCIDENT-RESPONSE", demographic.CriticalDependencyIncidentResponseSupport);
-            SaveInt(demographic.AssessmentId, "ORG-POC", demographic.OrgPointOfContact);
-
-
-            SaveBool(demographic.AssessmentId, "STANDARD-USED", demographic.UsesStandard);
-            SaveString(demographic.AssessmentId, "STANDARD1", demographic.Standard1);
-            SaveString(demographic.AssessmentId, "STANDARD2", demographic.Standard2);
-            SaveBool(demographic.AssessmentId, "REGULATION-REQD", demographic.RequiredToComply);
-            SaveInt(demographic.AssessmentId, "REG-TYPE1", demographic.RegulationType1);
-            SaveString(demographic.AssessmentId, "REG-1-OTHER", demographic.Reg1Other);
-            SaveInt(demographic.AssessmentId, "REG-TYPE2", demographic.RegulationType2);
-            SaveString(demographic.AssessmentId, "REG-2-OTHER", demographic.Reg2Other);
-
-            SaveIntList(demographic.AssessmentId, "SHARE-ORG", demographic.ShareOrgs);
-            SaveString(demographic.AssessmentId, "SHARE-OTHER", demographic.ShareOther);
-            SaveString(demographic.AssessmentId, "BARRIER1", demographic.Barrier1);
-            SaveString(demographic.AssessmentId, "BARRIER2", demographic.Barrier2);
-            SaveString(demographic.AssessmentId, "BUSINESS-UNIT", demographic.BusinessUnit);
-           
 
             _context.SaveChanges();
+
             AssessmentNaming.ProcessName(_context, userid, demographic.AssessmentId);
-            
         }
 
 
-        private void SaveString(int assessmentId, string recName, string value)
+        private void SaveString(int assessmentId, string recName, string value, List<DETAILS_DEMOGRAPHICS> existing)
         {
-            var rec = new DETAILS_DEMOGRAPHICS()
-            {
-                Assessment_Id = assessmentId,
-                DataItemName = recName,
-                StringValue = value
-            };
-
-            _context.DETAILS_DEMOGRAPHICS.Add(rec);
-        }
-
-
-        private void SaveInt(int assessmentId, string recName, int? value)
-        {
-            var rec = new DETAILS_DEMOGRAPHICS()
-            {
-                Assessment_Id = assessmentId,
-                DataItemName = recName,
-                IntValue = value
-            };
-
-            _context.DETAILS_DEMOGRAPHICS.Add(rec);
-        }
-
-
-        private void SaveDouble(int assessmentId, string recName, double value)
-        {
-            var rec = new DETAILS_DEMOGRAPHICS()
-            {
-                Assessment_Id = assessmentId,
-                DataItemName = recName,
-                FloatValue = value
-            };
-
-            _context.DETAILS_DEMOGRAPHICS.Add(rec);
-        }
-
-
-        private void SaveBool(int assessmentId, string recName, bool value)
-        {
-            var rec = new DETAILS_DEMOGRAPHICS()
-            {
-                Assessment_Id = assessmentId,
-                DataItemName = recName,
-                BoolValue = value
-            };
-
-            _context.DETAILS_DEMOGRAPHICS.Add(rec);
-        }
-
-
-        private void SaveDateTime(int assessmentId, string recName, DateTime value)
-        {
-            var rec = new DETAILS_DEMOGRAPHICS()
-            {
-                Assessment_Id = assessmentId,
-                DataItemName = recName,
-                DateTimeValue = value
-            };
-
-            _context.DETAILS_DEMOGRAPHICS.Add(rec);
-        }
-
-
-        private void SaveIntList(int assessmentId, string recName, List<int> values)
-        {
-            foreach (int value in values)
+            var target = existing.FirstOrDefault(x => x.DataItemName == recName);
+            if (target == null)
             {
                 var rec = new DETAILS_DEMOGRAPHICS()
                 {
                     Assessment_Id = assessmentId,
-                    DataItemName = $"{recName}-{value}",
+                    DataItemName = recName,
+                    StringValue = value
+                };
+                _context.DETAILS_DEMOGRAPHICS.Add(rec);
+            }
+            else
+            {
+                target.StringValue = value;
+            }
+        }
+
+
+        private void SaveInt(int assessmentId, string recName, int? value, List<DETAILS_DEMOGRAPHICS> existing)
+        {
+            var target = existing.FirstOrDefault(x => x.DataItemName == recName);
+            if (target == null)
+            {
+                var rec = new DETAILS_DEMOGRAPHICS()
+                {
+                    Assessment_Id = assessmentId,
+                    DataItemName = recName,
                     IntValue = value
                 };
-
                 _context.DETAILS_DEMOGRAPHICS.Add(rec);
+            }
+            else
+            {
+                target.IntValue = value;
+            }
+        }
+
+
+        private void SaveDouble(int assessmentId, string recName, double value, List<DETAILS_DEMOGRAPHICS> existing)
+        {
+            var target = existing.FirstOrDefault(x => x.DataItemName == recName);
+            if (target == null)
+            {
+                var rec = new DETAILS_DEMOGRAPHICS()
+                {
+                    Assessment_Id = assessmentId,
+                    DataItemName = recName,
+                    FloatValue = value
+                };
+                _context.DETAILS_DEMOGRAPHICS.Add(rec);
+            }
+            else
+            {
+                target.FloatValue = value;
+            }
+        }
+
+
+        private void SaveBool(int assessmentId, string recName, bool value, List<DETAILS_DEMOGRAPHICS> existing)
+        {
+            var target = existing.FirstOrDefault(x => x.DataItemName == recName);
+            if (target == null)
+            {
+                var rec = new DETAILS_DEMOGRAPHICS()
+                {
+                    Assessment_Id = assessmentId,
+                    DataItemName = recName,
+                    BoolValue = value
+                };
+                _context.DETAILS_DEMOGRAPHICS.Add(rec);
+            }
+            else
+            {
+                target.BoolValue = value;
+            }
+        }
+
+
+        private void SaveDateTime(int assessmentId, string recName, DateTime value, List<DETAILS_DEMOGRAPHICS> existing)
+        {
+            var target = existing.FirstOrDefault(x => x.DataItemName == recName);
+            if (target == null)
+            {
+                var rec = new DETAILS_DEMOGRAPHICS()
+                {
+                    Assessment_Id = assessmentId,
+                    DataItemName = recName,
+                    DateTimeValue = value
+                };
+                _context.DETAILS_DEMOGRAPHICS.Add(rec);
+            }
+            else
+            {
+                target.DateTimeValue = value;
+            }
+        }
+
+
+        private void SaveIntList(int assessmentId, string recName, List<int> values, List<DETAILS_DEMOGRAPHICS> existing)
+        {
+            var xxxxxxxxx = existing.Where(x => x.DataItemName.StartsWith($"{recName}-")).ToList();
+
+            foreach (int value in values)
+            {
+                var dataItemName = $"{recName}-{value}";
+
+
+                var target = existing.FirstOrDefault(x => x.DataItemName == dataItemName);
+                if (target == null)
+                {
+                    var rec = new DETAILS_DEMOGRAPHICS()
+                    {
+                        Assessment_Id = assessmentId,
+                        DataItemName = dataItemName,
+                        IntValue = value
+                    };
+                    _context.DETAILS_DEMOGRAPHICS.Add(rec);
+                }
+                else
+                {
+                    target.IntValue = value;
+                }
+
+                xxxxxxxxx.RemoveAll(x => x.DataItemName == dataItemName);
+            }
+
+            // look for records to remove
+            // what's left in xxxxx?
+            foreach (var item in xxxxxxxxx)
+            {
+                _context.DETAILS_DEMOGRAPHICS.Remove(item);
             }
         }
     }

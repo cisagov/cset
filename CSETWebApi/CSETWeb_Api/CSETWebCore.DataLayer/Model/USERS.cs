@@ -43,7 +43,7 @@ public partial class USERS
 
     public bool IsActive { get; set; }
 
-    public bool PreventEncrypt { get; set; }
+    public bool Encryption { get; set; }
 
     public bool CisaAssessorWorkflow { get; set; }
 

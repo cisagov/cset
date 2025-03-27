@@ -108,8 +108,13 @@ export interface AssessmentContactsResponse {
 
 export interface Demographic {
     assessment_Id?: number;
+
+    // PPD-21 or NIPP
+    sectorDirective?: string;
+
     sectorId?: number;
     industryId?: number;
+    
     size?: number;
     assetValue?: number;
     needsPrivacy?: boolean;

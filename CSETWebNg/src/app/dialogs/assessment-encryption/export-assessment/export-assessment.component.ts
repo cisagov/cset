@@ -26,14 +26,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
-    selector: 'app-export-assessment',
-    templateUrl: './export-assessment.component.html',
-    styleUrls: ['./export-assessment.component.scss'],
-    standalone: false
+  selector: 'app-export-assessment',
+  templateUrl: './export-assessment.component.html',
+  styleUrls: ['./export-assessment.component.scss'],
+  standalone: false
 })
 export class ExportAssessmentComponent {
-  preventEncrypt: any;
-
 
   constructor(
     public assessSvc: AssessmentService,
@@ -42,8 +40,6 @@ export class ExportAssessmentComponent {
   ) {
     dialogRef.disableClose = true;
   }
-
-  dialogTitle: string = "Export Assessment Options";
 
   data = {
     scrubData: false,
@@ -75,5 +71,4 @@ export class ExportAssessmentComponent {
     const checkbox = event.target as HTMLInputElement;
     this.data.scrubData = checkbox.checked;
   }
-
 }

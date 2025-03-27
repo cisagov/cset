@@ -42,13 +42,15 @@ export class AssessmentConfigIodComponent implements OnInit {
 
     this.getAssessmentDetail();
 
-    this.assessSvc.checkUpgrades().subscribe((data: Upgrades) => {
-      if (data) {
-        this.showUpgrade = !!data;
-        this.assessSvc.galleryItemGuid = data.target;
-        this.assessSvc.convertToModel = data.name;
-      }
-    })
+    if (this.configSvc.showAssessmentUpgrade() == true) {
+      this.assessSvc.checkUpgrades().subscribe((data: Upgrades) => {
+        if (data) {
+          this.showUpgrade = !!data;
+          this.assessSvc.galleryItemGuid = data.target;
+          this.assessSvc.convertToModel = data.name;
+        }
+      })
+    }
 
   }
 
@@ -93,6 +95,10 @@ export class AssessmentConfigIodComponent implements OnInit {
     if (this.assessment) {
       this.IsPCII = val;
       this.assessment.is_PCII = val;
+
+      if (!this.assessment.is_PCII) {
+        this.assessment.pciiNumber = null;
+      }
 
       this.configSvc.cisaAssessorWorkflow = true;
       this.assessSvc.updateAssessmentDetails(this.assessment);

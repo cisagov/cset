@@ -7,10 +7,10 @@
 
   <ItemGroup>
     <PackageReference Include="MartinCostello.SqlLocalDb" Version="3.4.0" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.15" />
-    <PackageReference Include="Npoi.Mapper" Version="6.2.1" />
+    <PackageReference Include="Npoi.Mapper" Version="6.2.2" />
   </ItemGroup>
 
   <ItemGroup>

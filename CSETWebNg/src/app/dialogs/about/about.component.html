@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="about d-flex flex-wrap justify-content-start flex-11a" *transloco="let t">
+<div class="about d-flex flex-column justify-content-start flex-11a" *transloco="let t">
   <app-about-cset
     *ngIf="configSvc.installationMode === 'CSET' || configSvc.installationMode === 'IOD' || configSvc.installationMode === ''"></app-about-cset>
   <app-about-rra *ngIf="configSvc.installationMode === 'RRA'"></app-about-rra>
