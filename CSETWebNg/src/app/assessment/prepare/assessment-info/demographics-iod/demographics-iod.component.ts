@@ -27,7 +27,9 @@ export class DemographicsIodComponent implements OnInit {
   serviceComposition: ServiceComposition;
   criticalServiceInfo: CriticalServiceInfo;
 
-
+  /**
+   * 
+   */
   constructor(public demoSvc: DemographicIodService,
     private assessSvc: AssessmentService,
     public dialog: MatDialog,
@@ -65,19 +67,29 @@ export class DemographicsIodComponent implements OnInit {
 
     this.assessSvc.assessment.sectorId = this.demographicData.sector;
 
+    this.assessSvc.assessmentStateChanged$.next(126);
     this.updateDemographics();
   }
 
+  /**
+   * 
+   */
   changeRegType1(o: any, evt: any) {
     this.demographicData.regulationType1 = o.optionValue;
     this.updateDemographics();
   }
 
+  /**
+   * 
+   */
   changeRegType2(o: any, evt: any) {
     this.demographicData.regulationType2 = o.optionValue;
     this.updateDemographics();
   }
 
+  /**
+   * 
+   */
   changeShareOrg(org: any, evt: any) {
     org.selected = evt.target.checked;
     if (org.selected) {
@@ -88,6 +100,9 @@ export class DemographicsIodComponent implements OnInit {
     this.updateDemographics();
   }
 
+  /**
+   * 
+   */
   isSharedOrgChecked(org): boolean {
     return this.demographicData.shareOrgs.includes(org.optionValue);
   }
@@ -112,14 +127,21 @@ export class DemographicsIodComponent implements OnInit {
     this.updateDemographics();
   }
 
+  /**
+   * 
+   */
   update(event: any) {
     this.updateDemographics();
   }
 
+  /**
+   * 
+   */
   updateDemographics() {
     this.configSvc.cisaAssessorWorkflow = true;
     this.demographicData.sectorDirective = 'NIPP';
 
+    // keep a few things in sync
     this.assessSvc.assessment.facilityName = this.demographicData.organizationName;
 
     this.demoSvc.updateDemographic(this.demographicData);
