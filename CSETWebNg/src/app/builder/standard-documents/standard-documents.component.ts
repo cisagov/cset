@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,11 @@ import { ActivatedRoute } from '@angular/router';
 import { ReferenceDoc } from '../../models/set-builder.model';
 
 @Component({
-  selector: 'app-standard-documents',
-  templateUrl: './standard-documents.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-standard-documents',
+    templateUrl: './standard-documents.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
 export class StandardDocumentsComponent implements OnInit {
 

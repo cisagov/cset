@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +42,7 @@ export interface AssessmentDetail {
     creditUnion?: string;
     assets?: string;
 
+    galleryItemGuid?: string;
     // a few demographics to track
     sectorId?: number;
     industryId?: number;
@@ -107,8 +108,13 @@ export interface AssessmentContactsResponse {
 
 export interface Demographic {
     assessment_Id?: number;
+
+    // PPD-21 or NIPP
+    sectorDirective?: string;
+
     sectorId?: number;
     industryId?: number;
+    
     size?: number;
     assetValue?: number;
     needsPrivacy?: boolean;
@@ -117,7 +123,7 @@ export interface Demographic {
     organizationName?: string;
     agency?: string;
     organizationType?: string;
-    facilitator?: number;
+    facilitatorId?: number;
 
     // Organiztion POC
     orgPointOfContact?: number;
@@ -132,66 +138,66 @@ export interface Demographic {
     isScoped?: boolean;
 }
 
-export interface AssessmentConfig{
-    additionalNotesAndComments?: any; 
-    applicationMode?: string; 
+export interface AssessmentConfig {
+    additionalNotesAndComments?: any;
+    applicationMode?: string;
     assessmentDate?: string;
-    assessmentDescription?: any; 
-    assessmentEffectiveDate?: string; 
-    assessmentName?: string; 
-    assets?: number; 
-    baselineAssessmentId?: any; 
-    baselineAssessmentName?: any; 
-    charter?: string; 
-    cityOrSiteName?: string; 
-    createdDate?: string; 
-    creatorId?: number; 
-    creatorName?: string; 
-    creditUnion?: any; 
-    diagramImage?: any; 
-    diagramMarkup?: any; 
-    executiveSummary?: string; 
-    facilityName?: string; 
-    galleryItemGuid?: string; 
-    hiddenScreens?: any; 
-    id?: number; 
+    assessmentDescription?: any;
+    assessmentEffectiveDate?: string;
+    assessmentName?: string;
+    assets?: number;
+    baselineAssessmentId?: any;
+    baselineAssessmentName?: any;
+    charter?: string;
+    cityOrSiteName?: string;
+    createdDate?: string;
+    creatorId?: number;
+    creatorName?: string;
+    creditUnion?: any;
+    diagramImage?: any;
+    diagramMarkup?: any;
+    executiveSummary?: string;
+    facilityName?: string;
+    galleryItemGuid?: string;
+    hiddenScreens?: any;
+    id?: number;
     isAcetOnly?: boolean;
-    isE_StateLed?: boolean; 
-    is_PCII?: boolean; 
+    isE_StateLed?: boolean;
+    is_PCII?: boolean;
     iseSubmitted?: boolean;
-    lastModifiedDate?: string; 
+    lastModifiedDate?: string;
     maturityModel?: {
-        modelId?: string; 
-        modelName?: string; 
-        maturityTargetLevel?: number; 
-        levels?: any; 
+        modelId?: string;
+        modelName?: string;
+        maturityTargetLevel?: number;
+        levels?: any;
         questionAlias?: string;
-        iconId?: any; 
-    }; 
-    origin?: any; 
-    pciiNumber?: any; 
-    postalCode?: any; 
-    questionRequirementCounts?: any; 
+        iconId?: any;
+    };
+    origin?: any;
+    pciiNumber?: any;
+    postalCode?: any;
+    questionRequirementCounts?: any;
     regionCode?: any;
     standards?: any;
     stateProvRegion?: string;
     typeDescription?: string;
     typeTitle?: string;
-    useDiagram?: boolean; 
+    useDiagram?: boolean;
     useMaturity?: boolean
     useStandard?: boolean
-    workflow?: string; 
+    workflow?: string;
 }
 
-export interface ServiceComposition{
+export interface ServiceComposition {
     applicationsDescription?: string;
-    assessmentId?: number; 
-    connectionsDescription?: string; 
-    networksDescription?: string; 
-    otherDefiningSystemDescription?: any; 
-    personnelDescription?: string; 
+    assessmentId?: number;
+    connectionsDescription?: string;
+    networksDescription?: string;
+    otherDefiningSystemDescription?: any;
+    personnelDescription?: string;
     primaryDefiningSystem?: number;
-    secondaryDefiningSystems?: any; 
+    secondaryDefiningSystems?: any;
     servicesDescription?: string;
 
 }
@@ -211,19 +217,23 @@ export interface ServiceDemographic {
 }
 
 export interface CriticalServiceInfo {
-    agency?: any; 
-    assessmentId?: number; 
-    assetValue?: any; 
-    cisaRegion?: number; 
-    criticalService?: string; 
-    facilitator?: null; 
-    id?: number; 
-    industryId?: any; 
-    isScoped?: boolean; 
-    orgPointOfContact?: any; 
-    organizationName?: any; 
-    organizationType?: any; 
-    pointOfContact?: number; 
-    sectorId?: any; 
-    size?: any; 
+    agency?: any;
+    assessmentId?: number;
+    assetValue?: any;
+    cisaRegion?: number;
+    criticalService?: string;
+    facilitatorId?: number;
+    id?: number;
+    industryId?: any;
+    isScoped?: boolean;
+    orgPointOfContact?: any;
+    organizationName?: any;
+    organizationType?: any;
+    pointOfContact?: number;
+    sectorId?: any;
+    size?: any;
+}
+export interface Upgrades {
+    name: string;
+    target: string;
 }

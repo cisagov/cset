@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2024 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -23,13 +23,15 @@
 <ng-container *transloco="let t">
     <div *ngFor="let d of model?.domains">
         <div class="cpg-domain-bar page-break" [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
-            [style.background-color]="backgroundColor(d.groupingId)" [style.borderColor]="backgroundColor(d.groupingId)">
+            [style.background-color]="backgroundColor(d.groupingId)"
+            [style.borderColor]="backgroundColor(d.groupingId)">
             {{d.title}}
         </div>
 
         <table *ngFor="let q of d.questions" class="cpg-table">
             <tr>
-                <th style="width: 45%;" [style.borderLeftColor]="backgroundColor(d.groupingId)" [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
+                <th style="width: 45%;" [style.borderLeftColor]="backgroundColor(d.groupingId)"
+                    [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
                     [style.background-color]="backgroundColor(d.groupingId)">
                     <div class="d-flex flex-row justify-content-between">
                         <div class="d-flex flex-row">
@@ -41,11 +43,11 @@
                             </div>
                         </div>
                         <div class="ms-4 font-weight-normal d-flex flex-wrap justify-content-end align-content-start">
-                            <ng-content *ngFor="let c of q.csfMappings; let l = last">
+                            <ng-container *ngFor="let c of q.csfMappings; let l = last">
                                 <span class="text-nowrap">
                                     {{c}}{{ l ? '' : ','}}
                                 </span>&nbsp;
-                            </ng-content>
+                            </ng-container>
                         </div>
                     </div>
                 </th>
@@ -53,7 +55,8 @@
                     [style.background-color]="backgroundColor(d.groupingId)">
                     {{t('reports.core.cpg.report.current assessment') | uppercase}}
                 </th>
-                <th style="width: 30%" [style.borderRightColor]="backgroundColor(d.groupingId)" [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
+                <th style="width: 30%" [style.borderRightColor]="backgroundColor(d.groupingId)"
+                    [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
                     [style.background-color]="backgroundColor(d.groupingId)">
                     {{t('reports.core.cpg.report.notes') | uppercase}}
                 </th>

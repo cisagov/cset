@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,11 +30,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { Aggregation } from '../../models/aggregation.model';
 
 @Component({
-  selector: 'app-aggregation-home',
-  templateUrl: './aggregation-home.component.html',
-  styleUrls: ['./aggregation-home.component.scss'],
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a trend-table-width' }
+    selector: 'app-aggregation-home',
+    templateUrl: './aggregation-home.component.html',
+    styleUrls: ['./aggregation-home.component.scss'],
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a trend-table-width' },
+    standalone: false
 })
 export class AggregationHomeComponent implements OnInit {
 

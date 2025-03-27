@@ -49,7 +49,7 @@ DR_EXPLAIN.searchIndex.ids = {
 	"46": ["User Profile Menu", "user_profile_menu.htm", [4]],
 	"47": ["User Profile", "user_profile.htm", [4,17]],
 	"48": ["Change Password", "change_password.htm", [4,17]],
-	"49": ["User Language", "user_language.htm", [4,17]],
+	"49": ["Settings", "settings.htm", [4,17]],
 	"50": ["My Assessments", "my_assessments.htm", []],
 	"51": ["Encrypt Assessment", "encrypt_assessment.htm", [5]],
 	"52": ["CSET File Import", "cset_file_import.htm", [5]],

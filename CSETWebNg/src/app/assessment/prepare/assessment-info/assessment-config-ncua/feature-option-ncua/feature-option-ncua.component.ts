@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,9 @@ import { NavigationService } from '../../../../../services/navigation/navigation
 import { NCUAService } from '../../../../../services/ncua.service';
 
 @Component({
-  selector: 'app-feature-option-ncua',
-  templateUrl: './feature-option-ncua.component.html'
+    selector: 'app-feature-option-ncua',
+    templateUrl: './feature-option-ncua.component.html',
+    standalone: false
 })
 export class FeatureOptionNcuaComponent implements OnInit {
 

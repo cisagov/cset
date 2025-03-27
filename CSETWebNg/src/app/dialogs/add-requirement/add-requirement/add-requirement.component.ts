@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,11 @@ import { Requirement, CategoryEntry } from '../../../models/set-builder.model';
 import { SetBuilderService } from '../../../services/set-builder.service';
 
 @Component({
-  selector: 'app-add-requirement',
-  templateUrl: './add-requirement.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-add-requirement',
+    templateUrl: './add-requirement.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class AddRequirementComponent implements OnInit {
 

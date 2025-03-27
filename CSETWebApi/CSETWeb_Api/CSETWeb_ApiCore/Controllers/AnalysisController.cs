@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -20,6 +20,8 @@ using Snickler.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using DocumentFormat.OpenXml.Spreadsheet;
+using CSETWebCore.Model.Standards;
+using CSETWebCore.Business.Results;
 
 
 
@@ -838,6 +840,10 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        /// <summary>
+        /// Returns a ChartData object with category scores. 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/analysis/StandardsResultsByCategory")]
         public IActionResult GetStandardsResultsByCategory()
@@ -845,56 +851,10 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             var lang = _tokenManager.GetCurrentLanguage();
 
-            ChartData chartData = new ChartData();
-
-            _context.LoadStoredProc("[usp_getStandardsResultsByCategory]")
-                    .WithSqlParam("assessment_Id", assessmentId)
-                    .ExecuteStoredProc((handler) =>
-                    {
-                        var result = handler.ReadToList<usp_getStandardsResultsByCategory>();
-                        var labels = (from usp_getStandardsResultsByCategory an in result
-                                      orderby an.Question_Group_Heading
-                                      select new { an.Question_Group_Heading, an.QGH_Id }).Distinct().ToList();
-
-                        chartData.DataRows = new List<DataRows>();
-                        foreach (var c in labels)
-                        {
-                            chartData.Labels.Add(_overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ??
-                                c.Question_Group_Heading);
-                        }
-
-                        ColorsList colors = new ColorsList();
-
-                        var sets = (from usp_getStandardsResultsByCategory an in result
-                                    select new { an.Set_Name, an.Short_Name }).Distinct();
-                        foreach (var set in sets)
-                        {
-                            ChartData nextChartData = new ChartData();
-                            chartData.dataSets.Add(nextChartData);
-                            nextChartData.DataRows = [];
-                            var nextSet = (from usp_getStandardsResultsByCategory an in result
-                                           where an.Set_Name == set.Set_Name
-                                           orderby an.Question_Group_Heading
-                                           select an).ToList();
-                            nextChartData.label = set.Short_Name;
-                            nextChartData.backgroundColor = colors.getNext(set.Set_Name);
-                            foreach (usp_getStandardsResultsByCategory c in nextSet)
-                            {
-                                nextChartData.data.Add((double)c.prc);
-                                nextChartData.Labels.Add(_overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ?? c.Question_Group_Heading);
-                                nextChartData.DataRows.Add(new DataRows()
-                                {
-                                    failed = c.yaCount,
-                                    percent = c.prc,
-                                    total = c.Actualcr,
-                                    title = _overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ?? c.Question_Group_Heading
-                                });
-                            }
-                        }
-
-                    });
-
-            return Ok(chartData);
+            ResultsAnalysisBusiness resultsBusiness = new ResultsAnalysisBusiness(_context, _overlay, lang, _tokenManager);
+            var results = resultsBusiness.ResultsByCategory(assessmentId);
+            
+            return Ok(results);
         }
 
 

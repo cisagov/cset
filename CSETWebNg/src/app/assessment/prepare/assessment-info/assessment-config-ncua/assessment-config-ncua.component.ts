@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,8 +31,9 @@ import { NCUAService } from '../../../../services/ncua.service';
 import { FeatureOptionNcuaComponent } from './feature-option-ncua/feature-option-ncua.component';
 
 @Component({
-  selector: 'app-assessment-config-ncua',
-  templateUrl: './assessment-config-ncua.component.html'
+    selector: 'app-assessment-config-ncua',
+    templateUrl: './assessment-config-ncua.component.html',
+    standalone: false
 })
 export class AssessmentConfigNcuaComponent implements OnInit, AfterViewInit {
 

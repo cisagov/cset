@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -317,28 +317,7 @@
 
 
     <div class="page-break">
-        <h1>
-            Document Library
-        </h1>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>{{t('extras.title')}}</th>
-                    <th>{{t('extras.file name')}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let doc of response?.documentLibraryTable">
-                    <td>{{doc.documentTitle}}</td>
-                    <td>{{doc.fileName}}</td>
-                </tr>
-                <tr *ngIf="response?.documentLibraryTable.length === 0">
-                    <td></td>
-                    <td>{{t('extras.no documents to display')}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <app-document-library [docs]="response?.documentLibraryEntries"></app-document-library>
     </div>
 
 

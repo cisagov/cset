@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -50,11 +50,17 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/ExcelExport")]
-        public IActionResult GetExcelExport(string token)
+        [Route("api/assessment/export/excel")]
+        public IActionResult GetExcelExport()
         {
-            int assessmentId = _token.AssessmentForUser(token);
+            var currentUserId = _token.GetUserId();
+            int assessmentId = _token.AssessmentForUser();
             string appName = _token.Payload(Constants.Constants.Token_Scope);
+
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+            _context.FillEmptyQuestionsForAnalysis(assessmentId);
+            _context.FillNetworkDiagramQuestions(assessmentId);
+
 
             var stream = _exporter.ExportToCSV(assessmentId);
             stream.Flush();
@@ -71,10 +77,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/ExcelExportISE")]
-        public IActionResult GetExcelExportISE(string token, string type = "ISE")
+        public IActionResult GetExcelExportISE(string type = "ISE")
         {
-            _token.SetToken(token);
-            int assessmentId = _token.AssessmentForUser(token);
+            int assessmentId = _token.AssessmentForUser();
             string appName = _token.Payload(Constants.Constants.Token_Scope);
 
             var stream = _exporter.ExportToExcelISE(assessmentId, type);
@@ -93,9 +98,8 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/ExcelExportAllNCUA")]
-        public IActionResult GetExcelExportAllNCUA(string token, string type = "")
+        public IActionResult GetExcelExportAllNCUA(string type = "")
         {
-            _token.SetToken(token);
             int currentUserId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
 
             var stream = _exporter.ExportToExcelAllNCUA(currentUserId, type);

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -37,9 +37,10 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 
 @Component({
-  selector: 'app-login-tsa',
-  templateUrl: './login-tsa.component.html',
-  styleUrls: ['./login-tsa.component.scss']
+    selector: 'app-login-tsa',
+    templateUrl: './login-tsa.component.html',
+    styleUrls: ['./login-tsa.component.scss'],
+    standalone: false
 })
 export class LoginTsaComponent implements OnInit {
 

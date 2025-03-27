@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -59,7 +59,6 @@ import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './initial/login/login.component';
 import { ResetPassComponent } from './initial/reset-pass/reset-pass.component';
 import { ResourceLibraryComponent } from './resource-library/resource-library.component';
-import { ImportComponent } from './import/import.component';
 import { AcetDetailComponent } from './assessment/results/acet-detail/acet-detail.component';
 import { AcetDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
 import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
@@ -94,7 +93,7 @@ import { TrendReportComponent } from './reports/trend-report/trend-report.compon
 import { CompareReportComponent } from './reports/compare-report/compare-report.component';
 import { CompareReportMComponent } from './reports/compare-report-m/compare-report-m.component';
 import { SiteSummaryComponent } from './reports/site-summary/site-summary.component';
-import { PhysicalSummaryComponent} from './reports/physical-summary/physical-summary.component';
+import { PhysicalSummaryComponent } from './reports/physical-summary/physical-summary.component';
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
@@ -245,7 +244,6 @@ import { Cmmc2ScorecardPageComponent } from './assessment/results/mat-cmmc2/scor
 import { Cmmc2ScorecardReportComponent } from './reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
 
 const appRoutes: Routes = [
-
   // reports routing
   {
     path: 'report-test',
@@ -300,7 +298,7 @@ const appRoutes: Routes = [
       { path: 'compare-analytics/:id/:type', component: CompareAnalyticsComponent },
       { path: 'trend-analytics/:id', component: TrendAnalyticsComponent },
 
-      { path: 'importModule', component: ImportComponent },
+      { path: 'importModule', loadChildren: () => import('./import-routing.module').then(m => m.ImportRoutingModule) },
 
       { path: 'module-content-launch', component: ModuleContentLaunchComponent },
 
@@ -476,7 +474,7 @@ const appRoutes: Routes = [
               { path: 'mvra-summary-page', component: MvraSummaryPageComponent },
               { path: 'cpg-summary-page', component: CpgSummaryComponent },
               { path: 'cpg-practices-page', component: CpgPracticesComponent },
-              { path: 'analytics-results-page', component: AnalyticsResultsComponent},
+              { path: 'analytics-results-page', component: AnalyticsResultsComponent },
               { path: 'analysis', component: AnalysisComponent },
               { path: 'dashboard', component: DashboardComponent },
               { path: 'ranked-questions', component: RankedQuestionsComponent },
@@ -604,10 +602,10 @@ const appRoutes: Routes = [
       { path: 'sdo-comments-and-mfr', component: SdOwnerCommentsMfrComponent },
       { path: 'appkeyreport', component: KeyReportComponent },
       { path: 'allAnsweredQuestions', component: AllAnsweredquestionsComponent },
-      { path: 'allMfrAndComments', component: AllCommentsmarkedComponent},
-      { path: 'allReviewedQuestions', component: AllReviewedComponent}
+      { path: 'allMfrAndComments', component: AllCommentsmarkedComponent },
+      { path: 'allReviewedQuestions', component: AllReviewedComponent }
 
-      
+
     ]
   },
   { path: '**', redirectTo: 'home' }

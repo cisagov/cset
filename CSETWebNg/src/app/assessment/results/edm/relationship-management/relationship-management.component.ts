@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,10 @@ import { MaturityService } from '../../../../services/maturity.service';
 import { MaturityQuestionResponse } from '../../../../models/questions.model';
 
 @Component({
-  selector: 'app-relationship-management',
-  templateUrl: './relationship-management.component.html',
-  styleUrls: ['./relationship-management.component.scss']
+    selector: 'app-relationship-management',
+    templateUrl: './relationship-management.component.html',
+    styleUrls: ['./relationship-management.component.scss'],
+    standalone: false
 })
 export class RelationshipManagementComponent implements OnInit {
 

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -98,7 +98,7 @@ export class NavigationService implements OnDestroy, OnInit {
     private maturitySvc: MaturityService,
     private pageVisibliltySvc: PageVisibilityService,
     private navTreeSvc: NavTreeService,
-    private questionsSvc: QuestionsService    
+    private questionsSvc: QuestionsService
   ) {
     this.setWorkflow('omni');
     this.assessSvc.assessmentStateChanged$.subscribe((reloadState) => {
@@ -120,7 +120,7 @@ export class NavigationService implements OnDestroy, OnInit {
           }
           this.buildTree();
           this.navDirect('phase-prepare');
-          
+
           break;
         case 126:
           // refresh tree only

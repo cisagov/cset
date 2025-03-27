@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -124,6 +124,10 @@ namespace UpgradeLibrary.Upgrade
             converters.Add("12.2.6.3", new ConvertDatabase12300(path));
             converters.Add("12.3.0.0", new ConvertDatabase12301(path));
             converters.Add("12.3.0.1", new ConvertDatabase12302(path));
+            converters.Add("12.3.0.2", new ConvertDatabase12310(path));
+            converters.Add("12.3.1.0", new ConvertDatabase12400(path));
+            converters.Add("12.4.0.0", new ConvertDatabase12401(path));
+            converters.Add("12.4.0.1", new ConvertDatabase12402(path));
         }
 
         public void UpgradeOnly(Version currentVersion, string tempConnect)

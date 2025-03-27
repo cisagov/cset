@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,11 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
 import { Aggregation } from '../models/aggregation.model';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class AggregationService {
@@ -110,20 +111,23 @@ export class AggregationService {
    * @param aggId
    */
   getAggregationToken(aggId: number) {
-    return this.http
-      .get(this.configSvc.apiUrl + 'auth/token?aggregationId=' + aggId)
-      .toPromise()
-      .then((response: { token: string }) => {
-        localStorage.removeItem('userToken');
-        localStorage.setItem('userToken', response.token);
-        if (aggId) {
-          localStorage.removeItem('aggregationId');
-          localStorage.setItem(
-            'aggregationId',
-            aggId ? aggId.toString() : ''
-          );
-        }
-      });
+    const headers = new HttpHeaders({
+      'AggregationId': aggId
+    });
+    const obs = this.http.get(this.configSvc.apiUrl + 'auth/token', { headers: headers });
+    const prom = firstValueFrom(obs);
+
+    return prom.then((response: { token: string }) => {
+      localStorage.removeItem('userToken');
+      localStorage.setItem('userToken', response.token);
+      if (aggId) {
+        localStorage.removeItem('aggregationId');
+        localStorage.setItem(
+          'aggregationId',
+          aggId ? aggId.toString() : ''
+        );
+      }
+    });
   }
 
 

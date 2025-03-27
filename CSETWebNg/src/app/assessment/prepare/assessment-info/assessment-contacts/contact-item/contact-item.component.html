@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -29,27 +29,17 @@
       style="width: 100%; height: 125px; overflow: hidden;">
       <div class="p-3 d-flex flex-column justify-content-center align-items-start" style="flex: 0 0 25%">
         <div class="d-flex">
-        <span> {{contact.firstName}} {{contact.lastName}} </span>
-        <div class="cset-icons-info-circle" style="margin-left: 5px" (mouseenter)="showTooltip = true" (mouseleave)="showTooltip = false" 
-          (mousemove)="updatePosition($event)">
-        </div>
+          <span> {{contact.firstName}} {{contact.lastName}} </span>
+          <div class="cset-icons-info-circle" style="margin-left: 5px" (mouseenter)="showTooltip = true"
+            (mouseleave)="showTooltip = false" (mousemove)="updatePosition($event)">
+          </div>
         </div>
         <div><em>{{getRoleName(contact.assessmentRoleId)}}</em></div>
-        <app-contact-tooltip 
-          *ngIf="showTooltip" 
-          [firstName]="contact.firstName"
-          [lastName]="contact.lastName"
-          [email]="contact.primaryEmail" 
-          [phone]="contact.phone"
-          [assessmentRoleId] = "contact.assessmentRoleId"
-          [assessmentRole] = "contact.role"
-          [title]="contact.title"
-          [organizationName]="contact.organizationName"
-          [siteName]="contact.siteName"
-          [cell]="contact.cellPhone"
-          [ecp]="contact.emergencyCommunicationsProtocol"
-          [POC]="contact.isPrimaryPoc"
-          [ngStyle]="{'top.px': tooltipPosition.y, 'left.px': tooltipPosition.x}">
+        <app-contact-tooltip *ngIf="showTooltip" [firstName]="contact.firstName" [lastName]="contact.lastName"
+          [email]="contact.primaryEmail" [phone]="contact.phone" [assessmentRoleId]="contact.assessmentRoleId"
+          [assessmentRole]="contact.role" [title]="contact.title" [organizationName]="contact.organizationName"
+          [siteName]="contact.siteName" [cell]="contact.cellPhone" [ecp]="contact.emergencyCommunicationsProtocol"
+          [POC]="contact.isPrimaryPoc" [ngStyle]="{'top.px': tooltipPosition.y, 'left.px': tooltipPosition.x}">
         </app-contact-tooltip>
       </div>
       <div class="p-3 d-flex flex-column flex-11a">
@@ -58,7 +48,7 @@
       <span class="d-flex align-items-center m-3 fw-600" style="text-align: center;"
         *ngIf="contact.isSiteParticipant">Participated<br />in Site Visit</span>
       <span class="d-flex align-items-center m-3 fw-600" style="text-align: center;">
-        </span>
+      </span>
 
       <span *ngIf="showControls()" class="d-flex align-items-center flex-00a">
         <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
@@ -102,7 +92,8 @@
         <span class="fs-small fw-400" *ngIf="contact.phone != null && contact.phone !== ''">{{ t('contact.office phone')
           }}:
           {{contact.phone}}</span>
-        <span class="fs-small fw-400" *ngIf="contact.cellPhone != null && contact.cellPhone !== ''">{{ t('contact.cellphone')
+        <span class="fs-small fw-400" *ngIf="contact.cellPhone != null && contact.cellPhone !== ''">{{
+          t('contact.cellphone')
           }}:
           {{contact.cellPhone}}</span>
         <span class="fs-small fw-400"
@@ -146,7 +137,8 @@
                 [(ngModel)]="contact.firstName" #fName="ngModel" [placeholder]="t('contact.first name')"
                 (keydown.esc)="abandonEdit()" matInput required>
 
-              <div *ngIf="f.submitted && !fName.valid" class="m-0 mt-2 alert alert-danger">{{t('user profile.first name required')}}</div>
+              <div *ngIf="f.submitted && !fName.valid" class="m-0 mt-2 alert alert-danger">{{t('user profile.first name
+                required')}}</div>
             </div>
 
             <div class="form-group d-flex flex-column flex-11a">
@@ -155,7 +147,8 @@
                 [(ngModel)]="contact.lastName" #lName="ngModel" [placeholder]="t('contact.last name')"
                 (keydown.esc)="abandonEdit()" matInput required>
 
-              <div *ngIf="f.submitted && !lName.valid" class="m-0 mt-2 alert alert-danger">{{t('user profile.last name required')}}</div>
+              <div *ngIf="f.submitted && !lName.valid" class="m-0 mt-2 alert alert-danger">{{t('user profile.last name
+                required')}}</div>
             </div>
           </div>
           <div class="d-flex flex-wrap flex-11a">

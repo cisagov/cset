@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
 <ng-container *transloco="let t">
     <h4>{{t('organization details')}}</h4>
     <form #f="ngForm">
-        <div class="row">
+        <div class="row mb-3">
             <p *ngIf="showAssessmentNameDisclaimer()">{{t('no pii in name')}}</p>
             <div class="col">
                 <label class="form-label" for="name">{{t('assessment name')}}</label>
@@ -43,12 +43,14 @@
                 <mat-datepicker #picker></mat-datepicker>
             </div>
         </div>
-        <div class="col" *ngIf="showFacilityName()">
+
+        <div class="col mb-3" *ngIf="showFacilityName()">
             <label class="form-label" for="facility">{{t('facility name')}}</label>
             <input type="text" maxlength="100" class="form-control" id="facility" name="facility"
                 [(ngModel)]="assessment.facilityName" (change)="update($event)" tabindex="0">
         </div>
-        <div class="row">
+
+        <div class="row mb-4">
             <div class="col" *ngIf="showCityName()">
                 <label class="form-label" for="citySite">{{t('city or site name')}}</label>
                 <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite"
@@ -61,6 +63,7 @@
             </div>
         </div>
     </form>
+
     <div class="mt-4">
         <h4>{{t('assessment type')}}</h4>
         <h5>{{ assessment.typeTitle || 'Blank Assessment' }}</h5>

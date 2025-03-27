@@ -7,9 +7,10 @@ import { HydroService } from '../../../../services/hydro.service';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
-  selector: 'app-hydro-deficiency',
-  templateUrl: './hydro-deficiency.component.html',
-  styleUrls: ['./hydro-deficiency.component.scss']
+    selector: 'app-hydro-deficiency',
+    templateUrl: './hydro-deficiency.component.html',
+    styleUrls: ['./hydro-deficiency.component.scss'],
+    standalone: false
 })
 export class HydroDeficiencyComponent implements OnInit {
 

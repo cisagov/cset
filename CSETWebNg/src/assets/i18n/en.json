@@ -35,6 +35,7 @@
   "org poc": "Organization Point of Contact",
   "select contact": "Select Contact",
   "select facilitator": "Select Facilitator",
+  "self assessment": "Self Assessment",
   "crit svc poc": "Critical Service Point of Contact",
   "asset gross value": "What is the gross value of the asset you are trying to protect?",
   "select gross value": "Select Value",
@@ -512,7 +513,7 @@
     "cpg answer key": "CPG Answer Key",
     "security practice": "Security Practice",
     "outcome": "Outcome",
-    "instructions ssg": "Sector-Specific Goals (SSGs) display based on the sector selected on the Assessment Information page. Appended to the CPGs, these goals are designed to address additional concerns unique to your industry. SSGs will not impact CPG results and will display separately in the results and reports."
+    "instructions ssg": "Sector-Specific Goals (SSGs) display based on the sector selected on the Assessment Information page. Appended to the CPGs, these goals are designed to address additional concerns unique to your industry."
   },
   "tooltip": {
     "view detail": "View Detail",
@@ -685,10 +686,13 @@
   "dialogs": {
     "alert": "Alert",
     "please confirm": "Please Confirm",
-    "remove contact": "Are you sure you want to remove {{firstName}} {{lastName}} from this assessment?",
-    "remove assessment": "Are you sure you want to remove {{assessmentName}}?",
+    "remove contact": "Are you sure you want to remove '{{firstName}} {{lastName}}' from this assessment?",
+    "remove assessment": "Are you sure you want to remove '{{assessmentName}}?'",
     "confirm create new assessment": "Are you sure you want to create a new assessment?",
     "export assessment title": "Export Assessment Options",
+    "export excel dialog title": "Export Assessment to Excel",
+    "export excel dialog 1": "The assessment Excel export is for simple data analysis. Excel data cannot be reimported.",
+    "export excel do not show": "Do not show this message again",
     "scrub pcii": "Select to remove PCII fields from export",
     "encrypt 1": "To encrypt your assessment, please enter a password.",
     "encrypt 2": "If you proceed without entering a password, no encryption will be used.",
@@ -765,6 +769,7 @@
       "tools": "Tools",
       "enable protected features": "Enable Protected Features",
       "assessment documents": "Assessment Documents",
+      "has no documents": "This assessment has no attached documents.",
       "parameter editor": "Parameter Editor",
       "export assessment to excel": "Export Assessment to Excel",
       "import modules": "Import Modules",
@@ -845,7 +850,11 @@
       "my assessments": "My Assessments",
       "change password": "Change Password",
       "user language": "User Language",
-      "logout": "Logout"
+      "logout": "Logout",
+      "settings": "Settings",
+      "encrypt": "Password encryption for assessment export",
+      "on": "On",
+      "off": "Off"
     }
   },
   "merge examinations": {
@@ -933,15 +942,19 @@
     "build date": "Build Date",
     "contact": "Contact",
     "learn more": "To learn more about cyber vulnerabilities, training, standards, and references, visit the <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">CISA Vulnerability Management website</a> or contact <a class=\"wrap-text\" href=\"mailto:{{dhsEmail}}\" class=\"mailto\">{{dhsEmail}}</a>.",
-    "encourage reporting": "CISA — Cybersecurity and Infrastructure Security Agency — encourages you to report suspicious cyber activity, incidents, and vulnerabilities affecting critical infrastructure control systems.",
+    "encourage reporting": "CISA — Cybersecurity & Infrastructure Security Agency — encourages you to report suspicious cyber activity, incidents, and vulnerabilities affecting critical infrastructure control systems.",
     "cset training resources": "Training Resources",
-    "training available": "training is available through the following resources",
-    "video tutorials": "Video Tutorials",
+    "training available": "Training is available through the following resources",
+    "cset user guide": "CSET User Guide",
+    "video tutorials": "CSET Video Tutorials (YouTube)",
     "cisa training program": "CISA Cybersecurity Training Program",
     "training description": "The training program events consist of Web-Based Training courses, 'regional' training courses and workshops at venues in various locations, in addition to the 5-day training event held in Idaho Falls, Idaho.",
     "training no cost": "Note: All training courses are presented at no cost to the attendee.",
-    "training website": "Training Website",
-    "training calendar": "Training Calendar",
+    "training website": "ICS Training Website",
+    "training calendar": "ICS Training Calendar",
+    "aes training": "AES Training",
+    "aes training description": "The Assessment Evaluation and Standardization (AES) Program qualifies individuals to conduct Cybersecurity & Infrastructure Security Agency (CISA) cyber assessments.",
+    "aes link": "Assessment Evaluation and Standardization Program - CISA",
     "acet": {
       "we ensure financial stability": "We Ensure Financial Stability",
       "description": "The NCUA ensures that millions of consumers, businesses and communities can safely use federally insured credit unions for their financial needs."
@@ -1009,6 +1022,13 @@
     "traffic light protocol": "Traffic Light Protocol",
     "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> is part of the <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Department of Homeland Security</a>",
     "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Website</a>"
+  },
+  "assessment upgrade": {
+    "upgrade available": "Assessment Upgrade Available",
+    "from to": "Upgrade assessment from '{{originalType}}' to '{{newType}}'",
+    "p1": "A newer version of this assessment type is now available.  Questions present in both the old and newer versions will be transferred, along with their observations, attached documents, feedback, and comments. Additionally, all demographic information and contacts will be transferred. Your original assessment will remain accessible, and this upgrade will generate a new assessment.",
+    "converting": "Converting your assessment, this may take a few moments.",
+    "upgrade button": "Upgrade"
   },
   "modules": {
     "cpg": {
@@ -1089,5 +1109,14 @@
       "report title": "Multiple Assessment Comparison Report",
       "document library": "Document Library"
     }
+  },
+  "analytics": {
+    "title": "Assessment Analytics",
+    "description 1": "This chart displays the implementation scoring of the current assessment in relation to other assessments of the same type, as applicable. Each category is scored, with the minimum, maximum, and median scores charted to illustrate how the current assessment compares to other assessments. Users can choose to view results within the same sector or across all sectors.",
+    "description 2": "If additional assessments of the same type have not been conducted, the chart will only display the current assessment results.",
+    "sample size": "Sample Size",
+    "tooltip": "Select a sector from Demographics in Assessment Information",
+    "my sector": "My Sector",
+    "all sectors": "All Sectors"
   }
 }

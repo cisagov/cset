@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2024 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,32 +20,25 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-
-<div mat-dialog-title class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span style="color: white;" class="me-2 cset-icons-export-excel"></span>
-    <span style="color: white;">Excel Export</span>
-</div>
-<mat-dialog-content>
-    <div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12 m-4">
-                    This excel export is for simple data analysis. Excel data cannot be reimported.
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="col-12 ms-4 mb-2">
-                    <input type="checkbox" name="doNotShowAgain" class="mt-1" autocomplete="off"
-                        (change)="setDoNotShow()" [(ngModel)]="doNotShow" [checked]="doNotShow">
-                    <label for="doNotShowAgain">&nbsp;Do not show this message again</label>
-                </div>
-            </div>
-        </div>
+<div *transloco="let t">
+    <div mat-dialog-title class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+        <span style="color: white;" class="me-2 cset-icons-export-excel"></span>
+        <span style="color: white;">{{t('dialogs.export excel dialog title')}}</span>
     </div>
-</mat-dialog-content>
+    <mat-dialog-content>
+        <div class="my-3">
+            {{t('dialogs.export excel dialog 1')}}
+        </div>
 
-<mat-dialog-actions class="ps-4 p-1" style="margin-bottom:15px;">
-    <button class="btn btn-primary" (click)="exportToExcel()">Export</button>
-    <button class="btn btn-secondary" (click)="close()">Cancel</button>
-</mat-dialog-actions>
+        <div>
+            <input type="checkbox" id="doNotShowAgain" name="doNotShowAgain" class="checkbox-custom" autocomplete="off"
+                (change)="setDoNotShow()" [(ngModel)]="doNotShow" [checked]="doNotShow">
+            <label for="doNotShowAgain" class="checkbox-custom-label">{{t('dialogs.export excel do not show')}}</label>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="mx-3 mb-3 justify-content-between">
+        <button class="btn btn-primary" (click)="exportToExcel()">{{t('buttons.export')}}</button>
+        <button class="btn btn-secondary" (click)="close()">{{t('buttons.cancel')}}</button>
+    </mat-dialog-actions>
+</div>

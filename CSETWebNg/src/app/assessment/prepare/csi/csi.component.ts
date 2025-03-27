@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-csi',
-  templateUrl: './csi.component.html',
-  host: { class: 'white-panel d-flex flex-column justify-content-start flex-11a' }
+    selector: 'app-csi',
+    templateUrl: './csi.component.html',
+    host: { class: 'white-panel d-flex flex-column justify-content-start flex-11a' },
+    standalone: false
 })
 export class CsiComponent implements OnInit {
 

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,18 +25,21 @@ import { Component } from '@angular/core';
 import { ConfigService } from '../../../../services/config.service';
 import { LayoutService } from '../../../../services/layout.service';
 import { ResourceLibraryService } from '../../../../services/resource-library.service';
-
+import { AssessmentService } from '../../../../services/assessment.service';
 
 @Component({
-  selector: 'app-tutorial-cmmc2',
-  templateUrl: './tutorial-cmmc2.component.html'
+    selector: 'app-tutorial-cmmc2',
+    templateUrl: './tutorial-cmmc2.component.html',
+    standalone: false
 })
 export class TutorialCmmc2Component {
 
   constructor(
     public configSvc: ConfigService,
     public layoutSvc: LayoutService,
-    private resourceLibSvc: ResourceLibraryService
+    public assessSvc: AssessmentService,
+    private resourceLibSvc: ResourceLibraryService,
+
   ) { }
 
   documentURL(documentName: string) {

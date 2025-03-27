@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2024 Battelle Energy Alliance, LLC
+  Copyright 2025 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,8 @@ SOFTWARE.
 
 */
 @charset "UTF-8";
+@use "sass:color";
+@use "sass:map";
 @use "../../../sass/mixins";
 @use "../../../sass/sal";
 @use "@angular/material/prebuilt-themes/indigo-pink.css";
@@ -60,29 +62,29 @@ $primary: (
   980: #2982B1
 );
 
-$primary-50: map-get($primary, 50);
-$primary-100: map-get($primary, 100);
-$primary-150: map-get($primary, 150);
-$primary-200: map-get($primary, 200);
-$primary-250: map-get($primary, 250);
-$primary-300: map-get($primary, 300);
-$primary-350: map-get($primary, 350);
-$primary-400: map-get($primary, 400);
-$primary-450: map-get($primary, 450); // Secondary
-$primary-500: map-get($primary, 500);
-$primary-550: map-get($primary, 550);
-$primary-600: map-get($primary, 600);
-$primary-650: map-get($primary, 650);
-$primary-700: map-get($primary, 700);
-$primary-750: map-get($primary, 750);
-$primary-800: map-get($primary, 800);
-$primary-850: map-get($primary, 850);
-$primary-900: map-get($primary, 900); // Main Dark Primary
-$primary-975: map-get($primary, 975);
-$primary-980: map-get($primary, 980);
+$primary-50: map.get($primary, 50);
+$primary-100: map.get($primary, 100);
+$primary-150: map.get($primary, 150);
+$primary-200: map.get($primary, 200);
+$primary-250: map.get($primary, 250);
+$primary-300: map.get($primary, 300);
+$primary-350: map.get($primary, 350);
+$primary-400: map.get($primary, 400);
+$primary-450: map.get($primary, 450); // Secondary
+$primary-500: map.get($primary, 500);
+$primary-550: map.get($primary, 550);
+$primary-600: map.get($primary, 600);
+$primary-650: map.get($primary, 650);
+$primary-700: map.get($primary, 700);
+$primary-750: map.get($primary, 750);
+$primary-800: map.get($primary, 800);
+$primary-850: map.get($primary, 850);
+$primary-900: map.get($primary, 900); // Main Dark Primary
+$primary-975: map.get($primary, 975);
+$primary-980: map.get($primary, 980);
 
 $primary-color: $primary-975;
-$secondary-color: map-get($primary, 980);
+$secondary-color: map.get($primary, 980);
 
 $link-color-dark: #1a53ff; //$primary-350;
 $link-color-light: $primary-350;
@@ -109,24 +111,24 @@ $grayscale: (
   900: #262626,
   950: #1a1a1a,
 );
-$gray-50: map-get($grayscale, 50);
-$gray-100: map-get($grayscale, 100);
-$gray-150: map-get($grayscale, 150);
-$gray-200: map-get($grayscale, 200);
-$gray-250: map-get($grayscale, 250);
-$gray-300: map-get($grayscale, 300);
-$gray-350: map-get($grayscale, 350);
-$gray-400: map-get($grayscale, 400);
-$gray-450: map-get($grayscale, 450);
-$gray-500: map-get($grayscale, 500);
-$gray-550: map-get($grayscale, 550);
-$gray-600: map-get($grayscale, 600);
-$gray-650: map-get($grayscale, 650);
-$gray-700: map-get($grayscale, 700);
-$gray-750: map-get($grayscale, 750);
-$gray-800: map-get($grayscale, 800);
-$gray-850: map-get($grayscale, 850);
-$gray-900: map-get($grayscale, 900);
+$gray-50: map.get($grayscale, 50);
+$gray-100: map.get($grayscale, 100);
+$gray-150: map.get($grayscale, 150);
+$gray-200: map.get($grayscale, 200);
+$gray-250: map.get($grayscale, 250);
+$gray-300: map.get($grayscale, 300);
+$gray-350: map.get($grayscale, 350);
+$gray-400: map.get($grayscale, 400);
+$gray-450: map.get($grayscale, 450);
+$gray-500: map.get($grayscale, 500);
+$gray-550: map.get($grayscale, 550);
+$gray-600: map.get($grayscale, 600);
+$gray-650: map.get($grayscale, 650);
+$gray-700: map.get($grayscale, 700);
+$gray-750: map.get($grayscale, 750);
+$gray-800: map.get($grayscale, 800);
+$gray-850: map.get($grayscale, 850);
+$gray-900: map.get($grayscale, 900);
 
 /* --- button styles --- */
 $active-text-color: $white;
@@ -260,12 +262,12 @@ a {
 
 .checkbox-custom:disabled+.checkbox-custom-label:before,
 .radio-custom:disabled+.radio-custom-label:before {
-  border-color: lighten($secondary-color, 35%);
+  border-color: color.adjust($secondary-color, $lightness: 35%);
 }
 
 .checkbox-custom:disabled:checked+.checkbox-custom-label:before,
 .radio-custom:disabled+.radio-custom-label:before {
-  background-color: lighten($secondary-color, 35%);
+  background-color: color.adjust($secondary-color, $lightness: 35%);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -498,7 +500,7 @@ label[required]::after {
 }
 
 .footer .bg-primary {
-  background-color: $primary-900  !important;
+  background-color: $primary-900 !important;
 }
 
 .footer .card-header:first-child {
@@ -629,15 +631,18 @@ table.assessment-summary th {
   padding: .5rem;
 }
 
-.table.table-td-p1 th, .table.table-td-p1 td {
+.table.table-td-p1 th,
+.table.table-td-p1 td {
   padding: .25rem !important;
 }
 
-.table.table-td-p2 th, .table.table-td-p2 td {
+.table.table-td-p2 th,
+.table.table-td-p2 td {
   padding: .5rem !important;
 }
 
-.table.table-td-small th, .table.table-td-small td {
+.table.table-td-small th,
+.table.table-td-small td {
   font-size: .875em;
 }
 
@@ -762,7 +767,7 @@ table.td-align-top td {
 .btn-outline-primary:hover {
   background-color: $primary-color;
   border-color: $secondary-color;
-  color: $gray-100  !important;
+  color: $gray-100 !important;
 }
 
 .btn.disabled.btn-primary,
@@ -1127,6 +1132,10 @@ table.td-align-top td {
   color: $white;
 }
 
+.btn-level.primary.active {
+  background-color: $primary-800;
+  color: $white;
+}
 
 .btn-geo {
   background-color: $gray-150;
@@ -1168,15 +1177,15 @@ table.td-align-top td {
 
 .ngx-slider .ngx-slider-pointer,
 .ngx-slider .ngx-slider-selection {
-  background-color: $primary-450  !important;
+  background-color: $primary-450 !important;
 }
 
 .ngx-slider .ngx-slider-tick.ngx-slider-selected {
-  background: $primary-450  !important;
+  background: $primary-450 !important;
 }
 
 .ngx-slider .ngx-slider-active::after {
-  background: $primary-250  !important;
+  background: $primary-250 !important;
 }
 
 .ngx-slider .ngx-slider-tick-legend {
@@ -1227,8 +1236,8 @@ table.td-align-top td {
 
 .mdc-tooltip__surface {
   font-size: 1em !important;
-  background-color: $gray-200  !important;
-  color: $gray-900  !important;
+  background-color: $gray-200 !important;
+  color: $gray-900 !important;
   letter-spacing: normal !important;
   border: 1px solid $gray-100 !important;
   line-height: 1.5em !important;
@@ -1244,7 +1253,8 @@ table.td-align-top td {
   letter-spacing: normal !important;
 }
 
-.mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label, .mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+.mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label,
+.mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
   color: $primary-color;
 }
 
@@ -1451,7 +1461,7 @@ ul.mat-tree-node mat-tree-node {
 
 table.data-table {
   width: 100%;
-  border: 2px solid $black  !important;
+  border: 2px solid $black !important;
 }
 
 tr.data-table:nth-child(even) {
@@ -1621,6 +1631,7 @@ ul.nav-tabs li.active button .tab-icon {
   flex: 0 0 auto;
   padding: 5px;
 }
+
 .navbar-toggler-icon:before {
   content: "\e5d2";
 }
@@ -1679,7 +1690,9 @@ ul.nav-tabs li.active button .tab-icon {
 
 .menu-divider {
   background-color: $gray-150;
+  color: $gray-150;
   margin: 8px 0;
+  opacity: .8;
 }
 
 .navbar-menu-header,
@@ -1709,24 +1722,25 @@ ul.nav-tabs li.active button .tab-icon {
 }
 
 .menu-panel [mat-menu-item] .mat-menu-submenu-icon {
-  color: $gray-150;
+  color: $gray-150 !important;
 }
 
 .menu-panel [mat-menu-item]:focus .mat-mdc-menu-submenu-icon,
 .menu-panel [mat-menu-item]:hover .mat-mdc-menu-submenu-icon {
-  color: $primary-color;
+  color: $primary-color !important;
 }
 
 .mat-mdc-menu-item:not(:hover):not([disabled]) .mdc-list-item__primary-text,
 .mat-mdc-menu-submenu-icon {
-  color: $gray-150;
+  color: $gray-150 !important;
 }
 
 .mat-mdc-menu-item[disabled] .mdc-list-item__primary-text {
   color: $primary-250;
 }
 
-.mat-mdc-button-base, .mdc-list-item__primary-text {
+.mat-mdc-button-base,
+.mdc-list-item__primary-text {
   letter-spacing: normal !important;
 }
 
@@ -2072,7 +2086,7 @@ input[type="checkbox"]+label {
 }
 
 .mat-pseudo-checkbox-checked {
-  background: $primary-900  !important;
+  background: $primary-900 !important;
 }
 
 // Questions Block
@@ -2246,7 +2260,7 @@ tooltip.glossary-definition.tooltip-bottom::after {
 }
 
 tooltip.glossary-definition.tooltip-left::after {
-  border-color: transparent transparent transparent $glossary-background  !important;
+  border-color: transparent transparent transparent $glossary-background !important;
 }
 
 // Question Extras
@@ -2373,6 +2387,7 @@ ul.related-questions li {
   border-radius: 4px;
   padding: 0.3em;
   margin: 4px 0;
+  text-align: center;
 }
 
 .score-container div:nth-child(1) {
@@ -2602,17 +2617,14 @@ mat-sidenav.mat-sidenav {
 
 // About
 .about article {
-  //width: 33.33%;
-  margin-right: $spacer * 3;
+  flex: 1 1 50%;
+  box-sizing: border-box;
+  padding: .8rem;
 }
 
-.about article:nth-child(3) {
-  margin-right: 0rem;
-}
-
-@media only screen and (max-width: 360px) {
+@media only screen and (max-width: 800px) {
   .about article {
-    margin-right: 0rem;
+    flex: 1 1 100%;
   }
 }
 
@@ -2631,10 +2643,6 @@ mat-sidenav.mat-sidenav {
 .about .nccic {
   font-family: "ITC Franklin Gothic", Arial, Times, serif;
   font-size: 30px;
-}
-
-.about article {
-  max-width: 300px;
 }
 
 // Component Override
@@ -2892,11 +2900,13 @@ table.assessment-documents th {
   font-weight: bold;
 }
 
-.nested-question-text, .nested-question-text p {
+.nested-question-text,
+.nested-question-text p {
   margin-bottom: 1rem;
 }
 
-.nested-option-block, .nested-option-block p {
+.nested-option-block,
+.nested-option-block p {
   margin-bottom: 1rem !important;
 }
 
@@ -3709,7 +3719,7 @@ table.td-text-start td {
 /////////////////// Tutorial pages ///////////////
 div.tutorial h5,
 .tutorial h6 {
-  color: $primary-600  !important;
+  color: $primary-600 !important;
 }
 
 div.tutorial h6 {
@@ -3862,9 +3872,11 @@ h6.dropdown-header {
   padding: 0px 20px !important;
   border-radius: 5px;
 }
+
 .swiper-button-prev {
   margin-left: 5px;
 }
+
 .swiper-button-next {
   margin-right: 5px;
 }
@@ -3995,30 +4007,30 @@ h6.dropdown-header {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity:20%;
+  opacity: 20%;
 }
 
 .gallery-card:hover .img-cropped-calc {
-  opacity:70% !important;
+  opacity: 70% !important;
 }
 
 .gallery-card-footer {
   background-color: #ffc107 !important;
-  
+
 }
 
-.card-footer{
+.card-footer {
   background-color: #fff;
   border: none;
-  min-height:50px;
-  max-height:50px;
+  min-height: 50px;
+  max-height: 50px;
   padding: .5rem .75rem;
 }
 
 .gallery-btn-play {
-  color: #ffc107  !important;
+  color: #ffc107 !important;
 }
 
 .gallery-btn-info:hover {
-  color: #ffc107  !important;
+  color: #ffc107 !important;
 }

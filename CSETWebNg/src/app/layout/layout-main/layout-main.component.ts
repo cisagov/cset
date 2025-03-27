@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ViewEncapsulation,OnInit, isDevMode } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, isDevMode, inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AggregationService } from '../../services/aggregation.service';
@@ -33,18 +33,19 @@ import { FileUploadClientService } from '../../services/file-client.service';
 import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
 import { LayoutService } from '../../services/layout.service';
 import { VersionService } from '../../services/version.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
-  selector: 'layout-main',
-  templateUrl: './layout-main.component.html',
-  styleUrls: ['./layout-main.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
-
+    selector: 'layout-main',
+    templateUrl: './layout-main.component.html',
+    styleUrls: ['./layout-main.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
+    standalone: false
 })
-export class LayoutMainComponent  implements OnInit {
+export class LayoutMainComponent implements OnInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
@@ -52,11 +53,14 @@ export class LayoutMainComponent  implements OnInit {
   devMode: boolean = isDevMode();
 
   display = "none";
-  displayNotifications="none";
+  displayNotifications = "none";
   localVersion: string;
-  
-  
-   
+  isMobile: boolean = false;
+
+  private _snackBar = inject(MatSnackBar);
+
+
+
   constructor(
     public auth: AuthenticationService,
     public assessSvc: AssessmentService,
@@ -67,10 +71,11 @@ export class LayoutMainComponent  implements OnInit {
     public setBuilderSvc: SetBuilderService,
     public dialog: MatDialog,
     public router: Router,
-    public versionSvc:VersionService
+    public versionSvc: VersionService
   ) { }
   ngOnInit() {
     this.versionSvc.getLatestVersion();
+    this.checkIsMobile();
   }
 
   /**
@@ -101,13 +106,50 @@ export class LayoutMainComponent  implements OnInit {
   showDisclaimer() {
     this.dialog.open(OnlineDisclaimerComponent, { data: { publicDomainName: this.configSvc.publicDomainName } });
   }
-  
+
   showNotifications(): void {
     this.display = "block";
   }
 
   onCloseHandled() {
     this.display = "none";
-    this.displayNotifications="none"
-  }  
+    this.displayNotifications = "none"
+  }
+
+  checkIsMobile(){
+    var hasTouchScreen = false;
+    var navigator = window.navigator as any;
+    if ("maxTouchPoints" in navigator) {
+        hasTouchScreen = navigator.maxTouchPoints > 0;
+    } else if ("msMaxTouchPoints" in navigator) {
+        hasTouchScreen = navigator.msMaxTouchPoints > 0;
+    } else {
+        var mQ = window.matchMedia && matchMedia("(pointer:coarse)");
+        if (mQ && mQ.media === "(pointer:coarse)") {
+            hasTouchScreen = !!mQ.matches;
+        } else if ('orientation' in window) {
+            hasTouchScreen = true; // deprecated, but good fallback
+        } else {
+            // Only as a last resort, fall back to user agent sniffing
+            var UA = navigator.userAgent;
+            hasTouchScreen = (
+                /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
+                /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
+            );
+        }
+    }
+
+    if (hasTouchScreen) {
+        this.isMobile = true; 
+    } else {
+      this.isMobile = false;
+    }
+    if(this.isMobile){
+      this._snackBar.open('Turn screen horizontal for best viewing experience', "Close", {
+        verticalPosition: 'top',
+        panelClass: ['notify-snackbar']
+      });
+    }
+    
+  }
 }

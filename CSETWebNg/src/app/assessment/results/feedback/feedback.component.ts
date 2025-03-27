@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -33,11 +33,12 @@ import { AssessmentService } from '../../../services/assessment.service';
 
 
 @Component({
-  selector: 'app-feedback',
-  templateUrl: './feedback.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' },
-  styleUrls: ['./feedback.component.css']
+    selector: 'app-feedback',
+    templateUrl: './feedback.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    styleUrls: ['./feedback.component.css'],
+    standalone: false
 })
 
 export class FeedbackComponent implements OnInit {

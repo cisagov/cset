@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,11 @@ import { ColorService } from '../../../../services/color.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 
 @Component({
-  selector: 'app-compare-summary',
-  templateUrl: './compare-summary.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-compare-summary',
+    templateUrl: './compare-summary.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class CompareSummaryComponent implements OnInit {
 
@@ -41,7 +42,7 @@ export class CompareSummaryComponent implements OnInit {
   chartCategoryAverage: any;
   catAvgHeight: number;
   assessments: any;
-  showComponents: boolean; 
+  showComponents: boolean;
   assessmentColors: Map<string, string>;
   toggleVariable: boolean = false; // Initial value
 
@@ -53,14 +54,14 @@ export class CompareSummaryComponent implements OnInit {
     public chartSvc: ChartService,
     public colorSvc: ColorService,
     public assessmentSvc: AssessmentService
-  ) { 
+  ) {
     this.assessmentTypeCheck()
   }
 
   ngOnInit() {
     this.assessmentColors = new Map<string, string>();
     this.populateCharts();
-     
+
   }
 
   async populateCharts() {
@@ -76,7 +77,7 @@ export class CompareSummaryComponent implements OnInit {
       this.chartOverallAverage = this.chartSvc.buildHorizBarChart('canvasOverallAverage', x, false, true);
     });
 
-    
+
 
     // Standards Answers
     this.aggregationSvc.getStandardsAnswers().subscribe((x: any) => {
@@ -93,14 +94,14 @@ export class CompareSummaryComponent implements OnInit {
 
 
     // Components Answers
-  this.aggregationSvc.getComponentsAnswers().subscribe((x: any) => {
-    if (x.data.every(item => item === 0)) {
-      x.data = [100];
-      x.labels = ['No Assessment Diagrams'];
-    }
-    this.chartComponentsPie = this.chartSvc.buildDoughnutChart('canvasComponentsPie', x);
-  });
-  
+    this.aggregationSvc.getComponentsAnswers().subscribe((x: any) => {
+      if (x.data.every(item => item === 0)) {
+        x.data = [100];
+        x.labels = ['No Assessment Diagrams'];
+      }
+      this.chartComponentsPie = this.chartSvc.buildDoughnutChart('canvasComponentsPie', x);
+    });
+
 
     // Category Averages
     this.aggregationSvc.getCategoryAverages().subscribe((x: any) => {
@@ -137,26 +138,26 @@ export class CompareSummaryComponent implements OnInit {
     }, 1000);
   }
 
-  async assessmentTypeCheck(){
-    let previousUseDiagram = null; 
+  async assessmentTypeCheck() {
+    let previousUseDiagram = null;
     this.aggregationSvc.getAssessments().subscribe(resp => {
-      for (let x of resp['assessments']){
+      for (let x of resp['assessments']) {
         if (previousUseDiagram !== null) {
           if (x.useDiagram === previousUseDiagram) {
-              this.showComponents = true;
+            this.showComponents = true;
           } else {
             this.showComponents = false;
           }
-          if (previousUseDiagram == false && x.useDiagram == false){
+          if (previousUseDiagram == false && x.useDiagram == false) {
             this.showComponents = false;
-          } 
+          }
+        }
+
+        // Update previousUseDiagram for the next iteration
+        previousUseDiagram = x.useDiagram;
       }
-  
-      // Update previousUseDiagram for the next iteration
-      previousUseDiagram = x.useDiagram;
-      }
-  })
-  
-}
+    })
+
+  }
 
 }

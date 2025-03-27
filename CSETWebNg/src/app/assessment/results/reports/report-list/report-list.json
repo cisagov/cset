@@ -63,6 +63,11 @@
       },
       {
         "linkUrl": "cmmc2CommentsMarked"
+      },
+      {
+        "exportUrl": "poam",
+        "icon": "export excel",
+        "disabledWhen": "cmmc level 1 not achieved"
       }
     ]
   },

@@ -3,13 +3,14 @@ import { AssessmentService } from '../../../../../services/assessment.service';
 import { MaturityService } from '../../../../../services/maturity.service';
 
 @Component({
-  selector: 'app-cmmc2-scorecard-page',
-  templateUrl: './cmmc2-scorecard-page.component.html',
-  styleUrl: './cmmc2-scorecard-page.component.scss'
+    selector: 'app-cmmc2-scorecard-page',
+    templateUrl: './cmmc2-scorecard-page.component.html',
+    styleUrl: './cmmc2-scorecard-page.component.scss',
+    standalone: false
 })
 export class Cmmc2ScorecardPageComponent implements OnInit {
 
-  scorecards: any[];
+  scorecards: any[] = [];
 
   targetLevel: number;
 

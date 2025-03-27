@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,24 +26,37 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/authentication.service';
-import { ChangePasswordComponent } from "../../dialogs/change-password/change-password.component";
+import { ChangePasswordComponent } from '../../dialogs/change-password/change-password.component';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { TranslocoService } from '@jsverse/transloco';
 
-
 @Component({
-  selector: 'app-landing-page-tabs',
-  templateUrl: './landing-page-tabs.component.html',
-  styleUrls: ['./landing-page-tabs.component.scss'],
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-landing-page-tabs',
+    templateUrl: './landing-page-tabs.component.html',
+    styleUrls: ['./landing-page-tabs.component.scss'],
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
-export class LandingPageTabsComponent implements OnInit, AfterViewInit {
-
+export class LandingPageTabsComponent implements OnInit {
   currentTab: string;
   isSearch: boolean = false;
-  searchString: string = "";
+  searchString: string = '';
   devMode: boolean = isDevMode();
-  @ViewChild('tabs') tabsElementRef: ElementRef;
+  private _tabsElementRef: ElementRef;
+
+  @ViewChild('tabs') set tabsElementRef(element: ElementRef) {
+    this._tabsElementRef = element;
+
+    if (this._tabsElementRef) {
+      const tabsEl = this._tabsElementRef.nativeElement;
+      tabsEl.classList.add('sticky-tabs');
+      if (this.authSvc.isLocal && this.devMode) {
+        tabsEl.style.top = '81px';
+      } else {
+        tabsEl.style.top = '62px';
+      }
+    }
+  }
 
   constructor(
     private route: ActivatedRoute,
@@ -59,23 +72,11 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
     this.checkPasswordReset();
 
     // setting the tab when we get a query parameter.
-    this.route.queryParamMap.pipe(filter(params => params.has('tab'))).subscribe(params => {
+    this.route.queryParamMap.pipe(filter((params) => params.has('tab'))).subscribe((params) => {
       this.setTab(params.get('tab'));
       // clear the query parameters from the url.
       this.router.navigate([], { queryParams: {} });
     });
-  }
-
-  ngAfterViewInit(): void {
-    if (!!this.tabsElementRef) {
-      const tabsEl = this.tabsElementRef.nativeElement;
-      tabsEl.classList.add('sticky-tabs');
-      if (this.authSvc.isLocal && this.devMode) {
-        tabsEl.style.top = '81px';
-      } else {
-        tabsEl.style.top = '62px';
-      }
-    }
   }
 
   setTab(tab) {
@@ -98,8 +99,8 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
 
   hasPath(rpath: string) {
     if (rpath != null) {
-      localStorage.removeItem("returnPath");
-      this.router.navigate([rpath], { queryParamsHandling: "preserve" });
+      localStorage.removeItem('returnPath');
+      this.router.navigate([rpath], { queryParamsHandling: 'preserve' });
     }
   }
 
@@ -112,23 +113,22 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.authSvc.passwordStatus()
-      .subscribe((passwordResetRequired: boolean) => {
-        if (passwordResetRequired) {
-          this.openPasswordDialog(true);
-        }
-      });
+    this.authSvc.passwordStatus().subscribe((passwordResetRequired: boolean) => {
+      if (passwordResetRequired) {
+        this.openPasswordDialog(true);
+      }
+    });
   }
 
   openPasswordDialog(showWarning: boolean) {
-    if (localStorage.getItem("returnPath")) {
-      if (!Number(localStorage.getItem("redirectid"))) {
-        this.hasPath(localStorage.getItem("returnPath"));
+    if (localStorage.getItem('returnPath')) {
+      if (!Number(localStorage.getItem('redirectid'))) {
+        this.hasPath(localStorage.getItem('returnPath'));
       }
     }
     this.dialog
       .open(ChangePasswordComponent, {
-        width: "300px",
+        width: '300px',
         data: { primaryEmail: this.authSvc.email(), warning: showWarning }
       })
       .afterClosed()

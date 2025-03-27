@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,10 @@ import { CmuReportModel } from '../../../../models/reports.model';
 import { CmuService } from './../../../../services/cmu.service';
 
 @Component({
-  selector: 'app-crr-nist-csf-cat-summary',
-  templateUrl: './crr-nist-csf-cat-summary.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+    selector: 'app-crr-nist-csf-cat-summary',
+    templateUrl: './crr-nist-csf-cat-summary.component.html',
+    styleUrls: ['./../crr-report.component.scss'],
+    standalone: false
 })
 export class CrrNistCsfCatSummaryComponent implements OnInit {
   @Input() model: CmuReportModel;
@@ -38,7 +39,7 @@ export class CrrNistCsfCatSummaryComponent implements OnInit {
   bodyData: any = null;
   legend: string = '';
 
-  constructor(private cmuSvc: CmuService) {}
+  constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
     this.cmuSvc.getNistCsfCatSummaryBodyData().subscribe((resp: any[]) => {

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,8 @@ import { TranslocoService } from '@jsverse/transloco';
   selector: 'app-sal-gen',
   templateUrl: './sal-gen.component.html',
   // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class SalGenComponent implements OnInit {
 
@@ -131,23 +132,6 @@ export class SalGenComponent implements OnInit {
       error => {
         console.log('Error saving gensal: ' + (<Error>error).name + (<Error>error).message);
         console.log('Error saving gensal: ' + (<Error>error).stack);
-      });
-  }
-
-  /**
-   * 
-   */
-  saveLevel(level: string) {
-    this.salsSvc.selectedSAL.selectedSALOverride = true;
-    this.salsSvc.selectedSAL.selected_Sal_Level = level;
-
-    this.salsSvc.updateStandardSelection(this.salsSvc.selectedSAL).subscribe(
-      (data: Sal) => {
-        this.salsSvc.selectedSAL = data;
-      },
-      error => {
-        console.log('Error setting sal level: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error setting sal level: ' + (<Error>error).stack);
       });
   }
 }

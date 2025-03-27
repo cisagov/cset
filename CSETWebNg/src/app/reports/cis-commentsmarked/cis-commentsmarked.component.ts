@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,10 @@ import { Title, DomSanitizer } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 
 @Component({
-  selector: 'app-cis-commentsmarked',
-  templateUrl: './cis-commentsmarked.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-cis-commentsmarked',
+    templateUrl: './cis-commentsmarked.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class CisCommentsmarkedComponent implements OnInit {
   response: any = null;

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -28,30 +28,28 @@
     <div class="d-flex flex-row flex-wrap sticky-sal justify-content-between align-items-start flex-11a">
 
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-app-mode form-check-label"
-                [class.active]="assessSvc.applicationMode == 'P'" (click)="setMode('P')"
-                matTooltip="Principle Scope">
+            <label class="btn btn-app-mode form-check-label" [class.active]="assessSvc.applicationMode == 'P'"
+                (click)="setMode('P')" matTooltip="Principle Scope">
                 <input name="app_mode" class="btn-check" type="radio" autocomplete="off"
-                [checked]="assessSvc.applicationMode == 'P'">
+                    [checked]="assessSvc.applicationMode == 'P'">
                 Principle Scope
             </label>
-            <label class="btn btn-app-mode form-check-label"
-                [class.active]="assessSvc.applicationMode == 'F'" (click)="setMode('F')"
-                matTooltip="Principle-Phase Scope">
+            <label class="btn btn-app-mode form-check-label" [class.active]="assessSvc.applicationMode == 'F'"
+                (click)="setMode('F')" matTooltip="Principle-Phase Scope">
                 <input name="app_mode" class="btn-check" type="radio" autocomplete="off"
-                [checked]="assessSvc.applicationMode == 'F'">
+                    [checked]="assessSvc.applicationMode == 'F'">
                 Principle-Phase Scope
             </label>
         </div>
         <div *ngIf="assessSvc.applicationMode == 'F'" class="d-flex flex-row">
             <div class="d-flex  align-items-start flex-00a">
                 <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
-                [matTooltip]="t('buttons.collapse all')" [aria-label]="t('buttons.collapse all')">
+                    [matTooltip]="t('buttons.collapse all')" [aria-label]="t('buttons.collapse all')">
                     <i class="fas fa-compress-alt"></i>
                 </button>
                 <!-- filter radius because we want the end cap of filter but don't want the actual filter -->
-                <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="expandAll(true)" [matTooltip]="t('buttons.expand all')"
-                [aria-label]="t('buttons.expand all')">
+                <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="expandAll(true)"
+                    [matTooltip]="t('buttons.expand all')" [aria-label]="t('buttons.expand all')">
                     <i class="fas fa-expand-alt"></i>
                 </button>
                 <!-- <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()">
@@ -62,22 +60,22 @@
     </div>
     The user can choose to do either-or, or both scopes for this principle.
 
-    <div *ngIf="assessSvc.applicationMode == 'F'" 
-        class="d-flex flex-row flex-wrap align-items-start flex-11a mb-4" style="justify-content: space-between;">
+    <div *ngIf="assessSvc.applicationMode == 'F'" class="d-flex flex-row flex-wrap align-items-start flex-11a mb-4"
+        style="justify-content: space-between;">
         <!-- <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filterMenu.showing only filtered')}}</div> -->
         <div *ngIf="!phases" class="w-100">
             <div class="spinner-container" style="margin: 2em auto">
                 <div style="max-width: 50px; max-height: 50px;"></div>
             </div>
         </div>
-        
+
         <div *ngFor="let g of phases" class="w-100">
             <app-question-block-cie [myGrouping]="g"></app-question-block-cie>
         </div>
     </div>
 
-    <div *ngIf="assessSvc.applicationMode == 'P'" 
-        class="d-flex flex-row flex-wrap align-items-start flex-11a mb-4" style="justify-content: space-between;">
+    <div *ngIf="assessSvc.applicationMode == 'P'" class="d-flex flex-row flex-wrap align-items-start flex-11a mb-4"
+        style="justify-content: space-between;">
         <!-- <h4>{{pageTitle}} Considerations at Each Lifecycle Phase</h4> -->
         <!-- <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filterMenu.showing only filtered')}}</div> -->
         <!-- <h4>Principle {{this.sectionIndex + 1}} Questions</h4> -->
@@ -87,7 +85,7 @@
                 <div style="max-width: 50px; max-height: 50px;"></div>
             </div>
         </div>
-        
+
         <app-question-block-cie *ngIf="section != null" [myGrouping]="section"></app-question-block-cie>
     </div>
 

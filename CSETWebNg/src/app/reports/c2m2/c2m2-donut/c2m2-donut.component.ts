@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,10 @@
 import { Component, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-c2m2-donut',
-  templateUrl: './c2m2-donut.component.html',
-  styleUrls: ['./c2m2-donut.component.scss']
+    selector: 'app-c2m2-donut',
+    templateUrl: './c2m2-donut.component.html',
+    styleUrls: ['./c2m2-donut.component.scss'],
+    standalone: false
 })
 export class C2m2DonutComponent implements OnInit, AfterViewInit {
 

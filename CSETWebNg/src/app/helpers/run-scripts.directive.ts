@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,10 @@
 ////////////////////////////////
 import { Directive, ElementRef, OnInit } from '@angular/core';
 
-@Directive({ selector: '[runScripts]' })
+@Directive({
+    selector: '[runScripts]',
+    standalone: false
+})
 export class RunScriptsDirective implements OnInit {
     constructor(private elementRef: ElementRef) { }
     ngOnInit(): void {

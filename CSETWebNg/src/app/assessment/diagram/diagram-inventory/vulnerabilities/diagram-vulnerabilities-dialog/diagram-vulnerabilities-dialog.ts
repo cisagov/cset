@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -33,9 +33,10 @@ interface cveWarning {
 }
 
 @Component({
-  selector: 'app-diagram-vulnerabilities-dialog',
-  templateUrl: './diagram-vulnerabilities-dialog.component.html',
-  styleUrls: ['./diagram-vulnerabilities-dialog.component.scss']
+    selector: 'app-diagram-vulnerabilities-dialog',
+    templateUrl: './diagram-vulnerabilities-dialog.component.html',
+    styleUrls: ['./diagram-vulnerabilities-dialog.component.scss'],
+    standalone: false
 })
 export class DiagramVulnerabilitiesDialogComponent implements OnInit {
 

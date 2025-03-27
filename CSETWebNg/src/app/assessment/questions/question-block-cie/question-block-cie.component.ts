@@ -20,9 +20,10 @@ import { CieService } from '../../../services/cie.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-question-block-cie',
-  templateUrl: './question-block-cie.component.html',
-  styleUrls: ['./question-block-cie.component.scss']
+    selector: 'app-question-block-cie',
+    templateUrl: './question-block-cie.component.html',
+    styleUrls: ['./question-block-cie.component.scss'],
+    standalone: false
 })
 export class QuestionBlockCieComponent implements OnInit {
   @Input() myGrouping: QuestionGrouping;

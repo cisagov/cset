@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -38,10 +38,11 @@ import { DateTime } from 'luxon';
 
 
 @Component({
-  selector: 'app-assessment-detail-ncua',
-  templateUrl: './assessment-detail-ncua.component.html',
-  styleUrls: ['./assessment-detail-ncua.component.scss'],
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-assessment-detail-ncua',
+    templateUrl: './assessment-detail-ncua.component.html',
+    styleUrls: ['./assessment-detail-ncua.component.scss'],
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 
 /**
@@ -290,7 +291,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     if (this.assessment.assets == null) {
       this.assessment.assets = "0";
     }
-      
+
     this.ncuaSvc.updateAssetSize(this.assessment.assets);
     this.acetDashboard.assets = this.assessment.assets;
 
@@ -376,7 +377,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       let date = new Date(Date.parse(this.assessment.assessmentDate));
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.datePipe.transform(date, 'MMddyy');
     }
-    
+
     // Specific ISE assessment names that we don't want bleeding over to ACET.
     if (this.isAnExamination()) {
       this.assessment.assessmentName = this.assessment.assessmentName + ", " + this.lastModifiedTimestamp;

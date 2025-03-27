@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -24,10 +24,12 @@
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
     <h3 class="mb-3">{{t('titles.assessment configuration')}}</h3>
 
+    <div *ngIf="this.showUpgrade">
+      <app-upgrade></app-upgrade>
+    </div>
 
-    <div class="row">
+    <div class="row mb-3">
       <div class="col">
-
         <label class="form-label" for="name">{{t('assessment name')}}</label>
         <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true"
           disabled="true" [(ngModel)]="assessment.assessmentName" (ngModelChange)="assessment.assessmentName"
@@ -41,7 +43,8 @@
         <mat-datepicker #picker></mat-datepicker>
       </div>
     </div>
-    <div class="row">
+
+    <div class="row mb-3">
       <div class="col" *ngIf="showCityName()">
         <label class="form-label" for="citySite">{{t('city or site name')}}</label>
         <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite"
@@ -53,7 +56,8 @@
           [(ngModel)]="assessment.stateProvRegion" (change)="update($event)" tabindex="0">
       </div>
     </div>
-    <div class="row">
+
+    <div class="row mb-3">
       <div class="col">
         <label for="name" class="form-label">{{t('cisa region')}}</label>
         <select class="form-select" id="cisaRegion" tabindex="0" name="cisaRegion" (change)="updateDemographicsIod()"
@@ -65,7 +69,8 @@
         </select>
       </div>
     </div>
-    <div class="row">
+
+    <div class="row mb-4">
       <div class="col-6">
         <div class="row">
           <label for="name" class="form-label">{{t('pcii requested')}}</label>
@@ -77,7 +82,8 @@
             </label>
             <label class="btn btn-level btn-rounded form-check-label" [class.active]="!assessment.is_PCII">
               <input class="btn-check" name="standardNo" id="standardNo" type="radio" autocomplete="off"
-                (change)="changeIsPCII(false)" tabindex="0" [ngModel]="!assessment.is_PCII" (ngModelChange)="assessment.is_PCII = $event" />
+                (change)="changeIsPCII(false)" tabindex="0" [ngModel]="!assessment.is_PCII"
+                (ngModelChange)="assessment.is_PCII = $event" />
               No
             </label>
           </div>
@@ -101,9 +107,25 @@
 
     <app-assessment-contacts (triggerChange)="refreshContacts()"></app-assessment-contacts>
 
-    <hr class="w-100 hr-sal my-5" />
+    <hr class="w-100 hr-sal my-4" />
 
-    <div class="row">
+    <div *ngIf="showFacilitator()" class="mb-4">
+      <label class="form-label" for="facilitator">{{t('contact.facilitator')}}</label>
+      <select class="form-select" id="facilitator" tabindex="0" name="facilitator" (change)="updateDemographics()"
+        [(ngModel)]="demographics.facilitatorId">
+        <option [ngValue]="null">-- {{t('select facilitator')}} --</option>
+        <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}}
+          {{contact.lastName}}</option>
+      </select>
+      <div class="mt-2">
+        <input type="checkbox" name="self-assessment" id="self-assessment" class="checkbox-custom mt-1"
+          [(ngModel)]="demographics.selfAssessment" [checked]="demographics.selfAssessment"
+          (change)="updateDemographics()">
+        <label for="self-assessment" class="checkbox-custom-label d-inline">{{ t('self assessment') }}</label>
+      </div>
+    </div>
+
+    <div class="row mb-4">
       <div class="col">
         <label class="form-label" for="criticalService">{{t('critical service name')}}</label>
         <textarea [ngClass]="{ 'alert-danger' : !demographics.criticalService }" appAutoSize class="form-control"
@@ -122,7 +144,7 @@
       </div>
     </div>
 
-    <div>
+    <div class="mb-4">
       <label class="form-label" for="critSvcPointOfContact">Critical Service Point of
         Contact</label>
       <select class="form-select" id="critSvcPointOfContact" tabindex="0" name="critSvcPointOfContact"
@@ -170,7 +192,7 @@
     </div>
 
     <!-- #6 -->
-    <div class="mb-5">
+    <div class="mb-4">
       <label for="disruptedSectors" class="form-label">
         Please select in order of criticality, the two critical infrastructure
         sectors which, if they were unavailable

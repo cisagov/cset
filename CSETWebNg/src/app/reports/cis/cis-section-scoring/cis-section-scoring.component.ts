@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,10 @@ import { CisService } from '../../../services/cis.service';
 import { MaturityService } from '../../../services/maturity.service';
 
 @Component({
-  selector: 'app-cis-section-scoring',
-  templateUrl: './cis-section-scoring.component.html',
-  styleUrls: ['../../../reports/reports.scss']
+    selector: 'app-cis-section-scoring',
+    templateUrl: './cis-section-scoring.component.html',
+    styleUrls: ['../../../reports/reports.scss'],
+    standalone: false
 })
 export class CisSectionScoringComponent implements OnInit {
 
@@ -40,6 +41,8 @@ export class CisSectionScoringComponent implements OnInit {
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
+  selfAssessment: boolean;
+
 
   baselineAssessmentName: string;
 
@@ -65,8 +68,9 @@ export class CisSectionScoringComponent implements OnInit {
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.creatorName;
+      this.assessorName = assessmentDetail.facilitatorName;
       this.facilityName = assessmentDetail.facilityName;
+      this.selfAssessment = assessmentDetail.selfAssessment;
     });
 
     this.cisSvc.getCisSectionScoring().subscribe((resp: any) => {

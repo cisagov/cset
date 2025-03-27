@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ChartService } from '../../../../services/chart.service';
 
 @Component({
-  selector: 'app-cis-scoring-chart',
-  templateUrl: './cis-scoring-chart.component.html',
-  styleUrls: ['../../../../reports/reports.scss']
+    selector: 'app-cis-scoring-chart',
+    templateUrl: './cis-scoring-chart.component.html',
+    styleUrls: ['../../../../reports/reports.scss'],
+    standalone: false
 })
 export class CisScoringChartComponent implements OnInit {
 

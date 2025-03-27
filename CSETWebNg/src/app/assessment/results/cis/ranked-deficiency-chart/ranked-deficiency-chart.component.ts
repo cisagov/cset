@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,9 +27,10 @@ import Chart from 'chart.js/auto';
 import { CisService } from '../../../../services/cis.service';
 
 @Component({
-  selector: 'app-ranked-deficiency-chart',
-  templateUrl: './ranked-deficiency-chart.component.html',
-  styleUrls: ['./ranked-deficiency-chart.component.scss', '../../../../reports/reports.scss']
+    selector: 'app-ranked-deficiency-chart',
+    templateUrl: './ranked-deficiency-chart.component.html',
+    styleUrls: ['./ranked-deficiency-chart.component.scss', '../../../../reports/reports.scss'],
+    standalone: false
 })
 
 export class RankedDeficiencyChartComponent implements AfterViewInit {

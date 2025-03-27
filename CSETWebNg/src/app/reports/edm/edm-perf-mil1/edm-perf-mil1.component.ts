@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,10 @@ import { MaturityService } from '../../../services/maturity.service';
 import { EDMBarChartModel } from '../edm-bar-chart.model';
 
 @Component({
-  selector: 'app-edm-perf-mil1',
-  templateUrl: './edm-perf-mil1.component.html',
-  styleUrls: ['./edm-perf-mil1.component.scss', '../../reports.scss']
+    selector: 'app-edm-perf-mil1',
+    templateUrl: './edm-perf-mil1.component.html',
+    styleUrls: ['./edm-perf-mil1.component.scss', '../../reports.scss'],
+    standalone: false
 })
 export class EdmPerfMil1Component implements OnInit {
 

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,8 @@ import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
     selector: 'app-irp-summary',
-    templateUrl: './irp-summary.component.html'
+    templateUrl: './irp-summary.component.html',
+    standalone: false
 })
 export class IrpSummaryComponent implements OnInit {
 

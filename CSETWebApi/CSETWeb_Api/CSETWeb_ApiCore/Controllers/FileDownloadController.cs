@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -26,20 +26,9 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/files/download/{id}")]
-        public IActionResult Download(int id, string token)
+        public IActionResult Download(int id)
         {
-            var assessmentId = _token.AssessmentForUser(token);
-            var file = _fileRepo.GetFileDescription(id);
-            var stream = new MemoryStream(file.Data);
-
-            return File(stream, file.ContentType, file.Name);
-        }
-
-
-        [HttpGet]
-        [Route("api/reffiles/download/{id}")]
-        public IActionResult DownloadReferenceFile(int id, string token)
-        {
+            var assessmentId = _token.AssessmentForUser();
             var file = _fileRepo.GetFileDescription(id);
             var stream = new MemoryStream(file.Data);
 

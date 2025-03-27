@@ -1,6 +1,6 @@
 /* 
 
-  Copyright 2024 Battelle Energy Alliance, LLC  
+  Copyright 2025 Battelle Energy Alliance, LLC  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -21,33 +21,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 
 */
-.header-sidenav{
+.header-sidenav {
   background-color: #F2F2F2;
 }
-.side-nav{
+
+.side-nav {
   border: #F2F2F2 1px solid;
 }
-.mat-expansion-panel{
-background-color: transparent;
+
+.mat-expansion-panel {
+  background-color: transparent;
 }
+
 .mat-expansion-panel:not([class*=mat-elevation-z]) {
   box-shadow: none;
 }
+
 .checkboxes label {
   display: block;
   padding-right: 10px;
   padding-left: 22px;
   text-indent: -22px;
 }
+
 .checkboxes input {
   vertical-align: middle;
 }
+
 .checkboxes label span {
   vertical-align: middle;
 }
-.btnApply{
-  background-color: rgba(0,0,0,.03);
+
+.btnApply {
+  background-color: rgba(0, 0, 0, .03);
 }
-.btnApply:hover{
+
+.btnApply:hover {
   background-color: white;
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -46,9 +46,10 @@ import { CompletionService } from '../../../services/completion.service';
  * of the question block can eventually replace the original.
  */
 @Component({
-  selector: 'app-question-block-ise',
-  templateUrl: './question-block-ise.component.html',
-  styleUrls: ['./question-block-ise.component.scss']
+    selector: 'app-question-block-ise',
+    templateUrl: './question-block-ise.component.html',
+    styleUrls: ['./question-block-ise.component.scss'],
+    standalone: false
 })
 export class QuestionBlockIseComponent implements OnInit {
 
@@ -80,7 +81,7 @@ export class QuestionBlockIseComponent implements OnInit {
   finalCoreQuestion = new Set([7627, 7632, 7638, 7644, 7651, 7654, 7660, 7668, 7673, 7678, 7682, 7686, 7690, 7693, 7698, 7701]);
   finalCorePlusQuestion = new Set([7706, 10926, 7718, 7730, 7736, 7739, 7746, 7755, 7771, 7779, 7790, 7802, 7821, 10929, 7838, 7851]);
   finalExtraQuestion = new Set([7867, 7873, 7889, 7900, 7910, 7917, 7946, 7965, 8001]);
-  
+
   // Statements added late so their id's are very different from other sub statements
   addedLateQuestions = new Set([10926, 10927, 10928, 10929, 10930]);
 
@@ -271,14 +272,14 @@ export class QuestionBlockIseComponent implements OnInit {
           return true;
         }
         // For all level 3 (CORE+) questions, check to see if we want to see them
-        } else if (q.maturityLevel === 3) {
+      } else if (q.maturityLevel === 3) {
         if ((q.questionId < 7852 || q.questionId >= 10926) && this.showCorePlus === true) {
           if (visible) {
             this.refreshPercentAnswered();
             return true;
           }
-        } else if ((q.questionId >= 7852 && (!this.addedLateQuestions.has(q.questionId)) 
-                    && this.ncuaSvc.showExtraQuestions === true)) {
+        } else if ((q.questionId >= 7852 && (!this.addedLateQuestions.has(q.questionId))
+          && this.ncuaSvc.showExtraQuestions === true)) {
           if (visible) {
             this.refreshPercentAnswered();
             return true;
@@ -756,12 +757,26 @@ export class QuestionBlockIseComponent implements OnInit {
     * SCUEP q's 1- 7 and CORE/CORE+ q's 1 - 10 use one domain, CORE/CORE+ q's 11+ have a different domain
     * this checks the q's parentQuestionId to see if it's SCUEP 1 - 7 or CORE/CORE+ 1 - 10 and sets the name accordingly
     */
-    let name = "";
+    let groupingPrefix = "";
     if (this.myGrouping.questions[0].questionId <= 7674) {
-      name = ("Information Security Program, " + this.myGrouping.title);
+      groupingPrefix = "Information Security Program,";
     } else {
-      name = ("Cybersecurity Controls, " + this.myGrouping.title);
+      groupingPrefix = "Cybersecurity Controls,";
     }
+
+    let myArray = this.myGrouping.title.split(" ");
+    let questionNum = Number(myArray[0]);
+
+    let sliceValue = 0;
+    if (questionNum <= 9) {
+      sliceValue = 2;
+    } else {
+      sliceValue = 3;
+    }
+
+    let title = this.myGrouping.title.slice(sliceValue);
+
+    let observationName = groupingPrefix + title;
 
     const observation: Observation = {
       question_Id: parentId,
@@ -777,7 +792,7 @@ export class QuestionBlockIseComponent implements OnInit {
       recommendations: '',
       resolution_Date: null,
       vulnerabilities: '',
-      title: name,
+      title: observationName,
       type: null,
       risk_Area: 'Transaction',
       sub_Risk: 'Information Systems & Technology Controls',

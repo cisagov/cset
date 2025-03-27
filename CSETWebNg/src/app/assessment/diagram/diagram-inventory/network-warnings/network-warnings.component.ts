@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,9 +27,10 @@ import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
 
 @Component({
-  selector: 'networkwarnings',
-  templateUrl: './network-warnings.component.html',
-  styleUrls: ['./network-warnings.component.scss']
+    selector: 'networkwarnings',
+    templateUrl: './network-warnings.component.html',
+    styleUrls: ['./network-warnings.component.scss'],
+    standalone: false
 })
 export class NetworkWarningsComponent implements OnInit {
   warnings = [];

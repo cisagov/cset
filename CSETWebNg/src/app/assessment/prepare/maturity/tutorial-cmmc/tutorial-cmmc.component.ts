@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,10 @@ import { ResourceLibraryService } from '../../../../services/resource-library.se
 
 
 @Component({
-  selector: 'app-tutorial-cmmc',
-  templateUrl: './tutorial-cmmc.component.html',
-  styleUrls: ['./tutorial-cmmc.component.scss']
+    selector: 'app-tutorial-cmmc',
+    templateUrl: './tutorial-cmmc.component.html',
+    styleUrls: ['./tutorial-cmmc.component.scss'],
+    standalone: false
 })
 export class TutorialCmmcComponent {
 

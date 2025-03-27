@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,27 +22,29 @@
 //
 ////////////////////////////////
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NewAssessmentDialogComponent } from '../../dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { AssessmentService } from '../../services/assessment.service';
 import { GalleryService } from '../../services/gallery.service';
-import { SwiperComponent } from 'swiper/angular';
-import { SwiperOptions } from 'swiper';
 import Fuse from 'fuse.js';
 import { map } from 'lodash';
 import { ConfigService } from '../../services/config.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
+import { SwiperOptions } from 'swiper/types';
+
 
 @Component({
   selector: 'app-search-page',
   templateUrl: './search-page.component.html',
-  styleUrls: ['./search-page.component.scss']
+  styleUrls: ['./search-page.component.scss'],
+  standalone: false
 })
 export class SearchPageComponent implements OnInit, AfterViewInit {
-  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
-
   @Input() searchQuery: string;
+
+  swiperInstance: any;
+
   hoverIndex = -1;
 
   show: boolean = false;
@@ -66,44 +68,13 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   searcher: any;
   cardsPerView: number = 1;
   rows = [];
-  config: SwiperOptions = {
-    slidesPerView: 1,
-    spaceBetween: 7,
-    slidesPerGroup: 1,
 
-    breakpoints: {
-      200: {
-        slidesPerView: 1,
-      },
-      620: {
-        slidesPerView: 2,
-      },
-      800: {
-        slidesPerView: 3,
-      },
-      1220: {
-        slidesPerView: 4,
-      },
-      1460: {
-        slidesPerView: 5
-      }
-    },
-    on: {
-      resize: () => {
-
-      }
-    }
-  };
   constructor(public dialog: MatDialog,
     public breakpointObserver: BreakpointObserver,
     public gallerySvc: GalleryService,
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public configSvc: ConfigService) {
-
-  }
-
-  ngAfterInit() {
 
   }
 
@@ -168,7 +139,57 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.initializeSwipers();
     this.checkNavigation();
+  }
+
+  private initializeSwipers(): void {
+    // Use querySelectorAll to get all swiper containers
+    const swiperEls = document.querySelectorAll('swiper-container');
+    const swiperConfig: SwiperOptions = {
+      slidesPerView: 1,
+      spaceBetween: 7,
+      slidesPerGroup: 1,
+      breakpoints: {
+        200: {
+          slidesPerView: 1,
+        },
+        620: {
+          slidesPerView: 2,
+        },
+        800: {
+          slidesPerView: 3,
+        },
+        1220: {
+          slidesPerView: 4,
+        },
+        1460: {
+          slidesPerView: 5
+        }
+      },
+      on: {
+        resize: () => {
+        }
+      }
+    };
+
+    // Configure each swiper instance
+    swiperEls.forEach(swiperEl => {
+      // Skip already initialized swipers
+      if (swiperEl.hasAttribute('data-initialized')) {
+        return;
+      }
+
+      // Apply configuration to each swiper element
+      Object.assign(swiperEl, swiperConfig);
+
+      // Mark as initialized
+      swiperEl.setAttribute('data-initialized', 'true');
+
+      // Initialize this particular swiper instance
+      // @ts-ignore - initialize method exists in Swiper web components but might not be in typings
+      swiperEl.initialize();
+    });
   }
 
   shuffleCards(i: number) {
@@ -269,7 +290,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   getImageSrc(src: string) {
     let path = "assets/images/cards/";
     if (src) {
-      return path + src;
+      return path + src.toLowerCase();
     }
     return path + 'default.jpeg';
   }

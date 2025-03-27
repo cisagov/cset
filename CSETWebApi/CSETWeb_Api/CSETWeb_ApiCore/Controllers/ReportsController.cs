@@ -1,10 +1,9 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.Business.Maturity;
@@ -20,12 +19,11 @@ using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Assessment;
-using CSETWebCore.Model.CisaAssessorWorkflow;
 using CSETWebCore.Model.Demographic;
 using CSETWebCore.Model.Reports;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -149,8 +147,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityReportData data = new MaturityReportData(_context);
-            data.MaturityModels = new List<MaturityReportData.MaturityModel>();
-            data.MaturityModels.Add(_report.GetBasicMaturityModel());
+            data.MaturityModels = [_report.GetBasicMaturityModel()];
             data.information = _report.GetInformation();
 
             return Ok(data);
@@ -396,6 +393,35 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        /// <summary>
+        /// Generates and exports an Excel spreadsheet with a POAM template
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/poam/excelexport")]
+        public IActionResult GetExcelExport()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            string lang = _token.GetCurrentLanguage();
+
+            // Create a memory stream to hold the Excel file
+            using (var memoryStream = new MemoryStream())
+            {
+                var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, true, 0, lang);
+
+                // Generate the Excel file
+                ExportPoamBusiness.GenerateSpreadSheet(memoryStream, mm);
+
+                // Return the file as a downloadable attachment
+                return File(
+                    memoryStream.ToArray(),
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    ExportPoamBusiness.GetFilename(assessmentId, _context)
+                );
+            }
+        }
+
 
         //--------------------------------
         // HYDRO Controllers
@@ -505,6 +531,9 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         [HttpGet]
         [Route("api/reports/observations")]
         public IActionResult GetObservations()
@@ -516,6 +545,36 @@ namespace CSETWebCore.Api.Controllers
             data.information = _report.GetInformation();
             data.Individuals = _report.GetObservationIndividuals();
             return Ok(data);
+        }
+
+
+        /// <summary>
+        /// Returns a file stream containing Observations in a CSV format.
+        /// </summary>
+        [HttpGet]
+        [Route("api/reports/observations/excel")]
+        public IActionResult ExportObservationsCsv()
+        {
+            _report.SetToken(_token);
+
+            int assessmentId = _token.AssessmentForUser();
+            string lang = _token.GetCurrentLanguage();
+
+            var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+
+            // Generate the Excel file
+            using (var memoryStream = new MemoryStream())
+            {
+                var otx = new ObservationsToExcel(_context, _report);
+                otx.GenerateSpreadsheet(assessmentId, memoryStream);
+
+                // Return the file as a downloadable attachment
+                return File(
+                    memoryStream.ToArray(),
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    $"{info.Assessment_Name} - Observations.xlsx"
+                );
+            }
         }
 
 
@@ -534,7 +593,7 @@ namespace CSETWebCore.Api.Controllers
             data.nistTypes = _report.GetNistInfoTypes();
             data.nistSalTable = _report.GetNistSals();
 
-            data.DocumentLibraryTable = _report.GetDocumentLibrary();
+            data.DocumentLibraryEntries = _report.GetDocumentLibrary();
             data.RankedQuestionsTable = _report.GetRankedQuestions();
             data.FinancialQuestionsTable = _report.GetFinancialQuestions();
             data.QuestionsWithComments = _report.GetQuestionsWithComments();
@@ -575,7 +634,7 @@ namespace CSETWebCore.Api.Controllers
             data.nistTypes = _report.GetNistInfoTypes();
             data.nistSalTable = _report.GetNistSals();
 
-            data.DocumentLibraryTable = _report.GetDocumentLibrary();
+            data.DocumentLibraryEntries = _report.GetDocumentLibrary();
             data.RankedQuestionsTable = _report.GetRankedQuestions();
             data.QuestionsWithComments = _report.GetQuestionsWithComments();
             data.QuestionsMarkedForReview = _report.GetQuestionsMarkedForReview();
@@ -596,7 +655,7 @@ namespace CSETWebCore.Api.Controllers
         {
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();
-            response.DocumentLibraryTable = new List<DocumentLibraryTable>();
+            response.DocumentLibraryEntries = new List<DocumentLibraryEntry>();
 
             var assessmentList = _aggregation.GetAssessmentsForAggregation((int)aggregationID);
 
@@ -635,11 +694,11 @@ namespace CSETWebCore.Api.Controllers
 
 
                 // Document Library 
-                var documentLibraryTable = _report.GetDocumentLibrary();
-                foreach (var docEntry in documentLibraryTable)
+                var documentLibraryEntries = _report.GetDocumentLibrary();
+                foreach (var docEntry in documentLibraryEntries)
                 {
                     docEntry.Alias = a.Alias;
-                    response.DocumentLibraryTable.Add(docEntry);
+                    response.DocumentLibraryEntries.Add(docEntry);
                 }
             }
 
@@ -656,7 +715,7 @@ namespace CSETWebCore.Api.Controllers
         {
             AggregationReportData response = new AggregationReportData();
             response.SalList = new List<BasicReportData.OverallSALTable>();
-            response.DocumentLibraryTable = new List<DocumentLibraryTable>();
+            response.DocumentLibraryEntries = new List<DocumentLibraryEntry>();
 
 
             var assessmentList = _aggregation.GetAssessmentsForAggregation((int)aggregationID);
@@ -694,11 +753,11 @@ namespace CSETWebCore.Api.Controllers
 
 
                 // Document Library 
-                var documentLibraryTable = _report.GetDocumentLibrary();
-                foreach (var docEntry in documentLibraryTable)
+                var documentLibraryEntries = _report.GetDocumentLibrary();
+                foreach (var docEntry in documentLibraryEntries)
                 {
                     docEntry.Alias = a.Alias;
-                    response.DocumentLibraryTable.Add(docEntry);
+                    response.DocumentLibraryEntries.Add(docEntry);
                 }
             }
 
@@ -785,7 +844,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        
+
         [HttpGet]
         [Route("api/reports/getCieAllQuestions")]
         public IActionResult GetCieAllQuestions()

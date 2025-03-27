@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,8 @@ import { Pipe, PipeTransform } from '@angular/core';
  *   formats to: 'some fallback value'
  */
 @Pipe({
-  name: 'nullishCoalesce',
+    name: 'nullishCoalesce',
+    standalone: false
 })
 export class NullishCoalescePipe implements PipeTransform {
   transform<T, K>(value: T, fallbackValue: K): NonNullable<T> | K {

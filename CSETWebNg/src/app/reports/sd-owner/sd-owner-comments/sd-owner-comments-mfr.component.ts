@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +32,10 @@ import { TranslocoService } from '@jsverse/transloco';
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-sd-owner-comments-mfr',
-  templateUrl: './sd-owner-comments-mfr.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'app-sd-owner-comments-mfr',
+    templateUrl: './sd-owner-comments-mfr.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 
 export class SdOwnerCommentsMfrComponent {
@@ -57,11 +58,11 @@ export class SdOwnerCommentsMfrComponent {
 
   ngOnInit(): void {
     this.loading = true;
-    
-    this.tSvc.selectTranslate('core.rra.cmfr.report title', {}, {scope: 'reports'})
-    .subscribe(title =>
-      this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
-  
+
+    this.tSvc.selectTranslate('core.rra.cmfr.report title', {}, { scope: 'reports' })
+      .subscribe(title =>
+        this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
+
 
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {

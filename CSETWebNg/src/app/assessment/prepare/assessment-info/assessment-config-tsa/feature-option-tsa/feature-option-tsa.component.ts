@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,9 +30,10 @@ import { NavigationService } from '../../../../../services/navigation/navigation
 import { StandardService } from '../../../../../services/standard.service';
 import { TsaService } from '../../../../../services/tsa.service';
 @Component({
-  selector: 'app-feature-option-tsa',
-  templateUrl: './feature-option-tsa.component.html',
-  styleUrls: ['./feature-option-tsa.component.scss']
+    selector: 'app-feature-option-tsa',
+    templateUrl: './feature-option-tsa.component.html',
+    styleUrls: ['./feature-option-tsa.component.scss'],
+    standalone: false
 })
 export class FeatureOptionTsaComponent implements OnInit {
   modelSelected: string;

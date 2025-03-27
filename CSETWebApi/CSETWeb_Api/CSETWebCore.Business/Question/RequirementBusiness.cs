@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -199,7 +199,7 @@ namespace CSETWebCore.Business.Question
                 {
                     DisplayNumber = dbR.Requirement_Title,
                     QuestionId = dbR.Requirement_Id,
-                    QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                    QuestionText = dbR.Requirement_Text,
                     Answer = answer?.a.Answer_Text,
                     AltAnswerText = answer?.a.Alternate_Justification,
                     FreeResponseAnswer = answer?.a.Free_Response_Answer,

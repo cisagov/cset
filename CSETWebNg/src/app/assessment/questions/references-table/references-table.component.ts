@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -36,9 +36,10 @@ import { ResourceLibraryService } from '../../../services/resource-library.servi
  * in 800-53.
  */
 @Component({
-  selector: 'app-references-table',
-  templateUrl: './references-table.component.html',
-  styleUrls: ['./references-table.component.scss']
+    selector: 'app-references-table',
+    templateUrl: './references-table.component.html',
+    styleUrls: ['./references-table.component.scss'],
+    standalone: false
 })
 export class ReferencesTableComponent {
 

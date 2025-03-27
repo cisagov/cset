@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,12 +35,13 @@ import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/onlin
 
 
 @Component({
-  selector: 'tsa-layout-main',
-  templateUrl: './tsa-layout-main.component.html',
-  styleUrls: ['./tsa-layout-main.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
+    selector: 'tsa-layout-main',
+    templateUrl: './tsa-layout-main.component.html',
+    styleUrls: ['./tsa-layout-main.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
+    standalone: false
 })
 export class TsaLayoutMainComponent {
   docUrl: string;

@@ -6,11 +6,13 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
 import { DemographicIodService } from '../../../../services/demographic-iod.service';
 import { DemographicService } from '../../../../services/demographic.service';
+import { Upgrades } from '../../../../models/assessment-info.model';
 
 @Component({
   selector: 'app-assessment-config-iod',
   templateUrl: './assessment-config-iod.component.html',
-  styleUrls: ['./assessment-config-iod.component.scss']
+  styleUrls: ['./assessment-config-iod.component.scss'],
+  standalone: false
 })
 export class AssessmentConfigIodComponent implements OnInit {
   iodDemographics: DemographicsIod = {};
@@ -18,6 +20,8 @@ export class AssessmentConfigIodComponent implements OnInit {
   contacts: User[];
   assessment: AssessmentDetail = {};
   IsPCII: boolean = false;
+  showUpgrade: boolean = false;
+  targetModel: string = '';
 
   constructor(
     private assessSvc: AssessmentService,
@@ -37,6 +41,16 @@ export class AssessmentConfigIodComponent implements OnInit {
     });
 
     this.getAssessmentDetail();
+
+    if (this.configSvc.showAssessmentUpgrade() == true) {
+      this.assessSvc.checkUpgrades().subscribe((data: Upgrades) => {
+        if (data) {
+          this.showUpgrade = !!data;
+          this.assessSvc.galleryItemGuid = data.target;
+          this.assessSvc.convertToModel = data.name;
+        }
+      })
+    }
 
   }
 
@@ -82,6 +96,10 @@ export class AssessmentConfigIodComponent implements OnInit {
       this.IsPCII = val;
       this.assessment.is_PCII = val;
 
+      if (!this.assessment.is_PCII) {
+        this.assessment.pciiNumber = null;
+      }
+
       this.configSvc.cisaAssessorWorkflow = true;
       this.assessSvc.updateAssessmentDetails(this.assessment);
     }
@@ -114,5 +132,9 @@ export class AssessmentConfigIodComponent implements OnInit {
 
   showStateName() {
     return this.configSvc.behaviors.showStateName;
+  }
+
+  showFacilitator() {
+    return this.configSvc.behaviors.showFacilitatorDropDown;
   }
 }

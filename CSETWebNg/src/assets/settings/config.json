@@ -1,6 +1,8 @@
 {
   "NOTENODE": "Casing on config chain matters, the only item that should be changed here is the current ConfigChain value.  Once that is changed everything else should be set",
-  "currentConfigChain": ["CSET"],
+  "currentConfigChain": [
+    "CSET"
+  ],
   "defaultLang": "en",
   "isRunningAnonymous": false,
   "app": {
@@ -31,7 +33,8 @@
     "showBuildTime": false,
     "showQuestionAndRequirementIDs": false,
     "canDeleteCustomModules": true,
-    "showExportAllButton": false
+    "showExportAllButton": false,
+    "showAssessmentUpgrade": false
   },
   "galleryLayout": "CSET",
   "installationMode": "CSET",
@@ -76,6 +79,7 @@
     "showUpdateDiagramCsafVulnerabilitiesButton": false,
     "showVulnerabilitiesDiagramInventoryTab": false,
     "additionalUserGuides": [],
+    "showMalcolmImport": true,
     "showMalcolmAnswerComparison": false,
     "replaceAssessmentWithAnalysis": false,
     "showPostalCode": false
@@ -510,6 +514,10 @@
     {
       "value": "uk",
       "name": "українська"
+    },
+    {
+      "value": "jp",
+      "name": "日本語"
     }
   ]
 }

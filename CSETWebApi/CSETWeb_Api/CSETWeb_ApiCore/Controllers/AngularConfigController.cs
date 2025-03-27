@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 using Newtonsoft.Json.Linq;
-using DocumentFormat.OpenXml.InkML;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -21,47 +20,28 @@ namespace CSETWebCore.Api.Controllers
     public class AngularConfigController : ControllerBase
     {
         private readonly IWebHostEnvironment _webHost;
+
         public AngularConfigController(IWebHostEnvironment webHost)
         {
             _webHost = webHost;
         }
+
+
+        // SECURITY NOTE:  The following two endpoints should not be included in a Release build
+
+#if !EXCLUDE_FROM_PUBLISH
+
         /// <summary>
-        /// NOTE THIS APOLOGY
-        /// this call returns the config.json file
-        /// but modifies the port to be the current port 
-        /// the application is running on.
-        /// (IE the file may be different from what is returned)
+        /// This method is only used by an internal test harness.  It exposes
+        /// secrets and should not be published in the production API.  
+        /// 
+        /// SECURITY NOTE:
+        /// If we ever remove the EXCLUDE_FROM_PUBLISH preprocessor directive,
+        /// some kind of private/internal authentication will need to be added to this method
+        /// to prevent it from being open to the public. 
         /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/assets/config")]
-        public IActionResult GetConfigURLRewrite()
-        {
-            try
-            {
-                Console.WriteLine("Reading the path test");
-                if (System.IO.File.Exists(Path.Combine(_webHost.ContentRootPath, "WebApp/index.html")))
-                {
-                    Console.WriteLine(Path.Combine(_webHost.ContentRootPath, "WebApp/index.html"));
-
-                    //process this as if we are running internally else do what ever used to be the case
-                    //in this case they are running together and we can just replace the config document. 
-                    var jd = processUpdatedJson(HttpContext.Request);
-                    return Ok(jd);
-                }
-                Console.WriteLine("Path didn't exist");
-
-                return Ok(processConfig(HttpContext.Request.Host, HttpContext.Request.Scheme));
-            }
-            catch (Exception)
-            {
-                return BadRequest("assets/config.json file not found");
-            }
-        }
-
-
         [HttpPost]
-        [Route("api/assets/changeConnectionString")]
+        [Route("api/assets/changeconnectionstring")]
         public string ChangeConnectionString([FromBody] string connString)
         {
             try
@@ -94,8 +74,17 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        /// <summary>
+        /// This method is only used by an internal test harness.  It exposes
+        /// secrets and should not be published in the production API.  
+        /// 
+        /// SECURITY NOTE:
+        /// If we ever remove the EXCLUDE_FROM_PUBLISH preprocessor directive,
+        /// some kind of private/internal authentication will need to be added to this method
+        /// to prevent it from being open to the public. 
+        /// </summary>
         [HttpGet]
-        [Route("api/assets/getConnectionString")]
+        [Route("api/assets/getconnectionstring")]
         public string GetConnectionString()
         {
             try
@@ -121,8 +110,51 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+#endif
 
-        Newtonsoft.Json.Linq.JObject processUpdatedJson(HttpRequest context)
+
+        /// <summary>
+        /// NOTE THIS APOLOGY
+        /// this call returns the config.json file
+        /// but modifies the port to be the current port 
+        /// the application is running on.
+        /// (IE the file may be different from what is returned)
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/assets/config")]
+        public IActionResult GetConfigURLRewrite()
+        {
+            try
+            {
+                Console.WriteLine("Reading the path test");
+                if (System.IO.File.Exists(Path.Combine(_webHost.ContentRootPath, "WebApp/index.html")))
+                {
+                    Console.WriteLine(Path.Combine(_webHost.ContentRootPath, "WebApp/index.html"));
+
+                    //process this as if we are running internally else do what ever used to be the case
+                    //in this case they are running together and we can just replace the config document. 
+                    var jd = ProcessUpdatedJson(HttpContext.Request);
+                    return Ok(jd);
+                }
+                Console.WriteLine("Path didn't exist");
+
+                return Ok(ProcessConfig(HttpContext.Request.Host, HttpContext.Request.Scheme));
+            }
+            catch (Exception)
+            {
+                return BadRequest("assets/config.json file not found");
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private JObject ProcessUpdatedJson(HttpRequest context)
         {
             string webpath = _webHost.ContentRootPath;
             if (!webpath.Contains("WebApp"))
@@ -201,9 +233,14 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-
-
-        private JsonElement processConfig(HostString newBase, string scheme)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newBase"></param>
+        /// <param name="scheme"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private JsonElement ProcessConfig(HostString newBase, string scheme)
         {
             _webHost.WebRootPath = Path.Combine(_webHost.ContentRootPath, "../../../CSETWebNg/src");
             var path = Path.Combine(_webHost.WebRootPath, "assets/settings/config.json");
@@ -238,17 +275,17 @@ namespace CSETWebCore.Api.Controllers
                                 if (element.Name == "appUrl")
                                 {
                                     writer.WritePropertyName(element.Name);
-                                    writer.WriteStringValue(newUri(newBase, scheme, root.GetProperty("appUrl").ToString()).ToString());
+                                    writer.WriteStringValue(NewUri(newBase, scheme, root.GetProperty("appUrl").ToString()).ToString());
                                 }
                                 else if (element.Name == "apiUrl")
                                 {
                                     writer.WritePropertyName(element.Name);
-                                    writer.WriteStringValue(newUri(newBase, scheme, root.GetProperty("apiUrl").ToString()).ToString());
+                                    writer.WriteStringValue(NewUri(newBase, scheme, root.GetProperty("apiUrl").ToString()).ToString());
                                 }
                                 else if (element.Name == "docUrl")
                                 {
                                     writer.WritePropertyName(element.Name);
-                                    writer.WriteStringValue(newUri(newBase, scheme, root.GetProperty("docUrl").ToString()).ToString());
+                                    writer.WriteStringValue(NewUri(newBase, scheme, root.GetProperty("docUrl").ToString()).ToString());
                                 }
                                 // write same value as original config json
                                 else
@@ -270,7 +307,14 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        private Uri newUri(HostString newBase, string scheme, string oldUri)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newBase"></param>
+        /// <param name="scheme"></param>
+        /// <param name="oldUri"></param>
+        /// <returns></returns>
+        private Uri NewUri(HostString newBase, string scheme, string oldUri)
         {
             //set the hostname and port to the same as the new base return the new uri
             UriBuilder tmp = new UriBuilder(oldUri);

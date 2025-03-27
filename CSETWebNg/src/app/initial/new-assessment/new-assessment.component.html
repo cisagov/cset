@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,41 +20,44 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<ng-container *transloco="let t">
+<div *transloco="let t">
     <div class="m-4" [innerHTML]="pageTitle">
     </div>
-    <div *ngFor="let row of gallerySvc.rows" class="m-4" style="height:240px;">
+    <div *ngFor="let row of gallerySvc.rows" class="container m-2" style="height:240px;">
         <div>
-            <h4>{{row.group_Title}}</h4>
-        </div>
-        <swiper class="gallery-slider" [config]="config" (slideChange)="onSlideChange()" #swiper>
-            <ng-template swiperSlide *ngFor="let c of row.galleryItems; let i = index">
-                <div [attr.id]="'c'+c.gallery_Item_Guid" class="card gallery-card" tabindex="0"
-                    (focus)="onHover(c.gallery_Item_Guid)" (mouseover)="onHover(c.gallery_Item_Guid)"
-                    (mouseleave)="onHoverOut(-1, c.gallery_Item_Guid)">
-
-                    <div class="card-body gallery-card-body cursor-pointer"
-                        style="min-height:150px; max-height:150px; z-index:1"
-                        (click)="navSvc.beginNewAssessmentGallery(c)">
-                        <div class="img-container">
-                            <img class="img-cropped-calc" [src]="getImageSrc(c.icon_File_Name_Small)">
+            <div>
+                <h4>{{row.group_Title}}</h4>
+            </div>
+            <swiper-container class="gallery-slider">
+                <swiper-slide *ngFor="let c of row.galleryItems; let i = index">
+                    <div [attr.id]="'c'+c.gallery_Item_Guid" class="card gallery-card"
+                        (focus)="onHover(c.gallery_Item_Guid)" (mouseover)="onHover(c.gallery_Item_Guid)"
+                        (mouseleave)="onHoverOut(-1, c.gallery_Item_Guid)">
+                        <div class="card-body gallery-card-body cursor-pointer"
+                            style="min-height:150px; max-height:150px; z-index:1"
+                            (click)="navSvc.beginNewAssessmentGallery(c)">
+                            <div class="img-container">
+                                <img class="img-cropped-calc" [src]="getImageSrc(c.icon_File_Name_Small)">
+                            </div>
+                            <h6 class="card-title" ellipsis [ellipsis-content]="c.title"
+                                style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
                         </div>
-                        <h6 class="card-title" ellipsis [ellipsis-content]="c.title"
-                            style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
-
+                        <div class="card-footer" [class.gallery-card-footer]="c.gallery_Item_Guid==hoverIndex"
+                            style="text-align:right;">
+                            <!--[hidden]="c.gallery_Item_Guid!=hoverIndex">-->
+                            <button [matTooltip]="t('tooltip.view detail')" [hidden]="c.gallery_Item_Guid!=hoverIndex"
+                                class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c)"
+                                style="margin-right:5px; z-index:100"><i class="fa-solid fa-circle-info"
+                                    style="font-size: 16px;"></i></button>
+                            <button [matTooltip]="t('tooltip.create assessment')"
+                                [hidden]="c.gallery_Item_Guid!=hoverIndex"
+                                class="btn btn-light btn-circle btn-sm gallery-btn-play"
+                                (click)="navSvc.beginNewAssessmentGallery(c)"><i class="fa-solid fa-play"
+                                    style="font-size: 16px; z-index:100"></i></button>
+                        </div>
                     </div>
-                    <div class="card-footer" [class.gallery-card-footer]="c.gallery_Item_Guid==hoverIndex" style="text-align:right;">
-                        <!--[hidden]="c.gallery_Item_Guid!=hoverIndex">-->
-                        <button [matTooltip]="t('tooltip.view detail')" [hidden]="c.gallery_Item_Guid!=hoverIndex"
-                            class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c)"
-                            style="margin-right:5px; z-index:100"><i class="fa-solid fa-circle-info"
-                                style="font-size: 16px;"></i></button>
-                        <button [matTooltip]="t('tooltip.create assessment')" [hidden]="c.gallery_Item_Guid!=hoverIndex" class="btn btn-light btn-circle btn-sm gallery-btn-play"
-                            (click)="navSvc.beginNewAssessmentGallery(c)"><i class="fa-solid fa-play"
-                                style="font-size: 16px; z-index:100"></i></button>
-                    </div>
-                </div>
-            </ng-template>
-        </swiper>
+                </swiper-slide>
+            </swiper-container>
+        </div>
     </div>
-</ng-container>
+</div>

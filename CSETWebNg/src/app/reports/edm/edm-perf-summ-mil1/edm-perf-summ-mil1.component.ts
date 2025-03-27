@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,10 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { EDMBarChartModel } from '../edm-bar-chart.model';
 
 @Component({
-  selector: 'app-edm-perf-summ-mil1',
-  templateUrl: './edm-perf-summ-mil1.component.html',
-  styleUrls: ['./edm-perf-summ-mil1.component.scss', '../../reports.scss']
+    selector: 'app-edm-perf-summ-mil1',
+    templateUrl: './edm-perf-summ-mil1.component.html',
+    styleUrls: ['./edm-perf-summ-mil1.component.scss', '../../reports.scss'],
+    standalone: false
 })
 export class EdmPerfSummMil1Component implements OnInit, OnChanges {
 

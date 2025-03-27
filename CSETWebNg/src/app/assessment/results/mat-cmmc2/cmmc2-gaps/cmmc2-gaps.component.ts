@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import { MaturityService } from '../../../../../app/services/maturity.service';
 import { BehaviorSubject } from 'rxjs';
 import { AssessmentService } from '../../../../services/assessment.service';
-import * as $ from 'jquery';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-cmmc-gaps',

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
@@ -44,18 +45,20 @@ import { AggregationService } from '../../services/aggregation.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
-import { NavigationService } from '../../services/navigation/navigation.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { GalleryService } from '../../services/gallery.service';
 import { SetBuilderService } from './../../services/set-builder.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
-import { UserLanguageComponent } from '../../dialogs/user-language/user-language.component';
+import { UserSettingsComponent } from '../../dialogs/user-settings/user-settings.component';
 import { translate } from '@jsverse/transloco';
+import { FileExportService } from '../../services/file-export.service';
+
 
 @Component({
   selector: 'app-top-menus',
   templateUrl: './top-menus.component.html',
-  styleUrls: ['./top-menus.component.scss']
+  styleUrls: ['./top-menus.component.scss'],
+  standalone: false
 })
 export class TopMenusComponent implements OnInit {
   docUrl: string;
@@ -76,7 +79,8 @@ export class TopMenusComponent implements OnInit {
     public router: Router,
     private _hotkeysService: HotkeysService,
     private gallerySvc: GalleryService,
-    private navSvc: NavigationService
+    private fileExportSvc: FileExportService,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -123,7 +127,8 @@ export class TopMenusComponent implements OnInit {
     // Resource Library
     this._hotkeysService.add(
       new Hotkey('alt+l', (event: KeyboardEvent): boolean => {
-        this.router.navigate(['resource-library']);
+        const url = "index.html?returnPath=resource-library";
+        window.open(url, '_blank');
         return false; // Prevent bubbling
       })
     );
@@ -400,20 +405,19 @@ export class TopMenusComponent implements OnInit {
     const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
     const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
     if (this.dialog.openDialogs[0] || doNotShow) {
-      this.exportToExcel();
+      this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'assessment/export/excel');
       return;
     }
+
     this.dialogRef = this.dialog.open(ExcelExportComponent);
     this.dialogRef.afterClosed().subscribe();
   }
 
-  exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
-  }
-
-
+  /**
+   * 
+   */
   exportToExcelNCUA() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExportISE?token=' + localStorage.getItem('userToken');
+    this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'ExcelExportISE');
   }
 
   /**
@@ -493,14 +497,12 @@ export class TopMenusComponent implements OnInit {
     if (this.dialog.openDialogs[0]) {
       return;
     }
-    this.dialogRef = this.dialog.open(UserLanguageComponent);
-    this.dialogRef.afterClosed().subscribe(
-      (data: any) => {
-        // the update user request happened when the dialog's form was saved
-        this.dialogRef = undefined;
-      },
-      (error) => console.log(error.message)
-    );
+    this.dialogRef = this.dialog.open(UserSettingsComponent);
+    this.dialogRef.afterClosed().subscribe((results) => {
+      if (results) {
+        this.assessSvc.persistEncryptPreference(results.encryption).subscribe(() => { });
+      }
+    });
   }
 
   /**

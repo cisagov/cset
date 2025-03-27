@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -34,10 +34,11 @@ import { ConfigService } from './../../../../services/config.service';
 import { DemographicService } from '../../../../services/demographic.service';
 
 @Component({
-  selector: 'app-csi-service-demographics',
-  templateUrl: './csi-service-demographics.component.html',
-  host: { class: 'd-flex flex-column flex-11a' },
-  styleUrls: ['./csi-service-demographics.component.scss']
+    selector: 'app-csi-service-demographics',
+    templateUrl: './csi-service-demographics.component.html',
+    host: { class: 'd-flex flex-column flex-11a' },
+    styleUrls: ['./csi-service-demographics.component.scss'],
+    standalone: false
 })
 export class CsiServiceDemographicsComponent implements OnInit {
   csiServiceDemographic: CsiServiceDemographic = {};

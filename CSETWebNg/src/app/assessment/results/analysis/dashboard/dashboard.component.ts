@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,10 +31,11 @@ import { TranslocoService } from '@jsverse/transloco';
 declare var $: any;
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class DashboardComponent implements OnInit {
 
@@ -75,15 +76,29 @@ export class DashboardComponent implements OnInit {
     this.overallScoreDisplay = this.getScore(x.overallBars, 'Overall').toFixed(0) + '%';
 
     this.standardBasedScore = this.getScore(x.overallBars, 'Standards');
-    this.standardBasedScoreDisplay = this.standardBasedScore > 0 ? 
+    this.standardBasedScoreDisplay = this.standardBasedScore > 0 ?
       this.standardBasedScore.toFixed(0) + '%' : this.tSvc.translate('reports.core.dashboard.no standards answers');
 
     this.componentBasedScore = this.getScore(x.overallBars, 'Components');
-    this.componentBasedScoreDisplay = this.componentBasedScore > 0 ? 
+    this.componentBasedScoreDisplay = this.componentBasedScore > 0 ?
       this.componentBasedScore.toFixed(0) + '%' : this.tSvc.translate('reports.core.dashboard.no components answers');
 
 
     // Assessment Compliance
+    if (!(this.assessSvc.assessment?.useStandard && this.assessSvc.assessment?.useDiagram)) {
+      // if we don't have a standard AND a diagram, just show the overall score
+      const b = x.overallBars;
+      const iKeeper = b.englishLabels.findIndex(x => x.toLowerCase() == 'overall');
+      if (iKeeper >= 0) {
+        const label = b.labels[iKeeper];
+        b.labels = [];
+        b.labels.push(label);
+        const dataItem = b.data[iKeeper];
+        b.data = [];
+        b.data.push(dataItem);
+      }
+    }
+
     if (this.assessComplChart) {
       this.assessComplChart.destroy();
     }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,8 +31,9 @@ import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-assessment-detail-tsa',
-  templateUrl: './assessment-detail-tsa.component.html'
+    selector: 'app-assessment-detail-tsa',
+    templateUrl: './assessment-detail-tsa.component.html',
+    standalone: false
 })
 export class AssessmentDetailTsaComponent implements OnInit {
   assessment: AssessmentDetail = {

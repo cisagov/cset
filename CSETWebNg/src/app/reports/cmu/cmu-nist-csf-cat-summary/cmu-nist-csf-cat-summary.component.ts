@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,15 +25,16 @@ import { Component, OnInit } from '@angular/core';
 import { CmuService } from '../../../services/cmu.service';
 
 @Component({
-  selector: 'app-cmu-nist-csf-cat-summary',
-  templateUrl: './cmu-nist-csf-cat-summary.component.html',
-  styleUrls: ['./cmu-nist-csf-cat-summary.component.scss']
+    selector: 'app-cmu-nist-csf-cat-summary',
+    templateUrl: './cmu-nist-csf-cat-summary.component.html',
+    styleUrls: ['./cmu-nist-csf-cat-summary.component.scss'],
+    standalone: false
 })
 export class CmuNistCsfCatSummaryComponent implements OnInit {
   csfData: any;
   legend: string = '';
 
-  constructor(private cmuSvc: CmuService) {}
+  constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
     this.cmuSvc.getCsfCatSummary().subscribe((resp: any) => {

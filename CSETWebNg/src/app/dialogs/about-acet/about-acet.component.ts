@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,11 @@ import { VersionService } from '../../services/version.service';
 
 
 @Component({
-  selector: 'app-about-acet',
-  templateUrl: './about-acet.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-about-acet',
+    templateUrl: './about-acet.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 
 
@@ -44,11 +45,11 @@ export class AboutAcetComponent {
   constructor(private dialog: MatDialogRef<AboutAcetComponent>,
     public configSvc: ConfigService,
     public versionSvc: VersionService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
-      this.versionSvc.localVersionObservable$.subscribe(localVersion => {
-        this.version = localVersion;
-      });
-    }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.versionSvc.localVersionObservable$.subscribe(localVersion => {
+      this.version = localVersion;
+    });
+  }
 
 
 }

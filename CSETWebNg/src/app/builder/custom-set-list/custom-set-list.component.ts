@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,10 +32,11 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
-  selector: 'app-custom-set-list',
-  templateUrl: './custom-set-list.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-custom-set-list',
+    templateUrl: './custom-set-list.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
 export class SetListComponent implements OnInit {
 

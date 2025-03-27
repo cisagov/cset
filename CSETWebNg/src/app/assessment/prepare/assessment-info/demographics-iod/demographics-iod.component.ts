@@ -1,106 +1,81 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DemographicIodService } from '../../../../services/demographic-iod.service';
 import { DemographicsIod } from '../../../../models/demographics-iod.model';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
-import { DemographicService } from '../../../../services/demographic.service';
 import { ServiceDemographic, AssessmentConfig, ServiceComposition, CriticalServiceInfo } from '../../../../models/assessment-info.model';
-import { CsiService } from '../../../../services/cis-csi.service';
 
 
 @Component({
   selector: 'app-demographics-iod',
   templateUrl: './demographics-iod.component.html',
-  styleUrls: ['./demographics-iod.component.scss']
+  styleUrls: ['./demographics-iod.component.scss'],
+  standalone: false
 })
 export class DemographicsIodComponent implements OnInit {
 
   @Input() events: Observable<void>;
 
-  private eventsSubscription: any;
-  
   /**
    * The principal model for this page
    */
   @Input() demographicData: DemographicsIod = {};
-  assessmentConfig: AssessmentConfig; 
-  serviceDemographics: ServiceDemographic; 
-  serviceComposition: ServiceComposition; 
-  criticalServiceInfo: CriticalServiceInfo; 
+  assessmentConfig: AssessmentConfig;
+  serviceDemographics: ServiceDemographic;
+  serviceComposition: ServiceComposition;
+  criticalServiceInfo: CriticalServiceInfo;
 
 
-  constructor(public demoSvc: DemographicIodService, 
+  constructor(public demoSvc: DemographicIodService,
     private assessSvc: AssessmentService,
-    private sanitizer: DomSanitizer,
     public dialog: MatDialog,
-    private configSvc : ConfigService, 
-    private iodDemoSvc: DemographicIodService,
-    private demoSvc2: DemographicService, 
-    private csiSvc: CsiService
-    ) {}
+    private configSvc: ConfigService,
+  ) { }
 
   /**
    *
    */
   ngOnInit() {
-    this.populateDemographicsModel()    
+    this.populateDemographicsModel();
   }
 
+  /**
+   * 
+   */
   populateDemographicsModel() {
-    this.demoSvc.getDemographics().subscribe((data: any) => {
+    this.demoSvc.getDemographics().subscribe((data: DemographicsIod) => {
       this.demographicData = data;
     })
-  }
-
-
-  ngOnDestroy() {
-    this.eventsSubscription?.unsubscribe();
   }
 
   /**
    *
    */
-  onChangeSector(evt: any) {
-    this.demographicData.subsector = null;
-
-    this.demoSvc.updateIndividualDemographics('SECTOR', this.demographicData.sector, 'int');
-    this.demoSvc.updateIndividualDemographics('SUBSECTOR', this.demographicData.subsector, 'int');
-
-    if (this.demographicData.sector) {
+  onChangeSector() {
+    if (!this.demographicData.sector) {
+      this.demographicData.listSubsectors = [];
+      this.demographicData.subsector = null;
+    } else {
       this.demoSvc.getSubsectors(this.demographicData.sector).subscribe((data: any[]) => {
         this.demographicData.listSubsectors = data;
       });
-      this.assessSvc.assessment.sectorId = this.demographicData.sector;
-      this.assessSvc.assessmentStateChanged$.next(126);
     }
-  }
 
-  onChangeOrgType(evt: any){
-    this.demographicData.organizationType = parseInt(evt.target.value)
-    this.newUpdate('ORG-TYPE', evt, 'int')
-  }
+    this.assessSvc.assessment.sectorId = this.demographicData.sector;
 
-  changeUsesStandard(val: boolean) {
-    this.demographicData.usesStandard = val;
-    this.demoSvc.updateIndividualDemographics('STANDARD-USED', val, 'bool')
-  }
-
-  setRequireComply(val: boolean) {
-    this.demographicData.requiredToComply = val;
-    this.demoSvc.updateIndividualDemographics('REGULATION-REQD', val, 'bool')
+    this.updateDemographics();
   }
 
   changeRegType1(o: any, evt: any) {
     this.demographicData.regulationType1 = o.optionValue;
-    this.demoSvc.updateIndividualDemographics('REG-TYPE1', o.optionValue, 'int');
+    this.updateDemographics();
   }
 
   changeRegType2(o: any, evt: any) {
     this.demographicData.regulationType2 = o.optionValue;
-    this.demoSvc.updateIndividualDemographics('REG-TYPE2', o.optionValue, 'int');
+    this.updateDemographics();
   }
 
   changeShareOrg(org: any, evt: any) {
@@ -117,24 +92,33 @@ export class DemographicsIodComponent implements OnInit {
     return this.demographicData.shareOrgs.includes(org.optionValue);
   }
 
+  /**
+   * Set a boolean property on a model.  
+   */
+  setBool(model: any, prop: string, state: boolean) {
+    model[prop] = state;
+
+    if (prop == 'usesStandard' && !state) {
+      model['standard1'] = null;
+      model['standard2'] = null;
+    }
+
+    if (prop == 'requiredToComply' && !state) {
+      model['regulationType1'] = null;
+      model['reg1Other'] = null;
+      model['regulationType2'] = null;
+      model['reg2Other'] = null;
+    }
+    this.updateDemographics();
+  }
+
   update(event: any) {
-    this.updateDemographics();    
+    this.updateDemographics();
   }
 
   updateDemographics() {
     this.configSvc.cisaAssessorWorkflow = true;
+    this.demographicData.sectorDirective = 'NIPP';
     this.demoSvc.updateDemographic(this.demographicData);
   }
-
-  newUpdate(name: string, event: any, type: string){
-    this.configSvc.cisaAssessorWorkflow = true;
-
-    let val = event.target.value;
-    if (val == '0: null') {
-      val = null;
-    }
-
-    this.demoSvc.updateIndividualDemographics(name, val, type)
-  }
-  
 } 

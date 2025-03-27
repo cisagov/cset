@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2024 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -24,15 +24,15 @@
   <h3 class="d-flex flex-column flex-00a">{{t('reports.high level assessment label')}}</h3>
   <div class="d-flex flex-column flex-00a">
     {{t('reports.high level assessment desc')}}
-    <textarea maxlength="4000" class="overview-textarea-height" name="overview" id="overview"
-      placeholder="{{t('reports.high level assessment placeholder')}}"
-      [(ngModel)]="o.assessmentDescription" (change)="update($event)"></textarea>
+    <textarea maxlength="4000" class="overview-textarea-height form-control" name="overview" id="overview"
+      placeholder="{{t('reports.high level assessment placeholder')}}" [(ngModel)]="o.assessmentDescription"
+      (change)="update($event)"></textarea>
   </div>
   <hr>
 
   <h3 class="d-flex flex-column flex-00a">{{t('reports.executive summary label')}}</h3>
   <div class="d-flex flex-column flex-00a">
-    <textarea class="overview-textarea-height" name="summary" id="summary"
+    <textarea class="overview-textarea-height form-control" name="summary" id="summary"
       placeholder="{{t('reports.executive summary placeholder')}}" [(ngModel)]="o.executiveSummary"
       (change)="update($event)"></textarea>
   </div>
@@ -41,9 +41,9 @@
   <h3 class="d-flex flex-column flex-00a">{{t('reports.comments label')}}</h3>
   <div class="d-flex flex-column flex-00a">
     {{t('reports.comments desc')}}
-    <textarea maxlength="4000" class="overview-textarea-height" name="comments" id="comments"
-      placeholder="{{t('reports.comments placeholder')}}"
-      [(ngModel)]="o.additionalNotesAndComments" (change)="update($event)"></textarea>
+    <textarea maxlength="4000" class="overview-textarea-height form-control" name="comments" id="comments"
+      placeholder="{{t('reports.comments placeholder')}}" [(ngModel)]="o.additionalNotesAndComments"
+      (change)="update($event)"></textarea>
   </div>
 
   <app-nav-back-next [page]="'overview'"></app-nav-back-next>

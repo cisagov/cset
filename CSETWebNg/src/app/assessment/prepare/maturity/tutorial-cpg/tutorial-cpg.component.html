@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,12 @@
     *transloco="let ttcpg; read: 'tutorial.cpg'">
     <h3 class="wrap-text mb-3">{{ttcpg('title')}}</h3>
     <div *transloco="let t">
-        <h5 >{{t('titles.overview')}}</h5>
+        <h5>{{t('titles.overview')}}</h5>
         <p>{{ttcpg('1')}}</p>
 
         <p>{{ttcpg('2')}}</p>
 
-        <h5 >{{t('titles.assessment')}}</h5>
+        <h5>{{t('titles.assessment')}}</h5>
         <p>{{ttcpg('3')}}</p>
         <ul>
             <li>{{ttcpg('3a')}}</li>
@@ -115,7 +115,8 @@
         </ul>
         <h5>{{t('titles.additional resources')}}</h5>
         <p>{{t('tutorial.additional resources')}}</p>
-        <p>{{t('tutorial.please visit')}} <a href="https://www.cisa.gov/cpgs" target="_blank">https://www.cisa.gov/cpgs</a> {{t('tutorial.for more information')}}</p>
+        <p>{{t('tutorial.please visit')}} <a href="https://www.cisa.gov/cpgs"
+                target="_blank">https://www.cisa.gov/cpgs</a> {{t('tutorial.for more information')}}</p>
     </div>
     <app-nav-back-next [page]="'tutorial-cpg'"></app-nav-back-next>
 </div>

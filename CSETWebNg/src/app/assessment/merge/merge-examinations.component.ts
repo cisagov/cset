@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -37,9 +37,10 @@ import { QuestionsService } from '../../services/questions.service';
 import { ActionItemText } from '../questions/observations/observations.model';
 
 @Component({
-  selector: 'merge-examinations',
-  templateUrl: './merge-examinations.component.html',
-  styleUrls: ['./merge-examinations.component.scss']
+    selector: 'merge-examinations',
+    templateUrl: './merge-examinations.component.html',
+    styleUrls: ['./merge-examinations.component.scss'],
+    standalone: false
 })
 
 export class MergeExaminationsComponent implements OnInit {

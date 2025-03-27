@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ReportService } from '../../../../services/report.service';
 
 @Component({
-  selector: 'app-mc-question',
-  templateUrl: './mc-question.component.html',
-  styleUrls: ['./mc-question.component.scss']
+    selector: 'app-mc-question',
+    templateUrl: './mc-question.component.html',
+    styleUrls: ['./mc-question.component.scss'],
+    standalone: false
 })
 export class McQuestionComponent implements OnInit {
 

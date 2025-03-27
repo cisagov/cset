@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,10 @@ import { QuestionsService } from '../../services/questions.service';
 import { ReportService } from '../../services/report.service';
 
 @Component({
-  selector: 'app-all-commentsmarked',
-  templateUrl: './all-commentsmarked.component.html',
-  styleUrls: ['../reports.scss','./all-commentsmarked.component.scss']
+    selector: 'app-all-commentsmarked',
+    templateUrl: './all-commentsmarked.component.html',
+    styleUrls: ['../reports.scss', './all-commentsmarked.component.scss'],
+    standalone: false
 })
 export class AllCommentsmarkedComponent {
 
@@ -43,7 +44,7 @@ export class AllCommentsmarkedComponent {
     public titleService: Title,
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService
-  ) {}
+  ) { }
 
   ngOnInit() {
 

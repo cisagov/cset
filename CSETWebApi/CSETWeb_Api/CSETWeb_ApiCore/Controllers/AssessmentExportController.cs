@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -11,15 +11,12 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.AssessmentIO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NLog;
 using System;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Mime;
+using System.Text;
 using System.Threading.Tasks;
-using DocumentFormat.OpenXml.Office2010.PowerPoint;
 using Microsoft.Extensions.Configuration;
 
 
@@ -36,7 +33,7 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Controller
         /// </summary>
-        public AssessmentExportController(ITokenManager token, CSETContext context, 
+        public AssessmentExportController(ITokenManager token, CSETContext context,
             IHttpContextAccessor http, IConfiguration configuration)
         {
             _token = token;
@@ -48,13 +45,11 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/assessment/export")]
-        public IActionResult ExportAssessment([FromQuery] string token, [FromQuery] string password = "", [FromQuery] string passwordHint = "")
+        public IActionResult ExportAssessment([FromQuery] string password = "", [FromQuery] string passwordHint = "")
         {
             try
             {
-                _token.SetToken(token);
-
-                int assessmentId = _token.AssessmentForUser(token);
+                int assessmentId = _token.AssessmentForUser();
 
                 // determine extension (.csetw, .acet)
                 string ext = IOHelper.GetExportFileExtension(_token.Payload(Constants.Constants.Token_Scope));
@@ -70,21 +65,20 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok();
         }
-        
+
         /// <summary>
         /// export assessment and send it to enterprise using enterprise token
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/assessment/exportAndSend")]
-        public async Task<IActionResult> ExportAndSendAssessment([FromQuery] string token)
+        [Route("api/assessment/exportandsend")]
+        public async Task<IActionResult> ExportAndSendAssessment()
         {
             try
             {
                 var assessmentId = _token.AssessmentForUser();
-                _token.SetEnterpriseToken(token);
-                
+
                 string url = _configuration["AssessmentUploadUrl"];
                 // Export the assessment
                 if (!string.IsNullOrEmpty(url))
@@ -127,21 +121,15 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/assessment/export/json")]
-        public IActionResult ExportAssessmentAsJson([FromQuery] string token, [FromQuery] bool? scrubData, [FromQuery] string password = "", [FromQuery] string passwordHint = "")
+        public IActionResult ExportAssessmentAsJson([FromQuery] bool? scrubData)
         {
             try
             {
-                _token.SetToken(token);
+                int assessmentId = _token.AssessmentForUser();
 
-                int assessmentId = _token.AssessmentForUser(token);
-
-                string ext = ".json";
-
-               
-
-                AssessmentExportFile result = new AssessmentExportManager(_context).ExportAssessment(assessmentId, ext, password, passwordHint, true, scrubData: true);
-
-                return File(result.FileContents, "application/octet-stream", result.FileName);
+                AssessmentExportFileJson result = new AssessmentExportManager(_context).ExportAssessmentJson(assessmentId, scrubData ?? false);
+                byte[] contents = Encoding.UTF8.GetBytes(result.JSON);
+                return  File(contents, "application/json", result.FileName);
             }
             catch (Exception exc)
             {
@@ -150,7 +138,7 @@ namespace CSETWebCore.Api.Controllers
 
             return null;
         }
-        
+
         /// <summary>
         /// Send file to external API
         /// </summary>
@@ -162,38 +150,19 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                
-                using(var client = new HttpClient())
-                using(var content = new MultipartFormDataContent())
+                using (var client = new HttpClient())
+                using (var content = new MultipartFormDataContent())
                 using (var byteContent = new ByteArrayContent(fileContents))
                 {
                     client.DefaultRequestHeaders.Authorization =
                         new AuthenticationHeaderValue("Bearer", _token.GetEnterpriseToken());
                     byteContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
-                    
+
                     content.Add(byteContent, "file", "assessment.csetw");
                     var response = await client.PostAsync(targetUrl, content);
                     return response.IsSuccessStatusCode;
 
-                }
-
-                ;
-                /*using (var client = new System.Net.Http.HttpClient())
-                {
-                    using(var client = httpClient)
-                        
-                    
-                    var content = new System.Net.Http.ByteArrayContent(fileContents);
-                    client.DefaultRequestHeaders.Authorization =
-                        new AuthenticationHeaderValue("Bearer", _token.GetEnterpriseToken());
-                    
-                    content.Headers.Add("Content-Type", "multipart/form-data");
-                    content.Headers.Add("Content-Disposition", $"attachment; filename=\"{fileName}\"");
-                    //content.Headers.Add("Authorization", $"Bearer {_token.GetEnterpriseToken()}");
-                    
-                    var response = await client.PostAsync(targetUrl, content);
-                    return response.IsSuccessStatusCode;
-                }*/
+                };
             }
             catch (Exception exc)
             {

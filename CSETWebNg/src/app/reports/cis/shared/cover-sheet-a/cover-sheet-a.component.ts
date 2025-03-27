@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,10 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 
 @Component({
-  selector: 'app-cover-sheet-a',
-  templateUrl: './cover-sheet-a.component.html',
-  styleUrls: ['./cover-sheet-a.component.scss', '../../../../reports/reports.scss']
+    selector: 'app-cover-sheet-a',
+    templateUrl: './cover-sheet-a.component.html',
+    styleUrls: ['./cover-sheet-a.component.scss', '../../../../reports/reports.scss'],
+    standalone: false
 })
 export class CoverSheetAComponent implements OnInit, OnChanges {
 
@@ -45,6 +46,10 @@ export class CoverSheetAComponent implements OnInit, OnChanges {
   @Input()
   facilityName: string;
 
+  @Input()
+  selfAssessment: boolean;
+
+
   infoParent: any;
 
   constructor() { }
@@ -59,7 +64,8 @@ export class CoverSheetAComponent implements OnInit, OnChanges {
         assessment_Name: this.assessmentName,
         assessor_Name: this.assessorName,
         facility_Name: this.facilityName,
-        assessment_Date: this.assessmentDate
+        assessment_Date: this.assessmentDate,
+        selfAssessment: this.selfAssessment
       }
     }
   }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -39,8 +39,9 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
-  selector: 'app-maturity-questions-acet',
-  templateUrl: './maturity-questions-acet.component.html'
+    selector: 'app-maturity-questions-acet',
+    templateUrl: './maturity-questions-acet.component.html',
+    standalone: false
 })
 export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
 

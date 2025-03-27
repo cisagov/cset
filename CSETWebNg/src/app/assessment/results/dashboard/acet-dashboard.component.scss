@@ -1,6 +1,6 @@
 /* 
 
-  Copyright 2024 Battelle Energy Alliance, LLC  
+  Copyright 2025 Battelle Energy Alliance, LLC  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -35,12 +35,12 @@ SOFTWARE.
 }
 
 .table-head {
-    background-color: rgb(245,245,245);
-    border-bottom: 2px solid rgb(200,200,200);
+    background-color: rgb(245, 245, 245);
+    border-bottom: 2px solid rgb(200, 200, 200);
 }
 
 .table-head-special {
-    background-color: rgb(245,245,245);
+    background-color: rgb(245, 245, 245);
 }
 
 .table-sub-head {
@@ -53,7 +53,7 @@ SOFTWARE.
 }
 
 .border-table {
-    border-top: 2px solid rgb(200,200,200);
+    border-top: 2px solid rgb(200, 200, 200);
 }
 
 .mid-align {
@@ -65,7 +65,7 @@ SOFTWARE.
 }
 
 .rightmost {
-    border-left: 1px solid rgb(200,200,200);
+    border-left: 1px solid rgb(200, 200, 200);
 }
 
 .dash-select {
@@ -78,21 +78,21 @@ SOFTWARE.
 
 .dash-header {
     width: 100%;
-    background-color: rgb(245,245,245);
-    color: rgb(16,60,123);
+    background-color: rgb(245, 245, 245);
+    color: rgb(16, 60, 123);
     padding: 30px 10px 10px 10px;
-    border-bottom: 2px solid rgb(200,200,200);
+    border-bottom: 2px solid rgb(200, 200, 200);
 }
 
 .dash-header-joined {
     margin-bottom: 0px;
     border-bottom: 0px;
-    border-top: 2px solid rgb(200,200,200);
+    border-top: 2px solid rgb(200, 200, 200);
     margin-top: 20px;
 }
 
 .blue-text {
-    color: rgb(16,60,123);
+    color: rgb(16, 60, 123);
 }
 
 .override-select {
@@ -104,8 +104,9 @@ SOFTWARE.
     padding: 2px;
     margin-top: 5px;
 }
+
 .mat-detail-red {
-    background-color: rgb(253,233,217);
-    color: rgb(156,0,6);
-    border:1px solid rgb(156,0,6);
+    background-color: rgb(253, 233, 217);
+    color: rgb(156, 0, 6);
+    border: 1px solid rgb(156, 0, 6);
 }

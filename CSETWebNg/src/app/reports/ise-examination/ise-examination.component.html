@@ -1,5 +1,5 @@
 <!----------------------
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -20,42 +20,21 @@
 -------------------------->
 <div class="report-body mb-5">
     <div id="ExamReport">
+
         <div class="flex-container">
             <div class="column mt-3">
-                <p class="report-title">
-                    EXAMINATION
-                </p>
-                <p class="report-title">
-                    REPORT
-                </p>
+                <p class="report-title">EXAMINATION</p>
+                <p class="report-title">REPORT</p>
             </div>
-            <!-- <div class="column">
-                <p style="text-align: center">
-                    <img height="600" src="assets/images/ACET/TOOLBOXMockup.svg" alt="acet">
-                </p>
-            </div> -->
 
             <div class="cover-page-bottom mb-4">
-                <div>
-                    <img style="height: 185px" src="assets/images/NCUA/ncua_seal_blue.svg" alt="ncua">
-                </div>
-                <div style="
-                                text-align: right;
-                                font-weight: normal;
-                                font-size: 18px;
-                                flex-direction: column;
-                                line-height: 150%;
-                                padding-right: 2em;
-                            ">
+                <img style="height: 185px" src="assets/images/NCUA/ncua_seal_blue.svg" alt="ncua">
 
+                <div style="text-align: right; font-weight: normal; font-size: 18px; flex-direction: column; line-height: 150%; padding-right: 2em;">
                     <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
-                    <div class="title-page-content">{{response?.information?.assessment_Date |
-                        localizeDate}}
-                    </div>
+                    <div class="title-page-content">{{response?.information?.assessment_Date | localizeDate}}</div>
                     <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
-                    <button class="btn form-check-label btn-copy" title="Print to PDF"
-                        (click)="print()">Print to PDF
-                    </button>
+                    <button class="btn form-check-label btn-copy" title="Print to PDF" (click)="print()">Print to PDF</button>
                 </div>
             </div>
         </div>
@@ -65,7 +44,6 @@
         </div>
 
         <ng-template #mainContent>
-            <!-- <div class="page-break"> -->
             <div class="ms-3 me-3 form">
                 <div class="d-flex flex-row" style="justify-content: space-between">
                     <div style="align-self: flex-end;">
@@ -112,6 +90,7 @@
                     </tr>
                 </table>
             </div>
+
             <div class="page-break"></div>
 
             <div class="d-flex flex-row" style="justify-content: space-between">
@@ -119,9 +98,9 @@
                     <span class="h2 report-text-blue">Results of Review</span>
                 </div>
             </div>
-            <p>
-                {{ this.summaryStatic }}
-            </p>
+            
+            <p>{{ this.summaryStatic }}</p>
+
             <div *ngIf="this.relaventIssues">
                 <div *ngIf="this.dorsTotal > 0">
                     {{ inCatStringBuilder(this.dorsTotal, this.dors.length, 'DOR') }}
@@ -130,17 +109,17 @@
                     </div>
                     <br>
                 </div>
+
                 <div *ngIf="this.examinerFindingsTotal > 0">
-                    {{ inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings.length, 'Examiner Finding')
-                    }}
+                    {{ inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings.length, 'Examiner Finding') }}
                     <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
                         {{ issue }}
                     </div>
                     <br>
                 </div>
+
                 <div *ngIf="this.supplementalFactsTotal > 0">
-                    {{ inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts.length, 'Supplemental
-                    Fact') }}
+                    {{ inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts.length, 'Supplemental Fact') }}
                     <div *ngFor="let issue of this.supplementalFacts" style="padding-left: 30px">
                         {{ issue }}
                     </div>
@@ -155,10 +134,9 @@
                     <br>
                 </div>
             </div>
+
             <div *ngIf="!this.relaventIssues">
-                <p>
-                    No Issues were noted.
-                </p>
+                <p>No Issues were noted.</p>
             </div>
 
             <div class="page-break"></div>
@@ -168,6 +146,7 @@
                     <div class="h2 report-text-blue">Statement Overview</div>
                 </div>
             </div>
+
             <table class="table-responsive td-align-top td-padding-half-rem">
                 <tr class="report-text-blue">
                     <td></td>
@@ -175,20 +154,24 @@
                     <td>Answers</td>
                     <td>Exam Level</td>
                 </tr>
+
                 <ng-container *ngFor="let d of response?.matAnsweredQuestions">
                     <tr class="rkw-domain">
                         <td colspan="5" class="background-1 h4 color-white"></td>
                     </tr>
+
                     <ng-container *ngFor="let f of d.assessmentFactors">
                         <tr>
-                            <td colspan="5" class="background-1 color-white font-weight-bold ps-4">{{f.title}} -
-                                Assessment Factor</td>
+                            <td colspan="5" class="background-1 color-white font-weight-bold ps-4">{{f.title}} - Assessment Factor</td>
                         </tr>
+
                         <ng-container *ngFor="let c of f.components">
                             <ng-container *ngIf="this.showSubcats.get(c.title)">
                                 <tr>
-                                    <td colspan="5" class="background-2 ps-5">{{c.title}} - Component
-                                        <label class="btn form-check-label" style="float: right">{{ this.expandedOptions.get(c.title) ? '-' : '+' }}
+                                    <td colspan="5" class="background-2 ps-5">
+                                        {{c.title}} - Component
+                                        <label class="btn form-check-label" style="float: right">
+                                            {{ this.expandedOptions.get(c.title) ? '-' : '+' }}
                                             <input class="hide" name="nameExample" type="checkbox" (click)="toggleExpansion(c.title)">
                                         </label>
                                     </td>
@@ -197,10 +180,13 @@
                                     <tr *ngIf="(requiredQuestion(q) || this.ncuaSvc.isParentQuestion(q.title)) && shouldExpand(c.title)">
                                         <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 font-weight-bold text-nowrap">{{q.title}}</td>
                                         <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="font-weight-bold text-nowrap">{{q.title}}</td>
+                                        
                                         <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3" [innerHTML]="q.questionText"></td>
                                         <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pe-3" [innerHTML]="q.questionText"></td>
+                                        
                                         <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3"></td>
                                         <td *ngIf="!this.ncuaSvc.isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pe-3">{{ questionsSvc.answerButtonLabel('ISE', q.answerText) }}</td>
+                                        
                                         <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3 pe-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                                         <td *ngIf="this.ncuaSvc.isParentQuestion(q.title)" class="background-3">
                                             <label class="btn form-check-label" style="float: right">{{this.expandedOptions.get(q.title) ? '-' : '+' }}
@@ -240,12 +226,10 @@
                                 <div>
                                     <span class="font-weight-bold">Statement Summary: </span>
                                     <br>
-                                    <span class="pe-3" style="white-space: pre-wrap;"
-                                        [innerHTML]="q.comments === 'Yes' ? q.comment : '[ No Statement Summary given. ]'"></span>
+                                    <span class="pe-3" style="white-space: pre-wrap;" [innerHTML]="q.comments === 'Yes' ? q.comment : '[ No Statement Summary given. ]'"></span>
                                 </div>
 
                                 <hr class="page-line">
-
                             </div>
                         </div>
                     </div>
@@ -260,133 +244,115 @@
                         <div class="h2 report-text-blue">Issues</div>
                     </div>
                 </div>
+
                 <div *ngIf="this.relaventIssues">
                     <div *ngFor="let observation of this.observationResponse">
-                        <div
-                            *ngIf="this.ncuaSvc.translateExamLevel(observation?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)">
-
+                        <div *ngIf="this.ncuaSvc.translateExamLevel(observation?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)">
                             <div>
                                 <strong>Statement: </strong> {{ observation?.question?.question_Title }}
                             </div>
+
                             <div>
                                 <strong>Title: </strong> {{ observation?.finding?.title }}
                             </div>
+                            
                             <div>
                                 <strong>Issue Type: </strong> {{ observation?.finding?.type }}
                             </div>
 
                             <strong>Description: </strong>
-                            <div style="white-space: pre-wrap;"
-                                [innerHTML]="(observation?.finding?.description == null || observation?.finding?.description == '') ? '(no Description available)' : observation?.finding?.description">
-                            </div>
-                            <div *ngIf="observation?.finding?.type !== 'Supplemental Fact'">
+                            <div style="white-space: pre-wrap;" [innerHTML]="(observation?.finding?.description == null || observation?.finding?.description == '') ? '(no Description available)' : observation?.finding?.description"></div>
 
-                                <strong> Action Items: </strong>
+                            <div *ngIf="observation?.finding?.type !== 'Supplemental Fact'">
+                                <strong> Action Required: </strong>
                                 <br>
-                                <div *ngIf="observation?.finding?.auto_Generated != 1">
-                                    <div *ngIf="observation?.finding?.actionItems != null" style="white-space: pre-wrap;"
-                                        [innerHTML]="observation?.finding?.actionItems">
+                                <!-- Not auto-generated -->
+                                <div *ngIf="observation?.finding?.auto_Generated == 0">
+                                    <div *ngIf="observation?.finding?.actionItems">
+                                        {{ observation?.finding?.actionItems }}
                                     </div>
-                                    <div *ngIf="observation?.actionItems == null">
-                                        (no Action Items available)
+                                    <div *ngIf="!observation?.finding?.actionItems">
+                                        (No actions available)
                                     </div>
                                 </div>
-                                <div *ngIf="this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
-                                    <div *ngFor="let allActionsInFinding of this.masterActionItemsMap.get(observation?.finding?.finding_Id); let i = index">
-                                        <div *ngIf="allActionsInFinding.action_Items != '' && allActionsInFinding.action_Items != '.'">
-                                            {{ this.getChildQuestionNumber(allActionsInFinding.question_Title) }}: {{
-                                            allActionsInFinding.action_Items }}
-                                        </div>
-                                        <div *ngIf="(allActionsInFinding.action_Items == '' || allActionsInFinding.action_Items == '.') && observation?.finding?.actionItems == null">
-                                            (no Action Items available)
+                                <!-- System generated issues -->
+                                <div *ngIf="observation?.finding?.auto_Generated == 1">
+                                    <div *ngIf="this.masterActionItemsMap.has(observation?.finding?.finding_Id); else noActionsBlock">
+                                        <div *ngFor="let actions of this.masterActionItemsMap.get(observation?.finding?.finding_Id);">
+                                            {{ actions.action_Items }}
                                         </div>
                                     </div>
+                                    <ng-template #noActionsBlock>
+                                        (No actions available)
+                                    </ng-template>
                                 </div>
-                                <div *ngIf="!this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
-                                    (no Action Items available)
-                                </div>
+
                                 <strong> Risk Area: </strong> {{ observation?.finding?.risk_Area }}
                                 <br>
+
                                 <strong> Sub-Risk Area: </strong> {{ observation?.finding?.sub_Risk }}
                                 <br>
-                                <strong> Regulatory Citation: </strong>
+                                
+                                <strong>Regulatory Citations: </strong>
                                 <br>
-                                <div *ngIf="this.masterActionItemsMap.has(observation?.finding?.finding_Id)">
-                                    <div *ngIf="observation?.finding?.citations != null && observation?.finding?.citations != ''">
-                                        {{
-                                        (this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                        == null
-                                        ||
-                                        this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                        == '') ?
-                                        ' ' :
-                                        this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                        + ', ' }}{{ observation?.finding?.citations }}
-                                    </div>
-                                    <div *ngIf="(observation?.finding?.citations == null || observation?.finding?.citations == '')
-                                                    && this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation != null
-                                                    && this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation != ''">
-                                        {{
-                                        this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                        }}
-                                    </div>
-                                    <div *ngIf="(this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation == null
-                                            || this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation == '')
-                                            && (observation?.finding?.citations == null || observation?.finding?.citations == '')">
-                                        (no Regulatory Citations available)
-                                    </div>
-                                </div>
-                                <div *ngIf="!this.masterActionItemsMap.has(observation?.finding?.finding_Id)">
-                                    (no Regulatory Citations available)
-                                </div>
+                                
+                                <span *ngIf="regCitationsMap.has(observation?.question?.mat_Question_Id)">
+                                    {{ regCitationsMap.get(observation?.question?.mat_Question_Id) }}
+                                    <span *ngIf="observation?.finding?.citations">, {{ observation?.finding?.citations }}</span>
+                                </span>
+
+                                <span *ngIf="!regCitationsMap.has(observation?.question?.mat_Question_Id)">(No Regulatory Citations available)</span>
+                                <br>
                             </div>
+
                             <div *ngIf="observation?.finding?.type === 'Supplemental Fact'">
-
                                 <strong> Supplemental Fact: </strong>
+                                <br>
 
+                                <span *ngIf="observation?.finding?.supp_Guidance != null && observation?.finding?.supp_Guidance != ''" style="white-space: pre-wrap;" [innerHtml]="observation?.finding?.supp_Guidance"></span>
+                                <span *ngIf="observation?.finding?.supp_Guidance == null || observation?.finding?.supp_Guidance == ''">(no Supplemental Fact available)</span>
                                 <br>
-                                <span
-                                    *ngIf="observation?.finding?.supp_Guidance != null && observation?.finding?.supp_Guidance != ''"
-                                    style="white-space: pre-wrap;" [innerHtml]="observation?.finding?.supp_Guidance"></span>
-                                <span *ngIf="observation?.finding?.supp_Guidance == null || observation?.finding?.supp_Guidance == ''">(no
-                                    Supplemental Fact available)</span>
-                                <br>
+
                                 <strong> Resources: </strong>
                                 <br>
+
                                 <span *ngIf="sourceFilesMap.has(observation?.finding?.finding_Id)">
                                     <div *ngFor="let file of sourceFilesMap.get(observation?.finding?.finding_Id)">
                                         {{ file.title }} (<strong>Section:</strong> {{ file.sectionRef }})
                                     </div>
                                 </span>
-                                <span *ngIf="!sourceFilesMap.has(observation?.finding?.finding_Id)">(no Resources
-                                    available)</span>
+
+                                <span *ngIf="!sourceFilesMap.has(observation?.finding?.finding_Id)">(no Resources available)</span>
+                                <br>
+
+                                <strong> References: </strong>
+                                <br>
+
+                                <span *ngIf="regCitationsMap.has(observation?.question?.mat_Question_Id)">
+                                    {{ regCitationsMap.get(observation?.question?.mat_Question_Id) }}
+                                </span>
+
+                                <span *ngIf="!regCitationsMap.has(observation?.question?.mat_Question_Id)">(No Regulatory Citations available)</span>
+                                <br>
                             </div>
 
-
-                            <hr class="page-line">
+                            <hr class="page-line">     
                         </div>
                     </div>
                 </div>
+
                 <div *ngIf="!this.relaventIssues">
                     No Issues were noted.
                 </div>
+                
             </div>
 
-
-            <!-- </div> -->
-
-            <div style="
-                    text-align: right;
-                    font-weight: normal;
-                    font-size: 18px;
-                    flex-direction: column;
-                    line-height: 150%;
-                ">
-
-                <button class="btn form-check-label btn-copy" title="Print to PDF"
-                    (click)="print()">Print to PDF
+            <div style="text-align: right; font-weight: normal; font-size: 18px; flex-direction: column; line-height: 150%;">
+                <button class="btn form-check-label btn-copy" title="Print to PDF" (click)="print()">
+                    Print to PDF
                 </button>
             </div>
+
         </ng-template>
     </div>
 

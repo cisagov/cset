@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,10 @@ import { LayoutService } from '../../../../services/layout.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-tutorial-cis',
-  templateUrl: './tutorial-cis.component.html',
-  styleUrls: ['./tutorial-cis.component.scss']
+    selector: 'app-tutorial-cis',
+    templateUrl: './tutorial-cis.component.html',
+    styleUrls: ['./tutorial-cis.component.scss'],
+    standalone: false
 })
 export class TutorialCisComponent implements OnInit {
 

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -25,11 +25,12 @@
     <!-- commented out due to client request -->
     <!-- <div *ngIf="!isAssessmentPageFilled() || disableIseReportLinks || ncuaSvc.unassignedIssues"> -->
     <div *ngIf="disableIseReportLinks">
-        <div class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
+        <div
+            class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
             <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
             <span class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
                 <!-- below are commented out in case clients change their minds -->
-<!-- 
+                <!-- 
                 <div class="mt-2 me-4">Some reports are disabled until all items are resolved.</div>
                 <br />
 
@@ -43,10 +44,10 @@
                 </div> -->
 
                 <div class="mt-2 me-4" *ngIf="disableIseReportLinks">
-                    There are unanswered statements. Some domains will be incomplete.
+                    There are unanswered examination statements that need to be answered.
                     <br /><br />
                 </div>
-<!-- 
+                <!-- 
                 <div class="mt-2 me-4" *ngIf="ncuaSvc.unassignedIssues">
                     Some reports are disabled until all Issues have
                     an "Issue Type" assigned.<br /><br />
@@ -68,7 +69,8 @@
 <!-- Not State Led -->
 <div *ngIf="!assessSvc.assessment.isE_StateLed">
     <div *ngIf="!isAssessmentPageFilled() || disableIseReportLinks || ncuaSvc.unassignedIssues">
-        <div class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
+        <div
+            class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
             <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
             <span class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
 
@@ -108,7 +110,8 @@
 <div *ngIf="!assessSvc.assessment.isE_StateLed">
     <div *ngIf="(isAssessmentPageFilled() && !disableIseReportLinks && !ncuaSvc.unassignedIssues)">
         <div *ngIf="(!iseHasBeenSubmitted && !ncuaSvc.iseHasBeenSubmitted)">
-            <div class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
+            <div
+                class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
                 <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
                 <div class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
                     This assessment has not been submitted. If this assessment is complete, please click submit.

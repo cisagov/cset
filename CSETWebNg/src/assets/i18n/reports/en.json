@@ -104,6 +104,10 @@
                "3": {
                     "title": "CMMC 2.0 - Comments and Marked for Review",
                     "desc": "This document consolidates all practices that have received comments and have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
+               },
+               "4": {
+                    "title": "Export POAM to Excel",
+                    "desc": "This report generates a Plan of Action and Milestones (POA&M) template which includes a list of unmet practices eligible for remediation. This POA&M will exclude any CMMC practices that are ineligible for inclusion per CMMC ruling."
                }
           },
           "rra": {
@@ -314,6 +318,7 @@
                }
           }
      },
+     "self assessment indicator": "Self Assessment",
      "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated {date}.",
      "reports run prior message": "Any reports run prior to that update may not reflect the current state of the assessment.",
      "printing report instructions button": "Printing Reports Instructions",
@@ -339,18 +344,19 @@
      "answer": "Answer",
      "rank": "Rank",
      "question": "Question",
-     "overall score text": "There may be a discrepancy in the displayed percentages because some questions apply to more than one component of the system. As a result, these questions are counted multiple times in the percentage calculation total. Essentially, the overlap in question relevance causes the overall component based score to appear lower than the component summary score.",
-     "assessment compliance text": "This chart shows the overall percentage scores. <br> Please note that unanswered questions are counted as a NO answer in these scores.",
+     "overall score para 1": "The Overall Score is determined by the number of questions answered \"Yes\" or \"Alt\" out of the total number of questions, excluding those marked as \"N/A.\" Unanswered questions and \"No\" responses to requirements are considered non-compliant.",
+     "overall score para 2": "The Overall Score is determined by the number of questions answered \"Yes\" or \"Alt\" out of the total number of questions, excluding those marked as \"N/A.\" Unanswered questions and \"No\" responses to requirements are considered non-compliant. The Standard Based Score only includes questions based on standard requirements. The Component Based Score only includes questions pertaining to diagram components.",
+     "overall score para 3": "Please note, there may be a discrepancy between scores as some questions apply to more than one component within the system. As a result, these questions are counted multiple times in the percentage calculation, which may make the Overall Score appear lower than the Component Based Score.",
+     "assessment compliance text": "This chart displays the compliance score(s) as calculated above. It provides insight into the organization's progress toward meeting the cybersecurity standards evaluated in the assessment. Unanswered questions and \"No\" responses to requirements are considered non-compliant.",
      "ranked categories text 1a": "This chart ranks the top areas of concern based on a weighted risk score. The percentages are calculated by assigning higher weights to requirements that, if not implemented, would make the system more vulnerable to easier attacks. Lower weights are assigned to requirements associated with more difficult attacks.",
      "ranked categories text 1b": "Categories are ranked in order of highest priority to lowest. Organizations can use this information to identify where to allocate additional resources and implement effective mitigating controls.",
-     "ranked categories text 2": "This chart shows subject areas needing the most attention. Each bar represents the labeled subject area's weighted contribution so that the combined total always equals 100%. The weighted contribution includes the importance of both the question and the subject area, as well as the percentage of missed questions in that subject area.",
-     "ranked categories text 3": "This table presents the priority ranking for each category, the number of unmet requirements out of the total, and the weighted risk percentage.",
+     "ranked categories text 2": "This table presents the priority ranking for each category, the number of unmet requirements out of the total, and the weighted risk percentage. Lower percentages are desirable.",
      "passed": "Passed",
      "failed": "Failed",
      "total": "Total",
      "percent": "Percent",
      "number": "Number",
-     "standards summary text 1": "This chart displays the percentage distribution of each response type for standard-based questions.",
+     "standards summary text 1": "This chart displays the percentage distribution of each response type across all standard-based questions.",
      "standards summary text 2": "This table displays the number of each response type, the total number of questions, and the percentage distribution for each response type.",
      "reference number": "Reference #",
      "high level assessment label": "High-Level Assessment Description",
@@ -372,7 +378,9 @@
           "no observations message": "The assessment does not contain any observations that are assigned to an individual.",
           "question identifier": "Question Identifier",
           "question text": "Question Text",
-          "summary": "This document contains a list of all observations identified and recorded during the assessment. For more information, view the Observations Tear Out Sheets page in the User Guide."
+          "summary": "This report lists all Observations identified and recorded during the assessment. For more information, view the Observations Tear Out Sheets page in the User Guide.",
+          "export csv link": "Export Observations to Excel",
+          "excel summary": "All Observations are exported to an Excel file.  Observations assigned to multiple parties will have an entry for each person responsible."
      },
      "core": {
           "dashboard": {
@@ -745,7 +753,15 @@
                },
                "deficiencies": {
                     "title": "CIS Deficiencies",
-                    "no baseline": "No baseline assessment has been selected to compare against."
+                    "report title": "DEFICIENCY REPORT CISA CIS",
+                    "para 1": "The CIS Deficiencies chart compares the results of the current assessment with the selected baseline for each category.",
+                    "no baseline": "No baseline assessment has been selected to compare against.",
+                    "gray title": "“0” = BASELINE",
+                    "gray body": "The baseline is denoted at the median which is represented by the zero “0” value on the chart. No bar is displayed; the results for that category remain unchanged.",
+                    "red title": "RED BAR",
+                    "red body": "The Deficiency report shows the current CIS assessment deficiencies in red using the baseline assessment selected during the CIS Configuration Step.",
+                    "green title": "GREEN BAR",
+                    "green body": "The Deficiency report shows the current CIS assessment improvements in green using the baseline assessment selected during the CIS Configuration Step."
                }
           },
           "crr": {

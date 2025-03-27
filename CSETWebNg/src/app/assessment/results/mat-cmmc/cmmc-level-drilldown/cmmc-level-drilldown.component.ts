@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,11 +29,12 @@ import { LayoutService } from '../../../../services/layout.service';
 import { Chart } from 'chart.js';
 
 @Component({
-  selector: 'app-cmmc-level-drilldown',
-  templateUrl: './cmmc-level-drilldown.component.html',
-  styleUrls: ['../../../../../sass/cmmc-results.scss'],
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-cmmc-level-drilldown',
+    templateUrl: './cmmc-level-drilldown.component.html',
+    styleUrls: ['../../../../../sass/cmmc-results.scss'],
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class CmmcLevelDrilldownComponent implements OnInit {
 

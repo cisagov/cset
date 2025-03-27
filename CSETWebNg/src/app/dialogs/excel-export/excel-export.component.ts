@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,15 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
 import { AssessmentService } from '../../services/assessment.service';
+import { FileExportService } from '../../services/file-export.service';
+
 
 @Component({
-  selector: 'excel-export',
-  templateUrl: './excel-export.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'excel-export',
+    templateUrl: './excel-export.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class ExcelExportComponent {
 
@@ -43,6 +46,7 @@ export class ExcelExportComponent {
     private dialog: MatDialogRef<ExcelExportComponent>,
     public configSvc: ConfigService,
     public assessSvc: AssessmentService,
+    private fileExportSvc: FileExportService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     dialog.beforeClosed().subscribe(() => dialog.close());
     var doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
@@ -55,9 +59,9 @@ export class ExcelExportComponent {
 
   exportToExcel() {
     if (this.assessSvc.isISE()) {
-      window.location.href = this.configSvc.apiUrl + 'ExcelExportISE?token=' + localStorage.getItem('userToken');
+      this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'ExcelExportISE');
     } else {
-      window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+      this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'assessment/export/excel');
     }
 
     this.dialog.close();
@@ -66,5 +70,4 @@ export class ExcelExportComponent {
   setDoNotShow() {
     localStorage.setItem('doNotShowExcelExport', this.doNotShow.toString());
   }
-
 }

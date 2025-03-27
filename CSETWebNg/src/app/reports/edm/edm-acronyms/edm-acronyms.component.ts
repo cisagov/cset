@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-edm-acronyms',
-  templateUrl: './edm-acronyms.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'app-edm-acronyms',
+    templateUrl: './edm-acronyms.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class EdmAcronymsComponent implements OnInit {
 

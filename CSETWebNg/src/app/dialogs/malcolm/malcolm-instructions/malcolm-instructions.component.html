@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2024 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -25,39 +25,37 @@
         <span class="me-3 fs-base-6 {{iconClass}}"></span>
         <span>Malcolm Instructions</span>
     </div>
-  
+
     <mat-dialog-content class="p-3 pb-0 pe-0 oy-auto d-flex flex-column flex-11a">
         <div class="pe-3">
-            Enter the IP address of the Malcolm instance to attempt to pull data from Malcolm directly.
-            <div class="d-flex" style="justify-content: space-between;">
-                <div class="d-flex flex-column">
-                <span style="color:red" *ngIf="iperror">Not a Valid IP Address</span>
-                <input #ipAddress class="inline-flex" type="text" (blur)="validateIP(ipAddress.value)">
+            Enter the IP address of the Malcolm instance to attempt to pull data from Malcolm directly
+            <div class="d-flex">
+                <div class="d-flex flex-column me-3">
+                    <input #ipAddress class="form-control" maxlength="20" type="text"
+                        (blur)="validateIP(ipAddress.value)">
+                    <span class="alert alert-danger mt-1" *ngIf="iperror">Not a valid IP address</span>
                 </div>
-                
-                <button class="btn btn-primary inline-flex" (click)="attemptToImportFromMalcolm(ipAddress.value)">Attempt to Import Malcolm Directly</button>
-                
+
+                <button class="btn btn-primary inline-flex"
+                    (click)="attemptToImportFromMalcolm(ipAddress.value)">Import</button>
             </div>
 
-            <!-- <span *ngIf=""></span> -->
-            <br>
-
-            <p>OR</p>
+            <p style="text-align: center;" class="my-2">&mdash;OR&mdash;</p>
             <ol>
-                <li>Open the command terminal</li>
-                -   Can be found by searching "cmd" in the Search box on the task bar
-                
-                <li>Find your IP address</li>
-                -   Can be found by entering "ipconfig" in the command terminal and finding the "IPv4 Address" field
-                <li>Enter the following command into the command terminal, replacing the marked area with your IP address</li>
-                <br>
-                curl -k -sSL -XPOST -H 'Content-Type: application/json'
-                https://(your_ip_here)/mapi/agg/source.ip,source.device.role,destination.ip,destination.device.role
-                -d '{{ '{' }} "from":"5 years ago","to": "now"{{ '}' }}'
-                <br><br>
+                <li>Open the command terminal. Type "cmd" in the Search box on the task bar</li>
+                <li>Find your IP address. Type "ipconfig" in a command terminal and use the "IPv4 Address" value
+                </li>
+                <li>Enter the following command into the command terminal, replacing the marked area with your IP
+                    address:
+                    <div style="font-family: monospace; font-size: .8rem; background-color: #eee; padding: 1rem;">
+                        curl -k -sSL -XPOST -H 'Content-Type: application/json'
+                        https://(your_ip_here)/mapi/agg/source.ip,source.device.role,destination.ip,destination.device.role
+                        -d '{{ '{' }} "from":"5 years ago","to": "now"{{ '}' }}'
+                    </div>
+                </li>
+
                 <li>Copy and paste the text output into a .txt file (i.e. “Notepad” on Windows, etc.)</li>
-                <li>Change the .txt file into a .json file</li>
-                -   Rename the file to have “.json” at the end instead of “.txt”   
+                <li>Rename the file to have a “.json” extension
             </ol>
             <label for="importFile" class="btn btn-primary cset-icons-import">
                 Import Malcolm File
@@ -67,7 +65,7 @@
 
         </div>
     </mat-dialog-content>
-  
+
     <mat-dialog-actions class="p-3 pt-3 mb-0 d-flex ms-auto flex-00a">
         <button class="btn btn-secondary" (click)="dialogRef.close(true)">Close</button>
     </mat-dialog-actions>

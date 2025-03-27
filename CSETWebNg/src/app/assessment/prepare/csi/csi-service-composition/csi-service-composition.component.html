@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2024 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -42,7 +42,8 @@
         (change)="update()"></textarea>
     </div>
     <div class="mb-4">
-      <label for="servicesDescription" class="form-label">Services (computer services, e-mail servers, web servers, control services,
+      <label for="servicesDescription" class="form-label">Services (computer services, e-mail servers, web servers,
+        control services,
         etc.)</label>
       <textarea [ngClass]="{
           'alert-danger': !serviceComposition.servicesDescription && showErrors()
@@ -51,7 +52,8 @@
         (change)="update()"></textarea>
     </div>
     <div class="mb-4">
-      <label for="applicationsDescription" class="form-label">Applications (computer programs, ERP software, shareware user-added
+      <label for="applicationsDescription" class="form-label">Applications (computer programs, ERP software, shareware
+        user-added
         non-company software, etc.)</label>
       <textarea [ngClass]="{
           'alert-danger': !serviceComposition.applicationsDescription && showErrors()
@@ -60,7 +62,8 @@
         placeholder="Applications Description" (change)="update()"></textarea>
     </div>
     <div class="mb-4">
-      <label for="connectionsDescription" class="form-label">Connections (VPN access by subcontractors, portable devices connected to
+      <label for="connectionsDescription" class="form-label">Connections (VPN access by subcontractors, portable devices
+        connected to
         organization services,
         interconnections between networks, connection of a Critical Service to the Internet, etc.)</label>
       <textarea [ngClass]="{
@@ -69,8 +72,9 @@
         id="connectionsDescription" [(ngModel)]="serviceComposition.connectionsDescription"
         placeholder="Connections Description" (change)="update()"></textarea>
     </div>
-    <div  class="mb-4" *ngIf="showCriticalServiceIdentifyingInfo()">
-      <label for="personnelDescription" class="form-label">Individuals (key IT/OT security professionals, including administrators, users,
+    <div class="mb-4" *ngIf="showCriticalServiceIdentifyingInfo()">
+      <label for="personnelDescription" class="form-label">Individuals (key IT/OT security professionals, including
+        administrators, users,
         and third-party vendors)</label>
       <textarea [ngClass]="{
           'alert-danger': !serviceComposition.personnelDescription && showErrors()

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { VadrDataService } from '../../../../services/vadr-data.service';
 
 @Component({
-  selector: 'app-vadr-answer-counts',
-  templateUrl: './vadr-answer-counts.component.html',
-  styleUrls: ['./vadr-answer-counts.component.scss']
+    selector: 'app-vadr-answer-counts',
+    templateUrl: './vadr-answer-counts.component.html',
+    styleUrls: ['./vadr-answer-counts.component.scss'],
+    standalone: false
 })
 export class VadrAnswerCountsComponent implements OnInit {
 

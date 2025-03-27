@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +32,10 @@ import { MaturityService } from '../../services/maturity.service';
 
 
 @Component({
-  selector: 'app-acet-answeredquestions',
-  templateUrl: './acet-answeredquestions.component.html',
-  styleUrls: ['../reports.scss', '../acet-reports.scss']
+    selector: 'app-acet-answeredquestions',
+    templateUrl: './acet-answeredquestions.component.html',
+    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    standalone: false
 })
 export class AcetAnsweredQuestionsComponent implements OnInit {
   response: any = {};
@@ -46,7 +47,7 @@ export class AcetAnsweredQuestionsComponent implements OnInit {
     public acetSvc: ACETService,
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
-    private tSvc: TranslocoService, 
+    private tSvc: TranslocoService,
     public matSvc: MaturityService
   ) { }
 
@@ -68,8 +69,8 @@ export class AcetAnsweredQuestionsComponent implements OnInit {
         let final: string = cleanedString.replace(/,/g, '/');
         this.targetLevel = final;
       });
-      
-    
+
+
   }
 
 

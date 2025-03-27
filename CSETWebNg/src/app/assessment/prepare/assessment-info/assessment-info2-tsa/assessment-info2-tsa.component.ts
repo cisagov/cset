@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,9 +30,10 @@ import { AssessmentDemographicsComponent } from '../assessment-demographics/asse
 
 
 @Component({
-  selector: 'app-assessment-info2-tsa',
-  templateUrl: './assessment-info2-tsa.component.html',
-  styleUrls: ['./assessment-info2-tsa.component.scss']
+    selector: 'app-assessment-info2-tsa',
+    templateUrl: './assessment-info2-tsa.component.html',
+    styleUrls: ['./assessment-info2-tsa.component.scss'],
+    standalone: false
 })
 export class AssessmentInfo2TsaComponent implements OnInit {
   constructor(

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,9 +35,10 @@ import Chart from 'chart.js/auto';
  * to work in the future.
  */
 @Component({
-  selector: 'app-eval-against-standards',
-  templateUrl: './eval-against-standards.component.html',
-  styleUrls: ['../reports.scss']
+    selector: 'app-eval-against-standards',
+    templateUrl: './eval-against-standards.component.html',
+    styleUrls: ['../reports.scss'],
+    standalone: false
 })
 export class EvalAgainstStandardsComponent implements OnInit {
 

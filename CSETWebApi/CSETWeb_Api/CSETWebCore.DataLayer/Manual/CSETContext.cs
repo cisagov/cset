@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -956,6 +956,11 @@ namespace CSETWebCore.DataLayer.Model
             if (modelId == null)
             {
                 m = DBNull.Value;
+            }
+
+            if (modelId != null)
+            {
+                FillEmptyMaturityQuestionsForModel(assessmentId, (int)modelId);
             }
 
 

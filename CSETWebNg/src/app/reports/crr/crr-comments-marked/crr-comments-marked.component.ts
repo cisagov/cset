@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,10 @@ import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
-  selector: 'app-crr-comments-marked',
-  templateUrl: './crr-comments-marked.component.html',
-  styleUrls: ['./../crr-report/crr-report.component.scss']
+    selector: 'app-crr-comments-marked',
+    templateUrl: './crr-comments-marked.component.html',
+    styleUrls: ['./../crr-report/crr-report.component.scss'],
+    standalone: false
 })
 export class CrrCommentsMarkedComponent implements OnInit {
   crrModel: CmuReportModel;

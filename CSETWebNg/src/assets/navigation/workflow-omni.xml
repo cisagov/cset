@@ -322,7 +322,7 @@
 
     <!-- Results Phase -->
     <node d="results" id="phase-results" visible="CF-DEMOGRAPHICS-COMPLETE" enabled="CF-ASSESSMENT-COMPLETE">
-    <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY-ANY(2,6,3,4,5,1,8,13,9,11,14,19)" />
+    <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="HIDE" />
 
         <!-- Results - Standards -->
         <node d="standard results" visible="OPTION:STANDARD">

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,9 @@ import { CmuService } from '../../../../services/cmu.service';
 import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
-  selector: 'app-crr-summary-results',
-  templateUrl: './crr-summary-results.component.html'
+    selector: 'app-crr-summary-results',
+    templateUrl: './crr-summary-results.component.html',
+    standalone: false
 })
 export class CrrSummaryResultsComponent implements OnInit {
   summaryResult: any = '';
@@ -36,7 +37,7 @@ export class CrrSummaryResultsComponent implements OnInit {
   chartLoaded: boolean = false;
   summaryResultLoaded: boolean = false;
 
-  constructor(private cmuSvc: CmuService) {}
+  constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
     this.cmuSvc.getCmuModel().subscribe((data: CmuReportModel) => {

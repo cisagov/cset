@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,9 +27,10 @@ import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
 
 @Component({
-  selector: 'zones',
-  templateUrl: './zones.component.html',
-  styleUrls: ['./zones.component.scss']
+    selector: 'zones',
+    templateUrl: './zones.component.html',
+    styleUrls: ['./zones.component.scss'],
+    standalone: false
 })
 export class ZonesComponent implements OnInit {
   zones = [];
@@ -42,9 +43,10 @@ export class ZonesComponent implements OnInit {
   }
 
   getZones() {
-    this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
-      this.zones = x.zones;
-    });
+    // this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
+    //   this.zones = x.zones;
+    // });
+    this.zones = this.diagramSvc.diagramModel?.zones;
   }
 
   sortData(sort: Sort) {

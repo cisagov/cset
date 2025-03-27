@@ -1,5 +1,5 @@
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -55,13 +55,14 @@ interface LibrarySearchResponse {
 }
 
 @Component({
-  selector: 'app-resource-library',
-  templateUrl: './resource-library.component.html',
-  styleUrls: ['./resource-library.component.scss'],
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+    selector: 'app-resource-library',
+    templateUrl: './resource-library.component.html',
+    styleUrls: ['./resource-library.component.scss'],
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100' },
+    standalone: false
 })
-export class ResourceLibraryComponent implements OnInit, AfterViewInit {
+export class ResourceLibraryComponent implements OnInit {
   results: LibrarySearchResponse[];
   searchTerm: string;
   searchString: string;
@@ -77,8 +78,22 @@ export class ResourceLibraryComponent implements OnInit, AfterViewInit {
   children?: LibrarySearchResponse[];
   filter: string = '';
   setFilterDebounced = new Subject<string>();
-  @ViewChild('tabs') tabsElementRef: ElementRef;
   devMode: boolean = isDevMode();
+  private _tabsElementRef: ElementRef;
+
+  @ViewChild('tabs') set tabsElementRef(element: ElementRef) {
+    this._tabsElementRef = element;
+
+    if (this._tabsElementRef) {
+      const tabsEl = this._tabsElementRef.nativeElement;
+      tabsEl.classList.add('sticky-tabs');
+      if (this.authSvc.isLocal && this.devMode) {
+        tabsEl.style.top = '81px';
+      } else {
+        tabsEl.style.top = '62px';
+      }
+    }
+  }
 
   constructor(private configSvc: ConfigService,
     private http: HttpClient,
@@ -114,18 +129,6 @@ export class ResourceLibraryComponent implements OnInit, AfterViewInit {
         this.isLoading = false;
       }
     );
-  }
-
-  ngAfterViewInit(): void {
-    if (!!this.tabsElementRef) {
-      const tabsEl = this.tabsElementRef.nativeElement;
-      tabsEl.classList.add('sticky-tabs');
-      if (this.authSvc.isLocal && this.devMode) {
-        tabsEl.style.top = '81px';
-      } else {
-        tabsEl.style.top = '62px';
-      }
-    }
   }
 
   setFilter(filter: string) {
@@ -193,9 +196,13 @@ export class ResourceLibraryComponent implements OnInit, AfterViewInit {
 
           // Cull out any entries whose HeadingTitle is null
 
-          while (this.results.findIndex(r => r.headingText === null) >= 0) {
-            this.results.splice(this.results.findIndex(r => r.headingText === null), 1);
-          }
+          // NOTE: I am commenting this out because I do not see any reason to filter out docs
+          // that don't have summaries. Searching for them in the browse tab works, so it should
+          // also work in the search tab.
+
+          // while (this.results.findIndex(r => r.headingText === null) >= 0) {
+          //   this.results.splice(this.results.findIndex(r => r.headingText === null), 1);
+          // }
         });
   }
 

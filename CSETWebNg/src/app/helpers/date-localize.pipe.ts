@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,10 @@ import { AuthenticationService } from '../services/authentication.service';
  * Formats a date to the 'local' style, based on the locale
  * currently set in the TranslocoService.
  */
-@Pipe({ name: 'localizeDate' })
+@Pipe({
+    name: 'localizeDate',
+    standalone: false
+})
 export class LocalizeDatePipe implements PipeTransform {
 
     constructor(

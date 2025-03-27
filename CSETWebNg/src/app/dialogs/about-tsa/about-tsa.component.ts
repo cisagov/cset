@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
 import { VersionService } from '../../services/version.service';
 @Component({
-  selector: 'app-about-tsa',
-  templateUrl: './about-tsa.component.html',
-  // styleUrls: ['./about-tsa.component.scss'],
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-about-tsa',
+    templateUrl: './about-tsa.component.html',
+    // styleUrls: ['./about-tsa.component.scss'],
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class AboutTsaComponent implements OnInit {
 
@@ -43,10 +44,10 @@ export class AboutTsaComponent implements OnInit {
     public configSvc: ConfigService,
     public versionSvc: VersionService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.versionSvc.localVersionObservable$.subscribe(localVersion => {
-        this.version = localVersion;
-      });
-     }
+    this.versionSvc.localVersionObservable$.subscribe(localVersion => {
+      this.version = localVersion;
+    });
+  }
 
   close() {
     return this.dialog.close();

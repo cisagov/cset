@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,8 +35,9 @@ import { MalcolmService } from '../../../../../services/malcolm.service';
 
 
 @Component({
-  selector: 'app-question-block-nested',
-  templateUrl: './question-block-nested.component.html'
+    selector: 'app-question-block-nested',
+    templateUrl: './question-block-nested.component.html',
+    standalone: false
 })
 export class QuestionBlockNestedComponent implements OnInit {
 
@@ -94,9 +95,9 @@ export class QuestionBlockNestedComponent implements OnInit {
     this.questionsSvc.extrasChanged$.subscribe((qe) => {
       this.refreshExtras(qe);
     });
-    
+
     if (this.configSvc.behaviors.showMalcolmAnswerComparison) {
-      this.malcolmSvc.getMalcolmAnswers().subscribe((r: any) => {    
+      this.malcolmSvc.getMalcolmAnswers().subscribe((r: any) => {
         this.malcolmInfo = r;
       });
     }

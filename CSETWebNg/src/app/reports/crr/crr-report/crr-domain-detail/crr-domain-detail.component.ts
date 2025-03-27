@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,14 +25,15 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
-  selector: 'app-crr-domain-detail',
-  templateUrl: './crr-domain-detail.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+    selector: 'app-crr-domain-detail',
+    templateUrl: './crr-domain-detail.component.html',
+    styleUrls: ['./../crr-report.component.scss'],
+    standalone: false
 })
 export class CrrDomainDetailComponent implements OnChanges {
   @Input() model: CmuReportModel;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnChanges(): void {}
+  ngOnChanges(): void { }
 }
