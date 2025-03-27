@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -42,8 +42,9 @@ interface UserAssessment {
 }
 
 @Component({
-  selector: 'app-select-assessments',
-  templateUrl: './select-assessments.component.html'
+    selector: 'app-select-assessments',
+    templateUrl: './select-assessments.component.html',
+    standalone: false
 })
 export class SelectAssessmentsComponent implements OnInit {
 
@@ -137,7 +138,7 @@ export class SelectAssessmentsComponent implements OnInit {
           element.disabled = true;
         }
       }
-      
+
       if (!!this.standardSelected) {
         if (element.useMaturity) {
           element.disabled = true;

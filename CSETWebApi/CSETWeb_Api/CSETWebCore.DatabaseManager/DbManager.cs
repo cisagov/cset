@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -247,7 +247,7 @@ namespace CSETWebCore.DatabaseManager
 
         private void DisplayOldLocalDbInstalledNotification(InitialDbInfo localdbInfo)
         {
-            if (!ApplicationCode.Equals("ACET"))
+            if (!ApplicationCode.Equals("ACET") && !ApplicationCode.Equals("TOOLBOX"))
             {
                 if (LocalDb2019Installed || LocalDb2012Installed)
                 {

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -20,6 +20,13 @@ namespace CSETWebCore.Model.Assessment
         public DateTime CreatedDate { get; set; }
         public int? CreatorId { get; set; }
         public string CreatorName { get; set; }
+
+        /// <summary>
+        /// Contains the name of the facilitator contact or the creator (fallback)
+        /// </summary>
+        public string FacilitatorName { get; set; }
+        public bool SelfAssessment { get; set; }
+
         public DateTime? AssessmentDate { get; set; }
         public DateTime? AssessmentEffectiveDate { get; set; }
         public string FacilityName { get; set; }

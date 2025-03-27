@@ -39,98 +39,116 @@
     <None Remove="Demographic\DemographicIO\Export\" />
     <None Remove="Demographic\DemographicIO\Import\" />
     <None Remove="Demographic\DemographicIO\Models\" />
+    <None Update="App_Data\AssessmentConversion\CMMC-CMMC2F.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\AssessmentConversion\CMMC2-CMMC2F.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\AssessmentConversion\upgrades.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\ResponseFile\DocumentNotFound.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\ResponseFile\NoHostDefined.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="App_Data\assessmentInviteTemplate_ACET.html">
+    <EmbeddedResource Include="App_Data\EmailTemplates\assessmentInviteTemplate_ACET.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\assessmentInviteTemplate_CF.html">
+    <EmbeddedResource Include="App_Data\EmailTemplates\assessmentInviteTemplate_CF.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\assessmentInviteTemplate_TSA.html">
+    <EmbeddedResource Include="App_Data\EmailTemplates\assessmentInviteTemplate_CSET.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\assessmentInviteTemplate_RRA.html">
+    <EmbeddedResource Include="App_Data\EmailTemplates\assessmentInviteTemplate_RRA.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\assessmentInviteTemplate_CSET.html">
+    <EmbeddedResource Include="App_Data\EmailTemplates\assessmentInviteTemplate_TSA.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\EmailFooter_TSA.html">
+    <EmbeddedResource Include="App_Data\EmailTemplates\EmailFooter.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\EmailFooter_CF.html">
+    <EmbeddedResource Include="App_Data\EmailTemplates\EmailFooter_ACET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\EmailTemplates\EmailFooter_CF.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\EmailFooter.html">
+    <EmbeddedResource Include="App_Data\EmailTemplates\EmailFooter_TSA.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\EmailFooter_ACET.html">
+    <EmbeddedResource Include="App_Data\EmailTemplates\inlineStylesheet.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\inlineStylesheet.html">
+    <EmbeddedResource Include="App_Data\EmailTemplates\invitedPasswordCreationTemplate_ACET.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\invitedPasswordCreationTemplate_CF.html">
+    <EmbeddedResource Include="App_Data\EmailTemplates\invitedPasswordCreationTemplate_CF.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\invitedPasswordCreationTemplate_TSA.html">
+    <EmbeddedResource Include="App_Data\EmailTemplates\invitedPasswordCreationTemplate_CSET.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\invitedPasswordCreationTemplate_RRA.html">
+    <EmbeddedResource Include="App_Data\EmailTemplates\invitedPasswordCreationTemplate_RRA.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\invitedPasswordCreationTemplate_ACET.html">
+    <EmbeddedResource Include="App_Data\EmailTemplates\invitedPasswordCreationTemplate_TSA.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\invitedPasswordCreationTemplate_CSET.html">
+    <EmbeddedResource Include="App_Data\EmailTemplates\passwordCreationTemplate_ACET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\EmailTemplates\passwordCreationTemplate_CF.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\EmailTemplates\passwordCreationTemplate_CSET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\EmailTemplates\passwordCreationTemplate_TSA.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\EmailTemplates\passwordResetTemplate_ACET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\EmailTemplates\passwordResetTemplate_CF.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\EmailTemplates\passwordResetTemplate_CSET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\EmailTemplates\passwordResetTemplate_TSA.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="App_Data\ModelProperties\ModelProperties.json" />
-    <EmbeddedResource Include="App_Data\passwordCreationTemplate_ACET.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\passwordCreationTemplate_CF.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\passwordCreationTemplate_TSA.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\passwordCreationTemplate_CSET.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\passwordResetTemplate_ACET.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\passwordResetTemplate_CF.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\passwordResetTemplate_TSA.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_Data\passwordResetTemplate_CSET.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="AssessmentIO\Import\ColumnImportRules.xml" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CsvHelper.Excel.Core" Version="27.2.1" />
-    <PackageReference Include="DocumentFormat.OpenXml" Version="3.1.0" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.67" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.3.0" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.12.0" />
     <PackageReference Include="Lucene.Net" Version="4.8.0-beta00016" />
     <PackageReference Include="Lucene.Net.Analysis.Common" Version="4.8.0-beta00016" />
     <PackageReference Include="Lucene.Net.Queries" Version="4.8.0-beta00016" />
     <PackageReference Include="Lucene.Net.QueryParser" Version="4.8.0-beta00016" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="8.0.14" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Abstractions" Version="8.0.14" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="NJsonSchema" Version="11.0.2" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.15" />
-    <PackageReference Include="Npoi.Mapper" Version="6.2.1" />
+    <PackageReference Include="NJsonSchema" Version="11.1.0" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.4.0" />
+    <PackageReference Include="Npoi.Mapper" Version="6.2.2" />
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.7" />
     <PackageReference Include="System.Data.OleDb" Version="8.0.1" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.10" />
     <PackageReference Include="TinyMapper" Version="3.0.3" />
@@ -187,6 +205,15 @@
     <None Update="App_Data\LanguagePacks\ES\SECURITY_QUESTION.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="App_Data\LanguagePacks\JP\GALLERY_ITEM.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\JP\SECTOR.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\JP\SECTOR_INDUSTRY.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="App_Data\LanguagePacks\UK\DEMOGRAPHICS_ORGANIZATION_TYPE.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -240,12 +267,6 @@
     </None>
     <None Update="App_Data\LanguagePacks\UK\MATURITY_MODELS.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="App_Data\DocumentNotFound.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="App_Data\NoHostDefined.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -137,6 +137,45 @@ export class SalService {
     // for now, let's just try to fit the text
     return level;
   }
+
+
+  /**
+   * 
+   */
+  saveSalLevels(level: string, ltype: string) {
+    switch (ltype) {
+      case 'C': {
+        this.selectedSAL.selectedSALOverride = false;
+        this.selectedSAL.cLevel = level;
+        break;
+      }
+      case 'I': {
+        this.selectedSAL.selectedSALOverride = false;
+        this.selectedSAL.iLevel = level;
+        break;
+      }
+      case 'A': {
+        this.selectedSAL.selectedSALOverride = false;
+        this.selectedSAL.aLevel = level;
+        break;
+      }
+      default: {
+        this.selectedSAL.selectedSALOverride = true;
+        this.selectedSAL.selected_Sal_Level = level;
+        break;
+      }
+    }
+
+    this.updateStandardSelection(this.selectedSAL).subscribe(
+      (data: Sal) => {
+        this.selectedSAL = data;
+      },
+      error => {
+        console.log('Error setting sal level: ' + (<Error>error).name + (<Error>error).message);
+        console.log('Error setting sal level: ' + (<Error>error).stack);
+      });
+  }
+
 
   /**
  * Primarily used to shorten the word MODERATE on NIST SAL grid

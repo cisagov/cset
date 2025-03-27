@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,10 @@ import { ConfigService } from './../../../../services/config.service';
 import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
-  selector: 'app-crr-cover-sheet',
-  templateUrl: './crr-cover-sheet.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+    selector: 'app-crr-cover-sheet',
+    templateUrl: './crr-cover-sheet.component.html',
+    styleUrls: ['./../crr-report.component.scss'],
+    standalone: false
 })
 export class CrrCoverSheetComponent implements OnInit {
   @Input() model: CmuReportModel;
@@ -36,7 +37,7 @@ export class CrrCoverSheetComponent implements OnInit {
   headerUrl: string;
   bannerUrl: string = 'assets/images/CRR/report-header.jpg';
 
-  constructor(private configSvc: ConfigService) {}
+  constructor(private configSvc: ConfigService) { }
 
   ngOnInit(): void {
     if (this.configSvc.installationMode === 'TSA') {

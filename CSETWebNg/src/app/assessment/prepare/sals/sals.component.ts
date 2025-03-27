@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ import { LayoutService } from '../../../services/layout.service';
 @Component({
   selector: 'app-sals',
   templateUrl: './sals.component.html',
-  // eslint-disable-next-line
+  standalone: false
 })
 export class SalsComponent implements OnInit {
 
@@ -50,6 +50,9 @@ export class SalsComponent implements OnInit {
   ) {
   }
 
+  /**
+   * 
+   */
   ngOnInit() {
     this.salsSvc.selectedSAL = new Sal();
 
@@ -73,6 +76,9 @@ export class SalsComponent implements OnInit {
       });
   }
 
+  /**
+   * 
+   */
   continue() { }
 
   /**
@@ -80,7 +86,7 @@ export class SalsComponent implements OnInit {
    */
   changeMethodology(newType: string) {
     this.selectedMethodology = newType;
-    this.salsSvc.saveSALType(newType).subscribe((data) => {  },
+    this.salsSvc.saveSALType(newType).subscribe((data) => { },
       error => {
         console.log('Error posting change: ' + (<Error>error).name + (<Error>error).message);
         console.log('Error posting change: ' + (<Error>error).stack);

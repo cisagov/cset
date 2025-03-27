@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -109,8 +109,13 @@ namespace CSETWebCore.Api.Controllers
 
                     command.ExecuteNonQuery();
                 }
-
-
+                using (SqlCommand command = new SqlCommand("FillAll", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    // Add input parameter
+                    command.Parameters.Add(new SqlParameter("@assessment_id", assessmentId));
+                    command.ExecuteNonQuery();
+                }
 
                 using (SqlCommand command = new SqlCommand("analytics_Compute_MaturityAll", connection))
                 {
@@ -201,7 +206,25 @@ namespace CSETWebCore.Api.Controllers
             int total_count = 0;
             foreach (DataRow row in SampleSize.Rows)
             {
-                total_count += Convert.ToInt32(row["AssessmentCount"]);
+                if (sectorId == null)
+                {
+                    if (row["SectorId"].ToString() == "")
+                    {
+                        total_count += Convert.ToInt32(row["AssessmentCount"]);
+                        break;
+                    }
+                }
+
+                else if (sectorId == Convert.ToInt32(row["SectorId"]))
+                {
+                    total_count += Convert.ToInt32(row["AssessmentCount"]);
+                    break;
+                }
+                else
+                {
+                    total_count += Convert.ToInt32(row["AssessmentCount"]);
+                    break;
+                }
             }
             response.SampleSize = total_count;
 

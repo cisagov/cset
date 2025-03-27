@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,12 +28,14 @@ import { AssessmentService } from '../../services/assessment.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { CieService } from '../../services/cie.service';
+import { FileExportService } from '../../services/file-export.service';
 
 @Component({
-  selector: 'app-cie-documents',
-  templateUrl: './cie-documents.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-cie-documents',
+    templateUrl: './cie-documents.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class CieDocumentsComponent implements OnInit {
 
@@ -43,6 +45,7 @@ export class CieDocumentsComponent implements OnInit {
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
     public assessSvc: AssessmentService,
+    private fileExportSvc: FileExportService,
     public fileSvc: FileUploadClientService,
     private cieSvc: CieService) { }
 
@@ -55,8 +58,7 @@ export class CieDocumentsComponent implements OnInit {
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
-      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.location.href = url;
+      this.fileExportSvc.fetchAndSaveFile(this.fileSvc.downloadUrl + doc.document_Id, response.token);
     });
   }
 

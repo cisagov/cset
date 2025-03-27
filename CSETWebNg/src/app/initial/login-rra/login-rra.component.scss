@@ -1,6 +1,6 @@
 /* 
 
-  Copyright 2024 Battelle Energy Alliance, LLC  
+  Copyright 2025 Battelle Energy Alliance, LLC  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -21,32 +21,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 
 */
-a:focus{
-    text-decoration: underline;
-  }
+a:focus {
+  text-decoration: underline;
+}
 
 .input-container {
-    position: relative;
-    padding: 0;
+  position: relative;
+  padding: 0;
 }
 
 .input-icon {
-    color: gray; 
-    position: absolute;
-    width: 20px;
-    background-color: #fff;
-    text-align: center; 
-    top: 15px; 
-    right: 10px;
-    cursor: pointer;
-    -moz-transition: all .15s ease-in;
-    -o-transition: all .15s ease-in;
-    -webkit-transition: all .15s ease-in;
-    transition: all .15s ease-in;
-    -webkit-user-select: none;
-    user-select: none;
+  color: gray;
+  position: absolute;
+  width: 20px;
+  background-color: #fff;
+  text-align: center;
+  top: 15px;
+  right: 10px;
+  cursor: pointer;
+  -moz-transition: all .15s ease-in;
+  -o-transition: all .15s ease-in;
+  -webkit-transition: all .15s ease-in;
+  transition: all .15s ease-in;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
-.input-icon:hover, .input-icon:focus {
-    color: black; 
+.input-icon:hover,
+.input-icon:focus {
+  color: black;
 }

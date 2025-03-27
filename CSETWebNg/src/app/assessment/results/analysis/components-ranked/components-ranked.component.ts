@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,14 +29,15 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import Chart from 'chart.js/auto';
 
 @Component({
-  selector: 'app-components-ranked',
-  templateUrl: './components-ranked.component.html'
+    selector: 'app-components-ranked',
+    templateUrl: './components-ranked.component.html',
+    standalone: false
 })
 export class ComponentsRankedComponent implements OnInit {
   canvasComponentRank: Chart;
   dataRows: { title: string; rank: number; failed: number; total: number; percent: number; }[];
   initialized = false;
-  componentCount: any; 
+  componentCount: any;
 
   constructor(
     private analysisSvc: AnalysisService,

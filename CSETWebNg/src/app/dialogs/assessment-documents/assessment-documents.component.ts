@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,12 +27,14 @@ import { ConfigService } from '../../services/config.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { FileExportService } from '../../services/file-export.service';
 
 @Component({
-  selector: 'app-assessment-documents',
-  templateUrl: './assessment-documents.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-assessment-documents',
+    templateUrl: './assessment-documents.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class AssessmentDocumentsComponent implements OnInit {
 
@@ -42,20 +44,20 @@ export class AssessmentDocumentsComponent implements OnInit {
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
     public assessSvc: AssessmentService,
+    public fileExportSvc: FileExportService,
     public fileSvc: FileUploadClientService) { }
 
   ngOnInit() {
     this.assessSvc.getAssessmentDocuments().subscribe((response: any) => {
       this.documents = response;
-      console.log(this.documents)
     });
   }
 
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
-      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.location.href = url;
+      const url = this.fileSvc.downloadUrl + doc.document_Id;
+      this.fileExportSvc.fetchAndSaveFile(url, response.token);
     });
   }
 

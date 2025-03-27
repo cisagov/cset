@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,10 +31,11 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-standards-summary',
-  templateUrl: './standards-summary.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-standards-summary',
+    templateUrl: './standards-summary.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class StandardsSummaryComponent implements OnInit, AfterViewInit {
   chart: any;

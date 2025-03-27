@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,10 @@ import { MaturityService } from '../../../../services/maturity.service';
 import { MaturityModel } from '../../../../models/assessment-info.model';
 
 @Component({
-  selector: 'app-model-select',
-  templateUrl: './model-select.component.html',
-  styleUrls: ['./model-select.component.scss']
+    selector: 'app-model-select',
+    templateUrl: './model-select.component.html',
+    styleUrls: ['./model-select.component.scss'],
+    standalone: false
 })
 export class ModelSelectComponent implements OnInit {
 

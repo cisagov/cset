@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,9 @@
 <div class="report-body mb-5">
 
     <div class="flex-container">
-        <app-cover-sheet-a [title]="'DEFICIENCY REPORT'"
-            [assessmentName]="assessmentName" [assessmentDate]="assessmentDate" [assessorName]="assessorName"
-            [facilityName]="facilityName"></app-cover-sheet-a>
+        <app-cover-sheet-a [title]="'DEFICIENCY REPORT'" [assessmentName]="assessmentName"
+            [assessmentDate]="assessmentDate" [assessorName]="assessorName"
+            [facilityName]="facilityName" [selfAssessment]="selfAssessment"></app-cover-sheet-a>
     </div>
     <div class="page-break">
 
@@ -52,25 +52,20 @@
                 <div class="row">
                     <div class="column">
                         <div>
-                            <ngx-charts-pie-chart
-                                [view]="view"
-                                [scheme]="colorScheme"
-                                [results]="this.graphData"
-                                [gradient]="gradient"
-                                [legendPosition]="legendPosition"
-                                [labels]="showLabels"
+                            <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="this.graphData"
+                                [gradient]="gradient" [legendPosition]="legendPosition" [labels]="showLabels"
                                 [doughnut]="isDoughnut">
                             </ngx-charts-pie-chart>
                         </div>
                     </div>
                     <div class="column">
                         <h2>Breakdown:</h2>
-                            <div class="breakdown-text">
-                                Yes Responses: {{ yesAnswers }} ({{ yesPercent }}%)<br>
-                                No Responses: {{ noAnswers }} ({{ noPercent }}%)<br>
-                                N/A Responses: {{ naAnswers }} ({{ naPercent }}%)<br>
-                                Unanswered: {{ unanswered }} ({{ unansweredPercent }}%)<br>
-                            </div>
+                        <div class="breakdown-text">
+                            Yes Responses: {{ yesAnswers }} ({{ yesPercent }}%)<br>
+                            No Responses: {{ noAnswers }} ({{ noPercent }}%)<br>
+                            N/A Responses: {{ naAnswers }} ({{ naPercent }}%)<br>
+                            Unanswered: {{ unanswered }} ({{ unansweredPercent }}%)<br>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -93,7 +88,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="deficiencies-list-item" style="width:630px;"><b [innerHTML]="s.questionText | safe: 'html'"></b></td>
+                            <td class="deficiencies-list-item" style="width:630px;"><b
+                                    [innerHTML]="s.questionText | safe: 'html'"></b></td>
 
                             <td
                                 style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555;width:100px;">
@@ -180,7 +176,8 @@
                 <hr class="my-2">
             </div>
 
-            <div *ngIf="(!responseU || responseU.length == 0) && (!responseNo || responseNo.length == 0) && (!responseNa || responseNa.length == 0)" class="mt-3">
+            <div *ngIf="(!responseU || responseU.length == 0) && (!responseNo || responseNo.length == 0) && (!responseNa || responseNa.length == 0)"
+                class="mt-3">
                 There are no deficiencies to display
             </div>
 

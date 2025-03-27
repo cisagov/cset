@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,17 @@
 -------------------------->
 <svg [attr.width]="containerWidth" [attr.height]="h" xmlns="http://www.w3.org/2000/svg">
      <line x1="0" [attr.x2]="chartWidth + p" [attr.y1]="h/2" [attr.y2]="h/2" stroke="#ddd" stroke-width="1"></line>
-     
-     <rect [attr.x]="chartWidth * (min/100) + p" [attr.y]="(h - barH)*.5" [attr.width]="(chartWidth * (max - min)/100)" [attr.height]="barH" [attr.rx]="h/8" [attr.ry]="h/8" [attr.fill]="rangeColor" />
-     <circle id="min" [attr.cx]="chartWidth * (min/100) + p" [attr.cy]="h/2" [attr.r]="h/8" [attr.stroke]="rangeColor" stroke-width="1" fill="#fff" [matTooltip]="'Min: ' + min + '%'"></circle>
-     <circle id="max" [attr.cx]="chartWidth * (max/100) + p" [attr.cy]="h/2" [attr.r]="h/8" [attr.stroke]="rangeColor" stroke-width="1" fill="#fff" [matTooltip]="'Max: ' + max + '%'"></circle>
-     
-     <circle id="myscore" [attr.cx]="chartWidth * (myScore/100) + p" [attr.cy]="h/2" [attr.r]="h/8+3" [attr.fill]="myColor" [matTooltip]="'Score: ' + myScore + '%'" />
-     
-     <line [attr.x1]="(median/100) * chartWidth + p" [attr.y1]="h/2-h/4" [attr.x2]="(median/100) * chartWidth + p" [attr.y2]="h/2+h/4" stroke="#2c3a4a" stroke-width="1" [matTooltip]="'Median: ' + median + '%'" />
+
+     <rect [attr.x]="chartWidth * (min/100) + p" [attr.y]="(h - barH)*.5" [attr.width]="(chartWidth * (max - min)/100)"
+          [attr.height]="barH" [attr.rx]="h/8" [attr.ry]="h/8" [attr.fill]="rangeColor" />
+     <circle id="min" [attr.cx]="chartWidth * (min/100) + p" [attr.cy]="h/2" [attr.r]="h/8" [attr.stroke]="rangeColor"
+          stroke-width="1" fill="#fff" [matTooltip]="'Min: ' + min + '%'"></circle>
+     <circle id="max" [attr.cx]="chartWidth * (max/100) + p" [attr.cy]="h/2" [attr.r]="h/8" [attr.stroke]="rangeColor"
+          stroke-width="1" fill="#fff" [matTooltip]="'Max: ' + max + '%'"></circle>
+
+     <circle id="myscore" [attr.cx]="chartWidth * (myScore/100) + p" [attr.cy]="h/2" [attr.r]="h/8+3"
+          [attr.fill]="myColor" [matTooltip]="'Score: ' + myScore + '%'" />
+
+     <line [attr.x1]="(median/100) * chartWidth + p" [attr.y1]="h/2-h/4" [attr.x2]="(median/100) * chartWidth + p"
+          [attr.y2]="h/2+h/4" stroke="#2c3a4a" stroke-width="1" [matTooltip]="'Median: ' + median + '%'" />
 </svg>

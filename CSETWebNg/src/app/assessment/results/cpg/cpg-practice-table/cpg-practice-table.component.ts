@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,10 @@ import { ColorService } from '../../../../services/color.service';
 import { CpgService } from '../../../../services/cpg.service';
 
 @Component({
-  selector: 'app-cpg-practice-table',
-  templateUrl: './cpg-practice-table.component.html',
-  styleUrls: ['./cpg-practice-table.component.scss', '../../../../reports/reports.scss']
+    selector: 'app-cpg-practice-table',
+    templateUrl: './cpg-practice-table.component.html',
+    styleUrls: ['./cpg-practice-table.component.scss', '../../../../reports/reports.scss'],
+    standalone: false
 })
 export class CpgPracticeTableComponent implements OnInit {
 
@@ -128,7 +129,7 @@ export class CpgPracticeTableComponent implements OnInit {
         // SSG - IT Product Design
         return '#548235';
 
-        
+
       default:
         return '#6BA443';
     }

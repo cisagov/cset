@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +32,10 @@ import { QuestionsService } from '../../../services/questions.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-cpg-deficiency',
-  templateUrl: './cpg-deficiency.component.html',
-  styleUrls: ['./cpg-deficiency.component.scss', '../../reports.scss']
+    selector: 'app-cpg-deficiency',
+    templateUrl: './cpg-deficiency.component.html',
+    styleUrls: ['./cpg-deficiency.component.scss', '../../reports.scss'],
+    standalone: false
 })
 export class CpgDeficiencyComponent implements OnInit {
 
@@ -46,6 +47,7 @@ export class CpgDeficiencyComponent implements OnInit {
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
+  selfAssessment: boolean;
 
   info: any;
 
@@ -76,7 +78,7 @@ export class CpgDeficiencyComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
 
-    this.tSvc.selectTranslate('core.cpg.deficiency.cpg deficiency', {}, {scope: 'reports'})
+    this.tSvc.selectTranslate('core.cpg.deficiency.cpg deficiency', {}, { scope: 'reports' })
       .subscribe(title => {
         this.titleSvc.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle)
       });
@@ -86,7 +88,7 @@ export class CpgDeficiencyComponent implements OnInit {
       this.assessSvc.assessment = assessmentDetail;
 
       var ssgModelId = this.ssgSvc.ssgBonusModel();
-  
+
       // get any deficient answers for the SSG model
       if (!!ssgModelId) {
         this.ssgIncluded = true;
@@ -102,6 +104,7 @@ export class CpgDeficiencyComponent implements OnInit {
       this.assessmentName = this.info.assessment_Name;
       this.assessmentDate = this.info.assessment_Date;
       this.assessorName = this.info.assessor_Name;
+      this.selfAssessment = this.info.selfAssessment;
       this.facilityName = this.info.facility_Name;
 
       this.def = resp.deficienciesList;

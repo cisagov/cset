@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,9 +27,10 @@ import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
 
 @Component({
-  selector: 'links',
-  templateUrl: './links.component.html',
-  styleUrls: ['./links.component.scss']
+    selector: 'links',
+    templateUrl: './links.component.html',
+    styleUrls: ['./links.component.scss'],
+    standalone: false
 })
 export class LinksComponent implements OnInit {
   links = [];
@@ -48,9 +49,10 @@ export class LinksComponent implements OnInit {
   }
 
   getLinks() {
-    this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
-      this.links = x.links;
-    });
+    this.links = this.diagramSvc.diagramModel?.links;
+    // this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
+    //   this.links = x.links;
+    // });
   }
 
   sortData(sort: Sort) {

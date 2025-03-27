@@ -1,7 +1,7 @@
 import { ResourceLibraryService } from './../../../services/resource-library.service';
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -41,16 +41,18 @@ import { ComponentOverrideComponent } from '../../../dialogs/component-override/
 import { LayoutService } from '../../../services/layout.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { CieService } from '../../../services/cie.service';
+import { FileExportService } from '../../../services/file-export.service';
 
 
 
 @Component({
-  selector: 'app-question-extras',
-  templateUrl: './question-extras.component.html',
-  styleUrls: ['./question-extras.component.css'],
-  encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-question-extras',
+    templateUrl: './question-extras.component.html',
+    styleUrls: ['./question-extras.component.css'],
+    encapsulation: ViewEncapsulation.None,
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class QuestionExtrasComponent implements OnInit {
 
@@ -88,6 +90,7 @@ export class QuestionExtrasComponent implements OnInit {
   constructor(
     public questionsSvc: QuestionsService,
     private observationSvc: ObservationsService,
+    public fileExportSvc: FileExportService,
     public fileSvc: FileUploadClientService,
     public dialog: MatDialog,
     public configSvc: ConfigService,
@@ -166,7 +169,7 @@ export class QuestionExtrasComponent implements OnInit {
 
   async fetchDetails(): Promise<QuestionDetailsContentViewModel> {
     const details = this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType).toPromise();
-    return details
+    return details;
   }
 
   /**
@@ -609,30 +612,12 @@ export class QuestionExtrasComponent implements OnInit {
   /**
    *
    */
-  downloadFile(document) {
-    this.fileSvc.downloadFile(document.document_Id).subscribe((data: Response) => {
-      // this.downloadFileData(data),
-    },
-      error => console.log(error)
-    );
-  }
-
-  /**
-   *
-   */
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
-      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.location.href = url;
+      this.fileExportSvc.fetchAndSaveFile(this.fileSvc.downloadUrl + doc.document_Id, response.token);
     });
   }
-
-  // downloadFileData(data: Response) {
-  //   const blob = new Blob([data], { type: 'text/csv' });
-  //   const url = window.URL.createObjectURL(blob);
-  //   window.open(url);
-  // }
 
   autoLoadSupplemental() {
     return this.questionsSvc.autoLoadSupplemental(this.assessSvc.assessment.maturityModel);

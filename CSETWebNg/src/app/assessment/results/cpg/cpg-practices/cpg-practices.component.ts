@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,10 @@ import { Component, OnInit } from '@angular/core';
 import { SsgService } from '../../../../services/ssg.service';
 
 @Component({
-  selector: 'app-cpg-practices',
-  templateUrl: './cpg-practices.component.html',
-  styleUrls: ['./cpg-practices.component.scss']
+    selector: 'app-cpg-practices',
+    templateUrl: './cpg-practices.component.html',
+    styleUrls: ['./cpg-practices.component.scss'],
+    standalone: false
 })
 export class CpgPracticesComponent implements OnInit {
 
@@ -39,8 +40,8 @@ export class CpgPracticesComponent implements OnInit {
    */
   constructor(
     public ssgSvc: SsgService
-  ) {  }
-  
+  ) { }
+
 
   /**
    * 

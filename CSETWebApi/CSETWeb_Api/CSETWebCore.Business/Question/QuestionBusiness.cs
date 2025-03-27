@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -590,6 +590,12 @@ namespace CSETWebCore.Business.Question
             }
 
             return info;
+        }
+
+        public ISE_ACTIONS GetRegulatoryCitations(int questionId)
+        {
+            var result = _context.ISE_ACTIONS.Where(x => x.Parent_Id == questionId).FirstOrDefault();
+            return result;
         }
 
 

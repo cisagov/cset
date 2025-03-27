@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,10 +32,11 @@ import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component'
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-sal-nist',
-  templateUrl: './sal-nist.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-sal-nist',
+    templateUrl: './sal-nist.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class SalNistComponent implements OnInit {
 
@@ -72,41 +73,9 @@ export class SalNistComponent implements OnInit {
       });
   }
 
-  saveLevel(level: string, ltype: string) {
-    this.salsSvc.selectedSAL.methodology = 'NIST';
-    switch (ltype) {
-      case 'C': {
-        this.salsSvc.selectedSAL.selectedSALOverride = false;
-        this.salsSvc.selectedSAL.cLevel = level;
-        break;
-      }
-      case 'I': {
-        this.salsSvc.selectedSAL.selectedSALOverride = false;
-        this.salsSvc.selectedSAL.iLevel = level;
-        break;
-      }
-      case 'A': {
-        this.salsSvc.selectedSAL.selectedSALOverride = false;
-        this.salsSvc.selectedSAL.aLevel = level;
-        break;
-      }
-      default: {
-        this.salsSvc.selectedSAL.selectedSALOverride = true;
-        this.salsSvc.selectedSAL.selected_Sal_Level = level;
-        break;
-      }
-    }
-
-    this.salsSvc.updateStandardSelection(this.salsSvc.selectedSAL).subscribe(
-      (data: Sal) => {
-        this.salsSvc.selectedSAL = data;
-      },
-      error => {
-        console.log('Error setting sal level: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error setting sal level: ' + (<Error>error).stack);
-      });
-  }
-
+  /**
+   * 
+   */
   changeSpecialFactor(model: NistSalModel, ciaType: string) {
     const cToFullType = { 'C': 'Confidentiality', 'I': 'Integrity', 'A': 'Availability' };
 

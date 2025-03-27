@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -29,7 +29,7 @@ namespace CSETWebCore.Business.Reports
         public List<CNSSSALJustificationsTable> nistTypes { get; set; }
         public List<RequirementControl> ControlList { get; set; }
         public List<Individual> Individuals { get; set; }
-        public List<DocumentLibraryTable> DocumentLibraryTable { get; set; }
+        public List<DocumentLibraryEntry> DocumentLibraryEntries { get; set; }
         public List<RankedQuestions> RankedQuestionsTable { get; set; }
         public List<QuestionsWithComments> QuestionsWithComments { get; set; }
         public List<QuestionsMarkedForReview> QuestionsMarkedForReview { get; set; }
@@ -48,6 +48,7 @@ namespace CSETWebCore.Business.Reports
             public string Assessment_Name { get; set; }
             public DateTime? Assessment_Date { get; set; }
             public string Assessor_Name { get; set; }
+            public bool SelfAssessment { get; set; } = false;
             public string Facility_Name { get; set; }
             public string City_Or_Site_Name { get; set; }
             public string State_Province_Or_Region { get; set; }
@@ -114,9 +115,9 @@ namespace CSETWebCore.Business.Reports
         }
     }
 
-    public class Observations
+    public class Observation
     {
-        public string Observation { get; set; }
+        public string ObservationTitle { get; set; }
         public string QuestionIdentifier { get; set; }
         public string QuestionText { get; set; }
         public string Importance { get; set; }
@@ -125,10 +126,14 @@ namespace CSETWebCore.Business.Reports
         public string Impact { get; set; }
         public string Recommendations { get; set; }
         public string Vulnerabilities { get; set; }
-        public string OtherContacts { get; set; }
+
+        /// <summary>
+        /// A comma list of all people assigned to the Observation
+        /// </summary>
+        public string Assignees { get; set; }
     }
 
-    public class DocumentLibraryTable
+    public class DocumentLibraryEntry
     {
         public string Alias { get; set; }
         public string DocumentTitle { get; set; }
@@ -251,8 +256,8 @@ namespace CSETWebCore.Business.Reports
 
     public class Individual
     {
-        public string INDIVIDUALFULLNAME { get; set; }
-        public List<Observations> Observations { get; set; }
+        public string FullName { get; set; }
+        public List<Observation> Observations { get; set; } = [];
     }
 
     public class QuestionsWithAltJust

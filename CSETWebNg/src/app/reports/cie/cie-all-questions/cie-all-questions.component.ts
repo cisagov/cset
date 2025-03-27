@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -37,11 +37,13 @@ import { AuthenticationService } from '../../../services/authentication.service'
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { QuestionFiltersReportsComponent } from '../../../dialogs/question-filters-reports/question-filters-reports.component';
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
+import { FileExportService } from '../../../services/file-export.service';
 
 @Component({
   selector: 'app-cie-all-questions',
   templateUrl: './cie-all-questions.component.html',
-  styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-all-questions.component.scss']
+  styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-all-questions.component.scss'],
+  standalone: false
 })
 export class CieAllQuestionsComponent {
 
@@ -66,6 +68,7 @@ export class CieAllQuestionsComponent {
     public questionsSvc: QuestionsService,
     private titleService: Title,
     public cieSvc: CieService,
+    private fileExportSvc: FileExportService,
     public configSvc: ConfigService,
     public observationSvc: ObservationsService,
     public fileSvc: FileUploadClientService,
@@ -94,9 +97,9 @@ export class CieAllQuestionsComponent {
             for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
 
-                this.expandedOptions.set('Phase_' + domain?.title + '_' + subcat?.title, false);
-                this.phaseTitleList.push('Phase_' + domain?.title + '_' + subcat?.title);
-                // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
+              this.expandedOptions.set('Phase_' + domain?.title + '_' + subcat?.title, false);
+              this.phaseTitleList.push('Phase_' + domain?.title + '_' + subcat?.title);
+              // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
             }
           }
         }
@@ -148,7 +151,7 @@ export class CieAllQuestionsComponent {
         combinedClass += 'top-half-border';
       }
     }
-    else{
+    else {
       combinedClass += 'bottom-half-border';
     }
     return combinedClass;
@@ -160,20 +163,8 @@ export class CieAllQuestionsComponent {
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
-      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.location.href = url;
+      this.fileExportSvc.fetchAndSaveFile(this.fileSvc.downloadUrl + doc.document_Id, response.token);
     });
-  }
-
-  /**
-   *
-   */
-  downloadFile(document) {
-    this.fileSvc.downloadFile(document.document_Id).subscribe((data: Response) => {
-      // this.downloadFileData(data),
-    },
-      error => console.log(error)
-    );
   }
 
   /**
@@ -182,12 +173,12 @@ export class CieAllQuestionsComponent {
    */
   expandAll(mode: boolean, principleOrPhase: string) {
     if (principleOrPhase == 'Principle') {
-      for(let i = 0; i < this.principleTitleList.length; i++ ) {
+      for (let i = 0; i < this.principleTitleList.length; i++) {
         this.expandedOptions.set(this.principleTitleList[i], mode);
       }
     }
     if (principleOrPhase == 'Phase') {
-      for(let i = 0; i < this.phaseTitleList.length; i++ ) {
+      for (let i = 0; i < this.phaseTitleList.length; i++) {
         this.expandedOptions.set(this.phaseTitleList[i], mode);
       }
     }

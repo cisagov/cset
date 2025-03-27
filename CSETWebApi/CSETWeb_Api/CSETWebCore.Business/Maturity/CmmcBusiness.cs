@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -72,6 +72,8 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         public CmmcScores GetCmmcScores(int assessmentId)
         {
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
             var response = new CmmcScores();
 
             var selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS
@@ -117,8 +119,13 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         public int GetScoreForLevel(int assessmentId, int level)
         {
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+            var modelId = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault()?.model_id;
+
+
             var levelId = _context.MATURITY_LEVELS
-                .Where(x => x.Level == level && x.Maturity_Model_Id == modelIdCmmc2)
+                .Where(x => x.Level == level && x.Maturity_Model_Id == modelId)
                 .Select(x => x.Maturity_Level_Id)
                 .FirstOrDefault();
 
@@ -141,6 +148,8 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public ScorecardResponse GetLevelScorecards(int assessmentId)
         {
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
             var response = new ScorecardResponse();
 
             var selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS
@@ -235,6 +244,8 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         public CmmcScoreModel GetSPRSScore(int assessmentId)
         {
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
             var response = new CmmcScoreModel();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);

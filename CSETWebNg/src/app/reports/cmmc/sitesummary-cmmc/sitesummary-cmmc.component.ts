@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,14 +27,14 @@ import { ReportService } from '../../../services/report.service';
 import { ConfigService } from '../../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { CmmcStyleService } from '../../../services/cmmc-style.service';
-import * as $ from 'jquery';
+import $ from 'jquery';
 import { BehaviorSubject } from 'rxjs';
 import { ChartService } from '../../../services/chart.service';
 @Component({
   selector: 'sitesummary',
   templateUrl: './sitesummary-cmmc.component.html',
   styleUrls: ['../../reports.scss'],
-  // providers: [CmmcStyleService]
+  standalone: false
 })
 export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, AfterViewInit {
 

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -37,8 +37,9 @@ interface UserAssessment {
 }
 
 @Component({
-  selector: 'app-trend-compare-compatibility',
-  templateUrl: './trend-compare-compatibility.component.html'
+    selector: 'app-trend-compare-compatibility',
+    templateUrl: './trend-compare-compatibility.component.html',
+    standalone: false
 })
 export class TrendCompareCompatibilityComponent implements OnInit {
 

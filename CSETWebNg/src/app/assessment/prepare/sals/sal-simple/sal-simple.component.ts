@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,11 @@ import { Sal } from '../../../../models/sal.model';
 import { SalService } from '../../../../services/sal.service';
 
 @Component({
-  selector: 'app-sal-simple',
-  templateUrl: './sal-simple.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-sal-simple',
+    templateUrl: './sal-simple.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 
 export class SalSimpleComponent implements OnInit {
@@ -48,41 +49,6 @@ export class SalSimpleComponent implements OnInit {
       error => {
         console.log('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
         console.log('Error Getting all standards: ' + (<Error>error).stack);
-      });
-  }
-
-  saveLevel(level: string, ltype: string) {
-    this.salsSvc.selectedSAL.methodology = 'Simple';
-    switch (ltype) {
-      case 'C': {
-        this.salsSvc.selectedSAL.cLevel = level;
-        this.salsSvc.selectedSAL.selectedSALOverride = false;
-        break;
-      }
-      case 'I': {
-        this.salsSvc.selectedSAL.iLevel = level;
-        this.salsSvc.selectedSAL.selectedSALOverride = false;
-        break;
-      }
-      case 'A': {
-        this.salsSvc.selectedSAL.aLevel = level;
-        this.salsSvc.selectedSAL.selectedSALOverride = false;
-        break;
-      }
-      default: {
-        this.salsSvc.selectedSAL.selectedSALOverride = true;
-        this.salsSvc.selectedSAL.selected_Sal_Level = level;
-        break;
-      }
-    }
-
-    this.salsSvc.updateStandardSelection(this.salsSvc.selectedSAL).subscribe(
-      (data: Sal) => {
-        this.salsSvc.selectedSAL = data;
-      },
-      error => {
-        console.log('Error setting sal level: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error setting sal level: ' + (<Error>error).stack);
       });
   }
 }

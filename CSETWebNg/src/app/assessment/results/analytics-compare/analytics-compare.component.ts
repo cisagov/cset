@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,9 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-analytics-compare',
-  templateUrl: './analytics-compare.component.html'
+    selector: 'app-analytics-compare',
+    templateUrl: './analytics-compare.component.html',
+    standalone: false
 })
 export class AnalyticsCompareComponent implements OnInit {
 

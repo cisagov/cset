@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,21 +26,22 @@ import { TranslocoService } from '@jsverse/transloco';
 import { TsaService } from '../../../../services/tsa.service';
 
 @Component({
-  selector: 'app-cmmc2-level1-score',
-  templateUrl: './cmmc2-level1-score.component.html',
-  styleUrl: './cmmc2-level1-score.component.scss'
+    selector: 'app-cmmc2-level1-score',
+    templateUrl: './cmmc2-level1-score.component.html',
+    styleUrl: './cmmc2-level1-score.component.scss',
+    standalone: false
 })
 export class Cmmc2Level1ScoreComponent {
 
   width = 700;
 
-  
+
   @Input()
   score: number;
 
   @Input()
   maxScore: number;
-  
+
   @Input()
   active = true;
 

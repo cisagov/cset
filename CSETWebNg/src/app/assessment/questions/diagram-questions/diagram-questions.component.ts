@@ -1,7 +1,7 @@
 import { CompletionService } from './../../../services/completion.service';
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,8 +35,9 @@ import { QuestionFilterService } from '../../../services/filtering/question-filt
 import { ConfigService } from '../../../services/config.service';
 
 @Component({
-  selector: 'app-diagram-questions',
-  templateUrl: './diagram-questions.component.html'
+    selector: 'app-diagram-questions',
+    templateUrl: './diagram-questions.component.html',
+    standalone: false
 })
 export class DiagramQuestionsComponent implements OnInit {
 

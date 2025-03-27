@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -245,7 +245,7 @@ export class QuestionFilterService {
             if (this.answerOptions.includes(q.answer) && this.showFilters.includes(q.answer)) {
               q.visible = true;
             }
-          
+
             // consider null answers as 'U'
             if ((q.answer == null || q.answer == 'U') && this.showFilters.includes('U')) {
               q.visible = true;
@@ -335,41 +335,41 @@ export class QuestionFilterService {
           af.questions.forEach(q => {
             // start with false, then set true if possible
             q.visible = false;
-  
+
             // If search string is specified, any questions that don't contain the string
             // are not shown.  No need to check anything else.
             if (this.filterSearchString.length > 0
               && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
               return;
             }
-  
+
             // because CIE is free-response based, 'U' just means "not NA"
             // 'U' with 'freeResponseAnswer' gives whether it's an 'N' (Unanswered) or 'Y' (Answered))
-            if (q.answerText == 'U' 
-              && (q.freeResponseText && q.freeResponseText.length > 0) 
+            if (q.answerText == 'U'
+              && (q.freeResponseText && q.freeResponseText.length > 0)
               && this.showFilters.includes('Y')) {
               q.visible = true;
             }
-  
-            if ((q.answerText == null || q.answerText == 'U') 
-              && (!q.freeResponseText || q.freeResponseText.length == 0) 
+
+            if ((q.answerText == null || q.answerText == 'U')
+              && (!q.freeResponseText || q.freeResponseText.length == 0)
               && this.showFilters.includes('N')) {
               q.visible = true;
             }
-  
+
             // if answer is 'NA', the free-response part is optional
             if (q.answerText == 'NA' && this.showFilters.includes(q.answerText)) {
               q.visible = true;
             }
           });
-            // evaluate category heading visibility
+          // evaluate category heading visibility
           af.areQuestionsDeficient = (af.questions.find(q => q.visible) == null ? true : false);
         });
 
         /** evaluate domain heading principle question visibility.
         * Put into 'areFactorQuestionsDeficient' to allow both principle 
         * and principle-phase tables to have separate filters
-        */ 
+        */
         d.categories.areFactorQuestionsDeficient = (d.categories.assessmentFactors.find(af => !af.areQuestionsDeficient) == null ? true : false);
       });
     }
@@ -381,41 +381,41 @@ export class QuestionFilterService {
             c.questions.forEach(q => {
               // start with false, then set true if possible
               q.visible = false;
-  
+
               // If search string is specified, any questions that don't contain the string
               // are not shown.  No need to check anything else.
               if (this.filterSearchString.length > 0
                 && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
                 return;
               }
-  
+
               // because CIE is free-response based, 'U' just means "not NA"
               // 'U' with 'freeResponseAnswer' gives whether it's an 'N' (Unanswered) or 'Y' (Answered))
-              if (q.answerText == 'U' && (q.freeResponseText && q.freeResponseText.length > 0) 
+              if (q.answerText == 'U' && (q.freeResponseText && q.freeResponseText.length > 0)
                 && this.showFilters.includes('Y')) {
                 q.visible = true;
               }
-  
-              if ((q.answerText == null || q.answerText == 'U') 
-                && (!q.freeResponseText || q.freeResponseText.length == 0) 
+
+              if ((q.answerText == null || q.answerText == 'U')
+                && (!q.freeResponseText || q.freeResponseText.length == 0)
                 && this.showFilters.includes('N')) {
                 q.visible = true;
               }
-  
+
               // if answer is 'NA', the free-response part is optional
               if (q.answerText == 'NA' && this.showFilters.includes(q.answerText)) {
                 q.visible = true;
               }
             });
-  
+
             // evaluate subcat visiblity
             c.isDeficient = (c.questions.find(q => q.visible) == null ? true : false);
           });
-  
+
           // evaluate category heading visibility
           af.isDeficient = (af.components.find(c => !c.isDeficient) == null ? true : false);
         });
-  
+
         // evaluate domain heading principle-phase question visibility
         d.categories.isDeficient = (d.categories.assessmentFactors.find(c => !c.isDeficient) == null ? true : false);
       });

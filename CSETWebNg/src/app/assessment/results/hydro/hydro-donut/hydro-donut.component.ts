@@ -1,9 +1,10 @@
 import { Component, Input, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-hydro-donut',
-  templateUrl: './hydro-donut.component.html',
-  styleUrls: ['./hydro-donut.component.scss']
+    selector: 'app-hydro-donut',
+    templateUrl: './hydro-donut.component.html',
+    styleUrls: ['./hydro-donut.component.scss'],
+    standalone: false
 })
 export class HydroDonutComponent {
   @ViewChild('pieChart') pieChart;

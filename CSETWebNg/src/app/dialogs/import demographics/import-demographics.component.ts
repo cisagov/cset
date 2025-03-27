@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,10 +32,11 @@ import { NCUAService } from '../../services/ncua.service';
 import { ImportDemographicService } from './../../services/import-demographic.service';
 
 @Component({
-  selector: 'app-import-demographics',
-  templateUrl: './import-demographics.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
+    selector: 'app-import-demographics',
+    templateUrl: './import-demographics.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
+    standalone: false
 })
 export class UploadDemographicsComponent implements OnInit {
 

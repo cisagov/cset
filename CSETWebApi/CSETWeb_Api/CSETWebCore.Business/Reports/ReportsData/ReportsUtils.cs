@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -218,15 +218,15 @@ namespace CSETWebCore.Business.Reports
         }
 
 
-        public List<DocumentLibraryTable> GetDocumentLibrary()
+        public List<DocumentLibraryEntry> GetDocumentLibrary()
         {
-            List<DocumentLibraryTable> list = new List<DocumentLibraryTable>();
+            List<DocumentLibraryEntry> list = new List<DocumentLibraryEntry>();
             var docs = from a in _context.DOCUMENT_FILE
                        where a.Assessment_Id == _assessmentId
                        select a;
             foreach (var doc in docs)
             {
-                var dlt = new DocumentLibraryTable()
+                var dlt = new DocumentLibraryEntry()
                 {
                     DocumentTitle = doc.Title,
                     FileName = doc.Path
@@ -253,7 +253,7 @@ namespace CSETWebCore.Business.Reports
         /// question text with the translated version.
         /// </summary>
         /// <returns></returns>
-        private void GetQuestionTitleAndText(dynamic f,
+        private void GetQuestionTitleAndText(ObservationIngredients f,
             List<StandardQuestions> stdList, List<ComponentQuestion> compList,
             int answerId,
             out string identifier, out string questionText)
@@ -262,12 +262,12 @@ namespace CSETWebCore.Business.Reports
             questionText = "";
             var lang = _tokenManager.GetCurrentLanguage();
 
-            switch (f.c.Question_Type)
+            switch (f.Answer.Question_Type)
             {
                 case "Question":
                     foreach (var s in stdList)
                     {
-                        var q1 = s.Questions.FirstOrDefault(x => x.QuestionId == f.c.Question_Or_Requirement_Id);
+                        var q1 = s.Questions.FirstOrDefault(x => x.QuestionId == f.Answer.Question_Or_Requirement_Id);
                         if (q1 != null)
                         {
                             identifier = q1.CategoryAndNumber;
@@ -279,7 +279,7 @@ namespace CSETWebCore.Business.Reports
                     return;
 
                 case "Component":
-                    var q2 = compList.FirstOrDefault(x => x.QuestionId == f.c.Question_Or_Requirement_Id);
+                    var q2 = compList.FirstOrDefault(x => x.QuestionId == f.Answer.Question_Or_Requirement_Id);
                     if (q2 != null)
                     {
                         identifier = q2.ComponentName;
@@ -289,28 +289,28 @@ namespace CSETWebCore.Business.Reports
                     return;
 
                 case "Requirement":
-                    identifier = f.r.Requirement_Title;
+                    identifier = f.NewRequirement.Requirement_Title;
                     var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
-                    questionText = rb.ResolveParameters(f.r.Requirement_Id, answerId, f.r.Requirement_Text);
+                    questionText = rb.ResolveParameters(f.NewRequirement.Requirement_Id, answerId, f.NewRequirement.Requirement_Text);
 
                     // translate
-                    questionText = _overlay.GetRequirement(f.r.Requirement_Id, lang)?.RequirementText ?? questionText;
+                    questionText = _overlay.GetRequirement(f.NewRequirement.Requirement_Id, lang)?.RequirementText ?? questionText;
 
                     return;
 
                 case "Maturity":
 
-                    identifier = f.mq.Question_Title;
-                    questionText = f.mq.Question_Text;
+                    identifier = f.MaturityQuestion.Question_Title;
+                    questionText = f.MaturityQuestion.Question_Text;
 
                     // CPG is a special case
-                    if (!String.IsNullOrEmpty(f.mq.Security_Practice))
+                    if (!String.IsNullOrEmpty(f.MaturityQuestion.Security_Practice))
                     {
-                        questionText = f.mq.Security_Practice;
+                        questionText = f.MaturityQuestion.Security_Practice;
                     }
 
                     // overlay
-                    MaturityQuestionOverlay o = _overlay.GetMaturityQuestion(f.mq.Mat_Question_Id, lang);
+                    MaturityQuestionOverlay o = _overlay.GetMaturityQuestion(f.MaturityQuestion.Mat_Question_Id, lang);
                     if (o != null)
                     {
                         identifier = o.QuestionTitle;

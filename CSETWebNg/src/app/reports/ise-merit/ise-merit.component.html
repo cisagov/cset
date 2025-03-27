@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -24,23 +24,15 @@
 
     <div class="flex-container">
         <div class="column mt-3">
-            <p class="report-title">
-                MERIT SCOPE
-            </p>
-            <p class="report-title">
-                REPORT
-            </p>
+            <p class="report-title">MERIT SCOPE</p>
+            <p class="report-title">REPORT</p>
         </div>
+
         <div class="column">
-            <!-- <p style="text-align: center">
-                <img height="600" src="assets/images/ACET/TOOLBOXMockup.svg">
-            </p> -->
             <div class="cover-page-bottom mb-4">
-                <div>
-                    <img src="assets/images/NCUA/ncua_seal_blue.svg" alt="ncua" style="height: 185px" alt="ncua" />
-                </div>
-                <div style="text-align: right; font-weight: normal; font-size: 18px;
-                            flex-direction: column; line-height: 150%; padding-right: 2em;">
+                <img src="assets/images/NCUA/ncua_seal_blue.svg" alt="ncua" style="height: 185px" alt="ncua" />
+                
+                <div style="text-align: right; font-weight: normal; font-size: 18px; flex-direction: column; line-height: 150%; padding-right: 2em;">
                     <div class="title-page-name">{{this.demographics?.information?.assessment_Name}}</div>
                     <div class="title-page-content">{{this.demographics?.information?.assessment_Date | localizeDate}}</div>
                     <div class="title-page-content">{{this.demographics?.information?.assessor_Name}}</div>
@@ -53,7 +45,6 @@
         </div>
 
         <ng-template #mainContent>
-            <!-- <div class="page-break"> -->
             <div class="ms-3 me-3 form">
                 <div class="d-flex flex-row" style="justify-content: space-between">
                     <div style="align-self: flex-end;">
@@ -100,7 +91,6 @@
                     </tr>
                 </table>
             </div>
-            <!-- </div> -->
 
             <div class="page-break">
                 <div class="ms-3 me-3">
@@ -153,9 +143,9 @@
                             </div>
                         </div>
                     </div>
-                    <p>
-                        {{ this.resultsOfReviewStatic }}
-                    </p>
+
+                    <p>{{ this.resultsOfReviewStatic }}</p>
+
                     <div *ngIf="this.relaventIssues">
                         <div *ngIf="this.dorsTotal > 0">
                             {{ inCatStringBuilder(this.dorsTotal, this.dors.length, 'DOR') }}
@@ -165,24 +155,21 @@
                             <br>
                         </div>
                         <div *ngIf="this.examinerFindingsTotal > 0">
-                            {{ inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings.length, 'Examiner
-                            Finding') }}
+                            {{ inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings.length, 'Examiner Finding') }}
                             <div *ngFor="let issue of this.examinerFindings" style="padding-left: 30px">
                                 {{ issue }}
                             </div>
                             <br>
                         </div>
                         <div *ngIf="this.supplementalFactsTotal > 0">
-                            {{ inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts.length,
-                            'Supplemental Fact') }}
+                            {{ inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts.length, 'Supplemental Fact') }}
                             <div *ngFor="let issue of this.supplementalFacts" style="padding-left: 30px">
                                 {{ issue }}
                             </div>
                             <br>
                         </div>
                         <div *ngIf="this.nonReportablesTotal > 0">
-                            {{ inCatStringBuilder(this.nonReportablesTotal, this.nonReportables.length,
-                            'Non-reportable') }}
+                            {{ inCatStringBuilder(this.nonReportablesTotal, this.nonReportables.length, 'Non-reportable') }}
                             <div *ngFor="let issue of this.nonReportables" style="padding-left: 30px">
                                 {{ issue }}
                             </div>
@@ -190,9 +177,7 @@
                         </div>
                     </div>
                     <div *ngIf="!this.relaventIssues">
-                        <p>
-                            No Issues were noted.
-                        </p>
+                        <p>No Issues were noted.</p>
                     </div>
                 </div>
             </div>
@@ -206,192 +191,156 @@
                     </div>
                     <div *ngIf="this.relaventIssues">
                         <div *ngFor="let observation of this.response">
-                            <div
-                                *ngIf="this.ncuaSvc.translateExamLevel(observation?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)">
-                                <div>
-                                    <strong>Statement: </strong> {{ observation?.question?.question_Title }}
-                                </div>
-                                <div>
-                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
-                                        flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                        [cdkCopyToClipboard]="(observation?.finding?.title == null || observation?.finding?.title == '') ? '(no Title available)' : observation?.finding?.title">
-                                        <span class="cset-icons-copy"></span>
-                                    </label>
-                                    <strong> Title: </strong> {{ observation?.finding?.title }}
-                                </div>
-                                <div>
-                                    <strong>Issue Type: </strong> {{ observation?.finding?.type }}
-                                </div>
-
-                                <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
-                                    flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                    [cdkCopyToClipboard]="(observation?.finding?.description == null || observation?.finding?.description == '') ? '(no Description available)' : observation?.finding?.description">
+                            <div *ngIf="this.ncuaSvc.translateExamLevel(observation?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)">
+                                <strong>Statement: </strong> {{ observation?.question?.question_Title }}
+                                <br>
+                                
+                                <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                  [cdkCopyToClipboard]="(observation?.finding?.title == null || observation?.finding?.title == '') ? '(no Title available)' : observation?.finding?.title">
                                     <span class="cset-icons-copy"></span>
                                 </label>
-                                <strong> Description: </strong><br>
+                                
+                                <strong> Title: </strong> {{ observation?.finding?.title }}
+                                <br>
+                            </div>
+
+                            <div>
+                                <strong>Issue Type: </strong> {{ observation?.finding?.type }}
+                                <br>
+
+                                <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                  [cdkCopyToClipboard]="(observation?.finding?.description == null || observation?.finding?.description == '') ? '(no Description available)' : observation?.finding?.description">
+                                    <span class="cset-icons-copy"></span>
+                                </label>
+
+                                <strong> Description: </strong>
+                                <br>
+                                
                                 <div style="white-space: pre-wrap;"
                                     [innerHTML]="(observation?.finding?.description == null || observation?.finding?.description == '') ? '(no Description available)' : observation?.finding?.description">
                                 </div>
 
                                 <div *ngIf="observation?.finding?.type !== 'Supplemental Fact'">
-                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; flex-direction: column; line-height: 150%;" 
-                                      title="Copy to Clipboard" [cdkCopyToClipboard]="getActionItemsToCopy(observation?.finding?.finding_Id)">
+                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; flex-direction: column; line-height: 150%;"
+                                      title="Copy to Clipboard" [cdkCopyToClipboard]="getActionItemsToCopy(observation?.finding)">
                                         <span class="cset-icons-copy"></span>
                                     </label>
-                                    <strong> Action Items: </strong>
+
+                                    <strong> Action Required: </strong>
                                     <br>
-                                    <div *ngIf="observation?.finding?.auto_Generated != 1">
-                                        <div *ngIf="observation?.finding?.actionItems != null"
-                                            style="white-space: pre-wrap;" [innerHTML]="observation?.finding?.actionItems">
+
+                                    <!-- Not auto-generated -->
+                                    <div *ngIf="observation?.finding?.auto_Generated == 0">
+                                        <div *ngIf="observation?.finding?.actionItems">
+                                            {{ observation?.finding?.actionItems }}
                                         </div>
-                                        <div *ngIf="observation?.finding?.actionItems == null">
-                                            (no Action Items available)
+                                        <div *ngIf="!observation?.finding?.actionItems">
+                                            (No actions available)
                                         </div>
                                     </div>
+
+                                    <!-- System generated issues -->
+                                     <div *ngIf="observation?.finding?.auto_Generated == 1">
+                                        <div *ngIf="this.masterActionItemsMap.has(observation?.finding?.finding_Id); else noActionsBlock">
+                                            <div *ngFor="let actions of this.masterActionItemsMap.get(observation?.finding?.finding_Id);">
+                                                {{ actions.action_Items }}
+                                            </div>
+                                        </div>
+                                        <ng-template #noActionsBlock>
+                                            (No actions available)
+                                        </ng-template>
+                                     </div>
+                                    
+
+                                    <!--
+                                    <div *ngIf="observation?.finding?.auto_Generated != 1">
+                                        <div *ngIf="observation?.finding?.actionItems != null" style="white-space: pre-wrap;" [innerHTML]="observation?.finding?.actionItems"></div>
+                                        <div *ngIf="observation?.finding?.actionItems == null">(No actions available)</div>
+                                    </div>
+
                                     <div *ngIf="this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
                                         <div *ngFor="let allActionsInFinding of this.masterActionItemsMap.get(observation?.finding?.finding_Id); let i = index">
                                             <div *ngIf="allActionsInFinding.action_Items != '' && allActionsInFinding.action_Items != '.'">
-                                                {{ this.getChildQuestionNumber(allActionsInFinding.question_Title) }}: {{ allActionsInFinding.action_Items }}
+                                                {{ allActionsInFinding.action_Items }}
                                             </div>
 
-                                            <div
-                                                *ngIf="(allActionsInFinding.action_Items == '' || allActionsInFinding.action_Items == '.') && observation?.finding?.actionItems == null">
-                                                (no Action Items available)
+                                            <div *ngIf="(allActionsInFinding.action_Items == '' || allActionsInFinding.action_Items == '.') && observation?.finding?.actionItems == null">
+                                                (No actions available)
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div
-                                        *ngIf="!this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
-                                        (no Action Items available)
+                                    <div *ngIf="!this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
+                                        (No actions available)
+                                    </div>-->
 
-                                    </div>
-
-                                    <!-- <div *ngIf="(this.masterActionItemsMap.get(observation?.finding?.finding_Id) == null || this.masterActionItemsMap.get(observation?.finding?.finding_Id) == '') && finding?.finding?.actionItems == null">
-                                        (no Action Items available)
-                                    </div> -->
-
-                                    <!-- <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
-                                        flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                        [cdkCopyToClipboard]="observation?.finding?.risk_Area">
-                                        <span class="cset-icons-copy"></span>
-                                    </label>  -->
                                     <strong> Risk Area: </strong> {{ observation?.finding?.risk_Area }}
-
                                     <br>
 
-                                    <!-- <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
-                                        flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                        [cdkCopyToClipboard]="observation?.finding?.sub_Risk">
-                                        <span class="cset-icons-copy"></span>
-                                    </label>  -->
                                     <strong> Sub-Risk Area: </strong> {{ observation?.finding?.sub_Risk }}
+                                    <br>
 
+                                    <strong>Regulatory Citations: </strong>
                                     <br>
-                                    <strong>Regulatory Citation: </strong>
-                                    <br>
-                                    <div *ngIf="this.masterActionItemsMap.has(observation?.finding?.finding_Id)">
-                                        <div
-                                            *ngIf="observation?.finding?.citations != null && observation?.finding?.citations != ''">
-                                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px;
-                                                    flex-direction: column; line-height: 150%;"
-                                                title="Copy to Clipboard"
-                                                [cdkCopyToClipboard]="((this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation == null
-                                                    || this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation == '') ?
-                                                    ' ' : this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation + ', ') + observation?.finding?.citations">
-                                                <span class="cset-icons-copy"></span>
-                                            </label>
-                                            {{
-                                            (this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                            == null
-                                            ||
-                                            this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                            == '') ?
-                                            ' ' :
-                                            this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                            + ', ' }}{{ observation?.finding?.citations }}
-                                        </div>
-                                        <div
-                                            *ngIf="(observation?.finding?.citations == null || observation?.finding?.citations == '')
-                                                    && this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation != null
-                                                    && this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation != ''">
-                                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px;
-                                                    flex-direction: column; line-height: 150%;"
-                                                title="Copy to Clipboard"
-                                                [cdkCopyToClipboard]="this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation">
-                                                <span class="cset-icons-copy"></span>
-                                            </label>
-                                            {{
-                                            this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
-                                            }}
-                                        </div>
-                                        <div
-                                            *ngIf="(this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation == null
-                                            || this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation == '')
-                                            && (observation?.finding?.citations == null || observation?.finding?.citations == '')">
-                                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px;
-                                                    flex-direction: column; line-height: 150%;"
-                                                title="Copy to Clipboard"
-                                                [cdkCopyToClipboard]="'(no Regulatory Citations available)'">
-                                                <span class="cset-icons-copy"></span>
-                                            </label>
-                                            (no Regulatory Citations available)
-                                        </div>
-                                    </div>
-                                    <div *ngIf="!this.masterActionItemsMap.has(observation?.finding?.finding_Id)">
-                                        <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px;
-                                                flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                            [cdkCopyToClipboard]="'(no Regulatory Citations available)'">
+                                    
+                                    <span *ngIf="regCitationsMap.has(observation?.question?.mat_Question_Id)">
+                                        <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                          [cdkCopyToClipboard]="getReferenceCopyText(observation?.question?.mat_Question_Id, observation?.finding?.citations)">
                                             <span class="cset-icons-copy"></span>
                                         </label>
-                                        (no Regulatory Citations available)
-                                    </div>
-
+                                        {{ regCitationsMap.get(observation?.question?.mat_Question_Id) }}<span *ngIf="observation?.finding?.citations">, {{ observation?.finding?.citations }}</span>
+                                    </span>
+                                    <span *ngIf="!regCitationsMap.has(observation?.question?.mat_Question_Id)">(No Regulatory Citations available)</span>
+                                    <br>
+                                
                                 </div>
+
                                 <div *ngIf="observation?.finding?.type === 'Supplemental Fact'">
-                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
-                                        flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                        [cdkCopyToClipboard]="observation?.finding?.supp_Guidance != null && observation?.finding?.supp_Guidance != '' ?
-                                            cleanText(observation?.finding?.supp_Guidance) : '(no Supplemental Fact available)'">
+                                    <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                      [cdkCopyToClipboard]="observation?.finding?.supp_Guidance != null && observation?.finding?.supp_Guidance != '' ? cleanText(observation?.finding?.supp_Guidance) : '(no Supplemental Fact available)'">
                                         <span class="cset-icons-copy"></span>
                                     </label>
+                                    
                                     <strong> Supplemental Fact: </strong>
                                     <br>
-                                    <span *ngIf="observation?.finding?.supp_Guidance != ''" style="white-space: pre-wrap;"
-                                        [innerHtml]="observation?.finding?.supp_Guidance"></span>
-                                    <span *ngIf="observation?.finding?.supp_Guidance == ''">(no Supplemental Fact
-                                        available)</span>
 
+                                    <span *ngIf="observation?.finding?.supp_Guidance != ''" style="white-space: pre-wrap;" [innerHtml]="observation?.finding?.supp_Guidance"></span>
+                                    <span *ngIf="observation?.finding?.supp_Guidance == ''">(no Supplemental Fact available)</span>
                                     <br>
-                                    <!-- <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
-                                        flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                        [cdkCopyToClipboard]="this.copyAllSourceFiles(observation?.finding?.finding_Id)">
-                                        <span class="cset-icons-copy"> Copy All</span>
-                                    </label> -->
+
                                     <strong> Resources: </strong>
                                     <br>
                                     <span *ngIf="sourceFilesMap.has(observation?.finding?.finding_Id)">
                                         <div *ngFor="let file of sourceFilesMap.get(observation?.finding?.finding_Id)">
-                                            <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px;
-                                                flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                                [cdkCopyToClipboard]="file.title + ' (Section: ' + file.sectionRef + ')'">
+                                            <label class="btn form-check-label btn-copy" style="text-align: left; font-weight: normal; font-size: 14px; flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                              [cdkCopyToClipboard]="file.title + ' (Section: ' + file.sectionRef + ')'">
                                                 <span class="cset-icons-copy"></span>
                                             </label>
                                             {{ file.title }} (<strong>Section:</strong> {{ file.sectionRef }})
                                         </div>
                                     </span>
-                                    <span *ngIf="!sourceFilesMap.has(observation?.finding?.finding_Id)">(no Resources
-                                        available)</span>
+                                    <span *ngIf="!sourceFilesMap.has(observation?.finding?.finding_Id)">(No Resources available)</span>
+                                    <br>
+
+                                    <strong> References: </strong>
+                                    <br>
+                                    <span *ngIf="regCitationsMap.has(observation?.question?.mat_Question_Id)">
+                                        <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal; font-size: 14px; flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
+                                          [cdkCopyToClipboard]="getReferenceCopyText(observation?.question?.mat_Question_Id)">
+                                            <span class="cset-icons-copy"></span>
+                                        </label>
+                                        {{ regCitationsMap.get(observation?.question?.mat_Question_Id) }}
+                                    </span>
+                                    <span *ngIf="!regCitationsMap.has(observation?.question?.mat_Question_Id)">(No Regulatory Citations available)</span>
+                                    <br>
+
                                 </div>
 
                                 <hr class="page-line">
                             </div>
-
                         </div>
                     </div>
-                    <div *ngIf="!this.relaventIssues">
-                        No Issues were noted.
-                    </div>
+                    <div *ngIf="!this.relaventIssues">No Issues were noted.</div>
                 </div>
             </div>
         </ng-template>

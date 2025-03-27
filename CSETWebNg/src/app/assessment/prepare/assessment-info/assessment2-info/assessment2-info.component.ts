@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,8 +30,9 @@ import { AssessmentDemographicsComponent } from '../assessment-demographics/asse
 import { NCUAService } from '../../../../services/ncua.service';
 
 @Component({
-  selector: 'app-assessment2-info',
-  templateUrl: './assessment2-info.component.html'
+    selector: 'app-assessment2-info',
+    templateUrl: './assessment2-info.component.html',
+    standalone: false
 })
 export class Assessment2InfoComponent implements OnInit {
 

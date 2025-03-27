@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +32,10 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
-  selector: 'executive',
-  templateUrl: './executive-cmmc2.component.html',
-  styleUrls: ['../../reports.scss']
+    selector: 'executive',
+    templateUrl: './executive-cmmc2.component.html',
+    styleUrls: ['../../reports.scss'],
+    standalone: false
 })
 export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
   loadingLevels = true;
@@ -73,7 +74,7 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
    *
    */
   ngOnInit() {
-    
+
     this.tSvc.selectTranslate('executive summary', {}, { scope: 'reports' })
       .subscribe(title =>
         this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));

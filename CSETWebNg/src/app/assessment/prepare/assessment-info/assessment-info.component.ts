@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,26 +21,47 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { ACETService } from '../../../services/acet.service';
+import { GalleryService } from '../../../services/gallery.service';
+import { Upgrades } from '../../../models/assessment-info.model';
+
 
 @Component({
   selector: 'app-assessment-info',
   templateUrl: './assessment-info.component.html',
   // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
-export class AssessmentInfoComponent {
+export class AssessmentInfoComponent implements OnInit {
+
+  showUpgrade: boolean = false;
+  targetModel: string = '';
 
   constructor(
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public navSvc: NavigationService,
     public ncuaSvc: NCUAService,
-    public acetSvc: ACETService
+    public acetSvc: ACETService,
+    public gallerySvc: GalleryService
   ) { }
+
+  ngOnInit(): void {
+
+    if (this.configSvc.showAssessmentUpgrade() == true) {
+      this.assessSvc.checkUpgrades().subscribe((data: Upgrades) => {
+        if (data) {
+          this.showUpgrade = !!data;
+          this.assessSvc.galleryItemGuid = data.target;
+          this.assessSvc.convertToModel = data.name;
+        }
+      })
+    }
+  }
 }

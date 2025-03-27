@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,14 +29,15 @@ import Chart from 'chart.js/auto';
 import { QuestionsService } from '../../../../services/questions.service';
 
 @Component({
-  selector: 'app-components-types',
-  templateUrl: './components-types.component.html'
+    selector: 'app-components-types',
+    templateUrl: './components-types.component.html',
+    standalone: false
 })
 export class ComponentsTypesComponent implements OnInit {
   chart: Chart;
   dataRows: { title: string; yes: number; no: number; na: number; alt: number; unanswered: number; total: number; }[];
   initialized = false;
-  dataSet: any; 
+  dataSet: any;
 
   constructor(
     private analysisSvc: AnalysisService,

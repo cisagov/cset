@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,10 +35,11 @@ import { ACETService } from '../../services/acet.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-questions',
-  templateUrl: './questions.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'app-questions',
+    templateUrl: './questions.component.html',
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' },
+    standalone: false
 })
 export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewInit {
   @ViewChild('questionBlock') questionBlock;
@@ -182,11 +183,11 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
     let q = scrollTarget.split(',').find(x => x.startsWith('Q:'))?.replace('Q:', '');
 
     // NEED TO DETERMINE WHICH GROUP TO EXPAND
-      // // expand the question's group
-      // var groupToExpand = this.findGroupingById(Number(g), this.groupings);
-      // if (!!groupToExpand) {
-      //   groupToExpand.expanded = true;
-      // }
+    // // expand the question's group
+    // var groupToExpand = this.findGroupingById(Number(g), this.groupings);
+    // if (!!groupToExpand) {
+    //   groupToExpand.expanded = true;
+    // }
 
 
     // scroll to the question
@@ -227,6 +228,8 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
    */
   setMode(mode: string) {
     this.assessSvc.applicationMode = mode;
+    this.categories = null;
+
     this.questionsSvc.setMode(mode).subscribe(() => {
       this.loadQuestions();
       this.navSvc.buildTree();

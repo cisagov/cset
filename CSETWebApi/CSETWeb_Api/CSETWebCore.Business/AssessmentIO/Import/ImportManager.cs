@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -63,7 +63,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 var x = new ZipFile(fs);
                 ZipEntry e = x.GetEntry("model.json");
 
-                
+
 
                 if (!String.IsNullOrEmpty(password))
                 {
@@ -120,7 +120,6 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                     foreach (var standard in model.CustomStandards)
                     {
-                        
                         var sets = context.SETS.Where(s => s.Short_Name.Contains(standard)).ToList();
                         if (sets.Count == 0)
                         {
@@ -150,12 +149,6 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                         if (set == null)
                         {
-                            //int incr = 1;
-                            //while (sets.Any(s => s.Short_Name == originalSetName))
-                            //{
-                            //    setModel.name = originalSetName + " " + incr;
-                            //    incr++;
-                            //}
                             var setResult = await setModel.ToSet(_context);
                             if (setResult.IsSuccess)
                             {
@@ -185,7 +178,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                                         erea.Question_Or_Requirement_Id = req.Requirement_Id;
                                     }
                                     return erea;
-                                }).Concat(model.jANSWER.Where(s => !s.Is_Requirement??false).GroupJoin(setResult.Result.NEW_QUESTION, s => s.Custom_Question_Guid, req => new Guid(MD5.Create().ComputeHash(Encoding.Default.GetBytes(req.Simple_Question))).ToString(), (erer, s) =>
+                                }).Concat(model.jANSWER.Where(s => !s.Is_Requirement ?? false).GroupJoin(setResult.Result.NEW_QUESTION, s => s.Custom_Question_Guid, req => new Guid(MD5.Create().ComputeHash(Encoding.Default.GetBytes(req.Simple_Question))).ToString(), (erer, s) =>
                                 {
                                     var req = s.FirstOrDefault();
                                     if (req != null)
@@ -208,7 +201,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                     Importer import = new Importer(model, currentUserId, email, accessKey, context, _token, _assessmentUtil, _utilities);
                     int newAssessmentId = import.RunImportManualPortion(overwriteAssessment);
-                    import.RunImportAutomatic(newAssessmentId, jsonObject, context);                    
+                    import.RunImportAutomatic(newAssessmentId, jsonObject, context);
 
                     // Save the diagram
                     var assessment = context.ASSESSMENTS.Where(x => x.Assessment_Id == newAssessmentId).FirstOrDefault();
@@ -271,7 +264,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         {
             using (assessmentsZipArchive)
             {
-               // ZipFile zip = ZipFile.Read(assessmentsZipArchive);
+                // ZipFile zip = ZipFile.Read(assessmentsZipArchive);
 
                 var zip = new ZipFile(assessmentsZipArchive);
 

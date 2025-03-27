@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -38,9 +38,10 @@ import { ActionItemText } from '../../questions/observations/observations.model'
 import { ReportService } from '../../../services/report.service';
 
 @Component({
-  selector: 'app-merge-cie-analysis',
-  templateUrl: './merge-cie-analysis.component.html',
-  styles: ['tr { border-bottom: 1px solid black; text-align: center; }']
+    selector: 'app-merge-cie-analysis',
+    templateUrl: './merge-cie-analysis.component.html',
+    styles: ['tr { border-bottom: 1px solid black; text-align: center; }'],
+    standalone: false
 })
 export class MergeCieAnalysisComponent implements OnInit {
   // Show a spinner on the frontend if the "behind the scenes" code is still running.
@@ -201,15 +202,15 @@ export class MergeCieAnalysisComponent implements OnInit {
                           this.assessmentIssues.set(question.questionId, obsArray);
                         }
                       }
-                      
+
                     });
-                    
+
                   }
                 }
               }
             });
         }
-        
+
       }
     );
   }
@@ -244,7 +245,7 @@ export class MergeCieAnalysisComponent implements OnInit {
                         this.assessmentDocuments.set(question.questionId, [doc]);
                       }
                     }
-                    
+
                   });
                 }
                 for (let j = 0; j < response.groupings[0].subGroupings[i].subGroupings.length; j++) {
@@ -264,7 +265,7 @@ export class MergeCieAnalysisComponent implements OnInit {
                           this.assessmentDocuments.set(question.questionId, [doc]);
                         }
                       }
-                      
+
                     });
                   }
                 }
@@ -299,10 +300,10 @@ export class MergeCieAnalysisComponent implements OnInit {
           // if the question didn't previously have a mapped response text
           if (!this.assessmentFreeResponses.has(question.questionId) && question.answer == 'U') {
             this.assessmentFreeResponses.set(question.questionId, question.freeResponseAnswer);
-          } 
+          }
           else if (!this.assessmentNAReasons.has(question.questionId) && question.answer == 'NA') {
             this.assessmentNAReasons.set(question.questionId, question.freeResponseAnswer);
-          } 
+          }
           else if (this.assessmentFreeResponses.has(question.questionId)) {
             let myString = this.assessmentFreeResponses.get(question.questionId);
             myString += ("\n" + question.freeResponseAnswer);
@@ -319,7 +320,7 @@ export class MergeCieAnalysisComponent implements OnInit {
           // if the question didn't previously have a mapped feedback
           if (!this.assessmentFeedback.has(question.questionId)) {
             this.assessmentFeedback.set(question.questionId, question.feedback);
-          } 
+          }
           else if (this.assessmentFeedback.has(question.questionId)) {
             let myString = this.assessmentFeedback.get(question.questionId);
             myString += ("\n" + question.feedback);
@@ -331,7 +332,7 @@ export class MergeCieAnalysisComponent implements OnInit {
           // if the question didn't previously have a mapped feedback
           if (!this.assessmentComment.has(question.questionId)) {
             this.assessmentComment.set(question.questionId, question.comment);
-          } 
+          }
           else if (this.assessmentComment.has(question.questionId)) {
             let myString = this.assessmentComment.get(question.questionId);
             myString += ("\n" + question.comment);
@@ -378,10 +379,10 @@ export class MergeCieAnalysisComponent implements OnInit {
             // if the question didn't previously have a mapped response text
             if (!this.assessmentFreeResponses.has(question.questionId) && question.answer == 'U') {
               this.assessmentFreeResponses.set(question.questionId, question.freeResponseAnswer);
-            } 
+            }
             else if (!this.assessmentNAReasons.has(question.questionId) && question.answer == 'NA') {
               this.assessmentNAReasons.set(question.questionId, question.freeResponseAnswer);
-            } 
+            }
             else if (this.assessmentFreeResponses.has(question.questionId)) {
               let myString = this.assessmentFreeResponses.get(question.questionId);
               myString += ("\n" + question.freeResponseAnswer);
@@ -394,12 +395,12 @@ export class MergeCieAnalysisComponent implements OnInit {
             }
           }
 
-          
+
           if (question.feedback != null && question.feedback != '') {
             // if the question didn't previously have a mapped feedback
             if (!this.assessmentFeedback.has(question.questionId)) {
               this.assessmentFeedback.set(question.questionId, question.feedback);
-            } 
+            }
             else if (this.assessmentFeedback.has(question.questionId)) {
               let myString = this.assessmentFeedback.get(question.questionId);
               myString += ("\n" + question.feedback);
@@ -411,14 +412,14 @@ export class MergeCieAnalysisComponent implements OnInit {
             // if the question didn't previously have a mapped feedback
             if (!this.assessmentComment.has(question.questionId)) {
               this.assessmentComment.set(question.questionId, question.comment);
-            } 
+            }
             else if (this.assessmentComment.has(question.questionId)) {
               let myString = this.assessmentComment.get(question.questionId);
               myString += ("\n" + question.comment);
               this.assessmentComment.set(question.questionId, myString);
             }
           }
-  
+
           let answerToSave: Answer = {
             answerId: null,
             questionId: question.questionId,
@@ -523,7 +524,7 @@ export class MergeCieAnalysisComponent implements OnInit {
   }
 
   getDisplayText(answerText: String, freeResponse: String) {
-    
+
     if (answerText === 'U') {
       return 'Provided Response';
     } else if (answerText === 'NA') {
@@ -562,12 +563,12 @@ export class MergeCieAnalysisComponent implements OnInit {
     this.assessmentCombinedFreeResponse.clear();
     this.assessmentCombinedFeedback.clear();
     this.assessmentCombinedComment.clear();
-    
+
     for (let i = 0; i < this.mergeConflicts.length; i++) {
       let combinedFreeResponse = '';
       let combinedFeedback = '';
       let combinedComment = '';
-      
+
       let selectedAnswer = this.mergeRadioSelections[i];
 
       for (let j = 0; j < 10; j++) {
@@ -594,7 +595,7 @@ export class MergeCieAnalysisComponent implements OnInit {
             if (this.mergeConflicts[i].answer_Text2 != null && this.mergeConflicts[i].answer_Text2 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer2 != null) {
                 combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer2;
-              }            
+              }
             }
             //feedback
             if (this.mergeConflicts[i].feedback2 != null) {
@@ -610,8 +611,8 @@ export class MergeCieAnalysisComponent implements OnInit {
             if (this.mergeConflicts[i].answer_Text3 != null && this.mergeConflicts[i].answer_Text3 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer3 != null) {
                 combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer3;
-              }            
-            }   
+              }
+            }
             //feedback
             if (this.mergeConflicts[i].feedback3 != null) {
               combinedFeedback += '\n ' + this.mergeConflicts[i].feedback3;
@@ -619,15 +620,15 @@ export class MergeCieAnalysisComponent implements OnInit {
             //comment
             if (this.mergeConflicts[i].comment3 != null) {
               combinedComment += '\n ' + this.mergeConflicts[i].comment3;
-            }         
+            }
             break;
           case 4:
             // free response
             if (this.mergeConflicts[i].answer_Text4 != null && this.mergeConflicts[i].answer_Text4 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer4 != null) {
                 combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer4;
-              }            
-            }    
+              }
+            }
             //feedback
             if (this.mergeConflicts[i].feedback4 != null) {
               combinedFeedback += '\n ' + this.mergeConflicts[i].feedback4;
@@ -635,15 +636,15 @@ export class MergeCieAnalysisComponent implements OnInit {
             //comment
             if (this.mergeConflicts[i].comment4 != null) {
               combinedComment += '\n ' + this.mergeConflicts[i].comment4;
-            }        
+            }
             break;
           case 5:
             // free response
             if (this.mergeConflicts[i].answer_Text5 != null && this.mergeConflicts[i].answer_Text5 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer5 != null) {
                 combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer5;
-              }            
-            }  
+              }
+            }
             //feedback
             if (this.mergeConflicts[i].feedback5 != null) {
               combinedFeedback += '\n ' + this.mergeConflicts[i].feedback5;
@@ -651,15 +652,15 @@ export class MergeCieAnalysisComponent implements OnInit {
             //comment
             if (this.mergeConflicts[i].comment5 != null) {
               combinedComment += '\n ' + this.mergeConflicts[i].comment5;
-            }          
+            }
             break;
           case 6:
             // free response
             if (this.mergeConflicts[i].answer_Text6 != null && this.mergeConflicts[i].answer_Text6 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer6 != null) {
                 combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer6;
-              }            
-            }       
+              }
+            }
             //feedback
             if (this.mergeConflicts[i].feedback6 != null) {
               combinedFeedback += '\n ' + this.mergeConflicts[i].feedback6;
@@ -667,15 +668,15 @@ export class MergeCieAnalysisComponent implements OnInit {
             //comment
             if (this.mergeConflicts[i].comment6 != null) {
               combinedComment += '\n ' + this.mergeConflicts[i].comment6;
-            }     
+            }
             break;
           case 7:
             // free response
             if (this.mergeConflicts[i].answer_Text7 != null && this.mergeConflicts[i].answer_Text7 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer7 != null) {
                 combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer7;
-              }            
-            }     
+              }
+            }
             //feedback
             if (this.mergeConflicts[i].feedback7 != null) {
               combinedFeedback += '\n ' + this.mergeConflicts[i].feedback7;
@@ -683,15 +684,15 @@ export class MergeCieAnalysisComponent implements OnInit {
             //comment
             if (this.mergeConflicts[i].comment7 != null) {
               combinedComment += '\n ' + this.mergeConflicts[i].comment7;
-            }       
+            }
             break;
           case 8:
             // free response
             if (this.mergeConflicts[i].answer_Text8 != null && this.mergeConflicts[i].answer_Text8 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer8 != null) {
                 combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer8;
-              }            
-            }    
+              }
+            }
             //feedback
             if (this.mergeConflicts[i].feedback8 != null) {
               combinedFeedback += '\n ' + this.mergeConflicts[i].feedback8;
@@ -699,15 +700,15 @@ export class MergeCieAnalysisComponent implements OnInit {
             //comment
             if (this.mergeConflicts[i].comment8 != null) {
               combinedComment += '\n ' + this.mergeConflicts[i].comment8;
-            }        
+            }
             break;
           case 9:
             // free response
             if (this.mergeConflicts[i].answer_Text9 != null && this.mergeConflicts[i].answer_Text9 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer9 != null) {
                 combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer9;
-              }            
-            }   
+              }
+            }
             //feedback
             if (this.mergeConflicts[i].feedback9 != null) {
               combinedFeedback += '\n ' + this.mergeConflicts[i].feedback9;
@@ -715,15 +716,15 @@ export class MergeCieAnalysisComponent implements OnInit {
             //comment
             if (this.mergeConflicts[i].comment9 != null) {
               combinedComment += '\n ' + this.mergeConflicts[i].comment9;
-            }         
+            }
             break;
           case 10:
             // free response
             if (this.mergeConflicts[i].answer_Text10 != null && this.mergeConflicts[i].answer_Text10 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer10 != null) {
                 combinedFreeResponse += '\n' + this.mergeConflicts[i].free_Response_Answer10;
-              }            
-            }  
+              }
+            }
             //feedback
             if (this.mergeConflicts[i].feedback10 != null) {
               combinedFeedback += '\n ' + this.mergeConflicts[i].feedback10;
@@ -731,7 +732,7 @@ export class MergeCieAnalysisComponent implements OnInit {
             //comment
             if (this.mergeConflicts[i].comment10 != null) {
               combinedComment += '\n ' + this.mergeConflicts[i].comment10;
-            }          
+            }
             break;
           default:
             break;
@@ -805,18 +806,18 @@ export class MergeCieAnalysisComponent implements OnInit {
 
     this.cieSvc.saveDocuments(documentArray).subscribe(
       (response: any) => {
-        this.navCounter ++;
+        this.navCounter++;
         if (this.navCounter >= 2) {
           this.navToHome();
         }
-    });
+      });
 
   }
 
   createMergedAssessment() {
     // Null out the button to prevent multiple clicks
     this.attemptingToMerge = true;
-    
+
     this.combineFields(); //freeResponse, feedback, comment
 
     this.convertToAnswerType(this.mergeRadioSelections.length, this.mergeRadioSelections);
@@ -853,42 +854,42 @@ export class MergeCieAnalysisComponent implements OnInit {
                     case 3:
                       if (this.mergeConflicts[0].assessment_Name3 != null) {
                         details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                      }           
+                      }
                       break;
                     case 4:
                       if (this.mergeConflicts[0].assessment_Name4 != null) {
                         details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                      }          
+                      }
                       break;
                     case 5:
                       if (this.mergeConflicts[0].assessment_Name5 != null) {
                         details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                      }           
+                      }
                       break;
                     case 6:
                       if (this.mergeConflicts[0].assessment_Name6 != null) {
                         details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                      }           
+                      }
                       break;
                     case 7:
                       if (this.mergeConflicts[0].assessment_Name7 != null) {
                         details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                      }            
+                      }
                       break;
                     case 8:
                       if (this.mergeConflicts[0].assessment_Name8 != null) {
                         details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                      }          
+                      }
                       break;
                     case 9:
                       if (this.mergeConflicts[0].assessment_Name9 != null) {
                         details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                      }           
+                      }
                       break;
                     case 10:
                       if (this.mergeConflicts[0].assessment_Name10 != null) {
                         details.assessmentName = "Merged " + (i + 1) + " Analyses";
-                      }           
+                      }
                       break;
                     default:
                       break;
@@ -911,8 +912,8 @@ export class MergeCieAnalysisComponent implements OnInit {
               // Add all the contacts contained in the merging assessments and save them in this new one
               this.saveNewAssessmentContacts(0);
             });
+          });
         });
-    });
   }
 
   saveNewAssessmentContacts(num: number) {
@@ -952,7 +953,7 @@ export class MergeCieAnalysisComponent implements OnInit {
         }
       }
     }
-    
+
     this.saveNewAssessmentAnswers();
   }
 
@@ -1014,7 +1015,7 @@ export class MergeCieAnalysisComponent implements OnInit {
           if (this.navCounter >= 2) {
             this.navToHome();
           }
-        }  
+        }
       });
     });
   }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,9 +27,10 @@ import { ConfigService } from '../../services/config.service';
 import { VersionService } from '../../services/version.service';
 
 @Component({
-  selector: 'app-about-renew',
-  templateUrl: './about-renew.component.html',
-  styleUrls: ['./about-renew.component.scss']
+    selector: 'app-about-renew',
+    templateUrl: './about-renew.component.html',
+    styleUrls: ['./about-renew.component.scss'],
+    standalone: false
 })
 export class AboutRenewComponent implements OnInit {
   version: any;
@@ -41,10 +42,10 @@ export class AboutRenewComponent implements OnInit {
     public configSvc: ConfigService,
     public versionSvc: VersionService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.versionSvc.localVersionObservable$.subscribe(localVersion => {
-        this.version = localVersion;
-      });
-     }
+    this.versionSvc.localVersionObservable$.subscribe(localVersion => {
+      this.version = localVersion;
+    });
+  }
 
   /**
    * 
@@ -54,7 +55,7 @@ export class AboutRenewComponent implements OnInit {
       this.linkerTime = localStorage.getItem('cset.linkerDate');
     }
   }
-  
+
 
   close() {
     return this.dialog.close();

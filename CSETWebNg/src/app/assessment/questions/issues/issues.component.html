@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -95,7 +95,7 @@
       <div *ngIf="this.observation.auto_Generated === 0">
         <div class="row">
           <div class="col-12">
-            <label for="manual-actions" class="form-label font-weight-bold">Action Items</label>
+            <label for="manual-actions" class="form-label font-weight-bold">Action Required</label>
             <textarea id="manual-actions" type="text" rows="5" autocomplete="off" class="form-control"
               [(ngModel)]="observation.actionItems"></textarea>
           </div>
@@ -111,7 +111,7 @@
                 <tr style="text-align: center;">
                   <th scope="col">Stmt #</th>
                   <th scope="col">Statement Text</th>
-                  <th scope="col">Action Items</th>
+                  <th scope="col">Action Required</th>
                 </tr>
               </thead>
               <tbody>

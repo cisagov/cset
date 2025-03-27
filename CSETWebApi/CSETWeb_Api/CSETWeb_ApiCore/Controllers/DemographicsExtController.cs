@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -82,48 +82,18 @@ namespace CSETWebCore.Api.Controllers
             var mgr = new DemographicExtBusiness(_context);
             mgr.SaveDemographics(demographics, userid ?? 0);
 
-
-            return Ok();
-        }
-
-
-
-        /// <summary>
-        /// Persists a single extended demographics value.
-        /// </summary>
-        /// <param name="demographics"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("api/demographics/ext3")]
-        public IActionResult PostExtended3([FromQuery] string name, [FromQuery] string val, [FromQuery] string t)
-        {
-            int assessmentId = _token.AssessmentForUser();
-
-            var mgr = new DemographicExtBusiness(_context);
-            if (val == "0: 0" | val == "0: null")
-            {
-                val = "0"; 
-            }
-            mgr.SaveX(assessmentId, name, val, t);
-
             return Ok();
         }
 
       
-
         [HttpGet]
         [Route("api/demographics/export")]
-        public IActionResult ExportDemographic([FromQuery] string token)
+        public IActionResult ExportDemographic()
         {
             try
             {
-                _token.SetToken(token);
-
-                int assessmentId = _token.AssessmentForUser(token);
-
-                string ext = ".json";
-
-                DemographicsExportFile result = new DemographicsExportManager(_context).ExportDemographics(assessmentId, ext);
+                int assessmentId = _token.AssessmentForUser();
+                DemographicsExportFile result = new DemographicsExportManager(_context).ExportDemographics(assessmentId);
 
                 return File(result.FileContents, "application/octet-stream", result.FileName);
             }

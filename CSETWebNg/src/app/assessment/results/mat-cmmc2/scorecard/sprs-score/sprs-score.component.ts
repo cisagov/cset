@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,8 +28,9 @@ import { MaturityService } from '../../../../../services/maturity.service';
 import { NavigationService } from '../../../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-sprs-score',
-  templateUrl: './sprs-score.component.html'
+    selector: 'app-sprs-score',
+    templateUrl: './sprs-score.component.html',
+    standalone: false
 })
 export class SprsScoreComponent implements OnInit {
   response: any;

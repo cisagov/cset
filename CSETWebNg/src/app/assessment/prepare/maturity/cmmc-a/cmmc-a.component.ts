@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,9 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import { AssessmentService } from '../../../../services/assessment.service';
 
 @Component({
-  selector: 'app-cmmc-a',
-  templateUrl: './cmmc-a.component.html'
+    selector: 'app-cmmc-a',
+    templateUrl: './cmmc-a.component.html',
+    standalone: false
 })
 export class CmmcAComponent implements OnInit {
 

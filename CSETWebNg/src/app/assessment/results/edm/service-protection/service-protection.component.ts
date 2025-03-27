@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,10 @@ import { MaturityService } from '../../../../services/maturity.service';
 import { MaturityQuestionResponse } from '../../../../models/questions.model';
 
 @Component({
-  selector: 'app-service-protection',
-  templateUrl: './service-protection.component.html',
-  styleUrls: ['./service-protection.component.scss']
+    selector: 'app-service-protection',
+    templateUrl: './service-protection.component.html',
+    styleUrls: ['./service-protection.component.scss'],
+    standalone: false
 })
 export class ServiceProtectionComponent implements OnInit {
 

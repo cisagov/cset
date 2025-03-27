@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,9 @@ import { Category } from '../../../models/questions.model';
 import { NavTreeNode } from '../../../services/navigation/navigation.service';
 
 @Component({
-  selector: 'app-category-block',
-  templateUrl: './category-block.component.html'
+    selector: 'app-category-block',
+    templateUrl: './category-block.component.html',
+    standalone: false
 })
 export class CategoryBlockComponent implements OnInit {
 

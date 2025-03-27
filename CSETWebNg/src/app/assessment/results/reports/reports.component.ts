@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -41,14 +41,16 @@ import { CisaWorkflowFieldValidationResponse } from '../../../models/demographic
 import { TranslocoService } from '@jsverse/transloco';
 import { ConversionService } from '../../../services/conversion.service';
 import { CieDocumentsComponent } from '../../../dialogs/cie-documents/cie-documents.component';
+import { ExportAssessmentComponent } from '../../../dialogs/assessment-encryption/export-assessment/export-assessment.component';
+import { FileExportService } from '../../../services/file-export.service';
 
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
   // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }, 
-  styleUrls: ['./reports.component.scss']
-
+  host: { class: 'd-flex flex-column flex-11a' },
+  styleUrls: ['./reports.component.scss'],
+  standalone: false
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
   /**
@@ -101,6 +103,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     public demoSvc: DemographicExtendedService,
     private cdr: ChangeDetectorRef,
     private reportSvc: ReportService,
+    private fileExportSvc: FileExportService,
     private convertSvc: ConversionService,
     public dialog: MatDialog
   ) {
@@ -151,7 +154,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
     // call the API for a ruling on whether all questions have been answered
     this.disableAcetReportLinks = false;
-  
+
     if (this.configSvc.installationMode === 'IOD') {
       this.reportSvc.validateCisaAssessorFields().subscribe((result: CisaWorkflowFieldValidationResponse) => {
         this.cisaAssessorWorkflowFieldValidation = result;
@@ -227,6 +230,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   clickReportLink(reportType: string) {
     const url = '/index.html?returnPath=report/' + reportType;
     localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
+
     window.open(url, '_blank');
   }
 
@@ -238,6 +242,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       saveAs(data, 'test.pdf');
     });
   }
+
 
   /**
    * If all ACET statements are not answered, set the 'disable' flag
@@ -260,35 +265,51 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     this.confidentiality = val;
   }
 
-  showExcelExportDialog() {
-    const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
-    const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
-    if (this.dialog.openDialogs[0] || doNotShow) {
-      this.exportToExcel();
-      return;
-    }
-    this.dialogRef = this.dialog.open(ExcelExportComponent);
-    this.dialogRef.afterClosed().subscribe();
-  }
-
-  exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
-  }
-
   /**
-   *
+   * 
    */
   clickExport(jsonOnly: boolean = false) {
-    // get short-term JWT from API
-    this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
-      let url = this.fileSvc.exportUrl + '?token=' + response.token;
+    let ext = '.csetw';
 
-      if (jsonOnly) {
-        url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
-      }
+    if (jsonOnly) {
+      let dialogRef = this.dialog.open(ExportAssessmentComponent, {
+        data: { jsonOnly }
+      });
 
-      window.location.href = url;
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          let url = this.fileSvc.exportUrl;
+
+          if (jsonOnly) {
+            url = this.fileSvc.exportJsonUrl;
+            ext = '.json';
+          }
+
+          let params = '';
+
+          if (result.scrubData) {
+            params = params + "&scrubData=" + result.scrubData;
+          }
+
+          if (result.encryptionData.password != null && result.encryptionData.password != "") {
+            params = params + "&password=" + result.encryptionData.password;
+          }
+
+          if (result.encryptionData.hint != null && result.encryptionData.hint != "") {
+            params = params + "&passwordHint=" + result.encryptionData.hint;
+          }
+
+          if (params.length > 0) {
+            url = url + '?' + params.replace(/^&/, '');
+          }
+
+          this.fileExportSvc.fetchAndSaveFile(url);
+        }
+      });
+    } else {
+      // If encryption is turned off
+      this.fileExportSvc.fetchAndSaveFile(this.fileSvc.exportUrl);
+    }
   }
 
   disableSubmitButton() {
@@ -347,10 +368,10 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       if (this.assessSvc.usesStandard('MOPhysical')) {
         this.currentSectionId = 'MOPhysical';
       } else if (this.assessSvc.assessment.useStandard && !this.isMobile) {
-          this.currentSectionId = 'STANDARD';
+        this.currentSectionId = 'STANDARD';
       } else if (this.assessSvc.assessment.useDiagram && !this.isMobile) {
-          this.currentSectionId = 'DIAGRAM';
-      } else if (this.assessSvc.usesMaturityModel('CMMC') ) {
+        this.currentSectionId = 'DIAGRAM';
+      } else if (this.assessSvc.usesMaturityModel('CMMC')) {
         this.currentSectionId = 'CMMC';
       } else if (this.assessSvc.usesMaturityModel('EDM')) {
         this.currentSectionId = 'EDM';
@@ -365,20 +386,20 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       } else if (this.assessSvc.usesMaturityModel('CMMC2F')) {
         this.currentSectionId = 'CMMC2';
       } else if (this.assessSvc.usesMaturityModel('RRA') && !this.isMobile) {
-          this.currentSectionId = 'RRA';
+        this.currentSectionId = 'RRA';
       } else if (this.assessSvc.usesMaturityModel('ACET') && !this.isMobile) {
-          this.currentSectionId = 'ACET';
+        this.currentSectionId = 'ACET';
       } else if (this.assessSvc.usesMaturityModel('MVRA') && !this.isMobile) {
-          this.currentSectionId = 'MVRA';
+        this.currentSectionId = 'MVRA';
       } else if (this.assessSvc.usesMaturityModel('CPG') && !this.isMobile) {
-          this.currentSectionId = 'CPG';
+        this.currentSectionId = 'CPG';
       } else if (this.assessSvc.usesMaturityModel('CPG2') && !this.isMobile) {
-          this.currentSectionId = 'CPG';
+        this.currentSectionId = 'CPG';
       } else if (this.assessSvc.usesMaturityModel('VADR') && !this.isMobile) {
         this.currentSectionId = 'VADR';
       } else if (this.assessSvc.usesMaturityModel('C2M2') && !this.isMobile) {
         this.currentSectionId = 'C2M2';
-      } else if (this.assessSvc.usesMaturityModel('SD02 Series') && !this.  isMobile) {
+      } else if (this.assessSvc.usesMaturityModel('SD02 Series') && !this.isMobile) {
         this.currentSectionId = 'SD02 Series';
       } else if (this.assessSvc.usesMaturityModel('SD02 Owner') && !this.isMobile) {
         this.currentSectionId = 'SD02 Owner';
@@ -391,14 +412,13 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       this.currentSectionId = null; // No assessment
     }
   }
-
 }
 
 @Component({
   selector: 'snack-bar-component-example-snack',
-  template:
-    '<span>{{ tSvc.translate(printInstructions) }}</span><button (click)="snackBarRef.dismiss()">{{ tSvc.translate(\'buttons.close\') }}</button>',
-  styles: ['']
+  template: '<span>{{ tSvc.translate(printInstructions) }}</span><button (click)="snackBarRef.dismiss()">{{ tSvc.translate(\'buttons.close\') }}</button>',
+  styles: [''],
+  standalone: false
 })
 export class PrintSnackComponent implements OnInit {
   constructor(public snackBarRef: MatSnackBarRef<PrintSnackComponent>,

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { map } from 'rxjs/operators';
-import { timer, Observable } from 'rxjs';
+import { timer, Observable, firstValueFrom } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -96,49 +96,49 @@ export class AuthenticationService {
    *
    */
   checkLocal() {
-    return this.http
-      .post(
-        this.configSvc.apiUrl + 'auth/login/standalone',
-        JSON.stringify({
-          TzOffset: new Date().getTimezoneOffset().toString(),
-          // If InstallationMode isn't empty, use it. Otherwise, default to CSET.
-          Scope: this.configSvc.installationMode
-        }),
-        headers
-      )
-      .toPromise()
-      .then(
-        (response: LoginResponse) => {
+    const obs = this.http.post(
+      this.configSvc.apiUrl + 'auth/login/standalone',
+      JSON.stringify({
+        TzOffset: new Date().getTimezoneOffset().toString(),
+        // If InstallationMode isn't empty, use it. Otherwise, default to CSET.
+        Scope: this.configSvc.installationMode
+      }),
+      headers
+    );
+    const prom = firstValueFrom(obs);
 
-          if (!response?.email) {
-            this.isLocal = false;
-          } else {
-            this.isLocal = true;
-            this.storeUserData(response);
-          }
+    return prom.then(
+      (response: LoginResponse) => {
 
-          // if there's a language for the user, set it
-          if (!!response?.lang) {
-            this.tSvc.setActiveLang(response.lang);
-            this.tSvc.load(response.lang);
-          }
-
-          localStorage.setItem('cset.isLocal', this.isLocal + '');
-
-          localStorage.setItem('cset.linkerDate', response?.linkerTime);
-
-          // If the response contains a userId, we assume we are authenticated at this point and can configure the CISA assessor workflow switch
-          // Otherwise, this will be configured after calling auth/login (non-standalone login)
-          if (response?.userId) {
-            return this.configureCisaAssessorWorkflow(response);
-          }
-
-        },
-        (error) => {
-          console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');
+        if (!response?.email) {
           this.isLocal = false;
+        } else {
+          this.isLocal = true;
+          this.storeUserData(response);
         }
-      );
+
+        // if there's a language for the user, set it
+        if (!!response?.lang) {
+          this.tSvc.setActiveLang(response.lang);
+          this.tSvc.load(response.lang);
+        }
+
+        localStorage.setItem('cset.isLocal', this.isLocal + '');
+
+        localStorage.setItem('cset.linkerDate', response?.linkerTime);
+
+        // If the response contains a userId, we assume we are authenticated at this point and can configure the CISA assessor workflow switch
+        // Otherwise, this will be configured after calling auth/login (non-standalone login)
+        if (response?.userId) {
+          return this.configureCisaAssessorWorkflow(response);
+        }
+
+      },
+      (error) => {
+        console.warn('Error getting stand-alone status. Assuming Enterprise configuration.');
+        this.isLocal = false;
+      }
+    );
   }
 
   /**
@@ -234,15 +234,6 @@ export class AuthenticationService {
   }
 
   /**
-   * TODO:  This is not working correctly - the local storage stuff
-   * hangs around even if we are sitting on the login page again
-   */
-  // isAuthenticated() {
-  //     const uid = localStorage.getItem('userId');
-  //     return !!uid;
-  // }
-
-  /**
    * Schedules an HTTP transaction to refresh the JWT.
    * @param http The current HttpClient instance.
    * @param token A JWT string.
@@ -252,7 +243,11 @@ export class AuthenticationService {
     refresh.subscribe((val) => {
       // only schedule a refresh if the user is currently logged on
       if (localStorage.getItem('userToken') != null) {
-        http.get(this.configSvc.apiUrl + 'auth/token?refresh').subscribe(
+        const headers = new HttpHeaders({
+          'refresh': ''
+        });
+
+        http.get(this.configSvc.apiUrl + 'auth/token', { headers: headers }).subscribe(
           (resp: LoginResponse) => {
             localStorage.removeItem('userToken');
             localStorage.setItem('userToken', resp.token);
@@ -294,11 +289,23 @@ export class AuthenticationService {
    * Requests a JWT with a short lifespan.
    */
   getShortLivedToken() {
-    return this.http.get(this.configSvc.apiUrl + 'auth/token?expSeconds=30000');
+    const headers = new HttpHeaders({
+      'expSeconds': 60
+    });
+
+    return this.http.get(this.configSvc.apiUrl + 'auth/token', { headers: headers });
   }
 
+  /**
+   * Requests an assessment-specific JWT with a short lifespan.
+   */
   getShortLivedTokenForAssessment(assessment_id: number) {
-    return this.http.get(this.configSvc.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=30000');
+    const headers = new HttpHeaders({
+      'assessmentId': assessment_id,
+      'expSeconds': 60
+    });
+    
+    return this.http.get(this.configSvc.apiUrl + 'auth/token', { headers: headers });
   }
 
   changePassword(data: ChangePassword) {
@@ -392,18 +399,18 @@ export class AuthenticationService {
    * Checks and sets the current user's cisa assessor workflow option.
    */
   configureCisaAssessorWorkflow(user) {
-    return this.configSvc
-      .getCisaAssessorWorkflow()
-      .toPromise()
-      .then((cisaAssessorWorkflowEnabled) => {
-        if (cisaAssessorWorkflowEnabled) {
-          return this.configSvc.enableCisaAssessorWorkflow().then(() => {
-            return user;
-          });
-        } else {
+    const obs = this.configSvc.getCisaAssessorWorkflow();
+    const prom = firstValueFrom(obs);
+
+    return prom.then((cisaAssessorWorkflowEnabled) => {
+      if (cisaAssessorWorkflowEnabled) {
+        return this.configSvc.enableCisaAssessorWorkflow().then(() => {
           return user;
-        }
-      });
+        });
+      } else {
+        return user;
+      }
+    });
   }
 
   /**

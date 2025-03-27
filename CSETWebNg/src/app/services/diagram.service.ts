@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Vendor } from '../models/diagram-vulnerabilities.model';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 const headers = {
   headers: new HttpHeaders()
@@ -38,31 +38,49 @@ export class DiagramService {
   apiUrl: string;
   id: number;
   csafVendors: Vendor[] = [];
-  private dataSubject = new Subject<any>();
 
+  private diagramRefreshSubject = new Subject<any>();
+  refresh$ = this.diagramRefreshSubject.asObservable();
+
+  /**
+   * The full result containing diagram data
+   */
+  diagramModel: any = null;
+
+
+  /**
+   * 
+   */
   constructor(private http: HttpClient, private configSvc: ConfigService) {
-    this.apiUrl = this.configSvc.apiUrl + 'diagram/';    
-  }
-  
-
-  getDiagramDataObservable() {
-    return this.dataSubject.asObservable();
-  }
-
-  emitDiagramData(data: any) {
-    this.dataSubject.next(data);
+    this.apiUrl = this.configSvc.apiUrl + 'diagram/';
   }
 
   saveComponent(component) {
     return this.http.post(this.apiUrl + 'saveComponent', component, headers)
   }
 
-  //replaces all the previous seperate calls
-  //to eliminate the current deadlock on the server
-  getCompleteDiagram(){
-    return this.http.get(this.apiUrl + 'getAllDiagram').subscribe((diaDataResult)=>{
-      this.emitDiagramData(diaDataResult);
+  // flipped to 'true' while waiting for a diagram to be fetched
+  fetchingDiagram: boolean = false;
+
+  /**
+   * Get diagram from API and update my model
+   */
+  obtainDiagram() {
+    this.fetchingDiagram = true;
+    this.diagramModel = null;
+
+    this.callDiagramEndpoint().subscribe(x => {
+      this.fetchingDiagram = false;
+      this.diagramModel = x;
+
+      this.diagramRefreshSubject.next('');
     });
+  }
+
+  // replaces all the previous separate calls
+  // to eliminate the current deadlock on the server
+  callDiagramEndpoint(): Observable<any> {
+    return this.http.get(this.apiUrl + 'getAllDiagram');
   }
 
   getDiagramWarnings() {

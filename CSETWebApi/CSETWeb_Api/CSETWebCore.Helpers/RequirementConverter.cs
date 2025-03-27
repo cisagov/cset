@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -129,18 +129,18 @@ namespace CSETWebCore.Helpers
                     var reqReference = new REQUIREMENT_REFERENCES();
                     try
                     {
-                        reqReference.Destination_String = reference.destination;
-                        reqReference.Page_Number = reference.pageNumber;
-                        reqReference.Section_Ref = String.IsNullOrEmpty(reference.sectionReference) ? "" : reference.sectionReference;
-                        reqReference.Gen_File_Id = importer.LookupGenFileId(reference.fileName);
+                        reqReference.Destination_String = reference.Destination;
+                        reqReference.Page_Number = reference.PageNumber;
+                        reqReference.Section_Ref = String.IsNullOrEmpty(reference.SectionReference) ? "" : reference.SectionReference;
+                        reqReference.Gen_File_Id = importer.LookupGenFileId(reference.FileName);
                     }
                     catch
                     {
-                        result.LogError(String.Format("Reference {0} could not be added for requirement {1} {2}.", externalRequirement.source?.fileName, externalRequirement.identifier, externalRequirement.text));
+                        result.LogError(String.Format("Reference {0} could not be added for requirement {1} {2}.", externalRequirement.source?.FileName, externalRequirement.identifier, externalRequirement.text));
                     }
                     if (reqReference.Gen_File_Id == 0)
                     {
-                        result.LogError(String.Format("Reference {0} has not been loaded into CSET.  Please add the file and try again.", externalRequirement.source?.fileName, externalRequirement.identifier, externalRequirement.text));
+                        result.LogError(String.Format("Reference {0} has not been loaded into CSET.  Please add the file and try again.", externalRequirement.source?.FileName, externalRequirement.identifier, externalRequirement.text));
                     }
                     else
                     {
@@ -155,14 +155,14 @@ namespace CSETWebCore.Helpers
             {
                 if (externalRequirement.source != null)
                 {
-                    reqSource.Gen_File_Id = importer.LookupGenFileId(externalRequirement.source.fileName);
-                    reqSource.Page_Number = externalRequirement.source.pageNumber;
-                    reqSource.Destination_String = externalRequirement.source.destination;
-                    reqSource.Section_Ref = String.IsNullOrEmpty(externalRequirement.source.sectionReference) ? "" : externalRequirement.source.sectionReference;
+                    reqSource.Gen_File_Id = importer.LookupGenFileId(externalRequirement.source.FileName);
+                    reqSource.Page_Number = externalRequirement.source.PageNumber;
+                    reqSource.Destination_String = externalRequirement.source.Destination;
+                    reqSource.Section_Ref = String.IsNullOrEmpty(externalRequirement.source.SectionReference) ? "" : externalRequirement.source.SectionReference;
                     reqSource.Source = true;
                     if (reqSource.Gen_File_Id == 0)
                     {
-                        result.LogError(String.Format("Source {0} has not been loaded into CSET.  Please add the file and try again.", externalRequirement.source?.fileName, externalRequirement.identifier, externalRequirement.text));
+                        result.LogError(String.Format("Source {0} has not been loaded into CSET.  Please add the file and try again.", externalRequirement.source?.FileName, externalRequirement.identifier, externalRequirement.text));
                     }
                     else
                     {
@@ -172,7 +172,7 @@ namespace CSETWebCore.Helpers
             }
             catch
             {
-                result.LogError(String.Format("Source {0} could not be added for requirement {1} {2}.", externalRequirement.source?.fileName, externalRequirement.identifier, externalRequirement.text));
+                result.LogError(String.Format("Source {0} could not be added for requirement {1} {2}.", externalRequirement.source?.FileName, externalRequirement.identifier, externalRequirement.text));
             }
 
             context.SaveChanges();

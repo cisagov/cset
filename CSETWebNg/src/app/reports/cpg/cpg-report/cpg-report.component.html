@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,9 @@
 -------------------------->
 <div class="report-body mb-5" *transloco="let t">
 
-    <app-cover-sheet-a title="{{ 'reports.core.cpg.report title' | transloco | uppercase }}" [assessmentName]="assessmentName"
-        [assessmentDate]="assessmentDate" [assessorName]="assessorName"
-        [facilityName]="facilityName"></app-cover-sheet-a>
+    <app-cover-sheet-a title="{{ 'reports.core.cpg.report title' | transloco | uppercase }}"
+        [assessmentName]="assessmentName" [assessmentDate]="assessmentDate" [assessorName]="assessorName"
+        [facilityName]="facilityName" [selfAssessment]="selfAssessment"></app-cover-sheet-a>
 
     <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
         <app-report-disclaimer></app-report-disclaimer>

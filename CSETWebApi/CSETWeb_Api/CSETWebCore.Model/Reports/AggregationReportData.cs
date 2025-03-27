@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -12,7 +12,7 @@ namespace CSETWebCore.Business.Reports
     {
         public string AggregationName { get; set; }
         public List<BasicReportData.OverallSALTable> SalList { get; set; }
-        public List<DocumentLibraryTable> DocumentLibraryTable { get; set; }
+        public List<DocumentLibraryEntry> DocumentLibraryEntries { get; set; }
         public AggInformation Information { get; set; }
     }
 }

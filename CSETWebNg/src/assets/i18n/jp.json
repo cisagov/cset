@@ -304,6 +304,98 @@
           "creator": "評価の作成者",
           "editor": "評価の編集者"
      },
+     "menu": {
+          "tools": {
+               "tools": "ツール",
+               "enable protected features": "保護機能を有効にする",
+               "assessment documents": "評価ドキュメント",
+               "parameter editor": "パラメータエディタ",
+               "export assessment to excel": "評価をExcelにエクスポート",
+               "import modules": "モジュールをインポート",
+               "module builder": "モジュールビルダー",
+               "module content report": "モジュール内容レポート",
+               "trend": "トレンド",
+               "compare": "比較",
+               "resume questions": "質問を再開"
+          },
+          "resource library": "リソースライブラリ",
+          "help": {
+               "help": "ヘルプ",
+               "cset user guide": "ユーザーガイド",
+               "about": "概要",
+               "keyboard shortcuts": "キーボードショートカット",
+               "legal": {
+                    "legal": "法的情報",
+                    "accessibility statement": {
+                         "accessibility statement": "アクセシビリティ声明",
+                         "htag": {
+                              "adobe acrobat pdf files": "Adobe Acrobat PDFファイル",
+                              "accessibility features": "アクセシビリティ機能",
+                              "keyboard shortcuts": "キーボードショートカット",
+                              "browser support": "ブラウザーサポート",
+                              "our section 508 testing efforts": "当社のSection 508テストの取り組み",
+                              "keyboard focus": "キーボード/フォーカス",
+                              "forms": "フォーム",
+                              "links buttons": "リンク/ボタン",
+                              "repetitive content and links": "繰り返しのコンテンツとリンク",
+                              "content structure": "コンテンツの構造",
+                              "language": "言語",
+                              "page and frame titles": "ページとフレームのタイトル",
+                              "color dependence and contrast": "色依存とコントラスト",
+                              "images": "画像",
+                              "resize text": "テキストのサイズ変更",
+                              "multiple ways": "複数の方法",
+                              "error identification": "エラー識別",
+                              "css style": "CSSスタイル",
+                              "data tables": "データテーブル",
+                              "all interactive elements": "すべてのインタラクティブ要素",
+                              "does not apply": "次のアクセシビリティ機能は当社のソフトウェアに適用されません"
+                         },
+                         "p": {
+                              "1": "米国リハビリテーション法第508条（29 U.S.C. 794d）の考慮により、このアプリケーションの機能と機能は、アクセシビリティ要件をサポートするために開発されました。業界のベストプラクティスと標準に従って、Windowsオペレーティングシステムや.NETアーキテクチャ、Chrome、Firefox、Edgeブラウザーに組み込まれたアクセシビリティ機能を設計および開発プロセスに組み込んでいます。ソフトウェア開発チームは、製品開発サイクル全体を通じてアクセシビリティ設計の考え方を統合することに専念しています。Section 508および技術標準の詳細については、<a href=\"https://www.section508.gov\">www.section508.gov</a>をご覧ください。",
+                              "2": "このアプリケーション内の多くのドキュメントは、HTMLまたはASCII（プレーンテキスト）形式で提供されています。これらの形式は、スクリーンリーダーを使用する人々にとって一般的にアクセス可能です。また、Adobe Acrobat® Portable Document Format（PDF）形式のドキュメントも多数あります。Adobe Acrobat Readerを使用してPDF形式のドキュメントを直接読むには、アクセシビリティプラグインをインストールする必要がある場合があります。このプラグインは<a href=\"https://www.adobe.com/trust/accessibility.html\">Adobeアクセシビリティ</a>のウェブサイトで無料で入手できます。",
+                              "3": "当チームは、すべてのアプリケーションの更新およびリリースにおいて、Section 508のアクセシビリティの考慮事項を組み込むよう努めています。",
+                              "4": "ヘルプメニューでアプリ固有のキーボードショートカットを提供しています。",
+                              "5": "最適なアプリケーション機能を利用するために、Google Chrome、Microsoft Edge、Mozilla Firefoxの使用を推奨します。各ブラウザーに特有のアクセシビリティ機能については、次の機能リストをご覧ください：<li><a href=\"https://about.google/belonging/disability-inclusion/product-accessibility/\">Google Chromeアクセシビリティ機能</a></li> <li><a href=\"https://support.microsoft.com/en-us/microsoft-edge/accessibility-features-in-microsoft-edge-4c696192-338e-9465-b2cd-bd9b698ad19a\">Microsoft Edgeアクセシビリティ機能</a></li> <li><a href=\"https://support.mozilla.org/en-US/kb/accessibility-features-firefox?redirectslug=accessibility-features-firefox-make-firefox-and-we&redirectlocale=en-US\">Mozilla Firefoxアクセシビリティ機能</a></li>",
+                              "6": "信頼性が高く効果的なオープンソースのサイバーセキュリティツールは、誰もが利用できるようにすべきだと信じています。",
+                              "7": "すべてのユーザーにとって最もアクセス可能な体験を確保するために、上記のSection 508ベストプラクティスに加えて、定期的にソフトウェアを次の機能についてテストしています：",
+                              "8": "すべての機能がキーボードのみを使用してアクセスおよび実行できることをテストします。",
+                              "9": "各フォーム入力にラベルと指示が提供されていること、および各フォームラベルが十分に説明的であることを確認します。ページに通知が提供されていることをテストします。フォーム関連の変更の通知、エラーがテキストで識別され、ユーザーに十分に説明され、正しい入力についての追加のガイダンスが提供されることを期待しています。最後に、ウェブページでは、ユーザーが送信を確認、取り消し、または再確認できるようにします。",
+                              "10": "各リンクとボタンがリンク/ボタンテキスト、アクセス可能な名前、アクセス可能な説明、および/またはプログラムで決定されたコンテキストの組み合わせから判断できることを確認します。また、リンクやボタンとの対話の結果としてのコンテンツの変更について通知が提供されることを確認します。",
+                              "11": "繰り返されるコンポーネントの相対順序が他のページと一致することを確認します。",
+                              "12": "各見出しがそのコンテンツのトピックまたは目的を説明していること、各プログラムで決定可能な見出しが視覚的な見出しであることを確認します。見出し構造内の視覚的な見出しのプレゼンテーションに論理的に一致するようにプログラムの見出しレベルを確認します。",
+                              "13": "各ウェブページのデフォルトの人間の言語がプログラムで決定可能であること、ページのデフォルト言語と異なるパッセージ（コンテンツ、画像説明、フォームラベルなど）が正しく識別されていることを確認します。",
+                              "14": "ウェブページのタイトル要素が定義されていること、そのコンテンツまたは目的を識別していることを確認します。",
+                              "15": "次のことを確認します：<li>情報を伝える、アクションを示す、応答を促す、または視覚要素を区別するために色が唯一の視覚的手段として使用されていないこと</li> <li>テキストおよび画像の視覚的プレゼンテーションが十分にコントラストがあること</li> <li>テキストおよび画像のテキストのコントラスト比が少なくとも4.5：1であること、大規模なテキストおよび画像が少なくとも3：1であること</li> <li>コンテンツの理解および操作の指示がコンポーネントの感覚的特性（形状、サイズ、視覚的位置、方向、音など）にのみ依存していないこと</li>",
+                              "16": "意味のある画像のアクセス可能な名前と説明は、画像の同等の説明を提供します。",
+                              "17": "テキストを元のサイズの少なくとも200％に拡大、縮小、またはズームする機能を確認します。",
+                              "18": "ユーザーが情報を迅速に見つけることができるように、情報が複数の方法で利用できることを確認します。",
+                              "19": "エラーが検出された場合、エラーを説明するテキスト付きのアラートが表示されることを確認します。",
+                              "20": "このアクセシビリティ機能は当社のソフトウェアには適用されません。",
+                              "21": "データテーブルの行または列のヘッダーがプログラムで識別されていること、データセルが関連するヘッダーと関連付けられていること、およびレイアウトテーブルに構造属性が含まれていないことを確認します。",
+                              "22": "複数の状態を持つインタラクティブインターフェイス要素が現在の状態を示し、入力フォームの役割がその機能を正確に反映していることを確認し、入力テキストフィールドに正しい値が含まれるようにします。",
+                              "23": "<li>自動再生/更新</li> <li>点滅</li> <li>調整可能な制限時間</li> <li>ビデオ-音声のみ</li> <li>マルチメディア</li> <li>タイムアウト</li> <li>必要なプラグイン</li> <li>代替バージョン</li>"
+                         }
+                    },
+                    "terms of use": {
+                         "terms of use": "利用規約",
+                         "description": "このソフトウェアは、米国政府の機関が後援する作業の一環として準備されました。米国政府およびその機関、ならびに従業員は、明示的または暗示的にいかなる保証も行わず、第三者の使用、またはその使用結果、またはこのソフトウェアに関連する情報、装置、製品、またはプロセスに関していかなる法的責任も負いません。また、第三者による使用が私有権を侵害しないことを表明するものではありません。",
+                         "open source licenses": "オープンソースライセンス"
+                    }
+               }
+          },
+          "user": {
+               "user profile": "ユーザープロファイル",
+               "my assessments": "私の評価",
+               "change password": "パスワードを変更する",
+               "user language": "ユーザー言語",
+               "logout": "ログアウト",
+               "setting": "設定",
+               "encrypt": "評価エクスポート時のパスワード暗号化",
+               "on": "の上",
+               "off": "オフ"
+          }
+     },
      "tooltip": {
           "view detail": "詳細を見る",
           "create assessment": "評価を作成",
@@ -347,5 +439,49 @@
           "analytics": "この評価の分析を表示。",
           "merged checked exams": "チェックされた試験をマージ",
           "export all": "すべての評価のコピーを別の場所にエクスポート。"
+     },
+     "welcome page": {
+          "internet explorer": "現在のブラウザとしてInternet Explorerが検出されました。\nInternet Explorerはサポートされていません。\nChrome、Firefox、Edgeなどの他のブラウザの使用を強くお勧めします。",
+          "welcome to acet": "ツールボックスへようこそ",
+          "welcome to": "{{appTitle}}へようこそ",
+          "to get started": "開始するには、以下のオプションから選択してください:",
+          "new assessment": "新しい評価を開始",
+          "new assessment tooltip": "評価タイプを選択して、新しい評価を開始します。",
+          "import assessment": "既存の評価をインポート",
+          "blank assessment": "空の評価",
+          "needs review": "レビューが必要",
+          "statements completed": "{{complete}}/{{total}} ステートメントが完了しました"
+     },
+     "login": {
+          "login prompt": "ログインするにはメールアドレスとパスワードを入力してください",
+          "placeholder email": "メールアドレス",
+          "placeholder password": "パスワード",
+          "reset password": "パスワードをリセット",
+          "register new acct": "新しいアカウントを登録",
+          "origin": "サイバーセキュリティ評価ツール (CSET®) は、重要な国家のサイバー資産を保護するために組織を支援するサイバーセキュリティおよびインフラセキュリティ庁 (CISA) の製品です。これは、CISA の指示の下でサイバーセキュリティの専門家によって開発されました。このツールは、サイバーシステムおよびネットワークのセキュリティポスチャを評価するための体系的かつ反復可能なアプローチをユーザーに提供します。これには、すべての産業制御および IT システムに関連する高レベルおよび詳細な質問が含まれています。",
+          "valid email required": "有効なメールアドレスが必要です",
+          "valid password required": "有効なパスワードが必要です",
+          "incorrect username or password": "ユーザー名またはパスワードが正しくありません",
+          "unknown email account": "不明なメールアカウント",
+          "bad user": "ユーザーが存在しないか、アクティブではありません",
+          "no questions defined": "アカウントにセキュリティ質問が定義されていません。次回ログイン時にセキュリティ質問を追加することを検討してください。",
+          "password expired": "パスワードの有効期限が切れています。「パスワードをリセット」をクリックしてください",
+          "running locally": "アプリケーションはローカルで実行されています。ログインは必要ありません。",
+          "error encountered": "アプリケーションの実行中にエラーが発生しました",
+          "enter name and email": "新しいアカウントを登録するには、名前とメールアドレスを入力してください"
+     },
+     "footer": {
+          "faq": "よくある質問 (FAQ)",
+          "accessibility": "アクセシビリティ",
+          "privacy and use": "プライバシーと使用",
+          "traffic light protocol": "交通信号プロトコル",
+          "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> は <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">国土安全保障省(ＤＨＳ)</a> の一部です",
+          "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE ウェブサイト</a>"
+     },
+     "upgrade": {
+          "upgrade": "アップグレード",
+          "final": "最終バージョンへ",
+          "convert": "評価を変換しています。しばらくお待ちください。",
+          "p1": "この評価の最終版が利用可能になりました。下書き版と最終版の両方に含まれる質問は、観察、添付文書、フィードバック、およびコメントとともに転送されます。さらに、すべての人口統計情報と連絡先も転送されます。元の下書きバージョンは引き続きアクセス可能で、このアップグレードにより新しい評価が生成されます。"
      }
 }

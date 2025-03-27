@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -26,6 +26,7 @@ using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Helpers;
 using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace CSETWebCore.Api.Controllers
@@ -361,8 +362,8 @@ namespace CSETWebCore.Api.Controllers
         /// 
         /// </summary>
         [HttpGet]
-        [Route("api/getPreventEncrypt")]
-        public IActionResult GetPreventEncryptStatus()
+        [Route("api/encryptStatus")]
+        public IActionResult GetEncryptStatus()
         {
             var userId = _tokenManager.GetCurrentUserId();
             var ak = _tokenManager.GetAccessKey();
@@ -372,13 +373,13 @@ namespace CSETWebCore.Api.Controllers
             {
                 query = from u in _context.USERS
                         where u.UserId == userId
-                        select u.PreventEncrypt;
+                        select u.Encryption;
             }
             else if (ak != null)
             {
                 query = from a in _context.ACCESS_KEY
                         where a.AccessKey == ak
-                        select a.PreventEncrypt;
+                        select a.Encryption;
             }
 
             var result = query.ToList().FirstOrDefault();
@@ -387,8 +388,8 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpPost]
-        [Route("api/savePreventEncrypt")]
-        public IActionResult SavePreventEncryptStatus([FromBody] bool status)
+        [Route("api/saveEncryptStatus")]
+        public IActionResult SaveEncryptStatus([FromBody] bool status)
         {
             var userId = _tokenManager.GetCurrentUserId();
             var ak = _tokenManager.GetAccessKey();
@@ -397,14 +398,14 @@ namespace CSETWebCore.Api.Controllers
             {
                 var user = _context.USERS.Where(x => x.UserId == userId).FirstOrDefault();
 
-                user.PreventEncrypt = status;
+                user.Encryption = status;
                 _context.SaveChanges();
             }
             else if (ak != null)
             {
                 var accessKey = _context.ACCESS_KEY.Where(x => x.AccessKey == ak).FirstOrDefault();
 
-                accessKey.PreventEncrypt = status;
+                accessKey.Encryption = status;
                 _context.SaveChanges();
             }
 
@@ -508,5 +509,56 @@ namespace CSETWebCore.Api.Controllers
 
             return null;
         }
+        
+        [HttpPost]
+        [Route("api/conversion")]
+        public IActionResult AssessmentConversion([FromQuery] int originalAssessmentId, [FromQuery] string targetModelName)
+        {
+            try
+            {
+                int assessmentId = _tokenManager.AssessmentForUser();
+               _assessmentBusiness.ConvertAssessment(assessmentId, originalAssessmentId, targetModelName);
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok();
+        }
+        
+        [HttpGet]
+        [Route("api/upgrades")]
+        public IActionResult PossibleUpgrades()
+        {
+            try
+            {
+                int assessmentId = _tokenManager.AssessmentForUser();
+                var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+                var rh = new ResourceHelper();
+                var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "AssessmentConversion",
+                    $"upgrades.json"));
+                
+                JArray jsonArray = JArray.Parse(json);
+                foreach (JObject obj in jsonArray)
+                {
+                    if (obj.ContainsKey(assessment.GalleryItemGuid.ToString().ToUpper()))
+                    {
+                        return Ok(obj[assessment.GalleryItemGuid.ToString().ToUpper()]);
+                    }
+                }
+                
+                return Ok();
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok();
+        }
+        
+        
     }
 }

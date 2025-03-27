@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,8 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AuthenticationService } from './authentication.service';
 import { JwtParser } from '../helpers/jwt-parser';
 import { DateTime } from 'luxon';
-// import { NCUAService } from './ncua.service';
+import { FileExportService } from './file-export.service';
+
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -47,9 +48,12 @@ export class ReportService {
   /**
    *
    */
-  constructor(private http: HttpClient, 
-    private configSvc: ConfigService, private tSvc: TranslocoService,
-    private authSvc: AuthenticationService
+  constructor(
+    private http: HttpClient,
+    private configSvc: ConfigService, 
+    private tSvc: TranslocoService,
+    private authSvc: AuthenticationService,
+    private fileExportSvc: FileExportService
   ) {
     if (!this.initialized) {
       this.apiUrl = this.configSvc.apiUrl;
@@ -156,6 +160,19 @@ export class ReportService {
   }
 
   /**
+   * 
+   */
+  clickExcelLink(reportType: string) {
+    if (reportType.toLowerCase() == 'poam') {
+      this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'reports/poam/excelexport');
+    }
+
+    if (reportType.toLowerCase() == 'observations') {
+      this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'reports/observations/excel');
+    }
+  }
+
+  /**
    * Converts linebreak characters to HTML <br> tag.
    */
   formatLinebreaks(text: string) {
@@ -245,7 +262,7 @@ export class ReportService {
       return t.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS);
     }
   }
-  
+
   getStandardAnsweredQuestions() {
     return this.http.get(this.configSvc.apiUrl + 'reports/getStandardAnsweredQuestions');
   }

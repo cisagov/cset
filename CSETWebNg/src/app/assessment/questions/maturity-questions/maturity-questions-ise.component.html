@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2024 Battelle Energy Alliance, LLC
+   Copyright 2025 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,8 @@
             <!-- <h2>{{ statementLevel }}</h2> -->
         </div>
 
-        <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filter-menu.showing only filtered')}}</div>
+        <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filter-menu.showing only filtered')}}
+        </div>
 
         <ng-container *ngIf="this.assessSvc.isISE(); else notIse">
             <div *ngIf="!this.ncuaSvc.issuesFinishedLoading || !groupings" class="w-100">

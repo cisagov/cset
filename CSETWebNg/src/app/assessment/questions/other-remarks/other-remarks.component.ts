@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
-  selector: 'app-other-remarks',
-  templateUrl: './other-remarks.component.html',
-  styleUrls: ['./other-remarks.component.scss']
+    selector: 'app-other-remarks',
+    templateUrl: './other-remarks.component.html',
+    styleUrls: ['./other-remarks.component.scss'],
+    standalone: false
 })
 export class OtherRemarksComponent implements OnInit {
 

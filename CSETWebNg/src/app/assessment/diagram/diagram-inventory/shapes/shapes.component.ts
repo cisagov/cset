@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,10 @@ import { Comparer } from '../../../../helpers/comparer';
 
 
 @Component({
-  selector: 'shapes',
-  templateUrl: './shapes.component.html',
-  styleUrls: ['./shapes.component.scss']
+    selector: 'shapes',
+    templateUrl: './shapes.component.html',
+    styleUrls: ['./shapes.component.scss'],
+    standalone: false
 })
 export class ShapesComponent implements OnInit {
   shapes = [];
@@ -56,22 +57,27 @@ export class ShapesComponent implements OnInit {
   }
 
   getShapes() {
-    this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
-      if (this.shapes.length > x.shapes.length) { // if a shape was removed (i.e. changed to a component)
-        this.componentsChange.emit(this.getComponents());
-      }
+    this.shapes = this.diagramSvc.diagramModel?.shapes;
+    this.componentsChange.emit(this.getComponents());
 
-      this.shapes = x.shapes;
-    });
+    // this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
+    //   if (this.shapes.length > x.shapes.length) { // if a shape was removed (i.e. changed to a component)
+    //     this.componentsChange.emit(this.getComponents());
+    //   }
+
+    //   this.shapes = x.shapes;
+    // });
   }
 
   /**
    *
    */
   getComponents() {
-    this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
-      this.diagramComponentList = x.components;
-    });
+    this.diagramComponentList = this.diagramSvc.diagramModel?.components;
+
+    // this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
+    //   this.diagramComponentList = x.components;
+    // });
   }
 
 
@@ -80,47 +86,83 @@ export class ShapesComponent implements OnInit {
    * can build SELECT controls for Asset Type.
    */
   getSymbols() {
-    this.diagramSvc.getDiagramDataObservable().subscribe((g: any) => {
-      this.symbols = [];
-      this.symbols.push( // inserts a default blank object in the beginning 
-        {
-          'abbreviation': null,
-          'componentFamilyName': null,
-          'component_Symbol_Id': null,
-          'fileName': '',
-          'height': 0,
-          'search_Tags': null,
-          'symbol_Name': '',
-          'width': 0
-        });
+    const g = this.diagramSvc.diagramModel;
 
-      g.symbols.forEach(gg => {
-        gg.symbols.forEach(s => {
-          this.symbols.push(s);
-        });
+    this.symbols = [];
+    this.symbols.push( // inserts a default blank object in the beginning 
+      {
+        'abbreviation': null,
+        'componentFamilyName': null,
+        'component_Symbol_Id': null,
+        'fileName': '',
+        'height': 0,
+        'search_Tags': null,
+        'symbol_Name': '',
+        'width': 0
       });
 
-      this.symbols.sort((a, b) => a.symbol_Name.localeCompare(b.symbol_Name));
+    g?.symbols.forEach(gg => {
+      gg.symbols.forEach(s => {
+        this.symbols.push(s);
+      });
     });
+
+    this.symbols.sort((a, b) => a.symbol_Name.localeCompare(b.symbol_Name));
+
+    // this.diagramSvc.getDiagramDataObservable().subscribe((g: any) => {
+    //   this.symbols = [];
+    //   this.symbols.push( // inserts a default blank object in the beginning 
+    //     {
+    //       'abbreviation': null,
+    //       'componentFamilyName': null,
+    //       'component_Symbol_Id': null,
+    //       'fileName': '',
+    //       'height': 0,
+    //       'search_Tags': null,
+    //       'symbol_Name': '',
+    //       'width': 0
+    //     });
+
+    //   g.symbols.forEach(gg => {
+    //     gg.symbols.forEach(s => {
+    //       this.symbols.push(s);
+    //     });
+    //   });
+
+    //   this.symbols.sort((a, b) => a.symbol_Name.localeCompare(b.symbol_Name));
+    // });
   }
+
 
   changeShapeToComponent(event: any, shape: any) {
     let type = event.target.value;
     let id = shape.id;
     let label = shape.value ? shape.value : '';
 
-    this.diagramSvc.getDiagramDataObservable().subscribe(
-      (x: any) => {
-        label = label == '' ? this.diagramSvc.applyComponentSuffix(type, x.components) : label;
 
-        this.diagramSvc.changeShapeToComponent(type, id, label).subscribe(
-          (compList: any) => {
-            this.getShapes();
-            this.componentsChange.emit(compList);
-          }
-        );
+    const x = this.diagramSvc.diagramModel;
+    label = label == '' ? this.diagramSvc.applyComponentSuffix(type, x.components) : label;
+
+    this.diagramSvc.changeShapeToComponent(type, id, label).subscribe(
+      (compList: any) => {
+        this.getShapes();
+        this.componentsChange.emit(compList);
       }
     );
+
+
+    // this.diagramSvc.getDiagramDataObservable().subscribe(
+    //   (x: any) => {
+    //     label = label == '' ? this.diagramSvc.applyComponentSuffix(type, x.components) : label;
+
+    //     this.diagramSvc.changeShapeToComponent(type, id, label).subscribe(
+    //       (compList: any) => {
+    //         this.getShapes();
+    //         this.componentsChange.emit(compList);
+    //       }
+    //     );
+    //   }
+    // );
 
   }
 

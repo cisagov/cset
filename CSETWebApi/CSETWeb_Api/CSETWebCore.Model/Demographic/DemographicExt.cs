@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2024 Battelle Energy Alliance, LLC  
+//   Copyright 2025 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -23,8 +23,15 @@ namespace CSETWebCore.Model.Demographic
         public DateTime AssessmentDate { get; set; }
         public int? OrganizationType { get; set; }
         public string OrganizationName { get; set; }
+
+        /// <summary>
+        /// PPD-21 or NIPP
+        /// </summary>
+        public string SectorDirective { get; set; }
+
         public int? Sector { get; set; }
         public int? Subsector { get; set; }
+
         public int? OrgPointOfContact { get; set; }
 
         [DisplayName("CISA Region")]

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ import { AuthenticationService } from './authentication.service';
 import { FileUploadClientService } from './file-client.service';
 import { AssessmentService } from './assessment.service';
 import { BehaviorSubject } from 'rxjs';
+import { FileExportService } from './file-export.service';
 
 
 const headers = {
@@ -40,17 +41,15 @@ const headers = {
 export class DemographicService {
   apiUrl: string;
   id: number;
-  shortLivedToken: any;
-  
+
 
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    private authSvc: AuthenticationService,
     public fileSvc: FileUploadClientService,
+    private fileExportSvc: FileExportService,
     public assessSvc: AssessmentService
-  )
-  {
+  ) {
     this.apiUrl = this.configSvc.apiUrl + 'Demographics/';
   }
 
@@ -90,27 +89,23 @@ export class DemographicService {
   updateDemographic(demographic: Demographic) {
     this.assessSvc.assessment.sectorId = demographic.sectorId;
     this.assessSvc.assessmentStateChanged$.next(126);
-    
+
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
       .subscribe(() => {
-        if (this.configSvc.cisaAssessorWorkflow) {
+        if (this.configSvc.cisaAssessorWorkflow) {  
 
         }
       });
   }
 
-  importDemographics(demographic: Demographic){
+  importDemographics(demographic: Demographic) {
     return this.http.post(this.apiUrl + 'import', JSON.stringify(demographic), headers)
-    .subscribe(() => {
+      .subscribe(() => {
 
-    });
-
+      });
   }
 
-  exportDemographics(){
-    let token = localStorage.getItem('userToken')
-    let url = this.apiUrl + 'export' + "?token=" + token;
-    window.location.href = url;
+  exportDemographics() {
+    this.fileExportSvc.fetchAndSaveFile(this.apiUrl + 'export');
   }
-
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,9 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
-    AssessmentContactsResponse,
-    AssessmentDetail,
-    MaturityModel
+  AssessmentContactsResponse,
+  AssessmentDetail,
+  MaturityModel
 } from '../models/assessment-info.model';
 import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
@@ -34,7 +34,7 @@ import { Router } from '@angular/router';
 import { DemographicExtendedService } from './demographic-extended.service';
 import { CyberFloridaService } from './cyberflorida.service';
 import { Answer } from '../models/questions.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, first, firstValueFrom, Observable } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 import { ConversionService } from './conversion.service';
 
@@ -80,7 +80,14 @@ export class AssessmentService {
    */
   public isBrandNew = false;
 
-  public assessmentCreator: any; 
+  public assessmentCreator: any;
+
+  //Hide upgrade assessment alert
+  public hideUpgradeAlert: boolean = false;
+
+  //Assessment upgrade conversion galleryItemGuid and target model name 
+  public galleryItemGuid: string = "";
+  public convertToModel: string = "";
 
   /**
    *
@@ -161,23 +168,27 @@ export class AssessmentService {
   }
 
   /**
-   *
+   * Get a new token that carries the assessmentID as a claim.  This token
+   * should be used for all assessment-specific requests.
    */
   getAssessmentToken(assessId: number) {
-    return this.http
-      .get(this.apiUrl + 'auth/token?assessmentId=' + assessId)
-      .toPromise()
-      .then((response: { token: string }) => {
-        localStorage.removeItem('userToken');
-        localStorage.setItem('userToken', response.token);
-        if (assessId) {
-          localStorage.removeItem('assessmentId');
-          localStorage.setItem(
-            'assessmentId',
-            assessId ? assessId.toString() : ''
-          );
-        }
-      });
+    const headers = new HttpHeaders({
+      'AssessmentId': assessId
+    });
+    const obs: Observable<object> = this.http.get(this.apiUrl + 'auth/token', { headers: headers });
+    const prom: Promise<object> = firstValueFrom(obs);
+
+    return prom.then((response: { token: string }) => {
+      localStorage.removeItem('userToken');
+      localStorage.setItem('userToken', response.token);
+      if (assessId) {
+        localStorage.removeItem('assessmentId');
+        localStorage.setItem(
+          'assessmentId',
+          assessId ? assessId.toString() : ''
+        );
+      }
+    });
   }
 
   /**
@@ -230,23 +241,23 @@ export class AssessmentService {
    *
    */
   getAssessmentContacts() {
-    return this.http
-      .get(this.apiUrl + 'contacts')
-      .toPromise()
-      .then((response: AssessmentContactsResponse) => {
-        this.userRoleId = response.currentUserRole;
-        return response;
-      });
+    const obs = this.http.get(this.apiUrl + 'contacts');
+    const prom = firstValueFrom(obs);
+
+    return prom.then((response: AssessmentContactsResponse) => {
+      this.userRoleId = response.currentUserRole;
+      return response;
+    });
   }
 
-   getCreator(){
-    return this.http
-      .get(this.apiUrl + 'assessmentcreator')
-      .toPromise()
-      .then((response: any) => {
-        this.assessmentCreator = response;
-        return response;
-      });
+  getCreator() {
+    const obs = this.http.get(this.apiUrl + 'assessmentcreator');
+    const prom = firstValueFrom(obs);
+
+    return prom.then((response: any) => {
+      this.assessmentCreator = response;
+      return response;
+    });
   }
 
   /**
@@ -265,7 +276,7 @@ export class AssessmentService {
     var id10 = (ids[9] != undefined ? ids[9] : 0);
 
     headers.params = headers.params.set('id1', id1).set('id2', id2).set('id3', id3).set('id4', id4)
-    .set('id5', id5).set('id6', id6).set('id7', id7).set('id8', id8).set('id9', id9).set('id10', id10);
+      .set('id5', id5).set('id6', id6).set('id7', id7).set('id8', id8).set('id9', id9).set('id10', id10);
 
     return this.http.get(this.apiUrl + 'contactsById', headers);
   }
@@ -308,22 +319,22 @@ export class AssessmentService {
   createContact(contact: User) {
     const body = this.configSvc.config.defaultInviteTemplate;
     return this.http.post(this.apiUrl + 'contacts/addnew', {
-        firstName: contact.firstName,
-        lastName: contact.lastName,
-        primaryEmail: contact.primaryEmail,
-        title: contact.title,
-        phone: contact.phone,
-        cellPhone: contact.cellPhone,
-        reportsTo: contact.reportsTo,
-        organizationName: contact.organizationName,
-        siteName: contact.siteName,
-        emergencyCommunicationsProtocol: contact.emergencyCommunicationsProtocol,
-        isSiteParticipant: contact.isSiteParticipant,
-        isPrimaryPoc: contact.isPrimaryPoc,
-        assessmentRoleId: contact.assessmentRoleId,
-        subject: this.configSvc.config.defaultInviteSubject,
-        body: body
-      },
+      firstName: contact.firstName,
+      lastName: contact.lastName,
+      primaryEmail: contact.primaryEmail,
+      title: contact.title,
+      phone: contact.phone,
+      cellPhone: contact.cellPhone,
+      reportsTo: contact.reportsTo,
+      organizationName: contact.organizationName,
+      siteName: contact.siteName,
+      emergencyCommunicationsProtocol: contact.emergencyCommunicationsProtocol,
+      isSiteParticipant: contact.isSiteParticipant,
+      isPrimaryPoc: contact.isPrimaryPoc,
+      assessmentRoleId: contact.assessmentRoleId,
+      subject: this.configSvc.config.defaultInviteSubject,
+      body: body
+    },
       headers
     );
   }
@@ -331,22 +342,22 @@ export class AssessmentService {
   createMergeContact(contact: User) {
     const body = this.configSvc.config.defaultInviteTemplate;
     return this.http.post(this.apiUrl + 'contacts/addnewmergecontact', {
-        firstName: contact.firstName,
-        lastName: contact.lastName,
-        primaryEmail: contact.primaryEmail,
-        title: contact.title,
-        phone: contact.phone,
-        cellPhone: contact.cellPhone,
-        reportsTo: contact.reportsTo,
-        organizationName: contact.organizationName,
-        siteName: contact.siteName,
-        emergencyCommunicationsProtocol: contact.emergencyCommunicationsProtocol,
-        isSiteParticipant: contact.isSiteParticipant,
-        isPrimaryPoc: contact.isPrimaryPoc,
-        assessmentRoleId: contact.assessmentRoleId,
-        subject: this.configSvc.config.defaultInviteSubject,
-        body: body
-      },
+      firstName: contact.firstName,
+      lastName: contact.lastName,
+      primaryEmail: contact.primaryEmail,
+      title: contact.title,
+      phone: contact.phone,
+      cellPhone: contact.cellPhone,
+      reportsTo: contact.reportsTo,
+      organizationName: contact.organizationName,
+      siteName: contact.siteName,
+      emergencyCommunicationsProtocol: contact.emergencyCommunicationsProtocol,
+      isSiteParticipant: contact.isSiteParticipant,
+      isPrimaryPoc: contact.isPrimaryPoc,
+      assessmentRoleId: contact.assessmentRoleId,
+      subject: this.configSvc.config.defaultInviteSubject,
+      body: body
+    },
       headers
     );
   }
@@ -390,7 +401,7 @@ export class AssessmentService {
   /**
    * Requests removing a user from an assessment.
    */
-  removeContact(assessmentContactId: number) {
+  removeContact(assessmentContactId: number): Observable<object> {
     return this.http.post(
       this.apiUrl + 'contacts/remove',
       { assessmentContactId: assessmentContactId },
@@ -441,21 +452,21 @@ export class AssessmentService {
     }
 
     return new Promise((resolve, reject) => {
-      this.createNewAssessmentFromGallery(workflow, galleryItem)
-        .toPromise()
-        .then(
-          (response: any) => {
-            // set the brand new flag
-            this.isBrandNew = true;
-            this.loadAssessment(response.id).then(() => {
-              resolve('assessment loaded');
-            });
-          },
-          error =>
-            console.log(
-              'Unable to create new assessment: ' + (<Error>error).message
-            )
-        );
+      const obs = this.createNewAssessmentFromGallery(workflow, galleryItem);
+      const prom = firstValueFrom(obs);
+      prom.then(
+        (response: any) => {
+          // set the brand new flag
+          this.isBrandNew = true;
+          this.loadAssessment(response.id).then(() => {
+            resolve(response.id);
+          });
+        },
+        error =>
+          console.log(
+            'Unable to create new assessment: ' + (<Error>error).message
+          )
+      );
     });
   }
 
@@ -469,7 +480,7 @@ export class AssessmentService {
     });
   }
 
-  refreshAssessment(){
+  refreshAssessment() {
     this.getAssessmentDetail().subscribe((detail: AssessmentDetail) => {
       this.assessment = detail
     })
@@ -482,9 +493,10 @@ export class AssessmentService {
    * this one.
    */
   loadAssessment(id: number): Promise<any> {
+    this.hideUpgradeAlert = false;
     return new Promise((resolve, reject) => {
       this.getAssessmentToken(id).then(() => {
-        this.getAssessmentDetail().subscribe(data => {
+        this.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
           this.assessment = data;
 
           this.applicationMode = this.assessment.applicationMode;
@@ -566,7 +578,9 @@ export class AssessmentService {
   }
 
   /**
-   *
+   * Possibly deprecated.  The Diagram page can determine if there
+   * is a diagram by looking at the components returned from the
+   * getCompleteDiagram endpoint.
    */
   hasDiagram() {
     return this.http.get(this.apiUrl + 'diagram/has');
@@ -616,7 +630,7 @@ export class AssessmentService {
     if (modelName == '*' && !!this.assessment.maturityModel.modelName) {
       return true;
     }
-    
+
     return this.assessment.maturityModel.modelName.toLowerCase() === modelName.toLowerCase();
   }
 
@@ -687,17 +701,15 @@ export class AssessmentService {
   * Saves the user's "Prevent Encrypt" toggle option to the database.
   * @param status
   */
-  persistEncryptPreference(preventEncrypt: boolean) {
-    let status = preventEncrypt;
-    return this.http.post(this.apiUrl + 'savePreventEncrypt', status, headers).subscribe();
-
+  persistEncryptPreference(status: boolean) {
+    return this.http.post(this.apiUrl + 'saveEncryptStatus', status, headers);
   }
 
   /**
   * Gets the user's "Prevent Encrypt" toggle option from the database.
   */
   getEncryptPreference() {
-    return this.http.get(this.apiUrl + 'getPreventEncrypt');
+    return this.http.get(this.apiUrl + 'encryptStatus');
   }
 
   isCyberFloridaComplete(): boolean {
@@ -725,6 +737,22 @@ export class AssessmentService {
     }
   }
 
+  //Assessment upgrade conversion 
+  convertAssesment(original_id: number) {
+    let queryParams = new HttpParams()
+      .set('originalAssessmentId', original_id)
+      .set('targetModelName', this.convertToModel)
 
- 
+    return this.http.post(
+      this.apiUrl + 'conversion', null, { params: queryParams }
+    );
+  }
+
+  //Check if assessment has an upgrade available 
+  checkUpgrades() {
+    return this.http.get(this.apiUrl + 'upgrades');
+  }
+
+
+
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2024 Battelle Energy Alliance, LLC
+//   Copyright 2025 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,10 @@ import { Vendor, Product } from '../../../../models/diagram-vulnerabilities.mode
 import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
 
 @Component({
-  selector: 'app-diagram-vulnerabilities',
-  templateUrl: './diagram-vulnerabilities.component.html',
-  styleUrls: ['./diagram-vulnerabilities.component.scss']
+    selector: 'app-diagram-vulnerabilities',
+    templateUrl: './diagram-vulnerabilities.component.html',
+    styleUrls: ['./diagram-vulnerabilities.component.scss'],
+    standalone: false
 })
 export class DiagramVulnerabilitiesComponent implements OnInit {
 
@@ -106,13 +107,20 @@ export class DiagramVulnerabilitiesComponent implements OnInit {
    *
    */
   getComponents() {
-    this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
-      this.diagramComponentList = x.components;
-      this.diagramComponentList.forEach(component => {
-        this.updateComponentVendorAndProduct(component);
-      })
-      this.componentsChange.emit(this.diagramComponentList);
-    });
+    const x = this.diagramSvc.diagramModel;
+    this.diagramComponentList = x.components;
+    this.diagramComponentList.forEach(component => {
+      this.updateComponentVendorAndProduct(component);
+    })
+    this.componentsChange.emit(this.diagramComponentList);
+
+    // this.diagramSvc.getDiagramDataObservable().subscribe((x: any) => {
+    //   this.diagramComponentList = x.components;
+    //   this.diagramComponentList.forEach(component => {
+    //     this.updateComponentVendorAndProduct(component);
+    //   })
+    //   this.componentsChange.emit(this.diagramComponentList);
+    // });
   }
 
   saveComponent(component) {
