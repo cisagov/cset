@@ -33,7 +33,8 @@
     "showBuildTime": false,
     "showQuestionAndRequirementIDs": false,
     "canDeleteCustomModules": true,
-    "showExportAllButton": false
+    "showExportAllButton": false,
+    "showAssessmentUpgrade": false
   },
   "galleryLayout": "CSET",
   "installationMode": "CSET",

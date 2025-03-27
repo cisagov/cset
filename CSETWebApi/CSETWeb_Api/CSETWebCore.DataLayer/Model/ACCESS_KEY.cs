@@ -16,7 +16,7 @@ public partial class ACCESS_KEY
 
     public DateTime GeneratedDate { get; set; }
 
-    public bool PreventEncrypt { get; set; }
+    public bool Encryption { get; set; }
 
     public bool CisaAssessorWorkflow { get; set; }
 

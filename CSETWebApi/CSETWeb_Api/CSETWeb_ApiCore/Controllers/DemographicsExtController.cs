@@ -82,35 +82,10 @@ namespace CSETWebCore.Api.Controllers
             var mgr = new DemographicExtBusiness(_context);
             mgr.SaveDemographics(demographics, userid ?? 0);
 
-
-            return Ok();
-        }
-
-
-
-        /// <summary>
-        /// Persists a single extended demographics value.
-        /// </summary>
-        /// <param name="demographics"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("api/demographics/ext3")]
-        public IActionResult PostExtended3([FromQuery] string name, [FromQuery] string val, [FromQuery] string t)
-        {
-            int assessmentId = _token.AssessmentForUser();
-
-            var mgr = new DemographicExtBusiness(_context);
-            if (val == "0: 0" | val == "0: null")
-            {
-                val = "0"; 
-            }
-            mgr.SaveX(assessmentId, name, val, t);
-
             return Ok();
         }
 
       
-
         [HttpGet]
         [Route("api/demographics/export")]
         public IActionResult ExportDemographic()

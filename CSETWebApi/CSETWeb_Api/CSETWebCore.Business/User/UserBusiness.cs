@@ -295,7 +295,7 @@ namespace CSETWebCore.Business.User
                 IsSuperUser = user.IsSuperUser,
                 PasswordResetRequired = user.PasswordResetRequired,
                 IsActive = user.IsActive,
-                PreventEncrypt = user.PreventEncrypt,
+                Encryption = user.Encryption,
                 CisaAssessorWorkflow = user.CisaAssessorWorkflow,
                 Lang = user.Lang
             };

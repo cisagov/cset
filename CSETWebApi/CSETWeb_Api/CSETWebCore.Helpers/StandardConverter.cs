@@ -57,6 +57,7 @@ namespace CSETWebCore.Helpers
                 {
                     result.LogError("Module already exists.  If this is a new version, please change the ShortName field to reflect this.");
                 }
+
                 category = _context.SETS_CATEGORY.FirstOrDefault(s => s.Set_Category_Name.Trim().ToLower() == externalStandard.category.Trim().ToLower());
 
                 if (category == null)
@@ -199,10 +200,10 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
                 Resources = s.REQUIREMENT_REFERENCES.Where(x => !x.Source).Select(t =>
                   new ExternalResource
                   {
-                      destination = t.Destination_String,
-                      fileName = t.Gen_File.File_Name,
-                      pageNumber = t.Page_Number,
-                      sectionReference = t.Section_Ref
+                      Destination = t.Destination_String,
+                      FileName = t.Gen_File.File_Name,
+                      PageNumber = t.Page_Number,
+                      SectionReference = t.Section_Ref
                   })
             }).ToDictionary(t => t.Requirement_Id, t => t.Resources);
 
@@ -212,10 +213,10 @@ new QuestionAndHeading() { Simple_Question = t.Simple_Question, Heading_Pair_Id 
                 Resource = s.REQUIREMENT_REFERENCES.Where(x => x.Source).Select(t =>
                                   new ExternalResource
                                   {
-                                      destination = t.Destination_String,
-                                      fileName = t.Gen_File.File_Name,
-                                      pageNumber = t.Page_Number,
-                                      sectionReference = t.Section_Ref
+                                      Destination = t.Destination_String,
+                                      FileName = t.Gen_File.File_Name,
+                                      PageNumber = t.Page_Number,
+                                      SectionReference = t.Section_Ref
                                   }).FirstOrDefault()
             }).ToDictionary(t => t.Requirement_Id, t => t.Resource);
 

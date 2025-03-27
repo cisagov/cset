@@ -54,12 +54,14 @@ export class AssessmentInfoComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.assessSvc.checkUpgrades().subscribe((data: Upgrades) => {
-      if (data) {
-        this.showUpgrade = !!data;
-        this.assessSvc.galleryItemGuid = data.target;
-        this.assessSvc.convertToModel = data.name;
-      }
-    })
+    if (this.configSvc.showAssessmentUpgrade() == true) {
+      this.assessSvc.checkUpgrades().subscribe((data: Upgrades) => {
+        if (data) {
+          this.showUpgrade = !!data;
+          this.assessSvc.galleryItemGuid = data.target;
+          this.assessSvc.convertToModel = data.name;
+        }
+      })
+    }
   }
 }

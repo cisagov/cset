@@ -15,12 +15,12 @@ namespace CSETWebCore.Model.AssessmentIO
     {
         [Required]
         [DataMember]
-        public string fileName { get; set; }
+        public string FileName { get; set; }
         [DataMember]
-        public int? pageNumber { get; set; }
+        public int? PageNumber { get; set; }
         [DataMember]
-        public string destination { get; set; }
+        public string Destination { get; set; }
         [DataMember]
-        public string sectionReference { get; set; }
+        public string SectionReference { get; set; }
     }
 }

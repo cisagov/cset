@@ -435,10 +435,9 @@ export class MyAssessmentsComponent implements OnInit {
     const obs = this.assessSvc.getEncryptPreference()
     const prom = firstValueFrom(obs);
     prom.then((response: boolean) => {
-      let preventEncrypt = response;
-      let encryption = preventEncrypt;
+      let encryption = response;
 
-      if (!preventEncrypt || jsonOnly) {
+      if (encryption || jsonOnly) {
         let dialogRef = this.dialog.open(ExportAssessmentComponent, {
           data: { jsonOnly, encryption }
         });
@@ -469,12 +468,19 @@ export class MyAssessmentsComponent implements OnInit {
               if (params.length > 0) {
                 url = url + '?' + params.replace(/^&/, '');
               }
+              this.fileExportSvc.fetchAndSaveFile(url, response.token);
             }
 
-            this.fileExportSvc.fetchAndSaveFile(url, response.token);
+
           });
         });
       }
+      else {
+        this.authSvc.getShortLivedTokenForAssessment(assessment_id).subscribe((response: any) => {
+          let url = this.fileSvc.exportUrl;
+          this.fileExportSvc.fetchAndSaveFile(url, response.token);
+        })
+      };
     });
   }
 
