@@ -101,13 +101,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "6mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "70mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "256kb",
+                  "maximumError": "512kb"
                 }
               ]
             },
@@ -115,7 +115,8 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "400kb"
+                  "maximumWarning": "256kb",
+                  "maximumError": "512kb"
                 }
               ],
               "optimization": {
@@ -144,7 +145,8 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "256kb",
+                  "maximumError": "512kb"
                 }
               ],
               "optimization": {
@@ -169,7 +171,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",

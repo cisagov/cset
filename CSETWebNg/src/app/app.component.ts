@@ -50,17 +50,19 @@ import { translate } from '@jsverse/transloco';
 declare var $: any;
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    encapsulation: ViewEncapsulation.None,
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a w-100' },
-    standalone: false
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a w-100' },
+  standalone: false
 })
 export class AppComponent implements OnInit, AfterViewInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
+  private dialogSubscriptions: any[] = [];
+
 
   @ViewChild('acc') accordion: any;
 
@@ -131,9 +133,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       return;
     }
     this.dialogRef = this.dialog.open(AboutComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
+    const subscription = this.dialogRef.afterClosed().subscribe();
+    this.dialogSubscriptions.push(subscription); // Store the subscription
   }
 
   termsOfUse() {
@@ -141,9 +142,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       return;
     }
     this.dialogRef = this.dialog.open(TermsOfUseComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
+    const subscription = this.dialogRef.afterClosed().subscribe();
+    this.dialogSubscriptions.push(subscription); // Store the subscription
   }
 
   advisory() {
@@ -151,9 +151,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       return;
     }
     this.dialogRef = this.dialog.open(AdvisoryComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
+    const subscription = this.dialogRef.afterClosed().subscribe();
+    this.dialogSubscriptions.push(subscription); // Store the subscription
   }
 
   editUser() {
@@ -161,18 +160,16 @@ export class AppComponent implements OnInit, AfterViewInit {
       return;
     }
     this.dialogRef = this.dialog.open(EditUserComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe(
-        (data: CreateUser) => {
-          if (data && data.primaryEmail) {
-            // don't send anything unless there's something sane to send
-            this.auth.updateUser(data).subscribe(() => this.auth.setUserInfo(data));
-          }
-          this.dialogRef = undefined;
-        },
-        error => console.log(error.message)
-      );
+    const subscription = this.dialogRef.afterClosed().subscribe(
+      (data: CreateUser) => {
+        if (data && data.primaryEmail) {
+          this.auth.updateUser(data).subscribe(() => this.auth.setUserInfo(data));
+        }
+        this.dialogRef = undefined;
+      },
+      error => console.log(error.message)
+    );
+    this.dialogSubscriptions.push(subscription); // Store the subscription
   }
 
   resetPassword() {
@@ -183,8 +180,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       width: '300px',
       data: { primaryEmail: this.auth.email() }
     });
-    this.dialogRef.afterClosed().subscribe();
+    const subscription = this.dialogRef.afterClosed().subscribe();
+    this.dialogSubscriptions.push(subscription); // Store the subscription
   }
+
 
   isAssessment() {
     return localStorage.getItem('assessmentId');
@@ -194,22 +193,18 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (this.dialog.openDialogs[0]) {
       return;
     }
-    // , {width: '800px', height: "500px"}
     this.dialogRef = this.dialog.open(AssessmentDocumentsComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
+    const subscription = this.dialogRef.afterClosed().subscribe();
+    this.dialogSubscriptions.push(subscription); // Store the subscription
   }
 
   editParameters() {
     if (this.dialog.openDialogs[0]) {
-
       return;
     }
     this.dialogRef = this.dialog.open(GlobalParametersComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
+    const subscription = this.dialogRef.afterClosed().subscribe();
+    this.dialogSubscriptions.push(subscription); // Store the subscription
   }
 
   enableProtectedFeature() {
@@ -334,5 +329,15 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   isFooterOpen() {
     this.footerSvc.isFooterOpen(this.accordion);
+  }
+
+  ngOnDestroy() {
+    // Unsubscribe from all stored subscriptions
+    this.dialogSubscriptions.forEach(subscription => {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    });
+    this.dialogSubscriptions = []; // Clear the array
   }
 }
