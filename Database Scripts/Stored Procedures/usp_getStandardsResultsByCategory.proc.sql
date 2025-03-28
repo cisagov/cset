@@ -76,48 +76,40 @@ begin
 	IF OBJECT_ID('tempdb..#TempR') IS NOT NULL DROP TABLE #TempR
 	IF OBJECT_ID('tempdb..#TempRAnswer') IS NOT NULL DROP TABLE #TempRAnswer
 
-	SELECT s.set_name, h.Question_Group_Heading, h.Question_Group_Heading_Id, isnull(count(c.Requirement_Id),0) qc into #tempR
+	SELECT s.set_name, c.standard_category, isnull(count(c.Requirement_Id),0) qc into #tempR
 		FROM Answer_Requirements a 
 		join NEW_REQUIREMENT c on a.Question_Or_Requirement_Id=c.Requirement_Id
-		join QUESTION_GROUP_HEADING h on c.Question_Group_Heading_Id = h.Question_Group_Heading_Id
 		join REQUIREMENT_SETS s on c.Requirement_Id = s.Requirement_Id
 		join AVAILABLE_STANDARDS v on s.Set_Name = v.Set_Name 		
 		where a.Assessment_Id = @assessment_id and v.Assessment_Id = a.Assessment_Id and v.Selected = 1 and a.Answer_Text <> 'NA'
-		group by s.set_name, Question_Group_Heading, h.question_group_heading_id
-
-			/**for multiple sets get the unique list of sets and question_group headers
-	   take the cross product 
-	   left join and fill with zero
-	   Essentially fill in the gaps on the categories
-	   */
+		group by s.set_name, standard_category
 
 
-	insert into #tempR (Set_Name,Question_Group_Heading, QC) 
-	select a.Set_name,a.Question_Group_Heading, qc=0 from 
-	(select * from (select distinct question_group_heading from #tempR) a, (select distinct set_name from #tempR) b) a 
-	left join #tempR on a.question_group_heading=#tempR.question_group_heading and a.set_name = #tempR.set_name
+	insert into #tempR (Set_Name,standard_category, QC) 
+	select a.Set_name,a.standard_category, qc=0 from 
+	(select * from (select distinct standard_category from #tempR) a, (select distinct set_name from #tempR) b) a 
+	left join #tempR on a.standard_category=#tempR.standard_category and a.set_name = #tempR.set_name
 	where #tempR.set_name is null
 
-	SELECT s.set_name, h.Question_Group_Heading, h.question_group_heading_id, count(c.Requirement_Id) qc into #tempRAnswer
+	SELECT s.set_name, c.standard_category,  count(c.Requirement_Id) qc into #tempRAnswer
 		FROM Answer_Requirements a 
 		join NEW_REQUIREMENT c on a.Question_Or_Requirement_Id=c.Requirement_Id
-		join QUESTION_GROUP_HEADING h on c.Question_Group_Heading_Id = h.Question_Group_Heading_Id
 		join REQUIREMENT_SETS s on c.Requirement_Id = s.Requirement_Id
 		join AVAILABLE_STANDARDS v on s.Set_Name = v.Set_Name 		
 		where a.Assessment_Id = @assessment_id and v.Assessment_Id = a.Assessment_Id and v.Selected = 1 and a.Answer_Text in ('Y','A')
-		group by s.set_name, Question_Group_Heading, h.Question_Group_Heading_Id
+		group by s.set_name, standard_category
 
 	select t.Set_Name, 
 	s.Short_Name, 
-	t.Question_Group_Heading, 
-	t.Question_Group_heading_id as [QGH_Id],
+	t.standard_category as [question_group_heading],
+	0 as [QGH_Id],
 	isnull(a.qc,0) yaCount, 
 	isnull(t.qc,0) Actualcr, 
-	--isnull(a.qc,0)/cast(t.qc as decimal(18,3)) * 100 [prc]
 	round(isnull(cast(a.qc as decimal(18,3))/t.qc,0),5) * 100 [prc]
 	from #tempR t 
-	left join #tempRAnswer a on t.Set_Name = a.Set_Name and t.Question_Group_Heading = a.Question_Group_Heading
+	left join #tempRAnswer a on t.Set_Name = a.Set_Name and t.Standard_Category = a.Standard_Category
 	join [SETS] s on t.Set_Name = s.Set_Name
-	order by Question_Group_Heading desc
+	order by t.standard_category desc
+
 end
 END
