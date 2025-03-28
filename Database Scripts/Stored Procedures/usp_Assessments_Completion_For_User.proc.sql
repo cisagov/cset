@@ -204,7 +204,7 @@ BEGIN
 	insert into @AssessmentTotalStandardQuestionsCount
 	select
 		AssessmentId = Assessment_Id,
-		TotalStandardQuestionsCount = COUNT(DISTINCT(Requirement_Id))
+		TotalStandardQuestionsCount = ISNULL(COUNT(DISTINCT(Requirement_Id)),0)
 		from #AvailableRequirementBasedStandard
 		group by Assessment_Id
 
@@ -213,7 +213,7 @@ BEGIN
 	insert into @AssessmentTotalStandardQuestionsCount
 	select
 		AssessmentId = Assessment_Id,
-		TotalStandardQuestionsCount = COUNT(DISTINCT(Question_Id))
+		TotalStandardQuestionsCount = isnull(COUNT(DISTINCT(Question_Id)),0)
 		from #AvailableQuestionBasedStandard
 		group by Assessment_Id
 	
@@ -233,9 +233,9 @@ BEGIN
 	select
 		AssessmentId = acq.AssessmentId,
 		CompletedCount = acq.CompletedCount,
-		TotalMaturityQuestionsCount = atmq.TotalMaturityQuestionsCount,
-		TotalStandardQuestionsCount = atsq.TotalStandardQuestionsCount,
-		TotalDiagramQuestionsCount = atdq.TotalDiagramQuestionsCount
+		TotalMaturityQuestionsCount = isnull(atmq.TotalMaturityQuestionsCount,0),
+		TotalStandardQuestionsCount = isnull(atsq.TotalStandardQuestionsCount,0),
+		TotalDiagramQuestionsCount = isnull(atdq.TotalDiagramQuestionsCount,0)
 		from @AssessmentCompletedQuestions acq
 			full join @AssessmentTotalMaturityQuestionsCount atmq on atmq.AssessmentId = acq.AssessmentId
 			full join @AssessmentTotalStandardQuestionsCount atsq on atsq.AssessmentId = acq.AssessmentId
