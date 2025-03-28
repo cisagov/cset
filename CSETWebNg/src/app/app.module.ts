@@ -102,7 +102,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
 import { FileUploadModule } from 'ng2-file-upload';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { StatusCreateComponent } from './assessment/documents/status-create/status-create.component';
