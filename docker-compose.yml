@@ -1,5 +1,17 @@
 ---
 services:
+  # web:
+  #   container_name: cset-web
+  #   build:
+  #     context: CSETWebNg
+  #   restart: unless-stopped
+  #   stdin_open: true
+  #   tty: true
+  #   extra_hosts:
+  #     - "host.docker.internal:host-gateway"
+  #   ports:
+  #     - 4200:80
+  #     - 443:443
   api:
     container_name: cset-api
     hostname: api
