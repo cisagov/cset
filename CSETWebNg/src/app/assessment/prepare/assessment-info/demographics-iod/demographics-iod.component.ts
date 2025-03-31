@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
 import { ServiceDemographic, AssessmentConfig, ServiceComposition, CriticalServiceInfo } from '../../../../models/assessment-info.model';
+import { ConstantsService } from '../../../../services/constants.service';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class DemographicsIodComponent implements OnInit {
     private assessSvc: AssessmentService,
     public dialog: MatDialog,
     private configSvc: ConfigService,
+    private c: ConstantsService
   ) { }
 
   /**
@@ -67,7 +69,7 @@ export class DemographicsIodComponent implements OnInit {
 
     this.assessSvc.assessment.sectorId = this.demographicData.sector;
 
-    this.assessSvc.assessmentStateChanged$.next(126);
+    this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
     this.updateDemographics();
   }
 
