@@ -1,28 +1,29 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the project files (csproj) and restore dependencies
-COPY ./CSETWeb_Api/CSETWeb_ApiCore/*.csproj ./
-RUN dotnet restore
-
-# Copy the rest of the application code
 COPY . .
 
-# Build the application
-RUN dotnet build CSETWeb_Api/CSETWeb_ApiCore --configuration Debug
+# Use Release configuration for published output
+RUN dotnet publish CSETWeb_Api/CSETWeb_ApiCore -c Release -o out
 
-# Expose the port the app runs on (default for ASP.NET Core is 5000 for HTTP)
+# --- Final Runtime Stage ---
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+
+WORKDIR /app
+
+# Copy published output from build stage
+COPY --from=build /app/out /app/
+
+WORKDIR /app/out
+
+# Expose the port (still good practice)
 EXPOSE 5000
 
-# Set environment variables for development mode
+# Set environment variable (optional if already configured in appsettings/code)
 ENV ASPNETCORE_ENVIRONMENT=Development
-ENV ASPNETCORE_URLS=http://0.0.0.0:5000
+# ASPNETCORE_URLS is often not needed here if Kestrel defaults or appsettings configure it
+# ENV ASPNETCORE_URLS=http://*:5000 # Use * or + instead of 0.0.0.0 if needed
 
-
-COPY ./etc/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod a+x /usr/local/bin/entrypoint.sh
-
-# Run the application
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+# Entrypoint to run the compiled DLL
+ENTRYPOINT ["dotnet", "CSETWebCore.Api.dll"]
