@@ -508,6 +508,14 @@ export class NavigationService implements OnDestroy, OnInit {
       this.resumeQuestionsTarget = x;
 
 
+      // requirement?  qqXXXXXX
+      var targetReqId = x.split(',').find(x => x.startsWith('R:'))?.replace('R:', '');
+      if (targetReqId != null) {
+        // TODO:  do the subcat expansion and navigation to the requirement
+      }
+
+
+
       // is there a specific nav node for the grouping? (nested)
       var g = x.split(',').find(x => x.startsWith('MG:'))?.replace('MG:', '');
       let e = this.workflow.getElementById('maturity-questions-nested-' + g);
