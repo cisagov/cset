@@ -52,6 +52,7 @@ import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { UserSettingsComponent } from '../../dialogs/user-settings/user-settings.component';
 import { translate } from '@jsverse/transloco';
 import { FileExportService } from '../../services/file-export.service';
+import { NavigationService } from '../../services/navigation/navigation.service';
 
 
 @Component({
@@ -72,6 +73,7 @@ export class TopMenusComponent implements OnInit {
     public auth: AuthenticationService,
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
+    public navSvc: NavigationService,
     public aggregationSvc: AggregationService,
     public fileSvc: FileUploadClientService,
     public setBuilderSvc: SetBuilderService,
