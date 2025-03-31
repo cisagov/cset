@@ -29,8 +29,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MaturityService } from '../maturity.service';
 import { PageVisibilityService } from '../navigation/page-visibility.service';
 import { NavTreeService } from './nav-tree.service';
-import { CieService } from '../cie.service';
 import { QuestionsService } from '../questions.service';
+import { ConstantsService } from '../constants.service';
 
 
 export interface NavTreeNode {
@@ -98,23 +98,24 @@ export class NavigationService implements OnDestroy, OnInit {
     private maturitySvc: MaturityService,
     private pageVisibliltySvc: PageVisibilityService,
     private navTreeSvc: NavTreeService,
-    private questionsSvc: QuestionsService
+    private questionsSvc: QuestionsService,
+    private c: ConstantsService
   ) {
     this.setWorkflow('omni');
     this.assessSvc.assessmentStateChanged$.subscribe((reloadState) => {
       switch (reloadState) {
-        case 123:
+        case this.c.NAV_APPLY_CIE_TO_CSTATES:
           // remembers state of ToC dropdown for CIE
           if (this.assessSvc.usesMaturityModel('CIE')) {
             this.navTreeSvc.applyCieToCStates();
           }
           break;
-        case 124:
+        case this.c.NAV_CIE_REFRESH_ENABLE_NEXT:
           this.buildTree();
           this.setNextEnabled(true);
           //this.navDirect('dashboard');
           break;
-        case 125:
+        case this.c.NAV_CIE_REFRESH_NAV_PREPARE:
           if (this.assessSvc.usesMaturityModel('CIE')) {
             this.navTreeSvc.applyCieToCStates();
           }
@@ -122,7 +123,7 @@ export class NavigationService implements OnDestroy, OnInit {
           this.navDirect('phase-prepare');
 
           break;
-        case 126:
+        case this.c.NAV_REFRESH_TREE_ONLY:
           // refresh tree only
           this.buildTree();
           break;
