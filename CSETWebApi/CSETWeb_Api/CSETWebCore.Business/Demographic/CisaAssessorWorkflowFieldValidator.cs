@@ -59,6 +59,7 @@ namespace CSETWebCore.Business.Demographic
 
             // remove Org Point of Contact - currently stored as DemographicExt but not required
             demoExtProperties.RemoveAll(x => x.Name == "OrgPointOfContact");
+            demoExtProperties.RemoveAll(x => x.Name == "SectorDirective");
 
 
             foreach (PropertyInfo property in demoExtProperties)
