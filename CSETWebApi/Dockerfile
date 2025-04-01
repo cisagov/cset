@@ -15,6 +15,9 @@ WORKDIR /app
 # Copy published output from build stage
 COPY --from=build /app/out /app/
 
+# Create a file to indicate local installation
+RUN touch LOCAL-INSTALLATION
+
 # Set environment variable (optional if already configured in appsettings/code)
 ENV ASPNETCORE_ENVIRONMENT=Production
 ENV HTTP_PORTS=5000
