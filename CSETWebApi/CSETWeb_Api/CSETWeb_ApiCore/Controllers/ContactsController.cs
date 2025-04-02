@@ -683,10 +683,11 @@ namespace CSETWebCore.Api.Controllers
             if (ac.Last_Q_Answered != null)
             {
                 string group = "";
-                group = ac.Last_Q_Answered.Split(',').ToList().Find(x => x.StartsWith("MG:")).Replace("MG:", "");
+                group = ac.Last_Q_Answered.Split(',').ToList().Find(x => x.StartsWith("MG:"));
 
                 if (group != null)
                 {
+                    group = group.Replace("MG:", "");
                     int groupInt = group.ToInt32();
                     int? parentGroupId = _context.MATURITY_GROUPINGS.Where(x => x.Grouping_Id == groupInt).Select(x => x.Parent_Id).FirstOrDefault();
                     if (parentGroupId != null)

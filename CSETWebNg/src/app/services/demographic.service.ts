@@ -25,11 +25,10 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Demographic } from '../models/assessment-info.model';
-import { AuthenticationService } from './authentication.service';
 import { FileUploadClientService } from './file-client.service';
 import { AssessmentService } from './assessment.service';
-import { BehaviorSubject } from 'rxjs';
 import { FileExportService } from './file-export.service';
+import { ConstantsService } from './constants.service';
 
 
 const headers = {
@@ -48,7 +47,8 @@ export class DemographicService {
     private configSvc: ConfigService,
     public fileSvc: FileUploadClientService,
     private fileExportSvc: FileExportService,
-    public assessSvc: AssessmentService
+    public assessSvc: AssessmentService,
+    private c: ConstantsService
   ) {
     this.apiUrl = this.configSvc.apiUrl + 'Demographics/';
   }
@@ -88,7 +88,7 @@ export class DemographicService {
    */
   updateDemographic(demographic: Demographic) {
     this.assessSvc.assessment.sectorId = demographic.sectorId;
-    this.assessSvc.assessmentStateChanged$.next(126);
+    this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
 
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
       .subscribe(() => {
