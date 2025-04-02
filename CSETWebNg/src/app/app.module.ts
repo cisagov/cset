@@ -684,7 +684,7 @@ import { RolesChangedComponent } from './dialogs/roles-changed/roles-changed.com
 import { AnalyticsResultsComponent } from './assessment/results/analytics-results/analytics-results.component';
 import { firstValueFrom } from 'rxjs';
 import { UpgradeComponent } from './assessment/upgrade/upgrade.component';
-import { CodeEditorModule } from '@ngstack/code-editor';
+import { CodeEditorModule, provideCodeEditor } from '@ngstack/code-editor';
 import { ImportComponent } from './import/import.component';
 import { NewAssessmentComponent } from './initial/new-assessment/new-assessment.component';
 import { register as registerSwiper } from 'swiper/element/bundle';
@@ -1293,11 +1293,8 @@ registerSwiper();
         NgxChartsModule,
         TooltipModule,
         EllipsisModule,
-        HotkeyModule.forRoot(),
-        CodeEditorModule.forRoot({
-            typingsWorkerUrl: 'assets/workers/typings-worker.js',
-            baseUrl: 'assets/monaco'
-        })],
+        CodeEditorModule,
+        HotkeyModule.forRoot()],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         TranslocoService,
@@ -1377,7 +1374,11 @@ registerSwiper();
         GalleryService,
         FooterService,
         AnalyticsService,
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient(withInterceptorsFromDi()),
+        provideCodeEditor({
+            typingsWorkerUrl: 'assets/workers/typings-worker.js',
+            baseUrl: 'assets/monaco'
+        })
     ],
 })
 export class AppModule { }
