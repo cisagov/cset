@@ -16,19 +16,19 @@
         "setup:electron-build-files": "shx rm -rf temp-electron && shx mkdir -p temp-electron/node_modules && shx cp -r {package.json,main-electron.js,License.txt,NOTICE.txt,dist} temp-electron && shx cp -r node_modules/{electron-log,electron-find-on-page,lodash} temp-electron/node_modules"
     },
     "dependencies": {
-        "@angular-devkit/build-webpack": "^0.1901.8",
+        "@angular-devkit/build-webpack": "^0.1902.5",
         "@angular-devkit/schematics": "^19.2.4",
         "@angular-eslint/schematics": "^19.2.1",
         "@angular-slider/ngx-slider": "^19.0.0",
         "@angular/animations": "^19.2.3",
-        "@angular/cdk": "^19.2.5",
+        "@angular/cdk": "^19.2.7",
         "@angular/cli": "^19.1.4",
         "@angular/common": "^19.2.3",
         "@angular/compiler": "^19.2.3",
         "@angular/core": "^19.2.3",
         "@angular/elements": "^19.2.3",
         "@angular/forms": "^19.2.3",
-        "@angular/material": "^19.2.5",
+        "@angular/material": "^19.2.7",
         "@angular/platform-browser": "^19.2.3",
         "@angular/platform-browser-dynamic": "^19.2.3",
         "@angular/platform-server": "^19.2.3",
@@ -77,6 +77,6 @@
         "@angular-builders/custom-webpack": "^19.0.0",
         "@electron/packager": "^18.3.6",
         "electron": "^35.1.2",
-        "shx": "^0.3.4"
+        "shx": "^0.4.0"
     }
 }

@@ -8,11 +8,11 @@ help:
 
 # target: build-backend - Launch the backend server
 build-backend:
-	cd CSETWebApi/CSETWeb_API/CSETWeb_ApiCore && dotnet build
+	cd CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore && dotnet build
 
 # target: launch-backend - Launch the backend server
 launch-backend:
-	cd CSETWebApi/CSETWeb_API/CSETWeb_ApiCore && dotnet run
+	cd CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore && dotnet run
 
 # target: build-frontend - Launch the frontend server
 build-frontend:
