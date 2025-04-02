@@ -48,6 +48,12 @@
     <None Update="App_Data\AssessmentConversion\upgrades.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="App_Data\LanguagePacks\ES\NEW_REQUIREMENT.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\ES\STANDARD_CATEGORY.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="App_Data\ResponseFile\DocumentNotFound.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
