@@ -28,7 +28,7 @@
         "@angular/core": "^19.2.3",
         "@angular/elements": "^19.2.3",
         "@angular/forms": "^19.2.3",
-        "@angular/material": "^19.2.5",
+        "@angular/material": "^19.2.7",
         "@angular/platform-browser": "^19.2.3",
         "@angular/platform-browser-dynamic": "^19.2.3",
         "@angular/platform-server": "^19.2.3",
