@@ -20,7 +20,7 @@
         "@angular-devkit/schematics": "^19.2.4",
         "@angular-eslint/schematics": "^19.2.1",
         "@angular-slider/ngx-slider": "^19.0.0",
-        "@angular/animations": "^19.2.3",
+        "@angular/animations": "^19.2.5",
         "@angular/cdk": "^19.2.7",
         "@angular/cli": "^19.1.4",
         "@angular/common": "^19.2.3",
