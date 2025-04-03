@@ -57,7 +57,7 @@
         "jquery": "^3.7.1",
         "locate-path": "^7.2.0",
         "lodash": "^4.17.21",
-        "luxon": "^3.5.0",
+        "luxon": "^3.6.1",
         "material-design-icons": "^3.0.1",
         "monaco-editor": "^0.52.2",
         "ng2-currency-mask": "^13.0.3",
