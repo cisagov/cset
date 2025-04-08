@@ -269,7 +269,8 @@
           "copy text": "テキストをコピー",
           "change password": "パスワードを変更",
           "reset password": "パスワードをリセット",
-          "forgot password": "パスワードを忘れました"
+          "forgot password": "パスワードを忘れました",
+          "role editor": "ロールエディター"
      },
      "contact": {
           "contacts": "連絡先",

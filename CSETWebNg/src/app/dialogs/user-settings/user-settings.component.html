@@ -62,7 +62,7 @@
             <div class="p-3">
                 <div class="d-flex align-items-center">
                     <span class="fas fa-language fs-base-6 me-3"></span>
-                    <label class="fw-600 form-label" for="selectLang">{{t('user language')}}</label>
+                    <label class="fw-600 form-label" for="langSelection">{{t('user language')}}</label>
                 </div>
 
                 <select class="form-select" id="langSelection" name="langSelection" [(ngModel)]="langSelection"
@@ -70,7 +70,10 @@
                     <option *ngFor="let o of languageOptions" [value]="o.value">{{o.name}}</option>
                 </select>
 
+                <mat-dialog-actions>
+                    <button class="m-0 btn btn-primary" (click)="openAdminUserRolesEditor()">{{t('buttons.role editor')}}</button>
 
+                </mat-dialog-actions>
             </div>
         </form>
         <mat-dialog-actions class="pt-3 mb-0 mx-0 px-0 d-flex justify-content-end flex-11a">

@@ -352,7 +352,8 @@
     "copy text": "Copy Text",
     "change password": "Change Password",
     "reset password": "Reset Password",
-    "forgot password": "Forgot Password"
+    "forgot password": "Forgot Password",
+    "role editor": "Role Editor"
   },
   "contact": {
     "contacts": "Contacts",

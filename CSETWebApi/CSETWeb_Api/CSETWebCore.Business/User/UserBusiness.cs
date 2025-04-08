@@ -5,12 +5,15 @@
 // 
 //////////////////////////////// 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Api.Models;
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.User;
+using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
 using Nelibur.ObjectMapper;
@@ -345,5 +348,30 @@ namespace CSETWebCore.Business.User
         {
             return $"{u.FirstName} {u.LastName}".Trim();
         }
+
+
+        public UsersAndRoles GetUserRoles()
+        {
+            var usersAndRoles = new UsersAndRoles();
+
+            usersAndRoles.UserRoles = (from user in _context.USERS
+                            join userRole in _context.USER_ROLES on user.UserId equals userRole.UserId
+                            join role in _context.ROLES on userRole.RoleId equals role.RoleId
+                            where role.RoleName != null
+                            select new UserRole()
+                            {
+                                FirstName = user.FirstName,
+                                LastName = user.LastName,
+                                PrimaryEmail = user.PrimaryEmail,
+                                RoleName = role.RoleName,
+                                UserId = user.UserId
+                            }).ToList();
+
+            usersAndRoles.Roles = (_context.ROLES).ToList();
+
+
+            return usersAndRoles;
+        }
+
     }
 }

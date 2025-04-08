@@ -1,4 +1,6 @@
 ﻿using CSETWebCore.Api.Models;
+using CSETWebCore.Business.Authorization;
+using CSETWebCore.Business.User;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Notification;
@@ -6,6 +8,7 @@ using CSETWebCore.Interfaces.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -146,6 +149,14 @@ namespace CSETWebCore.Api.Controllers
             var gp = new CSETGlobalProperties(_context);
             var secret = gp.GetProperty("UserApprovalApiKey");
             return (apiKey == secret);
+        }
+
+        [CsetAuthorize]
+        [HttpGet]
+        [Route("api/user/getUsersAndRoles")]
+        public IActionResult GetUsersAndRoles([FromQuery] string apiKey)
+        {
+            return Ok(_userBusiness.GetUserRoles());
         }
     }
 }
