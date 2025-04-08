@@ -359,7 +359,8 @@ const appRoutes: Routes = [
           {
             path: 'prepare',
             component: PrepareComponent,
-            canActivate: [AssessGuard], //, RoleGuard],
+            canActivate: [AssessGuard], 
+            //, RoleGuard],
             //data: { roles: [RoleType.USER]},
             canActivateChild: [AssessGuard],
             children: [
