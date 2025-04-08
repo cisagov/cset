@@ -33,6 +33,7 @@ import { ChangePassword } from '../models/reset-pass.model';
 import { CreateUser } from './../models/user.model';
 import { ConfigService } from './config.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { RoleType } from '../models/enums/role.model';
 
 export interface LoginResponse {
   token: string;
@@ -49,6 +50,7 @@ export interface LoginResponse {
   importExtensions: string;
   linkerTime: string;
   isFirstLogin: boolean;
+  roles: string[]; 
 }
 
 const headers = {
@@ -62,6 +64,7 @@ export class AuthenticationService {
   isLocal: boolean;
   private initialized = false;
   private parser = new JwtParser();
+  private currentUser:LoginResponse | null = null;
 
   isAuthenticated = false;
 
@@ -153,6 +156,7 @@ export class AuthenticationService {
    * @param user
    */
   storeUserData(user: LoginResponse) {
+    this.currentUser = user;
     if (user.token != null) {
       localStorage.setItem('userToken', user.token);
     }
@@ -164,7 +168,8 @@ export class AuthenticationService {
     localStorage.setItem('exportExtension', user.exportExtension);
     localStorage.setItem('importExtensions', user.importExtensions);
     localStorage.setItem('developer', String(false));
-    localStorage.setItem('isFirstLogin', String(user.isFirstLogin))
+    localStorage.setItem('isFirstLogin', String(user.isFirstLogin));
+    localStorage.setItem('role', JSON.stringify(user.roles))
     // schedule the first token refresh event
     this.scheduleTokenRefresh(this.http, user.token);
   }
@@ -438,5 +443,24 @@ export class AuthenticationService {
    */
   generateAccessKey() {
     return this.http.get(this.configSvc.apiUrl + 'auth/accesskey', { responseType: 'text' });
+  }
+
+  hasRole(requiredRoles: RoleType[]): boolean {
+    if (!this.currentUser) {
+      return false;
+    }
+    this.currentUser.roles = JSON.parse(localStorage.getItem("role"));
+    
+    return this.currentUser.roles.some((role: RoleType) => 
+      requiredRoles.includes(role)
+    );
+  }
+
+  hasMultipleRoles(requiredRoles: RoleType[]): boolean {
+    if (!this.currentUser) return false;
+
+    return requiredRoles.every(role => 
+      this.currentUser!.roles.includes(role)
+    );
   }
 }
