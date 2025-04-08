@@ -23,8 +23,8 @@
         "@angular/animations": "^19.2.5",
         "@angular/cdk": "^19.2.7",
         "@angular/cli": "^19.1.4",
-        "@angular/common": "^19.2.3",
         "@angular/compiler": "^19.2.5",
+        "@angular/common": "^19.2.5",
         "@angular/core": "^19.2.3",
         "@angular/elements": "^19.2.3",
         "@angular/forms": "^19.2.5",
@@ -43,7 +43,7 @@
         "@ngstack/code-editor": "^9.0.0",
         "@swimlane/ngx-charts": "^22.0.0-alpha.0",
         "@types/jquery": "^3.5.32",
-        "@types/sanitize-html": "^2.13.0",
+        "@types/sanitize-html": "^2.15.0",
         "angular2-hotkeys": "^16.0.1",
         "bootstrap": "^5.3.2",
         "chart.js": "^4.4.5",
@@ -70,7 +70,7 @@
         "screenfull": "^5.2.0",
         "style-loader": "^4.0.0",
         "swiper": "^11.2.5",
-        "typescript": "^5.7.3",
+        "typescript": "^5.8.3",
         "zone.js": "^0.15.0"
     },
     "devDependencies": {
