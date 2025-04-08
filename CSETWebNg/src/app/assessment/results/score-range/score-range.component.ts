@@ -41,7 +41,7 @@ export class ScoreRangeComponent implements OnInit {
   /**
    * height this svg is rendered at
    */
-  h = 50;
+  h = 70;
 
   barH: number;
 
@@ -58,12 +58,17 @@ export class ScoreRangeComponent implements OnInit {
   median: number;
 
   @Input()
+  average: number;
+
+  @Input()
   myScore: number;
 
   @Input()
   myColor = "#0000aa";
 
   rangeColor = "#87909e";
+
+  padding = 10;
 
   /**
    * padding value to get things away from the left and right edge
@@ -72,7 +77,7 @@ export class ScoreRangeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.containerWidth = this.chartWidth * 1.05;
+    this.containerWidth = this.chartWidth * 1.25;
     this.barH = this.h * .1;
   }
 }
