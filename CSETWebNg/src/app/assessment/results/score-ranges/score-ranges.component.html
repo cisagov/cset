@@ -29,8 +29,20 @@
                <span style="font-size: .8rem">Current assessment score</span>
           </div>
           <div>
-               <span class="me-3">|</span>
-               <span style="font-size: .8rem">Vertical bar is median score for sample</span>
+               <span class="me-3 pl-2">|</span>
+               <span style="font-size: .8rem">Vertical bar is average score for sample</span>
+          </div>
+          <div>
+               <svg width="8" height="8" class="me-3">
+                    <circle cy="4" cx="4" r="4" fill="#4682B4" />
+               </svg>
+               <span style="font-size: .8rem">Maximum score</span>
+          </div>
+          <div>
+               <svg width="8" height="8" class="me-3">
+                    <circle cy="4" cx="4" r="4" fill="#F28C28" />
+               </svg>
+               <span style="font-size: .8rem">Minimum score</span>
           </div>
      </div>
 
@@ -40,8 +52,9 @@
                     {{cat.label}}
                </td>
                <td>
-                    <app-score-range class="d-block" chartWidth="500" [min]="cat.min" [median]="cat.median"
-                         [max]="cat.max" [myScore]="cat.myScore" [myColor]="myColor"></app-score-range>
+                    <app-score-range class="d-block" [chartWidth]="500" [min]="cat.min" [median]="cat.median"
+                         [average]="cat.avg" [max]="cat.max" [myScore]="cat.myScore"
+                         [myColor]="myColor"></app-score-range>
                </td>
           </tr>
           <tr>
