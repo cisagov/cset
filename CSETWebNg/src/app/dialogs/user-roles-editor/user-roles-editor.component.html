@@ -1,0 +1,144 @@
+
+<div *transoloco="let t;" class="d-flex flex-column justify-content-center flex-11a">
+    hello
+
+    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+        <span class="cset-icons-profile fs-base-6 me-3"></span>
+        <span>{{t('user profile.dialog title')}}</span>
+    </div>
+    <mat-dialog-content class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
+
+        <ng-container *ngIf="users == null">
+            <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+                <div class="spinner-size-50"></div>
+            </div>
+        </ng-container>
+        
+        <ng-container *ngIf="users?.length > 0">
+
+            <!-- table for larger layouts -->
+            <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort
+                (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
+                <th aria-label="{{ t('assessment name')}}" mat-sort-header="assessment" style="width: 25%;">
+                    Last Name
+                </th>
+                <th *ngIf="isTSA" mat-sort-header="role" style="width: 5%;">First Name</th>
+                <th *ngIf="isCF" mat-sort-header="role" style="width: 5%;">Email</th>
+                <th aria-label="{{ t('assessment type')}}" mat-sort-header="role" style="width:15%;">Role</th>
+                
+                <tr *ngFor="let userRole of userRoles">
+                    <td>{{ userRole.lastName }}</td>
+                    <td>{{ userRole.firstName }}</td>
+                    <td>{{ userRole.primaryEmail }}</td>
+                    <td>
+                        <select class="form-select" name="roleSelection" [(ngModel)]="userRole.roleName"
+                            (change)="updateOverride($event.target.value)">
+                            <option *ngFor="let role of roles">{{ role.roleName }}</option>
+                        </select>
+                    </td>
+                    <!-- <td *ngIf="showColumn('ise-submitted')">
+                        <ng-container *ngIf="assessment.iseSubmitted">
+                            {{ systemTimeTranslator(assessment.submittedDate, 'short') }}
+                        </ng-container>
+                    </td>
+                    <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.lastModifiedDate | localizeDate}}</td>
+                    <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate,
+                        'med')}}</td>
+
+                    <td *ngIf="showColumn('primary-assessor')">{{assessment.firstName}} {{assessment.lastName}}</td>
+                    <td>
+                        <div
+                            *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">
+                            <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
+                                {{ { c: assessment.completedQuestionsCount, t:
+                                assessment.totalAvailableQuestionsCount, qa: assessment.questionAlias, l:
+                                tSvc.getActiveLang() } | completionCount }}
+                            </span>
+                            <ng-template #blankAssessment>
+                                {{ t('welcome page.blank assessment') }}
+                            </ng-template>
+                            <br>
+                        </div>
+                        <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
+                            matTooltip="{{t('tooltip.assessment requires review')}}">{{t('requires review')}}
+                        </span>
+                    </td>
+                    <td>
+                        <button tabindex="0"
+                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                            (click)="removeAssessment(assessment, i)"
+                            matTooltip="{{ t('tooltip.remove assessment') }}">
+                            <span class="cset-icons-trash-x fs-base-2 me-2"></span>
+                            <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.remove')}}</span>
+                        </button>
+                    </td>
+                    <td *ngIf="showColumn('export')">
+                        <button tabindex="0" id="assess-{{i}}-export"
+                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                            (click)="clickDownloadLink(assessment.assessmentId)"
+                            matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
+                            <span class="cset-icons-export-up fs-base-2 me-2"></span>
+                            <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.export')}}</span>
+                        </button>
+                    </td>
+                    <td *ngIf="showColumn('export json')">
+                        <button tabindex="0" id="assess-{{i}}-export"
+                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                            (click)="clickDownloadLink(assessment.assessmentId, true)"
+                            matTooltip="{{ t('tooltip.export assessment json') }}">
+                            <span class="cset-icons-export-up fs-base-2 me-2"></span>
+                            <span class="icon-link-button-text-dark">{{t('buttons.export json')}}</span>
+                        </button>
+                    </td>
+                    <td style="display:none;" *ngIf="showColumn('analytics')">
+                        <button tabindex="0"
+                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                            (click)="this.analyticsSvc.loadAssessment(assessment.assessmentId)"
+                            matTooltip="{{ t('tooltip.analytics') }}">
+                            <span class="cset-icons-bar-chart-vertical fs-base-2 me-2"></span>
+                            <span class="icon-link-button-text-dark">{{t('buttons.analytics')}}</span>
+                        </button>
+                    </td> -->
+                </tr>
+            </table>
+
+            <!-- table for handset portrait -->
+            <table *ngIf="layoutSvc.hp" role="presentation" aria-label="assessments" matSort
+                (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
+                <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">{{ t('assessment
+                    name') }}
+                </th>
+                <th aria-label="date" mat-sort-header="date" style="width:15%;">{{ t('last modified') }}</th>
+                <th aria-label="Actions" style="width: 5%" *ngIf="layoutSvc.hp"></th>
+                <tr *ngFor="let assessment of sortedAssessments;  let i = index">
+                    <td>
+                        <button tabindex="0"
+                            class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
+                            (click)="this.navSvc.beginAssessment(assessment.assessmentId)">
+                            {{assessment.assessmentName}}
+                        </button>
+                    </td>
+                    <td>{{systemTimeTranslator(assessment.lastModifiedDate, 'med')}}</td>
+                    <td class="text-nowrap ps-1">
+                        <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
+                            (click)="removeAssessment(assessment, i)"
+                            matTooltip="{{ t('tooltip.remove assessment') }}">
+                            <span class="cset-icons-trash-x fs-base-2"></span>
+                        </button>
+                        <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
+                            (click)="clickDownloadLink(assessment.assessmentId)"
+                            matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
+                            <span class="cset-icons-export-up fs-base-2"></span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </ng-container>
+        <mat-dialog-actions class="p-3 pt-0 mb-0">
+            <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
+        </mat-dialog-actions>
+    <!-- <mat-dialog-content class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
+        <p class="pe-3">{{t('dialogs.access denied 3')}}</p> -->
+    </mat-dialog-content>
+    
+</div>

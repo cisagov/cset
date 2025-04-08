@@ -324,7 +324,8 @@
         "copy text": "Copiar texto",
         "change password": "Cambiar la contraseña",
         "reset password": "Restablecer la contraseña",
-        "forgot password": "Contraseña olvidada"
+        "forgot password": "Contraseña olvidada",
+        "role editor": "Editor de Roles"
     },
     "answer-options": {
         "button-labels": {

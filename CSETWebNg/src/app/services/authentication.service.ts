@@ -439,4 +439,11 @@ export class AuthenticationService {
   generateAccessKey() {
     return this.http.get(this.configSvc.apiUrl + 'auth/accesskey', { responseType: 'text' });
   }
+
+  /**
+   *
+   */
+  getUsersAndRoles() {
+    return this.http.get(this.configSvc.apiUrl + 'user/getUsersAndRoles');
+  }
 }
