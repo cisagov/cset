@@ -1,4 +1,4 @@
-<div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a" *transloco="let t" >
+<div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a" *transloco="let t">
   <h3 class="mb-3">{{t('analytics.title')}}</h3>
   <p>{{t('analytics.description 1')}}</p>
   <p>{{t('analytics.description 2')}}</p>
@@ -7,32 +7,39 @@
       <div class="row">
         <div class="col-sm ps-0">
           <mat-card class="p-3" style="background-color: transparent; box-shadow: none">
-            <mat-card-header class="d-flex justify-content-center">  <h4>{{ dataType === 'mySector' ? sectorTitle : 'All Sectors' }}</h4>
+            <mat-card-header class="d-flex justify-content-center">
+              <h4>{{ dataType === 'mySector' ? sectorTitle : 'All Sectors' }}</h4>
             </mat-card-header>
             <div class="p-4">
               <mat-button-toggle-group [(ngModel)]="dataType" (change)="toggleData($event)">
                 <mat-button-toggle [value]="'mySector'" [disabled]="!showSector"
-                  matTooltip="Select a sector from Demographics in Assessment Information" [matTooltipDisabled]="showSector">
+                  matTooltip="Select a sector from Demographics in Assessment Information"
+                  [matTooltipDisabled]="showSector">
                   {{t('analytics.my sector')}}
-                  <div *ngIf="dataType === 'mySector'"><h6 style="font-size: 13px;">{{t('analytics.sample size')}}: {{sampleSize}}</h6></div>
+                  <div *ngIf="dataType === 'mySector'">
+                    <h6 style="font-size: 13px;">{{t('analytics.sample size')}}: {{sampleSize}}</h6>
+                  </div>
                 </mat-button-toggle>
                 <mat-button-toggle value="allSectors">{{t('analytics.all sectors')}}
-                  <div *ngIf="dataType === 'allSectors'"><h6 style="font-size: 13px;">{{t('analytics.sample size')}}: {{sampleSize}}</h6></div>
+                  <div *ngIf="dataType === 'allSectors'">
+                    <h6 style="font-size: 13px;">{{t('analytics.sample size')}}: {{sampleSize}}</h6>
+                  </div>
                 </mat-button-toggle>
               </mat-button-toggle-group>
             </div>
             <div style="display: block;" class="d-none">
               <canvas #barCanvas></canvas>
             </div>
-            
-            
+
+
             <div *ngIf="!scoreBarData">
               <div class="spinner-container" style="margin: 2em auto">
                 <div style="max-width: 50px; max-height: 50px;"></div>
               </div>
             </div>
-            <app-score-ranges *ngIf="!!scoreBarData" chartWidth="500" [data]="scoreBarData" myColor="#174792"></app-score-ranges>
-            
+            <app-score-ranges *ngIf="!!scoreBarData" [chartWidth]="500" [data]="scoreBarData"
+              myColor="#174792"></app-score-ranges>
+
           </mat-card>
 
         </div>
