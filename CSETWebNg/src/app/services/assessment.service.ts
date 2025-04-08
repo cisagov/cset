@@ -37,6 +37,7 @@ import { Answer } from '../models/questions.model';
 import { BehaviorSubject, first, firstValueFrom, Observable } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 import { ConversionService } from './conversion.service';
+import { ConstantsService } from './constants.service';
 
 
 export interface Role {
@@ -58,7 +59,8 @@ export class AssessmentService {
   private apiUrl: string;
   private initialized = false;
   public applicationMode: string;
-  public assessmentStateChanged$ = new BehaviorSubject(123);
+  public assessmentStateChanged$ = new BehaviorSubject(this.c.NAV_APPLY_CIE_TO_CSTATES);
+  
   /**
    * This is private because we need a setter so that we can do things
    * when the assessment is loaded.
@@ -98,7 +100,7 @@ export class AssessmentService {
     private router: Router,
     private extDemoSvc: DemographicExtendedService,
     private floridaSvc: CyberFloridaService,
-    private tSvc: TranslocoService,
+    private c: ConstantsService,
     private convSvc: ConversionService
   ) {
     if (!this.initialized) {
@@ -722,7 +724,7 @@ export class AssessmentService {
 
   initCyberFlorida(assessmentId: number) {
     this.floridaSvc.getInitialState().then(() => {
-      this.assessmentStateChanged$.next(125);
+      this.assessmentStateChanged$.next(this.c.NAV_CIE_REFRESH_NAV_PREPARE);
     }
     );
   }
@@ -732,7 +734,7 @@ export class AssessmentService {
     if (this.isCyberFloridaComplete()) {
       this.convSvc.isEntryCfAssessment().subscribe((data) => {
         if (data)
-          this.assessmentStateChanged$.next(124);
+          this.assessmentStateChanged$.next(this.c.NAV_CIE_REFRESH_ENABLE_NEXT);
       });
     }
   }
