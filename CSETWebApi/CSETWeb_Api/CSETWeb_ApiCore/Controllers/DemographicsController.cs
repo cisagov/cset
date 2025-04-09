@@ -53,6 +53,7 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
+        [CsetAuthorize(Roles=["Admin"])]
         [HttpGet]
         [Route("api/demographics")]
         [Obsolete("No longer in use anymore")]
