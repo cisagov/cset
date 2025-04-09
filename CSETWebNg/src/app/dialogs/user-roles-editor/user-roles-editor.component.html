@@ -1,38 +1,36 @@
 
-<div *transoloco="let t;" class="d-flex flex-column justify-content-center flex-11a">
-    hello
-
+<div *transloco="let t;" class="edit-user-dialog d-flex flex-column justify-content-center flex-11a">
     <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
         <span class="cset-icons-profile fs-base-6 me-3"></span>
         <span>{{t('user profile.dialog title')}}</span>
     </div>
     <mat-dialog-content class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
 
-        <ng-container *ngIf="users == null">
+        <ng-container *ngIf="userRoles == null">
             <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
                 <div class="spinner-size-50"></div>
             </div>
         </ng-container>
         
-        <ng-container *ngIf="users?.length > 0">
+        <ng-container *ngIf="userRoles?.length > 0">
 
             <!-- table for larger layouts -->
             <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort
                 (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
-                <th aria-label="{{ t('assessment name')}}" mat-sort-header="assessment" style="width: 25%;">
+                <th aria-label="Email" mat-sort-header="role" style="width: 25%;">Email</th>
+                <th aria-label="Last Name" mat-sort-header="assessment" style="width: 25%;">
                     Last Name
                 </th>
-                <th *ngIf="isTSA" mat-sort-header="role" style="width: 5%;">First Name</th>
-                <th *ngIf="isCF" mat-sort-header="role" style="width: 5%;">Email</th>
-                <th aria-label="{{ t('assessment type')}}" mat-sort-header="role" style="width:15%;">Role</th>
+                <th aria-label="First Name" mat-sort-header="role" style="width: 25%;">First Name</th>
+                <th aria-label="Role" mat-sort-header="role" style="width:25%;">Role</th>
                 
                 <tr *ngFor="let userRole of userRoles">
+                    <td>{{ userRole.primaryEmail }}</td>
                     <td>{{ userRole.lastName }}</td>
                     <td>{{ userRole.firstName }}</td>
-                    <td>{{ userRole.primaryEmail }}</td>
                     <td>
                         <select class="form-select" name="roleSelection" [(ngModel)]="userRole.roleName"
-                            (change)="updateOverride($event.target.value)">
+                            (change)="updateRole($event.target.value)">
                             <option *ngFor="let role of roles">{{ role.roleName }}</option>
                         </select>
                     </td>
