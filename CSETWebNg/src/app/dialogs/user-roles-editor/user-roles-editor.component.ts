@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { Sort } from '@angular/material/sort';
 import { Comparer } from '../../helpers/comparer';
 import { AuthenticationService } from '../../services/authentication.service';
+import { LayoutService } from '../../services/layout.service';
 
 @Component({
   selector: 'app-user-roles-editor',
@@ -20,6 +21,7 @@ export class UserRolesEditorComponent implements OnInit {
   constructor(
     private dialog: MatDialogRef<UserRolesEditorComponent>,
     private authSvc: AuthenticationService,
+    public layoutSvc: LayoutService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
@@ -65,6 +67,13 @@ export class UserRolesEditorComponent implements OnInit {
           return 0;
       }
     });
+  }
+
+  updateRoles(e: any) {
+    // this.acetSvc.postSelection(this.acetDashboard).subscribe((data: any) => {
+    //   this.ncuaSvc.updateExamLevelOverride(this.acetDashboard.override);
+    // });
+
   }
 
 }
