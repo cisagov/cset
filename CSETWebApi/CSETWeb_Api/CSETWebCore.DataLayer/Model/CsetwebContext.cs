@@ -305,6 +305,8 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<MATURITY_EXTRA> MATURITY_EXTRA { get; set; }
 
+    public virtual DbSet<MATURITY_GLOBAL_SEQUENCES> MATURITY_GLOBAL_SEQUENCES { get; set; }
+
     public virtual DbSet<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }
 
     public virtual DbSet<MATURITY_GROUPING_TYPES> MATURITY_GROUPING_TYPES { get; set; }
@@ -340,6 +342,18 @@ public partial class CsetwebContext : DbContext
     public virtual DbSet<NAVIGATION_STATE> NAVIGATION_STATE { get; set; }
 
     public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
+
+    public virtual DbSet<NCSF_CONVERSION_MAPPINGS> NCSF_CONVERSION_MAPPINGS { get; set; }
+
+    public virtual DbSet<NCSF_CONVERSION_MAPPINGS_ENTRY> NCSF_CONVERSION_MAPPINGS_ENTRY { get; set; }
+
+    public virtual DbSet<NCSF_CONVERSION_MAPPINGS_FULL> NCSF_CONVERSION_MAPPINGS_FULL { get; set; }
+
+    public virtual DbSet<NCSF_CONVERSION_MAPPINGS_MID> NCSF_CONVERSION_MAPPINGS_MID { get; set; }
+
+    public virtual DbSet<NCSF_ENTRY_TO_MID> NCSF_ENTRY_TO_MID { get; set; }
+
+    public virtual DbSet<NCSF_FULL_TO_MID> NCSF_FULL_TO_MID { get; set; }
 
     public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
 
@@ -427,6 +441,8 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
 
+    public virtual DbSet<ROLES> ROLES { get; set; }
+
     public virtual DbSet<RapidAssessmentControls> RapidAssessmentControls { get; set; }
 
     public virtual DbSet<SAL_DETERMINATION_TYPES> SAL_DETERMINATION_TYPES { get; set; }
@@ -486,6 +502,8 @@ public partial class CsetwebContext : DbContext
     public virtual DbSet<USER_DETAIL_INFORMATION> USER_DETAIL_INFORMATION { get; set; }
 
     public virtual DbSet<USER_EMAIL_HISTORY> USER_EMAIL_HISTORY { get; set; }
+
+    public virtual DbSet<USER_ROLES> USER_ROLES { get; set; }
 
     public virtual DbSet<USER_SECURITY_QUESTIONS> USER_SECURITY_QUESTIONS { get; set; }
 
@@ -1806,6 +1824,13 @@ public partial class CsetwebContext : DbContext
                 .HasConstraintName("fk_mat_questions");
         });
 
+        modelBuilder.Entity<MATURITY_GLOBAL_SEQUENCES>(entity =>
+        {
+            entity.HasKey(e => e.global_sequence).HasName("PK_Global_Sequence");
+
+            entity.Property(e => e.global_sequence).ValueGeneratedNever();
+        });
+
         modelBuilder.Entity<MATURITY_GROUPINGS>(entity =>
         {
             entity.HasKey(e => e.Grouping_Id).HasName("PK_MATURITY_ELEMENT");
@@ -1946,6 +1971,25 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Question_Group_Heading_Id).HasDefaultValue(50);
 
             entity.HasOne(d => d.NCSF_Function).WithMany(p => p.NCSF_CATEGORY).HasConstraintName("FK_NCSF_Category_NCSF_FUNCTIONS");
+        });
+
+        modelBuilder.Entity<NCSF_CONVERSION_MAPPINGS>(entity =>
+        {
+            entity.HasKey(e => e.Conversion_Id).HasName("PK_NCSF_ASSESSMENT_UPGRADE");
+        });
+
+        modelBuilder.Entity<NCSF_ENTRY_TO_MID>(entity =>
+        {
+            entity.HasOne(d => d.Entry_Level_TitlesNavigation).WithMany(p => p.NCSF_ENTRY_TO_MID).HasConstraintName("FK_NCSF_ENTRY_TO_MID_NCSF_CONVERSION_MAPPINGS_ENTRY");
+
+            entity.HasOne(d => d.Mid_Level_TitlesNavigation).WithMany(p => p.NCSF_ENTRY_TO_MID).HasConstraintName("FK_NCSF_ENTRY_TO_MID_NCSF_CONVERSION_MAPPINGS_MID");
+        });
+
+        modelBuilder.Entity<NCSF_FULL_TO_MID>(entity =>
+        {
+            entity.HasOne(d => d.Full_Level_TitlesNavigation).WithMany(p => p.NCSF_FULL_TO_MID).HasConstraintName("FK_NCSF_FULL_TO_MID_NCSF_CONVERSION_MAPPINGS_FULL");
+
+            entity.HasOne(d => d.Mid_Level_TitlesNavigation).WithMany(p => p.NCSF_FULL_TO_MID).HasConstraintName("FK_NCSF_FULL_TO_MID_NCSF_CONVERSION_MAPPINGS_MID");
         });
 
         modelBuilder.Entity<NCSF_FUNCTIONS>(entity =>
@@ -2439,6 +2483,11 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Set_NameNavigation).WithMany(p => p.REQUIREMENT_SETS).HasConstraintName("FK_QUESTION_SETS_SETS");
         });
 
+        modelBuilder.Entity<ROLES>(entity =>
+        {
+            entity.Property(e => e.RoleName).IsFixedLength();
+        });
+
         modelBuilder.Entity<SAL_DETERMINATION_TYPES>(entity =>
         {
             entity.HasKey(e => e.Sal_Determination_Type).HasName("PK_SAL_DETERMINATION_TYPES_1");
@@ -2735,6 +2784,17 @@ public partial class CsetwebContext : DbContext
         modelBuilder.Entity<USER_EMAIL_HISTORY>(entity =>
         {
             entity.HasOne(d => d.User).WithMany(p => p.USER_EMAIL_HISTORY).HasConstraintName("FK_USER_EMAIL_HISTORY_USERS");
+        });
+
+        modelBuilder.Entity<USER_ROLES>(entity =>
+        {
+            entity.HasOne(d => d.Role).WithMany(p => p.USER_ROLES)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_USER_ROLES_ROLES");
+
+            entity.HasOne(d => d.User).WithMany(p => p.USER_ROLES)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_USER_ROLES_USERS");
         });
 
         modelBuilder.Entity<USER_SECURITY_QUESTIONS>(entity =>

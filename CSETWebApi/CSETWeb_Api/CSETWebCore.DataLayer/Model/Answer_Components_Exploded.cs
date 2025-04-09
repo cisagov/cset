@@ -48,7 +48,7 @@ public partial class Answer_Components_Exploded
 
     public int? GroupHeadingId { get; set; }
 
-    [StringLength(100)]
+    [StringLength(150)]
     public string Universal_Sub_Category { get; set; }
 
     public int? SubCategoryId { get; set; }
