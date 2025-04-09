@@ -40,7 +40,7 @@ public partial class Answer_Components_Default
     public int GroupHeadingId { get; set; }
 
     [Required]
-    [StringLength(100)]
+    [StringLength(150)]
     public string Universal_Sub_Category { get; set; }
 
     public int SubCategoryId { get; set; }
