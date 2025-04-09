@@ -494,9 +494,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
             foreach (var item in model.jASSESSMENTS)
             {
+                item.Is_PCII = false;
                 item.PCII_Number = null;
             }
-
 
             return model;
         }
