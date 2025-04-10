@@ -33,7 +33,7 @@
 
             <div class="color1 font-weight-bold mt-2">{{req.title}}</div>
 
-            <div [innerHTML]="req.requirementText" class="mb-4"></div>
+            <div [innerHTML]="formatParameters(req.requirementText)" class="mb-4"></div>
 
             <app-guidance-block [supplementalInfo]="req.supplementalInfo"
                 *ngIf="reportSvc.showGuidance"></app-guidance-block>
