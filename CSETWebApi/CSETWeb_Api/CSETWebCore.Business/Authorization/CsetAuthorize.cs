@@ -20,6 +20,8 @@ namespace CSETWebCore.Business.Authorization
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class CsetAuthorize : Attribute, IAuthorizationFilter
     {
+        public string[] Roles { get; set; } = new string[]{"User"};
+
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             if (SkipAuthorization(context))
