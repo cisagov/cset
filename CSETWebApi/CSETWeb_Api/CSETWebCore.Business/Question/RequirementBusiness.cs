@@ -417,10 +417,9 @@ namespace CSETWebCore.Business.Question
             List<PARAMETERS> qBaseLevel;
             if (parametersDictionary.TryGetValue(reqId, out qBaseLevel))
             {
-
                 foreach (var b in qBaseLevel)
                 {
-                    ps.Set(b.Parameter_ID, b.Parameter_Name, b.Parameter_Name, reqId, 0);
+                    ps.Set(b.Parameter_ID, b.Parameter_Name, null, reqId, 0);
                 }
             }
 
@@ -445,12 +444,10 @@ namespace CSETWebCore.Business.Question
                 }
             }
 
-
             ps.Tokens = ps.Tokens.OrderByDescending(x => x.Token.Length).ToList();
 
             return ps.Tokens;
         }
-
 
 
         /// <summary>

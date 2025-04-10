@@ -122,12 +122,22 @@ export class QuestionBlockComponent implements OnInit {
       return text;
     }
 
+    // Substitute the longer tokens first, to avoid substituting a nested token
+    // and leave the outer token untouched.  We currently only support the outer tokens.
+    q.parmSubs.sort((a, b) => {
+      if (a.token.length > b.token.length) return -1;
+      if (a.token.length < b.token.length) return 1;
+      return 0;
+    });
+
     q.parmSubs.forEach(t => {
-      let s = t.substitution;
-      if (s == null) {
-        s = t.token;
+      if (t.substitution == null) {
+        // uncustomized
+        text = this.replaceAll(text, `{{${t.token}}}`, "[<span class='sub-me fst-italic pid-" + t.id + "'>" + t.token + "</span>]");
+      } else {
+        // customized
+        text = this.replaceAll(text, `{{${t.token}}}`, "<span class='sub-me pid-" + t.id + "'>" + t.substitution + "</span>");
       }
-      text = this.replaceAll(text, t.token, "<span class='sub-me pid-" + t.id + "'>" + s + "</span>");
     });
 
     return text;

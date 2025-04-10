@@ -26,16 +26,16 @@
     {{t('aggregation.compare.para 11')}}
   </div>
 
-  <table class="table table-bordered table-td-p2 mb-5">
+  <table class="table-bordered table-td-p2 mb-5">
     <tr>
-      <th class="pe-5">{{t('aggregation.compare.category')}}</th>
-      <th class="pe-5">{{t('aggregation.compare.subcategory')}}</th>
-      <th>{{t('aggregation.compare.question')}}</th>
+      <th class="align-top">{{t('aggregation.compare.category')}}</th>
+      <th class="ps-2 pe-4 align-top">{{t('aggregation.compare.subcategory')}}</th>
+      <th class="px-2 align-top">{{t('aggregation.compare.question')}}</th>
     </tr>
     <tr *ngFor="let q of missedQuestions">
-      <td class="pe-5">{{ q.category }}</td>
-      <td class="pe-5">{{ q.subcategory }}</td>
-      <td>{{ q.questionText }}</td>
+      <td class="align-top">{{ q.category }}</td>
+      <td class="ps-2 pe-4 align-top">{{ q.subcategory }}</td>
+      <td class="px-2 align-top" [innerHTML]="q.questionText"></td>
     </tr>
   </table>
 

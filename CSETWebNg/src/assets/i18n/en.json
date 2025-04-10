@@ -981,6 +981,13 @@
     "advisory": "Advisory",
     "keyboard shortcuts": "Keyboard Shortcuts"
   },
+  "parameters": {
+    "text1": "Many Standards in 'Requirements Mode' contain parameters that you can change to match your specific situation. The table below allows you to change the parameter values for the indicated parameter names in this Assessment by clicking on the Parameter Value. Changing a parameter value will update all related parameter values in the requirement text of the currently selected Cybersecurity Standard(s).",
+    "text2": "Parameters can also be customized by clicking on them in the control text. Note that changes made at that level are scoped to the specific control.",
+    "parameter name": "Parameter Name",
+    "parameter value": "Parameter Value",
+    "none": "The selected cybersecurity standards do not contain any customizable control parameters."
+  },
   "errors": {
     "import unsuported file 1": "Error: Unsupported file. Only .csetw files can be imported for enterprise installations.",
     "import unsuported file 2": "For more information, see the import section of the user guide"

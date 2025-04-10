@@ -23,18 +23,19 @@
 <div class="global-parameters-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="cset-icons-puzzle fs-base-6 me-3"></span>
-    <span>Parameter Editor</span>
+    <span>{{t('menu.tools.parameter editor')}}</span>
   </div>
 
   <mat-dialog-content class="p-3 pb-0 pe-0 oy-auto d-flex flex-column flex-11a">
     <div (keydown.enter)="handleEnter($event)" class="pe-3">
       <p>
-        Many Standards in 'Requirements Mode' contain parameters that you can change to match your
-        specific situation. The table below allows you to change the parameter values for the indicated
-        parameter names in this Assessment by clicking on the Default Parameter Value. Changing a default parameter
-        value will update all related parameter values in the requirement text of the currently selected Cybersecurity
-        Standard(s).
+       {{t('parameters.text1')}}
       </p>
+      <p>
+        {{t('parameters.text2')}}
+      </p>
+
+      <hr>
 
       <div *ngIf="defaults == null">
         <div class="spinner-container" style="margin: .5em auto">
@@ -45,14 +46,15 @@
       <div *ngIf="defaults != null && defaults.length === 0"
         class="alert-danger mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
         <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
-        <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">The selected
-          cybersecurity standards do not contain any parameters for customization.</span>
+        <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
+          {{t('parameters.none')}}
+        </span>
       </div>
 
       <table class="table" *ngIf="defaults != null &&  defaults.length > 0" (click)="edit()">
         <tr>
-          <th>Parameter Name</th>
-          <th>Default Parameter Value</th>
+          <th class="h4">{{t('parameters.parameter name')}}</th>
+          <th class="h4">{{t('parameters.parameter value')}}</th>
         </tr>
         <tr *ngFor="let p of defaults">
           <td>{{p.parameterName}}</td>
