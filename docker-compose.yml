@@ -1,17 +1,27 @@
 ---
 services:
+  web:
+    container_name: cset-web
+    build:
+      context: CSETWebNg
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - 4200:80
+      - 443:443
   api:
     container_name: cset-api
     hostname: api
     build:
       context: CSETWebApi
     restart: unless-stopped
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     ports:
       - "5000:5000"
-    volumes:
-      - ./CSETWebApi:/app
+    env_file:
+      - .env
     depends_on:
       - sqlserver
   sqlserver:
@@ -19,13 +29,8 @@ services:
     hostname: mssql
     image: "mcr.microsoft.com/mssql/server:2022-CU13-ubuntu-22.04"
     restart: unless-stopped
-    environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=Password123
-    # These ports are exposed on the host; 'hostport:containerport'.
-    # You could connect to this server from outside with the *host's*
-    # DNS name or IP address and port 27017 (the left-hand side of the
-    # colon).
+    env_file:
+      - .env
     ports:
       - "1433:1433"
     volumes:

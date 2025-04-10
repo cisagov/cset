@@ -322,7 +322,7 @@
 
     <!-- Results Phase -->
     <node d="results" id="phase-results" visible="CF-DEMOGRAPHICS-COMPLETE" enabled="CF-ASSESSMENT-COMPLETE">
-    <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="HIDE" />
+    <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY-ANY(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,20,21)" />
 
         <!-- Results - Standards -->
         <node d="standard results" visible="OPTION:STANDARD">
@@ -426,10 +426,7 @@
 
         <node d="reports" id="reports" path="assessment/{:id}/results/reports" />
 
-        <!--node displaytext="Assessment Comparison" id="analytics-compare" path="assessment/{:id}/results/analytics-compare" visible="ORIGIN:CF" /-->
-
         <node d="feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="INSTALL-MODE-ANY(CSET,IOD,CIE) SHOW-FEEDBACK" />
-        <node d="analytics" id="analytics" path="assessment/{:id}/results/analytics" visible="HIDE" />
 
         <node d="assessment complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
 
