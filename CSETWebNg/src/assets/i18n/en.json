@@ -694,7 +694,7 @@
     "export excel dialog title": "Export Assessment to Excel",
     "export excel dialog 1": "The assessment Excel export is for simple data analysis. Excel data cannot be reimported.",
     "export excel do not show": "Do not show this message again",
-    "scrub pcii": "Select to remove PCII fields from export",
+    "scrub pcii": "Remove PCII fields from export",
     "encrypt 1": "To encrypt your assessment, please enter a password.",
     "encrypt 2": "If you proceed without entering a password, no encryption will be used.",
     "access denied": "Access Denied",

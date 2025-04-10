@@ -242,6 +242,8 @@ import { Cmmc2LevelsComponent } from './assessment/prepare/maturity/cmmc2-levels
 import { Cmmc2ScoresComponent } from './assessment/results/mat-cmmc2/cmmc2-scores/cmmc2-scores.component';
 import { Cmmc2ScorecardPageComponent } from './assessment/results/mat-cmmc2/scorecard/cmmc2-scorecard/cmmc2-scorecard-page.component';
 import { Cmmc2ScorecardReportComponent } from './reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
+import { RoleGuard } from './guards/role.guard';
+import { RoleType } from './models/enums/role.model';
 
 const appRoutes: Routes = [
   // reports routing
@@ -357,7 +359,9 @@ const appRoutes: Routes = [
           {
             path: 'prepare',
             component: PrepareComponent,
-            canActivate: [AssessGuard],
+            canActivate: [AssessGuard], 
+            //, RoleGuard],
+            //data: { roles: [RoleType.USER]},
             canActivateChild: [AssessGuard],
             children: [
               { path: 'info1', component: AssessmentInfoComponent },

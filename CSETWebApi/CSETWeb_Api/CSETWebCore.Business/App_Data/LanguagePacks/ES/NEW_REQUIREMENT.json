@@ -1,0 +1,638 @@
+﻿[
+  {
+    "requirementId": "36478",
+    "requirementTitle": "GV.OC-01",
+    "requirementText": "Se comprende la misión de la organización y se informa sobre la gestión de riesgos de seguridad cibernética.",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Compartir la misión de la organización (por ejemplo, a través de declaraciones de visión y misión, marketing y estrategias de servicio) para proporcionar una base para identificar riesgos que puedan impedir esa misión</li></ul>"
+  },
+  {
+    "requirementId": "36479",
+    "requirementTitle": "GV.OC-02",
+    "requirementText": "Las partes interesadas internas y externas son comprendidas, y sus necesidades y expectativas con respecto a la gestión de riesgos de seguridad cibernética son comprendidas y consideradas.",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Identificar a las partes interesadas internas relevantes y sus expectativas relacionadas con la ciberseguridad (por ejemplo, expectativas de desempeño y riesgo de oficiales, directores y asesores; expectativas culturales de los empleados)</li> <li><b>Ej2:</b> Identificar a las partes interesadas externas relevantes y sus expectativas relacionadas con la ciberseguridad (por ejemplo, expectativas de privacidad de los clientes, expectativas comerciales de asociaciones, expectativas de cumplimiento de los reguladores, expectativas éticas de la sociedad)</li></ul>"
+  },
+  {
+    "requirementId": "36480",
+    "requirementTitle": "GV.OC-03",
+    "requirementText": "Se comprenden y gestionan los requisitos legales, normativos y contractuales relativos a la seguridad cibernética, incluidas las obligaciones en materia de privacidad y libertades civiles.",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Determinar un proceso para rastrear y gestionar los requisitos legales y regulatorios relacionados con la protección de la información de las personas (por ejemplo, Ley de Portabilidad y Responsabilidad del Seguro de Salud, Ley de Privacidad del Consumidor de California, Reglamento General de Protección de Datos)</li> <li><b>Ej2:</b> Determinar un proceso para rastrear y gestionar los requisitos contractuales para la gestión de la ciberseguridad de la información de proveedores, clientes y socios</li> <li><b>Ej3:</b> Alinear la estrategia de ciberseguridad de la organización con los requisitos legales, regulatorios y contractuales</li></ul>"
+  },
+  {
+    "requirementId": "36481",
+    "requirementTitle": "GV.OC-04",
+    "requirementText": "Se comprenden y comunican los objetivos, las capacidades y los servicios críticos de los que dependen las partes interesadas externas o que esperan de la organización",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Establecer criterios para determinar la criticidad de las capacidades y servicios según lo visto por las partes interesadas internas y externas</li> <li><b>Ej2:</b> Determinar (por ejemplo, a partir de un análisis de impacto en el negocio) los activos y operaciones comerciales que son vitales para lograr los objetivos de la misión y el impacto potencial de una pérdida (o pérdida parcial) de dichas operaciones</li> <li><b>Ej3:</b> Establecer y comunicar objetivos de resiliencia (por ejemplo, objetivos de tiempo de recuperación) para brindar capacidades y servicios críticos en varios estados operativos (por ejemplo, bajo ataque, durante la recuperación, operación normal)</li></ul>"
+  },
+  {
+    "requirementId": "36482",
+    "requirementTitle": "GV.OC-05",
+    "requirementText": "Se comprenden y comunican los resultados, capacidades y servicios de los que depende la organización",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Crear un inventario de las dependencias de la organización en recursos externos (por ejemplo, instalaciones, proveedores de alojamiento en la nube) y sus relaciones con los activos y funciones comerciales de la organización</li> <li><b>Ej2:</b> Identificar y documentar las dependencias externas que son puntos potenciales de falla para las capacidades y servicios críticos de la organización, y compartir esa información con el personal adecuado</li></ul>"
+  },
+  {
+    "requirementId": "36483",
+    "requirementTitle": "GV.RM-01",
+    "requirementText": "Los objetivos de la gestión de riesgos son establecidos y acordados por las partes interesadas de la organización",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Actualizar los objetivos de gestión de riesgos de ciberseguridad a corto y largo plazo como parte de la planificación estratégica anual y cuando ocurran cambios importantes</li> <li><b>Ej2:</b> Establecer objetivos medibles para la gestión de riesgos de ciberseguridad (por ejemplo, gestionar la calidad de la capacitación de los usuarios, garantizar una protección adecuada contra riesgos para los sistemas de control industrial)</li> <li><b>Ej3:</b> Los líderes senior acuerdan sobre los objetivos de ciberseguridad y los utilizan para medir y gestionar el riesgo y el desempeño</li></ul>"
+  },
+  {
+    "requirementId": "36484",
+    "requirementTitle": "GV.RM-02",
+    "requirementText": "Se establecen, se comunican y se mantienen las declaraciones sobre el apetito de riesgo y la tolerancia al riesgo",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Determinar y comunicar declaraciones de apetito de riesgo que transmitan expectativas sobre el nivel adecuado de riesgo para la organización</li> <li><b>Ej2:</b> Traducir las declaraciones de apetito de riesgo en declaraciones de tolerancia al riesgo específicas, medibles y ampliamente comprensibles</li> <li><b>Ej3:</b> Refinar periódicamente los objetivos organizacionales y el apetito de riesgo basándose en la exposición al riesgo conocida y el riesgo residual</li></ul>"
+  },
+  {
+    "requirementId": "36485",
+    "requirementTitle": "GV.RM-03",
+    "requirementText": "Las actividades y los resultados de la gestión de riesgos de seguridad cibernética se incluyen en los procesos de gestión de riesgos de la empresa",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Agregar y gestionar riesgos de ciberseguridad junto con otros riesgos empresariales (por ejemplo, cumplimiento, financiero, operativo, regulatorio, reputacional, seguridad)</li> <li><b>Ej2:</b> Incluir a los gestores de riesgos de ciberseguridad en la planificación de la gestión de riesgos empresariales</li> <li><b>Ej3:</b> Establecer criterios para escalar riesgos de ciberseguridad dentro de la gestión de riesgos empresariales</li></ul>"
+  },
+  {
+    "requirementId": "36486",
+    "requirementTitle": "GV.RM-04",
+    "requirementText": "Se establece y comunica una dirección estratégica que describa las opciones adecuadas de respuesta al riesgo.",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Especificar criterios para aceptar y evitar riesgos de ciberseguridad para varias clasificaciones de datos</li> <li><b>Ej2:</b> Determinar si se debe adquirir un seguro de ciberseguridad</li> <li><b>Ej3:</b> Documentar las condiciones bajo las cuales los modelos de responsabilidad compartida son aceptables (por ejemplo, externalizar ciertas funciones de ciberseguridad, que un tercero realice transacciones financieras en nombre de la organización, uso de servicios públicos basados en la nube)</li></ul>"
+  },
+  {
+    "requirementId": "36487",
+    "requirementTitle": "GV.RM-05",
+    "requirementText": "Se establecen líneas de comunicación en toda la organización para los riesgos de seguridad cibernética, lo que incluye a los riesgos de proveedores y otros terceros.",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Determinar cómo actualizar a los ejecutivos senior, directores y la gestión sobre la postura de ciberseguridad de la organización en intervalos acordados</li> <li><b>Ej2:</b> Identificar cómo todos los departamentos de la organización, como gestión, operaciones, auditores internos, legal, adquisiciones, seguridad física y RRHH, se comunicarán entre sí sobre los riesgos de ciberseguridad</li></ul>"
+  },
+  {
+    "requirementId": "36488",
+    "requirementTitle": "GV.RM-06",
+    "requirementText": "Se establece y comunica un método estandarizado para calcular, documentar, categorizar y priorizar los riesgos de seguridad cibernética.",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Establecer criterios para usar un enfoque cuantitativo para el análisis de riesgos de ciberseguridad y especificar fórmulas de probabilidad y exposición</li> <li><b>Ej2:</b> Crear y usar plantillas (por ejemplo, un registro de riesgos) para documentar información de riesgos de ciberseguridad (por ejemplo, descripción del riesgo, exposición, tratamiento y propiedad)</li> <li><b>Ej3:</b> Establecer criterios para la priorización de riesgos en los niveles apropiados dentro de la empresa</li> <li><b>Ej4:</b> Usar una lista consistente de categorías de riesgos para apoyar la integración, agregación y comparación de riesgos de ciberseguridad</li></ul>"
+  },
+  {
+    "requirementId": "36489",
+    "requirementTitle": "GV.RM-07",
+    "requirementText": "Se caracterizan las oportunidades estratégicas (es decir, los riesgos positivos) y se incluyen en las discusiones sobre riesgos de seguridad cibernética de la organización.",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Definir y comunicar orientación y métodos para identificar oportunidades e incluirlas en las discusiones de riesgos (por ejemplo, análisis FODA [fortalezas, debilidades, oportunidades y amenazas])</li> <li><b>Ej2:</b> Identificar objetivos ambiciosos y documentarlos</li> <li><b>Ej3:</b> Calcular, documentar y priorizar riesgos positivos junto con los riesgos negativos</li></ul>"
+  },
+  {
+    "requirementId": "36500",
+    "requirementTitle": "GV.RR-01",
+    "requirementText": "El liderazgo organizativo es responsable de los riesgos de seguridad cibernética y fomenta una cultura consciente de los riesgos, ética y de mejora continua.",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Los líderes (por ejemplo, directores) acuerdan sus roles y responsabilidades en el desarrollo, implementación y evaluación de la estrategia de ciberseguridad de la organización</li> <li><b>Ej2:</b> Compartir las expectativas de los líderes con respecto a una cultura segura y ética, especialmente cuando los eventos actuales presentan la oportunidad de resaltar ejemplos positivos o negativos de gestión de riesgos de ciberseguridad</li> <li><b>Ej3:</b> Los líderes dirigen al CISO para que mantenga una estrategia integral de gestión de riesgos de ciberseguridad y la revise y actualice al menos anualmente y después de eventos importantes</li> <li><b>Ej4:</b> Realizar revisiones para asegurar una autoridad y coordinación adecuadas entre los responsables de gestionar los riesgos de ciberseguridad</li></ul>"
+  },
+  {
+    "requirementId": "36501",
+    "requirementTitle": "GV.RR-02",
+    "requirementText": "Se establecen, comunican, comprenden y aplican las funciones, responsabilidades y autoridades relacionadas con la gestión de riesgos de seguridad cibernética.",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Documentar roles y responsabilidades de gestión de riesgos en políticas</li> <li><b>Ej2:</b> Documentar quién es responsable y rendirá cuentas de las actividades de gestión de riesgos de ciberseguridad y cómo se consultará e informará a esos equipos e individuos</li> <li><b>Ej3:</b> Incluir responsabilidades y requisitos de desempeño de ciberseguridad en las descripciones del personal</li> <li><b>Ej4:</b> Documentar objetivos de desempeño para el personal con responsabilidades de gestión de riesgos de ciberseguridad, y medir periódicamente el desempeño para identificar áreas de mejora</li> <li><b>Ej5:</b> Articular claramente las responsabilidades de ciberseguridad dentro de las operaciones, funciones de riesgo y funciones de auditoría interna</li></ul>"
+  },
+  {
+    "requirementId": "36502",
+    "requirementTitle": "GV.RR-03",
+    "requirementText": "Se asignan recursos adecuados de acuerdo con la estrategia de riesgos de seguridad cibernética, las funciones, las responsabilidades y las políticas.",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Realizar revisiones periódicas de gestión para asegurar que aquellos a quienes se les asignen responsabilidades de gestión de riesgos de ciberseguridad tengan la autoridad necesaria</li> <li><b>Ej2:</b> Identificar la asignación de recursos e inversión en línea con la tolerancia y respuesta al riesgo</li> <li><b>Ej3:</b> Proporcionar recursos humanos, técnicos y de procesos adecuados y suficientes para apoyar la estrategia de ciberseguridad</li></ul>"
+  },
+  {
+    "requirementId": "36503",
+    "requirementTitle": "GV.RR-04",
+    "requirementText": "La seguridad cibernética se incluye en las prácticas de recursos humanos",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Integrar consideraciones de gestión de riesgos de ciberseguridad en los procesos de recursos humanos (por ejemplo, selección de personal, incorporación, notificación de cambios, desvinculación)</li> <li><b>Ej2:</b> Considerar el conocimiento de ciberseguridad como un factor positivo en las decisiones de contratación, capacitación y retención</li> <li><b>Ej3:</b> Realizar verificaciones de antecedentes antes de incorporar nuevo personal para roles sensibles, y repetir periódicamente las verificaciones de antecedentes para el personal con dichos roles</li> <li><b>Ej4:</b> Definir y hacer cumplir las obligaciones del personal para estar al tanto, adherirse y cumplir con las políticas de seguridad en relación con sus roles</li></ul>"
+  },
+  {
+    "requirementId": "36504",
+    "requirementTitle": "GV.PO-01",
+    "requirementText": "La política de gestión de riesgos de seguridad cibernética se establece en base al contexto organizativo, la estrategia de seguridad cibernética y las prioridades, y es comunicada y aplicada",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Crear, difundir y mantener una política de gestión de riesgos comprensible y utilizable con declaraciones de intención, expectativas y dirección de la gestión</li> <li><b>Ej2:</b> Revisar periódicamente la política y los procesos y procedimientos de apoyo para asegurar que se alineen con los objetivos y prioridades de la estrategia de gestión de riesgos, así como con la dirección general de la política de ciberseguridad</li> <li><b>Ej3:</b> Requerir la aprobación de la alta dirección sobre la política</li> <li><b>Ej4:</b> Comunicar la política de gestión de riesgos de ciberseguridad y los procesos y procedimientos de apoyo en toda la organización</li> <li><b>Ej5:</b> Requerir que el personal reconozca la recepción de la política al ser contratado, anualmente y cada vez que se actualice la política</li></ul>"
+  },
+  {
+    "requirementId": "36505",
+    "requirementTitle": "GV.PO-02",
+    "requirementText": "La política de gestión de riesgos de seguridad cibernética se revisa, actualiza, comunica y aplica para reflejar los cambios en los requisitos, las amenazas, la tecnología y la misión de la organización",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Actualizar la política basándose en revisiones periódicas de los resultados de gestión de riesgos de ciberseguridad para asegurar que la política y los procesos y procedimientos de apoyo mantengan adecuadamente el riesgo a un nivel aceptable</li> <li><b>Ej2:</b> Proporcionar una línea de tiempo para revisar los cambios en el entorno de riesgos de la organización (por ejemplo, cambios en el riesgo o en los objetivos de la misión de la organización) y comunicar las actualizaciones recomendadas de la política</li> <li><b>Ej3:</b> Actualizar la política para reflejar cambios en los requisitos legales y regulatorios</li> <li><b>Ej4:</b> Actualizar la política para reflejar cambios en la tecnología (por ejemplo, adopción de inteligencia artificial) y cambios en el negocio (por ejemplo, adquisición de un nuevo negocio, nuevos requisitos contractuales)</li></ul>"
+  },
+  {
+    "requirementId": "36506",
+    "requirementTitle": "GV.OV-01",
+    "requirementText": "Los resultados de la estrategia de gestión de riesgos de seguridad cibernética se revisan para informar y ajustar la estrategia y la dirección",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Medir qué tan bien la estrategia de gestión de riesgos y los resultados de riesgos han ayudado a los líderes a tomar decisiones y lograr los objetivos de la organización</li> <li><b>Ej2:</b> Examinar si las estrategias de riesgo de ciberseguridad que impiden las operaciones o la innovación deben ajustarse</li></ul>"
+  },
+  {
+    "requirementId": "36507",
+    "requirementTitle": "GV.OV-02",
+    "requirementText": "La estrategia de gestión de riesgos de seguridad cibernética se revisa y ajusta para garantizar la cobertura de los requisitos y riesgos de la organización",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Revisar los hallazgos de auditoría para confirmar si la estrategia de ciberseguridad existente ha asegurado el cumplimiento con los requisitos internos y externos</li> <li><b>Ej2:</b> Revisar la supervisión del desempeño de aquellos en roles relacionados con la ciberseguridad para determinar si son necesarias modificaciones en las políticas</li> <li><b>Ej3:</b> Revisar la estrategia a la luz de los incidentes de ciberseguridad</li></ul>"
+  },
+  {
+    "requirementId": "36508",
+    "requirementTitle": "GV.OV-03",
+    "requirementText": "El rendimiento de la gestión de riesgos de seguridad cibernética de la organización se evalúa y revisa para realizar los ajustes necesarios",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Revisar los indicadores clave de rendimiento (KPIs) para asegurar que las políticas y procedimientos de toda la organización logren los objetivos</li> <li><b>Ej2:</b> Revisar los indicadores clave de riesgo (KRIs) para identificar los riesgos que enfrenta la organización, incluida la probabilidad y el impacto potencial</li> <li><b>Ej3:</b> Recopilar y comunicar métricas sobre la gestión de riesgos de ciberseguridad con la alta dirección</li></ul>"
+  },
+  {
+    "requirementId": "36490",
+    "requirementTitle": "GV.SC-01",
+    "requirementText": "Las partes interesadas de la organización establecen y acuerdan un programa, estrategia, objetivos, políticas y procesos de gestión de riesgos de seguridad cibernética en la cadena de suministro",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Establecer una estrategia que exprese los objetivos del programa de gestión de riesgos de la cadena de suministro de ciberseguridad</li> <li><b>Ej2:</b> Desarrollar el programa de gestión de riesgos de la cadena de suministro de ciberseguridad, incluyendo un plan (con hitos), políticas y procedimientos que guíen la implementación y mejora del programa, y compartir las políticas y procedimientos con las partes interesadas de la organización</li> <li><b>Ej3:</b> Desarrollar e implementar procesos del programa basados en la estrategia, objetivos, políticas y procedimientos que sean acordados y realizados por las partes interesadas de la organización</li> <li><b>Ej4:</b> Establecer un mecanismo interorganizacional que asegure la alineación entre las funciones que contribuyen a la gestión de riesgos de la cadena de suministro de ciberseguridad, como ciberseguridad, TI, operaciones, legal, recursos humanos e ingeniería</li></ul>"
+  },
+  {
+    "requirementId": "36491",
+    "requirementTitle": "GV.SC-02",
+    "requirementText": "Se establecen, comunican y coordinan interna y externamente las funciones y responsabilidades de seguridad cibernética para proveedores, clientes y colaboradores",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Identificar uno o más roles o posiciones específicas que serán responsables y rendirán cuentas de la planificación, provisión de recursos y ejecución de actividades de gestión de riesgos de la cadena de suministro de ciberseguridad</li> <li><b>Ej2:</b> Documentar roles y responsabilidades de gestión de riesgos de la cadena de suministro de ciberseguridad en políticas</li> <li><b>Ej3:</b> Crear matrices de responsabilidad para documentar quién será responsable y rendirá cuentas de las actividades de gestión de riesgos de la cadena de suministro de ciberseguridad y cómo se consultará e informará a esos equipos e individuos</li> <li><b>Ej4:</b> Incluir responsabilidades de gestión de riesgos de la cadena de suministro de ciberseguridad y requisitos de desempeño en las descripciones de los puestos para asegurar claridad y mejorar la rendición de cuentas</li> <li><b>Ej5:</b> Documentar objetivos de desempeño para el personal con responsabilidades específicas de gestión de riesgos de ciberseguridad, y medir periódicamente su desempeño para demostrar y mejorar el rendimiento</li> <li><b>Ej6:</b> Desarrollar roles y responsabilidades para proveedores, clientes y socios comerciales para abordar responsabilidades compartidas por los riesgos de ciberseguridad aplicables, e integrarlos en las políticas organizacionales y acuerdos de terceros aplicables</li> <li><b>Ej7:</b> Comunicar internamente roles y responsabilidades de gestión de riesgos de la cadena de suministro de ciberseguridad para terceros</li> <li><b>Ej8:</b> Establecer reglas y protocolos para los procesos de intercambio de información y reporte entre la organización y sus proveedores</li></ul>"
+  },
+  {
+    "requirementId": "36492",
+    "requirementTitle": "GV.SC-03",
+    "requirementText": "La gestión de riesgos de la cadena de suministro de seguridad cibernética está integrada en la seguridad cibernética y la gestión de riesgos empresariales, la evaluación de riesgos y los procesos de mejora",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Identificar áreas de alineación y superposición con la ciberseguridad y la gestión de riesgos empresariales</li> <li><b>Ej2:</b> Establecer conjuntos de controles integrados para la gestión de riesgos de ciberseguridad y la gestión de riesgos de la cadena de suministro de ciberseguridad</li> <li><b>Ej3:</b> Integrar la gestión de riesgos de la cadena de suministro de ciberseguridad en los procesos de mejora</li> <li><b>Ej4:</b> Escalar riesgos de ciberseguridad materiales en las cadenas de suministro a la alta dirección y abordarlos en el nivel de gestión de riesgos empresariales</li></ul>"
+  },
+  {
+    "requirementId": "36493",
+    "requirementTitle": "GV.SC-04",
+    "requirementText": "Los proveedores son conocidos y priorizados por criticidad",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Desarrollar criterios para la criticidad de los proveedores basados, por ejemplo, en la sensibilidad de los datos procesados o poseídos por los proveedores, el grado de acceso a los sistemas de la organización y la importancia de los productos o servicios para la misión de la organización</li> <li><b>Ej2:</b> Mantener un registro de todos los proveedores y priorizar a los proveedores en función de los criterios de criticidad</li></ul>"
+  },
+  {
+    "requirementId": "36494",
+    "requirementTitle": "GV.SC-05",
+    "requirementText": "Los requisitos para abordar los riesgos de seguridad cibernética en las cadenas de suministro se establecen, priorizan e integran en contratos y otros tipos de acuerdos con proveedores y otras terceras partes pertinentes",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Establecer requisitos de seguridad para proveedores, productos y servicios acordes con su nivel de criticidad y el impacto potencial si se ven comprometidos</li> <li><b>Ej2:</b> Incluir todos los requisitos de ciberseguridad y cadena de suministro que terceros deben seguir y cómo se puede verificar el cumplimiento de los requisitos en el lenguaje contractual predeterminado</li> <li><b>Ej3:</b> Definir las reglas y protocolos para el intercambio de información entre la organización y sus proveedores y subproveedores en los acuerdos</li> <li><b>Ej4:</b> Gestionar el riesgo incluyendo requisitos de seguridad en los acuerdos según su criticidad y el impacto potencial si se ven comprometidos</li> <li><b>Ej5:</b> Definir requisitos de seguridad en los acuerdos de nivel de servicio (SLAs) para monitorear a los proveedores en busca de un desempeño de seguridad aceptable a lo largo del ciclo de vida de la relación con el proveedor</li> <li><b>Ej6:</b> Requerir contractualmente a los proveedores que divulguen características, funciones y vulnerabilidades de ciberseguridad de sus productos y servicios durante la vida del producto o el término del servicio</li> <li><b>Ej7:</b> Requerir contractualmente a los proveedores que proporcionen y mantengan un inventario de componentes actualizado (por ejemplo, lista de materiales de software o hardware) para productos críticos</li> <li><b>Ej8:</b> Requerir contractualmente a los proveedores que verifiquen a sus empleados y protejan contra amenazas internas</li> <li><b>Ej9:</b> Requerir contractualmente a los proveedores que proporcionen evidencia de realizar prácticas de seguridad aceptables a través de, por ejemplo, autoevaluaciones, conformidad con estándares conocidos, certificaciones o inspecciones</li> <li><b>Ej10:</b> Especificar en contratos y otros acuerdos los derechos y responsabilidades de la organización, sus proveedores y sus cadenas de suministro, con respecto a los posibles riesgos de ciberseguridad</li></ul>"
+  },
+  {
+    "requirementId": "36495",
+    "requirementTitle": "GV.SC-06",
+    "requirementText": "Se llevan a cabo la planificación y la diligencia debida para reducir los riesgos antes de entablar relaciones formales con proveedores u otros terceros",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Realizar la debida diligencia exhaustiva sobre los proveedores potenciales que sea consistente con la planificación de adquisiciones y acorde con el nivel de riesgo, criticidad y complejidad de cada relación con el proveedor</li> <li><b>Ej2:</b> Evaluar la idoneidad de las capacidades tecnológicas y de ciberseguridad y las prácticas de gestión de riesgos de los proveedores potenciales</li> <li><b>Ej3:</b> Realizar evaluaciones de riesgo de proveedores contra los requisitos comerciales y de ciberseguridad aplicables</li> <li><b>Ej4:</b> Evaluar la autenticidad, integridad y seguridad de los productos críticos antes de su adquisición y uso</li></ul>"
+  },
+  {
+    "requirementId": "36496",
+    "requirementTitle": "GV.SC-07",
+    "requirementText": "Los riesgos planteados por un proveedor, sus productos y servicios y otros terceros se comprenden, registran, priorizan, evalúan, responden y monitorean a lo largo de la relación",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Ajustar los formatos y frecuencias de evaluación según la reputación de terceros y la criticidad de los productos o servicios que proporcionan</li> <li><b>Ej2:</b> Evaluar la evidencia de cumplimiento de terceros con los requisitos contractuales de ciberseguridad, como autoevaluaciones, garantías, certificaciones y otros artefactos</li> <li><b>Ej3:</b> Monitorear a los proveedores críticos para asegurar que cumplan con sus obligaciones de seguridad a lo largo del ciclo de vida de la relación con el proveedor utilizando una variedad de métodos y técnicas, como inspecciones, auditorías, pruebas u otras formas de evaluación</li> <li><b>Ej4:</b> Monitorear a los proveedores, servicios y productos críticos en busca de cambios en sus perfiles de riesgo, y reevaluar la criticidad y el impacto del riesgo del proveedor en consecuencia</li> <li><b>Ej5:</b> Planificar interrupciones inesperadas relacionadas con proveedores y la cadena de suministro para asegurar la continuidad del negocio</li></ul>"
+  },
+  {
+    "requirementId": "36497",
+    "requirementTitle": "GV.SC-08",
+    "requirementText": "Los proveedores pertinentes y otros terceros se incluyen en las actividades de planificación, respuesta y recuperación de incidentes",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Definir y usar reglas y protocolos para informar sobre actividades de respuesta a incidentes y recuperación y el estado entre la organización y sus proveedores</li> <li><b>Ej2:</b> Identificar y documentar los roles y responsabilidades de la organización y sus proveedores para la respuesta a incidentes</li> <li><b>Ej3:</b> Incluir a proveedores críticos en ejercicios y simulaciones de respuesta a incidentes</li> <li><b>Ej4:</b> Definir y coordinar métodos y protocolos de comunicación de crisis entre la organización y sus proveedores críticos</li> <li><b>Ej5:</b> Realizar sesiones colaborativas de lecciones aprendidas con proveedores críticos</li></ul>"
+  },
+  {
+    "requirementId": "36498",
+    "requirementTitle": "GV.SC-09",
+    "requirementText": "Las prácticas de seguridad de la cadena de suministro se integran en los programas de seguridad cibernética y de gestión de riesgos empresariales, y su rendimiento se monitorea a lo largo del ciclo de vida de los productos y servicios tecnológicos",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Las políticas y procedimientos requieren registros de procedencia para todos los productos y servicios tecnológicos adquiridos</li> <li><b>Ej2:</b> Proporcionar periódicamente informes de riesgos a los líderes sobre cómo se ha demostrado que los componentes adquiridos no han sido manipulados y son auténticos</li> <li><b>Ej3:</b> Comunicar regularmente entre los gestores de riesgos de ciberseguridad y el personal operativo sobre la necesidad de adquirir parches de software, actualizaciones y mejoras solo de proveedores de software autenticados y confiables</li> <li><b>Ej4:</b> Revisar las políticas para asegurar que requieran que el personal aprobado del proveedor realice el mantenimiento de los productos del proveedor</li> <li><b>Ej5:</b> Las políticas y procedimientos requieren verificar las actualizaciones de hardware crítico en busca de cambios no autorizados</li></ul>"
+  },
+  {
+    "requirementId": "36499",
+    "requirementTitle": "GV.SC-10",
+    "requirementText": "Los planes de gestión de riesgos de la cadena de suministro de seguridad cibernética incluyen disposiciones para las actividades que ocurren después de la conclusión de un acuerdo de colaboración o servicio",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Establecer procesos para terminar relaciones críticas tanto en circunstancias normales como adversas</li> <li><b>Ej2:</b> Definir e implementar planes para el soporte de mantenimiento y la obsolescencia de componentes al final de su vida útil</li> <li><b>Ej3:</b> Verificar que el acceso de los proveedores a los recursos de la organización se desactive rápidamente cuando ya no sea necesario</li> <li><b>Ej4:</b> Verificar que los activos que contienen los datos de la organización se devuelvan o se dispongan de manera adecuada y segura de manera oportuna</li> <li><b>Ej5:</b> Desarrollar y ejecutar un plan para terminar o transición de relaciones con proveedores que tenga en cuenta el riesgo de seguridad de la cadena de suministro y la resiliencia</li> <li><b>Ej6:</b> Mitigar los riesgos para los datos y sistemas creados por la terminación del proveedor</li> <li><b>Ej7:</b> Gestionar los riesgos de fuga de datos asociados con la terminación del proveedor</li></ul>"
+  },
+  {
+    "requirementId": "36403",
+    "requirementTitle": "ID.AM-01",
+    "requirementText": "Se mantienen inventarios del hardware gestionado por la organización",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Mantener inventarios de todo tipo de hardware, incluyendo TI, IoT, OT y dispositivos móviles</li> <li><b>Ej2:</b> Monitorear constantemente las redes para detectar nuevo hardware y actualizar automáticamente los inventarios</li></ul>"
+  },
+  {
+    "requirementId": "36404",
+    "requirementTitle": "ID.AM-02",
+    "requirementText": "Se mantienen inventarios de software, servicios y sistemas gestionados por la organización",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Mantener inventarios de todos los tipos de software y servicios, incluyendo software comercial, de código abierto, aplicaciones personalizadas, servicios API y aplicaciones y servicios basados en la nube</li> <li><b>Ej2:</b> Monitorear constantemente todas las plataformas, incluyendo contenedores y máquinas virtuales, para detectar cambios en el inventario de software y servicios</li> <li><b>Ej3:</b> Mantener un inventario de los sistemas de la organización</li></ul>"
+  },
+  {
+    "requirementId": "36405",
+    "requirementTitle": "ID.AM-03",
+    "requirementText": "Se mantienen representaciones de la comunicación de red autorizada de la organización y de los flujos de datos de red internos y externos",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Mantener líneas base de comunicación y flujos de datos dentro de las redes cableadas e inalámbricas de la organización</li> <li><b>Ej2:</b> Mantener líneas base de comunicación y flujos de datos entre la organización y terceros</li> <li><b>Ej3:</b> Mantener líneas base de comunicación y flujos de datos para el uso de infraestructura como servicio (IaaS) de la organización</li> <li><b>Ej4:</b> Mantener documentación de los puertos, protocolos y servicios de red esperados que se utilizan típicamente entre los sistemas autorizados</li></ul>"
+  },
+  {
+    "requirementId": "36406",
+    "requirementTitle": "ID.AM-04",
+    "requirementText": "Se mantienen inventarios de los servicios prestados por los proveedores",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Inventariar todos los servicios externos utilizados por la organización, incluyendo ofertas de infraestructura como servicio (IaaS), plataforma como servicio (PaaS) y software como servicio (SaaS) de terceros; APIs; y otros servicios de aplicaciones alojados externamente</li> <li><b>Ej2:</b> Actualizar el inventario cuando se vaya a utilizar un nuevo servicio externo para asegurar una adecuada supervisión de la gestión del riesgo cibernético en el uso de ese servicio por parte de la organización</li></ul>"
+  },
+  {
+    "requirementId": "36407",
+    "requirementTitle": "ID.AM-05",
+    "requirementText": "Se priorizan los activos en función de su clasificación, criticidad, recursos e impacto en la misión",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Definir criterios para priorizar cada clase de activos</li> <li><b>Ej2:</b> Aplicar los criterios de priorización a los activos</li> <li><b>Ej3:</b> Rastrear las prioridades de los activos y actualizarlas periódicamente o cuando ocurran cambios significativos en la organización</li></ul>"
+  },
+  {
+    "requirementId": "36408",
+    "requirementTitle": "ID.AM-07",
+    "requirementText": "Se mantienen inventarios de datos y los metadatos correspondientes para los tipos de datos designados",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Mantener una lista de los tipos de datos designados de interés (por ejemplo, información de identificación personal, información de salud protegida, números de cuentas financieras, propiedad intelectual de la organización, datos de tecnología operativa)</li> <li><b>Ej2:</b> Descubrir y analizar continuamente datos ad hoc para identificar nuevas instancias de tipos de datos designados</li> <li><b>Ej3:</b> Asignar clasificaciones de datos a los tipos de datos designados mediante etiquetas o marcas</li> <li><b>Ej4:</b> Rastrear la procedencia, el propietario de los datos y la geolocalización de cada instancia de los tipos de datos designados</li></ul>"
+  },
+  {
+    "requirementId": "36439",
+    "requirementTitle": "ID.AM-08",
+    "requirementText": "Los sistemas, el hardware, el software, los servicios y los datos se gestionan durante todo su ciclo de vida",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Integrar consideraciones de ciberseguridad a lo largo de los ciclos de vida de sistemas, hardware, software y servicios</li> <li><b>Ej2:</b> Integrar consideraciones de ciberseguridad en los ciclos de vida de los productos</li> <li><b>Ej3:</b> Identificar usos no oficiales de la tecnología para cumplir con los objetivos de la misión (es decir, \"TI en la sombra\")</li> <li><b>Ej4:</b> Identificar periódicamente sistemas, hardware, software y servicios redundantes que aumenten innecesariamente la superficie de ataque de la organización</li> <li><b>Ej5:</b> Configurar y asegurar adecuadamente sistemas, hardware, software y servicios antes de su despliegue en producción</li> <li><b>Ej6:</b> Actualizar inventarios cuando los sistemas, hardware, software y servicios se muevan o transfieran dentro de la organización</li> <li><b>Ej7:</b> Destruir de manera segura los datos almacenados según la política de retención de datos de la organización utilizando el método de destrucción prescrito, y mantener y gestionar un registro de las destrucciones</li> <li><b>Ej8:</b> Sanitizar de manera segura el almacenamiento de datos cuando el hardware se retire, desmantele, reasigne o envíe para reparaciones o reemplazo</li> <li><b>Ej9:</b> Ofrecer métodos para destruir papel, medios de almacenamiento y otras formas físicas de almacenamiento de datos</li></ul>"
+  },
+  {
+    "requirementId": "36409",
+    "requirementTitle": "ID.RA-01",
+    "requirementText": "Se identifican, validan y registran las vulnerabilidades de los activos",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Usar tecnologías de gestión de vulnerabilidades para identificar software no parcheado y mal configurado</li> <li><b>Ej2:</b> Evaluar las arquitecturas de red y sistemas para detectar debilidades de diseño e implementación que afecten la ciberseguridad</li> <li><b>Ej3:</b> Revisar, analizar o probar el software desarrollado por la organización para identificar vulnerabilidades de diseño, codificación y configuración predeterminada</li> <li><b>Ej4:</b> Evaluar las instalaciones que albergan activos informáticos críticos en busca de vulnerabilidades físicas y problemas de resiliencia</li> <li><b>Ej5:</b> Monitorear fuentes de inteligencia de amenazas cibernéticas para obtener información sobre nuevas vulnerabilidades en productos y servicios</li> <li><b>Ej6:</b> Revisar procesos y procedimientos en busca de debilidades que puedan ser explotadas para afectar la ciberseguridad</li></ul>"
+  },
+  {
+    "requirementId": "36410",
+    "requirementTitle": "ID.RA-02",
+    "requirementText": "Se recibe información sobre amenazas cibernéticas de foros y fuentes de intercambio de información",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Configurar herramientas y tecnologías de ciberseguridad con capacidades de detección o respuesta para ingerir de manera segura feeds de inteligencia de amenazas cibernéticas</li> <li><b>Ej2:</b> Recibir y revisar avisos de terceros de confianza sobre actores de amenazas actuales y sus tácticas, técnicas y procedimientos (TTP)</li> <li><b>Ej3:</b> Monitorear fuentes de inteligencia de amenazas cibernéticas para obtener información sobre los tipos de vulnerabilidades que pueden tener las tecnologías emergentes</li></ul>"
+  },
+  {
+    "requirementId": "36411",
+    "requirementTitle": "ID.RA-03",
+    "requirementText": "Se identifican y registran las amenazas internas y externas a la organización",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Utilizar inteligencia de amenazas cibernéticas para mantener la conciencia de los tipos de actores de amenazas que probablemente apunten a la organización y los TTP que probablemente utilicen</li> <li><b>Ej2:</b> Realizar búsqueda de amenazas para buscar signos de actores de amenazas dentro del entorno</li> <li><b>Ej3:</b> Implementar procesos para identificar actores de amenazas internos</li></ul>"
+  },
+  {
+    "requirementId": "36412",
+    "requirementTitle": "ID.RA-04",
+    "requirementText": "Se identifican y registran los impactos potenciales y las probabilidades de que las amenazas exploten las vulnerabilidades",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Líderes empresariales y profesionales de la gestión del riesgo cibernético trabajan juntos para estimar la probabilidad y el impacto de los escenarios de riesgo y registrarlos en los registros de riesgo</li> <li><b>Ej2:</b> Enumerar los posibles impactos comerciales del acceso no autorizado a las comunicaciones, sistemas y datos de la organización procesados en o por esos sistemas</li> <li><b>Ej3:</b> Tener en cuenta los posibles impactos de los fallos en cascada para los sistemas de sistemas</li></ul>"
+  },
+  {
+    "requirementId": "36413",
+    "requirementTitle": "ID.RA-05",
+    "requirementText": "Las amenazas, las vulnerabilidades, las probabilidades y los impactos se utilizan para comprender el riesgo inherente e informar sobre la priorización de la respuesta al riesgo",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Desarrollar modelos de amenazas para comprender mejor los riesgos para los datos e identificar respuestas adecuadas al riesgo</li> <li><b>Ej2:</b> Priorizar las asignaciones de recursos e inversiones en ciberseguridad basadas en probabilidades e impactos estimados</li></ul>"
+  },
+  {
+    "requirementId": "36414",
+    "requirementTitle": "ID.RA-06",
+    "requirementText": "Se eligen, priorizan, planifican, controlan y comunican las respuestas al riesgo",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Aplicar los criterios del plan de gestión de vulnerabilidades para decidir si aceptar, transferir, mitigar o evitar el riesgo</li> <li><b>Ej2:</b> Aplicar los criterios del plan de gestión de vulnerabilidades para seleccionar controles compensatorios para mitigar el riesgo</li> <li><b>Ej3:</b> Rastrear el progreso de la implementación de la respuesta al riesgo (por ejemplo, plan de acción y hitos [POA&M], registro de riesgos, informe de detalles de riesgos)</li> <li><b>Ej4:</b> Utilizar los hallazgos de la evaluación de riesgos para informar las decisiones y acciones de respuesta al riesgo</li> <li><b>Ej5:</b> Comunicar las respuestas planificadas al riesgo a las partes interesadas afectadas en orden de prioridad</li></ul>"
+  },
+  {
+    "requirementId": "36440",
+    "requirementTitle": "ID.RA-07",
+    "requirementText": "Se gestionan los cambios y las excepciones, se evalúa su impacto en el riesgo, se registran y se realiza su seguimiento",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Implementar y seguir procedimientos para la documentación formal, revisión, prueba y aprobación de cambios propuestos y excepciones solicitadas</li> <li><b>Ej2:</b> Documentar los posibles riesgos de realizar o no realizar cada cambio propuesto, y proporcionar orientación sobre la reversión de cambios</li> <li><b>Ej3:</b> Documentar los riesgos relacionados con cada excepción solicitada y el plan para responder a esos riesgos</li> <li><b>Ej4:</b> Revisar periódicamente los riesgos que se aceptaron basándose en acciones o hitos futuros planificados</li></ul>"
+  },
+  {
+    "requirementId": "36441",
+    "requirementTitle": "ID.RA-08",
+    "requirementText": "Se establecen procesos para recibir, analizar y responder a las divulgaciones de vulnerabilidades",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Compartir información de vulnerabilidades entre la organización y sus proveedores siguiendo las reglas y protocolos definidos en los contratos</li> <li><b>Ej2:</b> Asignar responsabilidades y verificar la ejecución de procedimientos para procesar, analizar el impacto y responder a divulgaciones de amenazas, vulnerabilidades o incidentes de ciberseguridad por parte de proveedores, clientes, socios y organizaciones gubernamentales de ciberseguridad</li></ul>"
+  },
+  {
+    "requirementId": "36442",
+    "requirementTitle": "ID.RA-09",
+    "requirementText": "Se evalúa la autenticidad e integridad del hardware y software antes de su adquisición y uso",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Evaluar la autenticidad y ciberseguridad de productos y servicios tecnológicos críticos antes de su adquisición y uso</li></ul>"
+  },
+  {
+    "requirementId": "36419",
+    "requirementTitle": "ID.RA-10",
+    "requirementText": "Se evalúan los proveedores críticos antes de su adquisición",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Realizar evaluaciones de riesgo de proveedores contra los requisitos comerciales y de ciberseguridad aplicables, incluida la cadena de suministro</li></ul>"
+  },
+  {
+    "requirementId": "36443",
+    "requirementTitle": "ID.IM-01",
+    "requirementText": "Las mejoras se identifican a partir de evaluaciones",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Realizar autoevaluaciones de servicios críticos que tomen en cuenta amenazas actuales y TTPs</li> <li><b>Ej2:</b> Invertir en evaluaciones de terceros o auditorías independientes de la efectividad del programa de ciberseguridad de la organización para identificar áreas que necesiten mejoras</li> <li><b>Ej3:</b> Evaluar constantemente el cumplimiento con los requisitos de ciberseguridad seleccionados mediante medios automatizados</li></ul>"
+  },
+  {
+    "requirementId": "36444",
+    "requirementTitle": "ID.IM-02",
+    "requirementText": "Las mejoras se identifican a partir de pruebas y ejercicios de seguridad, lo que incluye a los realizados en coordinación con proveedores y terceros pertinentes",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Identificar mejoras para futuras actividades de respuesta a incidentes basadas en hallazgos de evaluaciones de respuesta a incidentes (por ejemplo, ejercicios de mesa y simulaciones, pruebas, revisiones internas, auditorías independientes)</li> <li><b>Ej2:</b> Identificar mejoras para futuras actividades de continuidad del negocio, recuperación ante desastres y respuesta a incidentes basadas en ejercicios realizados en coordinación con proveedores de servicios críticos y proveedores de productos</li> <li><b>Ej3:</b> Involucrar a las partes interesadas internas (por ejemplo, ejecutivos senior, departamento legal, RRHH) en pruebas y ejercicios de seguridad según corresponda</li> <li><b>Ej4:</b> Realizar pruebas de penetración para identificar oportunidades de mejorar la postura de seguridad de sistemas seleccionados de alto riesgo según lo aprobado por la dirección</li> <li><b>Ej5:</b> Ejercitar planes de contingencia para responder y recuperarse del descubrimiento de que productos o servicios no se originaron con el proveedor o socio contratado o fueron alterados antes de la recepción</li> <li><b>Ej6:</b> Recopilar y analizar métricas de rendimiento utilizando herramientas y servicios de seguridad para informar mejoras al programa de ciberseguridad</li></ul>"
+  },
+  {
+    "requirementId": "36445",
+    "requirementTitle": "ID.IM-03",
+    "requirementText": "Las mejoras se identifican a partir de la ejecución de procesos, procedimientos y actividades operativos",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Realizar sesiones colaborativas de lecciones aprendidas con proveedores</li> <li><b>Ej2:</b> Revisar anualmente políticas, procesos y procedimientos de ciberseguridad para tener en cuenta las lecciones aprendidas</li> <li><b>Ej3:</b> Utilizar métricas para evaluar el rendimiento operativo de ciberseguridad a lo largo del tiempo</li></ul>"
+  },
+  {
+    "requirementId": "36446",
+    "requirementTitle": "ID.IM-04",
+    "requirementText": "Se establecen, comunican, mantienen y mejoran los planes de respuesta a incidentes y otros planes de seguridad cibernética que afectan a las operaciones",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Establecer planes de contingencia (por ejemplo, respuesta a incidentes, continuidad del negocio, recuperación ante desastres) para responder y recuperarse de eventos adversos que puedan interferir con las operaciones, exponer información confidencial o poner en peligro la misión y viabilidad de la organización</li> <li><b>Ej2:</b> Incluir información de contacto y comunicación, procesos para manejar escenarios comunes y criterios para la priorización, escalación y elevación en todos los planes de contingencia</li> <li><b>Ej3:</b> Crear un plan de gestión de vulnerabilidades para identificar y evaluar todo tipo de vulnerabilidades y para priorizar, probar e implementar respuestas al riesgo</li> <li><b>Ej4:</b> Comunicar los planes de ciberseguridad (incluidas las actualizaciones) a quienes son responsables de llevarlos a cabo y a las partes afectadas</li> <li><b>Ej5:</b> Revisar y actualizar todos los planes de ciberseguridad anualmente o cuando se identifique la necesidad de mejoras significativas</li></ul>"
+  },
+  {
+    "requirementId": "36447",
+    "requirementTitle": "PR.AA-01",
+    "requirementText": "La organización gestiona las identidades y credenciales de los usuarios, servicios y equipos autorizados",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Iniciar solicitudes de nuevo acceso o acceso adicional para empleados, contratistas y otros, y rastrear, revisar y cumplir con las solicitudes, con el permiso de los propietarios del sistema o datos cuando sea necesario</li> <li><b>Ej2:</b> Emitir, gestionar y revocar certificados criptográficos y tokens de identidad, claves criptográficas (es decir, gestión de claves) y otras credenciales</li> <li><b>Ej3:</b> Seleccionar un identificador único para cada dispositivo a partir de características de hardware inmutables o un identificador provisionado de manera segura en el dispositivo</li> <li><b>Ej4:</b> Etiquetar físicamente el hardware autorizado con un identificador para fines de inventario y servicio</li></ul>"
+  },
+  {
+    "requirementId": "36448",
+    "requirementTitle": "PR.AA-02",
+    "requirementText": "Las identidades están comprobadas y vinculadas a credenciales basadas en el contexto de las interacciones",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Verificar la identidad reclamada de una persona en el momento de la inscripción utilizando credenciales de identidad emitidas por el gobierno (por ejemplo, pasaporte, visa, licencia de conducir)</li> <li><b>Ej2:</b> Emitir una credencial diferente para cada persona (es decir, sin compartir credenciales)</li></ul>"
+  },
+  {
+    "requirementId": "36449",
+    "requirementTitle": "PR.AA-03",
+    "requirementText": "Los usuarios, servicios y hardware están autenticados",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Requerir autenticación multifactor</li> <li><b>Ej2:</b> Hacer cumplir políticas para la fortaleza mínima de contraseñas, PINs y autenticadores similares</li> <li><b>Ej3:</b> Reautenticar periódicamente a usuarios, servicios y hardware basados en el riesgo (por ejemplo, en arquitecturas de confianza cero)</li> <li><b>Ej4:</b> Asegurar que el personal autorizado pueda acceder a cuentas esenciales para proteger la seguridad en condiciones de emergencia</li></ul>"
+  },
+  {
+    "requirementId": "36450",
+    "requirementTitle": "PR.AA-04",
+    "requirementText": "Las afirmaciones de identidad se protegen, transmiten y verifican",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Proteger las afirmaciones de identidad que se utilizan para transmitir autenticación e información de usuario a través de sistemas de inicio de sesión único</li> <li><b>Ej2:</b> Proteger las afirmaciones de identidad que se utilizan para transmitir autenticación e información de usuario entre sistemas federados</li> <li><b>Ej3:</b> Implementar enfoques basados en estándares para las afirmaciones de identidad en todos los contextos, y seguir todas las directrices para la generación (por ejemplo, modelos de datos, metadatos), protección (por ejemplo, firmas digitales, cifrado) y verificación (por ejemplo, validación de firmas) de afirmaciones de identidad</li></ul>"
+  },
+  {
+    "requirementId": "36451",
+    "requirementTitle": "PR.AA-05",
+    "requirementText": "Los permisos de acceso, los derechos y las autorizaciones se definen en una política, se gestionan, se aplican y se revisan, e incorporan los principios de privilegio mínimo y separación de funciones",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Revisar periódicamente los privilegios de acceso lógico y físico y cada vez que alguien cambie de rol o deje la organización, y rescindir rápidamente los privilegios que ya no son necesarios</li> <li><b>Ej2:</b> Considerar los atributos del solicitante y del recurso solicitado para las decisiones de autorización (por ejemplo, geolocalización, día/hora, salud cibernética del punto final del solicitante)</li> <li><b>Ej3:</b> Restringir el acceso y los privilegios al mínimo necesario (por ejemplo, arquitectura de confianza cero)</li> <li><b>Ej4:</b> Revisar periódicamente los privilegios asociados con funciones comerciales críticas para confirmar la adecuada separación de funciones</li></ul>"
+  },
+  {
+    "requirementId": "36452",
+    "requirementTitle": "PR.AA-06",
+    "requirementText": "El acceso físico a los activos se gestiona, supervisa y aplica de forma proporcional al riesgo",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Utilizar guardias de seguridad, cámaras de seguridad, entradas con cerradura, sistemas de alarma y otros controles físicos para monitorear instalaciones y restringir el acceso</li> <li><b>Ej2:</b> Emplear controles de seguridad física adicionales para áreas que contengan activos de alto riesgo</li> <li><b>Ej3:</b> Escoltar a invitados, proveedores y otras terceras partes dentro de áreas que contengan activos críticos para el negocio</li></ul>"
+  },
+  {
+    "requirementId": "36415",
+    "requirementTitle": "PR.AT-01",
+    "requirementText": "Se sensibiliza y capacita al personal para que disponga de los conocimientos y habilidades necesarios para realizar tareas generales teniendo en cuenta los riesgos de seguridad cibernética",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Proporcionar conocimientos básicos de ciberseguridad y capacitación a empleados, contratistas, socios, proveedores y todos los demás usuarios de los recursos no públicos de la organización</li> <li><b>Ej2:</b> Capacitar al personal para reconocer intentos de ingeniería social y otros ataques comunes, reportar ataques y actividad sospechosa, cumplir con las políticas de uso aceptable y realizar tareas básicas de higiene cibernética (por ejemplo, parchear software, elegir contraseñas, proteger credenciales)</li> <li><b>Ej3:</b> Explicar las consecuencias de las violaciones de las políticas de ciberseguridad, tanto para los usuarios individuales como para la organización en su conjunto</li> <li><b>Ej4:</b> Evaluar o probar periódicamente a los usuarios en su comprensión de las prácticas básicas de ciberseguridad</li> <li><b>Ej5:</b> Requerir actualizaciones anuales para reforzar las prácticas existentes e introducir nuevas prácticas</li></ul>"
+  },
+  {
+    "requirementId": "36416",
+    "requirementTitle": "PR.AT-02",
+    "requirementText": "Se sensibiliza y capacita a las personas que desempeñan funciones especializadas para que posean los conocimientos y aptitudes necesarios para realizarlas tareas pertinentes teniendo en cuenta los riesgos de seguridad cibernética",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Identificar los roles especializados dentro de la organización que requieren capacitación adicional en ciberseguridad, como personal de seguridad física y cibernética, personal de finanzas, liderazgo senior y cualquier persona con acceso a datos críticos para el negocio</li> <li><b>Ej2:</b> Proporcionar concienciación y capacitación en ciberseguridad basada en roles a todos aquellos en roles especializados, incluidos contratistas, socios, proveedores y otras terceras partes</li> <li><b>Ej3:</b> Evaluar o probar periódicamente a los usuarios en su comprensión de las prácticas de ciberseguridad para sus roles especializados</li> <li><b>Ej4:</b> Requerir actualizaciones anuales para reforzar las prácticas existentes e introducir nuevas prácticas</li></ul>"
+  },
+  {
+    "requirementId": "36417",
+    "requirementTitle": "PR.DS-01",
+    "requirementText": "La confidencialidad, la integridad y la disponibilidad de los datos en reposo están protegidas",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Utilizar cifrado, firmas digitales y hashes criptográficos para proteger la confidencialidad e integridad de los datos almacenados en archivos, bases de datos, imágenes de discos de máquinas virtuales, imágenes de contenedores y otros recursos</li> <li><b>Ej2:</b> Utilizar cifrado de disco completo para proteger los datos almacenados en los puntos finales de los usuarios</li> <li><b>Ej3:</b> Confirmar la integridad del software validando las firmas</li> <li><b>Ej4:</b> Restringir el uso de medios extraíbles para prevenir la exfiltración de datos</li> <li><b>Ej5:</b> Asegurar físicamente los medios extraíbles que contengan información sensible sin cifrar, como en oficinas cerradas con llave o archivadores</li></ul>"
+  },
+  {
+    "requirementId": "36418",
+    "requirementTitle": "PR.DS-02",
+    "requirementText": "La confidencialidad, la integridad y la disponibilidad de los datos en tránsito están protegidas",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Utilizar cifrado, firmas digitales y hashes criptográficos para proteger la confidencialidad e integridad de las comunicaciones de red</li> <li><b>Ej2:</b> Cifrar automáticamente o bloquear correos electrónicos salientes y otras comunicaciones que contengan datos sensibles, dependiendo de la clasificación de los datos</li> <li><b>Ej3:</b> Bloquear el acceso a correos electrónicos personales, servicios de intercambio de archivos, servicios de almacenamiento de archivos y otras aplicaciones y servicios de comunicaciones personales desde los sistemas y redes de la organización</li> <li><b>Ej4:</b> Prevenir la reutilización de datos sensibles de entornos de producción (por ejemplo, registros de clientes) en desarrollo, pruebas y otros entornos no productivos</li></ul>"
+  },
+  {
+    "requirementId": "36453",
+    "requirementTitle": "PR.DS-10",
+    "requirementText": "La confidencialidad, la integridad y la disponibilidad de los datos en uso están protegidas",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Eliminar los datos que deben permanecer confidenciales (por ejemplo, de procesadores y memoria) tan pronto como ya no sean necesarios</li> <li><b>Ej2:</b> Proteger los datos en uso del acceso por parte de otros usuarios y procesos de la misma plataforma</li></ul>"
+  },
+  {
+    "requirementId": "36454",
+    "requirementTitle": "PR.DS-11",
+    "requirementText": "Se crean, protegen, mantienen y comprueban copias de seguridad de los datos",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Respaldar continuamente los datos críticos en tiempo casi real, y respaldar otros datos con frecuencia según los horarios acordados</li> <li><b>Ej2:</b> Probar respaldos y restauraciones para todo tipo de fuentes de datos al menos anualmente</li> <li><b>Ej3:</b> Almacenar de manera segura algunos respaldos fuera de línea y fuera del sitio para que un incidente o desastre no los dañe</li> <li><b>Ej4:</b> Hacer cumplir la separación geográfica y las restricciones de geolocalización para el almacenamiento de respaldos de datos</li></ul>"
+  },
+  {
+    "requirementId": "36455",
+    "requirementTitle": "PR.PS-01",
+    "requirementText": "Se establecen y aplican prácticas de gestión de la configuración",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Establecer, probar, desplegar y mantener líneas base endurecidas que hagan cumplir las políticas de ciberseguridad de la organización y proporcionen solo capacidades esenciales (es decir, principio de mínima funcionalidad)</li> <li><b>Ej2:</b> Revisar todas las configuraciones predeterminadas que puedan impactar potencialmente la ciberseguridad al instalar o actualizar software</li> <li><b>Ej3:</b> Monitorear el software implementado para detectar desviaciones de las líneas base aprobadas</li></ul>"
+  },
+  {
+    "requirementId": "36456",
+    "requirementTitle": "PR.PS-02",
+    "requirementText": "Se mantiene, sustituye y elimina el software en función del riesgo",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Realizar parches rutinarios y de emergencia dentro de los plazos especificados en el plan de gestión de vulnerabilidades</li> <li><b>Ej2:</b> Actualizar imágenes de contenedores y desplegar nuevas instancias de contenedores para reemplazar en lugar de actualizar las instancias existentes</li> <li><b>Ej3:</b> Reemplazar versiones de software y servicios obsoletos con versiones compatibles y mantenidas</li> <li><b>Ej4:</b> Desinstalar y eliminar software y servicios no autorizados que representen riesgos indebidos</li> <li><b>Ej5:</b> Desinstalar y eliminar cualquier componente de software innecesario (por ejemplo, utilidades del sistema operativo) que los atacantes puedan usar indebidamente</li> <li><b>Ej6:</b> Definir e implementar planes para el soporte de mantenimiento y la obsolescencia del software y los servicios al final de su vida útil</li></ul>"
+  },
+  {
+    "requirementId": "36457",
+    "requirementTitle": "PR.PS-03",
+    "requirementText": "Se mantiene, sustituye y elimina el hardware en función del riesgo",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Reemplazar hardware cuando carezca de las capacidades de seguridad necesarias o cuando no pueda soportar software con capacidades de seguridad necesarias</li> <li><b>Ej2:</b> Definir e implementar planes para el soporte de mantenimiento y la obsolescencia del hardware al final de su vida útil</li> <li><b>Ej3:</b> Realizar la disposición del hardware de manera segura, responsable y auditable</li></ul>"
+  },
+  {
+    "requirementId": "36458",
+    "requirementTitle": "PR.PS-04",
+    "requirementText": "Se generen registros y se pongan a disposición para una supervisión continua",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Configurar todos los sistemas operativos, aplicaciones y servicios (incluidos los servicios basados en la nube) para generar registros de logs</li> <li><b>Ej2:</b> Configurar generadores de logs para compartir de manera segura sus logs con los sistemas y servicios de infraestructura de registros de la organización</li> <li><b>Ej3:</b> Configurar generadores de logs para registrar los datos necesarios por arquitecturas de confianza cero</li></ul>"
+  },
+  {
+    "requirementId": "36459",
+    "requirementTitle": "PR.PS-05",
+    "requirementText": "Se impide la instalación y la ejecución de software no autorizado",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Cuando el riesgo lo justifique, restringir la ejecución de software solo a productos permitidos o denegar la ejecución de software prohibido y no autorizado</li> <li><b>Ej2:</b> Verificar la fuente del nuevo software y la integridad del software antes de instalarlo</li> <li><b>Ej3:</b> Configurar plataformas para usar solo servicios DNS aprobados que bloqueen el acceso a dominios maliciosos conocidos</li> <li><b>Ej4:</b> Configurar plataformas para permitir solo la instalación de software aprobado por la organización</li></ul>"
+  },
+  {
+    "requirementId": "36460",
+    "requirementTitle": "PR.PS-06",
+    "requirementText": "Se integran prácticas seguras de desarrollo de software y se supervisa su rendimiento durante todo el ciclo de vida de desarrollo del software",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Proteger todos los componentes del software desarrollado por la organización de la manipulación y el acceso no autorizado</li> <li><b>Ej2:</b> Asegurar que todo el software producido por la organización tenga vulnerabilidades mínimas en sus lanzamientos</li> <li><b>Ej3:</b> Mantener el software utilizado en entornos de producción y disponer de manera segura del software una vez que ya no sea necesario</li></ul>"
+  },
+  {
+    "requirementId": "36461",
+    "requirementTitle": "PR.IR-01",
+    "requirementText": "Las redes y los entornos están protegidos contra el acceso lógico y el uso no autorizados",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Segmentar lógicamente las redes de la organización y las plataformas basadas en la nube según los límites de confianza y los tipos de plataformas (por ejemplo, TI, IoT, OT, móviles, invitados), y permitir solo las comunicaciones necesarias entre segmentos</li> <li><b>Ej2:</b> Segmentar lógicamente las redes de la organización de las redes externas, y permitir solo las comunicaciones necesarias para ingresar a las redes de la organización desde las redes externas</li> <li><b>Ej3:</b> Implementar arquitecturas de confianza cero para restringir el acceso a la red a cada recurso al mínimo necesario</li> <li><b>Ej4:</b> Verificar la salud cibernética de los puntos finales antes de permitirles acceder y usar recursos de producción</li></ul>"
+  },
+  {
+    "requirementId": "36462",
+    "requirementTitle": "PR.IR-02",
+    "requirementText": "Los activos tecnológicos de la organización están protegidos de las amenazas del entorno",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Proteger el equipo de la organización de amenazas ambientales conocidas, como inundaciones, incendios, viento y calor y humedad excesivos</li> <li><b>Ej2:</b> Incluir la protección contra amenazas ambientales y las provisiones para infraestructura operativa adecuada en los requisitos para los proveedores de servicios que operan sistemas en nombre de la organización</li></ul>"
+  },
+  {
+    "requirementId": "36463",
+    "requirementTitle": "PR.IR-03",
+    "requirementText": "Se implementan mecanismos para lograr los requisitos de resiliencia en situaciones normales y adversas",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Evitar puntos únicos de falla en sistemas e infraestructura</li> <li><b>Ej2:</b> Usar balanceo de carga para aumentar la capacidad y mejorar la confiabilidad</li> <li><b>Ej3:</b> Usar componentes de alta disponibilidad como almacenamiento redundante y fuentes de alimentación para mejorar la confiabilidad del sistema</li></ul>"
+  },
+  {
+    "requirementId": "36464",
+    "requirementTitle": "PR.IR-04",
+    "requirementText": "Se mantiene una capacidad de recursos adecuada para garantizar la disponibilidad",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Monitorear el uso de almacenamiento, energía, computación, ancho de banda de red y otros recursos</li> <li><b>Ej2:</b> Prever necesidades futuras y escalar recursos en consecuencia</li></ul>"
+  },
+  {
+    "requirementId": "36424",
+    "requirementTitle": "DE.CM-01",
+    "requirementText": "Las redes y los servicios de red se monitorean para detectar acontecimientos potencialmente adversos",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Monitorear DNS, BGP y otros servicios de red en busca de eventos adversos</li> <li><b>Ej2:</b> Monitorear redes cableadas e inalámbricas en busca de conexiones desde puntos finales no autorizados</li> <li><b>Ej3:</b> Monitorear instalaciones en busca de redes inalámbricas no autorizadas o maliciosas</li> <li><b>Ej4:</b> Comparar los flujos de red reales con las líneas base para detectar desviaciones</li> <li><b>Ej5:</b> Monitorear las comunicaciones de red para identificar cambios en las posturas de seguridad para fines de confianza cero</li></ul>"
+  },
+  {
+    "requirementId": "36425",
+    "requirementTitle": "DE.CM-02",
+    "requirementText": "Se monitorea el entorno físico para detectar posibles acontecimientos adversos",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Monitorear registros de sistemas de control de acceso físico (por ejemplo, lectores de tarjetas) para encontrar patrones de acceso inusuales (por ejemplo, desviaciones de la norma) e intentos de acceso fallidos</li> <li><b>Ej2:</b> Revisar y monitorear registros de acceso físico (por ejemplo, registros de visitantes, hojas de registro)</li> <li><b>Ej3:</b> Monitorear controles de acceso físico (por ejemplo, cerraduras, pestillos, bisagras, alarmas) en busca de signos de manipulación</li> <li><b>Ej4:</b> Monitorear el entorno físico utilizando sistemas de alarma, cámaras y guardias de seguridad</li></ul>"
+  },
+  {
+    "requirementId": "36426",
+    "requirementTitle": "DE.CM-03",
+    "requirementText": "Se monitorea la actividad del personal y el uso de la tecnología para detectar posibles acontecimientos adverso",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Utilizar software de análisis de comportamiento para detectar actividad anómala de usuarios y mitigar amenazas internas</li> <li><b>Ej2:</b> Monitorear registros de sistemas de control de acceso lógico para encontrar patrones de acceso inusuales e intentos de acceso fallidos</li> <li><b>Ej3:</b> Monitorear continuamente la tecnología de engaño, incluidas las cuentas de usuario, para cualquier uso</li></ul>"
+  },
+  {
+    "requirementId": "36427",
+    "requirementTitle": "DE.CM-06",
+    "requirementText": "Se monitorean las actividades y los servicios de los proveedores de servicios externos para detectar acontecimientos potencialmente adversos.",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Monitorear las actividades de administración y mantenimiento remotas y en el sitio que realizan los proveedores externos en los sistemas de la organización</li> <li><b>Ej2:</b> Monitorear la actividad de los servicios basados en la nube, proveedores de servicios de Internet y otros proveedores de servicios para detectar desviaciones del comportamiento esperado</li></ul>"
+  },
+  {
+    "requirementId": "36467",
+    "requirementTitle": "DE.CM-09",
+    "requirementText": "Se monitorean el hardware y el software informáticos, los entornos de ejecución y sus datos para detectar posibles acontecimientos adversos",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Monitorear correo electrónico, web, servicios de intercambio de archivos, servicios de colaboración y otros vectores de ataque comunes para detectar malware, phishing, fugas de datos y exfiltración, y otros eventos adversos</li> <li><b>Ej2:</b> Monitorear intentos de autenticación para identificar ataques contra credenciales y reutilización no autorizada de credenciales</li> <li><b>Ej3:</b> Monitorear configuraciones de software en busca de desviaciones de las líneas base de seguridad</li> <li><b>Ej4:</b> Monitorear hardware y software en busca de signos de manipulación</li> <li><b>Ej5:</b> Usar tecnologías con presencia en puntos finales para detectar problemas de salud cibernética (por ejemplo, parches faltantes, infecciones de malware, software no autorizado) y redirigir los puntos finales a un entorno de remediación antes de que se autorice el acceso</li></ul>"
+  },
+  {
+    "requirementId": "36420",
+    "requirementTitle": "DE.AE-02",
+    "requirementText": "Los acontecimientos potencialmente adversos se analizan para comprender mejor las actividades asociadas",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Utilizar herramientas de gestión de eventos e información de seguridad (SIEM) u otras herramientas para monitorear continuamente los eventos de registro en busca de actividad maliciosa y sospechosa conocida</li> <li><b>Ej2:</b> Utilizar inteligencia de amenazas cibernéticas actualizada en herramientas de análisis de registros para mejorar la precisión de la detección y caracterizar a los actores de amenazas, sus métodos e indicadores de compromiso</li> <li><b>Ej3:</b> Realizar revisiones manuales periódicas de eventos de registro para tecnologías que no pueden ser monitoreadas suficientemente a través de la automatización</li> <li><b>Ej4:</b> Utilizar herramientas de análisis de registros para generar informes sobre sus hallazgos</li></ul>"
+  },
+  {
+    "requirementId": "36421",
+    "requirementTitle": "DE.AE-03",
+    "requirementText": "Se correlaciona la información procedente de diversas fuentes",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Transferir constantemente los datos de registro generados por otras fuentes a un número relativamente pequeño de servidores de registro</li> <li><b>Ej2:</b> Utilizar tecnología de correlación de eventos (por ejemplo, SIEM) para recopilar información capturada por múltiples fuentes</li> <li><b>Ej3:</b> Utilizar inteligencia de amenazas cibernéticas para ayudar a correlacionar eventos entre fuentes de registro</li></ul>"
+  },
+  {
+    "requirementId": "36422",
+    "requirementTitle": "DE.AE-04",
+    "requirementText": "Se comprende el impacto estimado y el alcance de los acontecimientos adversos",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Utilizar SIEMs u otras herramientas para estimar el impacto y el alcance, y revisar y refinar las estimaciones</li> <li><b>Ej2:</b> Una persona crea sus propias estimaciones de impacto y alcance</li></ul>"
+  },
+  {
+    "requirementId": "36423",
+    "requirementTitle": "DE.AE-06",
+    "requirementText": "La información sobre acontecimientos adversos se proporciona al personal y a las herramientas autorizadas",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Utilizar software de ciberseguridad para generar alertas y proporcionarlas al centro de operaciones de seguridad (SOC), respondedores de incidentes y herramientas de respuesta a incidentes</li> <li><b>Ej2:</b> Los respondedores de incidentes y otro personal autorizado pueden acceder a los hallazgos del análisis de registros en todo momento</li> <li><b>Ej3:</b> Crear y asignar automáticamente tickets en el sistema de tickets de la organización cuando ocurren ciertos tipos de alertas</li> <li><b>Ej4:</b> Crear y asignar manualmente tickets en el sistema de tickets de la organización cuando el personal técnico descubre indicadores de compromiso</li></ul>"
+  },
+  {
+    "requirementId": "36465",
+    "requirementTitle": "DE.AE-07",
+    "requirementText": "La inteligencia sobre amenazas cibernéticas y otra información contextual se integran en el análisis",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Proveer de manera segura feeds de inteligencia de amenazas cibernéticas a tecnologías, procesos y personal de detección</li> <li><b>Ej2:</b> Proveer de manera segura información de inventarios de activos a tecnologías, procesos y personal de detección</li> <li><b>Ej3:</b> Adquirir y analizar rápidamente divulgaciones de vulnerabilidades para las tecnologías de la organización de proveedores, vendedores y avisos de seguridad de terceros</li></ul>"
+  },
+  {
+    "requirementId": "36466",
+    "requirementTitle": "DE.AE-08",
+    "requirementText": "Se declaran incidentes cuando los acontecimientos adversos cumplen con los criterios de incidente definidos",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Aplicar criterios de incidentes a características conocidas y asumidas de la actividad para determinar si se debe declarar un incidente</li> <li><b>Ej2:</b> Tener en cuenta falsos positivos conocidos al aplicar criterios de incidentes</li></ul>"
+  },
+  {
+    "requirementId": "36468",
+    "requirementTitle": "RS.MA-01",
+    "requirementText": "Se ejecuta el plan de respuesta a incidentes en coordinación con los terceros pertinentes una vez que se declara un incidente",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Las tecnologías de detección informan automáticamente sobre incidentes confirmados</li> <li><b>Ej2:</b> Solicitar asistencia de respuesta a incidentes del proveedor de servicios de respuesta a incidentes de la organización</li> <li><b>Ej3:</b> Designar un líder de incidentes para cada incidente</li> <li><b>Ej4:</b> Iniciar la ejecución de planes de ciberseguridad adicionales según sea necesario para apoyar la respuesta a incidentes (por ejemplo, continuidad del negocio y recuperación ante desastres)</li></ul>"
+  },
+  {
+    "requirementId": "36469",
+    "requirementTitle": "RS.MA-02",
+    "requirementText": "Se clasifican y validan los informes de incidentes",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Revisar preliminarmente los informes de incidentes para confirmar que están relacionados con ciberseguridad y necesitan actividades de respuesta a incidentes</li> <li><b>Ej2:</b> Aplicar criterios para estimar la gravedad de un incidente</li></ul>"
+  },
+  {
+    "requirementId": "36470",
+    "requirementTitle": "RS.MA-03",
+    "requirementText": "Se clasifican y priorizan los incidentes",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Revisar y categorizar más a fondo los incidentes en función del tipo de incidente (por ejemplo, violación de datos, ransomware, DDoS, compromiso de cuentas)</li> <li><b>Ej2:</b> Priorizar los incidentes en función de su alcance, probable impacto y naturaleza crítica en el tiempo</li> <li><b>Ej3:</b> Seleccionar estrategias de respuesta a incidentes para incidentes activos equilibrando la necesidad de recuperarse rápidamente de un incidente con la necesidad de observar al atacante o realizar una investigación más exhaustiva</li></ul>"
+  },
+  {
+    "requirementId": "36471",
+    "requirementTitle": "RS.MA-04",
+    "requirementText": "Se escalan o elevan los incidentes según sea necesario",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Rastrear y validar el estado de todos los incidentes en curso</li> <li><b>Ej2:</b> Coordinar la escalación o elevación de incidentes con las partes interesadas internas y externas designadas</li></ul>"
+  },
+  {
+    "requirementId": "36472",
+    "requirementTitle": "RS.MA-05",
+    "requirementText": "Se aplican los criterios para iniciar la recuperación de incidentes",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Aplicar criterios de recuperación de incidentes a características conocidas y asumidas del incidente para determinar si se deben iniciar procesos de recuperación de incidentes</li> <li><b>Ej2:</b> Tener en cuenta la posible interrupción operativa de las actividades de recuperación de incidentes</li></ul>"
+  },
+  {
+    "requirementId": "36430",
+    "requirementTitle": "RS.AN-03",
+    "requirementText": "Se realizan análisis para determinar lo que ocurrió durante un incidente y la causa raíz del mismo",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Determinar la secuencia de eventos que ocurrieron durante el incidente y qué activos y recursos estuvieron involucrados en cada evento</li> <li><b>Ej2:</b> Intentar determinar qué vulnerabilidades, amenazas y actores de amenazas estuvieron directa o indirectamente involucrados en el incidente</li> <li><b>Ej3:</b> Analizar el incidente para encontrar las causas subyacentes y sistémicas</li> <li><b>Ej4:</b> Verificar cualquier tecnología de engaño cibernético para obtener información adicional sobre el comportamiento del atacante</li></ul>"
+  },
+  {
+    "requirementId": "36473",
+    "requirementTitle": "RS.AN-06",
+    "requirementText": "Se registran las acciones realizadas durante una investigación y se preservan la integridad y la procedencia de los registros",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Requerir que cada responder de incidentes y otros (por ejemplo, administradores de sistemas, ingenieros de ciberseguridad) que realizan tareas de respuesta a incidentes registren sus acciones y hagan que el registro sea inmutable</li> <li><b>Ej2:</b> Requerir que el líder del incidente documente el incidente en detalle y sea responsable de preservar la integridad de la documentación y las fuentes de toda la información reportada</li></ul>"
+  },
+  {
+    "requirementId": "36474",
+    "requirementTitle": "RS.AN-07",
+    "requirementText": "Se recopilan los datos y metadatos del incidente y se preservan su integridad y su procedencia",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Recopilar, preservar y salvaguardar la integridad de todos los datos y metadatos pertinentes del incidente (por ejemplo, fuente de datos, fecha/hora de recopilación) basándose en procedimientos de preservación de evidencia y cadena de custodia</li></ul>"
+  },
+  {
+    "requirementId": "36475",
+    "requirementTitle": "RS.AN-08",
+    "requirementText": "Se estima y valida la magnitud de un incidente.",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Revisar otros posibles objetivos del incidente para buscar indicadores de compromiso y evidencia de persistencia</li> <li><b>Ej2:</b> Ejecutar automáticamente herramientas en objetivos para buscar indicadores de compromiso y evidencia de persistencia</li></ul>"
+  },
+  {
+    "requirementId": "36428",
+    "requirementTitle": "RS.CO-02",
+    "requirementText": "Se notifican los incidentes a las partes interesadas internas y externas",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Seguir los procedimientos de notificación de violaciones de datos de la organización después de descubrir un incidente de violación de datos, incluyendo notificar a los clientes afectados</li> <li><b>Ej2:</b> Notificar a socios comerciales y clientes de incidentes de acuerdo con los requisitos contractuales</li> <li><b>Ej3:</b> Notificar a las agencias de aplicación de la ley y organismos reguladores de incidentes basados en los criterios del plan de respuesta a incidentes y la aprobación de la administración</li></ul>"
+  },
+  {
+    "requirementId": "36429",
+    "requirementTitle": "RS.CO-03",
+    "requirementText": "La información se comparte con las partes interesadas internas y externas designadas",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Compartir información de manera segura de acuerdo con los planes de respuesta y los acuerdos de intercambio de información</li> <li><b>Ej2:</b> Compartir voluntariamente información sobre las TTP observadas de un atacante, con todos los datos sensibles eliminados, con un Centro de Intercambio y Análisis de Información (ISAC)</li> <li><b>Ej3:</b> Notificar a RRHH cuando ocurra actividad maliciosa interna</li> <li><b>Ej4:</b> Actualizar periódicamente a la alta dirección sobre el estado de los incidentes importantes</li> <li><b>Ej5:</b> Seguir las reglas y protocolos definidos en los contratos para el intercambio de información sobre incidentes entre la organización y sus proveedores</li> <li><b>Ej6:</b> Coordinar los métodos de comunicación de crisis entre la organización y sus proveedores críticos</li></ul>"
+  },
+  {
+    "requirementId": "36431",
+    "requirementTitle": "RS.MI-01",
+    "requirementText": "Se contienen los incidentes",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Las tecnologías de ciberseguridad (por ejemplo, software antivirus) y las características de ciberseguridad de otras tecnologías (por ejemplo, sistemas operativos, dispositivos de infraestructura de red) realizan automáticamente acciones de contención</li> <li><b>Ej2:</b> Permitir a los respondedores de incidentes seleccionar y realizar manualmente acciones de contención</li> <li><b>Ej3:</b> Permitir a un tercero (por ejemplo, proveedor de servicios de Internet, proveedor de servicios de seguridad gestionados) realizar acciones de contención en nombre de la organización</li> <li><b>Ej4:</b> Transferir automáticamente los puntos finales comprometidos a una red de área local virtual (VLAN) de remediación</li></ul>"
+  },
+  {
+    "requirementId": "36432",
+    "requirementTitle": "RS.MI-02",
+    "requirementText": "Se erradican los incidentes",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Las tecnologías de ciberseguridad y las características de ciberseguridad de otras tecnologías (por ejemplo, sistemas operativos, dispositivos de infraestructura de red) realizan automáticamente acciones de erradicación</li> <li><b>Ej2:</b> Permitir a los respondedores de incidentes seleccionar y realizar manualmente acciones de erradicación</li> <li><b>Ej3:</b> Permitir a un tercero (por ejemplo, proveedor de servicios de seguridad gestionados) realizar acciones de erradicación en nombre de la organización</li></ul>"
+  },
+  {
+    "requirementId": "36433",
+    "requirementTitle": "RC.RP-01",
+    "requirementText": "La parte de recuperación del plan de respuesta a incidentes se ejecuta una vez que se inicia desde el proceso de respuesta a incidentes",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Comenzar los procedimientos de recuperación durante o después de los procesos de respuesta a incidentes</li> <li><b>Ej2:</b> Asegurar que todas las personas con responsabilidades de recuperación estén al tanto de los planes de recuperación y las autorizaciones requeridas para implementar cada aspecto de los planes</li></ul>"
+  },
+  {
+    "requirementId": "36434",
+    "requirementTitle": "RC.RP-02",
+    "requirementText": "Se seleccionan, delimitan, priorizan y llevan a cabo las acciones de recuperación",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Seleccionar acciones de recuperación basadas en los criterios definidos en el plan de respuesta a incidentes y los recursos disponibles</li> <li><b>Ej2:</b> Cambiar las acciones de recuperación planificadas basadas en una reevaluación de las necesidades y recursos de la organización</li></ul>"
+  },
+  {
+    "requirementId": "36435",
+    "requirementTitle": "RC.RP-03",
+    "requirementText": "Se verifica la integridad de las copias de seguridad y otros activos de restauración antes de usarlos para la restauración",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Verificar los activos de restauración en busca de indicadores de compromiso, corrupción de archivos y otros problemas de integridad antes de su uso</li></ul>"
+  },
+  {
+    "requirementId": "36436",
+    "requirementTitle": "RC.RP-04",
+    "requirementText": "Se tienen en cuenta las funciones críticas de la misión y la gestión de riesgos de seguridad cibernética para establecer normas operativas posteriores al incidente",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Utilizar registros de impacto comercial y categorización de sistemas (incluyendo objetivos de entrega de servicios) para validar que los servicios esenciales se restauren en el orden adecuado</li> <li><b>Ej2:</b> Trabajar con los propietarios de sistemas para confirmar la restauración exitosa de los sistemas y el regreso a las operaciones normales</li> <li><b>Ej3:</b> Monitorear el rendimiento de los sistemas restaurados para verificar la adecuación de la restauración</li></ul>"
+  },
+  {
+    "requirementId": "36437",
+    "requirementTitle": "RC.RP-05",
+    "requirementText": "Se verifica la integridad de los activos restaurados, se restauran los sistemas y servicios y se confirma el estado operativo normal",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Verificar los activos restaurados en busca de indicadores de compromiso y remediación de las causas raíz del incidente antes de su uso en producción</li> <li><b>Ej2:</b> Verificar la corrección y adecuación de las acciones de restauración tomadas antes de poner un sistema restaurado en línea</li></ul>"
+  },
+  {
+    "requirementId": "36476",
+    "requirementTitle": "RC.RP-06",
+    "requirementText": "Se declara el fin de la recuperación del incidente sobre la base de criterios y se completa la documentación relacionada con el incidente",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Preparar un informe posterior a la acción que documente el incidente en sí, las acciones de respuesta y recuperación tomadas, y las lecciones aprendidas</li> <li><b>Ej2:</b> Declarar el fin de la recuperación del incidente una vez que se cumplan los criterios</li></ul>"
+  },
+  {
+    "requirementId": "36438",
+    "requirementTitle": "RC.CO-03",
+    "requirementText": "Las actividades de recuperación y los progresos en el restablecimiento de las capacidades operativas se comunican a las partes interesadas internas y externas designadas",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Compartir de manera segura la información de recuperación, incluido el progreso de la restauración, de acuerdo con los planes de respuesta y los acuerdos de intercambio de información</li> <li><b>Ej2:</b> Actualizar periódicamente a la alta dirección sobre el estado de la recuperación y el progreso de la restauración de incidentes importantes</li> <li><b>Ej3:</b> Seguir las reglas y protocolos definidos en los contratos para el intercambio de información sobre incidentes entre la organización y sus proveedores</li> <li><b>Ej4:</b> Coordinar la comunicación de crisis entre la organización y sus proveedores críticos</li></ul>"
+  },
+  {
+    "requirementId": "36477",
+    "requirementTitle": "RC.CO-04",
+    "requirementText": "Las actualizaciones públicas sobre la recuperación del incidente se comparten mediante el uso de métodos y mensajes aprobados",
+    "supplementalInfo": "<h5>Ejemplos de Implementación</h5><ul><li><b>Ej1:</b> Seguir los procedimientos de notificación de violaciones de la organización para recuperarse de un incidente de violación de datos</li> <li><b>Ej2:</b> Explicar los pasos que se están tomando para recuperarse del incidente y prevenir una recurrencia</li></ul>"
+  }
+]

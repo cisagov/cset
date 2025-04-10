@@ -60,6 +60,7 @@ namespace CSETWebCore.Helpers
 
             // Read directly from the database; UserManager does not read password and salt, in order to keep them more private
             loginUser = _context.USERS.Where(x => x.PrimaryEmail == login.Email).FirstOrDefault();
+            
 
             if (loginUser == null)
             {
@@ -71,6 +72,12 @@ namespace CSETWebCore.Helpers
                 return null;
             }
 
+            var roles = (from u in _context.USERS
+                join ur in _context.USER_ROLES on u.UserId equals ur.UserId
+                join r in _context.ROLES on ur.RoleId equals r.RoleId
+                where u.UserId == loginUser.UserId
+                select r.RoleName).ToList();
+                    
             List<PASSWORD_HISTORY> tempPasswords = _context.PASSWORD_HISTORY.Where(password => password.UserId == loginUser.UserId && password.Is_Temp).ToList();
 
             // Validate the supplied password against the hashed password and its salt
@@ -127,7 +134,8 @@ namespace CSETWebCore.Helpers
                 ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
                 ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
                 LinkerTime = new BuildNumberHelper().GetLinkerTime(),
-                IsFirstLogin = loginUser.IsFirstLogin
+                IsFirstLogin = loginUser.IsFirstLogin,
+                Roles = roles.Any() ? roles : ["USER"]
             };
 
 
