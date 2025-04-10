@@ -2594,7 +2594,7 @@ mat-sidenav.mat-sidenav {
 ///////////////////////////////////////////////////////////////////////
 .sub-me {
   text-decoration: underline;
-  color: $link-color-dark;
+  color: $link-color-dark !important;
   cursor: pointer;
 }
 

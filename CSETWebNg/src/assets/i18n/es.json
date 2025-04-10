@@ -844,6 +844,13 @@
         "advisory": "Asesoramiento",
         "keyboard shortcuts": "Atajos de teclado"
     },
+    "parameters": {
+        "text1": "Muchos estándares en 'modo requisitos' contienen parámetros que se pueden cambiar para que coincidan con su situación específica. La tabla a continuación le permite cambiar los valores de los parámetros indicados en esta evaluación haciendo clic en el Valor de Parámetro. Cambiar un valor de parámetro actualizará todos los valores de parámetros relacionados en el texto del requisito de los Estándares de Ciberseguridad actualmente seleccionados.",
+        "text2": "Los parámetros también se pueden personalizar haciendo clic en ellos en el texto de control. Tenga en cuenta que los cambios realizados a ese nivel se aplican al control específico.",
+        "parameter name": "Nombre de Parámetro",
+        "parameter value": "Valor de Parámetro",
+        "none": "Los estándares de ciberseguridad seleccionados no contienen ningún parámetro de control personalizable."
+    },
     "errors": {
         "import unsuported file 1": "Error: archivo no compatible. Solo se pueden importar archivos web CSET para instalaciones empresariales.",
         "import unsuported file 2": "Para obtener más información, consulte la sección de importación de la guía del usuario"
