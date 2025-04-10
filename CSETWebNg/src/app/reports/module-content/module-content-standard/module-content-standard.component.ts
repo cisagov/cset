@@ -26,10 +26,10 @@ import { Title } from '@angular/platform-browser';
 import { ReportService } from '../../../services/report.service';
 
 @Component({
-    selector: 'app-module-content-standard',
-    templateUrl: './module-content-standard.component.html',
-    styleUrls: ['./module-content-standard.component.scss'],
-    standalone: false
+  selector: 'app-module-content-standard',
+  templateUrl: './module-content-standard.component.html',
+  styleUrls: ['./module-content-standard.component.scss'],
+  standalone: false
 })
 export class ModuleContentStandardComponent implements OnInit {
 
@@ -40,9 +40,20 @@ export class ModuleContentStandardComponent implements OnInit {
     private titleSvc: Title,
     public reportSvc: ReportService
   ) { }
-
+  
+  /**
+   * 
+   */
   ngOnInit(): void {
     this.titleSvc.setTitle('CSET Module Content Report - ' + this.set.setShortName);
   }
 
+  /**
+   * If there are any parameters in the text defined by double curly braces
+   * format them to look like the published standard.
+   */
+  formatParameters(text: string) {
+    text = text.replace(/{{/g, '[<em>').replace(/}}/g, '</em>]');
+    return text;
+  }
 }

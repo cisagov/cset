@@ -22,10 +22,10 @@
 -------------------------->
 <div class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start flex-11a">Define Parameter Value</div>
-  <mat-dialog-content class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
-    <div class="pe-3">
+  <mat-dialog-content class="p-4 oy-auto d-flex flex-column flex-11a">
+    <div>
       <p>
-        Define the input value for the selected parameter.
+        Define the value for the selected control parameter.
       </p>
       <div class="parameter-orig-value">{{originalValue}}</div>
       <textarea maxlength="2000" class="form-control" id="parmValue" name="parmValue" [(ngModel)]="parameterValue"
@@ -33,8 +33,8 @@
     </div>
   </mat-dialog-content>
 
-  <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">
-    <button class="m-0 btn btn-primary" (click)="save()">Save</button>
+  <mat-dialog-actions class="p-4 pt-0 mb-0 d-flex justify-content-between flex-11a">
     <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    <button class="m-0 btn btn-primary" (click)="save()">Save</button>
   </mat-dialog-actions>
 </div>
