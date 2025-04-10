@@ -49,11 +49,15 @@ export class ExportAssessmentComponent {
     }
   };
 
+
+  scrubSensitive = false;
+
   password = "";
   passwordHint = "";
   showPassword = false;
 
   confirm(): void {
+    this.data.scrubData = this.scrubSensitive;
     this.data.encryptionData.password = this.password;
     this.data.encryptionData.hint = this.passwordHint;
     this.dialogRef.close(this.data);
@@ -65,10 +69,5 @@ export class ExportAssessmentComponent {
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
-  }
-
-  onScrubDataChange(event: Event) {
-    const checkbox = event.target as HTMLInputElement;
-    this.data.scrubData = checkbox.checked;
   }
 }
