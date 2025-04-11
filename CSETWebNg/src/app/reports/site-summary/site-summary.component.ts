@@ -97,7 +97,6 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
     this.reportSvc.getReport('sitesummary').subscribe(
       (r: any) => {
         this.response = r;
-        console.log(r);
       },
       error => console.log('Site Summary report load Error: ' + (<Error>error).message)
     );
