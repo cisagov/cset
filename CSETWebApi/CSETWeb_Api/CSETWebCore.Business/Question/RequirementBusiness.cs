@@ -439,7 +439,7 @@ namespace CSETWebCore.Business.Question
                 {
                     foreach (var local in qLocal.ToList())
                     {
-                        ps.Set(local.p.Parameter_ID, local.p.Parameter_Name, local.pv.Parameter_Value, 0, local.pv.Answer_Id);
+                        ps.Set(local.p.Parameter_ID, local.p.Parameter_Name, local.pv.Parameter_Value, reqId, local.pv.Answer_Id);
                     }
                 }
             }
@@ -642,13 +642,20 @@ namespace CSETWebCore.Business.Question
             List<ParameterToken> tokens = this.GetTokensForRequirement(reqId, ansId);
             foreach (ParameterToken t in tokens)
             {
-                requirementText =  requirementText.Replace(t.Token, "<br><i>" +t.Substitution +"</i>");
+                if (t.Substitution != null)
+                {
+                    requirementText = requirementText.Replace(
+                        "{{" + t.Token + "}}",
+                        "<em>" + t.Substitution + "</em>");
+                }
             }
 
-            requirementText = requirementText.Replace("\r\n", "<br/>").Replace("\r", "<br/>").Replace("\n", "<br/>");
+            // format anything still unresolved
+            requirementText = requirementText.Replace("{{", "[<em>").Replace("}}", "</em>]");
 
             return requirementText;
         }
+
 
         public string RichTextParameters(int reqId, int ansId, string requirementText)
         {
