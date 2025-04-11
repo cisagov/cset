@@ -973,15 +973,6 @@ namespace CSETWebCore.Api.Controllers
 
             data.StandardsQuestions = await _report.GetStandardQuestionAnswers(assessmentId);
 
-            // only need answered questions for each standard (yes this should be a stored proc, but I don't have time)
-            //foreach(var standard in data.StandardsQuestions)
-            //{
-            //    standard.Questions = standard.Questions.Where(x => x.Answer != "U").ToList();
-            //}
-
-            // only need answered questions (yes this should be a stored proc, but I don't have time)
-            //data.ComponentQuestions = data.ComponentQuestions.Where(x => x.Answer != "U").ToList();
-
             return Ok(data);
         }
 
@@ -1016,20 +1007,5 @@ namespace CSETWebCore.Api.Controllers
             data.QuestionsMarkedForReview = _report.GetQuestionsReviewed();
             return Ok(data);
         }
-        //[HttpGet]
-        //[Route("api/reports/getCieNaQuestions")]
-        //public IActionResult getCieNaQuestions()
-        //{
-        //    var assessmentId = _token.AssessmentForUser();
-        //    _report.SetReportsAssessmentId(assessmentId);
-        //    _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-        //    MaturityBasicReportData data = new MaturityBasicReportData();
-
-        //    // the '4' signals to get levels 1 - 4
-        //    data.MatAnsweredQuestions = _report.GetCieQuestionList(0, true);
-        //    data.Information = _report.GetInformation();
-        //    return Ok(data);
-        //}
     }
 }

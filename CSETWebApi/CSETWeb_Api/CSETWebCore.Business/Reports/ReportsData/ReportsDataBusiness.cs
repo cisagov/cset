@@ -634,8 +634,9 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<QuestionsWithAltJust> GetQuestionsWithAlternateJustification()
         {
-
             var results = new List<QuestionsWithAltJust>();
+
+            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
 
             // get any "A" answers that currently apply
 
@@ -656,13 +657,22 @@ namespace CSETWebCore.Business.Reports
                             join req in _context.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
                             select new QuestionsWithAltJust()
                             {
+                                Id = req.Requirement_Id,
                                 Answer = ans.Answer_Text,
+                                AnswerId = ans.Answer_ID,
                                 CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
                                 AlternateJustification = ans.Alternate_Justification,
                                 Question = req.Requirement_Text
                             };
 
-                return query.ToList();
+                var reqs = query.ToList();
+
+                foreach(var req in reqs)
+                {
+                    req.Question = rm.ResolveParameters(req.Id, req.AnswerId, req.Question);
+                }
+
+                return reqs;
             }
             else
             {
@@ -672,7 +682,9 @@ namespace CSETWebCore.Business.Reports
                             orderby h.Question_Group_Heading
                             select new QuestionsWithAltJust()
                             {
+                                Id = q.Question_Id,
                                 Answer = ans.Answer_Text,
+                                AnswerId = ans.Answer_ID,
                                 CategoryAndNumber = h.Question_Group_Heading + " #" + ans.Question_Number,
                                 AlternateJustification = ans.Alternate_Justification,
                                 Question = q.Simple_Question
@@ -680,7 +692,6 @@ namespace CSETWebCore.Business.Reports
 
                 return query.ToList();
             }
-
         }
 
 
@@ -745,6 +756,8 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<QuestionsMarkedForReview> GetQuestionsMarkedForReview()
         {
+            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
+
             var results = new List<QuestionsMarkedForReview>();
 
             // get any "marked for review" or commented answers that currently apply
@@ -766,12 +779,21 @@ namespace CSETWebCore.Business.Reports
                             join req in _context.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
                             select new QuestionsMarkedForReview()
                             {
+                                Id = req.Requirement_Id,
                                 Answer = ans.Answer_Text,
+                                AnswerId = ans.Answer_ID,
                                 CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
                                 Question = req.Requirement_Text
                             };
 
-                return query.ToList();
+                var reqs = query.ToList();
+
+                foreach (var req in reqs)
+                {
+                    req.Question = rm.ResolveParameters(req.Id, req.AnswerId, req.Question);
+                }
+
+                return reqs;
             }
             else
             {
@@ -788,7 +810,6 @@ namespace CSETWebCore.Business.Reports
 
                 return query.ToList();
             }
-
         }
 
 
@@ -820,12 +841,21 @@ namespace CSETWebCore.Business.Reports
                             join req in _context.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
                             select new QuestionsMarkedForReview()
                             {
+                                Id = req.Requirement_Id,
                                 Answer = ans.Answer_Text,
+                                AnswerId = ans.Answer_ID,
                                 CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
                                 Question = rm.ResolveParameters(ans.Question_Or_Requirement_ID, ans.Answer_ID, req.Requirement_Text)
                             };
 
-                return query.ToList();
+                var reqs = query.ToList();
+
+                foreach (var req in reqs)
+                {
+                    req.Question = rm.ResolveParameters(req.Id, req.AnswerId, req.Question);
+                }
+
+                return reqs;
             }
             else
             {

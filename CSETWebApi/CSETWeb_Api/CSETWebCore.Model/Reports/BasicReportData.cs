@@ -195,9 +195,11 @@ namespace CSETWebCore.Business.Reports
 
     public class QuestionsMarkedForReview
     {
+        public int Id { get; set; }
         public string CategoryAndNumber { get; set; }
         public string Question { get; set; }
         public string Answer { get; set; }
+        public int AnswerId { get; set; }
     }
 
     /// <summary>
@@ -262,9 +264,11 @@ namespace CSETWebCore.Business.Reports
 
     public class QuestionsWithAltJust
     {
+        public int Id { get; set; }
         public string CategoryAndNumber { get; set; }
         public string Question { get; set; }
         public string Answer { get; set; }
+        public int AnswerId { get; set; }
         public string AlternateJustification { get; set; }
     }
 
