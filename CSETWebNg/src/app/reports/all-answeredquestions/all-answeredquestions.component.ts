@@ -51,9 +51,6 @@ export class AllAnsweredquestionsComponent implements OnInit {
     this.reportSvc.getStandardAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
-        // r.standardsQuestions.forEach(element => {
-        //   element.question = "<pre>"+element.question+"</pre>";
-        // });
         this.titleService.setTitle(this.tSvc.translate('reports.all.answered statements.tab title'));
       }
     );
