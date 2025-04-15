@@ -29,10 +29,18 @@
                     <td>{{ userRole.lastName }}</td>
                     <td>{{ userRole.firstName }}</td>
                     <td>
-                        <select class="form-select" name="roleSelection" [(ngModel)]="userRole.roleName"
+                        <ng-container *ngFor="let role of roles">
+                            <input type="checkbox" name="{{ role.roleName }}" id="{{ role.roleName }}" class="checkbox-custom mt-1"
+                                [checked]="userRole.roles.includes(role)">
+                            <label for="{{ role.roleName }}" class="checkbox-custom-label">
+                                {{ role.roleName }}
+                            </label>
+                        </ng-container>
+                        
+                        <!-- <select class="form-select" name="roleSelection" [(ngModel)]="userRole.roleName"
                             (change)="updateRole($event.target.value)">
                             <option *ngFor="let role of roles">{{ role.roleName }}</option>
-                        </select>
+                        </select> -->
                     </td>
                     <!-- <td *ngIf="showColumn('ise-submitted')">
                         <ng-container *ngIf="assessment.iseSubmitted">

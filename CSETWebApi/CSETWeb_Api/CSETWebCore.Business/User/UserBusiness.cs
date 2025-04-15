@@ -363,9 +363,11 @@ namespace CSETWebCore.Business.User
                                 FirstName = user.FirstName,
                                 LastName = user.LastName,
                                 PrimaryEmail = user.PrimaryEmail,
-                                RoleName = role.RoleName,
+                                Roles = _context.USER_ROLES.Where(x => x.UserId == user.UserId).Select(x => x.Role).ToList(),
                                 UserId = user.UserId
                             }).ToList();
+
+            usersAndRoles.UserRoles = usersAndRoles.UserRoles.DistinctBy(x => x.UserId).ToList();
 
             usersAndRoles.Roles = (_context.ROLES).ToList();
 
