@@ -21,6 +21,6 @@ namespace CSETWebCore.Model.User
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PrimaryEmail { get; set; }
-        public string RoleName { get; set; }
+        public List<ROLES> Roles { get; set; }
     }
 }
