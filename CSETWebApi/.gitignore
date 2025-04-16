@@ -41,3 +41,5 @@ obj
 /CSETWeb_Api/BusinessLogic/ImportAssessment/Models/AllGeneralJsonModels.cs.bak
 .DS_Store
 CSETWeb_Api/.DS_Store
+appsettings.Development.json
+CSETWebcore.Business.csproj.user
