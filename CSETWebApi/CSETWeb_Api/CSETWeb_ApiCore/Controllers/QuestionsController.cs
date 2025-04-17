@@ -684,6 +684,9 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SaveAnswerParameter")]
         public ParameterToken SaveAnswerParameter([FromBody] ParameterToken token)
         {
+            var assessmentId = _token.AssessmentForUser();
+            _questionRequirement.AssessmentId = assessmentId;
+
             var parmSub = new ParameterSubstitution(_context, _token);
 
             return parmSub.SaveAnswerParameter(_questionRequirement, token.RequirementId, token.Id, token.AnswerId, token.Substitution);
