@@ -68,7 +68,8 @@ namespace CSETWebCore.Business.Reports
         public List<BasicReportData.RequirementControl> GetControls(string applicationMode)
         {
             var lang = _tokenManager.GetCurrentLanguage();
-            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
+ 
+            var parmSub = new ParameterSubstitution(_context, _tokenManager);
 
             _questionRequirement.InitializeManager(_assessmentId);
 
@@ -175,7 +176,7 @@ namespace CSETWebCore.Business.Reports
 
 
                     // Replace parameter in requirement text if custom parameter is found 
-                    a.Requirement_Text = rm.ResolveParameters(a.Requirement_Id, a.Answer_Id, a.Requirement_Text);
+                    a.Requirement_Text = parmSub.ResolveParameters(a.Requirement_Id, a.Answer_Id, a.Requirement_Text);
 
                     control = new BasicReportData.RequirementControl()
                     {
@@ -290,8 +291,10 @@ namespace CSETWebCore.Business.Reports
 
                 case "Requirement":
                     identifier = f.NewRequirement.Requirement_Title;
-                    var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
-                    questionText = rb.ResolveParameters(f.NewRequirement.Requirement_Id, answerId, f.NewRequirement.Requirement_Text);
+
+                    var parmSub = new ParameterSubstitution(_context, _tokenManager);
+
+                    questionText = parmSub.ResolveParameters(f.NewRequirement.Requirement_Id, answerId, f.NewRequirement.Requirement_Text);
 
                     // translate
                     questionText = _overlay.GetRequirement(f.NewRequirement.Requirement_Id, lang)?.RequirementText ?? questionText;
@@ -299,7 +302,6 @@ namespace CSETWebCore.Business.Reports
                     return;
 
                 case "Maturity":
-
                     identifier = f.MaturityQuestion.Question_Title;
                     questionText = f.MaturityQuestion.Question_Text;
 

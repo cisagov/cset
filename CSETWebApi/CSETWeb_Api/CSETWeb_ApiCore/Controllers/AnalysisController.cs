@@ -82,6 +82,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetRankedQuestions()
         {
             var lang = _tokenManager.GetCurrentLanguage();
+            var parmSub = new ParameterSubstitution(_context, _tokenManager);
 
             int assessmentId = _tokenManager.AssessmentForUser();
             _requirement.SetRequirementAssessmentId(assessmentId);
@@ -109,7 +110,7 @@ namespace CSETWebCore.Api.Controllers
                 }
 
 
-                q.QuestionText = _requirement.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
+                q.QuestionText = parmSub.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
             }
 
             return Ok(rankedQuestionList);
@@ -120,6 +121,8 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/analysis/Feedback")]
         public IActionResult GetFeedback()
         {
+            var parmSub = new ParameterSubstitution(_context, _tokenManager);
+
             try
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
@@ -210,8 +213,8 @@ namespace CSETWebCore.Api.Controllers
 
                 foreach (FeedbackQuestion q in feedbackQuestions)
                 {
-                    q.QuestionText = _requirement.ResolveParameters(q.QuestionID, q.AnswerID, q.QuestionText);
-                    q.Feedback = _requirement.ResolveParameters(q.QuestionID, q.AnswerID, q.Feedback);
+                    q.QuestionText = parmSub.ResolveParameters(q.QuestionID, q.AnswerID, q.QuestionText);
+                    q.Feedback = parmSub.ResolveParameters(q.QuestionID, q.AnswerID, q.Feedback);
                     FeedbackResult.FeedbackBody += "Users Feedback: <br/>" + q.Feedback + "<br/><br/>";
                     FeedbackResult.FeedbackBody += q.QuestionText + "<br/><br/>";
                     FeedbackResult.FeedbackBody += FeedbackWarning + "<br/>";
@@ -225,8 +228,8 @@ namespace CSETWebCore.Api.Controllers
 
                 foreach (FeedbackQuestion q in feedbackQuestions)
                 {
-                    q.QuestionText = _requirement.RichTextParameters(q.QuestionID, q.AnswerID, q.QuestionText);
-                    q.Feedback = _requirement.RichTextParameters(q.QuestionID, q.AnswerID, q.Feedback);
+                    q.QuestionText = parmSub.RichTextParameters(q.QuestionID, q.AnswerID, q.QuestionText);
+                    q.Feedback = parmSub.RichTextParameters(q.QuestionID, q.AnswerID, q.Feedback);
                     FeedbackResult.FeedbackEmailBody += "Users Feedback: %0D%0A" + q.Feedback + "%0D%0A";
                     FeedbackResult.FeedbackEmailBody += q.QuestionText + "%0D%0A%0D%0A";
                     FeedbackResult.FeedbackEmailBody += FeedbackWarning + "%0D%0A";
