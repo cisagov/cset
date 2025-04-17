@@ -23,12 +23,5 @@ namespace CSETWebCore.Interfaces.Question
         QuestionGroup BuildCategoryResponse();
         QuestionSubCategory BuildSubcategoryResponse();
         List<int> GetActiveAnswerIds();
-        void LoadParametersList();
-        public List<ParameterToken> GetTokensForRequirement(int reqId, int ansId);
-        List<ParameterToken> GetDefaultParametersForAssessment();
-        ParameterToken SaveAssessmentParameter(int parameterId, string newText);
-        ParameterToken SaveAnswerParameter(int requirementId, int parameterId, int answerId, string newText);
-        string ResolveParameters(int reqId, int ansId, string requirementText);
-        string RichTextParameters(int reqId, int ansId, string requirementText);
     }
 }

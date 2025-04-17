@@ -110,40 +110,6 @@ export class QuestionBlockComponent implements OnInit {
   }
 
   /**
-   * Replace parameter placeholders in the question text template with any overridden values.
-   * @param q
-   */
-  applyTokensToText(q: Question) {
-    let text = q.questionText;
-
-    text = this.linebreakPipe.transform(text);
-
-    if (!q.parmSubs) {
-      return text;
-    }
-
-    // Substitute the longer tokens first, to avoid substituting a nested token
-    // and leave the outer token untouched.  We currently only support the outer tokens.
-    q.parmSubs.sort((a, b) => {
-      if (a.token.length > b.token.length) return -1;
-      if (a.token.length < b.token.length) return 1;
-      return 0;
-    });
-
-    q.parmSubs.forEach(t => {
-      if (t.substitution == null) {
-        // uncustomized
-        text = this.replaceAll(text, `{{${t.token}}}`, "[<span class='sub-me fst-italic pid-" + t.id + "'>" + t.token + "</span>]");
-      } else {
-        // customized
-        text = this.replaceAll(text, `{{${t.token}}}`, "<span class='sub-me pid-" + t.id + "'>" + t.substitution + "</span>");
-      }
-    });
-
-    return text;
-  }
-
-  /**
    *
    * @param q
    */
@@ -194,7 +160,7 @@ export class QuestionBlockComponent implements OnInit {
       q.answer_Id = result.answerId;
 
       q.parmSubs.find(s => s.id === parameterId).substitution = result.substitution;
-      this.applyTokensToText(q);
+      this.questionsSvc.applyTokensToText(q);
       this.dialogRef = null;
     });
   }
@@ -421,13 +387,6 @@ export class QuestionBlockComponent implements OnInit {
         });
     }, 500);
 
-  }
-
-  replaceAll(origString: string, searchStr: string, replaceStr: string) {
-    // escape regexp special characters in search string
-    searchStr = searchStr.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-
-    return origString.replace(new RegExp(searchStr, 'gi'), replaceStr);
   }
 
   /**
