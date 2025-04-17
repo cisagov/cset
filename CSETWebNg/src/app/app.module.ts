@@ -263,7 +263,6 @@ import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.compone
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
-import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
 import { IodLayoutComponent } from './layout/iod-layout/iod-layout.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
@@ -419,9 +418,6 @@ import { SprsScoreComponent } from './assessment/results/mat-cmmc2/scorecard/spr
 import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
-import { LoginRraComponent } from './initial/login-rra/login-rra.component';
-import { AboutRraComponent } from './dialogs/about-rra/about-rra.component';
-import { LogoRraComponent } from './layout/logos/logo-rra/logo-rra.component';
 import { LogoCsetComponent } from './layout/logos/logo-cset/logo-cset.component';
 import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-reports.component';
 import { QuestionBlockVadrComponent } from './assessment/questions/question-block-vadr/question-block-vadr.component';
@@ -894,7 +890,6 @@ registerSwiper();
         TutorialMvraComponent,
         LoginAcetComponent,
         LoginCsetComponent,
-        LoginRraComponent,
         AboutCsetComponent,
         AboutAcetComponent,
         AcetOriginComponent,
@@ -976,9 +971,6 @@ registerSwiper();
         AboutTsaComponent,
         TutorialCmmc2Component,
         TopMenusComponent,
-        RraLayoutMainComponent,
-        AboutRraComponent,
-        LogoRraComponent,
         IodLayoutComponent,
         LogoCsetComponent,
         TopMenusComponent,

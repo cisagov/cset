@@ -35,9 +35,6 @@
             <div *ngIf="configSvc.installationMode === 'CSET' || configSvc.installationMode === ''">
                 {{t('change password.enter email cset')}}
             </div>
-            <div *ngIf="configSvc.installationMode === 'RRA'">
-                {{t('change password.enter email rra')}}
-            </div>
             <div *ngIf="configSvc.installationMode === 'ACET'">
                 {{t('change password.enter email acet')}}
             </div>
