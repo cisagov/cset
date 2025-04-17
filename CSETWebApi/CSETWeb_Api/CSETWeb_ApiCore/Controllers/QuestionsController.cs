@@ -26,9 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Malcolm;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using CSETWebCore.Helpers;
-using CSETWebCore.Business.Contact;
 using NLog;
 
 namespace CSETWebCore.Api.Controllers
@@ -658,8 +656,11 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetDefaultParametersForAssessment()
         {
             var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
+            var controls = rm.GetControls().Requirements.ToList();
 
-            return Ok(rm.GetDefaultParametersForAssessment());
+            var parmSub = new ParameterSubstitution(_context, _token);
+
+            return Ok(parmSub.GetDefaultParametersForAssessment(controls));
         }
 
 
@@ -683,9 +684,9 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SaveAnswerParameter")]
         public ParameterToken SaveAnswerParameter([FromBody] ParameterToken token)
         {
-            var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
+            var parmSub = new ParameterSubstitution(_context, _token);
 
-            return rm.SaveAnswerParameter(token.RequirementId, token.Id, token.AnswerId, token.Substitution);
+            return parmSub.SaveAnswerParameter(_questionRequirement, token.RequirementId, token.Id, token.AnswerId, token.Substitution);
         }
 
 

@@ -9,16 +9,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using CSETWebCore.Business.Acet;
-using CSETWebCore.Business.Reports;
 using CSETWebCore.Constants;
-using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Question;
-using Microsoft.EntityFrameworkCore.Query;
-
 
 
 namespace CSETWebCore.Business.Question
@@ -190,6 +185,14 @@ namespace CSETWebCore.Business.Question
                     requirement.Requirement_Text = reqOverlay.RequirementText;
                     requirement.Supplemental_Info = reqOverlay.SupplementalInfo;
                 }
+
+                // We use an answerid of 0 because there is no need to resolve 
+                // parameters here -- we are in Questions mode, so just format the
+                // parameter tokens for display
+                var parmSub = new ParameterSubstitution(_context, _tokenManager);
+                requirement.Requirement_Text = 
+                    parmSub.ResolveParameters(requirement.Requirement_Id, 0, requirement.Requirement_Text);
+
 
                 var cat = _overlay.GetPropertyValue("STANDARD_CATEGORY", requirement.Standard_Sub_Category.ToLower(), _lang);
                 if (cat != null)
