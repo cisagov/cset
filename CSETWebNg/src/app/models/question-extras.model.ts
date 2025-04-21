@@ -39,6 +39,7 @@ export interface ReferenceDocLink {
   isUploaded: boolean;
   sectionRef?: string;
   bookmarks?: string[];
+  language: string;
 }
 
 /**

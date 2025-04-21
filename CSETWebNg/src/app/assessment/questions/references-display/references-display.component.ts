@@ -63,6 +63,7 @@ export class ReferencesDisplayComponent implements OnInit {
   ngOnInit(): void {
     // group sectionRefs (bookmarks) with their documents
     this.sourceDocuments = this.groupDocumentBookmarks(this.tab.sourceDocumentsList);
+    console.log( this.sourceDocuments)
     this.additionalDocuments = this.groupDocumentBookmarks(this.tab.additionalDocumentsList);
   }
 
@@ -72,7 +73,6 @@ export class ReferencesDisplayComponent implements OnInit {
    */
   groupDocumentBookmarks(docList): ReferenceDocLink[] {
     const list: ReferenceDocLink[] = [];
-
     docList?.forEach(ref => {
       ref.fileName = ref.fileName?.trim();
       ref.title = ref.title?.trim();
@@ -86,7 +86,8 @@ export class ReferencesDisplayComponent implements OnInit {
           title: ref.title,
           url: ref.url,
           isUploaded: ref.isUploaded,
-          bookmarks: []
+          bookmarks: [],
+          language:ref.language
         };
         list.push(listDoc);
       }
