@@ -73,7 +73,7 @@ export class ScoreRangeComponent implements OnInit {
   /**
    * padding value to get things away from the left and right edge
    */
-  p = 10;
+  p = 25;
 
 
   ngOnInit(): void {
