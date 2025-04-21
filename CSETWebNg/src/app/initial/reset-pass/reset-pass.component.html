@@ -121,10 +121,6 @@
                 <app-cset-origin *ngIf="showOrigin">
                 </app-cset-origin>
                 <app-acet-origin *ngIf="configSvc.installationMode === 'ACET'"></app-acet-origin>
-
-                <div *ngIf="configSvc.installationMode === 'RRA'">
-                    {{t('change password.ransomware explanation')}}
-                </div>
             </div>
             <img *ngIf="(configSvc.installationMode || '') === ''" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
             <img *ngIf="(configSvc.installationMode || '') === 'TSA'"
