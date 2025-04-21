@@ -33,7 +33,9 @@ export class ReferencesSectionComponent {
    * Bookmarks to an actual sectionRef are appended to the URL.
    */
   formatDocumentUrl(doc: ReferenceDocLink, bookmark: any) {
+    console.log(this.resourceLibSvc.formatDocumentUrl(doc, bookmark))
     return this.resourceLibSvc.formatDocumentUrl(doc, bookmark);
+
   }
 
   /**
@@ -48,10 +50,10 @@ export class ReferencesSectionComponent {
 
       // "document"
       return this.tSvc.translate('extras.document');
-      
+
     } else {
       if (!!bookmark.destinationString && bookmark.destinationString.trim().length > 0) {
-        // display the destinationstring 
+        // display the destinationstring
         return bookmark.destinationString;
       }
 
