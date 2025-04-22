@@ -1,0 +1,32 @@
+[
+  {
+    "key": "3",
+    "value": "Grande (3+ días)",
+    "valueEN": "Large (3+ days)"
+  },
+  {
+    "key": "2",
+    "value": "Mediana (1-2 días)",
+    "valueEN": "Medium (1-2 days)"
+  },
+  {
+    "key": "1",
+    "value": "Pequeña (1-2 horas)",
+    "valueEN": "Small (1-2 hour) assessment"
+  },
+  {
+    "key": "4",
+    "value": "1 semana",
+    "valueEN": "1 week"
+  },
+  {
+    "key": "5",
+    "value": "2 semanas",
+    "valueEN": "2 weeks"
+  },
+  {
+    "key": "6",
+    "value": "Más de 2 semanas",
+    "valueEN": "More than 2 weeks"
+  }
+]

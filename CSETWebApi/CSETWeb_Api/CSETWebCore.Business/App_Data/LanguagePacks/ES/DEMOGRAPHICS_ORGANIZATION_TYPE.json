@@ -1,37 +1,37 @@
 [
   {
     "key": "1",
-    "value": "Промисловість",
+    "value": "Industria",
     "valueEN": "Industry"
   },
   {
     "key": "2",
-    "value": "Центральні органи виконавчої влади",
+    "value": "Entidad Federal",
     "valueEN": "Federal Entity"
   },
   {
     "key": "3",
-    "value": "SLTT",
+    "value": "Estatal, Local, Tribal y Territorial (SLTT)",
     "valueEN": "SLTT"
   },
   {
     "key": "4",
-    "value": "Державний",
+    "value": "Estatal",
     "valueEN": "State"
   },
   {
     "key": "5",
-    "value": "Місцевий",
+    "value": "Local",
     "valueEN": "Local"
   },
   {
     "key": "6",
-    "value": "Територіальний",
+    "value": "Territorial",
     "valueEN": "Territorial"
   },
   {
     "key": "7",
-    "value": "Об'єданна теріторіальна громада",
+    "value": "Tribal",
     "valueEN": "Tribal"
   }
 ]
