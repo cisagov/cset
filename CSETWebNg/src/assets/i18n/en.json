@@ -229,7 +229,11 @@
         "adjusted questions": "Adjusted For System Questions",
         "information type": "Information Type",
         "type": "Type",
-        "special factors": "Special Factors"
+        "special factors": "Special Factors",
+        "determine special factors": "Determine Special Factors",
+        "confidentiality special factor": "Confidentiality Special Factor",
+        "integrity special factor": "Integrity Special Factor",
+        "availability special factor": "Availability Special Factor"
       },
       "level": {
         "low": "Low",

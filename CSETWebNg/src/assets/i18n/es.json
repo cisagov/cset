@@ -226,7 +226,11 @@
                 "adjusted questions": "Ajustado Para Preguntas del Sistema",
                 "information type": "Tipo de Información",
                 "type": "Tipo",
-                "special factors": "Factores Especiales"
+                "special factors": "Factores Especiales",
+                "determine special factors": "Determinar factores especiales",
+                "confidentiality special factor": "Factor Especial de Confidencialidad",
+                "integrity special factor": "Factor Especial de Integridad",
+                "availability special factor": "Factor Especial de Disponibilidad"
             },
             "level": {
                 "low": "Bajo",
