@@ -165,7 +165,11 @@
         "adjusted questions": "Скориговано для системних питань",
         "information type": "Тип інформації",
         "type": "Тип",
-        "special factors": "Спеціальні фактори"
+        "special factors": "Спеціальні фактори",
+        "determine special factors": "Визначити Особливі Фактори",
+        "confidentiality special factor": "Особливий Фактор Конфіденційності",
+        "integrity special factor": "Особливий Фактор Цілісності",
+        "availability special factor": "Особливий Фактор Доступності"
       },
       "level": {
         "low": "Низький",

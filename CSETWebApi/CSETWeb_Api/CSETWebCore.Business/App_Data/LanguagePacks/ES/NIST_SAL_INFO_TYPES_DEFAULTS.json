@@ -1,0 +1,433 @@
+[
+  {
+    "typeId": 1,
+    "typeValue": "Transporte Aéreo",
+    "specialFactorC": "Factores Especiales que Afectan la Determinación del Impacto de Confidencialidad: La divulgación no autorizada de información (por ejemplo, investigaciones, mantenimiento) que no ha sido adecuadamente investigada, coordinada o editada puede resultar en un daño económico grave a individuos y corporaciones. La pérdida de confianza pública es otra consecuencia potencial. Además, alguna información asociada con las funciones de transporte aéreo es propiedad de corporaciones o está sujeta a leyes de privacidad. En tales casos, el impacto de confidencialidad resultante de la divulgación no autorizada puede ser moderado. La sensibilidad de la información de transporte aéreo (por ejemplo, datos de posicionamiento de aeronaves) puede ser impulsada por el tiempo o eventos. Por ejemplo, las listas de pasajeros no se pueden divulgar al público general antes de que un vuelo despegue, pero se colocan en el dominio público en caso de un accidente. En tales casos, el impacto de confidencialidad resultante de la divulgación no autorizada puede ser moderado.",
+    "specialFactorI": "Factores Especiales que Afectan la Determinación del Impacto de Integridad: Algunas funciones de transporte aéreo son críticas en el tiempo (por ejemplo, instrucciones de control de tráfico aéreo, informes de posición, conciencia situacional, separación, informes meteorológicos para el área terminal, seguimiento de micro ráfagas, informes de problemas de mantenimiento). La gestión de comunicaciones (por ejemplo, la gestión de frecuencias) también necesita ser incluida en las consideraciones de impacto de integridad del transporte aéreo. Puede haber circunstancias en las que la asignación errónea de frecuencias puede resultar en la pérdida de comunicaciones con aeronaves que están afectadas por condiciones peligrosas (por ejemplo, pérdida de comunicaciones con una aeronave en un espacio aéreo congestionado). La modificación no autorizada o la destrucción de información crítica en el tiempo necesaria para estas funciones puede resultar en grandes pérdidas materiales y en la pérdida de vidas humanas. El Sistema de Aumento de Área Amplia (WAAS) complementa la disponibilidad e integridad de la información de posicionamiento disponible a partir de los Sistemas de Posicionamiento Global (GPS) del Departamento de Defensa. Debido a los impactos potenciales a nivel de sistema de una pérdida de integridad de este sistema, se recomienda un alto nivel de impacto de integridad.",
+    "specialFactorA": "Factores Especiales que Afectan la Determinación del Impacto de Disponibilidad: Algunas funciones de transporte aéreo son críticas en el tiempo (por ejemplo, instrucciones de control de tráfico aéreo, informes de posición, conciencia situacional, separación, informes meteorológicos para el área terminal, seguimiento de micro ráfagas, informes de problemas de mantenimiento). La pérdida de disponibilidad de información crítica en el tiempo necesaria para estas funciones puede resultar en grandes pérdidas materiales y en la pérdida de vidas humanas. El tiempo juega un papel importante en el impacto de disponibilidad de la información de transporte aéreo. Por ejemplo, la criticidad del tiempo de la información meteorológica puede medirse en minutos u horas en el caso de operaciones de pre-vuelo y en vuelo. Sin embargo, en el enfoque final de aterrizaje, puede ser necesario hasta el segundo de disponibilidad (por ejemplo, detección de micro ráfagas en el área terminal). Las operaciones aéreas no son tolerantes a la pérdida de información. El Sistema de Aumento de Área Amplia (WAAS) complementa la disponibilidad de información disponible a partir de los Sistemas de Posicionamiento Global (GPS) del Departamento de Defensa. Debido a los impactos potenciales a nivel de sistema de una pérdida de disponibilidad de este sistema, sería apropiadamente categorizado como teniendo un alto impacto de disponibilidad."
+  },
+  {
+    "typeId": 2,
+    "typeValue": "Gestión de Activos y Pasivos"
+  },
+  {
+    "typeId": 3,
+    "typeValue": "Ejecución del Presupuesto"
+  },
+  {
+    "typeId": 4,
+    "typeValue": "Formulación del Presupuesto"
+  },
+  {
+    "typeId": 5,
+    "typeValue": "Integración de Presupuesto y Rendimiento"
+  },
+  {
+    "typeId": 6,
+    "typeValue": "Planificación de Capital"
+  },
+  {
+    "typeId": 7,
+    "typeValue": "Cobros y Cuentas por Cobrar"
+  },
+  {
+    "typeId": 8,
+    "typeValue": "Planificación de Contingencias"
+  },
+  {
+    "typeId": 9,
+    "typeValue": "Continuidad de Operaciones"
+  },
+  {
+    "typeId": 10,
+    "typeValue": "Contabilidad de Costos/Medición de Rendimiento"
+  },
+  {
+    "typeId": 11,
+    "typeValue": "Servicios al Cliente"
+  },
+  {
+    "typeId": 12,
+    "typeValue": "Preparación y Planificación para Desastres",
+    "specialFactorC": "Factores Especiales que Afectan la Determinación del Impacto de Confidencialidad: Las consecuencias de la divulgación no autorizada de alguna información de preparación y planificación para desastres pueden incluir la revelación de características de infraestructura crítica débil o sensible o la seguridad inadecuada de objetivos en EE.UU. a terroristas o otros adversarios. Dicha información puede revelar al enemigo la técnica(s) más efectiva(s) para usar en atacar un objetivo, y/o información sobre las capacidades, intención y planes de nuestros adversarios. Donde se espera que la divulgación no autorizada de información de preparación y planificación para desastres asociada con infraestructuras críticas, grandes grupos de personas o activos nacionales clave sea de uso directo para terroristas, se recomienda un nivel de impacto de confidencialidad alto.",
+    "specialFactorI": "Factores Especiales que Afectan la Determinación del Impacto de Integridad: La modificación no autorizada o la destrucción de información que afecta las comunicaciones externas (por ejemplo, páginas web, correo electrónico) puede afectar negativamente las operaciones y/o la confianza pública en la agencia, pero el daño a la misión generalmente será limitado. Las consecuencias de la modificación no autorizada o la destrucción de información pueden ser muy graves o catastróficas si los datos son información operativa crítica en el tiempo. En tales casos, el nivel de impacto asignado sería moderado o alto.",
+    "specialFactorA": "Factores Especiales que Afectan la Determinación del Impacto de Disponibilidad: Si los respondedores de emergencias y aquellos responsables de las actividades de reparación y restauración no pueden acceder a la información de preparación y planificación en caso de una emergencia real, las consecuencias pueden incluir confusión y retrasos. En tales casos, el nivel de impacto de disponibilidad puede ser moderado o alto."
+  },
+  {
+    "typeId": 13,
+    "typeValue": "Respuesta a Emergencias",
+    "specialFactorC": "Factores Especiales que Afectan la Determinación del Impacto de Confidencialidad: En casos donde se está llevando a cabo un ataque, la divulgación no autorizada de información de respuesta a emergencias puede proporcionar información que podría permitir a terroristas u otros adversarios apuntar a recursos de respuesta a emergencias, poniendo en peligro los recursos y misiones de respuesta a emergencias y la seguridad pública. Dada la criticidad que mucha información de respuesta a emergencias tiene en términos de pérdida potencial de vidas humanas y daños importantes a la propiedad, donde se puede razonablemente esperar que la divulgación no autorizada de información facilite la interferencia con las misiones de respuesta a emergencias, el nivel de impacto de confidencialidad puede ser moderado o alto. La divulgación no autorizada de la respuesta a emergencias de una agencia por parte de otra agencia podría resultar en impactos negativos en la coordinación interjurisdiccional dentro de la infraestructura crítica de servicios de emergencia y la efectividad general de las organizaciones encargadas de las misiones de respuesta a emergencias.",
+    "specialFactorI": "Nivel de Impacto de Integridad Recomendado: El nivel de impacto de integridad provisional recomendado para la información de respuesta a emergencias es normalmente alto.",
+    "specialFactorA": "Nivel de Impacto de Disponibilidad Recomendado: El nivel de impacto de disponibilidad provisional recomendado para la información de respuesta a emergencias es alto."
+  },
+  {
+    "typeId": 14,
+    "typeValue": "Conservación y Preparación Energética",
+    "specialFactorC": "Factores Especiales que Afectan la Determinación del Impacto de Confidencialidad: En algunos casos, la divulgación no autorizada de hallazgos preliminares o políticas en consideración sobre medidas de conservación propuestas o la distribución de energía en caso de emergencia puede resultar en la movilización de intereses especiales. Estos grupos pueden oponerse con éxito a las medidas de conservación necesarias y obtener una ventaja injusta para intereses comerciales específicos. Además, la divulgación no autorizada puede causar pérdida de confianza en el gobierno federal, tanto a nivel nacional como internacional. En tales casos, puede resultar un daño grave para las operaciones de conservación y preparación energética. Por lo tanto, el nivel de impacto de confidencialidad puede ser moderado. En otros casos, la divulgación no autorizada de información sobre medidas tomadas para asegurar el suministro de energía en caso de emergencia puede facilitar actividades malintencionadas de terroristas. Aquí, hay un potencial de pérdida de vidas humanas resultante de cortes prolongados, por lo que el nivel de impacto de confidencialidad puede ser alto.",
+    "specialFactorI": "Factores Especiales que Afectan la Determinación del Impacto de Integridad: La modificación no autorizada o la destrucción de información necesaria para procedimientos críticos en la misión que aseguren el suministro de energía en caso de emergencia puede resultar en cortes prolongados. Existe algún potencial de amenaza consecuente para la infraestructura energética crítica y para la vida humana. En tales casos, el nivel de impacto de integridad puede ser alto.",
+    "specialFactorA": "Factores Especiales que Afectan la Determinación del Impacto de Disponibilidad: La no disponibilidad de información necesaria para procedimientos críticos en la misión que aseguren el suministro de energía en caso de emergencia puede resultar en cortes prolongados. Existe algún potencial de amenaza consecuente para la infraestructura energética crítica y para la vida humana. En tales casos, el nivel de impacto de disponibilidad puede ser alto."
+  },
+  {
+    "typeId": 15,
+    "typeValue": "Producción de Energía",
+    "specialFactorC": "Factores Especiales que Afectan la Determinación del Impacto de Confidencialidad: La divulgación no autorizada de alguna información sobre producción de energía puede resultar en consecuencias financieras importantes. En algunos casos, la divulgación prematura de esta información puede impactar los mercados financieros. La divulgación no autorizada a una sola institución podría dañar la confianza en las instituciones gubernamentales, resultar en eventos financieros adversos y tener un efecto adverso serio en la confianza pública en la agencia. Por lo tanto, el impacto de confidencialidad debería ser al menos moderado para esta información de producción de energía.",
+    "specialFactorI": "Factores Especiales que Afectan la Determinación del Impacto de Integridad: Si la información sobre producción de energía es crítica en el tiempo o muy sensible, el nivel de impacto de integridad puede ser moderado o alto.",
+    "specialFactorA": "Nivel de Impacto de Disponibilidad Recomendado: El nivel de impacto de disponibilidad provisional recomendado para la información de producción de energía es bajo."
+  },
+  {
+    "typeId": 16,
+    "typeValue": "Gestión de Recursos Energéticos",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 17,
+    "typeValue": "Suministro de Energía",
+    "specialFactorC": "Factores Especiales que Afectan la Determinación del Impacto de Confidencialidad: Las consecuencias de la divulgación no autorizada de información sobre el suministro de energía pueden tener un serio impacto económico con respecto a ventajas competitivas y dinámicas del mercado financiero y de productos. Además, la divulgación no autorizada de información de suministro puede asistir a terroristas en el robo de productos energéticos o en la interrupción de los canales de distribución de energía. La facilitación del robo de materiales nucleares es un resultado potencialmente catastrófico de la divulgación no autorizada de ciertos tipos de información sobre suministro de energía. En estos casos, el impacto de confidencialidad debe considerarse alto. Nivel de Impacto de Confidencialidad Recomendado: El nivel de impacto de confidencialidad provisional recomendado para la mayor parte de la información sobre suministro de energía es bajo.",
+    "specialFactorI": "Factores Especiales que Afectan la Determinación del Impacto de Integridad: Sistemas críticos para la misión: La modificación no autorizada de información o sistemas de información críticos para la misión (por ejemplo, distribución de energía eléctrica, oleoductos o gasoductos) puede resultar en impactos severos en el medio ambiente, el servicio, los principales activos y/o la seguridad humana. En consecuencia, el nivel de impacto de integridad asociado con estos tipos de procesos/sistemas críticos para la misión puede ser alto. Sistemas no críticos para la misión: Para información o sistemas de información que no impactan directamente funciones críticas para la misión, el nivel de impacto de integridad puede ser degradado a bajo."
+  },
+  {
+    "typeId": 19,
+    "typeValue": "Monitoreo y Pronóstico Ambiental",
+    "specialFactorC": "Factores Especiales que Afectan la Determinación del Impacto de Confidencialidad: Los efectos adversos más serios probablemente involucren la exposición de información que es propiedad de una organización o resulten en publicidad dañina para una organización. [La divulgación no autorizada de alguna información puede tener un serio impacto económico tanto en empresas individuales como en el mercado en general. Las consecuencias de tales divulgaciones no autorizadas pueden tener un efecto adverso en la confianza pública en la agencia.] En tales casos, los impactos potenciales de confidencialidad pueden ser al menos moderados.",
+    "specialFactorI": "Factores Especiales que Afectan la Determinación del Impacto de Integridad: La modificación no autorizada o la destrucción de información que afecta las comunicaciones externas (por ejemplo, páginas web, correo electrónico) puede afectar negativamente las operaciones y la confianza pública en la agencia, pero también la misión de la agencia. En algunos casos, la modificación no autorizada o la destrucción de información puede resultar en la pérdida de vidas humanas, un potencial de alto impacto.",
+    "specialFactorA": "Nivel de Impacto de Disponibilidad Recomendado: El nivel de impacto de disponibilidad provisional recomendado para la información de monitoreo y pronóstico ambiental es bajo."
+  },
+  {
+    "typeId": 20,
+    "typeValue": "Remediación Ambiental",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 21,
+    "typeValue": "Gestión de Instalaciones, Flotas y Equipos",
+    "specialFactorC": "Factores Especiales que Afectan la Determinación del Impacto de Confidencialidad: La información asociada con el mantenimiento, la administración y la operación de muchos edificios de oficinas del gobierno federal, flotas de transporte e instalaciones operativas puede ser de utilidad material para los delincuentes que buscan acceder a instalaciones federales para facilitar o perpetrar fraude, robo u otra empresa criminal (por ejemplo, extraer a reclusos de instalaciones de detención federales). En este caso, la divulgación no autorizada de información puede tener un efecto adverso grave en las operaciones de la agencia, los activos de la agencia o los individuos. El impacto de confidencialidad consecuente sería al menos moderado.",
+    "specialFactorI": "Factores Especiales que Afectan la Determinación del Impacto de Integridad: Las excepciones pueden incluir aspectos de respuesta a emergencias de la gestión de desastres o la protección del liderazgo. En tales casos, el nivel de impacto de integridad asociado con la modificación o destrucción no autorizada de la información de gestión de instalaciones, flotas y equipos puede ser alto.",
+    "specialFactorA": "Factores Especiales que Afectan la Determinación del Impacto de Disponibilidad: Las excepciones pueden incluir aspectos de respuesta a emergencias de la gestión de desastres o la protección del liderazgo. En tales casos, los retrasos medidos en segundos pueden costar vidas y causar daños importantes a la propiedad. En consecuencia, el nivel de impacto de disponibilidad asociado con la modificación o destrucción no autorizada de la información de gestión de instalaciones, flotas y equipos necesaria para responder a emergencias será alto."
+  },
+  {
+    "typeId": 22,
+    "typeValue": "Datos y Estadísticas de Propósito General",
+    "specialFactorC": "Factores Especiales que Afectan la Determinación del Impacto de Confidencialidad: La divulgación no autorizada y prematura de mucha información de datos y estadísticas económicas (por ejemplo, productos agrícolas, indicadores económicos) puede resultar en consecuencias financieras importantes. En algunos casos, la divulgación prematura de esta información puede impactar los principales mercados financieros y dañar las infraestructuras nacionales bancarias y financieras. La divulgación no autorizada y prematura a una sola institución (por ejemplo, una importante casa de corretaje de productos básicos), podría dañar la confianza en las instituciones de recopilación y desarrollo de datos y estadísticas de propósito general, resultar en una mayor disrupción del mercado y tener un efecto adverso severo o catastrófico en la confianza pública en la agencia. Incluso cuando las consecuencias se limitan a dar una ventaja injusta en el mercado a una sola institución financiera o comercial, la divulgación no autorizada puede tener un efecto adverso grave en la confianza pública en la agencia y su personal. Esto puede resultar en la asignación de un nivel de impacto moderado a dicha información.",
+    "specialFactorI": "Nivel de Impacto de Integridad Recomendado: El nivel de impacto de integridad provisional recomendado para la información de datos y estadísticas de propósito general es bajo.",
+    "specialFactorA": "Nivel de Impacto de Disponibilidad Recomendado: El nivel de impacto de disponibilidad provisional recomendado para la información de datos y estadísticas de propósito general es bajo."
+  },
+  {
+    "typeId": 23,
+    "typeValue": "Adquisición de Bienes",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 24,
+    "typeValue": "Transporte Terrestre",
+    "specialFactorC": "Factores Especiales que Afectan la Determinación del Impacto de Confidencialidad: Algunas funciones de regulación y aplicación de tarifas asociadas con el paso seguro de pasajeros y mercancías por tierra involucran información relativamente sensible. Estas están incluidas en la Aplicación de la Ley. La divulgación no autorizada de información de investigaciones de accidentes que aún no ha sido adecuadamente investigada, coordinada o editada puede resultar en un daño económico grave a individuos y corporaciones. La pérdida de confianza pública es otra consecuencia potencial. Además, alguna información asociada con las funciones de transporte terrestre es propiedad de corporaciones o está sujeta a leyes de privacidad (por ejemplo, la Ley de Privacidad de 1974). (Los niveles de impacto provisional de la Información de la Ley de Privacidad están documentados en el tipo de información de Identidad Personal y Autenticación.) En tales casos, el impacto de confidencialidad resultante de la divulgación no autorizada puede ser moderado.",
+    "specialFactorI": "Factores Especiales que Afectan la Determinación del Impacto de Integridad: Algunas funciones de transporte terrestre son críticas en el tiempo (por ejemplo, funciones de cambio de vía asociadas con viajes en tren). La modificación no autorizada o la destrucción de información crítica en el tiempo necesaria para estas funciones puede resultar en grandes pérdidas materiales y en la pérdida de vidas humanas. Dicha información tendrá un nivel de impacto de integridad alto.",
+    "specialFactorA": "Factores Especiales que Afectan la Determinación del Impacto de Disponibilidad: Algunas funciones de transporte terrestre son críticas en el tiempo (por ejemplo, funciones de cambio de vía asociadas con viajes en tren). La pérdida de disponibilidad de información crítica en el tiempo necesaria para estas funciones puede resultar en grandes pérdidas materiales y en la pérdida de vidas humanas. Dicha información tendrá un nivel de impacto de integridad alto."
+  },
+  {
+    "typeId": 25,
+    "typeValue": "Servicios de Mesa de Ayuda",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 26,
+    "typeValue": "Gestión de Infraestructura de Información",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 27,
+    "typeValue": "Gestión de Información",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 28,
+    "typeValue": "Seguridad de la Información",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 29,
+    "typeValue": "Intercambio de Información",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 30,
+    "typeValue": "Protección de la Propiedad Intelectual",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 31,
+    "typeValue": "Control de Inventario",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 32,
+    "typeValue": "Protección de Activos Claves e Infraestructura Crítica",
+    "specialFactorC": "Nivel de Impacto de Confidencialidad Recomendado: El nivel de impacto de confidencialidad provisional recomendado para la información de protección de infraestructura crítica es alto.",
+    "specialFactorI": "Nivel de Impacto de Integridad Recomendado: El nivel de impacto de integridad provisional recomendado para la información de protección de infraestructura crítica es alto.",
+    "specialFactorA": "Nivel de Impacto de Disponibilidad Recomendado: El nivel de impacto de disponibilidad provisional recomendado para la información de protección de infraestructura crítica es alto."
+  },
+  {
+    "typeId": 33,
+    "typeValue": "Gestión de Derechos Laborales",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 34,
+    "typeValue": "Gestión del Ciclo de Vida/Cambio",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 35,
+    "typeValue": "Gestión de Logística",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 36,
+    "typeValue": "Mejora de la Gestión",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 37,
+    "typeValue": "Manufactura",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 38,
+    "typeValue": "Otras Finanzas",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 39,
+    "typeValue": "Otra Gestión de Información",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 40,
+    "typeValue": "Otra Gestión",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 41,
+    "typeValue": "Otras Operaciones",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 42,
+    "typeValue": "Otra Investigación y Desarrollo",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 43,
+    "typeValue": "Otra Seguridad",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 44,
+    "typeValue": "Otras Funciones de Apoyo",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 45,
+    "typeValue": "Pagos",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 46,
+    "typeValue": "Mantenimiento de Infraestructura por Porcentaje",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 47,
+    "typeValue": "Permisos y Licencias",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 48,
+    "typeValue": "Prevención y Control de la Contaminación",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 49,
+    "typeValue": "Divulgación de Productos",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 50,
+    "typeValue": "Protección de Propiedad",
+    "specialFactorC": "Factores Especiales que Afectan la Determinación del Impacto de Confidencialidad: Cuando se protegen instalaciones de infraestructura crítica o activos clave nacionales, las consecuencias de la divulgación no autorizada de información de protección de la propiedad podrían revelar vulnerabilidades en las medidas de protección a terroristas u otros adversarios. Cuando se espera que la divulgación no autorizada de información de protección de la propiedad asociada con infraestructuras críticas, grandes grupos de personas o activos clave nacionales sea de uso directo para terroristas, el nivel de impacto de confidencialidad es alto.",
+    "specialFactorI": "Factores Especiales que Afectan la Determinación del Impacto de Integridad: La modificación no autorizada o la destrucción de información que afecta las comunicaciones externas (por ejemplo, páginas web, correo electrónico) puede afectar negativamente las operaciones o la confianza pública en la agencia. Sin embargo, el daño potencial a la misión de protección generalmente será de mayor preocupación. Si la información modificada o destruida es táctica, es decir, crítica en el tiempo, existe un mayor potencial para que se tomen acciones basadas en información incompleta o falsa. Esto puede tener efectos adversos graves en la operación de protección. Esto puede resultar en la asignación de un nivel de impacto moderado a dicha información.",
+    "specialFactorA": "Factores Especiales que Afectan la Determinación del Impacto de Disponibilidad: Las consecuencias de la incapacidad de las fuerzas de seguridad y otros respondedores de emergencias para recibir información de protección de la propiedad de manera oportuna pueden resultar en consecuencias catastróficas para las propiedades que podrían incluir infraestructuras críticas y activos clave nacionales. En general, el nivel de impacto de disponibilidad asignado a la información de protección de la propiedad depende de lo que se esté protegiendo. Esto puede resultar en la asignación de un nivel de impacto moderado o alto a dicha información."
+  },
+  {
+    "typeId": 51,
+    "typeValue": "Relaciones Públicas",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 52,
+    "typeValue": "Retención de Registros",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 53,
+    "typeValue": "Información de Reportes",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 54,
+    "typeValue": "Investigación y Desarrollo",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 55,
+    "typeValue": "Investigación e Innovación Científica y Tecnológica",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 56,
+    "typeValue": "Gestión de Seguridad",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 57,
+    "typeValue": "Recuperación de Servicios",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 58,
+    "typeValue": "Adquisición de Servicios",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 59,
+    "typeValue": "Monitoreo de Sistemas y Redes",
+    "specialFactorC": "Factores Especiales que Afectan la Determinación del Impacto de Confidencialidad: Cuando se espera que la información de monitoreo del sistema y la red recopilada tenga un alto nivel de impacto de confidencialidad, entonces la información de monitoreo del sistema y la red debe asignarse un alto nivel de impacto de confidencialidad. Cuando los datos de monitoreo del sistema y la red que se recopilan respaldan tipos de información descritos en esta guía, el personal de la agencia debe considerar una asignación de impacto de confidencialidad del tipo de información de mayor impacto procesada por el sistema. Dependiendo de la agencia y la misión que se esté apoyando, la sensibilidad de la información puede variar de baja a alta. (La información de seguridad nacional y los sistemas de seguridad nacional están fuera del alcance de esta guía.)",
+    "specialFactorI": "Factores Especiales que Afectan la Determinación del Impacto de Integridad: La pérdida de integridad de alguna información de monitoreo del sistema y la red puede ser muy grave para las operaciones de red y seguridad de la agencia, así como para la funcionalidad del sistema de información. Además, una pérdida de integridad puede tener graves consecuencias para la misión de la agencia y las funciones comerciales críticas. El nivel de impacto de integridad recomendado para la información de monitoreo del sistema y la red asociada con información altamente crítica es alto.",
+    "specialFactorA": "Nivel de Impacto de Disponibilidad Recomendado: El nivel de impacto de disponibilidad provisional recomendado para la información de monitoreo del sistema y la red es bajo."
+  },
+  {
+    "typeId": 60,
+    "typeValue": "Desarrollo de Sistemas",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 61,
+    "typeValue": "Mantenimiento de Sistemas",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 62,
+    "typeValue": "Capacitación y Empleo",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 63,
+    "typeValue": "Gestión de Recursos Hídricos",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 64,
+    "typeValue": "Transporte Marítimo",
+    "specialFactorC": "Factores Especiales que Afectan la Determinación del Impacto de Confidencialidad: La divulgación no autorizada de información de investigación de accidentes que no ha sido adecuadamente investigada, coordinada o editada puede resultar en un daño económico grave a individuos y corporaciones. La pérdida de confianza pública es otra consecuencia potencial. Además, alguna información asociada con las funciones de transporte marítimo es propiedad de corporaciones o está sujeta a leyes de privacidad. En tales casos, el impacto de confidencialidad resultante de la divulgación no autorizada puede ser moderado.",
+    "specialFactorI": "Factores Especiales que Afectan la Determinación del Impacto de Integridad: Algunas funciones de transporte marítimo y fluvial son críticas en el tiempo (por ejemplo, señales de socorro, operaciones de atraque, evitación de colisiones, advertencias de condiciones meteorológicas o marítimas peligrosas). La modificación no autorizada o la destrucción de información crítica en el tiempo necesaria para estas funciones puede resultar en grandes pérdidas materiales y en la pérdida de vidas humanas. Dicha información tendría un alto nivel de impacto de integridad. La gestión de comunicaciones (por ejemplo, la gestión de frecuencias) también necesita ser incluida en las consideraciones de impacto de integridad del transporte marítimo. Puede haber circunstancias en las que los errores en la asignación de frecuencias resulten en la incapacidad de las agencias del gobierno federal para comunicarse con las actividades del gobierno estatal o local. La posterior pérdida de capacidades de comunicación puede resultar en situaciones que amenacen la vida. Dicha información tendría un alto nivel de impacto de integridad.",
+    "specialFactorA": "Factores Especiales que Afectan la Determinación del Impacto de Disponibilidad: Algunas funciones de transporte marítimo y fluvial son críticas en el tiempo (por ejemplo, señales de socorro, operaciones de atraque, evitación de colisiones, advertencias de condiciones meteorológicas o marítimas peligrosas). La pérdida de disponibilidad de información crítica en el tiempo necesaria para estas funciones puede resultar en grandes pérdidas materiales y en la pérdida de vidas humanas. Dicha información tendría un alto nivel de impacto de integridad."
+  },
+  {
+    "typeId": 65,
+    "typeValue": "Seguridad Laboral",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 66,
+    "typeValue": "Planificación de la Fuerza Laboral",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  },
+  {
+    "typeId": 67,
+    "typeValue": "Desarrollo y Gestión de Políticas en el Lugar de Trabajo",
+    "specialFactorC": null,
+    "specialFactorI": null,
+    "specialFactorA": null
+  }
+]

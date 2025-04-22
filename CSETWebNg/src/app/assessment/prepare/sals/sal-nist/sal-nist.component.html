@@ -107,7 +107,7 @@
 
   <div class="mb-3">
     <h4>{{t('titles.sal.nist.selected information types')}}</h4>
-    <div>
+    <div class="mb-3">
       <p>{{t('titles.sal.nist.check applicable')}}</p>
       <table class="nist-sal-info-types" style="table-layout: fixed">
         <tr>
@@ -183,15 +183,15 @@
 
 
     <div class="mb-3">
-      <h4>Determine Special Factors</h4>
+      <h4>{{t('titles.sal.nist.determine special factors')}}</h4>
       <div class="form-group special-factors">
-        <label for="ConfidentialitySpecialFactor">Confidentiality Special Factor</label>
+        <label for="ConfidentialitySpecialFactor">{{t('titles.sal.nist.confidentiality special factor')}}</label>
         <textarea class="form-control" tabindex="0" id="ConfidentialitySpecialFactor"
           [(ngModel)]="topModel?.specialFactors.confidentiality_Special_Factor" (change)="specialFactor()"></textarea>
-        <label for="IntegritySpecialFactor">Integrity Special Factor</label>
+        <label for="IntegritySpecialFactor">{{t('titles.sal.nist.integrity special factor')}}</label>
         <textarea class="form-control" id="IntegritySpecialFactor"
           [(ngModel)]="topModel?.specialFactors.integrity_Special_Factor" (change)="specialFactor()"></textarea>
-        <label for="AvailabilitySpecialFactor">Availability Special Factor</label>
+        <label for="AvailabilitySpecialFactor">{{t('titles.sal.nist.availability special factor')}}</label>
         <textarea class="form-control" tabindex="0" id="AvailabilitySpecialFactor"
           [(ngModel)]="topModel?.specialFactors.availability_Special_Factor" (change)="specialFactor()"></textarea>
       </div>
