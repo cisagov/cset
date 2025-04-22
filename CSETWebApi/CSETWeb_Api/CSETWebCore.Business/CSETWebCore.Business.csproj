@@ -69,6 +69,9 @@
     <None Update="App_Data\LanguagePacks\ES\NIST_SAL_QUESTIONS.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="App_Data\LanguagePacks\ES\QUESTION_GROUP_HEADING.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="App_Data\LanguagePacks\ES\STANDARD_CATEGORY.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
