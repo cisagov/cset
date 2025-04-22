@@ -173,6 +173,7 @@
             "sal intro2": "Por ejemplo, un SAL típico alto contendrá entre 350-1000 preguntas, mientras que un SAL bajo típicamente contendrá entre 30-350 preguntas, dependiendo del estándar seleccionado.",
             "sal intro3": "El SAL se aplica a conjuntos de preguntas de Componentes Estándar y de Diagramas.",
             "current level": "Nivel corriente",
+            "methodology": "Metodología",
             "choose methodology": "Elija una de las tres metodologías SAL a continuación para determinar el nivel correcto para su evaluación.",
             "overall": "En general",
             "overall sal": "SAL general",
@@ -225,7 +226,11 @@
                 "adjusted questions": "Ajustado Para Preguntas del Sistema",
                 "information type": "Tipo de Información",
                 "type": "Tipo",
-                "special factors": "Factores Especiales"
+                "special factors": "Factores Especiales",
+                "determine special factors": "Determinar factores especiales",
+                "confidentiality special factor": "Factor Especial de Confidencialidad",
+                "integrity special factor": "Factor Especial de Integridad",
+                "availability special factor": "Factor Especial de Disponibilidad"
             },
             "level": {
                 "low": "Bajo",
@@ -273,7 +278,7 @@
         "comp results by cat": "Resultados de componentes por categoría",
         "answers by comp type": "Respuestas por tipo de componente",
         "network warnings": "Advertencias de red",
-        "high level desc exec sec comments": "Descripción de la evaluación de alto nivel Resumen ejecutivo y Comentarios",
+        "high level desc exec sec comments": "Descripción de la evaluación de alto nivel, Resumen ejecutivo y Comentarios",
         "reports": "Informes",
         "feedback": "Retroalimentación",
         "analytics": "analítica",
@@ -308,6 +313,8 @@
         "export": "Exportar",
         "export json": "JSON",
         "import": "Importar",
+        "import demographics": "Importar demografía",
+        "export demographics": "Exportar demografía",
         "enter password": "Introducir la contraseña",
         "export all": "Exportar todo",
         "export all to excel": "Exportar todo a Excel",
@@ -324,7 +331,9 @@
         "copy text": "Copiar texto",
         "change password": "Cambiar la contraseña",
         "reset password": "Restablecer la contraseña",
-        "forgot password": "Contraseña olvidada"
+        "forgot password": "Contraseña olvidada",
+        "on": "Activo",
+        "off": "Inactivo"
     },
     "answer-options": {
         "button-labels": {
@@ -843,6 +852,13 @@
         "protected features": "Funciones protegidas",
         "advisory": "Asesoramiento",
         "keyboard shortcuts": "Atajos de teclado"
+    },
+    "protected features": {
+        "protected features": "Funciones protegidas",
+        "module name": "Nombre de módulo",
+        "module full name": "Nombre completo de módulo",
+        "enable modules": "Habitar módulos",
+        "cisa assessor workflow": "Flujo de trabajo para evaluadores CISA"
     },
     "parameters": {
         "text1": "Muchos estándares en 'modo requisitos' contienen parámetros que se pueden cambiar para que coincidan con su situación específica. La tabla a continuación le permite cambiar los valores de los parámetros indicados en esta evaluación haciendo clic en el Valor de Parámetro. Cambiar un valor de parámetro actualizará todos los valores de parámetros relacionados en el texto del requisito de los Estándares de Ciberseguridad actualmente seleccionados.",
