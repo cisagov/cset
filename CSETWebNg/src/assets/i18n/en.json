@@ -176,6 +176,7 @@
       "sal intro2": "For example, a typical high SAL will contain 350-1000 questions where a low SAL will typically contain 30-350 questions, depending on the selected standard.",
       "sal intro3": "The SAL applies to Standard and Diagram Component question sets.",
       "current level": "Current Level",
+      "methodology": "Methodology",
       "choose methodology": "Choose one of the three SAL methodologies below to determine the correct level for your assessment.",
       "overall": "Overall",
       "overall sal": "Overall SAL",
@@ -352,7 +353,9 @@
     "copy text": "Copy Text",
     "change password": "Change Password",
     "reset password": "Reset Password",
-    "forgot password": "Forgot Password"
+    "forgot password": "Forgot Password",
+    "on": "On",
+    "off": "Off"
   },
   "contact": {
     "contacts": "Contacts",
@@ -980,6 +983,13 @@
     "protected features": "Protected Features",
     "advisory": "Advisory",
     "keyboard shortcuts": "Keyboard Shortcuts"
+  },
+  "protected features": {
+    "protected features": "Protected Features",
+    "module name": "Module Name",
+    "module full name": "Module Full Name",
+    "enable modules": "Enable Modules",
+    "cisa assessor workflow": "CISA Assessor Workflow"
   },
   "parameters": {
     "text1": "Many Standards in 'Requirements Mode' contain parameters that you can change to match your specific situation. The table below allows you to change the parameter values for the indicated parameter names in this Assessment by clicking on the Parameter Value. Changing a parameter value will update all related parameter values in the requirement text of the currently selected Cybersecurity Standard(s).",

@@ -48,6 +48,12 @@
     <None Update="App_Data\AssessmentConversion\upgrades.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="App_Data\LanguagePacks\ES\GALLERY_GROUP.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\ES\GALLERY_ITEM.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="App_Data\LanguagePacks\ES\NEW_REQUIREMENT.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

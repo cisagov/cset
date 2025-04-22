@@ -31,13 +31,14 @@
     <div class="d-flex flex-column flex-00a mb-5">
       <h3 class="text-center">{{t('reports.core.dashboard.score')}}</h3>
 
-      <p *ngIf="!(assessSvc.assessment?.useStandard && assessSvc.assessment?.useDiagram)">{{t('reports.overall score
-        para 1')}}</p>
+      <p *ngIf="!(assessSvc.assessment?.useStandard && assessSvc.assessment?.useDiagram)">
+        {{t('reports.overall score para 1')}}</p>
 
-      <p *ngIf="assessSvc.assessment?.useStandard && assessSvc.assessment?.useDiagram">{{t('reports.overall score para
-        2')}}</p>
-      <p *ngIf="assessSvc.assessment?.useStandard && assessSvc.assessment?.useDiagram">{{t('reports.overall score para
-        3')}}</p>
+      <p *ngIf="assessSvc.assessment?.useStandard && assessSvc.assessment?.useDiagram">
+        {{t('reports.overall score para 2')}}</p>
+        
+      <p *ngIf="assessSvc.assessment?.useStandard && assessSvc.assessment?.useDiagram">
+        {{t('reports.overall score para 3')}}</p>
 
       <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2em;">
 
