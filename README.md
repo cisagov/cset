@@ -73,6 +73,7 @@ The current recommended method to run CSET would be via Docker. Follow the steps
 
 - Clone this repository
 - Install [Docker Desktop](https://docs.docker.com/desktop/)
+  - **Important**: Update the Docker Desktop resource settings and allocate a minimum of 10 GB of memory
 - Copy over environment variables from the distribution file:
     - `cp env.dist .env`
 - Run CSET: `docker compose up -d`
