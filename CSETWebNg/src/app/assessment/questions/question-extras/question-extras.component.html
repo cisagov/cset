@@ -210,26 +210,28 @@
                 <div><span class="reqlabel">{{t('extras.title')}}: </span>{{tab?.requirementFrameworkTitle}}</div>
                 <div *ngIf="tab?.relatedFrameworkCategory"><span class="reqlabel">{{t('extras.category')}}:
                     </span>{{tab?.relatedFrameworkCategory}}</div>
+
+
                 <div *ngIf="!tab?.isMaturity && tab?.levelName && !usesRAC()">
                     <span class="reqlabel">{{t('extras.sal level')}}: </span>{{salLevel(tab?.levelName)}}
                 </div>
-
                 <div *ngIf="tab?.isMaturity && tab?.levelName">
                     <span class="reqlabel">{{t('extras.maturity level')}}: </span>{{tab?.levelName}}
                 </div>
 
+
                 <div *ngIf="!tab?.showRequirementStandards" class="reqlabel">{{t('extras.standard specific
                     requirement')}}:</div>
-                <div *ngIf="!tab?.showRequirementStandards">
+                <div *ngIf="!tab?.showRequirementStandards" class="mt-3 mx-4">
                     <span
                         [innerHTML]="tab?.requirementsData?.text ? (tab.requirementsData.text | safe: 'html') : 'none'"></span>
                     <span *ngIf="showQuestionIds" class="debug-highlight">{{
                         tab?.requirementsData?.requirementID }}</span>
                 </div>
 
+
                 <div *ngIf="tab?.questionsList?.length > 0" class="reqlabel">{{t('extras.questions related to req')}}:
                 </div>
-
                 <div>
                     <div *ngFor="let relatedQ of tab?.questionsList"
                         [innerHTML]="relatedQ.questionText | linebreak | safe: 'html'" class="related-question-1"></div>
