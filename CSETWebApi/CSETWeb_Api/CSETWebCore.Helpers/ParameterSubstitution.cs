@@ -16,14 +16,12 @@ namespace CSETWebCore.Helpers
 {
     public class ParameterSubstitution
     {
-        public List<ParameterToken> Tokens = new List<ParameterToken>();
         private CSETContext _context;
-        private ITokenManager _tokenManager;
         private int _assessmentId;
 
-        private Dictionary<int, List<PARAMETERS>> parametersDictionary = null;
-        private List<ParameterAssessment> parametersAssessmentList;
-        private Dictionary<int, List<ParameterValues>> parametersAnswerDictionary;
+        private Dictionary<int, List<PARAMETERS>> _parametersDictionary = null;
+        private List<ParameterAssessment> _parametersAssessmentList;
+        private Dictionary<int, List<ParameterValues>> _parametersAnswerDictionary;
 
 
         /// <summary>
@@ -33,31 +31,34 @@ namespace CSETWebCore.Helpers
         public ParameterSubstitution(CSETContext context, ITokenManager tokenManager)
         {
             _context = context;
-            _tokenManager = tokenManager;
             _assessmentId = tokenManager.AssessmentForUser();
+
+            // get the 'base' parameter values (parameter_name) for the requirement
+            LoadParametersLists();
         }
 
 
         /// <summary>
-        /// Adds a new element to the tokens list or overwrites
-        /// if it already exists.  This is so that we can overlay
-        /// global settings with local/answer settings.
+        /// 
         /// </summary>
-        /// <param name="token"></param>
-        /// <param name="substitution"></param>
-        public void Set(int id, string token, string substitution, int reqId, int ansId)
+        /// <param name="db"></param>
+        public void LoadParametersLists()
         {
-            var t = this.Tokens.Find(x => x.Token == token);
-            if (t != null)
-            {
-                t.Substitution = substitution;
-                t.RequirementId = reqId;
-                t.AnswerId = ansId;
-            }
-            else
-            {
-                Tokens.Add(new ParameterToken(id, token, substitution, reqId, ansId));
-            }
+            _parametersDictionary = (from p in _context.PARAMETERS
+                                     join r in _context.PARAMETER_REQUIREMENTS on p.Parameter_ID equals r.Parameter_Id
+                                     select new { p, r }).AsEnumerable()
+                .GroupBy(x => x.r.Requirement_Id)
+            .ToDictionary(x => x.Key, x => x.Select(y => y.p).ToList());
+            _parametersAssessmentList = (from pa in _context.PARAMETER_ASSESSMENT
+                                         join p in _context.PARAMETERS on pa.Parameter_ID equals p.Parameter_ID
+                                         where pa.Assessment_ID == _assessmentId
+                                         select new ParameterAssessment() { p = p, pa = pa }).ToList();
+
+            _parametersAnswerDictionary = (from p in _context.PARAMETERS
+                                           join pv in _context.PARAMETER_VALUES on p.Parameter_ID equals pv.Parameter_Id
+                                           select new ParameterValues() { p = p, pv = pv }).AsEnumerable()
+            .GroupBy(x => x.pv.Answer_Id)
+            .ToDictionary(x => x.Key, x => x.Select(y => y).ToList());
         }
 
 
@@ -69,69 +70,40 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public List<ParameterToken> GetTokensForRequirement(int reqId, int ansId)
         {
-            // get the 'base' parameter values (parameter_name) for the requirement
-            if (parametersDictionary == null)
-            {
-                LoadParametersList();
-            }
-
+            List<ParameterToken> pTokens = [];
             List<PARAMETERS> qBaseLevel;
-            if (parametersDictionary.TryGetValue(reqId, out qBaseLevel))
+            if (_parametersDictionary.TryGetValue(reqId, out qBaseLevel))
             {
                 foreach (var b in qBaseLevel)
                 {
-                    Set(b.Parameter_ID, b.Parameter_Name, null, reqId, 0);
+                    Set(pTokens, b.Parameter_ID, b.Parameter_Name, null, reqId, 0);
                 }
             }
 
             // overlay with any assessment-specific parameters for the requirement
-            var qAssessLevel = parametersAssessmentList;
+            var qAssessLevel = _parametersAssessmentList;
 
             foreach (var a in qAssessLevel)
             {
-                Set(a.p.Parameter_ID, a.p.Parameter_Name, a.pa.Parameter_Value_Assessment, reqId, 0);
+                Set(pTokens, a.p.Parameter_ID, a.p.Parameter_Name, a.pa.Parameter_Value_Assessment, reqId, 0);
             }
 
             // overlay with any 'inline' values for the answer
             if (ansId != 0)
             {
                 List<ParameterValues> qLocal;
-                if (parametersAnswerDictionary.TryGetValue(ansId, out qLocal))
+                if (_parametersAnswerDictionary.TryGetValue(ansId, out qLocal))
                 {
                     foreach (var local in qLocal.ToList())
                     {
-                        Set(local.p.Parameter_ID, local.p.Parameter_Name, local.pv.Parameter_Value, reqId, local.pv.Answer_Id);
+                        Set(pTokens, local.p.Parameter_ID, local.p.Parameter_Name, local.pv.Parameter_Value, reqId, local.pv.Answer_Id);
                     }
                 }
             }
 
-            Tokens = Tokens.OrderByDescending(x => x.Token.Length).ToList();
+            pTokens = pTokens.OrderByDescending(x => x.Token.Length).ToList();
 
-            return Tokens;
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="db"></param>
-        public void LoadParametersList()
-        {
-            parametersDictionary = (from p in _context.PARAMETERS
-                                    join r in _context.PARAMETER_REQUIREMENTS on p.Parameter_ID equals r.Parameter_Id
-                                    select new { p, r }).AsEnumerable()
-                .GroupBy(x => x.r.Requirement_Id)
-            .ToDictionary(x => x.Key, x => x.Select(y => y.p).ToList());
-            parametersAssessmentList = (from pa in _context.PARAMETER_ASSESSMENT
-                                        join p in _context.PARAMETERS on pa.Parameter_ID equals p.Parameter_ID
-                                        where pa.Assessment_ID == _assessmentId
-                                        select new ParameterAssessment() { p = p, pa = pa }).ToList();
-
-            parametersAnswerDictionary = (from p in _context.PARAMETERS
-                                          join pv in _context.PARAMETER_VALUES on p.Parameter_ID equals pv.Parameter_Id
-                                          select new ParameterValues() { p = p, pv = pv }).AsEnumerable()
-            .GroupBy(x => x.pv.Answer_Id)
-            .ToDictionary(x => x.Key, x => x.Select(y => y).ToList());
+            return pTokens;
         }
 
 
@@ -141,8 +113,9 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public List<ParameterToken> GetDefaultParametersForAssessment(List<RequirementPlus> reqs)
         {
+            List<ParameterToken> pTokens = [];
+
             // Get the list of requirement IDs
-            //List<RequirementPlus> reqs = GetControls().Requirements.ToList();
             List<int> requirementIds = reqs.Select(r => r.Requirement.Requirement_Id).ToList();
 
 
@@ -154,7 +127,7 @@ namespace CSETWebCore.Helpers
 
             foreach (var b in qBaseLevel)
             {
-                Set(b.p.Parameter_ID, b.p.Parameter_Name, b.p.Parameter_Name, b.r.Requirement_Id, 0);
+                Set(pTokens, b.p.Parameter_ID, b.p.Parameter_Name, b.p.Parameter_Name, b.r.Requirement_Id, 0);
             }
 
             // overlay with any assessment-specific parameters for the requirement
@@ -167,11 +140,10 @@ namespace CSETWebCore.Helpers
 
             foreach (var a in qAssessLevel)
             {
-                Set(a.p.Parameter_ID, a.p.Parameter_Name, a.pa.Parameter_Value_Assessment, a.pr.Requirement_Id, 0);
+                Set(pTokens, a.p.Parameter_ID, a.p.Parameter_Name, a.pa.Parameter_Value_Assessment, a.pr.Requirement_Id, 0);
             }
 
-
-            return Tokens;
+            return pTokens;
         }
 
 
@@ -247,8 +219,15 @@ namespace CSETWebCore.Helpers
 
             assessmentUtil.TouchAssessment(_assessmentId);
 
-            // Return the token that was just updated
-            return this.GetTokensForRequirement(requirementId, answerId).Where(p => p.Id == parameterId).First();
+
+            // Return a ParameterToken with the value that was just updated
+            var pt = new ParameterToken() { 
+                Substitution = dbParameterValues.Parameter_Value,
+                RequirementId = requirementId,
+                AnswerId = dbParameterValues.Answer_Id,
+                Id = dbParameterValues.Parameter_Id
+            };
+            return pt;
         }
 
 
@@ -260,8 +239,8 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public string ResolveParameters(int reqId, int ansId, string requirementText)
         {
-            List<ParameterToken> tokens = this.GetTokensForRequirement(reqId, ansId);
-            foreach (ParameterToken t in tokens)
+            List<ParameterToken> pTokens = this.GetTokensForRequirement(reqId, ansId);
+            foreach (ParameterToken t in pTokens)
             {
                 if (t.Substitution != null)
                 {
@@ -280,8 +259,8 @@ namespace CSETWebCore.Helpers
 
         public string RichTextParameters(int reqId, int ansId, string requirementText)
         {
-            List<ParameterToken> tokens = this.GetTokensForRequirement(reqId, ansId);
-            foreach (ParameterToken t in tokens)
+            List<ParameterToken> pTokens = GetTokensForRequirement(reqId, ansId);
+            foreach (ParameterToken t in pTokens)
             {
                 requirementText = requirementText.Replace(t.Token, t.Substitution);
             }
@@ -289,7 +268,29 @@ namespace CSETWebCore.Helpers
             requirementText = requirementText.Replace("\r\n", "%0D%0A").Replace("\r", "%0D%0A").Replace("\n", "%0D%0A");
 
             return requirementText;
+        }
 
+
+        /// <summary>
+        /// Adds a new element to the tokens list or overwrites
+        /// if it already exists.  This is so that we can overlay
+        /// global settings with local/answer settings.
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="substitution"></param>
+        public void Set(List<ParameterToken> pTokens, int id, string token, string substitution, int reqId, int ansId)
+        {
+            var t = pTokens.Find(x => x.Token == token);
+            if (t != null)
+            {
+                t.Substitution = substitution;
+                t.RequirementId = reqId;
+                t.AnswerId = ansId;
+            }
+            else
+            {
+                pTokens.Add(new ParameterToken(id, token, substitution, reqId, ansId));
+            }
         }
     }
 }
