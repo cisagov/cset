@@ -169,7 +169,6 @@ export class QuestionExtrasComponent implements OnInit {
 
   async fetchDetails(): Promise<QuestionDetailsContentViewModel> {
     const details = this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType).toPromise();
-    console.log(details)
     return details;
 
   }

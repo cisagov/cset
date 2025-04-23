@@ -24,7 +24,8 @@ export class ReferencesSectionComponent {
       public configSvc: ConfigService,
       public tSvc: TranslocoService,
       private resourceLibSvc: ResourceLibraryService
-    ) { }
+    ) {
+    }
 
   /**
    * Formats a URL to the document.  Handles uploaded documents via the
@@ -33,8 +34,8 @@ export class ReferencesSectionComponent {
    * Bookmarks to an actual sectionRef are appended to the URL.
    */
   formatDocumentUrl(doc: ReferenceDocLink, bookmark: any) {
-    console.log(this.resourceLibSvc.formatDocumentUrl(doc, bookmark))
     return this.resourceLibSvc.formatDocumentUrl(doc, bookmark);
+
 
   }
 
