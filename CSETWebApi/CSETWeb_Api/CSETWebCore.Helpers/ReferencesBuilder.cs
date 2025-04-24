@@ -42,43 +42,6 @@ namespace CSETWebCore.Helpers
             out List<ReferenceDocLink> sourceDocList,
             out List<ReferenceDocLink> additionalDocList)
         {
-            // var sourceQuery = _context.REQUIREMENT_REFERENCES
-            //     .Include(x => x.Gen_File)
-            //     .Where(s => s.Requirement_Id == requirementId && s.Source);
-            //
-            //
-            // var preferredSourceDocs = sourceQuery
-            //     .Where(s => s.Gen_File.Language == _lang)
-            //     .Select(s => new GenFileView
-            //     {
-            //         File_Id = s.Gen_File_Id,
-            //         Title = s.Gen_File.Title,
-            //         File_Name = s.Gen_File.File_Name,
-            //         Section_Ref = s.Section_Ref,
-            //         Destination_String = s.Destination_String,
-            //         Is_Uploaded = s.Gen_File.Is_Uploaded,
-            //         Sequence = s.Sequence,
-            //         Language = s.Gen_File.Language
-            //     })
-            //     .ToList();
-            //
-            // var finalSourceDocs = preferredSourceDocs.Any()
-            //     ? preferredSourceDocs
-            //     : sourceQuery
-            //         .Select(s => new GenFileView
-            //         {
-            //             File_Id = s.Gen_File_Id,
-            //             Title = s.Gen_File.Title,
-            //             File_Name = s.Gen_File.File_Name,
-            //             Section_Ref = s.Section_Ref,
-            //             Destination_String = s.Destination_String,
-            //             Is_Uploaded = s.Gen_File.Is_Uploaded,
-            //             Sequence = s.Sequence,
-            //             Language = s.Gen_File.Language
-            //         })
-            //         .ToList();
-            //
-            // sourceDocList = SortList(finalSourceDocs.AsQueryable());
             var sourceQuery = _context.REQUIREMENT_REFERENCES
                 .Include(x => x.Gen_File)
                 .Where(s => s.Requirement_Id == requirementId && s.Source);
