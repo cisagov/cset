@@ -24,6 +24,10 @@
 import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { ReportService } from '../../services/report.service';
 import { HttpClient } from '@angular/common/http';
+import htmlToPdfmake from 'html-to-pdfmake';
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.addVirtualFileSystem(pdfFonts);
 
 
 @Component({
@@ -89,7 +93,7 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
     comment: string
   }[] = [];
 
-  // Section 7 
+  // Section 7
   partiallyCompleteData: {
     mil: string,
     response: string,
@@ -1059,11 +1063,6 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
     let largeSpacing = 24;
     let extraLargeSpacing = 36;
 
-    let pdfMake = require('pdfmake/build/pdfmake.js');
-    let pdfFonts = require('pdfmake/build/vfs_fonts.js');
-    let htmlToPdfmake = require('html-to-pdfmake');
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
     // Section 3.2 Table Vertical Headers
     let assetSvg = { svg: '<svg height="120" width="200"><text x="-118" y="20" fill="black" transform="rotate(-90)">ASSET</text></svg>' };
     let threatSvg = { svg: '<svg height="120" width="200"><text x="-118" y="20" fill="black" transform="rotate(-90)">THREAT</text></svg>' };
@@ -1436,7 +1435,7 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         this.buildObjectivesTable("RISK", 5),
         { text: '', pageBreak: 'after', pageOrientation: 'landscape' },
 
-        // Section 4.4 Domain: Identity and Access Management (ACCESS) 
+        // Section 4.4 Domain: Identity and Access Management (ACCESS)
         { text: '4.4 Domain: Identity and Access Management (ACCESS)', style: 'header', marginBottom: largeSpacing },
         { text: 'Create and manage identities for the entities that may be granted logical or physical access to the organization\'s assets. Control access to the organization\'s assets, commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
 

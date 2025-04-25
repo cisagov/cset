@@ -1519,6 +1519,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Summary = reff.Gen_File.Summary,
                     Description = reff.Gen_File.Description,
                     Comments = reff.Gen_File.Comments,
+                    Language=reff.Gen_File.Language,
                 });
             }
 
@@ -1543,6 +1544,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Summary = reff.Gen_File.Summary,
                     Description = reff.Gen_File.Description,
                     Comments = reff.Gen_File.Comments,
+                    Language=reff.Gen_File.Language,
+                    
                 });
             }
 
