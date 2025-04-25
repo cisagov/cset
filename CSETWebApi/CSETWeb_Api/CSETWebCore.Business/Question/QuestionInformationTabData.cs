@@ -224,7 +224,7 @@ namespace CSETWebCore.Business.Question
                 tabData.SupplementalInfo = FormatSupplementalInfo(tabData.SupplementalInfo);
 
 
-                var refBuilder = new Helpers.ReferencesBuilder(_context);
+                var refBuilder = new Helpers.ReferencesBuilder(_context, _tokenManager);
                 refBuilder.BuildReferenceDocuments(requirement.Requirement_Id,
                     out List<ReferenceDocLink> sourceDocList,
                     out List<ReferenceDocLink> additionalDocList);
@@ -392,7 +392,7 @@ namespace CSETWebCore.Business.Question
             ShowSALLevel = true;
             ExaminationApproach = requirement.ExaminationApproach;
 
-            var refBuilder = new Helpers.ReferencesBuilder(_context);
+            var refBuilder = new Helpers.ReferencesBuilder(_context, _tokenManager);
             refBuilder.BuildReferenceDocuments(requirement.Requirement_Id,
                     out List<ReferenceDocLink> sourceDocList,
                     out List<ReferenceDocLink> additionalDocList);
@@ -460,7 +460,7 @@ namespace CSETWebCore.Business.Question
 
                     ShowSALLevel = true;
 
-                    var refBuilder = new Helpers.ReferencesBuilder(_context);
+                    var refBuilder = new Helpers.ReferencesBuilder(_context,_tokenManager);
                     refBuilder.BuildReferenceDocuments(frameworkData.RequirementID, out List<ReferenceDocLink> sourceDocList, out List<ReferenceDocLink> additionalDocList);
 
                     SetFrameworkQuestions(frameworkData.RequirementID);
@@ -507,7 +507,7 @@ namespace CSETWebCore.Business.Question
                 var reqid = _context.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
 
 
-                var refBuilder = new Helpers.ReferencesBuilder(_context);
+                var refBuilder = new Helpers.ReferencesBuilder(_context,_tokenManager);
                 refBuilder.BuildReferenceDocuments(reqid,
                     out List<ReferenceDocLink> sourceDocList,
                     out List<ReferenceDocLink> additionalDocList);
@@ -593,7 +593,7 @@ namespace CSETWebCore.Business.Question
                 RequirementsData = tabData;
 
 
-                var refBuilder = new Helpers.ReferencesBuilder(_context);
+                var refBuilder = new Helpers.ReferencesBuilder(_context,_tokenManager);
                 refBuilder.BuildRefDocumentsForMaturityQuestion(info.QuestionID,
                     out List<ReferenceDocLink> sourceDocList,
                     out List<ReferenceDocLink> additionalDocList);
