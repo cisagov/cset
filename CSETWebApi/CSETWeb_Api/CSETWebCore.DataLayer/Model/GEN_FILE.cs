@@ -101,7 +101,8 @@ public partial class GEN_FILE
     public byte[] Data { get; set; }
 
     public bool Is_Uploaded { get; set; }
-
+    [StringLength(50)]
+    public string Language { get; set; }
     [ForeignKey("Doc_Num")]
     [InverseProperty("GEN_FILE")]
     public virtual FILE_REF_KEYS Doc_NumNavigation { get; set; }

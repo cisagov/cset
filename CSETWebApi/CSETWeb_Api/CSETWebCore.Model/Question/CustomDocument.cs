@@ -23,12 +23,12 @@ namespace CSETWebCore.Model.Question
         public string Destination_String { get; set; }
         public bool Is_Uploaded { get; set; }
         public int? Sequence { get; set; }
-
+        public string Language { get; set; }
         public GenFileView()
         {
         }
 
-        public GenFileView(int id, string title, string fileName, string url, int fileTypeId, string sectionRef, bool isUploaded)
+        public GenFileView(int id, string title, string fileName, string url, int fileTypeId, string sectionRef, bool isUploaded, string Language)
         {
             this.File_Id = id;
             this.Title = title;
@@ -37,6 +37,7 @@ namespace CSETWebCore.Model.Question
             this.File_Type_Id = fileTypeId;
             this.Section_Ref = sectionRef;
             this.Is_Uploaded = isUploaded;
+            this.Language = Language;
         }
     }
 
@@ -52,5 +53,6 @@ namespace CSETWebCore.Model.Question
         public string Url { get; set; }
         public string SectionRef { get; set; }
         public string DestinationString { get; set;}
+        public string Language { get; set; }
     }
 }
