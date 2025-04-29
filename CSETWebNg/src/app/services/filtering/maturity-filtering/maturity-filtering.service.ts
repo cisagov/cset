@@ -320,9 +320,6 @@ export class MaturityFilteringService {
       if ((q.answer == null || q.answer == 'U') && filterSvc.showFilters.includes('U')) {
         q.visible = true;
 
-        if (this.assesmentSvc.isISE() && q.isParentQuestion) { //skips parent question when checking for visibility
-          q.visible = false;
-        }
         if (this.assesmentSvc.usesMaturityModel('VADR') && (q.freeResponseAnswer && q.freeResponseAnswer.length > 0)) {
           q.visible = false;
         }

@@ -86,10 +86,7 @@
                                 class="m-0 p-3 me-sm-2 me-md-3 me-lg-4 btn btn-primary d-flex align-items-center flex-11a lp-btn-mw-lg"
                                 (click)="clickNewAssessmentButton()"
                                 matTooltip="{{ t('welcome page.new assessment tooltip') }}">
-                                <span *ngIf="configSvc.installationMode !=='ACET'"
-                                    class="me-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
-                                <span *ngIf="configSvc.installationMode === 'ACET'"
-                                    class="me-3 landing-icon landing-icon-sm cset2-icons-acet-shield"></span>
+                                <span class="me-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
                                 <span class="landing-button-text landing-button-text-sm">{{ t('welcome page.new
                                     assessment') }}</span>
                             </button>
@@ -129,7 +126,6 @@
                 </div>
                 <p class="mt-3 fst-italic">
                     <app-cset-origin *ngIf="showCsetOrigin()"></app-cset-origin>
-                    <app-acet-origin *ngIf="showAcetOrigin()"></app-acet-origin>
                 </p>
             </ng-template>
         </div>

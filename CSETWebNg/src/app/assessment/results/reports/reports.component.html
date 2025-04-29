@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 <div *transloco="let t; read: 'reports'" class="white-panel oy-auto d-flex flex-column flex-11a">
-  <div *ngIf="!assessSvc.isISE()">
+  <div>
     <h3>{{ 'titles.reports' | transloco }}</h3>
 
     <p>
@@ -43,8 +43,7 @@
 
 
   <!-- Observation Tear Out Sheets -->
-  <div *ngIf="!assessSvc.usesMaturityModel('ISE')"
-    class="d-flex flex-column justify-content-start align-items-start mb-4">
+  <div class="d-flex flex-column justify-content-start align-items-start mb-4">
 
     <div class="mb-3 p-3 w-100" [class.gray-box]="true">
       <div class="d-flex flex-row" style="align-items: end">
@@ -76,6 +75,6 @@
     <app-report-list-common *ngIf="currentSectionId" [sectionId]="currentSectionId"></app-report-list-common>
 
 
-    <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
+    <app-nav-back-next [page]="'reports'"
       [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
   </div>

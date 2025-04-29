@@ -205,10 +205,6 @@ export class QuestionBlockComponent implements OnInit {
         this.mySubCategory.hasReviewItems = true;
         return;
       }
-      if (q.answer == 'A' && this.isAltTextRequired(q)) {
-        this.mySubCategory.hasReviewItems = true;
-        return;
-      }
     });
   }
 
@@ -339,18 +335,6 @@ export class QuestionBlockComponent implements OnInit {
         q.answer_Id = ansId;
       }
       );
-  }
-
-  /**
-   * For ACET installations, alt answers require 3 or more characters of
-   * justification.
-   */
-  isAltTextRequired(q: Question) {
-    if ((this.configSvc.installationMode === "ACET")
-      && (!q.altAnswerText || q.altAnswerText.trim().length < 3)) {
-      return true;
-    }
-    return false;
   }
 
   /**

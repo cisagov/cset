@@ -182,10 +182,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
    * link should be shown.
    */
   showObservationTearouts() {
-    if (this.assessSvc.isISE()) {
-      return false;
-    }
-
     if (this.isMobile) {
       return false;
     }

@@ -69,7 +69,7 @@
             </svg>
         </button>
 
-        <button *ngIf="!this.assessSvc.isISE() && displayIcon('CMNT')" id="btn_CMNT_{{ myQuestion.questionId }}"
+        <button *ngIf="displayIcon('CMNT')" id="btn_CMNT_{{ myQuestion.questionId }}"
             class="extras-button cursor-pointer" [class.active]="mode == 'CMNT'" (click)="toggleExtras('CMNT')"
             [matTooltip]="has('CMNT')==='inline' ? t('tooltip.comments with content'):t('tooltip.comment')"
             matTooltipPosition="above">
@@ -316,31 +316,19 @@
         </ng-template>
 
         <div *ngIf=" !!extras && mode === 'CMNT'">
-            <div *ngIf="!assessSvc.usesMaturityModel('CIE'); else cieComment" class="form-group">
+            <div class="form-group">
                 <textarea appAutoSize [(ngModel)]="myQuestion.comment" (change)="saveComment($event)"
                     style="min-height: 72px; width: 100%" class="form-control"
                     placeholder="{{t('extras.comment placeholder')}}"></textarea>
             </div>
-            <ng-template #cieComment class="form-group">
-                <textarea appAutoSize
-                    [value]="cieSvc.commentMap.get(myQuestion.questionId) != null ? cieSvc.commentMap.get(myQuestion.questionId) : ''"
-                    (change)="saveComment($event)" maxlength="2048" style="min-height: 72px; width: 100%"
-                    class="form-control"></textarea>
-            </ng-template>
         </div>
 
         <div *ngIf=" !!extras && mode === 'FDBK'">
-            <div *ngIf="!assessSvc.usesMaturityModel('CIE'); else cieFeedback" class="form-group">
+            <div class="form-group">
                 <textarea appAutoSize [(ngModel)]="myQuestion.feedback" (change)="saveFeedback($event)" maxlength="2048"
                     style="min-height: 72px; width: 100%" class="form-control"
                     placeholder="{{t('extras.feedback placeholder')}}"></textarea>
             </div>
-            <ng-template #cieFeedback class="form-group">
-                <textarea appAutoSize
-                    [value]="cieSvc.feedbackMap.get(myQuestion.questionId) != null ? cieSvc.feedbackMap.get(myQuestion.questionId) : ''"
-                    (change)="saveFeedback($event)" maxlength="2048" style="min-height: 72px; width: 100%"
-                    class="form-control"></textarea>
-            </ng-template>
         </div>
 
         <div *ngIf=" !!extras && mode === 'DOCS'">
@@ -395,49 +383,14 @@
                 class="display-none">
         </div>
 
+
         <div *ngIf=" !!extras && !!tab && mode === 'REFS'">
-            <div *ngIf="assessSvc.isISE()">
-                <table class="reference-table" *ngIf="tab != null">
-                    <tr *ngFor="let reftext of tab?.referenceTextList">
-                        <td colspan="2" [innerHTML]="reftext">
-                        </td>
-                    </tr>
-                    <tr *ngIf="tab?.sourceDocumentsList?.length > 0" class="font-weight-bold">
-                        <td>{{ documentLabel('Source Documents') }}</td>
-                        <td>{{'extras.section' | transloco}}</td>
-                    </tr>
-                    <tr *ngFor="let reference of tab?.sourceDocumentsList">
-                        <!-- <td class="align-top" [class.pb-4]="tab?.additionalDocumentsList?.length > 0"> -->
-                        <td class="align-top">
-                            <a href="{{formatDocumentUrl(reference, reference.sectionRef)}}" rel="noopener noreferrer"
-                                target="_blank">{{reference.title}}</a>
-                          <a> Lily</a>
-                        </td>
-                        <td class="text-nowrap align-top">{{reference.sectionRef}}</td>
-                    </tr>
-                    <tr *ngIf="tab?.additionalDocumentsList?.length > 0" class="font-weight-bold">
-                        <td>{{ documentLabel('Additional Documents') }}</td>
-                        <td>{{'extras.section' | transloco}}</td>
-                    </tr>
-                    <tr *ngFor="let reference of tab?.additionalDocumentsList">
-                        <td class="align-top">
-                            <a href="{{formatDocumentUrl(reference, reference.sectionRef)}}" rel="noopener noreferrer"
-                                target="_blank">{{reference.title}}</a>
-                        </td>
-                        <td class="text-nowrap align-top">{{reference.sectionRef}}</td>
-                    </tr>
-                    <tr *ngIf="areNoReferenceDocumentsAvailable()">
-                        <td colspan="2">(no reference documents available)</td>
-                    </tr>
-                </table>
-            </div>
-            <div *ngIf="!assessSvc.isISE()">
-                <app-references-display [tab]="tab" [q]="myQuestion"></app-references-display>
-            </div>
+            <app-references-display [tab]="tab" [q]="myQuestion"></app-references-display>
         </div>
 
+
         <div *ngIf=" !!extras && mode === 'OBSV'">
-            <div *ngIf="!this.assessSvc.isISE()">
+            <div>
                 <table class="table" *ngIf="tab != null && extras?.observations.length > 0">
                     <tr>
                         <th>{{ t('observation.observation title') }}</th>

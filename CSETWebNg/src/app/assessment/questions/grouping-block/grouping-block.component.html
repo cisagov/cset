@@ -61,7 +61,7 @@
             </app-question-block-vadr>
         </div>
         <div
-            *ngIf="(grouping.questions.length > 0) && !assessSvc.usesMaturityModel('VADR') && !assessSvc.usesMaturityModel('ISE') && !assessSvc.usesMaturityModel('CIE')">
+            *ngIf="(grouping.questions.length > 0) && !assessSvc.usesMaturityModel('VADR')">
             <app-question-block-maturity #questionBlock [myGrouping]="grouping">
             </app-question-block-maturity>
         </div>

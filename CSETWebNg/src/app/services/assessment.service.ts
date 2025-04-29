@@ -32,7 +32,6 @@ import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
 import { DemographicExtendedService } from './demographic-extended.service';
-import { CyberFloridaService } from './cyberflorida.service';
 import { Answer } from '../models/questions.model';
 import { BehaviorSubject, first, firstValueFrom, Observable } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
@@ -99,7 +98,6 @@ export class AssessmentService {
     private configSvc: ConfigService,
     private router: Router,
     private extDemoSvc: DemographicExtendedService,
-    private floridaSvc: CyberFloridaService,
     private c: ConstantsService,
     private convSvc: ConversionService
   ) {
@@ -142,7 +140,6 @@ export class AssessmentService {
         console.log("cleared first Time");
       }
     );
-    this.floridaSvc.clearState();
   }
 
   /**
@@ -502,7 +499,6 @@ export class AssessmentService {
           this.assessment = data;
 
           this.applicationMode = this.assessment.applicationMode;
-          //this.floridaSvc.updateStatus(this.assessment.);
 
           if (this.assessment.baselineAssessmentId) {
             localStorage.setItem("baseline", this.assessment.baselineAssessmentId.toString());
@@ -511,9 +507,6 @@ export class AssessmentService {
           }
 
           // make sure that the acet only switch is turned off when in standard CSET
-          if (this.configSvc.installationMode !== 'ACET') {
-            this.assessment.isAcetOnly = false;
-          }
           this.extDemoSvc.preloadDemoAndGeo();
           const rpath = localStorage.getItem('returnPath');
 
@@ -531,45 +524,6 @@ export class AssessmentService {
         });
       });
     });
-  }
-
-  /**
-   * Reset things to ACET defaults
-   */
-  setAcetDefaults() {
-    if (!!this.assessment) {
-      this.assessment.useMaturity = true;
-      this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
-      this.assessment.isAcetOnly = true;
-
-      this.assessment.useStandard = false;
-      this.assessment.useDiagram = false;
-    }
-  }
-
-
-  /**
-   *
-   */
-  setRraDefaults() {
-    if (!!this.assessment) {
-      this.assessment.useMaturity = true;
-      this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'RRA');
-
-      this.assessment.useStandard = false;
-      this.assessment.useDiagram = false;
-    }
-  }
-
-  setNcuaDefaults() {
-    if (!!this.assessment) {
-      this.assessment.useMaturity = true;
-      this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
-      //this.assessment.isAcetOnly = true;
-
-      this.assessment.useStandard = false;
-      this.assessment.useDiagram = false;
-    }
   }
 
   /**
@@ -672,23 +626,6 @@ export class AssessmentService {
   }
 
   /**
-  * A check for when we need custom ISE functionaltiy
-  * but prevents other assessments (like standards) from
-  * throwing an error when maturity model is undefined
-  */
-  isISE() {
-    if (this.assessment === undefined || this.assessment === null ||
-      this.assessment.maturityModel == null || this.assessment.maturityModel.modelName == null) {
-      return false;
-    }
-    if (this.assessment.maturityModel.modelName === 'ISE') {
-      return true;
-    }
-
-    return false;
-  }
-
-  /**
    * Indicates if the assessment is PCII.  This is set in the
    * CISA Assessor Workflow's Assessment Configuration page.
    */
@@ -714,29 +651,9 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'encryptStatus');
   }
 
-  isCyberFloridaComplete(): boolean {
-    if (this.configSvc.installationMode == "CF") {
-      return this.floridaSvc.isAssessmentComplete();
-    }
-    else
-      return true;
-  }
-
-  initCyberFlorida(assessmentId: number) {
-    this.floridaSvc.getInitialState().then(() => {
-      this.assessmentStateChanged$.next(this.c.NAV_CIE_REFRESH_NAV_PREPARE);
-    }
-    );
-  }
 
   updateAnswer(answer: Answer) {
-    this.floridaSvc.updateCompleteStatus(answer);
-    if (this.isCyberFloridaComplete()) {
-      this.convSvc.isEntryCfAssessment().subscribe((data) => {
-        if (data)
-          this.assessmentStateChanged$.next(this.c.NAV_CIE_REFRESH_ENABLE_NEXT);
-      });
-    }
+
   }
 
   //Assessment upgrade conversion 

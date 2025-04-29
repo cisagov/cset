@@ -244,9 +244,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     // Accessibility Features
     this._hotkeysService.add(new Hotkey('alt+c', (event: KeyboardEvent): boolean => {
       switch (this.configSvc.installationMode || '') {
-        case "ACET":
-          window.open(this.docUrl + "AccessibilityFeatures/index_acet.htm", "_blank");
-          break;
         default:
           window.open(this.docUrl + "ApplicationDocuments/AccessibilityStatement.pdf", "_blank");
       }
@@ -255,9 +252,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     // User Guide
     this._hotkeysService.add(new Hotkey('alt+g', (event: KeyboardEvent): boolean => {
       switch (this.configSvc.installationMode || '') {
-        case "ACET":
-          window.open(this.docUrl + "htmlhelp_acet/index.htm", "_blank");
-          break;
         default:
           window.open(this.docUrl + "htmlhelp/index.htm", "_blank");
       }

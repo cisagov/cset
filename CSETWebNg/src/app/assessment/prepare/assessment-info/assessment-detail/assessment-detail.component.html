@@ -27,13 +27,10 @@
             <p *ngIf="showAssessmentNameDisclaimer()">{{t('no pii in name')}}</p>
             <div class="col">
                 <label class="form-label" for="name">{{t('assessment name')}}</label>
-                <input type="text" maxlength="100" [disabled]="configSvc.installationMode === 'ACET'"
+                <input type="text" maxlength="100"
                     class="form-control" id="name" name="name" required focusOnInit="true"
                     [(ngModel)]="assessment.assessmentName" (ngModelChange)="assessment.assessmentName"
                     (change)="update($event)" autofocus tabindex="0">
-                <div class="invalid-feedback d-block text-muted" *ngIf="configSvc.installationMode === 'ACET'">
-                    Auto-populated based on data provided
-                </div>
             </div>
             <div class="col">
                 <label class="form-label" for="date">{{t('assessment date')}}</label>

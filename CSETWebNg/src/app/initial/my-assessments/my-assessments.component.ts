@@ -176,10 +176,6 @@ export class MyAssessmentsComponent implements OnInit {
     return this.configSvc.installationMode === 'CSET';
   }
 
-  showAcetOrigin(): boolean {
-    return this.configSvc.installationMode === 'ACET';
-  }
-
   getAssessments() {
     this.sortedAssessments = null;
     this.filterSvc.refresh();
@@ -247,9 +243,6 @@ export class MyAssessmentsComponent implements OnInit {
 
     if (item.useMaturity) {
       type += ', ' + this.getMaturityModelShortName(item);
-      if (item.selectedMaturityModel === 'ISE') {
-        item.questionAlias = 'statements';
-      }
     }
     if (item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;
     if (type.length > 0) type = type.substring(2);

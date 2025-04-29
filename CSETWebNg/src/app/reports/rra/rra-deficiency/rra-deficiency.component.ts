@@ -34,7 +34,7 @@ import { TranslocoService } from '@jsverse/transloco';
 @Component({
     selector: 'app-rra-deficiency',
     templateUrl: './rra-deficiency.component.html',
-    styleUrls: ['../../reports.scss', '../../acet-reports.scss'],
+    styleUrls: ['../../reports.scss'],
     standalone: false
 })
 export class RraDeficiencyComponent implements OnInit {

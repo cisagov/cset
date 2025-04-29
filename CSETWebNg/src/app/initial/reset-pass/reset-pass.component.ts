@@ -63,31 +63,8 @@ export class ResetPassComponent implements OnInit {
     /**
      *
      */
-    ngOnInit() {
-        switch (this.configSvc.installationMode) {
-            case 'ACET':
-            case 'RRA':
-            case 'RENEW':
-                this.showOrigin = false;
-                break;
-        }
-    }
+    ngOnInit() { }
 
-    showCsetLogo() {
-        var i = this.configSvc.installationMode;
-        if (i !== 'ACET' && i !== 'RRA') {
-            return true;
-        }
-        return false;
-    }
-
-    showRraLogo() {
-        var i = this.configSvc.installationMode;
-        if (i === 'RRA') {
-            return true;
-        }
-        return false;
-    }
 
     loadQuestions() {
         this.loading = true;

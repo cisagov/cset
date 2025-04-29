@@ -728,25 +728,13 @@ export class QuestionExtrasComponent implements OnInit {
    * Returns 'Observation' if the assessment is not ISE, 'Issue' if it is ISE
    */
   observationOrIssue() {
-    if (this.assessSvc.isISE()) {
-      return 'Issue';
-    }
-    else {
-      return 'Observation';
-    }
+    return 'Observation';
   }
 
   /**
    * Returns the custom label if the model has one (currently only ISE), or the default if not
    */
   documentLabel(defaultLabel: string) {
-    if (this.assessSvc.isISE()) {
-      if (defaultLabel === 'Source Documents') {
-        return 'Resources';
-      } else if (defaultLabel === 'Additional Documents') {
-        return 'References';
-      }
-    }
     return defaultLabel;
   }
 
