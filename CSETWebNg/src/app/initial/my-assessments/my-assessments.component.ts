@@ -45,7 +45,6 @@ import { LayoutService } from "../../services/layout.service";
 import { Comparer } from "../../helpers/comparer";
 import { ExportAssessmentComponent } from '../../dialogs/assessment-encryption/export-assessment/export-assessment.component';
 import { DateTime } from "luxon";
-import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
 import { TranslocoService } from "@jsverse/transloco";
 import { DateAdapter } from '@angular/material/core';
 import { HydroService } from "../../services/hydro.service";
@@ -521,19 +520,6 @@ export class MyAssessmentsComponent implements OnInit {
     this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'ExcelExportAllNCUA');
   }
 
-  openExportDecisionDialog() {
-    let dialogRef = this.dialog.open(NcuaExcelExportComponent, {
-      data: {
-        assessments: this.sortedAssessments
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
-        this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'ExcelExportAllNCUA?type=' + result);
-      }
-    });
-  }
 
   proceedToMerge() {
     this.router.navigate(['/examination-merge']);
