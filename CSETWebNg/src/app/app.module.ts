@@ -115,7 +115,6 @@ import { AssessmentDetailTsaComponent } from './assessment/prepare/assessment-in
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { AssessmentInfoTsaComponent } from './assessment/prepare/assessment-info/assessment-info-tsa/assessment-info-tsa.component';
-import { AssessmentInfoNcuaComponent } from './assessment/prepare/assessment-info/assessment-info-ncua/assessment-info-ncua.component';
 import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/assessment-config/assessment-config.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
@@ -239,7 +238,6 @@ import { TextComponent } from './assessment/diagram/diagram-inventory/text/text.
 import { ZonesComponent } from './assessment/diagram/diagram-inventory/zones/zones.component';
 import { DiagramService } from './services/diagram.service';
 import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
-import { NcuaExcelExportComponent } from './dialogs/excel-export/ncua-export/ncua-excel-export.component';
 import { MergeComponent } from './aggregation/merge/merge.component';
 import { AggregationService } from './services/aggregation.service';
 import { MergeQuestionDetailComponent } from './dialogs/merge-question-detail/merge-question-detail.component';
@@ -261,8 +259,6 @@ import { ChartColors } from './services/chart.service';
 import { LayoutSwitcherComponent } from './layout/layout-switcher/layout-switcher.component';
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
-import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
-import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { IodLayoutComponent } from './layout/iod-layout/iod-layout.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
@@ -406,7 +402,6 @@ import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-
 import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-heatmap.component';
 import { CmuService } from './services/cmu.service';
 import { Utilities } from './services/utilities.service';
-import { NCUAService } from './services/ncua.service';
 
 import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
@@ -436,7 +431,6 @@ import { OptionBlockNestedComponent } from './assessment/questions/maturity-ques
 import { ModuleContentLaunchComponent } from './reports/module-content/module-content-launch/module-content-launch.component';
 import { ModuleContentComponent } from './reports/module-content/module-content/module-content.component';
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
-import { AssessmentDetailNcuaComponent } from './assessment/prepare/assessment-info/assessment-detail-ncua/assessment-detail-ncua.component';
 import { QuestionExtrasDialogComponent } from './assessment/questions/question-extras-dialog/question-extras-dialog.component';
 import { VadrReportComponent } from './reports/vadr/vadr-report/vadr-report.component';
 import { VadrAnswerComplianceComponent } from './assessment/results/mat-vadr/vadr-answer-compliance/vadr-answer-compliance.component';
@@ -453,8 +447,6 @@ import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.componen
 import { GroupingBlockNestedReportComponent } from './reports/cis/grouping-block-nested-report/grouping-block-nested-report.component';
 import { QuestionBlockNestedReportComponent } from './reports/cis/question-block-nested-report/question-block-nested-report.component';
 import { OptionBlockNestedReportComponent } from './reports/cis/option-block-nested-report/option-block-nested-report.component';
-import { AssessmentConfigNcuaComponent } from './assessment/prepare/assessment-info/assessment-config-ncua/assessment-config-ncua.component';
-import { FeatureOptionNcuaComponent } from './assessment/prepare/assessment-info/assessment-config-ncua/feature-option-ncua/feature-option-ncua.component';
 import { CoverSheetAComponent } from './reports/cis/shared/cover-sheet-a/cover-sheet-a.component';
 import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb-a/disclaimer-blurb-a.component';
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
@@ -464,7 +456,6 @@ import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-defic
 import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
 import { CisScoringChartComponent } from './reports/cis/cis-section-scoring/cis-scoring-chart/cis-scoring-chart.component';
 import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
-import { MergeExaminationsComponent } from './assessment/merge/merge-examinations.component';
 import { CharterMismatchComponent } from './dialogs/charter-mistmatch/charter-mismatch.component';
 import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.directive';
 import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
@@ -516,8 +507,6 @@ import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
 import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
 import { IseDataComponent } from './reports/ise-data/ise-data.component';
 import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
-import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
-import { RenewLayoutMainComponent } from './layout/renew-layout-main/renew-layout-main.component';
 import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
 import { DemographicExtendedService } from './services/demographic-extended.service';
 import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
@@ -646,7 +635,6 @@ import { MaturityQuestionsCieComponent } from './assessment/questions/maturity-q
 import { AssessmentInfoCieComponent } from './assessment/prepare/assessment-info/assessment-info-cie/assessment-info-cie.component';
 import { AssessmentConfigCieComponent } from './assessment/prepare/assessment-info/assessment-config-cie/assessment-config-cie.component';
 import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-info/assessment-detail-cie/assessment-detail-cie.component';
-import { CieLayoutMainComponent } from './layout/cie-layout-main/cie-layout-main.component';
 import { AboutCieComponent } from './dialogs/about-cie/about-cie.component';
 import { ApplyingCieComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/applying-cie/applying-cie.component';
 import { CieExampleComponent } from './assessment/prepare/maturity/cie-example/cie-example.component';
@@ -701,9 +689,7 @@ registerSwiper();
         AssessmentDetailComponent,
         AssessmentContactsComponent,
         AssessmentDemographicsComponent,
-        AssessmentInfoNcuaComponent,
         AssessmentDetailTsaComponent,
-        AssessmentDetailNcuaComponent,
         ResultsComponent,
         SalSimpleComponent,
         StandardsComponent,
@@ -800,7 +786,6 @@ registerSwiper();
         TextComponent,
         ZonesComponent,
         ExcelExportComponent,
-        NcuaExcelExportComponent,
         MergeComponent,
         MergeQuestionDetailComponent,
         AggregationHomeComponent,
@@ -821,7 +806,6 @@ registerSwiper();
         LayoutBlankComponent,
         LayoutSwitcherComponent,
         LayoutMainComponent,
-        AcetLayoutMainComponent,
         ReportTestComponent,
         SiteDetailComponent,
         ObservationTearoutsComponent,
@@ -964,7 +948,6 @@ registerSwiper();
         CrrHeatmapComponent,
         MatCommentsComponent,
         AssessmentInfoTsaComponent,
-        TsaLayoutMainComponent,
         TsaAssessmentCompleteComponent,
         LoginTsaComponent,
         AssessmentConfigTsaComponent,
@@ -1009,8 +992,6 @@ registerSwiper();
         GroupingBlockNestedReportComponent,
         QuestionBlockNestedReportComponent,
         OptionBlockNestedReportComponent,
-        AssessmentConfigNcuaComponent,
-        FeatureOptionNcuaComponent,
         CoverSheetAComponent,
         DisclaimerBlurbAComponent,
         ConfigCisComponent,
@@ -1021,7 +1002,6 @@ registerSwiper();
         CisSectionScoringComponent,
         CisScoringChartComponent,
         SectionScoringComponent,
-        MergeExaminationsComponent,
         CharterMismatchComponent,
         DigitsOnlyNotZeroDirective,
         LandingPageTabsComponent,
@@ -1065,8 +1045,6 @@ registerSwiper();
         PrivacyWarningRejectComponent,
         SearchPageComponent,
         LogoTsaComponent,
-        CfLayoutMainComponent,
-        RenewLayoutMainComponent,
         OptionBlockComponent,
         DemographicsExtendedComponent,
         SectorHelpComponent,
@@ -1190,7 +1168,6 @@ registerSwiper();
         AssessmentInfoCieComponent,
         AssessmentConfigCieComponent,
         AssessmentDetailCieComponent,
-        CieLayoutMainComponent,
         AboutCieComponent,
         ApplyingCieComponent,
         CieExampleComponent,
@@ -1364,7 +1341,6 @@ registerSwiper();
         CmuService,
         CmuService,
         Utilities,
-        NCUAService,
         GalleryService,
         FooterService,
         AnalyticsService,

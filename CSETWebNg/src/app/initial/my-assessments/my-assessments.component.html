@@ -69,15 +69,7 @@
                                     <label for="importFile" class="m-0">{{t('buttons.export all to excel')}}</label>
                                 </label>
                             </div>
-                            <div *ngIf="this.ncuaSvc.switchStatus == true">
-                                <label *ngIf="configSvc.installationMode === 'ACET'"
-                                    class="m-0 ms-2 btn btn-secondary d-flex justify-content-end flex-00a"
-                                    matTooltip="{{ t('tooltip.export to excel') }}" (click)="openExportDecisionDialog()"
-                                    tabindex="0">
-                                    <span class="cset-icons-export-excel fs-base me-2"></span>
-                                    <label class="m-0">{{t('buttons.export all to excel')}}</label>
-                                </label>
-                            </div>
+                            
 
                             <label *ngIf="this.ncuaSvc.switchStatus"
                                 class="m-0 ms-2 btn btn-secondary d-flex align-items-center flex-00a"

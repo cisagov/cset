@@ -4,7 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.ACETDashboard;
 using CSETWebCore.Business.AdminTab;
 using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Assessment;
@@ -15,7 +14,6 @@ using CSETWebCore.Business.Diagram;
 using CSETWebCore.Business.Document;
 using CSETWebCore.Business.FileRepository;
 using CSETWebCore.Business.Framework;
-using CSETWebCore.Business.IRP;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.ModuleBuilder;
 using CSETWebCore.Business.Notification;
@@ -168,7 +166,6 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IUserBusiness, UserBusiness>();
             services.AddTransient<IUtilities, Utilities>();
             services.AddTransient<ITrendDataProcessor, TrendDataProcessor>();
-            services.AddTransient<IACETDashboardBusiness, ACETDashboardBusiness>();
             services.AddTransient<IReportsDataBusiness, ReportsDataBusiness>();
             services.AddTransient<IAggregationBusiness, AggregationBusiness>();
             services.AddTransient<IFrameworkBusiness, FrameworkBusiness>();
@@ -178,7 +175,6 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IDataHandling, DataHandling>();
             services.AddTransient<IGalleryState, GalleryState>();
             services.AddTransient<IGalleryEditor, GalleryEditor>();
-            services.AddScoped<IIRPBusiness, IRPBusiness>();
             services.AddTransient<IJSONFileExport, JSONFileExport>();
             services.AddTransient<IMalcolmBusiness, MalcolmBusiness>();
             services.AddScoped<IVersionBusiness, VersionBusiness>();
