@@ -34,7 +34,6 @@
         <node d="cis config" id="config-cis" path="assessment/{:id}/prepare/config-cis" visible="MATURITY:8" />
 
         <node d="cie tutorial.cie tutorial" id="tutorial-cie" visible="MATURITY:17" >
-            <node d="cie tutorial.quick facts" id="quick-facts-cie" path="assessment/{:id}/prepare/tutorial-cie/quick-facts-cie" />
             <node d="cie tutorial.overview" id="overview-cie" path="assessment/{:id}/prepare/tutorial-cie/overview-cie" />
             <node d="cie tutorial.background" id="background-cie" path="assessment/{:id}/prepare/tutorial-cie/background-cie" />
             <node d="cie tutorial.principles" id="principles-cie" path="assessment/{:id}/prepare/tutorial-cie/principles-cie" />
@@ -364,13 +363,6 @@
         <node d="goal performance" id="rra-gaps" path="assessment/{:id}/results/rra-gaps" visible="MATURITY:5" />
         <node d="assessment tiers" id="rra-level-results" path="assessment/{:id}/results/rra-level-results" visible="MATURITY:5" />
         <node d="performance summary" id="rra-summary-all" path="assessment/{:id}/results/rra-summary-all" visible="MATURITY:5" />
-
-
-
-        <!-- Results - ACET -->
-        <node d="acet maturity results" id="acet-detail" path="assessment/{:id}/results/acet-detail" visible="MATURITY:1" />
-        <node d="acet dashboard" id="acet-dashboard" path="assessment/{:id}/results/acet-dashboard" visible="MATURITY:1" />
-
 
 
         <!-- Results - CIS -->

@@ -7,7 +7,6 @@ import { ConfigService } from '../../services/config.service';
 import { DateAdapter } from '@angular/material/core';
 import { firstValueFrom } from 'rxjs';
 import { AssessmentService } from '../../services/assessment.service';
-import { NCUAService } from '../../services/ncua.service';
 
 @Component({
   selector: 'app-user-settings',
@@ -26,8 +25,7 @@ export class UserSettingsComponent implements OnInit {
     private authSvc: AuthenticationService,
     private configSvc: ConfigService,
     private dateAdapter: DateAdapter<any>,
-    public assessSvc: AssessmentService,
-    public ncuaSvc: NCUAService
+    public assessSvc: AssessmentService
   ) { }
 
   langSelection: string;

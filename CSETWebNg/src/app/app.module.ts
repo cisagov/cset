@@ -111,10 +111,8 @@ import { ContactItemComponent } from './assessment/prepare/assessment-info/asses
 // eslint-disable-next-line max-len
 import { AssessmentDemographicsComponent } from './assessment/prepare/assessment-info/assessment-demographics/assessment-demographics.component';
 import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
-import { AssessmentDetailTsaComponent } from './assessment/prepare/assessment-info/assessment-detail-tsa/assessment-detail-tsa.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
-import { AssessmentInfoTsaComponent } from './assessment/prepare/assessment-info/assessment-info-tsa/assessment-info-tsa.component';
 import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/assessment-config/assessment-config.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
@@ -216,11 +214,6 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { StandardDocumentsComponent } from './builder/standard-documents/standard-documents.component';
 import { RefDocumentComponent } from './builder/ref-document/ref-document.component';
 import { RequiredDocumentService } from './services/required-document.service';
-import { IRPService } from './services/irp.service';
-import { AcetDetailComponent } from './assessment/results/acet-detail/acet-detail.component';
-import { AcetDashboardComponent } from './assessment/results/dashboard/acet-dashboard.component';
-import { AdminComponent } from './assessment/results/admin/admin.component';
-import { ACETService } from './services/acet.service';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { ResourceLibraryService } from './services/resource-library.service';
 import { DiagramComponent } from './assessment/diagram/diagram.component';
@@ -300,14 +293,6 @@ import { ComplianceScoreComponent } from './assessment/results/mat-cmmc/chart-co
 import { ScoreRangeComponent } from './assessment/results/score-range/score-range.component';
 import { ScoreRangesComponent } from './assessment/results/score-ranges/score-ranges.component';
 import { CmmcStyleService } from './services/cmmc-style.service';
-import { InherentRiskProfileComponent } from './acet/inherent-risk-profile/inherent-risk-profile.component';
-import { IrpSectionComponent } from './reports/irp/irp.component';
-import { AcetDonutChartComponent } from './reports/acet-donut-chart/acet-donut-chart.component';
-import { AcetExecutiveComponent } from './reports/acet-executive/acet-executive.component';
-import { AcetDeficencyComponent } from './reports/acet-deficency/acet-deficency.component';
-import { AcetCommentsmarkedComponent } from './reports/acet-commentsmarked/acet-commentsmarked.component';
-import { AcetAnsweredQuestionsComponent } from './reports/acet-answeredquestions/acet-answeredquestions.component';
-import { AcetCompensatingcontrolsComponent } from './reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
 import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
 import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
 import { LoginAcetComponent } from './initial/login-acet/login-acet.component';
@@ -398,10 +383,8 @@ import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
 import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
 import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
-import { FeatureOptionTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/feature-option-tsa/feature-option-tsa.component';
 import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
 import { SprsScoreComponent } from './assessment/results/mat-cmmc2/scorecard/sprs-score/sprs-score.component';
-import { AssessmentConfigTsaComponent } from './assessment/prepare/assessment-info/assessment-config-tsa/assessment-config-tsa.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
 import { LogoCsetComponent } from './layout/logos/logo-cset/logo-cset.component';
@@ -412,8 +395,6 @@ import { CsiComponent } from './assessment/prepare/csi/csi.component';
 import { CsiOrganizationDemographicsComponent } from './assessment/prepare/csi/csi-organization-demographics/csi-organization-demographics.component';
 import { CsiServiceDemographicsComponent } from './assessment/prepare/csi/csi-service-demographics/csi-service-demographics.component';
 import { CsiServiceCompositionComponent } from './assessment/prepare/csi/csi-service-composition/csi-service-composition.component';
-import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
-import { AssessmentDemographicsTsaComponent } from './assessment/prepare/assessment-info/assessment-demographics-tsa/assessment-demographics-tsa.component';
 import { AssessmentComparisonAnalyticsComponent } from './initial/assessmenet-comparison-analytics/assessment-comparison-analytics.component';
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { QuestionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/question-block-nested/question-block-nested.component';
@@ -484,24 +465,17 @@ import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-m
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
 import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
 import { Cmmc2ScorecardReportComponent } from './reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
-import { IseAnsweredQuestionsComponent } from './reports/ise-answeredquestions/ise-answeredquestions.component';
-import { IseMeritComponent } from './reports/ise-merit/ise-merit.component';
-import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-chart.component';
 import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
-import { IseExaminationComponent } from './reports/ise-examination/ise-examination.component';
 import { IssuesComponent } from './assessment/questions/issues/issues.component';
 import { MeritCheckComponent } from './dialogs/ise-merit/merit-check.component';
 import { SearchPageComponent } from './initial/search-page/search-page.component';
 import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
-import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.component';
-import { IseDataComponent } from './reports/ise-data/ise-data.component';
 import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
 import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
 import { DemographicExtendedService } from './services/demographic-extended.service';
 import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
-import { AssessmentDetailCfComponent } from './assessment/prepare/assessment-info/assessment-detail-cf/assessment-detail-cf.component';
 import { LoginCfComponent } from './initial/login-cf/login-cf.component';
 import { LoginRenewComponent } from './initial/login-renew/login-renew.component';
 import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
@@ -522,7 +496,6 @@ import { CpgDomainSummaryComponent } from './assessment/results/cpg/cpg-domain-s
 import { CpgCostImpactComplexityComponent } from './assessment/results/cpg/cpg-cost-impact-complexity/cpg-cost-impact-complexity.component';
 import { CpgSummaryComponent } from './assessment/results/cpg/cpg-summary/cpg-summary.component';
 import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cpg-practices.component';
-import { GlobalConfigurationComponent } from './dialogs/global-configuration/global-configuration.component';
 import { ReferencesTableComponent } from './assessment/questions/references-table/references-table.component';
 import { ReferencesDisplayComponent } from './assessment/questions/references-display/references-display.component';
 import { DiagramVulnerabilitiesDialogComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
@@ -606,23 +579,11 @@ import { provideTranslocoScope } from '@jsverse/transloco';
 import { UserSettingsComponent } from './dialogs/user-settings/user-settings.component';
 import { MalcolmUploadErrorComponent } from './dialogs/malcolm/malcolm-upload-error.component';
 import { FooterService } from './services/footer.service';
-import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-info/assessment-convert-cf/assessment-convert-cf.component';
-import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/ise-warnings.component';
 import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytics/trend-compare-compatibility/trend-compare-compatibility.component';
 import { PrincipleSummaryComponent } from './assessment/questions/principle-summary/principle-summary.component';
-import { TutorialCieComponent } from './assessment/prepare/maturity/tutorial-cie/tutorial-cie.component';
-import { QuickFactsCieComponent } from './assessment/prepare/maturity/tutorial-cie/quick-facts-cie/quick-facts-cie.component';
-import { OverviewCieComponent } from './assessment/prepare/maturity/tutorial-cie/overview-cie/overview-cie.component';
-import { BackgroundCieComponent } from './assessment/prepare/maturity/tutorial-cie/background-cie/background-cie.component';
-import { PrinciplesCieComponent } from './assessment/prepare/maturity/tutorial-cie/principles-cie/principles-cie.component';
-import { LifecycleCieComponent } from './assessment/prepare/maturity/tutorial-cie/lifecycle-cie/lifecycle-cie.component';
-import { HowToUseCieComponent } from './assessment/prepare/maturity/tutorial-cie/how-to-use-cie/how-to-use-cie.component';
 import { MalcolmAnswerDefaultComponent } from './assessment/questions/malcolm-answer/malcolm-answer-default/malcolm-answer-default.component';
 import { MalcolmAnswerNestedComponent } from './assessment/questions/malcolm-answer/malcolm-answer-nested/malcolm-answer-nested.component';
 import { MalcolmInstructionsComponent } from './dialogs/malcolm/malcolm-instructions/malcolm-instructions.component';
-import { AssessmentInfoCieComponent } from './assessment/prepare/assessment-info/assessment-info-cie/assessment-info-cie.component';
-import { AssessmentConfigCieComponent } from './assessment/prepare/assessment-info/assessment-config-cie/assessment-config-cie.component';
-import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-info/assessment-detail-cie/assessment-detail-cie.component';
 import { SdOwnerDeficiencyComponent } from './reports/sd-owner/sd-owner-deficiency/sd-owner-deficiency.component';
 import { SdOwnerCommentsMfrComponent } from './reports/sd-owner/sd-owner-comments/sd-owner-comments-mfr.component';
 import { ReferencesSectionComponent } from './assessment/questions/references-section/references-section.component';
@@ -664,7 +625,6 @@ registerSwiper();
         AssessmentDetailComponent,
         AssessmentContactsComponent,
         AssessmentDemographicsComponent,
-        AssessmentDetailTsaComponent,
         ResultsComponent,
         SalSimpleComponent,
         StandardsComponent,
@@ -689,7 +649,6 @@ registerSwiper();
         FrameworkComponent,
         RequiredDocsComponent,
         DiagramComponent,
-        AcetDetailComponent,
         AboutComponent,
         AdvisoryComponent,
         QuestionsComponent,
@@ -735,8 +694,6 @@ registerSwiper();
         UploadDemographicsComponent,
         KeyboardShortcutsComponent,
         LicenseComponent,
-        AcetDashboardComponent,
-        AdminComponent,
         SetListComponent,
         CustomSetComponent,
         RequirementListComponent,
@@ -821,20 +778,6 @@ registerSwiper();
         ExecutiveCMMC2Component,
         NavBackNextComponent,
         CsetOriginComponent,
-        InherentRiskProfileComponent,
-        IrpSectionComponent,
-        AcetDonutChartComponent,
-        AcetExecutiveComponent,
-        AcetDeficencyComponent,
-        AcetCommentsmarkedComponent,
-        AcetAnsweredQuestionsComponent,
-        AcetCompensatingcontrolsComponent,
-        IseAnsweredQuestionsComponent,
-        IseMeritComponent,
-        IseExaminationComponent,
-        IseExaminerComponent,
-        IseDonutChartComponent,
-        IseDataComponent,
         TutorialCmmcComponent,
         TutorialEdmComponent,
         TutorialRraComponent,
@@ -913,11 +856,8 @@ registerSwiper();
         CrrResultsDetailComponent,
         CrrHeatmapComponent,
         MatCommentsComponent,
-        AssessmentInfoTsaComponent,
         TsaAssessmentCompleteComponent,
         LoginTsaComponent,
-        AssessmentConfigTsaComponent,
-        FeatureOptionTsaComponent,
         AboutTsaComponent,
         TutorialCmmc2Component,
         TopMenusComponent,
@@ -932,8 +872,6 @@ registerSwiper();
         CsiOrganizationDemographicsComponent,
         CsiServiceDemographicsComponent,
         CsiServiceCompositionComponent,
-        AssessmentInfo2TsaComponent,
-        AssessmentDemographicsTsaComponent,
         AssessmentComparisonAnalyticsComponent,
         MaturityQuestionsNestedComponent,
         QuestionBlockNestedComponent,
@@ -1015,7 +953,6 @@ registerSwiper();
         DemographicsExtendedComponent,
         SectorHelpComponent,
         AnalyticsCompareComponent,
-        AssessmentDetailCfComponent,
         LoginCfComponent,
         LoginRenewComponent,
         MvraGapsComponent,
@@ -1037,7 +974,6 @@ registerSwiper();
         CpgSummaryComponent,
         CpgPracticesComponent,
         OnlineDisclaimerComponent,
-        GlobalConfigurationComponent,
         ReferencesTableComponent,
         ReferencesDisplayComponent,
         DiagramVulnerabilitiesDialogComponent,
@@ -1115,23 +1051,11 @@ registerSwiper();
         CmuOtherRemarksComponent,
         UserSettingsComponent,
         MalcolmUploadErrorComponent,
-        AssessmentConvertCfComponent,
-        IseWarningsComponent,
         TrendAnalyticsComponent,
         PrincipleSummaryComponent,
-        TutorialCieComponent,
-        QuickFactsCieComponent,
-        OverviewCieComponent,
-        BackgroundCieComponent,
-        PrinciplesCieComponent,
-        LifecycleCieComponent,
-        HowToUseCieComponent,
         MalcolmAnswerDefaultComponent,
         MalcolmAnswerNestedComponent,
         MalcolmInstructionsComponent,
-        AssessmentInfoCieComponent,
-        AssessmentConfigCieComponent,
-        AssessmentDetailCieComponent,
         AnalyticsComponent,
         SdOwnerDeficiencyComponent,
         SdOwnerCommentsMfrComponent,
@@ -1265,14 +1189,12 @@ registerSwiper();
         StandardService,
         FrameworkService,
         RequiredDocumentService,
-        IRPService,
         ObservationsService,
         NavigationService,
         FileUploadClientService,
         AnalysisService,
         EnableFeatureService,
         SetBuilderService,
-        ACETService,
         ResourceLibraryService,
         DiagramService,
         AggregationService,

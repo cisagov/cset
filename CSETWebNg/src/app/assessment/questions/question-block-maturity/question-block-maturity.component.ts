@@ -27,10 +27,8 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { GroupingDescriptionComponent } from '../grouping-description/grouping-description.component';
-import { NCUAService } from '../../../services/ncua.service';
 import { LayoutService } from '../../../services/layout.service';
 import { CompletionService } from '../../../services/completion.service';
-import { ACETService } from '../../../services/acet.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 
@@ -75,8 +73,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
     public completionSvc: CompletionService,
     public assessSvc: AssessmentService,
     public layoutSvc: LayoutService,
-    public ncuaSvc: NCUAService,
-    public acetSvc: ACETService,
     public tSvc: TranslocoService
   ) {
 
@@ -94,11 +90,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
-
-
-    if (this.configSvc.installationMode === "ACET") {
-      this.altTextPlaceholder = "alt acet";
-    }
 
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }

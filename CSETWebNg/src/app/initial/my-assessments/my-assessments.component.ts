@@ -39,7 +39,6 @@ import { QuestionFilterService } from '../../services/filtering/question-filter.
 import { ReportService } from '../../services/report.service';
 import { firstValueFrom, of } from "rxjs";
 import { concatMap, map, tap, catchError } from "rxjs/operators";
-import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
 import { Comparer } from "../../helpers/comparer";
