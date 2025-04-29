@@ -10,11 +10,6 @@ import { AllAnsweredquestionsComponent } from '../../reports/all-answeredquestio
 import { AllCommentsmarkedComponent } from '../../reports/all-commentsmarked/all-commentsmarked.component';
 import { AllReviewedComponent } from '../../reports/all-reviewed/all-reviewed.component';
 import { C2m2ReportComponent } from '../../reports/c2m2/c2m2-report/c2m2-report.component';
-import { CieAllQuestionsComponent } from '../../reports/cie/cie-all-questions/cie-all-questions.component';
-import { CieMfrReportComponent } from '../../reports/cie/cie-mfr-report/cie-mfr-report.component';
-import { CieNotApplicableComponent } from '../../reports/cie/cie-not-applicable/cie-not-applicable.component';
-import { CiePrincipleOnlyComponent } from '../../reports/cie/cie-principle-only/cie-principle-only.component';
-import { CiePrinciplePhaseComponent } from '../../reports/cie/cie-principle-phase/cie-principle-phase.component';
 import { CisCommentsmarkedComponent } from '../../reports/cis-commentsmarked/cis-commentsmarked.component';
 import { CisRankedDeficiencyComponent } from '../../reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
 import { CisSectionScoringComponent } from '../../reports/cis/cis-section-scoring/cis-section-scoring.component';
@@ -84,11 +79,6 @@ const routes: Routes = [
     { path: 'isedonutchart', component: IseDonutChartComponent },
     { path: 'isemerit', component: IseMeritComponent },
     { path: 'isedata', component: IseDataComponent },
-    { path: 'cieAllQuestions', component: CieAllQuestionsComponent },
-    { path: 'ciePrincipleOnly', component: CiePrincipleOnlyComponent },
-    { path: 'ciePrinciplePhase', component: CiePrinciplePhaseComponent },
-    { path: 'cieNotApplicable', component: CieNotApplicableComponent },
-    { path: 'cieMfrReport', component: CieMfrReportComponent },
     { path: 'crrreport', component: CrrReportComponent },
     { path: 'crrDeficiencyReport', component: CrrDeficiencyComponent },
     { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },

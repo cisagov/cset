@@ -26,7 +26,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CharterMismatchComponent } from '../dialogs/charter-mistmatch/charter-mismatch.component';
-import { AcetFilteringService } from './filtering/maturity-filtering/acet-filtering.service';
 import { AssessmentService } from './assessment.service';
 import { MaturityService } from './maturity.service';
 import { ACETService } from './acet.service';
@@ -157,7 +156,6 @@ export class NCUAService {
     private http: HttpClient,
     private configSvc: ConfigService,
     public dialog: MatDialog,
-    public acetFilteringSvc: AcetFilteringService,
     private maturitySvc: MaturityService,
     private acetSvc: ACETService,
     private irpSvc: IRPService,
@@ -401,7 +399,7 @@ export class NCUAService {
   }
 
   refreshGroupList(level: number) {
-    this.acetFilteringSvc.resetDomainFilters(level);
+
   }
 
   getExamLevel() {

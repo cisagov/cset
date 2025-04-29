@@ -105,10 +105,6 @@ export class NavigationService implements OnDestroy, OnInit {
     this.assessSvc.assessmentStateChanged$.subscribe((reloadState) => {
       switch (reloadState) {
         case this.c.NAV_APPLY_CIE_TO_CSTATES:
-          // remembers state of ToC dropdown for CIE
-          if (this.assessSvc.usesMaturityModel('CIE')) {
-            this.navTreeSvc.applyCieToCStates();
-          }
           break;
         case this.c.NAV_CIE_REFRESH_ENABLE_NEXT:
           this.buildTree();
@@ -116,9 +112,6 @@ export class NavigationService implements OnDestroy, OnInit {
           //this.navDirect('dashboard');
           break;
         case this.c.NAV_CIE_REFRESH_NAV_PREPARE:
-          if (this.assessSvc.usesMaturityModel('CIE')) {
-            this.navTreeSvc.applyCieToCStates();
-          }
           this.buildTree();
           this.navDirect('phase-prepare');
 
@@ -132,12 +125,7 @@ export class NavigationService implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    // remembers state of ToC dropdown for CIE
-    if (this.assessSvc.usesMaturityModel('CIE')) {
-      this.navTreeSvc.applyCieToCStates();
-      this.buildTree();
 
-    }
   }
 
   ngOnDestroy() {
@@ -218,9 +206,6 @@ export class NavigationService implements OnDestroy, OnInit {
         this.assessSvc.initCyberFlorida(assessmentId);
       }
       else {
-        if (this.assessSvc.usesMaturityModel('CIE')) {
-          this.navTreeSvc.applyCieToCStates();
-        }
         this.navDirect('phase-prepare');
       }
     });
@@ -228,9 +213,6 @@ export class NavigationService implements OnDestroy, OnInit {
 
   beginNewAssessmentGallery(item: any) {
     this.assessSvc.newAssessmentGallery(item).then(() => {
-      if (this.assessSvc.usesMaturityModel('CIE')) {
-        this.navTreeSvc.applyCieToCStates();
-      }
       this.navDirect('phase-prepare');
     });
   }

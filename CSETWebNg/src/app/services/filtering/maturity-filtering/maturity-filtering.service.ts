@@ -27,7 +27,6 @@ import { ConfigService } from '../../config.service';
 import { QuestionGrouping } from '../../../models/questions.model';
 import { QuestionFilterService } from '../question-filter.service';
 import { AssessmentService } from '../../assessment.service';
-import { AcetFilteringService } from './acet-filtering.service';
 import { EdmFilteringService } from './edm-filtering.service';
 import { CrrFilteringService } from './crr-filtering.service';
 import { CmmcFilteringService } from './cmmc-filtering.service';
@@ -97,7 +96,6 @@ export class MaturityFilteringService {
     public configSvc: ConfigService,
     public questionFilterSvc: QuestionFilterService,
     public assesmentSvc: AssessmentService,
-    public acetFilteringSvc: AcetFilteringService,
     public cmmcFilteringSvc: CmmcFilteringService,
     public edmFilteringSvc: EdmFilteringService,
     public crrFilteringSvc: CrrFilteringService,
@@ -267,13 +265,6 @@ export class MaturityFilteringService {
       // Check maturity level filtering first.  If the question is not visible the rest of the
       // conditions can be avoided.
       switch (this.assesmentSvc.assessment.maturityModel.modelName) {
-        case 'ACET':
-          this.acetFilteringSvc.setQuestionVisibility(q, this.currentDomainName);
-          break;
-
-        case 'ISE':
-          this.acetFilteringSvc.setIseQuestionVisibility(q, this.currentDomainName);
-          break;
 
         case 'CMMC':
         case 'CMMC2':

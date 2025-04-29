@@ -118,8 +118,6 @@ import { AssessmentInfoTsaComponent } from './assessment/prepare/assessment-info
 import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/assessment-config/assessment-config.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
-import { IRPComponent } from './assessment/prepare/irp/irp.component';
-import { ExamProfileComponent } from './assessment/prepare/irp/irp-ise.component';
 import { PrepareComponent } from './assessment/prepare/prepare.component';
 import { SalGenComponent } from './assessment/prepare/sals/sal-gen/sal-gen.component';
 import { SalNistComponent } from './assessment/prepare/sals/sal-nist/sal-nist.component';
@@ -224,9 +222,7 @@ import { AcetDashboardComponent } from './assessment/results/dashboard/acet-dash
 import { AdminComponent } from './assessment/results/admin/admin.component';
 import { ACETService } from './services/acet.service';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
-import { DomainMaturityFilterComponent } from './assessment/questions/domain-maturity-filter/domain-maturity-filter.component';
 import { ResourceLibraryService } from './services/resource-library.service';
-import { IrpSummaryComponent } from './assessment/prepare/irp-summary/irp-summary.component';
 import { DiagramComponent } from './assessment/diagram/diagram.component';
 import { DiagramInfoComponent } from './assessment/diagram/diagram-info/diagram-info.component';
 import { DiagramInventoryComponent } from './assessment/diagram/diagram-inventory/diagram-inventory.component';
@@ -322,18 +318,14 @@ import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
-import { QuestionBlockIseComponent } from './assessment/questions/question-block-ise/question-block-ise.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { GeneralDeficiencyComponent } from './reports/general-deficiency/general-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
 import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
-import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
-import { MaturityQuestionsIseComponent } from './assessment/questions/maturity-questions/maturity-questions-ise.component';
 import { EdmComponent } from './reports/edm/edm.component';
 import { TooltipModule } from './modules/tooltip/tooltip.module';
 import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
 import { QuestionTextCpgComponent } from './assessment/questions/question-text/question-text-cpg/question-text-cpg.component';
-import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';
 import { CmmcFilteringService } from './services/filtering/maturity-filtering/cmmc-filtering.service';
 import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
 import { CrrFilteringService } from './services/filtering/maturity-filtering/crr-filtering.service';
@@ -395,7 +387,6 @@ import { RraAnswerDistributionComponent } from './assessment/results/mat-rra/rra
 import { RraAnswerComplianceComponent } from './assessment/results/mat-rra/rra-answer-compliance/rra-answer-compliance.component';
 import { RraQuestionsScoringComponent } from './assessment/results/mat-rra/rra-questions-scoring/rra-questions-scoring.component';
 import { RraMiniUserGuideComponent } from './dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
-import { IrpTabsComponent } from './assessment/prepare/irp/irp-tabs/irp-tabs.component';
 import { CrrSummaryResultsComponent } from './assessment/results/crr/crr-summary-results/crr-summary-results.component';
 import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-results-page.component';
 import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-detail/crr-results-detail.component';
@@ -466,7 +457,6 @@ import { McQuestionComponent } from './reports/module-content/model/mc-question/
 import { McOptionComponent } from './reports/module-content/model/mc-option/mc-option.component';
 import { GuidanceBlockComponent } from './reports/module-content/guidance-block/guidance-block.component';
 import { ReferencesBlockComponent } from './reports/module-content/references-block/references-block.component';
-import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/irp-ise-summary.component';
 import { NewAssessmentDialogComponent } from './dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { GalleryService } from './services/gallery.service';
 import { EllipsisModule } from './modules/ngx-ellipsis/ellipsis.module';
@@ -619,7 +609,6 @@ import { FooterService } from './services/footer.service';
 import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-info/assessment-convert-cf/assessment-convert-cf.component';
 import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/ise-warnings.component';
 import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytics/trend-compare-compatibility/trend-compare-compatibility.component';
-import { QuestionBlockCieComponent } from './assessment/questions/question-block-cie/question-block-cie.component';
 import { PrincipleSummaryComponent } from './assessment/questions/principle-summary/principle-summary.component';
 import { TutorialCieComponent } from './assessment/prepare/maturity/tutorial-cie/tutorial-cie.component';
 import { QuickFactsCieComponent } from './assessment/prepare/maturity/tutorial-cie/quick-facts-cie/quick-facts-cie.component';
@@ -631,22 +620,9 @@ import { HowToUseCieComponent } from './assessment/prepare/maturity/tutorial-cie
 import { MalcolmAnswerDefaultComponent } from './assessment/questions/malcolm-answer/malcolm-answer-default/malcolm-answer-default.component';
 import { MalcolmAnswerNestedComponent } from './assessment/questions/malcolm-answer/malcolm-answer-nested/malcolm-answer-nested.component';
 import { MalcolmInstructionsComponent } from './dialogs/malcolm/malcolm-instructions/malcolm-instructions.component';
-import { MaturityQuestionsCieComponent } from './assessment/questions/maturity-questions/maturity-questions-cie/maturity-questions-cie.component';
 import { AssessmentInfoCieComponent } from './assessment/prepare/assessment-info/assessment-info-cie/assessment-info-cie.component';
 import { AssessmentConfigCieComponent } from './assessment/prepare/assessment-info/assessment-config-cie/assessment-config-cie.component';
 import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-info/assessment-detail-cie/assessment-detail-cie.component';
-import { AboutCieComponent } from './dialogs/about-cie/about-cie.component';
-import { ApplyingCieComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/applying-cie/applying-cie.component';
-import { CieExampleComponent } from './assessment/prepare/maturity/cie-example/cie-example.component';
-import { CieBackgroundComponent } from './assessment/prepare/maturity/cie-example/cie-background/cie-background.component';
-import { CieAnalysisComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/cie-analysis.component';
-import { PrincipleAnalysisCieComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/principle-analysis-cie/principle-analysis-cie.component';
-import { CieAnalysisMatrixComponent } from './assessment/prepare/maturity/cie-example/cie-analysis-matrix/cie-analysis-matrix.component';
-import { MergeCieAnalysisComponent } from './assessment/merge/merge-cie-analysis/merge-cie-analysis.component';
-import { CieAllQuestionsComponent } from './reports/cie/cie-all-questions/cie-all-questions.component';
-import { CiePrincipleOnlyComponent } from './reports/cie/cie-principle-only/cie-principle-only.component';
-import { CiePrinciplePhaseComponent } from './reports/cie/cie-principle-phase/cie-principle-phase.component';
-import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-not-applicable.component';
 import { SdOwnerDeficiencyComponent } from './reports/sd-owner/sd-owner-deficiency/sd-owner-deficiency.component';
 import { SdOwnerCommentsMfrComponent } from './reports/sd-owner/sd-owner-comments/sd-owner-comments-mfr.component';
 import { ReferencesSectionComponent } from './assessment/questions/references-section/references-section.component';
@@ -655,7 +631,6 @@ import { AnalyticsComponent } from './assessment/results/analytics/analytics.com
 import { AnalyticsloginComponent } from './assessment/results/analysis/analytics-login/analytics-login.component';
 import { AnalyticsService } from './services/analytics.service';
 import { UploadDemographicsComponent } from './dialogs/import demographics/import-demographics.component';
-import { CieMfrReportComponent } from './reports/cie/cie-mfr-report/cie-mfr-report.component';
 import { ReportListComponent } from './assessment/results/reports/report-list/report-list.component';
 import { ReportListCommonComponent } from './assessment/results/reports/report-list/report-list-common.component';
 import { PhysicalSummaryComponent } from './reports/physical-summary/physical-summary.component';
@@ -713,8 +688,6 @@ registerSwiper();
         ConfirmComponent,
         FrameworkComponent,
         RequiredDocsComponent,
-        IRPComponent,
-        ExamProfileComponent,
         DiagramComponent,
         AcetDetailComponent,
         AboutComponent,
@@ -774,9 +747,6 @@ registerSwiper();
         AddRequirementComponent,
         StandardDocumentsComponent,
         RefDocumentComponent,
-        DomainMaturityFilterComponent,
-        IrpSummaryComponent,
-        ExamProfileSummaryComponent,
         DiagramInventoryComponent,
         DiagramInfoComponent,
         DiagramComponentsComponent,
@@ -844,8 +814,6 @@ registerSwiper();
         CategoryBlockComponent,
         AskQuestionsComponent,
         MaturityQuestionsComponent,
-        MaturityQuestionsAcetComponent,
-        MaturityQuestionsIseComponent,
         AwwaStandardComponent,
         DiagramQuestionsComponent,
         SitesummaryCMMCComponent,
@@ -880,7 +848,6 @@ registerSwiper();
         AcetOriginComponent,
         GroupingBlockComponent,
         QuestionBlockMaturityComponent,
-        QuestionBlockIseComponent,
         EdmComponent,
         EdmDeficiencyComponent,
         GeneralDeficiencyComponent,
@@ -941,7 +908,6 @@ registerSwiper();
         RraAnswerComplianceComponent,
         RraQuestionsScoringComponent,
         RraMiniUserGuideComponent,
-        IrpTabsComponent,
         CrrSummaryResultsComponent,
         CrrResultsPage,
         CrrResultsDetailComponent,
@@ -1152,7 +1118,6 @@ registerSwiper();
         AssessmentConvertCfComponent,
         IseWarningsComponent,
         TrendAnalyticsComponent,
-        QuestionBlockCieComponent,
         PrincipleSummaryComponent,
         TutorialCieComponent,
         QuickFactsCieComponent,
@@ -1164,28 +1129,12 @@ registerSwiper();
         MalcolmAnswerDefaultComponent,
         MalcolmAnswerNestedComponent,
         MalcolmInstructionsComponent,
-        MaturityQuestionsCieComponent,
         AssessmentInfoCieComponent,
         AssessmentConfigCieComponent,
         AssessmentDetailCieComponent,
-        AboutCieComponent,
-        ApplyingCieComponent,
-        CieExampleComponent,
-        CieBackgroundComponent,
-        CieAnalysisComponent,
-        PrincipleAnalysisCieComponent,
-        CieAnalysisMatrixComponent,
-        MergeCieAnalysisComponent,
-        CieAllQuestionsComponent,
-        CiePrincipleOnlyComponent,
-        CiePrinciplePhaseComponent,
-        CieNotApplicableComponent,
-        CieMfrReportComponent,
-        AboutCieComponent,
         AnalyticsComponent,
         SdOwnerDeficiencyComponent,
         SdOwnerCommentsMfrComponent,
-        AboutCieComponent,
         AnalyticsComponent,
         ReferencesSectionComponent,
         CisaWorkflowWarningsComponent,
@@ -1333,7 +1282,6 @@ registerSwiper();
         ReportAnalysisService,
         LocalStoreManager,
         CmmcStyleService,
-        AcetFilteringService,
         CmmcFilteringService,
         EdmFilteringService,
         CrrFilteringService,

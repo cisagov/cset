@@ -70,14 +70,6 @@
         <node d="sal.security assurance level (sal)" id="sal" path="assessment/{:id}/prepare/sal" visible="OPTION-ANY(STANDARD,DIAGRAM) ORIGIN-NOT:CF STANDARD-NOT:RAC" />
 
 
-        <!-- ACET/ISE-specific screens -->
-        <node d="inherent risk profiles" id="irp" path="assessment/{:id}/prepare/irp" visible="MATURITY:1" />
-        <node d="inherent risk profile summary" id="irp-summary" path="assessment/{:id}/prepare/irp-summary" visible="MATURITY:1" />
-
-        <node displaytext="Demographics" id="demo" path="assessment/{:id}/prepare/demographics" visible="MATURITY:10" />
-        <node displaytext="Exam Profile" id="irp-ise" path="assessment/{:id}/prepare/exam-profile" visible="MATURITY:10" />
-
-
         <!-- Diagram -->
         <node d="network diagram" id="diagram" path="assessment/{:id}/prepare/diagram/info" visible="OPTION:DIAGRAM" />
 
@@ -159,14 +151,6 @@
         <!-- Bonus model (SSG) -->
         <node d="ssg" ssg="true" id="maturity-questions-bonus" path="assessment/{:id}/maturity-questions/bonus" visible="MATURITY-ANY(11,21) SECTOR-ANY(1,19,13,28)" />
 
-
-
-        <!-- ACET or ISE in non-ACET skin shows the normal maturity-questions -->
-        <node d="maturity questions" id="maturity-questions-ncua" path="assessment/{:id}/maturity-questions" visible="INSTALL-MODE-NOT:ACET OPTION:MATURITY MATURITY-ANY(1,10)" />
-
-        <!-- Custom ACET questions page for ACET or ISE in ACET skin -->
-        <node d="statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" visible="INSTALL-MODE:ACET MATURITY:1" />
-        <node displaytext="Statements" id="maturity-questions-ise" path="assessment/{:id}/maturity-questions-ise" visible="INSTALL-MODE:ACET MATURITY:10" />
 
         <!-- CIS questions displayed in tree structure -->
         <node displaytext="CIS Questions" visible="MATURITY:8">

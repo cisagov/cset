@@ -91,8 +91,6 @@ import { PhysicalSummaryComponent } from './reports/physical-summary/physical-su
 import { ModelSelectComponent } from './assessment/prepare/maturity/model-select/model-select.component';
 import { CmmcLevelsComponent } from './assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
-import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
-import { MaturityQuestionsIseComponent } from './assessment/questions/maturity-questions/maturity-questions-ise.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-level-results/cmmc-level-results.component';
 import { CmmcGapsComponent } from './assessment/results/mat-cmmc/cmmc-gaps/cmmc-gaps.component';
@@ -157,8 +155,6 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
 import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
 import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
-import { ExamProfileComponent } from './assessment/prepare/irp/irp-ise.component';
-import { ExamProfileSummaryComponent } from './assessment/prepare/irp-summary/irp-ise-summary.component';
 import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-chart.component';
 import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
@@ -188,9 +184,7 @@ import { PrinciplesCieComponent } from './assessment/prepare/maturity/tutorial-c
 import { LifecycleCieComponent } from './assessment/prepare/maturity/tutorial-cie/lifecycle-cie/lifecycle-cie.component';
 import { HowToUseCieComponent } from './assessment/prepare/maturity/tutorial-cie/how-to-use-cie/how-to-use-cie.component';
 import { TutorialCieComponent } from './assessment/prepare/maturity/tutorial-cie/tutorial-cie.component';
-import { QuestionBlockCieComponent } from './assessment/questions/question-block-cie/question-block-cie.component';
 import { PrincipleSummaryComponent } from './assessment/questions/principle-summary/principle-summary.component';
-import { MaturityQuestionsCieComponent } from './assessment/questions/maturity-questions/maturity-questions-cie/maturity-questions-cie.component';
 import { AssessmentConfigCieComponent } from './assessment/prepare/assessment-info/assessment-config-cie/assessment-config-cie.component';
 import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-info/assessment-detail-cie/assessment-detail-cie.component';
 import { AssessmentInfoCieComponent } from './assessment/prepare/assessment-info/assessment-info-cie/assessment-info-cie.component';
@@ -357,8 +351,6 @@ const appRoutes: Routes = [
               { path: 'standards', component: StandardsComponent },
               { path: 'framework', component: FrameworkComponent },
               { path: 'required', component: RequiredDocsComponent },
-              { path: 'exam-profile', component: ExamProfileComponent },
-              { path: 'exam-profile-summary', component: ExamProfileSummaryComponent },
               {
                 path: 'diagram',
                 component: DiagramComponent,
@@ -377,12 +369,8 @@ const appRoutes: Routes = [
           { path: 'questions', component: QuestionsComponent },
           { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
-          { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
-          { path: 'maturity-questions-ise', component: MaturityQuestionsIseComponent },
           { path: 'instructions-cie', component: HowToUseCieComponent },
 
-          { path: 'maturity-questions-cie/:sec', component: MaturityQuestionsCieComponent },
-          { path: 'question-block-cie/:sec', component: QuestionBlockCieComponent },
           { path: 'principle-summary/:pri', component: PrincipleSummaryComponent },
           { path: 'maturity-questions/:grp', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
