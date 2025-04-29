@@ -358,58 +358,6 @@ export class ConfigService {
     title.innerText = this.config.behaviors.defaultTitle;
 
     switch (installationMode) {
-      case 'ACET':
-        {
-          var x = this.document.getElementsByClassName('root');
-          if (x.length > 0) {
-            x[0].classList.add('acet-background');
-          }
-
-          var x = document.getElementsByClassName('ncua-seal');
-          if (x.length > 0) {
-            x[0].classList.remove('d-none');
-          }
-
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_acet.ico?app=acet1';
-        }
-        break;
-      case 'TSA':
-        {
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_tsa.ico?app=tsa1';
-        }
-        break;
-      case 'CIE':
-        {
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_cie.ico?app=cie1';
-        }
-        break;
-      case 'CF':
-        {
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_cf.ico?app=cf1';
-        }
-        break;
-      case 'RRA':
-        {
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_rra.ico?app=rra1';
-        }
-        break;
-      case 'RENEW':
-        {
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_renew.ico?app=renew1';
-        }
-        break;
       default: {
         // change favicon and title
         const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");

@@ -160,20 +160,8 @@ export class QuestionsService {
    */
   storeAnswer(answer: Answer) {
     answer.questionType = localStorage.getItem('questionSet');
-    if (this.configSvc.installationMode == 'CF') {
-      this.processNavigationDisable(answer);
-    }
     return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers);
   }
-
-  /**
-   * Posts multiple (all) Answers to the API.
-   * @param answers
-   */
-  storeAllAnswers(answers: Answer[]) {
-    return this.http.post(this.configSvc.apiUrl + 'storeAllAnswers', answers, headers);
-  }
-
 
   /**
    * Posts a block of answers to the API.
@@ -421,15 +409,6 @@ export class QuestionsService {
       buttonLabelKey: "X",
       buttonCss: "btn-yes"
     };
-  }
-
-  /**
-   * 
-   */
-  processNavigationDisable(answer: Answer) {
-    //have a list of all the 20 necessary id's
-    //then when the list is complete enable the navigation
-    this.assessmentSvc.updateAnswer(answer);
   }
 
   /**

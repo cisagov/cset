@@ -87,10 +87,6 @@ export class QuestionBlockVadrComponent implements OnInit {
       }
     });
 
-    if (this.configSvc.installationMode === "ACET") {
-      this.altTextPlaceholder = this.altTextPlaceholder_ACET;
-    }
-
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
 
@@ -191,10 +187,6 @@ export class QuestionBlockVadrComponent implements OnInit {
         this.myGrouping.hasReviewItems = true;
         return;
       }
-      if (q.answer == 'A' && this.isAltTextRequired(q)) {
-        this.myGrouping.hasReviewItems = true;
-        return;
-      }
     });
   }
 
@@ -223,19 +215,6 @@ export class QuestionBlockVadrComponent implements OnInit {
       }
     });
     this.percentAnswered = (answeredCount / totalCount) * 100;
-  }
-
-
-  /**
-   * For ACET installations, alt answers require 3 or more characters of
-   * justification.
-   */
-  isAltTextRequired(q: Question) {
-    if ((this.configSvc.installationMode === "ACET")
-      && (!q.altAnswerText || q.altAnswerText.trim().length < 3)) {
-      return true;
-    }
-    return false;
   }
 
   /**

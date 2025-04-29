@@ -29,11 +29,11 @@ import { QuestionFilterService } from '../../services/filtering/question-filter.
 import { QuestionsService } from '../../services/questions.service';
 
 @Component({
-    selector: 'app-question-filters',
-    templateUrl: './question-filters.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-question-filters',
+  templateUrl: './question-filters.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class QuestionFiltersComponent implements OnInit {
 
@@ -74,18 +74,6 @@ export class QuestionFiltersComponent implements OnInit {
    * 
    */
   ngOnInit(): any {
-    if (this.configSvc.installationMode === 'ACET') {
-      this.skin = "acet";
-      if (this.assessSvc.isISE()) {
-        this.skin = "ise";
-        this.observations = "issues";
-        this.comments = "notes";
-      }
-      else {
-        this.observations = "observations";
-        this.comments = "comments";
-      }
-    }
     this.refreshAnswerOptions();
   }
 
@@ -95,22 +83,11 @@ export class QuestionFiltersComponent implements OnInit {
   refreshAnswerOptions() {
     this.answerOptions = [];
     this.filterSvc.answerOptions.filter(x => x != 'U').forEach(o => {
-      if (this.assessSvc.isISE()) {
-        this.answerOptions.push({
-          value: o,
-          text: this.questionsSvc.answerButtonLabel(this.filterSvc.maturityModelName, o)
-        });
-      } else {
-        this.answerOptions.push({
-          value: o,
-          text: this.questionsSvc.answerDisplayLabel(this.filterSvc.maturityModelName, o)
-        });
-      }
+      this.answerOptions.push({
+        value: o,
+        text: this.questionsSvc.answerDisplayLabel(this.filterSvc.maturityModelName, o)
+      });
     });
-    if (this.assessSvc.isISE()) {
-      // Remove 'N/A' and 'Compensating Control' from ISE filters menu.
-      this.answerOptions = this.answerOptions.slice(0, 2);
-    }
   }
 
   /**

@@ -192,10 +192,6 @@ export class PageVisibilityService {
         enabled = false;
       }
 
-      if (c == 'CF-ASSESSMENT-COMPLETE') {
-        enabled = enabled && this.assessSvc.isCyberFloridaComplete();
-      }
-
     });
 
     return enabled;

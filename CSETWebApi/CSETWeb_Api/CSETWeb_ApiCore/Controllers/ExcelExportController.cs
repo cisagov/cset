@@ -6,7 +6,6 @@
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.ExportCSV;
-using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.ReportEngine;
@@ -21,8 +20,6 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _token;
         private readonly IDataHandling _data;
         private readonly IMaturityBusiness _maturity;
-        private readonly IACETMaturityBusiness _acetMaturity;
-        private readonly IACETDashboardBusiness _acet;
         private readonly IHttpContextAccessor _http;
         private CSETContext _context;
         private ExcelExporter _exporter;
@@ -30,17 +27,15 @@ namespace CSETWebCore.Api.Controllers
         private string excelContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         private string excelExtension = ".xlsx";
 
-        public ExcelExportController(ITokenManager token, IDataHandling data, IACETMaturityBusiness acetMaturity, IMaturityBusiness maturity,
-            IACETDashboardBusiness acet, IHttpContextAccessor http, CSETContext context)
+        public ExcelExportController(ITokenManager token, IDataHandling data, IMaturityBusiness maturity,
+            IHttpContextAccessor http, CSETContext context)
         {
             _token = token;
             _data = data;
             _maturity = maturity;
-            _acetMaturity = acetMaturity;
-            _acet = acet;
             _http = http;
             _context = context;
-            _exporter = new ExcelExporter(_context, _data, _acetMaturity, _acet, _http);
+            _exporter = new ExcelExporter(_context, _data, _http);
         }
 
 
@@ -67,46 +62,6 @@ namespace CSETWebCore.Api.Controllers
             stream.Seek(0, System.IO.SeekOrigin.Begin);
 
             return File(stream, excelContentType, GetFilename(assessmentId, appName));
-        }
-
-
-        /// <summary>
-        /// Exports an assessment in a format used by NCUA.  One row for the assessment with select answers in columns
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/ExcelExportISE")]
-        public IActionResult GetExcelExportISE(string type = "ISE")
-        {
-            int assessmentId = _token.AssessmentForUser();
-            string appName = _token.Payload(Constants.Constants.Token_Scope);
-
-            var stream = _exporter.ExportToExcelISE(assessmentId, type);
-            stream.Flush();
-            stream.Seek(0, System.IO.SeekOrigin.Begin);
-
-            return File(stream, excelContentType, GetFilename(assessmentId, appName));
-        }
-
-
-        /// <summary>
-        /// Generates an Excel spreadsheet with a row for every assessment that
-        /// the current user has access to that uses the ACET standard.
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/ExcelExportAllNCUA")]
-        public IActionResult GetExcelExportAllNCUA(string type = "")
-        {
-            int currentUserId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
-
-            var stream = _exporter.ExportToExcelAllNCUA(currentUserId, type);
-            stream.Flush();
-            stream.Seek(0, System.IO.SeekOrigin.Begin);
-
-            return File(stream, excelContentType, $"My Assessments{excelExtension}");
         }
 
 

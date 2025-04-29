@@ -15,7 +15,6 @@ using CSETWebCore.Business.Diagram.Analysis;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.ExportCSV;
 using CSETWebCore.Interfaces;
-using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
@@ -42,10 +41,8 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _token;
         private readonly IAssessmentBusiness _assessment;
         private readonly IMaturityBusiness _maturity;
-        private readonly IACETMaturityBusiness _acetMaturity;
         private readonly IHttpContextAccessor _http;
         private readonly IDataHandling _dataHandling;
-        private readonly IACETDashboardBusiness _acet;
         private readonly IWebHostEnvironment _webHost;
 
         private CSETContext _context;
@@ -55,17 +52,15 @@ namespace CSETWebCore.Api.Controllers
 
         public DiagramController(IDiagramManager diagram, ITokenManager token,
             IAssessmentBusiness assessment, IDataHandling dataHandling, 
-            IMaturityBusiness maturity, IACETMaturityBusiness acetMaturity,
-            IHttpContextAccessor http, IACETDashboardBusiness acet, IWebHostEnvironment webHost, CSETContext context)
+            IMaturityBusiness maturity, IHttpContextAccessor http, 
+            IWebHostEnvironment webHost, CSETContext context)
         {
             _diagram = diagram;
             _token = token;
             _assessment = assessment;
             _dataHandling = dataHandling;
             _maturity = maturity;
-            _acetMaturity = acetMaturity;
             _http = http;
-            _acet = acet;
             _webHost = webHost;
             _context = context;
             _object = new object();
@@ -524,7 +519,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetExcelExportDiagram()
         {
             var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
-            var stream = new ExcelExporter(_context, _dataHandling, _acetMaturity, _acet, _http).ExportToExcellDiagram(assessmentId ?? 0);
+            var stream = new ExcelExporter(_context, _dataHandling, _http).ExportToExcellDiagram(assessmentId ?? 0);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");

@@ -30,8 +30,7 @@
       <mat-list class="pt-1">
         <mat-list-item *ngFor="let file of files; let i = index">
           <label mat-line class="mt-1 fs-base-5">{{file.name}}</label>
-          <ng-container
-            *ngIf="(configSvc.installationMode !== 'ACET' || !ncuaSvc.switchStatus) && getAssessmentHint(file.name)">
+          <ng-container *ngIf="getAssessmentHint(file.name)">
             <label mat-line class="ms-2 pt=1 pb-2 h6">Hint: <i>{{ getAssessmentHint(file.name) }}</i></label>
           </ng-container>
           <mat-progress-bar *ngIf="progress && !progress[file.name].progress.source.hasError" style="width: 65%"

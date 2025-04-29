@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
      * If we are at the login page already and the hasUserAgreedToPrivacy warning session storage flag is false or non-existent,
      * don't show the privacy warning to force a second login.
     */
-    let hasUserAgreedToPrivacyWarning: string = sessionStorage.getItem('hasUserAgreedToPrivacyWarning');
+    let hasUserAgreedToPrivacyWarning: string = sessionStorage.getItem('hasUserAgreedToPrivacyWarning') ?? 'false';
     if (hasUserAgreedToPrivacyWarning === 'false' || hasUserAgreedToPrivacyWarning === null) {
       sessionStorage.setItem('hasUserAgreedToPrivacyWarning', 'true')
     }

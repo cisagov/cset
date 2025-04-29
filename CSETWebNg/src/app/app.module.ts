@@ -295,11 +295,8 @@ import { ScoreRangesComponent } from './assessment/results/score-ranges/score-ra
 import { CmmcStyleService } from './services/cmmc-style.service';
 import { TutorialCmmcComponent } from './assessment/prepare/maturity/tutorial-cmmc/tutorial-cmmc.component';
 import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm/tutorial-edm.component';
-import { LoginAcetComponent } from './initial/login-acet/login-acet.component';
 import { LoginCsetComponent } from './initial/login-cset/login-cset.component';
 import { AboutCsetComponent } from './dialogs/about-cset/about-cset.component';
-import { AboutAcetComponent } from './dialogs/about-acet/about-acet.component';
-import { AcetOriginComponent } from './initial/acet-origin/acet-origin.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
@@ -317,7 +314,6 @@ import { CrrFilteringService } from './services/filtering/maturity-filtering/crr
 import { RraFilteringService } from './services/filtering/maturity-filtering/rra-filtering.service';
 import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
-import { FeatureOptionComponent } from './assessment/prepare/assessment-info/assessment-config/feature-option/feature-option.component';
 import { EdmHeatmapComponent } from './assessment/results/edm/edm-heatmap/edm-heatmap.component';
 import { EdmGlossaryComponent } from './reports/edm/edm-glossary/edm-glossary.component';
 import { EdmIntroTextComponent } from './reports/edm/edm-intro-text/edm-intro-text.component';
@@ -378,12 +374,9 @@ import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-
 import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-heatmap.component';
 import { CmuService } from './services/cmu.service';
 import { Utilities } from './services/utilities.service';
-
 import { RunScriptsDirective } from './helpers/run-scripts.directive';
 import { MatCommentsComponent } from './reports/edm/mat-comments/mat-comments.component';
 import { TsaAssessmentCompleteComponent } from './assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
-import { LoginTsaComponent } from './initial/login-tsa/login-tsa.component';
-import { AboutTsaComponent } from './dialogs/about-tsa/about-tsa.component';
 import { SprsScoreComponent } from './assessment/results/mat-cmmc2/scorecard/sprs-score/sprs-score.component';
 import { TutorialCmmc2Component } from './assessment/prepare/maturity/tutorial-cmmc2/tutorial-cmmc2.component';
 import { TopMenusComponent } from './layout/top-menus/top-menus.component';
@@ -468,7 +461,6 @@ import { Cmmc2ScorecardReportComponent } from './reports/cmmc2/cmmc2-scorecard-r
 import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
 import { IssuesComponent } from './assessment/questions/issues/issues.component';
-import { MeritCheckComponent } from './dialogs/ise-merit/merit-check.component';
 import { SearchPageComponent } from './initial/search-page/search-page.component';
 import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
 import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
@@ -476,13 +468,10 @@ import { DemographicsExtendedComponent } from './assessment/prepare/assessment-i
 import { DemographicExtendedService } from './services/demographic-extended.service';
 import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
-import { LoginCfComponent } from './initial/login-cf/login-cf.component';
-import { LoginRenewComponent } from './initial/login-renew/login-renew.component';
 import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
 import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary/mvra-summary.component';
 import { MvraAnswerFunctionsComponent } from './assessment/results/mat-mvra/mvra-answer-functions/mvra-answer-functions.component';
 import { MvraAnswerDomainsComponent } from './assessment/results/mat-mvra/mvra-answer-domains/mvra-answer-domains.component';
-import { AboutCfComponent } from './dialogs/about-cf/about-cf.component';
 import { ZipCodeDirective } from './helpers/zip-code.directive';
 import { MvraReportComponent } from './reports/mvra/mvra-report.component';
 import { MvraSummaryPageComponent } from './assessment/results/mat-mvra/mvra-summary-page/mvra-summary-page.component';
@@ -529,7 +518,6 @@ import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficie
 import { PdfReportsComponent } from './reports/pdf-reports/pdf-reports.component';
 import { InfoBlockComponent } from './reports/info-block/info-block.component';
 import { SiteInformationComponent } from './reports/site-information/site-information.component';
-import { AboutRenewComponent } from './dialogs/about-renew/about-renew.component';
 import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-cyber-shield.component';
 import { ExportAssessmentComponent } from './dialogs/assessment-encryption/export-assessment/export-assessment.component';
 import { ImportPasswordComponent } from './dialogs/assessment-encryption/import-password/import-password.component';
@@ -658,7 +646,6 @@ registerSwiper();
         OkayComponent,
         ObservationsComponent,
         IssuesComponent,
-        MeritCheckComponent,
         SafePipe,
         LinebreakPipe,
         CompletionCountPipe,
@@ -784,11 +771,8 @@ registerSwiper();
         TutorialCrrComponent,
         TutorialCpgComponent,
         TutorialMvraComponent,
-        LoginAcetComponent,
         LoginCsetComponent,
         AboutCsetComponent,
-        AboutAcetComponent,
-        AcetOriginComponent,
         GroupingBlockComponent,
         QuestionBlockMaturityComponent,
         EdmComponent,
@@ -800,7 +784,6 @@ registerSwiper();
         QuestionTextCpgComponent,
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
-        FeatureOptionComponent,
         EdmHeatmapComponent,
         EdmGlossaryComponent,
         EdmIntroTextComponent,
@@ -857,8 +840,6 @@ registerSwiper();
         CrrHeatmapComponent,
         MatCommentsComponent,
         TsaAssessmentCompleteComponent,
-        LoginTsaComponent,
-        AboutTsaComponent,
         TutorialCmmc2Component,
         TopMenusComponent,
         IodLayoutComponent,
@@ -953,14 +934,11 @@ registerSwiper();
         DemographicsExtendedComponent,
         SectorHelpComponent,
         AnalyticsCompareComponent,
-        LoginCfComponent,
-        LoginRenewComponent,
         MvraGapsComponent,
         MvraSummaryComponent,
         MvraAnswerFunctionsComponent,
         MvraAnswerDomainsComponent,
         MvraReportComponent,
-        AboutCfComponent,
         MvraSummaryPageComponent,
         MvraGapsPageComponent,
         LoginAccessKeyComponent,
@@ -1007,7 +985,6 @@ registerSwiper();
         PdfReportsComponent,
         InfoBlockComponent,
         SiteInformationComponent,
-        AboutRenewComponent,
         LogoCyberShieldComponent,
         ExportAssessmentComponent,
         ImportPasswordComponent,

@@ -202,12 +202,7 @@ export class NavigationService implements OnDestroy, OnInit {
    */
   beginAssessment(assessmentId: number) {
     this.assessSvc.loadAssessment(assessmentId).then(() => {
-      if (this.configSvc.installationMode == "CF") {
-        this.assessSvc.initCyberFlorida(assessmentId);
-      }
-      else {
-        this.navDirect('phase-prepare');
-      }
+      this.navDirect('phase-prepare');
     });
   }
 
@@ -504,15 +499,6 @@ export class NavigationService implements OnDestroy, OnInit {
       if (!!e) {
         this.navDirect(e.id);
         return;
-      }
-
-      // is there a specific nav node for the grouping? (CIE nested)
-      // get the parent grouping if it exists
-      var pg = x.split(',').find(x => x.startsWith('PG:'))?.replace('PG:', '');
-      if (pg != null) {
-        e = this.workflow.getElementById('maturity-questions-cie-' + pg);
-      } else {
-        e = this.workflow.getElementById('maturity-questions-cie-' + g);
       }
 
       if (!!e) {

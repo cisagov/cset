@@ -338,38 +338,6 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
-        /// <summary>
-        /// Persists multiple (all) assessment answers at once
-        /// during the ISE assessment merge process. This could probably
-        /// be combined with the above function, but I don't have the time
-        /// to do so currently
-        /// </summary>
-        [HttpPost]
-        [Route("api/storeAllAnswers")]
-        public IActionResult StoreAllAnswers([FromBody] List<Answer> answers)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            int? userId = _token.GetCurrentUserId();
-
-            if (answers == null || answers.Count == 0)
-            {
-                return Ok(0);
-            }
-
-            var lah = new LastAnsweredHelper(_context);
-
-            foreach (var answer in answers)
-            {
-                // save the last answered question
-                lah.Save(assessmentId, userId, answer);
-
-                var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-                mb.StoreAnswer(assessmentId, answer);
-            }
-
-            return Ok();
-        }
-
 
         /// <summary>
         /// Returns the details under a given questions details

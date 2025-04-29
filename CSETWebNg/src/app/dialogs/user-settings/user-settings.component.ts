@@ -36,15 +36,6 @@ export class UserSettingsComponent implements OnInit {
       this.languageOptions = options;
     }
 
-    // This ACET check is because the config.ACET.json's languageOptions 
-    // isn't being read correctly (as of 10/31/23) and I don't have time to fix it
-    if (this.configSvc.config.installationMode == 'ACET') {
-      this.languageOptions = [
-        { value: "en", name: "English" },
-        { value: "es", name: "Español" }
-      ];
-    }
-
     this.authSvc.getUserLang().subscribe((resp: any) => {
       this.langSelection = resp.lang.toLowerCase();
       this.dateAdapter.setLocale(this.langSelection);
