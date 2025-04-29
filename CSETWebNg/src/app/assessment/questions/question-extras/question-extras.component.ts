@@ -40,7 +40,6 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
 import { LayoutService } from '../../../services/layout.service';
 import { TranslocoService } from '@jsverse/transloco';
-import { CieService } from '../../../services/cie.service';
 import { FileExportService } from '../../../services/file-export.service';
 
 
@@ -98,7 +97,6 @@ export class QuestionExtrasComponent implements OnInit {
     public assessSvc: AssessmentService,
     public layoutSvc: LayoutService,
     private tSvc: TranslocoService,
-    private cieSvc: CieService,
     private resourceLibSvc: ResourceLibraryService
   ) { }
 
@@ -108,11 +106,6 @@ export class QuestionExtrasComponent implements OnInit {
    */
   ngOnInit() {
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
-
-    if (this.assessSvc.usesMaturityModel('CIE')) {
-      this.cieSvc.feedbackMap.set(this.myQuestion.questionId, this.myQuestion.feedback);
-      this.cieSvc.commentMap.set(this.myQuestion.questionId, this.myQuestion.comment);
-    }
 
     if (!!this.myOptions) {
       if (this.myOptions.eagerSupplemental) {
@@ -225,13 +218,8 @@ export class QuestionExtrasComponent implements OnInit {
    */
   saveComment(e) {
     this.defaultEmptyAnswer();
-    if (this.assessSvc.usesMaturityModel('CIE')) {
-      this.myQuestion.comment = this.cieSvc.applyContactAndEndTag(e.target.value, '\n- - End of Comment - -\n');
-      this.cieSvc.commentMap.set(this.myQuestion.questionId, this.myQuestion.comment);
-    }
-    else {
-      this.answer.comment = e.target.value;
-    }
+    this.answer.comment = e.target.value;
+    
     this.saveAnswer();
   }
 
@@ -249,14 +237,7 @@ export class QuestionExtrasComponent implements OnInit {
   */
   saveFeedback(e) {
     this.defaultEmptyAnswer();
-    if (this.assessSvc.usesMaturityModel('CIE')) {
-      this.myQuestion.feedback = this.cieSvc.applyContactAndEndTag(e.target.value, '\n- - End of Feedback - -\n');
-      this.cieSvc.feedbackMap.set(this.myQuestion.questionId, this.myQuestion.feedback);
-    }
-    else {
-      this.myQuestion.feedback = e.target.value;
-    }
-
+    this.myQuestion.feedback = e.target.value;
     this.saveAnswer();
   }
 
@@ -803,21 +784,4 @@ export class QuestionExtrasComponent implements OnInit {
     const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment.maturityModel?.modelName);
     return behavior?.independentSuppGuidance;
   }
-
-  /**
-   * For CIE, where feedback can be merged with other assessments
-   * @param q
-   * @returns
-   */
-  getFeedback(q: Question) {
-    if (this.cieSvc.feedbackMap.get(q.questionId) == null && q.feedback == null) {
-      return '';
-    }
-    else if (this.cieSvc.feedbackMap.get(q.questionId) == null && q.feedback != null) {
-      this.cieSvc.feedbackMap.set(q.questionId, this.cieSvc.applyContactAndEndTag(q.feedback, '\n- - End of Feedback - -\n'));
-    }
-
-    return this.cieSvc.feedbackMap.get(q.questionId);
-  }
-
 }

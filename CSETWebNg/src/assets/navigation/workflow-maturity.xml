@@ -90,9 +90,6 @@
                 <node id="maturity-questions-nested-2327" path="assessment/{:id}/maturity-questions-nested/2327" displaytext="28. Dependencies - End Point Systems" />
             </node>
         </node>
-
-
-        <node displaytext="Statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" visible="INSTALL-MODE:ACET MATURITY:ACET" />
     </node>
 
 

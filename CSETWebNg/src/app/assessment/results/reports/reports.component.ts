@@ -23,7 +23,6 @@
 ////////////////////////////////
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
-import { ACETService } from '../../../services/acet.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
@@ -35,12 +34,10 @@ import { DemographicExtendedService } from '../../../services/demographic-extend
 import { MatSnackBar, MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { FileUploadClientService } from '../../../services/file-client.service';
 import { AuthenticationService } from '../../../services/authentication.service';
-import { NCUAService } from '../../../services/ncua.service';
 import { ObservationsService } from '../../../services/observations.service';
 import { CisaWorkflowFieldValidationResponse } from '../../../models/demographics-iod.model';
 import { TranslocoService } from '@jsverse/transloco';
 import { ConversionService } from '../../../services/conversion.service';
-import { CieDocumentsComponent } from '../../../dialogs/cie-documents/cie-documents.component';
 import { ExportAssessmentComponent } from '../../../dialogs/assessment-encryption/export-assessment/export-assessment.component';
 import { FileExportService } from '../../../services/file-export.service';
 
@@ -92,8 +89,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     private _snackBar: MatSnackBar,
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
-    private acetSvc: ACETService,
-    private ncuaSvc: NCUAService,
     public observationsSvc: ObservationsService,
     public fileSvc: FileUploadClientService,
     public authSvc: AuthenticationService,
@@ -164,34 +159,11 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       });
     }
 
-    // disable everything if this is a Cyber Florida and demographics aren't complete
-    if (this.configSvc.installationMode === 'CF') {
-      this.isCyberFlorida = true;
-      this.demoSvc.getDemoAnswered().subscribe((answered: boolean) => {
-        this.disableEntirePage = false;
-      });
-    } else {
-      this.isCyberFlorida = false;
-    }
-
+    this.isCyberFlorida = false;
+ 
     this.assessSvc.getLastModified().subscribe((data: any) => {
       this.lastModifiedTimestamp = data.lastModifiedDate;
     });
-
-    // If this is an ISE, check if the assessment has been submitted or not
-    if (this.assessSvc.isISE()) {
-      this.ncuaSvc.getSubmissionStatus().subscribe((result: any) => {
-        this.iseHasBeenSubmitted = result;
-      });
-    }
-
-    // Moved this from the assessment-convert-cf component
-    // determine if this assessment is a Cyber Florida "entry" assessment.
-    if (this.assessSvc.assessment?.origin == 'CF') {
-      this.convertSvc.isEntryCfAssessment().subscribe((resp: boolean) => {
-        this.isCfEntry = resp;
-      });
-    }
 
     this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.cisaAssessorWorkflow = resp);
 
@@ -240,24 +212,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   clickReportService(report: string) {
     this.reportSvc.getPdf(report, this.confidentiality).subscribe((data) => {
       saveAs(data, 'test.pdf');
-    });
-  }
-
-
-  /**
-   * If all ACET statements are not answered, set the 'disable' flag
-   * to true.
-   */
-  checkAcetDisabledStatus() {
-    this.disableAcetReportLinks = true;
-    if (!this.assessSvc.usesMaturityModel('ACET')) {
-      return;
-    }
-
-    this.acetSvc.getAnswerCompletionRate().subscribe((percentAnswered: number) => {
-      if (percentAnswered == 100) {
-        this.disableAcetReportLinks = false;
-      }
     });
   }
 
@@ -313,25 +267,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   disableSubmitButton() {
-    if (this.ncuaSvc.ISE_StateLed) {
-      return false;
-    }
-    if (this.ncuaSvc.creditUnionName == null || this.ncuaSvc.creditUnionName == '') {
-      return true;
-    }
-
-    if (this.ncuaSvc.assetsAsNumber == null || this.ncuaSvc.assetsAsNumber == 0) {
-      return true;
-    }
-
-    if (this.ncuaSvc.unassignedIssues) {
-      return true;
-    }
-
-    if (this.ncuaSvc.submitInProgress) {
-      return true;
-    }
-
     if (this.reportSvc.disableIseReportLinks) {
       return true;
     }
@@ -339,27 +274,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   getSubmitButtonStyle() {
-    // If Disabled
-    if (this.disableSubmitButton()) {
-      return "background-color: gray; color: white;";
-    } else {
-      // If not disabled and also not submitted yet
-      if (!this.reportSvc.disableIseReportLinks && !this.ncuaSvc.iseHasBeenSubmitted) {
-        return "background-color: orange; color: white;";
-      } else {
-        // If not disabled & already submitted, default here
-        return "background-color: #3B68AA; color: white;";
-      }
-    }
-  }
-
-  showAssessDocs() {
-    if (this.dialog.openDialogs[0]) {
-      return;
-    }
-    // , {width: '800px', height: "500px"}
-    this.dialogRef = this.dialog.open(CieDocumentsComponent);
-    this.dialogRef.afterClosed().subscribe();
+    return "background-color: #3B68AA; color: white;";
   }
 
   updateSectionId(): void {

@@ -54,7 +54,6 @@ import { PrivacyWarningComponent } from '../initial/privacy-warning/privacy-warn
 import { PrivacyWarningRejectComponent } from '../initial/privacy-warning-reject/privacy-warning-reject.component';
 import { LogoutComponent } from '../initial/logout/logout.component';
 import { LoginAccessKeyComponent } from '../initial/login-access-key/login-access-key.component';
-import { MergeCieAnalysisComponent } from '../assessment/merge/merge-cie-analysis/merge-cie-analysis.component';
 
 
 const appRoutes: Routes = [
@@ -152,10 +151,6 @@ const appRoutes: Routes = [
       {
         path: 'resource-library',
         component: ResourceLibraryComponent
-      },
-      {
-        path: 'merge-cie-analysis',
-        component: MergeCieAnalysisComponent
       },
 
       {

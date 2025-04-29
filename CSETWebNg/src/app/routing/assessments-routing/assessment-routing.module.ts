@@ -15,35 +15,20 @@ import { AssessmentInfo2TsaComponent } from '../../assessment/prepare/assessment
 import { Assessment2InfoComponent } from '../../assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { CsiComponent } from '../../assessment/prepare/csi/csi.component';
 import { FrameworkComponent } from '../../assessment/prepare/framework/framework.component';
-import { ExamProfileSummaryComponent } from '../../assessment/prepare/irp-summary/irp-ise-summary.component';
-import { IrpSummaryComponent } from '../../assessment/prepare/irp-summary/irp-summary.component';
-import { ExamProfileComponent } from '../../assessment/prepare/irp/irp-ise.component';
-import { IRPComponent } from '../../assessment/prepare/irp/irp.component';
-import { CieAnalysisMatrixComponent } from '../../assessment/prepare/maturity/cie-example/cie-analysis-matrix/cie-analysis-matrix.component';
-import { ApplyingCieComponent } from '../../assessment/prepare/maturity/cie-example/cie-analysis/applying-cie/applying-cie.component';
-import { CieAnalysisComponent } from '../../assessment/prepare/maturity/cie-example/cie-analysis/cie-analysis.component';
-import { PrincipleAnalysisCieComponent } from '../../assessment/prepare/maturity/cie-example/cie-analysis/principle-analysis-cie/principle-analysis-cie.component';
-import { CieBackgroundComponent } from '../../assessment/prepare/maturity/cie-example/cie-background/cie-background.component';
-import { CieExampleComponent } from '../../assessment/prepare/maturity/cie-example/cie-example.component';
 import { CmmcLevelsComponent } from '../../assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { Cmmc2LevelsComponent } from '../../assessment/prepare/maturity/cmmc2-levels/cmmc2-levels.component';
 import { ConfigCisComponent } from '../../assessment/prepare/maturity/config-cis/config-cis.component';
 import { ModelSelectComponent } from '../../assessment/prepare/maturity/model-select/model-select.component';
-import { HowToUseCieComponent } from '../../assessment/prepare/maturity/tutorial-cie/how-to-use-cie/how-to-use-cie.component';
 import { PrepareComponent } from '../../assessment/prepare/prepare.component';
 import { RequiredDocsComponent } from '../../assessment/prepare/required/required.component';
 import { SalsComponent } from '../../assessment/prepare/sals/sals.component';
 import { StandardsComponent } from '../../assessment/prepare/standards/standards.component';
 import { DiagramQuestionsComponent } from '../../assessment/questions/diagram-questions/diagram-questions.component';
-import { MaturityQuestionsAcetComponent } from '../../assessment/questions/maturity-questions/maturity-questions-acet.component';
-import { MaturityQuestionsCieComponent } from '../../assessment/questions/maturity-questions/maturity-questions-cie/maturity-questions-cie.component';
-import { MaturityQuestionsIseComponent } from '../../assessment/questions/maturity-questions/maturity-questions-ise.component';
 import { MaturityQuestionsComponent } from '../../assessment/questions/maturity-questions/maturity-questions.component';
 import { MaturityQuestionsNestedComponent } from '../../assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { OtherRemarksComponent } from '../../assessment/questions/other-remarks/other-remarks.component';
 import { PlaceholderQuestionsComponent } from '../../assessment/questions/placeholder-questions/placeholder-questions.component';
 import { PrincipleSummaryComponent } from '../../assessment/questions/principle-summary/principle-summary.component';
-import { QuestionBlockCieComponent } from '../../assessment/questions/question-block-cie/question-block-cie.component';
 import { QuestionsComponent } from '../../assessment/questions/questions.component';
 import { AcetDetailComponent } from '../../assessment/results/acet-detail/acet-detail.component';
 import { AnalysisComponent } from '../../assessment/results/analysis/analysis.component';
@@ -113,29 +98,7 @@ const routes: Routes = [
             { path: 'info-config-iod', component: AssessmentConfigIodComponent },
             { path: 'demographics', component: AssessmentInfoNcuaComponent },
             { path: 'model-select', component: ModelSelectComponent },
-            { path: 'assessment-detail-cie', component: AssessmentDetailCieComponent },
-            { path: 'assessment-info-cie', component: AssessmentInfoCieComponent },
-            { path: 'assessment-config-cie', component: AssessmentConfigCieComponent },
-            {
-                path: 'cie-example',
-                component: CieExampleComponent,
-                canActivate: [AssessGuard],
-                canActivateChild: [AssessGuard],
-                children: [
-                    { path: 'cie-background', component: CieBackgroundComponent },
-                    {
-                        path: 'cie-analysis',
-                        component: CieAnalysisComponent,
-                        canActivate: [AssessGuard],
-                        canActivateChild: [AssessGuard],
-                        children: [
-                            { path: 'applying-cie', component: ApplyingCieComponent },
-                            { path: 'principle-analysis-cie/:pri', component: PrincipleAnalysisCieComponent }
-                        ]
-                    },
-                    { path: 'cie-analysis-matrix', component: CieAnalysisMatrixComponent },
-                ]
-            },
+            
             { path: 'config-cis', component: ConfigCisComponent },
             { path: 'cmmc-levels', component: CmmcLevelsComponent },
             { path: 'cmmc2-levels', component: Cmmc2LevelsComponent },
@@ -144,10 +107,6 @@ const routes: Routes = [
             { path: 'standards', component: StandardsComponent },
             { path: 'framework', component: FrameworkComponent },
             { path: 'required', component: RequiredDocsComponent },
-            { path: 'irp', component: IRPComponent },
-            { path: 'irp-summary', component: IrpSummaryComponent },
-            { path: 'exam-profile', component: ExamProfileComponent },
-            { path: 'exam-profile-summary', component: ExamProfileSummaryComponent },
             {
                 path: 'diagram',
                 component: DiagramComponent,
@@ -166,11 +125,6 @@ const routes: Routes = [
     { path: 'questions', component: QuestionsComponent },
     { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
     { path: 'maturity-questions', component: MaturityQuestionsComponent },
-    { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
-    { path: 'maturity-questions-ise', component: MaturityQuestionsIseComponent },
-    { path: 'instructions-cie', component: HowToUseCieComponent },
-    { path: 'maturity-questions-cie/:sec', component: MaturityQuestionsCieComponent },
-    { path: 'question-block-cie/:sec', component: QuestionBlockCieComponent },
     { path: 'principle-summary/:pri', component: PrincipleSummaryComponent },
     { path: 'maturity-questions/:grp', component: MaturityQuestionsComponent },
     { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
