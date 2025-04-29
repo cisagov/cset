@@ -27,7 +27,6 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { MaturityService } from '../../../services/maturity.service';
-import { NCUAService } from '../../../services/ncua.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { ModuleBehavior } from '../../../models/module-config.model';
 
@@ -52,7 +51,6 @@ export class GroupingBlockComponent implements OnInit {
     public matSvc: MaturityService,
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
-    public ncuaSvc: NCUAService
   ) { }
 
   /**

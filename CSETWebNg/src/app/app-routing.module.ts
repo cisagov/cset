@@ -139,7 +139,6 @@ import { Cmmc2LevelResultsComponent } from './assessment/results/mat-cmmc2/cmmc2
 import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc2-domain-results/cmmc2-domain-results.component';
 import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
-import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
 import { AssessmentConfigIodComponent } from './assessment/prepare/assessment-info/assessment-config-iod/assessment-config-iod.component';
 import { AssessmentDemogIodComponent } from './assessment/prepare/assessment-info/assessment-demog-iod/assessment-demog-iod.component';
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
@@ -155,7 +154,6 @@ import { SectionScoringComponent } from './assessment/results/cis/section-scorin
 import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
 import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
-import { IseDonutChartComponent } from './reports/ise-donut-chart/ise-donut-chart.component';
 import { PrivacyWarningComponent } from './initial/privacy-warning/privacy-warning.component';
 import { PrivacyWarningRejectComponent } from './initial/privacy-warning-reject/privacy-warning-reject.component';
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
@@ -177,17 +175,7 @@ import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr
 import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
 import { OtherRemarksComponent } from './assessment/questions/other-remarks/other-remarks.component';
 import { GeneralDeficiencyComponent } from './reports/general-deficiency/general-deficiency.component';
-import { QuickFactsCieComponent } from './assessment/prepare/maturity/tutorial-cie/quick-facts-cie/quick-facts-cie.component';
-import { OverviewCieComponent } from './assessment/prepare/maturity/tutorial-cie/overview-cie/overview-cie.component';
-import { BackgroundCieComponent } from './assessment/prepare/maturity/tutorial-cie/background-cie/background-cie.component';
-import { PrinciplesCieComponent } from './assessment/prepare/maturity/tutorial-cie/principles-cie/principles-cie.component';
-import { LifecycleCieComponent } from './assessment/prepare/maturity/tutorial-cie/lifecycle-cie/lifecycle-cie.component';
-import { HowToUseCieComponent } from './assessment/prepare/maturity/tutorial-cie/how-to-use-cie/how-to-use-cie.component';
-import { TutorialCieComponent } from './assessment/prepare/maturity/tutorial-cie/tutorial-cie.component';
 import { PrincipleSummaryComponent } from './assessment/questions/principle-summary/principle-summary.component';
-import { AssessmentConfigCieComponent } from './assessment/prepare/assessment-info/assessment-config-cie/assessment-config-cie.component';
-import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-info/assessment-detail-cie/assessment-detail-cie.component';
-import { AssessmentInfoCieComponent } from './assessment/prepare/assessment-info/assessment-info-cie/assessment-info-cie.component';
 import { SdOwnerDeficiencyComponent } from './reports/sd-owner/sd-owner-deficiency/sd-owner-deficiency.component';
 import { SdOwnerCommentsMfrComponent } from './reports/sd-owner/sd-owner-comments/sd-owner-comments-mfr.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
@@ -317,13 +305,9 @@ const appRoutes: Routes = [
             children: [
               { path: 'info1', component: AssessmentInfoComponent },
               { path: 'info2', component: Assessment2InfoComponent },
-              { path: 'info2-tsa', component: AssessmentInfo2TsaComponent },
               { path: 'info-demog-iod', component: AssessmentDemogIodComponent },
               { path: 'info-config-iod', component: AssessmentConfigIodComponent },
               { path: 'model-select', component: ModelSelectComponent },
-              { path: 'assessment-detail-cie', component: AssessmentDetailCieComponent },
-              { path: 'assessment-info-cie', component: AssessmentInfoCieComponent },
-              { path: 'assessment-config-cie', component: AssessmentConfigCieComponent },
               { path: 'tutorial-cmmc', component: TutorialCmmcComponent },
               { path: 'tutorial-cmmc2', component: TutorialCmmc2Component },
               { path: 'tutorial-edm', component: TutorialEdmComponent },
@@ -333,16 +317,6 @@ const appRoutes: Routes = [
               { path: 'tutorial-cis', component: TutorialCisComponent },
               { path: 'tutorial-cpg', component: TutorialCpgComponent },
               { path: 'tutorial-mvra', component: TutorialMvraComponent },
-              {
-                path: 'tutorial-cie', component: TutorialCieComponent,
-                children: [
-                  { path: 'quick-facts-cie', component: QuickFactsCieComponent },
-                  { path: 'overview-cie', component: OverviewCieComponent },
-                  { path: 'background-cie', component: BackgroundCieComponent },
-                  { path: 'principles-cie', component: PrinciplesCieComponent },
-                  { path: 'lifecycle-cie', component: LifecycleCieComponent },
-                ]
-              },
               { path: 'config-cis', component: ConfigCisComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'cmmc2-levels', component: Cmmc2LevelsComponent },
@@ -369,7 +343,6 @@ const appRoutes: Routes = [
           { path: 'questions', component: QuestionsComponent },
           { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
-          { path: 'instructions-cie', component: HowToUseCieComponent },
 
           { path: 'principle-summary/:pri', component: PrincipleSummaryComponent },
           { path: 'maturity-questions/:grp', component: MaturityQuestionsComponent },
@@ -477,7 +450,6 @@ const appRoutes: Routes = [
       { path: 'genDeficiencyReport', component: GeneralDeficiencyComponent },
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
       { path: 'cisCommentsmarked', component: CisCommentsmarkedComponent },
-      { path: 'isedonutchart', component: IseDonutChartComponent },
       { path: 'crrreport', component: CrrReportComponent },
       { path: 'crrDeficiencyReport', component: CrrDeficiencyComponent },
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },

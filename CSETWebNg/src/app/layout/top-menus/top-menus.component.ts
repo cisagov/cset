@@ -34,7 +34,6 @@ import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { EditUserComponent } from '../../dialogs/edit-user/edit-user.component';
 import { EnableProtectedComponent } from '../../dialogs/enable-protected/enable-protected.component';
 import { ExcelExportComponent } from '../../dialogs/excel-export/excel-export.component';
-import { GlobalConfigurationComponent } from '../../dialogs/global-configuration/global-configuration.component';
 import { GlobalParametersComponent } from '../../dialogs/global-parameters/global-parameters.component';
 import { KeyboardShortcutsComponent } from '../../dialogs/keyboard-shortcuts/keyboard-shortcuts.component';
 import { RraMiniUserGuideComponent } from '../../dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
@@ -387,13 +386,6 @@ export class TopMenusComponent implements OnInit {
         });
       }
     });
-  }
-
-  setMeritExportPath() {
-    if (this.dialog.openDialogs[0]) {
-      return;
-    }
-    this.dialogRef = this.dialog.open(GlobalConfigurationComponent);
   }
 
   showKeyboardShortcuts() {
