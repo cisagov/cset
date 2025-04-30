@@ -27,9 +27,7 @@ import { ReportService } from '../../services/report.service';
 import { QuestionsService } from '../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { AcetDashboard } from '../../models/acet-dashboard.model';
 import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin-save.model';
-import { ACETService } from '../../services/acet.service';
 import Chart from 'chart.js/auto';
 import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
@@ -58,8 +56,6 @@ export class SiteDetailComponent implements OnInit {
   warnings: any;
 
   // ACET data
-  matDetails: any;
-  acetDashboard: AcetDashboard;
   components: AdminTableData[];
   adminPageData: AdminPageData;
   grandTotal: number;
@@ -74,7 +70,6 @@ export class SiteDetailComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
     private titleService: Title,
-    public acetSvc: ACETService,
     private assessmentSvc: AssessmentService,
     private sanitizer: DomSanitizer,
     public tSvc: TranslocoService
@@ -112,45 +107,6 @@ export class SiteDetailComponent implements OnInit {
     this.reportSvc.getNetworkDiagramImage().subscribe(x => {
       this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x.diagram);
     });
-
-    this.assessmentSvc.getAssessmentDetail().subscribe(x => {
-      if (x['useMaturity'] === true) {
-        this.acetSvc.getMatDetailList().subscribe(
-          (data) => {
-            this.matDetails = data;
-          },
-          error => {
-            console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-            console.log('Error getting all documents: ' + (<Error>error).stack);
-          });
-      }
-    })
-
-
-    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment?.maturityModel?.modelName)) {
-      this.acetSvc.getAcetDashboard().subscribe(
-        (data: AcetDashboard) => {
-          this.acetDashboard = data;
-
-          for (let i = 0; i < this.acetDashboard.irps.length; i++) {
-            this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
-          }
-        },
-        error => {
-          console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-          console.log('Error getting all documents: ' + (<Error>error).stack);
-        });
-
-      this.acetSvc.getAdminData().subscribe(
-        (data: AdminPageData) => {
-          this.adminPageData = data;
-          this.processAcetAdminData();
-        },
-        error => {
-          console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-          console.log('Error getting all documents: ' + (<Error>error).stack);
-        });
-    }
   }
 
   processAcetAdminData() {

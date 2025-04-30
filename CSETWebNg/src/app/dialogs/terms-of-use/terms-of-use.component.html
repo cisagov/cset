@@ -23,8 +23,7 @@
 <div class="terms-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a w-100">
     <span class="cset-icons-handshake me-3 fs-base-6"></span>
-    <span *ngIf="configSvc.installationMode !=='ACET'">CSET {{t('menu.help.legal.terms of use.terms of use')}}</span>
-    <span *ngIf="configSvc.installationMode === 'ACET'">ACET {{t('menu.help.legal.terms of use.terms of use')}}</span>
+    <span>CSET {{t('menu.help.legal.terms of use.terms of use')}}</span>
   </div>
 
   <mat-dialog-content class="oy-auto p-3 pe-0 d-flex flex-column flex-11a w-100">

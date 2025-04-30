@@ -58,11 +58,7 @@ export class ExcelExportComponent {
   }
 
   exportToExcel() {
-    if (this.assessSvc.isISE()) {
-      this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'ExcelExportISE');
-    } else {
-      this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'assessment/export/excel');
-    }
+    this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'assessment/export/excel');
 
     this.dialog.close();
   }

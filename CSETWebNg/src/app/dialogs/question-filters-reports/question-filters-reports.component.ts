@@ -29,12 +29,12 @@ import { QuestionFilterService } from '../../services/filtering/question-filter.
 import { QuestionsService } from '../../services/questions.service';
 
 @Component({
-    selector: 'app-question-filters-reports',
-    templateUrl: './question-filters-reports.component.html',
-    // eslint-disable-next-line
-    styleUrls: ['../../reports/reports.scss', '../../reports/acet-reports.scss'],
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-question-filters-reports',
+  templateUrl: './question-filters-reports.component.html',
+  // eslint-disable-next-line
+  styleUrls: ['../../reports/reports.scss'],
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class QuestionFiltersReportsComponent implements OnInit {
 
@@ -75,13 +75,6 @@ export class QuestionFiltersReportsComponent implements OnInit {
    * 
    */
   ngOnInit(): any {
-    if (this.configSvc.installationMode === 'ACET') {
-      this.skin = "ncua";
-      if (this.assessSvc.isISE()) {
-        this.observations = "issues";
-        this.comments = "notes";
-      }
-    }
     this.refreshAnswerOptions();
   }
 
@@ -91,26 +84,11 @@ export class QuestionFiltersReportsComponent implements OnInit {
   refreshAnswerOptions() {
     this.answerOptions = [];
     this.filterSvc.answerOptions.filter(x => x != 'U').forEach(o => {
-      if (this.assessSvc.isISE()) {
-        this.answerOptions.push({
-          value: o,
-          text: this.questionsSvc.answerButtonLabel(this.filterSvc.maturityModelName, o)
-        });
-      } else {
-        this.answerOptions.push({
-          value: o,
-          text: this.questionsSvc.answerDisplayLabel(this.filterSvc.maturityModelName, o)
-        });
-      }
+      this.answerOptions.push({
+        value: o,
+        text: this.questionsSvc.answerDisplayLabel(this.filterSvc.maturityModelName, o)
+      });
     });
-    if (this.assessSvc.isISE()) {
-      // Remove 'N/A' and 'Compensating Control' from ISE filters menu.
-      this.answerOptions = this.answerOptions.slice(0, 2);
-    }
-    if (this.isInstallation('CIE')) {
-      // Everythiong except 'Yes', 'No', and 'N/A'
-      this.answerOptions = this.answerOptions.slice(0, 3);
-    }
   }
 
   /**

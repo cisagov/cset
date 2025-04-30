@@ -58,51 +58,7 @@
                                 <span class="cset-icons-export-up fs-base-2 me-2"></span>
                                 <span class="icon-link-button-text-dark">{{t('export all')}}</span>
                             </button>
-
-                            <!-- If they have the ncua switch we need to account for whether they want to export ACET's or ISE's -->
-                            <div *ngIf="this.ncuaSvc.switchStatus == false">
-                                <label *ngIf="configSvc.installationMode === 'ACET'"
-                                    class="m-0 ms-2 btn btn-secondary d-flex justify-content-end flex-00a"
-                                    matTooltip="{{ t('tooltip.export to excel') }}" (click)="exportToExcelAllAcet()"
-                                    tabindex="0">
-                                    <span class="cset-icons-export-excel fs-base me-2"></span>
-                                    <label for="importFile" class="m-0">{{t('buttons.export all to excel')}}</label>
-                                </label>
-                            </div>
-                            <div *ngIf="this.ncuaSvc.switchStatus == true">
-                                <label *ngIf="configSvc.installationMode === 'ACET'"
-                                    class="m-0 ms-2 btn btn-secondary d-flex justify-content-end flex-00a"
-                                    matTooltip="{{ t('tooltip.export to excel') }}" (click)="openExportDecisionDialog()"
-                                    tabindex="0">
-                                    <span class="cset-icons-export-excel fs-base me-2"></span>
-                                    <label class="m-0">{{t('buttons.export all to excel')}}</label>
-                                </label>
-                            </div>
-
-                            <label *ngIf="this.ncuaSvc.switchStatus"
-                                class="m-0 ms-2 btn btn-secondary d-flex align-items-center flex-00a"
-                                (click)="this.ncuaSvc.prepExaminationMerge()" tabindex="0">
-                                <span class="fs-base"></span>
-                                <label for="mergeExamination" class="m-0">
-                                    <span>{{this.ncuaSvc.prepForMerge === false ? t('buttons.merge examinations') :
-                                        t('buttons.end
-                                        merging')}}</span>
-                                </label>
-                            </label>
-                            <label *ngIf="configSvc.installationMode == 'CIE'"
-                                class="m-0 ms-2 btn btn-secondary d-flex align-items-center flex-00a"
-                                (click)="cieSvc.prepExaminationMerge()" tabindex="0">
-                                <span class="fs-base"></span>
-                                <label for="mergeExamination" class="m-0">
-                                    <span>{{cieSvc.prepForMerge === false ? t('buttons.merge examinations') :
-                                        t('buttons.end
-                                        merging')}}</span>
-                                </label>
-                            </label>
                         </div>
-
-
-
                     </div>
                     <div *ngIf="unsupportedImportFile"
                         class="alert-danger mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-00a">
@@ -119,8 +75,7 @@
             </ng-container>
             <ng-template #noAssessmentsElseBlock>
                 <h2 class="mt-0" *ngIf="sortedAssessments?.length == 0">
-                    <div *ngIf="appTitle == 'ACET'">{{ t('welcome page.welcome to acet') }}</div>
-                    <div *ngIf="appTitle != 'ACET'">{{ t('welcome page.welcome to', { appTitle:appTitle }) }}</div>
+                    <div>{{ t('welcome page.welcome to', { appTitle:appTitle }) }}</div>
                 </h2>
                 <p>{{ t('welcome page.to get started') }}</p>
                 <div class="mt-3 mb-4 flex-column d-flex justify-content-between flex-11a">
@@ -130,10 +85,7 @@
                                 class="m-0 p-3 me-sm-2 me-md-3 me-lg-4 btn btn-primary d-flex align-items-center flex-11a lp-btn-mw-lg"
                                 (click)="clickNewAssessmentButton()"
                                 matTooltip="{{ t('welcome page.new assessment tooltip') }}">
-                                <span *ngIf="configSvc.installationMode !=='ACET'"
-                                    class="me-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
-                                <span *ngIf="configSvc.installationMode === 'ACET'"
-                                    class="me-3 landing-icon landing-icon-sm cset2-icons-acet-shield"></span>
+                                <span class="me-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
                                 <span class="landing-button-text landing-button-text-sm">{{ t('welcome page.new
                                     assessment') }}</span>
                             </button>
@@ -173,7 +125,6 @@
                 </div>
                 <p class="mt-3 fst-italic">
                     <app-cset-origin *ngIf="showCsetOrigin()"></app-cset-origin>
-                    <app-acet-origin *ngIf="showAcetOrigin()"></app-acet-origin>
                 </p>
             </ng-template>
         </div>
@@ -185,154 +136,26 @@
         </div>
 
         <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto">
-            <ng-container *ngIf="!this.ncuaSvc.prepForMerge && !cieSvc.prepForMerge">
 
-                <!-- table for larger layouts -->
-                <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort
-                    (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
-                    <th aria-label="{{ t('assessment name')}}" mat-sort-header="assessment" style="width: 25%;">{{
-                        t('assessment name')}}
-                    </th>
-                    <th *ngIf="isTSA" style="width: 5%;">Source</th>
-                    <th *ngIf="isCF" style="width: 5%;">Type</th>
-                    <th aria-label="{{ t('assessment type')}}" mat-sort-header="type" style="width:15%;">{{
-                        t('assessment type')}}</th>
-                    <th *ngIf="showColumn('ise-submitted')" aria-label="ise-submitted" mat-sort-header="ise-submitted">
-                        {{ t('acet.submitted') }}</th>
-                    <th aria-label="{{ t('last modified')}}" mat-sort-header="date" style="width:15%;">{{ t('last
-                        modified')}}</th>
-                    <th *ngIf="showColumn('primary-assessor')" aria-label="assessor" mat-sort-header="assessor"
-                        style="width:15%;">{{t('primary assessor')}}</th>
-                    <th aria-label="{{t('status')}}" style="width:15%;">{{t('status')}}</th>
-                    <th aria-label="delete assessment" style="width:5%; min-width:25px;"></th>
-                    <th aria-label="export assessment" style="width:5%;"></th>
-                    <th aria-label="export JSON" style="width:5%;" *ngIf="showColumn('export json')"></th>
-                    <th aria-label="Analytics" style="width:5%;" *ngIf="showColumn('analytics')"></th>
-                    <tr *ngFor="let assessment of sortedAssessments;  let i = index">
-                        <td>
-                            <button tabindex="0"
-                                class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
-                                (click)="this.navSvc.beginAssessment(assessment.assessmentId)">
-                                {{assessment.assessmentName}}
-                            </button>
-                        </td>
-                        <td *ngIf="isTSA">{{isTSA &&
-                            (assessment.workflow=='BASE'||assessment.workflow=='CSET'||assessment.workflow==null) ?
-                            'CSET' :
-                            'TSA' }}
-                        </td>
-                        <td *ngIf="isCF">{{assessment.isEntryString}}</td>
-
-                        <td>{{assessment.type}}</td>
-                        <td *ngIf="showColumn('ise-submitted')">
-                            <ng-container *ngIf="assessment.iseSubmitted">
-                                {{ systemTimeTranslator(assessment.submittedDate, 'short') }}
-                            </ng-container>
-                        </td>
-                        <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.lastModifiedDate | localizeDate}}</td>
-                        <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate,
-                            'med')}}</td>
-
-                        <td *ngIf="showColumn('primary-assessor')">{{assessment.firstName}} {{assessment.lastName}}</td>
-                        <td>
-                            <div
-                                *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">
-                                <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
-                                    {{ { c: assessment.completedQuestionsCount, t:
-                                    assessment.totalAvailableQuestionsCount, qa: assessment.questionAlias, l:
-                                    tSvc.getActiveLang() } | completionCount }}
-                                </span>
-                                <ng-template #blankAssessment>
-                                    {{ t('welcome page.blank assessment') }}
-                                </ng-template>
-                                <br>
-                            </div>
-                            <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
-                                matTooltip="{{t('tooltip.assessment requires review')}}">{{t('requires review')}}
-                            </span>
-                        </td>
-                        <td>
-                            <button tabindex="0"
-                                class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                                (click)="removeAssessment(assessment, i)"
-                                matTooltip="{{ t('tooltip.remove assessment') }}">
-                                <span class="cset-icons-trash-x fs-base-2 me-2"></span>
-                                <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.remove')}}</span>
-                            </button>
-                        </td>
-                        <td *ngIf="showColumn('export')">
-                            <button tabindex="0" id="assess-{{i}}-export"
-                                class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                                (click)="clickDownloadLink(assessment.assessmentId)"
-                                matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
-                                <span class="cset-icons-export-up fs-base-2 me-2"></span>
-                                <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.export')}}</span>
-                            </button>
-                        </td>
-                        <td *ngIf="showColumn('export json')">
-                            <button tabindex="0" id="assess-{{i}}-export"
-                                class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                                (click)="clickDownloadLink(assessment.assessmentId, true)"
-                                matTooltip="{{ t('tooltip.export assessment json') }}">
-                                <span class="cset-icons-export-up fs-base-2 me-2"></span>
-                                <span class="icon-link-button-text-dark">{{t('buttons.export json')}}</span>
-                            </button>
-                        </td>
-                        <td style="display:none;" *ngIf="showColumn('analytics')">
-                            <button tabindex="0"
-                                class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                                (click)="this.analyticsSvc.loadAssessment(assessment.assessmentId)"
-                                matTooltip="{{ t('tooltip.analytics') }}">
-                                <span class="cset-icons-bar-chart-vertical fs-base-2 me-2"></span>
-                                <span class="icon-link-button-text-dark">{{t('buttons.analytics')}}</span>
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-
-                <!-- table for handset portrait -->
-                <table *ngIf="layoutSvc.hp" role="presentation" aria-label="assessments" matSort
-                    (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
-                    <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">{{ t('assessment
-                        name') }}
-                    </th>
-                    <th aria-label="date" mat-sort-header="date" style="width:15%;">{{ t('last modified') }}</th>
-                    <th aria-label="Actions" style="width: 5%" *ngIf="layoutSvc.hp"></th>
-                    <tr *ngFor="let assessment of sortedAssessments;  let i = index">
-                        <td>
-                            <button tabindex="0"
-                                class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
-                                (click)="this.navSvc.beginAssessment(assessment.assessmentId)">
-                                {{assessment.assessmentName}}
-                            </button>
-                        </td>
-                        <td>{{systemTimeTranslator(assessment.lastModifiedDate, 'med')}}</td>
-                        <td class="text-nowrap ps-1">
-                            <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
-                                (click)="removeAssessment(assessment, i)"
-                                matTooltip="{{ t('tooltip.remove assessment') }}">
-                                <span class="cset-icons-trash-x fs-base-2"></span>
-                            </button>
-                            <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
-                                (click)="clickDownloadLink(assessment.assessmentId)"
-                                matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
-                                <span class="cset-icons-export-up fs-base-2"></span>
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-            </ng-container>
-
-            <table *ngIf="(this.ncuaSvc.switchStatus && this.ncuaSvc.prepForMerge)" role="presentation"
-                aria-label="assessments" matSort (matSortChange)="sortData($event)" class="assessment-summary"
-                style="overflow-x:auto">
-                <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">{{ t('assessment
-                    name') }}</th>
-                <th aria-label="assessment type" mat-sort-header="type" style="width:15%;">{{ t('assessment type') }}
+            <!-- table for larger layouts -->
+            <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort
+                (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
+                <th aria-label="{{ t('assessment name')}}" mat-sort-header="assessment" style="width: 25%;">{{
+                    t('assessment name')}}
                 </th>
-                <th aria-label="date" mat-sort-header="date" style="width:15%;">{{ t('last modified') }}</th>
-                <th aria-label="status" mat-sort-header="status" style="width:15%;">{{t('status')}}</th>
-                <th aria-label="merge assessment" style="width:5%;"></th>
+                <th aria-label="{{ t('assessment type')}}" mat-sort-header="type" style="width:15%;">{{
+                    t('assessment type')}}</th>
+                <th *ngIf="showColumn('ise-submitted')" aria-label="ise-submitted" mat-sort-header="ise-submitted">
+                    {{ t('acet.submitted') }}</th>
+                <th aria-label="{{ t('last modified')}}" mat-sort-header="date" style="width:15%;">{{ t('last
+                    modified')}}</th>
+                <th *ngIf="showColumn('primary-assessor')" aria-label="assessor" mat-sort-header="assessor"
+                    style="width:15%;">{{t('primary assessor')}}</th>
+                <th aria-label="{{t('status')}}" style="width:15%;">{{t('status')}}</th>
+                <th aria-label="delete assessment" style="width:5%; min-width:25px;"></th>
+                <th aria-label="export assessment" style="width:5%;"></th>
+                <th aria-label="export JSON" style="width:5%;" *ngIf="showColumn('export json')"></th>
+                <th aria-label="Analytics" style="width:5%;" *ngIf="showColumn('analytics')"></th>
                 <tr *ngFor="let assessment of sortedAssessments;  let i = index">
                     <td>
                         <button tabindex="0"
@@ -341,106 +164,102 @@
                             {{assessment.assessmentName}}
                         </button>
                     </td>
+                   
+
                     <td>{{assessment.type}}</td>
+                    <td *ngIf="showColumn('ise-submitted')">
+                        <ng-container *ngIf="assessment.iseSubmitted">
+                            {{ systemTimeTranslator(assessment.submittedDate, 'short') }}
+                        </ng-container>
+                    </td>
+                    <td>{{assessment.lastModifiedDate | localizeDate}}</td>
+                    <td *ngIf="showColumn('primary-assessor')">{{assessment.firstName}} {{assessment.lastName}}</td>
+                    <td>
+                        <div
+                            *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">
+                            <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
+                                {{ { c: assessment.completedQuestionsCount, t:
+                                assessment.totalAvailableQuestionsCount, qa: assessment.questionAlias, l:
+                                tSvc.getActiveLang() } | completionCount }}
+                            </span>
+                            <ng-template #blankAssessment>
+                                {{ t('welcome page.blank assessment') }}
+                            </ng-template>
+                            <br>
+                        </div>
+                        <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
+                            matTooltip="{{t('tooltip.assessment requires review')}}">{{t('requires review')}}
+                        </span>
+                    </td>
+                    <td>
+                        <button tabindex="0"
+                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                            (click)="removeAssessment(assessment, i)" matTooltip="{{ t('tooltip.remove assessment') }}">
+                            <span class="cset-icons-trash-x fs-base-2 me-2"></span>
+                            <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.remove')}}</span>
+                        </button>
+                    </td>
+                    <td *ngIf="showColumn('export')">
+                        <button tabindex="0" id="assess-{{i}}-export"
+                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                            (click)="clickDownloadLink(assessment.assessmentId)"
+                            matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
+                            <span class="cset-icons-export-up fs-base-2 me-2"></span>
+                            <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.export')}}</span>
+                        </button>
+                    </td>
+                    <td *ngIf="showColumn('export json')">
+                        <button tabindex="0" id="assess-{{i}}-export"
+                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                            (click)="clickDownloadLink(assessment.assessmentId, true)"
+                            matTooltip="{{ t('tooltip.export assessment json') }}">
+                            <span class="cset-icons-export-up fs-base-2 me-2"></span>
+                            <span class="icon-link-button-text-dark">{{t('buttons.export json')}}</span>
+                        </button>
+                    </td>
+                    <td style="display:none;" *ngIf="showColumn('analytics')">
+                        <button tabindex="0"
+                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                            (click)="this.analyticsSvc.loadAssessment(assessment.assessmentId)"
+                            matTooltip="{{ t('tooltip.analytics') }}">
+                            <span class="cset-icons-bar-chart-vertical fs-base-2 me-2"></span>
+                            <span class="icon-link-button-text-dark">{{t('buttons.analytics')}}</span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- table for handset portrait -->
+            <table *ngIf="layoutSvc.hp" role="presentation" aria-label="assessments" matSort
+                (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
+                <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">{{ t('assessment
+                    name') }}
+                </th>
+                <th aria-label="date" mat-sort-header="date" style="width:15%;">{{ t('last modified') }}</th>
+                <th aria-label="Actions" style="width: 5%" *ngIf="layoutSvc.hp"></th>
+                <tr *ngFor="let assessment of sortedAssessments;  let i = index">
+                    <td>
+                        <button tabindex="0"
+                            class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
+                            (click)="this.navSvc.beginAssessment(assessment.assessmentId)">
+                            {{assessment.assessmentName}}
+                        </button>
+                    </td>
                     <td>{{systemTimeTranslator(assessment.lastModifiedDate, 'med')}}</td>
-                    <td>
-                        <div *ngIf="assessment.selectedMaturityModel != 'CIS'">
-                            <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
-                                {{ t('welcome page.statements completed',
-                                { complete: assessment.completedQuestionsCount
-                                , total: assessment.totalAvailableQuestionsCount }) }}
-                                <!-- {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}}
-                                Statement(s) Completed -->
-                            </span>
-                            <ng-template #blankAssessment>
-                                {{ t('welcome page.blank assessment') }}
-                            </ng-template>
-                            <br>
-                        </div>
-                        <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
-                            matTooltip="{{ t('tooltip.assessment requires review') }}">
-                            {{ t('welcome page.needs review') }}
-                        </span>
-                    </td>
-                    <td>
-                        <div *ngIf="assessment.type.includes('ISE')">
-                            <input type="checkbox" id="{{assessment.assessmentId}}" name="{{assessment.assessmentId}}"
-                                class="checkbox-custom mt-1" (change)="this.ncuaSvc.modifyMergeList(assessment, $event)"
-                                [checked]="">
-                            <label for="{{assessment.assessmentId}}" class="checkbox-custom-label">
-                                {{ t('merge examinations.merge') }}
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <button *ngIf="this.ncuaSvc.prepForMerge" (click)="this.proceedToMerge()"
-                [disabled]="this.ncuaSvc.assessmentsToMerge.length < 2 || this.ncuaSvc.assessmentsToMerge.length > 10"
-                class="btn btn-primary" matTooltip="{{ t('tooltip.merged checked exams') }}"
-                style="width: 11%; margin-top: 1.0rem; margin-left: auto; margin-right: 0">{{ t('merge
-                examinations.start merge') }}</button>
-
-            <!-- merge for CIE -->
-            <table *ngIf="configSvc.installationMode == 'CIE' && cieSvc.prepForMerge" role="presentation"
-                aria-label="assessments" matSort (matSortChange)="sortData($event)" class="assessment-summary"
-                style="overflow-x:auto">
-                <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">{{ t('assessment
-                    name') }}</th>
-                <th aria-label="assessment type" mat-sort-header="type" style="width:15%;">{{ t('assessment type') }}
-                </th>
-                <th aria-label="date" mat-sort-header="date" style="width:15%;">{{ t('last modified') }}</th>
-                <th aria-label="status" mat-sort-header="status" style="width:15%;">{{t('status')}}</th>
-                <th aria-label="merge assessment" style="width:5%;"></th>
-                <tr *ngFor="let assessment of sortedAssessments;  let i = index">
-                    <td>
-                        <button tabindex="0"
-                            class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
-                            (click)="this.navSvc.beginAssessment(assessment.assessmentId)">
-                            {{assessment.assessmentName}}
+                    <td class="text-nowrap ps-1">
+                        <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
+                            (click)="removeAssessment(assessment, i)" matTooltip="{{ t('tooltip.remove assessment') }}">
+                            <span class="cset-icons-trash-x fs-base-2"></span>
+                        </button>
+                        <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
+                            (click)="clickDownloadLink(assessment.assessmentId)"
+                            matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
+                            <span class="cset-icons-export-up fs-base-2"></span>
                         </button>
                     </td>
-                    <td>{{assessment.type}}</td>
-                    <td>{{systemTimeTranslator(assessment.lastModifiedDate)}}</td>
-                    <td>
-                        <div *ngIf="assessment.selectedMaturityModel != 'CIS'">
-                            <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
-                                {{ t('welcome page.statements completed',
-                                { complete: assessment.completedQuestionsCount
-                                , total: assessment.totalAvailableQuestionsCount }) }}
-                                <!-- {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}}
-                                Statement(s) Completed -->
-                            </span>
-                            <ng-template #blankAssessment>
-                                {{ t('welcome page.blank assessment') }}
-                            </ng-template>
-                            <br>
-                        </div>
-                        <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
-                            matTooltip="{{ t('tooltip.assessment requires review') }}">
-                            {{ t('welcome page.needs review') }}
-                        </span>
-                    </td>
-                    <td>
-                        <div *ngIf="assessment.type === 'CIE'">
-                            <input type="checkbox" id="{{assessment.assessmentId}}" name="{{assessment.assessmentId}}"
-                                class="checkbox-custom mt-1" (change)="cieSvc.modifyMergeList(assessment, $event)"
-                                [checked]="">
-                            <label for="{{assessment.assessmentId}}" class="checkbox-custom-label">
-                                {{ t('merge examinations.merge') }}
-                            </label>
-                        </div>
-                    </td>
                 </tr>
             </table>
-            <button *ngIf="cieSvc.prepForMerge" (click)="this.proceedToCieMerge()"
-                [disabled]="cieSvc.assessmentsToMerge.length < 2 || cieSvc.assessmentsToMerge.length > 10"
-                class="btn btn-primary" matTooltip="{{ t('tooltip.merged checked exams') }}"
-                style="width: 11%; margin-top: 1.0rem; margin-left: auto; margin-right: 0">{{ t('merge
-                examinations.start merge') }}</button>
 
-            <!-- <div *ngIf="sortedAssessments?.length == 0" class="mt-3 mb-4">
-            <p>There are no assessments available.</p>
-        </div> -->
         </div>
     </div>
 </ng-container>

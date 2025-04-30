@@ -23,13 +23,4 @@
 
 <!-- Display the correct layout corresponding to the current installation mode -->
 <layout-main *ngIf="installationMode == 'CSET'"></layout-main>
-
-<acet-layout-main *ngIf="installationMode == 'ACET'"></acet-layout-main>
-
-<tsa-layout-main *ngIf="installationMode == 'TSA'"></tsa-layout-main>
-
-<cf-layout-main *ngIf="installationMode == 'CF'"></cf-layout-main>
-
-<renew-layout-main *ngIf="installationMode == 'RENEW'"></renew-layout-main>
-<app-cie-layout-main *ngIf="installationMode == 'CIE'"></app-cie-layout-main>
 <iod-layout *ngIf="installationMode == 'IOD'"></iod-layout>

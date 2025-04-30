@@ -120,13 +120,10 @@
                     </div>
 
                     <div *ngIf="q.answer === 'A'">
-                        <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
+                        <textarea appAutoSize class="form-control" 
                             style="width: 100%; min-height: 80px;"
                             [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
                             [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
-                        <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg"
-                            aria-label="description required">{{
-                            t('answer-options.warnings.description required') }}</div>
                     </div>
                 </div>
             </div>
@@ -187,13 +184,10 @@
                     </div>
 
                     <div *ngIf="q.answer === 'A'">
-                        <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
+                        <textarea appAutoSize class="form-control"
                             style="width: 100%; min-height: 80px;"
                             [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
                             [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
-                        <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg"
-                            aria-label="description required">{{
-                            t('answer-options.warnings.description required') }}</div>
                     </div>
                 </div>
             </div>

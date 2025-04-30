@@ -26,12 +26,7 @@ namespace CSETWebCore.Interfaces.Reports
         List<MatRelevantAnswers> GetMarkedForReviewList(int? modelId = null);
         List<MatRelevantAnswers> GetAlternatesList();
         List<MatRelevantAnswers> GetQuestionsList(int? modelId = null);
-        List<MatAnsweredQuestionDomain> GetAnsweredQuestionList();
-        List<MatAnsweredQuestionDomain> GetIseAnsweredQuestionList();
-        BasicReportData.INFORMATION GetIseInformation();
-        List<MatAnsweredQuestionDomain> GetIseAllQuestionList();
 
-        List<SourceFiles> GetIseSourceFiles();
         string GetCsetVersion();
         string GetAssessmentGuid(int assessmentId);
         List<string> GetDomains();
@@ -66,9 +61,6 @@ namespace CSETWebCore.Interfaces.Reports
 
         IEnumerable<CONFIDENTIAL_TYPE> GetConfidentialTypes();
         List<BasicReportData.RequirementControl> GetControlsDiagram(string applicationMode);
-        List<MatAnsweredQuestionDomain> GetCieQuestionList(int matLevel, bool filterForNa = false);
-        List<MatAnsweredQuestionDomain> GetCieDocumentsForAssessment();
-        List<MatAnsweredQuestionDomain> GetCieMfrQuestionList();
         List<PhysicalQuestions> GetQuestionsWithSupplementals();
         Task<List<StandardQuestions>> GetStandardQuestionAnswers(int assessId);
     }

@@ -287,9 +287,3 @@ export interface MaturityFilter {
     isSet: boolean;
 }
 
-/**
- *
- */
-export class DomainMaturityFilterSet {
-
-}

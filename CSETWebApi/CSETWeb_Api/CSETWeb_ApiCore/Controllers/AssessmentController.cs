@@ -36,7 +36,6 @@ namespace CSETWebCore.Api.Controllers
     public class AssessmentController : ControllerBase
     {
         private readonly IAssessmentBusiness _assessmentBusiness;
-        private IACETAssessmentBusiness _acsetAssessmentBusiness;
         private readonly ITokenManager _tokenManager;
         private readonly IDocumentBusiness _documentBusiness;
         private readonly IStandardsBusiness _standards;
@@ -47,13 +46,11 @@ namespace CSETWebCore.Api.Controllers
         private readonly IUtilities _utilities;
 
         public AssessmentController(IAssessmentBusiness assessmentBusiness,
-            IACETAssessmentBusiness acetAssessmentBusiness,
             ITokenManager tokenManager, IDocumentBusiness documentBusiness, CSETContext context,
             IStandardsBusiness standards, IAssessmentUtil assessmentUtil,
             IAdminTabBusiness adminTabBusiness, IGalleryEditor galleryEditor, IUtilities utilities)
         {
             _assessmentBusiness = assessmentBusiness;
-            _acsetAssessmentBusiness = acetAssessmentBusiness;
             _tokenManager = tokenManager;
             _documentBusiness = documentBusiness;
             _context = context;
@@ -102,13 +99,6 @@ namespace CSETWebCore.Api.Controllers
             }
 
             ICreateAssessmentBusiness assessmentBusiness = (ICreateAssessmentBusiness)_assessmentBusiness;
-            switch (config.Model?.ModelName)
-            {
-                case "ACET":
-                case "ISE":
-                    assessmentBusiness = (ICreateAssessmentBusiness)_acsetAssessmentBusiness;
-                    break;
-            }
 
             // create new empty assessment
             var assessment = assessmentBusiness.CreateNewAssessment(currentUserId, workflow, config);
@@ -305,11 +295,6 @@ namespace CSETWebCore.Api.Controllers
                 throw new Exception("Not currently authorized to update the Assessment", null);
             }
 
-            if (assessmentDetail.Workflow == "ACET")
-            {
-                return Ok(_acsetAssessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail));
-            }
-
             return Ok(_assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail));
         }
 
@@ -434,23 +419,6 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        [Route("api/getIseSubmissionStatus")]
-        public IActionResult GetSubmissionStatus()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            var result = this._acsetAssessmentBusiness.GetIseSubmission(assessmentId);
-            return Ok(result);
-        }
-
-        [HttpPost]
-        [Route("api/updateIseSubmissionStatus")]
-        public IActionResult UpdateSubmissionStatus()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            this._acsetAssessmentBusiness.UpdateIseSubmission(assessmentId);
-            return Ok();
-        }
 
         [HttpGet]
         [Route("api/clearFirstTime")]
@@ -462,14 +430,6 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        [Route("api/moveHydroActionsOutOfIseActions")]
-        public IActionResult MoveHydroActionsOutOfIseActions()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            this._assessmentBusiness.MoveHydroActionsOutOfIseActions();
-            return Ok();
-        }
 
         [HttpGet]
         [Route("api/getAssessmentObservations")]

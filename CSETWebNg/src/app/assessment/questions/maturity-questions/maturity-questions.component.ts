@@ -153,13 +153,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  isNcuaModel() {
-    if (this.modelName == 'ACET' || this.modelName == 'ISE') {
-      return true;
-    }
-    return false;
-  }
-
   /**
    * Returns the URL of the Questions page in the user guide.
    */

@@ -49,13 +49,11 @@ import { ReportTestComponent } from '../reports/report-test/report-test.componen
 import { LayoutSwitcherComponent } from '../layout/layout-switcher/layout-switcher.component';
 import { LayoutBlankComponent } from '../layout/layout-blank/layout-blank.component';
 import { AssessmentComparisonAnalyticsComponent } from '../initial/assessmenet-comparison-analytics/assessment-comparison-analytics.component';
-import { MergeExaminationsComponent } from '../assessment/merge/merge-examinations.component';
 import { LandingPageTabsComponent } from '../initial/landing-page-tabs/landing-page-tabs.component';
 import { PrivacyWarningComponent } from '../initial/privacy-warning/privacy-warning.component';
 import { PrivacyWarningRejectComponent } from '../initial/privacy-warning-reject/privacy-warning-reject.component';
 import { LogoutComponent } from '../initial/logout/logout.component';
 import { LoginAccessKeyComponent } from '../initial/login-access-key/login-access-key.component';
-import { MergeCieAnalysisComponent } from '../assessment/merge/merge-cie-analysis/merge-cie-analysis.component';
 
 
 const appRoutes: Routes = [
@@ -153,14 +151,6 @@ const appRoutes: Routes = [
       {
         path: 'resource-library',
         component: ResourceLibraryComponent
-      },
-      {
-        path: 'examination-merge',
-        component: MergeExaminationsComponent
-      },
-      {
-        path: 'merge-cie-analysis',
-        component: MergeCieAnalysisComponent
       },
 
       {
