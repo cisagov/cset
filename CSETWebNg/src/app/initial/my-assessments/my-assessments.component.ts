@@ -90,9 +90,8 @@ export class MyAssessmentsComponent implements OnInit {
   // contains CSET or ACET; used for tooltips, etc
   appName: string;
   appTitle: string;
-  isTSA: boolean = false;
-  isCSET: boolean = false;
-  isCF: boolean = false;
+
+
   exportExtension: string;
   importExtensions: string;
 
@@ -132,10 +131,7 @@ export class MyAssessmentsComponent implements OnInit {
     this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);
     this.appTitle = this.configSvc.config.behaviors.defaultTitle;
     this.appName = 'CSET';
-    switch (this.configSvc.installationMode || '') {
-      default:
-        this.isCSET = true;
-    }
+
 
     if (localStorage.getItem("returnPath")) { }
     else {
@@ -194,10 +190,6 @@ export class MyAssessmentsComponent implements OnInit {
         this.assessSvc.getAssessments().pipe(
           map((assessments: UserAssessment[]) => {
             assessments.forEach((item, index, arr) => {
-              if (this.isCF) {
-                assessmentiDs.push(item.assessmentId);
-                item.isEntry = false;
-              }
 
               // determine assessment type display
               item.type = this.determineAssessmentType(item);

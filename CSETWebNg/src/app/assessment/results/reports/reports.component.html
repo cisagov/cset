@@ -38,9 +38,6 @@
   <app-cisa-workflow-warnings
     [invalidFields]="cisaAssessorWorkflowFieldValidation?.invalidFields"></app-cisa-workflow-warnings>
 
-  <!-- Moved this check from inside the component to here to prevent extra whitespace when not CF -->
-  <app-assessment-convert-cf *ngIf="isCfEntry" class="mt-4"></app-assessment-convert-cf>
-
 
   <!-- Observation Tear Out Sheets -->
   <div class="d-flex flex-column justify-content-start align-items-start mb-4">

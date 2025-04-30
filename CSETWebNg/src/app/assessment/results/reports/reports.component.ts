@@ -50,14 +50,6 @@ import { FileExportService } from '../../../services/file-export.service';
   standalone: false
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
-  /**
-   * Indicates if all ACET questions have been answered.  This is only
-   * used when the ACET model is in use and this is an ACET installation.
-   */
-  unassignedIssueTitles: any = [];
-
-  disableAcetReportLinks: boolean = true;
-  disableIseReportLinks: boolean = true;
   disableEntirePage: boolean = false;
 
   confidentiality: string = 'None';
@@ -68,16 +60,11 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   exportExtension: string;
 
   dialogRef: MatDialogRef<any>;
-  isCyberFlorida: boolean = false;
 
   observations: any = null;
   numberOfContacts: number = 1;
-  isConfigChainEqual: boolean = false;
-
-  iseHasBeenSubmitted: boolean = false;
 
   cisaAssessorWorkflowFieldValidation: CisaWorkflowFieldValidationResponse;
-  isCfEntry: boolean = false;
 
   currentSectionId: string | null = null;
 
@@ -113,7 +100,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       this.isMobile = false;
     }
     this.assessSvc.currentTab = 'results';
-    this.isConfigChainEqual = this.arraysEqual(this.configSvc.config.currentConfigChain, ['TSA', 'TSAonline']);
   }
 
   arraysEqual(a, b) {
@@ -147,9 +133,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       this.router.navigate([value], { relativeTo: this.route.parent });
     });
 
-    // call the API for a ruling on whether all questions have been answered
-    this.disableAcetReportLinks = false;
-
     if (this.configSvc.installationMode === 'IOD') {
       this.reportSvc.validateCisaAssessorFields().subscribe((result: CisaWorkflowFieldValidationResponse) => {
         this.cisaAssessorWorkflowFieldValidation = result;
@@ -158,8 +141,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         }
       });
     }
-
-    this.isCyberFlorida = false;
  
     this.assessSvc.getLastModified().subscribe((data: any) => {
       this.lastModifiedTimestamp = data.lastModifiedDate;
@@ -262,13 +243,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  disableSubmitButton() {
-    if (this.reportSvc.disableIseReportLinks) {
-      return true;
-    }
-    return false;
-  }
-
   getSubmitButtonStyle() {
     return "background-color: #3B68AA; color: white;";
   }
@@ -298,8 +272,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         this.currentSectionId = 'CMMC2';
       } else if (this.assessSvc.usesMaturityModel('RRA') && !this.isMobile) {
         this.currentSectionId = 'RRA';
-      } else if (this.assessSvc.usesMaturityModel('ACET') && !this.isMobile) {
-        this.currentSectionId = 'ACET';
       } else if (this.assessSvc.usesMaturityModel('MVRA') && !this.isMobile) {
         this.currentSectionId = 'MVRA';
       } else if (this.assessSvc.usesMaturityModel('CPG') && !this.isMobile) {

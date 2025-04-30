@@ -440,12 +440,6 @@ export class AssessmentService {
   newAssessmentGallery(galleryItem: any): Promise<any> {
     let workflow = 'BASE';
     switch (this.configSvc.installationMode || '') {
-      case 'ACET':
-        workflow = 'ACET';
-        break;
-      case 'TSA':
-        workflow = 'TSA';
-        break;
       default:
         workflow = 'BASE';
     }

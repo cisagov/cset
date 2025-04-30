@@ -272,13 +272,6 @@ export class TopMenusComponent implements OnInit {
    * Allows us to hide items for certain skins
    */
   showItemForCurrentSkin(item: string) {
-    // custom behavior for ACET
-    if (this.skin === 'ACET') {
-      if (item === 'assessment documents') {
-        return false;
-      }
-    }
-
     const show = this.configSvc.config.behaviors?.showAssessmentDocuments ?? true;
     return show;
   }

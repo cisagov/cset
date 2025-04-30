@@ -43,7 +43,6 @@ export class ReportService {
   confidentialityLevels: any[];
   confidentiality = '';
 
-  disableIseReportLinks: boolean = false;
 
   /**
    *

@@ -65,7 +65,6 @@ using Microsoft.AspNetCore.Rewrite;
 using CSETWebCore.Interfaces.Analytics;
 using CSETWebCore.Business.Analytics;
 using CSETWebCore.Api.Error;
-using CSETWebCore.Business.Merit;
 using System;
 using CSETWebCore.Business.AssessmentIO.Import;
 using CSETWebCore.Interfaces.Malcolm;
@@ -171,7 +170,6 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IDataHandling, DataHandling>();
             services.AddTransient<IGalleryState, GalleryState>();
             services.AddTransient<IGalleryEditor, GalleryEditor>();
-            services.AddTransient<IJSONFileExport, JSONFileExport>();
             services.AddTransient<IMalcolmBusiness, MalcolmBusiness>();
             services.AddScoped<IVersionBusiness, VersionBusiness>();
 

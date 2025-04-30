@@ -61,9 +61,6 @@ export class QuestionExtrasComponent implements OnInit {
   @ViewChild('questionExtras') questionExtrasDiv: ElementRef;
 
   @Input() myOptions: any;
-
-  // ISE options
-  @Input() ncuaDisplay: boolean = false;
   @Input() iconsToDisplay: string[] = [];
 
   extras: QuestionDetailsContentViewModel;
@@ -651,12 +648,6 @@ export class QuestionExtrasComponent implements OnInit {
    * Use "moduleBehaviors" configuration for the current module/model.
    */
   displayIcon(mode) {
-    //NCUA asked for specific behavior. See comment on displayIconISE function.
-    if (this.ncuaDisplay) {
-      let result = this.displayIconISE(mode);
-      return result;
-    }
-
     const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment.maturityModel?.modelName);
 
     if (mode == 'DETAIL') {
@@ -698,19 +689,6 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Custom show/hide functionality for ISE icons. Requires "this.ncuaDisplay" to be true.
-   * This function takes an array of strings ("this.iconsToDisplay") and if it finds the mode (icon)
-   * you want to show (['REFS', 'SUPP'], etc)
-   */
-  displayIconISE(mode) {
-    if (this.iconsToDisplay.includes(mode)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  /**
    * Returns an "I" or "G", depending on which version of the suppemental icon
    * should be shown based on context.
    * @returns
@@ -725,14 +703,14 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Returns 'Observation' if the assessment is not ISE, 'Issue' if it is ISE
+   * Returns 'Observation' 
    */
   observationOrIssue() {
     return 'Observation';
   }
 
   /**
-   * Returns the custom label if the model has one (currently only ISE), or the default if not
+   * Returns the custom label if the model has one or the default if not
    */
   documentLabel(defaultLabel: string) {
     return defaultLabel;

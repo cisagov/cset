@@ -46,10 +46,6 @@ export class PlaceholderQuestionsComponent implements OnInit {
    * Navigate the user to the Assessment Config page
    */
   navToAssessConfig() {
-    if (this.assessSvc.assessment.workflow == 'TSA') {
-      this.navSvc.navDirect('info-tsa');
-    } else {
-      this.navSvc.navDirect('info1');
-    }
+    this.navSvc.navDirect('info1');
   }
 }
