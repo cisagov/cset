@@ -133,27 +133,6 @@
     ]
   },
   {
-    "title": "ISE",
-    "reportList": [
-      {
-        "linkUrl": "isemerit",
-        "disabled": false
-      },
-      {
-        "linkUrl": "iseexamination",
-        "disabled": false
-      },
-      {
-        "linkUrl": "iseansweredquestions",
-        "disabled": false
-      },
-      {
-        "linkUrl": "iseexaminer",
-        "disabled": false
-      }
-    ]
-  },
-  {
     "title": "IMR",
     "reportList": [
       {
@@ -238,26 +217,6 @@
     "reportList": [
       {
         "linkUrl": "c2m2Report"
-      }
-    ]
-  },
-  {
-    "title": "ACET",
-    "reportList": [
-      {
-        "linkUrl": "acetexecutive"
-      },
-      {
-        "linkUrl": "acetgaps"
-      },
-      {
-        "linkUrl": "acetcommentsmarked"
-      },
-      {
-        "linkUrl": "acetansweredquestions"
-      },
-      {
-        "linkUrl": "acetcompensatingcontrols"
       }
     ]
   },

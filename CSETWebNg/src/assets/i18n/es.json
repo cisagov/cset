@@ -132,30 +132,6 @@
         "creator": "Creador de evaluaciones",
         "editor": "Editor de evaluación"
     },
-    "acet": {
-        "empty my assessments page footer text": "La Caja de herramientas de evaluación de ciberseguridad automatizada (ACET®) es un producto de la Administración Nacional de Cooperativas de Crédito (NCUA) que ayuda a las organizaciones a proteger sus activos cibernéticos nacionales clave. Fue desarrollado bajo la dirección de la Administración Nacional de Cooperativas de Crédito por expertos en ciberseguridad. Esta herramienta proporciona a los usuarios un enfoque sistemático y repetible para evaluar la situación de seguridad de sus sistemas y redes cibernéticos. Incluye preguntas detalladas y de alto nivel relacionadas con todos los sistemas de TI y control industrial.",
-        "credit union": "Unión de crédito",
-        "credit union name": "Nombre de la cooperativa de crédito",
-        "charter": "Carta",
-        "assets": "Activos",
-        "auto populate": "Auto-generado basado en los datos proporcionados.",
-        "target maturity range": "Rango de madurez objetivo",
-        "target percentage achieved": "Porcentaje de objetivo alcanzado",
-        "maturity results": "Resultados de madurez de ACET",
-        "actual level": "Nivel actual",
-        "assessment factor": "Factor de evaluación",
-        "component": "Componente",
-        "components": "Componentes",
-        "statements": "Declaraciónes",
-        "submitted": "Enviado"
-    },
-    "cyber-florida": {
-        "upgrade message": "Esta evaluación utiliza un subconjunto de los requisitos del Cybersecurity Framework v1.1 y un subconjunto de la Evaluación de preparación para ransomware. Para convertir esta evaluación para incluir todas las preguntas, haga clic en el botón a continuación.",
-        "upgrade confirm 1": "¿Está seguro de que desea convertir esta evaluación? Esta es una conversión unidireccional; no se puede deshacer.",
-        "upgrade confirm 2": "La evaluación se ha convertido.",
-        "title upgrade complete": "Conversión completa",
-        "upgrade button": "Convertir a evaluación completa"
-    },
     "titles": {
         "prepare": "Preparar",
         "assessment": "Evaluación",
@@ -538,19 +514,6 @@
             "include above target": "Incluir preguntas arriba del nivel objetivo de madurez",
             "show open ended": "Mostrar preguntas abiertas respondidas"
         },
-        "ncua": {
-            "dialog title": "Filtros de declaración",
-            "show answered as": "Mostrar declaraciones respondidas <em><b>{{optionText}}</b></em>",
-            "show unanswered": "Mostrar declaraciones sin respuesta",
-            "show with comments": "Mostrar declaraciones con comentarios",
-            "show with feedback": "Mostrar declaraciones con retroalimentación",
-            "show with notes": "Mostrar preguntas con notas",
-            "show marked for review": "Mostrar declaraciones marcadas para revisión",
-            "show with observations": "Mostrar declaraciones con observaciones",
-            "show with issues": "Mostrar declaraciones con problemas",
-            "include above target": "Incluir declaraciones arriba del nivel objetivo de madurez",
-            "show open ended": "Mostrar preguntas abiertas respondidas"
-        },
         "showing only filtered": "Mostrando sólo preguntas filtradas",
         "no questions visible": "No hay preguntas visibles para los filtros o criterios de búsqueda actuales. Cambie sus selecciones e inténtelo de nuevo."
     },
@@ -825,21 +788,7 @@
         "training calendar": "Calendario de capacitación en SCI",
         "aes training": "Entrenamiento con AES",
         "aes training description": "El Programa de Evaluación y Estandarización (AES) califica a las personas para llevar a cabo evaluaciones cibernéticas de la Agencia de Seguridad de Infraestructura y Ciberseguridad (CISA).",
-        "aes link": "Programa de Evaluación y Estandarización (AES) - CISA",
-        "acet": {
-            "we ensure financial stability": "Garantizamos la estabilidad financiera",
-            "description": "La NCUA se asegura de que millones de consumidores, empresas y comunidades puedan utilizar de manera segura las cooperativas de crédito aseguradas federalmente para sus necesidades financieras."
-        },
-        "cie": {
-            "ceser title": "CESER",
-            "ceser": "La Oficina del Departamento de Energía para la Oficina de Ciberseguridad, Seguridad Energética y Respuesta a Emergencias (CESER, por sus siglas en inglés) patrocina las iniciativas de CIE del INL y coordina el programa CIE que incluye el Laboratorio Nacional de Idaho (INL), el Laboratorio Nacional de Energía Renovable (NREL), e industria, académicos y otros socios en apoyo a la Estrategia Nacional de Ingeniería Informada por Ciberseguridad del Departamento de Energía, y la Estrategia Nacional de Ciberseguridad.",
-            "description": "Cyber-Informed Engineering <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://inl.gov/cie/\">(CIE)</a> builds tools for high-level implementation into curriculum, design standards, certification and curriculum accreditation.",
-            "cie tutorial title": "CIE Tutorial",
-            "cie tutorial": "La Guía de Implementación promueve la integración de los principios de Ingeniería Informada por Ciberseguridad (CIE) desde el inicio del ciclo de vida de la infraestructura energética crítica para mitigar las amenazas cibernéticas, enfatizando la colaboración entre las disciplinas de ingeniería, TI y ciberseguridad para avanzar hacia una cultura de 'seguridad por diseño'. Aconseja no convertir a los ingenieros en expertos en ciberseguridad, sino utilizar su experiencia para diseñar sistemas que sean intrínsecamente más seguros contra ataques cibernéticos y fallos tecnológicos.",
-            "cie background": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.whitehouse.gov/wp-content/uploads/2023/03/National-Cybersecurity-Strategy-2023.pdf\">Antecedentes de CIE </a>",
-            "cie principles": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.osti.gov/servlets/purl/1369373\">CIE Principles</a>",
-            "cie engineering lifecycle": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.incose.org/docs/default-source/los-angeles/libraryresources/se-jr-handdbook-2015.pdf?sfvrsn=1d3c80c6_2\">Ciclo de Vida de la Ingeniería/a>"
-        }
+        "aes link": "Programa de Evaluación y Estandarización (AES) - CISA"
     },
     "keyboard": {
         "dialog title": "Atajos de teclado",

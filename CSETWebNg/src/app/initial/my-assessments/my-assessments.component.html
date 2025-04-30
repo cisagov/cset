@@ -75,8 +75,7 @@
             </ng-container>
             <ng-template #noAssessmentsElseBlock>
                 <h2 class="mt-0" *ngIf="sortedAssessments?.length == 0">
-                    <div *ngIf="appTitle == 'ACET'">{{ t('welcome page.welcome to acet') }}</div>
-                    <div *ngIf="appTitle != 'ACET'">{{ t('welcome page.welcome to', { appTitle:appTitle }) }}</div>
+                    <div>{{ t('welcome page.welcome to', { appTitle:appTitle }) }}</div>
                 </h2>
                 <p>{{ t('welcome page.to get started') }}</p>
                 <div class="mt-3 mb-4 flex-column d-flex justify-content-between flex-11a">
@@ -144,8 +143,6 @@
                 <th aria-label="{{ t('assessment name')}}" mat-sort-header="assessment" style="width: 25%;">{{
                     t('assessment name')}}
                 </th>
-                <th *ngIf="isTSA" style="width: 5%;">Source</th>
-                <th *ngIf="isCF" style="width: 5%;">Type</th>
                 <th aria-label="{{ t('assessment type')}}" mat-sort-header="type" style="width:15%;">{{
                     t('assessment type')}}</th>
                 <th *ngIf="showColumn('ise-submitted')" aria-label="ise-submitted" mat-sort-header="ise-submitted">
@@ -167,12 +164,7 @@
                             {{assessment.assessmentName}}
                         </button>
                     </td>
-                    <td *ngIf="isTSA">{{isTSA &&
-                        (assessment.workflow=='BASE'||assessment.workflow=='CSET'||assessment.workflow==null) ?
-                        'CSET' :
-                        'TSA' }}
-                    </td>
-                    <td *ngIf="isCF">{{assessment.isEntryString}}</td>
+                   
 
                     <td>{{assessment.type}}</td>
                     <td *ngIf="showColumn('ise-submitted')">

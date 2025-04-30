@@ -275,15 +275,6 @@ export class ConfigService {
    * Determines if the Import button should display or not
    */
   showImportButton() {
-    // hide the import button if any Cyber Florida conditions exist
-    if (
-      (this.config.isCyberFlorida ?? false) ||
-      (this.config.galleryLayout ?? '') == 'Florida' ||
-      (this.config.installationMode ?? '') == 'CF'
-    ) {
-      return false;
-    }
-
     return true;
   }
 

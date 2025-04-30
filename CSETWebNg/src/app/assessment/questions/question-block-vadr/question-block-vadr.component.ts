@@ -48,7 +48,6 @@ export class QuestionBlockVadrComponent implements OnInit {
 
   openendedtext = "Open Ended question";
   altTextPlaceholder = "alt cset";
-  altTextPlaceholder_ACET = "alt acet";
   openEndedQuestion = false;
   showQuestionIds = false;
   showYNQuestions = false;

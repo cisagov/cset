@@ -75,7 +75,6 @@ export class NavigationService implements OnDestroy, OnInit {
   activeResultsView: string;
 
   frameworkSelected = false;
-  acetSelected = false;
   diagramSelected = true;
 
   cisSubnodes = null;
@@ -148,7 +147,6 @@ export class NavigationService implements OnDestroy, OnInit {
   }
 
   setACETSelected(acet: boolean) {
-    this.acetSelected = acet;
     this.navTreeSvc.buildTree(this.workflow, this.getMagic());
   }
 

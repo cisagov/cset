@@ -23,8 +23,7 @@
 <ng-container *transloco="let t">
     <ng-container *ngIf="showMenuStrip()">
         <button mat-button [matMenuTriggerFor]="tools" #toolsTrigger="matMenuTrigger"
-            class="dropdown-toggle navbar-menu-header" (keyup.arrowdown)="toolsTrigger.openMenu()"
-            *ngIf="configSvc.installationMode !== 'RRA'">
+            class="dropdown-toggle navbar-menu-header" (keyup.arrowdown)="toolsTrigger.openMenu()">
             <span class="cset-icons-tools fs-base-4 me-2 align-middle"></span>
             <span>{{ t('menu.tools.tools') }}</span>
         </button>
@@ -97,8 +96,7 @@
     </div>
 
 
-    <!-- HELP (non-RRA skin) -->
-    <div class="ms-auto" *ngIf="configSvc.installationMode !== 'RRA'">
+    <div class="ms-auto">
         <button mat-button [matMenuTriggerFor]="help" #helpTrigger="matMenuTrigger"
             (keyup.arrowdown)="helpTrigger.openMenu()" class="dropdown-toggle navbar-menu-header">
             <span class="cset-icons-question-circle-outline fs-base-4 me-2 align-middle"></span>
