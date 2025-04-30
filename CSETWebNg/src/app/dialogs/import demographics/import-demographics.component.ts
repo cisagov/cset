@@ -28,7 +28,6 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ImportPasswordComponent } from '../assessment-encryption/import-password/import-password.component';
 import { ConfigService } from '../../services/config.service';
-import { NCUAService } from '../../services/ncua.service';
 import { ImportDemographicService } from './../../services/import-demographic.service';
 
 @Component({

@@ -211,12 +211,6 @@
     <None Update="App_Data\LanguagePacks\ES\GENERIC.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="App_Data\LanguagePacks\ES\IRP.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="App_Data\LanguagePacks\ES\IRP_HEADER.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="App_Data\LanguagePacks\ES\MATURITY_GROUPINGS.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

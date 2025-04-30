@@ -34,7 +34,6 @@ import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { EditUserComponent } from '../../dialogs/edit-user/edit-user.component';
 import { EnableProtectedComponent } from '../../dialogs/enable-protected/enable-protected.component';
 import { ExcelExportComponent } from '../../dialogs/excel-export/excel-export.component';
-import { GlobalConfigurationComponent } from '../../dialogs/global-configuration/global-configuration.component';
 import { GlobalParametersComponent } from '../../dialogs/global-parameters/global-parameters.component';
 import { KeyboardShortcutsComponent } from '../../dialogs/keyboard-shortcuts/keyboard-shortcuts.component';
 import { RraMiniUserGuideComponent } from '../../dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
@@ -273,13 +272,6 @@ export class TopMenusComponent implements OnInit {
    * Allows us to hide items for certain skins
    */
   showItemForCurrentSkin(item: string) {
-    // custom behavior for ACET
-    if (this.skin === 'ACET') {
-      if (item === 'assessment documents') {
-        return false;
-      }
-    }
-
     const show = this.configSvc.config.behaviors?.showAssessmentDocuments ?? true;
     return show;
   }
@@ -387,13 +379,6 @@ export class TopMenusComponent implements OnInit {
         });
       }
     });
-  }
-
-  setMeritExportPath() {
-    if (this.dialog.openDialogs[0]) {
-      return;
-    }
-    this.dialogRef = this.dialog.open(GlobalConfigurationComponent);
   }
 
   showKeyboardShortcuts() {

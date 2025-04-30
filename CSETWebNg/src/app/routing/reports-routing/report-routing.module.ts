@@ -1,20 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { KeyReportComponent } from '../../assessment/results/reports/key-report/key-report.component';
-import { AcetAnsweredQuestionsComponent } from '../../reports/acet-answeredquestions/acet-answeredquestions.component';
-import { AcetCommentsmarkedComponent } from '../../reports/acet-commentsmarked/acet-commentsmarked.component';
-import { AcetCompensatingcontrolsComponent } from '../../reports/acet-compensatingcontrols/acet-compensatingcontrols.component';
-import { AcetDeficencyComponent } from '../../reports/acet-deficency/acet-deficency.component';
-import { AcetExecutiveComponent } from '../../reports/acet-executive/acet-executive.component';
 import { AllAnsweredquestionsComponent } from '../../reports/all-answeredquestions/all-answeredquestions.component';
 import { AllCommentsmarkedComponent } from '../../reports/all-commentsmarked/all-commentsmarked.component';
 import { AllReviewedComponent } from '../../reports/all-reviewed/all-reviewed.component';
 import { C2m2ReportComponent } from '../../reports/c2m2/c2m2-report/c2m2-report.component';
-import { CieAllQuestionsComponent } from '../../reports/cie/cie-all-questions/cie-all-questions.component';
-import { CieMfrReportComponent } from '../../reports/cie/cie-mfr-report/cie-mfr-report.component';
-import { CieNotApplicableComponent } from '../../reports/cie/cie-not-applicable/cie-not-applicable.component';
-import { CiePrincipleOnlyComponent } from '../../reports/cie/cie-principle-only/cie-principle-only.component';
-import { CiePrinciplePhaseComponent } from '../../reports/cie/cie-principle-phase/cie-principle-phase.component';
 import { CisCommentsmarkedComponent } from '../../reports/cis-commentsmarked/cis-commentsmarked.component';
 import { CisRankedDeficiencyComponent } from '../../reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
 import { CisSectionScoringComponent } from '../../reports/cis/cis-section-scoring/cis-section-scoring.component';
@@ -34,12 +24,6 @@ import { GeneralDeficiencyComponent } from '../../reports/general-deficiency/gen
 import { HydroActionItemsReportComponent } from '../../reports/hydro/hydro-action-items-report/hydro-action-items-report.component';
 import { HydroReportComponent } from '../../reports/hydro/hydro-report/hydro-report.component';
 import { ImrReportComponent } from '../../reports/imr/imr-report/imr-report.component';
-import { IseAnsweredQuestionsComponent } from '../../reports/ise-answeredquestions/ise-answeredquestions.component';
-import { IseDataComponent } from '../../reports/ise-data/ise-data.component';
-import { IseDonutChartComponent } from '../../reports/ise-donut-chart/ise-donut-chart.component';
-import { IseExaminationComponent } from '../../reports/ise-examination/ise-examination.component';
-import { IseExaminerComponent } from '../../reports/ise-examiner/ise-examiner.component';
-import { IseMeritComponent } from '../../reports/ise-merit/ise-merit.component';
 import { ModuleContentComponent } from '../../reports/module-content/module-content/module-content.component';
 import { MvraReportComponent } from '../../reports/mvra/mvra-report.component';
 import { ObservationTearoutsComponent } from '../../reports/observation-tearouts/observation-tearouts.component';
@@ -73,22 +57,6 @@ const routes: Routes = [
     { path: 'genDeficiencyReport', component: GeneralDeficiencyComponent },
     { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
     { path: 'cisCommentsmarked', component: CisCommentsmarkedComponent },
-    { path: 'acetexecutive', component: AcetExecutiveComponent },
-    { path: 'acetgaps', component: AcetDeficencyComponent },
-    { path: 'acetcommentsmarked', component: AcetCommentsmarkedComponent },
-    { path: 'acetansweredquestions', component: AcetAnsweredQuestionsComponent },
-    { path: 'acetcompensatingcontrols', component: AcetCompensatingcontrolsComponent },
-    { path: 'iseexamination', component: IseExaminationComponent },
-    { path: 'iseexaminer', component: IseExaminerComponent },
-    { path: 'iseansweredquestions', component: IseAnsweredQuestionsComponent },
-    { path: 'isedonutchart', component: IseDonutChartComponent },
-    { path: 'isemerit', component: IseMeritComponent },
-    { path: 'isedata', component: IseDataComponent },
-    { path: 'cieAllQuestions', component: CieAllQuestionsComponent },
-    { path: 'ciePrincipleOnly', component: CiePrincipleOnlyComponent },
-    { path: 'ciePrinciplePhase', component: CiePrinciplePhaseComponent },
-    { path: 'cieNotApplicable', component: CieNotApplicableComponent },
-    { path: 'cieMfrReport', component: CieMfrReportComponent },
     { path: 'crrreport', component: CrrReportComponent },
     { path: 'crrDeficiencyReport', component: CrrDeficiencyComponent },
     { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },

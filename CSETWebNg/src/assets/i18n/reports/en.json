@@ -173,29 +173,6 @@
                     "desc": "This report includes the same information as the Site Summary Report as well as a list of all network component questions and their corresponding answers."
                }
           },
-          "acet": {
-               "sectionTitle": "ACET Reports",
-               "1": {
-                    "title": "ACET Executive Summary",
-                    "desc": "This report includes site information, maturity details for each domain and sub-domain, the inherent risk profile, and the overall cybersecurity maturity level of each domain."
-               },
-               "2": {
-                    "title": "ACET Gap Report",
-                    "desc": "This report includes a list of all statements that were marked as “No” during the assessment process. This report serves to identify potential deficiencies or gaps in the organization’s cybersecurity practices."
-               },
-               "3": {
-                    "title": "ACET Comments and Marked for Review",
-                    "desc": "This document consolidates all statements that have received comments and have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
-               },
-               "4": {
-                    "title": "ACET Answered Statements",
-                    "desc": "This report contains a list of all statements within the organization’s maturity level, which includes their answer to each statement and whether a comment was added to the statement."
-               },
-               "5": {
-                    "title": "ACET Compensating Controls",
-                    "desc": "This report includes a list of all statements that were marked as “Alt” during the assessment process and includes any justifications or comments that were provided."
-               }
-          },
           "vadr": {
                "sectionTitle": "Validated Architecture Design Review (VADR)",
                "1": {
@@ -209,32 +186,6 @@
                "3": {
                     "title": "VADR Open Ended Questions Report",
                     "desc": "This report contains a list of all open ended questions within the assessment. Users can filter the report to show all questions or only show questions that have received answers."
-               }
-          },
-          "ise": {
-               "sectionTitle": "ISE Reports",
-               "1": {
-                    "title": "ISE MERIT SCOPE REPORT (copy paste to Execution Result)",
-                    "desc": "This report includes copy instructions, work performed, results of review and issues."
-               },
-               "2": {
-                    "title": "ISE EXAMINATION REPORT (attach as Document in Scope Task)",
-                    "desc": "This report includes results of review, statement overview, statement summary, and issues."
-               },
-               "3": {
-                    "title": "ISE Answered Statements",
-                    "desc": "This report includes all the statements within your exam level and your answers."
-               },
-               "4": {
-                    "title": "ISE Examiner Notes",
-                    "desc": "This report includes examiner notes."
-               }
-          },
-          "hydro": {
-               "sectionTitle": "Hydropower Cybersecurity Valuation Framework (HYDRO)",
-               "1": {
-                    "title": "Action Items Report",
-                    "desc": "This report includes action items by implementation status."
                }
           },
           "sd02 series": {
@@ -776,61 +727,6 @@
                     "percent by domain": "Percentage of Practices Completed by Domain",
                     "para 3": "The following chart illustrates the percentage of completed practices for each individual domain. This provides a snapshot of each domain's compliance with the cybersecurity requirements measured within the assessment, regardless of the MIL achieved."
                }
-          }
-     },
-     "acet": {
-          "acet reports": "ACET Reports",
-          "executive summary": {
-               "report title": "ACET Executive Summary",
-               "tab title": "Executive Report - ACET",
-               "executive summary": "Executive Summary",
-               "site information": "Site Information"
-          },
-          "gap report": {
-               "tab title": "Gap Report - ACET",
-               "gap report": "ACET Gap Report",
-               "gap report title 1": "GAP",
-               "gap report title 2": "REPORT",
-               "gap disclaimer 1": "This gap report lists the statements that are not currently compliant or 'No' answers.",
-               "gap disclaimer 2": "This is often referred to as the GAP Report. This report intends to list the gaps, assist users of the report in identifying gaps, prioritizing work, and beginning to make a plan to address the gaps by implementing the controls necessary to come into compliance with the associated statement.",
-               "gap disclaimer 3": "The percentage gap in each domain is also listed and will help to determine the priority. ACET is a cumulative maturity model meaning lower levels should be completed before moving to higher levels. Ideally baseline should be completed before focusing efforts on controls in evolving and so forth up the line of maturity levels.",
-               "gaps": "Gaps",
-               "marked for review": "Marked for Review",
-               "no deficiencies": "There are no deficiencies to display"
-          },
-          "comments and mfr": {
-               "tab title": "Comments Report - ACET",
-               "comments report": "ACET Comments and Marked for Review",
-               "comments report title 1": "COMMENTS REVIEW",
-               "comments report title 2": "REPORT",
-               "statements mfr": "Statements Marked for Review",
-               "statement": "Statement",
-               "no statements marked": "There are no statements marked for review",
-               "statement comments": "Statement Comments",
-               "no statements with comments": "There are no statements with comments"
-          },
-          "answered statements": {
-               "tab title": "Answered Statements Report - ACET",
-               "answered statements report": "ACET Answered Statements",
-               "answered statements report title 1": "ANSWERED STATEMENTS",
-               "answered statements report title 2": "REPORT",
-               "answered statements": "Answered Statements",
-               "report desc 1": "This report includes all the statements within your maturity level, your answers, and whether there is a comment attached to the statement.",
-               "report desc 2": "The answered statement set will only show statements at or below your maturity level.",
-               "maturity level key": "Maturity Level Key",
-               "answers": "Answers",
-               "comments": "Comments"
-          },
-          "compensating controls": {
-               "tab title": "Compensating Controls Report - ACET",
-               "compensating controls report": "ACET Compensating Controls",
-               "compensating controls report title 1": "COMPENSATING CONTROLS",
-               "compensating controls report title 2": "REPORT",
-               "compensating controls": "Compensating Controls",
-               "report desc": "This report contains all the statements that have an associated compensating control and the comment provided.",
-               "compensating comment": "Compensating Comment",
-               "no compensating comment": "No compensating comment or explanation was provided.",
-               "no compensating controls": "There are no compensating controls to display"
           }
      },
      "all": {

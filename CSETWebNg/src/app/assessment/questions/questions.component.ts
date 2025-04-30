@@ -31,7 +31,6 @@ import { NavigationService } from '../../services/navigation/navigation.service'
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ConfigService } from '../../services/config.service';
 import { CompletionService } from '../../services/completion.service';
-import { ACETService } from '../../services/acet.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
@@ -76,8 +75,7 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
     public tSvc: TranslocoService,
-    private dialog: MatDialog,
-    public acetSvc: ACETService
+    private dialog: MatDialog
   ) {
     const magic = this.navSvc.getMagic();
 

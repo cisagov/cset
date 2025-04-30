@@ -59,7 +59,6 @@
     "splashPageHTML": "dist/assets/splash.html",
     "homeComponentForCurrentInstallationMode": "",
     "defaultMaturityModel": "",
-    "isAcetOnly": false,
     "showExportOnReports": true,
     "showFacilityName": true,
     "showCityName": true,
@@ -402,81 +401,6 @@
           "code": "NI",
           "buttonLabelKey": "NI-C2M2",
           "buttonCss": "btn-c2m2-ni"
-        }
-      ]
-    },
-    {
-      "moduleName": "ACET",
-      "modelId": "1",
-      "independentSuppGuidance": true,
-      "showDomainHeaders": true,
-      "answerOptions": [
-        {
-          "skin": "ACET",
-          "code": "A",
-          "buttonLabelKey": "Yes(C)",
-          "buttonCss": "btn-alt",
-          "note": "This will only apply in the ACET skin.  See QuestionsService"
-        }
-      ]
-    },
-    {
-      "moduleName": "ISE",
-      "modelId": 10,
-      "showDomainHeaders": false,
-      "questionIcons": {
-        "showObservations": false
-      },
-      "answerOptions": [
-        {
-          "code": "Y",
-          "buttonLabelKey": "Yes",
-          "buttonCss": "btn-yes"
-        },
-        {
-          "code": "N",
-          "buttonLabelKey": "No",
-          "buttonCss": "btn-no"
-        },
-        {
-          "code": "U",
-          "buttonLabelKey": "Unanswered"
-        }
-      ]
-    },
-    {
-      "moduleName": "HYDRO",
-      "modelId": "13",
-      "questionIcons": {
-        "showDetails": false,
-        "showGuidance": false,
-        "showObservations": false,
-        "showReferences": false
-      }
-    },
-    {
-      "moduleName": "CIE",
-      "modelId": "17",
-      "questionIcons": {
-        "showDetails": false,
-        "showGuidance": false,
-        "showReferences": false
-      },
-      "answerOptions": [
-        {
-          "code": "NA",
-          "buttonLabelKey": "NA",
-          "buttonCss": "btn-na"
-        },
-        {
-          "code": "N",
-          "buttonLabelKey": "No",
-          "buttonCss": "btn-no"
-        },
-        {
-          "code": "Y",
-          "buttonLabelKey": "Yes",
-          "buttonCss": "btn-yes"
         }
       ]
     },
