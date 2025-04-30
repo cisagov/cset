@@ -23,8 +23,7 @@
 <ng-container *transloco="let t">
     <ng-container *ngIf="showMenuStrip()">
         <button mat-button [matMenuTriggerFor]="tools" #toolsTrigger="matMenuTrigger"
-            class="dropdown-toggle navbar-menu-header" (keyup.arrowdown)="toolsTrigger.openMenu()"
-            *ngIf="configSvc.installationMode !== 'RRA'">
+            class="dropdown-toggle navbar-menu-header" (keyup.arrowdown)="toolsTrigger.openMenu()">
             <span class="cset-icons-tools fs-base-4 me-2 align-middle"></span>
             <span>{{ t('menu.tools.tools') }}</span>
         </button>
@@ -33,12 +32,6 @@
             <button mat-menu-item (click)="enableProtectedFeature()" *ngIf="showMenuItem('enable protected features')">
                 <span class="cset-icons-key-shield fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.tools.enable protected features') }}</span>
-            </button>
-
-            <button mat-menu-item (click)="setMeritExportPath()"
-                *ngIf="assessSvc.isISE() && configSvc.config.currentConfigChain.includes('development')">
-                <span class="cset-icons-cog fs-base me-2 align-middle"></span>
-                <span>Set Submission Export Path</span>
             </button>
 
             <hr class="menu-divider" />
@@ -103,8 +96,7 @@
     </div>
 
 
-    <!-- HELP (non-RRA skin) -->
-    <div class="ms-auto" *ngIf="configSvc.installationMode !== 'RRA'">
+    <div class="ms-auto">
         <button mat-button [matMenuTriggerFor]="help" #helpTrigger="matMenuTrigger"
             (keyup.arrowdown)="helpTrigger.openMenu()" class="dropdown-toggle navbar-menu-header">
             <span class="cset-icons-question-circle-outline fs-base-4 me-2 align-middle"></span>
@@ -112,28 +104,10 @@
         </button>
 
         <mat-menu #help="matMenu" class="menu-panel">
-            <a *ngIf="configSvc.installationMode !== 'ACET'" mat-menu-item href="{{docUrl}}htmlhelp/index.htm"
+            <a mat-menu-item href="{{docUrl}}htmlhelp/index.htm"
                 target="_blank">
                 <span class="cset-icons-book-open fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.help.cset user guide') }}</span>
-            </a>
-            <a *ngIf="isGuideVisible('ACET')" mat-menu-item target="_blank" href="{{docUrl}}cdDocs_ACET/UserGuide.pdf">
-                <span class="cset-icons-book-open fs-base me-2 align-middle"></span>
-                <span>ACET</span>
-            </a>
-            <a *ngIf="isGuideVisible('ISE')" mat-menu-item target="_blank"
-                href="{{docUrl}}cdDocs_ACET/ISE_User_Guide.pdf">
-                <span class="cset-icons-pdf-doc fs-base me-2 align-middle"></span>
-                <span>ISE User Guide</span>
-            </a>
-            <a *ngIf="isGuideVisible('ISE')" mat-menu-item target="_blank"
-                href="{{docUrl}}cdDocs_ACET/ISE_Checklist.pdf">
-                <span class="cset-icons-pdf-doc fs-base me-2 align-middle"></span>
-                <span>ISE Checklist</span>
-            </a>
-            <a *ngIf="isGuideVisible('TSA')" mat-menu-item target="_blank" href="{{docUrl}}htmlhelp_tsa/index.htm">
-                <span class="cset-icons-book-open fs-base me-2 align-middle"></span>
-                <span>TSA</span>
             </a>
 
             <hr class="menu-divider" />

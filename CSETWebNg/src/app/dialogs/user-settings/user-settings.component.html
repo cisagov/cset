@@ -36,25 +36,18 @@
         <div>
             <span class="fa-solid fa-lock fs-base-6 me-3"></span>
             <span class="fw-600 form-label pb-2">{{t('menu.user.encrypt')}}</span>
-            <!-- Don't show the encryption for ACET/ISE. They don't want it. -->
 
-            <div *ngIf="!this.ncuaSvc.switchStatus" class="mb-2">
-                <div *ngIf="this.configSvc.installationMode != 'ACET'">
-                    <div class="btn-group btn-group-toggle pt-2" data-toggle="buttons">
-                        <label class="btn btn-level btn-rounded form-check-label" [class.active]="!encryption"
-                            (change)="updateEncryptPreference()">
-                            <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
-                                [checked]="!encryption" />
-                            {{t('menu.user.off')}}
-                        </label>
-                        <label class="btn btn-level btn-rounded form-check-label" [class.active]="encryption"
-                            (change)="updateEncryptPreference()">
-                            <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
-                                [checked]="encryption" />
-                            {{t('menu.user.on')}}
-                        </label>
-                    </div>
-                </div>
+            <div class="btn-group btn-group-toggle pt-2" data-toggle="buttons">
+                <label class="btn btn-level btn-rounded form-check-label" [class.active]="!encryption"
+                    (change)="updateEncryptPreference()">
+                    <input class="btn-check" type="radio" autocomplete="off" tabindex="0" [checked]="!encryption" />
+                    {{t('menu.user.off')}}
+                </label>
+                <label class="btn btn-level btn-rounded form-check-label" [class.active]="encryption"
+                    (change)="updateEncryptPreference()">
+                    <input class="btn-check" type="radio" autocomplete="off" tabindex="0" [checked]="encryption" />
+                    {{t('menu.user.on')}}
+                </label>
             </div>
 
             <form name="form" #userForm="ngForm">
@@ -63,17 +56,17 @@
                         <span class="fas fa-language fs-base-6 me-3"></span>
                         <label class="fw-600 form-label" for="selectLang">{{t('user language')}}</label>
                     </div>
-    
+
                     <select class="form-select" id="langSelection" name="langSelection" [(ngModel)]="langSelection"
                         (change)="save()">
                         <option *ngFor="let o of languageOptions" [value]="o.value">{{o.name}}</option>
                     </select>
-    
+
                 </div>
             </form>
 
         </div>
-        
+
         <mat-dialog-actions class="pt-3 mb-0 mx-0 d-flex justify-content-start flex-11a">
             <button class="m-0 btn btn-secondary" (click)="cancel()">{{t('buttons.ok')}}</button>
         </mat-dialog-actions>

@@ -44,7 +44,6 @@ import { ngxCsv } from "ngx-csv/ngx-csv";
     templateUrl: "./open-ended-questions.component.html",
     styleUrls: [
         "../../reports.scss",
-        "../../acet-reports.scss",
         "./open-ended-questions.component.scss",
     ],
     standalone: false

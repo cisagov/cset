@@ -88,9 +88,6 @@ export class AssessmentConfigComponent implements OnInit {
    */
   helpDocUrl() {
     switch (this.configSvc.installationMode || '') {
-      case "ACET":
-        return this.configSvc.docUrl + 'htmlhelp_acet/assessment_configuration.htm';
-        break;
       default:
         return this.configSvc.docUrl + 'htmlhelp/prepare_assessment_info.htm';
     }

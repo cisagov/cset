@@ -3,49 +3,27 @@ import { RouterModule, Routes } from '@angular/router';
 import { SdAnswerSummaryComponent } from '../../assessment/results/sd/sd-answer-summary/sd-answer-summary.component';
 import { DiagramInfoComponent } from '../../assessment/diagram/diagram-info/diagram-info.component';
 import { DiagramComponent } from '../../assessment/diagram/diagram.component';
-import { AssessmentConfigCieComponent } from '../../assessment/prepare/assessment-info/assessment-config-cie/assessment-config-cie.component';
 import { AssessmentConfigIodComponent } from '../../assessment/prepare/assessment-info/assessment-config-iod/assessment-config-iod.component';
 import { AssessmentDemogIodComponent } from '../../assessment/prepare/assessment-info/assessment-demog-iod/assessment-demog-iod.component';
-import { AssessmentDetailCieComponent } from '../../assessment/prepare/assessment-info/assessment-detail-cie/assessment-detail-cie.component';
-import { AssessmentInfoCieComponent } from '../../assessment/prepare/assessment-info/assessment-info-cie/assessment-info-cie.component';
-import { AssessmentInfoNcuaComponent } from '../../assessment/prepare/assessment-info/assessment-info-ncua/assessment-info-ncua.component';
-import { AssessmentInfoTsaComponent } from '../../assessment/prepare/assessment-info/assessment-info-tsa/assessment-info-tsa.component';
 import { AssessmentInfoComponent } from '../../assessment/prepare/assessment-info/assessment-info.component';
-import { AssessmentInfo2TsaComponent } from '../../assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
 import { Assessment2InfoComponent } from '../../assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { CsiComponent } from '../../assessment/prepare/csi/csi.component';
 import { FrameworkComponent } from '../../assessment/prepare/framework/framework.component';
-import { ExamProfileSummaryComponent } from '../../assessment/prepare/irp-summary/irp-ise-summary.component';
-import { IrpSummaryComponent } from '../../assessment/prepare/irp-summary/irp-summary.component';
-import { ExamProfileComponent } from '../../assessment/prepare/irp/irp-ise.component';
-import { IRPComponent } from '../../assessment/prepare/irp/irp.component';
-import { CieAnalysisMatrixComponent } from '../../assessment/prepare/maturity/cie-example/cie-analysis-matrix/cie-analysis-matrix.component';
-import { ApplyingCieComponent } from '../../assessment/prepare/maturity/cie-example/cie-analysis/applying-cie/applying-cie.component';
-import { CieAnalysisComponent } from '../../assessment/prepare/maturity/cie-example/cie-analysis/cie-analysis.component';
-import { PrincipleAnalysisCieComponent } from '../../assessment/prepare/maturity/cie-example/cie-analysis/principle-analysis-cie/principle-analysis-cie.component';
-import { CieBackgroundComponent } from '../../assessment/prepare/maturity/cie-example/cie-background/cie-background.component';
-import { CieExampleComponent } from '../../assessment/prepare/maturity/cie-example/cie-example.component';
 import { CmmcLevelsComponent } from '../../assessment/prepare/maturity/cmmc-levels/cmmc-levels.component';
 import { Cmmc2LevelsComponent } from '../../assessment/prepare/maturity/cmmc2-levels/cmmc2-levels.component';
 import { ConfigCisComponent } from '../../assessment/prepare/maturity/config-cis/config-cis.component';
 import { ModelSelectComponent } from '../../assessment/prepare/maturity/model-select/model-select.component';
-import { HowToUseCieComponent } from '../../assessment/prepare/maturity/tutorial-cie/how-to-use-cie/how-to-use-cie.component';
 import { PrepareComponent } from '../../assessment/prepare/prepare.component';
 import { RequiredDocsComponent } from '../../assessment/prepare/required/required.component';
 import { SalsComponent } from '../../assessment/prepare/sals/sals.component';
 import { StandardsComponent } from '../../assessment/prepare/standards/standards.component';
 import { DiagramQuestionsComponent } from '../../assessment/questions/diagram-questions/diagram-questions.component';
-import { MaturityQuestionsAcetComponent } from '../../assessment/questions/maturity-questions/maturity-questions-acet.component';
-import { MaturityQuestionsCieComponent } from '../../assessment/questions/maturity-questions/maturity-questions-cie/maturity-questions-cie.component';
-import { MaturityQuestionsIseComponent } from '../../assessment/questions/maturity-questions/maturity-questions-ise.component';
 import { MaturityQuestionsComponent } from '../../assessment/questions/maturity-questions/maturity-questions.component';
 import { MaturityQuestionsNestedComponent } from '../../assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { OtherRemarksComponent } from '../../assessment/questions/other-remarks/other-remarks.component';
 import { PlaceholderQuestionsComponent } from '../../assessment/questions/placeholder-questions/placeholder-questions.component';
 import { PrincipleSummaryComponent } from '../../assessment/questions/principle-summary/principle-summary.component';
-import { QuestionBlockCieComponent } from '../../assessment/questions/question-block-cie/question-block-cie.component';
 import { QuestionsComponent } from '../../assessment/questions/questions.component';
-import { AcetDetailComponent } from '../../assessment/results/acet-detail/acet-detail.component';
 import { AnalysisComponent } from '../../assessment/results/analysis/analysis.component';
 import { ComponentsRankedComponent } from '../../assessment/results/analysis/components-ranked/components-ranked.component';
 import { ComponentsResultsComponent } from '../../assessment/results/analysis/components-results/components-results.component';
@@ -66,7 +44,6 @@ import { CpgPracticesComponent } from '../../assessment/results/cpg/cpg-practice
 import { CpgSummaryComponent } from '../../assessment/results/cpg/cpg-summary/cpg-summary.component';
 import { CrrResultsPage } from '../../assessment/results/crr/crr-results-page/crr-results-page.component';
 import { CrrSummaryResultsComponent } from '../../assessment/results/crr/crr-summary-results/crr-summary-results.component';
-import { AcetDashboardComponent } from '../../assessment/results/dashboard/acet-dashboard.component';
 import { MaturityIndicatorLevelsComponent } from '../../assessment/results/edm/maturity-indicator-levels/maturity-indicator-levels.component';
 import { RelationshipFormationComponent } from '../../assessment/results/edm/relationship-formation/relationship-formation.component';
 import { RelationshipManagementComponent } from '../../assessment/results/edm/relationship-management/relationship-management.component';
@@ -107,35 +84,10 @@ const routes: Routes = [
             { path: '', loadChildren: () => import('./assessment-tutorial.module').then(m => m.AssessmentTutorialRoutingModule) },
             { path: 'info1', component: AssessmentInfoComponent },
             { path: 'info2', component: Assessment2InfoComponent },
-            { path: 'info-tsa', component: AssessmentInfoTsaComponent },
-            { path: 'info2-tsa', component: AssessmentInfo2TsaComponent },
             { path: 'info-demog-iod', component: AssessmentDemogIodComponent },
             { path: 'info-config-iod', component: AssessmentConfigIodComponent },
-            { path: 'demographics', component: AssessmentInfoNcuaComponent },
             { path: 'model-select', component: ModelSelectComponent },
-            { path: 'assessment-detail-cie', component: AssessmentDetailCieComponent },
-            { path: 'assessment-info-cie', component: AssessmentInfoCieComponent },
-            { path: 'assessment-config-cie', component: AssessmentConfigCieComponent },
-            {
-                path: 'cie-example',
-                component: CieExampleComponent,
-                canActivate: [AssessGuard],
-                canActivateChild: [AssessGuard],
-                children: [
-                    { path: 'cie-background', component: CieBackgroundComponent },
-                    {
-                        path: 'cie-analysis',
-                        component: CieAnalysisComponent,
-                        canActivate: [AssessGuard],
-                        canActivateChild: [AssessGuard],
-                        children: [
-                            { path: 'applying-cie', component: ApplyingCieComponent },
-                            { path: 'principle-analysis-cie/:pri', component: PrincipleAnalysisCieComponent }
-                        ]
-                    },
-                    { path: 'cie-analysis-matrix', component: CieAnalysisMatrixComponent },
-                ]
-            },
+            
             { path: 'config-cis', component: ConfigCisComponent },
             { path: 'cmmc-levels', component: CmmcLevelsComponent },
             { path: 'cmmc2-levels', component: Cmmc2LevelsComponent },
@@ -144,10 +96,6 @@ const routes: Routes = [
             { path: 'standards', component: StandardsComponent },
             { path: 'framework', component: FrameworkComponent },
             { path: 'required', component: RequiredDocsComponent },
-            { path: 'irp', component: IRPComponent },
-            { path: 'irp-summary', component: IrpSummaryComponent },
-            { path: 'exam-profile', component: ExamProfileComponent },
-            { path: 'exam-profile-summary', component: ExamProfileSummaryComponent },
             {
                 path: 'diagram',
                 component: DiagramComponent,
@@ -166,11 +114,6 @@ const routes: Routes = [
     { path: 'questions', component: QuestionsComponent },
     { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
     { path: 'maturity-questions', component: MaturityQuestionsComponent },
-    { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
-    { path: 'maturity-questions-ise', component: MaturityQuestionsIseComponent },
-    { path: 'instructions-cie', component: HowToUseCieComponent },
-    { path: 'maturity-questions-cie/:sec', component: MaturityQuestionsCieComponent },
-    { path: 'question-block-cie/:sec', component: QuestionBlockCieComponent },
     { path: 'principle-summary/:pri', component: PrincipleSummaryComponent },
     { path: 'maturity-questions/:grp', component: MaturityQuestionsComponent },
     { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
@@ -229,9 +172,6 @@ const routes: Routes = [
             { path: 'crr-domain-edm', component: CrrResultsPage },
             { path: 'crr-domain-ta', component: CrrResultsPage },
             { path: 'crr-domain-sa', component: CrrResultsPage },
-
-            { path: 'acet-detail', component: AcetDetailComponent },
-            { path: 'acet-dashboard', component: AcetDashboardComponent },
 
             { path: 'overview', component: OverviewComponent },
             { path: 'reports', component: ReportsComponent },

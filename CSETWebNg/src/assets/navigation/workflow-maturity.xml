@@ -90,9 +90,6 @@
                 <node id="maturity-questions-nested-2327" path="assessment/{:id}/maturity-questions-nested/2327" displaytext="28. Dependencies - End Point Systems" />
             </node>
         </node>
-
-
-        <node displaytext="Statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" visible="INSTALL-MODE:ACET MATURITY:ACET" />
     </node>
 
 
@@ -141,13 +138,6 @@
         <node displaytext="Goal Performance" id="rra-gaps" path="assessment/{:id}/results/rra-gaps" visible="MATURITY:RRA" />
         <node displaytext="Assessment Tiers" id="rra-level-results" path="assessment/{:id}/results/rra-level-results" visible="MATURITY:RRA" />
         <node displaytext="Performance Summary" id="rra-summary-all" path="assessment/{:id}/results/rra-summary-all" visible="MATURITY:RRA" />
-
-
-
-        <!-- Results - ACET -->
-        <node displaytext="ACET Maturity Results" id="acet-detail" path="assessment/{:id}/results/acet-detail" visible="MATURITY:ACET" />
-        <node displaytext="ACET Dashboard" id="acet-dashboard" path="assessment/{:id}/results/acet-dashboard" visible="MATURITY:ACET" />
-
 
 
         <!-- Results - CIS -->

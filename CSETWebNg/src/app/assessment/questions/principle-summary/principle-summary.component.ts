@@ -3,9 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../services/assessment.service';
 import { CompletionService } from '../../../services/completion.service';
 import { ConfigService } from '../../../services/config.service';
-import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { LayoutService } from '../../../services/layout.service';
-import { NCUAService } from '../../../services/ncua.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
@@ -51,10 +49,8 @@ export class PrincipleSummaryComponent implements OnInit {
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
     public assessSvc: AssessmentService,
-    public acetFilteringSvc: AcetFilteringService,
     public layoutSvc: LayoutService,
     public completionSvc: CompletionService,
-    public ncuaSvc: NCUAService,
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,

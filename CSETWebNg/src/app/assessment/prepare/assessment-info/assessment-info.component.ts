@@ -25,8 +25,6 @@ import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
-import { NCUAService } from '../../../services/ncua.service';
-import { ACETService } from '../../../services/acet.service';
 import { GalleryService } from '../../../services/gallery.service';
 import { Upgrades } from '../../../models/assessment-info.model';
 
@@ -47,8 +45,6 @@ export class AssessmentInfoComponent implements OnInit {
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public navSvc: NavigationService,
-    public ncuaSvc: NCUAService,
-    public acetSvc: ACETService,
     public gallerySvc: GalleryService
   ) { }
 

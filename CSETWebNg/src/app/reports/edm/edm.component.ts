@@ -24,7 +24,6 @@
 import { AfterContentInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
-import { ACETService } from '../../services/acet.service';
 import { DemographicService } from '../../services/demographic.service';
 import { MaturityQuestionResponse } from '../../models/questions.model';
 import { Demographic } from '../../models/assessment-info.model';
@@ -58,7 +57,6 @@ export class EdmComponent implements OnInit, AfterContentInit {
   constructor(
     private titleService: Title,
     public maturitySvc: MaturityService,
-    public acetSvc: ACETService,
     public demoSvc: DemographicService,
     public reportSvc: ReportService
   ) { }
