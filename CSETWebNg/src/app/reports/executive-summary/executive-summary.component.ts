@@ -25,8 +25,6 @@ import { Component, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { Title } from '@angular/platform-browser';
-import { AcetDashboard } from '../../models/acet-dashboard.model';
-import { ACETService } from '../../services/acet.service';
 import Chart from 'chart.js/auto';
 import { ConfigService } from '../../services/config.service';
 import { AssessmentService } from '../../services/assessment.service';
@@ -59,14 +57,11 @@ export class ExecutiveSummaryComponent implements OnInit {
 
   pageInitialized = false;
 
-  acetDashboard: AcetDashboard;
-
 
   constructor(
     public reportSvc: ReportService,
     public analysisSvc: ReportAnalysisService,
     private titleService: Title,
-    public acetSvc: ACETService,
     private assessmentSvc: AssessmentService,
     public configSvc: ConfigService,
     public tSvc: TranslocoService,
@@ -100,21 +95,6 @@ export class ExecutiveSummaryComponent implements OnInit {
         this.chartComponentsTypes = this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
       }, 0);
     });
-
-    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment?.maturityModel?.modelName)) {
-      this.acetSvc.getAcetDashboard().subscribe(
-        (data: AcetDashboard) => {
-          this.acetDashboard = data;
-
-          for (let i = 0; i < this.acetDashboard.irps.length; i++) {
-            this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
-          }
-        },
-        error => {
-          console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-          console.log('Error getting all documents: ' + (<Error>error).stack);
-        });
-    }
   }
 
   usesRAC() {

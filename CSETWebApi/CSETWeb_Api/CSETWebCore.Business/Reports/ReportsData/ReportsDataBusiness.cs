@@ -1255,12 +1255,6 @@ namespace CSETWebCore.Business.Reports
             GetQuestionTitleAndText(oi, standardQuestions, componentQuestions, oi.Answer.Answer_Id,
                 out string qid, out string qtxt);
 
-            if (_maturityBusiness.GetMaturityModel(_assessmentId)?.ModelName == "CIE")
-            {
-                GetQuestionTitleAndTextForCie(oi, standardQuestions, componentQuestions, oi.Answer.Answer_Id,
-                    out qid, out qtxt);
-            }
-
             obs.QuestionIdentifier = qid;
             obs.QuestionText = qtxt;
 

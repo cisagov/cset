@@ -27,11 +27,8 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { GroupingDescriptionComponent } from '../grouping-description/grouping-description.component';
-import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
-import { NCUAService } from '../../../services/ncua.service';
 import { LayoutService } from '../../../services/layout.service';
 import { CompletionService } from '../../../services/completion.service';
-import { ACETService } from '../../../services/acet.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 
@@ -75,10 +72,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public completionSvc: CompletionService,
     public assessSvc: AssessmentService,
-    public acetFilteringSvc: AcetFilteringService,
     public layoutSvc: LayoutService,
-    public ncuaSvc: NCUAService,
-    public acetSvc: ACETService,
     public tSvc: TranslocoService
   ) {
 
@@ -96,16 +90,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
-
-
-    if (this.configSvc.installationMode === "ACET") {
-      this.altTextPlaceholder = "alt acet";
-    }
-
-    this.acetFilteringSvc.filterAcet.subscribe((filter) => {
-      this.refreshReviewIndicator();
-      this.refreshPercentAnswered();
-    });
 
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
@@ -216,10 +200,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
         this.myGrouping.hasReviewItems = true;
         return;
       }
-      if (q.answer == 'A' && this.isAltTextRequired(q)) {
-        this.myGrouping.hasReviewItems = true;
-        return;
-      }
     });
   }
 
@@ -246,19 +226,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
       }
     });
     this.percentAnswered = (answeredCount / totalCount) * 100;
-  }
-
-
-  /**
-   * For ACET installations, alt answers require 3 or more characters of
-   * justification.
-   */
-  isAltTextRequired(q: Question) {
-    if ((this.configSvc.installationMode === "ACET")
-      && (!q.altAnswerText || q.altAnswerText.trim().length < 3)) {
-      return true;
-    }
-    return false;
   }
 
   /**

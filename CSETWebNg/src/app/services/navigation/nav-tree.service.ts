@@ -29,7 +29,6 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { of as observableOf, BehaviorSubject } from "rxjs";
 import { TranslocoService } from '@jsverse/transloco';
-import { CieService } from '../cie.service';
 import { SsgService } from '../ssg.service';
 
 @Injectable({
@@ -56,8 +55,7 @@ export class NavTreeService {
     private assessSvc: AssessmentService,
     private pageVisibliltySvc: PageVisibilityService,
     private tSvc: TranslocoService,
-    private ssgSvc: SsgService,
-    private cieSvc: CieService
+    private ssgSvc: SsgService
   ) {
     // set up the mat tree control and its data source
     this.tocControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
@@ -80,10 +78,6 @@ export class NavTreeService {
       console.warn('buildTree - magic compare failed');
       return;
     }
-    if (this.assessSvc.usesMaturityModel('CIE')) {
-      this.cieSvc.exampleExpanded = this.tocControl.isExpanded(this.findInTree(this.tocControl.dataNodes, 'cie-example'));
-      this.cieSvc.tutorialExpanded = this.tocControl.isExpanded(this.findInTree(this.tocControl.dataNodes, 'tutorial-cie'));
-    }
 
     this.workflow = workflow;
 
@@ -93,11 +87,6 @@ export class NavTreeService {
     this.setQuestionsTree();
 
     this.tocControl.expandAll();
-
-    // remembers state of ToC dropdown for CIE
-    if (this.assessSvc.usesMaturityModel('CIE')) {
-      this.applyCieToCStates();
-    }
 
     this.isNavLoading = false;
   }
@@ -390,25 +379,5 @@ export class NavTreeService {
       behavior: 'smooth' // Add 'smooth' for smooth scrolling animation
     });
   }
-
-  /**
-   * retains CIE Tutorial and Example section states between tree builds
-   */
-  applyCieToCStates() {
-    let node = this.findInTree(this.tocControl.dataNodes, 'tutorial-cie');
-
-    if (this.cieSvc.tutorialExpanded == null || !this.cieSvc.tutorialExpanded) {
-      if (node != null) this.tocControl.collapse(node);
-    }
-    else if (node != null) this.tocControl.expand(node);
-
-    node = this.findInTree(this.tocControl.dataNodes, 'cie-example');
-
-    if (this.cieSvc.exampleExpanded == null || !this.cieSvc.exampleExpanded) {
-      if (node != null) this.tocControl.collapse(node);
-    }
-    else if (node != null) this.tocControl.expand(node);
-  }
-
 
 }

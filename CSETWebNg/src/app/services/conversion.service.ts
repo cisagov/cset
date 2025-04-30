@@ -52,22 +52,4 @@ export class ConversionService {
       this.initialized = true;
     }
   }
-
-  /**
-   * 
-   */
-  isEntryCfAssessment() {
-    return this.http.get(this.apiUrl + 'convert/cf/entry');
-  }
-  isEntryCfAssessments(assessmentIds: number[]) {
-    return this.http.post(this.apiUrl + 'convert/cf/entrys', assessmentIds);
-  }
-
-  /**
-    * Converts a Cyber Florida "entry" assessment to a full assessment
-    * with 
-    */
-  convertCfSub() {
-    return this.http.get(this.apiUrl + 'convert/cf');
-  }
 }

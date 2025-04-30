@@ -82,8 +82,6 @@ export class LoginAccessKeyComponent implements OnInit {
   ) {
     this.title1['CSET'] = 'CSET Online';
     this.title2['CSET'] = 'CSET';
-    this.title1['TSA'] = 'CSET TSA Online';
-    this.title2['TSA'] = 'CSET TSA';
   }
 
   /**

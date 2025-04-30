@@ -60,14 +60,7 @@ export class AssessmentConfigIodComponent implements OnInit {
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
     this.IsPCII = this.assessment.is_PCII;
-    // a few things for a brand new assessment
-    if (this.assessSvc.isBrandNew) {
-      // RRA install presets the maturity model
-      if (this.configSvc.installationMode === 'RRA') {
-        this.assessSvc.setRraDefaults();
-        this.assessSvc.updateAssessmentDetails(this.assessment);
-      }
-    }
+
 
 
     this.assessSvc.isBrandNew = false;
