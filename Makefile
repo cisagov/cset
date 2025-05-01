@@ -24,7 +24,7 @@ launch-frontend:
 
 # target: launch-db - Launch the local database
 launch-db:
-	docker compose up -d
+	docker compose up -d sqlserver
 
 # target: load-db - Load the database from the backup
 load-db:
@@ -32,4 +32,4 @@ load-db:
 
 # target: remove-db - Remove the database, container and its data
 remove-db:
-	docker compose down -v
+	docker compose down -v sqlserver
