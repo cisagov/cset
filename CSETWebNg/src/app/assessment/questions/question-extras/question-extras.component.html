@@ -162,7 +162,7 @@
 
     <app-in-view *ngIf="autoLoadComments()" (inView$)="forceLoadQuestionExtra('CMNT')"></app-in-view>
 
-    <div class="question-extras" [class.extras-open]="expanded" [class.px-0]="layoutSvc.hp">
+    <div class="question-extras" [class.extras-open]="expanded" [ngClass]="{'px-0 ps-2': layoutSvc.hp}">
 
         <div *ngIf="extras == null || tab == null">
             <div class="spinner-container" style="margin: .5em auto">
