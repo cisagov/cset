@@ -49,7 +49,7 @@
         "bootstrap": "^5.3.5",
         "chart.js": "^4.4.5",
         "electron-find-on-page": "^1.0.1",
-        "electron-log": "^5.3.3",
+        "electron-log": "^5.4.0",
         "file-saver": "^2.0.5",
         "font-awesome": "^4.7.0",
         "fuse.js": "^7.1.0",
