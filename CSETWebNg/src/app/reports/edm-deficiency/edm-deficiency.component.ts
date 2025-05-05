@@ -32,7 +32,7 @@ import { QuestionsService } from '../../services/questions.service';
 @Component({
     selector: 'app-edm-deficiency',
     templateUrl: './edm-deficiency.component.html',
-    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    styleUrls: ['../reports.scss'],
     standalone: false
 })
 export class EdmDeficiencyComponent implements OnInit {

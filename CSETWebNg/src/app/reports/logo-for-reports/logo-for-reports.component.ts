@@ -25,9 +25,9 @@ import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
-    selector: 'app-logo-for-reports',
-    templateUrl: './logo-for-reports.component.html',
-    standalone: false
+  selector: 'app-logo-for-reports',
+  templateUrl: './logo-for-reports.component.html',
+  standalone: false
 })
 export class LogoForReportsComponent implements OnInit {
   sourceImage = '';
@@ -42,23 +42,8 @@ export class LogoForReportsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.configSvc.installationMode == 'TSA') {
-      this.sourceImage = 'assets/images/TSA/tsa_insignia_rgbtransparent.png';
-      this.LogoAlt = "TSA Logo";
-    }
-    else if (this.configSvc.installationMode == 'ACET') {
-      this.sourceImage = 'assets/images/ACET/ACET_shield_only.png';
-      this.LogoAlt = "ACET Logo";
-    }
-    else if (this.configSvc.installationMode == 'RENEW') {
-      // hide the PNG and show the SVG
-      this.showVector = true;
-      this.showRaster = false;
-    }
-    else {
-      this.sourceImage = 'assets/images/CISA_Logo_183px.png';
-      this.LogoAlt = "CISA Logo";
-    }
+    this.sourceImage = 'assets/images/CISA_Logo_183px.png';
+    this.LogoAlt = "CISA Logo";
 
     if (this.sourceImage.length > 0) {
       this.showRaster = true;

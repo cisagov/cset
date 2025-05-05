@@ -13,9 +13,6 @@ dist
 ## Web ##
 /CSETWebApi/CSETWeb_Api/.DS_Store
 /CSETWebApi/.DS_Store
-
-
-## Web ##
 /CSETWebApi/CSETWeb_Api/DataLayerCore/bin/Release
 /CSETWebApi/CSETWeb_Api/DataLayerCore/bin/Debug
 /CSETWebApi/CSETWeb_Api/AddCSETUser/publish
@@ -27,6 +24,7 @@ dist
 bin
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Properties/PublishProfiles/runlocal.pubxml.user
 /diagram/obj
+build
 
 
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/src/main/webapp/js/extensions.min.js

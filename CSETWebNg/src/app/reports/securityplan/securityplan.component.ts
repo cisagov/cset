@@ -26,8 +26,6 @@ import { Title, SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
 import { ConfigService } from '../../services/config.service';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
-import { AcetDashboard } from '../../models/acet-dashboard.model';
-import { ACETService } from '../../services/acet.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
 
@@ -46,7 +44,6 @@ export class SecurityplanComponent implements OnInit {
   networkDiagramImage: SafeHtml;
   responseResultsByCategory: any;
 
-  acetDashboard: AcetDashboard;
 
   /**
    * 
@@ -56,7 +53,6 @@ export class SecurityplanComponent implements OnInit {
     public reportSvc: ReportService,
     public analysisSvc: ReportAnalysisService,
     public configSvc: ConfigService,
-    public acetSvc: ACETService,
     private assessmentSvc: AssessmentService,
     private sanitizer: DomSanitizer,
     public tSvc: TranslocoService,
@@ -95,21 +91,6 @@ export class SecurityplanComponent implements OnInit {
     this.analysisSvc.getStandardsResultsByCategory().subscribe(x => {
       this.responseResultsByCategory = x;
     });
-
-    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment?.maturityModel?.modelName)) {
-      this.acetSvc.getAcetDashboard().subscribe(
-        (data: AcetDashboard) => {
-          this.acetDashboard = data;
-
-          for (let i = 0; i < this.acetDashboard.irps.length; i++) {
-            this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
-          }
-        },
-        error => {
-          console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-          console.log('Error getting all documents: ' + (<Error>error).stack);
-        });
-    }
   }
 
   usesRAC() {

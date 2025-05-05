@@ -84,11 +84,6 @@ $primary-900: map.get($primary, 900); // Main Dark Primary
 $primary-color: $primary-900;
 $secondary-color: map.get($primary, 450);
 
-$ncua-primary-background-image: linear-gradient(to right,
-    #0f3c7a,
-    #5290e5,
-    #0f3c7a);
-$ncua-secondary-color: #0f3c7a;
 
 $link-color-dark: #1a53ff; //$primary-350;
 $link-color-light: $primary-350;
@@ -1226,7 +1221,8 @@ ul.mat-tree-node mat-tree-node {
 .parameter-orig-value {
   font-size: 1.1em;
   color: $primary-color;
-  margin: 10px 0;
+  font-style: italic;
+  margin: 10px 10px;
 }
 
 // .parameter-editor-default-message {

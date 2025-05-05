@@ -25,10 +25,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MaturityDomainRemarks, QuestionGrouping } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
-import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { MaturityService } from '../../../services/maturity.service';
-import { NCUAService } from '../../../services/ncua.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { ModuleBehavior } from '../../../models/module-config.model';
 
@@ -49,12 +47,10 @@ export class GroupingBlockComponent implements OnInit {
    */
   constructor(
     public assessSvc: AssessmentService,
-    public acetFilteringSvc: AcetFilteringService,
     public maturityFilteringService: MaturityFilteringService,
     public matSvc: MaturityService,
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
-    public ncuaSvc: NCUAService
   ) { }
 
   /**
@@ -108,11 +104,6 @@ export class GroupingBlockComponent implements OnInit {
    * Indicates if all domain maturity filters have been turned off for the domain
    */
   allDomainMaturityLevelsHidden(): boolean {
-    if (this.isDomain() && (!this.assessSvc.isISE())) {
-      if (this.acetFilteringSvc.allDomainMaturityLevelsHidden(this.grouping.title)) {
-        return true;
-      }
-    }
     return false;
   }
 }

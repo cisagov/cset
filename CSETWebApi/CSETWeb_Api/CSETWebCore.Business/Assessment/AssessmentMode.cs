@@ -138,15 +138,6 @@ namespace CSETWebCore.Business.Assessment
         public string DetermineDefaultApplicationMode()
         {
             string defaultMode = QUESTIONS_BASED_APPLICATION_MODE;
-
-            // ACET defaults to Requirements mode
-            string scope = _tokenManager.Payload("scope");
-
-            if (scope == "ACET")
-            {
-                defaultMode = REQUIREMENTS_BASED_APPLICATION_MODE;
-            }
-
             return defaultMode;
         }
 

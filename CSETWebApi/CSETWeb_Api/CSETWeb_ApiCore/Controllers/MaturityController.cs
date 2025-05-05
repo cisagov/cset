@@ -119,7 +119,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SetMaturityLevel([FromBody] int level)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistMaturityLevel(assessmentId, level);
+            new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistMaturityLevel(assessmentId, level);
             return Ok();
         }
 
@@ -134,11 +134,6 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             string lang = _tokenManager.GetCurrentLanguage();
             string installationMode = _tokenManager.Payload("scope");
-
-            if (installationMode == "ACET")
-            {
-                return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, fill, groupingId, lang));
-            }
 
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, fill, groupingId, lang));
         }
@@ -516,34 +511,6 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetAllModels()
         {
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAllModels());
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/MaturityAnswerCompletionRate")]
-        public IActionResult GetAnswerCompletionRate()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerCompletionRate(assessmentId));
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/MaturityAnswerIseCompletionRate")]
-        public IActionResult GetIseAnswerCompletionRate()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetIseAnswerCompletionRate(assessmentId));
         }
 
 

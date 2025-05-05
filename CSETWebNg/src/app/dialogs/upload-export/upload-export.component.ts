@@ -29,7 +29,6 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ImportPasswordComponent } from '../assessment-encryption/import-password/import-password.component';
 import { ConfigService } from '../../services/config.service';
-import { NCUAService } from '../../services/ncua.service';
 
 @Component({
     selector: 'app-upload-export',
@@ -66,7 +65,6 @@ export class UploadExportComponent implements OnInit {
     private fileSvc: FileUploadClientService,
     private diagramSvc: DiagramService,
     private configSvc: ConfigService,
-    private ncuaSvc: NCUAService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 

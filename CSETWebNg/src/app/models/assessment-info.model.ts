@@ -54,7 +54,6 @@ export interface AssessmentDetail {
     regionCode?: number;
     charterType?: number;
 
-    isAcetOnly?: boolean;
     workflow?: string;
     origin?: string;
     hiddenScreens?: string[];
@@ -161,7 +160,6 @@ export interface AssessmentConfig {
     galleryItemGuid?: string;
     hiddenScreens?: any;
     id?: number;
-    isAcetOnly?: boolean;
     isE_StateLed?: boolean;
     is_PCII?: boolean;
     iseSubmitted?: boolean;
