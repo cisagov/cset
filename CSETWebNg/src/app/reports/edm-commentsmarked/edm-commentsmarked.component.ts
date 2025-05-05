@@ -32,7 +32,7 @@ import { MaturityService } from '../../services/maturity.service';
 @Component({
     selector: 'app-edm-commentsmarked',
     templateUrl: './edm-commentsmarked.component.html',
-    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    styleUrls: ['../reports.scss'],
     standalone: false
 })
 export class EdmCommentsmarkedComponent implements OnInit {

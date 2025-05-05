@@ -5,9 +5,6 @@ import { TranslocoService } from '@jsverse/transloco';
 /**
  * Builds a translated string of completion.
  * 
- * {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}}
- * {{this.assessment.selectedMaturityModel === 'ISE' ? 'Statement(s) ' : 'Question(s)'}} Completed
- * 
  * The pipe can be defined as pure as long as the source object includes the current language
  * so that a language change in the Transloco service will trigger the pipe.
  */

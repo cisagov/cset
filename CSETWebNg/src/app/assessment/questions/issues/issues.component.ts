@@ -166,7 +166,6 @@ export class IssuesComponent implements OnInit {
       text = text.replace(/&#167;/g, '');
       text = text.replace(/&#183;/g, '');
       text = text.replace(/&nbsp;/g, '');
-      text = text.replace('ISE Reference', '');
       text = text.replace('/\s/g', ' ');
     }
     

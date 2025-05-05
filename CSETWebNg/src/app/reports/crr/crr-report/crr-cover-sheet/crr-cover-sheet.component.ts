@@ -40,10 +40,6 @@ export class CrrCoverSheetComponent implements OnInit {
   constructor(private configSvc: ConfigService) { }
 
   ngOnInit(): void {
-    if (this.configSvc.installationMode === 'TSA') {
-      this.headerUrl = 'assets/images/TSA/tsa_insignia_rgbtransparent.png';
-    } else {
-      this.headerUrl = 'assets/images/CISA_Logo_1831px.png';
-    }
+    this.headerUrl = 'assets/images/CISA_Logo_1831px.png';
   }
 }
