@@ -813,7 +813,9 @@
         "text2": "Los parámetros también se pueden personalizar haciendo clic en ellos en el texto de control. Tenga en cuenta que los cambios realizados a ese nivel se aplican al control específico.",
         "parameter name": "Nombre de Parámetro",
         "parameter value": "Valor de Parámetro",
-        "none": "Los estándares de ciberseguridad seleccionados no contienen ningún parámetro de control personalizable."
+        "none": "Los estándares de ciberseguridad seleccionados no contienen ningún parámetro de control personalizable.",
+        "dialog title": "Definir Valor del Parámetro",
+        "dialog prompt": "Defina el valor para el parámetro de control seleccionado."
     },
     "errors": {
         "import unsuported file 1": "Error: archivo no compatible. Solo se pueden importar archivos web CSET para instalaciones empresariales.",
