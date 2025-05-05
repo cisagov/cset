@@ -15,7 +15,7 @@ import { LayoutService } from '../../services/layout.service';
 export class UserRolesEditorComponent implements OnInit {
 
   userRoles: any = [];
-  roles: any = [];
+  roles: any[] = [];
   comparer: Comparer = new Comparer();
 
   constructor(
@@ -40,7 +40,7 @@ export class UserRolesEditorComponent implements OnInit {
   /**
    *
    */
-  cancel() {
+  close() {
     this.dialog.close();
   }
 
@@ -62,18 +62,31 @@ export class UserRolesEditorComponent implements OnInit {
         case "email":
           return this.comparer.compare(a.primaryEmail, b.primaryEmail, isAsc);
         case "role":
-          return this.comparer.compare(a.roleId, b.roleId, isAsc);
+          return this.comparer.compare(a.roles.contains, b.roleId, isAsc);
         default:
           return 0;
       }
     });
   }
 
-  updateRoles(e: any) {
-    // this.acetSvc.postSelection(this.acetDashboard).subscribe((data: any) => {
-    //   this.ncuaSvc.updateExamLevelOverride(this.acetDashboard.override);
-    // });
 
+  toggleRole(userInfo: any, role: any, index: number) {
+    let userRole = userInfo.userRoles;
+
+    userRole = {
+      role: role,
+      roleId: role.roleId, 
+      user: userRole?.user ?? null,
+      userId: userInfo.userId,
+      userRoleId: userRole?.userRoleId ?? 0
+    };
+
+    this.userRoles[index].userRoles = userRole;
+    this.updateRoles(userRole);
+  }
+
+  updateRoles(updatedUserRole: any) {
+    this.authSvc.setUsersAndRoles(updatedUserRole).subscribe();
   }
 
 }

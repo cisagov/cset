@@ -1,10 +1,10 @@
 
-<div *transloco="let t;" class="edit-user-dialog d-flex flex-column justify-content-center flex-11a">
+<div *transloco="let t;" class="edit-user-dialog d-flex flex-column justify-content-center flex-11a" style="width: 700px">
     <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
         <span class="cset-icons-profile fs-base-6 me-3"></span>
         <span>{{t('user profile.dialog title')}}</span>
     </div>
-    <mat-dialog-content class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
+    <mat-dialog-content class="p-3 oy-auto d-flex flex-column flex-11a">
 
         <ng-container *ngIf="userRoles == null">
             <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
@@ -16,95 +16,34 @@
 
             <!-- table for larger layouts -->
             <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort
-                (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
-                <th aria-label="Email" mat-sort-header="role" style="width: 25%;">Email</th>
-                <th aria-label="Last Name" mat-sort-header="assessment" style="width: 25%;">
+                (matSortChange)="sortData($event)" class="assessment-summary">
+                <th aria-label="Email" mat-sort-header="email" style="width: 35%;">Email</th>
+                <th aria-label="Last Name" mat-sort-header="lastName" style="width: 25%;">
                     Last Name
                 </th>
-                <th aria-label="First Name" mat-sort-header="role" style="width: 25%;">First Name</th>
-                <th aria-label="Role" mat-sort-header="role" style="width:25%;">Role</th>
+                <th aria-label="First Name" mat-sort-header="firstName" style="width: 25%;">First Name</th>
+                <th aria-label="Role" mat-sort-header="role" style="width:15%;">Role</th>
                 
-                <tr *ngFor="let userRole of userRoles">
+                <tr *ngFor="let userRole of userRoles; let i = index">
                     <td>{{ userRole.primaryEmail }}</td>
                     <td>{{ userRole.lastName }}</td>
                     <td>{{ userRole.firstName }}</td>
                     <td>
-                        <ng-container *ngFor="let role of roles">
-                            <input type="checkbox" name="{{ role.roleName }}" id="{{ role.roleName }}" class="checkbox-custom mt-1"
-                                [checked]="userRole.roles.includes(role)">
-                            <label for="{{ role.roleName }}" class="checkbox-custom-label">
-                                {{ role.roleName }}
-                            </label>
-                        </ng-container>
+                        <!-- <ng-container *ngFor="let roleOfUser of userRole.roles"> -->
+                            <ng-container *ngFor="let role of roles">
+                                <input type="radio" name="{{ i + '_' + role.roleName.trim() }}" 
+                                        id="{{ i + '_' + role.roleName.trim() }}" class="radio-custom"
+                                        [checked]="role.roleId == userRole.userRoles.roleId"
+                                        (change)="toggleRole(userRole, role, i)">
+                                <label for="{{ i + '_' + role.roleName.trim() }}" class="radio-custom-label">
+                                    
+                                   
+                                    {{ role.roleName.trim() }}
+                                </label>
+                            </ng-container>
                         
-                        <!-- <select class="form-select" name="roleSelection" [(ngModel)]="userRole.roleName"
-                            (change)="updateRole($event.target.value)">
-                            <option *ngFor="let role of roles">{{ role.roleName }}</option>
-                        </select> -->
                     </td>
-                    <!-- <td *ngIf="showColumn('ise-submitted')">
-                        <ng-container *ngIf="assessment.iseSubmitted">
-                            {{ systemTimeTranslator(assessment.submittedDate, 'short') }}
-                        </ng-container>
-                    </td>
-                    <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.lastModifiedDate | localizeDate}}</td>
-                    <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate,
-                        'med')}}</td>
-
-                    <td *ngIf="showColumn('primary-assessor')">{{assessment.firstName}} {{assessment.lastName}}</td>
-                    <td>
-                        <div
-                            *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">
-                            <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
-                                {{ { c: assessment.completedQuestionsCount, t:
-                                assessment.totalAvailableQuestionsCount, qa: assessment.questionAlias, l:
-                                tSvc.getActiveLang() } | completionCount }}
-                            </span>
-                            <ng-template #blankAssessment>
-                                {{ t('welcome page.blank assessment') }}
-                            </ng-template>
-                            <br>
-                        </div>
-                        <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
-                            matTooltip="{{t('tooltip.assessment requires review')}}">{{t('requires review')}}
-                        </span>
-                    </td>
-                    <td>
-                        <button tabindex="0"
-                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                            (click)="removeAssessment(assessment, i)"
-                            matTooltip="{{ t('tooltip.remove assessment') }}">
-                            <span class="cset-icons-trash-x fs-base-2 me-2"></span>
-                            <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.remove')}}</span>
-                        </button>
-                    </td>
-                    <td *ngIf="showColumn('export')">
-                        <button tabindex="0" id="assess-{{i}}-export"
-                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                            (click)="clickDownloadLink(assessment.assessmentId)"
-                            matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
-                            <span class="cset-icons-export-up fs-base-2 me-2"></span>
-                            <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.export')}}</span>
-                        </button>
-                    </td>
-                    <td *ngIf="showColumn('export json')">
-                        <button tabindex="0" id="assess-{{i}}-export"
-                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                            (click)="clickDownloadLink(assessment.assessmentId, true)"
-                            matTooltip="{{ t('tooltip.export assessment json') }}">
-                            <span class="cset-icons-export-up fs-base-2 me-2"></span>
-                            <span class="icon-link-button-text-dark">{{t('buttons.export json')}}</span>
-                        </button>
-                    </td>
-                    <td style="display:none;" *ngIf="showColumn('analytics')">
-                        <button tabindex="0"
-                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                            (click)="this.analyticsSvc.loadAssessment(assessment.assessmentId)"
-                            matTooltip="{{ t('tooltip.analytics') }}">
-                            <span class="cset-icons-bar-chart-vertical fs-base-2 me-2"></span>
-                            <span class="icon-link-button-text-dark">{{t('buttons.analytics')}}</span>
-                        </button>
-                    </td> -->
+                    
                 </tr>
             </table>
 
@@ -141,10 +80,8 @@
             </table>
         </ng-container>
         <mat-dialog-actions class="p-3 pt-0 mb-0">
-            <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
+            <button class="btn btn-secondary" (click)="close(userRoles)">{{t('buttons.ok')}}</button>
         </mat-dialog-actions>
-    <!-- <mat-dialog-content class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
-        <p class="pe-3">{{t('dialogs.access denied 3')}}</p> -->
     </mat-dialog-content>
     
 </div>

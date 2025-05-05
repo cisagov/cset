@@ -25,5 +25,6 @@ namespace CSETWebCore.Interfaces.User
         string InsertRandom(string s, string choices, int number);
 
         UsersAndRoles GetUserRoles();
+        void SetUserRoles(USER_ROLES updatedRole);
     }
 }
