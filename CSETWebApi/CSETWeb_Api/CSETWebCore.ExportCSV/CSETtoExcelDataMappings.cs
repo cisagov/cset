@@ -190,14 +190,15 @@ namespace CSETWebCore.ExportCSV
                         }
                         catch(Exception ex)
                         {
-                            
+                          Console.WriteLine($"[Translation Error] Requirement Id {row.Question_Id}: {ex.Message}");
                         }
                     }
                 }
                 rows.ForEach(q =>
                 {
                     q.Is_Question = !((q.Is_Requirement ?? false) || (q.Is_Component ?? false) || (q.Is_Maturity ?? false) || (q.Is_Framework ?? false));
-                }); doc.AddList<QuestionExport>(rows, "Standard Requirements", QuestionExport.Headings);
+                }); 
+                doc.AddList<QuestionExport>(rows, "Standard Requirements", QuestionExport.Headings);
             }
         }
 
