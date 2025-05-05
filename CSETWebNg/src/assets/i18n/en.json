@@ -893,7 +893,9 @@
     "text2": "Parameters can also be customized by clicking on them in the control text. Note that changes made at that level are scoped to the specific control.",
     "parameter name": "Parameter Name",
     "parameter value": "Parameter Value",
-    "none": "The selected cybersecurity standards do not contain any customizable control parameters."
+    "none": "The selected cybersecurity standards do not contain any customizable control parameters.",
+    "dialog title": "Define Parameter Value",
+    "dialog prompt": "Define the value for the selected control parameter."
   },
   "errors": {
     "import unsuported file 1": "Error: Unsupported file. Only .csetw files can be imported for enterprise installations.",

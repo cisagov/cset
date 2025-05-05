@@ -144,9 +144,7 @@
                     t('assessment name')}}
                 </th>
                 <th aria-label="{{ t('assessment type')}}" mat-sort-header="type" style="width:15%;">{{
-                    t('assessment type')}}</th>
-                <th *ngIf="showColumn('ise-submitted')" aria-label="ise-submitted" mat-sort-header="ise-submitted">
-                    {{ t('acet.submitted') }}</th>
+                    t('assessment type')}}</th>              
                 <th aria-label="{{ t('last modified')}}" mat-sort-header="date" style="width:15%;">{{ t('last
                     modified')}}</th>
                 <th *ngIf="showColumn('primary-assessor')" aria-label="assessor" mat-sort-header="assessor"
@@ -167,11 +165,6 @@
                    
 
                     <td>{{assessment.type}}</td>
-                    <td *ngIf="showColumn('ise-submitted')">
-                        <ng-container *ngIf="assessment.iseSubmitted">
-                            {{ systemTimeTranslator(assessment.submittedDate, 'short') }}
-                        </ng-container>
-                    </td>
                     <td>{{assessment.lastModifiedDate | localizeDate}}</td>
                     <td *ngIf="showColumn('primary-assessor')">{{assessment.firstName}} {{assessment.lastName}}</td>
                     <td>

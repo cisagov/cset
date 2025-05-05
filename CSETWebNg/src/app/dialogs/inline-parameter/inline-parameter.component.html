@@ -20,12 +20,12 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="d-flex flex-column justify-content-center flex-11a">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start flex-11a">Define Parameter Value</div>
+<div class="d-flex flex-column justify-content-center flex-11a" *transloco="let t">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start flex-11a">{{t('parameters.dialog title')}}</div>
   <mat-dialog-content class="p-4 oy-auto d-flex flex-column flex-11a">
     <div>
       <p>
-        Define the value for the selected control parameter.
+        {{t('parameters.dialog prompt')}}
       </p>
       <div class="parameter-orig-value">{{originalValue}}</div>
       <textarea maxlength="2000" class="form-control" id="parmValue" name="parmValue" [(ngModel)]="parameterValue"
@@ -34,7 +34,7 @@
   </mat-dialog-content>
 
   <mat-dialog-actions class="p-4 pt-0 mb-0 d-flex justify-content-between flex-11a">
-    <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
-    <button class="m-0 btn btn-primary" (click)="save()">Save</button>
+    <button class="btn btn-secondary" (click)="cancel()">{{t('buttons.cancel')}}</button>
+    <button class="m-0 btn btn-primary" (click)="save()">{{t('buttons.save')}}</button>
   </mat-dialog-actions>
 </div>
