@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.ExportCSV
 {
@@ -22,6 +24,8 @@ namespace CSETWebCore.ExportCSV
         private int _assessmentId;
 
         private readonly IDataHandling _dataHandling;
+        private readonly ITokenManager _tokenManager;
+        private TranslationOverlay _overlay;
 
         /// <summary>
         /// Constructor.
@@ -29,11 +33,14 @@ namespace CSETWebCore.ExportCSV
         /// <param name="assessmentId"></param>
         /// <param name="context"></param>
         /// <param name="dataHandling"></param>
-        public CSETtoExcelDataMappings(int assessmentId, CSETContext context, IDataHandling dataHandling)
+        /// <param name="tokenManager"></param>
+        public CSETtoExcelDataMappings(int assessmentId, CSETContext context, IDataHandling dataHandling, ITokenManager tokenManager)
         {
             _context = context;
             _assessmentId = assessmentId;
             _dataHandling = dataHandling;
+            _tokenManager = tokenManager;
+            _overlay = new TranslationOverlay();
         }
 
 
@@ -89,6 +96,7 @@ namespace CSETWebCore.ExportCSV
         /// <param name="doc"></param>
         private void CreateWorksheetPageStandardAnswers(ref CSETtoExcelDocument doc)
         {
+            var lang = _tokenManager.GetCurrentLanguage();
             IEnumerable<QuestionExport> list;
 
             _context.FillEmptyQuestionsForAnalysis(_assessmentId);
@@ -163,11 +171,33 @@ namespace CSETWebCore.ExportCSV
                        };
 
                 var rows = list.ToList<QuestionExport>();
+                if (lang != "en")
+                {
+                    foreach (var row in rows)
+                    {
+                        try
+                        {
+                            var reqOverlay = _overlay.GetRequirement(row.Question_Id, lang);
+                            if (reqOverlay != null)
+                            {
+                                row.Simple_Question = reqOverlay.RequirementText ?? row.Simple_Question;
+                                var translatedCategory = _overlay.GetPropertyValue("STANDARD_CATEGORY", row.Question_Group_Heading?.ToLower(), lang);
+                                if (!string.IsNullOrWhiteSpace(translatedCategory))
+                                {
+                                    row.Question_Group_Heading = translatedCategory;
+                                }
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                          Console.WriteLine($"[Translation Error] Requirement Id {row.Question_Id}: {ex.Message}");
+                        }
+                    }
+                }
                 rows.ForEach(q =>
                 {
                     q.Is_Question = !((q.Is_Requirement ?? false) || (q.Is_Component ?? false) || (q.Is_Maturity ?? false) || (q.Is_Framework ?? false));
-                });
-
+                }); 
                 doc.AddList<QuestionExport>(rows, "Standard Requirements", QuestionExport.Headings);
             }
         }
