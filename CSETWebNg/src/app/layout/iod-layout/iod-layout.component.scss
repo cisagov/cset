@@ -1429,7 +1429,8 @@ ul.mat-tree-node mat-tree-node {
 .parameter-orig-value {
   font-size: 1.1em;
   color: $primary-color;
-  margin: 10px 0;
+  font-style: italic;
+  margin: 10px 10px;
 }
 
 // .parameter-editor-default-message {
