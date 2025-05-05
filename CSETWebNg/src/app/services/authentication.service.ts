@@ -451,6 +451,13 @@ export class AuthenticationService {
   getUsersAndRoles() {
     return this.http.get(this.configSvc.apiUrl + 'user/getUsersAndRoles');
   }
+
+  /**
+   *
+   */
+  setUsersAndRoles(updatedUserRole: any) {
+    return this.http.post(this.configSvc.apiUrl + 'user/setUsersAndRoles', updatedUserRole, headers);
+  }
   
   hasRole(requiredRoles: RoleType[]): boolean {
     if (!this.currentUser) {

@@ -5,6 +5,7 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
+using CSETWebCore.Model.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NLog;
@@ -157,6 +158,15 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetUsersAndRoles([FromQuery] string apiKey)
         {
             return Ok(_userBusiness.GetUserRoles());
+        }
+
+        [CsetAuthorize]
+        [HttpPost]
+        [Route("api/user/setUsersAndRoles")]
+        public IActionResult SetUsersAndRoles([FromBody] USER_ROLES updatedUserRole)
+        {
+            _userBusiness.SetUserRoles(updatedUserRole);
+            return Ok(true);
         }
     }
 }
