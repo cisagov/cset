@@ -11,6 +11,7 @@ using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.ReportEngine;
 using Microsoft.AspNetCore.Http;
+using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.ExportCSV
 {
@@ -21,7 +22,7 @@ namespace CSETWebCore.ExportCSV
         private readonly IACETMaturityBusiness _acetMaturity;
         private readonly IACETDashboardBusiness _acet;
         private readonly IHttpContextAccessor _http;
-
+        private readonly ITokenManager _token;
 
         /// <summary>
         /// Constructor.
@@ -31,14 +32,16 @@ namespace CSETWebCore.ExportCSV
         /// <param name="maturity"></param>
         /// <param name="acet"></param>
         /// <param name="http"></param>
+        ///  /// <param name="token"></param>
         public ExcelExporter(CSETContext context, IDataHandling dataHandling, IACETMaturityBusiness acetMaturity,
-            IACETDashboardBusiness acet, IHttpContextAccessor http)
+            IACETDashboardBusiness acet, IHttpContextAccessor http,ITokenManager token)
         {
             _context = context;
             _dataHandling = dataHandling;
             _acetMaturity = acetMaturity;
             _acet = acet;
             _http = http;
+            _token = token;
         }
 
 
@@ -56,7 +59,7 @@ namespace CSETWebCore.ExportCSV
             {
                 return stream;
             }
-            CSETtoExcelDataMappings export = new CSETtoExcelDataMappings(assessment_id, _context, _dataHandling);
+            CSETtoExcelDataMappings export = new CSETtoExcelDataMappings(assessment_id, _context, _dataHandling,_token);
             export.ProcessTables(stream);
             return stream;
         }

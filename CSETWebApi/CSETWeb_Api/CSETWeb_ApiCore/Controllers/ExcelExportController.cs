@@ -40,7 +40,7 @@ namespace CSETWebCore.Api.Controllers
             _acet = acet;
             _http = http;
             _context = context;
-            _exporter = new ExcelExporter(_context, _data, _acetMaturity, _acet, _http);
+            _exporter = new ExcelExporter(_context, _data, _acetMaturity, _acet, _http,_token);
         }
 
 
