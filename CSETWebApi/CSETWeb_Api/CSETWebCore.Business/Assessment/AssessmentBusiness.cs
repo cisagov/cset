@@ -1318,5 +1318,18 @@ namespace CSETWebCore.Business.Assessment
                 }
             }
         }
+
+        public bool GetAssessorMode(int assessmentId)
+        {
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            return assessment.AssessorMode;
+        }
+        
+        public void SetAssessorMode(int assessmentId, string mode)
+        {
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            assessment.AssessorMode = mode.ToBool();
+            _context.SaveChanges();
+        }
     }
 }
