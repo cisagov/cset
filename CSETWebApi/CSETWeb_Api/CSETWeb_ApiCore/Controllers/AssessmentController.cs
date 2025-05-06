@@ -527,24 +527,6 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
         
-        [HttpGet]
-        [Route("api/assessormode")]
-        public IActionResult GetAssessorMode()
-        {
-            try
-            {
-                int assessmentId = _tokenManager.AssessmentForUser();
-                var mode = _assessmentBusiness.GetAssessorMode(assessmentId);
-                return Ok(mode);
-            }
-            catch (Exception exc)
-            {
-                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
-            }
-
-            return Ok();
-        }
-        
         [HttpPost]
         [Route("api/assessormode")]
         public IActionResult SetAssessorMode([FromBody] string mode)
