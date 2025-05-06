@@ -198,8 +198,16 @@ namespace CSETWebCore.Api.Controllers
                 assessment.Origin = config.Origin;
             }
 
-
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == currentUserId);
+            if (user != null)
+            {
+                if (user.CisaAssessorWorkflow)
+                {
+                    assessment.AssessorMode = true;
+                }
+            }
             assessmentBusiness.SaveAssessmentDetail(assessment.Id, assessment);
+            
 
             return Ok(assessment);
         }
