@@ -725,13 +725,14 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.AnalyzeDiagram = false;
             dbAssessment.PCII_Number = assessment.PciiNumber;
             dbAssessment.Is_PCII = assessment.is_PCII;
+            dbAssessment.AssessorMode = assessment.AssessorMode;
 
             _context.ASSESSMENTS.Update(dbAssessment);
             _context.SaveChanges();
 
 
             var user = _context.USERS.FirstOrDefault(x => x.UserId == dbAssessment.AssessmentCreatorId);
-
+           
             var dbInformation = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
             if (dbInformation == null)
             {
@@ -758,7 +759,7 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.Origin = assessment.Origin;
             dbInformation.Region_Code = assessment.RegionCode;
             dbInformation.Ise_Submitted = assessment.IseSubmitted;
-
+            
             _context.INFORMATION.Update(dbInformation);
             _context.SaveChanges();
 
