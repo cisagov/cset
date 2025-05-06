@@ -22,7 +22,6 @@ export class AssessmentConfigIodComponent implements OnInit {
   IsPCII: boolean = false;
   showUpgrade: boolean = false;
   targetModel: string = '';
-  assessorAssessment: boolean;
   globalassessor: boolean;
 
 
@@ -54,9 +53,6 @@ export class AssessmentConfigIodComponent implements OnInit {
         }
       })
     }
-    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.globalassessor = resp);
-    this.assessSvc.getAssessorSetting();
-    this.assessorAssessment = this.assessSvc.assessmentAssessorMode;
   }
 
   /**
@@ -137,7 +133,7 @@ export class AssessmentConfigIodComponent implements OnInit {
   }
 
   updateAssessorMode() {
-    this.assessorAssessment = !this.assessorAssessment;
-    this.assessSvc.setAssessorSetting(this.assessorAssessment).subscribe(() => { });;
+    this.assessment.assessorMode = !this.assessment.assessorMode;
+    this.assessSvc.setAssessorSetting(this.assessment.assessorMode).subscribe(() => { });;
   }
 }

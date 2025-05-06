@@ -69,6 +69,7 @@ export interface AssessmentDetail {
     typeDescription?: string;
     pciiNumber?: string;
     is_PCII?: boolean;
+    assessorMode?: boolean;
 }
 
 export interface MaturityModel {
@@ -113,7 +114,7 @@ export interface Demographic {
 
     sectorId?: number;
     industryId?: number;
-    
+
     size?: number;
     assetValue?: number;
     needsPrivacy?: boolean;
