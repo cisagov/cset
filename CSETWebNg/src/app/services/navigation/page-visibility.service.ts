@@ -153,7 +153,6 @@ export class PageVisibilityService {
       }
 
       if (c == ('ASSESSOR')) {
-        console.log(this.configSvc.cisaAssessorWorkflow, this.assessSvc.assessment.assessorMode)
         show = show && (this.configSvc.cisaAssessorWorkflow || this.assessSvc.assessment.assessorMode);
       }
 
