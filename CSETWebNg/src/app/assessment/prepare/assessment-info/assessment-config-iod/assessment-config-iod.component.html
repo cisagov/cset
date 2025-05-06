@@ -105,8 +105,36 @@
         [innerHtml]="assessment.typeDescription | safe"></p>
     </div>
 
-    <app-assessment-contacts (triggerChange)="refreshContacts()"></app-assessment-contacts>
 
+    <div class="mt-4">
+      <h4>Assessment Settings</h4>
+      <div class="d-flex align-items-center flex-00a ms-auto me-5" style="margin-top:-5px;">
+        <div class="d-flex align-items-center me-3 pt-2">CISA Assessor Mode</div>
+        <div class="mb-2">
+          <div>
+            <div class="btn-group btn-group-toggle mt-3" data-toggle="buttons"
+              style="border: 2px solid transparent; border-radius: 8px;">
+              <label class="btn btn-level form-check-label" [class.active]="!assessorAssessment"
+                (change)="updateAssessorMode()">
+                <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                  [checked]="!assessorAssessment" />
+                {{t('menu.user.off')}}
+              </label>
+              <label class="btn btn-level form-check-label" [class.active]="assessorAssessment"
+                (change)="updateAssessorMode()">
+                <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                  [checked]="assessorAssessment" />
+                {{t('menu.user.on')}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <app-assessment-contacts (triggerChange)="refreshContacts()"></app-assessment-contacts>
+    </div>
     <hr class="w-100 hr-sal my-4" />
 
     <div *ngIf="showFacilitator()" class="mb-4">
