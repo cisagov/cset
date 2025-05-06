@@ -152,7 +152,14 @@ export class PageVisibilityService {
         show = show && this.sectorAny(c);
       }
 
+      if (c == ('ASSESSOR')) {
+        console.log(this.configSvc.cisaAssessorWorkflow, this.assessSvc.assessment.assessorMode)
+        show = show && (this.configSvc.cisaAssessorWorkflow || this.assessSvc.assessment.assessorMode);
+      }
 
+      if (c == ('ASSESSOR-NONE')) {
+        show = show && !(this.configSvc.cisaAssessorWorkflow || this.assessSvc.assessment.assessorMode);
+      }
 
       if (c == ('SHOW-FEEDBACK')) {
         show = show && this.configSvc.behaviors.showFeedback;
@@ -211,14 +218,6 @@ export class PageVisibilityService {
     let has = false;
     targets.forEach((t: string) => {
       has = has || (this.configSvc.installationMode == t);
-      if (t == 'IOD') {
-        if (rule.startsWith('INSTALL-MODE-NOT:') || rule.startsWith('INSTALL-MODE-NONE('))
-          has = true;
-        else {
-          has = has || (this.assessSvc.assessmentAssessorMode)
-        }
-      }
-
     });
 
     return has;
