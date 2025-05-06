@@ -44,7 +44,7 @@
         "@ngstack/code-editor": "^9.0.0",
         "@swimlane/ngx-charts": "^22.0.0-alpha.0",
         "@types/jquery": "^3.5.32",
-        "@types/sanitize-html": "^2.15.0",
+        "@types/sanitize-html": "^2.16.0",
         "angular2-hotkeys": "^16.0.1",
         "bootstrap": "^5.3.5",
         "chart.js": "^4.4.5",
