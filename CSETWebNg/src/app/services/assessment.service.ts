@@ -664,10 +664,6 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'upgrades');
   }
 
-  getAssessorSetting() {
-    return this.http.get(this.apiUrl + 'assessormode');
-  }
-
   setAssessorSetting(mode: boolean) {
     this.assessment.assessorMode = mode;
     return this.http.post(this.apiUrl + 'assessormode', mode, headers)
