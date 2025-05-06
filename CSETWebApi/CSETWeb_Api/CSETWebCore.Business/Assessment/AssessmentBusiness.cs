@@ -446,6 +446,8 @@ namespace CSETWebCore.Business.Assessment
                 assessment.is_PCII = result.aa.Is_PCII;
                 assessment.PciiNumber = result.aa.PCII_Number;
                 assessment.IseSubmitted = result.ii.Ise_Submitted;
+                assessment.AssessorMode = result.aa.AssessorMode;
+                
 
                 assessment.CreatorName = new User.UserBusiness(_context, null)
                     .GetUserDetail((int)assessment.CreatorId)?.FullName;

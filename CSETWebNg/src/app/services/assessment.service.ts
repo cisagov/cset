@@ -87,7 +87,6 @@ export class AssessmentService {
   //Assessment upgrade conversion galleryItemGuid and target model name 
   public galleryItemGuid: string = "";
   public convertToModel: string = "";
-  public assessmentAssessorMode: boolean;
 
   /**
    *
@@ -666,10 +665,11 @@ export class AssessmentService {
   }
 
   getAssessorSetting() {
-    return this.http.get(this.apiUrl + 'assessormode').subscribe((mode: boolean) => (this.assessmentAssessorMode = mode));
+    return this.http.get(this.apiUrl + 'assessormode');
   }
 
   setAssessorSetting(mode: boolean) {
+    this.assessment.assessorMode = mode;
     return this.http.post(this.apiUrl + 'assessormode', mode, headers)
   }
 
