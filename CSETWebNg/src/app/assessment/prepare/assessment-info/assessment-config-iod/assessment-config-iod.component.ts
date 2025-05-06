@@ -22,7 +22,6 @@ export class AssessmentConfigIodComponent implements OnInit {
   IsPCII: boolean = false;
   showUpgrade: boolean = false;
   targetModel: string = '';
-  globalassessor: boolean;
 
 
   constructor(
