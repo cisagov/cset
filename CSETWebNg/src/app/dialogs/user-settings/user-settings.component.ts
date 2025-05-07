@@ -17,6 +17,8 @@ export class UserSettingsComponent implements OnInit {
 
   languageOptions = [];
   encryption: boolean;
+  cisaWorkflowEnabled: boolean = false;
+  cisaWorkflowStatusLoaded: boolean = false;
 
   constructor(
     private dialog: MatDialogRef<EditUserComponent>,
@@ -44,6 +46,11 @@ export class UserSettingsComponent implements OnInit {
     this.assessSvc.getEncryptPreference().subscribe((result: boolean) => {
       this.encryption = result
     });
+    this.configSvc.getCisaAssessorWorkflow().subscribe((cisaWorkflowEnabled: boolean) => {
+      this.configSvc.cisaAssessorWorkflow = cisaWorkflowEnabled;
+      this.cisaWorkflowEnabled = cisaWorkflowEnabled;
+      this.cisaWorkflowStatusLoaded = true;
+    });
   }
 
   /**
@@ -70,6 +77,14 @@ export class UserSettingsComponent implements OnInit {
    *
    */
   cancel() {
-    this.dialog.close({ encryption: this.encryption });
+    this.dialog.close({ encryption: this.encryption, cisaWorkflowEnabled: this.cisaWorkflowEnabled });
+  }
+
+  showCisaAssessorWorkflowSwitch() {
+    return this.configSvc.behaviors.showCisaAssessorWorkflowSwitch;
+  }
+
+  toggleCisaAssessorWorkflow() {
+    this.cisaWorkflowEnabled = !this.cisaWorkflowEnabled;
   }
 }
