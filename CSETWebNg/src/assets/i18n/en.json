@@ -767,7 +767,7 @@
       "user language": "User Language",
       "logout": "Logout",
       "settings": "Settings",
-      "encrypt": "Password encryption for assessment export",
+      "encrypt": "Encrypt Assessment Export",
       "on": "On",
       "off": "Off"
     }
@@ -887,7 +887,7 @@
     "module name": "Module Name",
     "module full name": "Module Full Name",
     "enable modules": "Enable Modules",
-    "cisa assessor workflow": "CISA Assessor Workflow",
+    "cisa assessor workflow": "CISA Assessor",
     "assessment mode": "The assessment is currently in assessor workflow mode."
   },
   "parameters": {
