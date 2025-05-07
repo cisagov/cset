@@ -38,7 +38,7 @@ export class PageVisibilityService {
   constructor(
     private assessSvc: AssessmentService,
     private configSvc: ConfigService,
-    private demographics: DemographicExtendedService
+    private demographics: DemographicExtendedService,
   ) { }
 
   /**
@@ -97,8 +97,6 @@ export class PageVisibilityService {
         show = show && !this.sourceAny(c);
       }
 
-
-
       // Installation Mode / current skin
       if (c.startsWith('INSTALL-MODE:') || c.startsWith('INSTALL-MODE-ANY(')) {
         show = show && this.skinAny(c);
@@ -154,7 +152,13 @@ export class PageVisibilityService {
         show = show && this.sectorAny(c);
       }
 
+      if (c == ('ASSESSOR')) {
+        show = show && (this.configSvc.cisaAssessorWorkflow || this.assessSvc.assessment.assessorMode);
+      }
 
+      if (c == ('ASSESSOR-NONE')) {
+        show = show && !(this.configSvc.cisaAssessorWorkflow || this.assessSvc.assessment.assessorMode);
+      }
 
       if (c == ('SHOW-FEEDBACK')) {
         show = show && this.configSvc.behaviors.showFeedback;
@@ -210,7 +214,6 @@ export class PageVisibilityService {
     if (targets.find(x => x == 'CSET')) {
       targets.push('');
     }
-
     let has = false;
     targets.forEach((t: string) => {
       has = has || (this.configSvc.installationMode == t);

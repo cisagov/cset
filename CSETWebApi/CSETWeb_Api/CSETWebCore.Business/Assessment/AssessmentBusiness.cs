@@ -446,6 +446,8 @@ namespace CSETWebCore.Business.Assessment
                 assessment.is_PCII = result.aa.Is_PCII;
                 assessment.PciiNumber = result.aa.PCII_Number;
                 assessment.IseSubmitted = result.ii.Ise_Submitted;
+                assessment.AssessorMode = result.aa.AssessorMode;
+                
 
                 assessment.CreatorName = new User.UserBusiness(_context, null)
                     .GetUserDetail((int)assessment.CreatorId)?.FullName;
@@ -723,13 +725,14 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.AnalyzeDiagram = false;
             dbAssessment.PCII_Number = assessment.PciiNumber;
             dbAssessment.Is_PCII = assessment.is_PCII;
+            dbAssessment.AssessorMode = assessment.AssessorMode;
 
             _context.ASSESSMENTS.Update(dbAssessment);
             _context.SaveChanges();
 
 
             var user = _context.USERS.FirstOrDefault(x => x.UserId == dbAssessment.AssessmentCreatorId);
-
+           
             var dbInformation = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
             if (dbInformation == null)
             {
@@ -756,7 +759,7 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.Origin = assessment.Origin;
             dbInformation.Region_Code = assessment.RegionCode;
             dbInformation.Ise_Submitted = assessment.IseSubmitted;
-
+            
             _context.INFORMATION.Update(dbInformation);
             _context.SaveChanges();
 
@@ -1317,6 +1320,14 @@ namespace CSETWebCore.Business.Assessment
                     _context.SaveChanges();
                 }
             }
+        }
+        
+        
+        public void SetAssessorMode(int assessmentId, string mode)
+        {
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            assessment.AssessorMode = mode.ToBool();
+            _context.SaveChanges();
         }
     }
 }
