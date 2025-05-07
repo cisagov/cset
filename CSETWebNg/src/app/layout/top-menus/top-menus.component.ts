@@ -480,7 +480,7 @@ export class TopMenusComponent implements OnInit {
   /**
    * Display a dialog to let the user change the display language.
    */
-  editLanguage() {
+  userSettings() {
     if (this.dialog.openDialogs[0]) {
       return;
     }
@@ -488,6 +488,7 @@ export class TopMenusComponent implements OnInit {
     this.dialogRef.afterClosed().subscribe((results) => {
       if (results) {
         this.assessSvc.persistEncryptPreference(results.encryption).subscribe(() => { });
+        this.configSvc.setCisaAssessorWorkflow(results.cisaWorkflowEnabled).subscribe(() => { });
       }
     });
   }
