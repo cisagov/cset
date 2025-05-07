@@ -888,7 +888,7 @@
     "module full name": "Module Full Name",
     "enable modules": "Enable Modules",
     "cisa assessor workflow": "CISA Assessor",
-    "assessment mode": "The assessment is currently in assessor workflow mode."
+    "assessor mode": "The assessment is currently in assessor workflow mode."
   },
   "parameters": {
     "text1": "Many Standards in 'Requirements Mode' contain parameters that you can change to match your specific situation. The table below allows you to change the parameter values for the indicated parameter names in this Assessment by clicking on the Parameter Value. Changing a parameter value will update all related parameter values in the requirement text of the currently selected Cybersecurity Standard(s).",
