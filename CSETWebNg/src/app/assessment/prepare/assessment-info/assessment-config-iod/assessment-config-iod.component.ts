@@ -23,6 +23,7 @@ export class AssessmentConfigIodComponent implements OnInit {
   showUpgrade: boolean = false;
   targetModel: string = '';
 
+
   constructor(
     private assessSvc: AssessmentService,
     private demoSvc: DemographicService,
@@ -51,7 +52,6 @@ export class AssessmentConfigIodComponent implements OnInit {
         }
       })
     }
-
   }
 
   /**
@@ -129,5 +129,10 @@ export class AssessmentConfigIodComponent implements OnInit {
 
   showFacilitator() {
     return this.configSvc.behaviors.showFacilitatorDropDown;
+  }
+
+  updateAssessorMode() {
+    this.assessment.assessorMode = !this.assessment.assessorMode;
+    this.assessSvc.setAssessorSetting(this.assessment.assessorMode).subscribe(() => { });;
   }
 }

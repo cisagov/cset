@@ -15,22 +15,22 @@
         <node d="mvra tutorial" id="tutorial-mvra" path="assessment/{:id}/prepare/tutorial-mvra" visible="MATURITY:9" />
 
         <!-- vanilla prepare pages -->
-        <node d="assessment configuration" id="info1" path="assessment/{:id}/prepare/info1" visible="INSTALL-MODE-NONE(TSA,IOD,ISE) MATURITY-NONE(10,17)" />
-        <node d="assessment information" id="info2" path="assessment/{:id}/prepare/info2" visible="INSTALL-MODE-NONE(TSA,IOD) MATURITY-NONE(10,17)" />
+        <node d="assessment configuration" id="info1" path="assessment/{:id}/prepare/info1" visible="INSTALL-MODE-NONE(TSA,ISE) MATURITY-NONE(10,17) ASSESSOR-NONE" />
+        <node d="assessment information" id="info2" path="assessment/{:id}/prepare/info2" visible="INSTALL-MODE-NONE(TSA) MATURITY-NONE(10,17) ASSESSOR-NONE" />
 
         <node d="assessment configuration" id="info-tsa" path="assessment/{:id}/prepare/info-tsa" visible="INSTALL-MODE:TSA" />
         <node d="assessment information" id="info2-tsa" path="assessment/{:id}/prepare/info2-tsa" visible="INSTALL-MODE:TSA" />
 
         <!-- IOD CSA 'prepare' pages -->
-        <node d="organization demographics" id="info-demog-iod" path="assessment/{:id}/prepare/info-demog-iod" visible="INSTALL-MODE:IOD" />
-        <node d="assessment configuration" id="info-config-iod" path="assessment/{:id}/prepare/info-config-iod" visible="INSTALL-MODE:IOD" />
+        <node d="organization demographics" id="info-demog-iod" path="assessment/{:id}/prepare/info-demog-iod" visible="ASSESSOR" />
+        <node d="assessment configuration" id="info-config-iod" path="assessment/{:id}/prepare/info-config-iod" visible="ASSESSOR" />
  
         <!-- CIS config page -->
         <node d="cis config" id="config-cis" path="assessment/{:id}/prepare/config-cis" visible="MATURITY:8" />
 
         <!-- Critical Service -->
-        <node d="critical service information" id="csi" path="assessment/{:id}/prepare/csi" visible="INSTALL-MODE-NONE(IOD) MATURITY:8" />
-        <node d="critical service information" id="csi2" path="assessment/{:id}/prepare/csi" visible="INSTALL-MODE:IOD" />
+        <node d="critical service information" id="csi" path="assessment/{:id}/prepare/csi" visible="ASSESSOR-NONE MATURITY:8" />
+        <node d="critical service information" id="csi2" path="assessment/{:id}/prepare/csi" visible="ASSESSOR" />
 
 
         <node d="sal.security assurance level (sal)" id="sal" path="assessment/{:id}/prepare/sal" visible="OPTION-ANY(STANDARD,DIAGRAM) ORIGIN-NOT:CF STANDARD-NOT:RAC" />
@@ -311,7 +311,7 @@
 
         <node d="reports" id="reports" path="assessment/{:id}/results/reports" />
 
-        <node d="feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="INSTALL-MODE-ANY(CSET,IOD,CIE) SHOW-FEEDBACK" />
+        <node d="feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="INSTALL-MODE-ANY(CSET,CIE) SHOW-FEEDBACK ASSESSOR" />
 
         <node d="assessment complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
 
