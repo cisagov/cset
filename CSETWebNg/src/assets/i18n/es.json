@@ -687,7 +687,7 @@
             "user language": "Idioma del usuario",
             "logout": "Cerrar sesión",
             "settings": "Ajustes",
-            "encrypt": "Cifrado de contraseña para exportación de evaluaciones",
+            "encrypt": "Cifrar Exportación de Evaluación",
             "on": "Encendido",
             "off": "Apagado"
         }
@@ -807,7 +807,7 @@
         "module name": "Nombre de módulo",
         "module full name": "Nombre completo de módulo",
         "enable modules": "Habitar módulos",
-        "cisa assessor workflow": "Flujo de trabajo para evaluadores CISA",
+        "cisa assessor workflow": "Evaluador de CISA",
         "assessment mode": "La evaluación está actualmente en modo de flujo de trabajo del evaluador."
     },
     "parameters": {

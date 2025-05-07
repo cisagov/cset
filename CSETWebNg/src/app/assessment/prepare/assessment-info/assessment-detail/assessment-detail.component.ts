@@ -33,11 +33,11 @@ import { AwwaService } from '../../../../services/awwa.service';
 
 
 @Component({
-    selector: 'app-assessment-detail',
-    templateUrl: './assessment-detail.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-assessment-detail',
+  templateUrl: './assessment-detail.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class AssessmentDetailComponent implements OnInit {
 
@@ -129,5 +129,14 @@ export class AssessmentDetailComponent implements OnInit {
       }
       this.dialogRefAwwa = null;
     });
+  }
+
+  isCisaAssessorMode() {
+    // IOD means your in CISA Asssessor mode
+    return this.configSvc.installationMode == "IOD";
+  }
+  updateAssessorMode() {
+    this.assessment.assessorMode = !this.assessment.assessorMode;
+    this.assessSvc.setAssessorSetting(this.assessment.assessorMode).subscribe(() => { });;
   }
 }
