@@ -27,11 +27,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-    selector: 'app-enable-protected',
-    templateUrl: './enable-protected.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-enable-protected',
+  templateUrl: './enable-protected.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 
 export class EnableProtectedComponent implements OnInit {
@@ -39,8 +39,7 @@ export class EnableProtectedComponent implements OnInit {
   modulesList: EnabledModule[];
   message: any;
   enableFeatureButtonClick: boolean = false;
-  cisaWorkflowEnabled: boolean = false;
-  cisaWorkflowStatusLoaded: boolean = false;
+
 
   constructor(private dialog: MatDialogRef<EnableProtectedComponent>,
     private featureSvc: EnableFeatureService,
@@ -54,11 +53,7 @@ export class EnableProtectedComponent implements OnInit {
       this.modulesList = enabledModules;
     });
 
-    this.configSvc.getCisaAssessorWorkflow().subscribe((cisaWorkflowEnabled: boolean) => {
-      this.configSvc.cisaAssessorWorkflow = cisaWorkflowEnabled;
-      this.cisaWorkflowEnabled = cisaWorkflowEnabled;
-      this.cisaWorkflowStatusLoaded = true;
-    });
+
   }
 
   /**
@@ -75,9 +70,7 @@ export class EnableProtectedComponent implements OnInit {
     return (this.modulesList && this.modulesList.length > 0 && this.modulesList.every(m => m.unlocked));
   }
 
-  showCisaAssessorWorkflowSwitch() {
-    return this.configSvc.behaviors.showCisaAssessorWorkflowSwitch;
-  }
+
 
   /**
    *
@@ -93,15 +86,13 @@ export class EnableProtectedComponent implements OnInit {
     });
   }
 
-  toggleCisaAssessorWorkflow() {
-    this.cisaWorkflowEnabled = !this.cisaWorkflowEnabled;
-  }
+
 
   /**
    *
    */
   close() {
-    return this.dialog.close({ enableFeatureButtonClicked: this.enableFeatureButtonClick, cisaWorkflowEnabled: this.cisaWorkflowEnabled });
+    return this.dialog.close({ enableFeatureButtonClicked: this.enableFeatureButtonClick });
   }
 }
 
