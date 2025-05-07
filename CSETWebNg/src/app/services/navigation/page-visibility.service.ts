@@ -153,11 +153,19 @@ export class PageVisibilityService {
       }
 
       if (c == ('ASSESSOR')) {
-        show = show && (this.configSvc.cisaAssessorWorkflow || this.assessSvc.assessment.assessorMode);
+        if (this.configSvc.cisaAssessorWorkflow) {
+          show = show && (this.configSvc.cisaAssessorWorkflow && this.assessSvc.assessment?.assessorMode);
+        } else {
+          show = show && (this.configSvc.cisaAssessorWorkflow !== this.assessSvc.assessment?.assessorMode);
+        }
       }
 
       if (c == ('ASSESSOR-NONE')) {
-        show = show && !(this.configSvc.cisaAssessorWorkflow || this.assessSvc.assessment.assessorMode);
+        if (this.configSvc.cisaAssessorWorkflow) {
+          show = show && !(this.configSvc.cisaAssessorWorkflow && this.assessSvc.assessment?.assessorMode);
+        } else {
+          show = show && !(this.configSvc.cisaAssessorWorkflow !== this.assessSvc.assessment?.assessorMode);
+        }
       }
 
       if (c == ('SHOW-FEEDBACK')) {
