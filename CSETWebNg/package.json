@@ -32,7 +32,7 @@
         "@angular/material": "^19.2.9",
         "@angular/platform-browser": "^19.2.9",
         "@angular/platform-browser-dynamic": "^19.2.9",
-        "@angular/platform-server": "^19.2.9",
+        "@angular/platform-server": "^19.2.10",
         "@angular/router": "^19.2.9",
         "@babel/helpers": "^7.27.0",
         "@fortawesome/angular-fontawesome": "^1.0.0",
