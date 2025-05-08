@@ -367,17 +367,6 @@ export class TopMenusComponent implements OnInit {
       if (results.enableFeatureButtonClicked && this.router.url == '/home/landing-page-tabs') {
         this.gallerySvc.refreshCards();
       }
-
-      // Need to reload application in two cases.
-      // Case 1: cisaWorkflow switch is now on but configSvc still has non IOD installationMode set.
-      // Case 2: cisaWorkflow switch is now off but configSvc still has IOD installationMode set.
-      if ((results.cisaWorkflowEnabled && this.configSvc.installationMode != 'IOD') ||
-        (!results.cisaWorkflowEnabled && this.configSvc.installationMode == 'IOD')) {
-        this.configSvc.setCisaAssessorWorkflow(results.cisaWorkflowEnabled).subscribe(() => {
-          this.goHome();
-          window.location.reload();
-        });
-      }
     });
   }
 
@@ -489,6 +478,16 @@ export class TopMenusComponent implements OnInit {
       if (results) {
         this.assessSvc.persistEncryptPreference(results.encryption).subscribe(() => { });
         this.configSvc.setCisaAssessorWorkflow(results.cisaWorkflowEnabled).subscribe(() => { });
+        // Need to reload application in two cases.
+        // Case 1: cisaWorkflow switch is now on but configSvc still has non IOD installationMode set.
+        // Case 2: cisaWorkflow switch is now off but configSvc still has IOD installationMode set.
+        if ((results.cisaWorkflowEnabled && this.configSvc.installationMode != 'IOD') ||
+          (!results.cisaWorkflowEnabled && this.configSvc.installationMode == 'IOD')) {
+          this.configSvc.setCisaAssessorWorkflow(results.cisaWorkflowEnabled).subscribe(() => {
+            this.goHome();
+            window.location.reload();
+          });
+        }
       }
     });
   }
