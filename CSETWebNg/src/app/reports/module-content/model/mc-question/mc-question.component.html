@@ -41,11 +41,11 @@
         <div class="cpg-header">Security Practice</div>
         <div class="mb-2">{{q.securityPractice}}</div>
         <div class="cpg-header">Outcome</div>
-        <div class="mb-2">{{q.outcome}}</div>
+        <div class="mb-2" [innerHTML]="q.outcome"></div>
         <div class="cpg-header">Scope</div>
         <div class="mb-2">{{q.scope}}</div>
         <div class="cpg-header">Recommended Action</div>
-        <div class="mb-2">{{q.recommendedAction}}</div>
+        <div class="mb-2" [innerHTML]="q.recommendedAction"></div>
     </div>
 
     <app-guidance-block [supplementalInfo]="q.supplementalInfo" *ngIf="reportSvc.showGuidance"></app-guidance-block>

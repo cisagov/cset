@@ -70,7 +70,7 @@ export class QuestionExtrasComponent implements OnInit {
   answer: Answer;
   dialogRef: MatDialogRef<OkayComponent>;
 
-  msgNoSupplemental: string = `(${this.tSvc.translate('extras.no supplemental available')})`;
+  msgNoSupplemental: string;
 
   showMfr = false;
 
@@ -95,7 +95,9 @@ export class QuestionExtrasComponent implements OnInit {
     public layoutSvc: LayoutService,
     private tSvc: TranslocoService,
     private resourceLibSvc: ResourceLibraryService
-  ) { }
+  ) { 
+    this.msgNoSupplemental = `(${this.tSvc.translate('extras.no supplemental available')})`;
+  }
 
 
   /**
@@ -606,11 +608,13 @@ export class QuestionExtrasComponent implements OnInit {
    * Returns a boolean indicating if ANY type of supplemental exists
    */
   supplementalExists() {
+    console.log(this.myQuestion);
     return (
       !!this.tab?.requirementsData?.supplementalInfo
       || !!this.myQuestion.scope
       || !!this.myQuestion.recommendedAction
-      || !!this.myQuestion.services);
+      || !!this.myQuestion.services
+      || !!this.myQuestion.implementationGuides);
   }
 
   /**
