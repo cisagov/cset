@@ -608,7 +608,6 @@ export class QuestionExtrasComponent implements OnInit {
    * Returns a boolean indicating if ANY type of supplemental exists
    */
   supplementalExists() {
-    console.log(this.myQuestion);
     return (
       !!this.tab?.requirementsData?.supplementalInfo
       || !!this.myQuestion.scope

@@ -140,6 +140,13 @@
                     "desc": "This document consolidates all practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
                }
           },
+          "cre+": {
+               "sectionTitle": "Core Report",
+               "1": {
+                    "title": "CRE Core Report",
+                    "desc": "CRE Core Report description goes here"
+               }
+          },
           "mvra": {
                "sectionTitle": "Minimum Viable Resilience Assessment (MVRA) - DRAFT",
                "1": {
