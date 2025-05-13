@@ -170,6 +170,7 @@ export interface Question {
     scope: string;
     recommendedAction: string;
     services: string;
+    implementationGuides: string;
 
     // parent questions aren't answered directly and have subparts that are answered.
     isParentQuestion: boolean;
