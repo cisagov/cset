@@ -32,11 +32,12 @@
 
     </div>
 
-    <mat-dialog-content class="p-3 d-flex flex-column flex-11a">
+    <mat-dialog-content class="p-4 d-flex flex-column flex-11a">
         <div>
-            <span class="fa-solid fa-lock fs-base-6 me-3"></span>
-            <span class="fw-600 form-label pb-2">{{t('menu.user.encrypt')}}</span>
-
+            <div>
+                <span class="fa-solid fa-lock fs-base-6 me-3"></span>
+                <span class="fw-600 form-label pb-2">{{t('menu.user.encrypt')}}</span>
+            </div>
             <div class="btn-group btn-group-toggle pt-2" data-toggle="buttons">
                 <label class="btn btn-level btn-rounded form-check-label" [class.active]="!encryption"
                     (change)="updateEncryptPreference()">
@@ -49,7 +50,6 @@
                     {{t('menu.user.on')}}
                 </label>
             </div>
-
             <form name="form" #userForm="ngForm">
                 <div class="mb-2">
                     <div class="d-flex align-items-center">
@@ -64,11 +64,31 @@
 
                 </div>
             </form>
-
+            <div *ngIf="showCisaAssessorWorkflowSwitch()">
+                <div class="d-flex align-items-center">
+                    <span class="fa fa-globe fs-base-6 me-3"></span>
+                    <span class="fw-600 form-label">{{ t('protected features.cisa assessor
+                        workflow')}}</span>
+                </div>
+                <div class="btn-group btn-group-toggle pt-2" data-toggle="buttons">
+                    <label class="btn btn-level btn-rounded form-check-label" [class.active]="!cisaWorkflowEnabled"
+                        (change)="toggleCisaAssessorWorkflow()">
+                        <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
+                            [checked]="!cisaWorkflowEnabled" />
+                        {{t('menu.user.off')}}
+                    </label>
+                    <label class="btn btn-level btn-rounded form-check-label" [class.active]="cisaWorkflowEnabled"
+                        (change)="toggleCisaAssessorWorkflow()">
+                        <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
+                            [checked]="cisaWorkflowEnabled" />
+                        {{t('menu.user.on')}}
+                    </label>
+                </div>
+            </div>
         </div>
 
-        <mat-dialog-actions class="pt-3 mb-0 mx-0 d-flex justify-content-start flex-11a">
-            <button class="m-0 btn btn-secondary" (click)="cancel()">{{t('buttons.ok')}}</button>
-        </mat-dialog-actions>
     </mat-dialog-content>
+    <mat-dialog-actions class="p-3 pt-0 mb-0 mt-2">
+        <button class="btn btn-secondary" (click)="cancel()">{{ t('buttons.close') }}</button>
+    </mat-dialog-actions>
 </div>

@@ -35,7 +35,7 @@ namespace CSETWebCore.Api.Controllers
             _maturity = maturity;
             _http = http;
             _context = context;
-            _exporter = new ExcelExporter(_context, _data, _http);
+            _exporter = new ExcelExporter(_context, _data, _http, _token);
         }
 
 

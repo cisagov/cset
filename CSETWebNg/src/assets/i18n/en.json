@@ -76,6 +76,7 @@
   "link version": "Click here to view or download releases.",
   "legend": "Legend",
   "img suffix": "_en",
+  "assessment settings": "Assessment Settings",
   "publisher": {
     "cset": {
       "app long name": "Cyber Security Evaluation Tool",
@@ -766,7 +767,7 @@
       "user language": "User Language",
       "logout": "Logout",
       "settings": "Settings",
-      "encrypt": "Password encryption for assessment export",
+      "encrypt": "Encrypt Assessment Export",
       "on": "On",
       "off": "Off"
     }
@@ -886,14 +887,17 @@
     "module name": "Module Name",
     "module full name": "Module Full Name",
     "enable modules": "Enable Modules",
-    "cisa assessor workflow": "CISA Assessor Workflow"
+    "cisa assessor workflow": "CISA Assessor",
+    "assessor mode": "The assessment is currently in assessor workflow mode."
   },
   "parameters": {
     "text1": "Many Standards in 'Requirements Mode' contain parameters that you can change to match your specific situation. The table below allows you to change the parameter values for the indicated parameter names in this Assessment by clicking on the Parameter Value. Changing a parameter value will update all related parameter values in the requirement text of the currently selected Cybersecurity Standard(s).",
     "text2": "Parameters can also be customized by clicking on them in the control text. Note that changes made at that level are scoped to the specific control.",
     "parameter name": "Parameter Name",
     "parameter value": "Parameter Value",
-    "none": "The selected cybersecurity standards do not contain any customizable control parameters."
+    "none": "The selected cybersecurity standards do not contain any customizable control parameters.",
+    "dialog title": "Define Parameter Value",
+    "dialog prompt": "Define the value for the selected control parameter."
   },
   "errors": {
     "import unsuported file 1": "Error: Unsupported file. Only .csetw files can be imported for enterprise installations.",
