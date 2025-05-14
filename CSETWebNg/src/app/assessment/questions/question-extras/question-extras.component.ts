@@ -505,6 +505,16 @@ export class QuestionExtrasComponent implements OnInit {
       .subscribe();
   }
 
+  changeGlobal(document){
+    document.isGlobal = !document.isGlobal;
+    this.questionsSvc.changeGlobal(document.document_Id, document.isGlobal).subscribe();
+  }
+  getIsGlobalColor(doc){
+    if(doc.isGlobal)
+      return "#198754"
+    return "#dc3545"
+  }
+
   isNullOrWhiteSpace(str) {
     return str === null || str.match(/^[\t ]*$/) !== null;
   }
@@ -534,6 +544,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.extras.documents = this.extras.documents.filter(d => d.document_Id !== document.document_Id);
         this.extras.documents.forEach((item, index) => {
           if (item.document_Id == document.document_Id) this.extras.documents.splice(index, 1);
+          
         })
         // push the change to the API
         this.questionsSvc.deleteDocument(document.document_Id, this.myQuestion.questionId)
@@ -597,6 +608,8 @@ export class QuestionExtrasComponent implements OnInit {
       this.fileExportSvc.fetchAndSaveFile(this.fileSvc.downloadUrl + doc.document_Id, response.token);
     });
   }
+
+
 
   autoLoadSupplemental() {
     return this.questionsSvc.autoLoadSupplemental(this.assessSvc.assessment.maturityModel);

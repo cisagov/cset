@@ -542,6 +542,21 @@ namespace CSETWebCore.Helpers
             return AssessmentForUser(userId, accessKey, assessmentId);
         }
 
+        public bool IsUserAuthorizedForAssessment()
+        {
+            try
+            {
+                var assessment = AssessmentForUser();
+                if (assessment != null)
+                    return true;
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
 
         /// <summary>
         /// Checks to see if the current user is authorized to access the current assessment.  
