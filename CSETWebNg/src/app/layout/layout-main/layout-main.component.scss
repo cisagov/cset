@@ -1450,7 +1450,8 @@ ul.mat-tree-node mat-tree-node {
 .parameter-orig-value {
   font-size: 1.1em;
   color: $primary-color;
-  margin: 10px 0;
+  font-style: italic;
+  margin: 10px 10px;
 }
 
 // .parameter-editor-default-message {
@@ -2363,7 +2364,7 @@ ul.related-questions li {
 
 .group-heading {
   font-size: 25px;
-  margin: 0.4em 0;
+  margin: 1.7em 0 0.4em 0;
   color: $primary-color;
 }
 
@@ -2889,12 +2890,14 @@ table.assessment-documents th {
   font-weight: bold;
   font-size: 1.1rem;
   color: $primary-900;
+  margin-bottom: .3rem;
 }
 
 .sub-header-2 {
   font-weight: bold;
   font-size: 1rem;
   color: $primary-550;
+  margin-bottom: .2rem;
 }
 
 ol.alpha-bracket {

@@ -645,18 +645,6 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * check if approach exists for acet questions
-   * @param approach
-   */
-  checkForApproach(approach: string) {
-    if (!!approach) {
-      return true;
-    }
-
-    return false;
-  }
-
-  /**
    * Encapsulates logic that determines whether an icon should be displayed.
    * Use "moduleBehaviors" configuration for the current module/model.
    */

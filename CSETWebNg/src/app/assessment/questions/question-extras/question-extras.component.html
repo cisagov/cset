@@ -34,7 +34,7 @@
 
         <button *ngIf="displayIcon('DETAIL') && !myQuestion.is_Component" class="extras-button cursor-pointer"
             [class.active]="mode == 'DETAIL'" (click)="toggleExtras('DETAIL')"
-            [matTooltip]="checkForApproach(tab?.RequirementsData?.ExaminationApproach) ? t('tooltip.exam step') : t('tooltip.details standard')"
+            [matTooltip]="t('tooltip.details standard')"
             matTooltipPosition="above">
             <svg viewBox="0 0 32 32"
                 style="height: 31px; width: 31px; margin: auto; margin-left: 2px; margin-top: 4px;">
@@ -162,7 +162,7 @@
 
     <app-in-view *ngIf="autoLoadComments()" (inView$)="forceLoadQuestionExtra('CMNT')"></app-in-view>
 
-    <div class="question-extras" [class.extras-open]="expanded" [class.px-0]="layoutSvc.hp">
+    <div class="question-extras" [class.extras-open]="expanded" [ngClass]="{'px-0 ps-2': layoutSvc.hp}">
 
         <div *ngIf="extras == null || tab == null">
             <div class="spinner-container" style="margin: .5em auto">
@@ -205,7 +205,7 @@
             </div>
         </div>
         <ng-template #detailTab>
-            <div *ngIf="!!extras && !!tab && mode == 'DETAIL' && !checkForApproach(tab?.requirementsData?.examinationApproach)"
+            <div *ngIf="!!extras && !!tab && mode == 'DETAIL'"
                 class="detail">
                 <div><span class="reqlabel">{{t('extras.title')}}: </span>{{tab?.requirementFrameworkTitle}}</div>
                 <div *ngIf="tab?.relatedFrameworkCategory"><span class="reqlabel">{{t('extras.category')}}:
@@ -236,11 +236,6 @@
                     <div *ngFor="let relatedQ of tab?.questionsList"
                         [innerHTML]="relatedQ.questionText | linebreak | safe: 'html'" class="related-question-1"></div>
                 </div>
-            </div>
-
-            <div *ngIf=" !!extras && !!tab && mode == 'DETAIL' && checkForApproach(tab?.requirementsData?.examinationApproach)"
-                class="supplemental"
-                [innerHTML]="tab?.requirementsData?.examinationApproach | linebreak | safe: 'html'">
             </div>
 
             <div *ngIf=" !!extras && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">

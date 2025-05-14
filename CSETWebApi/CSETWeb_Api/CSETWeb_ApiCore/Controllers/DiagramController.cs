@@ -519,7 +519,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetExcelExportDiagram()
         {
             var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
-            var stream = new ExcelExporter(_context, _dataHandling, _http).ExportToExcellDiagram(assessmentId ?? 0);
+            var stream = new ExcelExporter(_context, _dataHandling, _http, _token).ExportToExcellDiagram(assessmentId ?? 0);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");

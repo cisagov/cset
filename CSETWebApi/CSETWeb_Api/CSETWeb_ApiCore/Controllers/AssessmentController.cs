@@ -198,8 +198,16 @@ namespace CSETWebCore.Api.Controllers
                 assessment.Origin = config.Origin;
             }
 
-
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == currentUserId);
+            if (user != null)
+            {
+                if (user.CisaAssessorWorkflow)
+                {
+                    assessment.AssessorMode = true;
+                }
+            }
             assessmentBusiness.SaveAssessmentDetail(assessment.Id, assessment);
+            
 
             return Ok(assessment);
         }
@@ -532,6 +540,22 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
         
+        [HttpPost]
+        [Route("api/assessormode")]
+        public IActionResult SetAssessorMode([FromBody] string mode)
+        {
+            try
+            {
+                int assessmentId = _tokenManager.AssessmentForUser();
+                _assessmentBusiness.SetAssessorMode(assessmentId, mode);
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok();
+        }
         
     }
 }
