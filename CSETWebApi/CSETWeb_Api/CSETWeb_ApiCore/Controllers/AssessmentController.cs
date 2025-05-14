@@ -314,10 +314,15 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/assessmentdocuments")]
         public IActionResult GetDocumentsForAssessment()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            _documentBusiness.SetUserAssessmentId(assessmentId);
+            var IsAssessment = _tokenManager.IsUserAuthorizedForAssessment();
+            if (IsAssessment)
+            {
+                int assessmentId = _tokenManager.AssessmentForUser();
+                _documentBusiness.SetUserAssessmentId(assessmentId);
 
-            return Ok(_documentBusiness.GetDocumentsForAssessment(assessmentId));
+                return Ok(_documentBusiness.GetDocumentsForAssessment(assessmentId));
+            }
+            return Ok(_documentBusiness.GetGlobalDocuments());
         }
 
 
@@ -378,6 +383,14 @@ namespace CSETWebCore.Api.Controllers
             var result = query.ToList().FirstOrDefault();
 
             return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("api/hasGlobalDocuments")]
+        public IActionResult HasGlobalDocuments()
+        {
+            var hasGlobal = _context.DOCUMENT_FILE.Any(x => x.IsGlobal);
+            return Ok(hasGlobal);
         }
 
         [HttpPost]
