@@ -645,6 +645,10 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'encryptStatus');
   }
 
+  hasGlobalDocuments(){
+    return this.http.get(this.apiUrl+ 'hasGlobalDocuments');
+  }
+
 
   updateAnswer(answer: Answer) {
 

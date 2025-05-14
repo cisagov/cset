@@ -35,6 +35,7 @@ namespace CSETWebCore.Interfaces.Helpers
         int? GetUserId();
         string GetAccessKey();
         int AssessmentForUser();
+        bool IsUserAuthorizedForAssessment();
         int AssessmentForUser(string tokenString);
         int AssessmentForUser(int? userId, string accessKey, int? assessmentId);
         void AuthorizeAdminRole();
