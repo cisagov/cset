@@ -236,7 +236,7 @@ export class MaturityService {
   /**
    * Asks the API for 'bonus' (SSG) questions.
    */
-  getBonusQuestionList(bonusModelId: number) {
+  getBonusQuestionList(bonusModelId: number | null) {
     return this.http.get(this.configSvc.apiUrl
       + 'maturity/questions/bonus?m=' + bonusModelId);
   }
