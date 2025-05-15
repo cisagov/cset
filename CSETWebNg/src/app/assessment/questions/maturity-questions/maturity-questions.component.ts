@@ -51,7 +51,7 @@ import { ModuleBehavior } from '../../../models/module-config.model';
 })
 export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
-  groupings: QuestionGrouping[] = [];
+  groupings: QuestionGrouping[] | null = [];
   pageTitle: string = '';
   moduleBehavior: ModuleBehavior;
   modelId: number;
@@ -99,7 +99,12 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     ).subscribe((e: any) => {
       if (e.urlAfterRedirects.includes('/maturity-questions/')) {
         this.groupingId = this.route.snapshot.params['grp'];
-        this.loadGrouping(+this.groupingId);
+
+        if (parseInt(this.groupingId) == +this.groupingId) {
+          this.loadGrouping(+this.groupingId);
+        } else {
+          this.loadQuestions();
+        }
       }
     });
 
@@ -146,7 +151,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.grouping = null;
     this.groupingId = this.route.snapshot.params['grp'];
 
-    if (!this.groupingId || this.groupingId.toLowerCase() == 'bonus') {
+    if (!this.groupingId || this.groupingId.toLowerCase() == 'bonus' || this.groupingId.toLowerCase().startsWith('m')) {
       this.loadQuestions();
     } else {
       this.loadGrouping(+this.groupingId);
@@ -171,13 +176,20 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
 
     // determine which endpoint to call to get the question list
-    var obsGetQ = this.maturitySvc.getQuestionsList(false);
-
+    var obsGetQ;
 
     if (this.groupingId?.toLowerCase() == 'bonus') {
-      const bonusModelId = this.ssgSvc.ssgBonusModel()
+      const bonusModelId = this.ssgSvc.ssgBonusModel();
       obsGetQ = this.maturitySvc.getBonusQuestionList(bonusModelId);
+
+    } else if (this.groupingId?.toLowerCase().startsWith('m')) {
+      const bonusModelId = +this.groupingId.substring(1);
+      obsGetQ = this.maturitySvc.getBonusQuestionList(bonusModelId);
+
+    } else {
+      obsGetQ = this.maturitySvc.getQuestionsList(false);
     }
+
 
     obsGetQ.subscribe(
       (response: MaturityQuestionResponse) => {
@@ -216,12 +228,12 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.refreshQuestionVisibility();
       },
       error => {
-        console.log(
+        console.error(
           'Error getting questions: ' +
           (<Error>error).name +
           (<Error>error).message
         );
-        console.log('Error getting questions: ' + (<Error>error).stack);
+        console.error('Error getting questions: ' + (<Error>error).stack);
       }
     );
   }
@@ -259,12 +271,12 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       this.refreshQuestionVisibility();
     },
       error => {
-        console.log(
+        console.error(
           'Error getting questions: ' +
           (<Error>error).name +
           (<Error>error).message
         );
-        console.log('Error getting questions: ' + (<Error>error).stack);
+        console.error('Error getting questions: ' + (<Error>error).stack);
       });
   }
 
@@ -292,7 +304,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
      * @param mode
      */
   expandAll(mode: boolean) {
-    this.groupings.forEach((g: QuestionGrouping) => {
+    this.groupings?.forEach((g: QuestionGrouping) => {
       this.recurseExpansion(g, mode);
     });
   }

@@ -78,6 +78,11 @@
       </p>
     </ng-container>
 
+    <!-- CRE+ asks user if they want to include other question sets -->
+    <ng-container *ngIf="!!groupings && this.assessSvc.assessment?.maturityModel.modelId == 22 && !groupingId">
+      <app-additional-questions-cre></app-additional-questions-cre>
+    </ng-container>
+
     <div *ngIf="!groupings" class="w-100">
       <div class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
@@ -92,7 +97,13 @@
   </div>
 
 
+  <!-- normal navigation -->
   <app-nav-back-next *ngIf="!groupingId" [page]="'maturity-questions'"></app-nav-back-next>
-  <app-nav-back-next *ngIf="!!groupingId" [page]="'maturity-questions-' + groupingId"></app-nav-back-next>
+  
+  <!-- Show a different model (like CRE's additional models) -->
+  <app-nav-back-next *ngIf="groupingId?.toLowerCase().startsWith('m')" [page]="'maturity-questions-' + groupingId"></app-nav-back-next>
+  
+  <!-- Show a grouping only -->
+  <app-nav-back-next *ngIf="!!groupingId && !groupingId.toLowerCase().startsWith('m')" [page]="'maturity-questions-' + groupingId"></app-nav-back-next>
 
 </div>

@@ -66,6 +66,7 @@ export class CompletionService {
    * we can quickly calculate answer counts.
    */
   setQuestionArray(data) {
+    console.log(data);
     this.reset();
 
     // this version gathers questions from a Standard response structure
