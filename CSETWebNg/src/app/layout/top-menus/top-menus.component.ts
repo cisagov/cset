@@ -552,7 +552,6 @@ export class TopMenusComponent implements OnInit {
   isNullOrEmptyAssessment() {
     let str = localStorage.getItem('assessmentId');
     let hasNoVal = str === null || str === undefined || str === "";
-    console.log(hasNoVal + " " + this.globalDocuments)
     return hasNoVal;
   }
 
