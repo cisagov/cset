@@ -32,9 +32,9 @@ import { ModuleBehavior } from '../../../models/module-config.model';
 
 
 @Component({
-    selector: 'app-grouping-block',
-    templateUrl: './grouping-block.component.html',
-    standalone: false
+  selector: 'app-grouping-block',
+  templateUrl: './grouping-block.component.html',
+  standalone: false
 })
 export class GroupingBlockComponent implements OnInit {
   @Input('grouping') grouping: QuestionGrouping;
@@ -83,21 +83,28 @@ export class GroupingBlockComponent implements OnInit {
   }
 
   /**
-   * Indicates if the domain label headers should be shown.
+   * Indicates if the grouping name header should be shown.
    * Invisible domains stay invisible.
-   * If the moduleBehavior.showDomainHeaders is not defined, it defaults to true.
    */
-  isDomainVisible(): boolean {
-    if (!this.isDomain()) {
+  isGroupingNameVisible(): boolean {
+    // look for a behavior to suppress the grouping name by its type
+    if (this.moduleBehavior?.hasOwnProperty('hideTopLevelGroupingName')) {
+      if ((this.moduleBehavior.hideTopLevelGroupingName ?? false) && this.grouping.groupingLevel == 1) {
+        return false;
+      }
+    }
+
+    // the display label that uses this function is reserved for the top-level.  Hide lower levels.
+    if (this.grouping.groupingLevel > 1) {
       return false;
     }
 
-    // hide invisible domains
+    // hide invisible groupings
     if (!this.grouping.visible) {
       return false;
     }
 
-    return this.moduleBehavior?.showDomainHeaders ?? true;
+    return true;
   }
 
   /**

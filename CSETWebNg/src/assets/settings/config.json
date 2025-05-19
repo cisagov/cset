@@ -153,7 +153,7 @@
       "moduleName": "RRA",
       "modelId": "5",
       "displayNameKey": "modules.rra.display-name",
-      "showDomainHeaders": false,
+      "hideTopLevelGroupingName": true,
       "questionIcons": {
         "showDetails": false,
         "guidanceIcon": "G",
@@ -197,7 +197,7 @@
       "moduleName": "CPG",
       "modelId": "11",
       "displayNameKey": "modules.cpg.display-name",
-      "showDomainHeaders": false,
+      "hideTopLevelGroupingName": true,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {
@@ -237,7 +237,7 @@
       "moduleName": "CPG2",
       "modelId": "21",
       "displayNameKey": "modules.cpg2.display-name",
-      "showDomainHeaders": false,
+      "hideTopLevelGroupingName": true,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {
@@ -422,6 +422,39 @@
           "code": "A",
           "buttonLabelKey": "Partial-MVRA",
           "buttonCss": "btn-alt"
+        }
+      ]
+    },
+    {
+      "moduleName": "CISA VADR",
+      "modelId": "25",
+      "displayNameKey": "modules.cisa vadr.display-name",
+      "autoLoadSupplemental": true,
+      "showMaturityLevelBadge": false,
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "consideredMissed": true
+        },
+        {
+          "code": "NA",
+          "buttonLabelKey": "na",
+          "buttonCss": "btn-na",
+          "chartSegmentColor": "#0a4b6e"
         }
       ]
     }
