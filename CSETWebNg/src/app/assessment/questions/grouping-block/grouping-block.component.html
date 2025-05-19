@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<ng-container *ngIf="isDomainVisible()">
+<ng-container *ngIf="isGroupingNameVisible()">
     <div class="domain-group-heading">
         {{grouping.title}}
     </div>
@@ -79,4 +79,4 @@
 
 </ng-container>
 
-<div *ngIf="isDomain() && isDomainVisible() && grouping.visible" class="mb-5"></div>
+<div *ngIf="isDomain() && isGroupingNameVisible() && grouping.visible" class="mb-5"></div>
