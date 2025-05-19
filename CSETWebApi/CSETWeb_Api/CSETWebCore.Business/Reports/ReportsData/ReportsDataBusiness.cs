@@ -302,6 +302,7 @@ namespace CSETWebCore.Business.Reports
                 {
                     GroupingID = sg.Grouping_Id,
                     GroupingType = sg.Type.Grouping_Type_Name,
+                    GroupingLevel = sg.Group_Level ?? 1,
                     Title = sg.Title,
                     Description = sg.Description,
                     Abbreviation = sg.Abbreviation

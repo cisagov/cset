@@ -19,6 +19,11 @@ namespace CSETWebCore.Model.Maturity
         public string GroupingType { get; set; }
 
         /// <summary>
+        /// The level in the grouping hierarchy for the model.
+        /// </summary>
+        public int GroupingLevel { get; set; }
+
+        /// <summary>
         /// The display title.
         /// </summary>
         public string Title { get; set; }

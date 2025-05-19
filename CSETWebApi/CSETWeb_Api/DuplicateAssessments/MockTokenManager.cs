@@ -331,6 +331,11 @@ namespace DuplicateAssessments
             return true;
         }
 
+        public bool IsUserAuthorizedForAssessment()
+        {
+            return true;
+        }
+
 
         /// <summary>
         /// Checks to see if the specified Assessment ID is in the token payload.
