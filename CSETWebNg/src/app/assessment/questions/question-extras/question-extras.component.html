@@ -368,6 +368,10 @@
                             <button (click)="download(doc)" matTooltip="{{t('tooltip.copy document')}}"
                                 matTooltipPosition="above" class="btn btn-link cset-icons-export-up" style="color: #285464; transform: scale(1.3);
                                   cursor: pointer; background-color:transparent;" tabindex="0"></button>
+                            <button (click)="changeGlobal(doc)" matTooltip="{{t('tooltip.copy document')}}" class="btn btn-link" [ngStyle]="{'color':getIsGlobalColor(doc)}"
+                                style="transform: scale(1.3); cursor: pointer; background-color:transparent;" tabindex="0">
+                                <i class="fa-solid fa-globe"></i>
+                            </button>
                         </div>
                     </td>
                 </tr>

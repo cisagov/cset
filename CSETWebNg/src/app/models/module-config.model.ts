@@ -37,10 +37,10 @@ export class ModuleBehavior {
      /**
       * If defined for a model, this can hide the Domain headers.  
       * 
-      * This is useful if the model has a single Domain and you don't need 
+      * This is useful if the model has a single top level grouping node and you don't need 
       * that large header to show.
       */
-     showDomainHeaders?: boolean;
+     hideTopLevelGroupingName?: boolean;
 
      /**
       * Indicates if the Critical Service fields should show on the Demographics page.
