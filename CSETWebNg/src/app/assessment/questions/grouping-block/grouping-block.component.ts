@@ -94,7 +94,7 @@ export class GroupingBlockComponent implements OnInit {
       }
     }
 
-    // the title that uses this function is reserved for the top-level.  Hide lower levels.
+    // the display label that uses this function is reserved for the top-level.  Hide lower levels.
     if (this.grouping.groupingLevel > 1) {
       return false;
     }
