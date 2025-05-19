@@ -64,6 +64,7 @@ export class TopMenusComponent implements OnInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   showFullAccessKey = false;
+  globalDocuments:boolean = false;
 
   @Input()
   skin: string;
@@ -92,7 +93,7 @@ export class TopMenusComponent implements OnInit {
         this.hasPath(localStorage.getItem('returnPath'));
       }
     }
-
+    this.checkHasGlobalDocuments();
     this.setupShortCutKeys();
   }
 
@@ -547,6 +548,21 @@ export class TopMenusComponent implements OnInit {
   inAssessment() {
     return localStorage.getItem('assessmentId');
   }
+
+  isNullOrEmptyAssessment() {
+    let str = localStorage.getItem('assessmentId');
+    let hasNoVal = str === null || str === undefined || str === "";
+    return hasNoVal;
+  }
+
+  checkHasGlobalDocuments():void {
+    let isGlobal = false;
+    this.assessSvc.hasGlobalDocuments().subscribe(
+      (response:any)=>{
+        this.globalDocuments = response;
+      }
+    );
+  }  
 
   showAssessDocs() {
     if (this.dialog.openDialogs[0]) {

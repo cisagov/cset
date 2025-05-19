@@ -36,8 +36,8 @@
 
             <hr class="menu-divider" />
 
-            <button mat-menu-item [disabled]="!inAssessment()" *ngIf="showItemForCurrentSkin('assessment documents')"
-                [ngClass]="{'disabled-menu-item' : !inAssessment()}" (click)="showAssessDocs()">
+            <button mat-menu-item [disabled]="isNullOrEmptyAssessment() && !globalDocuments" *ngIf="showItemForCurrentSkin('assessment documents')"
+                [ngClass]="{'disabled-menu-item' : isNullOrEmptyAssessment() && !globalDocuments}" (click)="showAssessDocs()">
                 <span class="cset-icons-books-stack-1 fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.tools.assessment documents') }}</span>
             </button>

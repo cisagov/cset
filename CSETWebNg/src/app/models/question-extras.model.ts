@@ -50,6 +50,7 @@ export interface QuestionDocument {
   document_Id: number;
   title: string;
   fileName: string;
+  isGlobal: boolean;
 }
 
 export interface QuestionDetailsContentViewModel {

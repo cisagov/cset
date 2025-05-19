@@ -188,6 +188,10 @@ export class QuestionsService {
     return this.http.post(this.configSvc.apiUrl + 'renamedocument?id=' + id + '&title=' + title, headers);
   }
 
+  changeGlobal(id: number, isGlobal: boolean) {
+    return this.http.post(this.configSvc.apiUrl + 'changeglobal?id=' + id + '&isGlobal=' + isGlobal, headers);
+  }
+
   /**
    * Deletes a document.
    */
