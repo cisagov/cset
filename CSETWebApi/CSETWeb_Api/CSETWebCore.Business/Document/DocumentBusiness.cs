@@ -72,7 +72,8 @@ namespace CSETWebCore.Business.Document
                 {
                     Document_Id = file.Document_Id,
                     Title = file.Title,
-                    FileName = file.Name
+                    FileName = file.Name, 
+                    IsGlobal = file.IsGlobal
                 };
 
                 list.Add(doc);
@@ -98,6 +99,28 @@ namespace CSETWebCore.Business.Document
             }
 
             doc.Title = title;
+            doc.UpdatedTimestamp = DateTime.Now;
+
+            _context.DOCUMENT_FILE.Update(doc);
+            _context.SaveChanges();
+            _assessmentUtil.TouchAssessment(doc.Assessment_Id);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isGlobal"></param>
+        public void ChangeGlobal(int id, Boolean isGlobal)
+        {
+            var doc = _context.DOCUMENT_FILE.Where(d => d.Document_Id == id).FirstOrDefault();
+
+            // if they provided a file ID we don't know about, do nothing.
+            if (doc == null)
+            {
+                return;
+            }
+
+            doc.IsGlobal = isGlobal;
             doc.UpdatedTimestamp = DateTime.Now;
 
             _context.DOCUMENT_FILE.Update(doc);
@@ -262,6 +285,7 @@ namespace CSETWebCore.Business.Document
 
             var files = from df in _context.DOCUMENT_FILE
                         where docIDs.Contains(df.Document_Id)
+                        || df.IsGlobal == true
                         select df;
 
             if (files == null || files.Count() == 0)
@@ -288,6 +312,40 @@ namespace CSETWebCore.Business.Document
             }
 
             return list;
+        }
+
+        public List<Model.Document.Document> GetGlobalDocuments()
+        {
+            var list = new List<Model.Document.Document>();
+            var files = from df in _context.DOCUMENT_FILE
+                where df.IsGlobal == true
+                select df;
+
+            if (files == null || files.Count() == 0)
+            {
+                return list;
+            }
+
+            foreach (var file in files)
+            {
+                Model.Document.Document doc = new Model.Document.Document()
+                {
+                    Document_Id = file.Document_Id,
+                    Title = file.Title,
+                    FileName = file.Name
+                };
+
+                // Don't display "click to edit title" in this context because they won't be able to click it
+                if (doc.Title == "click to edit title")
+                {
+                    doc.Title = "(untitled)";
+                }
+
+                list.Add(doc);
+            }
+
+            return list;
+            
         }
 
 

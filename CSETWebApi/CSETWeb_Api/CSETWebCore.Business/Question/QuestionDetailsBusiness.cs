@@ -11,9 +11,9 @@ using CSETWebCore.Enum.EnumHelper;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Question;
-using Newtonsoft.Json;
 using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
@@ -32,8 +32,6 @@ namespace CSETWebCore.Business.Question
         private readonly ITokenManager _tokenManager;
         private readonly IDocumentBusiness _documentBusiness;
         private InformationTabBuilder _informationTabBuilder;
-
-
         private QuestionDetails response;
 
 
@@ -45,13 +43,16 @@ namespace CSETWebCore.Business.Question
             InformationTabBuilder informationTabBuilder,
             CSETContext context,
             ITokenManager tokenManager,
-            IDocumentBusiness documentBusiness)
+            IDocumentBusiness documentBusiness,
+            IAssessmentUtil assessmentUtil,
+            IQuestionRequirementManager questionRequirementManager)
         {
             // create the response model
             response = new QuestionDetails();
             response.NoQuestionInformationText = "No Question/Requirement information to show.";
             response.IsNoQuestion = true;
             response.ListTabs = new List<QuestionInformationTabData>();
+
 
             // set injected services
             _context = context;
@@ -224,6 +225,7 @@ namespace CSETWebCore.Business.Question
                     Question = question.Question,
                     Requirement = question.NEW_REQUIREMENT ?? question.Question.NEW_REQUIREMENTs(_context).FirstOrDefault(t => t.REQUIREMENT_SETS.Select(s => s.Set_Name).Contains(question.SetName ?? question.DictionaryStandards.Keys.FirstOrDefault()))
                 };
+
                 list = _informationTabBuilder.CreateQuestionInformationTab(questionInfoData);
             }
             else if (question.IsComponent)

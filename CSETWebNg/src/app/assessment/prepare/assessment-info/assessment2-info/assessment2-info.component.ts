@@ -27,7 +27,7 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 import { DemographicService } from '../../../../services/demographic.service';
 import { ConfigService } from '../../../../services/config.service';
 import { AssessmentDemographicsComponent } from '../assessment-demographics/assessment-demographics.component';
-import { NCUAService } from '../../../../services/ncua.service';
+
 
 @Component({
     selector: 'app-assessment2-info',
@@ -40,7 +40,6 @@ export class Assessment2InfoComponent implements OnInit {
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     private demoSvc: DemographicService,
-    public ncuaSvc: NCUAService,
     public configSvc: ConfigService
   ) { }
 
@@ -48,19 +47,6 @@ export class Assessment2InfoComponent implements OnInit {
 
   ngOnInit() {
     this.demoSvc.id = (this.assessSvc.id());
-  }
-
-  /**
-   *
-   * @returns
-   */
-  isDisplayed(): boolean {
-    let isStandard = this.assessSvc.assessment?.useStandard;
-    let isNotAcetModel = !(this.assessSvc.usesMaturityModel('ACET'));
-
-    let show = (this.configSvc.installationMode !== "ACET") || isStandard;
-
-    return ((show || isNotAcetModel) && (!this.ncuaSvc.switchStatus));
   }
 
   /**
@@ -80,13 +66,5 @@ export class Assessment2InfoComponent implements OnInit {
     }
 
     return this.configSvc.behaviors?.showContacts ?? true;
-  }
-
-  usingIse() {
-    if (this.ncuaSvc.switchStatus && this.assessSvc.usesMaturityModel('ISE')) {
-      return true;
-    } else {
-      return false;
-    }
   }
 }

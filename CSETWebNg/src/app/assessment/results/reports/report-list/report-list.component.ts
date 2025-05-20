@@ -2,9 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ReportService } from '../../../../services/report.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { AssessmentService } from '../../../../services/assessment.service';
-import { NCUAService } from '../../../../services/ncua.service';
 import { ObservationsService } from '../../../../services/observations.service';
-import { ACETService } from '../../../../services/acet.service';
 import { MaturityService } from '../../../../services/maturity.service';
 
 /**
@@ -44,9 +42,7 @@ export class ReportListComponent implements OnInit {
     public tSvc: TranslocoService,
     public assessSvc: AssessmentService,
     public maturitySvc: MaturityService,
-    public ncuaSvc: NCUAService,
-    public observationsSvc: ObservationsService,
-    public acetSvc: ACETService
+    public observationsSvc: ObservationsService
   ) { }
 
   ngOnInit(): void {

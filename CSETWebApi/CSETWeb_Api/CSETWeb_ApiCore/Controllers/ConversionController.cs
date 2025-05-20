@@ -39,53 +39,5 @@ namespace CSETWebCore.Api.Controllers
             _tokenManager = tokenManager;
             _assessmentUtil = assessmentUtil;
         }
-
-
-        /// <summary>
-        /// Indicates if the assessment is a Cyber Florida "entry" assessment.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/convert/cf/entry")]
-        public IActionResult IsEntryCF()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            var biz = new ConversionBusiness(_context, _assessmentUtil);
-            return Ok(biz.IsEntryCF(assessmentId));
-        }
-        [HttpPost]
-        [Route("api/convert/cf/entrys")]
-        public IActionResult IsEntrysCF(List<int> assessmentIds)
-        {   
-            var biz = new ConversionBusiness(_context, _assessmentUtil);
-            return Ok(biz.IsEntryCF(assessmentIds));
-        }
-
-
-        /// <summary>
-        /// Converts a Cyber Florida "entry" assessment to a full assessment.
-        /// </summary>
-        /// <param name="login"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/convert/cf")]
-        public IActionResult ConvertCF()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            var biz = new ConversionBusiness(_context, _assessmentUtil);
-            biz.ConvertCF(assessmentId);
-
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("api/cf/isComplete")]
-        public IActionResult IsCFComplete()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            var biz = new CFBusiness(_context, _assessmentUtil);
-            return Ok(biz.getInitialAnswers(assessmentId));
-        }
     }
 }

@@ -84,11 +84,6 @@ $primary-900: map.get($primary, 900); // Main Dark Primary
 $primary-color: $primary-900;
 $secondary-color: map.get($primary, 450);
 
-$ncua-primary-background-image: linear-gradient(to right,
-    #0f3c7a,
-    #5290e5,
-    #0f3c7a);
-$ncua-secondary-color: #0f3c7a;
 
 $link-color-dark: #1a53ff; //$primary-350;
 $link-color-light: $primary-350;
@@ -1226,7 +1221,8 @@ ul.mat-tree-node mat-tree-node {
 .parameter-orig-value {
   font-size: 1.1em;
   color: $primary-color;
-  margin: 10px 0;
+  font-style: italic;
+  margin: 10px 10px;
 }
 
 // .parameter-editor-default-message {
@@ -2055,8 +2051,9 @@ tooltip.glossary-definition.tooltip-left::after {
   display: block;
   width: 100%;
   border-top: 1px solid $primary-550;
+  border-inline-start: 1px solid $gray-200;
   padding: 10px;
-  /*margin-bottom: 1em;*/
+  padding-left: 15px;
 }
 
 .extras-button {
@@ -2131,7 +2128,7 @@ ul.related-questions li {
 
 .group-heading {
   font-size: 25px;
-  margin: 0.4em 0;
+  margin: 1.7em 0 0.4em 0;
   color: $primary-color;
 }
 
@@ -2351,7 +2348,7 @@ mat-sidenav.mat-sidenav {
 ///////////////////////////////////////////////////////////////////////
 .sub-me {
   text-decoration: underline;
-  color: $link-color-dark;
+  color: $link-color-dark !important;
   cursor: pointer;
 }
 

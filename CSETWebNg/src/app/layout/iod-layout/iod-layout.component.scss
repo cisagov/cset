@@ -1429,7 +1429,8 @@ ul.mat-tree-node mat-tree-node {
 .parameter-orig-value {
   font-size: 1.1em;
   color: $primary-color;
-  margin: 10px 0;
+  font-style: italic;
+  margin: 10px 10px;
 }
 
 // .parameter-editor-default-message {
@@ -2278,8 +2279,9 @@ tooltip.glossary-definition.tooltip-left::after {
   display: block;
   width: 100%;
   border-top: 1px solid $primary-550;
+  border-inline-start: 1px solid $gray-200;
   padding: 10px;
-  /*margin-bottom: 1em;*/
+  padding-left: 15px;
 }
 
 .extras-button {
@@ -2354,7 +2356,7 @@ ul.related-questions li {
 
 .group-heading {
   font-size: 25px;
-  margin: 0.4em 0;
+  margin: 1.7em 0 0.4em 0;
   color: $primary-color;
 }
 
@@ -2588,7 +2590,7 @@ mat-sidenav.mat-sidenav {
 ///////////////////////////////////////////////////////////////////////
 .sub-me {
   text-decoration: underline;
-  color: $link-color-dark;
+  color: $link-color-dark !important;
   cursor: pointer;
 }
 
@@ -2887,12 +2889,14 @@ table.assessment-documents th {
   font-weight: bold;
   font-size: 1.1rem;
   color: $primary-900;
+  margin-bottom: .3rem;
 }
 
 .sub-header-2 {
   font-weight: bold;
   font-size: 1rem;
   color: $primary-550;
+  margin-bottom: .2rem;
 }
 
 

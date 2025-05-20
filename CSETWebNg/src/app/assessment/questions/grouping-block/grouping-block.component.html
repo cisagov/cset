@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<ng-container *ngIf="isDomainVisible()">
+<ng-container *ngIf="isGroupingNameVisible()">
     <div class="domain-group-heading">
         {{grouping.title}}
     </div>
@@ -41,8 +41,7 @@
 
 <ng-container *ngIf="!allDomainMaturityLevelsHidden()">
 
-    <ng-container
-        *ngIf="grouping.visible || (grouping.visible && assessSvc.isISE() && ncuaSvc.showCorePlusOnlySubCats(grouping.groupingID))">
+    <ng-container *ngIf="grouping.visible">
 
         <div class="capability-group-heading"
             *ngIf="grouping.questions.length == 0 && grouping.groupingType === 'Capability'">
@@ -57,22 +56,14 @@
         <div *ngFor="let sg of grouping.subGroupings">
             <app-grouping-block [grouping]="sg"></app-grouping-block>
         </div>
-        <div *ngIf="(grouping.questions.length > 0) && assessSvc.usesMaturityModel('CIE')">
-            <app-question-block-cie #questionBlock [myGrouping]="grouping">
-            </app-question-block-cie>
-        </div>
         <div *ngIf="(grouping.questions.length > 0) && assessSvc.usesMaturityModel('VADR')">
             <app-question-block-vadr #questionBlock [myGrouping]="grouping">
             </app-question-block-vadr>
         </div>
         <div
-            *ngIf="(grouping.questions.length > 0) && !assessSvc.usesMaturityModel('VADR') && !assessSvc.usesMaturityModel('ISE') && !assessSvc.usesMaturityModel('CIE')">
+            *ngIf="(grouping.questions.length > 0) && !assessSvc.usesMaturityModel('VADR')">
             <app-question-block-maturity #questionBlock [myGrouping]="grouping">
             </app-question-block-maturity>
-        </div>
-        <div *ngIf="(grouping.questions.length > 0) && assessSvc.usesMaturityModel('ISE')">
-            <app-question-block-ise #questionBlock [myGrouping]="grouping">
-            </app-question-block-ise>
         </div>
 
         <div *ngIf="isDomain() && (assessSvc.usesMaturityModel('EDM') || assessSvc.usesMaturityModel('CRR'))"
@@ -85,21 +76,7 @@
 
     </ng-container>
 
-    <ng-container *ngIf="this.ncuaSvc.getExtraQuestionStatus() === false">
-        <button *ngIf="assessSvc.usesMaturityModel('ISE') && grouping.groupingID === 2567"
-            class="btn btn-na form-check-label mt-2 mb-4" (click)="this.ncuaSvc.toggleExtraQuestionStatus()">
-            Show Extra Statements
-        </button>
-    </ng-container>
-    <ng-container *ngIf="this.ncuaSvc.getExtraQuestionStatus() === true">
-        <hr *ngIf="grouping.groupingID === 2566">
-        <button *ngIf="assessSvc.usesMaturityModel('ISE') && grouping.groupingID === 2575"
-            class="btn btn-na form-check-label mt-2 mb-4" (click)="this.ncuaSvc.toggleExtraQuestionStatus()">
-            Hide Extra Statements
-        </button>
-    </ng-container>
-
 
 </ng-container>
 
-<div *ngIf="isDomain() && isDomainVisible() && grouping.visible" class="mb-5"></div>
+<div *ngIf="isDomain() && isGroupingNameVisible() && grouping.visible" class="mb-5"></div>

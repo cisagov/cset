@@ -1,0 +1,34 @@
+[
+  {
+    "key": 16338,
+    "value": "¿La agregación de información en este sistema revela patrones y planes sensibles, o facilita el acceso a sistemas sensibles o críticos?"
+  },
+  {
+    "key": 16342,
+    "value": "¿El acceso a este sistema resulta o podría resultar en algún tipo de acceso a otros sistemas más sensibles o críticos (por ejemplo, a través de una red)?"
+  },
+  {
+    "key": 16346,
+    "value": "¿Existen circunstancias atenuantes tales como: El sistema proporciona flujo de proceso crítico o capacidad de seguridad, la visibilidad pública del sistema, el gran número de otros sistemas que dependen de su operación, o el costo total de reemplazo del sistema?"
+  },
+  {
+    "key": 16350,
+    "value": "¿La modificación o destrucción no autorizada de información que afecta las comunicaciones externas (por ejemplo, páginas web, correo electrónico) afectaría negativamente las operaciones o dañaría gravemente la función de la misión y/o la confianza pública?"
+  },
+  {
+    "key": 16354,
+    "value": "¿La destrucción física o lógica del sistema resultaría en gastos muy grandes para restaurar el sistema y/o requeriría un largo período de tiempo para la recuperación?"
+  },
+  {
+    "key": 16358,
+    "value": "¿La misión que sirve el sistema, o la información que el sistema procesa, afecta la seguridad de infraestructuras críticas y recursos clave?"
+  },
+  {
+    "key": 16362,
+    "value": "¿El sistema almacena, comunica o procesa alguna información de la ley de privacidad?"
+  },
+  {
+    "key": 16366,
+    "value": "¿El sistema almacena, comunica o procesa alguna información de secretos comerciales?"
+  }
+]

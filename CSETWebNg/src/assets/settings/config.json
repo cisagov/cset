@@ -59,7 +59,6 @@
     "splashPageHTML": "dist/assets/splash.html",
     "homeComponentForCurrentInstallationMode": "",
     "defaultMaturityModel": "",
-    "isAcetOnly": false,
     "showExportOnReports": true,
     "showFacilityName": true,
     "showCityName": true,
@@ -154,7 +153,7 @@
       "moduleName": "RRA",
       "modelId": "5",
       "displayNameKey": "modules.rra.display-name",
-      "showDomainHeaders": false,
+      "hideTopLevelGroupingName": true,
       "questionIcons": {
         "showDetails": false,
         "guidanceIcon": "G",
@@ -198,7 +197,7 @@
       "moduleName": "CPG",
       "modelId": "11",
       "displayNameKey": "modules.cpg.display-name",
-      "showDomainHeaders": false,
+      "hideTopLevelGroupingName": true,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {
@@ -238,7 +237,7 @@
       "moduleName": "CPG2",
       "modelId": "21",
       "displayNameKey": "modules.cpg2.display-name",
-      "showDomainHeaders": false,
+      "hideTopLevelGroupingName": true,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {
@@ -406,81 +405,6 @@
       ]
     },
     {
-      "moduleName": "ACET",
-      "modelId": "1",
-      "independentSuppGuidance": true,
-      "showDomainHeaders": true,
-      "answerOptions": [
-        {
-          "skin": "ACET",
-          "code": "A",
-          "buttonLabelKey": "Yes(C)",
-          "buttonCss": "btn-alt",
-          "note": "This will only apply in the ACET skin.  See QuestionsService"
-        }
-      ]
-    },
-    {
-      "moduleName": "ISE",
-      "modelId": 10,
-      "showDomainHeaders": false,
-      "questionIcons": {
-        "showObservations": false
-      },
-      "answerOptions": [
-        {
-          "code": "Y",
-          "buttonLabelKey": "Yes",
-          "buttonCss": "btn-yes"
-        },
-        {
-          "code": "N",
-          "buttonLabelKey": "No",
-          "buttonCss": "btn-no"
-        },
-        {
-          "code": "U",
-          "buttonLabelKey": "Unanswered"
-        }
-      ]
-    },
-    {
-      "moduleName": "HYDRO",
-      "modelId": "13",
-      "questionIcons": {
-        "showDetails": false,
-        "showGuidance": false,
-        "showObservations": false,
-        "showReferences": false
-      }
-    },
-    {
-      "moduleName": "CIE",
-      "modelId": "17",
-      "questionIcons": {
-        "showDetails": false,
-        "showGuidance": false,
-        "showReferences": false
-      },
-      "answerOptions": [
-        {
-          "code": "NA",
-          "buttonLabelKey": "NA",
-          "buttonCss": "btn-na"
-        },
-        {
-          "code": "N",
-          "buttonLabelKey": "No",
-          "buttonCss": "btn-no"
-        },
-        {
-          "code": "Y",
-          "buttonLabelKey": "Yes",
-          "buttonCss": "btn-yes"
-        }
-      ]
-    },
-    {
       "moduleName": "MVRA",
       "modelId": "9",
       "answerOptions": [
@@ -498,6 +422,39 @@
           "code": "A",
           "buttonLabelKey": "Partial-MVRA",
           "buttonCss": "btn-alt"
+        }
+      ]
+    },
+    {
+      "moduleName": "CISA VADR",
+      "modelId": "25",
+      "displayNameKey": "modules.cisa vadr.display-name",
+      "autoLoadSupplemental": true,
+      "showMaturityLevelBadge": false,
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "consideredMissed": true
+        },
+        {
+          "code": "NA",
+          "buttonLabelKey": "na",
+          "buttonCss": "btn-na",
+          "chartSegmentColor": "#0a4b6e"
         }
       ]
     }

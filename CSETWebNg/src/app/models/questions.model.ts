@@ -69,6 +69,7 @@ export interface QuestionGrouping {
     description: string;
     description_Extended: string;
     groupingID: number;
+    groupingLevel: number;
     groupingType: string;
     questions: Question[];
     subGroupings: QuestionGrouping[];
@@ -287,9 +288,3 @@ export interface MaturityFilter {
     isSet: boolean;
 }
 
-/**
- *
- */
-export class DomainMaturityFilterSet {
-
-}

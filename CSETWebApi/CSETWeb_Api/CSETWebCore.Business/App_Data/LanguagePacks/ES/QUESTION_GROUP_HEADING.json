@@ -1,0 +1,370 @@
+[
+  {
+    "key": "1",
+    "value": "800-53 R3"
+  },
+  {
+    "key": "2",
+    "value": "800-53 R3 Apéndice I"
+  },
+  {
+    "key": "3",
+    "value": "800-82"
+  },
+  {
+    "key": "4",
+    "value": "Control de Acceso"
+  },
+  {
+    "key": "5",
+    "value": "Gestión de Cuentas"
+  },
+  {
+    "key": "6",
+    "value": "Auditoría y Responsabilidad"
+  },
+  {
+    "key": "7",
+    "value": "Protección de Límites"
+  },
+  {
+    "key": "8",
+    "value": "CFATS"
+  },
+  {
+    "key": "9",
+    "value": "Protección de Comunicaciones"
+  },
+  {
+    "key": "10",
+    "value": "Gestión de Configuración"
+  },
+  {
+    "key": "11",
+    "value": "Continuidad"
+  },
+  {
+    "key": "12",
+    "value": "Defensa en Profundidad"
+  },
+  {
+    "key": "13",
+    "value": "Cifrado"
+  },
+  {
+    "key": "14",
+    "value": "Seguridad Ambiental"
+  },
+  {
+    "key": "15",
+    "value": "Cortafuegos"
+  },
+  {
+    "key": "16",
+    "value": "Detección de Intrusiones en Host"
+  },
+  {
+    "key": "17",
+    "value": "Respuesta a Incidentes"
+  },
+  {
+    "key": "18",
+    "value": "Protección de la Información"
+  },
+  {
+    "key": "19",
+    "value": "Gestión de Información y Documentos"
+  },
+  {
+    "key": "20",
+    "value": "Detección de Intrusiones"
+  },
+  {
+    "key": "21",
+    "value": "Registro"
+  },
+  {
+    "key": "22",
+    "value": "Mantenimiento"
+  },
+  {
+    "key": "23",
+    "value": "Gestión"
+  },
+  {
+    "key": "24",
+    "value": "Prácticas de Gestión"
+  },
+  {
+    "key": "25",
+    "value": "Monitoreo y Malware"
+  },
+  {
+    "key": "26",
+    "value": "NERC Rev 3"
+  },
+  {
+    "key": "27",
+    "value": "NIST_SAL"
+  },
+  {
+    "key": "28",
+    "value": "NRC 5.71"
+  },
+  {
+    "key": "29",
+    "value": "Organizacional"
+  },
+  {
+    "key": "30",
+    "value": "Contraseña"
+  },
+  {
+    "key": "31",
+    "value": "Personal"
+  },
+  {
+    "key": "32",
+    "value": "Acceso Físico"
+  },
+  {
+    "key": "33",
+    "value": "Seguridad Física"
+  },
+  {
+    "key": "34",
+    "value": "Planificación"
+  },
+  {
+    "key": "35",
+    "value": "Planes"
+  },
+  {
+    "key": "36",
+    "value": "Políticas"
+  },
+  {
+    "key": "37",
+    "value": "Políticas y Procedimientos Generales"
+  },
+  {
+    "key": "38",
+    "value": "Portátiles/Móviles/Inalámbricos"
+  },
+  {
+    "key": "39",
+    "value": "Procedimientos"
+  },
+  {
+    "key": "40",
+    "value": "Control de Acceso Remoto"
+  },
+  {
+    "key": "41",
+    "value": "Gestión y Evaluación de Riesgos"
+  },
+  {
+    "key": "42",
+    "value": "Asegurando el Contenido"
+  },
+  {
+    "key": "43",
+    "value": "Asegurando el Componente"
+  },
+  {
+    "key": "44",
+    "value": "Asegurando el Router"
+  },
+  {
+    "key": "45",
+    "value": "Asegurando el Sistema"
+  },
+  {
+    "key": "46",
+    "value": "Sistema Instrumentado de Seguridad (SIS)"
+  },
+  {
+    "key": "47",
+    "value": "Software"
+  },
+  {
+    "key": "48",
+    "value": "Adquisición de Sistemas y Servicios"
+  },
+  {
+    "key": "49",
+    "value": "Integridad del Sistema"
+  },
+  {
+    "key": "50",
+    "value": "Protección del Sistema"
+  },
+  {
+    "key": "51",
+    "value": "Capacitación"
+  },
+  {
+    "key": "52",
+    "value": "Autenticación de Usuarios"
+  },
+  {
+    "key": "54",
+    "value": "Privacidad"
+  },
+  {
+    "key": "55",
+    "value": "NISTIR"
+  },
+  {
+    "key": "56",
+    "value": "INGAA"
+  },
+  {
+    "key": "57",
+    "value": "NEI 0809 R6"
+  },
+  {
+    "key": "58",
+    "value": "Detectar"
+  },
+  {
+    "key": "59",
+    "value": "Identificar"
+  },
+  {
+    "key": "60",
+    "value": "Proteger"
+  },
+  {
+    "key": "61",
+    "value": "Recuperación de Desastres"
+  },
+  {
+    "key": "62",
+    "value": "Responder"
+  },
+  {
+    "key": "63",
+    "value": "Conciencia y Capacitación"
+  },
+  {
+    "key": "64",
+    "value": "Planificación de Contingencias"
+  },
+  {
+    "key": "65",
+    "value": "Identificación y Autenticación"
+  },
+  {
+    "key": "66",
+    "value": "Protección de Medios"
+  },
+  {
+    "key": "67",
+    "value": "Seguridad de Personal"
+  },
+  {
+    "key": "68",
+    "value": "Protección Física y Ambiental"
+  },
+  {
+    "key": "69",
+    "value": "Gestión de Programas"
+  },
+  {
+    "key": "70",
+    "value": "Evaluación de Riesgos"
+  },
+  {
+    "key": "71",
+    "value": "Evaluación y Autorización de Seguridad"
+  },
+  {
+    "key": "72",
+    "value": "Protección de Sistemas y Comunicaciones"
+  },
+  {
+    "key": "73",
+    "value": "Integridad del Sistema e Información"
+  },
+  {
+    "key": "74",
+    "value": "NERC5"
+  },
+  {
+    "key": "75",
+    "value": "Procedencia"
+  },
+  {
+    "key": "76",
+    "value": "HIPAA"
+  },
+  {
+    "key": "78",
+    "value": "Evaluación y Gestión de Vulnerabilidades"
+  },
+  {
+    "key": "79",
+    "value": "Gestión de Dispositivos Móviles MDM"
+  },
+  {
+    "key": "80",
+    "value": "Recuperar"
+  },
+  {
+    "key": "81",
+    "value": "Recuperación"
+  },
+  {
+    "key": "82",
+    "value": "Cadena de Suministro"
+  },
+  {
+    "key": "83",
+    "value": "Intercambio de Información"
+  },
+  {
+    "key": "84",
+    "value": "Gestión de Relaciones"
+  },
+  {
+    "key": "85",
+    "value": "Seguridad de Aplicaciones"
+  },
+  {
+    "key": "86",
+    "value": "Seguridad de Datos"
+  },
+  {
+    "key": "87",
+    "value": "Educación"
+  },
+  {
+    "key": "88",
+    "value": "Gobernanza y Gestión de Riesgos"
+  },
+  {
+    "key": "89",
+    "value": "Seguridad de Operaciones"
+  },
+  {
+    "key": "90",
+    "value": "Acuerdos de Nivel de Servicio (SLA)"
+  },
+  {
+    "key": "91",
+    "value": "Gobernar"
+  },
+  {
+    "key": "1085",
+    "value": "Evaluación, Autorización y Monitoreo"
+  },
+  {
+    "key": "1086",
+    "value": "Procesamiento y Transparencia de Información Personalmente Identificable"
+  },
+  {
+    "key": "1087",
+    "value": "Gestión de Riesgos en la Cadena de Suministro"
+  }
+]

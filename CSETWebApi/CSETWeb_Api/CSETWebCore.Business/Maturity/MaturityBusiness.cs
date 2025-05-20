@@ -946,6 +946,7 @@ namespace CSETWebCore.Business.Maturity
                 {
                     GroupingID = sg.Grouping_Id,
                     GroupingType = sg.Type.Grouping_Type_Name,
+                    GroupingLevel = sg.Group_Level ?? 0,
                     Title = sg.Title,
                     Description = sg.Description,
                     Abbreviation = sg.Abbreviation

@@ -31,7 +31,7 @@ import { MaturityService } from '../../services/maturity.service';
 @Component({
     selector: 'app-cis-commentsmarked',
     templateUrl: './cis-commentsmarked.component.html',
-    styleUrls: ['../reports.scss', '../acet-reports.scss'],
+    styleUrls: ['../reports.scss'],
     standalone: false
 })
 export class CisCommentsmarkedComponent implements OnInit {

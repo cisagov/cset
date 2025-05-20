@@ -7,7 +7,6 @@ import { ConfigService } from '../../services/config.service';
 import { DateAdapter } from '@angular/material/core';
 import { firstValueFrom } from 'rxjs';
 import { AssessmentService } from '../../services/assessment.service';
-import { NCUAService } from '../../services/ncua.service';
 import { UserRolesEditorComponent } from '../user-roles-editor/user-roles-editor.component';
 
 @Component({
@@ -21,6 +20,8 @@ export class UserSettingsComponent implements OnInit {
   encryption: boolean;
   adminDialogRef: any;
   @ViewChildren(UserRolesEditorComponent) userRolesEditor: UserRolesEditorComponent;
+  cisaWorkflowEnabled: boolean = false;
+  cisaWorkflowStatusLoaded: boolean = false;
 
   constructor(
     private dialog: MatDialogRef<EditUserComponent>,
@@ -30,8 +31,7 @@ export class UserSettingsComponent implements OnInit {
     private authSvc: AuthenticationService,
     private configSvc: ConfigService,
     private dateAdapter: DateAdapter<any>,
-    public assessSvc: AssessmentService,
-    public ncuaSvc: NCUAService
+    public assessSvc: AssessmentService
   ) { }
 
   langSelection: string;
@@ -42,15 +42,6 @@ export class UserSettingsComponent implements OnInit {
       this.languageOptions = options;
     }
 
-    // This ACET check is because the config.ACET.json's languageOptions 
-    // isn't being read correctly (as of 10/31/23) and I don't have time to fix it
-    if (this.configSvc.config.installationMode == 'ACET') {
-      this.languageOptions = [
-        { value: "en", name: "English" },
-        { value: "es", name: "Español" }
-      ];
-    }
-
     this.authSvc.getUserLang().subscribe((resp: any) => {
       this.langSelection = resp.lang.toLowerCase();
       this.dateAdapter.setLocale(this.langSelection);
@@ -58,6 +49,11 @@ export class UserSettingsComponent implements OnInit {
 
     this.assessSvc.getEncryptPreference().subscribe((result: boolean) => {
       this.encryption = result
+    });
+    this.configSvc.getCisaAssessorWorkflow().subscribe((cisaWorkflowEnabled: boolean) => {
+      this.configSvc.cisaAssessorWorkflow = cisaWorkflowEnabled;
+      this.cisaWorkflowEnabled = cisaWorkflowEnabled;
+      this.cisaWorkflowStatusLoaded = true;
     });
   }
 
@@ -85,7 +81,15 @@ export class UserSettingsComponent implements OnInit {
    *
    */
   cancel() {
-    this.dialog.close({ encryption: this.encryption });
+    this.dialog.close({ encryption: this.encryption, cisaWorkflowEnabled: this.cisaWorkflowEnabled });
+  }
+
+  showCisaAssessorWorkflowSwitch() {
+    return this.configSvc.behaviors.showCisaAssessorWorkflowSwitch;
+  }
+
+  toggleCisaAssessorWorkflow() {
+    this.cisaWorkflowEnabled = !this.cisaWorkflowEnabled;
   }
 
   openAdminUserRolesEditor() {

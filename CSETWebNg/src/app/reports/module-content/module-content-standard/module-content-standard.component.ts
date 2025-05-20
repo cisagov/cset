@@ -24,12 +24,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ReportService } from '../../../services/report.service';
+import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
-    selector: 'app-module-content-standard',
-    templateUrl: './module-content-standard.component.html',
-    styleUrls: ['./module-content-standard.component.scss'],
-    standalone: false
+  selector: 'app-module-content-standard',
+  templateUrl: './module-content-standard.component.html',
+  styleUrls: ['./module-content-standard.component.scss'],
+  standalone: false
 })
 export class ModuleContentStandardComponent implements OnInit {
 
@@ -38,11 +39,14 @@ export class ModuleContentStandardComponent implements OnInit {
 
   constructor(
     private titleSvc: Title,
+    public questionsSvc: QuestionsService,
     public reportSvc: ReportService
   ) { }
-
+  
+  /**
+   * 
+   */
   ngOnInit(): void {
     this.titleSvc.setTitle('CSET Module Content Report - ' + this.set.setShortName);
   }
-
 }

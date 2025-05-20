@@ -34,7 +34,6 @@ const headers = {
 @Injectable()
 export class StandardService {
   frameworkSelected = false;
-  acetSelected = false;
 
 
   constructor(

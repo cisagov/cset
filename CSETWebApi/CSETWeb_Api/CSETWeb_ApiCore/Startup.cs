@@ -4,7 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.ACETDashboard;
 using CSETWebCore.Business.AdminTab;
 using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Assessment;
@@ -15,7 +14,6 @@ using CSETWebCore.Business.Diagram;
 using CSETWebCore.Business.Document;
 using CSETWebCore.Business.FileRepository;
 using CSETWebCore.Business.Framework;
-using CSETWebCore.Business.IRP;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.ModuleBuilder;
 using CSETWebCore.Business.Notification;
@@ -29,7 +27,6 @@ using CSETWebCore.Business.User;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
-using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Aggregation;
 using CSETWebCore.Interfaces.Assessment;
@@ -40,7 +37,6 @@ using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.FileRepository;
 using CSETWebCore.Interfaces.Framework;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.IRP;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.ModuleBuilder;
 using CSETWebCore.Interfaces.Notification;
@@ -69,7 +65,6 @@ using Microsoft.AspNetCore.Rewrite;
 using CSETWebCore.Interfaces.Analytics;
 using CSETWebCore.Business.Analytics;
 using CSETWebCore.Api.Error;
-using CSETWebCore.Business.Merit;
 using System;
 using CSETWebCore.Business.AssessmentIO.Import;
 using CSETWebCore.Interfaces.Malcolm;
@@ -136,7 +131,6 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IAdminTabBusiness, AdminTabBusiness>();
             services.AddTransient<IAnalyticsBusiness, AnalyticsBusiness>();
             services.AddTransient<IAssessmentBusiness, AssessmentBusiness>();
-            services.AddTransient<IACETAssessmentBusiness, ACETAssessmentBusiness>();
             services.AddTransient<IAssessmentModeData, AssessmentModeData>();
             services.AddTransient<IAssessmentUtil, AssessmentUtil>();
             services.AddTransient<IContactBusiness, ContactBusiness>();
@@ -146,7 +140,6 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IDocumentBusiness, DocumentBusiness>();
             services.AddTransient<IHtmlFromXamlConverter, HtmlFromXamlConverter>();
             services.AddTransient<IMaturityBusiness, MaturityBusiness>();
-            services.AddTransient<IACETMaturityBusiness, ACETMaturityBusiness>();
             services.AddTransient<INotificationBusiness, NotificationBusiness>();
             services.AddTransient<IParameterContainer, ParameterContainer>();
             services.AddTransient<IPasswordHash, PasswordHash>();
@@ -168,7 +161,6 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IUserBusiness, UserBusiness>();
             services.AddTransient<IUtilities, Utilities>();
             services.AddTransient<ITrendDataProcessor, TrendDataProcessor>();
-            services.AddTransient<IACETDashboardBusiness, ACETDashboardBusiness>();
             services.AddTransient<IReportsDataBusiness, ReportsDataBusiness>();
             services.AddTransient<IAggregationBusiness, AggregationBusiness>();
             services.AddTransient<IFrameworkBusiness, FrameworkBusiness>();
@@ -178,8 +170,6 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IDataHandling, DataHandling>();
             services.AddTransient<IGalleryState, GalleryState>();
             services.AddTransient<IGalleryEditor, GalleryEditor>();
-            services.AddScoped<IIRPBusiness, IRPBusiness>();
-            services.AddTransient<IJSONFileExport, JSONFileExport>();
             services.AddTransient<IMalcolmBusiness, MalcolmBusiness>();
             services.AddScoped<IVersionBusiness, VersionBusiness>();
 

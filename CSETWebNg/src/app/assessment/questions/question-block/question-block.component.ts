@@ -110,30 +110,6 @@ export class QuestionBlockComponent implements OnInit {
   }
 
   /**
-   * Replace parameter placeholders in the question text template with any overridden values.
-   * @param q
-   */
-  applyTokensToText(q: Question) {
-    let text = q.questionText;
-
-    text = this.linebreakPipe.transform(text);
-
-    if (!q.parmSubs) {
-      return text;
-    }
-
-    q.parmSubs.forEach(t => {
-      let s = t.substitution;
-      if (s == null) {
-        s = t.token;
-      }
-      text = this.replaceAll(text, t.token, "<span class='sub-me pid-" + t.id + "'>" + s + "</span>");
-    });
-
-    return text;
-  }
-
-  /**
    *
    * @param q
    */
@@ -184,7 +160,7 @@ export class QuestionBlockComponent implements OnInit {
       q.answer_Id = result.answerId;
 
       q.parmSubs.find(s => s.id === parameterId).substitution = result.substitution;
-      this.applyTokensToText(q);
+      this.questionsSvc.applyTokensToText(q);
       this.dialogRef = null;
     });
   }
@@ -226,10 +202,6 @@ export class QuestionBlockComponent implements OnInit {
     this.mySubCategory.hasReviewItems = false;
     this.mySubCategory.questions.forEach(q => {
       if (q.markForReview) {
-        this.mySubCategory.hasReviewItems = true;
-        return;
-      }
-      if (q.answer == 'A' && this.isAltTextRequired(q)) {
         this.mySubCategory.hasReviewItems = true;
         return;
       }
@@ -366,18 +338,6 @@ export class QuestionBlockComponent implements OnInit {
   }
 
   /**
-   * For ACET installations, alt answers require 3 or more characters of
-   * justification.
-   */
-  isAltTextRequired(q: Question) {
-    if ((this.configSvc.installationMode === "ACET")
-      && (!q.altAnswerText || q.altAnswerText.trim().length < 3)) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
    * Pushes the answer to the API, specifically containing the alt text
    * @param q
    * @param altText
@@ -411,13 +371,6 @@ export class QuestionBlockComponent implements OnInit {
         });
     }, 500);
 
-  }
-
-  replaceAll(origString: string, searchStr: string, replaceStr: string) {
-    // escape regexp special characters in search string
-    searchStr = searchStr.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-
-    return origString.replace(new RegExp(searchStr, 'gi'), replaceStr);
   }
 
   /**

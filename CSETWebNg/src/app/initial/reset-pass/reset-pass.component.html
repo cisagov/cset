@@ -24,31 +24,13 @@
     <div class="px-4 pt-4 d-flex flex-column flex-00a mx-auto col-lg-8 col-md-8 col-sm-10">
 
         <!-- CSET Logo and Name -->
-        <div *ngIf="showCsetLogo()" class="mb-4 d-flex justify-content-start flex-00a">
+        <div class="mb-4 d-flex justify-content-start flex-00a">
             <app-logo-cset></app-logo-cset>
         </div>
-        <div *ngIf="showRraLogo()" clas="mb-4">
-            <app-logo-rra></app-logo-rra>
-        </div>
 
-        <div class="mb-4 p-3 bgc-black c-white" [ngClass]="{'login-margin' : (configSvc.installationMode === 'ACET') }">
+        <div class="mb-4 p-3 bgc-black c-white">
             <div *ngIf="configSvc.installationMode === 'CSET' || configSvc.installationMode === ''">
                 {{t('change password.enter email cset')}}
-            </div>
-            <div *ngIf="configSvc.installationMode === 'RRA'">
-                {{t('change password.enter email rra')}}
-            </div>
-            <div *ngIf="configSvc.installationMode === 'ACET'">
-                {{t('change password.enter email acet')}}
-            </div>
-            <div *ngIf="configSvc.installationMode === 'TSA'">
-                {{t('change password.enter email tsa')}}
-            </div>
-            <div *ngIf="configSvc.installationMode === 'RENEW'">
-                {{t('change password.enter email renew')}}
-            </div>
-            <div *ngIf="configSvc.installationMode === 'CF'">
-                {{t('change password.enter email cf')}}
             </div>
         </div>
 
@@ -123,15 +105,8 @@
             <div class="c-gray-600 mb-4">
                 <app-cset-origin *ngIf="showOrigin">
                 </app-cset-origin>
-                <app-acet-origin *ngIf="configSvc.installationMode === 'ACET'"></app-acet-origin>
-
-                <div *ngIf="configSvc.installationMode === 'RRA'">
-                    {{t('change password.ransomware explanation')}}
-                </div>
             </div>
             <img *ngIf="(configSvc.installationMode || '') === ''" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
-            <img *ngIf="(configSvc.installationMode || '') === 'TSA'"
-                src="./assets/images/TSA/tsa_insignia_rgbtransparent.png" alt="TSA seal" style="width: 175px">
         </div>
 
     </div>
