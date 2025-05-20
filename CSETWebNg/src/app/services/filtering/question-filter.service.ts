@@ -50,10 +50,13 @@ export class QuestionFilterService {
    */
   public showFilters: string[];
 
+    readonly maturityLevels = ['1', '2', '3', '4', '5'];
+
+
   /**
    * Filters that are turned on at the start.
    */
-  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI'];
+  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI', '1', '2', '3', '4', '5'];
 
   /**
    * If the user enters characters into the box, only questions containing that string
@@ -92,7 +95,24 @@ export class QuestionFilterService {
    * Reset the filters back to default settings.
    */
   refresh() {
+    console.log('REFRESH IN ')
     this.showFilters = this.defaultFilterSettings;
+
+    // let model = this.assessSvc.assessment?.maturityModel;
+    // console.log('model: ')
+    // console.log(model)
+    // if (model != null && model?.levels?.length > 0 ) {
+    //   model?.levels.forEach(levelInfo => {
+    //     console.log('levelInfo: ')
+    //     console.log(levelInfo)
+    //     if (model.maturityTargetLevel >= levelInfo.level) {
+    //       this.showFilters.push(levelInfo.level.toString());
+    //     }
+    //   });
+    // }
+
+    console.log('showFilters reset to: ')
+    console.log(this.showFilters)
   }
 
   /**
@@ -104,9 +124,44 @@ export class QuestionFilterService {
       return true;
     }
 
-    // see if any filters (not counting MT+) are turned off
-    const e = (this.remove(this.allowableFilters, 'MT+').length !== this.remove(this.showFilters, 'MT+').length);
+    let tempShowFilters = this.remove(this.showFilters, 'MT+');
+    let tempAllowableFilters = this.remove(this.allowableFilters, 'MT+');
+      
+    //
+    let model = this.assessSvc.assessment?.maturityModel;
+    if (model != null) {
+      for (let i = 0; i < model?.levels?.length; i++) {
+        let levelInfo = model?.levels[i];
+        if (model?.maturityTargetLevel >= levelInfo.level) {
+          tempAllowableFilters.push(levelInfo.level.toString());
+        }
+        else {
+          tempShowFilters = this.remove(tempShowFilters, levelInfo.level.toString());
+        }
+      }
 
+      if (model?.levels?.length != this.maturityLevels.length) {
+        tempShowFilters.splice(this.allowableFilters.length, (this.maturityLevels.length - model?.levels?.length));
+      }
+      // model?.levels.forEach(levelInfo => {
+      //   if (model.maturityTargetLevel >= levelInfo.level) {
+      //     tempAllowableFilters.push(levelInfo.level.toString());
+      //     // console.log('pushed: ' + levelInfo.level)
+      //   }
+      // });
+    }
+    //
+    // see if any filters (not counting MT+) are turned off
+    const e = (tempAllowableFilters.length !== tempShowFilters.length);
+
+    // this check is only for the comment
+    if (e) {
+      console.log('filter is engaged')
+      console.log('tempShowFilters: ')
+      console.log(tempShowFilters)
+      console.log('tempAllowableFilters: ')
+      console.log(tempAllowableFilters)
+    }
     return e;
   }
 
@@ -116,10 +171,38 @@ export class QuestionFilterService {
    * @param ans
    */
   filterOn(ans: string) {
+    // console.log('ans:')
+    // console.log(ans)
+    // console.log('showFilters:')
+    // console.log(this.showFilters)
     if (ans === 'ALL') {
-      if (this.arraysAreEqual(this.remove(this.showFilters, 'MT+'), this.remove(this.allowableFilters, 'MT+'))) {
+      let tempShowFilters = this.remove(this.showFilters, 'MT+');
+      let tempAllowableFilters = this.remove(this.allowableFilters, 'MT+');
+        
+      //
+      let model = this.assessSvc.assessment?.maturityModel;
+      if (model != null) {
+        for (let i = 0; i < model?.levels?.length; i++) {
+          let levelInfo = model?.levels[i];
+          if (model?.maturityTargetLevel >= levelInfo.level) {
+            tempAllowableFilters.push(levelInfo.level.toString());
+          }
+          else {
+            tempShowFilters = this.remove(tempShowFilters, levelInfo.level.toString());
+          }
+        }
+
+        if (model?.levels?.length != this.maturityLevels.length) {
+          tempShowFilters.splice(this.allowableFilters.length, (this.maturityLevels.length - model?.levels?.length));
+        }
+      }
+
+      if (this.arraysAreEqual(tempShowFilters, tempAllowableFilters)) {
         return true;
       } else {
+        console.log('NOT EQUAL')
+        console.log(this.showFilters)
+        console.log(this.allowableFilters)
         return false;
       }
     }
@@ -136,6 +219,8 @@ export class QuestionFilterService {
       if (show) {
         this.showFilters = this.allowableFilters.slice();
         this.showFilters = this.remove(this.showFilters, 'MT+');
+        console.log('setting ALL --------------')
+        console.log(this.showFilters)
       } else {
         this.showFilters = [];
       }
@@ -226,7 +311,6 @@ export class QuestionFilterService {
     }
 
     const filterStringLowerCase = this.filterSearchString.toLowerCase();
-
     domains.forEach(d => {
       d.categories.forEach(c => {
         c.subCategories.forEach(s => {
@@ -269,6 +353,14 @@ export class QuestionFilterService {
             }
 
             if (this.showFilters.includes('FR') && q.freeResponseAnswer && q.freeResponseAnswer.length > 0) {
+              q.visible = true;
+            }
+
+            if (this.showFilters.includes('FR') && q.freeResponseAnswer && q.freeResponseAnswer.length > 0) {
+              q.visible = true;
+            }
+
+            if (q.maturityLevel && this.showFilters.includes(q.maturityLevel.toString())) {
               q.visible = true;
             }
           });
@@ -421,5 +513,28 @@ export class QuestionFilterService {
       });
     }
   }
+
+  /**
+   * Displays the maturity's levels as options for filtering 
+   * (or does nothing for single-level maturities and standards)
+   */
+  // refreshMaturityLevels() {
+  //   console.log(this.assessSvc.assessment)
+  //   let model = this.assessSvc.assessment?.maturityModel;
+
+  //   if (!model || model?.levels == null || model?.levels?.length == 0) {
+  //     return;
+  //   }
+
+  //   model?.levels.forEach(x => {
+  //     if (model.maturityTargetLevel >= x.level) {
+  //       // this.maturityLabelsArray.push(x.label)
+  //       // this.maturityLevelsArray.push(x.level.toString())
+  //       this.showFilters.push(x.level.toString())
+  //       console.log('show me: ')
+  //       console.log(x)
+  //     }
+  //   });
+  // }
   //
 }
