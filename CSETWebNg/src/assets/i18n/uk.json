@@ -268,7 +268,8 @@
     "copy text": "Копіювати текст",
     "change password": "Змінити пароль",
     "reset password": "Скинути пароль",
-    "forgot password": "Забули пароль"
+    "forgot password": "Забули пароль",
+    "role editor": "Pольовий pедактор"
   },
   "contact": {
     "contacts": "Контакти",

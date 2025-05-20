@@ -597,6 +597,7 @@ import { CodeEditorModule, provideCodeEditor } from '@ngstack/code-editor';
 import { ImportComponent } from './import/import.component';
 import { NewAssessmentComponent } from './initial/new-assessment/new-assessment.component';
 import { register as registerSwiper } from 'swiper/element/bundle';
+import { UserRolesEditorComponent } from './dialogs/user-roles-editor/user-roles-editor.component';
 
 registerSwiper();
 
@@ -1051,7 +1052,8 @@ registerSwiper();
         RolesChangedComponent,
         AnalyticsResultsComponent,
         UpgradeComponent,
-        ImportComponent
+        ImportComponent,
+        UserRolesEditorComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
