@@ -56,14 +56,21 @@ export class MaturityFilteringService {
 
   /**
    * The allowable filter values.  Used for "select all"
+   * The numbers are Maturity levels. If a new maturity has more than 5 levels, add more here
    */
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'MT', 'MT+', 'FR', 'FI', 'LI', 'PI', 'NI'];
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'MT', 'MT+', 'FR', 'FI', 'LI', 'PI', 'NI', '1', '2', '3', '4', '5'];
 
   /**
    * The allowable maturity filter values.  Only applicable on maturity questions page.
    * On a non-maturity page, they are always assumed to be ON.
    */
   readonly maturityFilters = ['MT', 'MT+'];
+
+  /**
+   * The allowable maturoty levels.  Used for "select all"
+   * The numbers are Maturity levels. If a new maturity has more than 5 levels, add more here
+   */
+  readonly maturityLevels = ['1', '2', '3', '4', '5'];
 
   /**
    * Filter settings
@@ -115,6 +122,19 @@ export class MaturityFilteringService {
  */
   refresh() {
     this.showFilters = this.defaultFilterSettings;
+    let model = this.assesmentSvc.assessment?.maturityModel;
+
+    if (model && model?.levels != null && model?.levels?.length > 0) {
+      model?.levels.forEach(x => {
+        if (model.maturityTargetLevel >= x.level) {
+          // this.maturityLabelsArray.push(x.label)
+          // this.maturityLevelsArray.push(x.level.toString())
+          this.showFilters.push(x.level.toString())
+          console.log('show me: ')
+          console.log(x)
+        }
+      });
+    }
   }
 
 
@@ -135,9 +155,23 @@ export class MaturityFilteringService {
     if (this.filterSearchString.length > 0) {
       return true;
     }
+    let model = this.assesmentSvc.assessment?.maturityModel;
+
+    if (model && model?.levels != null && model?.levels?.length > 0) {
+      model?.levels.forEach(x => {
+        if (model.maturityTargetLevel >= x.level) {  
+
+        }
+      })
+    }
 
     // see if any filters (not counting MT+) are turned off
     const e = (this.remove(this.allowableFilters, 'MT+').length !== this.remove(this.showFilters, 'MT+').length);
+    if (!e) {
+      console.log('FILTER IS ENGAGED but arrays arent equal')
+      console.log(this.allowableFilters)
+      console.log(this.showFilters)
+    }
 
     return e;
   }
@@ -152,6 +186,9 @@ export class MaturityFilteringService {
       if (this.arraysAreEqual(this.remove(this.showFilters, 'MT+'), this.remove(this.allowableFilters, 'MT+'))) {
         return true;
       } else {
+        console.log('NOT EQUAL:')
+        console.log(this.showFilters)
+        console.log(this.allowableFilters)
         return false;
       }
     }
@@ -168,6 +205,8 @@ export class MaturityFilteringService {
       if (show) {
         this.showFilters = this.allowableFilters.slice();
         this.showFilters = this.remove(this.showFilters, 'MT+');
+        console.log('setting ALL --------------')
+        console.log(this.showFilters)
       } else {
         this.showFilters = [];
       }
@@ -223,7 +262,31 @@ export class MaturityFilteringService {
     return a1;
   }
 
+  /**
+   * Returns an array with all maturity levels higher 
+   * than the target level removed
+   * @param a
+   */
+  removeExtraMaturityLevels(a: any[]) {
+    let model = this.assesmentSvc.assessment?.maturityModel;
+    const a1 = a.slice();
 
+    // remove all maturity levels if none should exist
+    if (!model || model?.levels == null || model?.levels?.length == 0) {
+      const idx = a1.indexOf(this.maturityLevels[0]);
+      if (idx >= 0) {
+        a1.splice(idx, this.maturityLevels.length);
+      }      
+      return a1;
+    }
+
+
+    const idx = a1.indexOf(model?.maturityTargetLevel.toString());
+    if (idx >= 0) {
+      a1.splice(idx, 1);
+    }
+    return a1;
+  }
 
 
 
@@ -343,6 +406,10 @@ export class MaturityFilteringService {
       }
 
       if (filterSvc.showFilters.includes('FR') && q.freeResponseAnswer && q.freeResponseAnswer.length > 0) {
+        q.visible = true;
+      }
+
+      if (q.maturityLevel && filterSvc.showFilters.includes(q.maturityLevel.toString())) {
         q.visible = true;
       }
     });

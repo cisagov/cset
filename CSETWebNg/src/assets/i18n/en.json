@@ -586,6 +586,7 @@
     "core": {
       "dialog title": "Question Filters",
       "show answered as": "Show questions answered <em><b>{{optionText}}</b></em>",
+      "show maturity level": "Show <em><b>{{levelText}}</b></em> questions",
       "show unanswered": "Show unanswered questions",
       "show with comments": "Show questions with comments",
       "show with feedback": "Show questions with feedback",

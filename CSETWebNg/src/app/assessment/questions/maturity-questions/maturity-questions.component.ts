@@ -181,6 +181,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
     obsGetQ.subscribe(
       (response: MaturityQuestionResponse) => {
+        console.log(response)
         this.modelId = response.modelId;
 
         this.moduleBehavior = this.configSvc.getModuleBehavior(this.modelId);

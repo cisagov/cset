@@ -38,6 +38,8 @@ import { QuestionsService } from '../../services/questions.service';
 export class QuestionFiltersComponent implements OnInit {
 
   showFilterAboveTargetLevel = false;
+  maturityLevelsArray = [];
+  maturityLabelsArray = [];
 
   @Output() filterChanged = new EventEmitter<any>();
 
@@ -74,7 +76,31 @@ export class QuestionFiltersComponent implements OnInit {
    * 
    */
   ngOnInit(): any {
+    this.refreshMaturityLevels();
     this.refreshAnswerOptions();
+  }
+
+  /**
+   * Displays the maturity's levels as options for filtering 
+   * (or does nothing for single-level maturities and standards)
+   */
+  refreshMaturityLevels() {
+    console.log(this.assessSvc.assessment)
+    let model = this.assessSvc.assessment?.maturityModel;
+
+    if (!model || model?.levels == null || model?.levels?.length == 0) {
+      return;
+    }
+
+    model?.levels.forEach(x => {
+      if (model.maturityTargetLevel >= x.level) {
+        this.maturityLabelsArray.push(x.label)
+        this.maturityLevelsArray.push(x.level.toString())
+        // this.filterSvc.showFilters.push(x.level.toString())
+        console.log('show me: ')
+        console.log(x)
+      }
+    });
   }
 
   /**
