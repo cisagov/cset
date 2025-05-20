@@ -38,21 +38,17 @@
                 <span class="fa-solid fa-lock fs-base-6 me-3"></span>
                 <span class="fw-600 form-label pb-2">{{t('menu.user.encrypt')}}</span>
             </div>
-            <div *ngIf="!this.ncuaSvc.switchStatus">
-                <div *ngIf="this.configSvc.installationMode != 'ACET'">
-                    <div class="btn-group btn-group-toggle pt-2" data-toggle="buttons">
-                        <label class="btn btn-level btn-rounded form-check-label" [class.active]="!encryption"
-                            (change)="updateEncryptPreference()">
-                            <input class="btn-check" type="radio" autocomplete="off" tabindex="0" [checked]="!encryption" />
-                            {{t('menu.user.off')}}
-                        </label>
-                        <label class="btn btn-level btn-rounded form-check-label" [class.active]="encryption"
-                            (change)="updateEncryptPreference()">
-                            <input class="btn-check" type="radio" autocomplete="off" tabindex="0" [checked]="encryption" />
-                            {{t('menu.user.on')}}
-                        </label>
-                    </div>
-                </div>
+            <div class="btn-group btn-group-toggle pt-2" data-toggle="buttons">
+                <label class="btn btn-level btn-rounded form-check-label" [class.active]="!encryption"
+                    (change)="updateEncryptPreference()">
+                    <input class="btn-check" type="radio" autocomplete="off" tabindex="0" [checked]="!encryption" />
+                    {{t('menu.user.off')}}
+                </label>
+                <label class="btn btn-level btn-rounded form-check-label" [class.active]="encryption"
+                    (change)="updateEncryptPreference()">
+                    <input class="btn-check" type="radio" autocomplete="off" tabindex="0" [checked]="encryption" />
+                    {{t('menu.user.on')}}
+                </label>
             </div>
             <form name="form" #userForm="ngForm">
                 <div class="mb-2">
