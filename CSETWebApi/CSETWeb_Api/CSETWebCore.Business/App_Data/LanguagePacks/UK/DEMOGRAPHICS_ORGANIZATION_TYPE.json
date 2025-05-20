@@ -1,30 +1,37 @@
 [
   {
     "key": "1",
-    "value": "Промисловість"
+    "value": "Промисловість",
+    "valueEN": "Industry"
   },
   {
     "key": "2",
-    "value": "Центральні органи виконавчої влади"
+    "value": "Центральні органи виконавчої влади",
+    "valueEN": "Federal Entity"
   },
   {
     "key": "3",
-    "value": "SLTT"
+    "value": "SLTT",
+    "valueEN": "SLTT"
   },
   {
     "key": "4",
     "value": "Державний",
+    "valueEN": "State"
   },
   {
     "key": "5",
-    "value": "Місцевий"
+    "value": "Місцевий",
+    "valueEN": "Local"
   },
   {
     "key": "6",
-    "value": "Територіальний"
+    "value": "Територіальний",
+    "valueEN": "Territorial"
   },
   {
     "key": "7",
-    "value": "Об'єданна теріторіальна громада"
+    "value": "Об'єданна теріторіальна громада",
+    "valueEN": "Tribal"
   }
 ]

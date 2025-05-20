@@ -24,7 +24,8 @@ export class ReferencesSectionComponent {
       public configSvc: ConfigService,
       public tSvc: TranslocoService,
       private resourceLibSvc: ResourceLibraryService
-    ) { }
+    ) {
+    }
 
   /**
    * Formats a URL to the document.  Handles uploaded documents via the
@@ -34,6 +35,8 @@ export class ReferencesSectionComponent {
    */
   formatDocumentUrl(doc: ReferenceDocLink, bookmark: any) {
     return this.resourceLibSvc.formatDocumentUrl(doc, bookmark);
+
+
   }
 
   /**
@@ -48,10 +51,10 @@ export class ReferencesSectionComponent {
 
       // "document"
       return this.tSvc.translate('extras.document');
-      
+
     } else {
       if (!!bookmark.destinationString && bookmark.destinationString.trim().length > 0) {
-        // display the destinationstring 
+        // display the destinationstring
         return bookmark.destinationString;
       }
 

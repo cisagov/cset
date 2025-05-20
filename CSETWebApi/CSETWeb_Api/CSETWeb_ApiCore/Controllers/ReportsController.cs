@@ -844,123 +844,6 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-
-        [HttpGet]
-        [Route("api/reports/getCieAllQuestions")]
-        public IActionResult GetCieAllQuestions()
-        {
-            var assessmentId = _token.AssessmentForUser();
-            _report.SetReportsAssessmentId(assessmentId);
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-            MaturityBasicReportData data = new MaturityBasicReportData();
-
-            data.MatAnsweredQuestions = _report.GetCieQuestionList(0);
-            data.Information = _report.GetInformation();
-            return Ok(data);
-        }
-
-        [HttpGet]
-        [Route("api/reports/getCiePrincipleQuestions")]
-        public IActionResult getCiePrincipleQuestions()
-        {
-            var assessmentId = _token.AssessmentForUser();
-            _report.SetReportsAssessmentId(assessmentId);
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-            MaturityBasicReportData data = new MaturityBasicReportData();
-
-            data.MatAnsweredQuestions = _report.GetCieQuestionList(5);
-            data.Information = _report.GetInformation();
-            return Ok(data);
-        }
-
-        [HttpGet]
-        [Route("api/reports/getCiePhaseQuestions")]
-        public IActionResult getCiePhaseQuestions()
-        {
-            var assessmentId = _token.AssessmentForUser();
-            _report.SetReportsAssessmentId(assessmentId);
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-            MaturityBasicReportData data = new MaturityBasicReportData();
-
-            // the '4' signals to get levels 1 - 4
-            data.MatAnsweredQuestions = _report.GetCieQuestionList(4);
-            data.Information = _report.GetInformation();
-            return Ok(data);
-        }
-
-
-        [HttpGet]
-        [Route("api/reports/getCieNaQuestions")]
-        public IActionResult getCieNaQuestions()
-        {
-            var assessmentId = _token.AssessmentForUser();
-            _report.SetReportsAssessmentId(assessmentId);
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-            MaturityBasicReportData data = new MaturityBasicReportData();
-
-            // the '4' signals to get levels 1 - 4
-            data.MatAnsweredQuestions = _report.GetCieQuestionList(0, true);
-            data.Information = _report.GetInformation();
-            return Ok(data);
-        }
-
-
-        /// <summary>
-        /// Returns a collection of all documents attached to any question in the Assessment.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/cieAssessmentDocuments")]
-        public IActionResult CieAssessmentDocuments()
-        {
-            int assessmentId = _token.AssessmentForUser();
-            _report.SetReportsAssessmentId(assessmentId);
-            _documentBusiness.SetUserAssessmentId(assessmentId);
-
-            var data = new DocumentsReport();
-            data.information = _report.GetInformation();
-            //data.documents = _report.GetCieDocumentsForAssessment();
-
-            return Ok(data);
-        }
-
-
-        [HttpGet]
-        [Route("api/reports/getCieAllQuestionsWithDocuments")]
-        public IActionResult GetCieAllQuestionsWithDocuments()
-        {
-            var assessmentId = _token.AssessmentForUser();
-            _report.SetReportsAssessmentId(assessmentId);
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-            MaturityBasicReportData data = new MaturityBasicReportData();
-
-            data.MatAnsweredQuestions = _report.GetCieDocumentsForAssessment();
-            data.Information = _report.GetInformation();
-            return Ok(data);
-        }
-
-
-        [HttpGet]
-        [Route("api/reports/getCieAllMfrQuestionsWithDocuments")]
-        public IActionResult GetCieAllMfrQuestionsWithDocuments()
-        {
-            var assessmentId = _token.AssessmentForUser();
-            _report.SetReportsAssessmentId(assessmentId);
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-            MaturityBasicReportData data = new MaturityBasicReportData();
-
-            data.MatAnsweredQuestions = _report.GetCieMfrQuestionList();
-            data.Information = _report.GetInformation();
-            return Ok(data);
-        }
-
-
         [HttpGet]
         [Route("api/reports/getStandardAnsweredQuestions")]
         public async Task<IActionResult> GetStandardAnsweredQuestions()
@@ -972,15 +855,6 @@ namespace CSETWebCore.Api.Controllers
             data.information = _report.GetInformation();
 
             data.StandardsQuestions = await _report.GetStandardQuestionAnswers(assessmentId);
-
-            // only need answered questions for each standard (yes this should be a stored proc, but I don't have time)
-            //foreach(var standard in data.StandardsQuestions)
-            //{
-            //    standard.Questions = standard.Questions.Where(x => x.Answer != "U").ToList();
-            //}
-
-            // only need answered questions (yes this should be a stored proc, but I don't have time)
-            //data.ComponentQuestions = data.ComponentQuestions.Where(x => x.Answer != "U").ToList();
 
             return Ok(data);
         }
@@ -1016,20 +890,5 @@ namespace CSETWebCore.Api.Controllers
             data.QuestionsMarkedForReview = _report.GetQuestionsReviewed();
             return Ok(data);
         }
-        //[HttpGet]
-        //[Route("api/reports/getCieNaQuestions")]
-        //public IActionResult getCieNaQuestions()
-        //{
-        //    var assessmentId = _token.AssessmentForUser();
-        //    _report.SetReportsAssessmentId(assessmentId);
-        //    _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-        //    MaturityBasicReportData data = new MaturityBasicReportData();
-
-        //    // the '4' signals to get levels 1 - 4
-        //    data.MatAnsweredQuestions = _report.GetCieQuestionList(0, true);
-        //    data.Information = _report.GetInformation();
-        //    return Ok(data);
-        //}
     }
 }

@@ -18,6 +18,37 @@
                     "title": "Exportar POAM a Excel",
                     "desc": "Este informe genera una plantilla de Plan de acción e hitos (POA&M) que incluye una lista de prácticas no cumplidas que pueden remediarse. Este POA&M excluirá cualquier práctica de CMMC que no sea elegible para su inclusión según la resolución de CMMC."
                }
+          },
+          "standard": {
+               "sectionTitle": "Informes Estándar",
+               "1": {
+                    "title": "Resumen Ejecutivo",
+                    "desc": "Este informe incluye la descripción de la evaluación a nivel alto, el resumen ejecutivo, el Nivel de Garantía de Seguridad (SAL) y un conjunto de gráficos que resaltan el cumplimiento general y el cumplimiento por tipo de componente."
+               },
+               "2": {
+                    "title": "Informe Resumido del Sitio",
+                    "desc": "Este informe incluye la misma información que el Resumen Ejecutivo, así como información del sitio, el diagrama de la red, el cumplimiento de componentes por área temática, hallazgos y recomendaciones del análisis básico de la red, la biblioteca de documentos, comentarios, justificaciones alternativas para respuestas y preguntas marcadas para revisión."
+               },
+               "3": {
+                    "title": "Plan de Ciberseguridad del Sitio",
+                    "desc": "Esta plantilla está destinada a ser utilizada como una herramienta para el desarrollo de un plan de seguridad. La plantilla ayuda a identificar los controles implementados y aquellos que necesitan una mayor implementación basada en las respuestas proporcionadas en la evaluación. El propósito del plan de seguridad es proporcionar una visión general de los requisitos de seguridad del sistema y describir los controles implementados o planificados para cumplir con esos requisitos."
+               },
+               "4": {
+                    "title": "Informe Detallado del Sitio",
+                    "desc": "Este informe incluye la misma información que el Informe Resumido del Sitio, así como una lista de todas las preguntas de los componentes de la red y sus respuestas correspondientes."
+               },
+               "5": {
+                    "title": "Informe de Preguntas Respondidas",
+                    "desc": "Este informe indica cómo se respondió a cada pregunta."
+               },
+               "6": {
+                    "title": "Comentarios y Marcados para Revisión",
+                    "desc": "Este documento consolida todas las prácticas que han recibido comentarios o han sido marcadas para revisión durante el proceso de evaluación. Proporciona una visión general de las áreas donde puede ser necesaria una mayor atención o aclaración."
+               },
+               "7": {
+                    "title": "Preguntas Revisadas",
+                    "desc": "Este documento consolida todas las prácticas que han sido marcadas como revisadas durante el proceso de evaluación."
+               }
           }
      },
      "self assessment indicator": "Autoevaluación",
@@ -42,9 +73,11 @@
      "standard": "Estándar",
      "category": "Categoría",
      "answer": "Respuesta",
-     "rank": "Ranking",
+     "rank": "Posición",
      "question": "Pregunta",
-     "overall score text": "Puede haber una discrepancia en los porcentajes mostrados porque algunas preguntas se aplican a más de un componente del sistema. Como resultado, estas preguntas se cuentan varias veces en el total del cálculo del porcentaje. Esencialmente, la superposición en la relevancia de la pregunta hace que la puntuación general basada en el componente parezca más baja que la puntuación resumida del componente.",
+     "overall score para 1": "El Puntaje General se determina por el número de preguntas respondidas \"Sí\" o \"Alt\" del número total de preguntas, excluyendo aquellas marcadas como \"N/A\". Las preguntas sin responder y las respuestas \"No\" a los requisitos se consideran no cumplidas.",
+     "overall score para 2": "El Puntaje General se determina por el número de preguntas respondidas \"Sí\" o \"Alt\" del número total de preguntas, excluyendo aquellas marcadas como \"N/A\". Las preguntas sin responder y las respuestas \"No\" a los requisitos se consideran no cumplidas. El Puntaje Basado en Estándares solo incluye preguntas basadas en requisitos estándar. El Puntaje Basado en Componentes solo incluye preguntas relacionadas con los componentes del diagrama.",
+     "overall score para 3": "Por favor, tenga en cuenta que puede haber una discrepancia entre los puntajes, ya que algunas preguntas se aplican a más de un componente dentro del sistema. Como resultado, estas preguntas se cuentan múltiples veces en el cálculo del porcentaje, lo que puede hacer que el Puntaje General parezca más bajo que el Puntaje Basado en Componentes.",
      "assessment compliance text": "Este gráfico muestra las puntuaciones porcentuales generales. <br> Tenga en cuenta que las preguntas sin respuesta se cuentan como respuesta NO en estas puntuaciones.",
      "ranked categories text 1a": "Este gráfico clasifica las principales áreas de preocupación en función de una puntuación de riesgo ponderada. Los porcentajes se calculan asignando mayores pesos a los requisitos que, si no se implementan, harían que el sistema sea más vulnerable a ataques más fáciles. Se asignan pesos menores a los requisitos asociados con ataques más difíciles.",
      "ranked categories text 1b": "Las categorías se clasifican en orden de mayor a menor prioridad. Las organizaciones pueden utilizar esta información para identificar dónde asignar recursos adicionales e implementar controles de mitigación efectivos.",
@@ -75,7 +108,10 @@
           "tab title": "Hojas de Observaciones - {{defaultTitle}}",
           "no observations message": "La evaluación no contiene ninguna observación asignada a un individuo.",
           "question identifier": "Identificador de pregunta",
-          "question text": "Texto de la pregunta"
+          "question text": "Texto de la pregunta",
+          "summary": "Este informe enumera todas las Observaciones identificadas y registradas durante la evaluación. Para obtener más información, consulte la página de Hojas de Observaciones en la Guía del Usuario.",
+          "export csv link": "Exportar Observaciones a Excel",
+          "excel summary": "Todas las Observaciones se exportan a un archivo de Excel. Las observaciones asignadas a múltiples partes tendrán una entrada para cada persona responsable."
      },
      "core": {
           "dashboard": {
@@ -315,6 +351,10 @@
                "questions marked for review": "Preguntas Marcadas para Revisión",
                "no questions": "No hay preguntas marcadas para revisión."
           },
+          "reviewed questions": {
+               "reviewed questions": "Preguntas Revisadas",
+               "no questions": "No hay preguntas revisadas."
+          },
           "cpg": {
                "report title": "Objetivos de Rendimiento Cibernético de CISA (CPG)",
                "report": {
@@ -439,60 +479,15 @@
                     "green title": "BARRA VERDE",
                     "green body": "El informe de Deficiencias muestra las mejoras de la evaluación CIS actual en verde usando la evaluación de referencia seleccionada durante el Paso de Configuración CIS."
                }
-          },
-          "acet": {
-               "acet reports": "Los informes de ACET",
-               "executive summary": {
-                    "executive summary": "Resumen ejecutivo de ACET",
-                    "tab title": "Resumen ejecutivo - ACET",
-                    "site information": "Información del Sitio"
-               },
-               "gap report": {
-                    "tab title": "Informe de brechas - ACET",
-                    "gap report": "Informe de brechas de ACET",
-                    "gap report title 1": "INFORME",
-                    "gap report title 2": "DE BRECHAS",
-                    "gap disclaimer 1": "Este informe de brechas enumera las declaraciones que actualmente no cumplen o tienen respuestas 'No'.",
-                    "gap disclaimer 2": "A menudo se le conoce como el Informe de Brechas. Este informe tiene la intención de listar las brechas, ayudar a los usuarios del informe a identificar las brechas, priorizar el trabajo y comenzar a elaborar un plan para abordar las brechas mediante la implementación de los controles necesarios para cumplir con la declaración asociada.",
-                    "gap disclaimer 3": "El porcentaje de brecha en cada dominio también se muestra y ayudará a determinar la prioridad. ACET es un modelo de madurez acumulativa, lo que significa que los niveles inferiores deben completarse antes de pasar a los niveles superiores. Idealmente, se debe completar la línea base antes de enfocar los esfuerzos en los controles en evolución y así sucesivamente, siguiendo la línea de niveles de madurez.",
-                    "gaps": "Brechas",
-                    "marked for review": "Marcado para revisión",
-                    "no deficiencies": "No hay deficiencias que mostrar"
-               },
-               "comments and mfr": {
-                    "tab title": "Informe de comentarios - ACET",
-                    "comments report": "Comentarios y marcado para revisión ACET",
-                    "comments report title 1": "INFORME DE REVISIÓN",
-                    "comments report title 2": "DE COMENTARIOS",
-                    "statements mfr": "Declaraciones marcadas para revisión",
-                    "statement": "Declaración",
-                    "no statements marked": "No hay declaraciones marcadas para revisión",
-                    "statement comments": "Comentarios de Declaraciones",
-                    "no statements with comments": "No hay declaraciones con comentarios"
-               },
-               "answered statements": {
-                    "tab title": "Informe de declaraciones respondidas - ACET",
-                    "answered statements report": "Declaraciones respondidas ACET",
-                    "answered statements report title 1": "INFORME DE",
-                    "answered statements report title 2": "DECLARACIONES RESPONDIDAS",
-                    "answered statements": "Declaraciones respondidas",
-                    "report desc 1": "Este informe incluye todas las declaraciones dentro de su nivel de madurez, sus respuestas y si hay un comentario adjunto a la declaración.",
-                    "report desc 2": "El conjunto de declaraciones se determina según su nivel de madurez.",
-                    "maturity level key": "Clave de Nivel de Madurez",
-                    "answers": "Respuestas",
-                    "comments": "Comentarios"
-               },
-               "compensating controls": {
-                    "tab title": "Informe de controles compensatorios - ACET",
-                    "compensating controls report": "Controles compensatorios ACET",
-                    "compensating controls report title 1": "INFORME DE",
-                    "compensating controls report title 2": "CONTROLES COMPENSATORIOS",
-                    "compensating controls": "Controles compensatorios",
-                    "report desc": "Este informe contiene todas las declaraciones que tienen un control compensatorio asociado y el comentario proporcionado.",
-                    "compensating comment": "Comentario Compensatorio",
-                    "no compensating comment": "No se proporcionó ningún comentario o explicación compensatoria.",
-                    "no compensating controls": "No hay controles compensatorios para mostrar"
-               }
+          }
+     },
+     "all": {
+          "reviewed questions": {
+               "report title": "Preguntas Revisadas",
+               "reviewed report title 1": "PREGUNTAS REVISADAS",
+               "reviewed report title 2": "INFORME",
+               "reviewed questions": "Preguntas Revisadas",
+               "no questions": "No hay preguntas revisadas"
           }
      }
 }

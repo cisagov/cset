@@ -78,6 +78,7 @@
     "version available": "Versión disponible:",
     "link version": "Haga clic aquí para ver o descargar las versiones de CSET.",
     "legend": "Leyenda",
+    "assessment settings": "Configuración de evaluación",
     "publisher": {},
     "disclaimer": {
         "title": "Descargo de responsabilidad",
@@ -132,30 +133,6 @@
         "creator": "Creador de evaluaciones",
         "editor": "Editor de evaluación"
     },
-    "acet": {
-        "empty my assessments page footer text": "La Caja de herramientas de evaluación de ciberseguridad automatizada (ACET®) es un producto de la Administración Nacional de Cooperativas de Crédito (NCUA) que ayuda a las organizaciones a proteger sus activos cibernéticos nacionales clave. Fue desarrollado bajo la dirección de la Administración Nacional de Cooperativas de Crédito por expertos en ciberseguridad. Esta herramienta proporciona a los usuarios un enfoque sistemático y repetible para evaluar la situación de seguridad de sus sistemas y redes cibernéticos. Incluye preguntas detalladas y de alto nivel relacionadas con todos los sistemas de TI y control industrial.",
-        "credit union": "Unión de crédito",
-        "credit union name": "Nombre de la cooperativa de crédito",
-        "charter": "Carta",
-        "assets": "Activos",
-        "auto populate": "Auto-generado basado en los datos proporcionados.",
-        "target maturity range": "Rango de madurez objetivo",
-        "target percentage achieved": "Porcentaje de objetivo alcanzado",
-        "maturity results": "Resultados de madurez de ACET",
-        "actual level": "Nivel actual",
-        "assessment factor": "Factor de evaluación",
-        "component": "Componente",
-        "components": "Componentes",
-        "statements": "Declaraciónes",
-        "submitted": "Enviado"
-    },
-    "cyber-florida": {
-        "upgrade message": "Esta evaluación utiliza un subconjunto de los requisitos del Cybersecurity Framework v1.1 y un subconjunto de la Evaluación de preparación para ransomware. Para convertir esta evaluación para incluir todas las preguntas, haga clic en el botón a continuación.",
-        "upgrade confirm 1": "¿Está seguro de que desea convertir esta evaluación? Esta es una conversión unidireccional; no se puede deshacer.",
-        "upgrade confirm 2": "La evaluación se ha convertido.",
-        "title upgrade complete": "Conversión completa",
-        "upgrade button": "Convertir a evaluación completa"
-    },
     "titles": {
         "prepare": "Preparar",
         "assessment": "Evaluación",
@@ -173,6 +150,7 @@
             "sal intro2": "Por ejemplo, un SAL típico alto contendrá entre 350-1000 preguntas, mientras que un SAL bajo típicamente contendrá entre 30-350 preguntas, dependiendo del estándar seleccionado.",
             "sal intro3": "El SAL se aplica a conjuntos de preguntas de Componentes Estándar y de Diagramas.",
             "current level": "Nivel corriente",
+            "methodology": "Metodología",
             "choose methodology": "Elija una de las tres metodologías SAL a continuación para determinar el nivel correcto para su evaluación.",
             "overall": "En general",
             "overall sal": "SAL general",
@@ -225,7 +203,11 @@
                 "adjusted questions": "Ajustado Para Preguntas del Sistema",
                 "information type": "Tipo de Información",
                 "type": "Tipo",
-                "special factors": "Factores Especiales"
+                "special factors": "Factores Especiales",
+                "determine special factors": "Determinar factores especiales",
+                "confidentiality special factor": "Factor Especial de Confidencialidad",
+                "integrity special factor": "Factor Especial de Integridad",
+                "availability special factor": "Factor Especial de Disponibilidad"
             },
             "level": {
                 "low": "Bajo",
@@ -273,7 +255,7 @@
         "comp results by cat": "Resultados de componentes por categoría",
         "answers by comp type": "Respuestas por tipo de componente",
         "network warnings": "Advertencias de red",
-        "high level desc exec sec comments": "Descripción de la evaluación de alto nivel Resumen ejecutivo y Comentarios",
+        "high level desc exec sec comments": "Descripción de la evaluación de alto nivel, Resumen ejecutivo y Comentarios",
         "reports": "Informes",
         "feedback": "Retroalimentación",
         "analytics": "analítica",
@@ -308,6 +290,8 @@
         "export": "Exportar",
         "export json": "JSON",
         "import": "Importar",
+        "import demographics": "Importar demografía",
+        "export demographics": "Exportar demografía",
         "enter password": "Introducir la contraseña",
         "export all": "Exportar todo",
         "export all to excel": "Exportar todo a Excel",
@@ -325,7 +309,9 @@
         "change password": "Cambiar la contraseña",
         "reset password": "Restablecer la contraseña",
         "forgot password": "Contraseña olvidada",
-        "role editor": "Editor de Roles"
+        "role editor": "Editor de Roles",
+        "on": "Activo",
+        "off": "Inactivo"
     },
     "answer-options": {
         "button-labels": {
@@ -333,7 +319,6 @@
             "no": "No",
             "n/a": "N/A",
             "alt": "Alt",
-            "alt-acet": "Sí(C)",
             "u": "Sin respuesta",
             "unanswered": "Sin respuesta",
             "inc": "Inc",
@@ -531,19 +516,6 @@
             "include above target": "Incluir preguntas arriba del nivel objetivo de madurez",
             "show open ended": "Mostrar preguntas abiertas respondidas"
         },
-        "ncua": {
-            "dialog title": "Filtros de declaración",
-            "show answered as": "Mostrar declaraciones respondidas <em><b>{{optionText}}</b></em>",
-            "show unanswered": "Mostrar declaraciones sin respuesta",
-            "show with comments": "Mostrar declaraciones con comentarios",
-            "show with feedback": "Mostrar declaraciones con retroalimentación",
-            "show with notes": "Mostrar preguntas con notas",
-            "show marked for review": "Mostrar declaraciones marcadas para revisión",
-            "show with observations": "Mostrar declaraciones con observaciones",
-            "show with issues": "Mostrar declaraciones con problemas",
-            "include above target": "Incluir declaraciones arriba del nivel objetivo de madurez",
-            "show open ended": "Mostrar preguntas abiertas respondidas"
-        },
         "showing only filtered": "Mostrando sólo preguntas filtradas",
         "no questions visible": "No hay preguntas visibles para los filtros o criterios de búsqueda actuales. Cambie sus selecciones e inténtelo de nuevo."
     },
@@ -716,7 +688,7 @@
             "user language": "Idioma del usuario",
             "logout": "Cerrar sesión",
             "settings": "Ajustes",
-            "encrypt": "Cifrado de contraseña para exportación de evaluaciones",
+            "encrypt": "Cifrar Exportación de Evaluación",
             "on": "Encendido",
             "off": "Apagado"
         }
@@ -818,21 +790,7 @@
         "training calendar": "Calendario de capacitación en SCI",
         "aes training": "Entrenamiento con AES",
         "aes training description": "El Programa de Evaluación y Estandarización (AES) califica a las personas para llevar a cabo evaluaciones cibernéticas de la Agencia de Seguridad de Infraestructura y Ciberseguridad (CISA).",
-        "aes link": "Programa de Evaluación y Estandarización (AES) - CISA",
-        "acet": {
-            "we ensure financial stability": "Garantizamos la estabilidad financiera",
-            "description": "La NCUA se asegura de que millones de consumidores, empresas y comunidades puedan utilizar de manera segura las cooperativas de crédito aseguradas federalmente para sus necesidades financieras."
-        },
-        "cie": {
-            "ceser title": "CESER",
-            "ceser": "La Oficina del Departamento de Energía para la Oficina de Ciberseguridad, Seguridad Energética y Respuesta a Emergencias (CESER, por sus siglas en inglés) patrocina las iniciativas de CIE del INL y coordina el programa CIE que incluye el Laboratorio Nacional de Idaho (INL), el Laboratorio Nacional de Energía Renovable (NREL), e industria, académicos y otros socios en apoyo a la Estrategia Nacional de Ingeniería Informada por Ciberseguridad del Departamento de Energía, y la Estrategia Nacional de Ciberseguridad.",
-            "description": "Cyber-Informed Engineering <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://inl.gov/cie/\">(CIE)</a> builds tools for high-level implementation into curriculum, design standards, certification and curriculum accreditation.",
-            "cie tutorial title": "CIE Tutorial",
-            "cie tutorial": "La Guía de Implementación promueve la integración de los principios de Ingeniería Informada por Ciberseguridad (CIE) desde el inicio del ciclo de vida de la infraestructura energética crítica para mitigar las amenazas cibernéticas, enfatizando la colaboración entre las disciplinas de ingeniería, TI y ciberseguridad para avanzar hacia una cultura de 'seguridad por diseño'. Aconseja no convertir a los ingenieros en expertos en ciberseguridad, sino utilizar su experiencia para diseñar sistemas que sean intrínsecamente más seguros contra ataques cibernéticos y fallos tecnológicos.",
-            "cie background": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.whitehouse.gov/wp-content/uploads/2023/03/National-Cybersecurity-Strategy-2023.pdf\">Antecedentes de CIE </a>",
-            "cie principles": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.osti.gov/servlets/purl/1369373\">CIE Principles</a>",
-            "cie engineering lifecycle": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.incose.org/docs/default-source/los-angeles/libraryresources/se-jr-handdbook-2015.pdf?sfvrsn=1d3c80c6_2\">Ciclo de Vida de la Ingeniería/a>"
-        }
+        "aes link": "Programa de Evaluación y Estandarización (AES) - CISA"
     },
     "keyboard": {
         "dialog title": "Atajos de teclado",
@@ -844,6 +802,23 @@
         "protected features": "Funciones protegidas",
         "advisory": "Asesoramiento",
         "keyboard shortcuts": "Atajos de teclado"
+    },
+    "protected features": {
+        "protected features": "Funciones protegidas",
+        "module name": "Nombre de módulo",
+        "module full name": "Nombre completo de módulo",
+        "enable modules": "Habitar módulos",
+        "cisa assessor workflow": "Evaluador de CISA",
+        "assessment mode": "La evaluación está actualmente en modo de flujo de trabajo del evaluador."
+    },
+    "parameters": {
+        "text1": "Muchos estándares en 'modo requisitos' contienen parámetros que se pueden cambiar para que coincidan con su situación específica. La tabla a continuación le permite cambiar los valores de los parámetros indicados en esta evaluación haciendo clic en el Valor de Parámetro. Cambiar un valor de parámetro actualizará todos los valores de parámetros relacionados en el texto del requisito de los Estándares de Ciberseguridad actualmente seleccionados.",
+        "text2": "Los parámetros también se pueden personalizar haciendo clic en ellos en el texto de control. Tenga en cuenta que los cambios realizados a ese nivel se aplican al control específico.",
+        "parameter name": "Nombre de Parámetro",
+        "parameter value": "Valor de Parámetro",
+        "none": "Los estándares de ciberseguridad seleccionados no contienen ningún parámetro de control personalizable.",
+        "dialog title": "Definir Valor del Parámetro",
+        "dialog prompt": "Defina el valor para el parámetro de control seleccionado."
     },
     "errors": {
         "import unsuported file 1": "Error: archivo no compatible. Solo se pueden importar archivos web CSET para instalaciones empresariales.",

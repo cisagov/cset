@@ -82,15 +82,8 @@
   <p *ngIf="!!categories" class="mb-4">
     {{t('questions.instructions 1')}} {{ msgUnansweredEqualsNo }}
   </p>
-  <p *ngIf="configSvc.installationMode == 'CF' && assessSvc.usesStandard('Florida_NCSF_V1')"
-    style="color:red; font-weight: bold;">
-    To see your results please answer all 20 entry level questions.
-    For previously started assessments any work you may have done is automatically transfered and will be available when
-    you upgrade to a full assessment.
-  </p>
 
-
-
+  
   <div *ngFor="let c of categories" [class.display-none]="!c.visible" class="w-100">
     <app-category-block [myCategory]="c"></app-category-block>
   </div>

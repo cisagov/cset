@@ -190,18 +190,6 @@ export class AuthenticationService {
       case 'CSET':
         scope = 'CSET';
         break;
-      case 'ACET':
-        scope = 'ACET';
-        break;
-      case 'TSA':
-        scope = 'TSA';
-        break;
-      case 'RRA':
-        scope = 'RRA';
-        break;
-      case 'CF':
-        scope = 'CF';
-        break;
       case 'IOD':
         scope = 'IOD';
         break;

@@ -125,12 +125,10 @@
             </div>
 
             <div *ngIf="q.answer === 'A'">
-              <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
+              <textarea appAutoSize class="form-control"
                 style="width: 100%; min-height: 80px;"
                 [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)" [(ngModel)]="q.altAnswerText"
                 (ngModelChange)="storeAltText(q)" tabindex="0"></textarea>
-              <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg" aria-label="description required">*
-                Description required</div>
             </div>
 
             <app-malcolm-answer-default *ngIf="configSvc.config.behaviors.showMalcolmAnswerComparison != null 
@@ -141,7 +139,7 @@
         </div>
         <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
           <div style="width: 100%;list-style-type: none;">
-            <div [style.word-break]="applyWordBreak(q)" [innerHTML]="applyTokensToText(q)"
+            <div [style.word-break]="applyWordBreak(q)" [innerHTML]="questionsSvc.applyTokensToText(q)"
               (click)="questionTextClicked(q, $event)">
             </div>
             <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
@@ -153,7 +151,7 @@
           <div class="">
             <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.displayNumber }}</div>
             <div class="w-100 mb-3">
-              <div [style.word-break]="applyWordBreak(q)" [innerHTML]="applyTokensToText(q)"
+              <div [style.word-break]="applyWordBreak(q)" [innerHTML]="questionsSvc.applyTokensToText(q)"
                 (click)="questionTextClicked(q, $event)">
               </div>
               <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
@@ -180,12 +178,10 @@
             </div>
 
             <div *ngIf="q.answer === 'A'">
-              <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
+              <textarea appAutoSize class="form-control" 
                 style="width: 100%; min-height: 80px;"
                 [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)" [(ngModel)]="q.altAnswerText"
                 (ngModelChange)="storeAltText(q)" tabindex="0"></textarea>
-              <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg" aria-label="description required">*
-                Description required</div>
             </div>
           </div>
 

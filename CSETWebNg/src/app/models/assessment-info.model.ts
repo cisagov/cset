@@ -54,7 +54,6 @@ export interface AssessmentDetail {
     regionCode?: number;
     charterType?: number;
 
-    isAcetOnly?: boolean;
     workflow?: string;
     origin?: string;
     hiddenScreens?: string[];
@@ -70,6 +69,7 @@ export interface AssessmentDetail {
     typeDescription?: string;
     pciiNumber?: string;
     is_PCII?: boolean;
+    assessorMode?: boolean;
 }
 
 export interface MaturityModel {
@@ -114,7 +114,7 @@ export interface Demographic {
 
     sectorId?: number;
     industryId?: number;
-    
+
     size?: number;
     assetValue?: number;
     needsPrivacy?: boolean;
@@ -161,7 +161,6 @@ export interface AssessmentConfig {
     galleryItemGuid?: string;
     hiddenScreens?: any;
     id?: number;
-    isAcetOnly?: boolean;
     isE_StateLed?: boolean;
     is_PCII?: boolean;
     iseSubmitted?: boolean;

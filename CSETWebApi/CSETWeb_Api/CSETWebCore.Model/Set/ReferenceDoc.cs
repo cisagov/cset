@@ -25,6 +25,7 @@ namespace CSETWebCore.Model.Set
         public bool IsUploaded { get; set; }
         public bool Selected { get; set; }
 
+        public string Language { get; set; }
         /// <summary>
         /// To distinguish the documents whose information can be edited.
         /// </summary>

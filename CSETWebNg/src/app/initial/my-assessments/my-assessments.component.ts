@@ -39,17 +39,13 @@ import { QuestionFilterService } from '../../services/filtering/question-filter.
 import { ReportService } from '../../services/report.service';
 import { firstValueFrom, of } from "rxjs";
 import { concatMap, map, tap, catchError } from "rxjs/operators";
-import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
 import { Comparer } from "../../helpers/comparer";
 import { ExportAssessmentComponent } from '../../dialogs/assessment-encryption/export-assessment/export-assessment.component';
 import { DateTime } from "luxon";
-import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
 import { TranslocoService } from "@jsverse/transloco";
 import { DateAdapter } from '@angular/material/core';
-import { HydroService } from "../../services/hydro.service";
-import { CieService } from "../../services/cie.service";
 import { ConversionService } from "../../services/conversion.service";
 import { FileExportService } from "../../services/file-export.service";
 
@@ -94,11 +90,10 @@ export class MyAssessmentsComponent implements OnInit {
   // contains CSET or ACET; used for tooltips, etc
   appName: string;
   appTitle: string;
-  isTSA: boolean = false;
-  isCSET: boolean = false;
-  isCF: boolean = false;
+
+
   exportExtension: string;
-  importExtensions: string;
+  importExtensions: string = '.csetw';
 
   displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
 
@@ -123,12 +118,9 @@ export class MyAssessmentsComponent implements OnInit {
     public navTreeSvc: NavTreeService,
     private filterSvc: QuestionFilterService,
     public tSvc: TranslocoService,
-    private ncuaSvc: NCUAService,
     public layoutSvc: LayoutService,
     public dateAdapter: DateAdapter<any>,
     public reportSvc: ReportService,
-    private hydroSvc: HydroService,
-    public cieSvc: CieService,
     public conversionSvc: ConversionService
   ) { }
 
@@ -136,38 +128,16 @@ export class MyAssessmentsComponent implements OnInit {
     this.getAssessments();
 
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
-    this.exportExtension = localStorage.getItem('exportExtension');
-    this.importExtensions = localStorage.getItem('importExtensions');
     this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);
     this.appTitle = this.configSvc.config.behaviors.defaultTitle;
     this.appName = 'CSET';
-    switch (this.configSvc.installationMode || '') {
-      case 'ACET':
-        this.ncuaSvc.reset();
-        break;
-      case 'TSA':
-        // ACET files shouldn't be imported into the TSA version
-        this.importExtensions = this.importExtensions.replace(', .acet', '');
-        this.isTSA = true;
-        break;
-      case 'CF':
-        this.isCF = true;
-        this.navTreeSvc.clearNoMatterWhat();
-        break;
-      default:
-        this.isCSET = true;
-    }
+
 
     if (localStorage.getItem("returnPath")) { }
     else {
       this.navTreeSvc.clearTree(this.navSvc.getMagic());
     }
-    // if(this.isCF){
-    //   this.navTreeSvc.clearNoMatterWhat();
-    // }
 
-    this.ncuaSvc.assessmentsToMerge = [];
-    this.cieSvc.assessmentsToMerge = [];
 
     this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.cisaAssessorWorkflow = resp);
   }
@@ -181,26 +151,10 @@ export class MyAssessmentsComponent implements OnInit {
       if (this.configSvc.config.isRunningAnonymous) {
         return false;
       }
-
-      if (this.ncuaSvc.switchStatus) {
-        return false;
-      }
     }
 
     if (column == 'analytics') {
-      if (this.ncuaSvc.switchStatus) {
-        return false;
-      }
-
       return false;
-    }
-
-    if (column == 'ise-submitted') {
-      if (this.ncuaSvc.switchStatus) {
-        return true;
-      } else {
-        return false;
-      }
     }
 
     if (column == 'export') {
@@ -216,10 +170,6 @@ export class MyAssessmentsComponent implements OnInit {
 
   showCsetOrigin(): boolean {
     return this.configSvc.installationMode === 'CSET';
-  }
-
-  showAcetOrigin(): boolean {
-    return this.configSvc.installationMode === 'ACET';
   }
 
   getAssessments() {
@@ -240,10 +190,6 @@ export class MyAssessmentsComponent implements OnInit {
         this.assessSvc.getAssessments().pipe(
           map((assessments: UserAssessment[]) => {
             assessments.forEach((item, index, arr) => {
-              if (this.isCF) {
-                assessmentiDs.push(item.assessmentId);
-                item.isEntry = false;
-              }
 
               // determine assessment type display
               item.type = this.determineAssessmentType(item);
@@ -256,39 +202,15 @@ export class MyAssessmentsComponent implements OnInit {
                 (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
                 (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
 
-              if (item.type == "ISE") {
-                item.type = "ISE (SCUEP)";
-                if (item.totalAvailableQuestionsCount == 71) {
-                  item.type = "ISE (CORE)";
-                }
-              }
+              
 
             });
 
-            if (this.isCF) {
-              this.conversionSvc.isEntryCfAssessments(assessmentiDs).subscribe(
-                (result: any) => {
-                  result.forEach((element: any) => {
-                    let assessment = assessments.find(x => x.assessmentId === element.assessmentId);
-                    if (assessment) {
-                      assessment.isEntry = element.isEntry;
-                      assessment.isEntryString = element.isEntry ? 'Entry' : 'Full';
-                      if (assessment.isEntry)
-                        assessment.totalAvailableQuestionsCount = 20;
-                    }
-                  });
-                  this.sortedAssessments = assessments;
-                }
-              );
-            }
-            else {
+            
               this.sortedAssessments = assessments;
 
-              // NCUA want assessments sorted by "last modified"
-              if (this.ncuaSvc.switchStatus) {
-                this.sortedAssessments.sort((a, b) => new Date(b.lastModifiedDate).getTime() - new Date(a.lastModifiedDate).getTime());
-              }
-            }
+             
+            
           },
             error => {
               console.error(
@@ -313,9 +235,6 @@ export class MyAssessmentsComponent implements OnInit {
 
     if (item.useMaturity) {
       type += ', ' + this.getMaturityModelShortName(item);
-      if (item.selectedMaturityModel === 'ISE') {
-        item.questionAlias = 'statements';
-      }
     }
     if (item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;
     if (type.length > 0) type = type.substring(2);
@@ -514,34 +433,6 @@ export class MyAssessmentsComponent implements OnInit {
     }
   }
 
-  /**
-   *
-   */
-  exportToExcelAllAcet() {
-    this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'ExcelExportAllNCUA');
-  }
-
-  openExportDecisionDialog() {
-    let dialogRef = this.dialog.open(NcuaExcelExportComponent, {
-      data: {
-        assessments: this.sortedAssessments
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
-        this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'ExcelExportAllNCUA?type=' + result);
-      }
-    });
-  }
-
-  proceedToMerge() {
-    this.router.navigate(['/examination-merge']);
-  }
-
-  proceedToCieMerge() {
-    this.router.navigate(['/merge-cie-analysis']);
-  }
 
   clickNewAssessmentButton() {
     this.router.navigate(['/home'], { queryParams: { tab: 'newAssessment' } })

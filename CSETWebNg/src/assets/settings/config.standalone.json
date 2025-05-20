@@ -11,7 +11,6 @@
         "splashPageHTML": "dist/assets/splash.html",
         "homeComponentForCurrentInstallationMode": "",
         "defaultMaturityModel": "",
-        "isAcetOnly": false,
         "showFacilityName": true,
         "showCityName": true,
         "showStateName": true,

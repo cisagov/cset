@@ -76,6 +76,7 @@
   "link version": "Click here to view or download releases.",
   "legend": "Legend",
   "img suffix": "_en",
+  "assessment settings": "Assessment Settings",
   "publisher": {
     "cset": {
       "app long name": "Cyber Security Evaluation Tool",
@@ -85,53 +86,9 @@
       "show ip rights assertion": true,
       "ip dist": "the CSET Program Office"
     },
-    "cie": {
-      "app long name": "Cyber Informed Engineering",
-      "app short name": "CIE",
-      "org long name": "Department of Energy",
-      "org short name": "DOE",
-      "show ip rights assertion": false,
-      "ip dist": "the CIE Program Office"
-    },
     "iod": {
       "app long name": "Cyber Security Evaluation Tool",
       "app short name": "CSET",
-      "org long name": "Cybersecurity & Infrastructure Security Agency",
-      "org short name": "CISA",
-      "show ip rights assertion": true,
-      "ip dist": "the CSET Program Office"
-    },
-    "acet": {
-      "app long name": "Automated Cybersecurity Evaluation Toolbox",
-      "app short name": "ACET",
-      "org long name": "",
-      "org short name": "NCUA",
-      "show ip rights assertion": false
-    },
-    "tsa": {
-      "app long name": "TSA Cyber Security Evaluation Tool",
-      "app short name": "CSET-TSA",
-      "org long name": "Transportation Security Administration",
-      "org short name": "TSA",
-      "show ip rights assertion": false
-    },
-    "cf": {
-      "app long name": "Cyber Florida Assessment Tool",
-      "app short name": "CF",
-      "org long name": "Cyber Florida",
-      "org short name": "CF",
-      "show ip rights assertion": false
-    },
-    "renew": {
-      "app long name": "INL Renewables",
-      "app short name": "Renewables",
-      "org long name": "Idaho National Laboratory",
-      "org short name": "INL",
-      "show ip rights assertion": false
-    },
-    "rra": {
-      "app long name": "Ransomware Readiness Assessment",
-      "app short name": "RRA",
       "org long name": "Cybersecurity & Infrastructure Security Agency",
       "org short name": "CISA",
       "show ip rights assertion": true,
@@ -176,6 +133,7 @@
       "sal intro2": "For example, a typical high SAL will contain 350-1000 questions where a low SAL will typically contain 30-350 questions, depending on the selected standard.",
       "sal intro3": "The SAL applies to Standard and Diagram Component question sets.",
       "current level": "Current Level",
+      "methodology": "Methodology",
       "choose methodology": "Choose one of the three SAL methodologies below to determine the correct level for your assessment.",
       "overall": "Overall",
       "overall sal": "Overall SAL",
@@ -228,7 +186,11 @@
         "adjusted questions": "Adjusted For System Questions",
         "information type": "Information Type",
         "type": "Type",
-        "special factors": "Special Factors"
+        "special factors": "Special Factors",
+        "determine special factors": "Determine Special Factors",
+        "confidentiality special factor": "Confidentiality Special Factor",
+        "integrity special factor": "Integrity Special Factor",
+        "availability special factor": "Availability Special Factor"
       },
       "level": {
         "low": "Low",
@@ -291,7 +253,7 @@
     "comp results by cat": "Component Results By Category",
     "answers by comp type": "Answers By Component Type",
     "network warnings": "Network Warnings",
-    "high level desc exec sec comments": "High-Level Assessment Description Executive Summary & Comments",
+    "high level desc exec sec comments": "High-Level Assessment Description, Executive Summary & Comments",
     "reports": "Reports",
     "feedback": "Feedback",
     "analytics": "Analytics",
@@ -353,7 +315,9 @@
     "change password": "Change Password",
     "reset password": "Reset Password",
     "forgot password": "Forgot Password",
-    "role editor": "Role Editor"
+    "role editor": "Role Editor",
+    "on": "On",
+    "off": "Off"
   },
   "contact": {
     "contacts": "Contacts",
@@ -388,30 +352,6 @@
     "creator": "Assessment Creator",
     "editor": "Assessment Editor"
   },
-  "acet": {
-    "empty my assessments page footer text": "The Automated Cybersecurity Evaluation Toolbox (ACET®) is a National Credit Union Administration (NCUA) product that assists organizations in protecting their key national cyber assets. It was developed under the direction of the National Credit Union Administration by cybersecurity experts. This tool provides users with a systematic and repeatable approach for assessing the security posture of their cyber systems and networks. It includes both high-level and detailed questions related to all industrial control and IT systems.",
-    "credit union": "Credit Union",
-    "credit union name": "Credit Union Name",
-    "charter": "Charter",
-    "assets": "Assets",
-    "auto populate": "Auto-populated based on data provided",
-    "target maturity range": "Target Maturity Range",
-    "target percentage achieved": "Target Percentage Achieved",
-    "maturity results": "ACET Maturity Results",
-    "actual level": "Actual Level",
-    "assessment factor": "Assessment Factor",
-    "component": "Component",
-    "components": "Components",
-    "statements": "Statements",
-    "submitted": "Submitted"
-  },
-  "cyber-florida": {
-    "upgrade message": "We hope you find these reports helpful.  You can expand these results with more information by completing the full assessment here.  To participate in the Cyber Florida Full Assessment click the convert button below.",
-    "upgrade confirm 1": "Upgrading the assessment.  Would you like to continue?",
-    "upgrade confirm 2": "The assessment has been converted.",
-    "title upgrade complete": "Conversion Complete",
-    "upgrade button": "Convert to Full Assessment"
-  },
   "answer-options": {
     "button-labels": {
       "yes": "Yes",
@@ -419,7 +359,6 @@
       "n/a": "N/A",
       "na": "N/A",
       "alt": "Alt",
-      "alt-acet": "Yes(C)",
       "u": "Unanswered",
       "unanswered": "Unanswered",
       "inc": "Inc",
@@ -453,7 +392,6 @@
       "fully-mvra": "Fully",
       "not-mvra": "Not",
       "partial-mvra": "Partial",
-      "alt-acet": "Yes(C)",
       "yes(c)": "Yes Compensating Control",
       "imp-cpg": "Implemented",
       "prog-cpg": "In Progress",
@@ -483,7 +421,6 @@
       "not-mvra": "Not Implemented",
       "partial-mvra": "Partially Implemented",
       "yes(c)": "Yes Compensating Control",
-      "alt-acet": "Yes Compensating Control",
       "imp-cpg": "Implemented",
       "prog-cpg": "In Progress",
       "scoped-cpg": "Scoped",
@@ -659,28 +596,6 @@
       "include above target": "Include questions above maturity target level",
       "show open ended": "Show answered open-ended questions"
     },
-    "ise": {
-      "dialog title": "Statement Filters",
-      "show answered as": "Show statements answered <em><b>{{optionText}}</b></em>",
-      "show unanswered": "Show unanswered statements",
-      "show with comments": "Show statements with notes",
-      "show with feedback": "Show statements with feedback",
-      "show marked for review": "Show statements marked for review",
-      "show with observations": "Show statements with issues",
-      "include above target": "Include statements above maturity target level",
-      "show open ended": "Show answered open-ended statements"
-    },
-    "acet": {
-      "dialog title": "Statement Filters",
-      "show answered as": "Show statements answered <em><b>{{optionText}}</b></em>",
-      "show unanswered": "Show unanswered statements",
-      "show with comments": "Show statements with comments",
-      "show with feedback": "Show statements with feedback",
-      "show marked for review": "Show statements marked for review",
-      "show with observations": "Show statements with observations",
-      "include above target": "Include statements above maturity target level",
-      "show open ended": "Show answered open-ended statements"
-    },
     "showing only filtered": "Showing Only Filtered Questions",
     "no questions visible": "There are no questions visible for the current filters or search criteria. Please change your selections and try again."
   },
@@ -853,7 +768,7 @@
       "user language": "User Language",
       "logout": "Logout",
       "settings": "Settings",
-      "encrypt": "Password encryption for assessment export",
+      "encrypt": "Encrypt Assessment Export",
       "on": "On",
       "off": "Off"
     }
@@ -955,21 +870,7 @@
     "training calendar": "ICS Training Calendar",
     "aes training": "AES Training",
     "aes training description": "The Assessment Evaluation and Standardization (AES) Program qualifies individuals to conduct Cybersecurity & Infrastructure Security Agency (CISA) cyber assessments.",
-    "aes link": "Assessment Evaluation and Standardization Program - CISA",
-    "acet": {
-      "we ensure financial stability": "We Ensure Financial Stability",
-      "description": "The NCUA ensures that millions of consumers, businesses and communities can safely use federally insured credit unions for their financial needs."
-    },
-    "cie": {
-      "ceser title": "CESER",
-      "ceser": "The DOE Office for Office of Cybersecurity, Energy Security, and Emergency Response (CESER) sponsors INL CIE initiatives and coordinates the CIE program that includes Idaho National Laboratory (INL); the National Renewable Energy Laboratory (NREL), and industry, academic, and other partners in support of the Department of Energy’s National Cyber-Informed Engineering Strategy, and the National Cybersecurity Strategy.",
-      "description": "Cyber-Informed Engineering <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://inl.gov/cie/\">(CIE)</a> builds tools for high-level implementation into curriculum, design standards, certification and curriculum accreditation.",
-      "cie tutorial title": "CIE Tutorial",
-      "cie tutorial": "The Implementation Guide promotes integrating Cyber-Informed Engineering (CIE) principles early in the lifecycle of critical energy infrastructure to mitigate cyber threats, emphasizing collaboration among engineering disciplines, IT, and cybersecurity to shift towards a 'secure-by-design' culture. It advises against turning engineers into cyber experts but uses their expertise to design systems that are inherently more secure against cyber-attacks and technological failures.",
-      "cie background": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.whitehouse.gov/wp-content/uploads/2023/03/National-Cybersecurity-Strategy-2023.pdf\">CIE Background</a>",
-      "cie principles": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.osti.gov/servlets/purl/1369373\">CIE Principles</a>",
-      "cie engineering lifecycle": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.incose.org/docs/default-source/los-angeles/libraryresources/se-jr-handdbook-2015.pdf?sfvrsn=1d3c80c6_2\">Engineering Lifecycle</a>"
-    }
+    "aes link": "Assessment Evaluation and Standardization Program - CISA"
   },
   "keyboard": {
     "dialog title": "Keyboard Shortcuts",
@@ -981,6 +882,23 @@
     "protected features": "Protected Features",
     "advisory": "Advisory",
     "keyboard shortcuts": "Keyboard Shortcuts"
+  },
+  "protected features": {
+    "protected features": "Protected Features",
+    "module name": "Module Name",
+    "module full name": "Module Full Name",
+    "enable modules": "Enable Modules",
+    "cisa assessor workflow": "CISA Assessor",
+    "assessor mode": "The assessment is currently in assessor workflow mode."
+  },
+  "parameters": {
+    "text1": "Many Standards in 'Requirements Mode' contain parameters that you can change to match your specific situation. The table below allows you to change the parameter values for the indicated parameter names in this Assessment by clicking on the Parameter Value. Changing a parameter value will update all related parameter values in the requirement text of the currently selected Cybersecurity Standard(s).",
+    "text2": "Parameters can also be customized by clicking on them in the control text. Note that changes made at that level are scoped to the specific control.",
+    "parameter name": "Parameter Name",
+    "parameter value": "Parameter Value",
+    "none": "The selected cybersecurity standards do not contain any customizable control parameters.",
+    "dialog title": "Define Parameter Value",
+    "dialog prompt": "Define the value for the selected control parameter."
   },
   "errors": {
     "import unsuported file 1": "Error: Unsupported file. Only .csetw files can be imported for enterprise installations.",
@@ -1051,6 +969,10 @@
     },
     "rra": {
       "display-name": "Ransomware Readiness Assessment (RRA)"
+    },
+    "cisa vadr": {
+      "display-name": "CISA Validated Architecture Design Review (VADR)",
+      "model short title": "CISA VADR"
     }
   },
   "aggregation": {

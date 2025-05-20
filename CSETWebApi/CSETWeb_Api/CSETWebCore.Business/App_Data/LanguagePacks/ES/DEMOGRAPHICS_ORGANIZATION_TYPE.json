@@ -1,0 +1,37 @@
+[
+  {
+    "key": "1",
+    "value": "Industria",
+    "valueEN": "Industry"
+  },
+  {
+    "key": "2",
+    "value": "Entidad Federal",
+    "valueEN": "Federal Entity"
+  },
+  {
+    "key": "3",
+    "value": "Estatal, Local, Tribal y Territorial (SLTT)",
+    "valueEN": "SLTT"
+  },
+  {
+    "key": "4",
+    "value": "Estatal",
+    "valueEN": "State"
+  },
+  {
+    "key": "5",
+    "value": "Local",
+    "valueEN": "Local"
+  },
+  {
+    "key": "6",
+    "value": "Territorial",
+    "valueEN": "Territorial"
+  },
+  {
+    "key": "7",
+    "value": "Tribal",
+    "valueEN": "Tribal"
+  }
+]

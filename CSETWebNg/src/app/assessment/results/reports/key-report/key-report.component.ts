@@ -38,23 +38,12 @@ export class KeyReportComponent {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
     const authKey = this.auth.accessKey();
 
-    const isConfigChainEqual = this.arraysEqual(
-      this.configSvc.config.currentConfigChain,
-      ['TSA', 'TSAonline']
-    );
-    // Get the 'Assessment Name', 'Assessment Date' and 'Facility Name' based on the 'currentConfigChain'
-    const assessmentName = isConfigChainEqual
-      ? '_________________________'
-      : this.assessment.assessmentName;
 
-    const assessmentDate = isConfigChainEqual
-      ? '_________________________'
-      : this.assessment.assessmentDate.split('T')[0];
+    const assessmentName = this.assessment.assessmentName;
 
-    const facilityName =
-      isConfigChainEqual || this.assessment.facilityName == null
-        ? '_________________________'
-        : this.assessment.facilityName;
+    const assessmentDate = this.assessment.assessmentDate.split('T')[0];
+
+    const facilityName = this.assessment.facilityName;
 
     let content = [];
     for (let i = 0; i < this.contactCount; i++) {
