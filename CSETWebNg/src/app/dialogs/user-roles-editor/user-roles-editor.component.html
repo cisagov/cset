@@ -33,7 +33,7 @@
                             <ng-container *ngFor="let role of roles">
                                 <input type="radio" name="{{ i + '_' + role.roleName.trim() }}" 
                                         id="{{ i + '_' + role.roleName.trim() }}" class="radio-custom"
-                                        [checked]="role.roleId == userRole.userRoles.roleId"
+                                        [checked]="role.roleId == userRole.userRoles?.roleId"
                                         (change)="toggleRole(userRole, role, i)">
                                 <label for="{{ i + '_' + role.roleName.trim() }}" class="radio-custom-label">
                                     

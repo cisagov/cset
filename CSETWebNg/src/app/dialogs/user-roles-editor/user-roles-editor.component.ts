@@ -30,7 +30,6 @@ export class UserRolesEditorComponent implements OnInit {
       (r: any) => {
         this.userRoles = r.userRoles;
         this.roles = r.roles;
-        console.log(r)
       }
     );
   }
@@ -62,7 +61,7 @@ export class UserRolesEditorComponent implements OnInit {
         case "email":
           return this.comparer.compare(a.primaryEmail, b.primaryEmail, isAsc);
         case "role":
-          return this.comparer.compare(a.roles.contains, b.roleId, isAsc);
+          return this.comparer.compare(a.userRoles.roleId, b.userRoles.roleId, isAsc);
         default:
           return 0;
       }

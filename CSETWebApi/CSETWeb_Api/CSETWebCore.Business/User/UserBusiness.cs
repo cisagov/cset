@@ -15,7 +15,6 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.User;
-using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
 using DocumentFormat.OpenXml.InkML;
@@ -357,19 +356,31 @@ namespace CSETWebCore.Business.User
         {
             var usersAndRoles = new UsersAndRoles();
 
-            usersAndRoles.UserRoles = (from user in _context.USERS
-                                       join userRole in _context.USER_ROLES on user.UserId equals userRole.UserId
-                                       join role in _context.ROLES on userRole.RoleId equals role.RoleId
-                                       where user != null
-                                       select new UserRole()
-                                       {
-                                           FirstName = user.FirstName,
-                                           LastName = user.LastName,
-                                           PrimaryEmail = user.PrimaryEmail,
-                                           UserRoles = _context.USER_ROLES.Where(x => x.UserId == user.UserId).FirstOrDefault(),
-                                           //Roles = _context.ROLES.Where(x => x. == user.UserId).Select(x => x.Role).ToList(),
-                                           UserId = user.UserId
-                                       }).ToList();
+            foreach (var user in _context.USERS.ToList())
+            {
+                usersAndRoles.UserRoles.Add(new UserRole()
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PrimaryEmail = user.PrimaryEmail,
+                    UserRoles = _context.USER_ROLES.Where(x => x.UserId == user.UserId).FirstOrDefault(),
+                    UserId = user.UserId
+                });
+            }
+
+            //usersAndRoles.UserRoles = (from user in _context.USERS
+            //                           join userRole in _context.USER_ROLES on user.UserId equals userRole.UserId
+            //                           join role in _context.ROLES on userRole.RoleId equals role.RoleId
+            //                           where user != null
+            //                           select new UserRole()
+            //                           {
+            //                               FirstName = user.FirstName,
+            //                               LastName = user.LastName,
+            //                               PrimaryEmail = user.PrimaryEmail,
+            //                               UserRoles = _context.USER_ROLES.Where(x => x.UserId == user.UserId).FirstOrDefault(),
+            //                               //Roles = _context.ROLES.Where(x => x. == user.UserId).Select(x => x.Role).ToList(),
+            //                               UserId = user.UserId
+            //                           }).ToList();
 
             usersAndRoles.UserRoles = usersAndRoles.UserRoles.DistinctBy(x => x.UserId).ToList();
             usersAndRoles.Roles = _context.ROLES.ToList();
