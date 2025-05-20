@@ -62,11 +62,12 @@
                         <option *ngFor="let o of languageOptions" [value]="o.value">{{o.name}}</option>
                     </select>
 
-                <mat-dialog-actions>
-                    <button class="m-0 btn btn-primary" (click)="openAdminUserRolesEditor()">{{t('buttons.role editor')}}</button>
+                    <mat-dialog-actions>
+                        <button class="m-0 btn btn-primary" (click)="openAdminUserRolesEditor()">{{t('buttons.role editor')}}</button>
 
-                </mat-dialog-actions>
-            </div>
+                    </mat-dialog-actions>
+                </div>
+            </form>
         </div>
 
     </mat-dialog-content>

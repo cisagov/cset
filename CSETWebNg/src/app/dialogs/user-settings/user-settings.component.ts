@@ -93,17 +93,8 @@ export class UserSettingsComponent implements OnInit {
   }
 
   openAdminUserRolesEditor() {
-    // this.dialog.close({ encryption: this.encryption });
     try {
       this.adminDialogRef = this.adminDialog.open(UserRolesEditorComponent);
-      // this.adminDialog.open(UserRolesEditorComponent, {width: '500px', height: '500px'});
-
-      this.adminDialogRef.afterClosed().subscribe((results) => {
-        if (results) {
-          // this.assessSvc.persistEncryptPreference(results.encryption).subscribe(() => { });
-        }
-      });
-      console.log('success')
     } 
     catch (e: any) {
       console.log('error: ')
