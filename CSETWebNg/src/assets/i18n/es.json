@@ -689,7 +689,8 @@
             "settings": "Ajustes",
             "encrypt": "Cifrar Exportación de Evaluación",
             "on": "Encendido",
-            "off": "Apagado"
+            "off": "Apagado",
+            "admin": "Configuración de Administrador"
         }
     },
     "merge examinations": {
