@@ -1,4 +1,5 @@
-﻿using CSETWebCore.Api.Models;
+﻿using System;
+using CSETWebCore.Api.Models;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Notification;
@@ -19,7 +20,6 @@ namespace CSETWebCore.Api.Controllers
         private readonly INotificationBusiness _notificationBusiness;
         private readonly IConfiguration _configuration;
 
-
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -33,6 +33,7 @@ namespace CSETWebCore.Api.Controllers
             _userBusiness = userBusiness;
             _notificationBusiness = notificationBusiness;
             _configuration = configuration;
+            
         }
 
 
@@ -146,6 +147,27 @@ namespace CSETWebCore.Api.Controllers
             var gp = new CSETGlobalProperties(_context);
             var secret = gp.GetProperty("UserApprovalApiKey");
             return (apiKey == secret);
+        }
+        
+        /// <summary>
+        /// Checks for current user role.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/getRole")]
+        public IActionResult GetRole()
+        {
+            try
+            {
+                var role = _userBusiness.GetRole(1);
+                return Ok(new { Role = role });
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok(); 
         }
     }
 }
