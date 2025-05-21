@@ -1,13 +1,12 @@
-import { Component, Inject, OnInit, ViewChildren } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { EditUserComponent } from '../edit-user/edit-user.component';
 import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../../services/config.service';
 import { DateAdapter } from '@angular/material/core';
 import { firstValueFrom } from 'rxjs';
 import { AssessmentService } from '../../services/assessment.service';
-import { UserRolesEditorComponent } from '../user-roles-editor/user-roles-editor.component';
 
 @Component({
   selector: 'app-user-settings',
@@ -18,14 +17,11 @@ export class UserSettingsComponent implements OnInit {
 
   languageOptions = [];
   encryption: boolean;
-  adminDialogRef: any;
-  @ViewChildren(UserRolesEditorComponent) userRolesEditor: UserRolesEditorComponent;
   cisaWorkflowEnabled: boolean = false;
   cisaWorkflowStatusLoaded: boolean = false;
 
   constructor(
     private dialog: MatDialogRef<EditUserComponent>,
-    private adminDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private tSvc: TranslocoService,
     private authSvc: AuthenticationService,
@@ -90,16 +86,5 @@ export class UserSettingsComponent implements OnInit {
 
   toggleCisaAssessorWorkflow() {
     this.cisaWorkflowEnabled = !this.cisaWorkflowEnabled;
-  }
-
-  openAdminUserRolesEditor() {
-    try {
-      this.adminDialogRef = this.adminDialog.open(UserRolesEditorComponent);
-    } 
-    catch (e: any) {
-      console.log('error: ')
-      console.log(e)
-    }
-    
   }
 }

@@ -7,7 +7,6 @@
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
-using System.Collections.Generic;
 
 namespace CSETWebCore.Interfaces.User
 {
@@ -23,8 +22,5 @@ namespace CSETWebCore.Interfaces.User
         string CreateTempPassword();
 
         string InsertRandom(string s, string choices, int number);
-
-        UsersAndRoles GetUserRoles();
-        void SetUserRoles(USER_ROLES updatedRole);
     }
 }
