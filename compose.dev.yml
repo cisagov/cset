@@ -11,8 +11,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
-      - 4200:80
-      - 443:443
+      - 4200:4200
   api:
     container_name: cset-api
     hostname: api
