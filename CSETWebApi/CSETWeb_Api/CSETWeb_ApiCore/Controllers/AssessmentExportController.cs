@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -77,7 +78,17 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                var assessmentId = _token.AssessmentForUser();
+                var token = Request.Headers["RemoteAuthorization"].FirstOrDefault();
+                if (token != null)
+                {
+                    token = token.Replace("Bearer ", "");
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+
+                var assessmentId = _token.AssessmentForUser(token);
 
                 string url = _configuration["AssessmentUploadUrl"];
                 // Export the assessment

@@ -56,8 +56,14 @@ export class AnalyticsService {
    * 
    */
   getAnalyticsToken(username, password): any {
+    let obj =  JSON.stringify({
+          Email: username,
+          Password: password,
+          TzOffset: new Date().getTimezoneOffset().toString(),
+          Scope: "CSET"
+        });
     return this.http.post(
-      this.analyticsUrl + 'auth/login', { "email": username, password }, this.headers
+      this.analyticsUrl + 'auth/login', obj, this.headers
     );
   }
 
@@ -65,7 +71,11 @@ export class AnalyticsService {
    * 
    */
   postAnalyticsWithLogin(token): any {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(this.baseUrl + 'assessment/exportandsend', { headers, observe: 'response', responseType: 'blob' });
+    //const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.headers.headers = this.headers.headers.append('RemoteAuthorization', `Bearer ${token}`);
+    //return this.http.get(this.baseUrl + 'assessment/exportandsend', { headers.headers, observe: 'response', responseType: 'blob' });
+     return this.http.get(
+      this.baseUrl + 'assessment/exportandsend', this.headers
+    );
   }
 }
