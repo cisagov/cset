@@ -5,14 +5,10 @@
 // 
 //////////////////////////////// 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
 using System.Linq;
-using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Model.Contact;
-using CSETWebCore.Model.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
