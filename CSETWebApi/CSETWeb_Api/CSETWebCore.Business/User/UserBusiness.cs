@@ -345,5 +345,14 @@ namespace CSETWebCore.Business.User
         {
             return $"{u.FirstName} {u.LastName}".Trim();
         }
+
+        public string GetRole(int userId)
+        {
+            var userRole = _context.USER_ROLES.FirstOrDefault(x => x.UserId == userId);
+            var role = _context.ROLES
+                .Where(r => r.RoleId == userRole.RoleId)
+                .FirstOrDefault();
+            return role.RoleName;
+        }
     }
 }
