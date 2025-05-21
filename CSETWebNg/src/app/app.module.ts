@@ -597,6 +597,8 @@ import { CodeEditorModule, provideCodeEditor } from '@ngstack/code-editor';
 import { ImportComponent } from './import/import.component';
 import { NewAssessmentComponent } from './initial/new-assessment/new-assessment.component';
 import { register as registerSwiper } from 'swiper/element/bundle';
+import { AdminSettingsComponent } from './dialogs/admin-settings/admin-settings.component';
+import { UserService } from './services/user.service';
 
 registerSwiper();
 
@@ -1051,7 +1053,8 @@ registerSwiper();
         RolesChangedComponent,
         AnalyticsResultsComponent,
         UpgradeComponent,
-        ImportComponent
+        ImportComponent,
+        AdminSettingsComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
@@ -1191,6 +1194,7 @@ registerSwiper();
         GalleryService,
         FooterService,
         AnalyticsService,
+        UserService,
         provideHttpClient(withInterceptorsFromDi()),
         provideCodeEditor({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',
