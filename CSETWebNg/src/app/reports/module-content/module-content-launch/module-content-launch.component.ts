@@ -24,6 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SetBuilderService } from '../../../services/set-builder.service';
 import { AssessmentService } from '../../../services/assessment.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
     selector: 'app-module-content-launch',
@@ -43,14 +44,15 @@ export class ModuleContentLaunchComponent implements OnInit {
   selectedModel;
 
   /**
-   * 
+   *
    */
   constructor(
-    private setBuilderSvc: SetBuilderService
+    private setBuilderSvc: SetBuilderService,
+    public tSvc: TranslocoService
   ) { }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
     this.setBuilderSvc.getAllSetList().subscribe((x: any[]) => {
@@ -71,14 +73,14 @@ export class ModuleContentLaunchComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   selectType(event: any) {
     this.whichType = event.target.id;
   }
 
   /**
-   * 
+   *
    */
   launchModelReport() {
     const url = '/index.html?returnPath=report/module-content?mm=' + this.selectedModel;
@@ -86,7 +88,7 @@ export class ModuleContentLaunchComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   launchStandardReport() {
     const url = '/index.html?returnPath=report/module-content?m=' + this.selectedStandard;
