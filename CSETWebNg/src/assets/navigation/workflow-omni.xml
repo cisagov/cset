@@ -314,7 +314,8 @@
         <node d="feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="INSTALL-MODE-ANY(CSET,CIE) SHOW-FEEDBACK ASSESSOR" />
 
         <node d="assessment complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
-
+        
+        <node displaytext="Analytics" id="analytics" path="assessment/{:id}/results/analytics" visible="TRUE"/>
     </node>
 
 </nav>
