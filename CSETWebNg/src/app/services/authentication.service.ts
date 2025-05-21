@@ -433,20 +433,6 @@ export class AuthenticationService {
     return this.http.get(this.configSvc.apiUrl + 'auth/accesskey', { responseType: 'text' });
   }
 
-  /**
-   *
-   */
-  getUsersAndRoles() {
-    return this.http.get(this.configSvc.apiUrl + 'user/getUsersAndRoles');
-  }
-
-  /**
-   *
-   */
-  setUsersAndRoles(updatedUserRole: any) {
-    return this.http.post(this.configSvc.apiUrl + 'user/setUsersAndRoles', updatedUserRole, headers);
-  }
-  
   hasRole(requiredRoles: RoleType[]): boolean {
     if (!this.currentUser) {
       return false;

@@ -54,7 +54,7 @@
                 <div class="mb-2">
                     <div class="d-flex align-items-center">
                         <span class="fas fa-language fs-base-6 me-3"></span>
-                        <label class="fw-600 form-label" for="langSelection">{{t('user language')}}</label>
+                        <label class="fw-600 form-label" for="selectLang">{{t('user language')}}</label>
                     </div>
 
                     <select class="form-select" id="langSelection" name="langSelection" [(ngModel)]="langSelection"
@@ -62,12 +62,29 @@
                         <option *ngFor="let o of languageOptions" [value]="o.value">{{o.name}}</option>
                     </select>
 
-                    <mat-dialog-actions>
-                        <button class="m-0 btn btn-primary" (click)="openAdminUserRolesEditor()">{{t('buttons.role editor')}}</button>
-
-                    </mat-dialog-actions>
                 </div>
             </form>
+            <div *ngIf="showCisaAssessorWorkflowSwitch()">
+                <div class="d-flex align-items-center">
+                    <span class="fa fa-globe fs-base-6 me-3"></span>
+                    <span class="fw-600 form-label">{{ t('protected features.cisa assessor
+                        workflow')}}</span>
+                </div>
+                <div class="btn-group btn-group-toggle pt-2" data-toggle="buttons">
+                    <label class="btn btn-level btn-rounded form-check-label" [class.active]="!cisaWorkflowEnabled"
+                        (change)="toggleCisaAssessorWorkflow()">
+                        <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
+                            [checked]="!cisaWorkflowEnabled" />
+                        {{t('menu.user.off')}}
+                    </label>
+                    <label class="btn btn-level btn-rounded form-check-label" [class.active]="cisaWorkflowEnabled"
+                        (change)="toggleCisaAssessorWorkflow()">
+                        <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
+                            [checked]="cisaWorkflowEnabled" />
+                        {{t('menu.user.on')}}
+                    </label>
+                </div>
+            </div>
         </div>
 
     </mat-dialog-content>
