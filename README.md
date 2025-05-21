@@ -78,6 +78,13 @@ The current recommended method to run CSET would be via Docker. Follow the steps
     - `cp env.dist .env`
 - Run CSET: `docker compose up -d`
 
+For an editable development environment with live reload of both the API
+and Angular UI, you can use the `compose.dev.yml` file:
+
+```
+docker compose -f compose.dev.yml up
+```
+
 ### System Requirements for Enterprise Installation
 
 It is recommended that users meet the minimum system hardware and software requirements prior to installing CSET. This includes:

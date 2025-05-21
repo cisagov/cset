@@ -1,0 +1,21 @@
+FROM node:22
+
+WORKDIR /var/www
+
+COPY package*.json ./
+RUN npm install
+COPY . .
+
+# Configure INL certs and environment variables
+ADD http://certstore.inl.gov/pki/CAINLROOT_B64.crt /usr/local/share/ca-certificates/
+RUN /usr/sbin/update-ca-certificates
+ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt \
+    REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt \
+    CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt \
+    SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt \
+    SSL_CERT_DIR=/etc/ssl/certs/
+
+ENV NODE_OPTIONS=--max_old_space_size=8192
+
+EXPOSE 4200
+CMD ["npm", "start", "--", "--host", "0.0.0.0", "--port", "4200"]
