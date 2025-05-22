@@ -1,19 +1,37 @@
 <div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a">
 
     <div class="container">
-       
+
         <div class="row" style="padding-bottom: 5px;">
             <div class="col-12">
-                <h3>Analytics Assessment Data Upload</h3>
+                <h3>Sync Assessment to Server</h3>
+                <p>
+                    Clicking the Sync button will upload a copy of the current assessment to the CISA server.
+                    Please note that this action will overwrite any previous version of the assessment stored on the
+                    server.
+                </p>
             </div>
-        <div class="row">
-            <div class="col-12">
-                <button class="btn btn-primary" type="button" (click)="showLogin()">Submit Data</button>
+            <div class="row my-4">
+                <div class="col-12">
+                    <button class="btn btn-submit d-flex flex-row align-items-center" type="button" (click)="showLogin()">
+                        <i class="fa fa-upload me-3"></i>
+                        Sync
+                        <div *ngIf="uploadInProgress"
+                            class="spinner-container p-0 m-0 ms-3 d-flex justify-content-center align-items-center flex-11a">
+                            <div class="spinner-size-20"></div>
+                        </div>
+                    </button>
+                </div>
             </div>
+            <div class="row my-3">
+                <div class="col-12" [innerHTML]="errorMessage">
+                </div>
+            </div>
+
+            <button class="btn btn-link" (click)="logoutRemote()">Logout from Remote Server</button>
         </div>
 
+        <app-nav-back-next [page]="'analytics'"
+            [hide]="navSvc.isLastVisiblePage('analytics') ? 'next' : ''"></app-nav-back-next>
+
     </div>
-
-    <app-nav-back-next [page]="'analytics'" [hide]="navSvc.isLastVisiblePage('analytics') ? 'next' : ''"></app-nav-back-next>
-
-</div>
