@@ -74,6 +74,9 @@ export class AnalyticsloginComponent implements OnInit {
       this.analyticsSvc.getAnalyticsToken(this.dataloginForm.controls.username.value, this.dataloginForm.controls.password.value).subscribe(
         data => {
           let token = data.token;
+
+          localStorage.setItem('remoteToken', token);
+
           this.analyticsSvc.postAnalyticsWithLogin(token).subscribe(
             (data: any) => {
               this.dialogMat.open(AlertComponent, {
