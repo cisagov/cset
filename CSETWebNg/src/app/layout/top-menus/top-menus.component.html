@@ -176,8 +176,8 @@
                 <span class="fa-solid fa-gear fs-base me-2 align-middle"></span>
                 <span>{{t('menu.user.settings')}}</span>
             </button>
-            <button mat-menu-item *ngIf="showMenuItem('admin')" (click)="adminSettings()">
-                <span class="fa-solid fa-gear fs-base me-2 align-middle"></span>
+            <button mat-menu-item [routerLink]="['/admin-settings']" *ngIf="showMenuItem('admin')">
+                <span class="fa-solid fa-sliders fs-base me-2 align-middle"></span>
                 <span>{{t('menu.user.admin')}}</span>
             </button>
             <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()">
