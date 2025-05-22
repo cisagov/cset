@@ -20,36 +20,28 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel max-1200 m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
+<div class="white-panel max-1200 m-0 d-flex flex-column flex-11a oy-auto h-0 w-100"  *transloco="let t">
     <div class="max-1200">
-        <h2 class="mt-3">Module Content Report</h2>
-
-        <p>
-            This report illustrates the structure and question content of a CSET module, e.g., an industry standard
-            or maturity or best practices model.
-        </p>
-        <p>
-            The generated report has controls to show or hide the guidance and References
-            for each question.
-        </p>
-
-        <h5>Select a Standard</h5>
+        <h2 class="mt-3">  {{ t('Module Content Report') }}</h2>
+        <p>{{ t('ModuleContentLaunchComponent p1') }}</p>
+      <p>{{ t('ModuleContentLaunchComponent p2') }}</p>
+        <h5>{{ t('Select a Standard') }}</h5>
         <div class="d-flex flex-row">
             <select class="form-select mb-3" tabindex="0" [(ngModel)]="selectedStandard">
                 <option *ngFor="let s of standards" [value]="s.setName">{{s.fullName}}</option>
             </select>
             <button class="btn btn-primary text-nowrap ms-3" (click)="launchStandardReport()"
-                [disabled]="!selectedStandard">Launch Report</button>
+                [disabled]="!selectedStandard">{{ t('Launch Report') }}</button>
         </div>
 
-        <h5>Select a Model</h5>
+        <h5>{{t('Select a Model')}}</h5>
         <div class="d-flex flex-row">
             <select class="form-select mb-3" tabindex="0" [(ngModel)]="selectedModel">
                 <option *ngFor="let m of models" [value]="m.modelId">{{m.modelTitle}}</option>
             </select>
 
             <button class="btn btn-primary text-nowrap ms-3" (click)="launchModelReport()"
-                [disabled]="!selectedModel">Launch Report</button>
+                [disabled]="!selectedModel">{{ t('Launch Report') }}</button>
         </div>
 
     </div>
