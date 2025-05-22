@@ -24,6 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SetBuilderService } from '../../../services/set-builder.service';
 import { AssessmentService } from '../../../services/assessment.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
     selector: 'app-module-content-launch',
@@ -43,14 +44,16 @@ export class ModuleContentLaunchComponent implements OnInit {
   selectedModel;
 
   /**
-   * 
+   *
    */
   constructor(
-    private setBuilderSvc: SetBuilderService
+    private setBuilderSvc: SetBuilderService,
+    public tSvc: TranslocoService,
+    public assessSvc: AssessmentService,
   ) { }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
     this.setBuilderSvc.getAllSetList().subscribe((x: any[]) => {
@@ -61,24 +64,25 @@ export class ModuleContentLaunchComponent implements OnInit {
         return 0;
       });
     });
-
-    this.models = AssessmentService.allMaturityModels;
-    this.models?.sort((a, b) => {
-      if (a.modelTitle < b.modelTitle) { return -1; }
-      if (a.modelTitle > b.modelTitle) { return 1; }
-      return 0;
-    });
+    this.assessSvc.getAllMaturityModels().subscribe(data=>{
+      this.models=data;
+      this.models?.sort((a, b) => {
+        if (a.modelTitle < b.modelTitle) { return -1; }
+        if (a.modelTitle > b.modelTitle) { return 1; }
+        return 0;
+      });
+    })
   }
 
   /**
-   * 
+   *
    */
   selectType(event: any) {
     this.whichType = event.target.id;
   }
 
   /**
-   * 
+   *
    */
   launchModelReport() {
     const url = '/index.html?returnPath=report/module-content?mm=' + this.selectedModel;
@@ -86,7 +90,7 @@ export class ModuleContentLaunchComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   launchStandardReport() {
     const url = '/index.html?returnPath=report/module-content?m=' + this.selectedStandard;
