@@ -21,44 +21,33 @@
   SOFTWARE. 
 -------------------------->
 
-<div *transloco="let t" class="edit-user-dialog d-flex flex-column justify-content-center flex-11a">
-    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-        <span class="fa-solid fa-gear fs-base me-2 align-middle"></span>
-        <div class="pl-2">
-            <span>
-                {{t('menu.user.admin')}}
-            </span>
+<div class="white-panel max-1200 m-0 d-flex flex-column flex-11a oy-auto h-0 w-100" *transloco="let t">
+    <div class="max-1200">
+        <div class="container">
+            <h2>Admin Settings</h2>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.lastName }}</td>
+                        <td>{{ user.primaryEmail }}</td>
+                        <td>
+                            <select [(ngModel)]="user.roleId" (ngModelChange)="onRoleChange(user)">
+                                <option *ngFor="let role of roles" [value]="role.roleId">{{ role.roleName }}</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
     </div>
-
-    <mat-dialog-content class="p-4 d-flex flex-column flex-11a">
-        <div>
-            <div *ngIf="showCisaAssessorWorkflowSwitch()">
-                <div class="d-flex align-items-center">
-                    <span class="fa fa-globe fs-base-6 me-3"></span>
-                    <span class="fw-600 form-label">{{ t('protected features.cisa assessor
-                        workflow')}}</span>
-                </div>
-                <div class="btn-group btn-group-toggle pt-2" data-toggle="buttons">
-                    <label class="btn btn-level btn-rounded form-check-label" [class.active]="!cisaWorkflowEnabled"
-                        (change)="toggleCisaAssessorWorkflow()">
-                        <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
-                            [checked]="!cisaWorkflowEnabled" />
-                        {{t('menu.user.off')}}
-                    </label>
-                    <label class="btn btn-level btn-rounded form-check-label" [class.active]="cisaWorkflowEnabled"
-                        (change)="toggleCisaAssessorWorkflow()">
-                        <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
-                            [checked]="cisaWorkflowEnabled" />
-                        {{t('menu.user.on')}}
-                    </label>
-                </div>
-            </div>
-        </div>
-
-    </mat-dialog-content>
-    <mat-dialog-actions class="p-3 pt-0 mb-0 mt-2">
-        <button class="btn btn-secondary" (click)="cancel()">{{ t('buttons.close') }}</button>
-    </mat-dialog-actions>
 </div>

@@ -1,90 +1,79 @@
-import { Component, Inject, OnInit } from '@angular/core';
+////////////////////////////////
+//
+//   Copyright 2025 Battelle Energy Alliance, LLC
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+////////////////////////////////
+import { Component, OnInit } from '@angular/core';
+import { SetBuilderService } from '../../services/set-builder.service';
 import { AuthenticationService } from '../../services/authentication.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { EditUserComponent } from '../edit-user/edit-user.component';
-import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../../services/config.service';
-import { DateAdapter } from '@angular/material/core';
-import { firstValueFrom } from 'rxjs';
-import { AssessmentService } from '../../services/assessment.service';
+import { UserService } from '../../services/user.service';
+import { Roles, UserRole } from '../../models/user.model';
+
 
 @Component({
   selector: 'app-admin-settings',
   templateUrl: './admin-settings.component.html',
+  host: { class: 'd-flex flex-column flex-11a w-100' },
   standalone: false
 })
+
 export class AdminSettingsComponent implements OnInit {
 
-  languageOptions = [];
-  encryption: boolean;
-  cisaWorkflowEnabled: boolean = false;
-  cisaWorkflowStatusLoaded: boolean = false;
+  users: UserRole[] = [];
+  roles: Roles[] = [];
 
   constructor(
-    private dialog: MatDialogRef<EditUserComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private tSvc: TranslocoService,
-    private authSvc: AuthenticationService,
-    private configSvc: ConfigService,
-    private dateAdapter: DateAdapter<any>,
-    public assessSvc: AssessmentService
-  ) { }
+    public configSvc: ConfigService,
+    private userSvg: UserService) {
+  }
 
-  langSelection: string;
+  ngOnInit() {
+    this.getUsers();
+    this.getAvailableRoles();
+  }
 
-  ngOnInit(): void {
-    const options = this.configSvc.config.languageOptions;
-    if (!!options) {
-      this.languageOptions = options;
-    }
-
-    this.authSvc.getUserLang().subscribe((resp: any) => {
-      this.langSelection = resp.lang.toLowerCase();
-      this.dateAdapter.setLocale(this.langSelection);
-    });
-
-    this.assessSvc.getEncryptPreference().subscribe((result: boolean) => {
-      this.encryption = result
-    });
-    this.configSvc.getCisaAssessorWorkflow().subscribe((cisaWorkflowEnabled: boolean) => {
-      this.configSvc.cisaAssessorWorkflow = cisaWorkflowEnabled;
-      this.cisaWorkflowEnabled = cisaWorkflowEnabled;
-      this.cisaWorkflowStatusLoaded = true;
+  // Return available roles from database
+  getAvailableRoles() {
+    this.userSvg.getAvailableRoles().subscribe(data => {
+      this.roles = data
     });
   }
 
-  /**
-  *
-  */
-  save() {
-    const obs = this.tSvc.load(this.langSelection);
-    const prom = firstValueFrom(obs);
-
-    prom.then(() => {
-      this.tSvc.setActiveLang(this.langSelection);
-      this.authSvc.setUserLang(this.langSelection).subscribe(() => {
-        this.dateAdapter.setLocale(this.langSelection);
-      });
-    },
-      error => console.error('Error updating user langugage: ' + error.message));
+  // Return users from database 
+  getUsers() {
+    this.userSvg.getUsers().subscribe(
+      data => {
+        this.users = data
+      }
+    )
   }
 
-  updateEncryptPreference() {
-    this.encryption = !this.encryption
+  // Update user role 
+  updateUserRole(user: UserRole) {
+    this.userSvg.updateUserRole(user).subscribe(resp => { });
   }
 
-  /**
-   *
-   */
-  cancel() {
-    this.dialog.close({ encryption: this.encryption, cisaWorkflowEnabled: this.cisaWorkflowEnabled });
+  onRoleChange(user: UserRole) {
+    this.updateUserRole(user);
   }
 
-  showCisaAssessorWorkflowSwitch() {
-    return this.configSvc.behaviors.showCisaAssessorWorkflowSwitch;
-  }
-
-  toggleCisaAssessorWorkflow() {
-    this.cisaWorkflowEnabled = !this.cisaWorkflowEnabled;
-  }
 }

@@ -69,3 +69,15 @@ export interface PotentialQuestions {
   answer?: string;
 }
 
+export interface UserRole {
+  firstName: string;
+  lastName: string;
+  primaryEmail: string;
+  roleName: string;
+  roleId: number;
+  userId: number;
+}
+export interface Roles {
+  roleName: string;
+  roleId: number;
+}
