@@ -198,8 +198,16 @@ namespace CSETWebCore.Api.Controllers
                 assessment.Origin = config.Origin;
             }
 
-
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == currentUserId);
+            if (user != null)
+            {
+                if (user.CisaAssessorWorkflow)
+                {
+                    assessment.AssessorMode = true;
+                }
+            }
             assessmentBusiness.SaveAssessmentDetail(assessment.Id, assessment);
+            
 
             return Ok(assessment);
         }
@@ -306,10 +314,15 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/assessmentdocuments")]
         public IActionResult GetDocumentsForAssessment()
         {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            _documentBusiness.SetUserAssessmentId(assessmentId);
+            var IsAssessment = _tokenManager.IsUserAuthorizedForAssessment();
+            if (IsAssessment)
+            {
+                int assessmentId = _tokenManager.AssessmentForUser();
+                _documentBusiness.SetUserAssessmentId(assessmentId);
 
-            return Ok(_documentBusiness.GetDocumentsForAssessment(assessmentId));
+                return Ok(_documentBusiness.GetDocumentsForAssessment(assessmentId));
+            }
+            return Ok(_documentBusiness.GetGlobalDocuments());
         }
 
 
@@ -370,6 +383,14 @@ namespace CSETWebCore.Api.Controllers
             var result = query.ToList().FirstOrDefault();
 
             return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("api/hasGlobalDocuments")]
+        public IActionResult HasGlobalDocuments()
+        {
+            var hasGlobal = _context.DOCUMENT_FILE.Any(x => x.IsGlobal);
+            return Ok(hasGlobal);
         }
 
         [HttpPost]
@@ -519,6 +540,22 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
         
+        [HttpPost]
+        [Route("api/assessormode")]
+        public IActionResult SetAssessorMode([FromBody] string mode)
+        {
+            try
+            {
+                int assessmentId = _tokenManager.AssessmentForUser();
+                _assessmentBusiness.SetAssessorMode(assessmentId, mode);
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok();
+        }
         
     }
 }

@@ -93,7 +93,7 @@ export class MyAssessmentsComponent implements OnInit {
 
 
   exportExtension: string;
-  importExtensions: string;
+  importExtensions: string = '.csetw';
 
   displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
 

@@ -34,10 +34,8 @@ import { Router } from '@angular/router';
 import { DemographicExtendedService } from './demographic-extended.service';
 import { Answer } from '../models/questions.model';
 import { BehaviorSubject, first, firstValueFrom, Observable } from 'rxjs';
-import { TranslocoService } from '@jsverse/transloco';
 import { ConversionService } from './conversion.service';
 import { ConstantsService } from './constants.service';
-
 
 export interface Role {
   assessmentRoleId: number;
@@ -59,7 +57,7 @@ export class AssessmentService {
   private initialized = false;
   public applicationMode: string;
   public assessmentStateChanged$ = new BehaviorSubject(this.c.NAV_APPLY_CIE_TO_CSTATES);
-  
+
   /**
    * This is private because we need a setter so that we can do things
    * when the assessment is loaded.
@@ -645,6 +643,10 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'encryptStatus');
   }
 
+  hasGlobalDocuments(){
+    return this.http.get(this.apiUrl+ 'hasGlobalDocuments');
+  }
+
 
   updateAnswer(answer: Answer) {
 
@@ -666,6 +668,9 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'upgrades');
   }
 
-
+  setAssessorSetting(mode: boolean) {
+    this.assessment.assessorMode = mode;
+    return this.http.post(this.apiUrl + 'assessormode', mode, headers)
+  }
 
 }

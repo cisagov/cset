@@ -69,6 +69,7 @@
   "version available": "Доступна версія:",
   "link version": "Натисніть тут, щоб переглянути або завантажити версії CSET.",
   "legend": "Легенда",
+  "assessment settings": "Налаштування оцінювання",
   "img suffix": "_uk",
   "publisher": {
     "cset": {
@@ -546,7 +547,8 @@
     "scope": "Область застосування",
     "recommended action": "Рекомендована дія",
     "free services": "Безкоштовні послуги та довідкові матеріали",
-    "implementation guidance": "Посібники із впровадження",
+    "implementation guidance CPG": "Посібники із впровадження",
+    "implementation guidance CPG2": "Критерії Оцінювання",
     "attestation": "Атестація",
     "measurement": "Вимірювання",
     "component type": "Тип компоненту",
@@ -656,7 +658,7 @@
       "user language": "Мова користувача",
       "logout": "Вийти",
       "settings": "Налаштування",
-      "encrypt": "Шифрування пароля для експорту оцінки",
+      "encrypt": "Шифрувати Експорт Оцінки",
       "on": "Увімкнено",
       "off": "Вимкнено"
     }

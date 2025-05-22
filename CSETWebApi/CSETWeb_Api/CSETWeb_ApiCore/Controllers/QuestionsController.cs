@@ -587,6 +587,20 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Changes if document is Globally accessible
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isGlobal"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/ChangeGlobal")]
+        public IActionResult ChangeGlobal([FromQuery] int id, [FromQuery] Boolean isGlobal)
+        {
+            _document.ChangeGlobal(id, isGlobal);
+            return Ok();
+        }
+
 
         /// <summary>
         /// Detaches a stored document from the answer.  

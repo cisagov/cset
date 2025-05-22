@@ -36,8 +36,8 @@
 
             <hr class="menu-divider" />
 
-            <button mat-menu-item [disabled]="!inAssessment()" *ngIf="showItemForCurrentSkin('assessment documents')"
-                [ngClass]="{'disabled-menu-item' : !inAssessment()}" (click)="showAssessDocs()">
+            <button mat-menu-item [disabled]="isNullOrEmptyAssessment() && !globalDocuments" *ngIf="showItemForCurrentSkin('assessment documents')"
+                [ngClass]="{'disabled-menu-item' : isNullOrEmptyAssessment() && !globalDocuments}" (click)="showAssessDocs()">
                 <span class="cset-icons-books-stack-1 fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.tools.assessment documents') }}</span>
             </button>
@@ -104,8 +104,7 @@
         </button>
 
         <mat-menu #help="matMenu" class="menu-panel">
-            <a mat-menu-item href="{{docUrl}}htmlhelp/index.htm"
-                target="_blank">
+            <a mat-menu-item href="{{docUrl}}htmlhelp/index.htm" target="_blank">
                 <span class="cset-icons-book-open fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.help.cset user guide') }}</span>
             </a>
@@ -171,7 +170,7 @@
                 <span class="cset-icons-key fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.user.change password') }}</span>
             </button>
-            <button mat-menu-item *ngIf="showMenuItem('language picker')" (click)="editLanguage()">
+            <button mat-menu-item *ngIf="showMenuItem('language picker')" (click)="userSettings()">
                 <span class="fa-solid fa-gear fs-base me-2 align-middle"></span>
                 <span>{{t('menu.user.settings')}}</span>
             </button>

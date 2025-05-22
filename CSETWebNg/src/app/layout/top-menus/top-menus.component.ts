@@ -64,6 +64,7 @@ export class TopMenusComponent implements OnInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   showFullAccessKey = false;
+  globalDocuments:boolean = false;
 
   @Input()
   skin: string;
@@ -92,7 +93,7 @@ export class TopMenusComponent implements OnInit {
         this.hasPath(localStorage.getItem('returnPath'));
       }
     }
-
+    this.checkHasGlobalDocuments();
     this.setupShortCutKeys();
   }
 
@@ -367,17 +368,6 @@ export class TopMenusComponent implements OnInit {
       if (results.enableFeatureButtonClicked && this.router.url == '/home/landing-page-tabs') {
         this.gallerySvc.refreshCards();
       }
-
-      // Need to reload application in two cases.
-      // Case 1: cisaWorkflow switch is now on but configSvc still has non IOD installationMode set.
-      // Case 2: cisaWorkflow switch is now off but configSvc still has IOD installationMode set.
-      if ((results.cisaWorkflowEnabled && this.configSvc.installationMode != 'IOD') ||
-        (!results.cisaWorkflowEnabled && this.configSvc.installationMode == 'IOD')) {
-        this.configSvc.setCisaAssessorWorkflow(results.cisaWorkflowEnabled).subscribe(() => {
-          this.goHome();
-          window.location.reload();
-        });
-      }
     });
   }
 
@@ -480,7 +470,7 @@ export class TopMenusComponent implements OnInit {
   /**
    * Display a dialog to let the user change the display language.
    */
-  editLanguage() {
+  userSettings() {
     if (this.dialog.openDialogs[0]) {
       return;
     }
@@ -488,6 +478,17 @@ export class TopMenusComponent implements OnInit {
     this.dialogRef.afterClosed().subscribe((results) => {
       if (results) {
         this.assessSvc.persistEncryptPreference(results.encryption).subscribe(() => { });
+        this.configSvc.setCisaAssessorWorkflow(results.cisaWorkflowEnabled).subscribe(() => { });
+        // Need to reload application in two cases.
+        // Case 1: cisaWorkflow switch is now on but configSvc still has non IOD installationMode set.
+        // Case 2: cisaWorkflow switch is now off but configSvc still has IOD installationMode set.
+        if ((results.cisaWorkflowEnabled && this.configSvc.installationMode != 'IOD') ||
+          (!results.cisaWorkflowEnabled && this.configSvc.installationMode == 'IOD')) {
+          this.configSvc.setCisaAssessorWorkflow(results.cisaWorkflowEnabled).subscribe(() => {
+            this.goHome();
+            window.location.reload();
+          });
+        }
       }
     });
   }
@@ -547,6 +548,21 @@ export class TopMenusComponent implements OnInit {
   inAssessment() {
     return localStorage.getItem('assessmentId');
   }
+
+  isNullOrEmptyAssessment() {
+    let str = localStorage.getItem('assessmentId');
+    let hasNoVal = str === null || str === undefined || str === "";
+    return hasNoVal;
+  }
+
+  checkHasGlobalDocuments():void {
+    let isGlobal = false;
+    this.assessSvc.hasGlobalDocuments().subscribe(
+      (response:any)=>{
+        this.globalDocuments = response;
+      }
+    );
+  }  
 
   showAssessDocs() {
     if (this.dialog.openDialogs[0]) {
