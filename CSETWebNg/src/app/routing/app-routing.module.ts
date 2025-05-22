@@ -54,7 +54,7 @@ import { PrivacyWarningComponent } from '../initial/privacy-warning/privacy-warn
 import { PrivacyWarningRejectComponent } from '../initial/privacy-warning-reject/privacy-warning-reject.component';
 import { LogoutComponent } from '../initial/logout/logout.component';
 import { LoginAccessKeyComponent } from '../initial/login-access-key/login-access-key.component';
-import { AdminSettingsComponent } from '../dialogs/admin-settings/admin-settings.component';
+import { AdminSettingsComponent } from '../initial/admin-settings/admin-settings.component';
 
 const appRoutes: Routes = [
   // reports routing
