@@ -48,7 +48,8 @@ export class ModuleContentLaunchComponent implements OnInit {
    */
   constructor(
     private setBuilderSvc: SetBuilderService,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService,
+    public assessSvc: AssessmentService,
   ) { }
 
   /**
@@ -63,13 +64,14 @@ export class ModuleContentLaunchComponent implements OnInit {
         return 0;
       });
     });
-
-    this.models = AssessmentService.allMaturityModels;
-    this.models?.sort((a, b) => {
-      if (a.modelTitle < b.modelTitle) { return -1; }
-      if (a.modelTitle > b.modelTitle) { return 1; }
-      return 0;
-    });
+    this.assessSvc.getAllMaturityModels().subscribe(data=>{
+      this.models=data;
+      this.models?.sort((a, b) => {
+        if (a.modelTitle < b.modelTitle) { return -1; }
+        if (a.modelTitle > b.modelTitle) { return 1; }
+        return 0;
+      });
+    })
   }
 
   /**
