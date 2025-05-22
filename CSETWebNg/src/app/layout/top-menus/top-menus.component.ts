@@ -609,7 +609,6 @@ export class TopMenusComponent implements OnInit {
     this.userSvg.getRole().subscribe(
       (data: any) => {
         if (data.role == 'ADMIN') {
-          console.log(data.role)
           this.admin = true;
         } else {
           this.admin = false;
