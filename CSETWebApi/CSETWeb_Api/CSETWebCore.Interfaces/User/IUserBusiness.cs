@@ -4,6 +4,9 @@
 // 
 // 
 //////////////////////////////// 
+
+using System.Collections.Generic;
+using CSETWebCore.Api.Models;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
@@ -23,6 +26,12 @@ namespace CSETWebCore.Interfaces.User
 
         string InsertRandom(string s, string choices, int number);
         
-        string GetRole(int userId);
+        string GetRole(int? userId);
+
+        void UpdateRole(int roleId, int? userId);
+
+        List<ROLES> GetAvailableRoles();
+
+        List<UserRole> GetUsers();
     }
 }
