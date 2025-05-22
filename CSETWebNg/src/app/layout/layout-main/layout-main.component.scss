@@ -1362,6 +1362,12 @@ div.spinner-size-50 {
   max-height: 50px;
 }
 
+
+div.spinner-size-20 {
+  max-width: 20px;
+  max-height: 20px;
+}
+
 /* Safari */
 @-webkit-keyframes spin-wait {
   0% {
@@ -4069,7 +4075,8 @@ h6.dropdown-header {
   padding: 0 1rem 1rem 1rem;
   margin-top: 1rem;
 }
-.notify-snackbar{
+
+.notify-snackbar {
   background-color: default !important;
 }
 
