@@ -52,7 +52,7 @@ import { UserSettingsComponent } from '../../dialogs/user-settings/user-settings
 import { translate } from '@jsverse/transloco';
 import { FileExportService } from '../../services/file-export.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
-import { AdminSettingsComponent } from '../../dialogs/admin-settings/admin-settings.component';
+import { AdminSettingsComponent } from '../../initial/admin-settings/admin-settings.component';
 import { UserService } from '../../services/user.service';
 
 

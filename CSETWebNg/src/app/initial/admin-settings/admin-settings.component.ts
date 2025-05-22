@@ -22,8 +22,6 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { SetBuilderService } from '../../services/set-builder.service';
-import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import { UserService } from '../../services/user.service';
 import { Roles, UserRole } from '../../models/user.model';
@@ -60,11 +58,9 @@ export class AdminSettingsComponent implements OnInit {
 
   // Return users from database 
   getUsers() {
-    this.userSvg.getUsers().subscribe(
-      data => {
-        this.users = data
-      }
-    )
+    this.userSvg.getUsers().subscribe(data => {
+      this.users = data
+    });
   }
 
   // Update user role 
