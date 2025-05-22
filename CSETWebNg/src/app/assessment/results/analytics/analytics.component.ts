@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfigService } from '../../../services/config.service';
 import { AlertComponent } from '../../../dialogs/alert/alert.component';
 import { AnalyticsloginComponent } from '../analysis/analytics-login/analytics-login.component';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
     selector: 'app-analytics',
@@ -25,7 +26,7 @@ export class AnalyticsComponent implements OnInit {
             sectorName: '',
             industryName: '',
             assets: '',
-            size: '', 
+            size: '',
             alias: ''
         },
         questionAnswers: []
@@ -34,8 +35,16 @@ export class AnalyticsComponent implements OnInit {
     username: string = '';
     password: string = '';
 
+    uploadInProgress = false;
+    errorMessage = '';
+
+
+    /**
+     * 
+     */
     constructor(private router: Router,
         public navSvc: NavigationService,
+        private authSvc: AuthenticationService,
         public analyticsSvc: AnalyticsService,
         private route: ActivatedRoute,
         private snackBar: MatSnackBar,
@@ -43,6 +52,9 @@ export class AnalyticsComponent implements OnInit {
         private config: ConfigService
     ) { }
 
+    /**
+     * 
+     */
     ngOnInit() {
         this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
             this.router.navigate([value], { relativeTo: this.route.parent });
@@ -52,6 +64,9 @@ export class AnalyticsComponent implements OnInit {
         });
     }
 
+    /**
+     * 
+     */
     getAnalytics() {
         this.analyticsSvc.getAnalytics().subscribe(
             (data: any) => {
@@ -67,20 +82,50 @@ export class AnalyticsComponent implements OnInit {
      * Submit With Login
      */
     showLogin() {
-       const dialogRef = this.dialog.open(AnalyticsloginComponent, {
-            width: '300px',
-            disableClose: true,
-            data: this.analytics
-        }).afterClosed().subscribe(info => {
-            if (!!info && info.cancel) {
-                // user canceled, do nothing
-            } 
-        });
+        this.errorMessage = '';
+
+        // if we already signed in and have the remote token, submit without re-asking for credentials
+        var remoteToken = localStorage.getItem('remoteToken') ?? '';
+        this.analyticsSvc.isRemoteTokenValid(remoteToken).subscribe((isValidRemoteToken) => {
+            if (isValidRemoteToken.toString().toLowerCase() == 'true') {
+                this.uploadInProgress = true;
+                this.analyticsSvc.postAnalyticsWithLogin(remoteToken).subscribe(x => {
+                    this.uploadInProgress = false;
+                    this.errorMessage = 'The assessment was successfully uploaded'
+                },
+                    error => {
+                        this.uploadInProgress = false;
+                        this.errorMessage = '<i class="fa fa-triangle-exclamation me-2"></i>' + error.error;
+                    });
+                return;
+            } else {
+                // if we dont have a valid remote token, prompt for credentials
+                const dialogRef = this.dialog.open(AnalyticsloginComponent, {
+                    width: '300px',
+                    disableClose: true,
+                    data: this.analytics
+                }).afterClosed().subscribe(info => {
+                    if (!!info && info.cancel) {
+                        // user canceled, do nothing
+                    }
+                });
+            }
+        },
+            (error) => {
+                console.warn('call to validate remote token error');
+                console.warn(<Error>error.message);
+            }
+        );
+    }
+
+    logoutRemote() {
+        localStorage.removeItem('remoteToken');
     }
 
     getRawData() {
         return JSON.stringify(this.analytics);
     }
+
     /**
      * 
      * @param val 
