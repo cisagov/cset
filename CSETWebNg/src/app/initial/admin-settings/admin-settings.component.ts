@@ -22,7 +22,6 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../../services/config.service';
 import { UserService } from '../../services/user.service';
 import { Roles, UserRole } from '../../models/user.model';
 
@@ -40,7 +39,6 @@ export class AdminSettingsComponent implements OnInit {
   roles: Roles[] = [];
 
   constructor(
-    public configSvc: ConfigService,
     private userSvg: UserService) {
   }
 
