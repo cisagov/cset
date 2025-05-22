@@ -76,6 +76,7 @@
   "link version": "Click here to view or download releases.",
   "legend": "Legend",
   "img suffix": "_en",
+  "assessment settings": "Assessment Settings",
   "publisher": {
     "cset": {
       "app long name": "Cyber Security Evaluation Tool",
@@ -656,7 +657,8 @@
     "scope": "Scope",
     "recommended action": "Recommended Action",
     "free services": "Free Services and References",
-    "implementation guidance": "Implementation Guidance",
+    "implementation guidance CPG": "Implementation Guidance",
+    "implementation guidance CPG2": "Assessment Criteria",
     "attestation": "Attestation",
     "measurement": "Measurement",
     "component type": "Component Type",
@@ -766,7 +768,7 @@
       "user language": "User Language",
       "logout": "Logout",
       "settings": "Settings",
-      "encrypt": "Password encryption for assessment export",
+      "encrypt": "Encrypt Assessment Export",
       "on": "On",
       "off": "Off"
     }
@@ -886,7 +888,8 @@
     "module name": "Module Name",
     "module full name": "Module Full Name",
     "enable modules": "Enable Modules",
-    "cisa assessor workflow": "CISA Assessor Workflow"
+    "cisa assessor workflow": "CISA Assessor",
+    "assessor mode": "The assessment is currently in assessor workflow mode."
   },
   "parameters": {
     "text1": "Many Standards in 'Requirements Mode' contain parameters that you can change to match your specific situation. The table below allows you to change the parameter values for the indicated parameter names in this Assessment by clicking on the Parameter Value. Changing a parameter value will update all related parameter values in the requirement text of the currently selected Cybersecurity Standard(s).",
@@ -966,6 +969,10 @@
     },
     "rra": {
       "display-name": "Ransomware Readiness Assessment (RRA)"
+    },
+    "cisa vadr": {
+      "display-name": "CISA Validated Architecture Design Review (VADR)",
+      "model short title": "CISA VADR"
     }
   },
   "aggregation": {

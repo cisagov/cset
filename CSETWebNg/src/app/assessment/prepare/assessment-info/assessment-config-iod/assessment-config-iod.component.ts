@@ -7,6 +7,7 @@ import { ConfigService } from '../../../../services/config.service';
 import { DemographicIodService } from '../../../../services/demographic-iod.service';
 import { DemographicService } from '../../../../services/demographic.service';
 import { Upgrades } from '../../../../models/assessment-info.model';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-assessment-config-iod',
@@ -23,11 +24,13 @@ export class AssessmentConfigIodComponent implements OnInit {
   showUpgrade: boolean = false;
   targetModel: string = '';
 
+
   constructor(
     private assessSvc: AssessmentService,
     private demoSvc: DemographicService,
     private iodDemoSvc: DemographicIodService,
-    private configSvc: ConfigService
+    private configSvc: ConfigService,
+    private navSvc: NavigationService
   ) { }
 
   ngOnInit() {
@@ -51,7 +54,6 @@ export class AssessmentConfigIodComponent implements OnInit {
         }
       })
     }
-
   }
 
   /**
@@ -129,5 +131,15 @@ export class AssessmentConfigIodComponent implements OnInit {
 
   showFacilitator() {
     return this.configSvc.behaviors.showFacilitatorDropDown;
+  }
+
+  updateAssessorMode() {
+    this.assessment.assessorMode = !this.assessment.assessorMode;
+    // Sets assessment level assessor mode and navigates to configuration page in non-assessor mode
+    this.assessSvc.setAssessorSetting(this.assessment.assessorMode).subscribe(() => {
+      this.navSvc.navBack('info2');
+    });
+
+
   }
 }

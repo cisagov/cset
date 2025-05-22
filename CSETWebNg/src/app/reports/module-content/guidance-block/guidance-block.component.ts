@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
+import { Question } from '../../../models/questions.model';
 
 @Component({
     selector: 'app-guidance-block',
@@ -31,8 +32,10 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class GuidanceBlockComponent implements OnInit {
 
-  @Input()
-  supplementalInfo: string;
+  @Input('question')
+  q: Question;
+
+  
 
   constructor() { }
 
