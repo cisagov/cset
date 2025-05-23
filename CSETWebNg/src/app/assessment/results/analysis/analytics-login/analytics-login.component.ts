@@ -83,7 +83,7 @@ export class AnalyticsloginComponent implements OnInit {
                 data: {
                   title: 'Success',
                   iconClass: 'cset-icons-check-circle',
-                  messageText: "Assessment has been uploaded"
+                  messageText: "Assessment has been uploaded to the server"
                 }
               });
 

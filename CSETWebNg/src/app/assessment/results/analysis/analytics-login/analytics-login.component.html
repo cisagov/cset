@@ -3,12 +3,12 @@
       <span class="cset-icons-key-shield fs-base-6 me-3"></span>
       <span>Login to Data Submission</span>
     </div>
-    <mat-dialog-content class="p-3 pb-0 pe-0 oy-auto d-flex flex-column flex-11a">
+    <mat-dialog-content class="p-3 oy-auto d-flex flex-column flex-11a">
   
       <div class="container">
         <form [formGroup]="dataloginForm">
           <p>
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Username</mat-label>
               <input type="text" trim="blur" matInput placeholder="Username" formControlName="username"
                 [errorStateMatcher]="matcherusername">
@@ -20,7 +20,7 @@
           </p>
   
           <p>
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>Password</mat-label>
               <input type="password" trim="blur" matInput placeholder="Password" formControlName="password"
                 [errorStateMatcher]="matcherpassword">
