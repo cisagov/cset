@@ -28,6 +28,12 @@
                     </div>
                 </div>
             </div>
+            <div class="row my-3">
+                <div class="col-12" [innerHTML]="errorMessage">
+                </div>
+            </div>
+
+            <button class="btn btn-link" (click)="logoutRemote()">Logout from Remote Server</button>
         </div>
         <div>
             <button class="btn btn-link" (click)="logoutRemote()">Logout from Remote Server</button>
