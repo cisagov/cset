@@ -36,6 +36,7 @@ export class AnalyticsComponent implements OnInit {
     password: string = '';
 
     uploadInProgress = false;
+    successMessage = '';
     errorMessage = '';
 
 
@@ -82,16 +83,18 @@ export class AnalyticsComponent implements OnInit {
      * Submit With Login
      */
     showLogin() {
+        this.successMessage = '';
         this.errorMessage = '';
+        this.uploadInProgress = true;
 
         // if we already signed in and have the remote token, submit without re-asking for credentials
         var remoteToken = localStorage.getItem('remoteToken') ?? '';
         this.analyticsSvc.isRemoteTokenValid(remoteToken).subscribe((isValidRemoteToken) => {
             if (isValidRemoteToken.toString().toLowerCase() == 'true') {
-                this.uploadInProgress = true;
+                
                 this.analyticsSvc.postAnalyticsWithLogin(remoteToken).subscribe(x => {
                     this.uploadInProgress = false;
-                    this.errorMessage = 'The assessment was successfully uploaded'
+                    this.successMessage = 'The assessment has been uploaded to the server';
                 },
                     error => {
                         this.uploadInProgress = false;
@@ -99,6 +102,8 @@ export class AnalyticsComponent implements OnInit {
                     });
                 return;
             } else {
+                this.uploadInProgress = false;
+
                 // if we dont have a valid remote token, prompt for credentials
                 const dialogRef = this.dialog.open(AnalyticsloginComponent, {
                     width: '300px',
@@ -107,19 +112,23 @@ export class AnalyticsComponent implements OnInit {
                 }).afterClosed().subscribe(info => {
                     if (!!info && info.cancel) {
                         // user canceled, do nothing
-                    }
+                    } 
                 });
             }
         },
             (error) => {
+                this.uploadInProgress = false;
                 console.warn('call to validate remote token error');
                 console.warn(<Error>error.message);
+                this.errorMessage = error.message;
             }
         );
     }
 
     logoutRemote() {
         localStorage.removeItem('remoteToken');
+        this.successMessage = 'Logout complete';
+        this.errorMessage = '';
     }
 
     getRawData() {
@@ -137,6 +146,9 @@ export class AnalyticsComponent implements OnInit {
         return false;
     }
 
+    /**
+     * 
+     */
     openSnackBar(message) {
         this.snackBar.open(message, "", {
             duration: 4000,

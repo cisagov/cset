@@ -12,8 +12,9 @@
                 </p>
             </div>
             <div class="row my-4">
-                <div class="col-12">
-                    <button class="btn btn-submit d-flex flex-row align-items-center" type="button" (click)="showLogin()">
+                <div class="col-12 d-flex flex-row align-items-center">
+                    <button class="btn btn-sync d-flex flex-row align-items-center me-5" type="button"
+                        (click)="showLogin()">
                         <i class="fa fa-upload me-3"></i>
                         Sync
                         <div *ngIf="uploadInProgress"
@@ -21,13 +22,14 @@
                             <div class="spinner-size-20"></div>
                         </div>
                     </button>
+                    <div class="alert alert-success mb-0" *ngIf="successMessage.length > 0" [innerHTML]="successMessage">
+                    </div>
+                    <div class="alert alert-danger mb-0" *ngIf="errorMessage.length > 0" [innerHTML]="errorMessage">
+                    </div>
                 </div>
             </div>
-            <div class="row my-3">
-                <div class="col-12" [innerHTML]="errorMessage">
-                </div>
-            </div>
-
+        </div>
+        <div>
             <button class="btn btn-link" (click)="logoutRemote()">Logout from Remote Server</button>
         </div>
 

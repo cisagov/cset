@@ -813,6 +813,13 @@ table.td-align-top td {
   margin: 2px;
 }
 
+.btn-sync {
+  color: $gray-100 !important;
+  background-color: $primary-600 !important;
+  border-color: $primary-600 !important;
+  height: fit-content;
+}
+
 /* Answer option button styles */
 .btn-yes {
   background-color: $white;
