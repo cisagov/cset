@@ -85,7 +85,6 @@ export class TopMenusComponent implements OnInit {
     private _hotkeysService: HotkeysService,
     private gallerySvc: GalleryService,
     private fileExportSvc: FileExportService,
-    private http: HttpClient,
     private userSvg: UserService
   ) { }
 
@@ -595,14 +594,6 @@ export class TopMenusComponent implements OnInit {
   goHome() {
     this.assessSvc.dropAssessment();
     this.router.navigate(['/home'], { queryParams: { tab: 'myAssessments' } });
-  }
-
-  adminSettings() {
-    if (this.dialog.openDialogs[0]) {
-      return;
-    }
-    this.dialogRef = this.dialog.open(AdminSettingsComponent);
-    this.dialogRef.afterClosed().subscribe();
   }
 
   showAdminSettings() {
