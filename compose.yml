@@ -2,6 +2,7 @@
 services:
   web:
     container_name: cset-web
+    image: ghcr.io/cisagov/cset-web:latest
     build:
       context: CSETWebNg
     restart: unless-stopped
@@ -14,6 +15,7 @@ services:
       - 443:443
   api:
     container_name: cset-api
+    image: ghcr.io/cisagov/cset-api:latest
     hostname: api
     build:
       context: CSETWebApi
