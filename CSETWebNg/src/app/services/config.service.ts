@@ -64,7 +64,8 @@ export class ConfigService {
   dhsEmail: string;
 
   onlineUrl: string;
-  analyticsUrl: string = 'http://134.20.8.30:5778/';
+  /**analyticsUrl: string = 'http://134.20.8.30:5778/'; */
+  analyticsUrl= 'http://localhost:5001/';
 
   csetGithubApiUrl: string;
   helpContactEmail: string;
@@ -194,7 +195,8 @@ export class ConfigService {
     }
 
     this.appUrl = appProtocol + this.config.app.host + appPort;
-    this.analyticsUrl = 'http://134.20.8.30:5778/';
+    //this.analyticsUrl = 'http://134.20.8.30:5778/';
+    this.analyticsUrl = 'http://localhost:5001/';
     this.helpContactEmail = this.config.helpContactEmail;
     this.helpContactPhone = this.config.helpContactPhone;
     this.csetGithubApiUrl = this.config.csetGithubApiUrl;
