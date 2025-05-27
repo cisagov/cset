@@ -534,12 +534,8 @@ namespace CSETWebCore.Helpers
 
         public int AssessmentForUser(String tokenString)
         {
-            SetToken(tokenString);
-            int? userId = PayloadInt(Constants.Constants.Token_UserId);
-            string accessKey = Payload(Constants.Constants.Token_AccessKey);
-            int? assessmentId = PayloadInt(Constants.Constants.Token_AssessmentId);
-
-            return AssessmentForUser(userId, accessKey, assessmentId);
+            SetEnterpriseToken(tokenString);
+            return AssessmentForUser();
         }
 
         public bool IsUserAuthorizedForAssessment()

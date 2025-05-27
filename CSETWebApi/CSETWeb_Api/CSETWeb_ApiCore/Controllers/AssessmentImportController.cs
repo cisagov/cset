@@ -123,7 +123,12 @@ namespace CSETWebCore.Api.Controllers
                         }
                     }
 
-                    await _importManager.ProcessCSETAssessmentImport(bytes, currentUserId, accessKey, _context, pwd);
+
+                    // overwrite the assessment if instructed in the header
+                    bool.TryParse(Request.Headers["x-cset-overwrite"], out bool overwrite);
+
+
+                    await _importManager.ProcessCSETAssessmentImport(bytes, currentUserId, accessKey, _context, pwd, overwrite);
                 }
             }
             catch (Exception e)
