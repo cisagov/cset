@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { ReportService } from '../../../../services/report.service';
+import { Question } from '../../../../models/questions.model';
 
 @Component({
     selector: 'app-mc-question',
@@ -33,7 +34,7 @@ import { ReportService } from '../../../../services/report.service';
 export class McQuestionComponent implements OnInit {
 
   @Input()
-  q: any;
+  q: Question;
 
   constructor(
     public reportSvc: ReportService

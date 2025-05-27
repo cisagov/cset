@@ -577,7 +577,8 @@
         "scope": "Ámbito",
         "recommended action": "Acción recomendada",
         "free services": "Servicios gratuitas y referencias",
-        "implementation guidance": "Guía de implementación",
+        "implementation guidance CPG": "Guía de implementación",
+        "implementation guidance CPG2": "Criterios de evaluación",
         "attestation": "Atestación",
         "measurement": "Medición",
         "component type": "Tipo de componente",
@@ -919,5 +920,11 @@
         "tooltip": "Seleccione un sector de Demografía en Información de Evaluación",
         "my sector": "Mi Sector",
         "all sectors": "Todos los Sectores"
-    }
+    },
+  "Module Content Report": "Informe de Contenido del Módulo.",
+  "Select a Standard": "Seleccionar un Estándar",
+  "Launch Report": "Abrir Informe",
+  "Select a Model": "Seleccione un Modelo.",
+  "ModuleContentLaunchComponent p1": "Este informe ilustra la estructura y el contenido de preguntas de un módulo CSET, por ejemplo, un estándar de la industria o un modelo de madurez o de mejores prácticas.",
+  "ModuleContentLaunchComponent p2": "El informe generado tiene controles para mostrar u ocultar la guía y las referencias para cada pregunta."
 }
