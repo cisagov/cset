@@ -71,9 +71,9 @@ export class AnalyticsService {
    * Check
    */
   isRemoteTokenValid(tokenString: string | null) {
-    var payload = {
-      tokenString: tokenString
-    };
+    if (!tokenString) {
+      tokenString = '';
+    }
 
     return this.http.post(this.analyticsUrl + 'auth/istokenvalid', JSON.stringify(tokenString), this.headers);
   }
