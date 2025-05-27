@@ -36,8 +36,10 @@
 
             <hr class="menu-divider" />
 
-            <button mat-menu-item [disabled]="isNullOrEmptyAssessment() && !globalDocuments" *ngIf="showItemForCurrentSkin('assessment documents')"
-                [ngClass]="{'disabled-menu-item' : isNullOrEmptyAssessment() && !globalDocuments}" (click)="showAssessDocs()">
+            <button mat-menu-item [disabled]="isNullOrEmptyAssessment() && !globalDocuments"
+                *ngIf="showItemForCurrentSkin('assessment documents')"
+                [ngClass]="{'disabled-menu-item' : isNullOrEmptyAssessment() && !globalDocuments}"
+                (click)="showAssessDocs()">
                 <span class="cset-icons-books-stack-1 fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.tools.assessment documents') }}</span>
             </button>
@@ -170,9 +172,13 @@
                 <span class="cset-icons-key fs-base me-2 align-middle"></span>
                 <span>{{ t('menu.user.change password') }}</span>
             </button>
-            <button mat-menu-item *ngIf="showMenuItem('language picker')" (click)="userSettings()">
+            <button mat-menu-item *ngIf="showMenuItem()" (click)="userSettings()">
                 <span class="fa-solid fa-gear fs-base me-2 align-middle"></span>
                 <span>{{t('menu.user.settings')}}</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/admin-settings']" *ngIf="showMenuItem('admin')">
+                <span class="fa-solid fa-sliders fs-base me-2 align-middle"></span>
+                <span>{{t('menu.user.admin')}}</span>
             </button>
             <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()">
                 <span class="cset-icons-logout fs-base me-2 align-middle"></span>

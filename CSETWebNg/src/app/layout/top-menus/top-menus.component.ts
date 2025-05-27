@@ -52,6 +52,8 @@ import { UserSettingsComponent } from '../../dialogs/user-settings/user-settings
 import { translate } from '@jsverse/transloco';
 import { FileExportService } from '../../services/file-export.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
+import { AdminSettingsComponent } from '../../initial/admin-settings/admin-settings.component';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -64,7 +66,8 @@ export class TopMenusComponent implements OnInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   showFullAccessKey = false;
-  globalDocuments:boolean = false;
+  globalDocuments: boolean = false;
+  admin: boolean = false;
 
   @Input()
   skin: string;
@@ -82,7 +85,7 @@ export class TopMenusComponent implements OnInit {
     private _hotkeysService: HotkeysService,
     private gallerySvc: GalleryService,
     private fileExportSvc: FileExportService,
-    private http: HttpClient
+    private userSvg: UserService
   ) { }
 
   ngOnInit(): void {
@@ -95,6 +98,7 @@ export class TopMenusComponent implements OnInit {
     }
     this.checkHasGlobalDocuments();
     this.setupShortCutKeys();
+    this.showAdminSettings();
   }
 
   hasPath(rpath: string) {
@@ -263,6 +267,10 @@ export class TopMenusComponent implements OnInit {
 
     if (item == 'resume') {
       return this.inAssessment() ?? false;
+    }
+
+    if (item == 'admin') {
+      return this.admin;
     }
 
 
@@ -555,14 +563,14 @@ export class TopMenusComponent implements OnInit {
     return hasNoVal;
   }
 
-  checkHasGlobalDocuments():void {
+  checkHasGlobalDocuments(): void {
     let isGlobal = false;
     this.assessSvc.hasGlobalDocuments().subscribe(
-      (response:any)=>{
+      (response: any) => {
         this.globalDocuments = response;
       }
     );
-  }  
+  }
 
   showAssessDocs() {
     if (this.dialog.openDialogs[0]) {
@@ -586,5 +594,17 @@ export class TopMenusComponent implements OnInit {
   goHome() {
     this.assessSvc.dropAssessment();
     this.router.navigate(['/home'], { queryParams: { tab: 'myAssessments' } });
+  }
+
+  showAdminSettings() {
+    this.userSvg.getRole().subscribe(
+      (data: any) => {
+        if (data.role == 'ADMIN') {
+          this.admin = true;
+        } else {
+          this.admin = false;
+        }
+      }
+    )
   }
 }

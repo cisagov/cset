@@ -54,7 +54,7 @@ import { PrivacyWarningComponent } from '../initial/privacy-warning/privacy-warn
 import { PrivacyWarningRejectComponent } from '../initial/privacy-warning-reject/privacy-warning-reject.component';
 import { LogoutComponent } from '../initial/logout/logout.component';
 import { LoginAccessKeyComponent } from '../initial/login-access-key/login-access-key.component';
-
+import { AdminSettingsComponent } from '../initial/admin-settings/admin-settings.component';
 
 const appRoutes: Routes = [
   // reports routing
@@ -152,7 +152,10 @@ const appRoutes: Routes = [
         path: 'resource-library',
         component: ResourceLibraryComponent
       },
-
+      {
+        path: 'admin-settings',
+        component: AdminSettingsComponent
+      },
       {
         path: 'assessment/:id',
         component: AssessmentComponent,
