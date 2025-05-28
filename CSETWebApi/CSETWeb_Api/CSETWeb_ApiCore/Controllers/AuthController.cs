@@ -212,6 +212,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/auth/istokenvalid")]
         public IActionResult IsTokenValid([FromBody] string value)
         {
+            _logger.Info("api/auth/istokenvalid");
             return Ok(_tokenManager.IsTokenValid(value));
         }
 
