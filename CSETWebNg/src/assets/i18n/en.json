@@ -770,7 +770,8 @@
       "settings": "Settings",
       "encrypt": "Encrypt Assessment Export",
       "on": "On",
-      "off": "Off"
+      "off": "Off",
+      "admin": "Admin Settings"
     }
   },
   "merge examinations": {
