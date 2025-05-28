@@ -48,7 +48,7 @@
         <div class="mb-2" [innerHTML]="q.recommendedAction"></div>
     </div>
 
-    <app-guidance-block [supplementalInfo]="q.supplementalInfo" *ngIf="reportSvc.showGuidance"></app-guidance-block>
+    <app-guidance-block [question]="q" *ngIf="reportSvc.showGuidance"></app-guidance-block>
 
     <app-references-block [sourceDocs]="q.sourceDocuments" [additionalDocs]="q.additionalDocuments"
         [referenceText]="q.referenceText" *ngIf="reportSvc.showReferences"></app-references-block>

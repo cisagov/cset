@@ -465,6 +465,7 @@
     "related questions": "Related questions",
     "delete document": "Delete document",
     "copy document": "Copy this document to another location",
+    "global document": "Make this document globally accessible",
     "references": "References",
     "observations": "Observations",
     "observations with content": "Observations with content",
@@ -657,7 +658,8 @@
     "scope": "Scope",
     "recommended action": "Recommended Action",
     "free services": "Free Services and References",
-    "implementation guidance": "Implementation Guidance",
+    "implementation guidance CPG": "Implementation Guidance",
+    "implementation guidance CPG2": "Assessment Criteria",
     "attestation": "Attestation",
     "measurement": "Measurement",
     "component type": "Component Type",
@@ -769,7 +771,8 @@
       "settings": "Settings",
       "encrypt": "Encrypt Assessment Export",
       "on": "On",
-      "off": "Off"
+      "off": "Off",
+      "admin": "Admin Settings"
     }
   },
   "merge examinations": {
@@ -955,7 +958,7 @@
     },
     "cpg2": {
       "display-name": "Cyber Performance Goals (CPG) 2.0",
-      "model short title": "CPG 2.0 (draft)"
+      "model short title": "CPG 2.0"
     },
     "cre+": {
       "display-name": "Cyber Resilience Essentials (CRE+)",
@@ -1044,5 +1047,11 @@
     "tooltip": "Select a sector from Demographics in Assessment Information",
     "my sector": "My Sector",
     "all sectors": "All Sectors"
-  }
+  },
+  "Module Content Report": "Module Content Report",
+   "Select a Standard": "Select a Standard",
+   "Launch Report": "Launch Report",
+  "Select a Model": "Select a Model",
+  "ModuleContentLaunchComponent p1": "This report illustrates the structure and question content of a CSET module, e.g., an industry standard or maturity or best practices model.",
+  "ModuleContentLaunchComponent p2": "The generated report has controls to show or hide the guidance and References for each question."
 }

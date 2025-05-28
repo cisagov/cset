@@ -18,6 +18,11 @@
     "documentsIdentifier": "Documents",
     "onlineUrl": "https://cset.inl.gov"
   },
+  "analytics": {
+    "protocol": "http",
+    "host": "localhost",
+    "port": "5001"
+  },
   "library": {
     "protocol": "http",
     "host": "localhost",
@@ -341,7 +346,7 @@
       "moduleName": "CRE+",
       "modelId": "22",
       "displayNameKey": "modules.cre+.display-name",
-      "showDomainHeaders": false,
+      "hideTopLevelGroupingName": true,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {
