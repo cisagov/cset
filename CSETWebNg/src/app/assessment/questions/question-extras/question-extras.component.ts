@@ -45,13 +45,13 @@ import { FileExportService } from '../../../services/file-export.service';
 
 
 @Component({
-    selector: 'app-question-extras',
-    templateUrl: './question-extras.component.html',
-    styleUrls: ['./question-extras.component.css'],
-    encapsulation: ViewEncapsulation.None,
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-question-extras',
+  templateUrl: './question-extras.component.html',
+  styleUrls: ['./question-extras.component.css'],
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class QuestionExtrasComponent implements OnInit {
 
@@ -68,6 +68,7 @@ export class QuestionExtrasComponent implements OnInit {
   expanded = false;
   mode: string;  // selector for which data is being displayed, 'DETAIL', 'SUPP', 'CMNT', 'DOCS', 'OBSV', 'FDBK'.
   answer: Answer;
+  modelName: string;
   dialogRef: MatDialogRef<OkayComponent>;
 
   msgNoSupplemental: string;
@@ -113,6 +114,8 @@ export class QuestionExtrasComponent implements OnInit {
 
       this.showMfr = this.myOptions.showMfr;
     }
+
+    this.modelName = this.assessSvc.assessment.maturityModel?.modelName ?? '';
   }
 
   /**
@@ -218,7 +221,7 @@ export class QuestionExtrasComponent implements OnInit {
   saveComment(e) {
     this.defaultEmptyAnswer();
     this.answer.comment = e.target.value;
-    
+
     this.saveAnswer();
   }
 
@@ -507,12 +510,12 @@ export class QuestionExtrasComponent implements OnInit {
       .subscribe();
   }
 
-  changeGlobal(document){
+  changeGlobal(document) {
     document.isGlobal = !document.isGlobal;
     this.questionsSvc.changeGlobal(document.document_Id, document.isGlobal).subscribe();
   }
-  getIsGlobalColor(doc){
-    if(doc.isGlobal)
+  getIsGlobalColor(doc) {
+    if (doc.isGlobal)
       return "#198754"
     return "#dc3545"
   }
@@ -546,7 +549,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.extras.documents = this.extras.documents.filter(d => d.document_Id !== document.document_Id);
         this.extras.documents.forEach((item, index) => {
           if (item.document_Id == document.document_Id) this.extras.documents.splice(index, 1);
-          
+
         })
         // push the change to the API
         this.questionsSvc.deleteDocument(document.document_Id, this.myQuestion.questionId)

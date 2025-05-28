@@ -21,26 +21,53 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
-import { ReportService } from '../../../../services/report.service';
-import { Question } from '../../../../models/questions.model';
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../services/user.service';
+import { Roles, UserRole } from '../../models/user.model';
+
 
 @Component({
-    selector: 'app-mc-question',
-    templateUrl: './mc-question.component.html',
-    styleUrls: ['./mc-question.component.scss'],
-    standalone: false
+  selector: 'app-admin-settings',
+  templateUrl: './admin-settings.component.html',
+  host: { class: 'd-flex flex-column flex-11a w-100' },
+  standalone: false
 })
-export class McQuestionComponent implements OnInit {
 
-  @Input()
-  q: Question;
+export class AdminSettingsComponent implements OnInit {
+
+  users: UserRole[] = [];
+  roles: Roles[] = [];
 
   constructor(
-    public reportSvc: ReportService
-  ) { }
+    private userSvg: UserService) {
+  }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.getUsers();
+    this.getAvailableRoles();
+  }
+
+  // Return available roles from database
+  getAvailableRoles() {
+    this.userSvg.getAvailableRoles().subscribe(data => {
+      this.roles = data
+    });
+  }
+
+  // Return users from database 
+  getUsers() {
+    this.userSvg.getUsers().subscribe(data => {
+      this.users = data
+    });
+  }
+
+  // Update user role 
+  updateUserRole(user: UserRole) {
+    this.userSvg.updateUserRole(user).subscribe(resp => { });
+  }
+
+  onRoleChange(user: UserRole) {
+    this.updateUserRole(user);
   }
 
 }

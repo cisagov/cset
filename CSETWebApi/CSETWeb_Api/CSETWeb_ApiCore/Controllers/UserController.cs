@@ -1,4 +1,5 @@
-﻿using CSETWebCore.Api.Models;
+﻿using System;
+using CSETWebCore.Api.Models;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Notification;
@@ -8,17 +9,20 @@ using Microsoft.Extensions.Configuration;
 using NLog;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.Business.Authorization;
+using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.Api.Controllers
 {
     [ApiController]
+    [CsetAuthorize]
     public class UserController : ControllerBase
     {
         private readonly CSETContext _context;
         private readonly IUserBusiness _userBusiness;
         private readonly INotificationBusiness _notificationBusiness;
         private readonly IConfiguration _configuration;
-
+        private readonly ITokenManager _tokenManager;
 
         /// <summary>
         /// Constructor.
@@ -27,12 +31,14 @@ namespace CSETWebCore.Api.Controllers
         public UserController(CSETContext context,
             IUserBusiness userBusiness,
             INotificationBusiness notificationBusiness,
-            IConfiguration configuration)
+            IConfiguration configuration, ITokenManager tokenManager)
         {
             _context = context;
             _userBusiness = userBusiness;
             _notificationBusiness = notificationBusiness;
             _configuration = configuration;
+            _tokenManager = tokenManager;
+            
         }
 
 
@@ -146,6 +152,91 @@ namespace CSETWebCore.Api.Controllers
             var gp = new CSETGlobalProperties(_context);
             var secret = gp.GetProperty("UserApprovalApiKey");
             return (apiKey == secret);
+        }
+        
+        /// <summary>
+        /// Checks for current user role.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/getRole")]
+        public IActionResult GetRole()
+        {
+            try
+            {
+                var userId = _tokenManager.GetCurrentUserId();
+                var role = _userBusiness.GetRole(userId);
+                return Ok(new { Role = role });
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok(); 
+        }
+        
+        /// <summary>
+        /// Grabs all users from the database.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/getusers")]
+        public IActionResult GetAllUsers()
+        {           
+            try
+            {
+                var users = _userBusiness.GetUsers();
+                return Ok(users);
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok();
+        }
+        
+        /// <summary>
+        /// Updates user role.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/updateuser")]
+        public IActionResult UpdateUserRole([FromBody] UserRole user)
+        {
+            try
+            {
+                _userBusiness.UpdateRole(user.RoleId, user.UserId);
+                return Ok();
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok(); 
+        }
+        
+        /// <summary>
+        /// Grabs all current roles from the database.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/getavailableroles")]
+        public IActionResult GetAvailableRoles()
+        {
+            try
+            {
+                return Ok(_userBusiness.GetAvailableRoles());
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return Ok(); 
         }
     }
 }

@@ -145,6 +145,7 @@ export interface Question {
     questionType: string;
     questionText: string;
     parmSubs: SubToken[];
+    supplementalInfo: string;
     stdRefId: string;
     answerOptions: string[];
     answer_Id: number;
@@ -168,6 +169,7 @@ export interface Question {
     extrasExpanded: boolean;
 
     // CPG fields
+    securityPractice: string;
     scope: string;
     recommendedAction: string;
     services: string;
@@ -177,6 +179,8 @@ export interface Question {
     isParentQuestion: boolean;
     parentQuestionId: number;
 
+    followups: [];
+    
     visible: boolean;
     options: any[];
     failedIntegrityCheckOptions: IntegrityCheckOption[];
