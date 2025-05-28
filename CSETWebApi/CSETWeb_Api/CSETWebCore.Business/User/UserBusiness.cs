@@ -61,7 +61,7 @@ namespace CSETWebCore.Business.User
                 PasswordResetRequired = true,
                 IsActive = true
             };
-
+            
             // default the new user to NOT active if CSET Online is running in beta mode
             if (new CSETGlobalProperties(_context).GetBoolProperty("IsCsetOnlineBeta") ?? false)
             {
@@ -69,8 +69,7 @@ namespace CSETWebCore.Business.User
             }
 
             tmpContext.USERS.Add(u);
-
-
+            
             try
             {
                 tmpContext.SaveChanges();
@@ -101,8 +100,17 @@ namespace CSETWebCore.Business.User
                 Password = hash,
                 Salt = salt
             };
+            
+            var roles = _context.ROLES.FirstOrDefault(x=>x.RoleName == "USER");
+            var userRole = new USER_ROLES()
+            {
+                UserId = u.UserId,
+                RoleId = roles.RoleId
+            };
+            
             _context.PASSWORD_HISTORY.Add(history);
-
+            _context.USER_ROLES.Add(userRole);
+            
             UserCreateResponse resp = new UserCreateResponse
             {
                 UserId = u.UserId == 0 ? 1 : u.UserId,
