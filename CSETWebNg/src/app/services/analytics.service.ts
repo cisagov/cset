@@ -56,26 +56,35 @@ export class AnalyticsService {
    * 
    */
   getAnalyticsToken(username, password): any {
-    let obj =  JSON.stringify({
-          Email: username,
-          Password: password,
-          TzOffset: new Date().getTimezoneOffset().toString(),
-          Scope: "CSET"
-        });
+    let obj = JSON.stringify({
+      Email: username,
+      Password: password,
+      TzOffset: new Date().getTimezoneOffset().toString(),
+      Scope: "CSET"
+    });
     return this.http.post(
       this.analyticsUrl + 'auth/login', obj, this.headers
     );
   }
 
   /**
+   * Check
+   */
+  isRemoteTokenValid(tokenString: string | null) {
+    if (!tokenString) {
+      tokenString = '';
+    }
+
+    return this.http.post(this.analyticsUrl + 'auth/istokenvalid', JSON.stringify(tokenString), this.headers);
+  }
+
+  /**
    * 
    */
-  postAnalyticsWithLogin(token): any {
+  postAnalyticsWithLogin(token: string): any {
     //const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.headers.headers = this.headers.headers.append('RemoteAuthorization', `Bearer ${token}`);
+    this.headers.headers = this.headers.headers.set('RemoteAuthorization', `Bearer ${token}`);
     //return this.http.get(this.baseUrl + 'assessment/exportandsend', { headers.headers, observe: 'response', responseType: 'blob' });
-     return this.http.get(
-      this.baseUrl + 'assessment/exportandsend', this.headers
-    );
+    return this.http.get(this.baseUrl + 'assessment/exportandsend', this.headers);
   }
 }

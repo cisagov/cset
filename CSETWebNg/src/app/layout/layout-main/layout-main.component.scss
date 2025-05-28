@@ -813,6 +813,13 @@ table.td-align-top td {
   margin: 2px;
 }
 
+.btn-sync {
+  color: $gray-100 !important;
+  background-color: $primary-600 !important;
+  border-color: $primary-600 !important;
+  height: fit-content;
+}
+
 /* Answer option button styles */
 .btn-yes {
   background-color: $white;
@@ -1360,6 +1367,12 @@ ul.mat-tree-node {
 div.spinner-size-50 {
   max-width: 50px;
   max-height: 50px;
+}
+
+
+div.spinner-size-20 {
+  max-width: 20px;
+  max-height: 20px;
 }
 
 /* Safari */
@@ -4069,7 +4082,8 @@ h6.dropdown-header {
   padding: 0 1rem 1rem 1rem;
   margin-top: 1rem;
 }
-.notify-snackbar{
+
+.notify-snackbar {
   background-color: default !important;
 }
 

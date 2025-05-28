@@ -657,7 +657,8 @@
     "scope": "Scope",
     "recommended action": "Recommended Action",
     "free services": "Free Services and References",
-    "implementation guidance": "Implementation Guidance",
+    "implementation guidance CPG": "Implementation Guidance",
+    "implementation guidance CPG2": "Assessment Criteria",
     "attestation": "Attestation",
     "measurement": "Measurement",
     "component type": "Component Type",
@@ -1040,5 +1041,11 @@
     "tooltip": "Select a sector from Demographics in Assessment Information",
     "my sector": "My Sector",
     "all sectors": "All Sectors"
-  }
+  },
+  "Module Content Report": "Module Content Report",
+   "Select a Standard": "Select a Standard",
+   "Launch Report": "Launch Report",
+  "Select a Model": "Select a Model",
+  "ModuleContentLaunchComponent p1": "This report illustrates the structure and question content of a CSET module, e.g., an industry standard or maturity or best practices model.",
+  "ModuleContentLaunchComponent p2": "The generated report has controls to show or hide the guidance and References for each question."
 }

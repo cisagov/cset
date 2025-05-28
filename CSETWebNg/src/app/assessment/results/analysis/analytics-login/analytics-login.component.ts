@@ -74,13 +74,16 @@ export class AnalyticsloginComponent implements OnInit {
       this.analyticsSvc.getAnalyticsToken(this.dataloginForm.controls.username.value, this.dataloginForm.controls.password.value).subscribe(
         data => {
           let token = data.token;
+
+          localStorage.setItem('remoteToken', token);
+
           this.analyticsSvc.postAnalyticsWithLogin(token).subscribe(
             (data: any) => {
               this.dialogMat.open(AlertComponent, {
                 data: {
                   title: 'Success',
                   iconClass: 'cset-icons-check-circle',
-                  messageText: "Assessment has been uploaded"
+                  messageText: "Assessment has been uploaded to the server"
                 }
               });
 
