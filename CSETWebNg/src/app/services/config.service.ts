@@ -64,8 +64,7 @@ export class ConfigService {
   dhsEmail: string;
 
   onlineUrl: string;
-  /**analyticsUrl: string = 'http://134.20.8.30:5778/'; */
-  analyticsUrl= 'http://localhost:5001/';
+  analyticsUrl: string;
 
   csetGithubApiUrl: string;
   helpContactEmail: string;
@@ -195,8 +194,6 @@ export class ConfigService {
     }
 
     this.appUrl = appProtocol + this.config.app.host + appPort;
-    //this.analyticsUrl = 'http://134.20.8.30:5778/';
-    this.analyticsUrl = 'http://localhost:5001/';
     this.helpContactEmail = this.config.helpContactEmail;
     this.helpContactPhone = this.config.helpContactPhone;
     this.csetGithubApiUrl = this.config.csetGithubApiUrl;
@@ -206,6 +203,11 @@ export class ConfigService {
         this.helpContactEmail = resp;
       }
     });
+
+
+    this.analyticsUrl = this.buildUrl(this.config.analytics) + '/';
+
+
     // configure the reference document URL if the "library" property is defined
     // or if passed in as query param and stored as local storage variable. Local storage should
     // take precedence over the config file, since Electron uses it to dynamically set the port.
@@ -231,6 +233,23 @@ export class ConfigService {
     this.initialized = true;
   }
 
+  /** 
+   * Combines the elements provided to create a URL string
+   */
+  buildUrl(configGroup: any) {
+
+    let url = `${configGroup.protocol}://${configGroup.host}`;
+
+    if (!!configGroup.port) {
+      url = `${url}:${configGroup.port}`;
+    }
+
+    return url;
+  }
+
+  /**
+   * 
+   */
   checkOnlineStatusFromConfig() {
     this.checkLocalDocStatus().subscribe(
       (resp: boolean) => {

@@ -4,9 +4,9 @@
 
         <div class="row" style="padding-bottom: 5px;">
             <div class="col-12">
-                <h3>Sync Assessment to Server</h3>
+                <h3>Sync Assessment to Enterprise Server</h3>
                 <p>
-                    Clicking the Sync button will upload a copy of the current assessment to the CISA server.
+                    Clicking the Sync button will upload a copy of the current assessment to the CISA Enterprise server.
                     Please note that this action will overwrite any previous version of the assessment stored on the
                     server.
                 </p>
@@ -14,11 +14,11 @@
             <div class="row my-4">
                 <div class="col-12 d-flex flex-row align-items-center">
                     <button class="btn btn-sync d-flex flex-row align-items-center me-5" type="button"
-                        (click)="showLogin()">
+                        (click)="startUpload()">
                         <i class="fa fa-upload me-3"></i>
                         Sync
                         <div *ngIf="uploadInProgress"
-                            class="spinner-container p-0 m-0 ms-3 d-flex justify-content-center align-items-center flex-11a">
+                            class="spinner-container white p-0 m-0 ms-3 d-flex justify-content-center align-items-center flex-11a">
                             <div class="spinner-size-20"></div>
                         </div>
                     </button>
