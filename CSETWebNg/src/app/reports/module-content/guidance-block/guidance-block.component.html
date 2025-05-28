@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="mb-3 p-3" style="border-radius: .3rem; border: 1px solid #ddd">
+<div class="mb-3 p-3" style="border-radius: .3rem; border: 1px solid #ddd" *transloco="let t">
     <div class="color1 mb-2">
         <strong><em>Guidance</em></strong>
         <svg x="0px" y="0px" style="height: 20px; width: 20px; margin-left: .5rem;" viewBox="0 0 120 120">
@@ -38,10 +38,16 @@
             </g>
         </svg>
     </div>
-    <div *ngIf="!!supplementalInfo && supplementalInfo.length > 0"
-        [innerHTML]="supplementalInfo | linebreak | safe: 'html'"></div>
+    <div *ngIf="!!q.supplementalInfo && q.supplementalInfo.length > 0"
+        [innerHTML]="q.supplementalInfo | linebreak | safe: 'html'"></div>
 
-    <div *ngIf="!supplementalInfo || supplementalInfo.length === 0" style="font-style: italic">
+    <div *ngIf="!!q.implementationGuides">
+         <strong><em>{{t('extras.implementation guidance CPG2')}}</em></strong>
+        <div [innerHTML]="q.implementationGuides"></div>
+    </div>
+
+    <div *ngIf="(!q.supplementalInfo || q.supplementalInfo.length === 0) && !q.implementationGuides"
+        style="font-style: italic">
         (No guidance defined)
     </div>
 </div>

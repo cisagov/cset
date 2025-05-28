@@ -18,6 +18,11 @@
     "documentsIdentifier": "Documents",
     "onlineUrl": "https://cset.inl.gov"
   },
+  "analytics": {
+    "protocol": "http",
+    "host": "localhost",
+    "port": "5001"
+  },
   "library": {
     "protocol": "http",
     "host": "localhost",
@@ -334,6 +339,46 @@
           "code": "N",
           "buttonLabelKey": "Not-CPG",
           "buttonCss": "btn-no"
+        }
+      ]
+    },
+    {
+      "moduleName": "CRE+",
+      "modelId": "22",
+      "displayNameKey": "modules.cre+.display-name",
+      "hideTopLevelGroupingName": true,
+      "autoLoadSupplemental": true,
+      "showMaturityLevelBadge": false,
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
+        },
+        {
+          "code": "I",
+          "buttonLabelKey": "Prog-CPG",
+          "buttonCss": "btn-na",
+          "chartSegmentColor": "#0a4b6e"
+        },
+        {
+          "code": "S",
+          "buttonLabelKey": "Scoped-CPG",
+          "buttonCss": "btn-alt",
+          "chartSegmentColor": "#b17300"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "consideredMissed": true
         }
       ]
     },

@@ -67,6 +67,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+
         /// <summary>
         /// export assessment and send it to enterprise using enterprise token
         /// </summary>
@@ -82,6 +83,7 @@ namespace CSETWebCore.Api.Controllers
                 if (token != null)
                 {
                     token = token.Replace("Bearer ", "");
+                    _token.SetEnterpriseToken(token);
                 }
                 else
                 {
@@ -150,6 +152,7 @@ namespace CSETWebCore.Api.Controllers
             return null;
         }
 
+
         /// <summary>
         /// Send file to external API
         /// </summary>
@@ -167,6 +170,10 @@ namespace CSETWebCore.Api.Controllers
                 {
                     client.DefaultRequestHeaders.Authorization =
                         new AuthenticationHeaderValue("Bearer", _token.GetEnterpriseToken());
+
+                    // Tell the API to overwrite the assessment
+                    client.DefaultRequestHeaders.Add("x-cset-overwrite", "true");
+
                     byteContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
 
                     content.Add(byteContent, "file", "assessment.csetw");
