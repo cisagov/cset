@@ -101,7 +101,16 @@ namespace CSETWebCore.Business.User
                 Password = hash,
                 Salt = salt
             };
+            
+            var roles = _context.ROLES.FirstOrDefault(x=>x.RoleName == "USER");
+            var userRole = new USER_ROLES()
+            {
+                UserId = u.UserId,
+                RoleId = roles.RoleId
+            };
+            
             _context.PASSWORD_HISTORY.Add(history);
+            _context.USER_ROLES.Add(userRole);
 
             UserCreateResponse resp = new UserCreateResponse
             {
