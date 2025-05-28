@@ -355,6 +355,10 @@ namespace CSETWebCore.Business.User
         public string GetRole(int? userId)
         {
             var userRole = _context.USER_ROLES.FirstOrDefault(x => x.UserId == userId);
+            if (userRole == null)
+            {
+                return "USER";
+            }
             var role = _context.ROLES
                 .Where(r => r.RoleId == userRole.RoleId)
                 .FirstOrDefault();
