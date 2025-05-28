@@ -61,7 +61,7 @@ export class CpgPracticeTableComponent implements OnInit {
     }
 
     // we need an optional argument to getStructure.  Either get CPG or a specified SSG model.
-    this.model = this.cpgSvc.getStructure(modelId).subscribe((resp: any) => {
+    this.cpgSvc.getStructure(modelId).subscribe((resp: any) => {
       this.model = resp;
     });
   }
