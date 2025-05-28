@@ -1,0 +1,55 @@
+name: Build
+
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+      - release/*
+  push:
+    branches:
+      - release/*
+
+env:
+  IMAGE: ${{ secrets.IMAGE_URL }}
+  PAT: ${{ secrets.PAT }}
+
+jobs:
+  build-api:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./CSETWebApi
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Registry login
+        run: echo $PAT | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+
+      - name: Pull Docker Image
+        run: docker pull $IMAGE/api:latest
+
+      - name: Tag Docker Image
+        run: docker build -f Dockerfile . --tag $IMAGE/api:latest --cache-from $IMAGE:latest
+
+      - name: Push Docker Image
+        run: docker push $IMAGE/api:latest
+  build-web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./CSETWebNg
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Registry login
+        run: echo $PAT | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+
+      - name: Pull Docker Image
+        run: docker pull $IMAGE/web:latest
+
+      - name: Tag Docker Image
+        run: docker build -f Dockerfile . --tag $IMAGE/web:latest --cache-from $IMAGE:latest
+
+      - name: Push Docker Image
+        run: docker push $IMAGE/web:latest
