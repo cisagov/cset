@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Api.Models;
 using CSETWebCore.DataLayer.Model;
@@ -60,7 +61,7 @@ namespace CSETWebCore.Business.User
                 PasswordResetRequired = true,
                 IsActive = true
             };
-
+            
             // default the new user to NOT active if CSET Online is running in beta mode
             if (new CSETGlobalProperties(_context).GetBoolProperty("IsCsetOnlineBeta") ?? false)
             {
@@ -68,8 +69,7 @@ namespace CSETWebCore.Business.User
             }
 
             tmpContext.USERS.Add(u);
-
-
+            
             try
             {
                 tmpContext.SaveChanges();
@@ -100,8 +100,17 @@ namespace CSETWebCore.Business.User
                 Password = hash,
                 Salt = salt
             };
+            
+            var roles = _context.ROLES.FirstOrDefault(x=>x.RoleName == "USER");
+            var userRole = new USER_ROLES()
+            {
+                UserId = u.UserId,
+                RoleId = roles.RoleId
+            };
+            
             _context.PASSWORD_HISTORY.Add(history);
-
+            _context.USER_ROLES.Add(userRole);
+            
             UserCreateResponse resp = new UserCreateResponse
             {
                 UserId = u.UserId == 0 ? 1 : u.UserId,
@@ -344,6 +353,70 @@ namespace CSETWebCore.Business.User
         public static string FullName(USERS u)
         {
             return $"{u.FirstName} {u.LastName}".Trim();
+        }
+        
+        /// <summary>
+        /// Returns a role for specific user.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public string GetRole(int? userId)
+        {
+            var userRole = _context.USER_ROLES.FirstOrDefault(x => x.UserId == userId);
+            var role = _context.ROLES
+                .Where(r => r.RoleId == userRole.RoleId)
+                .FirstOrDefault();
+            return role.RoleName;
+        }
+        
+        /// <summary>
+        /// Returns all users in the database.
+        /// </summary>
+        /// <returns></returns>
+        public List<UserRole> GetUsers()
+        {
+            var resp = (from u in _context.USERS
+                join ur in _context.USER_ROLES on u.UserId equals ur.UserId
+                join r in _context.ROLES on ur.RoleId equals r.RoleId
+                select new UserRole
+                {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    PrimaryEmail = u.PrimaryEmail,
+                    RoleName = r.RoleName,
+                    RoleId = r.RoleId,
+                    UserId = u.UserId
+                }).ToList();
+            
+            return resp;
+        }
+
+        /// <summary>
+        /// Returns all available roles.
+        /// </summary>
+        /// <returns></returns>
+        public List<ROLES> GetAvailableRoles()
+        {
+            var roles = _context.ROLES.Select(x => new ROLES 
+            { 
+                RoleName = x.RoleName, 
+                RoleId = x.RoleId 
+            }).ToList();
+            return roles;
+        }
+    
+        /// <summary>
+        /// Updates role for specific user.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// /// <param name="roleId"></param>
+        /// <returns></returns>
+        public void UpdateRole(int roleId, int? userId)
+        {
+            var userRole = _context.USER_ROLES.FirstOrDefault(x => x.UserId == userId);
+            userRole.RoleId = roleId;
+            _context.USER_ROLES.Update(userRole);
+            _context.SaveChanges();
         }
     }
 }

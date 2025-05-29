@@ -50,7 +50,7 @@ export interface LoginResponse {
   importExtensions: string;
   linkerTime: string;
   isFirstLogin: boolean;
-  roles: string[]; 
+  roles: string[];
 }
 
 const headers = {
@@ -64,7 +64,7 @@ export class AuthenticationService {
   isLocal: boolean;
   private initialized = false;
   private parser = new JwtParser();
-  private currentUser:LoginResponse | null = null;
+  private currentUser: LoginResponse | null = null;
 
   isAuthenticated = false;
 
@@ -221,6 +221,9 @@ export class AuthenticationService {
       );
   }
 
+  /**
+   * 
+   */
   logout() {
     this.isAuthenticated = false;
     this.router.navigate(['/home/logout'], { queryParamsHandling: 'preserve' });
@@ -297,7 +300,7 @@ export class AuthenticationService {
       'assessmentId': assessment_id,
       'expSeconds': 60
     });
-    
+
     return this.http.get(this.configSvc.apiUrl + 'auth/token', { headers: headers });
   }
 
@@ -438,8 +441,8 @@ export class AuthenticationService {
       return false;
     }
     this.currentUser.roles = JSON.parse(localStorage.getItem("role"));
-    
-    return this.currentUser.roles.some((role: RoleType) => 
+
+    return this.currentUser.roles.some((role: RoleType) =>
       requiredRoles.includes(role)
     );
   }
@@ -447,7 +450,7 @@ export class AuthenticationService {
   hasMultipleRoles(requiredRoles: RoleType[]): boolean {
     if (!this.currentUser) return false;
 
-    return requiredRoles.every(role => 
+    return requiredRoles.every(role =>
       this.currentUser!.roles.includes(role)
     );
   }
