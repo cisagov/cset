@@ -18,6 +18,11 @@
     "documentsIdentifier": "Documents",
     "onlineUrl": "https://cset.inl.gov"
   },
+  "analytics": {
+    "protocol": "http",
+    "host": "localhost",
+    "port": "5001"
+  },
   "library": {
     "protocol": "http",
     "host": "localhost",

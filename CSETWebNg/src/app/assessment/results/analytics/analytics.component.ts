@@ -82,16 +82,21 @@ export class AnalyticsComponent implements OnInit {
     /**
      * Submit With Login
      */
-    showLogin() {
+    startUpload() {
         this.successMessage = '';
         this.errorMessage = '';
         this.uploadInProgress = true;
 
         // if we already signed in and have the remote token, submit without re-asking for credentials
         var remoteToken = localStorage.getItem('remoteToken') ?? '';
+
+        if (remoteToken.trim().length == 0) {
+            return;
+        }
+
         this.analyticsSvc.isRemoteTokenValid(remoteToken).subscribe((isValidRemoteToken) => {
             if (isValidRemoteToken.toString().toLowerCase() == 'true') {
-                
+
                 this.analyticsSvc.postAnalyticsWithLogin(remoteToken).subscribe(x => {
                     this.uploadInProgress = false;
                     this.successMessage = 'The assessment has been uploaded to the server';
@@ -102,18 +107,7 @@ export class AnalyticsComponent implements OnInit {
                     });
                 return;
             } else {
-                this.uploadInProgress = false;
-
-                // if we dont have a valid remote token, prompt for credentials
-                const dialogRef = this.dialog.open(AnalyticsloginComponent, {
-                    width: '300px',
-                    disableClose: true,
-                    data: this.analytics
-                }).afterClosed().subscribe(info => {
-                    if (!!info && info.cancel) {
-                        // user canceled, do nothing
-                    } 
-                });
+                this.showLoginDialog();
             }
         },
             (error) => {
@@ -125,12 +119,36 @@ export class AnalyticsComponent implements OnInit {
         );
     }
 
+    /**
+     * 
+     */
+    showLoginDialog() {
+        this.uploadInProgress = false;
+
+        // if we dont have a valid remote token, prompt for credentials
+        const dialogRef = this.dialog.open(AnalyticsloginComponent, {
+            width: '300px',
+            disableClose: true,
+            data: this.analytics
+        }).afterClosed().subscribe(info => {
+            if (!!info && info.cancel) {
+                // user canceled, do nothing
+            }
+        });
+    }
+
+    /**
+     * 
+     */
     logoutRemote() {
         localStorage.removeItem('remoteToken');
         this.successMessage = 'Logout complete';
         this.errorMessage = '';
     }
 
+    /**
+     * 
+     */
     getRawData() {
         return JSON.stringify(this.analytics);
     }

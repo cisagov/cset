@@ -465,6 +465,7 @@
     "related questions": "Related questions",
     "delete document": "Delete document",
     "copy document": "Copy this document to another location",
+    "global document": "Make this document globally accessible",
     "references": "References",
     "observations": "Observations",
     "observations with content": "Observations with content",
@@ -957,7 +958,7 @@
     },
     "cpg2": {
       "display-name": "Cyber Performance Goals (CPG) 2.0",
-      "model short title": "CPG 2.0 (draft)"
+      "model short title": "CPG 2.0"
     },
     "cmmc2": {
       "model long title": "Cybersecurity Maturity Model Certification (CMMC) 2.0 DRAFT",
