@@ -26,11 +26,11 @@ jobs:
       - name: Registry login
         run: echo $PAT | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
 
-      # - name: Pull Docker Image
-      #   run: docker pull $IMAGE/api:latest
+      - name: Pull Docker Image
+        run: docker pull $IMAGE/api:latest || true
 
       - name: Tag Docker Image
-        run: docker build -f Dockerfile . --tag $IMAGE/api:latest --cache-from $IMAGE:latest
+        run: docker build -f Dockerfile . --tag $IMAGE/api:latest --cache-from $IMAGE/api:latest
 
       - name: Push Docker Image
         run: docker push $IMAGE/api:latest
@@ -45,11 +45,11 @@ jobs:
       - name: Registry login
         run: echo $PAT | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
 
-      # - name: Pull Docker Image
-      #   run: docker pull $IMAGE/web:latest
+      - name: Pull Docker Image
+        run: docker pull $IMAGE/web:latest || true
 
       - name: Tag Docker Image
-        run: docker build -f Dockerfile . --tag $IMAGE/web:latest --cache-from $IMAGE:latest
+        run: docker build -f Dockerfile . --tag $IMAGE/web:latest --cache-from $IMAGE/web:latest
 
       - name: Push Docker Image
         run: docker push $IMAGE/web:latest
