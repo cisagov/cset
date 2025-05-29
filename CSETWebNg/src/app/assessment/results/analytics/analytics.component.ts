@@ -91,6 +91,7 @@ export class AnalyticsComponent implements OnInit {
         var remoteToken = localStorage.getItem('remoteToken') ?? '';
 
         if (remoteToken.trim().length == 0) {
+            this.showLoginDialog();
             return;
         }
 
@@ -99,7 +100,7 @@ export class AnalyticsComponent implements OnInit {
 
                 this.analyticsSvc.postAnalyticsWithLogin(remoteToken).subscribe(x => {
                     this.uploadInProgress = false;
-                    this.successMessage = 'The assessment has been uploaded to the server';
+                    this.successMessage = 'The assessment has been uploaded to the enterprise server';
                 },
                     error => {
                         this.uploadInProgress = false;

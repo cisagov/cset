@@ -79,7 +79,7 @@
     </ng-container>
 
     <!-- CRE+ asks user if they want to include other question sets -->
-    <ng-container *ngIf="!!groupings && this.assessSvc.assessment?.maturityModel.modelId == 22 && !groupingId">
+    <ng-container *ngIf="!!groupings && (this.assessSvc.assessment?.maturityModel.modelId == 23 || this.assessSvc.assessment?.maturityModel.modelId == 24) && !groupingId">
       <app-additional-questions-cre></app-additional-questions-cre>
     </ng-container>
 

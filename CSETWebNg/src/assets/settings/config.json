@@ -346,7 +346,7 @@
       "moduleName": "CRE+",
       "modelId": "22",
       "displayNameKey": "modules.cre+.display-name",
-      "hideTopLevelGroupingName": true,
+      "hideTopLevelGroupingName": false,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {
