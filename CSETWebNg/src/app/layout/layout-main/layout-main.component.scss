@@ -1364,11 +1364,15 @@ ul.mat-tree-node {
   border-top: 4px solid $primary-350;
 }
 
+.spinner-container.white>.spinner,
+.spinner-container.white>div {
+  border-top: 4px solid transparent;
+}
+
 div.spinner-size-50 {
   max-width: 50px;
   max-height: 50px;
 }
-
 
 div.spinner-size-20 {
   max-width: 20px;
