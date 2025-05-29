@@ -11,7 +11,7 @@ on:
       - release/*
 
 env:
-  IMAGE: ${{ secrets.IMAGE_URL }}
+  IMAGE: ${{ secrets.IMAGE }}
   PAT: ${{ secrets.PAT }}
 
 jobs:
