@@ -27,7 +27,7 @@
         "@angular/compiler": "^19.2.11",
         "@angular/compiler-cli": "^19.2.11",
         "@angular/core": "^19.2.11",
-        "@angular/elements": "^19.2.11",
+        "@angular/elements": "^20.0.0",
         "@angular/forms": "^19.2.11",
         "@angular/material": "^19.2.11",
         "@angular/platform-browser": "^19.2.11",
