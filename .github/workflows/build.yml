@@ -26,8 +26,8 @@ jobs:
       - name: Registry login
         run: echo $PAT | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
 
-      - name: Pull Docker Image
-        run: docker pull $IMAGE/api:latest
+      # - name: Pull Docker Image
+      #   run: docker pull $IMAGE/api:latest
 
       - name: Tag Docker Image
         run: docker build -f Dockerfile . --tag $IMAGE/api:latest --cache-from $IMAGE:latest
@@ -45,8 +45,8 @@ jobs:
       - name: Registry login
         run: echo $PAT | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
 
-      - name: Pull Docker Image
-        run: docker pull $IMAGE/web:latest
+      # - name: Pull Docker Image
+      #   run: docker pull $IMAGE/web:latest
 
       - name: Tag Docker Image
         run: docker build -f Dockerfile . --tag $IMAGE/web:latest --cache-from $IMAGE:latest
