@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -66,6 +67,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+
         /// <summary>
         /// export assessment and send it to enterprise using enterprise token
         /// </summary>
@@ -77,7 +79,18 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                var assessmentId = _token.AssessmentForUser();
+                var token = Request.Headers["RemoteAuthorization"].FirstOrDefault();
+                if (token != null)
+                {
+                    token = token.Replace("Bearer ", "");
+                    _token.SetEnterpriseToken(token);
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+
+                var assessmentId = _token.AssessmentForUser(token);
 
                 string url = _configuration["AssessmentUploadUrl"];
                 // Export the assessment
@@ -139,6 +152,7 @@ namespace CSETWebCore.Api.Controllers
             return null;
         }
 
+
         /// <summary>
         /// Send file to external API
         /// </summary>
@@ -156,6 +170,10 @@ namespace CSETWebCore.Api.Controllers
                 {
                     client.DefaultRequestHeaders.Authorization =
                         new AuthenticationHeaderValue("Bearer", _token.GetEnterpriseToken());
+
+                    // Tell the API to overwrite the assessment
+                    client.DefaultRequestHeaders.Add("x-cset-overwrite", "true");
+
                     byteContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
 
                     content.Add(byteContent, "file", "assessment.csetw");

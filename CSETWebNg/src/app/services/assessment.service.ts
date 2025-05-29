@@ -84,7 +84,7 @@ export class AssessmentService {
   //Hide upgrade assessment alert
   public hideUpgradeAlert: boolean = false;
 
-  //Assessment upgrade conversion galleryItemGuid and target model name 
+  //Assessment upgrade conversion galleryItemGuid and target model name
   public galleryItemGuid: string = "";
   public convertToModel: string = "";
 
@@ -124,7 +124,12 @@ export class AssessmentService {
     this.assessment = undefined;
     localStorage.removeItem('assessmentId');
   }
-
+  /**
+   *
+   */
+  getAllMaturityModels(): Observable<MaturityModel[]> {
+    return this.http.get<MaturityModel[]>(`${this.apiUrl}MaturityModels`);
+  }
   /**
    *
    */
@@ -258,7 +263,7 @@ export class AssessmentService {
   }
 
   /**
-   * 
+   *
    */
   getAssessmentContactsById(ids: number[]) {
     var id1 = (ids[0] != undefined ? ids[0] : 0);
@@ -652,7 +657,7 @@ export class AssessmentService {
 
   }
 
-  //Assessment upgrade conversion 
+  //Assessment upgrade conversion
   convertAssesment(original_id: number) {
     let queryParams = new HttpParams()
       .set('originalAssessmentId', original_id)
@@ -663,7 +668,7 @@ export class AssessmentService {
     );
   }
 
-  //Check if assessment has an upgrade available 
+  //Check if assessment has an upgrade available
   checkUpgrades() {
     return this.http.get(this.apiUrl + 'upgrades');
   }

@@ -56,16 +56,38 @@ export class AnalyticsService {
    * 
    */
   getAnalyticsToken(username, password): any {
+    let obj = JSON.stringify({
+      Email: username,
+      Password: password,
+      TzOffset: new Date().getTimezoneOffset().toString(),
+      Scope: "CSET"
+    });
     return this.http.post(
-      this.analyticsUrl + 'auth/login', { "email": username, password }, this.headers
+      this.analyticsUrl + 'auth/login', obj, this.headers
     );
+  }
+
+  /**
+   * Check
+   */
+  isRemoteTokenValid(tokenString: string | null) {
+    // the TokenManager in the API will throw a 401 for an empty string
+    if (!tokenString) {
+      tokenString = 'abc';
+    }
+
+    this.headers.headers.append('x-cset-noauth', 'true');
+
+    return this.http.post(this.analyticsUrl + 'auth/istokenvalid', JSON.stringify(tokenString), this.headers);
   }
 
   /**
    * 
    */
-  postAnalyticsWithLogin(token): any {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(this.baseUrl + 'assessment/exportandsend', { headers, observe: 'response', responseType: 'blob' });
+  postAnalyticsWithLogin(token: string): any {
+    //const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.headers.headers = this.headers.headers.set('RemoteAuthorization', `Bearer ${token}`);
+    //return this.http.get(this.baseUrl + 'assessment/exportandsend', { headers.headers, observe: 'response', responseType: 'blob' });
+    return this.http.get(this.baseUrl + 'assessment/exportandsend', this.headers);
   }
 }
