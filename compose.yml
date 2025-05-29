@@ -2,6 +2,8 @@
 services:
   web:
     container_name: cset-web
+    hostname: web
+    image: ghcr.io/cisagov/cset/web:latest
     build:
       context: CSETWebNg
     restart: unless-stopped
@@ -15,6 +17,7 @@ services:
   api:
     container_name: cset-api
     hostname: api
+    image: ghcr.io/cisagov/cset/api:latest
     build:
       context: CSETWebApi
     restart: unless-stopped
