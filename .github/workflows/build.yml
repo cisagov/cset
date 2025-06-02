@@ -51,4 +51,5 @@ jobs:
         run: docker build -f Dockerfile . --tag $IMAGE/web:latest --cache-from $IMAGE/web:latest
 
       - name: Push Docker Image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         run: docker push $IMAGE/web:latest
