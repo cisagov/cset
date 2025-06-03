@@ -270,7 +270,7 @@ import { CmmcAComponent } from './assessment/prepare/maturity/cmmc-a/cmmc-a.comp
 import { CategoryBlockComponent } from './assessment/questions/category-block/category-block.component';
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
 import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
-import { AdditionalQuestionsCreComponent } from './assessment/questions/maturity-questions/additional-questions-cre/additional-questions-cre.component';
+import { CreQuestionSelectorComponent } from './assessment/questions/maturity-questions/cre-question-selector/cre-question-selector.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
 import { SitesummaryCMMCComponent } from './reports/cmmc/sitesummary-cmmc/sitesummary-cmmc.component';
@@ -761,7 +761,7 @@ registerSwiper();
         ModelSelectComponent,
         CategoryBlockComponent,
         AskQuestionsComponent,
-        AdditionalQuestionsCreComponent,
+        CreQuestionSelectorComponent,
         MaturityQuestionsComponent,
         AwwaStandardComponent,
         DiagramQuestionsComponent,

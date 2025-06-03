@@ -234,13 +234,13 @@ export class MaturityFilteringService {
    * based on the current filter settings.
    * @param cats
    */
-  public evaluateFilters(groupings: QuestionGrouping[]) {
+  public evaluateFilters(groupings: QuestionGrouping[] | null) {
     if (!groupings) {
       return;
     }
 
     groupings.forEach(g => {
-      this.recurseQuestions(g);
+      this.recurseQuestionsForFiltering(g);
     });
   }
 
@@ -248,7 +248,7 @@ export class MaturityFilteringService {
   /**
    * Recurses any number of grouping levels and returns any Questions found.
    */
-  public recurseQuestions(g: QuestionGrouping) {
+  public recurseQuestionsForFiltering(g: QuestionGrouping) {
     const filterSvc = this.questionFilterSvc;
     const filterStringLowerCase = filterSvc.filterSearchString.toLowerCase();
 
@@ -350,7 +350,7 @@ export class MaturityFilteringService {
 
     // now dig down another level to see if there are questions
     g.subGroupings.forEach((sg: QuestionGrouping) => {
-      this.recurseQuestions(sg);
+      this.recurseQuestionsForFiltering(sg);
     });
 
     // if I have questions and they are all invisible, then I am invisible
@@ -366,5 +366,11 @@ export class MaturityFilteringService {
     if (g.subGroupings.length == 0 && g.questions.length == 0) {
       g.visible = false;
     }
+  }
+
+
+
+  public evaluateGroupSelection(groupings: QuestionGrouping[] | null) {
+
   }
 }
