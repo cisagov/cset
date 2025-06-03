@@ -217,6 +217,7 @@ namespace CSETWebCore.Helpers
                     if (_includeSupplemental)
                     {
                         xQuestion.SetAttributeValue("supplemental", myQ.Supplemental_Info);
+                        xQuestion.SetAttributeValue("referencetext", myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text);
                     }
 
                     if (_includeOtherText)
@@ -246,10 +247,6 @@ namespace CSETWebCore.Helpers
                             xTtp.Value = ttp.Description;
                             xQuestion.Add(xTtp);
                         }
-
-
-                        xQuestion.SetAttributeValue("referencetext",
-                            myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text);
                     }
 
                     foreach (var prop in myQ.MATURITY_QUESTION_PROPS)
