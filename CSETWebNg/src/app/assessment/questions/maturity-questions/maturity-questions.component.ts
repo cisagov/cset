@@ -201,6 +201,9 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
         this.groupings = response.groupings;
+        this.maturitySvc.selectableGroupings = response.groupings;
+
+
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
 
         // 100 is the default level if the model does not support a target
@@ -390,6 +393,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
  */
   refreshQuestionVisibility() {
     this.maturityFilteringSvc.evaluateFilters(this.groupings);
+
+    this.maturityFilteringSvc.evaluateGroupSelection(this.groupings);
   }
 
   /**
@@ -398,5 +403,13 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    */
   areGroupingsVisible() {
     return this.groupings?.some(g => g.visible);
+  }
+
+  /**
+   * Show the selector for CRE+ Optional Domain Questions (model 23)
+   * and CRE+ Optional MIL Questions (model 24) 
+   */
+  showCreSelector(): boolean {
+    return (this.modelId == 23 || this.modelId == 24);
   }
 }
