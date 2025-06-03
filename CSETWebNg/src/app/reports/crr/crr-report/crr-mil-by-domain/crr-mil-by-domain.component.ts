@@ -21,30 +21,45 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, Input, OnInit } from '@angular/core';
 import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
-    selector: 'app-crr-mil-by-domain',
-    templateUrl: './crr-mil-by-domain.component.html',
-    styleUrls: ['./../crr-report.component.scss'],
-    standalone: false
+  selector: 'app-crr-mil-by-domain',
+  templateUrl: './crr-mil-by-domain.component.html',
+  styleUrls: ['./../crr-report.component.scss'],
+  standalone: false
 })
-export class CrrMilByDomainComponent implements OnInit {
+export class CrrMilByDomainComponent implements AfterViewChecked {
 
   @Input()
-  model: CmuReportModel;
+  model: CmuReportModel = {};
 
   averageMil: number;
 
   constructor() { }
 
-  ngOnInit(): void {
+  /**
+   * 
+   */
+  ngAfterViewChecked(): void {
+    this.calculateAvg();
+  }
+
+  /**
+   * 
+   */
+  calculateAvg() {
+    if (!this.model) {
+      this.averageMil = 0;
+      return;
+    }
+
     let sum = 0;
-    this.model?.cmuResultsData.cmuDomains.forEach(d => {
+    this.model?.cmuResultsData?.cmuDomains.forEach(d => {
       sum += d.domainScore;
     });
 
-    this.averageMil = sum / this.model?.cmuResultsData.cmuDomains.length;
+    this.averageMil = sum / this.model.cmuResultsData.cmuDomains.length;
   }
 }
