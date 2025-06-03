@@ -33,12 +33,11 @@ jobs:
           scanners: vuln
           severity: CRITICAL,HIGH
 
-      - name: Upload SARIF artifact
-        id: upload
-        uses: actions/upload-artifact@v4
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
         with:
-          name: trivy-dotnet-results
-          path: trivy-dotnet-results.sarif
+          sarif_file: 'trivy-dotnet-results.sarif'
 
   nodejs:
     name: Node.js Analysis
@@ -56,32 +55,7 @@ jobs:
           scan-ref: ./CSETWebNg
           severity: CRITICAL,HIGH
 
-      - name: Upload SARIF artifact
-        id: upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: trivy-nodejs-results
-          path: trivy-nodejs-results.sarif
-
-  results:
-    name: Upload scan results
-    runs-on: ubuntu-latest
-    needs: [dotnet, nodejs]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Download All Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: .
-          merge-multiple: true
-
-      - name: Merge results
-        run: |
-          jq -s 'reduce .[] as $item ({}; . * $item)' trivy-*.sarif > trivy-results.sarif
-
-      - name: Upload scan results to Security tab
+      - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: "trivy-results.sarif"
+          sarif_file: 'trivy-nodejs-results.sarif'
