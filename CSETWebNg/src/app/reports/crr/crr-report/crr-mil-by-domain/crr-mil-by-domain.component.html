@@ -108,11 +108,11 @@
             </tr>
             <tr *ngFor="let domain of model?.cmuResultsData.cmuDomains">
                 <td>{{domain.domainName}}</td>
-                <td class="text-end">{{domain.domainScore.toFixed(3)}}</td>
+                <td class="text-end">{{domain.domainScore?.toFixed(3) ?? 0}}</td>
             </tr>
             <tr>
                 <td>{{t('reports.core.crr.summary results.average mil')}}</td>
-                <td class="text-end">{{averageMil.toFixed(3)}}</td>
+                <td class="text-end">{{averageMil?.toFixed(3) ?? 0}}</td>
             </tr>
         </table>
     </div>
