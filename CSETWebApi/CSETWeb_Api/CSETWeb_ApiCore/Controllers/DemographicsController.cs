@@ -53,10 +53,8 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        [CsetAuthorize(Roles=["Admin"])]
         [HttpGet]
         [Route("api/demographics")]
-        [Obsolete("No longer in use anymore")]
         public IActionResult Get()
         {
             int assessmentId = _token.AssessmentForUser();
@@ -69,7 +67,6 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/demographics")]
-        [Obsolete("No longer in use anymore")]
         public IActionResult Post([FromBody] Demographics demographics)
         {
             demographics.AssessmentId = _token.AssessmentForUser();
