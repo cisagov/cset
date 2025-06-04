@@ -920,12 +920,16 @@
         "sample size": "Tamaño de Muestra",
         "tooltip": "Seleccione un sector de Demografía en Información de Evaluación",
         "my sector": "Mi Sector",
-        "all sectors": "Todos los Sectores"
+        "all sectors": "Todos los Sectores",
+        "current score": "Puntuación de evaluación actual",
+        "vertical bar": "La barra vertical es la puntuación media de la muestra",
+        "max": "Puntuación máxima",
+        "min": "Puntuación mínima"
     },
-  "Module Content Report": "Informe de Contenido del Módulo.",
-  "Select a Standard": "Seleccionar un Estándar",
-  "Launch Report": "Abrir Informe",
-  "Select a Model": "Seleccione un Modelo.",
-  "ModuleContentLaunchComponent p1": "Este informe ilustra la estructura y el contenido de preguntas de un módulo CSET, por ejemplo, un estándar de la industria o un modelo de madurez o de mejores prácticas.",
-  "ModuleContentLaunchComponent p2": "El informe generado tiene controles para mostrar u ocultar la guía y las referencias para cada pregunta."
+    "Module Content Report": "Informe de Contenido del Módulo.",
+    "Select a Standard": "Seleccionar un Estándar",
+    "Launch Report": "Abrir Informe",
+    "Select a Model": "Seleccione un Modelo.",
+    "ModuleContentLaunchComponent p1": "Este informe ilustra la estructura y el contenido de preguntas de un módulo CSET, por ejemplo, un estándar de la industria o un modelo de madurez o de mejores prácticas.",
+    "ModuleContentLaunchComponent p2": "El informe generado tiene controles para mostrar u ocultar la guía y las referencias para cada pregunta."
 }
