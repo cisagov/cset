@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MaturityService } from '../../../../services/maturity.service';
+import { SelectableGroupingsService } from '../../../../services/selectable-groupings.service';
+import { QuestionGrouping } from '../../../../models/questions.model';
 
 @Component({
   selector: 'app-cre-question-selector',
@@ -7,11 +9,16 @@ import { MaturityService } from '../../../../services/maturity.service';
   styleUrl: './cre-question-selector.component.scss',
   standalone: false
 })
-export class CreQuestionSelectorComponent implements OnInit {
-  //@Input() groupings;
+export class CreQuestionSelectorComponent implements OnInit, AfterViewChecked {
 
-  selectedDomains: number[] = [];
-  selectedSubdomains: number[] = [];
+
+  @Input() modelId: number;
+
+
+  currentModelGroupings: QuestionGrouping[];
+
+  // selectedDomains: number[] = [];
+  // selectedSubdomains: number[] = [];
 
   domainSelected = true;
   milSelected = true;
@@ -20,21 +27,26 @@ export class CreQuestionSelectorComponent implements OnInit {
    * 
    * @param maturitySvc 
    */
-  constructor(public maturitySvc: MaturityService) {}
+  constructor(
+    public maturitySvc: MaturityService,
+    public selectableGroupingsSvc: SelectableGroupingsService
+  ) { }
 
   /**
    * 
    */
-  ngOnInit(): void {
-   // console.log(this.maturitySvc);
-    console.log('cre-question-control, selectableGroupings in service', this.maturitySvc.selectableGroupings);
-  }
+  ngOnInit(): void {  }
+
+  ngAfterViewChecked(): void {  }
+
 
   changeDomain(gi: number, evt: any) {
-    this.maturitySvc.selectableGroupings[gi].selected = evt.target.checked;
+    this.selectableGroupingsSvc.models.get(this.modelId)[gi].selected = evt.target.checked;
+    this.selectableGroupingsSvc.emitEvent();
   }
-
+  
   changeSubdomain(gi: number, sgi: number, evt: any) {
-    this.maturitySvc.selectableGroupings[gi].subGroupings[sgi].selected = evt.target.checked;
+    this.selectableGroupingsSvc.models.get(this.modelId)[gi].subGroupings[sgi].selected = evt.target.checked;
+    this.selectableGroupingsSvc.emitEvent();
   }
 }

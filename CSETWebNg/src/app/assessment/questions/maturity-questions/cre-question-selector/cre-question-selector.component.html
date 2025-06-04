@@ -20,18 +20,18 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="w-100 py-3 px-4 mb-4" style="border: 1px solid #ccc; border-radius: 1rem; background-color: #004; color: white;">
+<div class="w-100 py-3 px-4 mb-4" style="border: 1px solid #ccc; border-radius: 1rem; background-color: #212529; color: white;">
      <p>
           Select domains for additional questions
      </p>
-     <div *ngFor="let g of maturitySvc.selectableGroupings; let gi = index">
+     <div *ngFor="let g of selectableGroupingsSvc.models.get(modelId); let gi = index">
           <input class="checkbox-custom d-none" type="checkbox" id="dom-{{g.groupingID}}"
-               [checked]="maturitySvc.selectableGroupings[gi].selected ?? false" (change)="changeDomain(gi, $event)">
+               [checked]="selectableGroupingsSvc.models.get(modelId)[gi].selected ?? false" (change)="changeDomain(gi, $event)">
           <label for="dom-{{g.groupingID}}" class="checkbox-custom-label" style="color: white">{{g?.title}}</label>
           <div *ngIf="g.selected ?? false" class="collapsible-content ms-4">
                <div *ngFor="let sg of g.subGroupings; let sgi = index">
                     <input class="checkbox-custom d-none" type="checkbox" id="subdom-{{sg.groupingID}}" 
-                         [checked]="maturitySvc.selectableGroupings[gi].subGroupings[sgi].selected ?? false" (change)="changeSubdomain(gi, sgi, $event)">
+                         [checked]="selectableGroupingsSvc.models.get(modelId)[gi].subGroupings[sgi].selected ?? false" (change)="changeSubdomain(gi, sgi, $event)">
                     <label for="subdom-{{sg.groupingID}}" class="checkbox-custom-label" style="color: white">{{sg.title}}</label>    
                </div>
           </div>

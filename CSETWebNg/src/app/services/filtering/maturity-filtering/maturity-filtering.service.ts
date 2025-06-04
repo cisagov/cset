@@ -32,6 +32,7 @@ import { CrrFilteringService } from './crr-filtering.service';
 import { CmmcFilteringService } from './cmmc-filtering.service';
 import { RraFilteringService } from './rra-filtering.service';
 import { BasicFilteringService } from './basic-filtering.service';
+import { SelectableGroupingsService } from '../../selectable-groupings.service';
 
 
 const headers = {
@@ -92,7 +93,6 @@ export class MaturityFilteringService {
 
 
   constructor(
-    http: HttpClient,
     public configSvc: ConfigService,
     public questionFilterSvc: QuestionFilterService,
     public assesmentSvc: AssessmentService,
@@ -100,14 +100,10 @@ export class MaturityFilteringService {
     public edmFilteringSvc: EdmFilteringService,
     public crrFilteringSvc: CrrFilteringService,
     public rraFilteringSvc: RraFilteringService,
-    public basicFilteringSvc: BasicFilteringService
+    public basicFilteringSvc: BasicFilteringService,
+    public selectableGroupingsSvc: SelectableGroupingsService
   ) {
-
-
-
-
     this.refresh();
-
   }
 
   /**
@@ -258,6 +254,24 @@ export class MaturityFilteringService {
 
     g.visible = true;
 
+
+    // if CRE+, the grouping must be 'selected' or we hide it
+    if (this.assesmentSvc.assessment.maturityModel.modelName == 'CRE+') {
+
+      // get model ID
+      const modelId = this.questionFilterSvc.maturityModelId;
+
+      // look for me in the service
+      const sg = this.selectableGroupingsSvc.findGrouping(modelId, g.groupingID);
+
+      if (!!sg && !sg.selected) {
+        g.visible = false;
+        return;
+      }
+    }
+
+
+
     g.questions.forEach(q => {
       // start with false, then set true if the question should be shown
       q.visible = false;
@@ -366,11 +380,5 @@ export class MaturityFilteringService {
     if (g.subGroupings.length == 0 && g.questions.length == 0) {
       g.visible = false;
     }
-  }
-
-
-
-  public evaluateGroupSelection(groupings: QuestionGrouping[] | null) {
-
   }
 }
