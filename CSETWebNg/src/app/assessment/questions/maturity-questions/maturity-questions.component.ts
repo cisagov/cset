@@ -43,11 +43,12 @@ import { DemographicService } from '../../../services/demographic.service';
 import { DemographicIodService } from '../../../services/demographic-iod.service';
 import { SsgService } from '../../../services/ssg.service';
 import { ModuleBehavior } from '../../../models/module-config.model';
+import { SelectableGroupingsService } from '../../../services/selectable-groupings.service';
 
 @Component({
-    selector: 'app-maturity-questions',
-    templateUrl: './maturity-questions.component.html',
-    standalone: false
+  selector: 'app-maturity-questions',
+  templateUrl: './maturity-questions.component.html',
+  standalone: false
 })
 export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
@@ -81,6 +82,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
     public completionSvc: CompletionService,
+    public selectableGroupingSvc: SelectableGroupingsService,
     public cisSvc: CisService,
     public ssgSvc: SsgService,
     public maturityFilteringSvc: MaturityFilteringService,
@@ -134,6 +136,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       if (!!this.assessSvc.assessment) {
         this.load();
       }
+    });
+
+    this.selectableGroupingSvc.selectionChanged$.subscribe(() => {
+      this.refreshQuestionVisibility();
     });
   }
 
@@ -201,7 +207,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
         this.groupings = response.groupings;
-        this.maturitySvc.selectableGroupings = response.groupings;
+        this.selectableGroupingSvc.models.set(this.modelId, response.groupings);
 
 
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
@@ -393,8 +399,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
  */
   refreshQuestionVisibility() {
     this.maturityFilteringSvc.evaluateFilters(this.groupings);
-
-    this.maturityFilteringSvc.evaluateGroupSelection(this.groupings);
   }
 
   /**
