@@ -78,7 +78,7 @@ export class AnalyticsResultsComponent implements OnInit {
         this.demoIodSvc.getDemographics().subscribe((resp: DemographicsIod) => {
           resp.listSectors.forEach(sector => {
             if (sector.optionValue == this.sectorId) {
-              this.sectorTitle = this.tSvc.translate('analytics.' + sector.optionText)
+              this.sectorTitle = sector.optionText
             }
           });
         })
