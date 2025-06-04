@@ -53,10 +53,8 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        [CsetAuthorize(Roles=["Admin"])]
         [HttpGet]
         [Route("api/demographics")]
-        [Obsolete("No longer in use anymore")]
         public IActionResult Get()
         {
             int assessmentId = _token.AssessmentForUser();
@@ -69,7 +67,6 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpPost]
         [Route("api/demographics")]
-        [Obsolete("No longer in use anymore")]
         public IActionResult Post([FromBody] Demographics demographics)
         {
             demographics.AssessmentId = _token.AssessmentForUser();
@@ -196,12 +193,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/Demographics/AssetValues")]
         public async Task<IActionResult> GetAssetValues()
         {
-            // RKW - Get the calling application (scope) to filter the appropriate asset values.
-            //       The scope was set by the calling app during the login transaction and is stored in the JWT.
-            string scope = _token.Payload("scope");
-
             List<DEMOGRAPHICS_ASSET_VALUES> assetValues = await _context.DEMOGRAPHICS_ASSET_VALUES
-                .Where(x => x.AppCode == scope)
                 .ToListAsync();
             return Ok(assetValues.OrderBy(a => a.ValueOrder).Select(a => new DemographicsAssetValue() { AssetValue = a.AssetValue, DemographicsAssetId = a.DemographicsAssetId }).ToList());
         }
