@@ -62,7 +62,7 @@
                             <b>{{ cat.name }} ({{ cat.code }}):</b> {{ cat.desc }}
                         </div>
                         <ng-container *ngIf="cat.catChart">
-                            <span class="font-weight-bold">{{ e.function.Function.code }}.{{ cat.code }}:</span>
+                            <span class="fw-bold">{{ e.function.Function.code }}.{{ cat.code }}:</span>
                             <div [innerHtml]="cat.catChart | safe"></div>
                         </ng-container>
                         <br />

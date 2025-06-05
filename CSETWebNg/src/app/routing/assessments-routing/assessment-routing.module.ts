@@ -113,10 +113,10 @@ const routes: Routes = [
     },
     { path: 'questions', component: QuestionsComponent },
     { path: 'placeholder-questions', component: PlaceholderQuestionsComponent },
-    { path: 'maturity-questions', component: MaturityQuestionsComponent },
     { path: 'principle-summary/:pri', component: PrincipleSummaryComponent },
     { path: 'maturity-questions/:grp', component: MaturityQuestionsComponent },
     { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
+    { path: 'maturity-questions', component: MaturityQuestionsComponent },
     { path: 'other-remarks', component: OtherRemarksComponent },
     { path: 'diagram-questions', component: DiagramQuestionsComponent },
     {

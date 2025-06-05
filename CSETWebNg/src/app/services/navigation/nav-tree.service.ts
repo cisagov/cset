@@ -30,6 +30,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { of as observableOf, BehaviorSubject } from "rxjs";
 import { TranslocoService } from '@jsverse/transloco';
 import { SsgService } from '../ssg.service';
+import { ConfigService } from '../config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +56,8 @@ export class NavTreeService {
     private assessSvc: AssessmentService,
     private pageVisibliltySvc: PageVisibilityService,
     private tSvc: TranslocoService,
-    private ssgSvc: SsgService
+    private ssgSvc: SsgService,
+    private configSvc: ConfigService
   ) {
     // set up the mat tree control and its data source
     this.tocControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
@@ -135,10 +137,12 @@ export class NavTreeService {
           visible: true,
           enabled: true
         };
+
         navNode.visible = this.pageVisibliltySvc.showPage(workflowNode);
         if (navNode.visible) {
           navNode.enabled = this.pageVisibliltySvc.isEnabled(workflowNode);
         }
+
         // the node might need tweaking based on certain factors
         this.adjustNavNode(navNode);
 
@@ -160,12 +164,23 @@ export class NavTreeService {
    */
   adjustNavNode(node: NavTreeNode) {
     if (node.value == 'maturity-questions') {
+      const modelId = this.assessSvc.assessment?.maturityModel?.modelId;
+
       // Models may use a specific term (alias) for "questions" or "practices"
       const alias = this.assessSvc.assessment?.maturityModel?.questionsAlias?.toLowerCase();
       if (!!alias) {
         node.label = this.tSvc.translate(`titles.${alias}`);
       }
+
+      // Look for model-specific alias for maturity-questions.
+      // This approach does not rely on the back end and should be the primary
+      // way to override the node title.
+      const key = this.configSvc.getModuleBehavior(modelId)?.questionNodeKey;
+      if (!!key) {
+        node.label = this.tSvc.translate(key);
+      }
     }
+
 
     if (node.value == 'standard-questions') {
       const mode = this.assessSvc.applicationMode?.toLowerCase();
@@ -189,6 +204,7 @@ export class NavTreeService {
       this.tocControl.dataNodes = this.dataSource.data;
     }
   }
+
   clearNoMatterWhat() {
     this.isNavLoading = true;
     this.dataSource.data = null;
