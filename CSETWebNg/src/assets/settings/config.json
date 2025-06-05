@@ -346,7 +346,7 @@
       "moduleName": "CRE+",
       "modelId": "22",
       "displayNameKey": "modules.cre+.display-name",
-      "questionPageNavKey": "modules.cre+.question page nav title",
+      "questionNodeKey": "modules.cre+.question node title",
       "hideTopLevelGroupingName": false,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
@@ -475,7 +475,7 @@
       "moduleName": "CISA VADR",
       "modelId": "25",
       "displayNameKey": "modules.cisa vadr.display-name",
-      "questionPageNavKey": "modules.cisa vadr.question page nav title",
+      "questionNodeKey": "modules.cisa vadr.question node title",
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {
