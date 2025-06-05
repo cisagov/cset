@@ -35,6 +35,11 @@ export class ModuleBehavior {
      displayNameKey?: string;
 
      /**
+      * Allows the module to define the title for the maturity-questions node 
+      */
+     questionPageNavKey?: string;
+
+     /**
       * If defined for a model, this can hide the Domain headers.  
       * 
       * This is useful if the model has a single top level grouping node and you don't need 

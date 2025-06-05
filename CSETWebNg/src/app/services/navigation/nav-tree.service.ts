@@ -30,6 +30,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { of as observableOf, BehaviorSubject } from "rxjs";
 import { TranslocoService } from '@jsverse/transloco';
 import { SsgService } from '../ssg.service';
+import { ConfigService } from '../config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +56,8 @@ export class NavTreeService {
     private assessSvc: AssessmentService,
     private pageVisibliltySvc: PageVisibilityService,
     private tSvc: TranslocoService,
-    private ssgSvc: SsgService
+    private ssgSvc: SsgService,
+    private configSvc: ConfigService
   ) {
     // set up the mat tree control and its data source
     this.tocControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
@@ -119,6 +121,14 @@ export class NavTreeService {
         let d = workflowNode.attributes['d']?.value;
         if (!!d) {
           displaytext = this.tSvc.translate(`titles.${d}`);
+        }
+
+        // special case for 'maturity-questions'
+        if (workflowNode.attributes['id']?.value == 'maturity-questions') {
+          const key = this.configSvc.getModuleBehavior(25).questionPageNavKey;
+          if (!!key) {
+            displaytext = this.tSvc.translate(key);
+          }
         }
 
         // plug in the applicable SSG description
