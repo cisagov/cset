@@ -39,6 +39,7 @@ services:
     volumes:
       - mssql_data:/var/opt/mssql
       - ./backup:/var/opt/mssql/backup
+      - ./DatabaseScripts:/var/opt/mssql/scripts
 
 volumes:
   mssql_data:
