@@ -50,18 +50,15 @@ export class SelectableGroupingsService {
 
   /**
    * 
-   * @param groupings 
    */
-  public evaluateGroupSelection(groupings: QuestionGrouping[] | null) {
-    groupings?.forEach(g => {
-      // find my local thing
-      const mySetting = this.models.get(22)?.find(x => x.groupingID == g.groupingID);
-      if (!!mySetting) {
-        g.visible = mySetting?.selected;
-      }
-    });
+  setModelGroupings(modelId: number, groupings: QuestionGrouping[]) {
+    this.models.set(modelId, groupings);
   }
 
+
+  /**
+   * 
+   */
   public findGrouping(modelId: number, groupingID: number): QuestionGrouping | null {
     const targetModel = this.models.get(modelId);
     if (!targetModel) {
@@ -81,7 +78,7 @@ export class SelectableGroupingsService {
   /**
    * 
    */
-  emitEvent() {
+  emitSelectionChanged() {
     this.selectionChangedSubject.next();
   }
 }

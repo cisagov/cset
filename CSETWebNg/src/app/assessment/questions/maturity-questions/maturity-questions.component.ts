@@ -141,6 +141,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.selectableGroupingSvc.selectionChanged$.subscribe(() => {
       this.refreshQuestionVisibility();
     });
+
+    this.refreshQuestionVisibility();
   }
 
   ngAfterViewInit() {
@@ -207,7 +209,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
         this.groupings = response.groupings;
-        this.selectableGroupingSvc.models.set(this.modelId, response.groupings);
+        this.selectableGroupingSvc.setModelGroupings(this.modelId, response.groupings);
 
 
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
@@ -413,7 +415,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    * Show the selector for CRE+ Optional Domain Questions (model 23)
    * and CRE+ Optional MIL Questions (model 24) 
    */
-  showCreSelector(): boolean {
-    return (this.modelId == 23 || this.modelId == 24);
+  showCreSelector(modelId: number): boolean {
+    return (modelId == 23 || modelId == 24);
   }
 }

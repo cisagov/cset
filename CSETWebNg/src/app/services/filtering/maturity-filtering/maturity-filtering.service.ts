@@ -245,6 +245,7 @@ export class MaturityFilteringService {
    * Recurses any number of grouping levels and returns any Questions found.
    */
   public recurseQuestionsForFiltering(g: QuestionGrouping) {
+    const modelId = this.questionFilterSvc.maturityModelId;
     const filterSvc = this.questionFilterSvc;
     const filterStringLowerCase = filterSvc.filterSearchString.toLowerCase();
 
@@ -255,21 +256,14 @@ export class MaturityFilteringService {
     g.visible = true;
 
 
-    // if CRE+, the grouping must be 'selected' or we hide it
-    if (this.assesmentSvc.assessment.maturityModel.modelName == 'CRE+') {
-
-      // get model ID
-      const modelId = this.questionFilterSvc.maturityModelId;
-
-      // look for me in the service
+    // if CRE+ Optional (23) or MIL (24), the grouping must be marked 'selected' or we hide it
+    if ([23,24].includes(modelId)) {
       const sg = this.selectableGroupingsSvc.findGrouping(modelId, g.groupingID);
-
       if (!!sg && !sg.selected) {
         g.visible = false;
         return;
       }
     }
-
 
 
     g.questions.forEach(q => {
