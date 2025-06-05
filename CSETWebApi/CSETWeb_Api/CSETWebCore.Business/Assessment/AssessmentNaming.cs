@@ -44,7 +44,7 @@ namespace CSETWebCore.Business.Assessment
             [client-assessment type-report type].pcii.[PCII Number].[extension]
             [client-assessment type - report type].non-pcii.[Date of Assessment].[extension]
              */
-            if (user.CisaAssessorWorkflow)
+            if (assessment.AssessorMode)
             {
                 var date =  assessment.Assessment_Date.ToString("yyyy-MM-dd-HHmm");
                 var OrgName = info.Facility_Name;
