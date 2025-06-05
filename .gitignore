@@ -3,6 +3,8 @@
 *.log
 *.zip
 dist
+CLAUDE.md
+.claude/
 
 ## Mac OS ##
 .DS_Store
