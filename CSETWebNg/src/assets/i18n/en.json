@@ -963,7 +963,8 @@
     },
     "cre+": {
       "display-name": "Cyber Resilience Essentials (CRE+)",
-      "model short title": "CRE+"
+      "model short title": "CRE+",
+      "question page nav title": "Core Questions"
     },
     "cmmc2": {
       "model long title": "Cybersecurity Maturity Model Certification (CMMC) 2.0 DRAFT",
@@ -979,7 +980,8 @@
     },
     "cisa vadr": {
       "display-name": "CISA Validated Architecture Design Review (VADR)",
-      "model short title": "CISA VADR"
+      "model short title": "CISA VADR",
+      "question page nav title": "VADR Questions"
     }
   },
   "aggregation": {
