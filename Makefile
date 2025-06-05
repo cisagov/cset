@@ -28,7 +28,11 @@ launch-db:
 
 # target: load-db - Load the database from the backup
 load-db:
-	docker exec -i cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123" -i /var/opt/mssql/backup/restoredb.sql
+	docker exec -i cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123" -i /var/opt/mssql/scripts/InitScripts/initdb.sql
+
+# target: stop-db - Launch the local database
+stop-db:
+	docker compose stop sqlserver
 
 # target: remove-db - Remove the database, container and its data
 remove-db:
