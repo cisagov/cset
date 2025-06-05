@@ -188,9 +188,9 @@ export class ConfigService {
       this.serverUrl = localStorageApiUrl + '/';
       this.docUrl = localStorageApiUrl + '/' + this.config.api.documentsIdentifier + '/';
     } else {
-      this.apiUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/';
-      this.serverUrl = apiProtocol + this.config.api.host + apiPort + '/';
-      this.docUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.documentsIdentifier + '/';
+      this.apiUrl = this.buildUrl(this.config.api) + '/' + this.config.api.apiIdentifier + '/';
+      this.serverUrl = this.buildUrl(this.config.api) + '/';
+      this.docUrl = this.buildUrl(this.config.api) + '/' + this.config.api.documentsIdentifier + '/';
     }
 
     this.appUrl = appProtocol + this.config.app.host + appPort;

@@ -32,6 +32,7 @@ import { CrrFilteringService } from './crr-filtering.service';
 import { CmmcFilteringService } from './cmmc-filtering.service';
 import { RraFilteringService } from './rra-filtering.service';
 import { BasicFilteringService } from './basic-filtering.service';
+import { SelectableGroupingsService } from '../../selectable-groupings.service';
 
 
 const headers = {
@@ -92,7 +93,6 @@ export class MaturityFilteringService {
 
 
   constructor(
-    http: HttpClient,
     public configSvc: ConfigService,
     public questionFilterSvc: QuestionFilterService,
     public assesmentSvc: AssessmentService,
@@ -100,14 +100,10 @@ export class MaturityFilteringService {
     public edmFilteringSvc: EdmFilteringService,
     public crrFilteringSvc: CrrFilteringService,
     public rraFilteringSvc: RraFilteringService,
-    public basicFilteringSvc: BasicFilteringService
+    public basicFilteringSvc: BasicFilteringService,
+    public selectableGroupingsSvc: SelectableGroupingsService
   ) {
-
-
-
-
     this.refresh();
-
   }
 
   /**
@@ -234,13 +230,13 @@ export class MaturityFilteringService {
    * based on the current filter settings.
    * @param cats
    */
-  public evaluateFilters(groupings: QuestionGrouping[]) {
+  public evaluateFilters(groupings: QuestionGrouping[] | null) {
     if (!groupings) {
       return;
     }
 
     groupings.forEach(g => {
-      this.recurseQuestions(g);
+      this.recurseQuestionsForFiltering(g);
     });
   }
 
@@ -248,7 +244,8 @@ export class MaturityFilteringService {
   /**
    * Recurses any number of grouping levels and returns any Questions found.
    */
-  public recurseQuestions(g: QuestionGrouping) {
+  public recurseQuestionsForFiltering(g: QuestionGrouping) {
+    const modelId = this.questionFilterSvc.maturityModelId;
     const filterSvc = this.questionFilterSvc;
     const filterStringLowerCase = filterSvc.filterSearchString.toLowerCase();
 
@@ -257,6 +254,17 @@ export class MaturityFilteringService {
     }
 
     g.visible = true;
+
+
+    // if CRE+ Optional (23) or MIL (24), the grouping must be marked 'selected' or we hide it
+    if ([23,24].includes(modelId)) {
+      const sg = this.selectableGroupingsSvc.findGrouping(modelId, g.groupingID);
+      if (!!sg && !sg.selected) {
+        g.visible = false;
+        return;
+      }
+    }
+
 
     g.questions.forEach(q => {
       // start with false, then set true if the question should be shown
@@ -350,7 +358,7 @@ export class MaturityFilteringService {
 
     // now dig down another level to see if there are questions
     g.subGroupings.forEach((sg: QuestionGrouping) => {
-      this.recurseQuestions(sg);
+      this.recurseQuestionsForFiltering(sg);
     });
 
     // if I have questions and they are all invisible, then I am invisible

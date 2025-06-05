@@ -86,6 +86,14 @@
     ]
   },
   {
+    "title": "CRE+",
+    "reportList": [
+      {
+        "linkUrl": "creCoreReport"
+      }
+    ]
+  },
+  {
     "title": "VADR",
     "reportList": [
       {

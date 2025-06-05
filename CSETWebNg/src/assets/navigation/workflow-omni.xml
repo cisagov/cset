@@ -58,6 +58,13 @@
         <node d="ssg" ssg="true" id="maturity-questions-bonus" path="assessment/{:id}/maturity-questions/bonus" visible="MATURITY-ANY(11,21) SECTOR-ANY(1,19,13,28)" />
 
 
+        <!-- CRE optional domain questions (model 23) -->
+        <node displaytext="Domain Questions" id="maturity-questions-m23" path="assessment/{:id}/maturity-questions/m23" visible="MATURITY-ANY(22)" />
+        <!-- CRE optional MIL questions (model 24) -->
+        <node displaytext="MIL Questions" id="maturity-questions-m24" path="assessment/{:id}/maturity-questions/m24" visible="MATURITY-ANY(22)" />
+
+
+
         <!-- CIS questions displayed in tree structure -->
         <node displaytext="CIS Questions" visible="MATURITY:8">
             <node id="maturity-questions-nested-2301" displaytext="Cybersecurity Management">
@@ -315,7 +322,7 @@
 
         <node d="assessment complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
         
-        <node displaytext="Sync to Server" id="analytics" path="assessment/{:id}/results/analytics" visible="TRUE"/>
+        <node displaytext="Sync to Server" id="analytics" path="assessment/{:id}/results/analytics" visible="IS-CSA"/>
     </node>
 
 </nav>

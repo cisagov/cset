@@ -234,7 +234,7 @@ export class NavigationService implements OnDestroy, OnInit {
       return;
     }
 
-    if (originPage.children.length == 0 && originPage.nextElementSibling == null && originPage.parentElement.tagName == 'nav') {
+    if (originPage.children.length == 0 && originPage.nextElementSibling == null && originPage.parentElement?.tagName == 'nav') {
       // we are at the last page, nothing to do
       return;
     }
