@@ -1,7 +1,6 @@
-import { AfterViewChecked, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewChecked, Component, Input, OnInit } from '@angular/core';
 import { MaturityService } from '../../../../services/maturity.service';
 import { SelectableGroupingsService } from '../../../../services/selectable-groupings.service';
-import { QuestionGrouping } from '../../../../models/questions.model';
 
 @Component({
   selector: 'app-cre-question-selector',
@@ -15,17 +14,8 @@ export class CreQuestionSelectorComponent implements OnInit, AfterViewChecked {
   @Input() modelId: number;
 
 
-  currentModelGroupings: QuestionGrouping[];
-
-  // selectedDomains: number[] = [];
-  // selectedSubdomains: number[] = [];
-
-  domainSelected = true;
-  milSelected = true;
-
   /**
    * 
-   * @param maturitySvc 
    */
   constructor(
     public maturitySvc: MaturityService,
@@ -42,11 +32,11 @@ export class CreQuestionSelectorComponent implements OnInit, AfterViewChecked {
 
   changeDomain(gi: number, evt: any) {
     this.selectableGroupingsSvc.models.get(this.modelId)[gi].selected = evt.target.checked;
-    this.selectableGroupingsSvc.emitEvent();
+    this.selectableGroupingsSvc.emitSelectionChanged();
   }
   
   changeSubdomain(gi: number, sgi: number, evt: any) {
     this.selectableGroupingsSvc.models.get(this.modelId)[gi].subGroupings[sgi].selected = evt.target.checked;
-    this.selectableGroupingsSvc.emitEvent();
+    this.selectableGroupingsSvc.emitSelectionChanged();
   }
 }

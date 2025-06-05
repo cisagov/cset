@@ -79,7 +79,7 @@
     </ng-container>
 
     <!-- CRE+ allows the user to limit questions shown on some pages -->
-    <ng-container *ngIf="!!groupings && showCreSelector()">
+    <ng-container *ngIf="!!groupings && showCreSelector(modelId)">
       <app-cre-question-selector [modelId]="modelId"></app-cre-question-selector>
     </ng-container>
 
