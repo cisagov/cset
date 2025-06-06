@@ -346,7 +346,8 @@
       "moduleName": "CRE+",
       "modelId": "22",
       "displayNameKey": "modules.cre+.display-name",
-      "hideTopLevelGroupingName": true,
+      "questionNodeKey": "modules.cre+.question node title",
+      "hideTopLevelGroupingName": false,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {
@@ -474,6 +475,7 @@
       "moduleName": "CISA VADR",
       "modelId": "25",
       "displayNameKey": "modules.cisa vadr.display-name",
+      "questionNodeKey": "modules.cisa vadr.question node title",
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {

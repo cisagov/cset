@@ -43,15 +43,16 @@ import { DemographicService } from '../../../services/demographic.service';
 import { DemographicIodService } from '../../../services/demographic-iod.service';
 import { SsgService } from '../../../services/ssg.service';
 import { ModuleBehavior } from '../../../models/module-config.model';
+import { SelectableGroupingsService } from '../../../services/selectable-groupings.service';
 
 @Component({
-    selector: 'app-maturity-questions',
-    templateUrl: './maturity-questions.component.html',
-    standalone: false
+  selector: 'app-maturity-questions',
+  templateUrl: './maturity-questions.component.html',
+  standalone: false
 })
 export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
-  groupings: QuestionGrouping[] = [];
+  groupings: QuestionGrouping[] | null = [];
   pageTitle: string = '';
   moduleBehavior: ModuleBehavior;
   modelId: number;
@@ -81,6 +82,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
     public completionSvc: CompletionService,
+    public selectableGroupingSvc: SelectableGroupingsService,
     public cisSvc: CisService,
     public ssgSvc: SsgService,
     public maturityFilteringSvc: MaturityFilteringService,
@@ -99,7 +101,12 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     ).subscribe((e: any) => {
       if (e.urlAfterRedirects.includes('/maturity-questions/')) {
         this.groupingId = this.route.snapshot.params['grp'];
-        this.loadGrouping(+this.groupingId);
+
+        if (parseInt(this.groupingId) == +this.groupingId) {
+          this.loadGrouping(+this.groupingId);
+        } else {
+          this.loadQuestions();
+        }
       }
     });
 
@@ -130,6 +137,12 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.load();
       }
     });
+
+    this.selectableGroupingSvc.selectionChanged$.subscribe(() => {
+      this.refreshQuestionVisibility();
+    });
+
+    this.refreshQuestionVisibility();
   }
 
   ngAfterViewInit() {
@@ -146,7 +159,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.grouping = null;
     this.groupingId = this.route.snapshot.params['grp'];
 
-    if (!this.groupingId || this.groupingId.toLowerCase() == 'bonus') {
+    if (!this.groupingId || this.groupingId.toLowerCase() == 'bonus' || this.groupingId.toLowerCase().startsWith('m')) {
       this.loadQuestions();
     } else {
       this.loadGrouping(+this.groupingId);
@@ -171,13 +184,20 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
 
     // determine which endpoint to call to get the question list
-    var obsGetQ = this.maturitySvc.getQuestionsList(false);
-
+    var obsGetQ;
 
     if (this.groupingId?.toLowerCase() == 'bonus') {
-      const bonusModelId = this.ssgSvc.ssgBonusModel()
+      const bonusModelId = this.ssgSvc.ssgBonusModel();
       obsGetQ = this.maturitySvc.getBonusQuestionList(bonusModelId);
+
+    } else if (this.groupingId?.toLowerCase().startsWith('m')) {
+      const bonusModelId = +this.groupingId.substring(1);
+      obsGetQ = this.maturitySvc.getBonusQuestionList(bonusModelId);
+
+    } else {
+      obsGetQ = this.maturitySvc.getQuestionsList(false);
     }
+
 
     obsGetQ.subscribe(
       (response: MaturityQuestionResponse) => {
@@ -189,6 +209,9 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
         this.groupings = response.groupings;
+        this.selectableGroupingSvc.setModelGroupings(this.modelId, response.groupings);
+
+
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
 
         // 100 is the default level if the model does not support a target
@@ -216,12 +239,12 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.refreshQuestionVisibility();
       },
       error => {
-        console.log(
+        console.error(
           'Error getting questions: ' +
           (<Error>error).name +
           (<Error>error).message
         );
-        console.log('Error getting questions: ' + (<Error>error).stack);
+        console.error('Error getting questions: ' + (<Error>error).stack);
       }
     );
   }
@@ -259,12 +282,12 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       this.refreshQuestionVisibility();
     },
       error => {
-        console.log(
+        console.error(
           'Error getting questions: ' +
           (<Error>error).name +
           (<Error>error).message
         );
-        console.log('Error getting questions: ' + (<Error>error).stack);
+        console.error('Error getting questions: ' + (<Error>error).stack);
       });
   }
 
@@ -292,7 +315,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
      * @param mode
      */
   expandAll(mode: boolean) {
-    this.groupings.forEach((g: QuestionGrouping) => {
+    this.groupings?.forEach((g: QuestionGrouping) => {
       this.recurseExpansion(g, mode);
     });
   }
@@ -386,5 +409,13 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    */
   areGroupingsVisible() {
     return this.groupings?.some(g => g.visible);
+  }
+
+  /**
+   * Show the selector for CRE+ Optional Domain Questions (model 23)
+   * and CRE+ Optional MIL Questions (model 24) 
+   */
+  showCreSelector(modelId: number): boolean {
+    return (modelId == 23 || modelId == 24);
   }
 }

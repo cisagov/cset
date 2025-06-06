@@ -23,5 +23,7 @@
 <div class="sub-header-1">{{ 'questions.security practice' | transloco }}</div>
 <p>{{question.securityPractice}}</p>
 
-<div class="sub-header-1">{{ 'questions.outcome' | transloco }}</div>
-<p>{{question.outcome}}</p>
+<ng-container *ngIf="!!question.outcome">
+  <div class="sub-header-1">{{ 'questions.outcome' | transloco }}</div>
+  <div [innerHTML]="question.outcome"></div>
+</ng-container>

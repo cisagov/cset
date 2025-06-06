@@ -1,0 +1,57 @@
+<!----------------------
+
+   Copyright 2025 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="report-body mb-5" *transloco="let t">
+     <h1>CRE+ Core Module Final Report</h1>
+     <p>
+          Each question is listed with its answer and any associated
+          comments or notes.
+     </p>
+     <table class="w-100 cset-table">
+          <tr>
+               <th>Number</th>
+               <th>Question Text</th>
+               <th>Rating</th>
+               <th>Assessor Notes</th>
+          </tr>
+          <ng-container *ngFor="let g of groupings">
+               <tr>
+                    <td colspan="4" style="background-color: #ddd;">
+                         <h5 class="mt-2">
+                              {{g.title}}
+                         </h5>
+                    </td>
+               </tr>
+
+               <ng-container *ngFor="let q of g.questions">
+                    <tr>
+                         <td>{{q.displayNumber}}</td>
+                         <td>{{q.securityPractice}}</td>
+                         <td [class]="answerCellClass(q?.answerText)">
+                              {{questionsSvc.answerDisplayLabel(22, q?.answerText)}}
+                         </td>
+                         <td>{{q.comment}}</td>
+                    </tr>
+               </ng-container>
+          </ng-container>
+     </table>
+</div>

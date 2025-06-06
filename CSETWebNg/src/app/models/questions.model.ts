@@ -82,6 +82,9 @@ export interface QuestionGrouping {
 
     // indicates if filtering has hidden the grouping
     visible: boolean;
+
+    // in CRE+, groups can be 'selected' in order to be displayed in list
+    selected: boolean;
 }
 
 export interface ACETDomain {

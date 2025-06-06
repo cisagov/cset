@@ -660,6 +660,7 @@
     "free services": "Free Services and References",
     "implementation guidance CPG": "Implementation Guidance",
     "implementation guidance CPG2": "Assessment Criteria",
+    "implementation guidance CRE+": "Response Criteria",
     "attestation": "Attestation",
     "measurement": "Measurement",
     "component type": "Component Type",
@@ -960,6 +961,11 @@
       "display-name": "Cyber Performance Goals (CPG) 2.0",
       "model short title": "CPG 2.0"
     },
+    "cre+": {
+      "display-name": "Cyber Resilience Essentials (CRE+)",
+      "model short title": "CRE+",
+      "question node title": "Core Questions"
+    },
     "cmmc2": {
       "model long title": "Cybersecurity Maturity Model Certification (CMMC) 2.0 DRAFT",
       "model short title": "CMMC 2.0 DRAFT"
@@ -974,7 +980,8 @@
     },
     "cisa vadr": {
       "display-name": "CISA Validated Architecture Design Review (VADR)",
-      "model short title": "CISA VADR"
+      "model short title": "CISA VADR",
+      "question node title": "VADR Questions"
     }
   },
   "aggregation": {
