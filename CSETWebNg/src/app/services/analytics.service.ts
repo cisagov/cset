@@ -82,7 +82,11 @@ export class AnalyticsService {
       tokenString = 'abc';
     }
 
-    this.headers.headers.append('x-cset-noauth', 'true');
+    //Custom header to avoid interceptor from adding the authorization header + token
+    let headers = {
+      headers: new HttpHeaders().set('Content-Type', 'application/json').set('noauth', 'true').set('x-cset-noauth', 'true'),
+      params: new HttpParams()
+    }
 
     return this.http.post(this.analyticsUrl + 'auth/istokenvalid', JSON.stringify(tokenString), this.headers);
   }
