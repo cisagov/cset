@@ -39,9 +39,8 @@ export class AnalyticsComponent implements OnInit {
     successMessage = '';
     errorMessage = '';
 
-
     /**
-     * 
+     *
      */
     constructor(private router: Router,
         public navSvc: NavigationService,
@@ -54,7 +53,7 @@ export class AnalyticsComponent implements OnInit {
     ) { }
 
     /**
-     * 
+     *
      */
     ngOnInit() {
         this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
@@ -66,7 +65,7 @@ export class AnalyticsComponent implements OnInit {
     }
 
     /**
-     * 
+     *
      */
     getAnalytics() {
         this.analyticsSvc.getAnalytics().subscribe(
@@ -121,7 +120,7 @@ export class AnalyticsComponent implements OnInit {
     }
 
     /**
-     * 
+     *
      */
     showLoginDialog() {
         this.uploadInProgress = false;
@@ -139,7 +138,7 @@ export class AnalyticsComponent implements OnInit {
     }
 
     /**
-     * 
+     *
      */
     logoutRemote() {
         localStorage.removeItem('remoteToken');
@@ -148,15 +147,15 @@ export class AnalyticsComponent implements OnInit {
     }
 
     /**
-     * 
+     *
      */
     getRawData() {
         return JSON.stringify(this.analytics);
     }
 
     /**
-     * 
-     * @param val 
+     *
+     * @param val
      */
     isNullOrEmpty(val) {
         if (!val || val.length == 0) {
@@ -166,7 +165,7 @@ export class AnalyticsComponent implements OnInit {
     }
 
     /**
-     * 
+     *
      */
     openSnackBar(message) {
         this.snackBar.open(message, "", {
