@@ -35,7 +35,7 @@ namespace CSETWebCore.Business.Version
 
 
             // Codebase
-            var entryAssembly = Assembly.GetEntryAssembly();
+            var entryAssembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
             var verCode = entryAssembly.GetName().Version;
             response.CodebaseVersion = new DataLayer.Model.Version
             {
