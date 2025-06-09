@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +15,7 @@ export class AnalyticsService {
   };
 
   /**
-   * 
+   *
    */
   constructor(private http: HttpClient, private configSvc: ConfigService) {
     this.baseUrl = this.configSvc.apiUrl;
@@ -25,21 +24,21 @@ export class AnalyticsService {
   }
 
   /**
-   * 
+   *
    */
   getAnalytics(): any {
     return this.http.get(this.apiUrl + 'getAggregation');
   }
 
   /**
-   * 
+   *
    */
   isCisaAssessorMode() {
     return this.configSvc.installationMode == "IOD";
   }
 
   /**
-   * 
+   *
    */
   getAnalyticResults(maturityModelId: number, sectorId?: number): any {
     let url = this.apiUrl + "maturity/bars?"
@@ -53,7 +52,7 @@ export class AnalyticsService {
   }
 
   /**
-   * 
+   *
    */
   getAnalyticsToken(username, password): any {
     let obj = JSON.stringify({
@@ -62,8 +61,15 @@ export class AnalyticsService {
       TzOffset: new Date().getTimezoneOffset().toString(),
       Scope: "CSET"
     });
+
+    //Custom header to avoid interceptor from adding the authorization header + token
+    let headers = {
+      headers: new HttpHeaders().set('Content-Type', 'application/json').set('noauth', 'true'),
+      params: new HttpParams()
+    }
+
     return this.http.post(
-      this.analyticsUrl + 'auth/login', obj, this.headers
+      this.analyticsUrl + 'auth/login', obj, headers
     );
   }
 
@@ -76,13 +82,17 @@ export class AnalyticsService {
       tokenString = 'abc';
     }
 
-    this.headers.headers.append('x-cset-noauth', 'true');
+    //Custom header to avoid interceptor from adding the authorization header + token
+    let headers = {
+      headers: new HttpHeaders().set('Content-Type', 'application/json').set('noauth', 'true').set('x-cset-noauth', 'true'),
+      params: new HttpParams()
+    }
 
     return this.http.post(this.analyticsUrl + 'auth/istokenvalid', JSON.stringify(tokenString), this.headers);
   }
 
   /**
-   * 
+   *
    */
   postAnalyticsWithLogin(token: string): any {
     //const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
