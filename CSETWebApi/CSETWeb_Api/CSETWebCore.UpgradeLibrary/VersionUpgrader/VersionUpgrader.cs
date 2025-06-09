@@ -189,7 +189,7 @@ namespace UpgradeLibrary.Upgrade
             if (dbVersion > currentVersion)  //Assessmenet is newer than current
             {
                 throw new DatabaseUpgradeException("This database is a newer version of CSET.  Please upgrade to CSET " +
-                         dbVersion.ToString() + "or get a newer version of the upgrader");
+                         dbVersion.ToString() + " or get a newer version of the upgrader.");
             }
 
             //increase the database's comptibility level to latest

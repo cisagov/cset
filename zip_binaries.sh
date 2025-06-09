@@ -2,24 +2,18 @@
 ##################################################################
 ## This script builds the front and backend of CSET,            ##
 ## then zips them up with SQL Server Express 2022,              ##
-## .NET 7 hosting bundle, database files, and web.config files. ##
+## .NET 8 hosting bundle, database files, and web.config files. ##
 ## Provide the script with the correct _versionNum on cmd line. ##
 ##################################################################
 
-_installationMode=$1 
-_versionNum=$2
+_versionNum=$1
 
 start C:/src/Repos/CSETStandAlone/setup/WixInstaller/CSET_WixSetup/deprecateFAA.bat CSETWeb${_versionNum}
-sqlcmd -S "(localdb)\INLLocalDb2022" -d "$CSETWeb${_versionNum}" -i  $RepoDir"Database Scripts\Database Maint Scripts\Users Clean-out.sql"
-sqlcmd -S "(localdb)\INLLocalDb2022" -d "$CSETWeb${_versionNum}" -i  $RepoDir"Database Scripts\Database Maint Scripts\Assessment Clean-out.sql"
-sqlcmd -S "(localdb)\INLLocalDb2022" -d "$CSETWeb${_versionNum}" -i  $RepoDir"Database Scripts\Database Maint Scripts\Standards Clean-out.sql"
+sqlcmd -S "(localdb)\INLLocalDb2022" -d "CSETWeb${_versionNum}" -i  $RepoDir"Database Scripts\Database Maint Scripts\Users Clean-out.sql"
+sqlcmd -S "(localdb)\INLLocalDb2022" -d "CSETWeb${_versionNum}" -i  $RepoDir"Database Scripts\Database Maint Scripts\Assessment Clean-out.sql"
+sqlcmd -S "(localdb)\INLLocalDb2022" -d "CSETWeb${_versionNum}" -i  $RepoDir"Database Scripts\Database Maint Scripts\Standards Clean-out.sql"
 
 shopt -s nocasematch
-
-if [[ $_installationMode == "WMATA" ]]
-then
-    sqlcmd -S "(localdb)\INLLocalDb2022" -d "$CSETWeb${_versionNum}" -i  $RepoDir"Database Scripts\Database Maint Scripts\WMATA Setup.sql"
-fi
 
 sed -i 's/\"EnterpriseInstallation\": \"false\"/\"EnterpriseInstallation\": \"true\"/g' CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/appsettings.json
 
