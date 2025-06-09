@@ -31,6 +31,8 @@ export class AnalyticsloginComponent implements OnInit {
   matcherpassword = new MyErrorStateMatcher();
   matchalias = new MyErrorStateMatcher();
 
+  uploadInProgress = false;
+
   dataloginForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required])
@@ -63,6 +65,7 @@ export class AnalyticsloginComponent implements OnInit {
    * 
    */
   submit() {
+    this.uploadInProgress = true;
     this.postAnalyticsWithLogin();
   }
 
@@ -79,6 +82,8 @@ export class AnalyticsloginComponent implements OnInit {
 
           this.analyticsSvc.postAnalyticsWithLogin(token).subscribe(
             (data: any) => {
+              this.uploadInProgress = false;
+
               this.dialogMat.open(AlertComponent, {
                 data: {
                   title: 'Success',
@@ -91,6 +96,8 @@ export class AnalyticsloginComponent implements OnInit {
             });
         },
         err => {
+          this.uploadInProgress = false;
+
           if (err instanceof HttpErrorResponse) {
             let httpError: HttpErrorResponse = err;
             if (httpError.status === 403) {  // Username or password Failed
@@ -110,6 +117,7 @@ export class AnalyticsloginComponent implements OnInit {
           }
         });
     } else {
+      this.uploadInProgress = false;
       this.error = "Fill out required fields";
     }
   }

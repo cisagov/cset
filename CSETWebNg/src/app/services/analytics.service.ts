@@ -53,7 +53,7 @@ export class AnalyticsService {
   }
 
   /**
-   * 
+   * Use remote credentials to get the remote token
    */
   getAnalyticsToken(username, password): any {
     let obj = JSON.stringify({
@@ -62,8 +62,12 @@ export class AnalyticsService {
       TzOffset: new Date().getTimezoneOffset().toString(),
       Scope: "CSET"
     });
+    let headers = {
+      headers: new HttpHeaders().set('Content-Type', 'application/json').set('noauth', 'true'),
+      params: new HttpParams()
+    };
     return this.http.post(
-      this.analyticsUrl + 'auth/login', obj, this.headers
+      this.analyticsUrl + 'auth/login', obj, headers
     );
   }
 
@@ -76,18 +80,19 @@ export class AnalyticsService {
       tokenString = 'abc';
     }
 
-    this.headers.headers.append('x-cset-noauth', 'true');
+    let headers = {
+      headers: new HttpHeaders().set('Content-Type', 'application/json').set('noauth', 'true').set('x-cset-noauth', 'true'),
+      params: new HttpParams()
+    };
 
-    return this.http.post(this.analyticsUrl + 'auth/istokenvalid', JSON.stringify(tokenString), this.headers);
+    return this.http.post(this.analyticsUrl + 'auth/istokenvalid', JSON.stringify(tokenString), headers);
   }
 
   /**
    * 
    */
   postAnalyticsWithLogin(token: string): any {
-    //const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.headers.headers = this.headers.headers.set('RemoteAuthorization', `Bearer ${token}`);
-    //return this.http.get(this.baseUrl + 'assessment/exportandsend', { headers.headers, observe: 'response', responseType: 'blob' });
     return this.http.get(this.baseUrl + 'assessment/exportandsend', this.headers);
   }
 }

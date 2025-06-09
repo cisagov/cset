@@ -38,7 +38,7 @@ export class JwtInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     // add authorization header with jwt token if available 
     // and the requestor did not provide one
-    if (!request.headers.has('authorization')) {
+    if (!request.headers.has('authorization') && !request.headers.has('noauth')) {
       if (
         localStorage.getItem('userToken') &&
         localStorage.getItem('userToken').length > 1
