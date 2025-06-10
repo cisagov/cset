@@ -80,7 +80,7 @@ export class AnalyticsloginComponent implements OnInit {
 
           localStorage.setItem('remoteToken', token);
 
-          this.analyticsSvc.postAnalyticsWithLogin(token).subscribe(
+          this.analyticsSvc.postAnalytics(token).subscribe(
             (data: any) => {
               this.uploadInProgress = false;
 
@@ -93,7 +93,13 @@ export class AnalyticsloginComponent implements OnInit {
               });
 
               this.dialog.close();
-            });
+            },
+            err => {
+              let httpError: HttpErrorResponse = err;
+              console.error(err);
+              this.uploadInProgress = false;
+            }
+          );
         },
         err => {
           this.uploadInProgress = false;
