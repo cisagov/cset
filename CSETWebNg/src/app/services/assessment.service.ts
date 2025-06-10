@@ -233,7 +233,7 @@ export class AssessmentService {
         headers
       )
       .subscribe(() => {
-        if (this.configSvc.cisaAssessorWorkflow) {
+        if (this.configSvc.userIsCisaAssessor) {
           this.updateAssessmentName();
         }
       });

@@ -92,7 +92,7 @@ export class DemographicService {
 
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
       .subscribe(() => {
-        if (this.configSvc.cisaAssessorWorkflow) {  
+        if (this.configSvc.userIsCisaAssessor) {  
 
         }
       });

@@ -77,7 +77,7 @@ export class DemographicIodService {
   updateDemographic(demographic: DemographicsIod) {
     this.http.post(this.apiUrl, demographic, headers)
       .subscribe(() => {
-        if (this.configSvc.cisaAssessorWorkflow) {
+        if (this.configSvc.userIsCisaAssessor) {
           this.assessSvc.updateAssessmentName();
         }
       });
