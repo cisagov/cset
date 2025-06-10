@@ -108,7 +108,7 @@
 
     <div class="mt-4">
       <h4>{{ t('assessment settings') }}</h4>
-      <div *ngIf="this.configSvc.cisaAssessorWorkflow; else content"
+      <div *ngIf="this.configSvc.userIsCisaAssessor; else content"
         class="d-flex align-items-center flex-00a ms-auto me-5" style="margin-top:-5px;">
         <div class="d-flex align-items-center me-3 pt-2">{{ t('protected features.cisa assessor workflow') }}</div>
         <div class="mb-2">

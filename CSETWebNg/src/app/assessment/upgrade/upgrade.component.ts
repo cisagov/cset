@@ -164,7 +164,7 @@ export class UpgradeComponent implements OnInit {
     this.iodDemoSvc.getDemographics().subscribe((data: any) => {
       this.iodDemographics = data;
     });
-    if (this.configSvc.cisaAssessorWorkflow == true) {
+    if (this.configSvc.userIsCisaAssessor == true) {
       this.csiSvc.getCsiServiceDemographic().subscribe((result: CsiServiceDemographic) => {
         this.csiServiceDemographic = result;
       });
@@ -187,7 +187,7 @@ export class UpgradeComponent implements OnInit {
     this.assessment.galleryItemGuid = this.assessSvc.galleryItemGuid.toLowerCase()
     this.demoSvc.updateDemographic(this.demographicData);
     this.iodDemoSvc.updateDemographic(this.iodDemographics);
-    if (this.configSvc.cisaAssessorWorkflow == true) {
+    if (this.configSvc.userIsCisaAssessor == true) {
       this.csiSvc.updateCsiServiceDemographic(this.csiServiceDemographic);
       this.csiSvc.updateCsiServiceComposition(this.serviceComposition);
     }
