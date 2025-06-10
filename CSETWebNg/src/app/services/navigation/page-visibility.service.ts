@@ -176,6 +176,10 @@ export class PageVisibilityService {
         show = show && this.isUserCisaAssessor();
       }
 
+      if (c == 'HAS-URL-ANALYTICS') {
+        show = show && !!this.configSvc.analyticsUrl;
+      }
+
       if (c == 'SHOW-EXEC-SUMMARY') {
         show = show && this.showExecSummaryPage();
       }
