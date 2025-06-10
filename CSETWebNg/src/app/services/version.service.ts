@@ -39,7 +39,9 @@ export class VersionService {
       this.actualVersion = data.tag_name.substring(1);
       this.githubVersion = data.tag_name.substring(1).split('.').map(x => parseInt(x, 10));
       if (data) {
-        this.getInstalledVersion().subscribe(version => {
+        this.getInstalledVersion().subscribe(v => {
+          const version = v.codebaseVersion;
+          
           this.localVersion = version.majorVersion.toString() + '.' + version.minorVersion.toString() + '.' + version.build.toString() + '.' + version.revision.toString();
           this.localVersionSubject.next(this.localVersion);
 

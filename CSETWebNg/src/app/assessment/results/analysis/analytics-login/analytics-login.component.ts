@@ -83,16 +83,7 @@ export class AnalyticsloginComponent implements OnInit {
           this.analyticsSvc.postAnalytics(token).subscribe(
             (data: any) => {
               this.uploadInProgress = false;
-
-              this.dialogMat.open(AlertComponent, {
-                data: {
-                  title: 'Success',
-                  iconClass: 'cset-icons-check-circle',
-                  messageText: "Assessment has been uploaded to the enterprise server"
-                }
-              });
-
-              this.dialog.close();
+              this.dialog.close('The assessment has been uploaded to the enterprise server');
             },
             err => {
               let httpError: HttpErrorResponse = err;
