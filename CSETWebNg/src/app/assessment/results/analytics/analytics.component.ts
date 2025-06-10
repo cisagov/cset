@@ -97,7 +97,7 @@ export class AnalyticsComponent implements OnInit {
         this.analyticsSvc.isRemoteTokenValid(remoteToken).subscribe((isValidRemoteToken) => {
             if (isValidRemoteToken.toString().toLowerCase() == 'true') {
 
-                this.analyticsSvc.postAnalyticsWithLogin(remoteToken).subscribe(x => {
+                this.analyticsSvc.postAnalytics(remoteToken).subscribe(x => {
                     this.uploadInProgress = false;
                     this.successMessage = 'The assessment has been uploaded to the enterprise server';
                 },
