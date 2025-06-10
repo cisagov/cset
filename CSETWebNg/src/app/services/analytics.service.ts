@@ -94,8 +94,15 @@ export class AnalyticsService {
   /**
    *
    */
-  postAnalyticsWithLogin(token: string): any {
-    this.headers.headers = this.headers.headers.set('RemoteAuthorization', `Bearer ${token}`);
-    return this.http.get(this.baseUrl + 'assessment/exportandsend', this.headers);
+  postAnalytics(remoteToken: string): any {
+    let headers = {
+      headers: new HttpHeaders()
+        .set('RemoteAuthorization', remoteToken)
+        .set('Content-Type', 'application/json')
+        .set('x-cset-noauth', 'true'),
+      params: new HttpParams()
+    };
+
+    return this.http.get(this.baseUrl + 'assessment/exportandsend', headers);
   }
 }
