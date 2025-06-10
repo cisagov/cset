@@ -64,7 +64,7 @@ export class ConfigService {
   dhsEmail: string;
 
   onlineUrl: string;
-  analyticsUrl: string;
+  analyticsUrl: string | null;
 
   csetGithubApiUrl: string;
   helpContactEmail: string;
@@ -205,7 +205,10 @@ export class ConfigService {
     });
 
 
-    this.analyticsUrl = this.buildUrl(this.config.analytics) + '/';
+    this.analyticsUrl = this.buildUrl(this.config.analytics);
+    if (!!this.analyticsUrl) {
+      this.analyticsUrl = this.analyticsUrl + '/';
+    } 
 
 
     // configure the reference document URL if the "library" property is defined
@@ -237,6 +240,9 @@ export class ConfigService {
    * Combines the elements provided to create a URL string
    */
   buildUrl(configGroup: any) {
+    if (!configGroup) {
+      return null;
+    }
 
     let url = `${configGroup.protocol}://${configGroup.host}`;
 
