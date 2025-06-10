@@ -139,7 +139,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
 
-    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.cisaAssessorWorkflow = resp);
+    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.userIsCisaAssessor = resp);
   }
 
   /**
@@ -162,7 +162,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
     if (column == 'export json') {
-      return this.configSvc.cisaAssessorWorkflow;
+      return this.configSvc.userIsCisaAssessor;
     }
 
     return true;

@@ -153,18 +153,18 @@ export class PageVisibilityService {
       }
 
       if (c == ('ASSESSOR')) {
-        if (this.configSvc.cisaAssessorWorkflow) {
-          show = show && (this.configSvc.cisaAssessorWorkflow && this.assessSvc.assessment?.assessorMode);
+        if (this.configSvc.userIsCisaAssessor) {
+          show = show && (this.configSvc.userIsCisaAssessor && this.assessSvc.assessment?.assessorMode);
         } else {
-          show = show && (this.configSvc.cisaAssessorWorkflow !== this.assessSvc.assessment?.assessorMode);
+          show = show && (this.configSvc.userIsCisaAssessor !== this.assessSvc.assessment?.assessorMode);
         }
       }
 
       if (c == ('ASSESSOR-NONE')) {
-        if (this.configSvc.cisaAssessorWorkflow) {
-          show = show && !(this.configSvc.cisaAssessorWorkflow && this.assessSvc.assessment?.assessorMode);
+        if (this.configSvc.userIsCisaAssessor) {
+          show = show && !(this.configSvc.userIsCisaAssessor && this.assessSvc.assessment?.assessorMode);
         } else {
-          show = show && !(this.configSvc.cisaAssessorWorkflow !== this.assessSvc.assessment?.assessorMode);
+          show = show && !(this.configSvc.userIsCisaAssessor !== this.assessSvc.assessment?.assessorMode);
         }
       }
 
@@ -344,7 +344,7 @@ export class PageVisibilityService {
    * Indicates whether the current user is a CISA CSA / assessor
    */
   isUserCisaAssessor(): boolean {
-    return this.configSvc.cisaAssessorWorkflow;
+    return this.configSvc.userIsCisaAssessor;
   }
 
   /**
