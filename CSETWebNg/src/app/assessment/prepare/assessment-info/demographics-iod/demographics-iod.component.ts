@@ -140,7 +140,7 @@ export class DemographicsIodComponent implements OnInit {
    * 
    */
   updateDemographics() {
-    this.configSvc.cisaAssessorWorkflow = true;
+    this.configSvc.userIsCisaAssessor = true;
     this.demographicData.sectorDirective = 'NIPP';
 
     // keep a few things in sync

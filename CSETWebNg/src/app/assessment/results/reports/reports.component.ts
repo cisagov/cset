@@ -133,7 +133,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       this.router.navigate([value], { relativeTo: this.route.parent });
     });
 
-    if (this.configSvc.installationMode === 'IOD') {
+    if (this.configSvc.installationMode === 'IOD' && this.assessSvc.assessment.assessorMode) {
       this.reportSvc.validateCisaAssessorFields().subscribe((result: CisaWorkflowFieldValidationResponse) => {
         this.cisaAssessorWorkflowFieldValidation = result;
         if (!this.cisaAssessorWorkflowFieldValidation?.isValid) {
@@ -141,12 +141,12 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         }
       });
     }
- 
+    
     this.assessSvc.getLastModified().subscribe((data: any) => {
       this.lastModifiedTimestamp = data.lastModifiedDate;
     });
-
-    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.cisaAssessorWorkflow = resp);
+    
+    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.userIsCisaAssessor = resp);
 
     this.updateSectionId();
   }

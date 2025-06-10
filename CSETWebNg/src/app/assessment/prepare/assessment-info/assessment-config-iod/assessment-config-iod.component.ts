@@ -95,7 +95,7 @@ export class AssessmentConfigIodComponent implements OnInit {
         this.assessment.pciiNumber = null;
       }
 
-      this.configSvc.cisaAssessorWorkflow = true;
+      this.configSvc.userIsCisaAssessor = true;
       this.assessSvc.updateAssessmentDetails(this.assessment);
     }
   }

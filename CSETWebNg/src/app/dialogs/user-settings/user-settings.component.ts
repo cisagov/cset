@@ -47,7 +47,7 @@ export class UserSettingsComponent implements OnInit {
       this.encryption = result
     });
     this.configSvc.getCisaAssessorWorkflow().subscribe((cisaWorkflowEnabled: boolean) => {
-      this.configSvc.cisaAssessorWorkflow = cisaWorkflowEnabled;
+      this.configSvc.userIsCisaAssessor = cisaWorkflowEnabled;
       this.cisaWorkflowEnabled = cisaWorkflowEnabled;
       this.cisaWorkflowStatusLoaded = true;
     });
