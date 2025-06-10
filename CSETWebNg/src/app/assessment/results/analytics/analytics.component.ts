@@ -4,12 +4,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AnalyticsService } from '../../../services/analytics.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { strict } from 'assert';
-//import { DataloginComponent } from '../analysis/submitdata/datalogin/datalogin.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfigService } from '../../../services/config.service';
-import { AlertComponent } from '../../../dialogs/alert/alert.component';
 import { AnalyticsloginComponent } from '../analysis/analytics-login/analytics-login.component';
 import { AuthenticationService } from '../../../services/authentication.service';
+import { isNotFound } from '@angular/core/primitives/di';
 
 @Component({
     selector: 'app-analytics',
@@ -131,8 +130,12 @@ export class AnalyticsComponent implements OnInit {
             disableClose: true,
             data: this.analytics
         }).afterClosed().subscribe(info => {
-            if (!!info && info.cancel) {
-                // user canceled, do nothing
+            if (!!info) {
+                if (info.cancel) {
+                    // user canceled, do nothing
+                } else {
+                    this.successMessage = info;
+                }
             }
         });
     }
