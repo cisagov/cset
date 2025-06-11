@@ -66,21 +66,18 @@ namespace CSETWebCore.Business.Question
             // is this assessment CISA VADR
             if (models.Select(x => x.model_id).Contains(Constants.Constants.Model_CISA_VADR))
             {
+                var om = new ObservationsManager(_context, answer.AssessmentId);
+
                 if (answer.AnswerText == "N")
                 {
                     // build an Observation async and tell the front end to refresh their details
-
-                    var om = new ObservationsManager(_context, answer.AssessmentId);
                     om.BuildAutoObservation(answer);
                     detailsChanged = true;
                 }
                 else
                 {
-                    // clear out any automatic Observation?  How can we tell?  We don't want to delete manually-added ones
-                    // TODO:  
-
-
-
+                    // clear out any automatic Observations for the Answer
+                    om.DeleteAutoObservation(answer);
                     detailsChanged = true;
                 }
             }
