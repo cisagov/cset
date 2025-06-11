@@ -33,6 +33,13 @@ load-db:
 		-P "Password123" \
 		-i /var/opt/mssql/scripts/InitScripts/initdb.sql
 
+# target: load-bak = Load the database backup file
+load-bak:
+	docker exec -i cset-mssql /opt/mssql-tools/bin/sqlcmd \
+		-U 'sa' \
+		-P "Password123" \
+		-i /var/opt/mssql/backup/restoredb.sql
+
 # target: stop-db - Stop the local database
 stop-db:
 	docker compose stop sqlserver
