@@ -959,7 +959,8 @@
     },
     "cpg2": {
       "display-name": "Cyber Performance Goals (CPG) 2.0",
-      "model short title": "CPG 2.0"
+      "model short title": "CPG 2.0",
+      "question node title": "Security Practices"
     },
     "cre+": {
       "display-name": "Cyber Resilience Essentials (CRE+)",

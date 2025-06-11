@@ -296,3 +296,7 @@ export interface MaturityFilter {
     isSet: boolean;
 }
 
+export interface AnswerQuestionResponse {
+    answerId: number;
+    detailsChanged: boolean;
+}

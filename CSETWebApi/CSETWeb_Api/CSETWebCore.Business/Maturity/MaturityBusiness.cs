@@ -1084,7 +1084,7 @@ namespace CSETWebCore.Business.Maturity
         /// Stores an answer.
         /// </summary>
         /// <param name="answer"></param>
-        public int StoreAnswer(int assessmentId, Answer answer)
+        public Answer StoreAnswer(int assessmentId, Answer answer)
         {
             // Find the Maturity Question
             var question = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefault();
@@ -1128,9 +1128,12 @@ namespace CSETWebCore.Business.Maturity
             _context.ANSWER.Update(dbAnswer);
             _context.SaveChanges();
 
+            answer.AssessmentId = dbAnswer.Assessment_Id;
+            answer.AnswerId = dbAnswer.Answer_Id;
+
             _assessmentUtil.TouchAssessment(assessmentId);
 
-            return dbAnswer.Answer_Id;
+            return answer;
         }
 
 
