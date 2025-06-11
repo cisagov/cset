@@ -106,6 +106,10 @@ export class QuestionBlockComponent implements OnInit {
       });
     }
 
+    this.mySubCategory.questions.map((item: Question) => {
+      this.setJustificationVisibility(item);
+    });
+
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
 
@@ -295,6 +299,18 @@ export class QuestionBlockComponent implements OnInit {
   }
 
   /**
+ * Sets a flag on the question indicating whether the
+ * "Justification" field (or 'alt text') should display
+ */
+  setJustificationVisibility(q: Question) {
+    q.showJustificationField = false;
+
+    if (q.answer === 'A') {
+      q.showJustificationField = true;
+    }
+  }
+
+  /**
    * Pushes an answer asynchronously to the API.
    * @param q
    * @param ans
@@ -305,7 +321,9 @@ export class QuestionBlockComponent implements OnInit {
       newAnswerValue = "U";
     }
 
-    q.answer = newAnswerValue;
+    if (!!newAnswerValue) {
+      q.answer = newAnswerValue;
+    }
 
     const answer: Answer = {
       answerId: q.answer_Id,
@@ -326,6 +344,8 @@ export class QuestionBlockComponent implements OnInit {
 
     this.completionSvc.setAnswer(q.questionId, q.answer);
 
+    this.setJustificationVisibility(q);
+
     this.refreshReviewIndicator();
 
     this.refreshPercentAnswered();
@@ -337,45 +357,6 @@ export class QuestionBlockComponent implements OnInit {
           this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
         }
       });
-  }
-
-  /**
-   * Pushes the answer to the API, specifically containing the alt text
-   * @param q
-   * @param altText
-   */
-  storeAltText(q: Question) {
-
-    clearTimeout(this._timeoutId);
-    this._timeoutId = setTimeout(() => {
-      const answer: Answer = {
-        answerId: q.answer_Id,
-        questionId: q.questionId,
-        questionType: q.questionType,
-        questionNumber: q.displayNumber,
-        answerText: q.answer,
-        altAnswerText: q.altAnswerText,
-        comment: q.comment,
-        feedback: q.feedback,
-        markForReview: q.markForReview,
-        reviewed: q.reviewed,
-        is_Component: q.is_Component,
-        is_Requirement: q.is_Requirement,
-        is_Maturity: q.is_Maturity,
-        componentGuid: q.componentGuid
-      };
-
-      this.refreshReviewIndicator();
-
-      this.questionsSvc.storeAnswer(answer)
-        .subscribe((resp: AnswerQuestionResponse) => {
-        q.answer_Id = resp.answerId;
-        if (resp.detailsChanged) {
-          this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
-        }
-      });
-    }, 500);
-
   }
 
   /**

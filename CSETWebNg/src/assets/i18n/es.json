@@ -343,6 +343,7 @@
             "yes": "Sí",
             "no": "No",
             "n/a": "N/A",
+            "na": "N/A",
             "alt": "Alternar",
             "unanswered": "Sin respuesta",
             "inc": "Incompleto",
@@ -390,8 +391,8 @@
             "ni-c2m2": "No Implementado (NI)"
         },
         "placeholders": {
-            "alt acet": "Descripción, explicación y/o justificación para el control compensatorio",
-            "alt cset": "Descripción, explicación y/o justificación para la respuesta alternativa"
+            "alt justification": "Descripción, explicación y/o justificación para la respuesta alternativa",
+            "NA justification": "Descripción, explicación y/o justificación para la respuesta N/A"
         },
         "warnings": {
             "description required": "* Descripción requerida"

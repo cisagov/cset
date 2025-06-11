@@ -119,11 +119,11 @@
                         </label>
                     </div>
 
-                    <div *ngIf="q.answer === 'A'">
+                    <div *ngIf="q.showJustificationField">
                         <textarea appAutoSize class="form-control" 
                             style="width: 100%; min-height: 80px;"
-                            [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
-                            [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
+                            [placeholder]="t(`answer-options.placeholders.${q.answer} justification`)"
+                            [(ngModel)]="q.altAnswerText" (change)="storeAnswer(q, null)"></textarea>
                     </div>
                 </div>
             </div>
@@ -183,11 +183,11 @@
                         </label>
                     </div>
 
-                    <div *ngIf="q.answer === 'A'">
+                    <div *ngIf="q.showJustificationField">
                         <textarea appAutoSize class="form-control"
                             style="width: 100%; min-height: 80px;"
-                            [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
-                            [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
+                            [placeholder]="t(`answer-options.placeholders.${q.answer} justification`)"
+                            [(ngModel)]="q.altAnswerText" (change)="storeAnswer(q, null)"></textarea>
                     </div>
                 </div>
             </div>
