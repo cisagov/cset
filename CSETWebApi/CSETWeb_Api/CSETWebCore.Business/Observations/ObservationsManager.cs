@@ -222,7 +222,7 @@ namespace CSETWebCore.Business.Observations
 
 
         /// <summary>
-        /// Creates an Observation based on maturity question properties
+        /// Creates an Observation based on maturity question properties.
         /// </summary>
         public void BuildAutoObservation(Model.Question.Answer answer)
         {
@@ -257,6 +257,18 @@ namespace CSETWebCore.Business.Observations
             newObs.Auto_Generated = Constants.Constants.ObsCreatedByVadr;
 
             UpdateObservation(newObs);
+        }
+
+
+        /// <summary>
+        /// Deletes all "Auto" Observations attached to the specified Answer.
+        /// </summary>
+        /// <param name="answer"></param>
+        public void DeleteAutoObservation(Model.Question.Answer answer)
+        {
+            var listObs = _context.FINDING.Where(x => x.Answer_Id == answer.AnswerId && x.Auto_Generated == Constants.Constants.ObsCreatedByVadr).ToList();
+            _context.RemoveRange(listObs);
+            _context.SaveChanges();
         }
     }
 }

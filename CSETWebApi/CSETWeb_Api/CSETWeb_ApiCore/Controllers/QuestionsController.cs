@@ -241,6 +241,7 @@ namespace CSETWebCore.Api.Controllers
                 DetailsChanged = false
             };
 
+
             if (answer == null)
             {
                 return Ok(0);
