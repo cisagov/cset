@@ -132,8 +132,10 @@ export class QuestionBlockVadrComponent implements OnInit {
     if (q.answer === newAnswerValue) {
       newAnswerValue = "U";
     }
-
-    q.answer = newAnswerValue;
+    
+    if (!!newAnswerValue) {
+      q.answer = newAnswerValue;
+    }
 
     const answer: Answer = {
       answerId: q.answer_Id,
@@ -222,46 +224,9 @@ export class QuestionBlockVadrComponent implements OnInit {
   }
 
   /**
-   * Pushes the answer to the API, specifically containing the alt text
-   * @param q
-   * @param altText
+   * 
    */
-  storeAltText(q: Question) {
-
-    clearTimeout(this._timeoutId);
-    this._timeoutId = setTimeout(() => {
-      const answer: Answer = {
-        answerId: q.answer_Id,
-        questionId: q.questionId,
-        questionType: q.questionType,
-        questionNumber: q.displayNumber,
-        answerText: q.answer,
-        altAnswerText: q.altAnswerText,
-        // freeResponseAnswer: q.freeResponseAnswer,
-        comment: q.comment,
-        feedback: q.feedback,
-        markForReview: q.markForReview,
-        reviewed: q.reviewed,
-        is_Component: q.is_Component,
-        is_Requirement: q.is_Requirement,
-        is_Maturity: q.is_Maturity,
-        componentGuid: q.componentGuid
-      };
-
-      this.refreshReviewIndicator();
-
-      this.questionsSvc.storeAnswer(answer)
-        .subscribe((resp: AnswerQuestionResponse) => {
-          q.answer_Id = resp.answerId;
-          if (resp.detailsChanged) {
-            this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
-          }
-        });
-    }, 500);
-
-  }
   storeFreeText(q: Question) {
-
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
       const answer: Answer = {

@@ -153,7 +153,19 @@ export interface Question {
     answerOptions: string[];
     answer_Id: number;
     answer: string;
+
+    /**
+     * Stores a justification for the answer choice.  
+     * In Standards, it is asked for Alt answer choices.
+     * In maturity models it may vary.
+    */
     altAnswerText: string;
+
+    /**
+     * Used to control the ngIf of the justification field (altAmswerText)
+     */
+    showJustificationField: boolean;
+
     freeResponseAnswer?: string;
     answerMemo?: string;
     comment: string;
@@ -171,6 +183,8 @@ export interface Question {
     is_Maturity: boolean;
     extrasExpanded: boolean;
 
+
+
     // CPG fields
     securityPractice: string;
     scope: string;
@@ -183,7 +197,7 @@ export interface Question {
     parentQuestionId: number;
 
     followups: [];
-    
+
     visible: boolean;
     options: any[];
     failedIntegrityCheckOptions: IntegrityCheckOption[];
