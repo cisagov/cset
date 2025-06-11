@@ -43,6 +43,8 @@ export class ModuleContentLaunchComponent implements OnInit {
   models: any[];
   selectedModel;
 
+  selectedOption: string = '';
+
   /**
    *
    */
@@ -79,6 +81,33 @@ export class ModuleContentLaunchComponent implements OnInit {
    */
   selectType(event: any) {
     this.whichType = event.target.id;
+  }
+
+  /**
+   * Handle selection change to update old properties for backward compatibility
+   */
+  onSelectionChange() {
+    if (this.selectedOption.startsWith('standard:')) {
+      this.selectedStandard = this.selectedOption.substring(9);
+      this.selectedModel = null;
+    } else if (this.selectedOption.startsWith('model:')) {
+      this.selectedModel = this.selectedOption.substring(6);
+      this.selectedStandard = null;
+    } else {
+      this.selectedStandard = null;
+      this.selectedModel = null;
+    }
+  }
+
+  /**
+   * Launch the appropriate report based on selection
+   */
+  launchReport() {
+    if (this.selectedOption.startsWith('standard:')) {
+      this.launchStandardReport();
+    } else if (this.selectedOption.startsWith('model:')) {
+      this.launchModelReport();
+    }
   }
 
   /**
