@@ -13,13 +13,11 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
-using DocumentFormat.OpenXml.InkML;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using CSETWebCore.Business.Demographic;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -64,6 +62,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             _mb = new Maturity.MaturityBusiness(_context, null, null);
             _cb = new Contact.ContactBusiness(_context, _assessmentUtil, _token, null, null, null);
             _assessmentBiz = new AssessmentBusiness(null, _token, _utilities, _cb, null, _mb, _assessmentUtil, null, null, _context);
+           
+        
 
 
             //ignore the emass document we are not using it anyway.
@@ -114,8 +114,10 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
             int assessmentId = detail.Id;
 
-            Dictionary<int, int> oldAnswerId = new Dictionary<int, int>();
-            Dictionary<int, ANSWER> oldIdNewAnswer = new Dictionary<int, ANSWER>();
+            if (overwriteAssessment)
+            {
+               SyncOverwrite(assessmentId);
+            }
 
             Dictionary<string, int> oldUserNewUser = _context.USERS.ToDictionary(x => x.PrimaryEmail, y => y.UserId);
 
@@ -230,6 +232,90 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         {
             // set the feature flags on the ASSESSMENTS record
             _assessmentBiz.SetFeaturesOnAssessmentRecord(assessmentId);
+        }
+
+        public void SyncOverwrite(int assessmentId)
+        {
+            foreach (var answer in _model.jANSWER)
+            {
+                var currentAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Or_Requirement_Id == answer.Question_Or_Requirement_Id).FirstOrDefault();
+                if (currentAnswer == null)
+                {
+                    currentAnswer = new ANSWER();
+                }
+                currentAnswer.Assessment_Id = assessmentId;
+                currentAnswer.Question_Type = answer.Question_Type;
+                currentAnswer.Question_Number = answer.Question_Number;
+                currentAnswer.Answer_Text = answer.Answer_Text;
+                currentAnswer.Mat_Option_Id = answer.Mat_Option_Id;
+                currentAnswer.Alternate_Justification = answer.Alternate_Justification; 
+                currentAnswer.Free_Response_Answer = answer.Free_Response_Answer;
+                currentAnswer.Comment = answer.Comment;
+                currentAnswer.FeedBack = answer.FeedBack; 
+                currentAnswer.Mark_For_Review = answer.Mark_For_Review ?? false;
+                currentAnswer.Component_Guid = answer.Component_Guid;
+                currentAnswer.Reviewed = answer.Reviewed;
+                currentAnswer.Is_Requirement = answer.Is_Requirement;
+                currentAnswer.Is_Component = answer.Is_Component;
+                currentAnswer.Is_Maturity = answer.Is_Maturity;
+
+                _context.SaveChanges();
+            }
+            
+            foreach (var demographics in _model.jDEMOGRAPHICS)
+            {
+                var current = _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+                if (current == null)
+                {
+                    current = new DEMOGRAPHICS();
+                }
+                current.Assessment_Id = assessmentId;
+                current.SectorId = demographics.SectorId;
+                current.IndustryId = demographics.IndustryId;
+                current.Size = demographics.Size;
+                current.AssetValue = demographics.AssetValue;
+                current.NeedsPrivacy = demographics.NeedsPrivacy;
+                current.NeedsSupplyChain = demographics.NeedsSupplyChain;
+                current.NeedsICS = demographics.NeedsICS;
+                current.OrganizationName = demographics.OrganizationName;
+                current.Agency = demographics.Agency;
+                current.OrganizationType = demographics.OrganizationType;
+                current.Facilitator = demographics.Facilitator;
+                current.PointOfContact = demographics.PointOfContact;
+                current.IsScoped = demographics.IsScoped;
+                current.CriticalService = demographics.CriticalService;
+            }
+
+            foreach (var demographics in _model.jDETAILS_DEMOGRAPHICS)
+            {
+                var currentDemos = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).ToList();
+                var _demographicExtBiz = new DemographicExtBusiness(_context);
+                if (demographics.StringValue != null)
+                {
+                    var value = demographics.StringValue;
+                    _demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, value);
+                }
+                else if (demographics.IntValue != null)
+                {
+                    var value = demographics.IntValue;
+                    _demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, value);
+                }
+                else if (demographics.FloatValue != null)
+                {
+                    var value = demographics.FloatValue;
+                    _demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, value);
+                }
+                else if (demographics.BoolValue != null)
+                {
+                    var value = demographics.BoolValue;
+                    _demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, value);
+                }
+                else if (demographics.DateTimeValue != null)
+                {
+                    var value = demographics.DateTimeValue;
+                    _demographicExtBiz.SaveX(assessmentId, demographics.DataItemName, value);
+                }
+            }
         }
     }
 }
