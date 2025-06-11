@@ -16,6 +16,7 @@ env:
 jobs:
   build-api:
     runs-on: ubuntu-latest
+    if: github.actor != 'dependabot[bot]'
     defaults:
       run:
         working-directory: ./CSETWebApi
@@ -35,6 +36,7 @@ jobs:
         run: docker push $IMAGE/api:latest
   build-web:
     runs-on: ubuntu-latest
+    if: github.actor != 'dependabot[bot]'
     defaults:
       run:
         working-directory: ./CSETWebNg
@@ -53,3 +55,16 @@ jobs:
       - name: Push Docker Image
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         run: docker push $IMAGE/web:latest
+  dependabot-build:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Basic build test (API)
+        working-directory: ./CSETWebApi
+        run: docker build -f Dockerfile . --tag test-api:latest
+        
+      - name: Basic build test (Web)
+        working-directory: ./CSETWebNg
+        run: docker build -f Dockerfile . --tag test-web:latest
