@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Observations;
+using CSETWebCore.Model.Set;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
@@ -152,42 +153,10 @@ namespace CSETWebCore.Business.Observations
         /// Updates an Observation in its FINDING database record
         /// </summary>
         /// <param name="observation"></param>
-        public int UpdateObservation(Observation observation, bool merge)
+        public int UpdateObservation(Observation observation)
         {
             ObservationData fm = new ObservationData(observation, _context);
             int id = fm.Save();
-
-            if (merge == true)
-            {
-                var contactList = new List<FINDING_CONTACT>();
-                if (observation.Observation_Contacts != null)
-                {
-                    foreach (var contact in observation.Observation_Contacts)
-                    {
-                        var previousContact = _context.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == contact.Assessment_Contact_Id).FirstOrDefault();
-                        var userId = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Contact_Id == contact.Assessment_Contact_Id).Select(x => x.UserId).FirstOrDefault();
-                        var newContactId = _context.ASSESSMENT_CONTACTS.Where(x => x.UserId == userId && x.Assessment_Id == _assessmentId).Select(x => x.Assessment_Contact_Id).FirstOrDefault();
-
-
-                        FINDING_CONTACT newContact = new FINDING_CONTACT()
-                        {
-                            Finding_Id = id,
-                            Assessment_Contact_Id = newContactId
-                        };
-                        contactList.Add(newContact);
-                    }
-
-                    _context.FINDING_CONTACT.AddRange(contactList);
-                    _context.SaveChanges();
-
-                }
-
-            }
-            // IF MERGE
-            // IF fm._webObservation.ObservationContacts > 0 AND SELECT Finding_Contact (Where x.Finding_Id == id)
-            // _context.add(fm._webObservation.ObservationContact) <-- Maybe add a new function here inside the business and not manager? Idk.
-            // _context.save()
-            // 
             return id;
         }
 
@@ -228,23 +197,6 @@ namespace CSETWebCore.Business.Observations
         /// <summary>
         /// 
         /// </summary>
-        public async Task<List<Acet_GetActionItemsForReportResult>> GetActionItemsReport(int assessment_id, int examLevel)
-        {
-            int additionalExamLevel = 17; //initialized as SCUEP
-            if (examLevel == 18) //if CORE, include CORE+ in the stored proc
-            {
-                additionalExamLevel = 19; //CORE+
-            }
-
-            var data = await _context.Procedures.Acet_GetActionItemsForReportAsync(assessment_id, examLevel, additionalExamLevel);
-            return data;
-
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
         public void UpdateIssues(ActionItemTextUpdate items)
         {
             foreach (var item in items.actionTextItems)
@@ -266,6 +218,57 @@ namespace CSETWebCore.Business.Observations
                     _context.SaveChanges();
                 }
             }
+        }
+
+
+        /// <summary>
+        /// Creates an Observation based on maturity question properties.
+        /// </summary>
+        public void BuildAutoObservation(Model.Question.Answer answer)
+        {
+            // get question ID
+            var questionId = answer.QuestionId;
+
+            // get OBS-properties for the question
+            var props = _context.MATURITY_QUESTION_PROPS.Where(x => x.Mat_Question_Id == questionId && x.PropertyName.StartsWith("OBS-")).ToList();
+
+
+            // see if we have an existing auto observation
+            var existingAutoObs = _context.FINDING.Where(x => x.Answer_Id == answer.AnswerId && x.Auto_Generated == Constants.Constants.ObsCreatedByVadr).FirstOrDefault();
+            if (existingAutoObs != null)
+            {
+                return;
+            }
+
+
+            // create new observation record
+            var newObs = GetObservation(-1, (int)answer.AnswerId);
+
+            // populate with properties
+            newObs.Summary = props.Where(x => x.PropertyName == "OBS-DISCOVERY").FirstOrDefault()?.PropertyValue ?? "";
+            newObs.Issue = props.Where(x => x.PropertyName == "OBS-RISK-STATEMENT").FirstOrDefault()?.PropertyValue ?? "";
+            newObs.Recommendations = props.Where(x => x.PropertyName == "OBS-RECOMMENDATION").FirstOrDefault()?.PropertyValue ?? "";
+
+            //newObs.Risk_Area = props.Where(x => x.PropertyName == "OBS-RISK").FirstOrDefault()?.PropertyValue ?? "";
+            //newObs.Impact = props.Where(x => x.PropertyName == "OBS-IMPACT").FirstOrDefault()?.PropertyValue ?? "";
+            //newObs.Vulnerabilities = props.Where(x => x.PropertyName == "OBS-VULNERABILITY").FirstOrDefault()?.PropertyValue ?? "";
+
+            // mark the observation as created by VADR so that we can find it easily to delete 
+            newObs.Auto_Generated = Constants.Constants.ObsCreatedByVadr;
+
+            UpdateObservation(newObs);
+        }
+
+
+        /// <summary>
+        /// Deletes all "Auto" Observations attached to the specified Answer.
+        /// </summary>
+        /// <param name="answer"></param>
+        public void DeleteAutoObservation(Model.Question.Answer answer)
+        {
+            var listObs = _context.FINDING.Where(x => x.Answer_Id == answer.AnswerId && x.Auto_Generated == Constants.Constants.ObsCreatedByVadr).ToList();
+            _context.RemoveRange(listObs);
+            _context.SaveChanges();
         }
     }
 }

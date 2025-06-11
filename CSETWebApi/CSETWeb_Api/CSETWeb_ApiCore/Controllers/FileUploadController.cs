@@ -113,7 +113,8 @@ namespace CSETWebCore.Api.Controllers
                     // 
                     if (questionType.ToLower() == "maturity")
                     {
-                        answerId = _maturityBusiness.StoreAnswer(assessmentId, answer);
+                        var ans = _maturityBusiness.StoreAnswer(assessmentId, answer);
+                        answerId = (int)ans.AnswerId;
                     }
                     else
                     {

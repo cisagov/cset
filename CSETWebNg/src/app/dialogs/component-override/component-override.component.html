@@ -77,7 +77,7 @@
               </div>
               <div *ngIf="q.answer_Text === 'A'">
                 <textarea appAutoSize class="form-control" style="height: 80px; width: 100%; min-height: 72px;"
-                  placeholder="Description, explanation and/or justification for alternate answer"
+                  [placeholder]="t('answer-options.placeholders.alt justification')"
                   [(ngModel)]="q.altAnswerText" (change)="storeAnswer(q, 'A')"></textarea>
               </div>
             </td>

@@ -24,16 +24,16 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
-import { Answer } from '../../models/questions.model';
+import { Answer, AnswerQuestionResponse } from '../../models/questions.model';
 import { QuestionsService } from '../../services/questions.service';
 import { Utilities } from '../../services/utilities.service';
 
 @Component({
-    selector: 'component-override',
-    templateUrl: './component-override.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'component-override',
+  templateUrl: './component-override.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class ComponentOverrideComponent {
 
@@ -75,13 +75,15 @@ export class ComponentOverrideComponent {
     return this.questionsSvc.questions?.answerOptions.indexOf(ans) >= 0;
   }
 
-  storeAnswer(q: any, newAnswerValue: string) {
+  storeAnswer(q: any, newAnswerValue: string) {    
     // if they clicked on the same answer that was previously set, "un-set" it
     if (q.answer === newAnswerValue) {
       newAnswerValue = "U";
     }
-
-    q.answer_Text = newAnswerValue;
+    
+    if (!!newAnswerValue) {
+      q.answer_Text = newAnswerValue;
+    }
 
     q.question_Number = this.data.myQuestion.displayNumber;
 
@@ -106,7 +108,14 @@ export class ComponentOverrideComponent {
     // update the master question structure
     this.questionsSvc.setAnswerInQuestionList(q.question_Id, q.answer_Id, q.answer_Text);
 
-    this.questionsSvc.storeAnswer(answer).subscribe();
+    this.questionsSvc.storeAnswer(answer)
+      .subscribe((resp: AnswerQuestionResponse) => {
+        q.answer_Id = resp.answerId;
+        if (resp.detailsChanged) {
+          this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+        }
+      });
+
     this.questionChanged = true;
     this.questionsSvc.questionOverrideSubject.next(true);
   }

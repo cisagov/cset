@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Question, QuestionGrouping, Answer } from '../../../models/questions.model';
+import { Question, QuestionGrouping, Answer, AnswerQuestionResponse } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
@@ -39,10 +39,10 @@ import { TranslocoService } from '@jsverse/transloco';
  * of the question block can eventually replace the original.
  */
 @Component({
-    selector: 'app-question-block-maturity',
-    templateUrl: './question-block-maturity.component.html',
-    styleUrls: ['./question-block-maturity.component.scss'],
-    standalone: false
+  selector: 'app-question-block-maturity',
+  templateUrl: './question-block-maturity.component.html',
+  styleUrls: ['./question-block-maturity.component.scss'],
+  standalone: false
 })
 export class QuestionBlockMaturityComponent implements OnInit {
 
@@ -56,7 +56,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   modelAnswerOptions = [];
 
   // tokenized placeholder for transloco, made this variable a switch between the different placeholders
-  altTextPlaceholder = "alt cset";
+  altTextPlaceholder = 'alt cset';
   showQuestionIds = false;
 
   maturityModelId: number;
@@ -91,6 +91,10 @@ export class QuestionBlockMaturityComponent implements OnInit {
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
 
+    this.myGrouping.questions.map((item: Question) => {
+      this.setJustificationVisibility(item);
+    });
+
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
 
@@ -114,9 +118,9 @@ export class QuestionBlockMaturityComponent implements OnInit {
  */
   applyWordBreak(q: Question) {
     if (q.questionText.indexOf(' ') >= 0) {
-      return "normal";
+      return 'normal';
     }
-    return "break-all";
+    return 'break-all';
   }
 
   /**
@@ -141,6 +145,22 @@ export class QuestionBlockMaturityComponent implements OnInit {
   }
 
   /**
+   * Sets a flag on the question indicating whether the
+   * "Justification" field (or 'alt text') should display
+   */
+  setJustificationVisibility(q: Question) {
+    q.showJustificationField = false;
+
+    if (this.maturityModelId == 25 && q.answer === 'NA') {
+      // VADR (model 25) shows it when N/A is selected
+      q.showJustificationField = true;
+    } else if (q.answer === 'A') {
+      // Other models show it when Alt is selected (if they support that option)
+      q.showJustificationField = true;
+    }
+  }
+
+  /**
    * Pushes an answer asynchronously to the API.
    * @param q
    * @param ans
@@ -148,16 +168,18 @@ export class QuestionBlockMaturityComponent implements OnInit {
   storeAnswer(q: Question, newAnswerValue: string) {
     // if they clicked on the same answer that was previously set, "un-set" it
     if (q.answer === newAnswerValue) {
-      newAnswerValue = "U";
+      newAnswerValue = 'U';
     }
 
-    q.answer = newAnswerValue;
+    if (!!newAnswerValue) {
+      q.answer = newAnswerValue;
+    }
 
     const answer: Answer = {
       answerId: q.answer_Id,
       questionId: q.questionId,
       questionType: q.questionType,
-      questionNumber: "0",
+      questionNumber: '0',
       answerText: q.answer,
       altAnswerText: q.altAnswerText,
       comment: q.comment,
@@ -172,12 +194,19 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
     this.completionSvc.setAnswer(q.questionId, q.answer);
 
+    this.setJustificationVisibility(q);
+
     this.refreshReviewIndicator();
 
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer)
-      .subscribe();
+      .subscribe((resp: AnswerQuestionResponse) => {
+        q.answer_Id = resp.answerId;
+        if (resp.detailsChanged) {
+          this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+        }
+      });
   }
 
   /**
@@ -220,7 +249,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
       }
       if (q.visible) {
         totalCount++;
-        if (q.answer && q.answer !== "U") {
+        if (q.answer && q.answer !== 'U') {
           answeredCount++;
         }
       }
@@ -228,41 +257,9 @@ export class QuestionBlockMaturityComponent implements OnInit {
     this.percentAnswered = (answeredCount / totalCount) * 100;
   }
 
-  /**
-   * Pushes the answer to the API, specifically containing the alt text
-   * @param q
-   * @param altText
-   */
-  storeAltText(q: Question) {
-    clearTimeout(this._timeoutId);
-    this._timeoutId = setTimeout(() => {
-      const answer: Answer = {
-        answerId: q.answer_Id,
-        questionId: q.questionId,
-        questionType: q.questionType,
-        questionNumber: q.displayNumber,
-        answerText: q.answer,
-        altAnswerText: q.altAnswerText,
-        comment: q.comment,
-        feedback: q.feedback,
-        markForReview: q.markForReview,
-        reviewed: q.reviewed,
-        is_Component: q.is_Component,
-        is_Requirement: q.is_Requirement,
-        is_Maturity: q.is_Maturity,
-        componentGuid: q.componentGuid
-      };
-
-      this.refreshReviewIndicator();
-
-      this.questionsSvc.storeAnswer(answer)
-        .subscribe();
-    }, 500);
-  }
-
   checkAnswerKeyPress(event: any, q: Question, newAnswerValue: string) {
     if (event) {
-      if (event.key === "Enter") {
+      if (event.key === 'Enter') {
         this.storeAnswer(q, newAnswerValue);
       }
     }
@@ -270,7 +267,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   checkReviewKeyPress(event: any, q: Question) {
     if (event) {
-      if (event.key === "Enter") {
+      if (event.key === 'Enter') {
         this.saveMFR(q);
       }
     }

@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Question, QuestionGrouping, Answer } from '../../../models/questions.model';
+import { Question, QuestionGrouping, Answer, AnswerQuestionResponse } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
@@ -32,10 +32,10 @@ import { CompletionService } from '../../../services/completion.service';
 
 
 @Component({
-    selector: 'app-question-block-vadr',
-    templateUrl: './question-block-vadr.component.html',
-    styleUrls: ['./question-block-vadr.component.scss'],
-    standalone: false
+  selector: 'app-question-block-vadr',
+  templateUrl: './question-block-vadr.component.html',
+  styleUrls: ['./question-block-vadr.component.scss'],
+  standalone: false
 })
 export class QuestionBlockVadrComponent implements OnInit {
   @Input() myGrouping: QuestionGrouping;
@@ -132,8 +132,10 @@ export class QuestionBlockVadrComponent implements OnInit {
     if (q.answer === newAnswerValue) {
       newAnswerValue = "U";
     }
-
-    q.answer = newAnswerValue;
+    
+    if (!!newAnswerValue) {
+      q.answer = newAnswerValue;
+    }
 
     const answer: Answer = {
       answerId: q.answer_Id,
@@ -160,8 +162,13 @@ export class QuestionBlockVadrComponent implements OnInit {
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer)
-      .subscribe((ansId: number) => {
-        q.answer_Id = ansId;
+      .subscribe((resp: AnswerQuestionResponse) => {
+        q.answer_Id = resp.answerId;
+
+        // if the back-end changed the question's details, refresh the UI
+        if (resp.detailsChanged) {
+          this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+        }
       });
   }
 
@@ -217,43 +224,9 @@ export class QuestionBlockVadrComponent implements OnInit {
   }
 
   /**
-   * Pushes the answer to the API, specifically containing the alt text
-   * @param q
-   * @param altText
+   * 
    */
-  storeAltText(q: Question) {
-
-    clearTimeout(this._timeoutId);
-    this._timeoutId = setTimeout(() => {
-      const answer: Answer = {
-        answerId: q.answer_Id,
-        questionId: q.questionId,
-        questionType: q.questionType,
-        questionNumber: q.displayNumber,
-        answerText: q.answer,
-        altAnswerText: q.altAnswerText,
-        // freeResponseAnswer: q.freeResponseAnswer,
-        comment: q.comment,
-        feedback: q.feedback,
-        markForReview: q.markForReview,
-        reviewed: q.reviewed,
-        is_Component: q.is_Component,
-        is_Requirement: q.is_Requirement,
-        is_Maturity: q.is_Maturity,
-        componentGuid: q.componentGuid
-      };
-
-      this.refreshReviewIndicator();
-
-      this.questionsSvc.storeAnswer(answer)
-        .subscribe((ansId: number) => {
-          q.answer_Id = ansId;
-        });
-    }, 500);
-
-  }
   storeFreeText(q: Question) {
-
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
       const answer: Answer = {
@@ -277,8 +250,11 @@ export class QuestionBlockVadrComponent implements OnInit {
       this.refreshReviewIndicator();
 
       this.questionsSvc.storeAnswer(answer)
-        .subscribe((ansId: number) => {
-          q.answer_Id = ansId;
+        .subscribe((resp: AnswerQuestionResponse) => {
+          q.answer_Id = resp.answerId;
+          if (resp.detailsChanged) {
+            this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+          }
         });
     }, 500);
 

@@ -32,7 +32,7 @@ namespace CSETWebCore.Interfaces.Maturity
             List<FullAnswer> answers,
             string lang);
 
-        int StoreAnswer(int assessmentId, Answer answer);
+        Answer StoreAnswer(int assessmentId, Answer answer);
         object GetEdmScores(int assessmentId, string section);
         object GetReferenceText(string modelName);
         List<GlossaryEntry> GetGlossaryEntries(int modelId);
