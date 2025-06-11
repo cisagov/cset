@@ -25,23 +25,19 @@
         <h2 class="mt-3">  {{ t('Module Content Report') }}</h2>
         <p>{{ t('ModuleContentLaunchComponent p1') }}</p>
       <p>{{ t('ModuleContentLaunchComponent p2') }}</p>
-        <h5>{{ t('Select a Standard') }}</h5>
+        <h5>{{ t('Select a Standard or Model') }}</h5>
         <div class="d-flex flex-row">
-            <select class="form-select mb-3" tabindex="0" [(ngModel)]="selectedStandard">
-                <option *ngFor="let s of standards" [value]="s.setName">{{s.fullName}}</option>
+            <select class="form-select mb-3" tabindex="0" [(ngModel)]="selectedOption" (ngModelChange)="onSelectionChange()">
+                <option value="">{{ t('-- Select an option --') }}</option>
+                <optgroup [label]="t('Standards')">
+                    <option *ngFor="let s of standards" [value]="'standard:' + s.setName">{{s.fullName}}</option>
+                </optgroup>
+                <optgroup [label]="t('Models')">
+                    <option *ngFor="let m of models" [value]="'model:' + m.modelId">{{m.modelTitle}}</option>
+                </optgroup>
             </select>
-            <button class="btn btn-primary text-nowrap ms-3" (click)="launchStandardReport()"
-                [disabled]="!selectedStandard">{{ t('Launch Report') }}</button>
-        </div>
-
-        <h5>{{t('Select a Model')}}</h5>
-        <div class="d-flex flex-row">
-            <select class="form-select mb-3" tabindex="0" [(ngModel)]="selectedModel">
-                <option *ngFor="let m of models" [value]="m.modelId">{{m.modelTitle}}</option>
-            </select>
-
-            <button class="btn btn-primary text-nowrap ms-3" (click)="launchModelReport()"
-                [disabled]="!selectedModel">{{ t('Launch Report') }}</button>
+            <button class="btn btn-primary text-nowrap ms-3" (click)="launchReport()"
+                [disabled]="!selectedOption">{{ t('Launch Report') }}</button>
         </div>
 
     </div>
