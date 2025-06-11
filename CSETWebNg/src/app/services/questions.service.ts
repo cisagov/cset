@@ -324,6 +324,17 @@ export class QuestionsService {
     this.extrasChanged$.next(qe);
   }
 
+
+  /**
+   * If you need to refresh extras from the API, use this subject
+   */
+  private detailsChangedSubject = new BehaviorSubject<number>(0);
+  detailsChanged$ = this.detailsChangedSubject.asObservable();
+  emitRefreshQuestionDetails(questionId: number) {
+    this.detailsChangedSubject.next(questionId);
+  }
+
+
   /**
    *
    */

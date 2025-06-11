@@ -32,7 +32,7 @@
 
       <div class="form-group">
         <label for="title" class="form-label">{{ t('observation.title') }}</label>
-        <input id="title" type="text" autocomplete="off" class="form-control" [(ngModel)]="observation.summary">
+        <textarea id="title" autocomplete="off" class="form-control" type="text" appAutoSize [(ngModel)]="observation.summary"></textarea>
       </div>
 
       <div class="form-group">
@@ -54,22 +54,22 @@
 
       <div class="form-group">
         <label for="issue" class="form-label">{{ t('observation.issue') }}</label>
-        <textarea id="issue" autocomplete="off" class="form-control" type="text"
+        <textarea id="issue" autocomplete="off" class="form-control" type="text" appAutoSize
           [(ngModel)]="observation.issue"></textarea>
       </div>
       <div class="form-group">
         <label for="impact" class="form-label">{{ t('observation.impacts') }}</label>
-        <textarea id="impact" autocomplete="off" class="form-control" type="text"
+        <textarea id="impact" autocomplete="off" class="form-control" type="text" appAutoSize
           [(ngModel)]="observation.impact"></textarea>
       </div>
       <div class="form-group">
         <label for="recommendations" class="form-label">{{ t('observation.recommendations') }}</label>
-        <textarea id="recommendations" autocomplete="off" class="form-control" type="text"
+        <textarea id="recommendations" autocomplete="off" class="form-control" type="text" appAutoSize
           [(ngModel)]="observation.recommendations"></textarea>
       </div>
       <div class="form-group">
         <label for="vulnerabilities" class="form-label">{{ t('observation.vulnerabilities') }}</label>
-        <textarea id="vulnerabilities" autocomplete="off" class="form-control" type="text"
+        <textarea id="vulnerabilities" autocomplete="off" class="form-control" type="text" appAutoSize
           [(ngModel)]="observation.vulnerabilities"></textarea>
       </div>
     </div>

@@ -132,8 +132,8 @@
                             <div *ngIf="q.answer === 'A'">
                                 <textarea appAutoSize class="form-control"
                                     style="width: 100%; min-height: 80px;"
-                                    [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
-                                    [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
+                                    [placeholder]="t('answer-options.placeholders.alt justification')"
+                                    [(ngModel)]="q.altAnswerText" (change)="storeAnswer(q, null)"></textarea>
                             </div>
                         </div>
                     </div>
@@ -209,7 +209,7 @@
                             <div *ngIf="q.answer === 'A'">
                                 <textarea appAutoSize class="form-control"
                                     style="width: 100%; min-height: 80px;" [placeholder]="altTextPlaceholder"
-                                    [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
+                                    [(ngModel)]="q.altAnswerText" (change)="storeAnswer(q, null)"></textarea>
                             </div>
                         </div>
                     </div>

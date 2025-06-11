@@ -383,6 +383,7 @@
       "yes": "Yes",
       "no": "No",
       "n/a": "N/A",
+      "na": "N/A",
       "alt": "Alternate",
       "unanswered": "Unanswered",
       "inc": "Incomplete",
@@ -437,8 +438,8 @@
       "u-cmmc": "Unanswered"
     },
     "placeholders": {
-      "alt acet": "Description, explanation and/or justification for compensating control",
-      "alt cset": "Description, explanation and/or justification for alternate answer"
+      "alt justification": "Description, explanation and/or justification for alternate answer",
+      "NA justification": "Description, explanation and/or justification for N/A answer"
     },
     "warnings": {
       "description required": "* Description required"
@@ -959,7 +960,8 @@
     },
     "cpg2": {
       "display-name": "Cyber Performance Goals (CPG) 2.0",
-      "model short title": "CPG 2.0"
+      "model short title": "CPG 2.0",
+      "question node title": "Security Practices"
     },
     "cre+": {
       "display-name": "Cyber Resilience Essentials (CRE+)",

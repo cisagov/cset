@@ -100,11 +100,21 @@
 
 
 
-
+        <!-- Landscape ---------------------------------------------------------------------->
         <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
           <div class="number-and-text">
             <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.displayNumber }}</div>
+
+            <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
+              <div style="width: 100%;list-style-type: none;">
+                <div [style.word-break]="applyWordBreak(q)" [innerHTML]="questionsSvc.applyTokensToText(q)"
+                  (click)="questionTextClicked(q, $event)">
+                </div>
+                <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
+              </div>
+            </div>
           </div>
+
           <div>
             <div class="btn-group answer-group" role="group">
               <label *ngFor="let option of answerOptions" class="btn form-check-label"
@@ -124,11 +134,10 @@
               </label>
             </div>
 
-            <div *ngIf="q.answer === 'A'">
-              <textarea appAutoSize class="form-control"
-                style="width: 100%; min-height: 80px;"
-                [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)" [(ngModel)]="q.altAnswerText"
-                (ngModelChange)="storeAltText(q)" tabindex="0"></textarea>
+            <div *ngIf="q.showJustificationField">
+              <textarea appAutoSize class="form-control" style="width: 100%; min-height: 80px;"
+                [placeholder]="t('answer-options.placeholders.alt justification')" [(ngModel)]="q.altAnswerText"
+                (ngModelChange)="storeAnswer(q, null)" tabindex="0"></textarea>
             </div>
 
             <app-malcolm-answer-default *ngIf="configSvc.config.behaviors.showMalcolmAnswerComparison != null 
@@ -137,17 +146,12 @@
 
           </div>
         </div>
-        <div class="w-100 d-flex flex-row" *ngIf="!layoutSvc.hp">
-          <div style="width: 100%;list-style-type: none;">
-            <div [style.word-break]="applyWordBreak(q)" [innerHTML]="questionsSvc.applyTokensToText(q)"
-              (click)="questionTextClicked(q, $event)">
-            </div>
-            <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
-          </div>
-        </div>
 
+
+
+
+        <!-- Handheld Portrait -------------------------------------------------->
         <div class="w-100" *ngIf="layoutSvc.hp">
-          <!-- Handheld Portrait -->
           <div class="">
             <div style="font-weight: bold; margin-right: 1em; white-space: nowrap;">{{ q.displayNumber }}</div>
             <div class="w-100 mb-3">
@@ -177,11 +181,10 @@
               </label>
             </div>
 
-            <div *ngIf="q.answer === 'A'">
-              <textarea appAutoSize class="form-control" 
-                style="width: 100%; min-height: 80px;"
-                [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)" [(ngModel)]="q.altAnswerText"
-                (ngModelChange)="storeAltText(q)" tabindex="0"></textarea>
+            <div *ngIf="q.showJustificationField">
+              <textarea appAutoSize class="form-control" style="width: 100%; min-height: 80px;"
+                [placeholder]="t('answer-options.placeholders.alt justification')" [(ngModel)]="q.altAnswerText"
+                (ngModelChange)="storeAnswert(q, null)" tabindex="0"></textarea>
             </div>
           </div>
 
