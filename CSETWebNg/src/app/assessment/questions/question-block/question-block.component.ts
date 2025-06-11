@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { Answer, Question, SubCategory, SubCategoryAnswers } from '../../../models/questions.model';
+import { Answer, AnswerQuestionResponse, Question, SubCategory, SubCategoryAnswers } from '../../../models/questions.model';
 import { QuestionsService } from '../../../services/questions.service';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { InlineParameterComponent } from '../../../dialogs/inline-parameter/inline-parameter.component';
@@ -39,10 +39,10 @@ import { LinebreakPipe } from '../../../helpers/linebreak.pipe';
  * Represents the display container of a single subcategory with its member questions.
  */
 @Component({
-    selector: 'app-question-block',
-    templateUrl: './question-block.component.html',
-    styleUrls: ['./question-block.component.css'],
-    standalone: false
+  selector: 'app-question-block',
+  templateUrl: './question-block.component.html',
+  styleUrls: ['./question-block.component.css'],
+  standalone: false
 })
 export class QuestionBlockComponent implements OnInit {
 
@@ -331,10 +331,12 @@ export class QuestionBlockComponent implements OnInit {
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer)
-      .subscribe((ansId: number) => {
-        q.answer_Id = ansId;
-      }
-      );
+      .subscribe((resp: AnswerQuestionResponse) => {
+        q.answer_Id = resp.answerId;
+        if (resp.detailsChanged) {
+          this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+        }
+      });
   }
 
   /**
@@ -366,9 +368,12 @@ export class QuestionBlockComponent implements OnInit {
       this.refreshReviewIndicator();
 
       this.questionsSvc.storeAnswer(answer)
-        .subscribe((ansId: number) => {
-          q.answer_Id = ansId;
-        });
+        .subscribe((resp: AnswerQuestionResponse) => {
+        q.answer_Id = resp.answerId;
+        if (resp.detailsChanged) {
+          this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+        }
+      });
     }, 500);
 
   }

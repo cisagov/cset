@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Question, QuestionGrouping, Answer } from '../../../models/questions.model';
+import { Question, QuestionGrouping, Answer, AnswerQuestionResponse } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
@@ -32,10 +32,10 @@ import { CompletionService } from '../../../services/completion.service';
 
 
 @Component({
-    selector: 'app-question-block-vadr',
-    templateUrl: './question-block-vadr.component.html',
-    styleUrls: ['./question-block-vadr.component.scss'],
-    standalone: false
+  selector: 'app-question-block-vadr',
+  templateUrl: './question-block-vadr.component.html',
+  styleUrls: ['./question-block-vadr.component.scss'],
+  standalone: false
 })
 export class QuestionBlockVadrComponent implements OnInit {
   @Input() myGrouping: QuestionGrouping;
@@ -160,8 +160,13 @@ export class QuestionBlockVadrComponent implements OnInit {
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer)
-      .subscribe((ansId: number) => {
-        q.answer_Id = ansId;
+      .subscribe((resp: AnswerQuestionResponse) => {
+        q.answer_Id = resp.answerId;
+
+        // if the back-end changed the question's details, refresh the UI
+        if (resp.detailsChanged) {
+          this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+        }
       });
   }
 
@@ -246,8 +251,11 @@ export class QuestionBlockVadrComponent implements OnInit {
       this.refreshReviewIndicator();
 
       this.questionsSvc.storeAnswer(answer)
-        .subscribe((ansId: number) => {
-          q.answer_Id = ansId;
+        .subscribe((resp: AnswerQuestionResponse) => {
+          q.answer_Id = resp.answerId;
+          if (resp.detailsChanged) {
+            this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+          }
         });
     }, 500);
 
@@ -277,8 +285,11 @@ export class QuestionBlockVadrComponent implements OnInit {
       this.refreshReviewIndicator();
 
       this.questionsSvc.storeAnswer(answer)
-        .subscribe((ansId: number) => {
-          q.answer_Id = ansId;
+        .subscribe((resp: AnswerQuestionResponse) => {
+          q.answer_Id = resp.answerId;
+          if (resp.detailsChanged) {
+            this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+          }
         });
     }, 500);
 

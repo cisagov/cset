@@ -434,6 +434,16 @@ namespace CSETWebCore.Constants
         public const string MostIrp = "Most";
 
 
+        //Maturity Model IDs
+        public const int Model_CISA_VADR = 25;
+
+
+
+        // Observations
+        public const int ObsCreatedByVadr = 2;
+
+
+
         public const string DEFAULT_LAYER_NAME = "Background";
 
         public const int FIREWALL = 8;

@@ -116,6 +116,14 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     this.modelName = this.assessSvc.assessment.maturityModel?.modelName ?? '';
+
+
+    // listen for somebody to tell me that I need to refresh the details
+    this.questionsSvc.detailsChanged$.subscribe((changedQuestionId: any) => {
+      if (changedQuestionId == this.myQuestion.questionId) {
+        this.refreshDetails();
+      }
+    });
   }
 
   /**
@@ -162,11 +170,20 @@ export class QuestionExtrasComponent implements OnInit {
     })
   }
 
+  /**
+   * Simply pull the details from the back end.
+   */
+  async refreshDetails() {
+    this.extras = await this.fetchDetails();
+  }
+
+  /**
+   *  
+   */
   async fetchDetails(): Promise<QuestionDetailsContentViewModel> {
     const details = this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType).toPromise();
     return details;
-
-  }
+  }  
 
   /**
    * Gets all of the extra content for the question from the API.
@@ -178,7 +195,7 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     // Call the API for content
-    this.extras = await this.fetchDetails();
+    await this.refreshDetails();
     this.extras.questionId = this.myQuestion.questionId;
 
     // populate my details with the first "non-null" tab
@@ -429,11 +446,11 @@ export class QuestionExtrasComponent implements OnInit {
    */
   deleteObservation(obsToDelete) {
     // Build a message whether the observation has a title or not
-    let msg = this.tSvc.translate('observation.delete ' + this.observationOrIssue().toLowerCase() + ' confirm');
+    let msg = this.tSvc.translate('observation.delete observation confirm');
     msg = msg.replace('{title}', obsToDelete.summary);
 
     if (obsToDelete.summary === null) {
-      msg = this.tSvc.translate('observation.delete this ' + this.observationOrIssue().toLowerCase() + ' confirm');
+      msg = this.tSvc.translate('observation.delete this observation confirm');
     }
 
 

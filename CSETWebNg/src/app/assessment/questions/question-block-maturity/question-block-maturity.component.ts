@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Question, QuestionGrouping, Answer } from '../../../models/questions.model';
+import { Question, QuestionGrouping, Answer, AnswerQuestionResponse } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
@@ -39,10 +39,10 @@ import { TranslocoService } from '@jsverse/transloco';
  * of the question block can eventually replace the original.
  */
 @Component({
-    selector: 'app-question-block-maturity',
-    templateUrl: './question-block-maturity.component.html',
-    styleUrls: ['./question-block-maturity.component.scss'],
-    standalone: false
+  selector: 'app-question-block-maturity',
+  templateUrl: './question-block-maturity.component.html',
+  styleUrls: ['./question-block-maturity.component.scss'],
+  standalone: false
 })
 export class QuestionBlockMaturityComponent implements OnInit {
 
@@ -177,7 +177,12 @@ export class QuestionBlockMaturityComponent implements OnInit {
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer)
-      .subscribe();
+      .subscribe((resp: AnswerQuestionResponse) => {
+        q.answer_Id = resp.answerId;
+        if (resp.detailsChanged) {
+          this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+        }
+      });
   }
 
   /**
@@ -256,7 +261,12 @@ export class QuestionBlockMaturityComponent implements OnInit {
       this.refreshReviewIndicator();
 
       this.questionsSvc.storeAnswer(answer)
-        .subscribe();
+        .subscribe((resp: AnswerQuestionResponse) => {
+          q.answer_Id = resp.answerId;
+          if (resp.detailsChanged) {
+            this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+          }
+        });
     }, 500);
   }
 
