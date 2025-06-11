@@ -4,6 +4,8 @@
 # https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 version: 2
+secrets:
+  PAT: ${{ secrets.PAT }}
 updates:
   - package-ecosystem: "github-actions" 
     directory: "/" 
