@@ -25,13 +25,15 @@ import { Component, OnInit } from '@angular/core';
 import { SetBuilderService } from '../../../services/set-builder.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-module-content-launch',
-    templateUrl: './module-content-launch.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-module-content-launch',
+  templateUrl: './module-content-launch.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class ModuleContentLaunchComponent implements OnInit {
 
@@ -42,6 +44,29 @@ export class ModuleContentLaunchComponent implements OnInit {
 
   models: any[];
   selectedModel;
+
+  selectedOption: string = '';
+
+  searchableItems: any[] = [];
+  selectedItem: any;
+
+  search = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => {
+        if (term === '') {
+          return this.searchableItems.slice(0, 20);
+        }
+        return this.searchableItems
+          .filter(item => item.displayName && item.displayName.toLowerCase().includes(term.toLowerCase()))
+          .slice(0, 20);
+      })
+    );
+
+  formatter = (result: any) => result.displayName;
+
+  resultFormatter = (result: any) => result.displayName;
 
   /**
    *
@@ -63,15 +88,47 @@ export class ModuleContentLaunchComponent implements OnInit {
         if (a.fullName > b.fullName) { return 1; }
         return 0;
       });
+      this.buildSearchableItems();
     });
-    this.assessSvc.getAllMaturityModels().subscribe(data=>{
-      this.models=data;
+    this.assessSvc.getAllMaturityModels().subscribe(data => {
+      this.models = data;
       this.models?.sort((a, b) => {
         if (a.modelTitle < b.modelTitle) { return -1; }
         if (a.modelTitle > b.modelTitle) { return 1; }
         return 0;
       });
+      this.buildSearchableItems();
     })
+  }
+
+  /**
+   * Build combined array of searchable items
+   */
+  buildSearchableItems() {
+    if (!this.standards || !this.models) {
+      return;
+    }
+
+    this.searchableItems = [
+      ...this.standards
+        .filter(s => s.fullName)
+        .map(s => ({
+          type: 'standard',
+          value: 'standard:' + s.setName,
+          displayName: s.fullName,
+          original: s
+        })),
+      ...this.models
+        .filter(m => m.modelTitle)
+        .map(m => ({
+          type: 'model',
+          value: 'model:' + m.modelId,
+          displayName: m.modelTitle,
+          original: m
+        }))
+    ];
+
+    console.log(this.searchableItems);
   }
 
   /**
@@ -79,6 +136,52 @@ export class ModuleContentLaunchComponent implements OnInit {
    */
   selectType(event: any) {
     this.whichType = event.target.id;
+  }
+
+  /**
+   * Handle selection change to update old properties for backward compatibility
+   */
+  onSelectionChange() {
+    if (this.selectedOption.startsWith('standard:')) {
+      this.selectedStandard = this.selectedOption.substring(9);
+      this.selectedModel = null;
+    } else if (this.selectedOption.startsWith('model:')) {
+      this.selectedModel = this.selectedOption.substring(6);
+      this.selectedStandard = null;
+    } else {
+      this.selectedStandard = null;
+      this.selectedModel = null;
+    }
+  }
+
+  /**
+   * Handle item selection from typeahead
+   */
+  onItemSelect(event: any) {
+    if (event && event.item) {
+      this.selectedOption = event.item.value;
+      this.onSelectionChange();
+    }
+  }
+
+  /**
+   * Highlight matching text in search results
+   */
+  highlightMatch(value: string, term: string): string {
+    if (!term) return value;
+    const regex = new RegExp(`(${term})`, 'gi');
+    return value.replace(regex, '<mark>$1</mark>');
+  }
+
+  /**
+   * Launch the appropriate report based on selection
+   */
+  launchReport() {
+    if (this.selectedOption.startsWith('standard:')) {
+      this.launchStandardReport();
+    } else if (this.selectedOption.startsWith('model:')) {
+      this.launchModelReport();
+    }
   }
 
   /**
