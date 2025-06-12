@@ -29,11 +29,11 @@ import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-module-content-launch',
-    templateUrl: './module-content-launch.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-module-content-launch',
+  templateUrl: './module-content-launch.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class ModuleContentLaunchComponent implements OnInit {
 
@@ -46,10 +46,10 @@ export class ModuleContentLaunchComponent implements OnInit {
   selectedModel;
 
   selectedOption: string = '';
-  
+
   searchableItems: any[] = [];
   selectedItem: any;
-  
+
   search = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(200),
@@ -63,9 +63,9 @@ export class ModuleContentLaunchComponent implements OnInit {
           .slice(0, 20);
       })
     );
-    
+
   formatter = (result: any) => result.displayName;
-  
+
   resultFormatter = (result: any) => result.displayName;
 
   /**
@@ -90,8 +90,8 @@ export class ModuleContentLaunchComponent implements OnInit {
       });
       this.buildSearchableItems();
     });
-    this.assessSvc.getAllMaturityModels().subscribe(data=>{
-      this.models=data;
+    this.assessSvc.getAllMaturityModels().subscribe(data => {
+      this.models = data;
       this.models?.sort((a, b) => {
         if (a.modelTitle < b.modelTitle) { return -1; }
         if (a.modelTitle > b.modelTitle) { return 1; }
@@ -100,7 +100,7 @@ export class ModuleContentLaunchComponent implements OnInit {
       this.buildSearchableItems();
     })
   }
-  
+
   /**
    * Build combined array of searchable items
    */
@@ -108,21 +108,27 @@ export class ModuleContentLaunchComponent implements OnInit {
     if (!this.standards || !this.models) {
       return;
     }
-    
+
     this.searchableItems = [
-      ...this.standards.map(s => ({
-        type: 'standard',
-        value: 'standard:' + s.setName,
-        displayName: s.fullName,
-        original: s
-      })),
-      ...this.models.map(m => ({
-        type: 'model',
-        value: 'model:' + m.modelId,
-        displayName: m.modelTitle,
-        original: m
-      }))
+      ...this.standards
+        .filter(s => s.fullName)
+        .map(s => ({
+          type: 'standard',
+          value: 'standard:' + s.setName,
+          displayName: s.fullName,
+          original: s
+        })),
+      ...this.models
+        .filter(m => m.modelTitle)
+        .map(m => ({
+          type: 'model',
+          value: 'model:' + m.modelId,
+          displayName: m.modelTitle,
+          original: m
+        }))
     ];
+
+    console.log(this.searchableItems);
   }
 
   /**
@@ -157,7 +163,7 @@ export class ModuleContentLaunchComponent implements OnInit {
       this.onSelectionChange();
     }
   }
-  
+
   /**
    * Highlight matching text in search results
    */
@@ -166,7 +172,7 @@ export class ModuleContentLaunchComponent implements OnInit {
     const regex = new RegExp(`(${term})`, 'gi');
     return value.replace(regex, '<mark>$1</mark>');
   }
-  
+
   /**
    * Launch the appropriate report based on selection
    */
