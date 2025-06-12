@@ -25,6 +25,8 @@ import { Component, OnInit } from '@angular/core';
 import { SetBuilderService } from '../../../services/set-builder.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-module-content-launch',
@@ -44,6 +46,27 @@ export class ModuleContentLaunchComponent implements OnInit {
   selectedModel;
 
   selectedOption: string = '';
+  
+  searchableItems: any[] = [];
+  selectedItem: any;
+  
+  search = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => {
+        if (term === '') {
+          return this.searchableItems.slice(0, 20);
+        }
+        return this.searchableItems
+          .filter(item => item.displayName && item.displayName.toLowerCase().includes(term.toLowerCase()))
+          .slice(0, 20);
+      })
+    );
+    
+  formatter = (result: any) => result.displayName;
+  
+  resultFormatter = (result: any) => result.displayName;
 
   /**
    *
@@ -65,6 +88,7 @@ export class ModuleContentLaunchComponent implements OnInit {
         if (a.fullName > b.fullName) { return 1; }
         return 0;
       });
+      this.buildSearchableItems();
     });
     this.assessSvc.getAllMaturityModels().subscribe(data=>{
       this.models=data;
@@ -73,7 +97,32 @@ export class ModuleContentLaunchComponent implements OnInit {
         if (a.modelTitle > b.modelTitle) { return 1; }
         return 0;
       });
+      this.buildSearchableItems();
     })
+  }
+  
+  /**
+   * Build combined array of searchable items
+   */
+  buildSearchableItems() {
+    if (!this.standards || !this.models) {
+      return;
+    }
+    
+    this.searchableItems = [
+      ...this.standards.map(s => ({
+        type: 'standard',
+        value: 'standard:' + s.setName,
+        displayName: s.fullName,
+        original: s
+      })),
+      ...this.models.map(m => ({
+        type: 'model',
+        value: 'model:' + m.modelId,
+        displayName: m.modelTitle,
+        original: m
+      }))
+    ];
   }
 
   /**
@@ -99,6 +148,25 @@ export class ModuleContentLaunchComponent implements OnInit {
     }
   }
 
+  /**
+   * Handle item selection from typeahead
+   */
+  onItemSelect(event: any) {
+    if (event && event.item) {
+      this.selectedOption = event.item.value;
+      this.onSelectionChange();
+    }
+  }
+  
+  /**
+   * Highlight matching text in search results
+   */
+  highlightMatch(value: string, term: string): string {
+    if (!term) return value;
+    const regex = new RegExp(`(${term})`, 'gi');
+    return value.replace(regex, '<mark>$1</mark>');
+  }
+  
   /**
    * Launch the appropriate report based on selection
    */
