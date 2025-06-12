@@ -36,15 +36,30 @@ namespace CSETWebCore.Api.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
+        [Route("api/groupselections")]
+        public IActionResult GetSelections()
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            var biz = new GroupingBusiness(assessmentId, _context);
+
+            return Ok(biz.GetSelections());
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/groupselection")]
         public IActionResult ChangeSelection([FromBody] GroupSelectionRequest request)
         {
             int assessmentId = _token.AssessmentForUser();
-            var lang = _token.GetCurrentLanguage();
 
-            var biz = new GroupingBusiness(assessmentId, request, _context);
-            biz.PersistSelection();
+            var biz = new GroupingBusiness(assessmentId, _context);
+            biz.PersistSelection(request);
 
             return Ok();
         }

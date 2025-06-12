@@ -52,7 +52,7 @@ export class SelectableGroupingsService {
     private http: HttpClient,
     private configSvc: ConfigService
   ) {
-    this.apiUrl = this.configSvc.apiUrl + "groupselection/";
+    this.apiUrl = this.configSvc.apiUrl;
     this.models = new Map<number, QuestionGrouping[]>();
   }
 
@@ -93,9 +93,15 @@ export class SelectableGroupingsService {
   /**
    * 
    */
+  getSelectedGroupIds() {
+    return this.http.get(this.apiUrl + "groupselections/");
+  }
+
+  /**
+   * 
+   */
   save(groupingId: number, selected: boolean) {
-    console.log(groupingId, selected);
     const payload = { groupingId: groupingId, selected: selected };
-    return this.http.post(this.apiUrl, payload);
+    return this.http.post(this.apiUrl + "groupselection/", payload);
   }
 }

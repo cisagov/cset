@@ -30,7 +30,6 @@ namespace CSETWebCore.Business.Grouping
     public class GroupingBusiness
     {
         private int _assessment_Id;
-        private GroupSelectionRequest _request;
         private CsetwebContext _context;
 
 
@@ -38,25 +37,36 @@ namespace CSETWebCore.Business.Grouping
         /// 
         /// </summary>
         /// <param name="req"></param>
-        public GroupingBusiness(int assessmentId, GroupSelectionRequest req, CsetwebContext context)
+        public GroupingBusiness(int assessmentId, CsetwebContext context)
         {
             _assessment_Id = assessmentId;
-            _request = req;
             _context = context;
+        }
+
+
+        /// <summary>
+        /// Return a list of groupings selected
+        /// </summary>
+        /// <returns></returns>
+        public List<int> GetSelections()
+        {
+            var gs = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == _assessment_Id);
+            return gs.Select(x => x.Grouping_Id).ToList();
         }
 
 
         /// <summary>
         /// Saves the goruping selection status
         /// </summary>
-        public void PersistSelection()
+        public void PersistSelection(GroupSelectionRequest req)
         {
-            Console.WriteLine($"{_request.GroupingId}, {_request.Selected}");
+            Console.WriteLine($"{req.GroupingId}, {req.Selected}");
 
             var gs = _context.GROUPING_SELECTION
-                .Where(x => x.Assessment_Id == _assessment_Id).FirstOrDefault();
+                .Where(x => x.Assessment_Id == _assessment_Id && x.Grouping_Id == req.GroupingId)
+                .FirstOrDefault();
 
-            if (_request.Selected)
+            if (req.Selected)
             {
                 // Insert a new record
                 if (gs == null)
@@ -64,7 +74,7 @@ namespace CSETWebCore.Business.Grouping
                     var sss = new GROUPING_SELECTION
                     {
                         Assessment_Id = _assessment_Id,
-                        Grouping_Id = _request.GroupingId
+                        Grouping_Id = req.GroupingId
                     };
 
                     _context.GROUPING_SELECTION.Add(sss);
