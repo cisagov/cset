@@ -6,12 +6,10 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Grouping;
-using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
-using Microsoft.AspNetCore.Mvc;
-using System;
 using CSETWebCore.Model.Maturity;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -40,15 +38,13 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/groupselection")]
-        public IActionResult XXX([FromBody] GGG x)
+        public IActionResult ChangeSelection([FromBody] GroupSelectionRequest request)
         {
             int assessmentId = _token.AssessmentForUser();
             var lang = _token.GetCurrentLanguage();
 
-
-
-            var biz = new GroupingBusiness(x, _context);
-            biz.Persist();
+            var biz = new GroupingBusiness(assessmentId, request, _context);
+            biz.PersistSelection();
 
             return Ok();
         }

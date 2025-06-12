@@ -154,6 +154,9 @@ public partial class ASSESSMENTS
     [InverseProperty("Assessment")]
     public virtual ICollection<GENERAL_SAL> GENERAL_SAL { get; set; } = new List<GENERAL_SAL>();
 
+    [InverseProperty("Assessment")]
+    public virtual ICollection<GROUPING_SELECTION> GROUPING_SELECTION { get; set; } = new List<GROUPING_SELECTION>();
+
     [ForeignKey("GalleryItemGuid")]
     [InverseProperty("ASSESSMENTS")]
     public virtual GALLERY_ITEM GalleryItem { get; set; }
