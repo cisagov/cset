@@ -443,7 +443,8 @@
         "export assessment json": "Export una copia de esta evaluación como archivo JSON",
         "analytics": "Ver los análisis de esta evaluación.",
         "merged checked exams": "Fusiona los exámenes marcados",
-        "export all": "Exporta una copia de todas las evaluaciones a otra ubicación."
+        "export all": "Exporta una copia de todas las evaluaciones a otra ubicación.",
+        "nav collapse": "Expandir/contraer la navegación"
     },
     "level": {
         "low": "Pequeño",

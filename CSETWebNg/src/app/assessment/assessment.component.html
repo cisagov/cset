@@ -29,7 +29,7 @@
         <li class="d-flex align-items-center flex-00a" [ngClass]="{'nav-tab':expandNav, 'nav-tab-collapsed':!expandNav}"
           class.active="false" (click)="toggleNav()">
           <button class="icon-button-light mx-2 d-flex justify-content-start align-items-center flex-00a"
-            matTooltip="Expand/Collapse options" matTooltipPosition="below">
+            [matTooltip]="t('tooltip.nav collapse')" matTooltipPosition="below">
             <span class="fs-base-1 m-0"
               [ngClass]="{'cset-icons-chevron-left':expandNav, 'cset-icons-chevron-right':!expandNav}"></span>
           </button>

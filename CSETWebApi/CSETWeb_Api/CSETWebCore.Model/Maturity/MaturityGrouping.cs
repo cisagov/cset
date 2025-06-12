@@ -58,4 +58,14 @@ namespace CSETWebCore.Model.Maturity
         /// </summary>
         public List<QuestionAnswer> Questions { get; set; } = new List<QuestionAnswer>();
     }
+
+
+    /// <summary>
+    /// A request to mark a grouping as selected (created for CRE+)
+    /// </summary>
+    public class GGG
+    {
+        public int GroupingId { get; set; }
+        public bool Selected { get; set; }
+    }
 }
