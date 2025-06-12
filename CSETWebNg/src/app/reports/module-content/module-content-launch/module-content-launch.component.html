@@ -28,31 +28,22 @@
         <!-- Module Content Autocomplete Field -->
         <h5>{{ t('Select a Standard or Model') }}</h5>
         <div class="d-flex flex-row">
-            <input 
-              type="text"
-              class="form-control mb-3"
-              [(ngModel)]="selectedItem"
-              [ngbTypeahead]="search"
-              [inputFormatter]="formatter"
-              [resultTemplate]="resultTemplate"
-              [placeholder]="t('Start typing to search standards or models...')"
-              (selectItem)="onItemSelect($event)"
-              [focusFirst]="false"
-              [showHint]="true"
-              style="flex: 1"
-            />
+            <input type="text" class="form-control mb-3" [(ngModel)]="selectedItem" [ngbTypeahead]="search"
+                [inputFormatter]="formatter" [resultTemplate]="resultTemplate"
+                [placeholder]="t('Start typing to search standards or models...')" (selectItem)="onItemSelect($event)"
+                [focusFirst]="false" [showHint]="true" style="flex: 1" />
             <button class="btn btn-primary text-nowrap ms-3" (click)="launchReport()" [disabled]="!selectedOption">{{
                 t('Launch Report') }}</button>
         </div>
-        
+
         <!-- Result template for typeahead dropdown -->
         <ng-template #resultTemplate let-result="result" let-term="term">
-          <div class="d-flex align-items-center">
-            <small class="text-muted me-2">
-              {{ result.type === 'standard' ? t('Standard') : t('Model') }}
-            </small>
-            <span [innerHTML]="highlightMatch(result.displayName, term)"></span>
-          </div>
+            <div class="d-flex align-items-center">
+                <span style="flex: 1" [innerHTML]="highlightMatch(result.displayName, term)"></span>
+                <small class="type-label text-muted" [ngClass]="'type-' + result.type">
+                    {{ result.type === 'standard' ? t('Standard') : t('Model') }}
+                </small>
+            </div>
         </ng-template>
 
     </div>

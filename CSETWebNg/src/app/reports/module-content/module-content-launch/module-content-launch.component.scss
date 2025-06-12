@@ -21,3 +21,108 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 
 */
+
+// Import CSET variables
+@import '../../../../sass/variables';
+
+// Style the ng-bootstrap typeahead dropdown
+:host ::ng-deep {
+  // Main dropdown container
+  .ngb-typeahead-window {
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 2px;
+    background-color: white;
+    border: 1px solid $gray-300;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    // Bootstrap dropdown menu inside typeahead window
+    .dropdown-menu {
+      position: static;
+      float: none;
+      width: 100%;
+      margin: 0;
+      border: none;
+      box-shadow: none;
+      padding: 0.25rem 0;
+    }
+  }
+
+  // Individual dropdown items
+  .dropdown-item {
+    padding: 0.75rem 1rem;
+    color: $gray-800;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: $primary-50;
+      color: $primary-800;
+    }
+    
+    &:active,
+    &.active {
+      background-color: $primary-250;
+      color: white;
+    }
+    
+    &:focus {
+      outline: none;
+      background-color: $primary-50;
+    }
+  }
+
+  // Highlighted search terms
+  mark {
+    background-color: $yellow-100;
+    color: $gray-900;
+    font-weight: 600;
+    padding: 0 2px;
+    border-radius: 2px;
+  }
+}
+
+// Style the type badges
+.type-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  padding: 0.125rem 0.5rem;
+  border-radius: 3px;
+  margin-left: 0.75rem;
+  
+  &.type-standard {
+    background-color: $info-100;
+    color: $info-700;
+  }
+  
+  &.type-model {
+    background-color: $success-100;
+    color: $success-700;
+  }
+}
+
+// Empty state message
+.no-results {
+  padding: 1rem;
+  text-align: center;
+  color: $gray-600;
+  font-style: italic;
+}
+
+// Loading state
+.loading-results {
+  padding: 1rem;
+  text-align: center;
+  color: $primary-600;
+  
+  .spinner-border {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.5rem;
+  }
+}
