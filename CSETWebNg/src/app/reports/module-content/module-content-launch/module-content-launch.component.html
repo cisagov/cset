@@ -20,29 +20,31 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel max-1200 m-0 d-flex flex-column flex-11a oy-auto h-0 w-100"  *transloco="let t">
+<div class="white-panel max-1200 m-0 d-flex flex-column flex-11a oy-auto h-0 w-100" *transloco="let t">
     <div class="max-1200">
-        <h2 class="mt-3">  {{ t('Module Content Report') }}</h2>
+        <h2 class="mt-3"> {{ t('Module Content Report') }}</h2>
         <p>{{ t('ModuleContentLaunchComponent p1') }}</p>
-      <p>{{ t('ModuleContentLaunchComponent p2') }}</p>
-        <h5>{{ t('Select a Standard') }}</h5>
+        <p>{{ t('ModuleContentLaunchComponent p2') }}</p>
+        <!-- Module Content Autocomplete Field -->
+        <h5>{{ t('Select a Standard or Model') }}</h5>
         <div class="d-flex flex-row">
-            <select class="form-select mb-3" tabindex="0" [(ngModel)]="selectedStandard">
-                <option *ngFor="let s of standards" [value]="s.setName">{{s.fullName}}</option>
-            </select>
-            <button class="btn btn-primary text-nowrap ms-3" (click)="launchStandardReport()"
-                [disabled]="!selectedStandard">{{ t('Launch Report') }}</button>
+            <input type="text" class="form-control mb-3" [(ngModel)]="selectedItem" [ngbTypeahead]="search"
+                [inputFormatter]="formatter" [resultTemplate]="resultTemplate"
+                [placeholder]="t('Start typing to search standards or models...')" (selectItem)="onItemSelect($event)"
+                [focusFirst]="false" [showHint]="true" style="flex: 1" />
+            <button class="btn btn-primary text-nowrap ms-3" (click)="launchReport()" [disabled]="!selectedOption">{{
+                t('Launch Report') }}</button>
         </div>
 
-        <h5>{{t('Select a Model')}}</h5>
-        <div class="d-flex flex-row">
-            <select class="form-select mb-3" tabindex="0" [(ngModel)]="selectedModel">
-                <option *ngFor="let m of models" [value]="m.modelId">{{m.modelTitle}}</option>
-            </select>
-
-            <button class="btn btn-primary text-nowrap ms-3" (click)="launchModelReport()"
-                [disabled]="!selectedModel">{{ t('Launch Report') }}</button>
-        </div>
+        <!-- Result template for typeahead dropdown -->
+        <ng-template #resultTemplate let-result="result" let-term="term">
+            <div class="d-flex align-items-center">
+                <span style="flex: 1" [innerHTML]="highlightMatch(result.displayName, term)"></span>
+                <small class="type-label text-muted" [ngClass]="'type-' + result.type">
+                    {{ result.type === 'standard' ? t('Standard') : t('Model') }}
+                </small>
+            </div>
+        </ng-template>
 
     </div>
 </div>
