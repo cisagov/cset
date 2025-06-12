@@ -63,7 +63,7 @@ namespace CSETWebCore.Model.Maturity
     /// <summary>
     /// A request to mark a grouping as selected (created for CRE+)
     /// </summary>
-    public class GGG
+    public class GroupSelectionRequest
     {
         public int GroupingId { get; set; }
         public bool Selected { get; set; }
