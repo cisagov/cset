@@ -26,12 +26,12 @@
      </h5>
      <div *ngFor="let g of selectableGroupingsSvc.models.get(modelId); let gi = index" class="mb-2">
           <input class="checkbox-custom d-none" type="checkbox" id="dom-{{g.groupingID}}"
-               [checked]="selectableGroupingsSvc.models.get(modelId)[gi].selected ?? false" (change)="changeDomain(gi, $event)">
+               [checked]="selectedGroupIds.includes(g.groupingId) ?? false" (change)="changeDomain(gi, $event)">
           <label for="dom-{{g.groupingID}}" class="checkbox-custom-label mb-3" style="color: white">{{g?.title}}</label>
           <div *ngIf="g.selected ?? false" class="collapsible-content ms-4 mb-3 pb-2 nested-list section-border">
                <div *ngFor="let sg of g.subGroupings; let sgi = index">
                     <input class="checkbox-custom d-none" type="checkbox" id="subdom-{{sg.groupingID}}" 
-                         [checked]="selectableGroupingsSvc.models.get(modelId)[gi].subGroupings[sgi].selected ?? false" (change)="changeSubdomain(gi, sgi, $event)">
+                         [checked]="selectedGroupIds.includes(sg.groupingId) ?? false" (change)="changeSubdomain(gi, sgi, $event)">
                     <label for="subdom-{{sg.groupingID}}" class="checkbox-custom-label" style="color: white">{{sg.title}}</label>    
                </div>
           </div>

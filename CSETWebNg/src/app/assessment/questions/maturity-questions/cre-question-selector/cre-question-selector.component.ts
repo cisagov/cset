@@ -13,6 +13,7 @@ export class CreQuestionSelectorComponent implements OnInit, AfterViewChecked {
 
   @Input() modelId: number;
 
+  selectedGroupIds: number[] = [];
 
   /**
    * 
@@ -25,9 +26,16 @@ export class CreQuestionSelectorComponent implements OnInit, AfterViewChecked {
   /**
    * 
    */
-  ngOnInit(): void {  }
+  ngOnInit(): void {
+    this.selectableGroupingsSvc.getSelectedGroupIds().subscribe((x: number[]) => {
+      console.log(x);
+      this.selectedGroupIds = x;
+    });
+  }
 
-  ngAfterViewChecked(): void {  }
+  ngAfterViewChecked(): void {
+
+  }
 
 
   /**
@@ -38,9 +46,15 @@ export class CreQuestionSelectorComponent implements OnInit, AfterViewChecked {
     g.selected = evt.target.checked;
     this.selectableGroupingsSvc.emitSelectionChanged();
 
+    if (g.selected) {
+      this.selectedGroupIds.push(g.groupingID);
+    } else {
+      this.selectedGroupIds = this.selectedGroupIds.filter(x => x != g.groupingID);
+    }
+
     this.selectableGroupingsSvc.save(g.groupingID, g.selected).subscribe();
   }
-  
+
   /**
    * 
    */
@@ -48,6 +62,12 @@ export class CreQuestionSelectorComponent implements OnInit, AfterViewChecked {
     const g = this.selectableGroupingsSvc.models.get(this.modelId)[gi].subGroupings[sgi];
     g.selected = evt.target.checked;
     this.selectableGroupingsSvc.emitSelectionChanged();
+
+     if (g.selected) {
+      this.selectedGroupIds.push(g.groupingID);
+    } else {
+      this.selectedGroupIds = this.selectedGroupIds.filter(x => x != g.groupingID);
+    }
 
     this.selectableGroupingsSvc.save(g.groupingID, g.selected).subscribe();
   }
