@@ -30,13 +30,25 @@ export class CreQuestionSelectorComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked(): void {  }
 
 
+  /**
+   * 
+   */
   changeDomain(gi: number, evt: any) {
-    this.selectableGroupingsSvc.models.get(this.modelId)[gi].selected = evt.target.checked;
+    const g = this.selectableGroupingsSvc.models.get(this.modelId)[gi];
+    g.selected = evt.target.checked;
     this.selectableGroupingsSvc.emitSelectionChanged();
+
+    this.selectableGroupingsSvc.save(g.groupingID, g.selected).subscribe();
   }
   
+  /**
+   * 
+   */
   changeSubdomain(gi: number, sgi: number, evt: any) {
-    this.selectableGroupingsSvc.models.get(this.modelId)[gi].subGroupings[sgi].selected = evt.target.checked;
+    const g = this.selectableGroupingsSvc.models.get(this.modelId)[gi].subGroupings[sgi];
+    g.selected = evt.target.checked;
     this.selectableGroupingsSvc.emitSelectionChanged();
+
+    this.selectableGroupingsSvc.save(g.groupingID, g.selected).subscribe();
   }
 }

@@ -25,11 +25,15 @@ import { Injectable } from '@angular/core';
 import { SelectableModel } from '../models/selectable-model.model';
 import { QuestionGrouping } from '../models/questions.model';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelectableGroupingsService {
+
+  private apiUrl: string;
 
   /**
    * We can store multiple models for multiple question page state
@@ -44,7 +48,11 @@ export class SelectableGroupingsService {
   /**
    * 
    */
-  constructor() {
+  constructor(
+    private http: HttpClient,
+    private configSvc: ConfigService
+  ) {
+    this.apiUrl = this.configSvc.apiUrl + "groupselection/";
     this.models = new Map<number, QuestionGrouping[]>();
   }
 
@@ -80,5 +88,14 @@ export class SelectableGroupingsService {
    */
   emitSelectionChanged() {
     this.selectionChangedSubject.next();
+  }
+
+  /**
+   * 
+   */
+  save(groupingId: number, selected: boolean) {
+    console.log(groupingId, selected);
+    const payload = { groupingId: groupingId, selected: selected };
+    return this.http.post(this.apiUrl, payload);
   }
 }

@@ -20,8 +20,8 @@
   },
   "analytics": {
     "protocol": "http",
-    "host": "localhost",
-    "port": "5001"
+    "host": "csetac",
+    "port": "5778"
   },
   "library": {
     "protocol": "http",
@@ -480,6 +480,7 @@
       "showMaturityLevelBadge": false,
       "questionIcons": {
         "showDetails": false,
+        "showGuidance": false,
         "showReviewed": false
       },
       "answerOptions": [
