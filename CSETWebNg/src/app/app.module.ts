@@ -352,6 +352,7 @@ import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficie
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
 import { TutorialRraComponent } from './assessment/prepare/maturity/tutorial-rra/tutorial-rra.component';
 import { TutorialCpgComponent } from './assessment/prepare/maturity/tutorial-cpg/tutorial-cpg.component';
+import { TutorialCpg2Component } from './assessment/prepare/maturity/tutorial-cpg2/tutorial-cpg2.component';
 import { TutorialMvraComponent } from './assessment/prepare/maturity/tutorial-mvra/tutorial-mvra.component';
 import { RraLevelResultsComponent } from './assessment/results/mat-rra/rra-level-results/rra-level-results.component';
 import { RraGapsComponent } from './assessment/results/mat-rra/rra-gaps/rra-gaps.component';
@@ -775,6 +776,7 @@ registerSwiper();
         TutorialRraComponent,
         TutorialCrrComponent,
         TutorialCpgComponent,
+        TutorialCpg2Component,
         TutorialMvraComponent,
         LoginCsetComponent,
         AboutCsetComponent,
