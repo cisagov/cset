@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 6/16/2025 5:09:16 PM
+Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 6/16/2025 5:58:30 PM
 
 */
 		
@@ -82,6 +82,9 @@ ALTER TABLE [dbo].[GALLERY_GROUP_DETAILS] NOCHECK CONSTRAINT [FK_GALLERY_GROUP_D
 
 PRINT(N'Drop constraints from [dbo].[ANALYTICS_MATURITY_GROUPINGS]')
 ALTER TABLE [dbo].[ANALYTICS_MATURITY_GROUPINGS] NOCHECK CONSTRAINT [FK_ANALYTICS_MATURITY_GROUPINGS_MATURITY_MODELS]
+
+PRINT(N'Drop constraint FK_USER_ROLES_ROLES from [dbo].[USER_ROLES]')
+ALTER TABLE [dbo].[USER_ROLES] NOCHECK CONSTRAINT [FK_USER_ROLES_ROLES]
 
 PRINT(N'Drop constraints from [dbo].[REQUIREMENT_LEVELS]')
 ALTER TABLE [dbo].[REQUIREMENT_LEVELS] NOCHECK CONSTRAINT [FK_REQUIREMENT_LEVELS_NEW_REQUIREMENT]
@@ -2284,6 +2287,13 @@ INSERT INTO [dbo].[MATURITY_MODELS] ([Maturity_Model_Id], [Model_Name], [Answer_
 INSERT INTO [dbo].[MATURITY_MODELS] ([Maturity_Model_Id], [Model_Name], [Answer_Options], [Questions_Alias], [Analytics_Rollup_Level], [Model_Title], [Maturity_Level_Usage_Type]) VALUES (25, N'CISA VADR', N'Y,N,NA', NULL, 1, NULL, NULL)
 SET IDENTITY_INSERT [dbo].[MATURITY_MODELS] OFF
 PRINT(N'Operation applied to 4 rows out of 4')
+
+PRINT(N'Add rows to [dbo].[ROLES]')
+SET IDENTITY_INSERT [dbo].[ROLES] ON
+INSERT INTO [dbo].[ROLES] ([RoleId], [RoleName]) VALUES (1, N'USER')
+INSERT INTO [dbo].[ROLES] ([RoleId], [RoleName]) VALUES (2, N'ADMIN')
+SET IDENTITY_INSERT [dbo].[ROLES] OFF
+PRINT(N'Operation applied to 2 rows out of 2')
 
 PRINT(N'Add rows to [dbo].[ANALYTICS_MATURITY_GROUPINGS]')
 INSERT INTO [dbo].[ANALYTICS_MATURITY_GROUPINGS] ([Maturity_Model_Id], [Maturity_Question_Id], [Question_Group], [Group_Sequence], [Global_Sequence], [Group_id]) VALUES (12, 2000, N'Manage IT and OT Asset Inventory', 1, 469, 510)
@@ -14212,9 +14222,6 @@ INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Sect
 INSERT INTO [dbo].[MATURITY_REFERENCES] ([Mat_Question_Id], [Gen_File_Id], [Section_Ref], [Source], [Page_Number], [Destination_String], [Sequence]) VALUES (8573, 7076, N'SR-6', 0, NULL, NULL, NULL)
 PRINT(N'Operation applied to 4090 rows out of 4090')
 
-insert into USER_ROLES (UserId, RoleId)
-select UserId, (select RoleId from ROLES where RoleName = 'USER') from USERS;
-
 PRINT(N'Add constraints to [dbo].[MATURITY_REFERENCES]')
 ALTER TABLE [dbo].[MATURITY_REFERENCES] CHECK CONSTRAINT [FK_MATURITY_REFERENCES_GEN_FILE]
 ALTER TABLE [dbo].[MATURITY_REFERENCES] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_REFERENCES_MATURITY_QUESTIONS]
@@ -14251,6 +14258,7 @@ ALTER TABLE [dbo].[GALLERY_GROUP_DETAILS] WITH CHECK CHECK CONSTRAINT [FK_GALLER
 
 PRINT(N'Add constraints to [dbo].[ANALYTICS_MATURITY_GROUPINGS]')
 ALTER TABLE [dbo].[ANALYTICS_MATURITY_GROUPINGS] WITH CHECK CHECK CONSTRAINT [FK_ANALYTICS_MATURITY_GROUPINGS_MATURITY_MODELS]
+ALTER TABLE [dbo].[USER_ROLES] WITH CHECK CHECK CONSTRAINT [FK_USER_ROLES_ROLES]
 
 PRINT(N'Add constraints to [dbo].[REQUIREMENT_LEVELS]')
 ALTER TABLE [dbo].[REQUIREMENT_LEVELS] CHECK CONSTRAINT [FK_REQUIREMENT_LEVELS_NEW_REQUIREMENT]
