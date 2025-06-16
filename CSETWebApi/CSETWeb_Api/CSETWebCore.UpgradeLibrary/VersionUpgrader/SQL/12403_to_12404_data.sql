@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 6/12/2025 4:45:33 PM
+Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 6/16/2025 5:09:16 PM
 
 */
 		
@@ -2218,6 +2218,22 @@ UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'6.A', [Sequence]=0, [Gr
 ' WHERE [Mat_Question_Id] = 8573
 PRINT(N'Operation applied to 34 rows out of 34')
 
+PRINT(N'Update rows in [dbo].[GALLERY_GROUP_DETAILS]')
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=3 WHERE [Group_Detail_Id] = 15
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=5 WHERE [Group_Detail_Id] = 16
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=4 WHERE [Group_Detail_Id] = 72
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=4 WHERE [Group_Detail_Id] = 73
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=4 WHERE [Group_Detail_Id] = 75
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=5 WHERE [Group_Detail_Id] = 78
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=2 WHERE [Group_Detail_Id] = 102
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=3 WHERE [Group_Detail_Id] = 111
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=1 WHERE [Group_Detail_Id] = 2182
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=1 WHERE [Group_Detail_Id] = 2185
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=3 WHERE [Group_Detail_Id] = 3233
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=0 WHERE [Group_Detail_Id] = 4240
+UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=2 WHERE [Group_Detail_Id] = 7254
+PRINT(N'Operation applied to 13 rows out of 13')
+
 PRINT(N'Update row in [dbo].[MATURITY_MODELS]')
 UPDATE [dbo].[MATURITY_MODELS] SET [Analytics_Rollup_Level]=2 WHERE [Maturity_Model_Id] = 12
 
@@ -2684,11 +2700,13 @@ PRINT(N'Operation applied to 409 rows out of 409')
 PRINT(N'Add rows to [dbo].[GALLERY_GROUP_DETAILS]')
 SET IDENTITY_INSERT [dbo].[GALLERY_GROUP_DETAILS] ON
 INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (103, 6, 3, 0, '0b740316-ddaf-464f-8bea-a91d2ff0e134')
+INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (127, 2, 0, 0, 'b91a3f24-2f1b-4e2d-9c7f-168f2b5c8e4d')
+INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (128, 2, 0, 0, 'edf05bdf-ed10-42c5-a147-2260a4ae5c16')
 INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (7256, 73, 0, 0, 'af3413b6-a769-4ed3-b32e-3024f842b065')
 INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (7257, 73, 1, 0, 'c3d96f53-22ae-4b70-8b59-cb200904c069')
 INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Column_Index], [Click_Count], [Gallery_Item_Guid]) VALUES (7258, 2, 8, 0, 'a430c6cd-edac-42f7-bc67-8b544d7ea4f8')
 SET IDENTITY_INSERT [dbo].[GALLERY_GROUP_DETAILS] OFF
-PRINT(N'Operation applied to 4 rows out of 4')
+PRINT(N'Operation applied to 6 rows out of 6')
 
 PRINT(N'Add rows to [dbo].[MATURITY_GROUPINGS]')
 SET IDENTITY_INSERT [dbo].[MATURITY_GROUPINGS] ON
