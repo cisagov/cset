@@ -180,6 +180,7 @@ import { SdOwnerDeficiencyComponent } from './reports/sd-owner/sd-owner-deficien
 import { SdOwnerCommentsMfrComponent } from './reports/sd-owner/sd-owner-comments/sd-owner-comments-mfr.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { TutorialCpgComponent } from './assessment/prepare/maturity/tutorial-cpg/tutorial-cpg.component';
+import { TutorialCpg2Component } from './assessment/prepare/maturity/tutorial-cpg2/tutorial-cpg2.component';
 import { TutorialMvraComponent } from './assessment/prepare/maturity/tutorial-mvra/tutorial-mvra.component';
 import { AllAnsweredquestionsComponent } from './reports/all-answeredquestions/all-answeredquestions.component';
 import { AllCommentsmarkedComponent } from './reports/all-commentsmarked/all-commentsmarked.component';
@@ -316,6 +317,7 @@ const appRoutes: Routes = [
               { path: 'tutorial-rra', component: TutorialRraComponent },
               { path: 'tutorial-cis', component: TutorialCisComponent },
               { path: 'tutorial-cpg', component: TutorialCpgComponent },
+              { path: 'tutorial-cpg2', component: TutorialCpg2Component },
               { path: 'tutorial-mvra', component: TutorialMvraComponent },
               { path: 'config-cis', component: ConfigCisComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },

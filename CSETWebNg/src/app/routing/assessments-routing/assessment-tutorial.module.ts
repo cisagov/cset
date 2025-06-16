@@ -9,6 +9,7 @@ import { TutorialEdmComponent } from '../../assessment/prepare/maturity/tutorial
 import { TutorialImrComponent } from '../../assessment/prepare/maturity/tutorial-imr/tutorial-imr.component';
 import { TutorialMvraComponent } from '../../assessment/prepare/maturity/tutorial-mvra/tutorial-mvra.component';
 import { TutorialRraComponent } from '../../assessment/prepare/maturity/tutorial-rra/tutorial-rra.component';
+import { TutorialCpg2Component } from '../../assessment/prepare/maturity/tutorial-cpg2/tutorial-cpg2.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
     { path: 'tutorial-rra', component: TutorialRraComponent },
     { path: 'tutorial-cis', component: TutorialCisComponent },
     { path: 'tutorial-cpg', component: TutorialCpgComponent },
+    { path: 'tutorial-cpg2', component: TutorialCpg2Component },
     { path: 'tutorial-mvra', component: TutorialMvraComponent }
 ];
 
