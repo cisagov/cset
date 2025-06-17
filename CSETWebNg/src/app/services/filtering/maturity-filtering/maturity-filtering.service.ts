@@ -257,8 +257,6 @@ export class MaturityFilteringService {
 
 
     // if CRE+ Optional (23) or MIL (24), the grouping must be marked 'selected' or we hide it
-    // console.log('recurseQuestionsForFiltering');
-    // console.log(modelId);
     if ([23, 24].includes(modelId)) {
       const sg = this.selectableGroupingsSvc.findGrouping(modelId, g.groupingId);
 
