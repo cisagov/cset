@@ -31,6 +31,7 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 @Component({
   selector: 'app-module-content-launch',
   templateUrl: './module-content-launch.component.html',
+  styleUrls: ['./module-content-launch.component.scss'],
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' },
   standalone: false
@@ -49,6 +50,7 @@ export class ModuleContentLaunchComponent implements OnInit {
 
   searchableItems: any[] = [];
   selectedItem: any;
+  isReadOnly = false;
 
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -161,7 +163,19 @@ export class ModuleContentLaunchComponent implements OnInit {
     if (event && event.item) {
       this.selectedOption = event.item.value;
       this.onSelectionChange();
+      this.isReadOnly = true;
     }
+  }
+
+  /**
+   * Clear the current selection
+   */
+  clearSelection() {
+    this.selectedItem = null;
+    this.selectedOption = '';
+    this.selectedStandard = null;
+    this.selectedModel = null;
+    this.isReadOnly = false;
   }
 
   /**
