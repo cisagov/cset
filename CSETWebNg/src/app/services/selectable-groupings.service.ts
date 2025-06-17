@@ -53,7 +53,6 @@ export class SelectableGroupingsService {
     private http: HttpClient,
     private configSvc: ConfigService
   ) {
-    console.log('service CTOR');
     this.apiUrl = this.configSvc.apiUrl;
     this.models = new Map<number, QuestionGrouping[]>();
   }
