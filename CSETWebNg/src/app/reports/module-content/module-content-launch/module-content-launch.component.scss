@@ -25,104 +25,117 @@ SOFTWARE.
 // Import CSET variables
 @import '../../../../sass/variables';
 
-// Style the ng-bootstrap typeahead dropdown
-:host ::ng-deep {
-  // Main dropdown container
-  .ngb-typeahead-window {
-    width: 100%;
-    max-height: 300px;
-    overflow-y: auto;
-    margin-top: 2px;
-    background-color: white;
-    border: 1px solid $gray-300;
-    border-radius: 4px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    
-    // Bootstrap dropdown menu inside typeahead window
-    .dropdown-menu {
-      position: static;
-      float: none;
-      width: 100%;
-      margin: 0;
-      border: none;
-      box-shadow: none;
-      padding: 0.25rem 0;
-    }
+// Position relative container for clear button
+.position-relative {
+  position: relative;
+}
+
+// Clear button styling
+.btn-clear {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-top: -0.75rem; // Adjust for mb-3 on input
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  color: $gray-600;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $no-color;
   }
 
-  // Individual dropdown items
-  .dropdown-item {
-    padding: 0.75rem 1rem;
-    color: $gray-800;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    
-    &:hover {
-      background-color: $primary-50;
-      color: $primary-800;
-    }
-    
-    &:active,
-    &.active {
-      background-color: $primary-250;
-      color: white;
-    }
-    
-    &:focus {
-      outline: none;
-      background-color: $primary-50;
-    }
+  &:focus {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+    border-radius: 3px;
   }
+
+  i {
+    font-size: 1rem;
+  }
+}
+
+// Style for readonly input - make it look normal, not grayed out
+input.form-control[readonly] {
+  background-color: $white;
+  cursor: default;
+
+  &:focus {
+    border-color: $gray-300;
+    box-shadow: none;
+  }
+}
+
+// Add padding to input when clear button is present
+input.form-control[readonly] {
+  padding-right: 2.5rem;
+}
+
+// Style the ng-bootstrap typeahead dropdown
+:host ::ng-deep {
 
   // Highlighted search terms
   mark {
-    background-color: $yellow-100;
+    background-color: #FFEE8C;
     color: $gray-900;
     font-weight: 600;
-    padding: 0 2px;
+    // padding: 0 2px;  // Removed to eliminate extra space around highlighted text
     border-radius: 2px;
   }
-}
 
-// Style the type badges
-.type-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
-  padding: 0.125rem 0.5rem;
-  border-radius: 3px;
-  margin-left: 0.75rem;
-  
-  &.type-standard {
-    background-color: $info-100;
-    color: $info-700;
+  // Responsive typeahead results
+  .typeahead-result {
+    width: 100%;
+    min-width: 0; // Allow flex items to shrink below content size
+    
+    .result-text {
+      flex: 1;
+      min-width: 0; // Allow text to truncate properly
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-right: 0.5rem;
+    }
+
+    .type-label {
+      flex-shrink: 0; // Prevent label from shrinking
+      font-size: 0.875rem;
+      padding: 0.125rem 0.5rem;
+      border-radius: 0.25rem;
+      background-color: $gray-100;
+      
+      &.type-standard {
+        background-color: rgba($primary-color, 0.1);
+        color: $primary-color;
+      }
+      
+      &.type-model {
+        background-color: rgba($secondary-color, 0.1);
+        color: $secondary-color;
+      }
+    }
   }
-  
-  &.type-model {
-    background-color: $success-100;
-    color: $success-700;
+
+  // Ensure dropdown has proper width constraints
+  .dropdown-menu {
+    max-width: 100%;
+    min-width: 300px;
+    
+    @media (max-width: 576px) {
+      min-width: 100%;
+    }
   }
-}
 
-// Empty state message
-.no-results {
-  padding: 1rem;
-  text-align: center;
-  color: $gray-600;
-  font-style: italic;
-}
-
-// Loading state
-.loading-results {
-  padding: 1rem;
-  text-align: center;
-  color: $primary-600;
-  
-  .spinner-border {
-    width: 1.25rem;
-    height: 1.25rem;
-    margin-right: 0.5rem;
+  // Dropdown items
+  .dropdown-item {
+    padding: 0.5rem 1rem;
+    
+    &:hover .type-label {
+      opacity: 0.9;
+    }
   }
 }
