@@ -68,7 +68,7 @@ export interface QuestionGrouping {
     title: string;
     description: string;
     description_Extended: string;
-    groupingID: number;
+    groupingId: number;
     groupingLevel: number;
     groupingType: string;
     questions: Question[];

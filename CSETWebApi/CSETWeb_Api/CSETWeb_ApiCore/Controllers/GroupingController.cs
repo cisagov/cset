@@ -59,7 +59,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
 
             var biz = new GroupingBusiness(assessmentId, _context);
-            biz.PersistSelection(request);
+            biz.PersistSelections(request);
 
             return Ok();
         }

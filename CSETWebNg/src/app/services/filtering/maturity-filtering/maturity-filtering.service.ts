@@ -257,11 +257,21 @@ export class MaturityFilteringService {
 
 
     // if CRE+ Optional (23) or MIL (24), the grouping must be marked 'selected' or we hide it
-    if ([23,24].includes(modelId)) {
-      const sg = this.selectableGroupingsSvc.findGrouping(modelId, g.groupingID);
-      if (!!sg && !sg.selected) {
-        g.visible = false;
-        return;
+    // console.log('recurseQuestionsForFiltering');
+    // console.log(modelId);
+    if ([23, 24].includes(modelId)) {
+      const sg = this.selectableGroupingsSvc.findGrouping(modelId, g.groupingId);
+
+      console.log('the sg I found is ', sg);
+
+
+      if (!!sg) {
+        console.log('the selected property is ', sg.selected);
+        if (sg.hasOwnProperty('selected') && !sg.selected) {
+          console.log('hiding ', sg);
+          g.visible = false;
+          return;
+        }
       }
     }
 
@@ -272,7 +282,7 @@ export class MaturityFilteringService {
 
       // Check maturity level filtering first.  If the question is not visible the rest of the
       // conditions can be avoided.
-      switch (this.assesmentSvc.assessment.maturityModel.modelName) {
+      switch (this.assesmentSvc.assessment.maturityModel?.modelName) {
 
         case 'CMMC':
         case 'CMMC2':

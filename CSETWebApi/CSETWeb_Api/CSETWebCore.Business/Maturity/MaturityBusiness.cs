@@ -908,7 +908,7 @@ namespace CSETWebCore.Business.Maturity
             foreach (MaturityGrouping g in tempModel.SubGroupings)
             {
                 MATURITY_DOMAIN_REMARKS dm;
-                if (domainRemarks.TryGetValue(g.GroupingID, out dm))
+                if (domainRemarks.TryGetValue(g.GroupingId, out dm))
                 {
                     g.DomainRemark = dm.DomainRemarks;
                 }
@@ -944,7 +944,7 @@ namespace CSETWebCore.Business.Maturity
             {
                 var newGrouping = new MaturityGrouping()
                 {
-                    GroupingID = sg.Grouping_Id,
+                    GroupingId = sg.Grouping_Id,
                     GroupingType = sg.Type.Grouping_Type_Name,
                     GroupingLevel = sg.Group_Level ?? 0,
                     Title = sg.Title,
@@ -952,7 +952,7 @@ namespace CSETWebCore.Business.Maturity
                     Abbreviation = sg.Abbreviation
                 };
 
-                var o = _overlay.GetMaturityGrouping(newGrouping.GroupingID, lang);
+                var o = _overlay.GetMaturityGrouping(newGrouping.GroupingId, lang);
                 if (o != null)
                 {
                     newGrouping.Title = o.Title;
@@ -964,7 +964,7 @@ namespace CSETWebCore.Business.Maturity
 
 
                 // are there any questions that belong to this grouping?
-                var myQuestions = questions.Where(x => x.Grouping_Id == newGrouping.GroupingID).ToList();
+                var myQuestions = questions.Where(x => x.Grouping_Id == newGrouping.GroupingId).ToList();
 
                 var parentQuestionIDs = myQuestions.Select(x => x.Parent_Question_Id).Distinct().ToList();
 
@@ -1013,7 +1013,7 @@ namespace CSETWebCore.Business.Maturity
 
 
                 // Recurse down to build subgroupings
-                BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers, lang);
+                BuildSubGroupings(newGrouping, newGrouping.GroupingId, allGroupings, questions, answers, lang);
             }
         }
 
@@ -1393,7 +1393,7 @@ namespace CSETWebCore.Business.Maturity
                     Description = cisG.Description,
                     Abbreviation = cisG.Abbreviation,
                     GroupingType = cisG.GroupType,
-                    GroupingID = cisG.GroupingId,
+                    GroupingId = cisG.GroupingId,
                     Title = cisG.Title
                 };
 
