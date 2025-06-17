@@ -56,39 +56,60 @@ namespace CSETWebCore.Business.Grouping
 
 
         /// <summary>
-        /// Saves the goruping selection status
+        /// Saves the goruping selection status for a list of groups
         /// </summary>
-        public void PersistSelection(GroupSelectionRequest req)
+        public void PersistSelections(GroupSelectionRequest req)
         {
-            Console.WriteLine($"{req.GroupingId}, {req.Selected}");
-
-            var gs = _context.GROUPING_SELECTION
-                .Where(x => x.Assessment_Id == _assessment_Id && x.Grouping_Id == req.GroupingId)
-                .FirstOrDefault();
-
-            if (req.Selected)
+            foreach (int g in req.GroupingId)
             {
-                // Insert a new record
-                if (gs == null)
+                var gs = _context.GROUPING_SELECTION
+                    .Where(x => x.Assessment_Id == _assessment_Id && x.Grouping_Id == g)
+                    .FirstOrDefault();
+
+                if (req.Selected)
                 {
-                    var sss = new GROUPING_SELECTION
+                    // Insert a new record
+                    if (gs == null)
                     {
-                        Assessment_Id = _assessment_Id,
-                        Grouping_Id = req.GroupingId
-                    };
+                        var sss = new GROUPING_SELECTION
+                        {
+                            Assessment_Id = _assessment_Id,
+                            Grouping_Id = g
+                        };
 
-                    _context.GROUPING_SELECTION.Add(sss);
-                    _context.SaveChanges();
+                        _context.GROUPING_SELECTION.Add(sss);
+                        _context.SaveChanges();
+                    }
                 }
-            }
-            else
-            {
-                if (gs != null)
+                else
                 {
-                    _context.GROUPING_SELECTION.Remove(gs);
-                    _context.SaveChanges();
+                    if (gs != null)
+                    {
+                        _context.GROUPING_SELECTION.Remove(gs);
+                        _context.SaveChanges();
+                    }
+
+                    // clear out any answers
+                    ClearAnswersForGrouping(g);
                 }
             }
+        }
+
+
+        /// <summary>
+        /// Resets any existing answers to "U" for a grouping
+        /// </summary>
+        private void ClearAnswersForGrouping(int groupingId)
+        {
+            var questionIds = _context.MATURITY_QUESTIONS.Where(x => x.Grouping_Id == groupingId).Select(x => x.Mat_Question_Id).ToList();
+
+            var answers = _context.ANSWER.Where(x => x.Assessment_Id == this._assessment_Id
+                && x.Question_Type == "Maturity"
+                && questionIds.Contains(x.Question_Or_Requirement_Id))
+                .ToList();
+
+            answers.ForEach(a => a.Answer_Text = "U");
+            _context.SaveChanges();
         }
     }
 }

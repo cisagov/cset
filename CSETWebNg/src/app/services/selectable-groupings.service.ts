@@ -24,7 +24,7 @@
 import { Injectable } from '@angular/core';
 import { SelectableModel } from '../models/selectable-model.model';
 import { QuestionGrouping } from '../models/questions.model';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from './config.service';
 
@@ -40,6 +40,7 @@ export class SelectableGroupingsService {
    */
   models: Map<number, QuestionGrouping[]>;
 
+
   // 
   private selectionChangedSubject = new Subject<void>();
   selectionChanged$ = this.selectionChangedSubject.asObservable();
@@ -52,6 +53,7 @@ export class SelectableGroupingsService {
     private http: HttpClient,
     private configSvc: ConfigService
   ) {
+    console.log('service CTOR');
     this.apiUrl = this.configSvc.apiUrl;
     this.models = new Map<number, QuestionGrouping[]>();
   }
@@ -65,19 +67,26 @@ export class SelectableGroupingsService {
 
 
   /**
-   * 
+   * Returns the grouping in the structure with the specified ID
    */
-  public findGrouping(modelId: number, groupingID: number): QuestionGrouping | null {
-    const targetModel = this.models.get(modelId);
-    if (!targetModel) {
+  findGrouping(modelId: number, id: number): QuestionGrouping | null {
+    var model = this.models.get(modelId);
+
+    if (!model) {
       return null;
     }
 
-    for (let i: number = 0; i < targetModel.length; i++) {
-      const sb = targetModel[i].subGroupings.find(y => y.groupingID == groupingID);
-      if (!!sb) {
-        return sb;
+    for (let i = 0; i < model.length; i++) {
+      const g = model[i];
+      if (g.groupingId == id) {
+        return g;
       }
+      for (let j = 0; j < g.subGroupings.length; j++) {
+        const sg = g.subGroupings[j];
+        if (sg.groupingId == id) {
+          return sg;
+        }
+      };
     }
 
     return null;
@@ -93,14 +102,14 @@ export class SelectableGroupingsService {
   /**
    * 
    */
-  getSelectedGroupIds() {
-    return this.http.get(this.apiUrl + "groupselections/");
+  getSelectedGroupIds(): Observable<number[]> {
+    return this.http.get<number[]>(this.apiUrl + "groupselections/");
   }
 
   /**
    * 
    */
-  save(groupingId: number, selected: boolean) {
+  save(groupingId: number[], selected: boolean) {
     const payload = { groupingId: groupingId, selected: selected };
     return this.http.post(this.apiUrl + "groupselection/", payload);
   }

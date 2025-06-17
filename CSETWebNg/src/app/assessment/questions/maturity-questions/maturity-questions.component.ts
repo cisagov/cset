@@ -138,11 +138,12 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       }
     });
 
+    this.refreshQuestionVisibility();
+
     this.selectableGroupingSvc.selectionChanged$.subscribe(() => {
+      console.log('I got the subject!~');
       this.refreshQuestionVisibility();
     });
-
-    this.refreshQuestionVisibility();
   }
 
   ngAfterViewInit() {
@@ -362,7 +363,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    * Recurse grouping tree, looking for the ID
    */
   findGroupingById(id: number, groupings: any[]) {
-    var grp = groupings.find(x => x.groupingID == id);
+    var grp = groupings.find(x => x.groupingId == id);
     if (!!grp) {
       return grp;
     }

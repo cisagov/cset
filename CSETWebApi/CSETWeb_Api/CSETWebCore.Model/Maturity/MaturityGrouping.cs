@@ -11,7 +11,7 @@ namespace CSETWebCore.Model.Maturity
 {
     public class MaturityGrouping
     {
-        public int GroupingID { get; set; }
+        public int GroupingId { get; set; }
 
         /// <summary>
         /// The type of grouping, e.g., Domain, Goal, Capability, etc.
@@ -65,7 +65,7 @@ namespace CSETWebCore.Model.Maturity
     /// </summary>
     public class GroupSelectionRequest
     {
-        public int GroupingId { get; set; }
+        public List<int> GroupingId { get; set; }
         public bool Selected { get; set; }
     }
 }
