@@ -50,7 +50,7 @@ export class ModuleContentLaunchComponent implements OnInit {
 
   searchableItems: any[] = [];
   selectedItem: any;
-  isReadOnly = false;
+  isValidSelection = false;
 
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -163,7 +163,7 @@ export class ModuleContentLaunchComponent implements OnInit {
     if (event && event.item) {
       this.selectedOption = event.item.value;
       this.onSelectionChange();
-      this.isReadOnly = true;
+      this.isValidSelection = true;
     }
   }
 
@@ -175,7 +175,7 @@ export class ModuleContentLaunchComponent implements OnInit {
     this.selectedOption = '';
     this.selectedStandard = null;
     this.selectedModel = null;
-    this.isReadOnly = false;
+    this.isValidSelection = false;
   }
 
   /**
@@ -188,12 +188,30 @@ export class ModuleContentLaunchComponent implements OnInit {
   }
 
   /**
+   * Handle input text changes
+   */
+  onInputChange(value: any) {
+    // If the input was cleared or doesn't match any selected item, reset the selection
+    if (!value || (typeof value === 'string')) {
+      // Check if the typed value matches the currently selected item
+      const currentSelectedItem = this.searchableItems.find(item =>
+        this.selectedOption === item.value
+      );
+
+      if (!currentSelectedItem || value !== currentSelectedItem.displayName) {
+        // Text was modified, clear the selection
+        this.clearSelection();
+      }
+    }
+  }
+
+  /**
    * Launch the appropriate report based on selection
    */
   launchReport() {
-    if (this.selectedOption.startsWith('standard:')) {
+    if (this.isValidSelection && this.selectedOption.startsWith('standard:')) {
       this.launchStandardReport();
-    } else if (this.selectedOption.startsWith('model:')) {
+    } else if (this.isValidSelection && this.selectedOption.startsWith('model:')) {
       this.launchModelReport();
     }
   }
