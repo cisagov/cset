@@ -108,6 +108,14 @@
     ]
   },
   {
+    "title": "CISA VADR",
+    "reportList": [
+      {
+        "linkUrl": "cisaVadrReport"
+      }
+    ]
+  },
+  {
     "title": "SD02 Series",
     "reportList": [
       {

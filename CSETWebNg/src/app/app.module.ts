@@ -602,6 +602,8 @@ import { NewAssessmentComponent } from './initial/new-assessment/new-assessment.
 import { register as registerSwiper } from 'swiper/element/bundle';
 import { AdminSettingsComponent } from './initial/admin-settings/admin-settings.component';
 import { UserService } from './services/user.service';
+import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
+import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 
 registerSwiper();
 
@@ -879,6 +881,8 @@ registerSwiper();
         VadrQuestionsScoringComponent,
         VadrSummaryComponent,
         VadrSummaryAllComponent,
+        CisaVadrReportComponent,
+        VadrGroupingBlockComponent,
         OpenEndedQuestionsComponent,
         CisSurveyComponent,
         GroupingBlockNestedReportComponent,
