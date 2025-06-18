@@ -31,14 +31,15 @@
             <div class="position-relative" style="flex: 1">
                 <input type="text" class="form-control mb-3" [(ngModel)]="selectedItem" [ngbTypeahead]="search"
                     [inputFormatter]="formatter" [resultTemplate]="resultTemplate"
-                    [placeholder]="t('Start typing to search standards or models...')" (selectItem)="onItemSelect($event)"
-                    [focusFirst]="false" [showHint]="true" [readonly]="isReadOnly" />
-                <button *ngIf="isReadOnly" type="button" class="btn-clear" (click)="clearSelection()"
+                    [placeholder]="t('Start typing to search standards or models...')"
+                    (selectItem)="onItemSelect($event)" (ngModelChange)="onInputChange($event)" [focusFirst]="false"
+                    [showHint]="true" />
+                <button type="button" class="btn-clear" (click)="clearSelection()"
                     [attr.aria-label]="t('Clear selection')" title="{{ t('Clear selection') }}">
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
-            <button class="btn btn-primary text-nowrap ms-3" (click)="launchReport()" [disabled]="!selectedOption">{{
+            <button class="btn btn-primary text-nowrap ms-3" (click)="launchReport()" [disabled]="!isValidSelection">{{
                 t('Launch Report') }}</button>
         </div>
 
