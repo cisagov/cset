@@ -21,7 +21,7 @@ export class CreCoreReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.reportSvc.getModelContent('CPG').subscribe((x) => {
+    this.reportSvc.getModelContent('CRE+').subscribe((x) => {
       this.model = x;
 
       const parentGroup = this.model?.groupings[0];

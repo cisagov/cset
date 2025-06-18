@@ -31,6 +31,7 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 @Component({
   selector: 'app-module-content-launch',
   templateUrl: './module-content-launch.component.html',
+  styleUrls: ['./module-content-launch.component.scss'],
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' },
   standalone: false
@@ -49,6 +50,7 @@ export class ModuleContentLaunchComponent implements OnInit {
 
   searchableItems: any[] = [];
   selectedItem: any;
+  isValidSelection = false;
 
   search = (text$: Observable<string>) =>
     text$.pipe(
@@ -161,7 +163,19 @@ export class ModuleContentLaunchComponent implements OnInit {
     if (event && event.item) {
       this.selectedOption = event.item.value;
       this.onSelectionChange();
+      this.isValidSelection = true;
     }
+  }
+
+  /**
+   * Clear the current selection
+   */
+  clearSelection() {
+    this.selectedItem = null;
+    this.selectedOption = '';
+    this.selectedStandard = null;
+    this.selectedModel = null;
+    this.isValidSelection = false;
   }
 
   /**
@@ -174,12 +188,30 @@ export class ModuleContentLaunchComponent implements OnInit {
   }
 
   /**
+   * Handle input text changes
+   */
+  onInputChange(value: any) {
+    // If the input was cleared or doesn't match any selected item, reset the selection
+    if (!value || (typeof value === 'string')) {
+      // Check if the typed value matches the currently selected item
+      const currentSelectedItem = this.searchableItems.find(item =>
+        this.selectedOption === item.value
+      );
+
+      if (!currentSelectedItem || value !== currentSelectedItem.displayName) {
+        // Text was modified, clear the selection
+        this.clearSelection();
+      }
+    }
+  }
+
+  /**
    * Launch the appropriate report based on selection
    */
   launchReport() {
-    if (this.selectedOption.startsWith('standard:')) {
+    if (this.isValidSelection && this.selectedOption.startsWith('standard:')) {
       this.launchStandardReport();
-    } else if (this.selectedOption.startsWith('model:')) {
+    } else if (this.isValidSelection && this.selectedOption.startsWith('model:')) {
       this.launchModelReport();
     }
   }

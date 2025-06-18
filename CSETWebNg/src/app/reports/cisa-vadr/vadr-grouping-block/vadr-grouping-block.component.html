@@ -1,0 +1,50 @@
+<!----------------------
+
+   Copyright 2025 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<ng-content *transloco="let t">
+     <h1>{{grouping.title}}</h1>
+
+     <div *ngFor="let gg of grouping.groupings">
+          <h4>{{gg.title}}</h4>
+          <table class="cset-table">
+               <tr *ngFor="let q of gg.questions">
+                    <td>{{q.displayNumber}}</td>
+                    <td>
+                         <div [innerHTML]="q.questionText"></div>
+
+                         <div *ngIf="!!q.altAnswerText" style="border: 1px solid #ccc; border-radius: .3rem"
+                              class="p-2 m-2 mt-4">
+                              <div class="fw-bold">{{t('reports.core.cisa vadr.report.na answer justification')}}</div>
+                              <p>
+                                   {{q.altAnswerText}}
+                              </p>
+                         </div>
+                    </td>
+                    <td [class]="answerCellClass(q?.answerText)">
+                         <div class="text-center" style="width: 7rem">
+                              {{questionsSvc.answerDisplayLabel(25, q.answerText)}}
+                         </div>
+                    </td>
+               </tr>
+          </table>
+     </div>
+</ng-content>
