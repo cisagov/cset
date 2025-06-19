@@ -384,6 +384,88 @@
       ]
     },
     {
+      "moduleName": "CRE+ OPT",
+      "modelId": "23",
+      "displayNameKey": "modules.cre+.display-name",
+      "questionNodeKey": "modules.cre+.question node title",
+      "hideTopLevelGroupingName": false,
+      "autoLoadSupplemental": true,
+      "showMaturityLevelBadge": false,
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
+        },
+        {
+          "code": "I",
+          "buttonLabelKey": "Prog-CPG",
+          "buttonCss": "btn-na",
+          "chartSegmentColor": "#0a4b6e"
+        },
+        {
+          "code": "S",
+          "buttonLabelKey": "Scoped-CPG",
+          "buttonCss": "btn-alt",
+          "chartSegmentColor": "#b17300"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "consideredMissed": true
+        }
+      ]
+    },
+    {
+      "moduleName": "CRE+ MIL",
+      "modelId": "24",
+      "displayNameKey": "modules.cre+.display-name",
+      "questionNodeKey": "modules.cre+.question node title",
+      "hideTopLevelGroupingName": false,
+      "autoLoadSupplemental": true,
+      "showMaturityLevelBadge": false,
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
+        },
+        {
+          "code": "I",
+          "buttonLabelKey": "Prog-CPG",
+          "buttonCss": "btn-na",
+          "chartSegmentColor": "#0a4b6e"
+        },
+        {
+          "code": "S",
+          "buttonLabelKey": "Scoped-CPG",
+          "buttonCss": "btn-alt",
+          "chartSegmentColor": "#b17300"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "consideredMissed": true
+        }
+      ]
+    },
+    {
       "moduleName": "CMMC2F",
       "modelId": "19",
       "displayNameKey": "modules.cmmc2f.display-name",

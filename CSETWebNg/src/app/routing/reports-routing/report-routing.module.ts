@@ -15,6 +15,7 @@ import { CompareReportComponent } from '../../reports/compare-report/compare-rep
 import { CpgDeficiencyComponent } from '../../reports/cpg/cpg-deficiency/cpg-deficiency.component';
 import { CpgReportComponent } from '../../reports/cpg/cpg-report/cpg-report.component';
 import { CreCoreReportComponent } from '../../reports/crePlus/cre-core-report/cre-core-report.component';
+import { CreMilReportComponent } from '../../reports/crePlus/cre-mil-report/cre-mil-report.component';
 import { CrrCommentsMarkedComponent } from '../../reports/crr/crr-comments-marked/crr-comments-marked.component';
 import { CrrDeficiencyComponent } from '../../reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrReportComponent } from '../../reports/crr/crr-report/crr-report.component';
@@ -42,6 +43,7 @@ import { OpenEndedQuestionsComponent } from '../../reports/vadr/open-ended-quest
 import { VadrDeficiencyComponent } from '../../reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { VadrReportComponent } from '../../reports/vadr/vadr-report/vadr-report.component';
 import { CisaVadrReportComponent } from '../../reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
+
 
 const routes: Routes = [
     { path: '', loadChildren: () => import('./cmmc-report-routing.module').then(m => m.CmmcReportRoutingModule) },
@@ -76,6 +78,7 @@ const routes: Routes = [
     { path: 'cpgReport', component: CpgReportComponent },
     { path: 'cpgDeficiency', component: CpgDeficiencyComponent },
     { path: 'creCoreReport', component: CreCoreReportComponent },
+    { path: 'creMilReport', component: CreMilReportComponent },
     { path: 'commentsmfr', component: CommentsMfrComponent },
     { path: 'module-content', component: ModuleContentComponent },
     { path: 'c2m2Report', component: C2m2ReportComponent },
