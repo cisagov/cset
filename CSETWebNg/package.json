@@ -46,7 +46,7 @@
         "@types/jquery": "^3.5.32",
         "@types/sanitize-html": "^2.16.0",
         "angular2-hotkeys": "^16.0.1",
-        "bootstrap": "^5.3.6",
+        "bootstrap": "^5.3.7",
         "chart.js": "^4.4.5",
         "electron-find-on-page": "^1.0.1",
         "electron-log": "^5.4.0",
