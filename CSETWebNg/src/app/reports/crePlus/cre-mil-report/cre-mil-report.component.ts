@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { AssessmentService } from '../../../services/assessment.service';
 import { ReportService } from '../../../services/report.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { ConfigService } from '../../../services/config.service';
 import { Title } from '@angular/platform-browser';
-import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
-  selector: 'app-cre-core-report',
-  templateUrl: './cre-core-report.component.html',
-  styleUrls: ['../../reports.scss'],
-  standalone: false
+  selector: 'app-cre-mil-report',
+  standalone: false,
+  templateUrl: './cre-mil-report.component.html',
+  styleUrls: ['../../reports.scss']
 })
-export class CreCoreReportComponent implements OnInit {
+export class CreMilReportComponent implements OnInit {
 
-  title = 'CISA Cyber Resilience Essentials (CRE+) Final Report';
+  title = 'CISA Cyber Resilience Essentials (CRE+) MIL Report';
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
@@ -42,5 +42,4 @@ export class CreCoreReportComponent implements OnInit {
     });
   }
 
- 
 }

@@ -144,7 +144,15 @@
                "sectionTitle": "Cybersecurity Resilience Essentials (CRE+)",
                "1": {
                     "title": "CRE Core Final Report",
-                    "desc": "CRE Core Final Report description goes here"
+                    "desc": "CRE Core questions and selected Optional Domain questions are detailed in this report"
+               },
+               "2": {
+                    "title": "CRE MIL Final Report",
+                    "desc": "Selected MIL questions are detailed in this report"
+               },
+               "3": {
+                    "title": "CRE Chart Report",
+                    "desc": "Analytics and charts are presented in this report"
                }
           },
           "cisa vadr": {
