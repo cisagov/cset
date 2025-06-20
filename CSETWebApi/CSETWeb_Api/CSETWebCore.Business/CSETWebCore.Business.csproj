@@ -190,7 +190,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dashboard\" />
     <Folder Include="Version\" />
     <Folder Include="Demographic\DemographicIO\" />
     <Folder Include="Demographic\DemographicIO\Export\" />
