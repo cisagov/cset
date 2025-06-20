@@ -7,15 +7,11 @@
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Dashboard;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.Question;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Org.BouncyCastle.Bcpg.OpenPgp;
-using System.Collections.Generic;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -25,7 +21,6 @@ namespace CSETWebCore.Api.Controllers
     {
         private CSETContext _context;
         private readonly ITokenManager _tokenManager;
-        private readonly int _assessmentId;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
 
@@ -42,10 +37,6 @@ namespace CSETWebCore.Api.Controllers
             _tokenManager = tokenManager;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
-
-
-            //_assessmentId = _tokenManager.AssessmentForUser();
-            //_context.FillEmptyQuestionsForAnalysis(_assessmentId);
         }
 
 
@@ -57,13 +48,31 @@ namespace CSETWebCore.Api.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("api/chart/maturity/answerdistrib/normalized")]
-        public IActionResult XXX([FromQuery] int modelId)
+        public IActionResult GetNormalizedAnswerDistribution([FromQuery] int modelId)
         {
-            //int assessmentId = _tokenManager.AssessmentForUser();
-            int assessmentId = 100;
+            int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz = new DashboardChartBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var resp = biz.GetAnswerDistributionNormalized(modelId, assessmentId);
+            var biz = new DashboardChartBusiness(assessmentId, modelId, _context, _assessmentUtil, _adminTabBusiness);
+            var resp = biz.GetAnswerDistributionNormalized();
+
+            return Ok(resp);
+        }
+
+
+        /// <summary>
+        /// Returns the normalized values for the model's 
+        /// answer options.
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/chart/maturity/answerdistrib/domain")]
+        public IActionResult GetAnswerDistributionByDomain([FromQuery] int modelId)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var biz = new DashboardChartBusiness(assessmentId, modelId, _context, _assessmentUtil, _adminTabBusiness);
+            var resp = biz.GetAnswerDistributionByDomain();
 
             return Ok(resp);
         }

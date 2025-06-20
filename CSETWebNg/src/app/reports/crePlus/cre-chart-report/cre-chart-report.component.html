@@ -42,7 +42,7 @@
                <ngx-charts-bar-horizontal 
                     [scheme]="colorScheme"
                     [view]="[700, 300]" 
-                    [results]="d1" 
+                    [results]="distribCore" 
                     [xAxis]="true" 
                     [yAxis]="true"
                     [showXAxisLabel]="true" 
@@ -66,11 +66,12 @@
                <ngx-charts-bar-horizontal-2d 
                     [view]="[700, 800]" 
                     [scheme]="colorScheme"
-                    [results]="multi" 
+                    [results]="countsCore" 
                     [xAxis]="true" 
                     [yAxis]="true"
                     [showXAxisLabel]="true" 
                     [showYAxisLabel]="true"
+                    [xAxisTickFormatting]="formatIntegerXAxis"
                     [wrapTicks]="true"
                     [roundEdges]="false"
                     >
@@ -90,7 +91,7 @@
                <ngx-charts-bar-horizontal 
                     [scheme]="colorScheme"
                     [view]="[700, 300]" 
-                    [results]="d2" 
+                    [results]="distribOpt" 
                     [xAxis]="true" 
                     [yAxis]="true"
                     [showXAxisLabel]="true" 
@@ -112,11 +113,12 @@
                <ngx-charts-bar-horizontal-2d 
                     [view]="[700, 800]" 
                     [scheme]="colorScheme"
-                    [results]="multi" 
+                    [results]="countsOpt" 
                     [xAxis]="true" 
                     [yAxis]="true"
                     [showXAxisLabel]="true" 
                     [showYAxisLabel]="true"
+                    [xAxisTickFormatting]="formatIntegerXAxis"
                     [wrapTicks]="true"
                     [roundEdges]="false"
                     >
@@ -137,7 +139,7 @@
                <ngx-charts-bar-horizontal 
                     [scheme]="colorScheme"
                     [view]="[700, 300]" 
-                    [results]="d2" 
+                    [results]="distribMil" 
                     [xAxis]="true" 
                     [yAxis]="true"
                     [showXAxisLabel]="true" 
@@ -159,11 +161,12 @@
                <ngx-charts-bar-horizontal-2d 
                     [view]="[700, 800]" 
                     [scheme]="colorScheme"
-                    [results]="multi" 
+                    [results]="countsMil" 
                     [xAxis]="true" 
                     [yAxis]="true"
                     [showXAxisLabel]="true" 
                     [showYAxisLabel]="true"
+                    [xAxisTickFormatting]="formatIntegerXAxis"
                     [wrapTicks]="true"
                     [roundEdges]="false"
                     >
