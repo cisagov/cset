@@ -78,6 +78,7 @@ namespace CSETWebCore.Helpers
             Model.ModelId = _modelId;
             Model.ModelName = mm.Model_Name;
             Model.ModelTitle = mm.Model_Title;
+            Model.AnswerOptions = mm.Answer_Options.Split(',').ToList();
 
 
             // Get all maturity questions for the model regardless of level.
