@@ -10,6 +10,8 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Dashboard.BarCharts;
+using DocumentFormat.OpenXml.Office2019.Drawing.Model3D;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 
 
 namespace CSETWebCore.Business.Dashboard
@@ -19,9 +21,13 @@ namespace CSETWebCore.Business.Dashboard
     /// </summary>
     public class DashboardChartBusiness
     {
-        CSETContext _context;
+        private int _assessmentId;
+        private int _modelId;
+        private CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
+
+        private MaturityStructureForModel _structure;
 
 
         /// <summary>
@@ -29,12 +35,18 @@ namespace CSETWebCore.Business.Dashboard
         /// </summary>
         /// <param name="context"></param>
         /// <param name=""></param>
-        public DashboardChartBusiness(CSETContext context, IAssessmentUtil assessmentUtil,
+        public DashboardChartBusiness(int assessmentId, int modelId, CSETContext context, IAssessmentUtil assessmentUtil,
             IAdminTabBusiness adminTabBusiness)
         {
+            _assessmentId = assessmentId;
+            _modelId = modelId;
             _context = context;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
+
+
+            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            _structure = biz.GetMaturityStructureForModel(_modelId, _assessmentId);
         }
 
 
@@ -42,19 +54,95 @@ namespace CSETWebCore.Business.Dashboard
         /// Returns the distribution of answers for an assessment and model, normalized to 100%
         /// </summary>
         /// <returns></returns>
-        public List<Model.Dashboard.BarCharts.Grouping> GetAnswerDistributionNormalized(int modelId, int assessmentId)
+        public List<NameValue> GetAnswerDistributionNormalized()
+        {
+            // include "U" count so that we can calculate percentages.  
+            _structure.Model.AnswerOptions.Add("U");
+            double totalAnswerCount = _structure.AllAnswers.Count;
+
+
+            // transform into our response
+            var resp = new List<NameValue>();
+            foreach (var ansText in _structure.Model.AnswerOptions)
+            {
+                var x = new NameValue
+                {
+                    Name = ansText,
+                    Value = ((double)_structure.AllAnswers.Count(x => x.Answer_Text == ansText) * 100d) / totalAnswerCount
+                };
+
+                resp.Add(x);
+            }
+
+            resp.RemoveAll(x => x.Name == "U");
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// Returns a list of domains and an answer distribution (raw numbers) for each domain.
+        /// We recurse down to get the questions from any groupings that are children to the domain.
+        /// </summary>
+        /// <returns></returns>
+        public List<Model.Dashboard.BarCharts.Grouping> GetAnswerDistributionByDomain()
         {
             var resp = new List<Model.Dashboard.BarCharts.Grouping>();
 
+            var domains = _structure.Model.Groupings;
+            foreach (var item in domains)
+            {
+                var groupingIdBag = GetQuestionIdsForGrouping(item);
+
+                resp.Add(new Model.Dashboard.BarCharts.Grouping
+                {
+                    Name = item.Title,
+                    Series = GetAnswerCounts(groupingIdBag)
+                });
+            }
+
+            return resp;
+        }
 
 
-            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var structure = biz.GetMaturityStructureForModel(modelId, assessmentId);
+        /// <summary>
+        /// Recursively walks the grouping/question tree and returns a list of QuestionIds.
+        /// </summary>
+        /// <param name="grouping"></param>
+        /// <returns></returns>
+        private List<int> GetQuestionIdsForGrouping(Model.Nested.Grouping grouping)
+        {
+            List<int> ids = [];
 
-            // transform into our response
+            foreach (var g in grouping.Groupings)
+            {
+                ids.AddRange(GetQuestionIdsForGrouping(g));
+            }
+
+            ids.AddRange(grouping.Questions.Select(x => x.QuestionId).ToList());
+
+            return ids;
+        }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="questionIds"></param>
+        /// <returns></returns>
+        public List<NameValue> GetAnswerCounts(List<int> questionIds)
+        {
+            var resp = new List<NameValue>();
+            foreach (var ansText in _structure.Model.AnswerOptions)
+            {
+                var x = new NameValue
+                {
+                    Name = ansText,
+                    Value = (double)_structure.AllAnswers.Where(x => questionIds.Contains(x.Question_Or_Requirement_Id)).Count(x => x.Answer_Text == ansText)
+                };
 
+                resp.Add(x);
+            }
 
             return resp;
         }

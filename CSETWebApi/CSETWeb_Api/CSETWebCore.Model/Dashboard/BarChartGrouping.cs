@@ -10,10 +10,10 @@ namespace CSETWebCore.Model.Dashboard.BarCharts
     public class Grouping
     {
         public string Name { get; set; }
-        public List<Series> Series { get; set; } = [];
+        public List<NameValue> Series { get; set; } = [];
     }
 
-    public class Series
+    public class NameValue
     {
         public string Name { get; set; }
         public double Value { get; set; }
