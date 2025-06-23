@@ -202,7 +202,7 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
    * Recurse grouping tree, looking for the ID
    */
   findGroupingById(id: number, groupings: any[]) {
-    var grp = groupings.find(x => x.groupingID == id);
+    var grp = groupings.find(x => x.groupingId == id);
     if (!!grp) {
       return grp;
     }

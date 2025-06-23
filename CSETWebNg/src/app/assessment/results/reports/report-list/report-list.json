@@ -90,6 +90,12 @@
     "reportList": [
       {
         "linkUrl": "creCoreReport"
+      },
+      {
+        "linkUrl": "creMilReport"
+      },
+      {
+        "linkUrl": "creChartReport"
       }
     ]
   },

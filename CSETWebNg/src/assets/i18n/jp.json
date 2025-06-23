@@ -440,7 +440,8 @@
           "export assessment json": "この評価のコピーをJSONファイルとしてエクスポート",
           "analytics": "この評価の分析を表示。",
           "merged checked exams": "チェックされた試験をマージ",
-          "export all": "すべての評価のコピーを別の場所にエクスポート。"
+          "export all": "すべての評価のコピーを別の場所にエクスポート。",
+          "nav collapse": "ナビゲーションを展開/折りたたむ"
      },
      "welcome page": {
           "internet explorer": "現在のブラウザとしてInternet Explorerが検出されました。\nInternet Explorerはサポートされていません。\nChrome、Firefox、Edgeなどの他のブラウザの使用を強くお勧めします。",

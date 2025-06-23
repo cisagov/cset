@@ -463,6 +463,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[GROUPING_SELECTION]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[HYDRO_DATA]",
          "ObjectType": 0
       },
@@ -1492,7 +1496,6 @@
    "UseAsyncStoredProcedureCalls": true,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
-   "UseDatabaseNamesForRoutines": true,
    "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
    "UseDecimalDataAnnotationForSprocResult": true,
@@ -1511,6 +1514,5 @@
    "UseSchemaFolders": false,
    "UseSchemaNamespaces": false,
    "UseSpatial": false,
-   "UseT4": false,
-   "UseT4Split": false
+   "UseT4": false
 }

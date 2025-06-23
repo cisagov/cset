@@ -21,49 +21,54 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ReportService } from '../../../services/report.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { ConfigService } from '../../../services/config.service';
-import { Title } from '@angular/platform-browser';
-import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
-  selector: 'app-cre-core-report',
-  templateUrl: './cre-core-report.component.html',
-  styleUrls: ['../../reports.scss'],
-  standalone: false
+  selector: 'app-cre-core-report-grid',
+  standalone: false,
+  templateUrl: './cre-core-report-grid.component.html',
+  styleUrls: ['../../reports.scss']
 })
-export class CreCoreReportComponent implements OnInit {
+export class CreCoreReportGridComponent implements OnInit {
 
-  title = 'CISA Cyber Resilience Essentials (CRE+) Final Report';
-  assessmentName: string;
-  assessmentDate: string;
-  assessorName: string;
-  facilityName: string;
-  selfAssessment: boolean;
+  @Input() modelId: number;
+
+  model: any;
+  groupings: [];
 
   constructor(
-    public assessSvc: AssessmentService,
     public reportSvc: ReportService,
-    public questionsSvc: QuestionsService,
-    public configSvc: ConfigService,
-    public titleService: Title
-  ) {
-
-  }
+    public questionsSvc: QuestionsService
+  ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle(this.title);
+    this.reportSvc.getModelContent(this.modelId.toString()).subscribe((x) => {
+      this.model = x;
 
-    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      this.assessmentName = assessmentDetail.assessmentName;
-      this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.facilitatorName;
-      this.facilityName = assessmentDetail.facilityName;
-      this.selfAssessment = assessmentDetail.selfAssessment;
+      this.groupings = this.model?.groupings;
     });
   }
 
- 
+  /**
+  * Sets the coloring of a cell based on its answer.
+  * @param answer 
+  */
+  answerCellClass(answer: string) {
+    console.log(answer);
+    switch (answer) {
+      case 'Y':
+        return 'green-score';
+      case 'I':
+        return 'blue-score';
+      case 'S':
+        return 'gold-score';
+      case 'N':
+        return 'red-score';
+      case 'U':
+      case null:
+        return 'default-score';
+    }
+  }
 }
