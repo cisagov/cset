@@ -1,6 +1,7 @@
-import { AfterViewChecked, Component, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MaturityService } from '../../../../services/maturity.service';
 import { SelectableGroupingsService } from '../../../../services/selectable-groupings.service';
+import { QuestionGrouping } from '../../../../models/questions.model';
 
 @Component({
   selector: 'app-cre-question-selector',
@@ -8,10 +9,11 @@ import { SelectableGroupingsService } from '../../../../services/selectable-grou
   styleUrl: './cre-question-selector.component.scss',
   standalone: false
 })
-export class CreQuestionSelectorComponent implements OnInit, AfterViewChecked {
-
+export class CreQuestionSelectorComponent implements OnInit {
 
   @Input() modelId: number;
+
+  model: any;
 
 
   /**
@@ -19,24 +21,69 @@ export class CreQuestionSelectorComponent implements OnInit, AfterViewChecked {
    */
   constructor(
     public maturitySvc: MaturityService,
-    public selectableGroupingsSvc: SelectableGroupingsService
+    public selectableGroupingsSvc: SelectableGroupingsService,
+    public cdr: ChangeDetectorRef
   ) { }
+
+  /**
+   * Get the grouping structure from the service and set 
+   * a 'selected' property on each grouping/subgrouping based on what we
+   * have in the API.
+   */
+  ngOnInit(): void {
+    // use a local reference variable to the service's model
+    console.log('selector about to load model ' + this.modelId);
+    this.model = this.selectableGroupingsSvc.models.get(this.modelId);
+    console.log('and I found ', this.model);
+
+    // get the selected groups and mark them in the component's model
+    this.selectableGroupingsSvc.getSelectedGroupIds().subscribe((selectedGroupIds: number[]) => {
+      this.model?.forEach(grp => {
+        grp.selected = selectedGroupIds.includes(grp.groupingId);
+
+        grp.subGroupings.forEach(subGrp => {
+          subGrp.selected = selectedGroupIds.includes(subGrp.groupingId);
+        });
+      });
+
+      this.selectableGroupingsSvc.emitSelectionChanged();
+      //this.cdr.detectChanges();
+    });
+  }
 
   /**
    * 
    */
-  ngOnInit(): void {  }
+  changeGroupSelection(id: number, evt: any) {
+    const g = this.selectableGroupingsSvc.findGrouping(this.modelId, id);
+    if (!g) {
+      return;
+    }
 
-  ngAfterViewChecked(): void {  }
+    g.selected = evt.target.checked;
 
-
-  changeDomain(gi: number, evt: any) {
-    this.selectableGroupingsSvc.models.get(this.modelId)[gi].selected = evt.target.checked;
     this.selectableGroupingsSvc.emitSelectionChanged();
+
+    // persist the changed group(s)
+    const groupsChanged = this.buildList(g);
+    this.selectableGroupingsSvc.save(groupsChanged, g.selected).subscribe();
   }
-  
-  changeSubdomain(gi: number, sgi: number, evt: any) {
-    this.selectableGroupingsSvc.models.get(this.modelId)[gi].subGroupings[sgi].selected = evt.target.checked;
-    this.selectableGroupingsSvc.emitSelectionChanged();
+
+  /**
+   * Build a list of groups whose selected status is changed.
+   * This will de-select subgroups for a deselected parent.
+   */
+  buildList(g: QuestionGrouping): number[] {
+    let groupsChanged: number[] = [];
+    groupsChanged.push(g.groupingId);
+
+    if (!g.selected) {
+      g.subGroupings.forEach(x => {
+        x.selected = false;
+        groupsChanged.push(x.groupingId);
+      });
+    }
+
+    return groupsChanged;
   }
 }

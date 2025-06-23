@@ -263,6 +263,8 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<GLOSSARY> GLOSSARY { get; set; }
 
+    public virtual DbSet<GROUPING_SELECTION> GROUPING_SELECTION { get; set; }
+
     public virtual DbSet<HYDRO_DATA> HYDRO_DATA { get; set; }
 
     public virtual DbSet<HYDRO_DATA_ACTIONS> HYDRO_DATA_ACTIONS { get; set; }
@@ -1633,6 +1635,13 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of GLOSSARY records"));
         });
 
+        modelBuilder.Entity<GROUPING_SELECTION>(entity =>
+        {
+            entity.HasOne(d => d.Assessment).WithMany(p => p.GROUPING_SELECTION).HasConstraintName("FK_GROUP_SELECT_ASSESSMENTS");
+
+            entity.HasOne(d => d.Grouping).WithMany(p => p.GROUPING_SELECTION).HasConstraintName("FK_GROUP_SELECT_GROUP");
+        });
+
         modelBuilder.Entity<HYDRO_DATA>(entity =>
         {
             entity.HasKey(e => e.Mat_Option_Id).IsClustered(false);
@@ -2481,11 +2490,6 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_SETS).HasConstraintName("FK_REQUIREMENT_SETS_NEW_REQUIREMENT");
 
             entity.HasOne(d => d.Set_NameNavigation).WithMany(p => p.REQUIREMENT_SETS).HasConstraintName("FK_QUESTION_SETS_SETS");
-        });
-
-        modelBuilder.Entity<ROLES>(entity =>
-        {
-            entity.Property(e => e.RoleName).IsFixedLength();
         });
 
         modelBuilder.Entity<SAL_DETERMINATION_TYPES>(entity =>

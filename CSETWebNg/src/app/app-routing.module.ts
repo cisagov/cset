@@ -249,7 +249,7 @@ const appRoutes: Routes = [
       { path: 'compare-analytics/:id/:type', component: CompareAnalyticsComponent },
       { path: 'trend-analytics/:id', component: TrendAnalyticsComponent },
 
-      { path: 'importModule', loadChildren: () => import('./import-routing.module').then(m => m.ImportRoutingModule) },
+      { path: 'importModule', loadChildren: () => import('./routing/import-routing.module').then(m => m.ImportRoutingModule) },
 
       { path: 'module-content-launch', component: ModuleContentLaunchComponent },
 

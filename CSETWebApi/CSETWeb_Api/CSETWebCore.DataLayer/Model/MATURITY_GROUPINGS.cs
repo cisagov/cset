@@ -44,6 +44,9 @@ public partial class MATURITY_GROUPINGS
     public string Description_Extended { get; set; }
 
     [InverseProperty("Grouping")]
+    public virtual ICollection<GROUPING_SELECTION> GROUPING_SELECTION { get; set; } = new List<GROUPING_SELECTION>();
+
+    [InverseProperty("Grouping")]
     public virtual ICollection<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; } = new List<MATURITY_DOMAIN_REMARKS>();
 
     [InverseProperty("Grouping")]
