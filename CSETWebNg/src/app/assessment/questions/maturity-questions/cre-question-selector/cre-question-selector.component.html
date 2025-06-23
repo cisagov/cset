@@ -21,9 +21,13 @@
   SOFTWARE.
 -------------------------->
 <div *transloco="let t" class="w-100 py-3 px-4 mb-4" style="border: 1px solid #ccc; border-radius: 1rem; background-color: #212529; color: white;">
-     <h5 style="color: white" class="mb-3">
-          {{t(`modules.cre+.selector ${modelId} title`)}}
-     </h5>
+    <div class="d-flex flex-row justify-content-between">
+         <h5 style="color: white" class="mb-3">
+              {{t(`modules.cre+.selector ${modelId} title`)}}
+          </h5>
+          <div><i class="cset-icons-chevron-down q-expand"></i></div>
+     </div> 
+
      <div *ngFor="let g of model" class="mb-2">
           <input class="checkbox-custom d-none" type="checkbox" id="dom-{{g.groupingId}}"
                [(ngModel)]="g.selected" (change)="changeGroupSelection(g.groupingId, $event)">

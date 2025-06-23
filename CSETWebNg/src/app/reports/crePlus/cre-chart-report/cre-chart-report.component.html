@@ -36,117 +36,84 @@
 
      <div class="page-break">
 
+           <h1>CRE+ Assessment</h1>
 
           <div class="my-3">
-               <h3 class="text-center">CRE+ Assessment</h3>
-               <ngx-charts-bar-horizontal 
-                    [scheme]="colorScheme"
-                    [view]="[700, 300]" 
-                    [results]="distribCore" 
-                    [xAxis]="true" 
-                    [yAxis]="true"
-                    [showXAxisLabel]="true" 
-                    [showYAxisLabel]="true" 
-                    [xScaleMax]="100" 
-                    [xScaleMin]="0"
-                    [roundEdges]="false">
+               <ngx-charts-bar-horizontal [scheme]="colorScheme" [view]="[700, 300]" [results]="distribCore"
+                    [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xScaleMax]="100"
+                    [xScaleMin]="0" [roundEdges]="false">
                </ngx-charts-bar-horizontal>
                <p class="text-center">
                     <em>
-                         This chart shows the breakdown of CRE+ assessment responses
+                         This chart shows the distribution of CRE+ assessment responses
                     </em>
                </p>
           </div>
-
 
 
           <!--   CRE+ Domains grouped horizontal here  -->
           <div class="my-3">
-               <h3 class="text-center">CRE+ Assessment</h3>
-               <ngx-charts-bar-horizontal-2d 
-                    [view]="[700, 800]" 
-                    [scheme]="colorScheme"
-                    [results]="countsCore" 
-                    [xAxis]="true" 
-                    [yAxis]="true"
-                    [showXAxisLabel]="true" 
-                    [showYAxisLabel]="true"
-                    [xAxisTickFormatting]="formatIntegerXAxis"
-                    [wrapTicks]="true"
-                    [roundEdges]="false"
-                    >
+               <ngx-charts-bar-horizontal-2d [view]="viewCore2" [scheme]="colorScheme" [results]="countsCore"
+                    [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true"
+                    [xAxisTickFormatting]="formatIntegerXAxis" [wrapTicks]="true" [roundEdges]="false">
                </ngx-charts-bar-horizontal-2d>
                <p class="text-center">
                     <em>
-                         This chart shows the CRE+ assessment responses
+                         This chart shows the CRE+ assessment response counts
                          categorized by domain
                     </em>
                </p>
           </div>
+     </div>
 
-          <hr>
+
+     <div class="page-break">
+          <h1>Optional Domains</h1>
+          <p>
+               The domain chart includes only selected subdomains.
+          </p>
 
           <div class="my-3">
-               <h3 class="text-center">Optional Domains</h3>
-               <ngx-charts-bar-horizontal 
-                    [scheme]="colorScheme"
-                    [view]="[700, 300]" 
-                    [results]="distribOpt" 
-                    [xAxis]="true" 
-                    [yAxis]="true"
-                    [showXAxisLabel]="true" 
-                    [showYAxisLabel]="true" 
-                    [xScaleMax]="100" 
-                    [xScaleMin]="0"
-                    [roundEdges]="false">
+               <ngx-charts-bar-horizontal [scheme]="colorScheme" [view]="[700, 300]" [results]="distribOpt"
+                    [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xScaleMax]="100"
+                    [xScaleMin]="0" [roundEdges]="false">
                </ngx-charts-bar-horizontal>
                <p class="text-center">
                     <em>
-                         This chart shows the breakdown of the additional modules assessment responses
+                         This chart shows the distribution of the Additional Modules assessment responses
                     </em>
                </p>
           </div>
 
-           <!--   CRE+ Domains grouped horizontal here  -->
-          <div class="my-3">
-               <h3 class="text-center">CRE+ Assessment</h3>
-               <ngx-charts-bar-horizontal-2d 
-                    [view]="[700, 800]" 
-                    [scheme]="colorScheme"
-                    [results]="countsOpt" 
-                    [xAxis]="true" 
-                    [yAxis]="true"
-                    [showXAxisLabel]="true" 
-                    [showYAxisLabel]="true"
-                    [xAxisTickFormatting]="formatIntegerXAxis"
-                    [wrapTicks]="true"
-                    [roundEdges]="false"
-                    >
+          <!--   Optional Domains grouped horizontal here  -->
+          <div class="my-3"  *ngIf="countsOpt?.length > 0">
+               <ngx-charts-bar-horizontal-2d [view]="viewOpt2" [scheme]="colorScheme" [results]="countsOpt"
+                    [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true"
+                    [xAxisTickFormatting]="formatIntegerXAxis" [wrapTicks]="true" [roundEdges]="false">
                </ngx-charts-bar-horizontal-2d>
                <p class="text-center">
                     <em>
-                         This chart shows the additional modules assessment responses
+                         This chart shows the Additional Modules assessment response counts
                          categorized by domain
                     </em>
                </p>
           </div>
+          <div *ngIf="countsOpt?.length == 0" class="my-3 fst-italic">
+               No Additional Optional domains have been selected
+          </div>
+     </div>
 
-          <hr>
+     <div class="page-break">
 
-          <!-- MIL Questions -->
-            <div class="my-3">
-               <h3 class="text-center">MIL Questions</h3>
-               <ngx-charts-bar-horizontal 
-                    [scheme]="colorScheme"
-                    [view]="[700, 300]" 
-                    [results]="distribMil" 
-                    [xAxis]="true" 
-                    [yAxis]="true"
-                    [showXAxisLabel]="true" 
-                    [showYAxisLabel]="true" 
-                    [xScaleMax]="100" 
-                    [xScaleMin]="0"
-                    [roundEdges]="false">
+          <h1>MIL Questions</h1>
+          <p>
+               The domain chart includes only selected subdomains.
+          </p>
+          <!-- MIL Distribution -->
+          <div class="my-3">
+               <ngx-charts-bar-horizontal [scheme]="colorScheme" [view]="[700, 300]" [results]="distribMil"
+                    [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xScaleMax]="100"
+                    [xScaleMin]="0" [roundEdges]="false">
                </ngx-charts-bar-horizontal>
                <p class="text-center">
                     <em>
@@ -155,30 +122,23 @@
                </p>
           </div>
 
-           <!--   CRE+ Domains grouped horizontal here  -->
-          <div class="my-3">
-               <h3 class="text-center">MIL Questions</h3>
-               <ngx-charts-bar-horizontal-2d 
-                    [view]="[700, 800]" 
-                    [scheme]="colorScheme"
-                    [results]="countsMil" 
-                    [xAxis]="true" 
-                    [yAxis]="true"
-                    [showXAxisLabel]="true" 
-                    [showYAxisLabel]="true"
-                    [xAxisTickFormatting]="formatIntegerXAxis"
-                    [wrapTicks]="true"
-                    [roundEdges]="false"
-                    >
+          <!--   MIL grouped horizontal here  -->
+          <div class="my-3" *ngIf="countsMil?.length > 0">
+
+               <ngx-charts-bar-horizontal-2d [view]="viewMil2" [scheme]="colorScheme" [results]="countsMil"
+                    [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true"
+                    [xAxisTickFormatting]="formatIntegerXAxis" [wrapTicks]="true" [roundEdges]="false">
                </ngx-charts-bar-horizontal-2d>
                <p class="text-center">
                     <em>
-                         This chart shows the MIL Questions
+                         This chart shows the MIL Question response counts
                          categorized by domain
                     </em>
                </p>
           </div>
-
+          <div *ngIf="countsMil?.length == 0" class="my-3 fst-italic">
+               No MIL domains have been selected
+          </div>
      </div>
 
 </div>

@@ -29,6 +29,16 @@ namespace CSETWebCore.Business.Dashboard
 
         private MaturityStructureForModel _structure;
 
+        /// <summary>
+        /// Some models (CRE OPT and CRE MIL) should only include questions
+        /// belonging to groupings that the user selected.  
+        /// </summary>
+        private List<int> _modelsWithSelectableGroupings = [23, 24];
+
+        private bool _onlySelectedGroupings = false;
+
+        private List<int> _selectedGroupings = [];
+
 
         /// <summary>
         /// CTOR
@@ -47,6 +57,14 @@ namespace CSETWebCore.Business.Dashboard
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             _structure = biz.GetMaturityStructureForModel(_modelId, _assessmentId);
+
+
+            // if the model supports selectable groupings, build the list of selected groupings
+            if (_modelsWithSelectableGroupings.Contains(_modelId))
+            {
+                _onlySelectedGroupings = true;
+                this._selectedGroupings = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == _assessmentId).Select(x => x.Grouping_Id).ToList();
+            }
         }
 
 
@@ -92,6 +110,13 @@ namespace CSETWebCore.Business.Dashboard
             var domains = _structure.Model.Groupings;
             foreach (var item in domains)
             {
+                // do not include unselected groupings for certain models
+                if (_onlySelectedGroupings && !_selectedGroupings.Contains(item.GroupingId))
+                {
+                    continue;
+                }
+
+
                 var groupingIdBag = GetQuestionIdsForGrouping(item);
 
                 resp.Add(new Model.Dashboard.BarCharts.Grouping
