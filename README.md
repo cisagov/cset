@@ -76,7 +76,10 @@ The current recommended method to run CSET would be via Docker. Follow the steps
   - **Important**: Update the Docker Desktop resource settings and allocate a minimum of 10 GB of memory
 - Copy over environment variables from the distribution file:
     - `cp env.dist .env`
-- Run CSET: `docker compose up -d`
+- Run CSET
+  - `docker compose up -d`
+- Load Database
+  - `make create-bak && make load-bak`
 
 For an editable development environment with live reload of both the API
 and Angular UI, you can use the `compose.dev.yml` file:
