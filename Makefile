@@ -50,13 +50,6 @@ launch-frontend:
 launch-db:
 	docker compose up -d sqlserver
 
-# target: load-db - Load the database initialization check script
-load-db:
-	docker exec -i cset-mssql /opt/mssql-tools/bin/sqlcmd \
-		-U 'sa' \
-		-P "Password123" \
-		-i /var/opt/mssql/scripts/InitScripts/initdb.sql
-
 # target: split-bak - Split the database backup file into smaller chunks
 split-bak:
 	split -b 50M backup/CSETWeb.bak backup/bak-files/CSETWeb.bak.part_
