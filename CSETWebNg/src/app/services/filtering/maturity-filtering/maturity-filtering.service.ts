@@ -58,7 +58,7 @@ export class MaturityFilteringService {
    * The allowable filter values.  Used for "select all"
    * The numbers are Maturity levels. If a new maturity has more than 5 levels, add more here
    */
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'MT', 'MT+', 'FR', 'FI', 'LI', 'PI', 'NI', '1', '2', '3', '4', '5'];
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'MT', 'MT+', 'FR', 'FI', 'LI', 'PI', 'NI'];
 
   /**
    * The allowable maturity filter values.  Only applicable on maturity questions page.
@@ -218,6 +218,7 @@ export class MaturityFilteringService {
         this.showFilters.push(ans);
       }
     } else {
+      console.log('-----------------going to remove ' + ans)
       const i = this.showFilters.indexOf(ans);
       if (i >= 0) {
         this.showFilters.splice(i, 1);
@@ -409,8 +410,14 @@ export class MaturityFilteringService {
         q.visible = true;
       }
 
-      if (q.maturityLevel && filterSvc.showFilters.includes(q.maturityLevel.toString())) {
-        q.visible = true;
+      // if the question's maturity level filter is turned on, show it (otherwise hide it)
+      if (q.maturityLevel) { 
+        if (this.showFilters.includes(q.maturityLevel.toString())) {
+          q.visible = true;
+        }
+        else {
+          q.visible = false;
+        }
       }
     });
 
