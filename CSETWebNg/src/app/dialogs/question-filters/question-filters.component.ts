@@ -145,7 +145,7 @@ export class QuestionFiltersComponent implements OnInit {
    */
   updateFilters(e: Event, ans: string) {
     this.filterSvc.setFilter(ans, (<HTMLInputElement>e.target).checked);
-
+    console.log('update: ' + ans)
     this.filterChanged.emit(true);
   }
 
