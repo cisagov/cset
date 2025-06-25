@@ -36,7 +36,7 @@
 
       <p *ngIf="assessSvc.assessment?.useStandard && assessSvc.assessment?.useDiagram">
         {{t('reports.overall score para 2')}}</p>
-        
+
       <p *ngIf="assessSvc.assessment?.useStandard && assessSvc.assessment?.useDiagram">
         {{t('reports.overall score para 3')}}</p>
 
@@ -67,7 +67,9 @@
     <div class="d-flex flex-column flex-00a mb-5">
       <h3 class="text-center">{{t('titles.assessment compliance')}}</h3>
       <p [innerHTML]="t('reports.assessment compliance text')"></p>
-      <canvas id="canvasAssessmentCompliance" height="200" width="700">{{assessComplChart}}</canvas>
+      <div>
+        <canvas id="canvasAssessmentCompliance" height="200" width="700">{{assessComplChart}}</canvas>
+      </div>
     </div>
 
 
@@ -81,7 +83,9 @@
 
         <p>{{t('reports.ranked categories text 1b')}}</p>
 
-        <canvas id="canvasTopCategories" height="300" width="700">{{topCategChart}}</canvas>
+        <div>
+          <canvas id="canvasTopCategories" height="300" width="700">{{topCategChart}}</canvas>
+        </div>
       </div>
     </div>
 
