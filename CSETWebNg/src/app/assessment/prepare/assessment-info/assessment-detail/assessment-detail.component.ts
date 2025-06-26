@@ -80,7 +80,7 @@ export class AssessmentDetailComponent implements OnInit {
       this.assessment.assessmentDate = null;
     }
 
-    this.isAwwa = this.assessment.standards?.includes('AWWA');
+    this.isAwwa = this.assessment.standards?.includes('AWWA') ?? false;
   }
 
   /**

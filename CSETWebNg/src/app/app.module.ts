@@ -607,6 +607,8 @@ import { AdminSettingsComponent } from './initial/admin-settings/admin-settings.
 import { UserService } from './services/user.service';
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
+import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
+import { CisaVadrInfoComponent } from './assessment/prepare/maturity/cisa-vadr-info/cisa-vadr-info.component';
 
 registerSwiper();
 
@@ -884,6 +886,8 @@ registerSwiper();
         VadrQuestionsScoringComponent,
         VadrSummaryComponent,
         VadrSummaryAllComponent,
+        CisaVadrInfoComponent,
+        CisaVadrLevelsComponent,
         CisaVadrReportComponent,
         VadrGroupingBlockComponent,
         OpenEndedQuestionsComponent,
