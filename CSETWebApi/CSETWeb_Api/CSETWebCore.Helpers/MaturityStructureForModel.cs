@@ -30,7 +30,10 @@ namespace CSETWebCore.Helpers
 
         private List<MATURITY_QUESTIONS> allQuestions;
 
-        private List<ANSWER> allAnswers;
+        /// <summary>
+        /// A flat list of all the answers for the assessment
+        /// </summary>
+        public List<ANSWER> AllAnswers;
 
         private int _assessmentId;
 
@@ -56,6 +59,8 @@ namespace CSETWebCore.Helpers
             this._includeText = includeText;
             this._assessmentId = assessmentId;
 
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
             LoadStructure();
         }
 
@@ -78,6 +83,7 @@ namespace CSETWebCore.Helpers
             Model.ModelId = _modelId;
             Model.ModelName = mm.Model_Name;
             Model.ModelTitle = mm.Model_Title;
+            Model.AnswerOptions = mm.Answer_Options.Split(',').ToList();
 
 
             // Get all maturity questions for the model regardless of level.
@@ -89,8 +95,9 @@ namespace CSETWebCore.Helpers
                 _modelId == q.Maturity_Model_Id).ToList();
 
 
-            allAnswers = _context.ANSWER
-                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity && a.Assessment_Id == _assessmentId)
+            AllAnswers = _context.ANSWER
+                .Where(a => a.Question_Type == Constants.Constants.QuestionTypeMaturity && a.Assessment_Id == _assessmentId
+                    && allQuestions.Select(x => x.Mat_Question_Id).Contains(a.Question_Or_Requirement_Id))
                 .ToList();
 
 
@@ -155,7 +162,7 @@ namespace CSETWebCore.Helpers
 
                 foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
                 {
-                    var answer = allAnswers
+                    var answer = AllAnswers
                         .FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id && x.Mat_Option_Id == null);
 
                     var question = new Question()
@@ -168,6 +175,7 @@ namespace CSETWebCore.Helpers
                         ParentQuestionId = myQ.Parent_Question_Id,
                         QuestionType = myQ.Mat_Question_Type,
                         AnswerText = answer?.Answer_Text,
+                        AltAnswerText = answer?.Alternate_Justification,
                         Comment = answer?.Comment,
                         Options = GetOptions(myQ.Mat_Question_Id)
                     };
@@ -218,7 +226,7 @@ namespace CSETWebCore.Helpers
 
             foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
             {
-                var answer = allAnswers
+                var answer = AllAnswers
                     .FirstOrDefault(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id && x.Mat_Option_Id == null);
 
                 var question = new Question()

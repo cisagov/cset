@@ -104,7 +104,7 @@ namespace CSETWebCore.Business.Maturity
                 var nodeName = System.Text.RegularExpressions
                     .Regex.Replace(sg.Type.Grouping_Type_Name, " ", "_");
 
-                var grouping = new Grouping()
+                var grouping = new Model.Nested.Grouping()
                 {
                     GroupType = nodeName,
                     Abbreviation = sg.Abbreviation,
@@ -120,9 +120,9 @@ namespace CSETWebCore.Business.Maturity
                     ((NestedQuestions)oParent).Groupings.Add(grouping);
                 }
 
-                if (oParent is Grouping)
+                if (oParent is Model.Nested.Grouping)
                 {
-                    ((Grouping)oParent).Groupings.Add(grouping);
+                    ((Model.Nested.Grouping)oParent).Groupings.Add(grouping);
                 }
 
 
@@ -139,7 +139,7 @@ namespace CSETWebCore.Business.Maturity
         /// Calculate the grouping's scoring and add the chart data to the grouping.
         /// </summary>
         /// <param name="grouping"></param>
-        private void AddScoring(Grouping grouping)
+        private void AddScoring(Model.Nested.Grouping grouping)
         {
             var hChart = new HorizBarChart();
             grouping.Chart = hChart;

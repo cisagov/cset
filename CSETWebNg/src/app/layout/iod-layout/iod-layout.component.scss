@@ -1484,6 +1484,11 @@ th.data-table {
   text-align: center;
 }
 
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 .report-links button {
   display: block;
 }

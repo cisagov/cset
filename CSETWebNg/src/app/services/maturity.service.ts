@@ -27,6 +27,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AssessmentService } from './assessment.service';
 import { MaturityModel } from "../models/assessment-info.model";
 import { MaturityDomainRemarks, QuestionGrouping } from '../models/questions.model';
+import { Observable } from 'rxjs';
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
   params: new HttpParams()
@@ -67,8 +68,8 @@ export class MaturityService {
 
   cmmcData = null;
 
-  mvraGroupings = [];
-  cisGroupings = [];
+  mvraGroupings: any[] = [];
+  cisGroupings: any[] = [];
 
   /**
    * In CRE+, the user can select which groupings they want
@@ -370,8 +371,8 @@ export class MaturityService {
   /**
    *
    */
-  getGroupingTitles(modelId: number) {
-    return this.http.get(this.configSvc.apiUrl + 'maturity/groupingtitles?modelId=' + modelId);
+  getGroupingTitles(modelId: number): Observable<any[]> {
+    return this.http.get<any[]>(this.configSvc.apiUrl + 'maturity/groupingtitles?modelId=' + modelId);
   }
 
   getMvraScoring() {

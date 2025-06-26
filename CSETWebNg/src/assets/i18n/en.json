@@ -205,6 +205,8 @@
       }
     },
     "cmmc target level selection": "CMMC Target Level Selection",
+    "cisa vadr info": "Additional VADR Information",
+    "cisa vadr target level selection": "Risk Level Selection",
     "network diagram": "Network Diagram",
     "diagram component questions": "Diagram Component Questions",
     "standard questions": "Standard Questions",
@@ -496,11 +498,13 @@
     "export assessment json": "Export a copy of this assessment as a JSON file",
     "analytics": "View the analytics for this assessment.",
     "merged checked exams": "Merge checked examinations",
-    "export all": "Export a copy of all assessments to another location."
+    "export all": "Export a copy of all assessments to another location.",
+    "nav collapse": "Expand/collapse navigation"
   },
   "level": {
     "low": "Low",
     "medium": "Medium",
+    "moderate": "Moderate",
     "high": "High",
     "basic": "Basic",
     "incomplete": "Incomplete",
@@ -661,7 +665,7 @@
     "free services": "Free Services and References",
     "implementation guidance CPG": "Implementation Guidance",
     "implementation guidance CPG2": "Assessment Criteria",
-    "implementation guidance CRE+": "Response Criteria",
+    "implementation guidance CRE+": "Assessment Criteria",
     "attestation": "Attestation",
     "measurement": "Measurement",
     "component type": "Component Type",
@@ -966,7 +970,9 @@
     "cre+": {
       "display-name": "Cyber Resilience Essentials (CRE+)",
       "model short title": "CRE+",
-      "question node title": "Core Questions"
+      "question node title": "Core Questions",
+      "selector 23 title": "Select domains and subdomains for additional questions",
+      "selector 24 title": "Select domains and MILs for additional questions"
     },
     "cmmc2": {
       "model long title": "Cybersecurity Maturity Model Certification (CMMC) 2.0 DRAFT",
@@ -983,7 +989,16 @@
     "cisa vadr": {
       "display-name": "CISA Validated Architecture Design Review (VADR)",
       "model short title": "CISA VADR",
-      "question node title": "VADR Questions"
+      "question node title": "VADR Questions",
+      "level selection": {
+        "para 1": "Select the level appropriate to your organization's assessment.",
+        "btn-low": "Low",
+        "desc-low": "This is what you would pick if you are shooting for a low level of maturity",
+        "btn-mod": "Moderate",
+        "desc-mod": "This is what you would pick if you are shooting for a moderate level of maturity",
+        "btn-high": "High",
+        "desc-high": "This is what you would pick if you are shooting for a high level of maturity"
+      }
     }
   },
   "aggregation": {

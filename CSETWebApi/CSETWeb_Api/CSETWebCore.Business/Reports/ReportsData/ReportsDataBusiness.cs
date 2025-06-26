@@ -300,7 +300,7 @@ namespace CSETWebCore.Business.Reports
             {
                 var newGrouping = new MaturityGrouping()
                 {
-                    GroupingID = sg.Grouping_Id,
+                    GroupingId = sg.Grouping_Id,
                     GroupingType = sg.Type.Grouping_Type_Name,
                     GroupingLevel = sg.Group_Level ?? 1,
                     Title = sg.Title,
@@ -312,7 +312,7 @@ namespace CSETWebCore.Business.Reports
 
 
                 // are there any questions that belong to this grouping?
-                var myQuestions = questions.Where(x => x.Grouping_Id == newGrouping.GroupingID).ToList();
+                var myQuestions = questions.Where(x => x.Grouping_Id == newGrouping.GroupingId).ToList();
 
                 var parentQuestionIDs = myQuestions.Select(x => x.Parent_Question_Id).Distinct().ToList();
 
@@ -354,7 +354,7 @@ namespace CSETWebCore.Business.Reports
                 }
 
                 // Recurse down to build subgroupings
-                BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers);
+                BuildSubGroupings(newGrouping, newGrouping.GroupingId, allGroupings, questions, answers);
             }
         }
 

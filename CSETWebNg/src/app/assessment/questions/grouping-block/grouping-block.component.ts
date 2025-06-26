@@ -65,7 +65,7 @@ export class GroupingBlockComponent implements OnInit {
    *
    */
   submitTextComment(grouping: QuestionGrouping) {
-    const id = grouping.groupingID;
+    const id = grouping.groupingId;
     const strRemark = grouping.domainRemark;
     const remark: MaturityDomainRemarks = {
       group_Id: id,

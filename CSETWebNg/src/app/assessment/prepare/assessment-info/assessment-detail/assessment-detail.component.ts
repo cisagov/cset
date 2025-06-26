@@ -80,7 +80,7 @@ export class AssessmentDetailComponent implements OnInit {
       this.assessment.assessmentDate = null;
     }
 
-    this.isAwwa = this.assessment.standards?.includes('AWWA');
+    this.isAwwa = this.assessment.standards?.includes('AWWA') ?? false;
   }
 
   /**
@@ -89,7 +89,7 @@ export class AssessmentDetailComponent implements OnInit {
   update(e) {
     // default Assessment Name if it is left empty
     if (!!this.assessment) {
-      if (this.assessment.assessmentName.trim().length === 0) {
+      if (this.assessment.assessmentName?.trim().length === 0) {
         this.assessment.assessmentName = "(Untitled Assessment)";
       }
     }
