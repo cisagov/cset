@@ -559,7 +559,7 @@
       "displayNameKey": "modules.cisa vadr.display-name",
       "questionNodeKey": "modules.cisa vadr.question node title",
       "autoLoadSupplemental": true,
-      "showMaturityLevelBadge": false,
+      "showMaturityLevelBadge": true,
       "questionIcons": {
         "showDetails": false,
         "showGuidance": false,
