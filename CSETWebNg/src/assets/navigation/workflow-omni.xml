@@ -25,13 +25,16 @@
         <!-- IOD CSA 'prepare' pages -->
         <node d="organization demographics" id="info-demog-iod" path="assessment/{:id}/prepare/info-demog-iod" visible="ASSESSOR" />
         <node d="assessment configuration" id="info-config-iod" path="assessment/{:id}/prepare/info-config-iod" visible="ASSESSOR" />
- 
+
         <!-- CIS config page -->
         <node d="cis config" id="config-cis" path="assessment/{:id}/prepare/config-cis" visible="MATURITY:8" />
 
         <!-- Critical Service -->
         <node d="critical service information" id="csi" path="assessment/{:id}/prepare/csi" visible="ASSESSOR-NONE MATURITY:8" />
         <node d="critical service information" id="csi2" path="assessment/{:id}/prepare/csi" visible="ASSESSOR" />
+
+
+        <node d="cisa vadr info" id="cisa-vadr-info" path="assessment/{:id}/prepare/cisa-vadr-info" visible="MATURITY-ANY(25)" />
 
 
         <node d="sal.security assurance level (sal)" id="sal" path="assessment/{:id}/prepare/sal" visible="OPTION-ANY(STANDARD,DIAGRAM) ORIGIN-NOT:CF STANDARD-NOT:RAC" />
@@ -43,6 +46,7 @@
         <!-- target level selection -->
         <node d="cmmc target level selection" id="cmmc-levels" path="assessment/{:id}/prepare/cmmc-levels" visible="MATURITY-ANY(2,6)" />
         <node d="cmmc target level selection" id="cmmc2-levels" path="assessment/{:id}/prepare/cmmc2-levels" visible="MATURITY-ANY(19)" />
+        <node d="cisa vadr target level selection" id="cisa-vadr-levels" path="assessment/{:id}/prepare/cisa-vadr-levels" visible="MATURITY-ANY(25)" />
 
     </node>
 
@@ -221,8 +225,8 @@
     <!-- Results Phase -->
     <node d="results" id="phase-results" visible="CF-DEMOGRAPHICS-COMPLETE" enabled="CF-ASSESSMENT-COMPLETE">
 
-    <!-- Assessment Analytics -->
-    <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY-ANY(1,2,3,4,5,6,7,9,10,11,12,15,16,17,18,20,21)" />
+        <!-- Assessment Analytics -->
+        <node displaytext="Assessment Analytics" id="analytics-results-page" path="assessment/{:id}/results/analytics-results-page" visible="MATURITY-ANY(1,2,3,4,5,6,7,9,10,11,12,15,16,17,18,20,21)" />
 
         <!-- Results - Standards -->
         <node d="standard results" visible="OPTION:STANDARD">
@@ -322,7 +326,7 @@
         <node d="feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="INSTALL-MODE-ANY(CSET,CIE) SHOW-FEEDBACK ASSESSOR" />
 
         <node d="assessment complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
-        
+
         <node displaytext="Sync to Server" id="analytics" path="assessment/{:id}/results/analytics" visible="IS-CSA HAS-URL-ANALYTICS"/>
     </node>
 

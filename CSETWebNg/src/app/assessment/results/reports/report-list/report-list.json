@@ -90,6 +90,12 @@
     "reportList": [
       {
         "linkUrl": "creCoreReport"
+      },
+      {
+        "linkUrl": "creMilReport"
+      },
+      {
+        "linkUrl": "creChartReport"
       }
     ]
   },
@@ -104,6 +110,14 @@
       },
       {
         "linkUrl": "vadrOpenEndedReport"
+      }
+    ]
+  },
+  {
+    "title": "CISA VADR",
+    "reportList": [
+      {
+        "linkUrl": "cisaVadrReport"
       }
     ]
   },

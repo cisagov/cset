@@ -190,6 +190,8 @@ import { Cmmc2LevelsComponent } from './assessment/prepare/maturity/cmmc2-levels
 import { Cmmc2ScoresComponent } from './assessment/results/mat-cmmc2/cmmc2-scores/cmmc2-scores.component';
 import { Cmmc2ScorecardPageComponent } from './assessment/results/mat-cmmc2/scorecard/cmmc2-scorecard/cmmc2-scorecard-page.component';
 import { Cmmc2ScorecardReportComponent } from './reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
+import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
+import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { RoleGuard } from './guards/role.guard';
 import { RoleType } from './models/enums/role.model';
 
@@ -248,7 +250,7 @@ const appRoutes: Routes = [
       { path: 'compare-analytics/:id/:type', component: CompareAnalyticsComponent },
       { path: 'trend-analytics/:id', component: TrendAnalyticsComponent },
 
-      { path: 'importModule', loadChildren: () => import('./import-routing.module').then(m => m.ImportRoutingModule) },
+      { path: 'importModule', loadChildren: () => import('./routing/import-routing.module').then(m => m.ImportRoutingModule) },
 
       { path: 'module-content-launch', component: ModuleContentLaunchComponent },
 
@@ -322,6 +324,7 @@ const appRoutes: Routes = [
               { path: 'config-cis', component: ConfigCisComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'cmmc2-levels', component: Cmmc2LevelsComponent },
+              { path: 'cisa-vadr-levels', component: CisaVadrLevelsComponent },
               { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
               { path: 'standards', component: StandardsComponent },

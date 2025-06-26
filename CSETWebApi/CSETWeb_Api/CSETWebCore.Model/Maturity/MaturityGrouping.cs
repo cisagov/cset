@@ -11,7 +11,7 @@ namespace CSETWebCore.Model.Maturity
 {
     public class MaturityGrouping
     {
-        public int GroupingID { get; set; }
+        public int GroupingId { get; set; }
 
         /// <summary>
         /// The type of grouping, e.g., Domain, Goal, Capability, etc.
@@ -57,5 +57,15 @@ namespace CSETWebCore.Model.Maturity
         /// The lowest grouping in the hierarchy will hold a collection of questions.
         /// </summary>
         public List<QuestionAnswer> Questions { get; set; } = new List<QuestionAnswer>();
+    }
+
+
+    /// <summary>
+    /// A request to mark a grouping as selected (created for CRE+)
+    /// </summary>
+    public class GroupSelectionRequest
+    {
+        public List<int> GroupingId { get; set; }
+        public bool Selected { get; set; }
     }
 }

@@ -46,14 +46,14 @@
         "@types/jquery": "^3.5.32",
         "@types/sanitize-html": "^2.16.0",
         "angular2-hotkeys": "^16.0.1",
-        "bootstrap": "^5.3.6",
-        "chart.js": "^4.4.5",
+        "bootstrap": "^5.3.7",
+        "chart.js": "^4.5.0",
         "electron-find-on-page": "^1.0.1",
-        "electron-log": "^5.4.0",
+        "electron-log": "^5.4.1",
         "file-saver": "^2.0.5",
         "font-awesome": "^4.7.0",
         "fuse.js": "^7.1.0",
-        "html-to-pdfmake": "^2.5.25",
+        "html-to-pdfmake": "^2.5.28",
         "intersection-observer": "^0.12.2",
         "jquery": "^3.7.1",
         "locate-path": "^7.2.0",
@@ -72,7 +72,7 @@
         "style-loader": "^4.0.0",
         "swiper": "^11.2.5",
         "typescript": "^5.8.3",
-        "zone.js": "^0.15.0"
+        "zone.js": "^0.15.1"
     },
     "devDependencies": {
         "@angular-builders/custom-webpack": "^19.0.1",

@@ -33,7 +33,7 @@ namespace CSETWebCore.Business.Maturity
 
             int sequence = 0;
 
-            foreach (Grouping domain in model.Model.Groupings.Where(x => x.GroupType == "Domain"))
+            foreach (Model.Nested.Grouping domain in model.Model.Groupings.Where(x => x.GroupType == "Domain"))
             {
                 var d = new Model.C2M2.Charts.Domain()
                 {
@@ -47,7 +47,7 @@ namespace CSETWebCore.Business.Maturity
 
                 InitializeDomainMilRollups(d);
 
-                foreach (Grouping objective in domain.Groupings)
+                foreach (Model.Nested.Grouping objective in domain.Groupings)
                 {
                     var o = new Model.C2M2.Charts.Objective()
                     {
@@ -183,7 +183,7 @@ namespace CSETWebCore.Business.Maturity
             response.DomainList = new List<Model.C2M2.Tables.Domain>();
 
             int sequence = 0;
-            foreach (Grouping domain in model.Model.Groupings.Where(x => x.GroupType == "Domain"))
+            foreach (Model.Nested.Grouping domain in model.Model.Groupings.Where(x => x.GroupType == "Domain"))
             {
                 var d = new Model.C2M2.Tables.Domain()
                 {
@@ -193,7 +193,7 @@ namespace CSETWebCore.Business.Maturity
 
                 response.DomainList.Add(d);
 
-                foreach (Grouping objective in domain.Groupings)
+                foreach (Model.Nested.Grouping objective in domain.Groupings)
                 {
                     var o = new Model.C2M2.Tables.Objective()
                     {

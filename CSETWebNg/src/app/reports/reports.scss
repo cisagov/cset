@@ -586,6 +586,13 @@ table.assessment-summary th {
   }
 }*/
 
+
+/* ---- Fix for Chart.js charts that shrink infinitely (they must be contained within a parent div) ---- */
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 /* ---- signature styles ---- */
 
 .signature-block span {

@@ -20,19 +20,23 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="w-100 py-3 px-4 mb-4" style="border: 1px solid #ccc; border-radius: 1rem; background-color: #212529; color: white;">
-     <p>
-          Select domains for additional questions
-     </p>
-     <div *ngFor="let g of selectableGroupingsSvc.models.get(modelId); let gi = index">
-          <input class="checkbox-custom d-none" type="checkbox" id="dom-{{g.groupingID}}"
-               [checked]="selectableGroupingsSvc.models.get(modelId)[gi].selected ?? false" (change)="changeDomain(gi, $event)">
-          <label for="dom-{{g.groupingID}}" class="checkbox-custom-label" style="color: white">{{g?.title}}</label>
-          <div *ngIf="g.selected ?? false" class="collapsible-content ms-4">
-               <div *ngFor="let sg of g.subGroupings; let sgi = index">
-                    <input class="checkbox-custom d-none" type="checkbox" id="subdom-{{sg.groupingID}}" 
-                         [checked]="selectableGroupingsSvc.models.get(modelId)[gi].subGroupings[sgi].selected ?? false" (change)="changeSubdomain(gi, sgi, $event)">
-                    <label for="subdom-{{sg.groupingID}}" class="checkbox-custom-label" style="color: white">{{sg.title}}</label>    
+<div *transloco="let t" class="w-100 py-3 px-4 mb-4" style="border: 1px solid #ccc; border-radius: 1rem; background-color: #212529; color: white;">
+    <div class="d-flex flex-row justify-content-between">
+         <h5 style="color: white" class="mb-3">
+              {{t(`modules.cre+.selector ${modelId} title`)}}
+          </h5>
+          <div><i class="cset-icons-chevron-down q-expand"></i></div>
+     </div> 
+
+     <div *ngFor="let g of model" class="mb-2">
+          <input class="checkbox-custom d-none" type="checkbox" id="dom-{{g.groupingId}}"
+               [(ngModel)]="g.selected" (change)="changeGroupSelection(g.groupingId, $event)">
+          <label for="dom-{{g.groupingId}}" class="checkbox-custom-label mb-3" style="color: white">{{g?.title}} {{g.groupingId}}</label>
+          <div [hidden]="!g.selected" class="collapsible-content ms-4 mb-3 pb-2 nested-list section-border">
+               <div *ngFor="let sg of g.subGroupings">
+                    <input class="checkbox-custom d-none" type="checkbox" id="subdom-{{sg.groupingId}}" 
+                         [(ngModel)]="sg.selected" (change)="changeGroupSelection(sg.groupingId, $event)">
+                    <label for="subdom-{{sg.groupingId}}" class="checkbox-custom-label" style="color: white">{{sg.title}} {{sg.groupingId}}</label>    
                </div>
           </div>
      </div>

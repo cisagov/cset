@@ -86,6 +86,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       navigation: {
         nextEl: '.swiper-button-next', // selector for external button
         prevEl: '.swiper-button-prev', // selector for external button
+        disabledClass: 'swiper-button-hidden'
       },
       loop: false,
       breakpoints: {
@@ -137,7 +138,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   onHover(i: number) {
     this.hoverIndex = i;
     if (i > 0) {
-      var el = document.getElementById('c' + i.toString()).parentElement;
+      var el = document.getElementById('c' + i.toString())?.parentElement;
 
       var bounding = el.getBoundingClientRect();
 
@@ -155,7 +156,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   onHoverOut(i: number, cardId: number) {
     this.hoverIndex = i;
 
-    var el = document.getElementById('c' + cardId.toString()).parentElement;
+    var el = document.getElementById('c' + cardId.toString())?.parentElement;
     el.style.removeProperty('right');
   }
 
@@ -166,5 +167,5 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       data: data
     });
   }
-
+  
 }
