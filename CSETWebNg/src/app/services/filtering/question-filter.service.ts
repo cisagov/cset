@@ -33,16 +33,35 @@ import { AssessmentService } from '../assessment.service';
   providedIn: 'root'
 })
 export class QuestionFilterService {
+ //
+ //  /**
+ //   * The allowable filter values.  Used for "select all"
+ //   */
+ //  // readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI'];
+ // public allowableFilters:string[]=[]
+  private readonly baseFilters = [
+'Y', 'N', 'NA', 'A', 'I', 'S', 'U',
+'C', 'M', 'O', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI'
+];
 
-  /**
-   * The allowable filter values.  Used for "select all"
-   */
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI'];
+  /** UI needs this to know which toggles to render (answers + maturity levels). */
+  // public allowableFilters: string[] = [];
+  public get allowableFilters(): string[] {
+    const arr = [...this.baseFilters];
+    const model = this.assessSvc.assessment?.maturityModel;
+    if (model?.levels) {
+      model.levels.forEach(li => {
+        if(li.level <=model.maturityTargetLevel){
+          arr.push(li.level.toString());
+        }
 
-
+      });
+    }
+    return arr;
+  }
   /**
    * This is a list of what to SHOW.
-   * 
+   *
    * Filter settings
    *   Comments - C
    *   Marked For Review - M
@@ -68,7 +87,7 @@ export class QuestionFilterService {
   public answerOptions: string[] = ['Y', 'N', 'NA', 'A', 'I', 'U', 'FI', 'LI', 'PI', 'NI'];
 
   /**
-   * Consuming pages can set a model ID 
+   * Consuming pages can set a model ID
    */
   public maturityModelId: number;
 
@@ -77,10 +96,10 @@ export class QuestionFilterService {
    */
   public maturityModelName: string;
 
-
+ public  maturityTargetLevel: number;
   /**
    * Constructor
-   * @param assessSvc 
+   * @param assessSvc
    */
   constructor(
     private assessSvc: AssessmentService
@@ -91,10 +110,33 @@ export class QuestionFilterService {
   /**
    * Reset the filters back to default settings.
    */
-  refresh() {
-    this.showFilters = this.defaultFilterSettings;
-  }
+  // refresh() {
+  //   this.showFilters = this.defaultFilterSettings;
+  // }
+  /**
+   * Reset the filters back to default settings.
+   */
+  /**
+   * Reset the filters back to default settings.
+   */
+  public refresh(): void {
+    // 1) Reset showFilters to your static defaults
+    this.showFilters = [...this.defaultFilterSettings];
 
+    // 2) “Turn on” every maturity level ≤ maturityTargetLevel
+    const model = this.assessSvc.assessment?.maturityModel;
+    console.log(model)
+    if (model?.levels) {
+      model.levels.forEach(li => {
+        const lvl = li.level.toString();
+        this.maturityTargetLevel=model.maturityTargetLevel
+        if (li.level <= model.maturityTargetLevel && !this.showFilters.includes(lvl)) {
+          this.showFilters.push(lvl);
+        }
+        console.log( this.showFilters)
+      });
+    }
+  }
   /**
  * Returns true if we have any inclusion filters turned off.
  * We don't count MT+ for this, since it is normally turned off.
@@ -131,30 +173,67 @@ export class QuestionFilterService {
    * @param ans
    * @param show
    */
-  setFilter(ans: string, show: boolean) {
+  // setFilter(ans: string, show: boolean) {
+  //   if (ans === 'ALL') {
+  //     if (show) {
+  //       // this.showFilters = this.allowableFilters.slice();
+  //       // this.showFilters = this.remove(this.showFilters, 'MT+');
+  //        this.showFilters=this.allowableFilters.filter(f=>f !=='MT+')
+  //
+  //     } else {
+  //       this.showFilters = [];
+  //     }
+  //     return;
+  //   }
+  //
+  //   if (show) {
+  //     if (this.showFilters.indexOf(ans) < 0) {
+  //       this.showFilters.push(ans);
+  //       let model= this.assessSvc.assessment?.maturityModel;
+  //       console.log(model)
+  //       if (model!=null){
+  //         for(let i; i<model?.levels?.length; i++){
+  //           let levelInfo=model?.levels[i]
+  //           if(model?.maturityTargetLevel >= levelInfo.level){
+  //             this.showFilters.push(levelInfo.level.toString())
+  //             console.log(this.showFilters)
+  //           }
+  //         }
+  //       }
+  //     }
+  //   } else {
+  //     const i = this.showFilters.indexOf(ans);
+  //     if (i >= 0) {
+  //       this.showFilters.splice(i, 1);
+  //     }
+  //   }
+  // }
+  //
+  public setFilter(ans: string, show: boolean): void {
+    // “Select All” toggles every filter except the special MT+ flag
     if (ans === 'ALL') {
       if (show) {
-        this.showFilters = this.allowableFilters.slice();
-        this.showFilters = this.remove(this.showFilters, 'MT+');
+        this.showFilters = this.allowableFilters.filter(f => f !== 'MT+');
       } else {
         this.showFilters = [];
       }
       return;
     }
 
+    // Individual toggle
     if (show) {
-      if (this.showFilters.indexOf(ans) < 0) {
+      // Add it if not already present
+      if (!this.showFilters.includes(ans)) {
         this.showFilters.push(ans);
       }
     } else {
-      const i = this.showFilters.indexOf(ans);
-      if (i >= 0) {
-        this.showFilters.splice(i, 1);
+      // Remove it if present
+      const idx = this.showFilters.indexOf(ans);
+      if (idx >= 0) {
+        this.showFilters.splice(idx, 1);
       }
     }
   }
-
-
   /**
    * Utility method.  Should be moved somewhere common.
    */
@@ -177,8 +256,8 @@ export class QuestionFilterService {
 
   /**
    * Returns an array with the target removed.
-   * @param a 
-   * @param target 
+   * @param a
+   * @param target
    */
   remove(a: any[], target: any) {
     const a1 = a.slice();
@@ -193,7 +272,7 @@ export class QuestionFilterService {
    * This is an overload of evaluateFilters, which takes a list
    * of Domains.  This version wraps the category list in
    * a dummy Domain and calls evaluateFilters.
-   * @param categories 
+   * @param categories
    */
   public evaluateFiltersForCategories(categories: Category[]) {
     var dummyDomain: Domain = {
@@ -291,9 +370,9 @@ export class QuestionFilterService {
    * This is an overload of evaluateFilters, which takes a list
    * of Domains.  This version wraps the category list in
    * a dummy Domain and calls evaluateFilters.
-   * 
+   *
    * Made specifically for CIE, but can be modified to work with other maturities
-   * @param categories 
+   * @param categories
    */
   public evaluateFiltersForReportCategories(categories: any[], matLevel: number) {
     var dummyDomain: Domain = {
@@ -318,7 +397,7 @@ export class QuestionFilterService {
   /**
    * Sets the Visible property on all Questions, Subcategories and Categories
    * based on the current filter settings.
-   * 
+   *
    * Made specifically for CIE, but can be modified to work with other maturities
    * @param cats
    */
@@ -367,7 +446,7 @@ export class QuestionFilterService {
         });
 
         /** evaluate domain heading principle question visibility.
-        * Put into 'areFactorQuestionsDeficient' to allow both principle 
+        * Put into 'areFactorQuestionsDeficient' to allow both principle
         * and principle-phase tables to have separate filters
         */
         d.categories.areFactorQuestionsDeficient = (d.categories.assessmentFactors.find(af => !af.areQuestionsDeficient) == null ? true : false);
