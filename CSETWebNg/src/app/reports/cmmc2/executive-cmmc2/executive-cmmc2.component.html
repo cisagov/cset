@@ -102,13 +102,13 @@
 
     <div class="d-flex flex-row justify-content-center" *ngFor="let l of responseLevels">
       <!-- pie charts for compliance at each level -->
-      <div class="me-5 d-flex" style="align-items: center; justify-content: center;">
+      <div class="me-5 d-flex align-items-center">
         <div style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold"
           [class]="'cmmc2-level-' + l.levelValue">
           {{l.name}}
         </div>
       </div>
-      <div id="chart" class="mb-3" style="max-width: 300px; margin: 0 auto;">
+      <div id="chart" class="mb-3" style="width: 300px; height: 300px;">
         <canvas id="{{'level' + l.levelValue }}">{{l.chart}}</canvas>
       </div>
     </div>
