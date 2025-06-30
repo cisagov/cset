@@ -15,6 +15,8 @@ export class CreQuestionSelectorComponent implements OnInit {
 
   model: any;
 
+  expanded = false;
+
 
   /**
    * 
@@ -49,6 +51,11 @@ export class CreQuestionSelectorComponent implements OnInit {
       this.selectableGroupingsSvc.emitSelectionChanged();
       //this.cdr.detectChanges();
     });
+  }
+
+  toggleExpansion() {
+    console.log('expanded?', this.expanded);
+    this.expanded = !this.expanded;
   }
 
   /**
