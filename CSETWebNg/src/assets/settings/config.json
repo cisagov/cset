@@ -29,6 +29,11 @@
   "helpContactPhone": "",
   "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
   "supplementalAutoloadInitialValue": false,
+  "analytics": {
+    "protocol": "http",
+    "host": "csetac",
+    "port": "5778"
+  },
   "debug": {
     "showBuildTime": false,
     "showQuestionAndRequirementIDs": false,
