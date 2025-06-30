@@ -58,6 +58,12 @@ export class ModuleBehavior {
      showMaturityLevelBadge?: boolean;
 
      /**
+      * Indicates a model whose groupings must be selected to be presented to user.
+      * This was created for "CRE+ Optional Domains" (model 23) and "CRE+ MIL Questions" (model 24)
+      */
+     mustSelectGroupings?: boolean = false;
+
+     /**
       * 
       */
      independentSuppGuidance?: boolean;
@@ -114,9 +120,21 @@ export class AnswerOptionConfig {
 
      /**
       * Indicates if this answer is considered "implemented".
-      * This is a future feature.
+      * For future implementation.
       */
      consideredImplemented: boolean;
+
+     /**
+      * Indicates if this answer is considered "missed".
+      * For future implementation.
+      */
+     consideredMissed: boolean;
+
+     /**
+      * Indicates if an unanswered question is scored like this answer option.
+      * Normally used to indicate a "NO" answer.
+      */
+     unansweredEquivalent: boolean = false;
 }
 
 
