@@ -150,6 +150,35 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     dictAC.Add(a.Assessment_Contact_Id, newPrimaryContact.Assessment_Contact_Id);
                     continue;
                 }
+
+                if (overwriteAssessment)
+                {
+                    //Refresh sync contact record 
+                    var contactToSync = _context.ASSESSMENT_CONTACTS
+                        .Where(x => x.PrimaryEmail == _primaryEmail && x.Assessment_Id == assessmentId)
+                        .FirstOrDefault();
+
+                    if (contactToSync == null)
+                    {
+                        var originalContact = _context.ASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail == _primaryEmail)
+                            .FirstOrDefault();
+                        var refreshContact = new ASSESSMENT_CONTACTS();
+                        refreshContact.Assessment_Id = assessmentId;
+                        refreshContact.PrimaryEmail = _primaryEmail;
+                        refreshContact.UserId = originalContact.UserId;
+                        refreshContact.FirstName = originalContact.FirstName;
+                        refreshContact.LastName = originalContact.LastName;
+                        refreshContact.Invited = originalContact.Invited;
+                        refreshContact.Phone = originalContact.Phone;
+                        refreshContact.Title = originalContact.Title;
+                        //If they have removed this assessment on enterprise and this contact is being re-added, they are demoted to a user role. 
+                        refreshContact.AssessmentRoleId = 1;
+
+                        _context.ASSESSMENT_CONTACTS.Add(refreshContact);
+                        _context.SaveChanges();
+                    }
+                }
+
                 var item = TinyMapper.Map<ASSESSMENT_CONTACTS>(a);
                 item.Assessment_Id = assessmentId;
                 item.PrimaryEmail = a.PrimaryEmail;
