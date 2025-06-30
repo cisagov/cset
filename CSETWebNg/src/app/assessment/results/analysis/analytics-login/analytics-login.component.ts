@@ -39,6 +39,7 @@ export class AnalyticsloginComponent implements OnInit {
   });
 
 
+  hidePassword = true;
 
   @Input() error: string | null;
 
