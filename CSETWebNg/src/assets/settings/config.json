@@ -18,11 +18,6 @@
     "documentsIdentifier": "Documents",
     "onlineUrl": "https://cset.inl.gov"
   },
-  "analytics": {
-    "protocol": "http",
-    "host": "csetac",
-    "port": "5778"
-  },
   "library": {
     "protocol": "http",
     "host": "localhost",
@@ -34,6 +29,11 @@
   "helpContactPhone": "",
   "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
   "supplementalAutoloadInitialValue": false,
+  "analytics": {
+    "protocol": "http",
+    "host": "csetac",
+    "port": "5778"
+  },
   "debug": {
     "showBuildTime": false,
     "showQuestionAndRequirementIDs": false,

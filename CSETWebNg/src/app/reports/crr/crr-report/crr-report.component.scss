@@ -671,9 +671,13 @@ div.widget svg {
     margin-right: -2cm !important;
   }
 
+  .navbar {
+    display: none;
+  }
+
   #coversheet1 {
-    margin-left: -2cm;
-    margin-right: -2cm;
+    position: absolute;
+    margin-right: 2cm !important;
   }
 
   .container-fluid,
