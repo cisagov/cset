@@ -27,13 +27,73 @@ export class CreChartReportComponent implements OnInit {
   countsCore: any[];
   viewCore2: [number, number] = [700, 800];
 
-  distribOpt: any[];
-  countsOpt: any[];
-  viewOpt2: [number, number] = [700, 800];
+  domainDistrib = [
+  {
+    "name": "Asset Management",
+    "series": [
+      {
+        "name": "Implemented",
+        "value": 34
+      },
+      {
+        "name": "In Progress",
+        "value": 12
+      },
+      {
+        "name": "Scoped",
+        "value": 6
+      },
+      {
+        "name": "Not Implemented",
+        "value": 48
+      }
+    ]
+  },
 
-  distribMil: any[];
-  countsMil: any[];
-  viewMil2: [number, number] = [700, 800];
+   {
+    "name": "Configuration and Change Management",
+    "series": [
+      {
+        "name": "Implemented",
+        "value": 14
+      },
+      {
+        "name": "In Progress",
+        "value": 12
+      },
+      {
+        "name": "Scoped",
+        "value": 26
+      },
+      {
+        "name": "Not Implemented",
+        "value": 48
+      }
+    ]
+  },
+
+     {
+    "name": "Risk Management",
+    "series": [
+      {
+        "name": "Implemented",
+        "value": 4
+      },
+      {
+        "name": "In Progress",
+        "value": 32
+      },
+      {
+        "name": "Scoped",
+        "value": 36
+      },
+      {
+        "name": "Not Implemented",
+        "value": 28
+      }
+    ]
+  },
+  ];
 
 
   colorScheme = {
@@ -64,17 +124,19 @@ export class CreChartReportComponent implements OnInit {
       this.selfAssessment = assessmentDetail.selfAssessment;
     });
 
-    this.distribCore = await this.buildDistrib(22);
+    this.distribCore = await this.buildDistrib([22, 23, 24]);
     this.countsCore = await this.buildDomainCounts(22);
     this.viewCore2 = this.updateViewSize(this.countsCore?.length);
 
-    this.distribOpt = await this.buildDistrib(23);
-    this.countsOpt = await this.buildDomainCounts(23);
-    this.viewOpt2 = this.updateViewSize(this.countsOpt?.length);
 
-    this.distribMil = await this.buildDistrib(24);
-    this.countsMil = await this.buildDomainCounts(24);
-    this.viewMil2 = this.updateViewSize(this.countsMil?.length);
+
+    // this.distribOpt = await this.buildDistrib([23]);
+    // this.countsOpt = await this.buildDomainCounts(23);
+    // this.viewOpt2 = this.updateViewSize(this.countsOpt?.length);
+
+    // this.distribMil = await this.buildDistrib([24]);
+    // this.countsMil = await this.buildDomainCounts(24);
+    // this.viewMil2 = this.updateViewSize(this.countsMil?.length);
   }
 
   /**
@@ -90,43 +152,61 @@ export class CreChartReportComponent implements OnInit {
    */
   updateViewSize(count: number): [number, number] {
     const height = (count * 80) + 80;
-    return [700, Math.max(100, height)]; 
+    return [700, Math.max(100, height)];
   }
 
   /**
    * 
    */
-  async buildDistrib(modelId: number): Promise < any[] > {
-      const resp = await this.creSvc.getNormalizedAnswerDistrib(modelId).toPromise() || [];
+  async buildDistrib(modelIds: number[]): Promise<any[]> {
+    const resp = await this.creSvc.getNormalizedAnswerDistrib([...modelIds]).toPromise() || [];
 
-      // translate the answer labels
-      var opts = this.configSvc.getModuleBehavior(modelId).answerOptions;
+    // translate the answer labels
+    var opts = this.configSvc.getModuleBehavior(modelIds[0]).answerOptions;
 
-      resp.forEach(element => {
-        const key = opts?.find(x => x.code === element.name)?.buttonLabelKey.toLowerCase();
-        element.name = this.tSvc.translate('answer-options.labels.' + key);
-      });
+    resp.forEach(element => {
+      const key = opts?.find(x => x.code === element.name)?.buttonLabelKey.toLowerCase();
+      element.name = this.tSvc.translate('answer-options.labels.' + key);
+    });
 
-      return resp;
-    }
+    return resp;
+  }
 
 
   /**
    * 
    */
-  async buildDomainCounts(modelId: number): Promise < any[] > {
-      const resp = await this.creSvc.getDomainAnswerCounts(modelId).toPromise() || [];
+  async buildDomainCounts(modelId: number): Promise<any[]> {
+    const resp = await this.creSvc.getDomainAnswerCounts(modelId).toPromise() || [];
 
-      // translate the answer labels
-      var opts = this.configSvc.getModuleBehavior(modelId).answerOptions;
+    // translate the answer labels
+    var opts = this.configSvc.getModuleBehavior(modelId).answerOptions;
 
-      resp.forEach(element => {
-        element.series.forEach(series => {
-          const key = opts?.find(x => x.code === series.name)?.buttonLabelKey.toLowerCase();
-          series.name = this.tSvc.translate('answer-options.labels.' + key);
-        });
+    resp.forEach(element => {
+      element.series.forEach(series => {
+        const key = opts?.find(x => x.code === series.name)?.buttonLabelKey.toLowerCase();
+        series.name = this.tSvc.translate('answer-options.labels.' + key);
       });
+    });
 
-      return resp;
-    }
+    return resp;
   }
+
+
+  /*************
+  Label and tooltip formatting functions 
+  ***************/
+
+  fmt1 = (value) => {
+    return `${Math.round(value)}%`;
+  };
+
+  fmt2 = (label) => {
+    const slice = this.distribCore.find(slice => slice.name === label);
+    return `${label}: ${Math.round(slice.value)}%`;
+  }
+
+  fmt3 = (obj) => {
+    return `${obj.data.name}<br>${Math.round(obj.data.value)}%`;
+  }
+}

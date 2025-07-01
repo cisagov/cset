@@ -26,10 +26,10 @@
           <h5 style="color: white" class="mb-3">
                {{t(`modules.cre+.selector ${modelId} title`)}}
           </h5>
-          <div (click)="toggleExpansion()"><i class="cset-icons-chevron-down q-expand"></i></div>
+          <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="expanded" (click)="toggleExpansion()"></i>
      </div>
 
-     <div *ngIf="expanded">
+     <div [@expandCollapse]="expanded ? 'expanded' : 'collapsed'">
           <div *ngFor="let g of model" class="mb-2">
                <input class="checkbox-custom d-none" type="checkbox" id="dom-{{g.groupingId}}" [(ngModel)]="g.selected"
                     (change)="changeGroupSelection(g.groupingId, $event)">
