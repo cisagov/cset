@@ -1,4 +1,4 @@
-.PHONY: help build-backend launch-backend build-frontend launch-frontend launch-db load-db stop-db remove-db
+.PHONY: help build-backend launch-backend build-frontend launch-frontend launch-db load-db sql-shell stop-db remove-db
 include .env
 export
 
@@ -64,6 +64,12 @@ load-bak:
 		-U 'sa' \
 		-P "Password123" \
 		-i /var/opt/mssql/backup/restoredb.sql
+
+# target: sql - Access SQL shell in the cset-mssql container
+sql:
+	docker exec -it cset-mssql /opt/mssql-tools/bin/sqlcmd \
+		-U 'sa' \
+		-P "Password123"
 
 # target: stop-db - Stop the local database
 stop-db:
