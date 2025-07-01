@@ -222,7 +222,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.filterSvc.answerOptions = response.answerOptions.slice();
         this.filterSvc.maturityModelId = response.modelId;
         this.filterSvc.maturityModelName = response.modelName;
-
+         this.filterSvc.maturityTargetLevel=response.maturityTargetLevel
+        this.filterSvc.refreshAllowableFilters();
         this.displayTitle();
 
 
@@ -414,7 +415,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   /**
    * Show the selector for CRE+ Optional Domain Questions (model 23)
-   * and CRE+ Optional MIL Questions (model 24) 
+   * and CRE+ Optional MIL Questions (model 24)
    */
   showCreSelector(modelId: number): boolean {
     return (modelId == 23 || modelId == 24);
