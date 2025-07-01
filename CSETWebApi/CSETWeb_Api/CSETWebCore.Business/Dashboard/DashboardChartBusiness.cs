@@ -67,6 +67,9 @@ namespace CSETWebCore.Business.Dashboard
         /// <returns></returns>
         public List<NameValue> GetAnswerDistributionNormalized(int modelId)
         {
+            // flesh out model-specific questions 
+            _context.FillEmptyMaturityQuestionsForModel(_assessmentId, modelId);
+
             var structure = _biz.GetMaturityStructureForModel(modelId, _assessmentId);
 
             // include "U" count so that we can calculate percentages.  
@@ -94,15 +97,19 @@ namespace CSETWebCore.Business.Dashboard
 
 
         /// <summary>
-        /// Returns a list of domains and an answer distribution (raw numbers) for each domain.
+        /// Returns a list of domains and a normalized answer distribution (percentages) for each domain.
         /// We recurse down to get the questions from any groupings that are children to the domain.
         /// </summary>
         /// <returns></returns>
-        public List<Model.Dashboard.BarCharts.Grouping> GetAnswerDistributionByDomain(int modelId)
+        public List<NameSeries> GetAnswerDistributionByDomain(int modelId)
         {
-            var resp = new List<Model.Dashboard.BarCharts.Grouping>();
+            // flesh out model-specific questions 
+            _context.FillEmptyMaturityQuestionsForModel(_assessmentId, modelId);
+
+            var resp = new List<NameSeries>();
 
             var structure = _biz.GetMaturityStructureForModel(modelId, _assessmentId);
+            structure.Model.AnswerOptions.Add("U");
 
             var domains = structure.Model.Groupings;
             foreach (var item in domains)
@@ -114,12 +121,12 @@ namespace CSETWebCore.Business.Dashboard
                 }
 
 
-                var groupingIdBag = GetQuestionIdsForGrouping(item);
+                var questionIdBag = GetQuestionIdsForGrouping(item);
 
-                resp.Add(new Model.Dashboard.BarCharts.Grouping
+                resp.Add(new NameSeries
                 {
                     Name = item.Title,
-                    Series = GetAnswerCounts(modelId, groupingIdBag)
+                    Series = GetAnswerCounts(modelId, questionIdBag, structure)
                 });
             }
 
@@ -152,10 +159,8 @@ namespace CSETWebCore.Business.Dashboard
         /// </summary>
         /// <param name="questionIds"></param>
         /// <returns></returns>
-        public List<NameValue> GetAnswerCounts(int modelId, List<int> questionIds)
+        public List<NameValue> GetAnswerCounts(int modelId, List<int> questionIds, MaturityStructureForModel structure)
         {
-            var structure = _biz.GetMaturityStructureForModel(modelId, _assessmentId);
-
             var resp = new List<NameValue>();
             foreach (var ansText in structure.Model.AnswerOptions)
             {

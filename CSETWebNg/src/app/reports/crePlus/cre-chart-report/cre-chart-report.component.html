@@ -38,6 +38,7 @@
 
           <h1>CRE+ Assessment Overview</h1>
 
+          <!-- composite answer distrib bar chart -->
           <div class="my-4 p-3" style="border: 1px solid #ddd">
                <h2 class="text-center">
                     <div>
@@ -48,8 +49,8 @@
                     </div>
                </h2>
                <ngx-charts-bar-horizontal [scheme]="colorScheme" [view]="[700, 300]" [results]="distribCore"
-                    [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xScaleMax]="100"
-                    [xScaleMin]="0" [roundEdges]="false" [showDataLabel]="true" [dataLabelFormatting]="fmt1">
+                    [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisTickFormatting]="fmt1" 
+                    [xScaleMax]="100" [xScaleMin]="0" [roundEdges]="false" [showDataLabel]="true" [dataLabelFormatting]="fmt1">
                </ngx-charts-bar-horizontal>
                <p class="text-center">
                     <em>
@@ -58,6 +59,7 @@
                     </em>
                </p>
           </div>
+
 
           <!-- pie chart of all answers -->
           <div class="my-4 p-3" style="border: 1px solid #ddd">
@@ -82,8 +84,8 @@
           </div>
 
 
-
-                    <div class="my-4 p-3" style="border: 1px solid #ddd">
+          <!-- Stacked bars for each domain -->
+          <div class="my-4 p-3" style="border: 1px solid #ddd">
                <h2 class="text-center">
                     <div>
                          All Questions
@@ -93,12 +95,16 @@
                     </div>
                </h2>
 
-
                <ngx-charts-bar-horizontal-stacked [view]="[700, 500]" [scheme]="colorScheme" [results]="domainDistrib"
-                    [xAxis]="true" [yAxis]="true" [legend]="true" [trimLabels]="false" [wrapTicks]="true"
-                    [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel"
-                    [yAxisLabel]="yAxisLabel">
+                    [xAxis]="true" [yAxis]="true" [legend]="true" [lllllegendPosition]="'below'" [legend] [trimLabels]="false" [wrapTicks]="true"
+                    [dataLabelFormatting]="fmt1" [showXAxisLabel]="true" [showYAxisLabel]="true"
+                    [xAxisLabel]="xAxisLabel" [xAxisTickFormatting]="fmt1" [yAxisLabel]="yAxisLabel">
                </ngx-charts-bar-horizontal-stacked>
+               <ng-template #customTemplate let-series="series" let-data="data" let-x="x" let-y="y">
+                    <svg:text [attr.x]="x + 10" [attr.y]="y + 20" style="fill: white; font-size: 12px;">
+                         {{ data.value }}
+                    </svg:text>
+               </ng-template>
                <p class="text-center">
                     <em>
                          This chart shows the breakdown of all responses<br>(CRE+ optional domains and optional MIL
@@ -106,49 +112,5 @@
                     </em>
                </p>
           </div>
-
-
      </div>
-
-
-
-
-     <div class="page-break" *ngIf="false">
-
-          <h1>MIL Questions</h1>
-          <p>
-               The domain chart includes only selected subdomains.
-          </p>
-          <!-- MIL Distribution -->
-          <div class="my-3">
-               <ngx-charts-bar-horizontal [scheme]="colorScheme" [view]="[700, 300]" [results]="distribMil"
-                    [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xScaleMax]="100"
-                    [xScaleMin]="0" [roundEdges]="false">
-               </ngx-charts-bar-horizontal>
-               <p class="text-center">
-                    <em>
-                         This chart shows the breakdown of MIL assessment responses
-                    </em>
-               </p>
-          </div>
-
-          <!--   MIL grouped horizontal here  -->
-          <div class="my-3" *ngIf="countsMil?.length > 0">
-
-               <ngx-charts-bar-horizontal-2d [view]="viewMil2" [scheme]="colorScheme" [results]="countsMil"
-                    [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true"
-                    [xAxisTickFormatting]="formatIntegerXAxis" [wrapTicks]="true" [roundEdges]="false">
-               </ngx-charts-bar-horizontal-2d>
-               <p class="text-center">
-                    <em>
-                         This chart shows the MIL Question response counts
-                         categorized by domain
-                    </em>
-               </p>
-          </div>
-          <div *ngIf="countsMil?.length == 0" class="my-3 fst-italic">
-               No MIL domains have been selected
-          </div>
-     </div>
-
 </div>

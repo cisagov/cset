@@ -22,14 +22,15 @@
 -------------------------->
 <div *transloco="let t" class="w-100 py-3 px-4 mb-4"
      style="border: 1px solid #ccc; border-radius: 1rem; background-color: #212529; color: white;">
-     <div class="d-flex flex-row justify-content-between">
-          <h5 style="color: white" class="mb-3">
+     <div class="d-flex flex-row justify-content-between cursor-pointer" (click)="toggleExpansion()">
+          <h5 style="color: white" class="mb-0">
                {{t(`modules.cre+.selector ${modelId} title`)}}
           </h5>
-          <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="expanded" (click)="toggleExpansion()"></i>
+          <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="expanded"></i>
      </div>
 
      <div [@expandCollapse]="expanded ? 'expanded' : 'collapsed'">
+          <div class="mt-3"></div>
           <div *ngFor="let g of model" class="mb-2">
                <input class="checkbox-custom d-none" type="checkbox" id="dom-{{g.groupingId}}" [(ngModel)]="g.selected"
                     (change)="changeGroupSelection(g.groupingId, $event)">

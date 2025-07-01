@@ -18,4 +18,10 @@ namespace CSETWebCore.Model.Dashboard.BarCharts
         public string Name { get; set; }
         public double Value { get; set; }
     }
+
+    public class NameSeries
+    {
+        public string Name { get; set; }
+        public List<NameValue> Series { get; set; } = [];
+    }
 }

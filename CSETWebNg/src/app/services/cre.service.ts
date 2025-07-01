@@ -61,7 +61,7 @@ export class CreService {
   /**
    * 
    */
-  getDomainAnswerCounts(modelId: number): Observable<any[]> {
-    return this.http.get<any[]>(this.configSvc.apiUrl + `chart/maturity/answerdistrib/domain?modelId=${modelId}`);
+  getDomainAnswerCounts(modelIds: number[]): Observable<any[]> {
+    return this.http.get<any[]>(this.configSvc.apiUrl + `chart/maturity/answerdistrib/domain?modelIds=${modelIds.join('|')}`);
   }
 }

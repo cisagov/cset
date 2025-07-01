@@ -24,83 +24,18 @@ export class CreChartReportComponent implements OnInit {
   selfAssessment: boolean;
 
   distribCore: any[];
-  countsCore: any[];
-  viewCore2: [number, number] = [700, 800];
+  domainDistrib: any[];
 
-  domainDistrib = [
-  {
-    "name": "Asset Management",
-    "series": [
-      {
-        "name": "Implemented",
-        "value": 34
-      },
-      {
-        "name": "In Progress",
-        "value": 12
-      },
-      {
-        "name": "Scoped",
-        "value": 6
-      },
-      {
-        "name": "Not Implemented",
-        "value": 48
-      }
-    ]
-  },
-
-   {
-    "name": "Configuration and Change Management",
-    "series": [
-      {
-        "name": "Implemented",
-        "value": 14
-      },
-      {
-        "name": "In Progress",
-        "value": 12
-      },
-      {
-        "name": "Scoped",
-        "value": 26
-      },
-      {
-        "name": "Not Implemented",
-        "value": 48
-      }
-    ]
-  },
-
-     {
-    "name": "Risk Management",
-    "series": [
-      {
-        "name": "Implemented",
-        "value": 4
-      },
-      {
-        "name": "In Progress",
-        "value": 32
-      },
-      {
-        "name": "Scoped",
-        "value": 36
-      },
-      {
-        "name": "Not Implemented",
-        "value": 28
-      }
-    ]
-  },
-  ];
+  
 
 
   colorScheme = {
-    domain: ['#5AA454', '#367190', '#b17300', '#DC3545']
+    domain: ['#5AA454', '#367190', '#b17300', '#DC3545', '#eeeeee']
   }
 
-
+  /**
+   * CTOR
+   */
   constructor(
     public assessSvc: AssessmentService,
     public reportSvc: ReportService,
@@ -113,6 +48,9 @@ export class CreChartReportComponent implements OnInit {
 
   }
 
+  /**
+   * OnInit
+   */
   async ngOnInit(): Promise<void> {
     this.titleService.setTitle(this.title);
 
@@ -125,34 +63,7 @@ export class CreChartReportComponent implements OnInit {
     });
 
     this.distribCore = await this.buildDistrib([22, 23, 24]);
-    this.countsCore = await this.buildDomainCounts(22);
-    this.viewCore2 = this.updateViewSize(this.countsCore?.length);
-
-
-
-    // this.distribOpt = await this.buildDistrib([23]);
-    // this.countsOpt = await this.buildDomainCounts(23);
-    // this.viewOpt2 = this.updateViewSize(this.countsOpt?.length);
-
-    // this.distribMil = await this.buildDistrib([24]);
-    // this.countsMil = await this.buildDomainCounts(24);
-    // this.viewMil2 = this.updateViewSize(this.countsMil?.length);
-  }
-
-  /**
-   * 
-   */
-  formatIntegerXAxis(val: number): string {
-    return Number.isInteger(val) ? val.toFixed(0) : '';
-  }
-
-  /**
-   * Determine the height based on the number of entries
-   * plus 80px for the X-axis
-   */
-  updateViewSize(count: number): [number, number] {
-    const height = (count * 80) + 80;
-    return [700, Math.max(100, height)];
+    this.domainDistrib = await this.buildDomainDistrib([22,23,24]);
   }
 
   /**
@@ -165,7 +76,7 @@ export class CreChartReportComponent implements OnInit {
     var opts = this.configSvc.getModuleBehavior(modelIds[0]).answerOptions;
 
     resp.forEach(element => {
-      const key = opts?.find(x => x.code === element.name)?.buttonLabelKey.toLowerCase();
+      const key = opts?.find(x => x.code === element.name)?.buttonLabelKey.toLowerCase() ?? 'u';
       element.name = this.tSvc.translate('answer-options.labels.' + key);
     });
 
@@ -176,15 +87,15 @@ export class CreChartReportComponent implements OnInit {
   /**
    * 
    */
-  async buildDomainCounts(modelId: number): Promise<any[]> {
-    const resp = await this.creSvc.getDomainAnswerCounts(modelId).toPromise() || [];
+  async buildDomainDistrib(modelIds: number[]): Promise<any[]> {
+    const resp = await this.creSvc.getDomainAnswerCounts([...modelIds]).toPromise() || [];
 
     // translate the answer labels
-    var opts = this.configSvc.getModuleBehavior(modelId).answerOptions;
+    var opts = this.configSvc.getModuleBehavior(modelIds[0]).answerOptions;
 
     resp.forEach(element => {
       element.series.forEach(series => {
-        const key = opts?.find(x => x.code === series.name)?.buttonLabelKey.toLowerCase();
+        const key = opts?.find(x => x.code === series.name)?.buttonLabelKey.toLowerCase() ?? 'u';
         series.name = this.tSvc.translate('answer-options.labels.' + key);
       });
     });

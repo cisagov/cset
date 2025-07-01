@@ -121,7 +121,6 @@ import { SalGenComponent } from './assessment/prepare/sals/sal-gen/sal-gen.compo
 import { SalNistComponent } from './assessment/prepare/sals/sal-nist/sal-nist.component';
 import { SalSimpleComponent } from './assessment/prepare/sals/sal-simple/sal-simple.component';
 import { SalsComponent } from './assessment/prepare/sals/sals.component';
-import { StandardsComponent } from './assessment/prepare/standards/standards.component';
 import { ObservationsComponent } from './assessment/questions/observations/observations.component';
 import { QuestionBlockComponent } from './assessment/questions/question-block/question-block.component';
 import { QuestionExtrasComponent } from './assessment/questions/question-extras/question-extras.component';
@@ -627,7 +626,6 @@ registerSwiper();
         AssessmentDemographicsComponent,
         ResultsComponent,
         SalSimpleComponent,
-        StandardsComponent,
         ResetPassComponent,
         EmailComponent,
         ConfirmEqualValidatorDirective,
