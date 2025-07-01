@@ -4,16 +4,19 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Dashboard;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Dashboard.BarCharts;
+using DocumentFormat.OpenXml.Office2019.Drawing.Model3D;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -43,23 +46,23 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        /// <summary>
-        /// Returns the normalized values for the model's 
-        /// answer options.
-        /// </summary>
-        /// <returns></returns>
-        [AllowAnonymous]
-        [HttpGet]
-        [Route("api/chart/maturity/answerdistrib/normalized")]
-        public IActionResult GetNormalizedAnswerDistribution([FromQuery] int modelIds)
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
+        ///// <summary>
+        ///// Returns the normalized values for the model's 
+        ///// answer options.
+        ///// </summary>
+        ///// <returns></returns>
+        //[AllowAnonymous]
+        //[HttpGet]
+        //[Route("api/chart/maturity/answerdistrib/normalized")]
+        //public IActionResult GetNormalizedAnswerDistribution([FromQuery] int modelIds)
+        //{
+        //    int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz = new DashboardChartBusiness(assessmentId, _context, _assessmentUtil, _adminTabBusiness);
-            var resp = biz.GetAnswerDistributionNormalized(modelIds);
+        //    var biz = new DashboardChartBusiness(assessmentId, _context, _assessmentUtil, _adminTabBusiness);
+        //    var resp = biz.GetAnswerDistributionNormalized(modelIds);
 
-            return Ok(resp);
-        }
+        //    return Ok(resp);
+        //}
 
 
 
@@ -76,18 +79,19 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            List<int> modelIdList = modelIds.Split('|').Select(x => int.Parse(x)).ToList();
-
             var biz = new DashboardChartBusiness(assessmentId, _context, _assessmentUtil, _adminTabBusiness);
 
 
             // build a composite of all models
             List<NameValue> composite = new();
 
+
+            List<int> modelIdList = ParseModelIds(modelIds);
+
             foreach (int modelId in modelIdList)
             {
                 var answerDistrib = biz.GetAnswerDistributionNormalized(modelId);
-                foreach(NameValue pair in answerDistrib)
+                foreach (NameValue pair in answerDistrib)
                 {
                     composite.Add(new NameValue() { Name = pair.Name, Value = pair.Value });
                 }
@@ -97,7 +101,7 @@ namespace CSETWebCore.Api.Controllers
             // average composite answers for the final result
             List<NameValue> resp = new();
             var answerOptions = composite.Select(x => x.Name).Distinct();
-            foreach(string opt in answerOptions)
+            foreach (string opt in answerOptions)
             {
                 resp.Add(new NameValue() { Name = opt, Value = composite.FindAll(x => x.Name == opt).Select(x => x.Value).Average() });
             }
@@ -115,14 +119,101 @@ namespace CSETWebCore.Api.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("api/chart/maturity/answerdistrib/domain")]
-        public IActionResult GetAnswerDistributionByDomain([FromQuery] int modelId)
+        public IActionResult GetAnswerDistributionByDomainNormalized([FromQuery] string modelIds)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var biz = new DashboardChartBusiness(assessmentId, _context, _assessmentUtil, _adminTabBusiness);
-            var resp = biz.GetAnswerDistributionByDomain(modelId);
+
+
+            // build a composite of all models
+            List<DomainAnswerCount> composite = new();
+
+
+            List<int> modelIdList = ParseModelIds(modelIds);
+
+            foreach (int modelId in modelIdList)
+            {
+                var answerDistrib = biz.GetAnswerDistributionByDomain(modelId);
+
+                foreach (NameSeries ns in answerDistrib)
+                {
+                    foreach (NameValue nv in ns.Series)
+                    {
+                        var dac = new DomainAnswerCount();
+                        dac.DomainName = ns.Name;
+                        dac.AnswerOptionName = nv.Name;
+                        dac.AnswerCount = (int)nv.Value;
+
+                        composite.Add(dac);
+                    }
+                }
+            }
+
+            // average composite answers for the final result
+            List<NameSeries> resp = new();
+
+
+            var domainNames = composite.Select(x => x.DomainName).Distinct();
+            var answerOpts = composite.Select(x => x.AnswerOptionName).Distinct();
+
+            foreach (string dom in domainNames)
+            {
+                var totalAnswersInDomain = composite.Where(x => x.DomainName == dom).Sum(x => x.AnswerCount);
+
+                var nsDomain = new NameSeries() { Name = dom, Series = [] };
+                resp.Add(nsDomain);
+
+                // calculate percentages for each answer option
+                foreach (var opt in answerOpts)
+                {
+                    var totalAnswersForAnswerOption = composite.Where(x => x.DomainName == dom && x.AnswerOptionName == opt).Select(x => x.AnswerCount).Sum();
+                    float avg = ((float)totalAnswersForAnswerOption / (float)totalAnswersInDomain) * 100f;
+
+                    var nv1 = new NameValue() { Name = opt, Value = avg };
+                    nsDomain.Series.Add(nv1);
+                }
+            }
 
             return Ok(resp);
         }
+
+
+        /// <summary>
+        /// Converts a vertical bar-delimited list of integer values 
+        /// to a List<int>.  Any non-integers are ignored.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        private List<int> ParseModelIds(string s)
+        {
+            List<int> intList = [];
+
+            if (s == null)
+            {
+                return intList;
+            }
+
+            List<string> stringList = s.Split('|').ToList();
+
+            for (int i = 0; i < stringList.Count; i++)
+            {
+                if (int.TryParse(stringList[i], out int id))
+                {
+                    intList.Add(id);
+                }
+            }
+
+            return intList;
+        }
+    }
+
+
+
+    public class DomainAnswerCount
+    {
+        public string DomainName { get; set; }
+        public string AnswerOptionName { get; set; }
+        public int AnswerCount { get; set; }
     }
 }
