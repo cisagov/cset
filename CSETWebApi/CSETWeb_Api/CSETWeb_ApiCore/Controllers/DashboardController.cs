@@ -4,19 +4,17 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Dashboard;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Model.Dashboard;
 using CSETWebCore.Model.Dashboard.BarCharts;
-using DocumentFormat.OpenXml.Office2019.Drawing.Model3D;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -46,26 +44,6 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        ///// <summary>
-        ///// Returns the normalized values for the model's 
-        ///// answer options.
-        ///// </summary>
-        ///// <returns></returns>
-        //[AllowAnonymous]
-        //[HttpGet]
-        //[Route("api/chart/maturity/answerdistrib/normalized")]
-        //public IActionResult GetNormalizedAnswerDistribution([FromQuery] int modelIds)
-        //{
-        //    int assessmentId = _tokenManager.AssessmentForUser();
-
-        //    var biz = new DashboardChartBusiness(assessmentId, _context, _assessmentUtil, _adminTabBusiness);
-        //    var resp = biz.GetAnswerDistributionNormalized(modelIds);
-
-        //    return Ok(resp);
-        //}
-
-
-
         /// <summary>
         /// Returns a composite of the normalized values for the answer options in all specified models.
         /// The modelIds parameter should be delimited with vertical bar (|) characters, e.g., modelIds=23|24|25
@@ -83,27 +61,33 @@ namespace CSETWebCore.Api.Controllers
 
 
             // build a composite of all models
-            List<NameValue> composite = new();
+            List<DomainAnswerCount> composite = new();
 
 
             List<int> modelIdList = ParseModelIds(modelIds);
 
             foreach (int modelId in modelIdList)
             {
-                var answerDistrib = biz.GetAnswerDistributionNormalized(modelId);
-                foreach (NameValue pair in answerDistrib)
+                var answerDistrib = biz.GetAnswerDistributionAll(modelId);
+                foreach (DomainAnswerCount pair in answerDistrib)
                 {
-                    composite.Add(new NameValue() { Name = pair.Name, Value = pair.Value });
+                    composite.Add(new DomainAnswerCount() { AnswerOptionName = pair.AnswerOptionName, AnswerCount = pair.AnswerCount });
                 }
             }
 
+            int answerCountTotal = composite.Sum(x => x.AnswerCount);
 
-            // average composite answers for the final result
+            // calc percentages
             List<NameValue> resp = new();
-            var answerOptions = composite.Select(x => x.Name).Distinct();
+            var answerOptions = composite.Select(x => x.AnswerOptionName).Distinct();
             foreach (string opt in answerOptions)
             {
-                resp.Add(new NameValue() { Name = opt, Value = composite.FindAll(x => x.Name == opt).Select(x => x.Value).Average() });
+                var x = new NameValue() { Name = opt, Value = 0 };
+
+                float totalForOption = composite.FindAll(x => x.AnswerOptionName == opt).Sum(x => x.AnswerCount);
+                x.Value = (totalForOption / (float)answerCountTotal) * 100f;
+
+                resp.Add(x);
             }
 
 
@@ -206,14 +190,5 @@ namespace CSETWebCore.Api.Controllers
 
             return intList;
         }
-    }
-
-
-
-    public class DomainAnswerCount
-    {
-        public string DomainName { get; set; }
-        public string AnswerOptionName { get; set; }
-        public int AnswerCount { get; set; }
     }
 }

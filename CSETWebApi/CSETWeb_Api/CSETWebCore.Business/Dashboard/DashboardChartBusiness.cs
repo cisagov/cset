@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.Business.AdminTab;
-using CSETWebCore.Business.Maturity;
+﻿using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Model.Dashboard;
 using CSETWebCore.Model.Dashboard.BarCharts;
-using DocumentFormat.OpenXml.Math;
-using DocumentFormat.OpenXml.Office2019.Drawing.Model3D;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 
 namespace CSETWebCore.Business.Dashboard
@@ -36,8 +31,6 @@ namespace CSETWebCore.Business.Dashboard
         /// </summary>
         private List<int> _modelsWithSelectableGroupings = [23, 24];
 
-        private bool _onlySelectedGroupings = false;
-
         private List<int> _selectedGroupings = [];
 
         private MaturityBusiness _biz;
@@ -58,6 +51,8 @@ namespace CSETWebCore.Business.Dashboard
 
 
             _biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+
+            _selectedGroupings = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == _assessmentId).Select(x => x.Grouping_Id).ToList();
         }
 
 
@@ -65,7 +60,7 @@ namespace CSETWebCore.Business.Dashboard
         /// Returns the distribution of answers for an assessment and model, normalized to 100%
         /// </summary>
         /// <returns></returns>
-        public List<NameValue> GetAnswerDistributionNormalized(int modelId)
+        public List<DomainAnswerCount> GetAnswerDistributionAll(int modelId)
         {
             // flesh out model-specific questions 
             _context.FillEmptyMaturityQuestionsForModel(_assessmentId, modelId);
@@ -74,23 +69,29 @@ namespace CSETWebCore.Business.Dashboard
 
             // include "U" count so that we can calculate percentages.  
             structure.Model.AnswerOptions.Add("U");
-            double totalAnswerCount = structure.AllAnswers.Count;
 
 
-            // transform into our response
-            var resp = new List<NameValue>();
-            foreach (var ansText in structure.Model.AnswerOptions)
+            var countableQuestionIds = structure.allQuestions.Select(x => x.Mat_Question_Id);
+            var countableAnswers = structure.AllAnswers;
+
+            // don't count questions in unselected groupings for models that require groupings to be selected
+            if (_modelsWithSelectableGroupings.Contains(modelId))
             {
-                var x = new NameValue
-                {
-                    Name = ansText,
-                    Value = ((double)structure.AllAnswers.Count(x => x.Answer_Text == ansText) * 100d) / totalAnswerCount
-                };
-
-                resp.Add(x);
+                countableQuestionIds = structure.allQuestions.Where(q => _selectedGroupings.Contains((int)q.Grouping_Id)).Select(x => x.Mat_Question_Id);
+                countableAnswers.RemoveAll(x => !countableQuestionIds.Contains(x.Question_Or_Requirement_Id));
             }
 
-            resp.RemoveAll(x => x.Name == "U");
+
+            var resp = new List<DomainAnswerCount>();
+            foreach (var ansText in structure.Model.AnswerOptions)
+            {
+                var dac = new DomainAnswerCount();
+                dac.DomainName = "ALL";
+                dac.AnswerOptionName = ansText;
+                dac.AnswerCount = countableAnswers.Count(x => x.Answer_Text == ansText);
+
+                resp.Add(dac);
+            }
 
             return resp;
         }
@@ -112,16 +113,10 @@ namespace CSETWebCore.Business.Dashboard
             structure.Model.AnswerOptions.Add("U");
 
             var domains = structure.Model.Groupings;
+
             foreach (var item in domains)
             {
-                // do not include unselected groupings for certain models
-                if (_onlySelectedGroupings && !_selectedGroupings.Contains(item.GroupingId))
-                {
-                    continue;
-                }
-
-
-                var questionIdBag = GetQuestionIdsForGrouping(item);
+                var questionIdBag = GetQuestionIdsForGrouping(modelId, item);
 
                 resp.Add(new NameSeries
                 {
@@ -139,13 +134,19 @@ namespace CSETWebCore.Business.Dashboard
         /// </summary>
         /// <param name="grouping"></param>
         /// <returns></returns>
-        private List<int> GetQuestionIdsForGrouping(Model.Nested.Grouping grouping)
+        private List<int> GetQuestionIdsForGrouping(int modelId, Model.Nested.Grouping grouping)
         {
             List<int> ids = [];
 
             foreach (var g in grouping.Groupings)
             {
-                ids.AddRange(GetQuestionIdsForGrouping(g));
+                ids.AddRange(GetQuestionIdsForGrouping(modelId, g));
+            }
+
+            // don't count questions in unselected groupings for models that require groupings to be selected
+            if (_modelsWithSelectableGroupings.Contains(modelId) && !_selectedGroupings.Contains(grouping.GroupingId))
+            {
+                return ids;
             }
 
             ids.AddRange(grouping.Questions.Select(x => x.QuestionId).ToList());
