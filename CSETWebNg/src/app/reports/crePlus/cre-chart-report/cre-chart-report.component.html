@@ -96,15 +96,10 @@
                </h2>
 
                <ngx-charts-bar-horizontal-stacked [view]="[700, 500]" [scheme]="colorScheme" [results]="domainDistrib"
-                    [xAxis]="true" [yAxis]="true" [legend]="true" [lllllegendPosition]="'below'" [legend] [trimLabels]="false" [wrapTicks]="true"
+                    [xAxis]="true" [yAxis]="true" [legend]="true" [trimLabels]="false" [wrapTicks]="true"
                     [dataLabelFormatting]="fmt1" [showXAxisLabel]="true" [showYAxisLabel]="true"
                     [xAxisLabel]="xAxisLabel" [xAxisTickFormatting]="fmt1" [yAxisLabel]="yAxisLabel">
                </ngx-charts-bar-horizontal-stacked>
-               <ng-template #customTemplate let-series="series" let-data="data" let-x="x" let-y="y">
-                    <svg:text [attr.x]="x + 10" [attr.y]="y + 20" style="fill: white; font-size: 12px;">
-                         {{ data.value }}
-                    </svg:text>
-               </ng-template>
                <p class="text-center">
                     <em>
                          This chart shows the breakdown of all responses<br>(CRE+ optional domains and optional MIL

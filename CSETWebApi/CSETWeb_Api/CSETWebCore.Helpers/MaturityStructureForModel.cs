@@ -28,7 +28,7 @@ namespace CSETWebCore.Helpers
 
         private List<MATURITY_GROUPINGS> allGroupings;
 
-        private List<MATURITY_QUESTIONS> allQuestions;
+        public List<MATURITY_QUESTIONS> allQuestions;
 
         /// <summary>
         /// A flat list of all the answers for the assessment
