@@ -75,7 +75,6 @@ export class QuestionFiltersComponent implements OnInit {
    */
   ngOnInit(): any {
     this.refreshAnswerOptions();
-    this
   }
 
   /**
@@ -141,30 +140,16 @@ export class QuestionFiltersComponent implements OnInit {
   usesMaturityModel(model: string) {
     return this.assessSvc.usesMaturityModel(model);
   }
-  // public get maturityLevels(): string[] {
-  //   if (!this.filterSvc?.allowableFilters) return [];
-  //   console.log(this.filterSvc.allowableFilters.filter(f => ! isNaN(Number(f))))
-  //   return this.filterSvc.allowableFilters.filter(f => ! isNaN(Number(f)) && Number(f)<=this.filterSvc.maturityTargetLevel);
-  // }
   public get maturityLevels(): string[] {
-    console.log('=== DEBUG maturityLevels getter ===');
-    console.log('filterSvc exists:', !!this.filterSvc);
-    console.log('allowableFilters:', this.filterSvc?.allowableFilters);
-    console.log('maturityTargetLevel:', this.filterSvc?.maturityTargetLevel);
-
     if (!this.filterSvc?.allowableFilters) {
-      console.log('No allowableFilters found');
       return [];
     }
-
     const levels = this.filterSvc.allowableFilters
       .filter(f => !isNaN(Number(f))) // Only numeric values
       .map(f => Number(f)) // Convert to numbers for comparison
       .filter(level => level <= (this.filterSvc.maturityTargetLevel || 999)) // Only levels <= target
       .map(level => level.toString()) // Convert back to strings
       .sort((a, b) => Number(a) - Number(b)); // Sort numerically
-
-    console.log('Final maturity levels for display:', levels);
     return levels;
   }
 }

@@ -33,101 +33,36 @@ import { AssessmentService } from '../assessment.service';
   providedIn: 'root'
 })
 export class QuestionFilterService {
- //
- //  /**
- //   * The allowable filter values.  Used for "select all"
- //   */
- //  // readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI'];
- // public allowableFilters:string[]=[]
-  private readonly baseFilters = [
-'Y', 'N', 'NA', 'A', 'I', 'S', 'U',
-'C', 'M', 'O', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI'
+
+  /**
+   * The allowable filter values.  Used for "select all"
+   */
+  private readonly baseFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI'
 ];
 
   /** UI needs this to know which toggles to render (answers + maturity levels). */
-  // public allowableFilters: string[] = [];
-  // public get allowableFilters(): string[] {
-  //   const arr = [...this.baseFilters];
-  //   const model = this.assessSvc.assessment?.maturityModel;
-  //   if (model?.levels) {
-  //     model.levels.forEach(li => {
-  //       if(li.level <=model.maturityTargetLevel){
-  //         arr.push(li.level.toString());
-  //       }
-  //
-  //     });
-  //   }
-  //   return arr;
-  // }
-  // EDIT: Update allowableFilters getter with debugging
-  // public get allowableFilters(): string[] {
-  //   console.log('=== DEBUG allowableFilters getter ===');
-  //   const arr = [...this.baseFilters];
-  //   console.log('Base filters:', arr);
-  //
-  //   const model = this.assessSvc.assessment?.maturityModel;
-  //   console.log('Model:', model);
-  //   console.log('Model levels:', model?.levels);
-  //   console.log('Target level:', model?.maturityTargetLevel);
-  //
-  //   if (model?.levels) {
-  //     // Ensure maturityTargetLevel is set
-  //     if (!this.maturityTargetLevel) {
-  //       this.maturityTargetLevel = model.maturityTargetLevel;
-  //     }
-  //
-  //     // Add levels <= target level, avoiding duplicates
-  //     model.levels.forEach(li => {
-  //       console.log(`Processing level ${li.level}, target is ${this.maturityTargetLevel}`);
-  //       const levelStr = li.level.toString();
-  //       if (li.level <= this.maturityTargetLevel && !arr.includes(levelStr)) {
-  //         console.log(`Adding level ${levelStr} to allowable filters`);
-  //         arr.push(levelStr);
-  //       }
-  //     });
-  //   }
-  //
-  //   console.log('Final allowable filters:', arr);
-  //   return arr;
-  // }
-  // EDIT: Fix the allowableFilters getter to use the updated maturityTargetLevel
   public get allowableFilters(): string[] {
-    console.log('=== DEBUG allowableFilters getter ===');
     const arr = [...this.baseFilters];
-    console.log('Base filters:', arr);
-
     const model = this.assessSvc.assessment?.maturityModel;
-    console.log('Model:', model);
-    console.log('Model levels:', model?.levels);
-    console.log('Model target level:', model?.maturityTargetLevel);
-    console.log('Service target level:', this.maturityTargetLevel);
 
     if (model?.levels) {
       // Use the service's maturityTargetLevel if it exists, otherwise fall back to model's
       const targetLevel = this.maturityTargetLevel || model.maturityTargetLevel;
-      console.log('Using target level:', targetLevel);
 
       // Add levels <= target level, avoiding duplicates
       model.levels.forEach(li => {
-        console.log(`Processing level ${li.level}, target is ${targetLevel}`);
         const levelStr = li.level.toString();
         if (li.level <= targetLevel && !arr.includes(levelStr)) {
-          console.log(`Adding level ${levelStr} to allowable filters`);
           arr.push(levelStr);
         }
       });
     }
-
-    console.log('Final allowable filters:', arr);
     return arr;
   }
   // ADD: Method to update target level and refresh available filters
   public updateMaturityTargetLevel(newTargetLevel: number): void {
-    console.log(`Updating maturity target level from ${this.maturityTargetLevel} to ${newTargetLevel}`);
-
     const oldTargetLevel = this.maturityTargetLevel;
     this.maturityTargetLevel = newTargetLevel;
-
     // If target level increased, add new levels to showFilters
     if (newTargetLevel > oldTargetLevel) {
       const model = this.assessSvc.assessment?.maturityModel;
@@ -137,7 +72,6 @@ export class QuestionFilterService {
           // Add new levels that are now within target and not already in showFilters
           if (li.level <= newTargetLevel && li.level > oldTargetLevel && !this.showFilters.includes(levelStr)) {
             this.showFilters.push(levelStr);
-            console.log(`Added new level ${levelStr} to showFilters due to target level increase`);
           }
         });
       }
@@ -157,7 +91,6 @@ export class QuestionFilterService {
       });
     }
 
-    console.log('Updated showFilters:', this.showFilters);
   }
   /**
    * This is a list of what to SHOW.
@@ -204,22 +137,14 @@ export class QuestionFilterService {
   constructor(
     private assessSvc: AssessmentService
   ) {
-    this.refresh();
+    // this.refresh();
+   this.showFilters=[...this.defaultFilterSettings]
   }
+
 
   /**
    * Reset the filters back to default settings.
    */
-  // refresh() {
-  //   this.showFilters = this.defaultFilterSettings;
-  // }
-  /**
-   * Reset the filters back to default settings.
-   */
-  /**
-   * Reset the filters back to default settings.
-   */
-// EDIT: Replace the existing refresh() method
   public refresh(): void {
     // Only do full initialization if never initialized before
     if (!this.filtersInitialized) {
@@ -231,30 +156,30 @@ export class QuestionFilterService {
     }
   }
 
-// ADD: New method for initial filter setup
   private initializeFilters(): void {
     // Start with base defaults
     this.showFilters = [...this.defaultFilterSettings];
-
-    // Add maturity levels for initial setup
-    this.addMaturityLevels();
-
-    console.log('Filters initialized with levels:', this.showFilters);
+    const model=this.assessSvc.assessment?.maturityModel;
+    if(model?.levels){
+      this.maturityTargetLevel=model.maturityTargetLevel
+      model.levels.forEach(li=>{
+        const levelStr=li.level.toString();
+        if(li.level<=this.maturityTargetLevel && !this.showFilters.includes(levelStr)){
+          this.showFilters.push(levelStr)
+        }
+      })
+    }
   }
 
 // ADD: New method to handle dynamic level updates without resetting user choices
-// EDIT: Improve the updateDynamicLevels method
   private updateDynamicLevels(): void {
     const model = this.assessSvc.assessment?.maturityModel;
 
     if (!model?.levels) {
-      console.log('No model levels found for dynamic update');
       return;
     }
 
     const newTargetLevel = model.maturityTargetLevel;
-    console.log(`Dynamic update: current target ${this.maturityTargetLevel}, new target ${newTargetLevel}`);
-
     // Only update if target level actually changed
     if (this.maturityTargetLevel !== newTargetLevel) {
       this.updateMaturityTargetLevel(newTargetLevel);
@@ -263,35 +188,13 @@ export class QuestionFilterService {
     }
   }
 
-// ADD: Helper method for adding maturity levels during initialization
-  private addMaturityLevels(): void {
-    const model = this.assessSvc.assessment?.maturityModel;
-
-    if (!model?.levels) {
-      return;
-    }
-
-    this.maturityTargetLevel = model.maturityTargetLevel;
-
-    // Add all levels <= target level to the initial filter set
-    model.levels.forEach(li => {
-      const levelStr = li.level.toString();
-      if (li.level <= this.maturityTargetLevel && !this.showFilters.includes(levelStr)) {
-        this.showFilters.push(levelStr);
-
-      }
-    });
-  }
-
-// ADD: Method to force complete re-initialization (for when assessment/model changes)
+// Force complete re-initialization (for when assessment/model changes)
   public forceRefresh(): void {
     this.filtersInitialized = false;
     this.refresh();
   }
   public refreshAllowableFilters(): void {
-    console.log('Forcing refresh of allowable filters');
     const filters = this.allowableFilters; // This will trigger the getter
-    console.log('Refreshed allowable filters:', filters);
   }
   /**
  * Returns true if we have any inclusion filters turned off.
@@ -329,42 +232,6 @@ export class QuestionFilterService {
    * @param ans
    * @param show
    */
-  // setFilter(ans: string, show: boolean) {
-  //   if (ans === 'ALL') {
-  //     if (show) {
-  //       // this.showFilters = this.allowableFilters.slice();
-  //       // this.showFilters = this.remove(this.showFilters, 'MT+');
-  //        this.showFilters=this.allowableFilters.filter(f=>f !=='MT+')
-  //
-  //     } else {
-  //       this.showFilters = [];
-  //     }
-  //     return;
-  //   }
-  //
-  //   if (show) {
-  //     if (this.showFilters.indexOf(ans) < 0) {
-  //       this.showFilters.push(ans);
-  //       let model= this.assessSvc.assessment?.maturityModel;
-  //       console.log(model)
-  //       if (model!=null){
-  //         for(let i; i<model?.levels?.length; i++){
-  //           let levelInfo=model?.levels[i]
-  //           if(model?.maturityTargetLevel >= levelInfo.level){
-  //             this.showFilters.push(levelInfo.level.toString())
-  //             console.log(this.showFilters)
-  //           }
-  //         }
-  //       }
-  //     }
-  //   } else {
-  //     const i = this.showFilters.indexOf(ans);
-  //     if (i >= 0) {
-  //       this.showFilters.splice(i, 1);
-  //     }
-  //   }
-  // }
-  //
   public setFilter(ans: string, show: boolean): void {
     // “Select All” toggles every filter except the special MT+ flag
     if (ans === 'ALL') {

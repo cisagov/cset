@@ -144,6 +144,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       console.log('I got the subject!~');
       this.refreshQuestionVisibility();
     });
+
   }
 
   ngAfterViewInit() {
@@ -222,8 +223,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.filterSvc.answerOptions = response.answerOptions.slice();
         this.filterSvc.maturityModelId = response.modelId;
         this.filterSvc.maturityModelName = response.modelName;
-         this.filterSvc.maturityTargetLevel=response.maturityTargetLevel
+        this.filterSvc.maturityTargetLevel=response.maturityTargetLevel
+        // Adding Maturity Levels to the filters
         this.filterSvc.refreshAllowableFilters();
+        this.filterSvc.forceRefresh();
         this.displayTitle();
 
 
