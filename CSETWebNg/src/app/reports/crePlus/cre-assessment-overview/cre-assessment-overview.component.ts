@@ -6,6 +6,7 @@ import { ConfigService } from '../../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { CreService } from '../../../services/cre.service';
 import { TranslocoScope, TranslocoService } from '@jsverse/transloco';
+import { firstValueFrom } from 'rxjs';
 
 
 @Component({
@@ -27,10 +28,6 @@ export class CreAssessmentOverview implements OnInit {
   distribCore: any[];
   domainDistrib: any[];
 
-  colorScheme = {
-    domain: ['#5AA454', '#367190', '#b17300', '#DC3545', '#EEEEEE']
-  }
-
 
   /**
    * CTOR
@@ -43,9 +40,7 @@ export class CreAssessmentOverview implements OnInit {
     public creSvc: CreService,
     public titleService: Title,
     public tSvc: TranslocoService
-  ) {
-
-  }
+  ) { }
 
   /**
    * OnInit
@@ -69,7 +64,7 @@ export class CreAssessmentOverview implements OnInit {
    * 
    */
   async buildAllDistrib(modelIds: number[]): Promise<any[]> {
-    const resp = await this.creSvc.getAllAnswerDistrib([...modelIds]).toPromise() || [];
+    const resp = await firstValueFrom(this.creSvc.getAllAnswerDistrib([...modelIds])) || [];
 
     // translate the answer labels
     var opts = this.configSvc.getModuleBehavior(modelIds[0]).answerOptions;
@@ -86,7 +81,7 @@ export class CreAssessmentOverview implements OnInit {
    * 
    */
   async buildDomainDistrib(modelIds: number[]): Promise<any[]> {
-    let resp = await this.creSvc.getDomainAnswerDistrib([...modelIds]).toPromise() || [];
+    let resp = await firstValueFrom(this.creSvc.getDomainAnswerDistrib([...modelIds])) || [];
 
     // translate the answer labels
     var opts = this.configSvc.getModuleBehavior(modelIds[0]).answerOptions;
@@ -106,16 +101,8 @@ export class CreAssessmentOverview implements OnInit {
   Label and tooltip formatting functions 
   ***************/
 
-  fmt1 = (value) => {
-    return `${Math.round(value)}%`;
-  };
-
   fmt2 = (label) => {
     const slice = this.distribCore.find(slice => slice.name === label);
     return `${label}: ${Math.round(slice.value)}%`;
-  }
-
-  fmt3 = (obj) => {
-    return `${obj.data.name}<br>${Math.round(obj.data.value)}%`;
   }
 }

@@ -143,16 +143,28 @@
           "cre+": {
                "sectionTitle": "Cybersecurity Resilience Essentials (CRE+)",
                "1": {
-                    "title": "CRE Core Final Report",
+                    "title": "CRE+ (Core Module) Final Report",
                     "desc": "CRE Core questions and selected Optional Domain questions are detailed in this report"
                },
                "2": {
-                    "title": "CRE MIL Final Report",
+                    "title": "MIL Final Report",
                     "desc": "Selected MIL questions are detailed in this report"
                },
                "3": {
-                    "title": "CRE Assessment Overview",
+                    "title": "Assessment Overview",
                     "desc": "Charts showing distribution of answers across the assessment and by domain"
+               },
+               "4": {
+                    "title": "CRE+ (Core Module) Charts",
+                    "desc": "Charts showing distribution of answers in the Core module"
+               },
+               "5": {
+                    "title": "Optional Domains Charts",
+                    "desc": "Charts showing distribution of answers of the selected Optional Domains questions"
+               },
+               "6": {
+                    "title": "MIL Questions Charts",
+                    "desc": "Charts showing distribution of answers of the selected MIL questions"
                }
           },
           "cisa vadr": {
@@ -758,6 +770,19 @@
                     "average mil": "Average MIL",
                     "percent by domain": "Percentage of Practices Completed by Domain",
                     "para 3": "The following chart illustrates the percentage of completed practices for each individual domain. This provides a snapshot of each domain's compliance with the cybersecurity requirements measured within the assessment, regardless of the MIL achieved."
+               }
+          },
+          "cre": {
+               "chart reports by model": {
+                    "22": {
+                         "title": "RANDY MODEL 22"
+                    },
+                    "23": {
+                         "title": "MODEL 23"
+                    },
+                    "24": {
+                         "title": "MODEL 24"
+                    }
                }
           }
      },
