@@ -308,6 +308,14 @@ export class MaturityFilteringService {
         return;
       }
 
+      if(q.maturityLevel !== undefined && q.maturityLevel !==null){
+        const questionLevel=q.maturityLevel.toString();
+        if(!filterSvc.showFilters.includes(questionLevel)){
+          q.visible=false;
+          return
+        }
+      }
+
       // If we made it this far, start over assuming visible = false
       q.visible = false;
 

@@ -71,14 +71,14 @@ export class QuestionFiltersComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   ngOnInit(): any {
     this.refreshAnswerOptions();
   }
 
   /**
-   * 
+   *
    */
   refreshAnswerOptions() {
     this.answerOptions = [];
@@ -91,15 +91,15 @@ export class QuestionFiltersComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   getId(option: any): string {
     return 'cbShowOption' + option.value;
   }
 
   /**
-   * 
-   * @param e 
+   *
+   * @param e
    */
   updateFilterString(e: Event) {
     if ((<KeyboardEvent>e).keyCode === 13) {
@@ -114,8 +114,8 @@ export class QuestionFiltersComponent implements OnInit {
 
   /**
    * Turns a filter on or off, depending on the state of the checkbox.
-   * @param e 
-   * @param ans 
+   * @param e
+   * @param ans
    */
   updateFilters(e: Event, ans: string) {
     this.filterSvc.setFilter(ans, (<HTMLInputElement>e.target).checked);
@@ -124,7 +124,7 @@ export class QuestionFiltersComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   close() {
     return this.dialog.close();
@@ -139,5 +139,17 @@ export class QuestionFiltersComponent implements OnInit {
 
   usesMaturityModel(model: string) {
     return this.assessSvc.usesMaturityModel(model);
+  }
+  public get maturityLevels(): string[] {
+    if (!this.filterSvc?.allowableFilters) {
+      return [];
+    }
+    const levels = this.filterSvc.allowableFilters
+      .filter(f => !isNaN(Number(f))) // Only numeric values
+      .map(f => Number(f)) // Convert to numbers for comparison
+      .filter(level => level <= (this.filterSvc.maturityTargetLevel || 999)) // Only levels <= target
+      .map(level => level.toString()) // Convert back to strings
+      .sort((a, b) => Number(a) - Number(b)); // Sort numerically
+    return levels;
   }
 }
