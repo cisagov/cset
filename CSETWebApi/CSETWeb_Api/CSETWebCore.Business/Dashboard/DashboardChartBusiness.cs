@@ -1,4 +1,5 @@
-﻿using CSETWebCore.Business.Maturity;
+﻿using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
@@ -52,6 +53,7 @@ namespace CSETWebCore.Business.Dashboard
 
             _biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
+            // A list of selected grouping IDs, regardless of model
             _selectedGroupings = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == _assessmentId).Select(x => x.Grouping_Id).ToList();
         }
 
@@ -104,9 +106,6 @@ namespace CSETWebCore.Business.Dashboard
         /// <returns></returns>
         public List<NameSeries> GetAnswerDistributionByDomain(int modelId)
         {
-            // flesh out model-specific questions 
-            _context.FillEmptyMaturityQuestionsForModel(_assessmentId, modelId);
-
             var resp = new List<NameSeries>();
 
             var structure = _biz.GetMaturityStructureForModel(modelId, _assessmentId);
@@ -163,6 +162,7 @@ namespace CSETWebCore.Business.Dashboard
         public List<NameValue> GetAnswerCounts(int modelId, List<int> questionIds, MaturityStructureForModel structure)
         {
             var resp = new List<NameValue>();
+
             foreach (var ansText in structure.Model.AnswerOptions)
             {
                 var x = new NameValue
@@ -175,6 +175,92 @@ namespace CSETWebCore.Business.Dashboard
             }
 
             return resp;
+        }
+
+
+
+
+        /// <summary>
+        /// Creates the entire tree of answer distributions for a model within an assessment.
+        /// </summary>
+        public List<NameSeriesCount> BuildFullDistributionForModel(int modelId)
+        {
+            List<NameSeriesCount> resp = [];
+
+            var mbiz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var structure = mbiz.GetMaturityStructureForModel(modelId, _assessmentId);
+
+            // Include 'U' as an answer option for complete results
+            if (!structure.Model.AnswerOptions.Contains("U"))
+            {
+                structure.Model.AnswerOptions.Add("U");
+            }
+
+            // start with the groupings (domains) at the top of the model
+            foreach (var grp in structure.Model.Groupings)
+            {
+                var domainDetails = BuildGroupingDetails(grp, structure);
+
+                resp.Add(domainDetails);
+            }
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// Recurses a Grouping and builds a tree with all domains and subdomains 
+        /// and thier question distributions.
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="structure"></param>
+        /// <returns></returns>
+        public NameSeriesCount BuildGroupingDetails(Model.Nested.Grouping g, MaturityStructureForModel structure)
+        {
+            var resp = new NameSeriesCount();
+            resp.Name = g.Title;
+            resp.Series = BuildSeries(g, structure);
+
+            foreach (var subgroup in g.Groupings)
+            {
+                resp.Subgroups.Add(BuildGroupingDetails(subgroup, structure));
+            }
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// Creates a list of name-value pairs containing answer counts and percentages.
+        /// </summary>
+        private List<NameValueCount> BuildSeries(Model.Nested.Grouping g, MaturityStructureForModel structure)
+        {
+            List<NameValueCount> list = [];
+
+            foreach (var ansText in structure.Model.AnswerOptions)
+            {
+                var i = new NameValueCount();
+                i.Name = ansText;
+                i.Count = structure.AllAnswers.Where(x => g.Questions.Select(x => x.QuestionId).Contains(x.Question_Or_Requirement_Id)).Count(x => x.Answer_Text == ansText);
+
+                list.Add(i);
+            }
+
+
+            // Calculate percentages based on the counts
+            var ansCountTotal = list.Sum(x => x.Count);
+            foreach (var l in list)
+            {
+                if (ansCountTotal == 0)
+                {
+                    l.Value = 0;
+                    continue;
+                }
+
+                l.Value = ((float)l.Count / (float)ansCountTotal) * 100f;
+            }
+
+            return list;
         }
     }
 }

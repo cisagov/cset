@@ -44,24 +44,17 @@ export class CreService {
   ) { }
 
 
-  // /**
-  //  * 
-  //  */
-  // getNormalizedAnswerDistrib(modelId: number): Observable<any[]> {
-  //   return this.http.get<any[]>(this.configSvc.apiUrl + `chart/maturity/answerdistrib/normalized?modelId=${modelId}`);
-  // }
-
   /**
    * 
    */
-  getNormalizedAnswerDistrib(modelIds: number[]): Observable<any[]> {
-    return this.http.get<any[]>(this.configSvc.apiUrl + `chart/maturity/answerdistribs/normalized?modelIds=${modelIds.join('|')}`);
+  getAllAnswerDistrib(modelIds: number[]): Observable<any[]> {
+    return this.http.get<any[]>(this.configSvc.apiUrl + `chart/maturity/answerdistribs/all?modelIds=${modelIds.join('|')}`);
   }
 
   /**
    * 
    */
-  getDomainAnswerCounts(modelIds: number[]): Observable<any[]> {
+  getDomainAnswerDistrib(modelIds: number[]): Observable<any[]> {
     return this.http.get<any[]>(this.configSvc.apiUrl + `chart/maturity/answerdistrib/domain?modelIds=${modelIds.join('|')}`);
   }
 }

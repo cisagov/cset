@@ -9,12 +9,12 @@ import { TranslocoScope, TranslocoService } from '@jsverse/transloco';
 
 
 @Component({
-  selector: 'app-cre-chart-report',
+  selector: 'app-cre-assessment-overview',
   standalone: false,
-  templateUrl: './cre-chart-report.component.html',
+  templateUrl: './cre-assessment-overview.component.html',
   styleUrls: ['../../reports.scss'],
 })
-export class CreChartReportComponent implements OnInit {
+export class CreAssessmentOverview implements OnInit {
 
   title = 'CISA Cyber Resilience Essentials (CRE+) Chart Report';
   assessmentName: string;
@@ -23,15 +23,14 @@ export class CreChartReportComponent implements OnInit {
   facilityName: string;
   selfAssessment: boolean;
 
+  // chart models
   distribCore: any[];
   domainDistrib: any[];
 
-  
-
-
   colorScheme = {
-    domain: ['#5AA454', '#367190', '#b17300', '#DC3545', '#eeeeee']
+    domain: ['#5AA454', '#367190', '#b17300', '#DC3545', '#EEEEEE']
   }
+
 
   /**
    * CTOR
@@ -62,15 +61,15 @@ export class CreChartReportComponent implements OnInit {
       this.selfAssessment = assessmentDetail.selfAssessment;
     });
 
-    this.distribCore = await this.buildDistrib([22, 23, 24]);
-    this.domainDistrib = await this.buildDomainDistrib([22,23,24]);
+    this.distribCore = await this.buildAllDistrib([22, 23, 24]);
+    this.domainDistrib = await this.buildDomainDistrib([22, 23, 24]);
   }
 
   /**
    * 
    */
-  async buildDistrib(modelIds: number[]): Promise<any[]> {
-    const resp = await this.creSvc.getNormalizedAnswerDistrib([...modelIds]).toPromise() || [];
+  async buildAllDistrib(modelIds: number[]): Promise<any[]> {
+    const resp = await this.creSvc.getAllAnswerDistrib([...modelIds]).toPromise() || [];
 
     // translate the answer labels
     var opts = this.configSvc.getModuleBehavior(modelIds[0]).answerOptions;
@@ -83,12 +82,11 @@ export class CreChartReportComponent implements OnInit {
     return resp;
   }
 
-
   /**
    * 
    */
   async buildDomainDistrib(modelIds: number[]): Promise<any[]> {
-    const resp = await this.creSvc.getDomainAnswerCounts([...modelIds]).toPromise() || [];
+    let resp = await this.creSvc.getDomainAnswerDistrib([...modelIds]).toPromise() || [];
 
     // translate the answer labels
     var opts = this.configSvc.getModuleBehavior(modelIds[0]).answerOptions;
