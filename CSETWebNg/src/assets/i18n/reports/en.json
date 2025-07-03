@@ -151,8 +151,8 @@
                     "desc": "Selected MIL questions are detailed in this report"
                },
                "3": {
-                    "title": "CRE Chart Report",
-                    "desc": "Analytics and charts are presented in this report"
+                    "title": "CRE Assessment Overview",
+                    "desc": "Charts showing distribution of answers across the assessment and by domain"
                }
           },
           "cisa vadr": {

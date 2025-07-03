@@ -16,7 +16,7 @@ import { CpgDeficiencyComponent } from '../../reports/cpg/cpg-deficiency/cpg-def
 import { CpgReportComponent } from '../../reports/cpg/cpg-report/cpg-report.component';
 import { CreCoreReportComponent } from '../../reports/crePlus/cre-core-report/cre-core-report.component';
 import { CreMilReportComponent } from '../../reports/crePlus/cre-mil-report/cre-mil-report.component';
-import { CreChartReportComponent } from '../../reports/crePlus/cre-chart-report/cre-chart-report.component';
+import { CreAssessmentOverview } from '../../reports/crePlus/cre-assessment-overview/cre-assessment-overview.component';
 import { CrrCommentsMarkedComponent } from '../../reports/crr/crr-comments-marked/crr-comments-marked.component';
 import { CrrDeficiencyComponent } from '../../reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrReportComponent } from '../../reports/crr/crr-report/crr-report.component';
@@ -79,7 +79,7 @@ const routes: Routes = [
     { path: 'cpgDeficiency', component: CpgDeficiencyComponent },
     { path: 'creCoreReport', component: CreCoreReportComponent },
     { path: 'creMilReport', component: CreMilReportComponent },
-    { path: 'creChartReport', component: CreChartReportComponent },
+    { path: 'creChartReport', component: CreAssessmentOverview },
     { path: 'commentsmfr', component: CommentsMfrComponent },
     { path: 'module-content', component: ModuleContentComponent },
     { path: 'c2m2Report', component: C2m2ReportComponent },

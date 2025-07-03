@@ -52,7 +52,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/chart/maturity/answerdistribs/normalized")]
+        [Route("api/chart/maturity/answerdistribs/all")]
         public IActionResult GetNormalizedAnswerDistribution([FromQuery] string modelIds)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
@@ -161,6 +161,29 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(resp);
         }
+
+
+
+        /// <summary>
+        /// A more targeted way to build answer distribution series for the entire model.
+        /// </summary>
+        /// <param name="modelIds"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/chart/maturity/answerdistrib/model")]
+        public IActionResult BuildDetailedAnswerDistribForModel([FromQuery] int modelId)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var dbiz = new DashboardChartBusiness(assessmentId, _context, _assessmentUtil, _adminTabBusiness);
+
+            var resp = dbiz.BuildFullDistributionForModel(modelId);
+
+            return Ok(resp);
+        }
+
+
 
 
         /// <summary>

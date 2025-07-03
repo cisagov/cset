@@ -13,7 +13,7 @@ import { QuestionGrouping } from '../../../../models/questions.model';
     trigger('expandCollapse', [
       state('collapsed', style({ height: '0px', overflow: 'hidden', padding: '0px' })),
       state('expanded', style({ height: '*', padding: '*' })),
-      transition('collapsed <=> expanded', animate('0.5s ease'))
+      transition('collapsed <=> expanded', animate('0.3s ease'))
     ])
       ]
     })

@@ -459,7 +459,7 @@ import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-m
 import { CreCoreReportComponent } from './reports/crePlus/cre-core-report/cre-core-report.component';
 import { CreCoreReportGridComponent } from './reports/crePlus/cre-core-report-grid/cre-core-report-grid.component';
 import { CreMilReportComponent } from './reports/crePlus/cre-mil-report/cre-mil-report.component';
-import { CreChartReportComponent } from './reports/crePlus/cre-chart-report/cre-chart-report.component';
+import { CreAssessmentOverview } from './reports/crePlus/cre-assessment-overview/cre-assessment-overview.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
 import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
 import { Cmmc2ScorecardReportComponent } from './reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
@@ -942,7 +942,7 @@ registerSwiper();
         CreCoreReportComponent,
         CreCoreReportGridComponent,
         CreMilReportComponent,
-        CreChartReportComponent,
+        CreAssessmentOverview,
         Cmmc2CommentsMarkedComponent,
         Cmmc2DeficiencyComponent,
         Cmmc2ScorecardReportComponent,
