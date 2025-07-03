@@ -39,7 +39,7 @@
           <h1>CRE+ Assessment Overview</h1>
 
           <!-- composite answer distrib bar chart -->
-          <div class="my-4 p-3" style="border: 1px solid #ddd">
+          <div class="my-4 px-3" style="border: 1px solid #ddd">
                <h2 class="text-center">
                     <div>
                          All Questions
@@ -48,9 +48,9 @@
                          (CRE+, Optional Domains, Optional MIL Questions)
                     </div>
                </h2>
-               <ngx-charts-bar-horizontal [scheme]="colorScheme" [view]="[700, 300]" [results]="distribCore"
-                    [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisTickFormatting]="fmt1" 
-                    [xScaleMax]="100" [xScaleMin]="0" [roundEdges]="false" [showDataLabel]="true" [dataLabelFormatting]="fmt1">
+               <ngx-charts-bar-horizontal [scheme]="creSvc.colorScheme" [view]="[700, 300]" [results]="distribCore"
+                    [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisTickFormatting]="creSvc.fmt1" 
+                    [xScaleMax]="100" [xScaleMin]="0" [roundEdges]="false" [showDataLabel]="true" [dataLabelFormatting]="creSvc.fmt1">
                </ngx-charts-bar-horizontal>
                <p class="text-center">
                     <em>
@@ -62,7 +62,7 @@
 
 
           <!-- pie chart of all answers -->
-          <div class="my-4 p-3" style="border: 1px solid #ddd">
+          <div class="my-4 px-3" style="border: 1px solid #ddd">
                <h2 class="text-center">
                     <div>
                          All Questions
@@ -71,8 +71,8 @@
                          (CRE+, Optional Domains, Optional MIL Questions)
                     </div>
                </h2>
-               <ngx-charts-pie-chart [view]="[700, 450]" [results]="distribCore" [scheme]="colorScheme" [labels]="true"
-                    [labelFormatting]="fmt2" [trimLabels]="false" [tooltipText]="fmt3"
+               <ngx-charts-pie-chart [view]="[700, 450]" [results]="distribCore" [scheme]="creSvc.colorScheme" [labels]="true"
+                    [labelFormatting]="fmt2" [trimLabels]="false" [tooltipText]="creSvc.fmt3"
                     class="d-flex justify-content-center">
                </ngx-charts-pie-chart>
                <p class="text-center">
@@ -85,7 +85,7 @@
 
 
           <!-- Stacked bars for each domain -->
-          <div class="my-4 p-3" style="border: 1px solid #ddd">
+          <div class="my-4 px-3" style="border: 1px solid #ddd">
                <h2 class="text-center">
                     <div>
                          All Questions
@@ -95,10 +95,9 @@
                     </div>
                </h2>
 
-               <ngx-charts-bar-horizontal-stacked [view]="[700, 500]" [scheme]="colorScheme" [results]="domainDistrib"
+               <ngx-charts-bar-horizontal-stacked [view]="[700, 500]" [scheme]="creSvc.colorScheme" [results]="domainDistrib"
                     [xAxis]="true" [yAxis]="true" [legend]="true" [trimLabels]="false" [wrapTicks]="true"
-                    [dataLabelFormatting]="fmt1" [showXAxisLabel]="true" [showYAxisLabel]="true"
-                    [xAxisLabel]="xAxisLabel" [xAxisTickFormatting]="fmt1" [yAxisLabel]="yAxisLabel">
+                    [dataLabelFormatting]="creSvc.fmt1" [xAxisTickFormatting]="creSvc.fmt1" >
                </ngx-charts-bar-horizontal-stacked>
                <p class="text-center">
                     <em>
@@ -108,4 +107,6 @@
                </p>
           </div>
      </div>
+
+     
 </div>

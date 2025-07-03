@@ -270,6 +270,8 @@ import { CategoryBlockComponent } from './assessment/questions/category-block/ca
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
 import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
 import { CreQuestionSelectorComponent } from './assessment/questions/maturity-questions/cre-question-selector/cre-question-selector.component';
+import { CreSubdomainChartsComponent } from './reports/crePlus/cre-subdomain-charts/cre-subdomain-charts.component';
+import { CreModelChartsComponent } from './reports/crePlus/cre-model-charts/cre-model-charts.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
 import { SitesummaryCMMCComponent } from './reports/cmmc/sitesummary-cmmc/sitesummary-cmmc.component';
@@ -609,6 +611,7 @@ import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-bl
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
 import { CisaVadrInfoComponent } from './assessment/prepare/maturity/cisa-vadr-info/cisa-vadr-info.component';
 
+
 registerSwiper();
 
 @NgModule({
@@ -943,6 +946,8 @@ registerSwiper();
         CreCoreReportGridComponent,
         CreMilReportComponent,
         CreAssessmentOverview,
+        CreSubdomainChartsComponent,
+        CreModelChartsComponent,
         Cmmc2CommentsMarkedComponent,
         Cmmc2DeficiencyComponent,
         Cmmc2ScorecardReportComponent,

@@ -19,12 +19,10 @@ namespace CSETWebCore.Business.Dashboard
     public class DashboardChartBusiness
     {
         private int _assessmentId;
-        private List<int> _modelIds;
         private CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
 
-        //private MaturityStructureForModel _structure;
 
         /// <summary>
         /// Some models (CRE OPT and CRE MIL) should only include questions
@@ -201,6 +199,13 @@ namespace CSETWebCore.Business.Dashboard
             {
                 var domainDetails = BuildGroupingDetails(grp, structure);
 
+                // do not include domains with no applicable subdomains
+                if (domainDetails.Subgroups.Count == 0)
+                {
+                    continue;
+                }
+
+
                 resp.Add(domainDetails);
             }
 
@@ -223,6 +228,11 @@ namespace CSETWebCore.Business.Dashboard
 
             foreach (var subgroup in g.Groupings)
             {
+                if (_modelsWithSelectableGroupings.Contains(structure.Model.ModelId) && !_selectedGroupings.Contains(g.GroupingId))
+                {
+                    continue;
+                }
+
                 resp.Subgroups.Add(BuildGroupingDetails(subgroup, structure));
             }
 

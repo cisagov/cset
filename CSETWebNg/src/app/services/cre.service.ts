@@ -35,13 +35,30 @@ const headers = {
 })
 export class CreService {
 
+  public colorScheme = {
+    domain: ['#5AA454', '#367190', '#b17300', '#DC3545', '#EEEEEE']
+  }
+
   /**
    * 
    */
   constructor(
     private configSvc: ConfigService,
-        private http: HttpClient
+    private http: HttpClient
   ) { }
+
+  /*************
+  Label and tooltip formatting functions 
+  ***************/
+
+  fmt1 = (value) => {
+    return `${Math.round(value)}%`;
+  };
+
+  fmt3 = (obj) => {
+    return `${obj.data.name}<br>${Math.round(obj.data.value)}%`;
+  }
+
 
 
   /**
@@ -56,5 +73,12 @@ export class CreService {
    */
   getDomainAnswerDistrib(modelIds: number[]): Observable<any[]> {
     return this.http.get<any[]>(this.configSvc.apiUrl + `chart/maturity/answerdistrib/domain?modelIds=${modelIds.join('|')}`);
+  }
+
+  /**
+   * 
+   */
+  getDistribForModel(modelId: number): Observable<any[]> {
+    return this.http.get<any[]>(this.configSvc.apiUrl + `chart/maturity/answerdistrib/model?modelId=${modelId}`);
   }
 }

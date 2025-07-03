@@ -95,7 +95,16 @@
         "linkUrl": "creMilReport"
       },
       {
-        "linkUrl": "creChartReport"
+        "linkUrl": "creAssessmentOverview"
+      },
+      {
+        "linkUrl": "creModelChartReport/22"
+      },
+      {
+        "linkUrl": "creModelChartReport/23"
+      },
+      {
+        "linkUrl": "creModelChartReport/24"
       }
     ]
   },

@@ -145,6 +145,12 @@ namespace CSETWebCore.Api.Controllers
             {
                 var totalAnswersInDomain = composite.Where(x => x.DomainName == dom).Sum(x => x.AnswerCount);
 
+                // unselected subdomains have no distribution because they have no answers
+                if (totalAnswersInDomain == 0)
+                {
+                    continue;
+                }
+
                 var nsDomain = new NameSeries() { Name = dom, Series = [] };
                 resp.Add(nsDomain);
 
@@ -152,16 +158,15 @@ namespace CSETWebCore.Api.Controllers
                 foreach (var opt in answerOpts)
                 {
                     var totalAnswersForAnswerOption = composite.Where(x => x.DomainName == dom && x.AnswerOptionName == opt).Select(x => x.AnswerCount).Sum();
-                    float avg = ((float)totalAnswersForAnswerOption / (float)totalAnswersInDomain) * 100f;
+                    float percent = ((float)totalAnswersForAnswerOption / (float)totalAnswersInDomain) * 100f;
 
-                    var nv1 = new NameValue() { Name = opt, Value = avg };
+                    var nv1 = new NameValue() { Name = opt, Value = percent };
                     nsDomain.Series.Add(nv1);
                 }
             }
 
             return Ok(resp);
         }
-
 
 
         /// <summary>
@@ -182,8 +187,6 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(resp);
         }
-
-
 
 
         /// <summary>

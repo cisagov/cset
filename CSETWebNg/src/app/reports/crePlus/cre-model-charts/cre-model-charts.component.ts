@@ -1,32 +1,37 @@
 import { Component, OnInit } from '@angular/core';
+import { CreService } from '../../../services/cre.service';
+import { ConfigService } from '../../../services/config.service';
+import { TranslocoService } from '@jsverse/transloco';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ReportService } from '../../../services/report.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { ConfigService } from '../../../services/config.service';
 import { Title } from '@angular/platform-browser';
-import { CreService } from '../../../services/cre.service';
-import { TranslocoScope, TranslocoService } from '@jsverse/transloco';
+import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
-
 @Component({
-  selector: 'app-cre-assessment-overview',
-  standalone: false,
-  templateUrl: './cre-assessment-overview.component.html',
+  selector: 'app-cre-model-charts',
+  templateUrl: './cre-model-charts.component.html',
   styleUrls: ['../../reports.scss'],
+  standalone: false,
 })
-export class CreAssessmentOverview implements OnInit {
+export class CreModelChartsComponent implements OnInit {
 
-  title = 'CISA Cyber Resilience Essentials (CRE+) Chart Report';
+  title: string;
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
   selfAssessment: boolean;
 
+  modelId: number;
+
+  
   // chart models
-  distribCore: any[];
+  distribModel: any[];
   domainDistrib: any[];
+  domainList: any[];
+
 
 
   /**
@@ -39,13 +44,17 @@ export class CreAssessmentOverview implements OnInit {
     public configSvc: ConfigService,
     public creSvc: CreService,
     public titleService: Title,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService,
+    private route: ActivatedRoute
   ) { }
 
   /**
-   * OnInit
+   * 
    */
   async ngOnInit(): Promise<void> {
+    this.modelId = +this.route.snapshot.params['m'];
+    
+    this.title = this.tSvc.translate(`reports.core.cre.chart reports by model.${this.modelId}.title`);
     this.titleService.setTitle(this.title);
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
@@ -56,9 +65,12 @@ export class CreAssessmentOverview implements OnInit {
       this.selfAssessment = assessmentDetail.selfAssessment;
     });
 
-    this.distribCore = await this.buildAllDistrib([22, 23, 24]);
-    this.domainDistrib = await this.buildDomainDistrib([22, 23, 24]);
+    this.distribModel = await this.buildAllDistrib([this.modelId]);   console.log('distribModel', this.distribModel);
+    this.domainDistrib = await this.buildDomainDistrib([this.modelId]); console.log('domainDistrib', this.domainDistrib);
+    this.domainList = await this.getFullModel(this.modelId);
   }
+
+
 
   /**
    * 
@@ -96,13 +108,23 @@ export class CreAssessmentOverview implements OnInit {
     return resp;
   }
 
+  /**
+   * Get the full answer distrib object from the API
+   */
+  async getFullModel(modelId: number): Promise<any[]> {
+    let resp = await firstValueFrom(this.creSvc.getDistribForModel(modelId)) || [];
 
-  /*************
-  Label and tooltip formatting functions 
-  ***************/
+    // translate the answer labels
+    var opts = this.configSvc.getModuleBehavior(modelId).answerOptions;
+    resp.forEach(x => {
+      x.subgroups.forEach(element => {
+        element.series.forEach(element => {
+          const key = opts?.find(x => x.code === element.name)?.buttonLabelKey.toLowerCase() ?? 'u';
+          element.name = this.tSvc.translate('answer-options.labels.' + key);
+        });
+      });
+    });
 
-  fmt2 = (label) => {
-    const slice = this.distribCore.find(slice => slice.name === label);
-    return `${label}: ${Math.round(slice.value)}%`;
+    return resp;
   }
 }
