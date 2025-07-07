@@ -160,7 +160,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     // determine whether displaying a grouping or all questions for the model
     this.grouping = null;
     this.groupingId = this.route.snapshot.params['grp'];
-
     if (!this.groupingId || this.groupingId.toLowerCase() == 'bonus' || this.groupingId.toLowerCase().startsWith('m')) {
       this.loadQuestions();
     } else {
