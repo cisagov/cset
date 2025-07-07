@@ -137,8 +137,8 @@ export class QuestionFilterService {
   constructor(
     private assessSvc: AssessmentService
   ) {
-    // this.refresh();
-   this.showFilters=[...this.defaultFilterSettings]
+    this.refresh();
+   // this.showFilters=[...this.defaultFilterSettings]
   }
 
 
