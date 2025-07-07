@@ -37,12 +37,64 @@ export class QuestionFilterService {
   /**
    * The allowable filter values.  Used for "select all"
    */
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI'];
+  private readonly baseFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI'
+];
 
+  /** UI needs this to know which toggles to render (answers + maturity levels). */
+  public get allowableFilters(): string[] {
+    const arr = [...this.baseFilters];
+    const model = this.assessSvc.assessment?.maturityModel;
 
+    if (model?.levels) {
+      // Use the service's maturityTargetLevel if it exists, otherwise fall back to model's
+      const targetLevel = this.maturityTargetLevel || model.maturityTargetLevel;
+
+      // Add levels <= target level, avoiding duplicates
+      model.levels.forEach(li => {
+        const levelStr = li.level.toString();
+        if (li.level <= targetLevel && !arr.includes(levelStr)) {
+          arr.push(levelStr);
+        }
+      });
+    }
+    return arr;
+  }
+  // ADD: Method to update target level and refresh available filters
+  public updateMaturityTargetLevel(newTargetLevel: number): void {
+    const oldTargetLevel = this.maturityTargetLevel;
+    this.maturityTargetLevel = newTargetLevel;
+    // If target level increased, add new levels to showFilters
+    if (newTargetLevel > oldTargetLevel) {
+      const model = this.assessSvc.assessment?.maturityModel;
+      if (model?.levels) {
+        model.levels.forEach(li => {
+          const levelStr = li.level.toString();
+          // Add new levels that are now within target and not already in showFilters
+          if (li.level <= newTargetLevel && li.level > oldTargetLevel && !this.showFilters.includes(levelStr)) {
+            this.showFilters.push(levelStr);
+          }
+        });
+      }
+    }
+
+    // If target level decreased, remove levels that are now above target
+    if (newTargetLevel < oldTargetLevel) {
+      this.showFilters = this.showFilters.filter(f => {
+        if (isNaN(Number(f))) {
+          return true; // Keep non-numeric filters
+        }
+        const keep = Number(f) <= newTargetLevel;
+        if (!keep) {
+          console.log(`Removing level ${f} from showFilters due to target level decrease`);
+        }
+        return keep;
+      });
+    }
+
+  }
   /**
    * This is a list of what to SHOW.
-   * 
+   *
    * Filter settings
    *   Comments - C
    *   Marked For Review - M
@@ -60,7 +112,7 @@ export class QuestionFilterService {
    * are visible.
    */
   public filterSearchString = '';
-
+  private filtersInitialized= false;
   /**
    * Valid 'answer'-type filter values.  Defaulted to these (for standards)
    * but overrideable by a maturity model.
@@ -68,7 +120,7 @@ export class QuestionFilterService {
   public answerOptions: string[] = ['Y', 'N', 'NA', 'A', 'I', 'U', 'FI', 'LI', 'PI', 'NI'];
 
   /**
-   * Consuming pages can set a model ID 
+   * Consuming pages can set a model ID
    */
   public maturityModelId: number;
 
@@ -77,24 +129,73 @@ export class QuestionFilterService {
    */
   public maturityModelName: string;
 
-
+ public  maturityTargetLevel: number;
   /**
    * Constructor
-   * @param assessSvc 
+   * @param assessSvc
    */
   constructor(
     private assessSvc: AssessmentService
   ) {
-    this.refresh();
+    // this.refresh();
+   this.showFilters=[...this.defaultFilterSettings]
   }
+
 
   /**
    * Reset the filters back to default settings.
    */
-  refresh() {
-    this.showFilters = this.defaultFilterSettings;
+  public refresh(): void {
+    // Only do full initialization if never initialized before
+    if (!this.filtersInitialized) {
+      this.initializeFilters();
+      this.filtersInitialized = true;
+    } else {
+      // On subsequent calls, only update dynamic levels without touching user selections
+      this.updateDynamicLevels();
+    }
   }
 
+  private initializeFilters(): void {
+    // Start with base defaults
+    this.showFilters = [...this.defaultFilterSettings];
+    const model=this.assessSvc.assessment?.maturityModel;
+    if(model?.levels){
+      this.maturityTargetLevel=model.maturityTargetLevel
+      model.levels.forEach(li=>{
+        const levelStr=li.level.toString();
+        if(li.level<=this.maturityTargetLevel && !this.showFilters.includes(levelStr)){
+          this.showFilters.push(levelStr)
+        }
+      })
+    }
+  }
+
+// ADD: New method to handle dynamic level updates without resetting user choices
+  private updateDynamicLevels(): void {
+    const model = this.assessSvc.assessment?.maturityModel;
+
+    if (!model?.levels) {
+      return;
+    }
+
+    const newTargetLevel = model.maturityTargetLevel;
+    // Only update if target level actually changed
+    if (this.maturityTargetLevel !== newTargetLevel) {
+      this.updateMaturityTargetLevel(newTargetLevel);
+    } else {
+      console.log('Target level unchanged, no dynamic update needed');
+    }
+  }
+
+// Force complete re-initialization (for when assessment/model changes)
+  public forceRefresh(): void {
+    this.filtersInitialized = false;
+    this.refresh();
+  }
+  public refreshAllowableFilters(): void {
+    const filters = this.allowableFilters; // This will trigger the getter
+  }
   /**
  * Returns true if we have any inclusion filters turned off.
  * We don't count MT+ for this, since it is normally turned off.
@@ -131,30 +232,31 @@ export class QuestionFilterService {
    * @param ans
    * @param show
    */
-  setFilter(ans: string, show: boolean) {
+  public setFilter(ans: string, show: boolean): void {
+    // “Select All” toggles every filter except the special MT+ flag
     if (ans === 'ALL') {
       if (show) {
-        this.showFilters = this.allowableFilters.slice();
-        this.showFilters = this.remove(this.showFilters, 'MT+');
+        this.showFilters = this.allowableFilters.filter(f => f !== 'MT+');
       } else {
         this.showFilters = [];
       }
       return;
     }
 
+    // Individual toggle
     if (show) {
-      if (this.showFilters.indexOf(ans) < 0) {
+      // Add it if not already present
+      if (!this.showFilters.includes(ans)) {
         this.showFilters.push(ans);
       }
     } else {
-      const i = this.showFilters.indexOf(ans);
-      if (i >= 0) {
-        this.showFilters.splice(i, 1);
+      // Remove it if present
+      const idx = this.showFilters.indexOf(ans);
+      if (idx >= 0) {
+        this.showFilters.splice(idx, 1);
       }
     }
   }
-
-
   /**
    * Utility method.  Should be moved somewhere common.
    */
@@ -177,8 +279,8 @@ export class QuestionFilterService {
 
   /**
    * Returns an array with the target removed.
-   * @param a 
-   * @param target 
+   * @param a
+   * @param target
    */
   remove(a: any[], target: any) {
     const a1 = a.slice();
@@ -193,7 +295,7 @@ export class QuestionFilterService {
    * This is an overload of evaluateFilters, which takes a list
    * of Domains.  This version wraps the category list in
    * a dummy Domain and calls evaluateFilters.
-   * @param categories 
+   * @param categories
    */
   public evaluateFiltersForCategories(categories: Category[]) {
     var dummyDomain: Domain = {
@@ -291,9 +393,9 @@ export class QuestionFilterService {
    * This is an overload of evaluateFilters, which takes a list
    * of Domains.  This version wraps the category list in
    * a dummy Domain and calls evaluateFilters.
-   * 
+   *
    * Made specifically for CIE, but can be modified to work with other maturities
-   * @param categories 
+   * @param categories
    */
   public evaluateFiltersForReportCategories(categories: any[], matLevel: number) {
     var dummyDomain: Domain = {
@@ -318,7 +420,7 @@ export class QuestionFilterService {
   /**
    * Sets the Visible property on all Questions, Subcategories and Categories
    * based on the current filter settings.
-   * 
+   *
    * Made specifically for CIE, but can be modified to work with other maturities
    * @param cats
    */
@@ -367,7 +469,7 @@ export class QuestionFilterService {
         });
 
         /** evaluate domain heading principle question visibility.
-        * Put into 'areFactorQuestionsDeficient' to allow both principle 
+        * Put into 'areFactorQuestionsDeficient' to allow both principle
         * and principle-phase tables to have separate filters
         */
         d.categories.areFactorQuestionsDeficient = (d.categories.assessmentFactors.find(af => !af.areQuestionsDeficient) == null ? true : false);
