@@ -307,12 +307,14 @@ export class MaturityFilteringService {
       if (!q.visible) {
         return;
       }
+      
+
 
       if(q.maturityLevel !== undefined && q.maturityLevel !==null){
         const questionLevel=q.maturityLevel.toString();
         if(!filterSvc.showFilters.includes(questionLevel)){
-          q.visible=false;
-          return
+          //q.visible=false;   -- quick fix for now to prevent questions from being hidden incorrectly
+          //return;
         }
       }
 
