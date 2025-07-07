@@ -307,8 +307,9 @@ export class MaturityFilteringService {
       if (!q.visible) {
         return;
       }
-
-      if(q.maturityLevel !== undefined && q.maturityLevel !==null){
+      
+      const maturityModel=this.assesmentSvc.assessment?.maturityModel;
+      if(maturityModel?.levels.length>0 && q.maturityLevel !== undefined && q.maturityLevel !==null){
         const questionLevel=q.maturityLevel.toString();
         if(!filterSvc.showFilters.includes(questionLevel)){
           q.visible=false;
