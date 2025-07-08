@@ -141,7 +141,8 @@ export class QuestionFiltersComponent implements OnInit {
     return this.assessSvc.usesMaturityModel(model);
   }
   public get maturityLevels(): string[] {
-    if (!this.filterSvc?.allowableFilters) {
+    const maturityModel=this.assessSvc.assessment?.maturityModel;
+    if (!this.filterSvc?.allowableFilters || !maturityModel?.levels || maturityModel.levels.length<=1 ) {
       return [];
     }
     const levels = this.filterSvc.allowableFilters
