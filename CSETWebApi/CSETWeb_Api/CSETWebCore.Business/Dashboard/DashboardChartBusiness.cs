@@ -228,7 +228,7 @@ namespace CSETWebCore.Business.Dashboard
 
             foreach (var subgroup in g.Groupings)
             {
-                if (_modelsWithSelectableGroupings.Contains(structure.Model.ModelId) && !_selectedGroupings.Contains(g.GroupingId))
+                if (_modelsWithSelectableGroupings.Contains(structure.Model.ModelId) && !_selectedGroupings.Contains(subgroup.GroupingId))
                 {
                     continue;
                 }

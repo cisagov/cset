@@ -9,6 +9,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
+
 @Component({
   selector: 'app-cre-model-charts',
   templateUrl: './cre-model-charts.component.html',
@@ -17,7 +18,6 @@ import { firstValueFrom } from 'rxjs';
 })
 export class CreModelChartsComponent implements OnInit {
 
-  title: string;
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
@@ -26,7 +26,7 @@ export class CreModelChartsComponent implements OnInit {
 
   modelId: number;
 
-  
+
   // chart models
   distribModel: any[];
   domainDistrib: any[];
@@ -53,9 +53,7 @@ export class CreModelChartsComponent implements OnInit {
    */
   async ngOnInit(): Promise<void> {
     this.modelId = +this.route.snapshot.params['m'];
-    
-    this.title = this.tSvc.translate(`reports.core.cre.chart reports by model.${this.modelId}.title`);
-    this.titleService.setTitle(this.title);
+
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
@@ -63,14 +61,19 @@ export class CreModelChartsComponent implements OnInit {
       this.assessorName = assessmentDetail.facilitatorName;
       this.facilityName = assessmentDetail.facilityName;
       this.selfAssessment = assessmentDetail.selfAssessment;
+
+
+      setTimeout(() => {
+        const titleKey = `reports.core.cre.chart reports by model.${this.modelId}.title`;
+        var title = this.tSvc.translate(titleKey, { defaultTitle: this.configSvc.behaviors.defaultTitle });
+        this.titleService.setTitle(title);
+      }, 500);
     });
 
-    this.distribModel = await this.buildAllDistrib([this.modelId]);   console.log('distribModel', this.distribModel);
-    this.domainDistrib = await this.buildDomainDistrib([this.modelId]); console.log('domainDistrib', this.domainDistrib);
+    this.distribModel = await this.buildAllDistrib([this.modelId]);
+    this.domainDistrib = await this.buildDomainDistrib([this.modelId]);
     this.domainList = await this.getFullModel(this.modelId);
   }
-
-
 
   /**
    * 

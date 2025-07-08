@@ -773,15 +773,25 @@
                }
           },
           "cre": {
+               "answer distribution": "Answer Distribution",
                "chart reports by model": {
                     "22": {
-                         "title": "RANDY MODEL 22"
+                         "title": "Cyber Resilience Essentials (CRE+) (Core Module) Charts",
+                         "chart footer1": "CRE+ Core Module Answer Distribution",
+                         "chart footer2": "CRE+ Core Module Answer Distribution by domain"
+
                     },
                     "23": {
-                         "title": "MODEL 23"
+                         "title": "Cyber Resilience Essentials (CRE+) Optional Domains Charts",
+                         "chart footer1": "Optional Domain Answer Distribution.  Only selected subdomains are included.",
+                         "chart footer2": "Optional Domain Answer Distribution by domain. Only selected subdomains are included.",
+                         "no selected": "None of the subdomains were selected so there is nothing to show."
                     },
                     "24": {
-                         "title": "MODEL 24"
+                         "title": "Cyber Resilience Essentials (CRE+) MIL Questions Charts",
+                         "chart footer1": "MIL Question Answer Distribution.  Only selected subdomains are included.",
+                         "chart footer2": "MIL Question Answer Distribution by domain. Only selected subdomains are included.",
+                         "no selected": "None of the MILs were selected so there is nothing to show."
                     }
                }
           }
