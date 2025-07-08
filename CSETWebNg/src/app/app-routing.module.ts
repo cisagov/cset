@@ -30,7 +30,6 @@ import { FrameworkComponent } from './assessment/prepare/framework/framework.com
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
 import { PrepareComponent } from './assessment/prepare/prepare.component';
 import { SalsComponent } from './assessment/prepare/sals/sals.component';
-import { StandardsComponent } from './assessment/prepare/standards/standards.component';
 import { QuestionsComponent } from './assessment/questions/questions.component';
 import { AnalysisComponent } from './assessment/results/analysis/analysis.component';
 import { ComponentsRankedComponent } from './assessment/results/analysis/components-ranked/components-ranked.component';
@@ -327,7 +326,6 @@ const appRoutes: Routes = [
               { path: 'cisa-vadr-levels', component: CisaVadrLevelsComponent },
               { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
-              { path: 'standards', component: StandardsComponent },
               { path: 'framework', component: FrameworkComponent },
               { path: 'required', component: RequiredDocsComponent },
               {
