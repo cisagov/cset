@@ -2023,7 +2023,7 @@ input[type="checkbox"]+label {
   transform: scaleY(-1);
   filter: FlipH;
   -ms-filter: "FlipH";
-  margin-top: -10px;
+  margin-top: -5px;
 }
 
 .open-desc {
@@ -2160,6 +2160,8 @@ input[type="checkbox"]+label {
   -moz-transition: transform 0.3s;
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
+  display: flex;
+  align-items: center;
 }
 
 .q-expand.expand-flip {
@@ -2168,7 +2170,7 @@ input[type="checkbox"]+label {
   transform: scaleY(-1);
   filter: FlipH;
   -ms-filter: "FlipH";
-  margin-top: -10px;
+  margin-top: -5px;
 }
 
 .header-question {

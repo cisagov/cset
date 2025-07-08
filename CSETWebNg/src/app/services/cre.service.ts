@@ -35,26 +35,50 @@ const headers = {
 })
 export class CreService {
 
-  /**
-   * 
-   */
-  constructor(
-    private configSvc: ConfigService,
-        private http: HttpClient
-  ) { }
-
-
-  /**
-   * 
-   */
-  getNormalizedAnswerDistrib(modelId: number): Observable<any[]> {
-    return this.http.get<any[]>(this.configSvc.apiUrl + `chart/maturity/answerdistrib/normalized?modelId=${modelId}`);
+  public colorScheme = {
+    domain: ['#5AA454', '#367190', '#b17300', '#DC3545', '#EEEEEE']
   }
 
   /**
    * 
    */
-  getDomainAnswerCounts(modelId: number): Observable<any[]> {
-    return this.http.get<any[]>(this.configSvc.apiUrl + `chart/maturity/answerdistrib/domain?modelId=${modelId}`);
+  constructor(
+    private configSvc: ConfigService,
+    private http: HttpClient
+  ) { }
+
+  /*************
+  Label and tooltip formatting functions 
+  ***************/
+
+  fmt1 = (value) => {
+    return `${Math.round(value)}%`;
+  };
+
+  fmt3 = (obj) => {
+    return `${obj.data.name}<br>${Math.round(obj.data.value)}%`;
+  }
+
+
+
+  /**
+   * 
+   */
+  getAllAnswerDistrib(modelIds: number[]): Observable<any[]> {
+    return this.http.get<any[]>(this.configSvc.apiUrl + `chart/maturity/answerdistribs/all?modelIds=${modelIds.join('|')}`);
+  }
+
+  /**
+   * 
+   */
+  getDomainAnswerDistrib(modelIds: number[]): Observable<any[]> {
+    return this.http.get<any[]>(this.configSvc.apiUrl + `chart/maturity/answerdistrib/domain?modelIds=${modelIds.join('|')}`);
+  }
+
+  /**
+   * 
+   */
+  getDistribForModel(modelId: number): Observable<any[]> {
+    return this.http.get<any[]>(this.configSvc.apiUrl + `chart/maturity/answerdistrib/model?modelId=${modelId}`);
   }
 }
