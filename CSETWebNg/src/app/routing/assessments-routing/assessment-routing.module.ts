@@ -16,7 +16,6 @@ import { ModelSelectComponent } from '../../assessment/prepare/maturity/model-se
 import { PrepareComponent } from '../../assessment/prepare/prepare.component';
 import { RequiredDocsComponent } from '../../assessment/prepare/required/required.component';
 import { SalsComponent } from '../../assessment/prepare/sals/sals.component';
-import { StandardsComponent } from '../../assessment/prepare/standards/standards.component';
 import { DiagramQuestionsComponent } from '../../assessment/questions/diagram-questions/diagram-questions.component';
 import { MaturityQuestionsComponent } from '../../assessment/questions/maturity-questions/maturity-questions.component';
 import { MaturityQuestionsNestedComponent } from '../../assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
@@ -97,7 +96,6 @@ const routes: Routes = [
             { path: 'cisa-vadr-levels', component: CisaVadrLevelsComponent },
             { path: 'csi', component: CsiComponent },
             { path: 'sal', component: SalsComponent },
-            { path: 'standards', component: StandardsComponent },
             { path: 'framework', component: FrameworkComponent },
             { path: 'required', component: RequiredDocsComponent },
             {

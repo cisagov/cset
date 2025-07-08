@@ -379,6 +379,7 @@
           "buttonLabelKey": "Not-CPG",
           "buttonCss": "btn-no",
           "chartSegmentColor": "#990000",
+          "unansweredEquivalent": true,
           "consideredMissed": true
         }
       ]
@@ -391,6 +392,7 @@
       "hideTopLevelGroupingName": false,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
+      "mustSelectGroupings": true,
       "questionIcons": {
         "showDetails": false,
         "showReviewed": false
@@ -420,6 +422,7 @@
           "buttonLabelKey": "Not-CPG",
           "buttonCss": "btn-no",
           "chartSegmentColor": "#990000",
+          "unansweredEquivalent": true,
           "consideredMissed": true
         }
       ]
@@ -432,6 +435,7 @@
       "hideTopLevelGroupingName": false,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
+      "mustSelectGroupings": true,
       "questionIcons": {
         "showDetails": false,
         "showReviewed": false
@@ -461,6 +465,7 @@
           "buttonLabelKey": "Not-CPG",
           "buttonCss": "btn-no",
           "chartSegmentColor": "#990000",
+          "unansweredEquivalent": true,
           "consideredMissed": true
         }
       ]
@@ -528,7 +533,8 @@
         {
           "code": "NI",
           "buttonLabelKey": "NI-C2M2",
-          "buttonCss": "btn-c2m2-ni"
+          "buttonCss": "btn-c2m2-ni",
+          "unansweredEquivalent": true
         }
       ]
     },

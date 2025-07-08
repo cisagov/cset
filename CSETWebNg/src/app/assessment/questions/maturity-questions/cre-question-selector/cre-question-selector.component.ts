@@ -1,4 +1,5 @@
 import { AfterViewChecked, Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MaturityService } from '../../../../services/maturity.service';
 import { SelectableGroupingsService } from '../../../../services/selectable-groupings.service';
 import { QuestionGrouping } from '../../../../models/questions.model';
@@ -7,13 +8,22 @@ import { QuestionGrouping } from '../../../../models/questions.model';
   selector: 'app-cre-question-selector',
   templateUrl: './cre-question-selector.component.html',
   styleUrl: './cre-question-selector.component.scss',
-  standalone: false
-})
+  standalone: false,
+  animations: [
+    trigger('expandCollapse', [
+      state('collapsed', style({ height: '0px', overflow: 'hidden', padding: '0px' })),
+      state('expanded', style({ height: '*', padding: '*' })),
+      transition('collapsed <=> expanded', animate('0.3s ease'))
+    ])
+      ]
+    })
 export class CreQuestionSelectorComponent implements OnInit {
 
   @Input() modelId: number;
 
   model: any;
+
+  expanded = false;
 
 
   /**
@@ -49,6 +59,10 @@ export class CreQuestionSelectorComponent implements OnInit {
       this.selectableGroupingsSvc.emitSelectionChanged();
       //this.cdr.detectChanges();
     });
+  }
+
+  toggleExpansion() {
+    this.expanded = !this.expanded;
   }
 
   /**

@@ -67,6 +67,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   grouping: QuestionGrouping | null;
   groupingId: string; // this is a string to be able to support 'bonus'
   title: string;
+  showGroupingSelector = false;
 
   msgUnansweredEqualsNo = '';
 
@@ -141,9 +142,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.refreshQuestionVisibility();
 
     this.selectableGroupingSvc.selectionChanged$.subscribe(() => {
-      console.log('I got the subject!~');
+      //console.log('I got the subject!~');
       this.refreshQuestionVisibility();
     });
+
   }
 
   ngAfterViewInit() {
@@ -207,6 +209,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.moduleBehavior = this.configSvc.getModuleBehavior(this.modelId);
 
 
+        // Show the selector for CRE+ Optional Domain Questions (model 23)
+        // and CRE+ Optional MIL Questions (model 24)
+        this.showGroupingSelector = this.moduleBehavior.mustSelectGroupings ?? false;
+
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
         this.groupings = response.groupings;
@@ -222,16 +228,20 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.filterSvc.answerOptions = response.answerOptions.slice();
         this.filterSvc.maturityModelId = response.modelId;
         this.filterSvc.maturityModelName = response.modelName;
-
+        this.filterSvc.maturityTargetLevel=response.maturityTargetLevel
+        // Adding Maturity Levels to the filters
+        this.filterSvc.refreshAllowableFilters();
+        this.filterSvc.forceRefresh();
         this.displayTitle();
 
 
         this.glossarySvc.glossaryEntries = response.glossary;
 
+        
         // set the message with the current "no" answer value
-        const codeForNo = this.assessSvc.assessment?.maturityModel?.modelId == 12 ? 'NI' : 'N';
-        const noValue = this.questionsSvc.answerButtonLabel(this.modelName, codeForNo);
-        this.msgUnansweredEqualsNo = this.tSvc.translate('questions.unanswered equals no', { 'no-ans': noValue });
+        let codeForNo = this.moduleBehavior.answerOptions?.find(o => o.unansweredEquivalent)?.code ?? 'N';
+        const valueForNo = this.questionsSvc.answerButtonLabel(this.modelName, codeForNo);
+        this.msgUnansweredEqualsNo = this.tSvc.translate('questions.unanswered equals no', { 'no-ans': valueForNo });
 
         this.loaded = true;
 
@@ -414,7 +424,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   /**
    * Show the selector for CRE+ Optional Domain Questions (model 23)
-   * and CRE+ Optional MIL Questions (model 24) 
+   * and CRE+ Optional MIL Questions (model 24)
    */
   showCreSelector(modelId: number): boolean {
     return (modelId == 23 || modelId == 24);

@@ -449,7 +449,7 @@
   },
   "questions": {
     "instructions 1": "Select the applicable answer for each of the following questions.",
-    "unanswered equals no": "Unanswered questions are calculated as a '{{no-ans}}' response.",
+    "unanswered equals no": "Unanswered questions are scored as a '{{no-ans}}' response.",
     "cpg answer key": "CPG Answer Key",
     "security practice": "Security Practice",
     "outcome": "Outcome",
