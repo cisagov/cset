@@ -22,13 +22,15 @@
 -------------------------->
 <div class="report-body mb-5" *transloco="let t">
 
-     <app-cover-sheet-a [title]="title" [assessmentName]="assessmentName" [assessmentDate]="assessmentDate"
-          [assessorName]="assessorName" [facilityName]="facilityName"
-          [selfAssessment]="selfAssessment"></app-cover-sheet-a>
+     <app-cover-sheet-a [title]="t(`reports.core.cre.chart reports by model.${modelId}.title`) | transloco | uppercase"
+          [assessmentName]="assessmentName" [assessmentDate]="assessmentDate" [assessorName]="assessorName"
+          [facilityName]="facilityName" [selfAssessment]="selfAssessment"></app-cover-sheet-a>
+
 
      <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
           <app-report-disclaimer></app-report-disclaimer>
      </div>
+
 
      <div class="page-break">
           <app-report-advisory></app-report-advisory>
@@ -36,22 +38,53 @@
 
 
      <div class="page-break">
-           <ngx-charts-bar-horizontal [scheme]="creSvc.colorScheme" [view]="[700, 300]" [results]="distribModel"
-                    [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisTickFormatting]="creSvc.fmt1" 
-                    [xScaleMax]="100" [xScaleMin]="0" [roundEdges]="false" [showDataLabel]="true" [dataLabelFormatting]="creSvc.fmt1">
-               </ngx-charts-bar-horizontal>
+          <h1>{{ 'reports.core.cre.answer distribution' | transloco }}</h1>
 
-          <ngx-charts-pie-chart [view]="[700, 450]" [results]="distribModel" [scheme]="creSvc.colorScheme" [labels]="true"
-                    [labelFormatting]="fmt2" [trimLabels]="false" [tooltipText]="creSvc.fmt3"
-                    class="d-flex justify-content-center">
-               </ngx-charts-pie-chart>
+          <div *ngIf="domainList.length > 0; else no_selected_subdomains">
+               <p>
 
-          <ngx-charts-bar-horizontal-stacked [view]="[700, 500]" [scheme]="creSvc.colorScheme" [results]="domainDistrib"
-                    [xAxis]="true" [yAxis]="true" [legend]="true" [trimLabels]="false" [wrapTicks]="true"
-                    [dataLabelFormatting]="creSvc.fmt1" [xAxisTickFormatting]="creSvc.fmt1" >
-               </ngx-charts-bar-horizontal-stacked>
+               </p>
+
+               <div class="my-4 px-3" style="border: 1px solid #ddd">
+                    <ngx-charts-bar-horizontal [scheme]="creSvc.colorScheme" [view]="[700, 300]"
+                         [results]="distribModel" [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true"
+                         [showYAxisLabel]="true" [xAxisTickFormatting]="creSvc.fmt1" [xScaleMax]="100" [xScaleMin]="0"
+                         [roundEdges]="false" [showDataLabel]="true" [dataLabelFormatting]="creSvc.fmt1">
+                    </ngx-charts-bar-horizontal>
+                    <p class="fst-italic text-center mt-3">
+                         {{`reports.core.cre.chart reports by model.${modelId}.chart footer1` | transloco}}
+                    </p>
+               </div>
+
+
+               <div class="my-4 px-3" style="border: 1px solid #ddd">
+                    <ngx-charts-pie-chart [view]="[700, 450]" [results]="distribModel" [scheme]="creSvc.colorScheme"
+                         [labels]="true" [labelFormatting]="fmt2" [trimLabels]="false" [tooltipText]="creSvc.fmt3"
+                         class="d-flex justify-content-center">
+                    </ngx-charts-pie-chart>
+                    <p class="fst-italic text-center mt-3">
+                         {{`reports.core.cre.chart reports by model.${modelId}.chart footer1` | transloco}}
+                    </p>
+               </div>
+
+
+               <div class="my-4 px-3" style="border: 1px solid #ddd">
+                    <ngx-charts-bar-horizontal-stacked [view]="[700, 500]" [scheme]="creSvc.colorScheme"
+                         [results]="domainDistrib" [xAxis]="true" [yAxis]="true" [legend]="true" [trimLabels]="false"
+                         [wrapTicks]="true" [dataLabelFormatting]="creSvc.fmt1" [xAxisTickFormatting]="creSvc.fmt1">
+                    </ngx-charts-bar-horizontal-stacked>
+                    <p class="fst-italic text-center mt-3">
+                         {{`reports.core.cre.chart reports by model.${modelId}.chart footer2` | transloco}}
+                    </p>
+               </div>
+          </div>
+
+          <ng-template #no_selected_subdomains>
+               <p>
+                    {{ `reports.core.cre.chart reports by model.${modelId}.no selected` | transloco }}
+               </p>
+          </ng-template>
      </div>
-
 
 
      <div class="page-break" *ngFor="let d of domainList">
