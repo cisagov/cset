@@ -458,9 +458,8 @@ import { CrrNistCsfCatPerformanceComponent } from './reports/crr/crr-report/crr-
 import { CmuNistCsfCatPerformanceComponent } from './reports/cmu/cmu-nist-csf-cat-performance/cmu-nist-csf-cat-performance.component';
 import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-side-toc.component';
 import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-main-toc.component';
-import { CreCoreReportComponent } from './reports/crePlus/cre-core-report/cre-core-report.component';
-import { CreCoreReportGridComponent } from './reports/crePlus/cre-core-report-grid/cre-core-report-grid.component';
-import { CreMilReportComponent } from './reports/crePlus/cre-mil-report/cre-mil-report.component';
+import { CreFinalReportComponent } from './reports/crePlus/cre-final-report/cre-final-report.component';
+import { CreFinalReportGridComponent } from './reports/crePlus/cre-final-report-grid/cre-final-report-grid.component';
 import { CreAssessmentOverview } from './reports/crePlus/cre-assessment-overview/cre-assessment-overview.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
 import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
@@ -942,9 +941,8 @@ registerSwiper();
         NewAssessmentComponent,
         NewAssessmentDialogComponent,
         CrrMainTocComponent,
-        CreCoreReportComponent,
-        CreCoreReportGridComponent,
-        CreMilReportComponent,
+        CreFinalReportComponent,
+        CreFinalReportGridComponent,
         CreAssessmentOverview,
         CreSubdomainChartsComponent,
         CreModelChartsComponent,
