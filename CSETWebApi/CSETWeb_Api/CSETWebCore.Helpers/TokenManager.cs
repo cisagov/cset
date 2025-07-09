@@ -57,7 +57,8 @@ namespace CSETWebCore.Helpers
                 if (!string.IsNullOrEmpty(req.Headers["Authorization"]))
                 {
                     _tokenString = req.Headers["Authorization"];
-                    Init(_tokenString);
+                    // Do not call Init() here - defer validation until token is actually needed
+                    // This prevents exceptions during dependency injection
                 }
             }
         }
@@ -141,6 +142,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public string Payload(string claim)
         {
+            Init(); // Ensure token is initialized before accessing
             return ReadTokenPayload(_token, claim);
         }
 
@@ -153,6 +155,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public int? PayloadInt(string claim)
         {
+            Init(); // Ensure token is initialized before accessing
             var val = ReadTokenPayload(_token, claim);
             int result;
             bool b = int.TryParse(val, out result);
