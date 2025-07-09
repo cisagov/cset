@@ -315,8 +315,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 current.OrganizationName = demographics.OrganizationName;
                 current.Agency = demographics.Agency;
                 current.OrganizationType = demographics.OrganizationType;
-                current.Facilitator = demographics.Facilitator;
-                current.PointOfContact = demographics.PointOfContact;
+                // current.Facilitator = demographics.Facilitator; // Skipping sync until contacts logic is determined
+                // current.PointOfContact = demographics.PointOfContact; // Skipping sync until contacts logic is determined 
                 current.IsScoped = demographics.IsScoped;
                 current.CriticalService = demographics.CriticalService;
             }
