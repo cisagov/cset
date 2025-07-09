@@ -24,6 +24,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ReportService } from '../../../services/report.service';
 import { QuestionsService } from '../../../services/questions.service';
+import { SelectableGroupingsService } from '../../../services/selectable-groupings.service';
 
 @Component({
   selector: 'app-cre-final-report-grid',
@@ -46,14 +47,15 @@ export class CreFinalReportGridComponent implements OnInit {
    */
   constructor(
     public reportSvc: ReportService,
-    public questionsSvc: QuestionsService
+    public questionsSvc: QuestionsService,
+    private selectableGroupingsSvc: SelectableGroupingsService
   ) { }
 
   /**
    * 
    */
   ngOnInit(): void {
-    this.modelSupportSelectableGroupings = [23, 24].includes(this.modelId);
+    this.modelSupportSelectableGroupings = this.selectableGroupingsSvc.modelsThatSupportSelectableGroupings.includes(this.modelId);
 
     this.reportSvc.getModelContent(this.modelId.toString()).subscribe((x) => {
       this.model = x;

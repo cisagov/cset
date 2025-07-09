@@ -15,8 +15,8 @@ import { QuestionGrouping } from '../../../../models/questions.model';
       state('expanded', style({ height: '*', padding: '*' })),
       transition('collapsed <=> expanded', animate('0.3s ease'))
     ])
-      ]
-    })
+  ]
+})
 export class CreQuestionSelectorComponent implements OnInit {
 
   @Input() modelId: number;
@@ -36,31 +36,15 @@ export class CreQuestionSelectorComponent implements OnInit {
   ) { }
 
   /**
-   * Get the grouping structure from the service and set 
-   * a 'selected' property on each grouping/subgrouping based on what we
-   * have in the API.
+   * 
    */
-  ngOnInit(): void {
-    // use a local reference variable to the service's model
-    console.log('selector about to load model ' + this.modelId);
+  async ngOnInit(): Promise<void> {
     this.model = this.selectableGroupingsSvc.models.get(this.modelId);
-    console.log('and I found ', this.model);
-
-    // get the selected groups and mark them in the component's model
-    this.selectableGroupingsSvc.getSelectedGroupIds().subscribe((selectedGroupIds: number[]) => {
-      this.model?.forEach(grp => {
-        grp.selected = selectedGroupIds.includes(grp.groupingId);
-
-        grp.subGroupings.forEach(subGrp => {
-          subGrp.selected = selectedGroupIds.includes(subGrp.groupingId);
-        });
-      });
-
-      this.selectableGroupingsSvc.emitSelectionChanged();
-      //this.cdr.detectChanges();
-    });
   }
 
+  /**
+   * 
+   */
   toggleExpansion() {
     this.expanded = !this.expanded;
   }
@@ -70,6 +54,7 @@ export class CreQuestionSelectorComponent implements OnInit {
    */
   changeGroupSelection(id: number, evt: any) {
     const g = this.selectableGroupingsSvc.findGrouping(this.modelId, id);
+
     if (!g) {
       return;
     }
@@ -85,7 +70,7 @@ export class CreQuestionSelectorComponent implements OnInit {
 
   /**
    * Build a list of groups whose selected status is changed.
-   * This will de-select subgroups for a deselected parent.
+   * This will de-select all subgroups of a deselected parent.
    */
   buildList(g: QuestionGrouping): number[] {
     let groupsChanged: number[] = [];
