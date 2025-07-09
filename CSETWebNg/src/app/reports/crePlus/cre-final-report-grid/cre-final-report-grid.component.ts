@@ -24,26 +24,39 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ReportService } from '../../../services/report.service';
 import { QuestionsService } from '../../../services/questions.service';
+import { SelectableGroupingsService } from '../../../services/selectable-groupings.service';
 
 @Component({
-  selector: 'app-cre-core-report-grid',
+  selector: 'app-cre-final-report-grid',
   standalone: false,
-  templateUrl: './cre-core-report-grid.component.html',
+  templateUrl: './cre-final-report-grid.component.html',
   styleUrls: ['../../reports.scss']
 })
-export class CreCoreReportGridComponent implements OnInit {
+export class CreFinalReportGridComponent implements OnInit {
 
   @Input() modelId: number;
 
   model: any;
   groupings: [];
 
+  modelSupportSelectableGroupings = false;
+
+
+  /**
+   * 
+   */
   constructor(
     public reportSvc: ReportService,
-    public questionsSvc: QuestionsService
+    public questionsSvc: QuestionsService,
+    private selectableGroupingsSvc: SelectableGroupingsService
   ) { }
 
+  /**
+   * 
+   */
   ngOnInit(): void {
+    this.modelSupportSelectableGroupings = this.selectableGroupingsSvc.modelsThatSupportSelectableGroupings.includes(this.modelId);
+
     this.reportSvc.getModelContent(this.modelId.toString()).subscribe((x) => {
       this.model = x;
 
@@ -56,7 +69,6 @@ export class CreCoreReportGridComponent implements OnInit {
   * @param answer 
   */
   answerCellClass(answer: string) {
-    console.log(answer);
     switch (answer) {
       case 'Y':
         return 'green-score';

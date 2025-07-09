@@ -26,7 +26,7 @@ namespace CSETWebCore.Interfaces.Maturity
         object GetEdmPercentScores(int assessmentId);
         MaturityResponse GetMaturityQuestions(int assessmentId, bool fill, int groupingId, string lang);
 
-        void BuildSubGroupings(MaturityGrouping g, int? parentID,
+        void BuildSubGroupings(int assessmentId, int modelId, MaturityGrouping g, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
             List<MATURITY_QUESTIONS> questions,
             List<FullAnswer> answers,
