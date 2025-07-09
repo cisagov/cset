@@ -139,15 +139,15 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.refreshQuestionVisibility();
-
+    
     this.selectableGroupingSvc.selectionChanged$.subscribe(() => {
-      //console.log('I got the subject!~');
       this.refreshQuestionVisibility();
     });
-
   }
 
+  /**
+   * 
+   */
   ngAfterViewInit() {
     setTimeout(() => {
       this.scrollToResumeQuestionsTarget();
@@ -167,6 +167,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     } else {
       this.loadGrouping(+this.groupingId);
     }
+
+    this.refreshQuestionVisibility();
   }
 
   /**
@@ -192,11 +194,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     if (this.groupingId?.toLowerCase() == 'bonus') {
       const bonusModelId = this.ssgSvc.ssgBonusModel();
       obsGetQ = this.maturitySvc.getBonusQuestionList(bonusModelId);
-
+      
     } else if (this.groupingId?.toLowerCase().startsWith('m')) {
       const bonusModelId = +this.groupingId.substring(1);
       obsGetQ = this.maturitySvc.getBonusQuestionList(bonusModelId);
-
+      
     } else {
       obsGetQ = this.maturitySvc.getQuestionsList(false);
     }

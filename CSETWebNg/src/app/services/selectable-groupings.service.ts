@@ -24,7 +24,7 @@
 import { Injectable } from '@angular/core';
 import { SelectableModel } from '../models/selectable-model.model';
 import { QuestionGrouping } from '../models/questions.model';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from './config.service';
 
@@ -35,10 +35,14 @@ export class SelectableGroupingsService {
 
   private apiUrl: string;
 
+  public modelsThatSupportSelectableGroupings = [23, 24];
+
   /**
    * We can store multiple models for multiple question page state
    */
   models: Map<number, QuestionGrouping[]>;
+
+  selectedGroupIds: number[];
 
 
   // 
@@ -69,26 +73,29 @@ export class SelectableGroupingsService {
    * Returns the grouping in the structure with the specified ID
    */
   findGrouping(modelId: number, id: number): QuestionGrouping | null {
-    var model = this.models.get(modelId);
+    const modelDomains = this.models.get(modelId);
+    return this.findDeep(modelDomains, item => item.groupingId == id);
+  }
 
-    if (!model) {
-      return null;
-    }
+  /**
+   * 
+   */
+  findDeep(arr, predicate): QuestionGrouping | null {
+    let result;
+    result = null;
 
-    for (let i = 0; i < model.length; i++) {
-      const g = model[i];
-      if (g.groupingId == id) {
-        return g;
+    for (const item of arr) {
+      if (predicate(item)) {
+        result = item;
+        break;
       }
-      for (let j = 0; j < g.subGroupings.length; j++) {
-        const sg = g.subGroupings[j];
-        if (sg.groupingId == id) {
-          return sg;
-        }
-      };
+      
+      if (item.subGroupings && item.subGroupings.length) {
+        result = this.findDeep(item.subGroupings, predicate);
+        if (result) break;
+      }
     }
-
-    return null;
+    return result;
   }
 
   /**
@@ -96,13 +103,6 @@ export class SelectableGroupingsService {
    */
   emitSelectionChanged() {
     this.selectionChangedSubject.next();
-  }
-
-  /**
-   * 
-   */
-  getSelectedGroupIds(): Observable<number[]> {
-    return this.http.get<number[]>(this.apiUrl + "groupselections/");
   }
 
   /**

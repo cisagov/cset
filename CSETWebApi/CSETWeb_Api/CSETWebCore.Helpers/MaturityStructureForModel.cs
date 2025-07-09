@@ -133,7 +133,7 @@ namespace CSETWebCore.Helpers
             var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentID).OrderBy(x => x.Sequence).ToList();
 
 
-            // remove any "unselected" groups if the model support selectable groupings
+            // if the current model supports "selectable" groupings, remove any "unselected" groups 
             if (_modelsWithSelectableGroupings.Contains(_modelId))
             {
                 mySubgroups.RemoveAll(x => !_selectedGroupings.Contains(x.Grouping_Id));
