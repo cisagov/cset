@@ -64,7 +64,7 @@ export class CreModelChartsComponent implements OnInit {
 
 
       setTimeout(() => {
-        const titleKey = `reports.core.cre.chart reports by model.${this.modelId}.title`;
+        const titleKey = `reports.core.cre.chart reports.${this.modelId}.title`;
         var title = this.tSvc.translate(titleKey, { defaultTitle: this.configSvc.behaviors.defaultTitle });
         this.titleService.setTitle(title);
       }, 500);
