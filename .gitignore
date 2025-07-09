@@ -12,6 +12,10 @@ CLAUDE.md
 ## VS Code ##
 .vscode
 
+## .NET ##
+CSETWeb_Api.sln.DotSettings.user
+
+
 ## Web ##
 /CSETWebApi/CSETWeb_Api/.DS_Store
 /CSETWebApi/.DS_Store
