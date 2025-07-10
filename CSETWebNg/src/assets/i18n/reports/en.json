@@ -812,8 +812,8 @@
                     },
                     "24": {
                          "title": "Cyber Resilience Essentials (CRE+) MIL Questions Charts",
-                         "chart footer1": "MIL Question Answer Distribution.  Only selected subdomains are included.",
-                         "chart footer2": "MIL Question Answer Distribution by domain. Only selected subdomains are included.",
+                         "chart footer1": "MIL Question Answer Distribution.  Only selected MILs are included.",
+                         "chart footer2": "MIL Question Answer Distribution by domain. Only selected MILs are included.",
                          "no selected": "None of the MILs were selected so there is nothing to show."
                     }
                }

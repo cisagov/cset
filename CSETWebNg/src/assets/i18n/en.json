@@ -974,6 +974,12 @@
       "selector 23 title": "Select domains and subdomains for additional questions",
       "selector 24 title": "Select domains and MILs for additional questions"
     },
+    "cre+ opt": {
+      "display-name": "CRE+ Optional Domains"
+    },
+    "cre+ mil": {
+      "display-name": "CRE+ MIL"
+    },
     "cmmc2": {
       "model long title": "Cybersecurity Maturity Model Certification (CMMC) 2.0 DRAFT",
       "model short title": "CMMC 2.0 DRAFT"

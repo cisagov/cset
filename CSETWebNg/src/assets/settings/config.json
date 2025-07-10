@@ -387,8 +387,8 @@
     {
       "moduleName": "CRE+ OPT",
       "modelId": "23",
-      "displayNameKey": "modules.cre+.display-name",
-      "questionNodeKey": "modules.cre+.question node title",
+      "displayNameKey": "modules.cre+ opt.display-name",
+      "questionNodeKey": "modules.cre+ opt.question node title",
       "hideTopLevelGroupingName": false,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
@@ -430,8 +430,8 @@
     {
       "moduleName": "CRE+ MIL",
       "modelId": "24",
-      "displayNameKey": "modules.cre+.display-name",
-      "questionNodeKey": "modules.cre+.question node title",
+      "displayNameKey": "modules.cre+ mil.display-name",
+      "questionNodeKey": "modules.cre+ mil.question node title",
       "hideTopLevelGroupingName": false,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
