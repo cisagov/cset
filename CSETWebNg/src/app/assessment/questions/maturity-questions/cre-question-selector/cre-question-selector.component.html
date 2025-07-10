@@ -34,14 +34,13 @@
           <div *ngFor="let g of model" class="mb-2">
                <input class="checkbox-custom d-none" type="checkbox" id="dom-{{g.groupingId}}" [(ngModel)]="g.selected"
                     (change)="changeGroupSelection(g.groupingId, $event)">
-               <label for="dom-{{g.groupingId}}" class="checkbox-custom-label mb-3" style="color: white">{{g?.title}}
-                    {{g.groupingId}}</label>
+               <label for="dom-{{g.groupingId}}" class="checkbox-custom-label mb-3" style="color: white">{{g?.title}}</label>
                <div [hidden]="!g.selected" class="collapsible-content ms-4 mb-3 pb-2 nested-list section-border">
                     <div *ngFor="let sg of g.subGroupings">
                          <input class="checkbox-custom d-none" type="checkbox" id="subdom-{{sg.groupingId}}"
                               [(ngModel)]="sg.selected" (change)="changeGroupSelection(sg.groupingId, $event)">
                          <label for="subdom-{{sg.groupingId}}" class="checkbox-custom-label"
-                              style="color: white">{{sg.title}} {{sg.groupingId}}</label>
+                              style="color: white">{{sg.title}}</label>
                     </div>
                </div>
           </div>
