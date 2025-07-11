@@ -35,7 +35,7 @@ export class CmmcFilteringService {
 
     constructor(
         public assessmentSvc: AssessmentService,
-        public questionFilterSvc: QuestionFilterService
+        public questionFilterSvc: QuestionFilterService,
     ) { }
 
     /**
@@ -48,17 +48,11 @@ export class CmmcFilteringService {
             this.assessmentSvc.assessment.maturityModel?.maturityTargetLevel :
             10;
 
-        // if the 'show above target' filter is turned on, show it, regardless of the question's level
-        if (this.questionFilterSvc.showFilters.includes('MT+')) {
-            q.visible = true;
-        }
-      // if the question's maturity level is at or below the target level, show it
-      if (q.maturityLevel <= targetLevel) {
-        const questionLevel=q.maturityLevel.toString();
-        if(this,this.questionFilterSvc.showFilters.includes(questionLevel)){
-          q.visible = true;
-        }
+        q.visible = true;
 
+      // Hide questions above target level (unless MT+ is selected)
+      if (q.maturityLevel > targetLevel && !this.questionFilterSvc.showFilters.includes('MT+')) {
+        q.visible = false;
       }
     }
 }
