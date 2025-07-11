@@ -393,6 +393,7 @@
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "mustSelectGroupings": true,
+      "groupingsAreMil": false,
       "questionIcons": {
         "showDetails": false,
         "showReviewed": false
@@ -436,6 +437,7 @@
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "mustSelectGroupings": true,
+      "groupingsAreMil": true,
       "questionIcons": {
         "showDetails": false,
         "showReviewed": false
