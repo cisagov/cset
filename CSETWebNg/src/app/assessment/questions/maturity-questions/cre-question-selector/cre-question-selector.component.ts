@@ -21,6 +21,8 @@ export class CreQuestionSelectorComponent implements OnInit {
 
   @Input() modelId: number;
 
+  @Input() cumulativeLevels = false;
+
   model: any;
 
   expanded = false;
@@ -50,7 +52,7 @@ export class CreQuestionSelectorComponent implements OnInit {
   }
 
   /**
-   * 
+   * Persists the selected/deselected state of a 
    */
   changeGroupSelection(id: number, evt: any) {
     const g = this.selectableGroupingsSvc.findGrouping(this.modelId, id);
@@ -66,6 +68,19 @@ export class CreQuestionSelectorComponent implements OnInit {
     // persist the changed group(s)
     const groupsChanged = this.buildList(g);
     this.selectableGroupingsSvc.save(groupsChanged, g.selected).subscribe();
+  }
+
+  /**
+   * Sets the clicked level and levels below it to true. 
+   */
+  changeMilSelection(id: number, evt: any) {
+    const gg = this.selectableGroupingsSvc.findGroupingAndLesser(this.modelId, id);
+
+    this.selectableGroupingsSvc.emitSelectionChanged();
+
+    // persist the true group and the false group to the API
+    this.selectableGroupingsSvc.save(gg.filter(x => x.selected).map(x => x.groupingId), true).subscribe();
+    this.selectableGroupingsSvc.save(gg.filter(x => !x.selected).map(x => x.groupingId), false).subscribe();
   }
 
   /**

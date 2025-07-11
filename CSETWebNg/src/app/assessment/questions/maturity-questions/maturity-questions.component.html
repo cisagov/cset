@@ -80,7 +80,7 @@
 
     <!-- CRE+ allows the user to limit questions shown on some pages -->
     <ng-container *ngIf="!!groupings && showGroupingSelector">
-      <app-cre-question-selector [modelId]="modelId"></app-cre-question-selector>
+      <app-cre-question-selector [modelId]="modelId" [cumulativeLevels]="groupingsAreMil"></app-cre-question-selector>
     </ng-container>
 
     <div *ngIf="!groupings" class="w-100">

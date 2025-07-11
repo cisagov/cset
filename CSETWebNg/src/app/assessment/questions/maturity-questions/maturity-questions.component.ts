@@ -57,6 +57,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
   navTarget: string | null; // this is a string to be able to support 'bonus' or 'm23'
 
   groupings: QuestionGrouping[] | null = [];
+  groupingsAreMil = false;
+
   pageTitle: string = '';
   moduleBehavior: ModuleBehavior;
   modelId: number;
@@ -226,24 +228,25 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
         // Show the selector for CRE+ Optional Domain Questions (model 23)
         // and CRE+ Optional MIL Questions (model 24)
         this.showGroupingSelector = this.moduleBehavior.mustSelectGroupings ?? false;
-
+        this.groupingsAreMil = this.moduleBehavior.groupingsAreMil ?? false;
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
         this.groupings = response.groupings;
         this.selectableGroupingSvc.setModelGroupings(this.modelId, response.groupings);
 
-
-        this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
+        if (this.assessSvc.assessment && this.assessSvc.assessment.maturityModel) {
+          this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
+          this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
+        }
 
         // 100 is the default level if the model does not support a target
         this.modelSupportsTargetLevel = response.maturityTargetLevel < 100;
 
-        this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions.slice();
         this.filterSvc.maturityModelId = response.modelId;
         this.filterSvc.maturityModelName = response.modelName;
         this.filterSvc.maturityTargetLevel = response.maturityTargetLevel;
-        
+
         // Adding Maturity Levels to the filters
         this.filterSvc.refreshAllowableFilters();
         this.filterSvc.forceRefresh();
@@ -291,9 +294,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
       this.modelName = response.modelName;
       this.questionsAlias = response.questionsAlias;
       this.groupings = response.groupings;
-      this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
+      if (this.assessSvc.assessment && this.assessSvc.assessment.maturityModel) {
+        this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
+        this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
+      }
 
-      this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
       this.filterSvc.answerOptions = response.answerOptions.slice();
       this.filterSvc.maturityModelId = response.modelId;
 
