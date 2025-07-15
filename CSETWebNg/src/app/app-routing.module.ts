@@ -30,7 +30,6 @@ import { FrameworkComponent } from './assessment/prepare/framework/framework.com
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
 import { PrepareComponent } from './assessment/prepare/prepare.component';
 import { SalsComponent } from './assessment/prepare/sals/sals.component';
-import { StandardsComponent } from './assessment/prepare/standards/standards.component';
 import { QuestionsComponent } from './assessment/questions/questions.component';
 import { AnalysisComponent } from './assessment/results/analysis/analysis.component';
 import { ComponentsRankedComponent } from './assessment/results/analysis/components-ranked/components-ranked.component';
@@ -190,6 +189,7 @@ import { Cmmc2LevelsComponent } from './assessment/prepare/maturity/cmmc2-levels
 import { Cmmc2ScoresComponent } from './assessment/results/mat-cmmc2/cmmc2-scores/cmmc2-scores.component';
 import { Cmmc2ScorecardPageComponent } from './assessment/results/mat-cmmc2/scorecard/cmmc2-scorecard/cmmc2-scorecard-page.component';
 import { Cmmc2ScorecardReportComponent } from './reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
+import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { RoleGuard } from './guards/role.guard';
 import { RoleType } from './models/enums/role.model';
@@ -323,9 +323,9 @@ const appRoutes: Routes = [
               { path: 'config-cis', component: ConfigCisComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'cmmc2-levels', component: Cmmc2LevelsComponent },
+              { path: 'cisa-vadr-levels', component: CisaVadrLevelsComponent },
               { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
-              { path: 'standards', component: StandardsComponent },
               { path: 'framework', component: FrameworkComponent },
               { path: 'required', component: RequiredDocsComponent },
               {

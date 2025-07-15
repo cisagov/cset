@@ -256,22 +256,9 @@ export class MaturityFilteringService {
     g.visible = true;
 
 
-    // if CRE+ Optional (23) or MIL (24), the grouping must be marked 'selected' or we hide it
-    if ([23, 24].includes(modelId)) {
-      const sg = this.selectableGroupingsSvc.findGrouping(modelId, g.groupingId);
+    // first check the 'selected' property (see maturity models 23 and 24)
+    g.visible = g.selected;
 
-      console.log('the sg I found is ', sg);
-
-
-      if (!!sg) {
-        console.log('the selected property is ', sg.selected);
-        if (sg.hasOwnProperty('selected') && !sg.selected) {
-          console.log('hiding ', sg);
-          g.visible = false;
-          return;
-        }
-      }
-    }
 
 
     g.questions.forEach(q => {
@@ -307,7 +294,17 @@ export class MaturityFilteringService {
       if (!q.visible) {
         return;
       }
+
       const maturityModel=this.assesmentSvc.assessment?.maturityModel;
+
+      if (q.maturityLevel !== undefined && q.maturityLevel !== null) {
+        const questionLevel = q.maturityLevel.toString();
+        if (!filterSvc.showFilters.includes(questionLevel)) {
+          //q.visible=false;   -- quick fix for now to prevent questions from being hidden incorrectly
+          //return;
+        }
+      }
+
       // If we made it this far, start over assuming visible = false
       q.visible = false
       

@@ -16,7 +16,6 @@ import { ModelSelectComponent } from '../../assessment/prepare/maturity/model-se
 import { PrepareComponent } from '../../assessment/prepare/prepare.component';
 import { RequiredDocsComponent } from '../../assessment/prepare/required/required.component';
 import { SalsComponent } from '../../assessment/prepare/sals/sals.component';
-import { StandardsComponent } from '../../assessment/prepare/standards/standards.component';
 import { DiagramQuestionsComponent } from '../../assessment/questions/diagram-questions/diagram-questions.component';
 import { MaturityQuestionsComponent } from '../../assessment/questions/maturity-questions/maturity-questions.component';
 import { MaturityQuestionsNestedComponent } from '../../assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
@@ -73,6 +72,8 @@ import { ReportsComponent } from '../../assessment/results/reports/reports.compo
 import { ResultsComponent } from '../../assessment/results/results.component';
 import { TsaAssessmentCompleteComponent } from '../../assessment/results/tsa-assessment-complete/tsa-assessment-complete.component';
 import { AssessGuard } from '../../guards/assess.guard';
+import { CisaVadrLevelsComponent } from '../../assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
+import { CisaVadrInfoComponent } from '../../assessment/prepare/maturity/cisa-vadr-info/cisa-vadr-info.component';
 
 const routes: Routes = [
     {
@@ -91,9 +92,10 @@ const routes: Routes = [
             { path: 'config-cis', component: ConfigCisComponent },
             { path: 'cmmc-levels', component: CmmcLevelsComponent },
             { path: 'cmmc2-levels', component: Cmmc2LevelsComponent },
+            { path: 'cisa-vadr-info', component: CisaVadrInfoComponent },
+            { path: 'cisa-vadr-levels', component: CisaVadrLevelsComponent },
             { path: 'csi', component: CsiComponent },
             { path: 'sal', component: SalsComponent },
-            { path: 'standards', component: StandardsComponent },
             { path: 'framework', component: FrameworkComponent },
             { path: 'required', component: RequiredDocsComponent },
             {

@@ -30,9 +30,13 @@
         <p>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Password</mat-label>
-            <input type="password" trim="blur" matInput placeholder="Password" formControlName="password"
-              [errorStateMatcher]="matcherpassword">
-            <mat-icon matPrefix style="margin-right:10px;">lock</mat-icon>
+            <input [type]="hidePassword ? 'password' : 'text'" trim="blur" matInput placeholder="Password"
+              formControlName="password" [errorStateMatcher]="matcherpassword">
+            <mat-icon matPrefix style="margin-right: 10px;">lock</mat-icon>
+            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" class="" type="button"
+              style="margin-right: 15px; padding: 0; width: 24px; height: 24px; vertical-align: middle;">
+              <mat-icon class="">{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+            </button>
             <mat-error *ngIf="dataloginForm.controls.password.hasError('required')">
               Password is <strong>required</strong>
             </mat-error>

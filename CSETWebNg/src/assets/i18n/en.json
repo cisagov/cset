@@ -205,6 +205,8 @@
       }
     },
     "cmmc target level selection": "CMMC Target Level Selection",
+    "cisa vadr info": "Additional VADR Information",
+    "cisa vadr target level selection": "Risk Level Selection",
     "network diagram": "Network Diagram",
     "diagram component questions": "Diagram Component Questions",
     "standard questions": "Standard Questions",
@@ -447,7 +449,7 @@
   },
   "questions": {
     "instructions 1": "Select the applicable answer for each of the following questions.",
-    "unanswered equals no": "Unanswered questions are calculated as a '{{no-ans}}' response.",
+    "unanswered equals no": "Unanswered questions are scored as a '{{no-ans}}' response.",
     "cpg answer key": "CPG Answer Key",
     "security practice": "Security Practice",
     "outcome": "Outcome",
@@ -502,6 +504,7 @@
   "level": {
     "low": "Low",
     "medium": "Medium",
+    "moderate": "Moderate",
     "high": "High",
     "basic": "Basic",
     "incomplete": "Incomplete",
@@ -971,6 +974,12 @@
       "selector 23 title": "Select domains and subdomains for additional questions",
       "selector 24 title": "Select domains and MILs for additional questions"
     },
+    "cre+ opt": {
+      "display-name": "CRE+ Optional Domains"
+    },
+    "cre+ mil": {
+      "display-name": "CRE+ MIL"
+    },
     "cmmc2": {
       "model long title": "Cybersecurity Maturity Model Certification (CMMC) 2.0 DRAFT",
       "model short title": "CMMC 2.0 DRAFT"
@@ -986,7 +995,16 @@
     "cisa vadr": {
       "display-name": "CISA Validated Architecture Design Review (VADR)",
       "model short title": "CISA VADR",
-      "question node title": "VADR Questions"
+      "question node title": "VADR Questions",
+      "level selection": {
+        "para 1": "Select the level appropriate to your organization's assessment.",
+        "btn-low": "Low",
+        "desc-low": "This is what you would pick if you are shooting for a low level of maturity",
+        "btn-mod": "Moderate",
+        "desc-mod": "This is what you would pick if you are shooting for a moderate level of maturity",
+        "btn-high": "High",
+        "desc-high": "This is what you would pick if you are shooting for a high level of maturity"
+      }
     }
   },
   "aggregation": {

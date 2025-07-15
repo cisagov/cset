@@ -31,6 +31,7 @@ import { QuestionFilterService } from './filtering/question-filter.service';
 import { BehaviorSubject } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 import { LinebreakPipe } from '../helpers/linebreak.pipe';
+import { AnswerOptionConfig } from '../models/module-config.model';
 
 const headers = {
   headers: new HttpHeaders()
@@ -385,7 +386,7 @@ export class QuestionsService {
    * Standards questions screen pass '0' for the modelId.
    */
   findAnsDefinition(model: string, answerCode: string) {
-    let ansDef = null;
+    let ansDef;
 
     // assume unanswered if null or undefined
     if (!answerCode) {

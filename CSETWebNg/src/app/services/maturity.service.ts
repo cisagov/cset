@@ -66,7 +66,7 @@ export class MaturityService {
   ofc: any[];
 
 
-  cmmcData = null;
+  cmmcData;
 
   mvraGroupings: any[] = [];
   cisGroupings: any[] = [];
@@ -87,6 +87,7 @@ export class MaturityService {
     private configSvc: ConfigService,
     private assessSvc: AssessmentService
   ) {
+    this.cmmcData = null;
 
     // get MVRA grouping titles
     this.getGroupingTitles(9).subscribe((l: any[]) => {
@@ -156,8 +157,8 @@ export class MaturityService {
    */
   targetLevelName() {
     const model = this.assessSvc.assessment.maturityModel;
-    if (!!this.assessSvc.assessment && !!model.maturityTargetLevel) {
-      const l = model.levels.find(x => x.level == this.assessSvc.assessment.maturityModel.maturityTargetLevel);
+    if (!!this.assessSvc.assessment && !!model?.maturityTargetLevel) {
+      const l = model.levels.find(x => x.level == this.assessSvc.assessment.maturityModel?.maturityTargetLevel);
       if (!!l) {
         return l.label;
       }
