@@ -47,7 +47,6 @@ export class CmmcFilteringService {
         const targetLevel = this.assessmentSvc.assessment ?
             this.assessmentSvc.assessment.maturityModel?.maturityTargetLevel :
             10;
-
         q.visible = true;
 
       // Hide questions above target level (unless MT+ is selected)
