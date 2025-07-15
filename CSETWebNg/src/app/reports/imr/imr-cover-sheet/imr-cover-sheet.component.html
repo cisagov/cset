@@ -1,22 +1,24 @@
-<span class="d-flex justify-content-center">
+<div class="cover-page">
+  <span class="d-flex justify-content-center">
     <img class="my-4" style="height: 18rem" src="assets/images/CISA_Logo_1831px.png" alt="cisa">
-</span>
+  </span>
 
-<div class="text-center h3">
+  <div class="text-center h3">
     <div>
-        INCIDENT MANAGEMENT REVIEW
-        <br>
-        REPORT
+      INCIDENT MANAGEMENT REVIEW
+      <br>
+      REPORT
     </div>
     <div class="my-3 h4">
-        FOR
+      FOR
     </div>
     <div class="mb-3">
-        {{ this.model?.assessmentDetails?.facility_Name }}
+      {{ this.model?.assessmentDetails?.facility_Name }}
     </div>
     <div>
-        {{this.model?.assessmentDetails?.assessment_Date | localizeDate}}
+      {{this.model?.assessmentDetails?.assessment_Date | localizeDate}}
     </div>
+  </div>
 </div>
 
 

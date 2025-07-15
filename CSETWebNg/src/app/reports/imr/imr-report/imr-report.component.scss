@@ -681,18 +681,17 @@ div.widget svg {
     margin: 0 !important;
   }
 
-  .report-body-crr {
+  .report-body-imr {
     margin-left: 1.5cm !important;
     margin-right: -2cm !important;
   }
 
-  #coversheet1 {
-    margin-left: -2cm;
-    margin-right: -2cm;
+  .navbar {
+    display: none;
   }
 
   .container-fluid,
-  .report-body-crr {
+  .report-body-imr {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -702,8 +701,14 @@ div.widget svg {
     padding-top: 1.5cm !important;
   }
 
+  .cover-page {
+    margin-left: 8cm !important;
+  }
+
   .report-notification {
-    margin-top: 8cm !important;
+    position: absolute;
+    margin-left: 2cm !important;
+    margin-top: 4cm !important;
   }
 
   #mil4-page-break {

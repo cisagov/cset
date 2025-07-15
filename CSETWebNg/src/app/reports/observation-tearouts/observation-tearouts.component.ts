@@ -28,10 +28,10 @@ import { ReportService } from '../../services/report.service';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'observations',
-    templateUrl: './observation-tearouts.component.html',
-    styleUrls: ['../reports.scss'],
-    standalone: false
+  selector: 'observations',
+  templateUrl: './observation-tearouts.component.html',
+  styleUrls: ['../reports.scss'],
+  standalone: false
 })
 export class ObservationTearoutsComponent implements OnInit {
 
@@ -53,7 +53,9 @@ export class ObservationTearoutsComponent implements OnInit {
     this.reportSvc.getReport('observations').subscribe(
       (r: any) => {
         this.response = r;
-        this.titleService.setTitle(this.tSvc.translate('reports.observations tear-out sheets.tab title', { defaultTitle: this.configSvc.behaviors.defaultTitle }));
+
+        var title = this.tSvc.translate('reports.observations tear-out sheets.tab title', { defaultTitle: this.configSvc.behaviors.defaultTitle });
+        this.titleService.setTitle(title);
       },
       error => console.log('Observation Tear Out Sheets report load Error: ' + (<Error>error).message)
     );

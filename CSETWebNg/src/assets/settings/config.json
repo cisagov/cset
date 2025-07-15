@@ -18,11 +18,6 @@
     "documentsIdentifier": "Documents",
     "onlineUrl": "https://cset.inl.gov"
   },
-  "analytics": {
-    "protocol": "http",
-    "host": "csetac",
-    "port": "5778"
-  },
   "library": {
     "protocol": "http",
     "host": "localhost",
@@ -34,6 +29,11 @@
   "helpContactPhone": "",
   "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
   "supplementalAutoloadInitialValue": false,
+  "analytics": {
+    "protocol": "http",
+    "host": "csetac",
+    "port": "5778"
+  },
   "debug": {
     "showBuildTime": false,
     "showQuestionAndRequirementIDs": false,
@@ -379,6 +379,7 @@
           "buttonLabelKey": "Not-CPG",
           "buttonCss": "btn-no",
           "chartSegmentColor": "#990000",
+          "unansweredEquivalent": true,
           "consideredMissed": true
         }
       ]
@@ -386,11 +387,13 @@
     {
       "moduleName": "CRE+ OPT",
       "modelId": "23",
-      "displayNameKey": "modules.cre+.display-name",
-      "questionNodeKey": "modules.cre+.question node title",
+      "displayNameKey": "modules.cre+ opt.display-name",
+      "questionNodeKey": "modules.cre+ opt.question node title",
       "hideTopLevelGroupingName": false,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
+      "mustSelectGroupings": true,
+      "groupingsAreMil": false,
       "questionIcons": {
         "showDetails": false,
         "showReviewed": false
@@ -420,6 +423,7 @@
           "buttonLabelKey": "Not-CPG",
           "buttonCss": "btn-no",
           "chartSegmentColor": "#990000",
+          "unansweredEquivalent": true,
           "consideredMissed": true
         }
       ]
@@ -427,11 +431,13 @@
     {
       "moduleName": "CRE+ MIL",
       "modelId": "24",
-      "displayNameKey": "modules.cre+.display-name",
-      "questionNodeKey": "modules.cre+.question node title",
+      "displayNameKey": "modules.cre+ mil.display-name",
+      "questionNodeKey": "modules.cre+ mil.question node title",
       "hideTopLevelGroupingName": false,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
+      "mustSelectGroupings": true,
+      "groupingsAreMil": true,
       "questionIcons": {
         "showDetails": false,
         "showReviewed": false
@@ -461,6 +467,7 @@
           "buttonLabelKey": "Not-CPG",
           "buttonCss": "btn-no",
           "chartSegmentColor": "#990000",
+          "unansweredEquivalent": true,
           "consideredMissed": true
         }
       ]
@@ -528,7 +535,8 @@
         {
           "code": "NI",
           "buttonLabelKey": "NI-C2M2",
-          "buttonCss": "btn-c2m2-ni"
+          "buttonCss": "btn-c2m2-ni",
+          "unansweredEquivalent": true
         }
       ]
     },
@@ -559,7 +567,7 @@
       "displayNameKey": "modules.cisa vadr.display-name",
       "questionNodeKey": "modules.cisa vadr.question node title",
       "autoLoadSupplemental": true,
-      "showMaturityLevelBadge": false,
+      "showMaturityLevelBadge": true,
       "questionIcons": {
         "showDetails": false,
         "showGuidance": false,
