@@ -297,7 +297,6 @@ export class MaturityFilteringService {
           break;
 
         case 'RRA':
-        case 'MVRA':
           this.rraFilteringSvc.setQuestionVisibility(q);
           break;
 
@@ -310,11 +309,8 @@ export class MaturityFilteringService {
       }
       const maturityModel=this.assesmentSvc.assessment?.maturityModel;
       // If we made it this far, start over assuming visible = false
-      q.visible = false;
-
-
-      // If search string is specified, any questions that don't contain the string
-      // are not shown.  No need to check anything else.
+      q.visible = false
+      
       if (filterSvc.filterSearchString.length > 0
         && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
         return;

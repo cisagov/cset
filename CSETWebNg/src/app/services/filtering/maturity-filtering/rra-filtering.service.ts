@@ -32,7 +32,6 @@ export class RraFilteringService {
      * MATURITY-based filtering.
      */
     public setQuestionVisibility(q: Question) {
-        console.log(q)
         q.visible = true;
     }
 }
