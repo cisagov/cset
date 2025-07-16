@@ -1268,7 +1268,10 @@ ul.mat-tree-node {
 }
 
 .side-nav-container .current-node>button {
-  border: 1px solid #ffffff;
+  border: none;
+  border-radius: .3rem !important;
+  background-color: #ffffff;
+  color: $primary-600;
 }
 
 .side-nav-container .btn-home {

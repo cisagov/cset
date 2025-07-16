@@ -46,7 +46,9 @@ export class CreMilCharts2Component {
   facilityName: string;
   selfAssessment: boolean;
 
-
+  /**
+   * 
+   */
   constructor(
     public assessSvc: AssessmentService,
     public reportSvc: ReportService,
