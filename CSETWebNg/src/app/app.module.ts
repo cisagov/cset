@@ -272,6 +272,7 @@ import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-
 import { CreQuestionSelectorComponent } from './assessment/questions/maturity-questions/cre-question-selector/cre-question-selector.component';
 import { CreSubdomainChartsComponent } from './reports/crePlus/cre-subdomain-charts/cre-subdomain-charts.component';
 import { CreModelChartsComponent } from './reports/crePlus/cre-model-charts/cre-model-charts.component';
+import { CreMilCharts2Component } from './reports/crePlus/cre-mil-charts-2/cre-mil-charts-2.component';
 import { CreHeatmapsComponent } from './reports/crePlus/cre-heatmaps/cre-heatmaps.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
@@ -948,6 +949,7 @@ registerSwiper();
         CreAssessmentOverview,
         CreSubdomainChartsComponent,
         CreModelChartsComponent,
+        CreMilCharts2Component,
         CreHeatmapsComponent,
         Cmmc2CommentsMarkedComponent,
         Cmmc2DeficiencyComponent,
