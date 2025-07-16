@@ -295,7 +295,7 @@ export class MaturityFilteringService {
         return;
       }
 
-
+      const maturityModel=this.assesmentSvc.assessment?.maturityModel;
 
       if (q.maturityLevel !== undefined && q.maturityLevel !== null) {
         const questionLevel = q.maturityLevel.toString();
@@ -306,23 +306,29 @@ export class MaturityFilteringService {
       }
 
       // If we made it this far, start over assuming visible = false
-      q.visible = false;
-
-
-      // If search string is specified, any questions that don't contain the string
-      // are not shown.  No need to check anything else.
+      q.visible = false
+      
       if (filterSvc.filterSearchString.length > 0
         && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
         return;
       }
-
+      // only apply maturity-level filtering when the user has toggled at least one numeric level
+      const hasLevelFilter = filterSvc.showFilters.some(f => /^\d+$/.test(f));
+      if (maturityModel?.levels?.length > 0
+        && q.maturityLevel != null
+        && hasLevelFilter) {
+        const questionLevel = q.maturityLevel.toString();
+        if (!filterSvc.showFilters.includes(questionLevel)) {
+          q.visible = false;
+          return;
+        }
+      }
       // add any question-specific answer options to the filter service
       q.answerOptions?.forEach(opt => {
         if (!filterSvc.answerOptions.includes(opt)) {
           filterSvc.answerOptions.push(opt);
         }
       });
-
 
       // evaluate answers
       if (filterSvc.answerOptions.includes(q.answer) && filterSvc.showFilters.includes(q.answer)) {
@@ -358,6 +364,10 @@ export class MaturityFilteringService {
       if (filterSvc.showFilters.includes('FR') && q.freeResponseAnswer && q.freeResponseAnswer.length > 0) {
         q.visible = true;
       }
+      const hasAnswerOrFeatureFilter = filterSvc.showFilters.some(f =>
+        filterSvc.answerOptions.includes(f) || f === "U" ||  ["C", "FB", "M", "O", "FR"].includes(f));
+      if (!hasAnswerOrFeatureFilter && q.maturityLevel != null) {  const questionLevel = q.maturityLevel.toString();
+        if (filterSvc.showFilters.includes(questionLevel)) { q.visible = true;  }}
     });
 
 
@@ -380,4 +390,5 @@ export class MaturityFilteringService {
       g.visible = false;
     }
   }
+
 }

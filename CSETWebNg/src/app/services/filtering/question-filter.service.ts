@@ -69,7 +69,6 @@ export class QuestionFilterService {
       if (model?.levels) {
         model.levels.forEach(li => {
           const levelStr = li.level.toString();
-          // Add new levels that are now within target and not already in showFilters
           if (li.level <= newTargetLevel && li.level > oldTargetLevel && !this.showFilters.includes(levelStr)) {
             this.showFilters.push(levelStr);
           }
@@ -137,8 +136,8 @@ export class QuestionFilterService {
   constructor(
     private assessSvc: AssessmentService
   ) {
-    // this.refresh();
-   this.showFilters=[...this.defaultFilterSettings]
+    this.refresh();
+   // this.showFilters=[...this.defaultFilterSettings]
   }
 
 
