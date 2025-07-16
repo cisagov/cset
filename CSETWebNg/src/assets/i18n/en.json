@@ -971,8 +971,8 @@
       "display-name": "Cyber Resilience Essentials (CRE+)",
       "model short title": "CRE+",
       "question node title": "Core Questions",
-      "selector 23 title": "Select domains and subdomains for additional questions",
-      "selector 24 title": "Select domains and MILs for additional questions"
+      "selector 23 title": "Select domains and subdomains to include additional questions in the assessment",
+      "selector 24 title": "Select domains and MILs to include additional questions in the assessment"
     },
     "cre+ opt": {
       "display-name": "CRE+ Optional Domains"

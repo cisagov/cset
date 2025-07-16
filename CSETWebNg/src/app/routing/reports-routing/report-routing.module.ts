@@ -44,6 +44,7 @@ import { OpenEndedQuestionsComponent } from '../../reports/vadr/open-ended-quest
 import { VadrDeficiencyComponent } from '../../reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { VadrReportComponent } from '../../reports/vadr/vadr-report/vadr-report.component';
 import { CisaVadrReportComponent } from '../../reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
+import { CreHeatmapsComponent } from '../../reports/crePlus/cre-heatmaps/cre-heatmaps.component';
 
 
 const routes: Routes = [
@@ -81,6 +82,7 @@ const routes: Routes = [
     { path: 'cre-final-report/:m', component: CreFinalReportComponent },
     { path: 'cre-assessment-overview', component: CreAssessmentOverview },
     { path: 'cre-model-chart-report/:m', component: CreModelChartsComponent },
+    { path: 'cre-heatmaps', component: CreHeatmapsComponent },
     { path: 'commentsmfr', component: CommentsMfrComponent },
     { path: 'module-content', component: ModuleContentComponent },
     { path: 'c2m2Report', component: C2m2ReportComponent },

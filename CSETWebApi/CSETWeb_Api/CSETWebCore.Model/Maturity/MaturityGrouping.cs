@@ -68,11 +68,20 @@ namespace CSETWebCore.Model.Maturity
 
 
     /// <summary>
-    /// A request to mark a grouping as selected (created for CRE+)
+    /// A request to mark groupings as selected (created for CRE+)
     /// </summary>
     public class GroupSelectionRequest
     {
-        public List<int> GroupingId { get; set; }
+        public List<GroupSelection> Groups;
+    }
+
+
+    /// <summary>
+    /// A request to change the selection status for a grouping
+    /// </summary>
+    public class GroupSelection
+    {
+        public int GroupingId { get; set; }
         public bool Selected { get; set; }
     }
 }
