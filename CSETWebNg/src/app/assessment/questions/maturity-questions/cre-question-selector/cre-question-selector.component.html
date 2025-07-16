@@ -20,10 +20,9 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" class="w-100 py-3 px-4 mb-4"
-     style="border: 1px solid #ccc; border-radius: 1rem; background-color: #212529; color: white;">
+<div *transloco="let t" class="w-100 py-3 px-4 mb-4 selector">
      <div class="d-flex flex-row justify-content-between cursor-pointer" (click)="toggleExpansion()">
-          <h5 style="color: white" class="mb-0">
+          <h5 style="color: white" class="mb-0 me-3">
                {{t(`modules.cre+.selector ${modelId} title`)}}
           </h5>
           <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="expanded"></i>
@@ -63,8 +62,8 @@
                                    data-toggle="buttons">
                                    <ng-template ngFor let-sg [ngForOf]="g.subGroupings">
                                         <label [attr.csetid]="'CRE-MIL-' + sg.groupingId"
-                                             class="btn btn-level primary btn-rounded" [class.active]="sg.selected"
-                                             (click)="changeMilSelection(sg.groupingId, $event)">
+                                             class="btn btn-mil primary btn-rounded" [class.active]="sg.selected"
+                                             (change)="changeMilSelection(sg.groupingId, $event)">
                                              <input class="btn-check primary" tabindex="0" type="radio"
                                                   autocomplete="off" name="cre_mil_main" [checked]="sg.selected">
                                              {{ sg.title }}

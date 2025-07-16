@@ -67,20 +67,19 @@ export class CreQuestionSelectorComponent implements OnInit {
 
     // persist the changed group(s)
     const groupsChanged = this.buildList(g);
-    this.selectableGroupingsSvc.save(groupsChanged, g.selected).subscribe();
+    this.selectableGroupingsSvc.save(groupsChanged).subscribe();
   }
 
   /**
    * Sets the clicked level and levels below it to true. 
    */
   changeMilSelection(id: number, evt: any) {
-    const gg = this.selectableGroupingsSvc.findGroupingAndLesser(this.modelId, id);
-
-    this.selectableGroupingsSvc.emitSelectionChanged();
+    const milsForSubdomain = this.selectableGroupingsSvc.findGroupingAndLesser(this.modelId, id);
 
     // persist the true group and the false group to the API
-    this.selectableGroupingsSvc.save(gg.filter(x => x.selected).map(x => x.groupingId), true).subscribe();
-    this.selectableGroupingsSvc.save(gg.filter(x => !x.selected).map(x => x.groupingId), false).subscribe();
+    this.selectableGroupingsSvc.save(milsForSubdomain).subscribe();
+
+    this.selectableGroupingsSvc.emitSelectionChanged();
   }
 
   /**
