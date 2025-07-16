@@ -57,6 +57,7 @@ namespace CSETWebCore.Business.Grouping
                         };
 
                         _context.GROUPING_SELECTION.Add(dbGS);
+                        _context.SaveChanges();
                     }
                 }
                 else
