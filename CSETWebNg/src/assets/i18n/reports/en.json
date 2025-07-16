@@ -169,6 +169,10 @@
                "7": {
                     "title": "MIL Questions Charts",
                     "desc": "Charts showing distribution of answers of the selected MIL questions"
+               },
+               "8": {
+                    "title": "Heatmaps",
+                    "desc": "Heatmaps for all questions by domain"
                }
           },
           "cisa vadr": {
@@ -816,6 +820,14 @@
                          "chart footer2": "MIL Question Answer Distribution by domain. Only selected MILs are included.",
                          "no selected": "None of the MILs were selected so there is nothing to show."
                     }
+               },
+               "heatmap report": {
+                    "title": "CISA Cyber Resilience Essentials (CRE+) - Heatmaps Assessment Overview",
+                    "p1": "All in-scope answers are represented, grouped by their corresponding domains.",
+                    "answer heatmaps": "Answer Heatmaps",
+                    "core questions": "Core Questions",
+                    "optional domain questions": "Optional Domain Questions",
+                    "mil questions": "MIL Questions"
                }
           }
      },

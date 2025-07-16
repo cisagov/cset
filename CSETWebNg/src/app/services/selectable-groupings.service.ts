@@ -156,8 +156,11 @@ export class SelectableGroupingsService {
   /**
    * Persists a group of groupings with the same selected status.
    */
-  save(groupingId: number[], selected: boolean) {
-    const payload = { groupingId: groupingId, selected: selected };
-    return this.http.post(this.apiUrl + "groupselection/", payload);
+  save(groupings: any) {
+    const payload = [] as any[];
+    for (let g of groupings) {
+      payload.push({ groupingId: g.groupingId, selected: g.selected});
+    }
+    return this.http.post(this.apiUrl + "groupselection/", { groups: payload });
   }
 }

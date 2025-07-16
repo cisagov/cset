@@ -1,28 +1,7 @@
 ﻿using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Maturity;
-using System;
-using System.Linq;
 using System.Collections.Generic;
-using CSETWebCore.Business.AdminTab;
-using CSETWebCore.Business.Maturity;
-using CSETWebCore.Helpers;
-using CSETWebCore.Interfaces;
-using CSETWebCore.Interfaces.Assessment;
-using CSETWebCore.Interfaces.Contact;
-using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.Maturity;
-using CSETWebCore.Interfaces.Sal;
-using CSETWebCore.Interfaces.Standards;
-using CSETWebCore.Model.Assessment;
-using CSETWebCore.Model.Document;
-using CSETWebCore.Model.Observations;
-using CSETWebCore.Model.Question;
-using LogicExtensions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Nelibur.ObjectMapper;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Linq;
 
 
 namespace CSETWebCore.Business.Grouping
@@ -60,37 +39,37 @@ namespace CSETWebCore.Business.Grouping
         /// </summary>
         public void PersistSelections(GroupSelectionRequest req)
         {
-            foreach (int g in req.GroupingId)
+            foreach (var g in req.Groups)
             {
-                var gs = _context.GROUPING_SELECTION
-                    .Where(x => x.Assessment_Id == _assessment_Id && x.Grouping_Id == g)
+                var dbGS = _context.GROUPING_SELECTION
+                    .Where(x => x.Assessment_Id == _assessment_Id && x.Grouping_Id == g.GroupingId)
                     .FirstOrDefault();
 
-                if (req.Selected)
+                if (g.Selected)
                 {
                     // Insert a new record
-                    if (gs == null)
+                    if (dbGS == null)
                     {
-                        var sss = new GROUPING_SELECTION
+                        dbGS = new GROUPING_SELECTION
                         {
                             Assessment_Id = _assessment_Id,
-                            Grouping_Id = g
+                            Grouping_Id = g.GroupingId
                         };
 
-                        _context.GROUPING_SELECTION.Add(sss);
+                        _context.GROUPING_SELECTION.Add(dbGS);
                         _context.SaveChanges();
                     }
                 }
                 else
                 {
-                    if (gs != null)
+                    if (dbGS != null)
                     {
-                        _context.GROUPING_SELECTION.Remove(gs);
-                        _context.SaveChanges();
+                        _context.GROUPING_SELECTION.Remove(dbGS);
                     }
 
                     // clear out any answers
-                    ClearAnswersForGrouping(g);
+                    ClearAnswersForGrouping(g.GroupingId);
+                    _context.SaveChanges();
                 }
             }
         }
