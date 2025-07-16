@@ -167,10 +167,14 @@
                     "desc": "Charts showing distribution of answers of the selected Optional Domains questions"
                },
                "7": {
-                    "title": "MIL Questions Charts",
+                    "title": "MIL Questions Charts 1",
                     "desc": "Charts showing distribution of answers of the selected MIL questions"
                },
                "8": {
+                    "title": "MIL Questions Charts 2",
+                    "desc": "Charts showing distribution of answers of the selected MIL questions"
+               },
+               "9": {
                     "title": "Heatmaps",
                     "desc": "Heatmaps for all questions by domain"
                }
@@ -828,6 +832,10 @@
                     "core questions": "Core Questions",
                     "optional domain questions": "Optional Domain Questions",
                     "mil questions": "MIL Questions"
+               },
+               "mil charts 2": {
+                    "title": "MIL Questions Charts 2",
+                    "p1": "maybe an intro paragraph here"
                }
           }
      },
