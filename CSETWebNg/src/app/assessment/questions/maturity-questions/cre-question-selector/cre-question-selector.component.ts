@@ -86,17 +86,17 @@ export class CreQuestionSelectorComponent implements OnInit {
    * Build a list of groups whose selected status is changed.
    * This will de-select all subgroups of a deselected parent.
    */
-  buildList(g: QuestionGrouping): number[] {
-    let groupsChanged: number[] = [];
-    groupsChanged.push(g.groupingId);
+  buildList(g: QuestionGrouping): QuestionGrouping[] {
+    let groupsChanged: QuestionGrouping[] = [];
+
+    groupsChanged.push(g);
 
     if (!g.selected) {
-      g.subGroupings.forEach(x => {
-        x.selected = false;
-        groupsChanged.push(x.groupingId);
+      g.subGroupings.forEach(sg => {
+        sg.selected = false;
+        groupsChanged.push(sg);
       });
     }
-
     return groupsChanged;
   }
 }
