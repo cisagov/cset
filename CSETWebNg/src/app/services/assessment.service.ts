@@ -31,7 +31,6 @@ import {
 import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
-import { DemographicExtendedService } from './demographic-extended.service';
 import { Answer } from '../models/questions.model';
 import { BehaviorSubject, first, firstValueFrom, Observable } from 'rxjs';
 import { ConversionService } from './conversion.service';
@@ -95,7 +94,6 @@ export class AssessmentService {
     private http: HttpClient,
     private configSvc: ConfigService,
     private router: Router,
-    private extDemoSvc: DemographicExtendedService,
     private c: ConstantsService,
     private convSvc: ConversionService
   ) {
@@ -504,7 +502,7 @@ export class AssessmentService {
           }
 
           // make sure that the acet only switch is turned off when in standard CSET
-          this.extDemoSvc.preloadDemoAndGeo();
+          // this.extDemoSvc.preloadDemoAndGeo();
           const rpath = localStorage.getItem('returnPath');
 
           // normal assessment load
@@ -648,8 +646,8 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'encryptStatus');
   }
 
-  hasGlobalDocuments(){
-    return this.http.get(this.apiUrl+ 'hasGlobalDocuments');
+  hasGlobalDocuments() {
+    return this.http.get(this.apiUrl + 'hasGlobalDocuments');
   }
 
 
