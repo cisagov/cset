@@ -58,24 +58,24 @@ namespace CSETWebCore.Api.Controllers
         /// Get analytic information
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        [Route("api/analytics/getAnalytics")]
-        public IActionResult GetAnalytics()
-        {
-            var demographics = GetDemographics();
-            var assessment = GetAnalyticsAssessment();
-            assessment.Assets = demographics.AssetValue;
-            assessment.Size = demographics.Size;
-            assessment.IndustryId = demographics.IndustryId;
-            assessment.SectorId = demographics.SectorId;
-
-            return Ok(new Analytics
-            {
-                Assessment = assessment,
-                Demographics = demographics,
-                QuestionAnswers = GetQuestionsAnswers()
-            });
-        }
+        // [HttpGet]
+        // [Route("api/analytics/getAnalytics")]
+        // public IActionResult GetAnalytics()
+        // {
+        //     var demographics = GetDemographics();
+        //     var assessment = GetAnalyticsAssessment();
+        //     assessment.Assets = demographics.AssetValue;
+        //     assessment.Size = demographics.Size;
+        //     assessment.IndustryId = demographics.IndustryId;
+        //     assessment.SectorId = demographics.SectorId;
+        //
+        //     return Ok(new Analytics
+        //     {
+        //         Assessment = assessment,
+        //         Demographics = demographics,
+        //         QuestionAnswers = GetQuestionsAnswers()
+        //     });
+        // }
 
         [HttpGet]
         [Route("api/analytics/getAggregation")]
@@ -244,11 +244,11 @@ namespace CSETWebCore.Api.Controllers
         /// Returns an instance of Demographics for Anonymous export 
         /// </summary>        
         /// <returns></returns>
-        private AnalyticsDemographic GetDemographics()
-        {
-            int assessmentId = _token.AssessmentForUser();
-            return _demographic.GetAnonymousDemographics(assessmentId);
-        }
+        // private AnalyticsDemographic GetDemographics()
+        // {
+        //     int assessmentId = _token.AssessmentForUser();
+        //     return _demographic.GetAnonymousDemographics(assessmentId);
+        // }
 
         /// <summary>
         /// Returns questions/answers for current selected assessment
