@@ -795,7 +795,7 @@
                          "title": "CISA Cyber Resilience Essentials (CRE+) Optional Domain Final Report",
                          "question title": "Optional Domain Questions",
                          "only selected": "Only questions from selected subdomains are included.",
-                         "none selected": "This report shows only selected subdomain.  Select one or more Optional Domain subdomains to see questions on this report."
+                         "none selected": "This report shows only selected subdomains.  Select one or more Optional Domain subdomains to see questions on this report."
                     },
                      "24": {
                          "title": "CISA Cyber Resilience Essentials (CRE+) MIL Final Report",
