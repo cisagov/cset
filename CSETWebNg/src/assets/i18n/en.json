@@ -36,6 +36,13 @@
   "select contact": "Select Contact",
   "select facilitator": "Select Facilitator",
   "self assessment": "Self Assessment",
+  "tech domain": {
+    "label": "Technology Domain for Assessment",
+    "select": "Select Technology Domain",
+    "ot": "Operational Technology (OT)",
+    "it": "Information Technology (IT)",
+    "ot+it": "Both OT and IT"
+  },
   "crit svc poc": "Critical Service Point of Contact",
   "asset gross value": "What is the gross value of the asset you are trying to protect?",
   "select gross value": "Select Value",

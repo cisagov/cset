@@ -12,6 +12,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Model.Edm;
 using CSETWebCore.Model.Maturity;
+using CSETWebCore.Model.Mvra;
 using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
@@ -19,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using CSETWebCore.Model.Mvra;
 
 
 namespace CSETWebCore.Business.Maturity
@@ -37,6 +37,11 @@ namespace CSETWebCore.Business.Maturity
         private TranslationOverlay _overlay;
 
         private AdditionalSupplemental _addlSuppl;
+
+        /// <summary>
+        /// Utilities that support manipulation of Supplemental Guidance
+        /// </summary>
+        private SupplementalGuidanceUtils _suppUtils;
 
         public readonly List<string> ModelsWithTargetLevel = ["ACET", "CMMC", "CMMC2"];
 
@@ -785,6 +790,8 @@ namespace CSETWebCore.Business.Maturity
 
             var targetModelId = defaultModel.model_id;
 
+            _suppUtils = new SupplementalGuidanceUtils(assessmentId, _context);
+
 
             // A list of the assessment's selected grouping IDs
             _selectedGroupingIds = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Grouping_Id).ToList();
@@ -835,6 +842,8 @@ namespace CSETWebCore.Business.Maturity
                 .Where(q =>
                 targetModelId == q.Maturity_Model_Id);
 
+
+            // some special logic for the CIE model
             if (groupingId != 0 && targetModelId != 17)
             {
                 questionQuery = questionQuery.Where(x => x.Question_Text.StartsWith("A"));
@@ -874,6 +883,13 @@ namespace CSETWebCore.Business.Maturity
                     q.Risk_Addressed = o.RiskAddressed;
                     q.Services = o.Services;
                     q.Implementation_Guides = o.Implementation_Guides;
+                }
+
+
+                // CPG 2.0 may need to have its guidance modified
+                if (targetModelId == 21)
+                {
+                    q.Implementation_Guides = _suppUtils.RemoveNonApplicableTechDomains(q.Implementation_Guides);
                 }
             }
 
