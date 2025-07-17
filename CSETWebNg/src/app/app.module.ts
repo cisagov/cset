@@ -471,8 +471,6 @@ import { IssuesComponent } from './assessment/questions/issues/issues.component'
 import { SearchPageComponent } from './initial/search-page/search-page.component';
 import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
 import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
-import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
-import { DemographicExtendedService } from './services/demographic-extended.service';
 import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
 import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
@@ -956,7 +954,6 @@ registerSwiper();
         SearchPageComponent,
         LogoTsaComponent,
         OptionBlockComponent,
-        DemographicsExtendedComponent,
         SectorHelpComponent,
         AnalyticsCompareComponent,
         MvraGapsComponent,
@@ -1184,7 +1181,6 @@ registerSwiper();
         AssessGuard,
         AggregationGuard,
         DemographicService,
-        DemographicExtendedService,
         AssessmentService,
         EmailService,
         QuestionsService,
