@@ -5,15 +5,13 @@
 // 
 //////////////////////////////// 
 
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
+using System.Linq;
+
 
 namespace CSETWebCore.Business.Demographic
 {
@@ -76,6 +74,7 @@ namespace CSETWebCore.Business.Demographic
             demographics.OrgPointOfContact = (int?)extBiz.GetX(assessmentId, "ORG-POC");
 
             demographics.SelfAssessment = ((bool?)extBiz.GetX(assessmentId, "SELF-ASSESS")) ?? false;
+            demographics.TechDomain = extBiz.GetX(assessmentId, "TECH-DOMAIN")?.ToString();
 
 
             return demographics;
@@ -186,6 +185,7 @@ namespace CSETWebCore.Business.Demographic
             extBiz.SaveX(demographics.AssessmentId, "CISA-REGION", demographics.CisaRegion);
             extBiz.SaveX(demographics.AssessmentId, "ORG-POC", demographics.OrgPointOfContact);
             extBiz.SaveX(demographics.AssessmentId, "SELF-ASSESS", demographics.SelfAssessment);
+            extBiz.SaveX(demographics.AssessmentId, "TECH-DOMAIN", demographics.TechDomain);
 
 
             // Values that we should mirror into DETAILS_DEMOGRAPHICS

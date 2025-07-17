@@ -125,6 +125,9 @@ export interface Demographic {
     organizationType?: string;
     facilitatorId?: number;
 
+    // Technology Domain (IT vs OT)
+    techDomain?: string;
+
     // Organiztion POC
     orgPointOfContact?: number;
 
