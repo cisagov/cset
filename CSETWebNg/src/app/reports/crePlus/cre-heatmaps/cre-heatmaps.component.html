@@ -37,7 +37,7 @@
 
 
      <div class="page-break">
-          <h1>{{t('reports.core.cre.heatmap report.answer Heatmaps')}}</h1>
+          <h1>{{t('reports.core.cre.heatmap report.answer heatmaps')}}</h1>
           <p>{{t('reports.core.cre.heatmap report.p1')}}</p>
 
           <table>
@@ -73,6 +73,9 @@
                          </div>
                     </td>
                </tr>
+               <tr *ngIf="model23?.groupings.length == 0">
+                    <td colspan="2" class="py-3 pe-4">{{t('reports.core.cre.heatmap report.no optional domain heatmap')}}</td>
+               </tr>
                <tr>
                     <td colspan="2">
                          <h2 style="font-size: 1.4rem" class="pt-4">{{t('reports.core.cre.heatmap report.mil questions')}}</h2>
@@ -88,6 +91,9 @@
                               </div>
                          </div>
                     </td>
+               </tr>
+               <tr *ngIf="model24?.groupings.length == 0">
+                    <td colspan="2" class="py-3 pe-4">{{t('reports.core.cre.heatmap report.no mil heatmap')}}</td>
                </tr>
           </table>
      </div>

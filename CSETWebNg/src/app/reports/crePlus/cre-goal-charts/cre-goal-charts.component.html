@@ -35,16 +35,16 @@
 
 <hr style="width: 50%; margin: 2rem auto;">
 
-<div *ngFor="let sd of domainDistrib?.subgroups" class="my-4 px-3" style="border: 1px solid #ddd">
+<div *ngFor="let goal of domainDistrib?.subgroups" class="my-4 px-3" style="border: 1px solid #ddd">
      <h2 class="text-center">
           <div>
                CRE+ Core Module: {{domainDistrib?.name}}
           </div>
           <div>
-               Subdomain: {{sd.name}}
+               Goal: {{goal.name}}
           </div>
      </h2>
-     <ngx-charts-bar-horizontal [view]="[700, 300]" [results]="sd.series" [scheme]="creSvc.colorScheme" [xAxis]="true"
+     <ngx-charts-bar-horizontal [view]="[700, 300]" [results]="goal.series" [scheme]="creSvc.colorScheme" [xAxis]="true"
           [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisTickFormatting]="creSvc.fmt1"
           [xScaleMax]="100" [xScaleMin]="0" [roundEdges]="false" [showDataLabel]="true"
           [dataLabelFormatting]="creSvc.fmt1">

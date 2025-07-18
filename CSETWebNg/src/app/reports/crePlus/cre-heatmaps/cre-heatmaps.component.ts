@@ -95,7 +95,7 @@ export class CreHeatmapsComponent implements OnInit {
 
 
   /**
-   * Lumps questions from subdomains into a domain-level collection
+   * Lumps questions from goals into a domain-level collection
    */
   consolidateQuestions(model: any) {
     for (let domain of model.groupings) {

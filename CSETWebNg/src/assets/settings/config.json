@@ -242,6 +242,7 @@
       "moduleName": "CPG2",
       "modelId": "21",
       "displayNameKey": "modules.cpg2.display-name",
+      "questionNodeKey": "modules.cpg2.question node title",
       "hideTopLevelGroupingName": true,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,

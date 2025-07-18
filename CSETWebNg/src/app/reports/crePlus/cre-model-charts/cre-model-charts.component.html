@@ -40,7 +40,7 @@
      <div class="page-break">
           <h1>{{ 'reports.core.cre.answer distribution' | transloco }}</h1>
 
-          <div *ngIf="domainList?.length > 0; else no_selected_subdomains">
+          <div *ngIf="domainList?.length > 0; else no_selected_goals">
                <p>
 
                </p>
@@ -79,7 +79,7 @@
                </div>
           </div>
 
-          <ng-template #no_selected_subdomains>
+          <ng-template #no_selected_goals>
                <p>
                     {{ `reports.core.cre.chart reports.${modelId}.no selected` | transloco }}
                </p>
@@ -89,7 +89,7 @@
 
      <div class="page-break" *ngFor="let d of domainList">
           <div>
-               <app-cre-subdomain-charts [domainDistrib]="d"></app-cre-subdomain-charts>
+               <app-cre-goal-charts [domainDistrib]="d"></app-cre-goal-charts>
           </div>
      </div>
 

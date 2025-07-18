@@ -21,16 +21,16 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterViewChecked, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CreService } from '../../../services/cre.service';
 
 @Component({
-  selector: 'app-cre-subdomain-charts',
-  templateUrl: './cre-subdomain-charts.component.html',
+  selector: 'app-cre-goal-charts',
+  templateUrl: './cre-goal-charts.component.html',
   styleUrls: ['../../reports.scss'],
   standalone: false,
 })
-export class CreSubdomainChartsComponent implements OnChanges {
+export class creGoalChartsComponent implements OnChanges {
 
   @Input() domainDistrib: any;
 
