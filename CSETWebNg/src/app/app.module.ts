@@ -270,7 +270,7 @@ import { CategoryBlockComponent } from './assessment/questions/category-block/ca
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
 import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
 import { CreQuestionSelectorComponent } from './assessment/questions/maturity-questions/cre-question-selector/cre-question-selector.component';
-import { CreSubdomainChartsComponent } from './reports/crePlus/cre-subdomain-charts/cre-subdomain-charts.component';
+import { creGoalChartsComponent } from './reports/crePlus/cre-goal-charts/cre-goal-charts.component';
 import { CreModelChartsComponent } from './reports/crePlus/cre-model-charts/cre-model-charts.component';
 import { CreMilCharts2Component } from './reports/crePlus/cre-mil-charts-2/cre-mil-charts-2.component';
 import { CreHeatmapsComponent } from './reports/crePlus/cre-heatmaps/cre-heatmaps.component';
@@ -947,7 +947,7 @@ registerSwiper();
         CreFinalReportComponent,
         CreFinalReportGridComponent,
         CreAssessmentOverview,
-        CreSubdomainChartsComponent,
+        creGoalChartsComponent,
         CreModelChartsComponent,
         CreMilCharts2Component,
         CreHeatmapsComponent,

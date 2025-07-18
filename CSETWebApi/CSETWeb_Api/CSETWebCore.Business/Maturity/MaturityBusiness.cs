@@ -884,13 +884,6 @@ namespace CSETWebCore.Business.Maturity
                     q.Services = o.Services;
                     q.Implementation_Guides = o.Implementation_Guides;
                 }
-
-
-                // CPG 2.0 may need to have its guidance modified
-                if (targetModelId == 21)
-                {
-                    q.Implementation_Guides = _suppUtils.RemoveNonApplicableTechDomains(q.Implementation_Guides);
-                }
             }
 
 

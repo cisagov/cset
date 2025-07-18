@@ -13,6 +13,10 @@ using System.Text.RegularExpressions;
 
 namespace CSETWebCore.Helpers
 {
+    /// <summary>
+    /// Originally intended for parsing and suppressing parts of Supplemental Guidance in CRE+.
+    /// No longer needed, but keeping this functionality in case we want to use it in the future.
+    /// </summary>
     public class SupplementalGuidanceUtils
     {
         /// <summary>
