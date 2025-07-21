@@ -65,30 +65,10 @@ namespace CSETWebCore.Business.Grouping
                     if (dbGS != null)
                     {
                         _context.GROUPING_SELECTION.Remove(dbGS);
+                        _context.SaveChanges();
                     }
-
-                    // clear out any answers
-                    ClearAnswersForGrouping(g.GroupingId);
-                    _context.SaveChanges();
                 }
             }
-        }
-
-
-        /// <summary>
-        /// Resets any existing answers to "U" for a grouping
-        /// </summary>
-        private void ClearAnswersForGrouping(int groupingId)
-        {
-            var questionIds = _context.MATURITY_QUESTIONS.Where(x => x.Grouping_Id == groupingId).Select(x => x.Mat_Question_Id).ToList();
-
-            var answers = _context.ANSWER.Where(x => x.Assessment_Id == this._assessment_Id
-                && x.Question_Type == "Maturity"
-                && questionIds.Contains(x.Question_Or_Requirement_Id))
-                .ToList();
-
-            answers.ForEach(a => a.Answer_Text = "U");
-            _context.SaveChanges();
         }
     }
 }
