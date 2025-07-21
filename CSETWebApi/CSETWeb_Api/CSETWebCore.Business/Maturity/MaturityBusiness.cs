@@ -43,6 +43,8 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         private SupplementalGuidanceUtils _suppUtils;
 
+        private QuestionScopeAnalyzer _questionScope = null;
+
         public readonly List<string> ModelsWithTargetLevel = ["ACET", "CMMC", "CMMC2"];
 
         private List<int> _selectedGroupingIds = [];
@@ -793,6 +795,16 @@ namespace CSETWebCore.Business.Maturity
             _suppUtils = new SupplementalGuidanceUtils(assessmentId, _context);
 
 
+
+            // Spin up the generic scope analyzer or a maturity model-specific one
+            _questionScope = new QuestionScopeAnalyzer();
+            // CPG 2.0
+            if (targetModelId == 21)
+            {
+                _questionScope = new CpgScopeAnalyzer(assessmentId, _context);
+            }
+
+
             // A list of the assessment's selected grouping IDs
             _selectedGroupingIds = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Grouping_Id).ToList();
 
@@ -802,8 +814,6 @@ namespace CSETWebCore.Business.Maturity
             {
                 targetModelId = (int)modelId;
             }
-
-
 
             var targetModel = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == targetModelId).FirstOrDefault();
 
@@ -1016,6 +1026,15 @@ namespace CSETWebCore.Business.Maturity
                             Value = prop.PropertyValue
                         });
                     }
+
+
+                    // see if the question should be included in the response
+                    var inScope = _questionScope.IsQuestionInScope(qa);
+                    if (!inScope)
+                    {
+                        continue;
+                    }
+
 
                     qa.Countable = IsQuestionCountable(myQ.Maturity_Model_Id, qa);
 
