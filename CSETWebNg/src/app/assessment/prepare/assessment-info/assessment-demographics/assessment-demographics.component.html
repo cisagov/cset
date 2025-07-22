@@ -85,7 +85,7 @@
             <select class="form-select" id="size" tabindex="0" name="size" [(ngModel)]="demographicData.size"
                 (ngModelChange)="update($event)">
                 <option [ngValue]="null">-- {{t('select effort')}} --</option>
-                <option *ngFor="let s of sizeList" [ngValue]="s.demographicId">{{s.description}}</option>
+                <option *ngFor="let s of sizeList" [ngValue]="s.sizeId">{{s.description}}</option>
             </select>
         </div>
 
