@@ -23,7 +23,5 @@ public partial class DEMOGRAPHICS_SIZE
     public string Description { get; set; }
 
     public int? ValueOrder { get; set; }
-
-    [InverseProperty("SizeNavigation")]
-    public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; } = new List<DEMOGRAPHICS>();
+    
 }

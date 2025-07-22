@@ -28,7 +28,4 @@ public partial class DEMOGRAPHICS_ASSET_VALUES
     [ForeignKey("AppCode")]
     [InverseProperty("DEMOGRAPHICS_ASSET_VALUES")]
     public virtual APP_CODE AppCodeNavigation { get; set; }
-
-    [InverseProperty("AssetValueNavigation")]
-    public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; } = new List<DEMOGRAPHICS>();
 }
