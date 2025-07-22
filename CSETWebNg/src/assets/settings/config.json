@@ -563,6 +563,11 @@
       ]
     },
     {
+      "comment": "This is the VADR developed for TSA",
+      "moduleName": "VADR",
+      "modelId": 7
+    },
+    {
       "moduleName": "CISA VADR",
       "modelId": "25",
       "displayNameKey": "modules.cisa vadr.display-name",

@@ -1036,6 +1036,7 @@ namespace CSETWebCore.Business.Maturity
                     }
 
 
+                    qa.IsAnswerable = myQ.Is_Answerable;
                     qa.Countable = IsQuestionCountable(myQ.Maturity_Model_Id, qa);
 
                     if (answer != null)
@@ -1100,8 +1101,8 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         private bool IsQuestionCountable(int modelId, QuestionAnswer qa)
         {
-            // EDM and CRR - parent questions are unanswerable and not countable
-            if (modelId == 3 || modelId == 4)
+            // EDM and CRR and CPG2 - parent questions are unanswerable and not countable
+            if (modelId == 3 || modelId == 4 || modelId == 21)
             {
                 return !qa.IsParentQuestion;
             }
@@ -1461,6 +1462,7 @@ namespace CSETWebCore.Business.Maturity
             {
                 var newQ = new QuestionAnswer()
                 {
+                    IsAnswerable = q.IsAnswerable,
                     Answer = q.AnswerText,
                     AltAnswerText = q.AltAnswerText,
                     QuestionId = q.QuestionId,
