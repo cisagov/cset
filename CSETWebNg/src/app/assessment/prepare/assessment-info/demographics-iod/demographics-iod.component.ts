@@ -26,7 +26,6 @@ export class DemographicsIodComponent implements OnInit {
   assessmentConfig: AssessmentConfig;
   serviceDemographics: ServiceDemographic;
   serviceComposition: ServiceComposition;
-  criticalServiceInfo: CriticalServiceInfo;
 
   /**
    * 
