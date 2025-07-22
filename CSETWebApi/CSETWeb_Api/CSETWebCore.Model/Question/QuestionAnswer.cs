@@ -34,6 +34,9 @@ namespace CSETWebCore.Model.Question
         public string QuestionText { get; set; }
         public List<ParameterToken> ParmSubs { get; set; }
         public string StdRefId { get; set; }
+
+        public bool IsAnswerable { get; set; }
+
         public string Answer { get; set; }
 
         /// <summary>

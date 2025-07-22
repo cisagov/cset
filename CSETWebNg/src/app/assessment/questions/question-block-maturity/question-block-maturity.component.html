@@ -102,7 +102,7 @@
                 </div>
 
 
-                <div *ngIf="!q.isParentQuestion">
+                <div *ngIf="q.isAnswerable">
                     <!-- build the list of answer choice buttons -->
                     <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
                         <label *ngFor="let option of q.answerOptions ?? modelAnswerOptions"
@@ -166,7 +166,7 @@
                 </div>
 
 
-                <div *ngIf="!q.isParentQuestion">
+                <div *ngIf="q.isAnswerable">
                     <!-- build the list of answer options -->
                     <div class="btn-group btn-group-toggle answer-group ms-0" data-toggle="buttons">
                         <label *ngFor="let option of answerOptions" class="btn form-check-label"

@@ -68,7 +68,7 @@ export class QuestionBlockVadrComponent implements OnInit {
    *
    */
   ngOnInit(): void {
-    this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
+    this.answerOptions = this.assessSvc.assessment?.maturityModel?.answerOptions;
 
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();

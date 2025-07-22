@@ -83,7 +83,7 @@ namespace CSETWebCore.Model.Nested
         public string ImplementationGuides { get; set; }
 
 
-
+        public bool IsAnswerable { get; set; }
         public string AnswerText { get; set; }
         public string AnswerMemo { get; set; }
         public string AltAnswerText { get; set; }
