@@ -768,20 +768,20 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param></param>
         /// <returns></returns>
-        public List<DEMOGRAPHICS_ORGANIZATION_TYPE> GetOrganizationTypes()
+        public List<DETAILS_DEMOGRAPHICS_OPTIONS> GetOrganizationTypes()
         {
-            var list = new List<DEMOGRAPHICS_ORGANIZATION_TYPE>();
-            list = _context.DEMOGRAPHICS_ORGANIZATION_TYPE.ToList();
+            var list = new List<DETAILS_DEMOGRAPHICS_OPTIONS>();
+            list = _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ORG-TYPE").ToList();
 
             var lang = _tokenManager.GetCurrentLanguage();
             if (lang != "en")
             {
                 list.ForEach(x =>
                 {
-                    var val = _overlay.GetValue("DEMOGRAPHICS_ORGANIZATION_TYPE", x.OrganizationTypeId.ToString(), lang)?.Value;
+                    var val = _overlay.GetValue("DEMOGRAPHICS_ORGANIZATION_TYPE", x.OptionValue.ToString(), lang)?.Value;
                     if (val != null)
                     {
-                        x.OrganizationType = val;
+                        x.OptionText = val;
                     }
                 });
             }
