@@ -388,7 +388,6 @@ import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-rep
 import { QuestionBlockVadrComponent } from './assessment/questions/question-block-vadr/question-block-vadr.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { CsiComponent } from './assessment/prepare/csi/csi.component';
-import { CsiOrganizationDemographicsComponent } from './assessment/prepare/csi/csi-organization-demographics/csi-organization-demographics.component';
 import { CsiServiceDemographicsComponent } from './assessment/prepare/csi/csi-service-demographics/csi-service-demographics.component';
 import { CsiServiceCompositionComponent } from './assessment/prepare/csi/csi-service-composition/csi-service-composition.component';
 import { AssessmentComparisonAnalyticsComponent } from './initial/assessmenet-comparison-analytics/assessment-comparison-analytics.component';
@@ -863,7 +862,6 @@ registerSwiper();
         QuestionBlockVadrComponent,
         VadrDeficiencyComponent,
         CsiComponent,
-        CsiOrganizationDemographicsComponent,
         CsiServiceDemographicsComponent,
         CsiServiceCompositionComponent,
         AssessmentComparisonAnalyticsComponent,
