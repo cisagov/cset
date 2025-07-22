@@ -73,7 +73,7 @@
         {{t('questions.instructions ssg')}}
       </p>
 
-      <p class="mb-4" *ngIf="!filterSvc.isFilterEngaged()">
+      <p class="mb-4" *ngIf="filterSvc.showFilters.length>0">
         {{t('questions.instructions 1')}} {{ msgUnansweredEqualsNo }}
       </p>
     </ng-container>
