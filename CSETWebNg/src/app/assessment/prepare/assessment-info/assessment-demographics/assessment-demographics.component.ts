@@ -55,8 +55,9 @@ interface AssessmentSize {
     description: string;
 }
 
-interface ImportExportData {
-    data: any;
+interface OrgTypes {
+    orgTypeId: number;
+    type: string;
 }
 
 @Component({
@@ -80,7 +81,7 @@ export class AssessmentDemographicsComponent implements OnInit {
     contacts: User[];
     isSLTT: boolean = false;
     demographicData: Demographic = {};
-    orgTypes: any[];
+    orgTypes: OrgTypes[];
 
     assetValueTemp: number;
 
