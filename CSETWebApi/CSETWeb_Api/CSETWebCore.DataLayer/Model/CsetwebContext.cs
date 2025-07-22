@@ -149,7 +149,7 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARD { get; set; }
 
-    public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
+    // public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
 
     public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
 
@@ -1090,32 +1090,32 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Custom_Questionaire_NameNavigation).WithMany(p => p.CUSTOM_STANDARD_BASE_STANDARDCustom_Questionaire_NameNavigation).HasConstraintName("FK_CUSTOM_STANDARD_BASE_STANDARD_SETS1");
         });
 
-        modelBuilder.Entity<DEMOGRAPHICS>(entity =>
-        {
-            entity.ToTable(tb => tb.HasComment("A collection of DEMOGRAPHICS records"));
-
-            entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
-            entity.Property(e => e.IsScoped).HasDefaultValue(false);
-
-            entity.HasOne(d => d.Assessment).WithOne(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENTS");
-
-            entity.HasOne(d => d.AssetValueNavigation).WithMany(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_ASSET_VALUES");
-
-            entity.HasOne(d => d.FacilitatorNavigation).WithMany(p => p.DEMOGRAPHICSFacilitatorNavigation).HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENT_CONTACTS_FACILITATOR");
-
-            entity.HasOne(d => d.Industry).WithMany(p => p.DEMOGRAPHICS)
-                .HasPrincipalKey(p => p.IndustryId)
-                .HasForeignKey(d => d.IndustryId)
-                .HasConstraintName("FK_DEMOGRAPHICS_SECTOR_INDUSTRY");
-
-            entity.HasOne(d => d.OrganizationTypeNavigation).WithMany(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_ORGANIZATION_TYPE");
-
-            entity.HasOne(d => d.PointOfContactNavigation).WithMany(p => p.DEMOGRAPHICSPointOfContactNavigation).HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENT_CONTACTS_POINTOFCONTACT");
-
-            entity.HasOne(d => d.Sector).WithMany(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_SECTOR");
-
-            entity.HasOne(d => d.SizeNavigation).WithMany(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_SIZE");
-        });
+        // modelBuilder.Entity<DEMOGRAPHICS>(entity =>
+        // {
+        //     entity.ToTable(tb => tb.HasComment("A collection of DEMOGRAPHICS records"));
+        //
+        //     entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
+        //     entity.Property(e => e.IsScoped).HasDefaultValue(false);
+        //
+        //     entity.HasOne(d => d.Assessment).WithOne(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENTS");
+        //
+        //     entity.HasOne(d => d.AssetValueNavigation).WithMany(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_ASSET_VALUES");
+        //
+        //     entity.HasOne(d => d.FacilitatorNavigation).WithMany(p => p.DEMOGRAPHICSFacilitatorNavigation).HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENT_CONTACTS_FACILITATOR");
+        //
+        //     entity.HasOne(d => d.Industry).WithMany(p => p.DEMOGRAPHICS)
+        //         .HasPrincipalKey(p => p.IndustryId)
+        //         .HasForeignKey(d => d.IndustryId)
+        //         .HasConstraintName("FK_DEMOGRAPHICS_SECTOR_INDUSTRY");
+        //
+        //     entity.HasOne(d => d.OrganizationTypeNavigation).WithMany(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_ORGANIZATION_TYPE");
+        //
+        //     entity.HasOne(d => d.PointOfContactNavigation).WithMany(p => p.DEMOGRAPHICSPointOfContactNavigation).HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENT_CONTACTS_POINTOFCONTACT");
+        //
+        //     entity.HasOne(d => d.Sector).WithMany(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_SECTOR");
+        //
+        //     entity.HasOne(d => d.SizeNavigation).WithMany(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_SIZE");
+        // });
 
         modelBuilder.Entity<DEMOGRAPHICS_ASSET_VALUES>(entity =>
         {
@@ -1242,10 +1242,6 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Assessment).WithMany(p => p.DOCUMENT_FILE)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_DOCUMENT_FILE_ASSESSMENTS");
-
-            entity.HasOne(d => d.AssessmentNavigation).WithMany(p => p.DOCUMENT_FILE)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DOCUMENT_FILE_DEMOGRAPHICS");
         });
 
         modelBuilder.Entity<EXTRA_ACET_MAPPING>(entity =>
