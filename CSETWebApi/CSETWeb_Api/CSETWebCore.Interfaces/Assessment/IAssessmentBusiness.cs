@@ -28,7 +28,7 @@ namespace CSETWebCore.Interfaces.Assessment
         void GetSelectedStandards(ref AssessmentDetail assessment);
         void SetFeaturesOnAssessmentRecord(int assessmentId);
 
-        List<DEMOGRAPHICS_ORGANIZATION_TYPE> GetOrganizationTypes();
+        List<DETAILS_DEMOGRAPHICS_OPTIONS> GetOrganizationTypes();
         bool IsCurrentUserOnAssessment(int assessmentId);
         ASSESSMENTS GetAssessmentById(int assessmentId);
         DateTime GetLastModifiedDateUtc(int assessmentId);

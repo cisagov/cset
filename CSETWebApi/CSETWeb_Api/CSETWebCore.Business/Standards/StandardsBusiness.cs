@@ -141,16 +141,16 @@ namespace CSETWebCore.Business.Standards
                 return list;
             }
 
-            // Convert Size and AssetValue from their keys to the strings they are stored as
-            string assetValue = _context.DEMOGRAPHICS_ASSET_VALUES.Where(dav => dav.DemographicsAssetId == demographics.AssetValue).FirstOrDefault()?.AssetValue;
-            string assetSize = _context.DEMOGRAPHICS_SIZE.Where(dav => dav.DemographicId == demographics.Size).FirstOrDefault()?.Size;
+           
+            var assetValue = _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ASSET-VALUE" && x.Option_Id == demographics.AssetValue).FirstOrDefault();
+            var assetSize = _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "SIZE" && x.Option_Id == demographics.Size).FirstOrDefault();
 
             // Build a list of standard sets that are recommended for the current demographics
             list = _context.SECTOR_STANDARD_RECOMMENDATIONS.Where(
                             x => x.Industry_Id == demographics.IndustryId
                             && x.Sector_Id == demographics.SectorId
-                            && x.Organization_Size == assetSize
-                            && x.Asset_Value == assetValue)
+                            && x.Organization_Size == assetSize.OptionText
+                            && x.Asset_Value == assetValue.OptionText)
                             .Select(x => x.Set_Name).ToList();
 
             // Remove any trailing spaces
