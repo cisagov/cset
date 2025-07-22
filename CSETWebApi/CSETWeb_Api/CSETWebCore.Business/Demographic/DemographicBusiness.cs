@@ -113,8 +113,8 @@ namespace CSETWebCore.Business.Demographic
             extBiz.SaveX(demographics.AssessmentId, "POC", demographics.PointOfContact == 0 ? null : demographics.PointOfContact);
             extBiz.SaveX(demographics.AssessmentId, "CRIT-SERVICE", demographics.CriticalService);
             extBiz.SaveX(demographics.AssessmentId, "FACILITATOR", demographics.FacilitatorId == 0 ? null : demographics.FacilitatorId);
-            extBiz.SaveX(demographics.AssessmentId, "ASSET-VALUE", assetValue.OptionValue);
-            extBiz.SaveX(demographics.AssessmentId, "SIZE", assetSize.OptionValue);
+            extBiz.SaveX(demographics.AssessmentId, "ASSET-VALUE", assetValue?.OptionValue);
+            extBiz.SaveX(demographics.AssessmentId, "SIZE", assetSize?.OptionValue);
             
             _assessmentUtil.TouchAssessment(demographics.AssessmentId);
 
