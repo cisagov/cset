@@ -300,30 +300,6 @@ namespace CSETWebCore.Business.Assessment
             return list;
         }
 
-        public AggregationAssessment GetAggregationAssessmentDetail(int assessmentId)
-        {
-            AggregationAssessment aggregation = new AggregationAssessment();
-
-            var query = from aa in _context.ASSESSMENTS
-                        where aa.Assessment_Id == assessmentId
-                        select aa;
-
-            var result = query.ToList().FirstOrDefault();
-            if (result != null)
-            {
-                aggregation.Assessment = new ASSESSMENTS();
-                aggregation.Assessment = result;
-                aggregation.Answers = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId).ToList();
-                aggregation.Demographics = _context.DEMOGRAPHICS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
-                aggregation.Documents = _context.DOCUMENT_FILE.Where(x => x.Assessment_Id == assessmentId).ToList();
-                aggregation.Findings = (from a in aggregation.Answers
-                                        join f in _context.FINDING on a.Answer_Id equals f.Answer_Id
-                                        select f).ToList();
-
-            }
-            return aggregation;
-        }
-
 
         /// <summary>
         /// 
