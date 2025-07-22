@@ -78,7 +78,7 @@
   </div>
 
 
-  <p *ngIf="filterSvc.showFilters.length>0" class="mb-4">
+  <p *ngIf="categories && filterSvc.showFilters.length>0 && visibleGroupCount() >0" class="mb-4">
     {{t('questions.instructions 1')}} {{ msgUnansweredEqualsNo }}
   </p>
 
