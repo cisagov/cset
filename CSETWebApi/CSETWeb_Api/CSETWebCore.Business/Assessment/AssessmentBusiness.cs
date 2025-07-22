@@ -19,6 +19,7 @@ using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Demographic;
 using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Observations;
 using CSETWebCore.Model.Question;
@@ -768,15 +769,17 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param></param>
         /// <returns></returns>
-        public List<DETAILS_DEMOGRAPHICS_OPTIONS> GetOrganizationTypes()
+        public List<OrganizationType> GetOrganizationTypes()
         {
-            var list = new List<DETAILS_DEMOGRAPHICS_OPTIONS>();
-            list = _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ORG-TYPE").ToList();
+            List<DETAILS_DEMOGRAPHICS_OPTIONS> orgTypes = _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ORG-TYPE").ToList();
+            
+            // List<DETAILS_DEMOGRAPHICS_OPTIONS> assetValues = await _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ASSET-VALUE").ToListAsync();
+            // return Ok(assetValues.OrderBy(a => a.Sequence).Select(a => new DemographicsAssetValue() { AssetValue = a.OptionText, DemographicsAssetId = a.OptionValue }).ToList());
 
             var lang = _tokenManager.GetCurrentLanguage();
             if (lang != "en")
             {
-                list.ForEach(x =>
+                orgTypes.ForEach(x =>
                 {
                     var val = _overlay.GetValue("DEMOGRAPHICS_ORGANIZATION_TYPE", x.OptionValue.ToString(), lang)?.Value;
                     if (val != null)
@@ -785,8 +788,7 @@ namespace CSETWebCore.Business.Assessment
                     }
                 });
             }
-
-            return list;
+            return (orgTypes.OrderBy(a => a.Sequence).Select(a => new OrganizationType() { Type = a.OptionText, OrgTypeId = a.OptionValue })).ToList();
         }
 
         /// <summary>
