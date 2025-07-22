@@ -458,26 +458,24 @@ namespace CSETWebCore.Business.Contact
 
 
             // Null out any related Facilitator or Point of Contact references
-            var demoList1 = (from x in _context.DEMOGRAPHICS
-                             where x.Facilitator == ac.Assessment_Contact_Id
-                             select x).ToList();
+            var demoList1 =  _context.DETAILS_DEMOGRAPHICS
+                    .Where(x => x.DataItemName == "FACILITATOR" && x.IntValue == ac.Assessment_Contact_Id)
+               .ToList();
 
             foreach (var dd in demoList1)
             {
-                dd.Facilitator = null;
+                dd.IntValue = null;
             }
 
 
-            var demoList2 = (from x in _context.DEMOGRAPHICS
-                             where x.PointOfContact == ac.Assessment_Contact_Id
-                             select x).ToList();
+            var demoList2 = _context.DETAILS_DEMOGRAPHICS
+                .Where(x => x.DataItemName == "POC" && x.IntValue == ac.Assessment_Contact_Id)
+                .ToList();
 
             foreach (var dd in demoList2)
             {
-                dd.PointOfContact = null;
+                dd.IntValue = null;
             }
-
-
 
             _context.SaveChanges();
 
