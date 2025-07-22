@@ -61,8 +61,7 @@
         <div *ngIf="!browserIsIE() && !usesRAC()" class="mt-2">
           <input type="checkbox" id="auto_load_supp" name="auto_load_supp" class="checkbox-custom"
             [(ngModel)]="autoLoadSupplementalInfo" (change)="persistAutoLoadSetting()">
-          <label for="auto_load_supp" class="checkbox-custom-label" style="margin: 0 5px;">{{t('auto load
-            guidance')}}</label>
+          <label for="auto_load_supp" class="checkbox-custom-label" style="margin: 0 5px;">{{t('auto load guidance')}}</label>
         </div>
       </div>
     </div>
@@ -79,11 +78,11 @@
   </div>
 
 
-  <p *ngIf="!!categories" class="mb-4">
+  <p *ngIf="categories && filterSvc.showFilters.length>0 && visibleGroupCount() >0" class="mb-4">
     {{t('questions.instructions 1')}} {{ msgUnansweredEqualsNo }}
   </p>
 
-  
+
   <div *ngFor="let c of categories" [class.display-none]="!c.visible" class="w-100">
     <app-category-block [myCategory]="c"></app-category-block>
   </div>
