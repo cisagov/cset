@@ -53,10 +53,6 @@ public partial class DOCUMENT_FILE
     [InverseProperty("DOCUMENT_FILE")]
     public virtual ASSESSMENTS Assessment { get; set; }
 
-    [ForeignKey("Assessment_Id")]
-    [InverseProperty("DOCUMENT_FILE")]
-    public virtual DEMOGRAPHICS AssessmentNavigation { get; set; }
-
     [InverseProperty("Document")]
     public virtual ICollection<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; } = new List<DOCUMENT_ANSWERS>();
 

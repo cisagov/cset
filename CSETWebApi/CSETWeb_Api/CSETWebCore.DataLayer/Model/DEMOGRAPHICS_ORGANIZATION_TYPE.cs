@@ -19,7 +19,5 @@ public partial class DEMOGRAPHICS_ORGANIZATION_TYPE
     [Required]
     [StringLength(50)]
     public string OrganizationType { get; set; }
-
-    [InverseProperty("OrganizationTypeNavigation")]
-    public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; } = new List<DEMOGRAPHICS>();
+    
 }
