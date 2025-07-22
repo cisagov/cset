@@ -56,8 +56,8 @@ interface AssessmentSize {
 }
 
 interface OrgTypes {
-    orgTypeId: number;
-    type: string;
+    id: number;
+    text: string;
 }
 
 @Component({

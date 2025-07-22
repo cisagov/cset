@@ -769,7 +769,7 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param></param>
         /// <returns></returns>
-        public List<OrganizationType> GetOrganizationTypes()
+        public List<DetailsDemographicsOptionsDTO> GetOrganizationTypes()
         {
             List<DETAILS_DEMOGRAPHICS_OPTIONS> orgTypes = _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ORG-TYPE").ToList();
             
@@ -788,7 +788,7 @@ namespace CSETWebCore.Business.Assessment
                     }
                 });
             }
-            return (orgTypes.OrderBy(a => a.Sequence).Select(a => new OrganizationType() { Type = a.OptionText, OrgTypeId = a.OptionValue })).ToList();
+            return (orgTypes.OrderBy(a => a.Sequence).Select(a => new DetailsDemographicsOptionsDTO() { Text = a.OptionText, Id = a.OptionValue })).ToList();
         }
 
         /// <summary>

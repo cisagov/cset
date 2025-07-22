@@ -60,8 +60,8 @@ interface StandardsNames {
 }
 
 interface OrgTypes {
-  orgTypeId: string;
-  typeL: string;
+  id: string;
+  text: string;
 }
 
 @Component({
