@@ -6,9 +6,9 @@
 //////////////////////////////// 
 namespace CSETWebCore.Model.Demographic
 {
-    public class OrganizationType
+    public class DetailsDemographicsOptionsDTO
     {
-        public int OrgTypeId { get; set; }
-        public string Type { get; set; }
+        public int Id { get; set; }
+        public string Text { get; set; }
     }
 }
