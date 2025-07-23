@@ -307,11 +307,26 @@ export class MaturityFilteringService {
 
       // If we made it this far, start over assuming visible = false
       q.visible = false
-      
-      if (filterSvc.filterSearchString.length > 0
-        && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
-        return;
+      if (filterSvc.filterSearchString.length > 0) {
+        let textToSearch = '';
+
+        if (this.assesmentSvc.assessment.maturityModel?.modelName === 'CPG2' || this.assesmentSvc.assessment.maturityModel?.modelName === 'CPG') {
+          // For CPG2 and CPG, combine securityPractice and outcome for searching
+          textToSearch = (q.securityPractice || '') + ' ' + (q.outcome || '');
+        } else {
+          // For all other models, use questionText
+          textToSearch = q.questionText || '';
+        }
+
+        if (textToSearch.toLowerCase().indexOf(filterStringLowerCase) < 0) {
+          return;
+        }
       }
+      // OLD code to filter questionText
+      // if (filterSvc.filterSearchString.length > 0
+      //   && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
+      //   return;
+      // }
       // only apply maturity-level filtering when the user has toggled at least one numeric level
       const hasLevelFilter = filterSvc.showFilters.some(f => /^\d+$/.test(f));
       if (maturityModel?.levels?.length > 0
