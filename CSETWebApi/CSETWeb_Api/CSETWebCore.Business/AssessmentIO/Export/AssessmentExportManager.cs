@@ -459,11 +459,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     item.StringValue = null;
                 }
                 
-                if (item.DataItemName == "AGENCY")
-                {
-                    item.StringValue = null;
-                }
-                
                 if (item.DataItemName == "SUBSECTOR")
                 {
                     item.IntValue = null;
