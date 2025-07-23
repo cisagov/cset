@@ -136,20 +136,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(list.Select(s => new Sector { SectorId = s.SectorId, SectorName = s.SectorName }).ToList());
         }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [HttpGet]
-        [Route("api/Demographics/Sectors_Industry")]
-        public IActionResult GetSECTOR_INDUSTRY()
-        {
-            var list = _context.SECTOR_INDUSTRY;
-            return Ok(list);
-        }
-
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -187,77 +174,42 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// 
+        /// Get asset value options from DETAILS_DEMOGRAPHICS_OPTIONS
         /// </summary>
         [HttpGet]
         [Route("api/Demographics/AssetValues")]
         public async Task<IActionResult> GetAssetValues()
         {
-            List<DEMOGRAPHICS_ASSET_VALUES> assetValues = await _context.DEMOGRAPHICS_ASSET_VALUES
-                .ToListAsync();
-            return Ok(assetValues.OrderBy(a => a.ValueOrder).Select(a => new DemographicsAssetValue() { AssetValue = a.AssetValue, DemographicsAssetId = a.DemographicsAssetId }).ToList());
+            List<DETAILS_DEMOGRAPHICS_OPTIONS> assetValues = await _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ASSET-VALUE").ToListAsync();
+            return Ok(assetValues.OrderBy(a => a.Sequence).Select(a => new DemographicsAssetValue() { AssetValue = a.OptionText, DemographicsAssetId = a.OptionValue }).ToList());
         }
 
 
         /// <summary>
-        /// 
-        /// </summary>
-        [HttpGet]
-        [Route("api/Demographics/StatesAndProvinces")]
-        public async Task<IActionResult> GetStatesAndProvinces()
-        {
-            List<STATES_AND_PROVINCES> statesAndProvinces = await _context.STATES_AND_PROVINCES.ToListAsync();
-
-            // translate if not running in english
-            var lang = _token.GetCurrentLanguage();
-            if (lang != "en")
-            {
-                statesAndProvinces.ForEach(x =>
-                {
-                    var val = _overlay.GetValue("STATES_AND_PROVINCES", x.STATES_AND_PROVINCES_ID.ToString(), lang)?.Value;
-                    if (val != null)
-                    {
-                        x.Display_Name = val;
-                    }
-                });
-            }
-
-            return Ok(statesAndProvinces.OrderBy(s => s.Display_Name).Select(s => new StateAndProvince() 
-                { 
-                    StateAndProvinceId = s.STATES_AND_PROVINCES_ID, 
-                    ISOCode = s.ISO_code, 
-                    CountryCode = s.Country_Code, 
-                    DisplayName = s.Display_Name 
-                }).ToList());
-        }
-
-
-        /// <summary>
-        /// 
+        /// Get size options from DETAILS_DEMOGRAPHICS_OPTIONS
         /// </summary>
         [HttpGet]
         [Route("api/Demographics/Size")]
         public async Task<IActionResult> GetSize()
         {
-            List<DEMOGRAPHICS_SIZE> assetValues = await _context.DEMOGRAPHICS_SIZE.ToListAsync();
-
+            List<DETAILS_DEMOGRAPHICS_OPTIONS> assetSize = await _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "SIZE").ToListAsync();
 
             // translate if not running in english
             var lang = _token.GetCurrentLanguage();
             if (lang != "en")
             {
-                assetValues.ForEach(x =>
+                assetSize.ForEach(x =>
                 {
-                    var val = _overlay.GetValue("DEMOGRAPHICS_SIZE", x.DemographicId.ToString(), lang)?.Value;
+                    var val = _overlay.GetValue("DEMOGRAPHICS_SIZE", x.OptionValue.ToString(), lang)?.Value;
                     if (val != null)
                     {
-                        x.Description = val;
+                        x.OptionText = val;
                     }
                 });
             }
 
 
-            return Ok(assetValues.OrderBy(a => a.ValueOrder).Select(s => new AssessmentSize() { DemographicId = s.DemographicId, Description = s.Description, Size = s.Size }).ToList());
+            return Ok(assetSize.OrderBy(a => a.Sequence).Select(s => new AssessmentSize() { SizeId = s.OptionValue, Description = s.OptionText }).ToList());
         }
     }
 }

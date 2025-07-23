@@ -24,7 +24,6 @@
 import { Injectable } from '@angular/core';
 import { AssessmentService } from '../assessment.service';
 import { ConfigService } from '../config.service';
-import { DemographicExtendedService } from '../demographic-extended.service';
 
 /**
  * Analyzes assessment
@@ -38,7 +37,6 @@ export class PageVisibilityService {
   constructor(
     private assessSvc: AssessmentService,
     private configSvc: ConfigService,
-    private demographics: DemographicExtendedService,
   ) { }
 
   /**

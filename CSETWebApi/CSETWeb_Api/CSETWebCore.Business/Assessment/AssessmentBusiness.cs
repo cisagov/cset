@@ -19,6 +19,7 @@ using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Demographic;
 using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Observations;
 using CSETWebCore.Model.Question;
@@ -298,30 +299,6 @@ namespace CSETWebCore.Business.Assessment
             list = _context.usp_AssessmentsCompletionForAccessKey(accessKey).ToList();
 
             return list;
-        }
-
-        public AggregationAssessment GetAggregationAssessmentDetail(int assessmentId)
-        {
-            AggregationAssessment aggregation = new AggregationAssessment();
-
-            var query = from aa in _context.ASSESSMENTS
-                        where aa.Assessment_Id == assessmentId
-                        select aa;
-
-            var result = query.ToList().FirstOrDefault();
-            if (result != null)
-            {
-                aggregation.Assessment = new ASSESSMENTS();
-                aggregation.Assessment = result;
-                aggregation.Answers = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId).ToList();
-                aggregation.Demographics = _context.DEMOGRAPHICS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
-                aggregation.Documents = _context.DOCUMENT_FILE.Where(x => x.Assessment_Id == assessmentId).ToList();
-                aggregation.Findings = (from a in aggregation.Answers
-                                        join f in _context.FINDING on a.Answer_Id equals f.Answer_Id
-                                        select f).ToList();
-
-            }
-            return aggregation;
         }
 
 
@@ -792,25 +769,26 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param></param>
         /// <returns></returns>
-        public List<DEMOGRAPHICS_ORGANIZATION_TYPE> GetOrganizationTypes()
+        public List<DetailsDemographicsOptionsDTO> GetOrganizationTypes()
         {
-            var list = new List<DEMOGRAPHICS_ORGANIZATION_TYPE>();
-            list = _context.DEMOGRAPHICS_ORGANIZATION_TYPE.ToList();
+            List<DETAILS_DEMOGRAPHICS_OPTIONS> orgTypes = _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ORG-TYPE").ToList();
+            
+            // List<DETAILS_DEMOGRAPHICS_OPTIONS> assetValues = await _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ASSET-VALUE").ToListAsync();
+            // return Ok(assetValues.OrderBy(a => a.Sequence).Select(a => new DemographicsAssetValue() { AssetValue = a.OptionText, DemographicsAssetId = a.OptionValue }).ToList());
 
             var lang = _tokenManager.GetCurrentLanguage();
             if (lang != "en")
             {
-                list.ForEach(x =>
+                orgTypes.ForEach(x =>
                 {
-                    var val = _overlay.GetValue("DEMOGRAPHICS_ORGANIZATION_TYPE", x.OrganizationTypeId.ToString(), lang)?.Value;
+                    var val = _overlay.GetValue("DEMOGRAPHICS_ORGANIZATION_TYPE", x.OptionValue.ToString(), lang)?.Value;
                     if (val != null)
                     {
-                        x.OrganizationType = val;
+                        x.OptionText = val;
                     }
                 });
             }
-
-            return list;
+            return (orgTypes.OrderBy(a => a.Sequence).Select(a => new DetailsDemographicsOptionsDTO() { Text = a.OptionText, Id = a.OptionValue })).ToList();
         }
 
         /// <summary>

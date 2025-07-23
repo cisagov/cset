@@ -135,16 +135,12 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public int? DetermineSsgModel(int assessmentId)
         {
-            var demographics = _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-
+           
             var ddSector = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "SECTOR").FirstOrDefault();
-
-
-
+            
             // CHEMICAL
             var chemicalSectors = new List<int>() { 1, 19 };
-            if ((chemicalSectors.Contains(demographics?.SectorId ?? -1))
-                || chemicalSectors.Contains(ddSector?.IntValue ?? -1))
+            if (chemicalSectors.Contains(ddSector?.IntValue ?? -1))
             {
                 return Constants.Constants.Model_SSG_CHEM;
             }
@@ -152,8 +148,7 @@ namespace CSETWebCore.Business.Maturity
 
             // INFORMATION TECHNOLOGY (IT)
             var itSectors = new List<int>() { 13, 28 };
-            if ((itSectors.Contains(demographics?.SectorId ?? -1))
-                || itSectors.Contains(ddSector?.IntValue ?? -1))
+            if (itSectors.Contains(ddSector?.IntValue ?? -1))
             {
                 return Constants.Constants.Model_SSG_IT;
             }

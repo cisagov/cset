@@ -51,13 +51,13 @@ interface Sector {
 }
 
 interface AssessmentSize {
-    demographicId: number;
-    size: string;
+    sizeId: number;
     description: string;
 }
 
-interface ImportExportData {
-    data: any;
+interface DetailsDemographicsOptions {
+    id: number;
+    text: string;
 }
 
 @Component({
@@ -81,7 +81,7 @@ export class AssessmentDemographicsComponent implements OnInit {
     contacts: User[];
     isSLTT: boolean = false;
     demographicData: Demographic = {};
-    orgTypes: any[];
+    orgTypes: DetailsDemographicsOptions[];
 
     assetValueTemp: number;
 
@@ -172,7 +172,7 @@ export class AssessmentDemographicsComponent implements OnInit {
 
                 // Currently this screen shows PPD-21 (the original 16 critical infrastructure sector list)
                 this.demographicData.sectorDirective = 'PPD-21';
-                
+
                 // populate Industry dropdown based on Sector
                 this.populateIndustryOptions(this.demographicData.sectorId);
             },
