@@ -143,7 +143,7 @@ namespace CSETWebCore.Business.Analytics
             demographics.PointOfContact = (int?)extBiz.GetX(assessmentId, "POC");
             demographics.CriticalService = (string?)extBiz.GetX(assessmentId, "CRIT-SERVICE");
             demographics.PointOfContact = (int?)extBiz.GetX(assessmentId, "POC");
-            demographics.Agency = (string?)extBiz.GetX(assessmentId, "AGENCY");
+            demographics.Agency = (string?)extBiz.GetX(assessmentId, "BUSINESS-UNIT");
             demographics.Facilitator = (int?)extBiz.GetX(assessmentId, "FACILITATOR");
             demographics.IsScoped = (bool?)extBiz.GetX(assessmentId, "SCOPED");
             demographics.OrganizationName = (string?)extBiz.GetX(assessmentId, "ORG-NAME");

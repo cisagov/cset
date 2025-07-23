@@ -54,7 +54,7 @@ namespace CSETWebCore.Business.Demographic
             demographics.IndustryId = (int?)extBiz.GetX(assessmentId, "SUBSECTOR");
             demographics.CriticalService = (string?)extBiz.GetX(assessmentId, "CRIT-SERVICE");
             demographics.PointOfContact = (int?)extBiz.GetX(assessmentId, "POC");
-            demographics.Agency = (string?)extBiz.GetX(assessmentId, "AGENCY");
+            demographics.Agency = (string?)extBiz.GetX(assessmentId, "BUSINESS-UNIT");
             demographics.FacilitatorId = (int?)extBiz.GetX(assessmentId, "FACILITATOR");
             demographics.IsScoped = (bool?)extBiz.GetX(assessmentId, "SCOPED");
             demographics.OrganizationName = (string?)extBiz.GetX(assessmentId, "ORG-NAME");
@@ -105,7 +105,6 @@ namespace CSETWebCore.Business.Demographic
             extBiz.SaveX(demographics.AssessmentId, "ORG-NAME", demographics.OrganizationName);
             extBiz.SaveX(demographics.AssessmentId, "BUSINESS-UNIT", demographics.Agency);
             extBiz.SaveX(demographics.AssessmentId, "ORG-TYPE", demographics.OrganizationType == 0 ? null : demographics.OrganizationType);
-            extBiz.SaveX(demographics.AssessmentId, "AGENCY", demographics.Agency);
             extBiz.SaveX(demographics.AssessmentId, "SECTOR", demographics.SectorId == 0 ? null: demographics.SectorId);
             extBiz.SaveX(demographics.AssessmentId, "SUBSECTOR", demographics.IndustryId == 0 ? null: demographics.IndustryId);
             extBiz.SaveX(demographics.AssessmentId, "SECTOR-DIRECTIVE", demographics.SectorDirective);
