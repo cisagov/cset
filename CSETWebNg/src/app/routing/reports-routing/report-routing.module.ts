@@ -14,8 +14,7 @@ import { CompareReportMComponent } from '../../reports/compare-report-m/compare-
 import { CompareReportComponent } from '../../reports/compare-report/compare-report.component';
 import { CpgDeficiencyComponent } from '../../reports/cpg/cpg-deficiency/cpg-deficiency.component';
 import { CpgReportComponent } from '../../reports/cpg/cpg-report/cpg-report.component';
-import { CreCoreReportComponent } from '../../reports/crePlus/cre-core-report/cre-core-report.component';
-import { CreMilReportComponent } from '../../reports/crePlus/cre-mil-report/cre-mil-report.component';
+import { CreFinalReportComponent } from '../../reports/crePlus/cre-final-report/cre-final-report.component';
 import { CreAssessmentOverview } from '../../reports/crePlus/cre-assessment-overview/cre-assessment-overview.component';
 import { CreModelChartsComponent } from '../../reports/crePlus/cre-model-charts/cre-model-charts.component';
 import { CrrCommentsMarkedComponent } from '../../reports/crr/crr-comments-marked/crr-comments-marked.component';
@@ -45,6 +44,8 @@ import { OpenEndedQuestionsComponent } from '../../reports/vadr/open-ended-quest
 import { VadrDeficiencyComponent } from '../../reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { VadrReportComponent } from '../../reports/vadr/vadr-report/vadr-report.component';
 import { CisaVadrReportComponent } from '../../reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
+import { CreHeatmapsComponent } from '../../reports/crePlus/cre-heatmaps/cre-heatmaps.component';
+import { CreMilCharts2Component } from '../../reports/crePlus/cre-mil-charts-2/cre-mil-charts-2.component';
 
 
 const routes: Routes = [
@@ -79,10 +80,11 @@ const routes: Routes = [
     { path: 'mvraReport', component: MvraReportComponent },
     { path: 'cpgReport', component: CpgReportComponent },
     { path: 'cpgDeficiency', component: CpgDeficiencyComponent },
-    { path: 'creCoreReport', component: CreCoreReportComponent },
-    { path: 'creMilReport', component: CreMilReportComponent },
-    { path: 'creAssessmentOverview', component: CreAssessmentOverview },
-    { path: 'creModelChartReport/:m', component: CreModelChartsComponent },
+    { path: 'cre-final-report/:m', component: CreFinalReportComponent },
+    { path: 'cre-assessment-overview', component: CreAssessmentOverview },
+    { path: 'cre-model-chart-report/:m', component: CreModelChartsComponent },
+    { path: 'cre-mil-charts-2', component: CreMilCharts2Component },
+    { path: 'cre-heatmaps', component: CreHeatmapsComponent },
     { path: 'commentsmfr', component: CommentsMfrComponent },
     { path: 'module-content', component: ModuleContentComponent },
     { path: 'c2m2Report', component: C2m2ReportComponent },

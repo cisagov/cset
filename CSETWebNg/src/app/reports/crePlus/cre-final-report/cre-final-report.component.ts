@@ -27,14 +27,16 @@ import { QuestionsService } from '../../../services/questions.service';
 import { ConfigService } from '../../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { AssessmentService } from '../../../services/assessment.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-  selector: 'app-cre-core-report',
-  templateUrl: './cre-core-report.component.html',
+  selector: 'app-cre-final-report',
+  templateUrl: './cre-final-report.component.html',
   styleUrls: ['../../reports.scss'],
   standalone: false
 })
-export class CreCoreReportComponent implements OnInit {
+export class CreFinalReportComponent implements OnInit {
 
   title = 'CISA Cyber Resilience Essentials (CRE+) Final Report';
   assessmentName: string;
@@ -42,19 +44,28 @@ export class CreCoreReportComponent implements OnInit {
   assessorName: string;
   facilityName: string;
   selfAssessment: boolean;
+  modelId: number;
+
 
   constructor(
     public assessSvc: AssessmentService,
     public reportSvc: ReportService,
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
-    public titleService: Title
+    public tSvc: TranslocoService,
+    public titleService: Title,
+    public route: ActivatedRoute
   ) {
 
   }
 
   ngOnInit(): void {
-    this.titleService.setTitle(this.title);
+    this.modelId = +this.route.snapshot.params['m'];
+
+    setTimeout(() => {
+      this.title = this.tSvc.translate(`reports.core.cre.final reports.${this.modelId}.title`);
+      this.titleService.setTitle(this.title);
+    }, 500);
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;

@@ -74,7 +74,7 @@
       <div class="col-6">
         <div class="row">
           <label for="name" class="form-label">{{t('pcii requested')}}</label>
-          <div class="btn-group col-10" style="padding-left: 0px;" role="group" data-toggle="buttons">
+          <div class="btn-group col-10" role="group" data-toggle="buttons">
             <label class="btn btn-level btn-rounded form-check-label" [class.active]="assessment.is_PCII">
               <input class="btn-check" name="standardYes" id="standardYes" type="radio" autocomplete="off"
                 (change)="changeIsPCII(true)" tabindex="0" [(ngModel)]="assessment.is_PCII" />
@@ -108,36 +108,43 @@
 
     <div class="mt-4">
       <h4>{{ t('assessment settings') }}</h4>
-      <div *ngIf="this.configSvc.userIsCisaAssessor; else content"
-        class="d-flex align-items-center flex-00a ms-auto me-5" style="margin-top:-5px;">
-        <div class="d-flex align-items-center me-3 pt-2">{{ t('protected features.cisa assessor workflow') }}</div>
-        <div class="mb-2">
-          <div>
-            <div class="btn-group btn-group-toggle mt-3" data-toggle="buttons"
-              style="border: 2px solid transparent; border-radius: 8px;">
-              <label class="btn btn-level form-check-label" [class.active]="!assessment.assessorMode"
-                (change)="updateAssessorMode()">
-                <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
-                  [checked]="!assessment.assessorMode" />
-                {{t('menu.user.off')}}
-              </label>
-              <label class="btn btn-level form-check-label" [class.active]="assessment.assessorMode"
-                (change)="updateAssessorMode()">
-                <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
-                  [checked]="assessment.assessorMode" />
-                {{t('menu.user.on')}}
-              </label>
-            </div>
+
+      <div *ngIf="this.configSvc.userIsCisaAssessor; else content" class="mb-3 col-6">
+        <label class="form-label">{{t('protected features.cisa assessor workflow')}}</label>
+        <div>
+          <div class="btn-group btn-group-toggle col-10" data-toggle="buttons" style="border: 2px solid transparent; border-radius: 8px;">
+            <label class="btn btn-level form-check-label" [class.active]="assessment.assessorMode"
+              (change)="updateAssessorMode()">
+              <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                [checked]="assessment.assessorMode" />
+              {{t('answer-options.button-labels.yes')}}
+            </label>
+            <label class="btn btn-level form-check-label" [class.active]="!assessment.assessorMode"
+              (change)="updateAssessorMode()">
+              <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                [checked]="!assessment.assessorMode" />
+              {{t('answer-options.button-labels.no')}}
+            </label>
           </div>
         </div>
       </div>
-      <ng-template #content class="d-flex align-items-center flex-00a ms-auto me-5" style="margin-top:-5px;">
-        <div>
-          <p>
-            {{ t('protected features.assessor mode') }}
-          </p>
-        </div>
+      <ng-template #content class=" mb-3">
+        <p>
+          {{ t('protected features.assessor mode') }}
+        </p>
       </ng-template>
+
+      <div class="mb-5">
+        <label class="form-label" for="techDomain">{{t('tech domain.label')}}</label>
+        <select class="form-select" id="techDomain" tabindex="0" name="techDomain" (change)="updateDemographics()"
+          [(ngModel)]="demographics.techDomain">
+          <option [ngValue]="null">-- {{t('tech domain.select')}} --</option>
+          <option value="OT">{{t('tech domain.ot')}}</option>
+          <option value="IT">{{t('tech domain.it')}}</option>
+          <option value="OT+IT">{{t('tech domain.ot+it')}}</option>
+        </select>
+      </div>
+
     </div>
 
     <div class="mt-4">

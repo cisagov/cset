@@ -11,3 +11,40 @@
   .section-border {
     border-bottom: 1px solid rgba(255, 255, 255, .3);
   }
+
+  .selector {
+    background-color: #07354d;
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    color: white;
+  }
+
+  $gray-150: #e6e6e6; 
+  $gray-400: #a6a6a6; 
+  $white: #ffffff;
+  $black: #000000;
+  $primary-color: #075d4d;
+  $secondary-color: #062d42;
+
+
+  .btn-mil {
+    background-color: $gray-150;
+    color: $secondary-color;
+  }
+
+  .btn-mil:hover {
+    background-color: $gray-400;
+    color: $secondary-color;
+  }
+
+  .btn-mil:not(.disabled).active,
+  .btn-mil:not(.disabled).activeLevel,
+  .show>.btn-mil.dropdown-toggle {
+    background-color: $secondary-color;
+    color: $white;
+  }
+
+  .btn-mil.primary.active {
+    background-color: $primary-color;
+    color: $white;
+  }

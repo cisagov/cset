@@ -22,47 +22,64 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { CreService } from '../../../services/cre.service';
+import { ConfigService } from '../../../services/config.service';
+import { TranslocoService } from '@jsverse/transloco';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ReportService } from '../../../services/report.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { ConfigService } from '../../../services/config.service';
 import { Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
-  selector: 'app-cre-mil-report',
-  standalone: false,
-  templateUrl: './cre-mil-report.component.html',
-  styleUrls: ['../../reports.scss']
+  selector: 'app-cre-mil-charts-2',
+  templateUrl: './cre-mil-charts-2.component.html',
+  styleUrls: ['../../reports.scss', './cre-mil-charts-2.component.scss'],
+  standalone: false
 })
-export class CreMilReportComponent implements OnInit {
+export class CreMilCharts2Component {
 
-  title = 'CISA Cyber Resilience Essentials (CRE+) MIL Report';
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
   selfAssessment: boolean;
 
+  /**
+   * 
+   */
   constructor(
     public assessSvc: AssessmentService,
     public reportSvc: ReportService,
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
-    public titleService: Title
-  ) {
+    public creSvc: CreService,
+    public titleService: Title,
+    public tSvc: TranslocoService,
+    private route: ActivatedRoute
+  ) { }
 
-  }
-
-  ngOnInit(): void {
-    this.titleService.setTitle(this.title);
-
+  /**
+   * 
+   */
+  async ngOnInit(): Promise<void> {
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
       this.assessorName = assessmentDetail.facilitatorName;
       this.facilityName = assessmentDetail.facilityName;
       this.selfAssessment = assessmentDetail.selfAssessment;
+
+
+      setTimeout(() => {
+        const titleKey = `reports.core.cre.mil charts 2.title`;
+        var title = this.tSvc.translate(titleKey, { defaultTitle: this.configSvc.behaviors.defaultTitle });
+        this.titleService.setTitle(title);
+      }, 500);
     });
+
+
   }
 
 }

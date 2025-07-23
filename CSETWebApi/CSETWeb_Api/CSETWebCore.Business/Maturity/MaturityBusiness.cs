@@ -12,6 +12,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Model.Edm;
 using CSETWebCore.Model.Maturity;
+using CSETWebCore.Model.Mvra;
 using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
@@ -19,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using CSETWebCore.Model.Mvra;
 
 
 namespace CSETWebCore.Business.Maturity
@@ -38,7 +38,14 @@ namespace CSETWebCore.Business.Maturity
 
         private AdditionalSupplemental _addlSuppl;
 
+        /// <summary>
+        /// Utilities that support manipulation of Supplemental Guidance
+        /// </summary>
+        private SupplementalGuidanceUtils _suppUtils;
+
         public readonly List<string> ModelsWithTargetLevel = ["ACET", "CMMC", "CMMC2"];
+
+        private List<int> _selectedGroupingIds = [];
 
 
 
@@ -216,7 +223,7 @@ namespace CSETWebCore.Business.Maturity
                         if (!isLevelAchieved)
                         {
                             nextLevel++;
-                            pushLevel(nextLevel, item);
+                            PushLevel(nextLevel, item);
                         }
                         break;
                 }
@@ -238,7 +245,7 @@ namespace CSETWebCore.Business.Maturity
         }
 
         private Dictionary<usp_countsForLevelsByGroupMaturityModelResults, int> levels = new Dictionary<usp_countsForLevelsByGroupMaturityModelResults, int>();
-        private void pushLevel(int nextLevel, usp_countsForLevelsByGroupMaturityModelResults item)
+        private void PushLevel(int nextLevel, usp_countsForLevelsByGroupMaturityModelResults item)
         {
             //if the previous level was achieved then we can go for the next level
             //other wise we cannot
@@ -783,6 +790,12 @@ namespace CSETWebCore.Business.Maturity
 
             var targetModelId = defaultModel.model_id;
 
+            _suppUtils = new SupplementalGuidanceUtils(assessmentId, _context);
+
+
+            // A list of the assessment's selected grouping IDs
+            _selectedGroupingIds = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Grouping_Id).ToList();
+
 
             // If the model ID was specified by the caller, use that instead of the assessment's model
             if (modelId != null)
@@ -829,6 +842,8 @@ namespace CSETWebCore.Business.Maturity
                 .Where(q =>
                 targetModelId == q.Maturity_Model_Id);
 
+
+            // some special logic for the CIE model
             if (groupingId != 0 && targetModelId != 17)
             {
                 questionQuery = questionQuery.Where(x => x.Question_Text.StartsWith("A"));
@@ -869,6 +884,13 @@ namespace CSETWebCore.Business.Maturity
                     q.Services = o.Services;
                     q.Implementation_Guides = o.Implementation_Guides;
                 }
+
+
+                // CPG 2.0 may need to have its guidance modified
+                if (targetModelId == 21)
+                {
+                    q.Implementation_Guides = _suppUtils.RemoveNonApplicableTechDomains(q.Implementation_Guides);
+                }
             }
 
 
@@ -899,7 +921,7 @@ namespace CSETWebCore.Business.Maturity
 
             // Recursively build the grouping/question hierarchy
             var tempModel = new MaturityGrouping();
-            BuildSubGroupings(tempModel, null, allGroupings, questions, answers.ToList(), lang);
+            BuildSubGroupings(assessmentId, targetModel.Maturity_Model_Id, tempModel, null, allGroupings, questions, answers.ToList(), lang);
 
             //GRAB all the domain remarks and assign them if necessary
             Dictionary<int, MATURITY_DOMAIN_REMARKS> domainRemarks =
@@ -927,7 +949,7 @@ namespace CSETWebCore.Business.Maturity
         /// Recursive method that builds subgroupings for the specified group.
         /// It also attaches any questions pertinent to this group.
         /// </summary>
-        public void BuildSubGroupings(MaturityGrouping g, int? parentID,
+        public void BuildSubGroupings(int assessmentId, int modelId, MaturityGrouping g, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
             List<MATURITY_QUESTIONS> questions,
             List<FullAnswer> answers,
@@ -951,6 +973,14 @@ namespace CSETWebCore.Business.Maturity
                     Description = sg.Description,
                     Abbreviation = sg.Abbreviation
                 };
+
+
+                // Set the Selected if the model supports selectable models
+                if (modelId == 23 || modelId == 24)
+                {
+                    newGrouping.Selected = _selectedGroupingIds.Contains(newGrouping.GroupingId);
+                }
+
 
                 var o = _overlay.GetMaturityGrouping(newGrouping.GroupingId, lang);
                 if (o != null)
@@ -1013,7 +1043,7 @@ namespace CSETWebCore.Business.Maturity
 
 
                 // Recurse down to build subgroupings
-                BuildSubGroupings(newGrouping, newGrouping.GroupingId, allGroupings, questions, answers, lang);
+                BuildSubGroupings(assessmentId, modelId, newGrouping, newGrouping.GroupingId, allGroupings, questions, answers, lang);
             }
         }
 

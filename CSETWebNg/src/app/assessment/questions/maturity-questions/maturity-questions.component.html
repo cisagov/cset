@@ -62,25 +62,25 @@
       </span>
     </div>
 
-    <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filter-menu.showing only filtered')}}</div>
+    <div *ngIf="!!groupings && filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filter-menu.showing only filtered')}}</div>
 
     <div *ngIf="maturityFilteringSvc.showingAboveMaturityTargetLevel()" class="filters-engaged">Including Questions
       Above Target Level</div>
 
 
     <ng-container *ngIf="!!groupings">
-      <p class="mb-4" *ngIf="this.groupingId?.toLowerCase() == 'bonus'">
+      <p class="mb-4" *ngIf="this.navTarget?.toLowerCase() == 'bonus'">
         {{t('questions.instructions ssg')}}
       </p>
 
-      <p class="mb-4">
+      <p class="mb-4" *ngIf="filterSvc.showFilters.length>0 && areGroupingsVisible()">
         {{t('questions.instructions 1')}} {{ msgUnansweredEqualsNo }}
       </p>
     </ng-container>
 
     <!-- CRE+ allows the user to limit questions shown on some pages -->
     <ng-container *ngIf="!!groupings && showGroupingSelector">
-      <app-cre-question-selector [modelId]="modelId"></app-cre-question-selector>
+      <app-cre-question-selector [modelId]="modelId" [cumulativeLevels]="groupingsAreMil"></app-cre-question-selector>
     </ng-container>
 
     <div *ngIf="!groupings" class="w-100">
@@ -98,12 +98,12 @@
 
 
   <!-- normal navigation -->
-  <app-nav-back-next *ngIf="!groupingId" [page]="'maturity-questions'"></app-nav-back-next>
-  
+  <app-nav-back-next *ngIf="!navTarget" [page]="'maturity-questions'"></app-nav-back-next>
+
   <!-- Show a different model (like CRE's additional models) -->
-  <app-nav-back-next *ngIf="groupingId?.toLowerCase().startsWith('m')" [page]="'maturity-questions-' + groupingId"></app-nav-back-next>
-  
+  <app-nav-back-next *ngIf="navTarget?.toLowerCase().startsWith('m')" [page]="'maturity-questions-' + navTarget"></app-nav-back-next>
+
   <!-- Show a grouping only -->
-  <app-nav-back-next *ngIf="!!groupingId && !groupingId.toLowerCase().startsWith('m')" [page]="'maturity-questions-' + groupingId"></app-nav-back-next>
+  <app-nav-back-next *ngIf="!!navTarget && !navTarget.toLowerCase().startsWith('m')" [page]="'maturity-questions-' + navTarget"></app-nav-back-next>
 
 </div>

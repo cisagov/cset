@@ -78,6 +78,7 @@
           "title": "Cross-Sector Cybersecurity Performance Goals (CPG) Tutorial",
           "1": "In July 2021, President Biden signed National Security Memorandum (NSM)-5: Improving Cybersecurity for Critical Infrastructure Control Systems. This memorandum requires CISA, in coordination with the National Institute of Standards and Technology (NIST) and the interagency community, to develop baseline cybersecurity goals that are consistent across all critical infrastructure sectors.",
           "2": "Cybersecurity performance goals (CPGs) are a prioritized subset of IT and OT cybersecurity practices aimed at effectively mitigating risks to the public and critical infrastructure (CI) operations of all sizes. The CPGs are not all-encompassing, but function as a baseline of recommended practices that organizations should incorporate as part of their comprehensive cybersecurity programs.",
+          "2a": "The current version of the CPG assessment is 2.0.",
           "3": "The CPG assessment consists of 34 security practices (questions), each aligning with one of the six NIST CSF functions:",
           "3a": "Govern",
           "3b": "Identify",

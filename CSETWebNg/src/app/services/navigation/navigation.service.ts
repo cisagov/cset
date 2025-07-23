@@ -82,7 +82,7 @@ export class NavigationService implements OnDestroy, OnInit {
   /**
    * Defines the grouping or question to scroll to when "resuming"
    */
-  resumeQuestionsTarget: string = null;
+  resumeQuestionsTarget: string | null = null;
 
 
 

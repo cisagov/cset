@@ -147,24 +147,36 @@
                     "desc": "CRE Core questions and selected Optional Domain questions are detailed in this report"
                },
                "2": {
+                    "title": "Optional Domains Final Report",
+                    "desc": "Selected Optional Domain questions are detailed in this report"
+               },
+               "3": {
                     "title": "MIL Final Report",
                     "desc": "Selected MIL questions are detailed in this report"
                },
-               "3": {
+               "4": {
                     "title": "Assessment Overview",
                     "desc": "Charts showing distribution of answers across the assessment and by domain"
                },
-               "4": {
+               "5": {
                     "title": "CRE+ (Core Module) Charts",
                     "desc": "Charts showing distribution of answers in the Core module"
                },
-               "5": {
+               "6": {
                     "title": "Optional Domains Charts",
                     "desc": "Charts showing distribution of answers of the selected Optional Domains questions"
                },
-               "6": {
-                    "title": "MIL Questions Charts",
+               "7": {
+                    "title": "MIL Questions Charts 1",
                     "desc": "Charts showing distribution of answers of the selected MIL questions"
+               },
+               "8": {
+                    "title": "MIL Questions Charts 2",
+                    "desc": "Charts showing distribution of answers of the selected MIL questions"
+               },
+               "9": {
+                    "title": "Heatmaps",
+                    "desc": "Heatmaps for all questions by domain"
                }
           },
           "cisa vadr": {
@@ -773,8 +785,27 @@
                }
           },
           "cre": {
+               "final reports": {
+                    "p1": "Each question is listed with its answer and any associated comments or notes.",
+                    "22": {
+                         "title": "CISA Cyber Resilience Essentials (CRE+) Core Module Final Report",
+                         "question title": "Core Module Questions"
+                    },
+                     "23": {
+                         "title": "CISA Cyber Resilience Essentials (CRE+) Optional Domain Final Report",
+                         "question title": "Optional Domain Questions",
+                         "only selected": "Only questions from selected subdomains are included.",
+                         "none selected": "This report shows only selected subdomains.  Select one or more Optional Domain subdomains to see questions on this report."
+                    },
+                     "24": {
+                         "title": "CISA Cyber Resilience Essentials (CRE+) MIL Final Report",
+                         "question title": "MIL Questions",
+                         "only selected": "Only questions from selected subdomains are included.",
+                         "none selected": "This report shows only selected MILs.  Select one or more MILs to see questions on this report."
+                    }
+               },
                "answer distribution": "Answer Distribution",
-               "chart reports by model": {
+               "chart reports": {
                     "22": {
                          "title": "Cyber Resilience Essentials (CRE+) (Core Module) Charts",
                          "chart footer1": "CRE+ Core Module Answer Distribution",
@@ -789,10 +820,22 @@
                     },
                     "24": {
                          "title": "Cyber Resilience Essentials (CRE+) MIL Questions Charts",
-                         "chart footer1": "MIL Question Answer Distribution.  Only selected subdomains are included.",
-                         "chart footer2": "MIL Question Answer Distribution by domain. Only selected subdomains are included.",
+                         "chart footer1": "MIL Question Answer Distribution.  Only selected MILs are included.",
+                         "chart footer2": "MIL Question Answer Distribution by domain. Only selected MILs are included.",
                          "no selected": "None of the MILs were selected so there is nothing to show."
                     }
+               },
+               "heatmap report": {
+                    "title": "CISA Cyber Resilience Essentials (CRE+) - Heatmaps Assessment Overview",
+                    "p1": "All in-scope answers are represented, grouped by their corresponding domains.",
+                    "answer heatmaps": "Answer Heatmaps",
+                    "core questions": "Core Questions",
+                    "optional domain questions": "Optional Domain Questions",
+                    "mil questions": "MIL Questions"
+               },
+               "mil charts 2": {
+                    "title": "Cyber Resilience Essentials (CRE+) MIL Questions Charts 2",
+                    "p1": "maybe an intro paragraph here"
                }
           }
      },

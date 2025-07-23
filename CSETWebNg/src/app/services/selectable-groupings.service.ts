@@ -24,7 +24,7 @@
 import { Injectable } from '@angular/core';
 import { SelectableModel } from '../models/selectable-model.model';
 import { QuestionGrouping } from '../models/questions.model';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from './config.service';
 
@@ -35,10 +35,14 @@ export class SelectableGroupingsService {
 
   private apiUrl: string;
 
+  public modelsThatSupportSelectableGroupings = [23, 24];
+
   /**
    * We can store multiple models for multiple question page state
    */
   models: Map<number, QuestionGrouping[]>;
+
+  selectedGroupIds: number[];
 
 
   // 
@@ -69,27 +73,78 @@ export class SelectableGroupingsService {
    * Returns the grouping in the structure with the specified ID
    */
   findGrouping(modelId: number, id: number): QuestionGrouping | null {
-    var model = this.models.get(modelId);
+    const modelDomains = this.models.get(modelId);
+    return this.findDeep(modelDomains, item => item.groupingId == id);
+  }
 
-    if (!model) {
-      return null;
-    }
+  /**
+   * Finds the target's parent, then iterate through the parent's children, 
+   * setting their selected property to true if they are below or at the 
+   * target level, and false above the target.
+   */
+  findGroupingAndLesser(modelId: number, id: number): QuestionGrouping[] {
+    let resp: Array<QuestionGrouping> = [];
 
-    for (let i = 0; i < model.length; i++) {
-      const g = model[i];
-      if (g.groupingId == id) {
-        return g;
+    const modelDomains = this.models.get(modelId);
+    const target = this.findDeep(modelDomains, item => item.groupingId == id);
+
+    const parent = this.findParent(modelDomains, target);
+
+    let selected = true;
+
+    for (let c of parent) {
+      resp.push(c);
+      c.selected = selected;
+      if (c == target) {
+        selected = false;
       }
-      for (let j = 0; j < g.subGroupings.length; j++) {
-        const sg = g.subGroupings[j];
-        if (sg.groupingId == id) {
-          return sg;
-        }
-      };
     }
 
+    return resp;
+  }
+
+  /**
+   * 
+   */
+  findDeep(arr, predicate): QuestionGrouping | null {
+    let result;
+    result = null;
+
+    for (const item of arr) {
+      if (predicate(item)) {
+        result = item;
+        break;
+      }
+
+      if (item.subGroupings && item.subGroupings.length) {
+        result = this.findDeep(item.subGroupings, predicate);
+        if (result) break;
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 
+   * @param obj 
+   * @param target 
+   * @returns 
+   */
+  findParent(obj, target) {
+    for (let key in obj) {
+      if (obj[key] === target) {
+        return obj;
+      }
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+        let parent = this.findParent(obj[key], target);
+        if (parent) {
+          return parent;
+        }
+      }
+    }
     return null;
   }
+
 
   /**
    * 
@@ -99,17 +154,13 @@ export class SelectableGroupingsService {
   }
 
   /**
-   * 
+   * Persists a group of groupings with the same selected status.
    */
-  getSelectedGroupIds(): Observable<number[]> {
-    return this.http.get<number[]>(this.apiUrl + "groupselections/");
-  }
-
-  /**
-   * 
-   */
-  save(groupingId: number[], selected: boolean) {
-    const payload = { groupingId: groupingId, selected: selected };
-    return this.http.post(this.apiUrl + "groupselection/", payload);
+  save(groupings: any) {
+    const payload = [] as any[];
+    for (let g of groupings) {
+      payload.push({ groupingId: g.groupingId, selected: g.selected});
+    }
+    return this.http.post(this.apiUrl + "groupselection/", { groups: payload });
   }
 }
