@@ -3,48 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CSETWebCore.Business.Demographic.DemographicIO.Models
 {
-
-    public class jDEMOGRAPHICS
-    {
-        [Required]
-        public Int32 Assessment_Id { get; set; }
-
-        public Int32? SectorId { get; set; }
-
-        public Int32? IndustryId { get; set; }
-
-        [MaxLength(50)]
-        public String Size { get; set; }
-
-        [MaxLength(50)]
-        public String AssetValue { get; set; }
-
-        public Boolean NeedsPrivacy { get; set; }
-
-        public Boolean NeedsSupplyChain { get; set; }
-
-        public Boolean NeedsICS { get; set; }
-
-        [MaxLength(150)]
-        public String OrganizationName { get; set; }
-
-        [MaxLength(150)]
-        public String Agency { get; set; }
-
-        public Int32? OrganizationType { get; set; }
-
-        public Int32? Facilitator { get; set; }
-
-        public Int32? PointOfContact { get; set; }
-
-        public Boolean? IsScoped { get; set; }
-
-        [MaxLength(100)]
-        public String CriticalService { get; set; }
-
-    }
-
-
     public class jDETAILS_DEMOGRAPHICS
     {
         [Required]
