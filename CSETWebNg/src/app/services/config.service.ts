@@ -22,8 +22,8 @@
 //
 ////////////////////////////////
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Injectable, Inject, DOCUMENT } from '@angular/core';
+
 import { concat, firstValueFrom } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { merge } from 'lodash';
