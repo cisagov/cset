@@ -52,6 +52,5 @@ export class Cmmc2ScoresComponent implements OnInit {
     this.maturitySvc.getCmmcScores().subscribe(x => {
       this.scores = x;
     });
-
   }
 }

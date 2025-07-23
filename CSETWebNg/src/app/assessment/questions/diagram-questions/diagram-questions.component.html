@@ -42,7 +42,7 @@
     <h3>
       {{t('titles.diagram component questions')}}
     </h3>
-    <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filter-menu.showing only filtered')}}</div>
+    <div *ngIf="!!categories && filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filter-menu.showing only filtered')}}</div>
 
     <div *ngIf="!categories" class="w-100">
       <div class="spinner-container" style="margin: 2em auto">

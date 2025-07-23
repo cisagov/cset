@@ -89,22 +89,31 @@
     "title": "CRE+",
     "reportList": [
       {
-        "linkUrl": "creCoreReport"
+        "linkUrl": "cre-final-report/22"
       },
       {
-        "linkUrl": "creMilReport"
+        "linkUrl": "cre-final-report/23"
       },
       {
-        "linkUrl": "creAssessmentOverview"
+        "linkUrl": "cre-final-report/24"
       },
       {
-        "linkUrl": "creModelChartReport/22"
+        "linkUrl": "cre-assessment-overview"
       },
       {
-        "linkUrl": "creModelChartReport/23"
+        "linkUrl": "cre-model-chart-report/22"
       },
       {
-        "linkUrl": "creModelChartReport/24"
+        "linkUrl": "cre-model-chart-report/23"
+      },
+      {
+        "linkUrl": "cre-model-chart-report/24"
+      },
+      {
+        "linkUrl": "cre-mil-charts-2"
+      },
+      {
+        "linkUrl": "cre-heatmaps"
       }
     ]
   },

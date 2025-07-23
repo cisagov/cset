@@ -36,6 +36,13 @@
   "select contact": "Select Contact",
   "select facilitator": "Select Facilitator",
   "self assessment": "Self Assessment",
+  "tech domain": {
+    "label": "Technology Domain for Assessment",
+    "select": "Select Technology Domain",
+    "ot": "Operational Technology (OT)",
+    "it": "Information Technology (IT)",
+    "ot+it": "Both OT and IT"
+  },
   "crit svc poc": "Critical Service Point of Contact",
   "asset gross value": "What is the gross value of the asset you are trying to protect?",
   "select gross value": "Select Value",
@@ -971,8 +978,14 @@
       "display-name": "Cyber Resilience Essentials (CRE+)",
       "model short title": "CRE+",
       "question node title": "Core Questions",
-      "selector 23 title": "Select domains and subdomains for additional questions",
-      "selector 24 title": "Select domains and MILs for additional questions"
+      "selector 23 title": "Select domains and subdomains to include additional questions in the assessment",
+      "selector 24 title": "Select domains and MILs to include additional questions in the assessment"
+    },
+    "cre+ opt": {
+      "display-name": "CRE+ Optional Domains"
+    },
+    "cre+ mil": {
+      "display-name": "CRE+ MIL"
     },
     "cmmc2": {
       "model long title": "Cybersecurity Maturity Model Certification (CMMC) 2.0 DRAFT",

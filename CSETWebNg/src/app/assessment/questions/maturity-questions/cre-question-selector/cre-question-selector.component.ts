@@ -15,11 +15,13 @@ import { QuestionGrouping } from '../../../../models/questions.model';
       state('expanded', style({ height: '*', padding: '*' })),
       transition('collapsed <=> expanded', animate('0.3s ease'))
     ])
-      ]
-    })
+  ]
+})
 export class CreQuestionSelectorComponent implements OnInit {
 
   @Input() modelId: number;
+
+  @Input() cumulativeLevels = false;
 
   model: any;
 
@@ -36,40 +38,25 @@ export class CreQuestionSelectorComponent implements OnInit {
   ) { }
 
   /**
-   * Get the grouping structure from the service and set 
-   * a 'selected' property on each grouping/subgrouping based on what we
-   * have in the API.
+   * 
    */
-  ngOnInit(): void {
-    // use a local reference variable to the service's model
-    console.log('selector about to load model ' + this.modelId);
+  async ngOnInit(): Promise<void> {
     this.model = this.selectableGroupingsSvc.models.get(this.modelId);
-    console.log('and I found ', this.model);
-
-    // get the selected groups and mark them in the component's model
-    this.selectableGroupingsSvc.getSelectedGroupIds().subscribe((selectedGroupIds: number[]) => {
-      this.model?.forEach(grp => {
-        grp.selected = selectedGroupIds.includes(grp.groupingId);
-
-        grp.subGroupings.forEach(subGrp => {
-          subGrp.selected = selectedGroupIds.includes(subGrp.groupingId);
-        });
-      });
-
-      this.selectableGroupingsSvc.emitSelectionChanged();
-      //this.cdr.detectChanges();
-    });
-  }
-
-  toggleExpansion() {
-    this.expanded = !this.expanded;
   }
 
   /**
    * 
    */
+  toggleExpansion() {
+    this.expanded = !this.expanded;
+  }
+
+  /**
+   * Persists the selected/deselected state of a 
+   */
   changeGroupSelection(id: number, evt: any) {
     const g = this.selectableGroupingsSvc.findGrouping(this.modelId, id);
+
     if (!g) {
       return;
     }
@@ -80,24 +67,36 @@ export class CreQuestionSelectorComponent implements OnInit {
 
     // persist the changed group(s)
     const groupsChanged = this.buildList(g);
-    this.selectableGroupingsSvc.save(groupsChanged, g.selected).subscribe();
+    this.selectableGroupingsSvc.save(groupsChanged).subscribe();
+  }
+
+  /**
+   * Sets the clicked level and levels below it to true. 
+   */
+  changeMilSelection(id: number, evt: any) {
+    const milsForSubdomain = this.selectableGroupingsSvc.findGroupingAndLesser(this.modelId, id);
+
+    // persist the true group and the false group to the API
+    this.selectableGroupingsSvc.save(milsForSubdomain).subscribe();
+
+    this.selectableGroupingsSvc.emitSelectionChanged();
   }
 
   /**
    * Build a list of groups whose selected status is changed.
-   * This will de-select subgroups for a deselected parent.
+   * This will de-select all subgroups of a deselected parent.
    */
-  buildList(g: QuestionGrouping): number[] {
-    let groupsChanged: number[] = [];
-    groupsChanged.push(g.groupingId);
+  buildList(g: QuestionGrouping): QuestionGrouping[] {
+    let groupsChanged: QuestionGrouping[] = [];
+
+    groupsChanged.push(g);
 
     if (!g.selected) {
-      g.subGroupings.forEach(x => {
-        x.selected = false;
-        groupsChanged.push(x.groupingId);
+      g.subGroupings.forEach(sg => {
+        sg.selected = false;
+        groupsChanged.push(sg);
       });
     }
-
     return groupsChanged;
   }
 }

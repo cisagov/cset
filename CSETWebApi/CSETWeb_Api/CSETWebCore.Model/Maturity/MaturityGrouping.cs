@@ -44,6 +44,13 @@ namespace CSETWebCore.Model.Maturity
         public string Description_Extended { get; set; }
 
         /// <summary>
+        /// Created for models that require the user to select groupings:
+        /// CRE OD (24) and CRE MIL (24)
+        /// Set to true for all other cases.  
+        /// </summary>
+        public bool Selected { get; set; } = true;
+
+        /// <summary>
         /// an optional remark for each domain in the model
         /// </summary>
         public string DomainRemark { get; set; }
@@ -61,11 +68,20 @@ namespace CSETWebCore.Model.Maturity
 
 
     /// <summary>
-    /// A request to mark a grouping as selected (created for CRE+)
+    /// A request to mark groupings as selected (created for CRE+)
     /// </summary>
     public class GroupSelectionRequest
     {
-        public List<int> GroupingId { get; set; }
+        public List<GroupSelection> Groups;
+    }
+
+
+    /// <summary>
+    /// A request to change the selection status for a grouping
+    /// </summary>
+    public class GroupSelection
+    {
+        public int GroupingId { get; set; }
         public bool Selected { get; set; }
     }
 }

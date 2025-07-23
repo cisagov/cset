@@ -5,15 +5,13 @@
 // 
 //////////////////////////////// 
 
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
+using System.Linq;
+
 
 namespace CSETWebCore.Business.Demographic
 {
@@ -50,6 +48,7 @@ namespace CSETWebCore.Business.Demographic
             demographics.CisaRegion = (int?)extBiz.GetX(assessmentId, "CISA-REGION");
             demographics.OrgPointOfContact = (int?)extBiz.GetX(assessmentId, "ORG-POC");
             demographics.SelfAssessment = ((bool?)extBiz.GetX(assessmentId, "SELF-ASSESS")) ?? false;
+            demographics.TechDomain = extBiz.GetX(assessmentId, "TECH-DOMAIN")?.ToString();
             demographics.SectorId = (int?)extBiz.GetX(assessmentId, "SECTOR");
             demographics.IndustryId = (int?)extBiz.GetX(assessmentId, "SUBSECTOR");
             demographics.CriticalService = (string?)extBiz.GetX(assessmentId, "CRIT-SERVICE");
@@ -102,6 +101,7 @@ namespace CSETWebCore.Business.Demographic
             extBiz.SaveX(demographics.AssessmentId, "CISA-REGION", demographics.CisaRegion);
             extBiz.SaveX(demographics.AssessmentId, "ORG-POC", demographics.OrgPointOfContact);
             extBiz.SaveX(demographics.AssessmentId, "SELF-ASSESS", demographics.SelfAssessment);
+            extBiz.SaveX(demographics.AssessmentId, "TECH-DOMAIN", demographics.TechDomain);
             extBiz.SaveX(demographics.AssessmentId, "ORG-NAME", demographics.OrganizationName);
             extBiz.SaveX(demographics.AssessmentId, "BUSINESS-UNIT", demographics.Agency);
             extBiz.SaveX(demographics.AssessmentId, "ORG-TYPE", demographics.OrganizationType == 0 ? null : demographics.OrganizationType);

@@ -26,6 +26,15 @@ namespace CSETWebCore.Helpers
 
         public ModelStructure Model;
 
+        /// <summary>
+        /// Some models (CRE OPT and CRE MIL) should only include questions
+        /// belonging to groupings that the user selected.  
+        /// </summary>
+        private List<int> _modelsWithSelectableGroupings = [23, 24];
+
+        // A list of selected grouping IDs, regardless of model
+        List<int> _selectedGroupings;
+
         private List<MATURITY_GROUPINGS> allGroupings;
 
         public List<MATURITY_QUESTIONS> allQuestions;
@@ -58,6 +67,9 @@ namespace CSETWebCore.Helpers
             this._context = context;
             this._includeText = includeText;
             this._assessmentId = assessmentId;
+
+            // A list of selected grouping IDs, regardless of model
+            _selectedGroupings = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == _assessmentId).Select(x => x.Grouping_Id).ToList();
 
             _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
@@ -119,6 +131,15 @@ namespace CSETWebCore.Helpers
         private void GetSubgroups(object oParent, int? parentID)
         {
             var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentID).OrderBy(x => x.Sequence).ToList();
+
+
+            // if the current model supports "selectable" groupings, remove any "unselected" groups 
+            if (_modelsWithSelectableGroupings.Contains(_modelId))
+            {
+                mySubgroups.RemoveAll(x => !_selectedGroupings.Contains(x.Grouping_Id));
+            }
+
+
 
             if (mySubgroups.Count == 0)
             {

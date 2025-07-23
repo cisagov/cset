@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
@@ -34,9 +34,9 @@ import { ConfigService } from '../../../services/config.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { GlossaryService } from '../../../services/glossary.service';
 import { CisService } from '../../../services/cis.service';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, NavigationEnd, Router, UrlSegment, UrlSegmentGroup, UrlTree } from '@angular/router';
+import { filter, takeUntil } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
 import { CompletionService } from '../../../services/completion.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { DemographicService } from '../../../services/demographic.service';
@@ -50,9 +50,15 @@ import { SelectableGroupingsService } from '../../../services/selectable-groupin
   templateUrl: './maturity-questions.component.html',
   standalone: false
 })
-export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
+export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  private routerSubscription: Subscription;
+  private destroy$ = new Subject<void>();
+  navTarget: string | null; // this is a string to be able to support 'bonus' or 'm23'
 
   groupings: QuestionGrouping[] | null = [];
+  groupingsAreMil = false;
+
   pageTitle: string = '';
   moduleBehavior: ModuleBehavior;
   modelId: number;
@@ -65,16 +71,18 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   loaded = false;
 
   grouping: QuestionGrouping | null;
-  groupingId: string; // this is a string to be able to support 'bonus'
-  title: string;
   showGroupingSelector = false;
+
+  title: string;
 
   msgUnansweredEqualsNo = '';
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
 
-  private _routerSub = Subscription.EMPTY;
 
+  /**
+   * 
+   */
   constructor(
     public assessSvc: AssessmentService,
     public demoSvc: DemographicService,
@@ -91,26 +99,21 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public glossarySvc: GlossaryService,
     public navSvc: NavigationService,
     private dialog: MatDialog,
-    private route: ActivatedRoute,
     private router: Router,
     private tSvc: TranslocoService
   ) {
+    this.routerSubscription = this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.setNavTarget(event);
+        this.load();
+      });
+  }
 
-    // listen for NavigationEnd to know when the page changed
-    this._routerSub = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((e: any) => {
-      if (e.urlAfterRedirects.includes('/maturity-questions/')) {
-        this.groupingId = this.route.snapshot.params['grp'];
-
-        if (parseInt(this.groupingId) == +this.groupingId) {
-          this.loadGrouping(+this.groupingId);
-        } else {
-          this.loadQuestions();
-        }
-      }
-    });
-
+  /**
+   *
+   */
+  ngOnInit() {
     if (this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe(
         (data: any) => {
@@ -118,36 +121,37 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         });
     }
 
+    // listen for grouping selector changes
+    this.selectableGroupingSvc.selectionChanged$.subscribe(() => {
+      this.refreshQuestionVisibility();
+    });
+
+
+    // Refresh the page in case of user language change.  
+    // The more complex event analysis is needed because
+    // the Transloco service will also emit langChanges$ when the
+    // component is initialized.  We only care about a true language 
+    // change to avoid calling the API multiple times.
+    this.tSvc.events$
+      .pipe(
+        filter(event => event.type === 'langChanged'),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(() => {
+        if (this.assessSvc.assessment) {
+          this.load();
+        }
+      });
+
+
     localStorage.setItem("questionSet", "Maturity");
     this.assessSvc.currentTab = 'questions';
   }
 
+
   /**
-   *
+   * 
    */
-  ngOnInit() {
-    // refresh the page in case of language change
-    // NOTE: langChanges$ will emit the active language on subscription,
-    // so load() will always fire on initial page load
-    this.tSvc.langChanges$.subscribe(() => {
-
-      // check for assessment existence so that this isn't triggered when logging
-      // in after a timeout.  In that scenario there is no assessment ID in the JWT
-      // and the call to load questions or groupings will crash.
-      if (!!this.assessSvc.assessment) {
-        this.load();
-      }
-    });
-
-    this.refreshQuestionVisibility();
-
-    this.selectableGroupingSvc.selectionChanged$.subscribe(() => {
-      //console.log('I got the subject!~');
-      this.refreshQuestionVisibility();
-    });
-
-  }
-
   ngAfterViewInit() {
     setTimeout(() => {
       this.scrollToResumeQuestionsTarget();
@@ -155,18 +159,30 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * 
+   */
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+
+
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+  }
+
+  /**
    *
    */
   load() {
     // determine whether displaying a grouping or all questions for the model
-    this.grouping = null;
-    this.groupingId = this.route.snapshot.params['grp'];
-
-    if (!this.groupingId || this.groupingId.toLowerCase() == 'bonus' || this.groupingId.toLowerCase().startsWith('m')) {
+    if (!this.navTarget || this.navTarget.toLowerCase() == 'bonus' || this.navTarget.toLowerCase().startsWith('m')) {
       this.loadQuestions();
     } else {
-      this.loadGrouping(+this.groupingId);
+      this.loadGrouping(+this.navTarget);
     }
+
+    this.refreshQuestionVisibility();
   }
 
   /**
@@ -189,12 +205,12 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     // determine which endpoint to call to get the question list
     var obsGetQ;
 
-    if (this.groupingId?.toLowerCase() == 'bonus') {
+    if (this.navTarget?.toLowerCase() == 'bonus') {
       const bonusModelId = this.ssgSvc.ssgBonusModel();
       obsGetQ = this.maturitySvc.getBonusQuestionList(bonusModelId);
 
-    } else if (this.groupingId?.toLowerCase().startsWith('m')) {
-      const bonusModelId = +this.groupingId.substring(1);
+    } else if (this.navTarget?.toLowerCase().startsWith('m')) {
+      const bonusModelId = +this.navTarget.substring(1);
       obsGetQ = this.maturitySvc.getBonusQuestionList(bonusModelId);
 
     } else {
@@ -212,23 +228,25 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         // Show the selector for CRE+ Optional Domain Questions (model 23)
         // and CRE+ Optional MIL Questions (model 24)
         this.showGroupingSelector = this.moduleBehavior.mustSelectGroupings ?? false;
-
+        this.groupingsAreMil = this.moduleBehavior.groupingsAreMil ?? false;
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
         this.groupings = response.groupings;
         this.selectableGroupingSvc.setModelGroupings(this.modelId, response.groupings);
 
-
-        this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
+        if (this.assessSvc.assessment && this.assessSvc.assessment.maturityModel) {
+          this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
+          this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
+        }
 
         // 100 is the default level if the model does not support a target
         this.modelSupportsTargetLevel = response.maturityTargetLevel < 100;
 
-        this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions.slice();
         this.filterSvc.maturityModelId = response.modelId;
         this.filterSvc.maturityModelName = response.modelName;
-        this.filterSvc.maturityTargetLevel=response.maturityTargetLevel
+        this.filterSvc.maturityTargetLevel = response.maturityTargetLevel;
+
         // Adding Maturity Levels to the filters
         this.filterSvc.refreshAllowableFilters();
         this.filterSvc.forceRefresh();
@@ -237,7 +255,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
         this.glossarySvc.glossaryEntries = response.glossary;
 
-        
+
         // set the message with the current "no" answer value
         let codeForNo = this.moduleBehavior.answerOptions?.find(o => o.unansweredEquivalent)?.code ?? 'N';
         const valueForNo = this.questionsSvc.answerButtonLabel(this.modelName, codeForNo);
@@ -276,9 +294,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
       this.modelName = response.modelName;
       this.questionsAlias = response.questionsAlias;
       this.groupings = response.groupings;
-      this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
+      if (this.assessSvc.assessment && this.assessSvc.assessment.maturityModel) {
+        this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
+        this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
+      }
 
-      this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
       this.filterSvc.answerOptions = response.answerOptions.slice();
       this.filterSvc.maturityModelId = response.modelId;
 
@@ -307,7 +327,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    */
   displayTitle() {
     // Bonus questions are for SSGs.
-    if (this.groupingId?.toLowerCase() == 'bonus') {
+    if (this.navTarget?.toLowerCase() == 'bonus') {
       this.pageTitle = this.tSvc.translate(`titles.ssg.${this.ssgSvc.ssgSimpleSectorLabel()}`);
       return;
     }
@@ -428,5 +448,63 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
    */
   showCreSelector(modelId: number): boolean {
     return (modelId == 23 || modelId == 24);
+  }
+
+
+  /**
+   * This component can load the entire model, a specific model
+   * or a particular grouping.
+   * Parses the URL to determine how to format the API call.
+   * navTarget is the property that gets set.
+   */
+  setNavTarget(event: any) {
+    const currentUrl = event.urlAfterRedirects;
+    if (!currentUrl.endsWith('/maturity-questions') && !currentUrl.includes('/maturity-questions/')) {
+      return;
+    }
+
+    // get the next URL segment, if there is one and set the navTarget
+    const mqIndex = this.findSegmentIndex(currentUrl, 'maturity-questions');
+    const t = this.getSegment(currentUrl, mqIndex + 1);
+    if (!!t) {
+      this.navTarget = t;
+    } else {
+      this.navTarget = null;
+    }
+  }
+
+  /**
+   * Helper method for parsing routing URLs.
+   */
+  findSegmentIndex(url: string, segmentToFind: string): number {
+    const urlTree: UrlTree = this.router.parseUrl(url);
+    const primaryGroup: UrlSegmentGroup = urlTree.root.children['primary'];
+
+    if (primaryGroup) {
+      const segments = primaryGroup.segments;
+      for (let i = 0; i < segments.length; i++) {
+        if (segments[i].path === segmentToFind) {
+          return i;
+        }
+      }
+    }
+    return -1;
+  }
+
+  /**
+   * Helper method for parsing routing URLs.
+   */
+  getSegment(url: string, idx: number): string | null {
+    const urlTree: UrlTree = this.router.parseUrl(url);
+    const primaryGroup: UrlSegmentGroup = urlTree.root.children['primary'];
+
+    if (primaryGroup) {
+      const segments = primaryGroup.segments;
+      if (segments.length > idx) {
+        return segments[idx].toString();
+      }
+    }
+
+    return null;
   }
 }

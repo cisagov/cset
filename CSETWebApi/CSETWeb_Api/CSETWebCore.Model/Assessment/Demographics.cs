@@ -30,6 +30,12 @@ namespace CSETWebCore.Model.Assessment
         public int? OrganizationType { get; set; }
         public int? OrgPointOfContact { get; set; }
         public int? FacilitatorId { get; set; }
+
+        /// <summary>
+        /// The technology domain for the assessment, e.g., OT, IT or OT+IT
+        /// </summary>
+        public string TechDomain { get; set; }
+
         public bool SelfAssessment { get; set; }
         public string? CriticalService { get; set; }
         public int? PointOfContact { get; set; }

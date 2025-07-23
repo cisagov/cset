@@ -22,7 +22,7 @@
 -------------------------->
 <div class="report-body mb-5" *transloco="let t">
 
-     <app-cover-sheet-a [title]="t(`reports.core.cre.chart reports by model.${modelId}.title`) | transloco | uppercase"
+     <app-cover-sheet-a [title]="t(`reports.core.cre.chart reports.${modelId}.title`) | transloco | uppercase"
           [assessmentName]="assessmentName" [assessmentDate]="assessmentDate" [assessorName]="assessorName"
           [facilityName]="facilityName" [selfAssessment]="selfAssessment"></app-cover-sheet-a>
 
@@ -40,7 +40,7 @@
      <div class="page-break">
           <h1>{{ 'reports.core.cre.answer distribution' | transloco }}</h1>
 
-          <div *ngIf="domainList.length > 0; else no_selected_subdomains">
+          <div *ngIf="domainList?.length > 0; else no_selected_subdomains">
                <p>
 
                </p>
@@ -52,7 +52,7 @@
                          [roundEdges]="false" [showDataLabel]="true" [dataLabelFormatting]="creSvc.fmt1">
                     </ngx-charts-bar-horizontal>
                     <p class="fst-italic text-center mt-3">
-                         {{`reports.core.cre.chart reports by model.${modelId}.chart footer1` | transloco}}
+                         {{`reports.core.cre.chart reports.${modelId}.chart footer1` | transloco}}
                     </p>
                </div>
 
@@ -63,7 +63,7 @@
                          class="d-flex justify-content-center">
                     </ngx-charts-pie-chart>
                     <p class="fst-italic text-center mt-3">
-                         {{`reports.core.cre.chart reports by model.${modelId}.chart footer1` | transloco}}
+                         {{`reports.core.cre.chart reports.${modelId}.chart footer1` | transloco}}
                     </p>
                </div>
 
@@ -74,14 +74,14 @@
                          [wrapTicks]="true" [dataLabelFormatting]="creSvc.fmt1" [xAxisTickFormatting]="creSvc.fmt1">
                     </ngx-charts-bar-horizontal-stacked>
                     <p class="fst-italic text-center mt-3">
-                         {{`reports.core.cre.chart reports by model.${modelId}.chart footer2` | transloco}}
+                         {{`reports.core.cre.chart reports.${modelId}.chart footer2` | transloco}}
                     </p>
                </div>
           </div>
 
           <ng-template #no_selected_subdomains>
                <p>
-                    {{ `reports.core.cre.chart reports by model.${modelId}.no selected` | transloco }}
+                    {{ `reports.core.cre.chart reports.${modelId}.no selected` | transloco }}
                </p>
           </ng-template>
      </div>
