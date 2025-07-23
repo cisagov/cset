@@ -136,20 +136,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(list.Select(s => new Sector { SectorId = s.SectorId, SectorName = s.SectorName }).ToList());
         }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [HttpGet]
-        [Route("api/Demographics/Sectors_Industry")]
-        public IActionResult GetSECTOR_INDUSTRY()
-        {
-            var list = _context.SECTOR_INDUSTRY;
-            return Ok(list);
-        }
-
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -187,7 +174,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// 
+        /// Get asset value options from DETAILS_DEMOGRAPHICS_OPTIONS
         /// </summary>
         [HttpGet]
         [Route("api/Demographics/AssetValues")]
@@ -199,40 +186,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// 
-        /// </summary>
-        [HttpGet]
-        [Route("api/Demographics/StatesAndProvinces")]
-        public async Task<IActionResult> GetStatesAndProvinces()
-        {
-            List<STATES_AND_PROVINCES> statesAndProvinces = await _context.STATES_AND_PROVINCES.ToListAsync();
-
-            // translate if not running in english
-            var lang = _token.GetCurrentLanguage();
-            if (lang != "en")
-            {
-                statesAndProvinces.ForEach(x =>
-                {
-                    var val = _overlay.GetValue("STATES_AND_PROVINCES", x.STATES_AND_PROVINCES_ID.ToString(), lang)?.Value;
-                    if (val != null)
-                    {
-                        x.Display_Name = val;
-                    }
-                });
-            }
-
-            return Ok(statesAndProvinces.OrderBy(s => s.Display_Name).Select(s => new StateAndProvince() 
-                { 
-                    StateAndProvinceId = s.STATES_AND_PROVINCES_ID, 
-                    ISOCode = s.ISO_code, 
-                    CountryCode = s.Country_Code, 
-                    DisplayName = s.Display_Name 
-                }).ToList());
-        }
-
-
-        /// <summary>
-        /// 
+        /// Get size options from DETAILS_DEMOGRAPHICS_OPTIONS
         /// </summary>
         [HttpGet]
         [Route("api/Demographics/Size")]
