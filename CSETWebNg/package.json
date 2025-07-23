@@ -33,7 +33,7 @@
         "@angular/platform-browser": "^19.2.11",
         "@angular/platform-browser-dynamic": "^19.2.11",
         "@angular/platform-server": "^19.2.11",
-        "@angular/router": "^19.2.11",
+        "@angular/router": "^20.1.2",
         "@babel/helpers": "^7.27.0",
         "@fortawesome/angular-fontawesome": "^1.0.0",
         "@fortawesome/fontawesome-free": "^6.6.0",
