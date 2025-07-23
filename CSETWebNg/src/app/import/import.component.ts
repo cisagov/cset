@@ -29,7 +29,7 @@ import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import screenfull from 'screenfull';
 import { Screenfull } from "screenfull";
-import { FileItem, FileUploader } from 'ng2-file-upload';
+import { FileItem, FileUploader } from '../modules/ng2-file-upload';
 import { XmlCompletionItemProvider } from '../models/xmlCompletionItemProvider.model';
 import { ConfigService } from '../services/config.service';
 import { FileUploadClientService, LinkedSet } from '../services/file-client.service';
