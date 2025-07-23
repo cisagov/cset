@@ -22,7 +22,6 @@
 //
 ////////////////////////////////
 import { editor, languages } from 'monaco-editor/esm/vs/editor/editor.api';
-import { MAT_CHECKBOX_CONTROL_VALUE_ACCESSOR } from "@angular/material/checkbox";
 
 export interface XmlFormattingOptions {
     editorOptions: languages.FormattingOptions;
@@ -42,7 +41,7 @@ export class XmlFormattingOptionsFactory {
             newLine: (document.getEOL() === "\r\n") ? "\r\n" : "\n",
             removeCommentsOnMinify: false,
             splitAttributesOnFormat: true,
-            splitXmlnsOnFormat: MAT_CHECKBOX_CONTROL_VALUE_ACCESSOR
+            splitXmlnsOnFormat: true
         };
     }
 }
