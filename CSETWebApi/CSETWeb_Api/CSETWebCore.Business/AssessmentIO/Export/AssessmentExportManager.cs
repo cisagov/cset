@@ -458,6 +458,21 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 {
                     item.StringValue = null;
                 }
+                
+                if (item.DataItemName == "AGENCY")
+                {
+                    item.StringValue = null;
+                }
+                
+                if (item.DataItemName == "SUBSECTOR")
+                {
+                    item.IntValue = null;
+                }
+                
+                if (item.DataItemName == "ORG-NAME")
+                {
+                    item.StringValue = null;
+                }
             }
 
             foreach (var item in model.jCIS_CSI_SERVICE_COMPOSITION)
@@ -478,13 +493,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             }
 
             model.jASSESSMENT_CONTACTS = null;
-
-            foreach (var item in model.jDEMOGRAPHICS)
-            {
-                item.Agency = null;
-                item.IndustryId = null;
-                item.OrganizationName = null;
-            }
 
             foreach (var item in model.jASSESSMENTS)
             {
