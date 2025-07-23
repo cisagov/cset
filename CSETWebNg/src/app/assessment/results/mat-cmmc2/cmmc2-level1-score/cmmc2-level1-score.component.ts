@@ -51,6 +51,10 @@ export class Cmmc2Level1ScoreComponent {
    * The max width in score is 313.  (offset / 313)
    */
   n(s: number) {
+    if (!s) {
+      return 0;
+    }
+    
     return (s / this.maxScore) * this.width;
   }
 }
