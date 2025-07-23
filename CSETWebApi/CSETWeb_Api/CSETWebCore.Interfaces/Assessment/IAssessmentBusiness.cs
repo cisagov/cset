@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Demographic;
 using CSETWebCore.Model.Observations;
 using CSETWebCore.Model.Document;
 
@@ -28,7 +29,7 @@ namespace CSETWebCore.Interfaces.Assessment
         void GetSelectedStandards(ref AssessmentDetail assessment);
         void SetFeaturesOnAssessmentRecord(int assessmentId);
 
-        List<DEMOGRAPHICS_ORGANIZATION_TYPE> GetOrganizationTypes();
+        List<DetailsDemographicsOptionsDTO> GetOrganizationTypes();
         bool IsCurrentUserOnAssessment(int assessmentId);
         ASSESSMENTS GetAssessmentById(int assessmentId);
         DateTime GetLastModifiedDateUtc(int assessmentId);

@@ -52,7 +52,7 @@ namespace CSETWebCore.Api.Controllers
             var assessmentId = _token.AssessmentForUser();
 
             var mgr = new DemographicExtBusiness(_context);
-            var response = mgr.GetDemographics(assessmentId);
+            var response = mgr.GetExtDemographics(assessmentId);
             return Ok(response);
         }
 
