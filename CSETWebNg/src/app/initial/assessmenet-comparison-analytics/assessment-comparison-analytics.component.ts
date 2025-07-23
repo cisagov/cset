@@ -59,12 +59,17 @@ interface StandardsNames {
   set_Name: string;
 }
 
+interface OrgTypes {
+  id: string;
+  text: string;
+}
+
 @Component({
-    selector: "app-assessment-comparison-analytics",
-    templateUrl: "./assessment-comparison-analytics.component.html",
-    styleUrls: ["./assessment-comparison-analytics.component.scss"],
-    host: { class: "d-flex flex-column flex-11a" },
-    standalone: false
+  selector: "app-assessment-comparison-analytics",
+  templateUrl: "./assessment-comparison-analytics.component.html",
+  styleUrls: ["./assessment-comparison-analytics.component.scss"],
+  host: { class: "d-flex flex-column flex-11a" },
+  standalone: false
 })
 export class AssessmentComparisonAnalyticsComponent implements OnInit {
   assessment: AssessmentDetail = {};
@@ -90,7 +95,7 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
   industryList: Industry[];
   btnSearch: boolean = true;
   demographicData: Demographic = {};
-  orgTypes: any[];
+  orgTypes: OrgTypes[];
   standards: StandardsNames[];
   standardsChecked: any = [];
   ischecked: boolean = false;

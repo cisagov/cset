@@ -80,7 +80,7 @@
               <select class="form-select" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
                 (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
                 <option [ngValue]="null">-- Select Type --</option>
-                <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option>
+                <option *ngFor="let t of orgTypes" [value]="t.id">{{t.text}}</option>
               </select>
             </div>
             <div class="col-12 text-end">

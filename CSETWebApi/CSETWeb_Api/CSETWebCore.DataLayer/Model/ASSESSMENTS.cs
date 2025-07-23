@@ -128,9 +128,6 @@ public partial class ASSESSMENTS
     public virtual ICollection<COUNTY_ANSWERS> COUNTY_ANSWERS { get; set; } = new List<COUNTY_ANSWERS>();
 
     [InverseProperty("Assessment")]
-    public virtual DEMOGRAPHICS DEMOGRAPHICS { get; set; }
-
-    [InverseProperty("Assessment")]
     public virtual DEMOGRAPHIC_ANSWERS DEMOGRAPHIC_ANSWERS { get; set; }
 
     [InverseProperty("Assessment")]

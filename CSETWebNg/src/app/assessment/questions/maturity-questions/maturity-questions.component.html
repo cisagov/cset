@@ -73,7 +73,7 @@
         {{t('questions.instructions ssg')}}
       </p>
 
-      <p class="mb-4">
+      <p class="mb-4" *ngIf="filterSvc.showFilters.length>0 && areGroupingsVisible()">
         {{t('questions.instructions 1')}} {{ msgUnansweredEqualsNo }}
       </p>
     </ng-container>
@@ -99,10 +99,10 @@
 
   <!-- normal navigation -->
   <app-nav-back-next *ngIf="!navTarget" [page]="'maturity-questions'"></app-nav-back-next>
-  
+
   <!-- Show a different model (like CRE's additional models) -->
   <app-nav-back-next *ngIf="navTarget?.toLowerCase().startsWith('m')" [page]="'maturity-questions-' + navTarget"></app-nav-back-next>
-  
+
   <!-- Show a grouping only -->
   <app-nav-back-next *ngIf="!!navTarget && !navTarget.toLowerCase().startsWith('m')" [page]="'maturity-questions-' + navTarget"></app-nav-back-next>
 

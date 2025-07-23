@@ -126,41 +126,7 @@ namespace CSETWebCore.Business.Demographic.Import
                 await context.SaveChangesAsync();
 
             }
-
-            foreach (var demographics in model.jDEMOGRAPHICS)
-            {
-                var dDemographics = context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-
-                // Creating new Service Composition record for this assessment
-                if (dDemographics == null)
-                {
-                    dDemographics = new DEMOGRAPHICS()
-                    {
-                        Assessment_Id = assessmentId,
-                        CriticalService = demographics.CriticalService
-
-
-                    };
-                    context.DEMOGRAPHICS.Add(dDemographics);
-                    await context.SaveChangesAsync();
-                }
-
-                dDemographics.SectorId = demographics.SectorId;
-                dDemographics.IndustryId = demographics.IndustryId;
-                dDemographics.Size = demographics.Size;
-                dDemographics.AssetValue = demographics.AssetValue;
-                dDemographics.NeedsPrivacy = demographics.NeedsPrivacy;
-                dDemographics.NeedsSupplyChain = demographics.NeedsSupplyChain;
-                dDemographics.NeedsICS = demographics.NeedsICS;
-                dDemographics.OrganizationName = demographics.OrganizationName;
-                dDemographics.Agency = demographics.Agency;
-                dDemographics.OrganizationType = demographics.OrganizationType;
-                dDemographics.IsScoped = demographics.IsScoped;
-                dDemographics.CriticalService = demographics.CriticalService;
-
-                await context.SaveChangesAsync();
-            }
-
+            
 
             foreach (var jdd in model.jDETAILS_DEMOGRAPHICS)
             {
