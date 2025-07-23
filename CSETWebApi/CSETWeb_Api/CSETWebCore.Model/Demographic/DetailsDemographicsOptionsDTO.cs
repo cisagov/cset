@@ -6,9 +6,9 @@
 //////////////////////////////// 
 namespace CSETWebCore.Model.Demographic
 {
-    public class AssessmentSize
+    public class DetailsDemographicsOptionsDTO
     {
-        public int SizeId { get; set; }
-        public string Description { get; set; }
+        public int Id { get; set; }
+        public string Text { get; set; }
     }
 }

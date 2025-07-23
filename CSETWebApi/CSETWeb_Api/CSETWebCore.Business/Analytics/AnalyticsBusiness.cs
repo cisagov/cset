@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CSETWebCore.Business.Demographic;
 using CSETWebCore.Model.Analytics;
 using Microsoft.EntityFrameworkCore;
 using AggregationAssessment = CSETWebCore.Model.Assessment.AggregationAssessment;
@@ -127,27 +128,36 @@ namespace CSETWebCore.Business.Analytics
                     MatOptionId = a.Mat_Option_Id,
                     AssessmentId = a.Assessment_Id
                 }).ToList();
-            var demographics = (from d in _context.DEMOGRAPHICS
-                where d.Assessment_Id == assessmentId
-                select new AgDemographics
-                {
-                    SectorId = d.SectorId,
-                    IndustryId = d.IndustryId,
-                    Size = d.Size,
-                    AssetValue = d.AssetValue,
-                    NeedsPrivacy = d.NeedsPrivacy,
-                    NeedsSupplyChain = d.NeedsSupplyChain,
-                    NeedsIcs = d.NeedsICS,
-                    OrganizationName = d.OrganizationName, 
-                    Agency = d.Agency,
-                    OrganizationType = d.OrganizationType,
-                    Facilitator = d.Facilitator,
-                    PointOfContact = d.PointOfContact,
-                    IsScoped = d.IsScoped,
-                    CriticalService = d.CriticalService,
-                    AssessmentId = d.Assessment_Id
-                }).FirstOrDefault();
-
+            var demographics = new AgDemographics();
+            var extBiz = new DemographicExtBusiness(_context);
+            demographics.AssessmentId = assessmentId;
+            demographics.SectorId = (int?)extBiz.GetX(assessmentId, "SECTOR");
+            demographics.IndustryId = (int?)extBiz.GetX(assessmentId, "SUBSECTOR");
+            var sizeId = (int?)extBiz.GetX(assessmentId, "SIZE");
+            if (sizeId != null)
+            {
+                var assetSize = _context.DETAILS_DEMOGRAPHICS_OPTIONS
+                    .FirstOrDefault(opt => opt.DataItemName == "SIZE" && opt.OptionValue == sizeId);
+                demographics.Size = assetSize.OptionText;
+            }
+            demographics.PointOfContact = (int?)extBiz.GetX(assessmentId, "POC");
+            demographics.CriticalService = (string?)extBiz.GetX(assessmentId, "CRIT-SERVICE");
+            demographics.PointOfContact = (int?)extBiz.GetX(assessmentId, "POC");
+            demographics.Agency = (string?)extBiz.GetX(assessmentId, "BUSINESS-UNIT");
+            demographics.Facilitator = (int?)extBiz.GetX(assessmentId, "FACILITATOR");
+            demographics.IsScoped = (bool?)extBiz.GetX(assessmentId, "SCOPED");
+            demographics.OrganizationName = (string?)extBiz.GetX(assessmentId, "ORG-NAME");
+            demographics.OrganizationType = (int?)extBiz.GetX(assessmentId, "ORG-TYPE");
+            demographics.IsScoped = (bool?)extBiz.GetX(assessmentId, "SCOPED");
+            
+            var assetId = (int?)extBiz.GetX(assessmentId, "ASSET-VALUE");
+            if (assetId != null)
+            {
+                var assetValue = _context.DETAILS_DEMOGRAPHICS_OPTIONS
+                    .FirstOrDefault(opt => opt.DataItemName == "ASSET-VALUE" && opt.OptionValue == assetId);
+                demographics.AssetValue = assetValue.OptionText;
+            }
+            
             var documents = (from d in _context.DOCUMENT_FILE
                 where d.Assessment_Id == assessmentId
                 select new AgDocuments

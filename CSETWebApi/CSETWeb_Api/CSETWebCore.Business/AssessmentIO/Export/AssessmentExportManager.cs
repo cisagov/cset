@@ -80,7 +80,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             TinyMapper.Bind<CUSTOM_QUESTIONAIRE_QUESTIONS, jCUSTOM_QUESTIONAIRE_QUESTIONS>();
             TinyMapper.Bind<CUSTOM_QUESTIONAIRES, jCUSTOM_QUESTIONAIRES>();
             TinyMapper.Bind<DEMOGRAPHIC_ANSWERS, jDEMOGRAPHIC_ANSWERS>();
-            TinyMapper.Bind<DEMOGRAPHICS, jDEMOGRAPHICS>();
             TinyMapper.Bind<DETAILS_DEMOGRAPHICS, jDETAILS_DEMOGRAPHICS>();
             TinyMapper.Bind<DIAGRAM_CONTAINER, jDIAGRAM_CONTAINER>();
             TinyMapper.Bind<DOCUMENT_ANSWERS, jDOCUMENT_ANSWERS>();
@@ -173,11 +172,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             foreach (var item in _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jDETAILS_DEMOGRAPHICS.Add(TinyMapper.Map<DETAILS_DEMOGRAPHICS, jDETAILS_DEMOGRAPHICS>(item));
-            }
-
-            foreach (var item in _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId))
-            {
-                model.jDEMOGRAPHICS.Add(TinyMapper.Map<DEMOGRAPHICS, jDEMOGRAPHICS>(item));
             }
 
             foreach (var item in _context.METRO_ANSWERS.Where(x => x.Assessment_Id == assessmentId))
@@ -464,6 +458,16 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 {
                     item.StringValue = null;
                 }
+                
+                if (item.DataItemName == "SUBSECTOR")
+                {
+                    item.IntValue = null;
+                }
+                
+                if (item.DataItemName == "ORG-NAME")
+                {
+                    item.StringValue = null;
+                }
             }
 
             foreach (var item in model.jCIS_CSI_SERVICE_COMPOSITION)
@@ -484,13 +488,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             }
 
             model.jASSESSMENT_CONTACTS = null;
-
-            foreach (var item in model.jDEMOGRAPHICS)
-            {
-                item.Agency = null;
-                item.IndustryId = null;
-                item.OrganizationName = null;
-            }
 
             foreach (var item in model.jASSESSMENTS)
             {

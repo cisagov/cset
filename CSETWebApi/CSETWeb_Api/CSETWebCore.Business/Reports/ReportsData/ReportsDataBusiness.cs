@@ -1078,21 +1078,14 @@ namespace CSETWebCore.Business.Reports
 
             // Facilitator or Primary Assessor (Creator)
             USERS userCreator = _context.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
-            USERS userFacilitator = null;
-
-            var demographics = _context.DEMOGRAPHICS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
-            if (demographics != null)
+            var demoExtBiz = new DemographicExtBusiness(_context);
+            var facilitatorId = (int?)demoExtBiz.GetX(_assessmentId, "FACILITATOR");
+            
+            if (facilitatorId != null)
+                
             {
-                var acFacilitator = _context.ASSESSMENT_CONTACTS.FirstOrDefault(x => x.Assessment_Contact_Id == demographics.Facilitator);
-                if (acFacilitator != null)
-                {
-                    userFacilitator = _context.USERS.FirstOrDefault(x => x.UserId == acFacilitator.UserId);
-                }
-            }
-
-            if (userFacilitator != null)
-            {
-                info.Assessor_Name = userFacilitator != null ? FormatName(userFacilitator.FirstName, userFacilitator.LastName) : string.Empty;
+                USERS user = _context.USERS.FirstOrDefault(x => x.UserId == facilitatorId);
+                info.Assessor_Name = user != null ? FormatName(user.FirstName, user.LastName) : string.Empty;
             }
             else
             {
@@ -1100,9 +1093,9 @@ namespace CSETWebCore.Business.Reports
             }
 
 
-            var demoExtBiz = new DemographicExtBusiness(_context);
+           
             info.SelfAssessment = ((bool?)demoExtBiz.GetX(_assessmentId, "SELF-ASSESS")) ?? false;
-
+         
 
             // Other Contacts
             info.Additional_Contacts = new List<string>();

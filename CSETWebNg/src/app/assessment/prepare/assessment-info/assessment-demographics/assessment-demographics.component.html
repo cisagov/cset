@@ -85,7 +85,7 @@
             <select class="form-select" id="size" tabindex="0" name="size" [(ngModel)]="demographicData.size"
                 (ngModelChange)="update($event)">
                 <option [ngValue]="null">-- {{t('select effort')}} --</option>
-                <option *ngFor="let s of sizeList" [ngValue]="s.demographicId">{{s.description}}</option>
+                <option *ngFor="let s of sizeList" [ngValue]="s.sizeId">{{s.description}}</option>
             </select>
         </div>
 
@@ -124,13 +124,13 @@
             <select *ngIf="isSLTT" class="form-select" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
                 [(ngModel)]="demographicData.organizationType" (ngModelChange)="update($event)">
                 <option [ngValue]="null">-- {{t('select type')}} --</option>
-                <option *ngFor="let t of orgTypes" [ngValue]="t.organizationTypeId">{{t.organizationType}}</option>
+                <option *ngFor="let t of orgTypes" [ngValue]="t.id">{{t.text}}</option>
             </select>
             <select *ngIf="!isSLTT" class="form-select" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
                 [(ngModel)]="demographicData.organizationType" (ngModelChange)="update($event)">
                 <option [ngValue]="null">-- {{t('select type')}} --</option>
                 <ng-container *ngFor="let t of orgTypes">
-                    <option *ngIf="t.organizationTypeId!==3" [ngValue]="t.organizationTypeId">{{t.organizationType}}
+                    <option *ngIf="t.id!==3" [ngValue]="t.id">{{t.text}}
                     </option>
                 </ng-container>
             </select>

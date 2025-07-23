@@ -26,9 +26,6 @@ public partial class SECTOR
     public int? NIPP_sector { get; set; }
 
     [InverseProperty("Sector")]
-    public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; } = new List<DEMOGRAPHICS>();
-
-    [InverseProperty("Sector")]
     public virtual ICollection<SECTOR_INDUSTRY> SECTOR_INDUSTRY { get; set; } = new List<SECTOR_INDUSTRY>();
 
     [InverseProperty("Sector")]
