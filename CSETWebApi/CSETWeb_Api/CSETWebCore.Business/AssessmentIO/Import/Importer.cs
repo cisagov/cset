@@ -299,7 +299,6 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
             foreach (var demographics in _model.jDETAILS_DEMOGRAPHICS)
             {
-                var currentDemos = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).ToList();
                 var _demographicExtBiz = new DemographicExtBusiness(_context);
                 if (demographics.StringValue != null)
                 {
