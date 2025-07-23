@@ -33,7 +33,7 @@ namespace CSETWebCore.Business.Demographic
         /// Returns an object containing the extended Demographics values.
         /// </summary>
         /// <returns></returns>
-        public DemographicExt GetDemographics(int assessmentId)
+        public DemographicExt GetExtDemographics(int assessmentId)
         {
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();

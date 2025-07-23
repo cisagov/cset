@@ -835,7 +835,7 @@ namespace CSETWebCore.Api.Controllers
             var cisServiceDemographicBusiness = new CisDemographicBusiness(_context, _assessmentUtil);
 
             Demographics demographics = demoBusiness.GetDemographics(assessmentId);
-            DemographicExt iodDemograhics = iodDemoBusiness.GetDemographics(assessmentId);
+            DemographicExt iodDemograhics = iodDemoBusiness.GetExtDemographics(assessmentId);
             CisServiceDemographics cisServiceDemographics = cisServiceDemographicBusiness.GetServiceDemographics(assessmentId);
             CisServiceComposition cisServiceComposition = cisServiceDemographicBusiness.GetServiceComposition(assessmentId);
 
