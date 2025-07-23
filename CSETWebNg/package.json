@@ -40,7 +40,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@jsverse/transloco": "^7.6.1",
     "@kolkov/angular-editor": "^3.0.0-beta.2",
-    "@ng-bootstrap/ng-bootstrap": "^18.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^19.0.1",
     "@ngstack/code-editor": "^9.0.0",
     "@swimlane/ngx-charts": "^22.0.0",
     "@types/jquery": "^3.5.32",
@@ -75,7 +75,7 @@
     "zone.js": "^0.15.1"
   },
   "devDependencies": {
-    "@angular-builders/custom-webpack": "^19.0.1",
+    "@angular-builders/custom-webpack": "^20.0.0",
     "@electron/packager": "^18.3.6",
     "electron": "^37.2.1",
     "shx": "^0.4.0",
