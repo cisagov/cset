@@ -5,6 +5,7 @@
 dist
 CLAUDE.md
 .claude/
+.serena/
 
 ## Mac OS ##
 .DS_Store

@@ -37,7 +37,7 @@
     "@babel/helpers": "^7.27.0",
     "@fortawesome/angular-fontawesome": "^2.0.1",
     "@fortawesome/fontawesome-free": "^7.0.0",
-    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/fontawesome-svg-core": "^7.0.0",
     "@jsverse/transloco": "^7.6.1",
     "@kolkov/angular-editor": "^3.0.0-beta.2",
     "@ng-bootstrap/ng-bootstrap": "^19.0.1",
