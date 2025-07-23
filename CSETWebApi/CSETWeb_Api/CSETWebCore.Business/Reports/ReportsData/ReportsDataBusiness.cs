@@ -159,7 +159,7 @@ namespace CSETWebCore.Business.Reports
 
             // RRA should be always be defaulted to its maximum available level (3)
             // since the user can't configure it
-            if (targetModelId == 5)
+            if (targetModelId == Constants.Constants.Model_RRA)
             {
                 selectedLevel = 3;
             }

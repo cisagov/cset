@@ -1,4 +1,4 @@
-﻿using CSETWebCore.DataLayer.Model;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
 using System;
 using System.Collections.Generic;
@@ -61,6 +61,19 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return true;
+        }
+
+
+        /// <summary>
+        /// Returns a list of question IDs that are in scope
+        /// </summary>
+        /// <returns></returns>
+        public override List<int> QuestionIdsInScope()
+        {
+            var isIt = _context.MATURITY_QUESTION_PROPS.Any(x => x.PropertyValue == "IS-IT" && x.PropertyValue == "1");
+            var isOt = _context.MATURITY_QUESTION_PROPS.Any(x => x.PropertyValue == "IS-OT" && x.PropertyValue == "1");
+
+            return new List<int>();
         }
     }
 }

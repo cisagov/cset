@@ -138,7 +138,7 @@ namespace CSETWebCore.Business.Maturity
 
 
                     // special scoring for HYDRO
-                    if (QuestionsModel.ModelId == 13)
+                    if (QuestionsModel.ModelId == Constants.Constants.Model_HYDRO)
                     {
                         return CalculateHydroScore(grouped, total);
                     }
