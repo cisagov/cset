@@ -146,7 +146,7 @@ namespace CSETWebCore.Business.Maturity
             if ((chemicalSectors.Contains(demographics?.SectorId ?? -1))
                 || chemicalSectors.Contains(ddSector?.IntValue ?? -1))
             {
-                return 18;
+                return Constants.Constants.Model_SSG_CHEM;
             }
 
 
@@ -155,7 +155,7 @@ namespace CSETWebCore.Business.Maturity
             if ((itSectors.Contains(demographics?.SectorId ?? -1))
                 || itSectors.Contains(ddSector?.IntValue ?? -1))
             {
-                return 20;
+                return Constants.Constants.Model_SSG_IT;
             }
 
 

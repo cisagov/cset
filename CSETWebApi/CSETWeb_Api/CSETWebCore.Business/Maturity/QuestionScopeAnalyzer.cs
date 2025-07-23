@@ -1,4 +1,4 @@
-﻿using CSETWebCore.Model.Question;
+using CSETWebCore.Model.Question;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +19,12 @@ namespace CSETWebCore.Business.Maturity
         public virtual bool IsQuestionInScope(QuestionAnswer qa)
         {
             return true;
+        }
+
+
+        public virtual List<int> QuestionIdsInScope()
+        {
+            return new List<int>();
         }
     }
 }

@@ -799,7 +799,7 @@ namespace CSETWebCore.Business.Maturity
             // Spin up the generic scope analyzer or a maturity model-specific one
             _questionScope = new QuestionScopeAnalyzer();
             // CPG 2.0
-            if (targetModelId == 21)
+            if (targetModelId == Constants.Constants.Model_CPG2)
             {
                 _questionScope = new CpgScopeAnalyzer(assessmentId, _context);
             }
@@ -979,7 +979,7 @@ namespace CSETWebCore.Business.Maturity
 
 
                 // Set the Selected if the model supports selectable models
-                if (modelId == 23 || modelId == 24)
+                if (modelId == Constants.Constants.Model_CRE_OD || modelId == Constants.Constants.Model_CRE_MIL)
                 {
                     newGrouping.Selected = _selectedGroupingIds.Contains(newGrouping.GroupingId);
                 }
@@ -1102,19 +1102,19 @@ namespace CSETWebCore.Business.Maturity
         private bool IsQuestionCountable(int modelId, QuestionAnswer qa)
         {
             // EDM and CRR and CPG2 - parent questions are unanswerable and not countable
-            if (modelId == 3 || modelId == 4 || modelId == 21)
+            if (modelId == Constants.Constants.Model_EDM || modelId == Constants.Constants.Model_CRR || modelId == Constants.Constants.Model_CPG2)
             {
                 return !qa.IsParentQuestion;
             }
 
             // VADR - child questions are freeform and not countable
-            if (modelId == 7)
+            if (modelId == Constants.Constants.Model_TSA_VADR)
             {
                 return qa.ParentQuestionId == null;
             }
 
             // ISE - parent questions are not answerable and not countable
-            if (modelId == 10)
+            if (modelId == Constants.Constants.Model_ISE)
             {
                 return !qa.IsParentQuestion;
             }

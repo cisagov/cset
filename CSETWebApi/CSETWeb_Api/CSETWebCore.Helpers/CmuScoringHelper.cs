@@ -72,7 +72,7 @@ namespace CSETWebCore.Helpers
 
             LoadStructure();
 
-            if (this.ModelId == 3 || this.ModelId == 4)
+            if (this.ModelId == Constants.Constants.Model_EDM || this.ModelId == Constants.Constants.Model_CRR)
             {
                 ManipulateStructure();
             }
