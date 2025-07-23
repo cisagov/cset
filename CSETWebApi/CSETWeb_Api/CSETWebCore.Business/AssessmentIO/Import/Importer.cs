@@ -296,30 +296,6 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                 _context.SaveChanges();
             }
-            
-            // foreach (var demographics in _model.jDEMOGRAPHICS)
-            // {
-            //     var current = _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-            //     if (current == null)
-            //     {
-            //         current = new DEMOGRAPHICS();
-            //     }
-            //     current.Assessment_Id = assessmentId;
-            //     current.SectorId = demographics.SectorId;
-            //     current.IndustryId = demographics.IndustryId;
-            //     current.Size = demographics.Size;
-            //     current.AssetValue = demographics.AssetValue;
-            //     current.NeedsPrivacy = demographics.NeedsPrivacy;
-            //     current.NeedsSupplyChain = demographics.NeedsSupplyChain;
-            //     current.NeedsICS = demographics.NeedsICS;
-            //     current.OrganizationName = demographics.OrganizationName;
-            //     current.Agency = demographics.Agency;
-            //     current.OrganizationType = demographics.OrganizationType;
-            //     // current.Facilitator = demographics.Facilitator; // Skipping sync until contacts logic is determined
-            //     // current.PointOfContact = demographics.PointOfContact; // Skipping sync until contacts logic is determined 
-            //     current.IsScoped = demographics.IsScoped;
-            //     current.CriticalService = demographics.CriticalService;
-            // }
 
             foreach (var demographics in _model.jDETAILS_DEMOGRAPHICS)
             {
