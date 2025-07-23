@@ -55,7 +55,7 @@ interface AssessmentSize {
     description: string;
 }
 
-interface OrgTypes {
+interface DetailsDemographicsOptions {
     id: number;
     text: string;
 }
@@ -81,7 +81,7 @@ export class AssessmentDemographicsComponent implements OnInit {
     contacts: User[];
     isSLTT: boolean = false;
     demographicData: Demographic = {};
-    orgTypes: OrgTypes[];
+    orgTypes: DetailsDemographicsOptions[];
 
     assetValueTemp: number;
 
