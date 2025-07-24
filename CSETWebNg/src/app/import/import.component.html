@@ -94,6 +94,36 @@
                             background: white;
                             padding: 10px;
                         }
+
+                        ngs-code-editor .monaco-editor .decorationsOverviewRuler {
+                            pointer-events: none !important;
+                        }
+
+                        ngs-code-editor .monaco-editor .lines-content {
+                            pointer-events: auto !important;
+                        }
+
+                        ngs-code-editor .monaco-editor .view-lines {
+                            pointer-events: auto !important;
+                        }
+
+                        ngs-code-editor .monaco-editor .monaco-mouse-cursor-text {
+                            pointer-events: auto !important;
+                        }
+
+                        /* Fix text highlighting elements blocking clicks */
+                        ngs-code-editor .monaco-editor .mtk1,
+                        ngs-code-editor .monaco-editor .bracket-highlighting-0,
+                        ngs-code-editor .monaco-editor .bracket-highlighting-1,
+                        ngs-code-editor .monaco-editor .bracket-highlighting-2,
+                        ngs-code-editor .monaco-editor .bracket-highlighting-3 {
+                            pointer-events: none !important;
+                        }
+
+                        /* Ensure the input area can receive clicks */
+                        ngs-code-editor .monaco-editor .inputarea {
+                            pointer-events: auto !important;
+                        }
                     </style>
 
 
