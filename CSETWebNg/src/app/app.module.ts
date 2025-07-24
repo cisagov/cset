@@ -609,6 +609,8 @@ import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/ci
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
 import { CisaVadrInfoComponent } from './assessment/prepare/maturity/cisa-vadr-info/cisa-vadr-info.component';
+import { HtmlReaderService } from './services/htmlReader.service';
+import { HtmlToDocxService } from './services/htmlToDocx.service';
 
 
 registerSwiper();
@@ -1216,6 +1218,8 @@ registerSwiper();
         FooterService,
         AnalyticsService,
         UserService,
+        HtmlReaderService,
+        HtmlToDocxService,
         provideHttpClient(withInterceptorsFromDi()),
         provideCodeEditor({
             typingsWorkerUrl: 'assets/workers/typings-worker.js',

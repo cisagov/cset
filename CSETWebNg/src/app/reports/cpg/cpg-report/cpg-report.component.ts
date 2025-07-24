@@ -21,13 +21,15 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { CpgService } from '../../../services/cpg.service';
 import { SsgService } from '../../../services/ssg.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { HtmlReaderService } from '../../../services/htmlReader.service'; 
+import { HtmlToDocxService } from '../../../services/htmlToDocx.service';
 
 @Component({
     selector: 'app-cpg-report',
@@ -43,6 +45,7 @@ export class CpgReportComponent implements OnInit {
   assessorName: string;
   facilityName: string;
   selfAssessment: boolean;
+  htmlString: string="";
 
   answerDistribByDomain: any;
 
@@ -59,8 +62,12 @@ export class CpgReportComponent implements OnInit {
     public cpgSvc: CpgService,
     public ssgSvc: SsgService,
     public configSvc: ConfigService,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService, 
+    public readerSvc: HtmlReaderService,
+    public docxSvc: HtmlToDocxService
   ) { }
+
+
 
   /**
    * 
@@ -98,5 +105,12 @@ export class CpgReportComponent implements OnInit {
 
       this.answerDistribByDomain = resp;
     });
+
+    
+  }
+  
+  extractContent(){
+    this.htmlString = this.readerSvc.readHtmlByClassName("word-conversion");
+     this.docxSvc.convertHtmlToDocx(this.htmlString);       
   }
 }
