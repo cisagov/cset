@@ -52,20 +52,23 @@ namespace CSETWebCore.Business.ModuleIO
             var existingSet = _context.SETS.FirstOrDefault(s => s.Set_Name == setname);
             if (existingSet != null)
             {
-                // result.LogError("Module already exists.  If this is a new version, please change the ShortName field to reflect this.");
+                throw new InvalidOperationException($"Module '{setname}' already exists. If this is a new version, please change the ShortName field to reflect this.");
             }
+            
             category = _context.SETS_CATEGORY.FirstOrDefault(s => s.Set_Category_Name.Trim().ToLower() == externalStandard.category.Trim().ToLower());
 
             if (category == null)
             {
-                // result.LogError("Module Category is invalid.  Please check the spelling and try again.");
+                throw new ArgumentException($"Module Category '{externalStandard.category}' is invalid. Please check the spelling and try again.");
             }
-            else
+            
+            var existingSetsInCategory = category.SETS?.Where(s => s.Order_In_Category.HasValue).ToList();
+            if (existingSetsInCategory != null && existingSetsInCategory.Any())
             {
-                categoryOrder = category.SETS.Max(s => s.Order_In_Category);
+                categoryOrder = existingSetsInCategory.Max(s => s.Order_In_Category);
             }
 
-            set.Set_Category_Id = category?.Set_Category_Id;
+            set.Set_Category_Id = category.Set_Category_Id;
             set.Order_In_Category = categoryOrder;
             set.Short_Name = externalStandard.shortName;
             set.Set_Name = setname;
@@ -88,15 +91,16 @@ namespace CSETWebCore.Business.ModuleIO
             string configSetup = "{Sets:[\"" + set.Set_Name + "\"],SALLevel:\"Low\",QuestionMode:\"Questions\"}";
 
             var custom = _context.GALLERY_GROUP.Where(x => x.Group_Title.Equals("Custom")).FirstOrDefault();
-            int colIndex = 0;
-            if (custom != null)
+            if (custom == null)
             {
-                var colIndexList = _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id.Equals(custom.Group_Id)).ToList();
+                throw new InvalidOperationException("Required 'Custom' gallery group is missing from the database. Please contact the system administrator.");
+            }
 
-                if (colIndexList != null)
-                {
-                    colIndex = colIndexList.Count;
-                }
+            int colIndex = 0;
+            var colIndexList = _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id.Equals(custom.Group_Id)).ToList();
+            if (colIndexList != null)
+            {
+                colIndex = colIndexList.Count;
             }
 
             if (!string.IsNullOrWhiteSpace(set.Standard_ToolTip))
@@ -107,7 +111,6 @@ namespace CSETWebCore.Business.ModuleIO
             {
                 set.Standard_ToolTip = $"{category.Set_Category_Name}";
             }
-
 
             _galleryEditor.AddGalleryItem("", "", set.Standard_ToolTip, set.Full_Name, configSetup, custom.Group_Id, colIndex);
 
@@ -129,8 +132,12 @@ namespace CSETWebCore.Business.ModuleIO
         /// <param name="db"></param>
         private void ProcessRequirements(ExternalStandard externalStandard, SETS set)
         {
-            // var jsonStandard = System.Text.Json.JsonSerializer.Serialize(externalStandard);
-            //JsonConvert.SerializeObject(externalStandard, Formatting.Indented);
+            // Handle case where requirements is null or empty
+            if (externalStandard.requirements == null || !externalStandard.requirements.Any())
+            {
+                NLog.LogManager.GetCurrentClassLogger().Info($"No requirements provided for module '{set.Set_Name}'. Module imported without requirements.");
+                return;
+            }
 
             var questionDictionary = new Dictionary<string, DataLayer.Model.NEW_QUESTION>();
             var categoryDictionary = new Dictionary<string, STANDARD_CATEGORY>();
@@ -142,6 +149,12 @@ namespace CSETWebCore.Business.ModuleIO
 
             foreach (var requirement in externalStandard.requirements)
             {
+                // Skip null requirements
+                if (requirement == null)
+                {
+                    NLog.LogManager.GetCurrentClassLogger().Warn($"Null requirement found in module '{set.Set_Name}', skipping.");
+                    continue;
+                }
                 //skip duplicates
                 if (!requirementList.Any(s => s == requirement.identifier.Trim().ToLower() + "|||" + requirement.text.Trim().ToLower()))
                 {
@@ -228,47 +241,53 @@ namespace CSETWebCore.Business.ModuleIO
 
             try
             {
-                questionGroupHeading = _context.QUESTION_GROUP_HEADING.FirstOrDefault(s => s.Question_Group_Heading1.Trim().ToLower() == externalRequirement.heading.Trim().ToLower());
-                try
+                if (!string.IsNullOrWhiteSpace(externalRequirement.heading))
                 {
-                    var subcatId = _context.UNIVERSAL_SUB_CATEGORIES.FirstOrDefault(s => s.Universal_Sub_Category.Trim().ToLower() == externalRequirement.subheading.Trim().ToLower())?.Universal_Sub_Category_Id ?? 0;
-                    if (subcatId == 0)
-                    {
-                        var subcat = new UNIVERSAL_SUB_CATEGORIES() { Universal_Sub_Category = externalRequirement.subheading };
-                        _context.UNIVERSAL_SUB_CATEGORIES.Add(subcat);
-                        _context.SaveChanges();
-                        subcatId = subcat.Universal_Sub_Category_Id;
-                    }
+                    questionGroupHeading = _context.QUESTION_GROUP_HEADING.FirstOrDefault(s => s.Question_Group_Heading1.Trim().ToLower() == externalRequirement.heading.Trim().ToLower());
+                }
 
+                if (questionGroupHeading != null && !string.IsNullOrWhiteSpace(externalRequirement.subheading))
+                {
                     try
                     {
-                        uschPairing = _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.FirstOrDefault(s => (s.Universal_Sub_Category_Id == subcatId) && (s.Question_Group_Heading_Id == questionGroupHeading.Question_Group_Heading_Id));
-                        if (uschPairing == null)
+                        var subcatId = _context.UNIVERSAL_SUB_CATEGORIES.FirstOrDefault(s => s.Universal_Sub_Category.Trim().ToLower() == externalRequirement.subheading.Trim().ToLower())?.Universal_Sub_Category_Id ?? 0;
+                        if (subcatId == 0)
                         {
-                            uschPairing = new UNIVERSAL_SUB_CATEGORY_HEADINGS()
-                            {
-                                Set_Name = "Standards",
-                                Universal_Sub_Category_Id = subcatId,
-                                Question_Group_Heading_Id = questionGroupHeading.Question_Group_Heading_Id
-                            };
-                            _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Add(uschPairing);
+                            var subcat = new UNIVERSAL_SUB_CATEGORIES() { Universal_Sub_Category = externalRequirement.subheading };
+                            _context.UNIVERSAL_SUB_CATEGORIES.Add(subcat);
                             _context.SaveChanges();
+                            subcatId = subcat.Universal_Sub_Category_Id;
+                        }
+
+                        try
+                        {
+                            uschPairing = _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.FirstOrDefault(s => (s.Universal_Sub_Category_Id == subcatId) && (s.Question_Group_Heading_Id == questionGroupHeading.Question_Group_Heading_Id));
+                            if (uschPairing == null)
+                            {
+                                uschPairing = new UNIVERSAL_SUB_CATEGORY_HEADINGS()
+                                {
+                                    Set_Name = "Standards",
+                                    Universal_Sub_Category_Id = subcatId,
+                                    Question_Group_Heading_Id = questionGroupHeading.Question_Group_Heading_Id
+                                };
+                                _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Add(uschPairing);
+                                _context.SaveChanges();
+                            }
+                        }
+                        catch (Exception exc)
+                        {
+                            NLog.LogManager.GetCurrentClassLogger().Error($"Error creating universal sub category heading: {exc}");
                         }
                     }
                     catch (Exception exc)
                     {
-                        NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
-                        var myExc = exc;
+                        NLog.LogManager.GetCurrentClassLogger().Error($"Error processing subheading '{externalRequirement.subheading}': {exc}");
                     }
                 }
-                catch
-                {
-
-                }
             }
-            catch
+            catch (Exception exc)
             {
-
+                NLog.LogManager.GetCurrentClassLogger().Error($"Error processing heading '{externalRequirement.heading}': {exc}");
             }
 
 
@@ -435,13 +454,35 @@ namespace CSETWebCore.Business.ModuleIO
                         newQuestion.Original_Set_Name = setName;
                         newQuestion.Simple_Question = question;
                         newQuestion.Weight = externalRequirement.weight;
-                        newQuestion.Question_Group_Id = questionGroupHeading.Question_Group_Heading_Id;
+                        
+                        if (questionGroupHeading != null)
+                        {
+                            newQuestion.Question_Group_Id = questionGroupHeading.Question_Group_Heading_Id;
+                        }
+                        else
+                        {
+                            // Use a default question group if none specified
+                            var defaultQuestionGroup = _context.QUESTION_GROUP_HEADING.FirstOrDefault();
+                            if (defaultQuestionGroup != null)
+                            {
+                                newQuestion.Question_Group_Id = defaultQuestionGroup.Question_Group_Heading_Id;
+                                NLog.LogManager.GetCurrentClassLogger().Warn($"Using default question group for question '{question}' in requirement '{externalRequirement.identifier}'");
+                            }
+                            else
+                            {
+                                throw new InvalidOperationException("No question groups available in the database. Please contact the system administrator.");
+                            }
+                        }
+                        
                         newQuestion.Universal_Sal_Level = SalCompare.FindLowestSal(externalRequirement.securityAssuranceLevels);
                         newQuestion.Std_Ref = setName.Replace("_", "");
                         newQuestion.Std_Ref = newQuestion.Std_Ref.Substring(0, Math.Min(newQuestion.Std_Ref.Length, 50));
                         newQuestion.Std_Ref_Number = stdRefNum++;
 
-                        newQuestion.Heading_Pair_Id = uschPairing.Heading_Pair_Id;
+                        if (uschPairing != null)
+                        {
+                            newQuestion.Heading_Pair_Id = uschPairing.Heading_Pair_Id;
+                        }
 
                         _context.NEW_QUESTION.Add(newQuestion);
                         _context.SaveChanges();
