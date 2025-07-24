@@ -123,7 +123,19 @@ export class ImportComponent implements OnInit, OnDestroy {
       formatOnPaste: true,
       formatOnType: true,
       automaticLayout: true,
-      quickSuggestions: true
+      quickSuggestions: true,
+      readOnly: false,
+      selectOnLineNumbers: true,
+      minimap: { enabled: false },
+      scrollbar: {
+        vertical: 'auto',
+        horizontal: 'auto',
+        useShadows: false
+      },
+      overviewRulerLanes: 0,
+      hideCursorInOverviewRuler: true,
+      overviewRulerBorder: false,
+      fixedOverflowWidgets: true
     };
   }
   get codeChecked(): boolean {
@@ -157,13 +169,14 @@ export class ImportComponent implements OnInit, OnDestroy {
 
     if (this.lang === 'json') {
       this.fileClient.getJSONExportSet(setName).subscribe(s => {
+        const formattedJson = JSON.stringify(JSON.parse(s), null, '\t');
         this.codeModel = {
           language: 'json',
           uri: 'main.json',
-          value: JSON.stringify(JSON.parse(s), null, '\t'),
+          value: formattedJson,
           schemas: this.jsonCodeModel.schemas
         };
-
+        this.moduleCode = formattedJson;
 
       });
     } else {
@@ -174,6 +187,7 @@ export class ImportComponent implements OnInit, OnDestroy {
           value: s,
           schemas: this.xmlCodeModel.schemas
         };
+        this.moduleCode = s;
       });
     }
   }
@@ -209,10 +223,33 @@ export class ImportComponent implements OnInit, OnDestroy {
         }
       },
       e => {
-        console.error(e)
-        for (let key in e.error.errors) {
-          this.errors.push(`${e.error.errors[key]}`);
+        console.error(e);
+        
+        // Handle 409 Conflict responses with ProblemDetails format
+        if (e.status === 409 && e.error) {
+          if (e.error.detail) {
+            this.errors.push(`Module conflict: ${e.error.detail}`);
+          } else if (e.error.title) {
+            this.errors.push(`Module conflict: ${e.error.title}`);
+          } else {
+            this.errors.push('A module with this name already exists. Please use a different name or remove the existing module first.');
+          }
         }
+        // Handle validation errors format
+        else if (e.error && e.error.errors) {
+          for (let key in e.error.errors) {
+            this.errors.push(`${e.error.errors[key]}`);
+          }
+        }
+        // Handle other error formats
+        else if (e.error && e.error.message) {
+          this.errors.push(e.error.message);
+        }
+        // Fallback for any other error structure
+        else {
+          this.errors.push('An error occurred while processing the module. Please check the module format and try again.');
+        }
+        
         this.state = 'Failed';
       }
     );
@@ -304,11 +341,33 @@ export class ImportComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.uploader === undefined) {
       this.initializeUploader();
-    };
+    }
+    this.configureMonacoEnvironment();
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
+  }
+
+  private configureMonacoEnvironment() {
+    // Configure Monaco Editor environment to load assets from correct path
+    (window as any).MonacoEnvironment = {
+      getWorkerUrl: function (moduleId: string, label: string) {
+        if (label === 'json') {
+          return './assets/monaco/vs/language/json/jsonWorker.js';
+        }
+        if (label === 'css' || label === 'scss' || label === 'less') {
+          return './assets/monaco/vs/language/css/cssWorker.js';
+        }
+        if (label === 'html' || label === 'handlebars' || label === 'razor') {
+          return './assets/monaco/vs/language/html/htmlWorker.js';
+        }
+        if (label === 'typescript' || label === 'javascript') {
+          return './assets/monaco/vs/language/typescript/tsWorker.js';
+        }
+        return './assets/monaco/vs/base/worker/workerMain.js';
+      }
+    };
   }
 
   private initializeUploader() {
@@ -352,26 +411,39 @@ export class ImportComponent implements OnInit, OnDestroy {
     });
     this.codeModel = { ...this.jsonCodeModel };
     this.editorService.loaded.subscribe(t => {
-      this.fileClient.getSchema().subscribe(s => {
-        this.jsonCodeModel.schemas.push({
-          uri: 'http://custom/schema.json',
-          schema: s
+      try {
+        this.fileClient.getSchema().subscribe(s => {
+          this.jsonCodeModel.schemas.push({
+            uri: 'http://custom/schema.json',
+            schema: s
+          });
+          this.codeModel = { ...this.jsonCodeModel };
         });
-        this.codeModel = { ...this.jsonCodeModel };
-      });
-      this.fileClient.getText('assets/Standard.xsd').subscribe(s => {
-        this.xmlCodeModel.schemas.push({
-          uri: 'http://custom/schema.xsd',
-          schema: s
-        });
+        this.fileClient.getText('assets/Standard.xsd').subscribe(s => {
+          this.xmlCodeModel.schemas.push({
+            uri: 'http://custom/schema.xsd',
+            schema: s
+          });
 
-        if (t?.monaco) {
-          this.monaco = t.monaco;
-          this.registerXmlProviders(s);
-        } else {
-          console.warn("Monaco not fully initialized");
-        }
-      });
+          if (t?.monaco) {
+            this.monaco = t.monaco;
+            this.registerXmlProviders(s);
+          } else {
+            console.warn("Monaco not fully initialized, retrying...");
+            // Retry initialization after a short delay
+            setTimeout(() => {
+              if ((window as any).monaco) {
+                this.monaco = (window as any).monaco;
+                this.registerXmlProviders(s);
+              }
+            }, 1000);
+          }
+        });
+      } catch (error) {
+        console.error('Error initializing Monaco Editor:', error);
+        // Set a basic code model even if Monaco fails to load completely
+        this.codeModel = { ...this.jsonCodeModel };
+      }
     });
 
     this.fileOverModuleStateObservable.pipe(debounceTime(10)).subscribe(t => {

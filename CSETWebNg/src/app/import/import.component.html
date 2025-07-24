@@ -50,17 +50,6 @@
                 </ul>
             </div>
             <div class="p-0 col-md-8 d-flex flex-column flex-11a w-100">
-                <div>
-                    <div class="alert alert-success" role="alert" *ngIf="state=='Succeeded'">The module was imported
-                        successfully!</div>
-                    <div class="alert alert-info" role="alert" *ngIf="state=='Processing'">Module has been submitted
-                        for processing. This may take several minutes</div>
-                    <div class="alert alert-danger" role="alert" *ngIf="state=='Failed'">The module failed to import
-                        because an error occurred in processing.</div>
-                    <div class="alert alert-warning" role="alert" *ngIf="importNgForm.invalid">You need to resolve all
-                        errors before the module can be imported.</div>
-
-                </div>
                 <form #importNgForm='ngForm' class="d-flex flex-column flex-11a" (submit)="submitForm()">
                     <style>
                         .my-drop-zone {
@@ -93,6 +82,62 @@
                         .fullscreen {
                             background: white;
                             padding: 10px;
+                        }
+
+                        ngs-code-editor .monaco-editor .decorationsOverviewRuler {
+                            pointer-events: none !important;
+                        }
+
+                        ngs-code-editor .monaco-editor .lines-content {
+                            pointer-events: auto !important;
+                        }
+
+                        ngs-code-editor .monaco-editor .view-lines {
+                            pointer-events: auto !important;
+                        }
+
+                        ngs-code-editor .monaco-editor .monaco-mouse-cursor-text {
+                            pointer-events: auto !important;
+                        }
+
+                        /* Fix text highlighting elements blocking clicks */
+                        ngs-code-editor .monaco-editor .mtk1,
+                        ngs-code-editor .monaco-editor .bracket-highlighting-0,
+                        ngs-code-editor .monaco-editor .bracket-highlighting-1,
+                        ngs-code-editor .monaco-editor .bracket-highlighting-2,
+                        ngs-code-editor .monaco-editor .bracket-highlighting-3 {
+                            pointer-events: none !important;
+                        }
+
+                        /* Ensure the input area can receive clicks */
+                        ngs-code-editor .monaco-editor .inputarea {
+                            pointer-events: auto !important;
+                        }
+
+                        /* Improved alert positioning for better UX */
+                        .import-alerts-container {
+                            min-height: 0;
+                            transition: all 0.3s ease-in-out;
+                        }
+
+                        .import-alerts-container .alert {
+                            margin-bottom: 0.5rem;
+                            animation: slideDown 0.3s ease-in-out;
+                        }
+
+                        .import-alerts-container .alert:last-child {
+                            margin-bottom: 0;
+                        }
+
+                        @keyframes slideDown {
+                            from {
+                                opacity: 0;
+                                transform: translateY(-10px);
+                            }
+                            to {
+                                opacity: 1;
+                                transform: translateY(0);
+                            }
                         }
                     </style>
 
@@ -163,6 +208,18 @@
                                     }}</span>
                             </li>
                         </ul>
+                    </div>
+
+                    <!-- Error/Success Messages positioned above action buttons -->
+                    <div class="mb-3 import-alerts-container">
+                        <div class="alert alert-success" role="alert" *ngIf="state=='Succeeded'">The module was imported
+                            successfully!</div>
+                        <div class="alert alert-info" role="alert" *ngIf="state=='Processing'">Module has been submitted
+                            for processing. This may take several minutes</div>
+                        <div class="alert alert-danger" role="alert" *ngIf="state=='Failed'">The module failed to import
+                            because an error occurred in processing.</div>
+                        <div class="alert alert-warning" role="alert" *ngIf="importNgForm.invalid">You need to resolve all
+                            errors before the module can be imported.</div>
                     </div>
 
                     <div style="margin: .5em 0">
