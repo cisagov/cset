@@ -20,7 +20,12 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5" *transloco="let t">
+<div>
+    <button (click)="extractContent()" class="btn btn-primary">
+        Convert to Word
+    </button>
+</div>
+<div class="report-body mb-5 word-conversion" *transloco="let t">
 
     <app-cover-sheet-a title="{{ 'reports.core.cpg.report title' | transloco | uppercase }}"
         [assessmentName]="assessmentName" [assessmentDate]="assessmentDate" [assessorName]="assessorName"
