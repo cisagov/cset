@@ -52,6 +52,8 @@ namespace CSETWebCore.Model.Assessment
         public bool UseDiagram { get; set; }
         public bool UseMaturity { get; set; }
         public bool? IsAcetOnly { get; set; }
+
+
         public bool? IseSubmitted { get; set; }
         public bool? ISE_StateLed { get; set; }
 

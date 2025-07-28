@@ -801,7 +801,7 @@ namespace CSETWebCore.Business.Maturity
             // CPG 2.0
             if (targetModelId == Constants.Constants.Model_CPG2)
             {
-                _questionScope = new CpgScopeAnalyzer(assessmentId, _context);
+                _questionScope = new QuestionScopeAnalyzerCpg(assessmentId, _context);
             }
 
 
@@ -1001,6 +1001,7 @@ namespace CSETWebCore.Business.Maturity
 
                 var parentQuestionIDs = myQuestions.Select(x => x.Parent_Question_Id).Distinct().ToList();
 
+
                 foreach (var myQ in myQuestions)
                 {
                     FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
@@ -1029,8 +1030,7 @@ namespace CSETWebCore.Business.Maturity
 
 
                     // see if the question should be included in the response
-                    var inScope = _questionScope.IsQuestionInScope(qa);
-                    if (!inScope)
+                    if (_questionScope.OutOfScope.Contains(qa.QuestionId))
                     {
                         continue;
                     }

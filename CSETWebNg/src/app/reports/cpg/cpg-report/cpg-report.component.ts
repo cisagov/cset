@@ -44,6 +44,8 @@ export class CpgReportComponent implements OnInit {
   facilityName: string;
   selfAssessment: boolean;
 
+  techDomain: string;
+
   answerDistribByDomain: any;
 
   isSsgApplicable = false;
@@ -76,13 +78,14 @@ export class CpgReportComponent implements OnInit {
       this.assessorName = assessmentDetail.facilitatorName;
       this.facilityName = assessmentDetail.facilityName;
       this.selfAssessment = assessmentDetail.selfAssessment;
+      this.techDomain = 'OT';
 
       this.assessSvc.assessment = assessmentDetail;
       this.isSsgApplicable = this.ssgSvc.doesSsgApply();
       this.ssgBonusModel = this.ssgSvc.ssgBonusModel();
     });
 
-    this.cpgSvc.getAnswerDistrib().subscribe((resp: any) => {
+    this.cpgSvc.getAnswerDistrib(21, 'OT').subscribe((resp: any) => {
       const cpgAnswerOptions = this.configSvc.getModuleBehavior('CPG').answerOptions;
 
       resp.forEach(r => {

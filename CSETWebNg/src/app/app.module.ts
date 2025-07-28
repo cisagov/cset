@@ -490,6 +490,7 @@ import { CpgDomainSummaryComponent } from './assessment/results/cpg/cpg-domain-s
 import { CpgCostImpactComplexityComponent } from './assessment/results/cpg/cpg-cost-impact-complexity/cpg-cost-impact-complexity.component';
 import { CpgSummaryComponent } from './assessment/results/cpg/cpg-summary/cpg-summary.component';
 import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cpg-practices.component';
+import { CpgAnswerBlockComponent } from './assessment/results/cpg/cpg-answer-block/cpg-answer-block.component';
 import { ReferencesTableComponent } from './assessment/questions/references-table/references-table.component';
 import { ReferencesDisplayComponent } from './assessment/questions/references-display/references-display.component';
 import { DiagramVulnerabilitiesDialogComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
@@ -608,7 +609,6 @@ import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/ci
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
 import { CisaVadrInfoComponent } from './assessment/prepare/maturity/cisa-vadr-info/cisa-vadr-info.component';
-
 
 
 registerSwiper();
@@ -974,6 +974,7 @@ registerSwiper();
         CpgCostImpactComplexityComponent,
         CpgSummaryComponent,
         CpgPracticesComponent,
+        CpgAnswerBlockComponent,
         OnlineDisclaimerComponent,
         ReferencesTableComponent,
         ReferencesDisplayComponent,

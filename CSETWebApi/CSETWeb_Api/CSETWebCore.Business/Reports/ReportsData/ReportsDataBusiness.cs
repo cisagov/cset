@@ -116,6 +116,8 @@ namespace CSETWebCore.Business.Reports
             var query = from a in _context.ANSWER
                         join m in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_Level)
                             on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                        join p in _context.MATURITY_QUESTION_PROPS 
+                            on m.Mat_Question_Id equals p.Mat_Question_Id
                         where a.Assessment_Id == _assessmentId
                             && m.Maturity_Model_Id == targetModelId
                             && a.Question_Type == "Maturity"
@@ -138,6 +140,11 @@ namespace CSETWebCore.Business.Reports
                     matAns.IsParentWithChildren = true;
                 }
             }
+
+
+            // Do not include unanswerable questions
+            responseList.RemoveAll(x => !x.Mat.Is_Answerable);
+
 
             foreach (var matAns in responseList)
             {

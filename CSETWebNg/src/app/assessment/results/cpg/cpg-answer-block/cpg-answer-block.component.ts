@@ -21,37 +21,17 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-    selector: 'app-cpg-domain-summary',
-    templateUrl: './cpg-domain-summary.component.html',
-    styleUrls: ['./cpg-domain-summary.component.scss'],
-    standalone: false
+  selector: 'app-cpg-answer-block',
+  templateUrl: './cpg-answer-block.component.html',
+  styleUrl: './cpg-answer-block.component.scss',
+  standalone: false
 })
-export class CpgDomainSummaryComponent implements OnInit {
+export class CpgAnswerBlockComponent {
 
   @Input()
-  answerDistribByDomain = [];
+  answer: any;
 
-
-
-  xAxisTicks = [0, 25, 50, 75, 100];
-  answerDistribColorScheme = { domain: ['#28A745', '#007bff', '#FFC107', '#DC3545', '#c8c8c8'] };
-
-
-  constructor() { }
-
-  /**
-   * 
-   */
-  ngOnInit(): void {
-  }
-
-  /**
-   * 
-   */
-  formatPercent(x: any) {
-    return x + '%';
-  }
 }

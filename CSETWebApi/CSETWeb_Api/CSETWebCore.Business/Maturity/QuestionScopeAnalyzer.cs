@@ -13,16 +13,22 @@ namespace CSETWebCore.Business.Maturity
     /// </summary>
     public class QuestionScopeAnalyzer
     {
+
+        // determine the out of scope questions based on the full assessment
+        public List<int> OutOfScope = [];
+
+
         /// <summary>
-        /// The default scope analyzer - everybody is good
+        /// 
         /// </summary>
-        public virtual bool IsQuestionInScope(QuestionAnswer qa)
+        public QuestionScopeAnalyzer()
         {
-            return true;
+            // determine the out of scope questions based on the full assessment
+            OutOfScope = OutOfScopeQuestionIds();
         }
 
 
-        public virtual List<int> QuestionIdsInScope()
+        public virtual List<int> OutOfScopeQuestionIds(string techDomain = null)
         {
             return new List<int>();
         }
