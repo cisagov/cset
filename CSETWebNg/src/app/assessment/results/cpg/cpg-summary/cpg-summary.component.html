@@ -29,15 +29,31 @@
         </ng-container>
     </p>
 
-    <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain" class="mb-5"></app-cpg-domain-summary>
+    <div class="mb-4" *ngIf="techDomain == 'OT' || techDomain == 'OT+IT' || techDomain == null">
+        <h3>{{t('reports.core.cpg.ot')}}</h3>
+        <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomainOt" class="mb-5"></app-cpg-domain-summary>
 
-    <h4>
-        {{t('reports.core.cpg.report.chart detail')}}
-    </h4>
+        <h4 style="margin-top: 5rem;">
+            {{t('reports.core.cpg.report.chart detail')}}
+        </h4>
 
-    <p>{{t('reports.core.cpg.report.p.2')}}</p>
+        <p>{{t('reports.core.cpg.report.p.2')}}</p>
 
-    <app-cpg-domain-summary-table [data]="answerDistribByDomain"></app-cpg-domain-summary-table>
+        <app-cpg-domain-summary-table [data]="answerDistribByDomainOt"></app-cpg-domain-summary-table>
+    </div>
+
+    <div class="mg-4" *ngIf="techDomain == 'IT' || techDomain == 'OT+IT' || techDomain == null">
+        <h3>{{t('reports.core.cpg.it')}}</h3>
+        <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomainIt" class="mb-5"></app-cpg-domain-summary>
+
+        <h4 style="margin-top: 5rem;">
+            {{t('reports.core.cpg.report.chart detail')}}
+        </h4>
+
+        <p>{{t('reports.core.cpg.report.p.2')}}</p>
+
+        <app-cpg-domain-summary-table [data]="answerDistribByDomainIt"></app-cpg-domain-summary-table>
+    </div>
 
     <app-nav-back-next [page]="'cpg-summary-page'"></app-nav-back-next>
 </div>

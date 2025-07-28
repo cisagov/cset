@@ -34,7 +34,7 @@
             {{d.title}}
         </div>
 
-        <table *ngFor="let q of d.questions" class="cpg-table">
+        <table *ngFor="let q of parentQuestions(d)" class="cpg-table">
             <tr>
                 <th style="width: 45%;" [style.borderLeftColor]="backgroundColor(d.groupingId)"
                     [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
@@ -89,26 +89,20 @@
                         <p [innerHTML]="q.recommendedAction"></p>
                     </div>
                 </td>
-                <td>
-                    <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'Y'">
-                        <i class="far fa-lg" [class.fa-check-square]="q.answer == 'Y'"
-                            [class.fa-square]="q.answer != 'Y'"></i>
-                        {{t('answer-options.labels.imp-cpg') | uppercase}}
+                <!-- CPG 1.1 has the answer in the question itself -->
+                <td *ngIf="model?.modelId == 11">
+                    <app-cpg-answer-block [answer]="q.answer"></app-cpg-answer-block>
+                </td>
+                <!-- CPG 2.0 has child answers for OT/IT -->
+                <td *ngIf="model?.modelId == 21">
+                    <div *ngIf="model.techDomain == 'OT' || model.techDomain == 'OT+IT' || model.techDomain == null" class="my-3">
+                        <h4>{{t('reports.core.cpg.ot-abbrev')}}</h4>
+                        <app-cpg-answer-block [answer]="findChild(d, q, 'OT')?.answer"></app-cpg-answer-block>
                     </div>
-                    <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'I'">
-                        <i class="far fa-lg" [class.fa-check-square]="q.answer == 'I'"
-                            [class.fa-square]="q.answer != 'I'"></i>
-                        {{t('answer-options.labels.prog-cpg') | uppercase}}
-                    </div>
-                    <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'S'">
-                        <i class="far fa-lg" [class.fa-check-square]="q.answer == 'S'"
-                            [class.fa-square]="q.answer != 'S'"></i>
-                        {{t('answer-options.labels.scoped-cpg') | uppercase}}
-                    </div>
-                    <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'N'">
-                        <i class="far fa-lg" [class.fa-check-square]="q.answer == 'N'"
-                            [class.fa-square]="q.answer != 'N'"></i>
-                        {{t('answer-options.labels.not-cpg') | uppercase}}
+
+                    <div *ngIf="model.techDomain == 'IT' || model.techDomain == 'OT+IT' || model.techDomain == null" class="my-3">
+                        <h4>{{t('reports.core.cpg.it-abbrev')}}</h4>
+                        <app-cpg-answer-block [answer]="findChild(d, q, 'IT')?.answer"></app-cpg-answer-block>
                     </div>
                 </td>
                 <td>

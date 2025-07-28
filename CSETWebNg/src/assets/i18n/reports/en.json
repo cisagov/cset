@@ -671,7 +671,11 @@
                          "3": "Marked for Review",
                          "4": "There are no deficiencies to display."
                     }
-               }
+               },
+               "ot": "Operational Technology (OT)",
+               "ot-abbrev": "OT",
+               "it": "Information Technology (IT)",
+               "it-abbrev": "IT"
           },
           "cisa vadr": {
                "report title": "CISA Validated Architecture Design Review (VADR)",
@@ -791,13 +795,13 @@
                          "title": "CISA Cyber Resilience Essentials (CRE+) Core Module Final Report",
                          "question title": "Core Module Questions"
                     },
-                     "23": {
+                    "23": {
                          "title": "CISA Cyber Resilience Essentials (CRE+) Optional Domain Final Report",
                          "question title": "Optional Domain Questions",
                          "only selected": "Only questions from selected goals are included.",
                          "none selected": "This report shows only selected goals.  Select one or more Optional Domain goals to see questions on this report."
                     },
-                     "24": {
+                    "24": {
                          "title": "CISA Cyber Resilience Essentials (CRE+) MIL Final Report",
                          "question title": "MIL Questions",
                          "only selected": "Only questions from selected goals are included.",
@@ -810,7 +814,6 @@
                          "title": "Cyber Resilience Essentials (CRE+) (Core Module) Charts",
                          "chart footer1": "CRE+ Core Module Answer Distribution",
                          "chart footer2": "CRE+ Core Module Answer Distribution by domain"
-
                     },
                     "23": {
                          "title": "Cyber Resilience Essentials (CRE+) Optional Domains Charts",

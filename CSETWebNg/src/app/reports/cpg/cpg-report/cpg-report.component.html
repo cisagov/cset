@@ -38,25 +38,28 @@
     <div class="page-break">
         <h1>{{t('reports.core.cpg.report.performance summary')}}</h1>
 
-        <p>
-            {{t('reports.core.cpg.report.p.a')}}
-            <ng-container *ngIf="isSsgApplicable">
-                {{t('reports.core.cpg.report.ssg.includes ssg')}}
-            </ng-container>
-        </p>
+        <div *ngIf="techDomain == 'OT' || !techDomain">
+            <h2>OT</h2>
+            <p>
+                {{t('reports.core.cpg.report.p.a')}}
+                <ng-container *ngIf="isSsgApplicable">
+                    {{t('reports.core.cpg.report.ssg.includes ssg')}}
+                </ng-container>
+            </p>
 
-        <div class="chart mb-5 d-inline-block w-100">
-            <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain"
-                class="mb-5"></app-cpg-domain-summary>
-        </div>
+            <div class="chart mb-5 d-inline-block w-100">
+                <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain" [techDomain]="techDomain"
+                    class="mb-5"></app-cpg-domain-summary>
+            </div>
 
-        <div>
-            <h4>{{t('reports.core.cpg.report.chart detail')}}</h4>
+            <div>
+                <h4>{{t('reports.core.cpg.report.chart detail')}}</h4>
 
-            <p>{{t('reports.core.cpg.report.p.2')}}</p>
+                <p>{{t('reports.core.cpg.report.p.2')}}</p>
 
-            <app-cpg-domain-summary-table [data]="answerDistribByDomain"
-                [inReport]="true"></app-cpg-domain-summary-table>
+                <app-cpg-domain-summary-table [data]="answerDistribByDomain"
+                    [inReport]="true"></app-cpg-domain-summary-table>
+            </div>
         </div>
     </div>
 

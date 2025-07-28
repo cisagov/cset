@@ -26,10 +26,10 @@ import { ColorService } from '../../../../services/color.service';
 import { CpgService } from '../../../../services/cpg.service';
 
 @Component({
-    selector: 'app-cpg-practice-table',
-    templateUrl: './cpg-practice-table.component.html',
-    styleUrls: ['./cpg-practice-table.component.scss', '../../../../reports/reports.scss'],
-    standalone: false
+  selector: 'app-cpg-practice-table',
+  templateUrl: './cpg-practice-table.component.html',
+  styleUrls: ['./cpg-practice-table.component.scss', '../../../../reports/reports.scss'],
+  standalone: false
 })
 export class CpgPracticeTableComponent implements OnInit {
 
@@ -39,7 +39,7 @@ export class CpgPracticeTableComponent implements OnInit {
    * To render a practice table for a specified model
    */
   @Input()
-  ssgModelId?: number;
+  ssgModelId?: number | null;
 
 
   /**
@@ -54,7 +54,7 @@ export class CpgPracticeTableComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    let modelId = null;
+    let modelId: number | null = null;
 
     if (!!this.ssgModelId) {
       modelId = this.ssgModelId;
@@ -64,6 +64,26 @@ export class CpgPracticeTableComponent implements OnInit {
     this.cpgSvc.getStructure(modelId).subscribe((resp: any) => {
       this.model = resp;
     });
+  }
+
+  /**
+   * 
+   */
+  parentQuestions(d: any) {
+    return d.questions.filter(x => x.isParentQuestion);
+  }
+
+  /**
+   * 
+   */
+  findChild(domain: any, parent: any, techDomain: string) {
+    for (let q of domain.questions) {
+      if (q.parentQuestionId == parent.questionId && q.questionText.indexOf(techDomain) > 0) {
+        return q;
+      }
+    }
+
+    return null;
   }
 
   /**
