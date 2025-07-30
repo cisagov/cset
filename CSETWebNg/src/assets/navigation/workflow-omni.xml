@@ -64,9 +64,9 @@
 
 
         <!-- CRE optional domain questions (model 23) -->
-        <node displaytext="Domain Questions" id="maturity-questions-m23" path="assessment/{:id}/maturity-questions/m23" visible="MATURITY-ANY(22)" />
+        <node d="optional domain questions" id="maturity-questions-m23" path="assessment/{:id}/maturity-questions/m23" visible="MATURITY-ANY(22)" />
         <!-- CRE optional MIL questions (model 24) -->
-        <node displaytext="MIL Questions" id="maturity-questions-m24" path="assessment/{:id}/maturity-questions/m24" visible="MATURITY-ANY(22)" />
+        <node d="mil questions" id="maturity-questions-m24" path="assessment/{:id}/maturity-questions/m24" visible="MATURITY-ANY(22)" />
 
 
 

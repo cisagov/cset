@@ -88,13 +88,13 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/answerdistrib/cpg/domains")]
-        public IActionResult GetAnswerDistribForDomains()
+        public IActionResult GetAnswerDistribForDomains([FromQuery] int? modelId, [FromQuery] string techDomain)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             var lang = _tokenManager.GetCurrentLanguage();
 
             var cpgBiz = new CpgBusiness(_context, lang);
-            var resp = cpgBiz.GetAnswerDistribForDomains(assessmentId);
+            var resp = cpgBiz.GetAnswerDistribForDomains(assessmentId, modelId, techDomain);
 
             return Ok(resp);
         }
