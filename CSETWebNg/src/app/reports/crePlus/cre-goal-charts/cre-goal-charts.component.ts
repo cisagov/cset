@@ -21,37 +21,43 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { CreService } from '../../../services/cre.service';
 
 @Component({
-    selector: 'app-progress',
-    templateUrl: './progress.component.html',
-    standalone: false
+  selector: 'app-cre-goal-charts',
+  templateUrl: './cre-goal-charts.component.html',
+  styleUrls: ['../../reports.scss'],
+  standalone: false,
 })
-export class ProgressComponent implements OnInit, OnChanges {
-  @Input() value: number;
-  
-  radius = 15;
-  circumference = 2 * Math.PI * this.radius;
-  dashoffset: number;
+export class creGoalChartsComponent implements OnChanges {
 
-  constructor() {
-    this.progress(0);
-  }
+  @Input() domainDistrib: any;
 
-  ngOnInit() { }
+  stackedModel: any[];
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.value.currentValue !== changes.value.previousValue) {
-      this.progress(changes.value.currentValue);
+  stackedHeight: number;
+  stackedPadding: number;
+
+  constructor(
+    public creSvc: CreService
+  ) {  }
+
+  /**
+   * 
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!!this.domainDistrib) { 
+      this.stackedModel = this.domainDistrib.subgroups;
+      this.calcStackedHeight();
     }
   }
 
-  private progress(value: number) {
-    if (isNaN(value)) {
-      value = 0;
-    }
-    const progress = value / 100;
-    this.dashoffset = this.circumference * (1 - progress);
+  /**
+   * 
+   */
+  calcStackedHeight() {
+    this.stackedHeight = Math.max(200, this.domainDistrib.subgroups.length * 50 + 100);
+    this.stackedPadding = Math.max(10, 30 - this.domainDistrib.subgroups.length);
   }
 }

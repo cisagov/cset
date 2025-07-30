@@ -958,7 +958,7 @@ namespace CSETWebCore.DataLayer.Model
             };
             var _ = await _context.Database.ExecuteSqlRawAsync("EXEC @returnValue = [dbo].[GetApplicationModeDefault] @Assessment_Id = @Assessment_Id, @Application_Mode = @Application_Mode OUTPUT", sqlParameters, cancellationToken);
 
-            Application_Mode?.SetValue(parameterApplication_Mode.Value);
+            Application_Mode.SetValue(parameterApplication_Mode.Value);
             returnValue?.SetValue(parameterreturnValue.Value);
 
             return _;
@@ -1491,8 +1491,8 @@ namespace CSETWebCore.DataLayer.Model
             };
             var _ = await _context.Database.ExecuteSqlRawAsync("EXEC @returnValue = [dbo].[Parse_XML] @XMLString = @XMLString, @strtX = @strtX, @endX = @endX OUTPUT, @DataStr = @DataStr OUTPUT", sqlParameters, cancellationToken);
 
-            endX?.SetValue(parameterendX.Value);
-            DataStr?.SetValue(parameterDataStr.Value);
+            endX.SetValue(parameterendX.Value);
+            DataStr.SetValue(parameterDataStr.Value);
             returnValue?.SetValue(parameterreturnValue.Value);
 
             return _;

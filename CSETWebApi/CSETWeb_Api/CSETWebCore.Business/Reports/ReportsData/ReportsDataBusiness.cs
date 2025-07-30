@@ -116,6 +116,8 @@ namespace CSETWebCore.Business.Reports
             var query = from a in _context.ANSWER
                         join m in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_Level)
                             on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                        join p in _context.MATURITY_QUESTION_PROPS 
+                            on m.Mat_Question_Id equals p.Mat_Question_Id
                         where a.Assessment_Id == _assessmentId
                             && m.Maturity_Model_Id == targetModelId
                             && a.Question_Type == "Maturity"
@@ -139,6 +141,11 @@ namespace CSETWebCore.Business.Reports
                 }
             }
 
+
+            // Do not include unanswerable questions
+            responseList.RemoveAll(x => !x.Mat.Is_Answerable);
+
+
             foreach (var matAns in responseList)
             {
                 var o = _overlay.GetMaturityQuestion(matAns.Mat.Mat_Question_Id, lang);
@@ -159,7 +166,7 @@ namespace CSETWebCore.Business.Reports
 
             // RRA should be always be defaulted to its maximum available level (3)
             // since the user can't configure it
-            if (targetModelId == 5)
+            if (targetModelId == Constants.Constants.Model_RRA)
             {
                 selectedLevel = 3;
             }
@@ -336,7 +343,7 @@ namespace CSETWebCore.Business.Reports
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
                         MaturityLevel = myQ.Maturity_Level_Id,
-                        IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
+                        IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id) || myQ.Parent_Question_Id == null,
                         SetName = string.Empty,
                         FreeResponseAnswer = answer?.a.Free_Response_Answer
                     };
