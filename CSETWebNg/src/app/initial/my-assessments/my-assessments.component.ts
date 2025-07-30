@@ -71,6 +71,7 @@ interface UserAssessment {
   questionAlias: string;
   iseSubmission: boolean;
   submittedDate?: Date;
+  done?:boolean;
 }
 
 @Component({
@@ -102,7 +103,7 @@ export class MyAssessmentsComponent implements OnInit {
   exportAllInProgress: boolean = false;
 
   timer = ms => new Promise(res => setTimeout(res, ms));
-
+  currentFilter:'all'| 'done' | 'pending'= 'all';
 
   constructor(
     public configSvc: ConfigService,
@@ -131,7 +132,6 @@ export class MyAssessmentsComponent implements OnInit {
     this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);
     this.appTitle = this.configSvc.config.behaviors.defaultTitle;
     this.appName = 'CSET';
-
 
     if (localStorage.getItem("returnPath")) { }
     else {
@@ -202,15 +202,12 @@ export class MyAssessmentsComponent implements OnInit {
                 (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
                 (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
 
-              
+
 
             });
 
-            
-              this.sortedAssessments = assessments;
 
-             
-            
+              this.sortedAssessments = assessments;
           },
             error => {
               console.error(
@@ -225,7 +222,7 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   determineAssessmentType(item: UserAssessment) {
     let type = '';
@@ -256,7 +253,7 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   hasPath(rpath: string) {
     if (rpath != null) {
@@ -312,7 +309,7 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   sortData(sort: Sort) {
     if (!sort.active || sort.direction === "") {
@@ -341,14 +338,14 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   logout() {
     this.authSvc.logout();
   }
 
   /**
-   * 
+   *
    */
   async clickDownloadLink(assessment_id: number, jsonOnly: boolean = false) {
     const obs = this.assessSvc.getEncryptPreference()
@@ -467,8 +464,22 @@ export class MyAssessmentsComponent implements OnInit {
     this.exportAllInProgress = false;
   }
 
+
   temp() {
     this.assessSvc.moveActionItemsFrom_IseActions_To_HydroData().subscribe();
   }
-
+  get filteredAssessments():UserAssessment[]{
+    if(!this.sortedAssessments) return[]
+    switch (this.currentFilter){
+      case 'done':
+        return this.sortedAssessments.filter(a=>a.done==true)
+      case 'pending':
+        return this.sortedAssessments.filter(a=>a.done==false)
+      default:
+        return this.sortedAssessments;
+    }
+  }
+  setFilter(filter:'all' | 'done'| 'pending'):void{
+    this.currentFilter=filter;
+  }
 }
