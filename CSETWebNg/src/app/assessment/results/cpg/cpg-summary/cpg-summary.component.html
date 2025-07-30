@@ -45,16 +45,16 @@
             <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomainOt"
                 class="mb-5"></app-cpg-domain-summary>
 
-            <p>{{t('reports.core.cpg.report.p.2')}}</p>
+            <p class="mt-5">{{t('reports.core.cpg.report.p.2')}}</p>
             <app-cpg-domain-summary-table [data]="answerDistribByDomainOt"></app-cpg-domain-summary-table>
         </div>
 
-        <div class="mg-4" *ngIf="techDomain == 'IT' || techDomain == 'OT+IT' || techDomain == null">
+        <div class="mb-4" *ngIf="techDomain == 'IT' || techDomain == 'OT+IT' || techDomain == null">
             <h4>{{t('reports.core.cpg.it')}}</h4>
             <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomainIt"
                 class="mb-5"></app-cpg-domain-summary>
 
-            <p>{{t('reports.core.cpg.report.p.2')}}</p>
+            <p class="mt-5">{{t('reports.core.cpg.report.p.2')}}</p>
             <app-cpg-domain-summary-table [data]="answerDistribByDomainIt"></app-cpg-domain-summary-table>
         </div>
     </ng-content>
