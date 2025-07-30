@@ -33,7 +33,11 @@ import { CpgService } from '../../../../services/cpg.service';
 })
 export class CpgPracticeTableComponent implements OnInit {
 
-  model: any;
+  /**
+   * 
+   */
+  @Input()
+  modelId: number;
 
   /**
    * To render a practice table for a specified model
@@ -41,6 +45,7 @@ export class CpgPracticeTableComponent implements OnInit {
   @Input()
   ssgModelId?: number | null;
 
+  model: any;
 
   /**
    * 
@@ -54,14 +59,14 @@ export class CpgPracticeTableComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    let modelId: number | null = null;
+   // let modelId: number | null = null;
 
     if (!!this.ssgModelId) {
-      modelId = this.ssgModelId;
+      this.modelId = this.ssgModelId;
     }
 
     // we need an optional argument to getStructure.  Either get CPG or a specified SSG model.
-    this.cpgSvc.getStructure(modelId).subscribe((resp: any) => {
+    this.cpgSvc.getStructure(this.modelId).subscribe((resp: any) => {
       this.model = resp;
     });
   }

@@ -28,12 +28,15 @@ import { ConfigService } from '../../../services/config.service';
 import { CpgService } from '../../../services/cpg.service';
 import { SsgService } from '../../../services/ssg.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { Demographic } from '../../../models/assessment-info.model';
+import { DemographicService } from '../../../services/demographic.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
-    selector: 'app-cpg-report',
-    templateUrl: './cpg-report.component.html',
-    styleUrls: ['./cpg-report.component.scss', '../../reports.scss'],
-    standalone: false
+  selector: 'app-cpg-report',
+  templateUrl: './cpg-report.component.html',
+  styleUrls: ['./cpg-report.component.scss', '../../reports.scss'],
+  standalone: false
 })
 export class CpgReportComponent implements OnInit {
   loading = false;
@@ -44,12 +47,17 @@ export class CpgReportComponent implements OnInit {
   facilityName: string;
   selfAssessment: boolean;
 
-  techDomain: string;
+  modelId: number;
+  techDomain: string | undefined;
+
 
   answerDistribByDomain: any;
 
+  answerDistribByDomainOt: any[];
+  answerDistribByDomainIt: any[];
+
   isSsgApplicable = false;
-  ssgBonusModel: number = null;
+  ssgBonusModel: number | null = null;
 
 
   /**
@@ -58,6 +66,7 @@ export class CpgReportComponent implements OnInit {
   constructor(
     public titleSvc: Title,
     private assessSvc: AssessmentService,
+    public demoSvc: DemographicService,
     public cpgSvc: CpgService,
     public ssgSvc: SsgService,
     public configSvc: ConfigService,
@@ -67,39 +76,71 @@ export class CpgReportComponent implements OnInit {
   /**
    * 
    */
-  ngOnInit(): void {
-    this.tSvc.selectTranslate('core.cpg.report.cpg report', {}, { scope: 'reports' })
-      .subscribe(title =>
-        this.titleSvc.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
-
+  async ngOnInit(): Promise<void> {
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
       this.assessmentDate = assessmentDetail.assessmentDate;
       this.assessorName = assessmentDetail.facilitatorName;
       this.facilityName = assessmentDetail.facilityName;
       this.selfAssessment = assessmentDetail.selfAssessment;
-      this.techDomain = 'OT';
 
       this.assessSvc.assessment = assessmentDetail;
+
+      this.modelId = assessmentDetail.maturityModel.modelId;
+
+      if (this.modelId == 11) {
+        this.initCpg1();
+      }
+
+      if (this.modelId == 21) {
+        this.initCpg2();
+      }
+
       this.isSsgApplicable = this.ssgSvc.doesSsgApply();
       this.ssgBonusModel = this.ssgSvc.ssgBonusModel();
     });
 
-    this.cpgSvc.getAnswerDistrib(21, 'OT').subscribe((resp: any) => {
-      const cpgAnswerOptions = this.configSvc.getModuleBehavior('CPG').answerOptions;
+    this.tSvc.selectTranslate('core.cpg.report.cpg report', {}, { scope: 'reports' })
+      .subscribe(title =>
+        this.titleSvc.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
 
-      resp.forEach(r => {
-        r.series.forEach(element => {
-          if (element.name == 'U') {
-            element.name = this.tSvc.translate('answer-options.labels.u');
-          } else {
-            const key = cpgAnswerOptions?.find(x => x.code == element.name).buttonLabelKey;
-            element.name = this.tSvc.translate('answer-options.labels.' + key.toLowerCase());
-          }
-        });
+    var demog: Demographic = await firstValueFrom(this.demoSvc.getDemographic());
+    this.techDomain = demog.techDomain;
+  }
+
+  /**
+   * 
+   */
+  async initCpg1() {
+    this.answerDistribByDomain = await this.getDistribForTechDomain(this.modelId, '');
+  }
+
+  /**
+   * 
+   */
+  async initCpg2() {
+    this.answerDistribByDomainOt = await this.getDistribForTechDomain(this.modelId, 'OT');
+    this.answerDistribByDomainIt = await this.getDistribForTechDomain(this.modelId, 'IT');
+  }
+
+  /**
+   * 
+   */
+  async getDistribForTechDomain(modelId: number, techDomain: string): Promise<any> {
+    const resp = await firstValueFrom(this.cpgSvc.getAnswerDistrib(modelId, techDomain));
+    const cpgAnswerOptions = this.configSvc.getModuleBehavior('CPG').answerOptions;
+
+    resp.forEach(r => {
+      r.series.forEach(element => {
+        if (element.name == 'U') {
+          element.name = this.tSvc.translate('answer-options.labels.u');
+        } else {
+          const key = cpgAnswerOptions?.find(x => x.code == element.name)?.buttonLabelKey;
+          element.name = this.tSvc.translate('answer-options.labels.' + key?.toLowerCase());
+        }
       });
-
-      this.answerDistribByDomain = resp;
     });
+
+    return resp;
   }
 }

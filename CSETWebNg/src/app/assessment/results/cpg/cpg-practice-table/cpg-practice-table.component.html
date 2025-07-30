@@ -89,19 +89,19 @@
                         <p [innerHTML]="q.recommendedAction"></p>
                     </div>
                 </td>
-                <!-- CPG 1.1 has the answer in the question itself -->
+                <!-- CPG 1.1 holds the answer in the question itself -->
                 <td *ngIf="model?.modelId == 11">
                     <app-cpg-answer-block [answer]="q.answer"></app-cpg-answer-block>
                 </td>
                 <!-- CPG 2.0 has child answers for OT/IT -->
                 <td *ngIf="model?.modelId == 21">
-                    <div *ngIf="model.techDomain == 'OT' || model.techDomain == 'OT+IT' || model.techDomain == null" class="my-3">
-                        <h4>{{t('reports.core.cpg.ot-abbrev')}}</h4>
+                    <div *ngIf="model.techDomain == 'OT' || model.techDomain == 'OT+IT' || model.techDomain == null" class="mb-3">
+                        <div class="sub-header-1">{{t('reports.core.cpg.ot-abbrev')}}</div>
                         <app-cpg-answer-block [answer]="findChild(d, q, 'OT')?.answer"></app-cpg-answer-block>
                     </div>
 
-                    <div *ngIf="model.techDomain == 'IT' || model.techDomain == 'OT+IT' || model.techDomain == null" class="my-3">
-                        <h4>{{t('reports.core.cpg.it-abbrev')}}</h4>
+                    <div *ngIf="model.techDomain == 'IT' || model.techDomain == 'OT+IT' || model.techDomain == null" class="mb-3">
+                        <div class="sub-header-1">{{t('reports.core.cpg.it-abbrev')}}</div>
                         <app-cpg-answer-block [answer]="findChild(d, q, 'IT')?.answer"></app-cpg-answer-block>
                     </div>
                 </td>

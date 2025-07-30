@@ -208,7 +208,7 @@ namespace CSETWebCore.Helpers
                     var question = QuestionAnswerBuilder.BuildCpgQuestion(myQ, answer);
 
 
-                    question.IsParentQuestion = questions.Select(x => x.Parent_Question_Id).Contains(question.QuestionId);
+                    question.IsParentQuestion = questions.Select(x => x.Parent_Question_Id).Contains(question.QuestionId) || question.ParentQuestionId == null;
 
 
                     if (_includeText)
