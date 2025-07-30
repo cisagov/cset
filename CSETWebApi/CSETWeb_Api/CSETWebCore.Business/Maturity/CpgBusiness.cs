@@ -191,19 +191,17 @@ namespace CSETWebCore.Business.Maturity
 
 
             // Spin up the generic scope analyzer or a maturity model-specific one
-            var _questionScope = new QuestionScopeAnalyzer();
-            var outOfScopeQ = new List<int>();
+            var _questionScope = new QuestionScopeAnalyzer(assessmentId);
 
 
             // CPG 2.0
             if (modelId == Constants.Constants.Model_CPG2)
             {
-                _questionScope = new QuestionScopeAnalyzerCpg(assessmentId, _context);
-                outOfScopeQ = _questionScope.OutOfScopeQuestionIds(techDomain);
+                _questionScope = new QuestionScopeAnalyzer(assessmentId, _context, techDomain);
             }
 
 
-            answerList.RemoveAll(x => outOfScopeQ.Contains(x.Mat_Question_Id));
+            answerList.RemoveAll(x => _questionScope.OutOfScopeQuestionIds.Contains(x.Mat_Question_Id));
 
 
             // group the answers 

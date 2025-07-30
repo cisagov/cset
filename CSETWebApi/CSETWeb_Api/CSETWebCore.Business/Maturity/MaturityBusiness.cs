@@ -797,11 +797,16 @@ namespace CSETWebCore.Business.Maturity
 
 
             // Spin up the generic scope analyzer or a maturity model-specific one
-            _questionScope = new QuestionScopeAnalyzer();
+            _questionScope = new QuestionScopeAnalyzer(assessmentId);
+
             // CPG 2.0
             if (targetModelId == Constants.Constants.Model_CPG2)
             {
-                _questionScope = new QuestionScopeAnalyzerCpg(assessmentId, _context);
+                var _techDomain = _context.DETAILS_DEMOGRAPHICS
+                    .Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "TECH-DOMAIN")
+                    .FirstOrDefault()?.StringValue ?? null;
+
+                _questionScope = new QuestionScopeAnalyzer(assessmentId, _context, _techDomain);
             }
 
 
@@ -1030,7 +1035,7 @@ namespace CSETWebCore.Business.Maturity
 
 
                     // see if the question should be included in the response
-                    if (_questionScope.OutOfScope.Contains(qa.QuestionId))
+                    if (_questionScope.OutOfScopeQuestionIds.Contains(qa.QuestionId))
                     {
                         continue;
                     }

@@ -212,7 +212,6 @@ export class QuestionBlockVadrComponent implements OnInit {
         return;
       }
       if (!q.parentQuestionId) {
-
         totalCount++;
         if (q.answer && q.answer !== "U") {
           answeredCount++;

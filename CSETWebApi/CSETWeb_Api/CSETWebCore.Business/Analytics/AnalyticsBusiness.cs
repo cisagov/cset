@@ -141,12 +141,12 @@ namespace CSETWebCore.Business.Analytics
                 demographics.Size = assetSize.OptionText;
             }
             demographics.PointOfContact = (int?)extBiz.GetX(assessmentId, "POC");
-            demographics.CriticalService = (string?)extBiz.GetX(assessmentId, "CRIT-SERVICE");
+            demographics.CriticalService = (string)extBiz.GetX(assessmentId, "CRIT-SERVICE");
             demographics.PointOfContact = (int?)extBiz.GetX(assessmentId, "POC");
-            demographics.Agency = (string?)extBiz.GetX(assessmentId, "BUSINESS-UNIT");
+            demographics.Agency = (string)extBiz.GetX(assessmentId, "BUSINESS-UNIT");
             demographics.Facilitator = (int?)extBiz.GetX(assessmentId, "FACILITATOR");
             demographics.IsScoped = (bool?)extBiz.GetX(assessmentId, "SCOPED");
-            demographics.OrganizationName = (string?)extBiz.GetX(assessmentId, "ORG-NAME");
+            demographics.OrganizationName = (string)extBiz.GetX(assessmentId, "ORG-NAME");
             demographics.OrganizationType = (int?)extBiz.GetX(assessmentId, "ORG-TYPE");
             demographics.IsScoped = (bool?)extBiz.GetX(assessmentId, "SCOPED");
             
