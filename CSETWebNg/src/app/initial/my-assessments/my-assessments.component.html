@@ -27,7 +27,35 @@
             <div *ngIf="browserIsIE" class="alert alert-danger text-start">
                 {{ t('welcome page.internet explorer') }}
             </div>
+          <!-- ADD these 3 buttons -->
+          <div class="filter-controls mb-3">
+            <button
+              type="button"
+              class="btn me-2"
+              [class.btn-primary]="currentFilter === 'all'"
+            [class.btn-outline-primary]="currentFilter !== 'all'"
+            (click)="setFilter('all')">
+            All
+            </button>
 
+            <button
+              type="button"
+              class="btn me-2"
+            [class.btn-success]="currentFilter === 'done'"
+            [class.btn-outline-success]="currentFilter !== 'done'"
+            (click)="setFilter('done')">
+            Done
+            </button>
+
+            <button
+              type="button"
+              class="btn"
+              [class.btn-warning]="currentFilter === 'pending'"
+            [class.btn-outline-warning]="currentFilter !== 'pending'"
+            (click)="setFilter('pending')">
+            Pending
+            </button>
+          </div>
             <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
                 <h3 class="mt-0" *ngIf="sortedAssessments?.length > 0">{{ t('my assessments') }}</h3>
                 <div class="mt-3 mb-4 d-flex flex-column justify-content-between flex-00a">
@@ -86,8 +114,7 @@
                                 (click)="clickNewAssessmentButton()"
                                 matTooltip="{{ t('welcome page.new assessment tooltip') }}">
                                 <span class="me-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
-                                <span class="landing-button-text landing-button-text-sm">{{ t('welcome page.new
-                                    assessment') }}</span>
+                                <span class="landing-button-text landing-button-text-sm">{{ t('welcome page.new assessment') }}</span>
                             </button>
                             <!-- <hr class="landing my-4"> -->
                             <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
@@ -144,9 +171,8 @@
                     t('assessment name')}}
                 </th>
                 <th aria-label="{{ t('assessment type')}}" mat-sort-header="type" style="width:15%;">{{
-                    t('assessment type')}}</th>              
-                <th aria-label="{{ t('last modified')}}" mat-sort-header="date" style="width:15%;">{{ t('last
-                    modified')}}</th>
+                    t('assessment type')}}</th>
+                <th aria-label="{{ t('last modified')}}" mat-sort-header="date" style="width:15%;">{{ t('last modified')}}</th>
                 <th *ngIf="showColumn('primary-assessor')" aria-label="assessor" mat-sort-header="assessor"
                     style="width:15%;">{{t('primary assessor')}}</th>
                 <th aria-label="{{t('status')}}" style="width:15%;">{{t('status')}}</th>
@@ -154,7 +180,7 @@
                 <th aria-label="export assessment" style="width:5%;"></th>
                 <th aria-label="export JSON" style="width:5%;" *ngIf="showColumn('export json')"></th>
                 <th aria-label="Analytics" style="width:5%;" *ngIf="showColumn('analytics')"></th>
-                <tr *ngFor="let assessment of sortedAssessments;  let i = index">
+                <tr *ngFor="let assessment of filteredAssessments;  let i = index">
                     <td>
                         <button tabindex="0"
                             class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
@@ -162,7 +188,7 @@
                             {{assessment.assessmentName}}
                         </button>
                     </td>
-                   
+
 
                     <td>{{assessment.type}}</td>
                     <td>{{assessment.lastModifiedDate | localizeDate}}</td>
