@@ -39,9 +39,13 @@ import { Demographic } from '../../../../models/assessment-info.model';
 })
 export class CpgSummaryComponent implements OnInit {
 
-  modelId: number = 21;
+  modelId: number;
   techDomain: string | undefined;
 
+  // model for CPG 1.1
+  answerDistribByDomain: any[];
+
+  // models for CPG 2.0
   answerDistribByDomainOt: any[];
   answerDistribByDomainIt: any[];
 
@@ -60,16 +64,19 @@ export class CpgSummaryComponent implements OnInit {
    * 
    */
   async ngOnInit(): Promise<void> {
+    this.modelId = this.assessSvc.assessment?.maturityModel?.modelId ?? 0;
 
-    var xxx: Demographic = await firstValueFrom(this.demoSvc.getDemographic());
-    this.techDomain = xxx.techDomain;
+    var demog: Demographic = await firstValueFrom(this.demoSvc.getDemographic());
+    this.techDomain = demog.techDomain;
 
-    console.log('1', this.techDomain);
+    if (this.modelId == 11) {
+      this.answerDistribByDomain = await this.getDistribForTechDomain(this.modelId, '');
+    }
 
-    this.answerDistribByDomainOt = await this.getDistribForTechDomain(this.modelId, 'OT');
-    console.log(2, this.answerDistribByDomainOt);
-    this.answerDistribByDomainIt = await this.getDistribForTechDomain(this.modelId, 'IT');
-    console.log(3, this.answerDistribByDomainIt);
+    if (this.modelId == 21) {
+      this.answerDistribByDomainOt = await this.getDistribForTechDomain(this.modelId, 'OT');
+      this.answerDistribByDomainIt = await this.getDistribForTechDomain(this.modelId, 'IT');
+    }
 
     this.isSsgApplicable = this.ssgSvc.doesSsgApply();
   }

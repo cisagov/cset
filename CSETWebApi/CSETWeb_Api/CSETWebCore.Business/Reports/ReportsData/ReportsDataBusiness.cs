@@ -343,7 +343,7 @@ namespace CSETWebCore.Business.Reports
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
                         MaturityLevel = myQ.Maturity_Level_Id,
-                        IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
+                        IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id) || myQ.Parent_Question_Id == null,
                         SetName = string.Empty,
                         FreeResponseAnswer = answer?.a.Free_Response_Answer
                     };

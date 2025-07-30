@@ -1009,7 +1009,7 @@ namespace CSETWebCore.Business.Maturity
 
                     var qa = QuestionAnswerBuilder.BuildQuestionAnswer(myQ, answer);
                     qa.MaturityModelId = sg.Maturity_Model_Id;
-                    qa.IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id);
+                    qa.IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id) || myQ.Parent_Question_Id == null;
 
 
                     // Include CSF mappings
