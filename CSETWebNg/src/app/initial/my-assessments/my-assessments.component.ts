@@ -72,6 +72,7 @@ interface UserAssessment {
   iseSubmission: boolean;
   submittedDate?: Date;
   done?:boolean;
+  favorite?:boolean;
 }
 
 @Component({
@@ -103,7 +104,7 @@ export class MyAssessmentsComponent implements OnInit {
   exportAllInProgress: boolean = false;
 
   timer = ms => new Promise(res => setTimeout(res, ms));
-  currentFilter:'all'| 'done' | 'pending'= 'all';
+  currentFilter:'all'| 'done' | 'pending' |'favorite'= 'all';
 
   constructor(
     public configSvc: ConfigService,
@@ -208,6 +209,7 @@ export class MyAssessmentsComponent implements OnInit {
 
 
               this.sortedAssessments = assessments;
+              console.log(assessments)
           },
             error => {
               console.error(
@@ -475,11 +477,19 @@ export class MyAssessmentsComponent implements OnInit {
         return this.sortedAssessments.filter(a=>a.done==true)
       case 'pending':
         return this.sortedAssessments.filter(a=>a.done==false)
+      case 'favorite':
+        return this.sortedAssessments.filter(a=>a.favorite==true)
       default:
         return this.sortedAssessments;
     }
   }
-  setFilter(filter:'all' | 'done'| 'pending'):void{
+  setFilter(filter:'all' | 'done'| 'pending'|'favorite'):void{
     this.currentFilter=filter;
+  }
+  getCompletionPercentage(assessment:UserAssessment):number{
+    if(!assessment.totalAvailableQuestionsCount ||assessment.totalAvailableQuestionsCount===0){
+      return 0;
+    }
+    return Math.round(assessment.completedQuestionsCount/assessment.totalAvailableQuestionsCount)*100
   }
 }
