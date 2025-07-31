@@ -28,7 +28,12 @@
                 {{ t('welcome page.internet explorer') }}
             </div>
           <!-- ADD these 3 buttons -->
+          <div data-theme="light" class="no-prose">
+            <div class="radial-progress not-prose" style="--value:70;" aria-valuenow="70" role="progressbar">70%</div>
+          </div>
+
           <div class="filter-controls mb-3">
+
             <button
               type="button"
               class="btn me-2"
@@ -40,13 +45,13 @@
 
             <button
               type="button"
-              class="btn me-2"
+              class="btn btn-sm"
             [class.btn-success]="currentFilter === 'done'"
             [class.btn-outline-success]="currentFilter !== 'done'"
             (click)="setFilter('done')">
             Done
             </button>
-
+            <div class="badge badge-secondary">test badge</div>
             <button
               type="button"
               class="btn"
@@ -55,6 +60,16 @@
             (click)="setFilter('pending')">
             Pending
             </button>
+            <button
+              type="button"
+              class="btn me-2"
+              [class.btn-success]="currentFilter === 'favorite'"
+              [class.btn-outline-success]="currentFilter !== 'favorite'"
+              (click)="setFilter('favorite')">
+              Favorite
+            </button>
+
+
           </div>
             <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
                 <h3 class="mt-0" *ngIf="sortedAssessments?.length > 0">{{ t('my assessments') }}</h3>
@@ -194,6 +209,19 @@
                     <td>{{assessment.lastModifiedDate | localizeDate}}</td>
                     <td *ngIf="showColumn('primary-assessor')">{{assessment.firstName}} {{assessment.lastName}}</td>
                     <td>
+                      <div class="flex items-center gap-3">
+                        <!-- Heart Icon for Favorites using Material Icon -->
+                        <mat-icon *ngIf="assessment.favorite" class="text-error" style="font-size: 20px;">
+                          favorite
+                        </mat-icon>
+
+                        <!-- DaisyUI Radial Progress -->
+                        <div class="radial-progress text-primary text-xs"
+                             [style]="'--value:' + getCompletionPercentage(assessment) + '; --size:3rem; --thickness: 3px'"
+                             [attr.role]="'progressbar'">
+                          {{getCompletionPercentage(assessment)}}%
+                        </div>
+                      </div>
                         <div
                             *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">
                             <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
