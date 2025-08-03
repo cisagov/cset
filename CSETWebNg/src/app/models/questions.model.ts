@@ -155,7 +155,7 @@ export interface Question {
     answer: string;
 
     /**
-     * Stores a justification for the answer choice.  
+     * Stores a justification for the answer choice.
      * In Standards, it is asked for Alt answer choices.
      * In maturity models it may vary.
     */
@@ -191,10 +191,12 @@ export interface Question {
     recommendedAction: string;
     services: string;
     implementationGuides: string;
+    outcome?:string;
 
     // parent questions aren't answered directly and have subparts that are answered.
     isParentQuestion: boolean;
     parentQuestionId: number;
+    isAnswerable: boolean;
 
     followups: [];
 

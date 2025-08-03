@@ -65,7 +65,12 @@
 
             <div class="w-100 mt-3 mb-1 d-flex flex-row" *ngIf="!layoutSvc.hp">
                 <div class="number-and-text">
-                    <div [class.display-hidden]="!!q.parentQuestionId"
+
+                    <!-- indent for child questions -->
+                    <div *ngIf="q.parentQuestionId" class="ms-4 ps-5"></div>
+
+                    <!-- parent-level questions -->
+                    <div *ngIf="!q.parentQuestionId"
                         style="font-weight: bold; margin-right: 2rem; white-space: nowrap;">
                         {{ q.displayNumber }}
                         <div>
@@ -74,6 +79,7 @@
                             </span>
                         </div>
                     </div>
+
                     <div style="width: 100%;">
                         <div *ngIf="!!q.shortName" class="mb-1 fst-italic font-weight-bold"
                             style="color: #666; font-size: .8rem; white-space: normal;">
@@ -96,7 +102,7 @@
                 </div>
 
 
-                <div *ngIf="!q.isParentQuestion">
+                <div *ngIf="q.isAnswerable">
                     <!-- build the list of answer choice buttons -->
                     <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
                         <label *ngFor="let option of q.answerOptions ?? modelAnswerOptions"
@@ -120,8 +126,7 @@
                     </div>
 
                     <div *ngIf="q.showJustificationField">
-                        <textarea appAutoSize class="form-control" 
-                            style="width: 100%; min-height: 80px;"
+                        <textarea appAutoSize class="form-control" style="width: 100%; min-height: 80px;"
                             [placeholder]="t(`answer-options.placeholders.${q.answer} justification`)"
                             [(ngModel)]="q.altAnswerText" (change)="storeAnswer(q, null)"></textarea>
                     </div>
@@ -161,7 +166,7 @@
                 </div>
 
 
-                <div *ngIf="!q.isParentQuestion">
+                <div *ngIf="q.isAnswerable">
                     <!-- build the list of answer options -->
                     <div class="btn-group btn-group-toggle answer-group ms-0" data-toggle="buttons">
                         <label *ngFor="let option of answerOptions" class="btn form-check-label"
@@ -184,8 +189,7 @@
                     </div>
 
                     <div *ngIf="q.showJustificationField">
-                        <textarea appAutoSize class="form-control"
-                            style="width: 100%; min-height: 80px;"
+                        <textarea appAutoSize class="form-control" style="width: 100%; min-height: 80px;"
                             [placeholder]="t(`answer-options.placeholders.${q.answer} justification`)"
                             [(ngModel)]="q.altAnswerText" (change)="storeAnswer(q, null)"></textarea>
                     </div>

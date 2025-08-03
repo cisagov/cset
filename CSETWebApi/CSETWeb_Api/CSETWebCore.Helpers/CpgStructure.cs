@@ -110,6 +110,8 @@ namespace CSETWebCore.Helpers
             Top.ModelName = mm.Model_Name;
             Top.ModelId = (int)this.ModelId;
 
+            Top.TechDomain = _context.DETAILS_DEMOGRAPHICS.Where(x => x.DataItemName == "TECH-DOMAIN").FirstOrDefault()?.StringValue ?? null;
+
 
 
             // Get all maturity questions for the model regardless of level.
@@ -204,6 +206,9 @@ namespace CSETWebCore.Helpers
                 {
                     FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
                     var question = QuestionAnswerBuilder.BuildCpgQuestion(myQ, answer);
+
+
+                    question.IsParentQuestion = questions.Select(x => x.Parent_Question_Id).Contains(question.QuestionId) || question.ParentQuestionId == null;
 
 
                     if (_includeText)

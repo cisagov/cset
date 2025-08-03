@@ -64,6 +64,12 @@ export class ModuleBehavior {
      mustSelectGroupings?: boolean = false;
 
      /**
+      * Indicates a model whose groupings are cumulative.  
+      * This was created for "CRE+ MIL" (model 24).  
+      */
+     groupingsAreMil?: boolean = false;
+
+     /**
       * 
       */
      independentSuppGuidance?: boolean;

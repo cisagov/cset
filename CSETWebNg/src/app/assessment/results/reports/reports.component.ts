@@ -30,7 +30,6 @@ import { saveAs } from 'file-saver';
 import { ReportService } from '../../../services/report.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ExcelExportComponent } from '../../../dialogs/excel-export/excel-export.component';
-import { DemographicExtendedService } from '../../../services/demographic-extended.service';
 import { MatSnackBar, MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { FileUploadClientService } from '../../../services/file-client.service';
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -82,7 +81,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     public configSvc: ConfigService,
-    public demoSvc: DemographicExtendedService,
     private cdr: ChangeDetectorRef,
     private reportSvc: ReportService,
     private fileExportSvc: FileExportService,
@@ -133,7 +131,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       this.router.navigate([value], { relativeTo: this.route.parent });
     });
 
-    if (this.configSvc.installationMode === 'IOD' && this.assessSvc.assessment.assessorMode) {
+    if (this.configSvc.installationMode === 'IOD' && this.assessSvc.assessment?.assessorMode) {
       this.reportSvc.validateCisaAssessorFields().subscribe((result: CisaWorkflowFieldValidationResponse) => {
         this.cisaAssessorWorkflowFieldValidation = result;
         if (!this.cisaAssessorWorkflowFieldValidation?.isValid) {
@@ -141,11 +139,11 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         }
       });
     }
-    
+
     this.assessSvc.getLastModified().subscribe((data: any) => {
       this.lastModifiedTimestamp = data.lastModifiedDate;
     });
-    
+
     this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.userIsCisaAssessor = resp);
 
     this.updateSectionId();

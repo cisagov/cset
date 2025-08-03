@@ -34,6 +34,8 @@ export class CpgDomainSummaryComponent implements OnInit {
   @Input()
   answerDistribByDomain = [];
 
+
+
   xAxisTicks = [0, 25, 50, 75, 100];
   answerDistribColorScheme = { domain: ['#28A745', '#007bff', '#FFC107', '#DC3545', '#c8c8c8'] };
 

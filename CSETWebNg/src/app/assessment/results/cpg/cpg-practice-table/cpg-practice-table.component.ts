@@ -26,21 +26,26 @@ import { ColorService } from '../../../../services/color.service';
 import { CpgService } from '../../../../services/cpg.service';
 
 @Component({
-    selector: 'app-cpg-practice-table',
-    templateUrl: './cpg-practice-table.component.html',
-    styleUrls: ['./cpg-practice-table.component.scss', '../../../../reports/reports.scss'],
-    standalone: false
+  selector: 'app-cpg-practice-table',
+  templateUrl: './cpg-practice-table.component.html',
+  styleUrls: ['./cpg-practice-table.component.scss', '../../../../reports/reports.scss'],
+  standalone: false
 })
 export class CpgPracticeTableComponent implements OnInit {
 
-  model: any;
+  /**
+   * 
+   */
+  @Input()
+  modelId: number;
 
   /**
    * To render a practice table for a specified model
    */
   @Input()
-  ssgModelId?: number;
+  ssgModelId?: number | null;
 
+  model: any;
 
   /**
    * 
@@ -54,16 +59,36 @@ export class CpgPracticeTableComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    let modelId = null;
+   // let modelId: number | null = null;
 
     if (!!this.ssgModelId) {
-      modelId = this.ssgModelId;
+      this.modelId = this.ssgModelId;
     }
 
     // we need an optional argument to getStructure.  Either get CPG or a specified SSG model.
-    this.cpgSvc.getStructure(modelId).subscribe((resp: any) => {
+    this.cpgSvc.getStructure(this.modelId).subscribe((resp: any) => {
       this.model = resp;
     });
+  }
+
+  /**
+   * 
+   */
+  parentQuestions(d: any) {
+    return d.questions.filter(x => x.isParentQuestion);
+  }
+
+  /**
+   * 
+   */
+  findChild(domain: any, parent: any, techDomain: string) {
+    for (let q of domain.questions) {
+      if (q.parentQuestionId == parent.questionId && q.questionText.indexOf(techDomain) > 0) {
+        return q;
+      }
+    }
+
+    return null;
   }
 
   /**

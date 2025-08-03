@@ -69,12 +69,6 @@ public partial class ASSESSMENT_CONTACTS
     [InverseProperty("ASSESSMENT_CONTACTS")]
     public virtual ASSESSMENT_ROLES AssessmentRole { get; set; }
 
-    [InverseProperty("FacilitatorNavigation")]
-    public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICSFacilitatorNavigation { get; set; } = new List<DEMOGRAPHICS>();
-
-    [InverseProperty("PointOfContactNavigation")]
-    public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICSPointOfContactNavigation { get; set; } = new List<DEMOGRAPHICS>();
-
     [InverseProperty("Assessment_Contact")]
     public virtual ICollection<FINDING_CONTACT> FINDING_CONTACT { get; set; } = new List<FINDING_CONTACT>();
 

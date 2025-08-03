@@ -1289,7 +1289,10 @@ ul.mat-tree-node {
 }
 
 .side-nav-container .current-node>button {
-  border: 1px solid #ffffff;
+  border: none;
+  border-radius: .3rem !important;
+  background-color: #ffffff;
+  color: $primary-600;
 }
 
 .side-nav-container .btn-home {
@@ -4100,6 +4103,6 @@ h6.dropdown-header {
 
 .mat-mdc-snack-bar-container.notify-snackbar {
   --mat-snack-bar-button-color: #000 !important;
-  --mdc-snackbar-container-color: #ffc107 !important;
-  --mdc-snackbar-supporting-text-color: #000 !important;
+  --mat-snackbar-container-color: #ffc107 !important;
+  --mat-snackbar-supporting-text-color: #000 !important;
 }

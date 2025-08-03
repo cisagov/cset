@@ -36,7 +36,7 @@ build-backend:
 
 # target: launch-backend - Launch the backend server
 launch-backend:
-	cd CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore && dotnet run
+	cd CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore && dotnet watch
 
 # target: build-frontend - Launch the frontend server
 build-frontend:
@@ -78,3 +78,7 @@ stop-db:
 # target: remove-db - Remove the database, container and its data
 remove-db:
 	docker compose down -v sqlserver
+
+# target: sql - Run SQL commands in the database
+sql:
+	docker exec -it cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123"

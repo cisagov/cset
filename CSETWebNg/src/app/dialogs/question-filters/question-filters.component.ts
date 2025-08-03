@@ -141,7 +141,8 @@ export class QuestionFiltersComponent implements OnInit {
     return this.assessSvc.usesMaturityModel(model);
   }
   public get maturityLevels(): string[] {
-    if (!this.filterSvc?.allowableFilters) {
+    const maturityModel=this.assessSvc.assessment?.maturityModel;
+    if (!this.filterSvc?.allowableFilters || !maturityModel?.levels || maturityModel.levels.length<=1 ) {
       return [];
     }
     const levels = this.filterSvc.allowableFilters
@@ -152,4 +153,10 @@ export class QuestionFiltersComponent implements OnInit {
       .sort((a, b) => Number(a) - Number(b)); // Sort numerically
     return levels;
   }
+  public getMaturityLevelLabel(levelNumber: string | number): string
+  {
+    const maturityModel =this.assessSvc.assessment?.maturityModel;
+    if (!maturityModel?.levels) { return `Level ${levelNumber}`; }
+    const level =maturityModel.levels.find(l => l.level.toString() === levelNumber.toString());
+    return level?.label || `Level ${levelNumber}`; }
 }

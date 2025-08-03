@@ -380,6 +380,7 @@ namespace CSETWebCore.Api.Controllers
                     {
                         Question_Title = q.DisplayNumber,
                         Question_Text = q.QuestionText,
+                        IsAnswerable = q.IsAnswerable,
                         Answer = new ANSWER() { Answer_Text = q.Answer },
                         ReferenceText = refText,
                         Parent_Question_Id = q.ParentQuestionId
@@ -835,7 +836,7 @@ namespace CSETWebCore.Api.Controllers
             var cisServiceDemographicBusiness = new CisDemographicBusiness(_context, _assessmentUtil);
 
             Demographics demographics = demoBusiness.GetDemographics(assessmentId);
-            DemographicExt iodDemograhics = iodDemoBusiness.GetDemographics(assessmentId);
+            DemographicExt iodDemograhics = iodDemoBusiness.GetExtDemographics(assessmentId);
             CisServiceDemographics cisServiceDemographics = cisServiceDemographicBusiness.GetServiceDemographics(assessmentId);
             CisServiceComposition cisServiceComposition = cisServiceDemographicBusiness.GetServiceComposition(assessmentId);
 

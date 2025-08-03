@@ -242,6 +242,7 @@
       "moduleName": "CPG2",
       "modelId": "21",
       "displayNameKey": "modules.cpg2.display-name",
+      "questionNodeKey": "modules.cpg2.question node title",
       "hideTopLevelGroupingName": true,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
@@ -387,12 +388,13 @@
     {
       "moduleName": "CRE+ OPT",
       "modelId": "23",
-      "displayNameKey": "modules.cre+.display-name",
-      "questionNodeKey": "modules.cre+.question node title",
+      "displayNameKey": "modules.cre+ opt.display-name",
+      "questionNodeKey": "modules.cre+ opt.question node title",
       "hideTopLevelGroupingName": false,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "mustSelectGroupings": true,
+      "groupingsAreMil": false,
       "questionIcons": {
         "showDetails": false,
         "showReviewed": false
@@ -430,12 +432,13 @@
     {
       "moduleName": "CRE+ MIL",
       "modelId": "24",
-      "displayNameKey": "modules.cre+.display-name",
-      "questionNodeKey": "modules.cre+.question node title",
+      "displayNameKey": "modules.cre+ mil.display-name",
+      "questionNodeKey": "modules.cre+ mil.question node title",
       "hideTopLevelGroupingName": false,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "mustSelectGroupings": true,
+      "groupingsAreMil": true,
       "questionIcons": {
         "showDetails": false,
         "showReviewed": false
@@ -558,6 +561,11 @@
           "buttonCss": "btn-alt"
         }
       ]
+    },
+    {
+      "comment": "This is the VADR developed for TSA",
+      "moduleName": "VADR",
+      "modelId": 7
     },
     {
       "moduleName": "CISA VADR",

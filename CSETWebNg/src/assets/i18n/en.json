@@ -36,6 +36,13 @@
   "select contact": "Select Contact",
   "select facilitator": "Select Facilitator",
   "self assessment": "Self Assessment",
+  "tech domain": {
+    "label": "Technology Domain for Assessment",
+    "select": "Select Technology Domain",
+    "ot": "Operational Technology (OT)",
+    "it": "Information Technology (IT)",
+    "ot+it": "Both OT and IT"
+  },
   "crit svc poc": "Critical Service Point of Contact",
   "asset gross value": "What is the gross value of the asset you are trying to protect?",
   "select gross value": "Select Value",
@@ -275,7 +282,9 @@
       "chemical": "Chemical Sector Goals",
       "it": "Information Technology Goals",
       "other": "Other Sector Goals"
-    }
+    },
+    "optional domain questions": "Optional Domain Questions",
+    "mil questions": "MIL Questions"
   },
   "buttons": {
     "ok": "OK",
@@ -965,14 +974,20 @@
     "cpg2": {
       "display-name": "Cyber Performance Goals (CPG) 2.0",
       "model short title": "CPG 2.0",
-      "question node title": "Security Practices"
+      "question node title": "Goals"
     },
     "cre+": {
       "display-name": "Cyber Resilience Essentials (CRE+)",
       "model short title": "CRE+",
       "question node title": "Core Questions",
-      "selector 23 title": "Select domains and subdomains for additional questions",
-      "selector 24 title": "Select domains and MILs for additional questions"
+      "selector 23 title": "Select domains and goals to include additional questions in the assessment",
+      "selector 24 title": "Select domains and MILs to include additional questions in the assessment"
+    },
+    "cre+ opt": {
+      "display-name": "CRE+ Optional Domains"
+    },
+    "cre+ mil": {
+      "display-name": "CRE+ MIL"
     },
     "cmmc2": {
       "model long title": "Cybersecurity Maturity Model Certification (CMMC) 2.0 DRAFT",

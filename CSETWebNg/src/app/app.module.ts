@@ -101,7 +101,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
-import { FileUploadModule } from 'ng2-file-upload';
+import { FileUploadModule } from './modules/ng2-file-upload';
 import { AppRoutingModule } from './routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { AssessmentComponent } from './assessment/assessment.component';
@@ -270,8 +270,10 @@ import { CategoryBlockComponent } from './assessment/questions/category-block/ca
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
 import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
 import { CreQuestionSelectorComponent } from './assessment/questions/maturity-questions/cre-question-selector/cre-question-selector.component';
-import { CreSubdomainChartsComponent } from './reports/crePlus/cre-subdomain-charts/cre-subdomain-charts.component';
+import { creGoalChartsComponent } from './reports/crePlus/cre-goal-charts/cre-goal-charts.component';
 import { CreModelChartsComponent } from './reports/crePlus/cre-model-charts/cre-model-charts.component';
+import { CreMilCharts2Component } from './reports/crePlus/cre-mil-charts-2/cre-mil-charts-2.component';
+import { CreHeatmapsComponent } from './reports/crePlus/cre-heatmaps/cre-heatmaps.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
 import { SitesummaryCMMCComponent } from './reports/cmmc/sitesummary-cmmc/sitesummary-cmmc.component';
@@ -388,7 +390,6 @@ import { LogoForReportsComponent } from './reports/logo-for-reports/logo-for-rep
 import { QuestionBlockVadrComponent } from './assessment/questions/question-block-vadr/question-block-vadr.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { CsiComponent } from './assessment/prepare/csi/csi.component';
-import { CsiOrganizationDemographicsComponent } from './assessment/prepare/csi/csi-organization-demographics/csi-organization-demographics.component';
 import { CsiServiceDemographicsComponent } from './assessment/prepare/csi/csi-service-demographics/csi-service-demographics.component';
 import { CsiServiceCompositionComponent } from './assessment/prepare/csi/csi-service-composition/csi-service-composition.component';
 import { AssessmentComparisonAnalyticsComponent } from './initial/assessmenet-comparison-analytics/assessment-comparison-analytics.component';
@@ -470,8 +471,6 @@ import { IssuesComponent } from './assessment/questions/issues/issues.component'
 import { SearchPageComponent } from './initial/search-page/search-page.component';
 import { LogoTsaComponent } from './layout/logos/logo-tsa/logo-tsa.component';
 import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
-import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
-import { DemographicExtendedService } from './services/demographic-extended.service';
 import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
 import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
@@ -491,6 +490,7 @@ import { CpgDomainSummaryComponent } from './assessment/results/cpg/cpg-domain-s
 import { CpgCostImpactComplexityComponent } from './assessment/results/cpg/cpg-cost-impact-complexity/cpg-cost-impact-complexity.component';
 import { CpgSummaryComponent } from './assessment/results/cpg/cpg-summary/cpg-summary.component';
 import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cpg-practices.component';
+import { CpgAnswerBlockComponent } from './assessment/results/cpg/cpg-answer-block/cpg-answer-block.component';
 import { ReferencesTableComponent } from './assessment/questions/references-table/references-table.component';
 import { ReferencesDisplayComponent } from './assessment/questions/references-display/references-display.component';
 import { DiagramVulnerabilitiesDialogComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
@@ -864,7 +864,6 @@ registerSwiper();
         QuestionBlockVadrComponent,
         VadrDeficiencyComponent,
         CsiComponent,
-        CsiOrganizationDemographicsComponent,
         CsiServiceDemographicsComponent,
         CsiServiceCompositionComponent,
         AssessmentComparisonAnalyticsComponent,
@@ -944,8 +943,10 @@ registerSwiper();
         CreFinalReportComponent,
         CreFinalReportGridComponent,
         CreAssessmentOverview,
-        CreSubdomainChartsComponent,
+        creGoalChartsComponent,
         CreModelChartsComponent,
+        CreMilCharts2Component,
+        CreHeatmapsComponent,
         Cmmc2CommentsMarkedComponent,
         Cmmc2DeficiencyComponent,
         Cmmc2ScorecardReportComponent,
@@ -954,7 +955,6 @@ registerSwiper();
         SearchPageComponent,
         LogoTsaComponent,
         OptionBlockComponent,
-        DemographicsExtendedComponent,
         SectorHelpComponent,
         AnalyticsCompareComponent,
         MvraGapsComponent,
@@ -974,6 +974,7 @@ registerSwiper();
         CpgCostImpactComplexityComponent,
         CpgSummaryComponent,
         CpgPracticesComponent,
+        CpgAnswerBlockComponent,
         OnlineDisclaimerComponent,
         ReferencesTableComponent,
         ReferencesDisplayComponent,
@@ -1182,7 +1183,6 @@ registerSwiper();
         AssessGuard,
         AggregationGuard,
         DemographicService,
-        DemographicExtendedService,
         AssessmentService,
         EmailService,
         QuestionsService,

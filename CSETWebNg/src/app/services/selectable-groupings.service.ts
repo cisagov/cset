@@ -78,6 +78,32 @@ export class SelectableGroupingsService {
   }
 
   /**
+   * Finds the target's parent, then iterate through the parent's children, 
+   * setting their selected property to true if they are below or at the 
+   * target level, and false above the target.
+   */
+  findGroupingAndLesser(modelId: number, id: number): QuestionGrouping[] {
+    let resp: Array<QuestionGrouping> = [];
+
+    const modelDomains = this.models.get(modelId);
+    const target = this.findDeep(modelDomains, item => item.groupingId == id);
+
+    const parent = this.findParent(modelDomains, target);
+
+    let selected = true;
+
+    for (let c of parent) {
+      resp.push(c);
+      c.selected = selected;
+      if (c == target) {
+        selected = false;
+      }
+    }
+
+    return resp;
+  }
+
+  /**
    * 
    */
   findDeep(arr, predicate): QuestionGrouping | null {
@@ -89,7 +115,7 @@ export class SelectableGroupingsService {
         result = item;
         break;
       }
-      
+
       if (item.subGroupings && item.subGroupings.length) {
         result = this.findDeep(item.subGroupings, predicate);
         if (result) break;
@@ -100,16 +126,41 @@ export class SelectableGroupingsService {
 
   /**
    * 
+   * @param obj 
+   * @param target 
+   * @returns 
+   */
+  findParent(obj, target) {
+    for (let key in obj) {
+      if (obj[key] === target) {
+        return obj;
+      }
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+        let parent = this.findParent(obj[key], target);
+        if (parent) {
+          return parent;
+        }
+      }
+    }
+    return null;
+  }
+
+
+  /**
+   * 
    */
   emitSelectionChanged() {
     this.selectionChangedSubject.next();
   }
 
   /**
-   * 
+   * Persists a group of groupings with the same selected status.
    */
-  save(groupingId: number[], selected: boolean) {
-    const payload = { groupingId: groupingId, selected: selected };
-    return this.http.post(this.apiUrl + "groupselection/", payload);
+  save(groupings: any) {
+    const payload = [] as any[];
+    for (let g of groupings) {
+      payload.push({ groupingId: g.groupingId, selected: g.selected});
+    }
+    return this.http.post(this.apiUrl + "groupselection/", { groups: payload });
   }
 }
