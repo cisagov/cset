@@ -78,7 +78,3 @@ stop-db:
 # target: remove-db - Remove the database, container and its data
 remove-db:
 	docker compose down -v sqlserver
-
-# target: sql - Run SQL commands in the database
-sql:
-	docker exec -it cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123"
