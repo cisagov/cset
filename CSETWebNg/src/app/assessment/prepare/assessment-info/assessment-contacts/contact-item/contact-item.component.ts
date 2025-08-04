@@ -189,40 +189,38 @@ export class ContactItemComponent implements OnInit {
   }
 
   saveContact() {
-    this.assessSvc
-      .getAssessmentContacts()
-      .then((data: AssessmentContactsResponse) => {
-        if (data.currentUserRole == 2) {
-          if (this.contact.isNew) {
-            if (this.existsDuplicateEmail(this.contact.primaryEmail)) {
-              return;
-            }
+    if (this.contact.isNew) {
+      if (this.existsDuplicateEmail(this.contact.primaryEmail)) {
+        return;
+      }
 
-            this.create.emit(this.contact);
+      this.create.emit(this.contact);
 
-            this.contact.isNew = false;
-            this.editMode = true;
-          } else {
-            this.finishEdit();
-          }
-          return true;
-        } else {
-          this.scrollToTop();
-          this.abandonEdit();
-          let rolesChangeDialog = this.dialog.open(RolesChangedComponent)
-          rolesChangeDialog.afterClosed().subscribe(() => {
-          })
-          this.ngOnInit();
-          this.rolesChangedEvent.emit();
-        }
-      })
+      this.contact.isNew = false;
+      this.editMode = true;
+    } else {
+      this.finishEdit();
+    }
   }
 
   removeContact() {
     this.remove.emit(true);
   }
 
+  canEditContact(): boolean {
+    return this.assessSvc.userRoleId === 2;
+  }
+
   editContact() {
+    if (!this.canEditContact()) {
+      this.dialog.open(AlertComponent, {
+        data: { 
+          messageText: "Only assessment facilitators can edit contact information. Please contact your assessment facilitator to make changes." 
+        }
+      });
+      return;
+    }
+    
     this.contact.startEdit();
     this.startEditEvent.emit();
     this.editMode = false;
@@ -273,10 +271,22 @@ export class ContactItemComponent implements OnInit {
   }
 
   showControls() {
+    // Assessment creators cannot be deleted and should not show delete controls
+    if (this.getCreator()) {
+      return false;
+    }
+    
     if (this.assessSvc.userRoleId === 2 && !this.contact.isFirst) {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Check if this contact is the assessment creator
+   */
+  getCreator(): boolean {
+    return this.creatorId == this.contact.userId;
   }
 
   getRoleName(roleId: number) {

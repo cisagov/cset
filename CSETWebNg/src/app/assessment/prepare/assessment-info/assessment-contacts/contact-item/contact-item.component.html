@@ -37,7 +37,7 @@
         <div><em>{{getRoleName(contact.assessmentRoleId)}}</em></div>
         <!-- Creator message display -->
         <div class="fw-bold" *ngIf="!showControls()">
-          <div *ngIf="creatorId == contact.userId; else Editor">{{t('contact.creator')}}</div>
+          <div *ngIf="getCreator(); else Editor">{{t('contact.creator')}}</div>
           <ng-template #Editor>{{t('contact.editor')}}</ng-template>
         </div>
         <app-contact-tooltip *ngIf="showTooltip" [firstName]="contact.firstName" [lastName]="contact.lastName"
@@ -58,7 +58,8 @@
       <!-- Contact Controls -->
       <span class="d-flex align-items-center flex-00a">
         <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
-          (click)="editContact()" [disabled]="!enableMyControls">
+          (click)="editContact()" [disabled]="!enableMyControls || !canEditContact()"
+          [title]="!canEditContact() ? 'Only facilitators can edit contact information' : ''">
           <span class="cset-icons-pencil fs-base-2"></span>
           <span class="d-none d-md-flex fs-smaller">{{ t('buttons.change') }}</span>
         </button>
@@ -88,7 +89,7 @@
         </span>
         <!-- Creator message display -->
         <div class="fs-small fw-bold" *ngIf="!showControls()">
-          <div *ngIf="creatorId == contact.userId; else EditorMobile">{{t('contact.creator')}}</div>
+          <div *ngIf="getCreator(); else EditorMobile">{{t('contact.creator')}}</div>
           <ng-template #EditorMobile>{{t('contact.editor')}}</ng-template>
         </div>
         <span class="fs-small fw-400" *ngIf="contact.title != null && contact.title !== ''">{{contact.title}}</span>
@@ -111,7 +112,8 @@
 
       <div class="d-flex align-items-center flex-00a">
         <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
-          (click)="editContact()" [disabled]="!enableMyControls">
+          (click)="editContact()" [disabled]="!enableMyControls || !canEditContact()"
+          [title]="!canEditContact() ? 'Only facilitators can edit contact information' : ''">
           <span class="cset-icons-pencil fs-base-2"></span>
           <span class="d-none d-md-flex fs-smaller">{{ t('buttons.change') }}</span>
         </button>

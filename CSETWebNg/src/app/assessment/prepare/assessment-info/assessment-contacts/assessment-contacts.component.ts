@@ -227,7 +227,11 @@ export class AssessmentContactsComponent implements OnInit {
                 // Update the userId in case changing email linked to new user in backend
                 this.contacts.find(x => x.userId === contact.userId).userId = data.userId;
               }
-              this.contactItems.forEach(x => x.enableMyControls = true);
+              this.contactItems.forEach(x => {
+                x.enableMyControls = true;
+                // Refresh creator status after contact update
+                x.assessmentCreator();
+              });
               this.changeOccurred();
             });
           } catch (error) {
