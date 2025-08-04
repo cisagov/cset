@@ -27,50 +27,46 @@
             <div *ngIf="browserIsIE" class="alert alert-danger text-start">
                 {{ t('welcome page.internet explorer') }}
             </div>
-          <!-- ADD these 3 buttons -->
-          <div data-theme="light" class="no-prose">
-            <div class="radial-progress not-prose" style="--value:70;" aria-valuenow="70" role="progressbar">70%</div>
-          </div>
 
-          <div class="filter-controls mb-3">
+          <!--          <div class="filter-controls mb-3">-->
 
-            <button
-              type="button"
-              class="btn me-2"
-              [class.btn-primary]="currentFilter === 'all'"
-            [class.btn-outline-primary]="currentFilter !== 'all'"
-            (click)="setFilter('all')">
-            All
-            </button>
+          <!--            <button-->
+          <!--              type="button"-->
+          <!--              class="btn me-2"-->
+          <!--              [class.btn-primary]="currentFilter === 'all'"-->
+          <!--            [class.btn-outline-primary]="currentFilter !== 'all'"-->
+          <!--            (click)="setFilter('all')">-->
+          <!--            All-->
+          <!--            </button>-->
 
-            <button
-              type="button"
-              class="btn btn-sm"
-            [class.btn-success]="currentFilter === 'done'"
-            [class.btn-outline-success]="currentFilter !== 'done'"
-            (click)="setFilter('done')">
-            Done
-            </button>
-            <div class="badge badge-secondary">test badge</div>
-            <button
-              type="button"
-              class="btn"
-              [class.btn-warning]="currentFilter === 'pending'"
-            [class.btn-outline-warning]="currentFilter !== 'pending'"
-            (click)="setFilter('pending')">
-            Pending
-            </button>
-            <button
-              type="button"
-              class="btn me-2"
-              [class.btn-success]="currentFilter === 'favorite'"
-              [class.btn-outline-success]="currentFilter !== 'favorite'"
-              (click)="setFilter('favorite')">
-              Favorite
-            </button>
+          <!--            <button-->
+          <!--              type="button"-->
+          <!--              class="btn btn-sm"-->
+          <!--            [class.btn-success]="currentFilter === 'done'"-->
+          <!--            [class.btn-outline-success]="currentFilter !== 'done'"-->
+          <!--            (click)="setFilter('done')">-->
+          <!--            Done-->
+          <!--            </button>-->
+          <!--            <button-->
+          <!--              type="button"-->
+          <!--              class="btn"-->
+          <!--              [class.btn-warning]="currentFilter === 'pending'"-->
+          <!--            [class.btn-outline-warning]="currentFilter !== 'pending'"-->
+          <!--            (click)="setFilter('pending')">-->
+          <!--            Pending-->
+          <!--            </button>-->
+          <!--            <button-->
+          <!--              type="button"-->
+          <!--              class="btn me-2"-->
+          <!--              [class.btn-success]="currentFilter === 'favorite'"-->
+          <!--              [class.btn-outline-success]="currentFilter !== 'favorite'"-->
+          <!--              (click)="setFilter('favorite')">-->
+          <!--              Favorite-->
+          <!--            </button>-->
 
 
-          </div>
+          <!--          </div>
+-->
             <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
                 <h3 class="mt-0" *ngIf="sortedAssessments?.length > 0">{{ t('my assessments') }}</h3>
                 <div class="mt-3 mb-4 d-flex flex-column justify-content-between flex-00a">
@@ -116,6 +112,45 @@
                     </div>
                 </div>
             </ng-container>
+          <div class="filter-controls mb-3">
+            <div class="join bg-gray-200 p-1 rounded-lg">
+              <button
+                type="button"
+                class="join-item btn btn-sm"
+                [class.btn-active]="currentFilter === 'all'"
+              [class.bg-white]="currentFilter === 'all'"
+              [class.shadow-sm]="currentFilter === 'all'"
+              [class.text-base-content]="currentFilter === 'all'"
+              [class.btn-ghost]="currentFilter !== 'all'"
+              (click)="setFilter('all')">
+              View all
+              </button>
+
+              <button
+                type="button"
+                class="join-item btn btn-sm"
+                [class.btn-active]="currentFilter === 'done'"
+              [class.bg-white]="currentFilter === 'done'"
+              [class.shadow-sm]="currentFilter === 'done'"
+              [class.text-base-content]="currentFilter === 'done'"
+              [class.btn-ghost]="currentFilter !== 'done'"
+              (click)="setFilter('done')">
+              Done
+              </button>
+
+              <button
+                type="button"
+                class="join-item btn btn-sm"
+                [class.btn-active]="currentFilter === 'favorite'"
+              [class.bg-white]="currentFilter === 'favorite'"
+              [class.shadow-sm]="currentFilter === 'favorite'"
+              [class.text-base-content]="currentFilter === 'favorite'"
+              [class.btn-ghost]="currentFilter !== 'favorite'"
+              (click)="setFilter('favorite')">
+              Favorites
+              </button>
+            </div>
+          </div>
             <ng-template #noAssessmentsElseBlock>
                 <h2 class="mt-0" *ngIf="sortedAssessments?.length == 0">
                     <div>{{ t('welcome page.welcome to', { appTitle:appTitle }) }}</div>
@@ -215,12 +250,7 @@
                           favorite
                         </mat-icon>
 
-                        <!-- DaisyUI Radial Progress -->
-                        <div class="radial-progress text-primary text-xs"
-                             [style]="'--value:' + getCompletionPercentage(assessment) + '; --size:3rem; --thickness: 3px'"
-                             [attr.role]="'progressbar'">
-                          {{getCompletionPercentage(assessment)}}%
-                        </div>
+                        <progress class="progress text-primary w-56" [value]="getCompletionPercentage(assessment)" max="100"></progress>
                       </div>
                         <div
                             *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">

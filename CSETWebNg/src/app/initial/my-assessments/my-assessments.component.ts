@@ -490,6 +490,6 @@ export class MyAssessmentsComponent implements OnInit {
     if(!assessment.totalAvailableQuestionsCount ||assessment.totalAvailableQuestionsCount===0){
       return 0;
     }
-    return Math.round(assessment.completedQuestionsCount/assessment.totalAvailableQuestionsCount)*100
+    return Math.round((assessment.completedQuestionsCount/assessment.totalAvailableQuestionsCount)*100)
   }
 }
