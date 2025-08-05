@@ -21,13 +21,13 @@
   SOFTWARE.
 -------------------------->
 <div *transloco="let t">
-  <div class="advisory-dialog d-flex flex-column justify-content-center flex-11a">
-    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+  <div class="advisory-dialog flex flex-col justify-center flex-11a">
+    <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
       <span class="me-3 fs-base-6 cset-icons-advisory"></span>
       <span>{{t('advisory.title')}}</span>
     </div>
 
-    <mat-dialog-content class="p-3 pe-0 mt-2 oy-auto d-flex flex-column flex-11a">
+    <mat-dialog-content class="p-3 pe-0 mt-2 oy-auto flex flex-col flex-11a">
 
       <div class="px-3">
         <h4>{{appLongName}}</h4>
@@ -49,7 +49,7 @@
       </div>
     </mat-dialog-content>
 
-    <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-start flex-00a">
+    <mat-dialog-actions class="p-3 pt-0 mb-0 flex justify-start flex-00a">
       <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
     </mat-dialog-actions>
   </div>

@@ -23,14 +23,14 @@
 
 <ng-container *transloco="let t">
     <h4>{{t('demographics')}}</h4>
-    <div class="assess-component d-flex flex-column justify-content-start flex-11a mb-4">
+    <div class="assess-component flex flex-col justify-start flex-11a mb-4">
         <div class="button-container">
             <table>
                 <th>
                     <button class="icon-link-button-text-dark" tabindex="0" id="demographic-import"
-                        class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                        class="icon-link-button-dark btn bgc-trans flex justify-center items-center flex-00a"
                         matTooltip="{{t('buttons.import demographics')}}" (click)="uploader.click()">
-                        <span class="me-2 fs-base cset-icons-import"></span>
+                        <span class="mr-2 fs-base cset-icons-import"></span>
                         <input #uploader hidden type="file" tabindex="0" class="hidden-input" id="importFile" multiple
                             accept=".json" (change)="importClick($event)">
                         <span class="icon-link-button-text-dark">{{t('buttons.import')}}</span>
@@ -38,9 +38,9 @@
                 </th>
                 <th>
                     <button tabindex="0" id="demographic-export"
-                        class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                        class="icon-link-button-dark btn bgc-trans flex justify-center items-center flex-00a"
                         (click)="exportClick()" matTooltip="{{t('buttons.export demographics')}}">
-                        <span class="cset-icons-export-up fs-base-2 me-2"></span>
+                        <span class="cset-icons-export-up fs-base-2 mr-2"></span>
                         <span class="icon-link-button-text-dark">{{t('buttons.export')}}</span>
                     </button>
                 </th>
@@ -164,8 +164,8 @@
                 </select>
             </div>
         </div>
-        <div class="d-flex flex-column justify-content-between flex-00a" *ngIf="showEdmFields()">
-            <div class="standard-item d-flex justify-content-between flex-11a">
+        <div class="flex flex-col justify-between flex-00a" *ngIf="showEdmFields()">
+            <div class="standard-item flex justify-between flex-11a">
                 <div>
                     <input type="checkbox" id="edmIsScoped" name="edmIsScoped" tabindex="0" class="checkbox-custom mt-1"
                         (change)="update($event)" [(ngModel)]="demographicData.isScoped"

@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
+<div class="white-panel m-0 flex flex-col flex-11a oy-auto h-0 w-full">
   <div class="max-1200">
     <app-builder-breadcrumbs></app-builder-breadcrumbs>
 
@@ -55,8 +55,8 @@
       </div>
 
       <h5>Categorization</h5>
-      <div class="d-flex flex-row">
-        <div class="form-group me-2">
+      <div class="flex flex-row">
+        <div class="form-group mr-2">
           <label>Question Group Heading
             <select class="form-select" id="category" name="category" [(ngModel)]="selectedGHId">
               <option value="0">--Select Heading--</option>
@@ -117,8 +117,8 @@
         in the Module.
       </p>
 
-      <div class="d-flex flex-row mb-3">
-        <div class="d-flex flex-column w-100">
+      <div class="flex flex-row mb-3">
+        <div class="flex flex-col w-full">
           <input id="txtSearchQuestionText" class="form-control" type="text" name="searchTerms" id="searchTerms"
             [(ngModel)]="searchTerms" (keydown.enter)="search()">
           <div *ngIf="searchError && searchTerms.trim().length === 0" class="alert alert-danger">Enter search keywords
@@ -126,9 +126,9 @@
         </div>
         <div>
           <button type="submit"
-            class="btn btn-primary search-btn ms-2 d-flex justify-content-start align-items-center flex-00a"
+            class="btn btn-primary search-btn ml-2 flex justify-start items-center flex-00a"
             matTooltip="Search questions" (click)="search()">
-            <mat-icon class="me-1">search</mat-icon>Search
+            <mat-icon class="mr-1">search</mat-icon>Search
           </button>
         </div>
       </div>
@@ -154,8 +154,8 @@
         <hr *ngIf="searchHits.length > 0" class="hr-sal" />
 
         <div *ngFor="let q of searchHits; let i = index">
-          <div class="d-flex flex-row justify-content-between">
-            <div class="ms-2 me-3 w-100">
+          <div class="flex flex-row justify-between">
+            <div class="ml-2 me-3 w-full">
               <div [innerHTML]="q.questionText" class="mt-2 mb-4">
               </div>
               <div>
@@ -169,7 +169,7 @@
                 Security Assurance Level
               </h6>
               <p>Select all applicable levels.</p>
-              <div class="w-100">
+              <div class="w-full">
                 <div class="btn-group btn-group-toggle">
                   <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'L')">
                     <input type="checkbox" id="SAL-L-{{q.questionID}}" name="SAL-L-{{q.questionID}}"
@@ -203,7 +203,7 @@
       </div>
     </div>
 
-    <div class="d-flex flex-row mt-3 mb-3">
+    <div class="flex flex-row mt-3 mb-3">
       <button *ngIf="!!(setBuilderSvc.activeRequirement)" class="btn btn-link me-3"
         (click)="setBuilderSvc.navRequirementDetail(setBuilderSvc.activeRequirement.requirementID)">
         &laquo; Back to Requirement

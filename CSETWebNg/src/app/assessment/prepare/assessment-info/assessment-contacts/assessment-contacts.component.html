@@ -29,8 +29,8 @@
         (create)="saveNewContact(contact)" (remove)="removeContact(contact, i)" (rolesChangedEvent)="refreshContacts()">
       </app-contact-item>
       <span class="mt-2 btn-group" *ngIf="showControls()">
-        <button class="btn btn-group d-flex align-items-center flex-00a" (click)="newContact()" [disabled]="adding==1">
-          <span class="cset-icons-plus fs-base me-2"></span>
+        <button class="btn btn-group flex items-center flex-00a" (click)="newContact()" [disabled]="adding==1">
+          <span class="cset-icons-plus fs-base mr-2"></span>
           <span>{{ t('add contact') }}</span>
         </button>
         <button *ngIf="false" class="btn btn-group cset-icons-envelope" (click)="openEmailDialog()">{{ t('email

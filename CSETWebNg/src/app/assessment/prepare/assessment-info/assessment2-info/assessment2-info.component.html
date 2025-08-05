@@ -20,13 +20,13 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" class="white-panel d-flex justify-content-start flex-column flex-11a">
+<div *transloco="let t" class="white-panel flex justify-start flex-col flex-11a">
   <h3 class="mb-3">{{ t('titles.assessment information') }}</h3>
 
-  <app-assessment-contacts *ngIf="showContacts()" class="mb-5 d-flex justify-content-end flex-00a"
+  <app-assessment-contacts *ngIf="showContacts()" class="mb-5 flex justify-end flex-00a"
     (triggerChange)="contactsUpdated()"></app-assessment-contacts>
 
-  <app-assessment-demographics #demographics class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics>
+  <app-assessment-demographics #demographics class="mb-5 flex justify-end flex-00a"></app-assessment-demographics>
 
   <app-nav-back-next [page]="'info2'"></app-nav-back-next>
 

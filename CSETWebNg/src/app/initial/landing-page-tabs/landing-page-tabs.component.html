@@ -20,23 +20,23 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div *transloco="let t" class="assess-component d-flex flex-column justify-content-start flex-11a w-100">
+<div *transloco="let t" class="assess-component flex flex-col justify-start flex-11a w-full">
 
   <!-- Tabs -->
-  <div #tabs class="mt-0 ps-0 d-flex flex-column justify-content-start flex-00a">
-    <div class="d-flex justify-content-start flex-11a">
-      <ul class="nav nav-tabs d-flex flex-11a questions-tab-border">
-        <li style="margin-left:45px;" class="d-flex align-items-center flex-00a"
+  <div #tabs class="mt-0 ps-0 flex flex-col justify-start flex-00a">
+    <div class="flex justify-start flex-11a">
+      <ul class="nav nav-tabs flex flex-11a questions-tab-border">
+        <li style="margin-left:45px;" class="flex items-center flex-00a"
           [class.active]="checkActive('newAssessment')" (click)="setTab('newAssessment')">
-          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab" tabindex="0">
-            <span class="tab-icon me-2" id="prepareIcon"><i class="fa-solid fa-file-circle-plus"></i></span>
+          <button class="btn bgc-trans flex items-center flex-00a h-full" data-toggle="tab" tabindex="0">
+            <span class="tab-icon mr-2" id="prepareIcon"><i class="fa-solid fa-file-circle-plus"></i></span>
             <span class="nav-tab-text">{{t('new assessment')}}</span>
           </button>
         </li>
-        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('myAssessments')"
+        <li class="flex items-center flex-00a" [class.active]="checkActive('myAssessments')"
           (click)="setTab('myAssessments')">
-          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab" tabindex="0">
-            <span class="tab-icon me-2" id="questionsIcon"><i class="fa-solid fa-clipboard-check"></i></span>
+          <button class="btn bgc-trans flex items-center flex-00a h-full" data-toggle="tab" tabindex="0">
+            <span class="tab-icon mr-2" id="questionsIcon"><i class="fa-solid fa-clipboard-check"></i></span>
             <span class="nav-tab-text">{{ t('my assessments') }}</span>
           </button>
         </li>
@@ -51,7 +51,7 @@
             (keyup.enter)="changeToSearch(searchGallery.value)" aria-label="search gallery"
             aria-describedby="search-gallery">
           <div class="input-group-append">
-            <button class="btn btn-outline-primary" type="button" id="search-gallery"
+            <button class="btn btn-outline btn-primary" type="button" id="search-gallery"
               (click)="changeToSearch(searchGallery.value)"><i class="fa-solid fa-magnifying-glass"></i></button>
           </div>
         </div>

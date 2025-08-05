@@ -22,7 +22,7 @@
 -------------------------->
 <div class="white-panel">
   <div id="top"></div>
-  <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
+  <div class="flex flex-row flex-wrap justify-between items-start flex-11a mb-4">
 
     <div *ngIf="hydroSvc.isHydroLevel(modelName); else defaultHeader" class="pt-3 pb-2 bgc-gray-50"
       style="margin-left: -1rem; padding-left: 1rem;">
@@ -39,24 +39,24 @@
       <h3>{{modelName}} Questions</h3>
     </ng-template>
 
-    <div *ngIf="!section" class="w-100">
+    <div *ngIf="!section" class="w-full">
       <div class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
       </div>
     </div>
 
     <!-- This extra blank div hides the text that shows up while scrolling in the small gap between the tabs bar and the chart. -->
-    <div *ngIf="false || (!!section && maturitySvc.showChartOnNestedQPage())" class="w-100 sticky-sal"></div>
+    <div *ngIf="false || (!!section && maturitySvc.showChartOnNestedQPage())" class="w-full sticky-sal"></div>
 
     <div *ngIf="false || (!!section && maturitySvc.showChartOnNestedQPage())"
-      class="w-100 text-center mb-3 mt-3 sticky-sal" style="border: 1px solid #ccc; border-radius: .3rem; top: 5px;">
+      class="w-full text-center mb-3 mt-3 sticky-sal" style="border: 1px solid #ccc; border-radius: .3rem; top: 5px;">
       <h6><strong>{{title}}</strong></h6>
       <canvas id="canvasScore" class="m-3" style="width: 75%; max-height: 100px;">{{chartScore}}</canvas>
     </div>
 
 
 
-    <div *ngIf="!!section" class="w-100">
+    <div *ngIf="!!section" class="w-full">
       <app-grouping-block-nested [grouping]="section"></app-grouping-block-nested>
     </div>
 

@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex justify-content-start flex-column flex-11a">
+<div class="white-panel flex justify-start flex-col flex-11a">
   <div class="max-1200">
     <h3 class="wrap-text">Merge Assessments</h3>
     <div>
@@ -46,7 +46,7 @@
           </div>
 
           <div class="question-row" *ngFor="let q of cat.questions">
-            <div style="width: 100%;" class="d-flex flex-row pe-2">
+            <div style="width: 100%;" class="flex flex-row pe-2">
               <div [style.word-break]="applyWordBreak(q)" [innerHTML]="assessmentSvc.formatLinebreaks(q.questionText)"
                 (click)="questionTextClicked(q, $event)">
               </div>
@@ -59,7 +59,7 @@
               </button>
             </div>
 
-            <div class="d-flex flex-row btn-group answer-group">
+            <div class="flex flex-row btn-group answer-group">
               <div *ngFor="let ans of q.sourceAnswers" class="merge-source-answer {{ans.answerText}}">
                 {{ ans.answerText }}
               </div>

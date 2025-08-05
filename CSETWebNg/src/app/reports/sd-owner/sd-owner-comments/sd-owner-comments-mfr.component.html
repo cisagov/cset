@@ -47,7 +47,7 @@
 
     <ng-template #mainContent>
         <div class="ms-3 me-3 form">
-            <div class="d-flex flex-row justify-content-between align-items-end">
+            <div class="flex flex-row justify-between items-end">
                 <h1 class="page-title">
                     {{t('reports.core.rra.cmfr.marked for review', {alias: aliasTranslated})}}
                 </h1>
@@ -68,7 +68,7 @@
                                 {{questionsSvc.answerDisplayLabel('', s.answer.answer_Text)}}
                             </div>
                         </td>
-                        <td class="deficiencies-list-flag"><img class="MarkedFlag ms-2" *ngIf="s.answer.mark_For_Review"
+                        <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
                                 src="assets/images/icons/MarkedFlag.png">
                         </td>
                     </tr>
@@ -107,7 +107,7 @@
 
         <br>
         <div class="ms-3 me-3 form">
-            <div class="d-flex flex-row justify-content-between align-items-end">
+            <div class="flex flex-row justify-between items-end">
                 <h1 class="page-title">
                     {{t('reports.core.rra.cmfr.with comments', {alias: aliasTranslated})}}
                 </h1>
@@ -128,7 +128,7 @@
                                 {{questionsSvc.answerDisplayLabel('', s.answer.answer_Text)}}
                             </div>
                         </td>
-                        <td class="deficiencies-list-flag"><img class="MarkedFlag ms-2" *ngIf="s.answer.mark_For_Review"
+                        <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
                                 src="assets/images/icons/MarkedFlag.png">
                         </td>
                     </tr>

@@ -20,13 +20,13 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="d-flex flex-column justify-content-center flex-11a">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+<div class="flex flex-col justify-center flex-11a">
+  <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
     <span class="me-3 fs-base-6 cset-icons-envelope"></span>
     <span>Invitation Email</span>
   </div>
 
-  <form class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
+  <form class="p-3 pe-0 oy-auto flex flex-col flex-11a">
     <mat-dialog-content>
       <div class="mt-3">
         <label>From:</label> {{from.firstName}} {{from.lastName}} &lt;{{from.primaryEmail}}&gt;
@@ -44,10 +44,10 @@
         </div>
       </div>
 
-      <div class="mt-3 d-flex flex-column flex-11a">
+      <div class="mt-3 flex flex-col flex-11a">
         <label for="subj">Subject:</label>
         <input type="text" maxlength="250" name="subj" id="subj" placeholder="Subject" [(ngModel)]="subject"
-          class="ps-2 d-flex flex-11a" style="min-width: 50vw">
+          class="ps-2 flex flex-11a" style="min-width: 50vw">
       </div>
 
       <div class="mt-3">
@@ -59,7 +59,7 @@
       </div>
     </mat-dialog-content>
   </form>
-  <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
+  <mat-dialog-actions class="p-3 mb-0 flex justify-between flex-00a">
     <button type="button" class="m-0 btn btn-primary" (click)="send()"
       [disabled]="recipientList.length === 0">Send</button>
     <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>

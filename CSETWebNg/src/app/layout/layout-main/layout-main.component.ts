@@ -42,7 +42,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     styleUrls: ['./layout-main.component.scss'],
     encapsulation: ViewEncapsulation.None,
     // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
+    host: { class: 'flex flex-col flex-1 w-full h-full' },
     standalone: false
 })
 export class LayoutMainComponent implements OnInit {

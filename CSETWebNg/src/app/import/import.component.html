@@ -20,21 +20,21 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="bgc-gray50 d-flex flex-11a w-100">
-    <div class="p-4 pb-0 pe-0 d-flex flex-column flex-11a w-100">
+<div class="bgc-gray50 flex flex-11a w-full">
+    <div class="p-4 pb-0 pe-0 flex flex-col flex-11a w-full">
         <h3 class="mb-4">Import New Module (Question/Requirements Set)</h3>
-        <div class="pe-4 oy-auto d-flex flex-11a w-100 h-0">
-            <div class="p-0 me-4 col-md-4 d-flex flex-column flex-11a w-100" style="overflow:auto;">
+        <div class="pe-4 oy-auto flex flex-11a w-full h-0">
+            <div class="p-0 me-4 col-md-4 flex flex-col flex-11a w-full" style="overflow:auto;">
                 <h4>Export</h4>
                 <ul class="list-group">
                     <ng-container *ngFor="let set of sets">
                         <li class="list-group-item bgc-white">
                             <div style="display: flex; flex-flow:column">
                                 <h6>{{set.name}}</h6>
-                                <div class="d-flex mt-2">
+                                <div class="flex mt-2">
                                     <span class="flex-11a mb-1">
                                         <button (click)="clickXMLLink(set.setName)"
-                                            class="btn btn-secondary me-1">XML</button>
+                                            class="btn btn-secondary mr-1">XML</button>
                                         <button (click)="clickJSONLink(set.setName)"
                                             class="btn btn-secondary">JSON</button>
                                     </span>
@@ -49,8 +49,8 @@
                     </ng-container>
                 </ul>
             </div>
-            <div class="p-0 col-md-8 d-flex flex-column flex-11a w-100">
-                <form #importNgForm='ngForm' class="d-flex flex-column flex-11a" (submit)="submitForm()">
+            <div class="p-0 col-md-8 flex flex-col flex-11a w-full">
+                <form #importNgForm='ngForm' class="flex flex-col flex-11a" (submit)="submitForm()">
                     <style>
                         .my-drop-zone {
                             border: dashed 3px lightgray;
@@ -142,15 +142,15 @@
                     </style>
 
 
-                    <div class="d-flex flex-11a flex-column w-100" ng2FileDrop
+                    <div class="flex flex-11a flex-col w-full" ng2FileDrop
                         style="position:relative;min-height:100px;position:relative; "
                         (fileOver)="fileOverModuleBase($event)" (onFileDrop)="onModuleFileChanged($event)"
                         [uploader]="uploader" #codeContainer [ngClass]="{'fullscreen':getFullScreen()}">
                         <div style="position:absolute;top:0;bottom:0;left:0;right:0;display:none;z-index:10000;background:rgba(0,0,0,0.25); align-items:center;justify-content:center"
-                            [ngClass]="{'d-flex': hasModuleBaseDropZoneOver }">
+                            [ngClass]="{'flex': hasModuleBaseDropZoneOver }">
                             <h4>Drop code file here</h4>
                         </div>
-                        <h4 class="d-flex" style="align-items:center">Module Code
+                        <h4 class="flex" style="align-items:center">Module Code
                             <div class="btn-group ms-3 me-3 flex-11a" role="group" aria-label="...">
                                 <button (click)="switchToJson()" type="button" class="btn btn-secondary"
                                     [ngClass]="{'active': this.lang=='json'}">JSON</button>
@@ -172,8 +172,8 @@
                         <div class="mb-2">Please specify the code for your new module below. You can either begin
                             typing, drop a file onto the editor, load an existing module, or copy and paste text. To get
                             suggestions, type CTRL-Spacebar. Use alt-shift-f to format the code.</div>
-                        <div [ngClass]="{'has-error': showError()}" class="d-flex flex-11a p-0 mb-2">
-                            <ngs-code-editor #code class="d-flex flex-11a form-control" [codeModel]="codeModel"
+                        <div [ngClass]="{'has-error': showError()}" class="flex flex-11a p-0 mb-2">
+                            <ngs-code-editor #code class="flex flex-11a form-control" [codeModel]="codeModel"
                                 [options]="configOptions" (valueChanged)="onModelChange($event)"
                                 style="height:auto!important;"></ngs-code-editor>
                         </div>
@@ -224,18 +224,18 @@
 
                     <div style="margin: .5em 0">
                         <button [attr.disabled]="state=='Processing'||!importNgForm.valid?true:null" type="submit"
-                            class="btn btn-success btn-s me-2" *ngIf="state!='Succeeded'"
+                            class="btn btn-success btn-s mr-2" *ngIf="state!='Succeeded'"
                             [ngClass]="{'p-0': state=='Processing', 'pe-2':state=='Processing'}"
                             style="display:inline-flex;align-items:center">
                             <span class="spinner-container" style="display:inline-block" *ngIf="state=='Processing'">
                                 <div class="spinner" style="max-width: 20px; max-height: 20px;"></div>
                             </span>
-                            <span class="cset-icons-import me-1" *ngIf="state!='Processing'"></span>
+                            <span class="cset-icons-import mr-1" *ngIf="state!='Processing'"></span>
                             <span *ngIf="state=='Failed'">Retry Import</span>
                             <span *ngIf="state=='Processing'">Processing</span>
                             <span *ngIf="state=='Ready'">Import</span>
                         </button>
-                        <div class="d-flex align-items-center" *ngIf="state!='Processing' && state!='Ready'">
+                        <div class="flex items-center" *ngIf="state!='Processing' && state!='Ready'">
                             <button class="btn btn-primary" (click)="clearForm()">Import another module
                             </button>
                             <div style="margin-bottom: 0" class="alert alert-warning ms-3">

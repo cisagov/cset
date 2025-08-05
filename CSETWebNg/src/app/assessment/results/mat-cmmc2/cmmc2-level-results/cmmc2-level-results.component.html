@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel h-0 d-flex flex-column flex-11a" *transloco="let t">
+<div class="white-panel h-0 flex flex-col flex-11a" *transloco="let t">
     <h3>{{t('titles.performance by level')}}</h3>
 
     <div *ngIf="loading">
@@ -33,10 +33,10 @@
         <p>
             {{t('cmmc.scoring.perf by level desc')}}
         </p>
-        <div class="d-flex mb-4" [class.flex-row]="!layoutSvc.hp" [class.flex-column]="layoutSvc.hp"
+        <div class="flex mb-4" [class.flex-row]="!layoutSvc.hp" [class.flex-col]="layoutSvc.hp"
             *ngFor="let l of response">
             <!-- pie charts for compliance at each level -->
-            <div class="d-flex" [class.me-5]="!layoutSvc.hp" [class.mb-3]="layoutSvc.hp"
+            <div class="flex" [class.me-5]="!layoutSvc.hp" [class.mb-3]="layoutSvc.hp"
                 style="align-items: center; justify-content: center;">
                 <div style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold"
                     [class]="'cmmc2-level-' + l.levelValue" [class.p-2]="layoutSvc.hp">

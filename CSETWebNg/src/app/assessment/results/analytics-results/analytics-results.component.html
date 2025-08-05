@@ -1,4 +1,4 @@
-<div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a" *transloco="let t">
+<div class="white-panel oy-auto ox-auto flex flex-col flex-11a" *transloco="let t">
   <h3 class="mb-3">{{t('analytics.title')}}</h3>
   <p>{{t('analytics.description 1')}}</p>
   <p>{{t('analytics.description 2')}}</p>
@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-sm ps-0">
           <mat-card class="p-3" style="background-color: transparent; box-shadow: none">
-            <mat-card-header class="d-flex justify-content-center">
+            <mat-card-header class="flex justify-center">
               <h4>{{ dataType === 'mySector' ? sectorTitle : 'All Sectors' }}</h4>
             </mat-card-header>
             <div class="p-4">

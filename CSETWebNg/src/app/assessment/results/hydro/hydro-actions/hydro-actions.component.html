@@ -26,8 +26,8 @@
     </div>
 </div>
 
-<div *ngIf="loadingCounter == 2" class="d-flex flex-column justify-content-start flex-11a">
-    <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+<div *ngIf="loadingCounter == 2" class="flex flex-col justify-start flex-11a">
+    <div class="white-panel flex flex-col justify-start flex-11a">
         <div class="mb-3">
             <h3>Action Items</h3>
             <p>
@@ -42,7 +42,7 @@
                     <h4>{{progressLevels[progressLevel[0].actionData.progress_Id - 1].progress_Text}}</h4>
                 </div>
                 <div *ngFor="let item of progressLevel"
-                    class="mb-4 d-flex flex-column justify-content-between flex-00a">
+                    class="mb-4 flex flex-col justify-between flex-00a">
                     <app-hydro-action-item [item]="item" [progressArray]="progressLevels"></app-hydro-action-item>
                 </div>
                 <br>

@@ -20,24 +20,24 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="edit-user-dialog d-flex flex-column justify-content-center flex-11a"
+<div class="edit-user-dialog flex flex-col justify-center flex-11a"
   style="max-width: 50vw; min-width: 50vw" *transloco="let t">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+  <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
     <i class="far fa-check-square me-3 fs-base-6"></i>
     <span>Select Assessments</span>
   </div>
 
-  <div class="p-3 pe-0 oy-auto d-flex flex-column flex-11a bgc-primary-200">
+  <div class="p-3 pe-0 oy-auto flex flex-col flex-11a bgc-primary-200">
     <app-trend-compare-compatibility #refreshComponent> </app-trend-compare-compatibility>
   </div>
 
-  <mat-dialog-content class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
+  <mat-dialog-content class="p-3 pe-0 oy-auto flex flex-col flex-11a">
     <form name="form" #userForm="ngForm">
       <div class="mt-0 me-3 ml=3 mb-3">
         <table>
           <tr *ngFor="let a of assessments">
             <td class="align-top">
-              <input type="checkbox" [id]="'assess-' + a.assessmentId" class="checkbox-custom me-2"
+              <input type="checkbox" [id]="'assess-' + a.assessmentId" class="checkbox-custom mr-2"
                 (change)="toggleSelection($event, a)" [checked]="a.selected" [disabled]="a.disabled">
               <label [for]="'assess-' + a.assessmentId" class="checkbox-custom-label mb-0 pe-5"
                 [class.o45]="a.disabled">
@@ -49,7 +49,7 @@
           </tr>
         </table>
 
-        <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">
+        <mat-dialog-actions class="p-3 pt-0 mb-0 flex justify-between flex-11a">
           <button class="m-0 btn btn-primary" (click)="close()">{{t('buttons.ok')}}</button>
         </mat-dialog-actions>
       </div>

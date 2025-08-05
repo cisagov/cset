@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100" *transloco="let t">
+<div class="white-panel m-0 flex flex-col flex-11a oy-auto h-0 w-full" *transloco="let t">
 
   <div class="max-1200">
     <app-builder-breadcrumbs></app-builder-breadcrumbs>
@@ -68,7 +68,7 @@
         [(ngModel)]="doc.comments" (change)="update($event)"></textarea>
     </div>
 
-    <div class="d-flex flex-row mt-3 mb-3">
+    <div class="flex flex-row mt-3 mb-3">
       <button class="btn btn-link me-3" (click)="navStandardDocuments()">
         &laquo; Back to Reference Document List
       </button>

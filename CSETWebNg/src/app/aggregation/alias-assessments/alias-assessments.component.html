@@ -20,10 +20,10 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="wp-0 d-flex flex-column justify-content-start flex-11a trend-table-width" *transloco="let t">
-  <div class="bgc-trans mt-4 ms-4 pe-4 d-flex flex-column flex-00a max-1200">
+<div class="wp-0 flex flex-col justify-start flex-11a trend-table-width" *transloco="let t">
+  <div class="bgc-trans mt-4 ms-4 pe-4 flex flex-col flex-00a max-1200">
     <h3>{{ this.aggregationSvc?.modeDisplay(false) }} Details</h3>
-    <div class="w-100">
+    <div class="w-full">
       <div class="form-group">
         <label>{{ this.aggregationSvc?.modeDisplay(false) }} Name*</label>
         <input type="text" class="form-control" maxlength="100"
@@ -46,11 +46,11 @@
     </div>
 
     <div class="mt-3 mb-3">
-      <button class="btn btn-primary" (click)="openSelectionDialog()"><i class="far fa-check-square me-2"></i>Select
+      <button class="btn btn-primary" (click)="openSelectionDialog()"><i class="far fa-check-square mr-2"></i>Select
         Assessments</button>
     </div>
   </div>
-  <div class="px-4 mb-4 d-flex flex-column flex-11a oy-auto h-0 max-1200">
+  <div class="px-4 mb-4 flex flex-col flex-11a oy-auto h-0 max-1200">
     <div class="trend-table-width" style="overflow-y: auto;">
       <table *ngIf="aliasData?.assessments.length > 0" class="assessment-summary td-p-1">
         <tr>
@@ -88,7 +88,7 @@
       There are no assessments selected for this {{ this.aggregationSvc?.modeDisplay(false) }}
     </div>
 
-    <div class="mt-3 d-flex justify-content-between flex-00a">
+    <div class="mt-3 flex justify-between flex-00a">
       <button class="btn btn-primary" (click)="navBackIfValid()">{{t('buttons.back')}}</button>
       <button class="btn btn-primary" [disabled]="validateNext()"
         (click)="navAggSvc.navNext('alias-assessments')">{{t('buttons.next')}}</button>

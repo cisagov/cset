@@ -21,74 +21,67 @@
   SOFTWARE. 
 -------------------------->
 
-<div *transloco="let t" class="edit-user-dialog d-flex flex-column justify-content-center flex-11a">
-    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-        <span class="fa-solid fa-gear fs-base me-2 align-middle"></span>
-        <div class="pl-2">
-            <span>
-                {{t('menu.user.settings')}}
-            </span>
-        </div>
-
+<div *transloco="let t" class="modal-box max-w-lg">
+    <div class="flex items-center gap-3 mb-6">
+        <span class="fa-solid fa-gear text-2xl"></span>
+        <h3 class="font-bold text-lg">
+            {{t('menu.user.settings')}}
+        </h3>
     </div>
 
-    <mat-dialog-content class="p-4 d-flex flex-column flex-11a">
-        <div>
-            <div>
-                <span class="fa-solid fa-lock fs-base-6 me-3"></span>
-                <span class="fw-600 form-label pb-2">{{t('menu.user.encrypt')}}</span>
+    <div class="space-y-6">
+        <div class="form-control">
+            <div class="flex items-center gap-3 mb-3">
+                <span class="fa-solid fa-lock text-xl"></span>
+                <span class="font-semibold">{{t('menu.user.encrypt')}}</span>
             </div>
-            <div class="btn-group btn-group-toggle pt-2" data-toggle="buttons">
-                <label class="btn btn-level btn-rounded form-check-label" [class.active]="!encryption"
-                    (change)="updateEncryptPreference()">
-                    <input class="btn-check" type="radio" autocomplete="off" tabindex="0" [checked]="!encryption" />
+            <div class="join">
+                <input class="join-item btn" type="radio" name="encryption" aria-label="{{t('menu.user.off')}}"
+                    [checked]="!encryption" (change)="updateEncryptPreference()" tabindex="0" />
+                <div class="join-item btn" [class.btn-active]="!encryption">
                     {{t('menu.user.off')}}
-                </label>
-                <label class="btn btn-level btn-rounded form-check-label" [class.active]="encryption"
-                    (change)="updateEncryptPreference()">
-                    <input class="btn-check" type="radio" autocomplete="off" tabindex="0" [checked]="encryption" />
+                </div>
+                <input class="join-item btn" type="radio" name="encryption" aria-label="{{t('menu.user.on')}}"
+                    [checked]="encryption" (change)="updateEncryptPreference()" tabindex="0" />
+                <div class="join-item btn" [class.btn-active]="encryption">
                     {{t('menu.user.on')}}
-                </label>
-            </div>
-            <form name="form" #userForm="ngForm">
-                <div class="mb-2">
-                    <div class="d-flex align-items-center">
-                        <span class="fas fa-language fs-base-6 me-3"></span>
-                        <label class="fw-600 form-label" for="selectLang">{{t('user language')}}</label>
-                    </div>
-
-                    <select class="form-select" id="langSelection" name="langSelection" [(ngModel)]="langSelection"
-                        (change)="save()">
-                        <option *ngFor="let o of languageOptions" [value]="o.value">{{o.name}}</option>
-                    </select>
-
-                </div>
-            </form>
-            <div *ngIf="showCisaAssessorWorkflowSwitch()">
-                <div class="d-flex align-items-center">
-                    <span class="fa fa-globe fs-base-6 me-3"></span>
-                    <span class="fw-600 form-label">{{ t('protected features.cisa assessor
-                        workflow')}}</span>
-                </div>
-                <div class="btn-group btn-group-toggle pt-2" data-toggle="buttons">
-                    <label class="btn btn-level btn-rounded form-check-label" [class.active]="!cisaWorkflowEnabled"
-                        (change)="toggleCisaAssessorWorkflow()">
-                        <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
-                            [checked]="!cisaWorkflowEnabled" />
-                        {{t('menu.user.off')}}
-                    </label>
-                    <label class="btn btn-level btn-rounded form-check-label" [class.active]="cisaWorkflowEnabled"
-                        (change)="toggleCisaAssessorWorkflow()">
-                        <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
-                            [checked]="cisaWorkflowEnabled" />
-                        {{t('menu.user.on')}}
-                    </label>
                 </div>
             </div>
         </div>
+        <form name="form" #userForm="ngForm">
+            <div class="form-control w-full">
+                <div class="flex items-center gap-3 mb-3">
+                    <span class="fas fa-language text-xl"></span>
+                    <label class="font-semibold" for="selectLang">{{t('user language')}}</label>
+                </div>
 
-    </mat-dialog-content>
-    <mat-dialog-actions class="p-3 pt-0 mb-0 mt-2">
-        <button class="btn btn-secondary" (click)="cancel()">{{ t('buttons.close') }}</button>
-    </mat-dialog-actions>
+                <select class="select select-bordered w-full" id="langSelection" name="langSelection" [(ngModel)]="langSelection"
+                    (change)="save()">
+                    <option *ngFor="let o of languageOptions" [value]="o.value">{{o.name}}</option>
+                </select>
+            </div>
+        </form>
+        <div *ngIf="showCisaAssessorWorkflowSwitch()" class="form-control">
+            <div class="flex items-center gap-3 mb-3">
+                <span class="fa fa-globe text-xl"></span>
+                <span class="font-semibold">{{ t('protected features.cisa assessor workflow')}}</span>
+            </div>
+            <div class="join">
+                <input class="join-item btn" type="radio" name="cisaWorkflow" aria-label="{{t('menu.user.off')}}"
+                    [checked]="!cisaWorkflowEnabled" (change)="toggleCisaAssessorWorkflow()" tabindex="0" />
+                <div class="join-item btn" [class.btn-active]="!cisaWorkflowEnabled">
+                    {{t('menu.user.off')}}
+                </div>
+                <input class="join-item btn" type="radio" name="cisaWorkflow" aria-label="{{t('menu.user.on')}}"
+                    [checked]="cisaWorkflowEnabled" (change)="toggleCisaAssessorWorkflow()" tabindex="0" />
+                <div class="join-item btn" [class.btn-active]="cisaWorkflowEnabled">
+                    {{t('menu.user.on')}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-action">
+        <button class="btn btn-primary" (click)="cancel()">{{ t('buttons.close') }}</button>
+    </div>
 </div>

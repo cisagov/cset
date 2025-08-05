@@ -21,8 +21,8 @@
   SOFTWARE. 
 -------------------------->
 <div *transloco="let t">
-    <div mat-dialog-title class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-        <span style="color: white;" class="me-2 cset-icons-export-excel"></span>
+    <div mat-dialog-title class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
+        <span style="color: white;" class="mr-2 cset-icons-export-excel"></span>
         <span style="color: white;">{{t('dialogs.export excel dialog title')}}</span>
     </div>
     <mat-dialog-content>
@@ -37,7 +37,7 @@
         </div>
     </mat-dialog-content>
 
-    <mat-dialog-actions class="mx-3 mb-3 justify-content-between">
+    <mat-dialog-actions class="mx-3 mb-3 justify-between">
         <button class="btn btn-secondary" (click)="close()">{{t('buttons.cancel')}}</button>
         <button class="btn btn-primary" (click)="exportToExcel()">{{t('buttons.export')}}</button>
     </mat-dialog-actions>

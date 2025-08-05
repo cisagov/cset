@@ -48,7 +48,7 @@
 
         <ng-template #mainContent>
 
-            <div class="d-flex flex-row justify-content-between align-items-end" *ngIf="responseU.length>0">
+            <div class="flex flex-row justify-between items-end" *ngIf="responseU.length>0">
 
                 <h1 class="page-title" style="margin: 2em 0 0.5em 0;">Unanswered - Deficiencies</h1>
                 <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
@@ -74,7 +74,7 @@
                                     {{s.answerText}}
                                 </div>
                             </td>
-                            <td class="deficiencies-list-flag"><img class="MarkedFlag ms-2" *ngIf="s.markForReview"
+                            <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.markForReview"
                                     src="assets/images/icons/MarkedFlag.png"></td>
                         </tr>
 
@@ -82,7 +82,7 @@
                 </table>
                 <hr class="my-2">
             </div>
-            <div class="d-flex flex-row justify-content-between align-items-end" *ngIf="responseS.length>0">
+            <div class="flex flex-row justify-between items-end" *ngIf="responseS.length>0">
 
                 <h1 class="page-title" style="margin: 2em 0 0.5em 0;">No - Deficiencies</h1>
                 <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
@@ -107,7 +107,7 @@
                                     {{s.answerText}}
                                 </div>
                             </td>
-                            <td class="deficiencies-list-flag"><img class="MarkedFlag ms-2" *ngIf="s.markForReview"
+                            <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.markForReview"
                                     src="assets/images/icons/MarkedFlag.png"></td>
                         </tr>
 

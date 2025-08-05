@@ -1,9 +1,9 @@
-<div class="d-flex flex-column justify-content-center flex-11a" (keydown.enter)="submit()">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span class="cset-icons-key-shield fs-base-6 me-3"></span>
-    <span>Login to Data Submission</span>
+<div class="modal-box max-w-md" (keydown.enter)="submit()">
+  <div class="flex items-center gap-3 mb-6">
+    <span class="cset-icons-key-shield text-2xl text-primary"></span>
+    <h3 class="font-bold text-lg">Login to Data Submission</h3>
   </div>
-  <mat-dialog-content class="p-3 oy-auto d-flex flex-column flex-11a">
+  <div class="space-y-4">
 
     <div class="container">
       <form [formGroup]="dataloginForm">
@@ -15,50 +15,53 @@
             If you do not have an account, use the browser interface to create a new account.
           </p>
         </div>
-        <p>
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Username</mat-label>
-            <input type="text" trim="blur" matInput placeholder="Username" formControlName="username"
-              [errorStateMatcher]="matcherusername">
-            <mat-icon matPrefix style="margin-right:10px;">face</mat-icon>
-            <mat-error *ngIf="dataloginForm.controls.username.hasError('required')">
-              Username is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </p>
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text">Username</span>
+          </label>
+          <div class="relative">
+            <input type="text" trim="blur" placeholder="Username" formControlName="username"
+              [errorStateMatcher]="matcherusername" class="input input-bordered w-full pl-10">
+            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/70">
+              <i class="fa-solid fa-user"></i>
+            </span>
+          </div>
+          <label class="label" *ngIf="dataloginForm.controls.username.hasError('required')">
+            <span class="label-text-alt text-error">Username is <strong>required</strong></span>
+          </label>
+        </div>
 
-        <p>
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Password</mat-label>
-            <input [type]="hidePassword ? 'password' : 'text'" trim="blur" matInput placeholder="Password"
-              formControlName="password" [errorStateMatcher]="matcherpassword">
-            <mat-icon matPrefix style="margin-right: 10px;">lock</mat-icon>
-            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" class="" type="button"
-              style="margin-right: 15px; padding: 0; width: 24px; height: 24px; vertical-align: middle;">
-              <mat-icon class="">{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text">Password</span>
+          </label>
+          <div class="relative">
+            <input [type]="hidePassword ? 'password' : 'text'" trim="blur" placeholder="Password"
+              formControlName="password" [errorStateMatcher]="matcherpassword" class="input input-bordered w-full pl-10 pr-12">
+            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/70">
+              <i class="fa-solid fa-lock"></i>
+            </span>
+            <button (click)="hidePassword = !hidePassword" type="button"
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 btn btn-ghost btn-sm btn-circle">
+              <i class="fa-solid" [class.fa-eye]="hidePassword" [class.fa-eye-slash]="!hidePassword"></i>
             </button>
-            <mat-error *ngIf="dataloginForm.controls.password.hasError('required')">
-              Password is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </p>
-        <p *ngIf="error" class="alert alert-danger">
-          {{ error }}
-        </p>
+          </div>
+          <label class="label" *ngIf="dataloginForm.controls.password.hasError('required')">
+            <span class="label-text-alt text-error">Password is <strong>required</strong></span>
+          </label>
+        </div>
+        <div *ngIf="error" class="alert alert-error">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <span>{{ error }}</span>
+        </div>
       </form>
     </div>
-  </mat-dialog-content>
-  <mat-dialog-actions class="p-3 pt-0 mb-0">
-    <div class="d-flex flex-row w-100" style="justify-content: space-between">
-      <div class="d-flex flex-row">
-        <button class="btn btn-default" (click)="close()">Cancel</button>&nbsp;
-        <button class="btn btn-primary d-flex flex-row" (click)="submit()">Login and Sync
-          <div *ngIf="uploadInProgress"
-            class="spinner-container white p-0 m-0 ms-3 d-flex justify-content-center align-items-center flex-11a">
-            <div class="spinner-size-20"></div>
-          </div>
-        </button>
-      </div>
-    </div>
-  </mat-dialog-actions>
+  </div>
+  <div class="modal-action">
+    <button class="btn btn-ghost" (click)="close()">Cancel</button>
+    <button class="btn btn-primary" (click)="submit()" [disabled]="uploadInProgress">
+      <span *ngIf="uploadInProgress" class="loading loading-spinner loading-sm"></span>
+      Login and Sync
+    </button>
+  </div>
 </div>

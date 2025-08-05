@@ -20,8 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="wp-0 d-flex flex-column justify-content-start flex-11a trend-table-width">
-  <div class="bgc-trans my-4 mx-4 d-flex flex-column flex-00a trend-table-width">
+<div class="wp-0 flex flex-col justify-start flex-11a trend-table-width">
+  <div class="bgc-trans my-4 mx-4 flex flex-col flex-00a trend-table-width">
     <h3>{{ this.aggregationSvc?.modeDisplay(true) }}</h3>
 
     <ng-container *ngIf="this.aggregationSvc?.mode === 'TREND'">
@@ -53,21 +53,21 @@
 
     <div class="mt-4">
       <button *ngIf="this.aggregationSvc?.mode === 'TREND'"
-        class="m-0 btn btn-primary d-flex align-items-center flex-00a" (click)="newAggregation()"
+        class="m-0 btn btn-primary flex items-center flex-00a" (click)="newAggregation()"
         matTooltip="Create a new trend">
-        <span class="me-2 fs-base cset2-icons-trend"></span>
+        <span class="mr-2 fs-base cset2-icons-trend"></span>
         <span>New Trend</span>
       </button>
 
       <button *ngIf="this.aggregationSvc?.mode === 'COMPARE'"
-        class="m-0 btn btn-primary d-flex align-items-center flex-00a" (click)="newAggregation()"
+        class="m-0 btn btn-primary flex items-center flex-00a" (click)="newAggregation()"
         matTooltip="Create a new comparison">
-        <span class="me-2 fs-base cset2-icons-compare"></span>
+        <span class="mr-2 fs-base cset2-icons-compare"></span>
         <span>New Comparison</span>
       </button>
 
       <div *ngIf="aggregations == null">
-        <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+        <div class="spinner-container m-0 flex justify-center items-center flex-11a">
           <div class="spinner-size-50"></div>
         </div>
       </div>
@@ -79,7 +79,7 @@
     </div>
   </div>
 
-  <div class="px-4 mb-4 d-flex flex-column flex-11a oy-auto h-0 trend-table-width" style="width: 100vw;">
+  <div class="px-4 mb-4 flex flex-col flex-11a oy-auto h-0 trend-table-width" style="width: 100vw;">
     <div *ngIf="aggregations?.length > 0" style="width:100vw;" class="trend-table-width">
       <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
         <th mat-sort-header="assessment">{{ this.aggregationSvc?.modeDisplay(false) }} Name</th>
@@ -88,7 +88,7 @@
         <tr *ngFor="let agg of aggregations; let i = index">
           <td>
             <button
-              class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
+              class="btn btn-link btn-link-dark flex justify-start items-start flex-00a wrap-text text-start"
               (click)="this.aggregationSvc.loadAggregation(agg.aggregationId)">
               {{agg.aggregationName}}
             </button>
@@ -96,9 +96,9 @@
           <td>{{agg.aggregationDate | localizeDate}}</td>
           <td>
             <button
-              class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+              class="icon-link-button-dark btn bgc-trans flex justify-center items-center flex-00a"
               (click)="removeAggregation(agg, i)" matTooltip="Permanently remove this trend.">
-              <span class="cset-icons-trash-x fs-base-2 me-2"></span>
+              <span class="cset-icons-trash-x fs-base-2 mr-2"></span>
               <span class="icon-link-button-text-dark">Remove</span>
             </button>
           </td>

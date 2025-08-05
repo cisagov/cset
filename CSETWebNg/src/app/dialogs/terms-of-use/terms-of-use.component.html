@@ -20,15 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="terms-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a w-100">
+<div class="terms-dialog flex flex-col justify-center flex-11a" *transloco="let t">
+  <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a w-full">
     <span class="cset-icons-handshake me-3 fs-base-6"></span>
     <span>CSET {{t('menu.help.legal.terms of use.terms of use')}}</span>
   </div>
 
-  <mat-dialog-content class="oy-auto p-3 pe-0 d-flex flex-column flex-11a w-100">
-    <div class="pe-3 d-flex flex-column align-items-start flex-11a">
-      <p class="w-100">
+  <mat-dialog-content class="oy-auto p-3 pe-0 flex flex-col flex-11a w-full">
+    <div class="pe-3 flex flex-col items-start flex-11a">
+      <p class="w-full">
         {{t('menu.help.legal.terms of use.description')}}
       </p>
       <button class="btn btn-link p-0" (click)="openSourceLicenses()">
@@ -37,7 +37,7 @@
     </div>
   </mat-dialog-content>
 
-  <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex flex-00a">
+  <mat-dialog-actions class="p-3 pt-0 mb-0 flex flex-00a">
     <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
   </mat-dialog-actions>
 </div>

@@ -20,21 +20,18 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" class="confirm-dialog d-flex flex-column justify-content-center flex-11a">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span class="me-3 fs-base-6 cset-icons-check-circle"></span>
-    <span>{{ t('dialogs.please confirm') }}</span>
+<div *transloco="let t" class="modal-box max-w-md">
+  <div class="flex items-center gap-3 mb-4">
+    <span class="text-2xl cset-icons-check-circle text-success"></span>
+    <h3 class="font-bold text-lg">{{ t('dialogs.please confirm') }}</h3>
   </div>
 
-  <div class="p-3 pb-0 pe-0 mt-2 oy-auto d-flex flex-column flex-11a">
-    <mat-dialog-content class="p-0 pe-3 d-flex flex-column flex-11a" [innerHtml]="confirmMessage | safe">
-    </mat-dialog-content>
+  <div class="py-4 max-h-96 overflow-y-auto">
+    <div [innerHtml]="confirmMessage | safe"></div>
   </div>
 
-  <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-start flex-00a">
-    <button class=" btn btn-primary m-0 me-2" (click)="dialogRef.close(true)">{{ t('answer-options.button-labels.yes')
-      }}</button>
-    <button class="btn btn-secondary" (click)="dialogRef.close(false)">{{ t('answer-options.button-labels.no')
-      }}</button>
-  </mat-dialog-actions>
+  <div class="modal-action">
+    <button class="btn btn-primary" (click)="dialogRef.close(true)">{{ t('answer-options.button-labels.yes') }}</button>
+    <button class="btn btn-ghost" (click)="dialogRef.close(false)">{{ t('answer-options.button-labels.no') }}</button>
+  </div>
 </div>

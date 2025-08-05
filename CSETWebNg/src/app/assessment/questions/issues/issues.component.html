@@ -20,14 +20,14 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<ng-container *ngIf="this.loading === true; else mainContent" class="w-100">
+<ng-container *ngIf="this.loading === true; else mainContent" class="w-full">
   <div class="spinner-container" style="margin: 2em auto">
     <div style="max-width: 200px; max-height: 200px;"></div>
   </div>
 </ng-container>
 
 <ng-template #mainContent>
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+  <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
     <span class="me-3 fs-base-6 cset-icons-light-bulb"></span>
     <h2 style="color: white;">Issues</h2>
   </div>

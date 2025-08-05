@@ -20,13 +20,13 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="advisory-dialog d-flex flex-column justify-content-center flex-11a">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+<div class="advisory-dialog flex flex-col justify-center flex-11a">
+  <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
     <span class="me-3 fs-base-6 cset-icons-books-stack-2"></span>
     <span>Add Requirement</span>
   </div>
 
-  <form class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
+  <form class="p-3 pe-0 oy-auto flex flex-col flex-11a">
     <mat-dialog-content>
       <p>
         Category and Subcategory are used to group Requirements in CSET. Question Group Heading and Subcategory are
@@ -80,7 +80,7 @@
 
     </mat-dialog-content>
   </form>
-  <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
+  <mat-dialog-actions class="p-3 mb-0 flex justify-between flex-00a">
     <button class="btn btn-primary" (click)="create()">Create</button>
     <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
   </mat-dialog-actions>

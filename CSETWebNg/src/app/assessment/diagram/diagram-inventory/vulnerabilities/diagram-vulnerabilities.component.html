@@ -43,7 +43,7 @@
           (blur)="saveComponent(component)">
         <mat-autocomplete #autoVendor="matAutocomplete">
           <mat-option *ngFor="let vendor of filteredVendorOptions" [value]="vendor.name">
-            <div class="d-flex justify-content-between">
+            <div class="flex justify-between">
               <span>
                 {{ vendor.name }}
               </span>
@@ -62,7 +62,7 @@
           (blur)="saveComponent(component)">
         <mat-autocomplete #autoProduct="matAutocomplete">
           <mat-option *ngFor="let product of filteredProductOptions" [value]="product.name">
-            <div class="d-flex justify-content-between">
+            <div class="flex justify-between">
               <span>
                 {{ product.name }}
               </span>

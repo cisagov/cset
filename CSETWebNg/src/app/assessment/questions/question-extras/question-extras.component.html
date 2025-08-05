@@ -147,7 +147,7 @@
         </span>
 
         <span class="btn-group-toggle">
-            <label *ngIf="showMfr" class="me-0 ms-2 btn form-check-label btn-mfr"
+            <label *ngIf="showMfr" class="mr-0 ml-2 btn form-check-label btn-mfr"
                 [class.answer-selected]="myQuestion.markForReview === true"
                 matTooltip="This control requires further review.">
                 <input name="q_{{myQuestion.questionId}}_F" type="checkbox" class="btn-check"
@@ -407,13 +407,13 @@
                         <td>
                             <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
                                 (click)="addEditObservation(obs.observation_Id)">
-                                <span class="me-1 cset-icons-pencil"></span>
+                                <span class="mr-1 cset-icons-pencil"></span>
                             </button>
                         </td>
                         <td>
                             <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
                                 (click)="deleteObservation(obs)">
-                                <span class="me-1 cset-icons-trash-can"></span>
+                                <span class="mr-1 cset-icons-trash-can"></span>
                             </button>
                         </td>
                     </tr>

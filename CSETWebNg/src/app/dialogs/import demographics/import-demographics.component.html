@@ -21,21 +21,21 @@
   SOFTWARE.
 -------------------------->
 <input type="file" #file style="display: none" (change)="onFilesAdded()" />
-<div *transloco="let t" class="upload-export d-flex flex-column flex-11a">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start flex-11a">{{ appName }} File Import</div>
+<div *transloco="let t" class="upload-export flex flex-col flex-11a">
+  <div class="mat-dialog-header p-3 flex justify-start flex-11a">{{ appName }} File Import</div>
   <h4 style="position: sticky; top: 0; padding-top: 15px; padding-left: 15px;" class="mb-2 c-primary">Uploading Files
   </h4>
-  <mat-dialog-content class="oy-auto p-3 pe-0 d-flex flex-column flex-00a">
+  <mat-dialog-content class="oy-auto p-3 pe-0 flex flex-col flex-00a">
     <div class="pe-3">
       <mat-list class="pt-1">
         <mat-list-item *ngFor="let file of files; let i = index">
           <label mat-line class="mt-1 fs-base-5">{{file.name}}</label>
           <ng-container *ngIf="getAssessmentHint(file.name)">
-            <label mat-line class="ms-2 pt=1 pb-2 h6">Hint: <i>{{ getAssessmentHint(file.name) }}</i></label>
+            <label mat-line class="ml-2 pt=1 pb-2 h6">Hint: <i>{{ getAssessmentHint(file.name) }}</i></label>
           </ng-container>
           <mat-progress-bar *ngIf="progress && !progress[file.name].progress.source.hasError" style="width: 65%"
             mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar>
-          <i *ngIf="progress[file.name].progress.source.hasError && xCount == 0" class="fa-solid fa-xmark ms-1"
+          <i *ngIf="progress[file.name].progress.source.hasError && xCount == 0" class="fa-solid fa-xmark ml-1"
             style="color: red"></i>
         </mat-list-item>
       </mat-list>
@@ -45,7 +45,7 @@
   <div style="position: sticky; bottom: 0; padding-bottom: 15px; padding-left: 15px;">
     <label style="padding-right: 15px;" class="mt-4">{{statusText}}</label>
 
-    <mat-dialog-actions class="me-3 p-0 mb-0 d-flex justify-content-between flex-00a">
+    <mat-dialog-actions class="me-3 p-0 mb-0 flex justify-between flex-00a">
       <!-- <button class="btn btn-primary" [disabled]="!canBeClosed" (click)="closeDialog()">{{primaryButtonText}}</button>
       <button class="btn btn-secondary" *ngIf="showCancelButton" mat-dialog-close>Cancel</button> -->
       <button class="btn btn-secondary" *ngIf="showCancelButton && data.isCsafUpload" (click)="cancelUpload()"

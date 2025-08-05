@@ -20,13 +20,13 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel oy-auto d-flex flex-column flex-11a">
+<div class="white-panel oy-auto flex flex-col flex-11a">
   <h3>Assessment Comparison</h3>
   <div class="row">
     <div class="col-sm-3">
       <div class="card">
         <div class="card-header">
-          <div class="mt-2 justify-content-center align-items-center">
+          <div class="mt-2 justify-center items-center">
             <span style="font-size: 1rem; font-weight: 500"><strong>Assessment name:</strong> </span>&nbsp;
             <div><span style="font-size: 1rem">
                 {{this.assessment.assessmentName}}
@@ -41,7 +41,7 @@
         <div class="card-body text-wrap">
           <div *ngIf="isMaturity" class="mb-4">
             <h6> {{"Comparing Maturity Model " + maturityModelName}}</h6>
-            <input #s type="checkbox" class="checkbox-custom me-2" id="{{maturityModelName}}"
+            <input #s type="checkbox" class="checkbox-custom mr-2" id="{{maturityModelName}}"
               name="{{maturityModelName}}" value="{{maturityModelName}}" checked>
             <label [for]="maturityModelName" class="checkbox-custom-label">{{maturityModelName}}</label>
           </div>
@@ -49,7 +49,7 @@
             <div *ngIf="isStandard" class="col-12 mt-2" id="chart" class="mb-3">
               <h6>Choose the standards you would like to compare </h6>
               <div *ngFor="let s of standards" class="checkboxes">
-                <input #s type="checkbox" class="checkbox-custom me-2" id="{{s.full_Name}}" name="{{s.full_Name}}"
+                <input #s type="checkbox" class="checkbox-custom mr-2" id="{{s.full_Name}}" name="{{s.full_Name}}"
                   (change)="onChange($event)" value="{{s.short_Name}}"><label [for]="s.full_Name"
                   class="checkbox-custom-label">{{s.full_Name}}</label>
               </div>

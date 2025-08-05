@@ -22,192 +22,234 @@
 -------------------------->
 <ng-container *transloco="let t">
     <ng-container *ngIf="showMenuStrip()">
-        <button mat-button [matMenuTriggerFor]="tools" #toolsTrigger="matMenuTrigger"
-            class="dropdown-toggle navbar-menu-header" (keyup.arrowdown)="toolsTrigger.openMenu()">
-            <span class="cset-icons-tools fs-base-4 me-2 align-middle"></span>
-            <span>{{ t('menu.tools.tools') }}</span>
-        </button>
+        <div class="dropdown dropdown-hover">
+            <button tabindex="0" role="button" class="btn btn-ghost navbar-menu-header">
+                <span class="cset-icons-tools text-lg mr-2 align-middle"></span>
+                <span>{{ t('menu.tools.tools') }}</span>
+            </button>
+            <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-64 p-2 shadow">
+                <li *ngIf="showMenuItem('enable protected features')">
+                    <a (click)="enableProtectedFeature()">
+                        <span class="cset-icons-key-shield text-base mr-2 align-middle"></span>
+                        <span>{{ t('menu.tools.enable protected features') }}</span>
+                    </a>
+                </li>
+                <li><hr class="my-2"></li>
 
-        <mat-menu #tools="matMenu" class="menu-panel">
-            <button mat-menu-item (click)="enableProtectedFeature()" *ngIf="showMenuItem('enable protected features')">
-                <span class="cset-icons-key-shield fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.tools.enable protected features') }}</span>
-            </button>
+                <li *ngIf="showItemForCurrentSkin('assessment documents')">
+                    <a (click)="showAssessDocs()" [class.disabled]="isNullOrEmptyAssessment() && !globalDocuments">
+                        <span class="cset-icons-books-stack-1 text-base mr-2 align-middle"></span>
+                        <span>{{ t('menu.tools.assessment documents') }}</span>
+                    </a>
+                </li>
+                <li *ngIf="showMenuItem('parameter editor')">
+                    <a (click)="editParameters()" [class.disabled]="!inAssessment()">
+                        <span class="cset-icons-puzzle text-base mr-2 align-middle"></span>
+                        <span>{{ t('menu.tools.parameter editor') }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="showExcelExportDialog()" [class.disabled]="!inAssessment()">
+                        <span class="cset-icons-export-excel text-base mr-2 align-middle"></span>
+                        <span>{{ t('menu.tools.export assessment to excel') }}</span>
+                    </a>
+                </li>
+                <li><hr class="my-2"></li>
 
-            <hr class="menu-divider" />
+                <li *ngIf="showMenuItem('import modules')">
+                    <a [routerLink]="['/importModule']">
+                        <span class="cset-icons-module text-base mr-2 align-middle"></span>
+                        <span>{{ t('menu.tools.import modules') }}</span>
+                    </a>
+                </li>
+                <li *ngIf="showMenuItem('module builder')">
+                    <a [routerLink]="['/set-list']">
+                        <span class="cset-icons-module text-base mr-2 align-middle"></span>
+                        <span>{{ t('menu.tools.module builder') }}</span>
+                    </a>
+                </li>
+                <li *ngIf="showMenuItem('module content report')">
+                    <a [routerLink]="['/module-content-launch']">
+                        <span class="cset-icons-module text-base mr-2 align-middle"></span>
+                        <span>{{ t('menu.tools.module content report') }}</span>
+                    </a>
+                </li>
+                <li *ngIf="showMenuItem('trend')">
+                    <a (click)="navigateTrend()">
+                        <span class="cset2-icons-trend text-base mr-2 align-middle"></span>
+                        <span>{{ t('menu.tools.trend') }}</span>
+                    </a>
+                </li>
+                <li *ngIf="showMenuItem('compare')">
+                    <a (click)="navigateCompare()">
+                        <span class="cset2-icons-compare text-base mr-2 align-middle"></span>
+                        <span>{{ t('menu.tools.compare') }}</span>
+                    </a>
+                </li>
 
-            <button mat-menu-item [disabled]="isNullOrEmptyAssessment() && !globalDocuments"
-                *ngIf="showItemForCurrentSkin('assessment documents')"
-                [ngClass]="{'disabled-menu-item' : isNullOrEmptyAssessment() && !globalDocuments}"
-                (click)="showAssessDocs()">
-                <span class="cset-icons-books-stack-1 fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.tools.assessment documents') }}</span>
-            </button>
-            <button mat-menu-item [disabled]="!inAssessment()" *ngIf="showMenuItem('parameter editor')"
-                [ngClass]="{'disabled-menu-item' : !inAssessment()}" (click)="editParameters()">
-                <span class="cset-icons-puzzle fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.tools.parameter editor') }}</span>
-            </button>
-            <button mat-menu-item [disabled]="!inAssessment()" [ngClass]="{'disabled-menu-item' : !inAssessment()}"
-                (click)="showExcelExportDialog()">
-                <span class="cset-icons-export-excel fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.tools.export assessment to excel') }}</span>
-            </button>
-
-            <hr class="menu-divider" />
-
-            <button mat-menu-item [routerLink]="['/importModule']" *ngIf="showMenuItem('import modules')">
-                <span class="cset-icons-module fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.tools.import modules') }}</span>
-            </button>
-            <button mat-menu-item [routerLink]="['/set-list']" *ngIf="showMenuItem('module builder')">
-                <span class="cset-icons-module fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.tools.module builder') }}</span>
-            </button>
-            <button mat-menu-item [routerLink]="['/module-content-launch']"
-                *ngIf="showMenuItem('module content report')">
-                <span class="cset-icons-module fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.tools.module content report') }}</span>
-            </button>
-            <button mat-menu-item (click)="navigateTrend()" *ngIf="showMenuItem('trend')">
-                <span class="cset2-icons-trend fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.tools.trend') }}</span>
-            </button>
-            <button mat-menu-item (click)="navigateCompare()" *ngIf="showMenuItem('compare')">
-                <span class="cset2-icons-compare fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.tools.compare') }}</span>
-            </button>
-
-            <ng-container *ngIf="showMenuItem('resume')">
-                <hr class="menu-divider" />
-                <button mat-menu-item (click)="navSvc.resumeQuestions()">
-                    <span class="fa fa-bolt fs-base me-2 align-middle"></span>
-                    <span>{{ t('menu.tools.resume questions') }}</span>
-                </button>
-            </ng-container>
-        </mat-menu>
+                <ng-container *ngIf="showMenuItem('resume')">
+                    <li><hr class="my-2"></li>
+                    <li>
+                        <a (click)="navSvc.resumeQuestions()">
+                            <span class="fa fa-bolt text-base mr-2 align-middle"></span>
+                            <span>{{ t('menu.tools.resume questions') }}</span>
+                        </a>
+                    </li>
+                </ng-container>
+            </ul>
+        </div>
     </ng-container>
 
 
     <div *ngIf="showResourceLibraryLink()">
-        <a mat-button class="navbar-menu-header ws-no-wrap" href="index.html?returnPath=resource-library"
+        <a class="btn btn-ghost navbar-menu-header whitespace-nowrap" href="index.html?returnPath=resource-library"
             target="_blank">
-            <span class="cset-icons-library fs-base-4 me-2 align-middle"></span>
+            <span class="cset-icons-library text-lg mr-2 align-middle"></span>
             <span>{{t('menu.resource library')}}</span>
         </a>
     </div>
 
 
-    <div class="ms-auto">
-        <button mat-button [matMenuTriggerFor]="help" #helpTrigger="matMenuTrigger"
-            (keyup.arrowdown)="helpTrigger.openMenu()" class="dropdown-toggle navbar-menu-header">
-            <span class="cset-icons-question-circle-outline fs-base-4 me-2 align-middle"></span>
-            <span>{{ t('menu.help.help') }}</span>
-        </button>
-
-        <mat-menu #help="matMenu" class="menu-panel">
-            <a mat-menu-item href="{{docUrl}}htmlhelp/index.htm" target="_blank">
-                <span class="cset-icons-book-open fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.help.cset user guide') }}</span>
-            </a>
-
-            <hr class="menu-divider" />
-
-            <button mat-menu-item (click)="about()">
-                <span class="cset-icons-cset-lock fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.help.about') }}</span>
+    <div class="ml-auto">
+        <div class="dropdown dropdown-hover">
+            <button tabindex="0" role="button" class="btn btn-ghost navbar-menu-header">
+                <span class="cset-icons-question-circle-outline text-lg mr-2 align-middle"></span>
+                <span>{{ t('menu.help.help') }}</span>
             </button>
-            <button mat-menu-item (click)="showKeyboardShortcuts()" *ngIf="!configSvc.isMobile()">
-                <span class="cset-icons-keyboard-shortcuts-key fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.help.keyboard shortcuts') }}</span>
-            </button>
+            <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-64 p-2 shadow">
+                <li>
+                    <a href="{{docUrl}}htmlhelp/index.htm" target="_blank">
+                        <span class="cset-icons-book-open text-base mr-2 align-middle"></span>
+                        <span>{{ t('menu.help.cset user guide') }}</span>
+                    </a>
+                </li>
+                <li><hr class="my-2"></li>
 
-            <button mat-menu-item [matMenuTriggerFor]="legal">
-                <span class="fas fa-balance-scale fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.help.legal.legal') }}</span>
-            </button>
-        </mat-menu>
+                <li>
+                    <a (click)="about()">
+                        <span class="cset-icons-cset-lock text-base mr-2 align-middle"></span>
+                        <span>{{ t('menu.help.about') }}</span>
+                    </a>
+                </li>
+                <li *ngIf="!configSvc.isMobile()">
+                    <a (click)="showKeyboardShortcuts()">
+                        <span class="cset-icons-keyboard-shortcuts-key text-base mr-2 align-middle"></span>
+                        <span>{{ t('menu.help.keyboard shortcuts') }}</span>
+                    </a>
+                </li>
+
+                <li>
+                    <details>
+                        <summary>
+                            <span class="fas fa-balance-scale text-base mr-2 align-middle"></span>
+                            <span>{{ t('menu.help.legal.legal') }}</span>
+                        </summary>
+                        <ul class="bg-base-100 rounded-t-none p-2">
 
 
 
-        <mat-menu #legal="matMenu" class="menu-panel">
-            <button mat-menu-item (click)="accessibilityDocument()">
-                <span class="cset-icons-accessibility-doc fs-base me-2 align-middle"></span>
-                <span>{{ 'menu.help.legal.accessibility statement.accessibility statement' | transloco }}</span>
-            </button>
-            <button mat-menu-item (click)="advisory()">
-                <span class="cset-icons-advisory fs-base me-2 align-middle"></span>
-                <span>{{ 'advisory.title' | transloco }}</span>
-            </button>
-
-            <button mat-menu-item (click)="termsOfUse()">
-                <span class="cset-icons-handshake fs-base me-2 align-middle"></span>
-                <span>{{ 'menu.help.legal.terms of use.terms of use' | transloco }}</span>
-            </button>
-        </mat-menu>
+                            <li>
+                                <a (click)="accessibilityDocument()">
+                                    <span class="cset-icons-accessibility-doc text-base mr-2 align-middle"></span>
+                                    <span>{{ 'menu.help.legal.accessibility statement.accessibility statement' | transloco }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a (click)="advisory()">
+                                    <span class="cset-icons-advisory text-base mr-2 align-middle"></span>
+                                    <span>{{ 'advisory.title' | transloco }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a (click)="termsOfUse()">
+                                    <span class="cset-icons-handshake text-base mr-2 align-middle"></span>
+                                    <span>{{ 'menu.help.legal.terms of use.terms of use' | transloco }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </details>
+                </li>
+            </ul>
+        </div>
     </div>
 
 
 
     <!-- USER MENU -->
     <div *ngIf="showUserMenu()">
-        <button mat-button [matMenuTriggerFor]="usermenu" #userTrigger="matMenuTrigger"
-            (keyup.arrowdown)="userTrigger.openMenu()" class="dropdown-toggle navbar-menu-header"
-            *ngIf="auth.userToken()">
-            <span class="cset-icons-profile fs-base-4 me-2 align-middle"></span>
-            <span class="ws-no-wrap" *ngIf="auth.email() && auth.userToken()">
-                <span>{{auth.firstName()}} {{auth.lastName()}}</span>
-            </span>
-        </button>
-        <mat-menu #usermenu="matMenu" class="menu-panel">
-            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="editUser()">
-                <span class="cset-icons-profile fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.user.user profile') }}</span>
+        <div class="dropdown dropdown-hover" *ngIf="auth.userToken()">
+            <button tabindex="0" role="button" class="btn btn-ghost navbar-menu-header">
+                <span class="cset-icons-profile text-lg mr-2 align-middle"></span>
+                <span class="whitespace-nowrap" *ngIf="auth.email() && auth.userToken()">
+                    <span>{{auth.firstName()}} {{auth.lastName()}}</span>
+                </span>
             </button>
-            <button mat-menu-item (click)="goHome()">
-                <span class="cset-icons-clipboard-check fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.user.my assessments') }}</span>
-            </button>
-            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="resetPassword()">
-                <span class="cset-icons-key fs-base me-2 align-middle"></span>
-                <span>{{ t('menu.user.change password') }}</span>
-            </button>
-            <button mat-menu-item *ngIf="showMenuItem()" (click)="userSettings()">
-                <span class="fa-solid fa-gear fs-base me-2 align-middle"></span>
-                <span>{{t('menu.user.settings')}}</span>
-            </button>
-            <button mat-menu-item [routerLink]="['/admin-settings']" *ngIf="showMenuItem('admin')">
-                <span class="fa-solid fa-sliders fs-base me-2 align-middle"></span>
-                <span>{{t('menu.user.admin')}}</span>
-            </button>
-            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()">
-                <span class="cset-icons-logout fs-base me-2 align-middle"></span>
-                <span>{{t('menu.user.logout')}}</span>
-            </button>
-        </mat-menu>
+            <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-64 p-2 shadow">
+                <li *ngIf="showUserMenuItem()">
+                    <a (click)="editUser()">
+                        <span class="cset-icons-profile text-base mr-2 align-middle"></span>
+                        <span>{{ t('menu.user.user profile') }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="goHome()">
+                        <span class="cset-icons-clipboard-check text-base mr-2 align-middle"></span>
+                        <span>{{ t('menu.user.my assessments') }}</span>
+                    </a>
+                </li>
+                <li *ngIf="showUserMenuItem()">
+                    <a (click)="resetPassword()">
+                        <span class="cset-icons-key text-base mr-2 align-middle"></span>
+                        <span>{{ t('menu.user.change password') }}</span>
+                    </a>
+                </li>
+                <li *ngIf="showMenuItem()">
+                    <a (click)="userSettings()">
+                        <span class="fa-solid fa-gear text-base mr-2 align-middle"></span>
+                        <span>{{t('menu.user.settings')}}</span>
+                    </a>
+                </li>
+                <li *ngIf="showMenuItem('admin')">
+                    <a [routerLink]="['/admin-settings']">
+                        <span class="fa-solid fa-sliders text-base mr-2 align-middle"></span>
+                        <span>{{t('menu.user.admin')}}</span>
+                    </a>
+                </li>
+                <li *ngIf="showUserMenuItem()">
+                    <a (click)="auth.logout()">
+                        <span class="cset-icons-logout text-base mr-2 align-middle"></span>
+                        <span>{{t('menu.user.logout')}}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <!-- ANONYMOUS 'USER' MENU -->
     <div *ngIf="showAnonymousMenu()">
-        <button mat-button [matMenuTriggerFor]="usermenu" #userTrigger="matMenuTrigger" style="width: 150px;"
-            (keyup.arrowdown)="userTrigger.openMenu()" class="dropdown-toggle navbar-menu-header"
-            *ngIf="auth.userToken()" (mouseenter)="showFullAccessKey = true" (mouseleave)="showFullAccessKey = false">
-            <span class="cset-icons-profile fs-base-4 me-2 align-middle"></span>
-            <span class="ws-no-wrap" *ngIf="auth.accessKey()">
-                <span *ngIf="showFullAccessKey || userTrigger.menuOpen">{{auth.accessKey()}}</span>
-                <span *ngIf="!showFullAccessKey && !userTrigger.menuOpen">{{hideAccessKey(auth.accessKey())}}</span>
-            </span>
-        </button>
-
-        <mat-menu #usermenu="matMenu" class="menu-panel">
-            <button mat-menu-item (click)="goHome()">
-                <span class="cset-icons-clipboard-check fs-base me-2 align-middle"></span>
-                <span>{{ t('my assessments') }}</span>
+        <div class="dropdown dropdown-hover" *ngIf="auth.userToken()">
+            <button tabindex="0" role="button" class="btn btn-ghost navbar-menu-header w-36"
+                (mouseenter)="showFullAccessKey = true" (mouseleave)="showFullAccessKey = false">
+                <span class="cset-icons-profile text-lg mr-2 align-middle"></span>
+                <span class="whitespace-nowrap" *ngIf="auth.accessKey()">
+                    <span *ngIf="showFullAccessKey">{{auth.accessKey()}}</span>
+                    <span *ngIf="!showFullAccessKey">{{hideAccessKey(auth.accessKey())}}</span>
+                </span>
             </button>
-            <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()">
-                <span class="cset-icons-logout fs-base me-2 align-middle"></span>
-                <span>{{ t('buttons.logout') }}</span>
-            </button>
-        </mat-menu>
+            <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-64 p-2 shadow">
+                <li>
+                    <a (click)="goHome()">
+                        <span class="cset-icons-clipboard-check text-base mr-2 align-middle"></span>
+                        <span>{{ t('my assessments') }}</span>
+                    </a>
+                </li>
+                <li *ngIf="showUserMenuItem()">
+                    <a (click)="auth.logout()">
+                        <span class="cset-icons-logout text-base mr-2 align-middle"></span>
+                        <span>{{ t('buttons.logout') }}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </ng-container>

@@ -36,8 +36,8 @@
     height: calc(100% - 26px);
   }
 </style>
-<div class="white-panel d-flex flex-column justify-content-start flex-11a" *transloco="let t">
-  <h3 class="d-flex flex-column flex-00a">{{t('titles.feedback')}}</h3>
+<div class="white-panel flex flex-col justify-start flex-11a" *transloco="let t">
+  <h3 class="flex flex-col flex-00a">{{t('titles.feedback')}}</h3>
   <div class="flex-container">
     <p>
       {{t('feedback.text 1')}}
@@ -72,12 +72,12 @@
     <button (click)="openDefaultMailClient()" matTooltip="{{t('tooltip.create feedback email')}}"
       class='textAreaCopyBtn btn btn-primary'>{{t('buttons.email')}}</button>
   </div>
-  <div *ngIf="!initialized" class="d-flex flex-11a w-100">
-    <div class="spinner-container d-flex justify-content-center align-items-center flex-11a w-100">
+  <div *ngIf="!initialized" class="flex flex-11a w-full">
+    <div class="spinner-container flex justify-center items-center flex-11a w-full">
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <div class="my-3 d-flex flex-column justify-content-between flex-00a" [hidden]="!initialized">
+  <div class="my-3 flex flex-col justify-between flex-00a" [hidden]="!initialized">
     <div #divtoView class="copytxt" [innerHTML]="feedbackBody"></div>
   </div>
 

@@ -20,45 +20,45 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" class="assess-component d-flex flex-column justify-content-start flex-11a w-100">
+<div *transloco="let t" class="assess-component flex flex-col justify-start flex-11a w-full">
 
   <!-- Tabs -->
-  <div class="mt-0 ps-0 d-flex flex-column justify-content-start flex-00a">
-    <div class="d-flex justify-content-start flex-11a">
-      <ul class="nav d-flex justify-content-start flex-00a bgc-secondary questions-tab-border">
-        <li class="d-flex align-items-center flex-00a" [ngClass]="{'nav-tab':expandNav, 'nav-tab-collapsed':!expandNav}"
+  <div class="mt-0 ps-0 flex flex-col justify-start flex-00a">
+    <div class="flex justify-start flex-11a">
+      <ul class="nav flex justify-start flex-00a bgc-secondary questions-tab-border">
+        <li class="flex items-center flex-00a" [ngClass]="{'nav-tab':expandNav, 'nav-tab-collapsed':!expandNav}"
           class.active="false" (click)="toggleNav()">
-          <button class="icon-button-light mx-2 d-flex justify-content-start align-items-center flex-00a"
+          <button class="icon-button-light mx-2 flex justify-start items-center flex-00a"
             [matTooltip]="t('tooltip.nav collapse')" matTooltipPosition="below">
             <span class="fs-base-1 m-0"
               [ngClass]="{'cset-icons-chevron-left':expandNav, 'cset-icons-chevron-right':!expandNav}"></span>
           </button>
         </li>
       </ul>
-      <ul class="nav nav-tabs d-flex flex-11a questions-tab-border">
-        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('prepare')"
+      <ul class="nav nav-tabs flex flex-11a questions-tab-border">
+        <li class="flex items-center flex-00a" [class.active]="checkActive('prepare')"
           (click)="setTab('prepare')">
 
-          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
+          <button class="btn bgc-trans flex items-center flex-00a h-full" data-toggle="tab"
             (click)="navSvc.navDirect('phase-prepare')" tabindex="0">
             <span class="tab-icon cset-icons-clipboard-pencil" id="prepareIcon"></span>
-            <span class="nav-tab-text ms-2">{{t('titles.prepare')}}</span>
+            <span class="nav-tab-text ml-2">{{t('titles.prepare')}}</span>
           </button>
         </li>
-        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('questions')"
+        <li class="flex items-center flex-00a" [class.active]="checkActive('questions')"
           (click)="setTab('questions')">
-          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
+          <button class="btn bgc-trans flex items-center flex-00a h-full" data-toggle="tab"
             (click)="navSvc.navDirect('phase-assessment')" tabindex="0">
             <span class="tab-icon cset-icons-question-mark" id="questionsIcon"></span>
-            <span class="nav-tab-text ms-2">{{assessmentAlias}}</span>
+            <span class="nav-tab-text ml-2">{{assessmentAlias}}</span>
           </button>
         </li>
-        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('results')"
+        <li class="flex items-center flex-00a" [class.active]="checkActive('results')"
           (click)="setTab('results')">
-          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
+          <button class="btn bgc-trans flex items-center flex-00a h-full" data-toggle="tab"
             (click)="navSvc.navDirect('phase-results')" tabindex="0">
             <span class="tab-icon cset-icons-results"></span>
-            <span class="nav-tab-text ms-2">{{t('titles.results')}}</span>
+            <span class="nav-tab-text ml-2">{{t('titles.results')}}</span>
           </button>
         </li>
       </ul>
@@ -66,8 +66,8 @@
   </div>
 
   <!-- Content -->
-  <div class="side-nav-container p-0 d-flex flex-column justify-content-start flex-11a">
-    <mat-sidenav-container id="sidenav-container" class="d-flex flex-column flex-11a">
+  <div class="side-nav-container p-0 flex flex-col justify-start flex-11a">
+    <mat-sidenav-container id="sidenav-container" class="flex flex-col flex-11a">
       <mat-sidenav [mode]="sidenavMode()" [opened]="expandNav" id="sidenav" (openedChange)="openStateChange($event)">
         <button class="btn btn-home" (click)="goHome()" [matTooltip]="'View assessment list'">
           <i class="fas fa-home"></i>
@@ -75,7 +75,7 @@
 
         <mat-tree [dataSource]="navTreeSvc?.dataSource" [treeControl]="navTreeSvc?.tocControl" class="mb-5">
 
-          <mat-tree-node *matTreeNodeDef="let node" [hidden]="!node.visible" class="ms-1"
+          <mat-tree-node *matTreeNodeDef="let node" [hidden]="!node.visible" class="ml-1"
             [class.current-node]="node?.isCurrent" [id]="node?.value">
             <!--isNodeDisabled(node?.disabled) ||-->
             <button (click)="selectNavItem(node?.value)" [disabled]="!(node?.enabled)" tabindex="0"
@@ -88,7 +88,7 @@
 
           <mat-nested-tree-node *matTreeNodeDef="let node; when: navTreeSvc?.hasNestedChild" [hidden]="!node.visible">
             <button class="btn btn-trans btn-link no-underline" matTreeNodeToggle tabindex="0">
-              <div class="menu-link d-flex">
+              <div class="menu-link flex">
                 <mat-icon style="position: relative; top: -.1rem;">
                   {{navTreeSvc?.tocControl?.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                 </mat-icon>
@@ -106,15 +106,15 @@
         </mat-tree>
 
         <div *ngIf="navSvc.isNavLoading">
-          <div class="spinner-container toc m-0 d-flex justify-content-center align-items-center flex-11a">
+          <div class="spinner-container toc m-0 flex justify-center items-center flex-11a">
             <div class="spinner-size-50"></div>
           </div>
         </div>
 
       </mat-sidenav>
 
-      <mat-sidenav-content class="bgc-gray-50 d-flex flex-column flex-11a oy-auto ">
-        <div class="max-1000 h-0 d-flex flex-column flex-11a" id="sidenav-content">
+      <mat-sidenav-content class="bgc-gray-50 flex flex-col flex-11a oy-auto ">
+        <div class="max-1000 h-0 flex flex-col flex-11a" id="sidenav-content">
           <router-outlet></router-outlet>
         </div>
       </mat-sidenav-content>

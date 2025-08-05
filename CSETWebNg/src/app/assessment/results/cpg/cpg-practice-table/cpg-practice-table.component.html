@@ -39,16 +39,16 @@
                 <th style="width: 45%;" [style.borderLeftColor]="backgroundColor(d.groupingId)"
                     [style.color]="colorSvc.textColor(backgroundColor(d.groupingId))"
                     [style.background-color]="backgroundColor(d.groupingId)">
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="d-flex flex-row">
-                            <div class="me-2 font-weight-bold">
+                    <div class="flex flex-row justify-between">
+                        <div class="flex flex-row">
+                            <div class="mr-2 font-weight-bold">
                                 {{q.displayNumber}}
                             </div>
                             <div class="font-weight-normal">
                                 <span [innerHTML]="q.securityPractice"></span>
                             </div>
                         </div>
-                        <div class="ms-4 font-weight-normal d-flex flex-wrap justify-content-end align-content-start">
+                        <div class="ms-4 font-weight-normal flex flex-wrap justify-end align-content-start">
                             <ng-container *ngFor="let c of q.csfMappings; let l = last">
                                 <span class="text-nowrap">
                                     {{c}}{{ l ? '' : ','}}

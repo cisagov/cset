@@ -21,21 +21,21 @@
   SOFTWARE.
 -------------------------->
 <div class="ms-4 nested-option-block-report" *ngFor="let o of optRadio">
-    <div class="d-flex flex-row" style="break-inside: avoid">
+    <div class="flex flex-row" style="break-inside: avoid">
         <i *ngIf="o.selected" class="far fa-lg fa-check-square"></i>
         <i *ngIf="!o.selected" class="far fa-lg fa-square"></i>
-        <div class="ms-2" style="white-space: normal">
+        <div class="ml-2" style="white-space: normal">
             <span [innerHTML]="o.optionText"></span>
-            <i *ngIf="o.baselineSelected" class="ms-2 fa fa-star"></i>
+            <i *ngIf="o.baselineSelected" class="ml-2 fa fa-star"></i>
         </div>
     </div>
 
 
     <div>
         <div *ngIf="o.hasAnswerText" [innerHTML]="o.answerText" class="form-control my-2"></div>
-        <div *ngIf="o.hasAnswerText && cisSvc.hasBaseline()" class="d-flex flex-row mt-1 mb-2">
-            <div class="form-control w-100" [innerHTML]="o.baselineAnswerText"></div>
-            <i class="fa fa-star ms-1"></i>
+        <div *ngIf="o.hasAnswerText && cisSvc.hasBaseline()" class="flex flex-row mt-1 mb-2">
+            <div class="form-control w-full" [innerHTML]="o.baselineAnswerText"></div>
+            <i class="fa fa-star ml-1"></i>
         </div>
 
 
@@ -53,21 +53,21 @@
 
 
 <div class="ms-4 nested-option-block-report" *ngFor="let o of optCheckbox">
-    <div class="d-flex flex-row" style="break-inside: avoid">
+    <div class="flex flex-row" style="break-inside: avoid">
         <i *ngIf="o.selected" class="far fa-lg fa-check-square"></i>
         <i *ngIf="!o.selected" class="far fa-lg fa-square"></i>
-        <div class="ms-2" style="white-space: normal">
+        <div class="ml-2" style="white-space: normal">
             <span [innerHTML]="o.optionText"></span>
-            <i *ngIf="o.baselineSelected" class="ms-2 fa fa-star"></i>
+            <i *ngIf="o.baselineSelected" class="ml-2 fa fa-star"></i>
         </div>
     </div>
 
     <div>
         <div *ngIf="o.hasAnswerText" [innerHTML]="o.answerText" class="form-control my-2"></div>
         <div *ngIf="o.hasAnswerText && cisSvc.hasBaseline() && o.baselineAnswerText?.length > 0"
-            class="d-flex flex-row mt-1 mb-2">
-            <div class="form-control w-100" [innerHTML]="o.baselineAnswerText"></div>
-            <i class="fa fa-star ms-1"></i>
+            class="flex flex-row mt-1 mb-2">
+            <div class="form-control w-full" [innerHTML]="o.baselineAnswerText"></div>
+            <i class="fa fa-star ml-1"></i>
         </div>
 
         <div *ngIf="!!o.followups && o.followups.length > 0" class="ms-4 mt-3">
@@ -84,7 +84,7 @@
 
 
 <div *ngFor="let o of optOther" class="ms-4 break-inside-avoid nested-option-block-report">
-    <input type="text" *ngIf="o.optionType == 'text-first'" class="form-control me-1"
+    <input type="text" *ngIf="o.optionType == 'text-first'" class="form-control mr-1"
         style="width: 6rem; display: inline" [value]="o.answerText" (change)="changeText(o, $event)">
 
     <span [innerHTML]="o.optionText"></span>

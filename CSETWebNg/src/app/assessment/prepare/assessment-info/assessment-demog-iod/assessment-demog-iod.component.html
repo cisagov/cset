@@ -21,26 +21,26 @@
   SOFTWARE.
 -------------------------->
 <ng-container *transloco="let t">
-  <div class="assess-component d-flex flex-column justify-content-start flex-11a mb-4">
-    <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+  <div class="assess-component flex flex-col justify-start flex-11a mb-4">
+    <div class="white-panel flex flex-col justify-start flex-11a">
       <h3 class="mb-3">{{t('titles.organization demographics')}}</h3>
 
       <div class="button-container">
 
         <label tabindex="0" id="demographic-import"
-          class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+          class="icon-link-button-dark btn bgc-trans flex justify-center items-center flex-00a"
           matTooltip="Import Organization Demographics, Assessment Configuration, Critical Service Information">
-          <span class="me-2 fs-base-2 cset-icons-import"></span>
+          <span class="mr-2 fs-base-2 cset-icons-import"></span>
           <span class="icon-link-button-text-dark">{{t('buttons.import')}}</span>
           <input type="file" tabindex="0" class="hidden-input" id="importFile" multiple accept=".json"
             (change)="importClick($event)">
         </label>
 
         <button tabindex="0" id="demographic-export"
-          class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+          class="icon-link-button-dark btn bgc-trans flex justify-center items-center flex-00a"
           (click)="exportClick()"
           matTooltip="Export Organization Demographics, Assessment Configuration, Critical Service Information">
-          <span class="cset-icons-export-up fs-base-2 me-2"></span>
+          <span class="cset-icons-export-up fs-base-2 mr-2"></span>
           <span class="icon-link-button-text-dark">{{t('buttons.export')}}</span>
         </button>
 

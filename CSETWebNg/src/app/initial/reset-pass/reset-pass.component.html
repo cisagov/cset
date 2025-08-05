@@ -20,11 +20,11 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div id="white-panel" *transloco="let t" class="p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
-    <div class="px-4 pt-4 d-flex flex-column flex-00a mx-auto col-lg-8 col-md-8 col-sm-10">
+<div id="white-panel" *transloco="let t" class="p-0 bgc-gray-50 flex flex-col justify-start flex-11a">
+    <div class="px-4 pt-4 flex flex-col flex-00a mx-auto col-lg-8 col-md-8 col-sm-10">
 
         <!-- CSET Logo and Name -->
-        <div class="mb-4 d-flex justify-content-start flex-00a">
+        <div class="mb-4 flex justify-start flex-00a">
             <app-logo-cset></app-logo-cset>
         </div>
 
@@ -38,7 +38,7 @@
 
         <div>
             <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate
-                class="d-flex flex-column justify-content-between flex-00a">
+                class="flex flex-col justify-between flex-00a">
                 <div class="mb-3" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
                     <input type="email" tabindex="0" class="form-control" name="email"
                         placeholder="{{'login.placeholder email' | transloco}}" [(ngModel)]="model.email"
@@ -46,7 +46,7 @@
                     <div *ngIf="f.submitted && !email.valid" class="mx-4 alert alert-danger">{{t('login.valid email
                         required')}}</div>
                 </div>
-                <div class="d-flex justify-content-between flex-11a">
+                <div class="flex justify-between flex-11a">
                     <button [disabled]="loading || !enableNext" tabindex="0" class="btn btn-primary"
                         (click)="loadQuestions()">{{t('buttons.next')}}</button>
                     <a [routerLink]="['/home','login']">{{t('buttons.login')}}</a>
@@ -101,7 +101,7 @@
         </div>
         <div class="mx-4 alert alert-danger" *ngIf="errorMsg">{{warning}}</div>
 
-        <div class="mt-4 mb-4 d-flex flex-column justify-content-start align-items-center flex-00a">
+        <div class="mt-4 mb-4 flex flex-col justify-start items-center flex-00a">
             <div class="c-gray-600 mb-4">
                 <app-cset-origin *ngIf="showOrigin">
                 </app-cset-origin>

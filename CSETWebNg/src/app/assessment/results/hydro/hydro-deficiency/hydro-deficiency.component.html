@@ -26,8 +26,8 @@
   </div>
 </div>
 
-<div *ngIf="!loading" class="d-flex flex-column justify-content-start flex-11a">
-  <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+<div *ngIf="!loading" class="flex flex-col justify-start flex-11a">
+  <div class="white-panel flex flex-col justify-start flex-11a">
     <div class="mb-3">
       <h3>Assessment Scores</h3>
       <p>
@@ -35,36 +35,36 @@
       </p>
       <br>
 
-      <div class="d-inline-flex">
-        <div class="d-inline-flex" style="padding-left: 8px;">
-          <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+      <div class="inline-flex">
+        <div class="inline-flex" style="padding-left: 8px;">
+          <div class="inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
             <span class="color-block" style="background: rgb(66, 106, 90);"></span>
             <span class="color-word">High Impact</span>
           </div>
-          <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+          <div class="inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
             <span class="color-block" style="background: rgb(127, 182, 133);"></span>
             <span class="color-word">Medium Impact</span>
           </div>
-          <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+          <div class="inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
             <span class="color-block" style="background: rgb(180, 237, 210);"></span>
             <span class="color-word">Low Impact</span>
           </div>
-          <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+          <div class="inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
             <span class="color-block" style="background: rgb(217, 83, 30);"></span>
             <span class="color-word">UnImplemented</span>
           </div>
         </div>
       </div>
       <div style="justify-items: space-evenly;">
-        <div *ngFor="let id of catIds; let i = index" class="d-inline-flex">
+        <div *ngFor="let id of catIds; let i = index" class="inline-flex">
           <div>
             <app-hydro-donut [totalData]="catCountMap.get(catIds[i])"
               [weightData]="domainWeightTotals[i]"></app-hydro-donut>
-            <div class="d-inline-flex"
+            <div class="inline-flex"
               style="margin-left: 10px; margin-right: 10px; width: 130px; justify-content: center;">
               <button (click)="toggleCategory(catNames[i])" tabindex="0" type="button"
                 style="border-radius: 18px; font-weight: 100; font-size: 75%; justify-content: center;"
-                class="d-inline-flex">
+                class="inline-flex">
                 <span style="text-align: center; padding-right: 8px;">{{catNames[i]}}</span>
                 <i class="cset-icons-chevron-down q-expand" style="justify-self: end; align-self: center;"
                   [class.expand-flip]="catExpandedMap.get(catNames[i])"></i>

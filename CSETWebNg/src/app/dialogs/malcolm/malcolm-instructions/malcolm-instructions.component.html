@@ -20,17 +20,17 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="d-flex flex-column justify-content-center flex-11a" style="width:800px;">
-    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+<div class="flex flex-col justify-center flex-11a" style="width:800px;">
+    <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
         <span class="me-3 fs-base-6 {{iconClass}}"></span>
         <span>Malcolm Instructions</span>
     </div>
 
-    <mat-dialog-content class="p-3 pb-0 pe-0 oy-auto d-flex flex-column flex-11a">
+    <mat-dialog-content class="p-3 pb-0 pe-0 oy-auto flex flex-col flex-11a">
         <div class="pe-3">
             Enter the IP address of the Malcolm instance to attempt to pull data from Malcolm directly
-            <div class="d-flex">
-                <div class="d-flex flex-column me-3">
+            <div class="flex">
+                <div class="flex flex-col me-3">
                     <input #ipAddress class="form-control" maxlength="20" type="text"
                         (blur)="validateIP(ipAddress.value)">
                     <span class="alert alert-danger mt-1" *ngIf="iperror">Not a valid IP address</span>
@@ -66,7 +66,7 @@
         </div>
     </mat-dialog-content>
 
-    <mat-dialog-actions class="p-3 pt-3 mb-0 d-flex ms-auto flex-00a">
+    <mat-dialog-actions class="p-3 pt-3 mb-0 flex ms-auto flex-00a">
         <button class="btn btn-secondary" (click)="dialogRef.close(true)">Close</button>
     </mat-dialog-actions>
 </div>

@@ -20,20 +20,20 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" class="d-flex flex-column justify-content-center flex-11a">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+<div *transloco="let t" class="flex flex-col justify-center flex-11a">
+  <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
     <span class="me-3 fs-base-6 cset-icons-exclamation-triangle" aria-label="charter-warning"></span>
     <span>{{t('dialogs.export assessment title')}}</span>
   </div>
 
-  <mat-dialog-content class="pt-3 ps-3 pe-3 d-flex flex-column flex-11a">
+  <mat-dialog-content class="pt-3 ps-3 pe-3 flex flex-col flex-11a">
 
     <div *ngIf="input.encryption && !input.jsonOnly">
       <p>{{t('dialogs.encrypt 1')}}</p>
       <p>{{t('dialogs.encrypt 2')}}</p>
     </div>
 
-    <div class="input-container ms-1 me-1">
+    <div class="input-container ml-1 mr-1">
       <div *ngIf="input.encryption && !input.jsonOnly">
         <input [type]="showPassword ? 'text' : 'password'" tabindex="0" class="form-control mt-2" name="password"
           placeholder="Password" [(ngModel)]="password" />
@@ -58,7 +58,7 @@
     </div>
   </mat-dialog-content>
 
-  <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">
+  <mat-dialog-actions class="p-3 pt-0 mb-0 flex justify-between flex-11a">
     <button class="m-0 btn btn-secondary" (click)="cancel()">{{ t('buttons.cancel') }}</button>
     <button class="btn btn-primary" (click)="confirm()">{{ t('buttons.continue') }}</button>
   </mat-dialog-actions>

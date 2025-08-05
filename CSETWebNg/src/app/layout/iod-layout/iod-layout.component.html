@@ -20,20 +20,20 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="bgc-page d-flex flex-column flex-11a w-100">
-  <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
+<div class="bgc-page flex flex-col flex-11a w-full">
+  <div class="container-fluid no-gutters flex flex-col justify-start flex-11a w-full" id="cset-app">
     <div class="sticky-navbar">
 
-      <div class="no-gutters local-install mt-0 ps-0 d-flex justify-content-center align-items-center flex-00a"
+      <div class="no-gutters local-install mt-0 ps-0 flex justify-center items-center flex-00a"
         *ngIf="auth.isLocal && devMode">
         <span class="col-sm-12">Local Installation</span>
       </div>
 
-      <div class="no-gutters pcii-header mt-0 ps-3 d-flex flex-00a" *ngIf="assessSvc.isPcii()">
+      <div class="no-gutters pcii-header mt-0 ps-3 flex flex-00a" *ngIf="assessSvc.isPcii()">
         <span class="col-12">Warning: Data contained in this assessment is Protected Critical Infrastructure
           Information <a
             href="https://www.cisa.gov/resources-tools/programs/protected-critical-infrastructure-information-pcii-program"
-            target="_blank" class="ms-2">Click here to learn more</a>
+            target="_blank" class="ml-2">Click here to learn more</a>
         </span>
       </div>
 
@@ -45,7 +45,7 @@
           [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder(this.router.url)) }"
           (click)="this.router.url!='/resource-library' && goHome()">
           <!-- CSET Lock Logo -->
-          <div class="d-flex justify-content-start align-items-center flex-00a">
+          <div class="flex justify-start items-center flex-00a">
             <app-logo-cset mode="white" style="max-height: 3rem"></app-logo-cset>
           </div>
         </span>
@@ -68,8 +68,8 @@
 
 
     <!-- Body -->
-    <div class="no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
-      <div class="p-0 d-flex col-12 bgc-gray-50">
+    <div class="no-gutters flex flex-nowrap justify-between flex-11a w-full">
+      <div class="p-0 flex col-12 bgc-gray-50">
         <router-outlet></router-outlet>
       </div>
     </div>
@@ -87,27 +87,27 @@
       <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
         data-bs-parent="#accordionFooter">
         <div class="footer-section-2 p-0">
-          <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+          <div class="flex flex-row flex-wrap justify-center flex-11a">
             <ng-container *ngIf="isRunningAnonymous()">
               <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer" (click)="showDisclaimer()">INL
                 Privacy & Accessibility</a>
-              <span class="me-2 ms-2">|</span>
+              <span class="mr-2 ml-2">|</span>
               <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                 href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
-              <span class="me-2 ms-2">|</span>
+              <span class="mr-2 ml-2">|</span>
             </ng-container>
             <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
               href="https://www.us-cert.gov/ics/Frequently-Asked-Questions">FAQ</a>
-            <span class="me-2 ms-2">|</span>
+            <span class="mr-2 ml-2">|</span>
             <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
               href="http://www.us-cert.gov/tlp/">Traffic Light Protocol</a>
-            <span class="me-2 ms-2">|</span>
+            <span class="mr-2 ml-2">|</span>
             <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
               href="http://www.us-cert.gov/privacy/">Privacy &amp; Use</a>
-            <span class="me-2 ms-2">|</span>
+            <span class="mr-2 ml-2">|</span>
             <a target="_blank" rel="noopener noreferrer" href="http://www.us-cert.gov/accessibility/">Accessibility</a>
           </div>
-          <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+          <div class="flex flex-row flex-wrap justify-center flex-11a">
             <a target="_blank" rel="noopener noreferrer" href="https://www.cisa.gov/">CISA</a>
             <span style="padding: 2px">is part of the</span>
             <a target="_blank" rel="noopener noreferrer" href="http://www.dhs.gov">Department of Homeland

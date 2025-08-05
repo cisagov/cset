@@ -48,23 +48,23 @@
     <!-- start of the donut box -->
     <div style="position: relative; border: 1px solid rgb(179, 179, 179);">
       <div class="color-legend ms-3 mt-1" style="width: 60%; flex-wrap: wrap;">
-        <div class="row d-flex align-items-center me-4">
+        <div class="row flex items-center me-4">
           <span class="legend-color-box" style="background-color: #265B94;"></span>
           <span style="font-size: 0.8em;">Fully Implemented (FI)</span>
         </div>
-        <div class="row d-flex align-items-center me-4" style="padding-left: 14px;">
+        <div class="row flex items-center me-4" style="padding-left: 14px;">
           <span class="legend-color-box" style="background-color: #F5DA8C;"></span>
           <span style="font-size: 0.8em;">Partially Implemented (PI)</span>
         </div>
-        <div class="row d-flex align-items-center">
+        <div class="row flex items-center">
           <span class="legend-color-box all-borders" style="background-color: #E6E6E6;"></span>
           <span style="font-size: 0.8em;">Unanswered (U)</span>
         </div>
-        <div class="row d-flex align-items-center me-4">
+        <div class="row flex items-center me-4">
           <span class="legend-color-box" style="background-color: #90A5C7;"></span>
           <span style="font-size: 0.8em;">Largely Implemented (LI)</span>
         </div>
-        <div class="row d-flex align-items-center">
+        <div class="row flex items-center">
           <span class="legend-color-box" style="background-color: #DCA237;"></span>
           <span style="font-size: 0.8em;">Not Implemented (NI)</span>
         </div>
@@ -75,10 +75,10 @@
         <div>{{domain.title}}</div>
       </div>
 
-      <div class="d-flex" style="padding: 2px; margin-bottom: -1px; justify-content: space-evenly;
+      <div class="flex" style="padding: 2px; margin-bottom: -1px; justify-content: space-evenly;
         text-align: center; align-items: top;">
 
-        <div *ngFor="let objective of domain.objectives" class="d-flex flex-column justify-content-top"
+        <div *ngFor="let objective of domain.objectives" class="flex flex-col justify-content-top"
           style="max-width: 150px; align-items: center;">
 
           <!-- supplying the donuts with question info -->

@@ -34,7 +34,7 @@
 
   <p>Figure 2 shows the MIL achieved for each C2M2 domain.</p>
 
-  <div class="w-100 d-flex flex-column">
+  <div class="w-full flex flex-col">
     <app-c2m2-domain-mil-bar-chart [domainData]="donutData"></app-c2m2-domain-mil-bar-chart>
     <span class="caption">
       Figure 2: MIL Achieved by Domain
@@ -57,10 +57,10 @@
     Refer to Section 4.2 of the C2M2 V2.1 model document for a description of how MIL achievement is determined.
   </p>
 
-  <div class="d-flex flex-column align-items-center" style="margin-left: -20px;">
+  <div class="flex flex-col items-center" style="margin-left: -20px;">
     <!-- goes to a new MIL row -->
     <div *ngFor="let dataRow of milData; let i = index">
-      <div class="d-flex" style="justify-items: space-evenly; ">
+      <div class="flex" style="justify-items: space-evenly; ">
         <!--supplies donut with current MIL level info for each domain -->
         <div *ngFor="let data of dataRow; let j = index">
           <div *ngIf="i == 0">
@@ -87,24 +87,24 @@
       </div>
     </div>
 
-    <div class="color-legend justify-content-between mt-2 mb-1" style="width: 90%">
-      <div class="row d-flex align-items-center">
+    <div class="color-legend justify-between mt-2 mb-1" style="width: 90%">
+      <div class="row flex items-center">
         <span class="legend-color-box" style="background-color: #265B94;"></span>
         <span style="font-size: 0.8em;">Fully Implemented (FI)</span>
       </div>
-      <div class="row d-flex align-items-center">
+      <div class="row flex items-center">
         <span class="legend-color-box" style="background-color: #90A5C7;"></span>
         <span style="font-size: 0.8em;">Largely Implemented (LI)</span>
       </div>
-      <div class="row d-flex align-items-center">
+      <div class="row flex items-center">
         <span class="legend-color-box" style="background-color: #F5DA8C;"></span>
         <span style="font-size: 0.8em;">Partially Implemented (PI)</span>
       </div>
-      <div class="row d-flex align-items-center">
+      <div class="row flex items-center">
         <span class="legend-color-box" style="background-color: #DCA237;"></span>
         <span style="font-size: 0.8em;">Not Implemented (NI)</span>
       </div>
-      <div class="row d-flex align-items-center">
+      <div class="row flex items-center">
         <span class="legend-color-box all-borders" style="background-color: #E6E6E6;"></span>
         <span style="font-size: 0.8em;">Unanswered (U)</span>
       </div>

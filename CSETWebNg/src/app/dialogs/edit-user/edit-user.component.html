@@ -20,13 +20,13 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" class="edit-user-dialog d-flex flex-column justify-content-center flex-11a">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+<div *transloco="let t" class="edit-user-dialog flex flex-col justify-center flex-11a">
+  <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
     <span class="cset-icons-profile fs-base-6 me-3"></span>
     <span>{{t('user profile.dialog title')}}</span>
   </div>
 
-  <mat-dialog-content class="p-3 pe-0 oy-auto d-flex flex-column flex-11a">
+  <mat-dialog-content class="p-3 pe-0 oy-auto flex flex-col flex-11a">
     <form name="form" #userForm="ngForm" (ngSubmit)="save(userForm)">
       <div class="pe-3">
 
@@ -103,7 +103,7 @@
         </div>
       </div>
 
-      <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">
+      <mat-dialog-actions class="p-3 pt-0 mb-0 flex justify-between flex-11a">
         <button class="m-0 btn btn-primary">{{ t('buttons.save') }}</button>
         <button class="m-0 btn btn-secondary" (click)="cancel()">{{ t('buttons.cancel') }}</button>
       </mat-dialog-actions>

@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 
-<div *transloco="let t" class="white-panel d-flex flex-column justify-content-start flex-11a">
+<div *transloco="let t" class="white-panel flex flex-col justify-start flex-11a">
 
   <h3 class="mb-3">{{t('titles.assessment configuration')}}</h3>
 
@@ -29,7 +29,7 @@
     <app-upgrade></app-upgrade>
   </div>
 
-  <app-assessment-detail class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail>
+  <app-assessment-detail class="mb-5 flex justify-end flex-00a"></app-assessment-detail>
 
 
   <app-nav-back-next [page]="'info1'"></app-nav-back-next>

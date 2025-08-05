@@ -31,7 +31,7 @@
         <p> {{t('reports.core.cpg.deficiency.p.2')}} </p>
     </div>
 
-    <div class="d-flex flex-row justify-content-between align-items-end">
+    <div class="flex flex-row justify-between items-end">
         <h1 class="page-title">{{t('reports.core.cpg.deficiency.deficiencies')}}</h1>
         <p style="color: #de761c;text-align: right;">{{t('reports.core.cpg.deficiency.p.3')}} - <img class="MarkedFlag"
                 src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
@@ -40,7 +40,7 @@
     <hr class="page-break m-0">
 
     <div *ngIf="!loading">
-        <table role="presentation" class="w-100">
+        <table role="presentation" class="w-full">
             <ng-template ngFor let-s [ngForOf]="def">
                 <tr>
                     <td class="deficiencies-list-item pe-3" style="font-weight: bold; width: 50px;">
@@ -52,7 +52,7 @@
                             {{questionsSvc.answerDisplayLabel(11, s.answer.answer_Text)}}
                         </div>
                     </td>
-                    <td class="deficiencies-list-flag"><img class="MarkedFlag ms-2" *ngIf="s.answer.mark_For_Review"
+                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
                             src="assets/images/icons/MarkedFlag.png"></td>
                 </tr>
 

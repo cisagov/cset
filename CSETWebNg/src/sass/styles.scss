@@ -23,7 +23,7 @@ SOFTWARE.
 */
 @use "./mixins";
 @use "./sal";
-@use "@angular/material/prebuilt-themes/indigo-pink.css";
+/* @use "@angular/material/prebuilt-themes/indigo-pink.css"; */ /* Commented out for DaisyUI conversion */
 @use "cset-font-styles.css";
 @use "cset2-font-styles.css";
 
@@ -32,7 +32,7 @@ SOFTWARE.
 }
 
 body {
-  background-color: $gray-50;
+  @apply bg-base-200 font-roboto;
   outline: none;
 }
 
