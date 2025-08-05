@@ -24,3 +24,11 @@ SOFTWARE.
 @use './sass/_variables.scss';
 @use './sass/_mixins.scss';
 //@use "~@ng-select/ng-select/themes/material.theme.css";
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';
+.ag-theme-alpine{
+  --ag-font-family: inherit;
+  --ag-font-size: 14px;
+  --ag-header-background-color: #367190;
+  --ag-odd-row-background-color: transparent;
+}

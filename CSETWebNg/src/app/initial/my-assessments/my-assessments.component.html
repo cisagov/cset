@@ -27,46 +27,6 @@
             <div *ngIf="browserIsIE" class="alert alert-danger text-start">
                 {{ t('welcome page.internet explorer') }}
             </div>
-
-          <!--          <div class="filter-controls mb-3">-->
-
-          <!--            <button-->
-          <!--              type="button"-->
-          <!--              class="btn me-2"-->
-          <!--              [class.btn-primary]="currentFilter === 'all'"-->
-          <!--            [class.btn-outline-primary]="currentFilter !== 'all'"-->
-          <!--            (click)="setFilter('all')">-->
-          <!--            All-->
-          <!--            </button>-->
-
-          <!--            <button-->
-          <!--              type="button"-->
-          <!--              class="btn btn-sm"-->
-          <!--            [class.btn-success]="currentFilter === 'done'"-->
-          <!--            [class.btn-outline-success]="currentFilter !== 'done'"-->
-          <!--            (click)="setFilter('done')">-->
-          <!--            Done-->
-          <!--            </button>-->
-          <!--            <button-->
-          <!--              type="button"-->
-          <!--              class="btn"-->
-          <!--              [class.btn-warning]="currentFilter === 'pending'"-->
-          <!--            [class.btn-outline-warning]="currentFilter !== 'pending'"-->
-          <!--            (click)="setFilter('pending')">-->
-          <!--            Pending-->
-          <!--            </button>-->
-          <!--            <button-->
-          <!--              type="button"-->
-          <!--              class="btn me-2"-->
-          <!--              [class.btn-success]="currentFilter === 'favorite'"-->
-          <!--              [class.btn-outline-success]="currentFilter !== 'favorite'"-->
-          <!--              (click)="setFilter('favorite')">-->
-          <!--              Favorite-->
-          <!--            </button>-->
-
-
-          <!--          </div>
--->
             <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
                 <h3 class="mt-0" *ngIf="sortedAssessments?.length > 0">{{ t('my assessments') }}</h3>
                 <div class="mt-3 mb-4 d-flex flex-column justify-content-between flex-00a">
@@ -215,96 +175,96 @@
         <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto">
 
             <!-- table for larger layouts -->
-            <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort
-                (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
-                <th aria-label="{{ t('assessment name')}}" mat-sort-header="assessment" style="width: 25%;">{{
-                    t('assessment name')}}
-                </th>
-                <th aria-label="{{ t('assessment type')}}" mat-sort-header="type" style="width:15%;">{{
-                    t('assessment type')}}</th>
-                <th aria-label="{{ t('last modified')}}" mat-sort-header="date" style="width:15%;">{{ t('last modified')}}</th>
-                <th *ngIf="showColumn('primary-assessor')" aria-label="assessor" mat-sort-header="assessor"
-                    style="width:15%;">{{t('primary assessor')}}</th>
-                <th aria-label="{{t('status')}}" style="width:15%;">{{t('status')}}</th>
-                <th aria-label="delete assessment" style="width:5%; min-width:25px;"></th>
-                <th aria-label="export assessment" style="width:5%;"></th>
-                <th aria-label="export JSON" style="width:5%;" *ngIf="showColumn('export json')"></th>
-                <th aria-label="Analytics" style="width:5%;" *ngIf="showColumn('analytics')"></th>
-                <tr *ngFor="let assessment of filteredAssessments;  let i = index">
-                    <td>
-                        <button tabindex="0"
-                            class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"
-                            (click)="this.navSvc.beginAssessment(assessment.assessmentId)">
-                            {{assessment.assessmentName}}
-                        </button>
-                    </td>
+<!--            <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort-->
+<!--                (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">-->
+<!--                <th aria-label="{{ t('assessment name')}}" mat-sort-header="assessment" style="width: 25%;">{{-->
+<!--                    t('assessment name')}}-->
+<!--                </th>-->
+<!--                <th aria-label="{{ t('assessment type')}}" mat-sort-header="type" style="width:15%;">{{-->
+<!--                    t('assessment type')}}</th>-->
+<!--                <th aria-label="{{ t('last modified')}}" mat-sort-header="date" style="width:15%;">{{ t('last modified')}}</th>-->
+<!--                <th *ngIf="showColumn('primary-assessor')" aria-label="assessor" mat-sort-header="assessor"-->
+<!--                    style="width:15%;">{{t('primary assessor')}}</th>-->
+<!--                <th aria-label="{{t('status')}}" style="width:15%;">{{t('status')}}</th>-->
+<!--                <th aria-label="delete assessment" style="width:5%; min-width:25px;"></th>-->
+<!--                <th aria-label="export assessment" style="width:5%;"></th>-->
+<!--                <th aria-label="export JSON" style="width:5%;" *ngIf="showColumn('export json')"></th>-->
+<!--                <th aria-label="Analytics" style="width:5%;" *ngIf="showColumn('analytics')"></th>-->
+<!--                <tr *ngFor="let assessment of filteredAssessments;  let i = index">-->
+<!--                    <td>-->
+<!--                        <button tabindex="0"-->
+<!--                            class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"-->
+<!--                            (click)="this.navSvc.beginAssessment(assessment.assessmentId)">-->
+<!--                            {{assessment.assessmentName}}-->
+<!--                        </button>-->
+<!--                    </td>-->
 
 
-                    <td>{{assessment.type}}</td>
-                    <td>{{assessment.lastModifiedDate | localizeDate}}</td>
-                    <td *ngIf="showColumn('primary-assessor')">{{assessment.firstName}} {{assessment.lastName}}</td>
-                    <td>
-                      <div class="flex items-center gap-3">
-                        <!-- Heart Icon for Favorites using Material Icon -->
-                        <mat-icon *ngIf="assessment.favorite" class="text-error" style="font-size: 20px;">
-                          favorite
-                        </mat-icon>
+<!--                    <td>{{assessment.type}}</td>-->
+<!--                    <td>{{assessment.lastModifiedDate | localizeDate}}</td>-->
+<!--                    <td *ngIf="showColumn('primary-assessor')">{{assessment.firstName}} {{assessment.lastName}}</td>-->
+<!--                    <td>-->
+<!--                      <div class="flex items-center gap-3">-->
+<!--                        &lt;!&ndash; Heart Icon for Favorites using Material Icon &ndash;&gt;-->
+<!--                        <mat-icon *ngIf="assessment.favorite" class="text-error" style="font-size: 20px;">-->
+<!--                          favorite-->
+<!--                        </mat-icon>-->
 
-                        <progress class="progress text-primary w-56" [value]="getCompletionPercentage(assessment)" max="100"></progress>
-                      </div>
-                        <div
-                            *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">
-                            <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
-                                {{ { c: assessment.completedQuestionsCount, t:
-                                assessment.totalAvailableQuestionsCount, qa: assessment.questionAlias, l:
-                                tSvc.getActiveLang() } | completionCount }}
-                            </span>
-                            <ng-template #blankAssessment>
-                                {{ t('welcome page.blank assessment') }}
-                            </ng-template>
-                            <br>
-                        </div>
-                        <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
-                            matTooltip="{{t('tooltip.assessment requires review')}}">{{t('requires review')}}
-                        </span>
-                    </td>
-                    <td>
-                        <button tabindex="0"
-                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                            (click)="removeAssessment(assessment, i)" matTooltip="{{ t('tooltip.remove assessment') }}">
-                            <span class="cset-icons-trash-x fs-base-2 me-2"></span>
-                            <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.remove')}}</span>
-                        </button>
-                    </td>
-                    <td *ngIf="showColumn('export')">
-                        <button tabindex="0" id="assess-{{i}}-export"
-                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                            (click)="clickDownloadLink(assessment.assessmentId)"
-                            matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
-                            <span class="cset-icons-export-up fs-base-2 me-2"></span>
-                            <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.export')}}</span>
-                        </button>
-                    </td>
-                    <td *ngIf="showColumn('export json')">
-                        <button tabindex="0" id="assess-{{i}}-export"
-                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                            (click)="clickDownloadLink(assessment.assessmentId, true)"
-                            matTooltip="{{ t('tooltip.export assessment json') }}">
-                            <span class="cset-icons-export-up fs-base-2 me-2"></span>
-                            <span class="icon-link-button-text-dark">{{t('buttons.export json')}}</span>
-                        </button>
-                    </td>
-                    <td style="display:none;" *ngIf="showColumn('analytics')">
-                        <button tabindex="0"
-                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-                            (click)="this.analyticsSvc.loadAssessment(assessment.assessmentId)"
-                            matTooltip="{{ t('tooltip.analytics') }}">
-                            <span class="cset-icons-bar-chart-vertical fs-base-2 me-2"></span>
-                            <span class="icon-link-button-text-dark">{{t('buttons.analytics')}}</span>
-                        </button>
-                    </td>
-                </tr>
-            </table>
+<!--                        <progress class="progress text-primary w-56" [value]="getCompletionPercentage(assessment)" max="100"></progress>-->
+<!--                      </div>-->
+<!--                        <div-->
+<!--                            *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">-->
+<!--                            <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">-->
+<!--                                {{ { c: assessment.completedQuestionsCount, t:-->
+<!--                                assessment.totalAvailableQuestionsCount, qa: assessment.questionAlias, l:-->
+<!--                                tSvc.getActiveLang() } | completionCount }}-->
+<!--                            </span>-->
+<!--                            <ng-template #blankAssessment>-->
+<!--                                {{ t('welcome page.blank assessment') }}-->
+<!--                            </ng-template>-->
+<!--                            <br>-->
+<!--                        </div>-->
+<!--                        <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""-->
+<!--                            matTooltip="{{t('tooltip.assessment requires review')}}">{{t('requires review')}}-->
+<!--                        </span>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <button tabindex="0"-->
+<!--                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"-->
+<!--                            (click)="removeAssessment(assessment, i)" matTooltip="{{ t('tooltip.remove assessment') }}">-->
+<!--                            <span class="cset-icons-trash-x fs-base-2 me-2"></span>-->
+<!--                            <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.remove')}}</span>-->
+<!--                        </button>-->
+<!--                    </td>-->
+<!--                    <td *ngIf="showColumn('export')">-->
+<!--                        <button tabindex="0" id="assess-{{i}}-export"-->
+<!--                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"-->
+<!--                            (click)="clickDownloadLink(assessment.assessmentId)"-->
+<!--                            matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">-->
+<!--                            <span class="cset-icons-export-up fs-base-2 me-2"></span>-->
+<!--                            <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.export')}}</span>-->
+<!--                        </button>-->
+<!--                    </td>-->
+<!--                    <td *ngIf="showColumn('export json')">-->
+<!--                        <button tabindex="0" id="assess-{{i}}-export"-->
+<!--                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"-->
+<!--                            (click)="clickDownloadLink(assessment.assessmentId, true)"-->
+<!--                            matTooltip="{{ t('tooltip.export assessment json') }}">-->
+<!--                            <span class="cset-icons-export-up fs-base-2 me-2"></span>-->
+<!--                            <span class="icon-link-button-text-dark">{{t('buttons.export json')}}</span>-->
+<!--                        </button>-->
+<!--                    </td>-->
+<!--                    <td style="display:none;" *ngIf="showColumn('analytics')">-->
+<!--                        <button tabindex="0"-->
+<!--                            class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"-->
+<!--                            (click)="this.analyticsSvc.loadAssessment(assessment.assessmentId)"-->
+<!--                            matTooltip="{{ t('tooltip.analytics') }}">-->
+<!--                            <span class="cset-icons-bar-chart-vertical fs-base-2 me-2"></span>-->
+<!--                            <span class="icon-link-button-text-dark">{{t('buttons.analytics')}}</span>-->
+<!--                        </button>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </table>-->
 
             <!-- table for handset portrait -->
             <table *ngIf="layoutSvc.hp" role="presentation" aria-label="assessments" matSort
@@ -336,7 +296,22 @@
                     </td>
                 </tr>
             </table>
-
+          <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a">
+            <ag-grid-angular
+              class="ag-theme-alpine"
+              theme="legacy"
+              [rowData]="filteredAssessments"
+              [columnDefs]="columnDefs"
+              [defaultColDef]="defaultColDef"
+              [pagination]="true"
+              [paginationPageSize]="50"
+              [suppressCellFocus]="true"
+              [rowHeight]="50"
+              (gridReady)="onGridReady($event)"
+              (cellClicked)="onCellClicked($event)"
+              style="height: 600px; width: 100%;">
+            </ag-grid-angular>
+          </div>
         </div>
     </div>
 </ng-container>

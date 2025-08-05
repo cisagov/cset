@@ -25,7 +25,8 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { DatePipe } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, inject, provideAppInitializer } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import {AgGridModule} from 'ag-grid-angular';
+import {ModuleRegistry, AllCommunityModule} from 'ag-grid-community';
 // import { MatAutocompleteModule } from '@angular/material/autocomplete';
 // import { MatNativeDateModule } from '@angular/material/core';
 // import { MatDialogModule } from '@angular/material/dialog';
@@ -612,7 +613,7 @@ import { CisaVadrInfoComponent } from './assessment/prepare/maturity/cisa-vadr-i
 
 
 registerSwiper();
-
+ModuleRegistry.registerModules([AllCommunityModule]);
 @NgModule({
     declarations: [
         AppComponent,
@@ -1138,6 +1139,7 @@ registerSwiper();
         NgxChartsModule,
         TooltipModule,
         EllipsisModule,
+        AgGridModule,
         CodeEditorModule,
         HotkeyModule.forRoot()],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

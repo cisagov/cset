@@ -46,6 +46,8 @@
     "@swimlane/ngx-charts": "^23.0.0-alpha.0",
     "@types/jquery": "^3.5.32",
     "@types/sanitize-html": "^2.16.0",
+    "ag-grid-angular": "^34.1.0",
+    "ag-grid-community": "^34.1.0",
     "angular2-hotkeys": "^16.0.1",
     "bootstrap": "^5.3.7",
     "chart.js": "^4.5.0",

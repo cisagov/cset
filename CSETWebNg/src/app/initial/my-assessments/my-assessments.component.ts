@@ -48,7 +48,7 @@ import { TranslocoService } from "@jsverse/transloco";
 import { DateAdapter } from '@angular/material/core';
 import { ConversionService } from "../../services/conversion.service";
 import { FileExportService } from "../../services/file-export.service";
-
+import {ColDef, GridApi, GridReadyEvent} from 'ag-grid-community';
 
 interface UserAssessment {
   isEntry: boolean;
@@ -105,7 +105,61 @@ export class MyAssessmentsComponent implements OnInit {
 
   timer = ms => new Promise(res => setTimeout(res, ms));
   currentFilter:'all'| 'done' | 'pending' |'favorite'= 'all';
+  private gridApi!: GridApi;
 
+  columnDefs: ColDef[] = [
+    {
+      field: 'assessmentName',
+  headerName: 'Assessment Name',
+  sortable: true,
+  filter: true,
+  flex: 2,
+  cellRenderer: this.assessmentNameRenderer.bind(this)
+},
+{
+  field: 'type',
+  headerName: 'Assessment Type',
+  sortable: true,
+    filter: true,
+  flex: 1
+},
+{
+  field: 'lastModifiedDate',
+  headerName: 'Last Modified',
+  sortable: true,
+    flex: 1,
+  valueFormatter: (params) => this.formatDate(params.value)
+},
+{
+  field: 'creatorName',
+  headerName: 'Primary Assessor',
+  sortable: true,
+    flex: 1,
+  hide: !this.showColumn('primary-assessor'),
+  valueGetter: (params) => `${params.data.firstName || ''} ${params.data.lastName || ''}`.trim()
+},
+{
+  headerName: 'Status',
+  cellRenderer: this.statusRenderer.bind(this),
+    sortable: false,
+  filter: false,
+  flex: 2
+},
+{
+  headerName: 'Actions',
+  cellRenderer: this.actionsRenderer.bind(this),
+    sortable: false,
+  filter: false,
+  width: 120,
+  pinned: 'right'
+}
+];
+
+defaultColDef: ColDef = {
+  resizable: true,
+  sortable: true,
+  filter: true
+};
   constructor(
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
@@ -491,5 +545,109 @@ export class MyAssessmentsComponent implements OnInit {
       return 0;
     }
     return Math.round((assessment.completedQuestionsCount/assessment.totalAvailableQuestionsCount)*100)
+  }
+  // Assessment name cell with clickable link
+  assessmentNameRenderer(params: any): string {
+    const assessmentId = params.data.assessmentId;
+    const assessmentName = params.value;
+
+    return `
+    <button
+      class="btn btn-link btn-link-dark text-start p-0 h-auto min-h-0 normal-case justify-start"
+      data-action="navigate"
+      data-assessment-id="${assessmentId}"
+      style="text-align: left; width: 100%;">
+      ${assessmentName}
+    </button>
+  `;
+  }
+
+// Status cell with progress and favorite icon
+  statusRenderer(params: any): string {
+    const assessment = params.data;
+    const percentage = this.getCompletionPercentage(assessment);
+    const favoriteIcon = assessment.favorite ?
+      '<i class="material-icons text-red-500 mr-2" style="font-size: 18px;">favorite</i>' : '';
+
+    return `
+    <div class="flex items-center gap-3">
+      ${favoriteIcon}
+      <progress class="progress progress-primary w-24" value="${percentage}" max="100"></progress>
+      <span class="text-xs font-medium">${percentage}%</span>
+    </div>
+  `;
+  }
+
+// Actions cell with delete and export buttons
+  actionsRenderer(params: any): string {
+    const assessmentId = params.data.assessmentId;
+    const rowIndex = params.rowIndex;
+
+    let buttons = `
+    <button
+      class="btn btn-ghost btn-sm btn-square text-error hover:bg-error hover:text-white"
+      data-action="delete"
+      data-assessment-id="${assessmentId}"
+      data-row-index="${rowIndex}"
+      title="Remove assessment">
+<!--      <i class="material-icons" style="font-size: 16px;">delete</i>-->
+  <span class="cset-icons-trash-x fs-base-2 me-2"></span>
+    </button>
+  `;
+
+    if (this.showColumn('export')) {
+      buttons += `
+      <button
+        class="btn btn-ghost btn-sm btn-square ml-1"
+        data-action="export"
+        data-assessment-id="${assessmentId}"
+        title="Export assessment">
+        <span class="cset-icons-export-up text-sm"></span>
+      </button>
+    `;
+    }
+
+    return `<div class="flex gap-1">${buttons}</div>`;
+  }
+
+// Handle grid clicks
+  onCellClicked(event: any): void {
+    const target = event.event.target;
+    const action = target.getAttribute('data-action');
+
+    if (!action) return;
+
+    const assessmentId = parseInt(target.getAttribute('data-assessment-id'));
+
+    switch(action) {
+      case 'navigate':
+        this.navSvc.beginAssessment(assessmentId);
+        break;
+
+      case 'delete':
+        const rowIndex = parseInt(target.getAttribute('data-row-index'));
+        const assessment = this.filteredAssessments.find(a => a.assessmentId === assessmentId);
+        if (assessment) {
+          this.removeAssessment(assessment, rowIndex);
+        }
+        break;
+
+      case 'export':
+        this.clickDownloadLink(assessmentId);
+        break;
+    }
+  }
+
+// Grid ready event
+  onGridReady(params: GridReadyEvent): void {
+    this.gridApi = params.api;
+    params.api.sizeColumnsToFit();
+  }
+
+// Format date helper
+  formatDate(dateString: string): string {
+    // Use your existing date formatting or the pipe
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
   }
 }
