@@ -21,7 +21,7 @@
           </label>
           <div class="relative">
             <input type="text" trim="blur" placeholder="Username" formControlName="username"
-              [errorStateMatcher]="matcherusername" class="input input-bordered w-full pl-10">
+              class="input input-bordered w-full pl-10">
             <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/70">
               <i class="fa-solid fa-user"></i>
             </span>
@@ -37,7 +37,7 @@
           </label>
           <div class="relative">
             <input [type]="hidePassword ? 'password' : 'text'" trim="blur" placeholder="Password"
-              formControlName="password" [errorStateMatcher]="matcherpassword" class="input input-bordered w-full pl-10 pr-12">
+              formControlName="password" class="input input-bordered w-full pl-10 pr-12">
             <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/70">
               <i class="fa-solid fa-lock"></i>
             </span>
