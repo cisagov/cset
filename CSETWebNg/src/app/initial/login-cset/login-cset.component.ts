@@ -37,6 +37,9 @@ import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/onlin
     selector: 'app-login-cset',
     templateUrl: './login-cset.component.html',
     styleUrls: ['./login-cset.component.scss'],
+    host: {
+        'class': 'block min-h-screen w-full'
+    },
     standalone: false
 })
 export class LoginCsetComponent implements OnInit {
