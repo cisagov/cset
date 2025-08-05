@@ -31,9 +31,17 @@ SOFTWARE.
   font-family: "Roboto", sans-serif;
 }
 
+html, body {
+  @apply h-full min-h-screen;
+}
+
 body {
   @apply bg-base-200 font-roboto;
   outline: none;
+}
+
+app-root {
+  @apply block h-full min-h-screen;
 }
 
 .gutter-background {

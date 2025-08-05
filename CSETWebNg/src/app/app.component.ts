@@ -54,7 +54,7 @@ declare var $: any;
   templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.None,
   // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a w-100' },
+  host: { class: 'flex flex-col flex-1 w-full h-full min-h-screen' },
   standalone: false
 })
 export class AppComponent implements OnInit, AfterViewInit {

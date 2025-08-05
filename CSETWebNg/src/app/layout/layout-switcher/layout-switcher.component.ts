@@ -29,7 +29,7 @@ import { ConfigService } from '../../services/config.service';
     templateUrl: './layout-switcher.component.html',
     encapsulation: ViewEncapsulation.None,
     // eslint-disable-next-line
-    host: { class: 'h-100' },
+    host: { class: 'min-h-screen w-full' },
     standalone: false
 })
 
