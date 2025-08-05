@@ -26,7 +26,7 @@
     <button *ngIf="i < breadcrumbs.length - 1" (click)="navToCrumb(breadcrumb)" class="btn btn-link">
       {{ breadcrumb.displayName }}
     </button>
-    <span *ngIf="i < breadcrumbs.length - 1" class="ms-1 me-1">&raquo;</span>
+    <span *ngIf="i < breadcrumbs.length - 1" class="ml-1 mr-1">&raquo;</span>
     <span *ngIf="i === breadcrumbs.length - 1" class="btn disabled">{{ breadcrumb.displayName }}</span>
   </li>
 </ol>

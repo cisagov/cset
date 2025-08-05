@@ -29,19 +29,19 @@
   </p>
 </div>
 
-<div class="d-flex flex-row col-12">
+<div class="flex flex-row col-12">
   <div class="col-4 ps-0 pe-0">
     <ul style="padding-inline-start: 0" class="pe-5">
       <li *ngFor="let g of resp?.groupings" class="cursor-pointer list-unstyled">
-        <div (click)="selectGrouping(g)" [class.cat-selected]="g === currentGrouping" class="p-1 ps-2 pe-2 w-100">
+        <div (click)="selectGrouping(g)" [class.cat-selected]="g === currentGrouping" class="p-1 ps-2 pe-2 w-full">
           {{ g.title }}
         </div>
       </li>
     </ul>
   </div>
-  <div class="chart d-flex flex-column flex-00a col-8">
-    <div class="d-flex flex-wrap flex-00a sticky-sal">
-      <div class="mt-2 text-center w-100">
+  <div class="chart flex flex-col flex-00a col-8">
+    <div class="flex flex-wrap flex-00a sticky-sal">
+      <div class="mt-2 text-center w-full">
         <h5>
           {{ currentGrouping?.title }}
         </h5>

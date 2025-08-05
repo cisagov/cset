@@ -23,38 +23,48 @@
 <ng-container *transloco="let t">
     <h4>{{t('organization details')}}</h4>
     <form #f="ngForm">
-        <div class="row mb-3">
-            <p *ngIf="showAssessmentNameDisclaimer()">{{t('no pii in name')}}</p>
-            <div class="col">
-                <label class="form-label" for="name">{{t('assessment name')}}</label>
-                <input type="text" maxlength="100" class="form-control" id="name" name="name" required
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <p *ngIf="showAssessmentNameDisclaimer()" class="col-span-full">{{t('no pii in name')}}</p>
+            <div class="form-control w-full">
+                <label class="label" for="name">
+                    <span class="label-text">{{t('assessment name')}}</span>
+                </label>
+                <input type="text" maxlength="100" class="input input-bordered w-full" id="name" name="name" required
                     focusOnInit="true" [(ngModel)]="assessment.assessmentName"
                     (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
             </div>
-            <div class="col">
-                <label class="form-label" for="date">{{t('assessment date')}}</label>
-                <input matInput MatDatepickerInput class="form-control" id="date" name="date"
+            <div class="form-control w-full">
+                <label class="label" for="date">
+                    <span class="label-text">{{t('assessment date')}}</span>
+                </label>
+                <input matInput MatDatepickerInput class="input input-bordered w-full" id="date" name="date"
                     [(ngModel)]="assessment.assessmentDate" [matDatepicker]="picker" (focus)="picker.open()"
                     (blur)="update($event)" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
                 <mat-datepicker #picker></mat-datepicker>
             </div>
         </div>
 
-        <div class="col mb-3" *ngIf="showFacilityName()">
-            <label class="form-label" for="facility">{{t('facility name')}}</label>
-            <input type="text" maxlength="100" class="form-control" id="facility" name="facility"
+        <div class="form-control w-full mb-6" *ngIf="showFacilityName()">
+            <label class="label" for="facility">
+                <span class="label-text">{{t('facility name')}}</span>
+            </label>
+            <input type="text" maxlength="100" class="input input-bordered w-full" id="facility" name="facility"
                 [(ngModel)]="assessment.facilityName" (change)="update($event)" tabindex="0">
         </div>
 
-        <div class="row mb-4">
-            <div class="col" *ngIf="showCityName()">
-                <label class="form-label" for="citySite">{{t('city or site name')}}</label>
-                <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite"
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="form-control w-full" *ngIf="showCityName()">
+                <label class="label" for="citySite">
+                    <span class="label-text">{{t('city or site name')}}</span>
+                </label>
+                <input type="text" maxlength="100" class="input input-bordered w-full" id="citySite" name="citySite"
                     [(ngModel)]="assessment.cityOrSiteName" (change)="update($event)" tabindex="0">
             </div>
-            <div class="col" *ngIf="showStateName()">
-                <label class="form-label" for="stateProvRegion">{{t('state province region')}}</label>
-                <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion"
+            <div class="form-control w-full" *ngIf="showStateName()">
+                <label class="label" for="stateProvRegion">
+                    <span class="label-text">{{t('state province region')}}</span>
+                </label>
+                <input type="text" maxlength="100" class="input input-bordered w-full" id="stateProvRegion" name="stateProvRegion"
                     [(ngModel)]="assessment.stateProvRegion" (change)="update($event)" tabindex="0">
             </div>
         </div>
@@ -78,23 +88,20 @@
     <div *ngIf="this.configSvc.userIsCisaAssessor" class="mt-4">
         <h4>{{ t('assessment settings') }}</h4>
 
-        <div class="mb-3 col-6">
-            <label class="form-label">{{t('protected features.cisa assessor workflow')}}</label>
-            <div>
-                <div class="btn-group btn-group-toggle col-10" data-toggle="buttons"
-                    style="border: 2px solid transparent; border-radius: 8px;">
-                    <label class="btn btn-level form-check-label" [class.active]="assessment.assessorMode"
-                        (change)="updateAssessorMode()">
-                        <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
-                            [checked]="assessment.assessorMode" />
-                        {{t('answer-options.button-labels.yes')}}
-                    </label>
-                    <label class="btn btn-level form-check-label" [class.active]="!assessment.assessorMode"
-                        (change)="updateAssessorMode()">
-                        <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
-                            [checked]="!assessment.assessorMode" />
-                        {{t('answer-options.button-labels.no')}}
-                    </label>
+        <div class="form-control w-full max-w-md mb-6">
+            <label class="label">
+                <span class="label-text">{{t('protected features.cisa assessor workflow')}}</span>
+            </label>
+            <div class="join">
+                <input class="join-item btn" type="radio" name="assessorMode" aria-label="{{t('answer-options.button-labels.yes')}}"
+                    [checked]="assessment.assessorMode" (change)="updateAssessorMode()" tabindex="0" />
+                <div class="join-item btn" [class.btn-active]="assessment.assessorMode">
+                    {{t('answer-options.button-labels.yes')}}
+                </div>
+                <input class="join-item btn" type="radio" name="assessorMode" aria-label="{{t('answer-options.button-labels.no')}}"
+                    [checked]="!assessment.assessorMode" (change)="updateAssessorMode()" tabindex="0" />
+                <div class="join-item btn" [class.btn-active]="!assessment.assessorMode">
+                    {{t('answer-options.button-labels.no')}}
                 </div>
             </div>
         </div>

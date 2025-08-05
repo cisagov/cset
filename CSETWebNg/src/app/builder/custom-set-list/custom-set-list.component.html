@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel max-1200 m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
+<div class="white-panel max-1200 m-0 flex flex-col flex-11a oy-auto h-0 w-full">
   <div class="max-1200">
     <app-builder-breadcrumbs></app-builder-breadcrumbs>
     <h3>
@@ -31,38 +31,38 @@
     </p>
     <div>
       <button class="btn btn-primary" (click)="setBuilderSvc.newCustomSet()">
-        <span class="cset-icons-plus fs-base me-2"></span>
+        <span class="cset-icons-plus fs-base mr-2"></span>
         Create Module
       </button>
     </div>
 
     <div *ngIf="!setDetailList">
-      <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+      <div class="spinner-container m-0 flex justify-center items-center flex-11a">
         <div class="spinner-size-50"></div>
       </div>
     </div>
     <div *ngIf="setDetailList?.length > 0" class="row">
       <div class="col-12">
-        <table class="w-100">
+        <table class="w-full">
           <tr *ngFor="let s of setDetailList">
-            <td class="w-100">
+            <td class="w-full">
               <button style="white-space: normal; text-align:left;" class="btn btn-link"
                 (click)="setBuilderSvc.navSetDetail2(s.setName)">
                 {{s.fullName}}
               </button>
             </td>
             <td>
-              <button type="button" class="p-0 me-3 btn icon-button d-flex flex-column align-items-center flex-00a"
+              <button type="button" class="p-0 me-3 btn icon-button flex flex-col items-center flex-00a"
                 (click)="this.cloneSet(s.setName)">
                 <span class="fa fa-clone fs-base-2"></span>
-                <span class="d-none d-md-flex fs-smaller">Clone</span>
+                <span class="d-none d-mflex fs-smaller">Clone</span>
               </button>
             </td>
             <td *ngIf="canDeleteCustomModules">
               <button type="button" *ngIf="s.isCustom"
-                class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="this.deleteSet(s)">
+                class="p-0 btn icon-button flex flex-col items-center flex-00a" (click)="this.deleteSet(s)">
                 <span class="cset-icons-trash-can fs-base-2"></span>
-                <span class="d-none d-md-flex fs-smaller">Delete</span>
+                <span class="d-none d-mflex fs-smaller">Delete</span>
               </button>
             </td>
           </tr>

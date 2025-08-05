@@ -20,12 +20,12 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="d-flex flex-column justify-content-center flex-11a h-100 w-100" *transloco="let t">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+<div class="flex flex-col justify-center flex-11a h-full w-full" *transloco="let t">
+  <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
     <span class="fs-base-6 me-3"><i class="fa-solid fa-file"></i></span>
     <span>{{t('titles.assessment description')}}</span>
   </div>
-  <mat-dialog-content class="pb-0 p-3 pe-0 oy-auto d-flex flex-column flex-11a h-100"
+  <mat-dialog-content class="pb-0 p-3 pe-0 oy-auto flex flex-col flex-11a h-full"
     style="position:relative; overflow-x:hidden;">
     <div class="p-4" style="z-index: 100">
       <h3 class="mb-4">{{ data.title }}</h3>

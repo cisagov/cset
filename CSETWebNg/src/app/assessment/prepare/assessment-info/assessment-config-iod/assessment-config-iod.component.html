@@ -20,8 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" class="assess-component d-flex flex-column justify-content-start flex-11a mb-4">
-  <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+<div *transloco="let t" class="assess-component flex flex-col justify-start flex-11a mb-4">
+  <div class="white-panel flex flex-col justify-start flex-11a">
     <h3 class="mb-3">{{t('titles.assessment configuration')}}</h3>
 
     <div *ngIf="this.showUpgrade">
@@ -115,13 +115,13 @@
           <div class="btn-group btn-group-toggle col-10" data-toggle="buttons" style="border: 2px solid transparent; border-radius: 8px;">
             <label class="btn btn-level form-check-label" [class.active]="assessment.assessorMode"
               (change)="updateAssessorMode()">
-              <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+              <input class="btn-check items-center" type="radio" autocomplete="off" tabindex="0"
                 [checked]="assessment.assessorMode" />
               {{t('answer-options.button-labels.yes')}}
             </label>
             <label class="btn btn-level form-check-label" [class.active]="!assessment.assessorMode"
               (change)="updateAssessorMode()">
-              <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+              <input class="btn-check items-center" type="radio" autocomplete="off" tabindex="0"
                 [checked]="!assessment.assessorMode" />
               {{t('answer-options.button-labels.no')}}
             </label>
@@ -150,7 +150,7 @@
     <div class="mt-4">
       <app-assessment-contacts (triggerChange)="refreshContacts()"></app-assessment-contacts>
     </div>
-    <hr class="w-100 hr-sal my-4" />
+    <hr class="w-full hr-sal my-4" />
 
     <div *ngIf="showFacilitator()" class="mb-4">
       <label class="form-label" for="facilitator">{{t('contact.facilitator')}}</label>

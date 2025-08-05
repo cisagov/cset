@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex justify-content-start flex-column flex-11a trend-table-width" *transloco="let t">
+<div class="white-panel flex justify-start flex-col flex-11a trend-table-width" *transloco="let t">
   <div class="max-1200">
     <h3 class="mb-4">{{t('aggregation.compare.compare assessments')}}</h3>
 
@@ -53,11 +53,11 @@
           [checked]="tab === 'BESTWORST'">{{t('aggregation.compare.best to worst')}}
       </label>
 
-      <hr class="w-100 hr-sal mt-1 mb-5" />
+      <hr class="w-full hr-sal mt-1 mb-5" />
 
-      <div class="mt-0 me-0 d-flex flex-column justify-content-start flex-11a">
+      <div class="mt-0 mr-0 flex flex-col justify-start flex-11a">
         <div *ngIf="this.type === 'maturity-based'; else standardsBased" [ngSwitch]="tab"
-          class="d-flex flex-column justify-content-start flex-00a">
+          class="flex flex-col justify-start flex-00a">
           <app-compare-individual-maturity *ngSwitchCase="'INDIVIDUAL'"></app-compare-individual-maturity>
           <app-compare-missed-maturity *ngSwitchCase="'MISSED'"></app-compare-missed-maturity>
           <app-compare-bestworst-maturity *ngSwitchCase="'BESTWORST'"></app-compare-bestworst-maturity>
@@ -71,7 +71,7 @@
       </div>
     </div>
 
-    <div class="mt-3 d-flex justify-content-between flex-00a">
+    <div class="mt-3 flex justify-between flex-00a">
       <button class="btn btn-primary" (click)="navAggSvc.navBack('compare-analytics')">{{t('buttons.back')}}</button>
       <button *ngIf="this.type != 'maturity-based'" class="btn btn-primary"
         (click)="generateReport('compare-report')">{{t('aggregation.compare.generate compare report')}}</button>

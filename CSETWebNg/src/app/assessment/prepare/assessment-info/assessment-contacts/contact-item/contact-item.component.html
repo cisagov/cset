@@ -21,14 +21,14 @@
   SOFTWARE.
 -------------------------->
 <div #topScrollAnchor></div>
-<div *transloco="let t" class="d-flex align-items-center flex-11a">
+<div *transloco="let t" class="flex items-center flex-11a">
   <!-- Display Mode -->
   <ng-template #contact_display [ngIf]="editMode">
-    <div *ngIf="!layoutSvc.hp" class="d-flex my-2 pe-2 br-standard align-items-center"
+    <div *ngIf="!layoutSvc.hp" class="flex my-2 pe-2 br-standard items-center"
       [ngClass]="!showControls() ? 'bgc-primary-50 c-gray-900 b-primary-200' : 'b-light'"
       style="width: 100%; height: 125px; overflow: hidden;">
-      <div class="p-3 d-flex flex-column justify-content-center align-items-start" style="flex: 0 0 25%">
-        <div class="d-flex">
+      <div class="p-3 flex flex-col justify-center items-start" style="flex: 0 0 25%">
+        <div class="flex">
           <span> {{contact.firstName}} {{contact.lastName}} </span>
           <div class="cset-icons-info-circle" style="margin-left: 5px" (mouseenter)="showTooltip = true"
             (mouseleave)="showTooltip = false" (mousemove)="updatePosition($event)">
@@ -42,43 +42,43 @@
           [POC]="contact.isPrimaryPoc" [ngStyle]="{'top.px': tooltipPosition.y, 'left.px': tooltipPosition.x}">
         </app-contact-tooltip>
       </div>
-      <div class="p-3 d-flex flex-column flex-11a">
+      <div class="p-3 flex flex-col flex-11a">
         <div *ngIf="contact.primaryEmail"> {{contact.primaryEmail}} </div>
       </div>
-      <span class="d-flex align-items-center m-3 fw-600" style="text-align: center;"
+      <span class="flex items-center m-3 fw-600" style="text-align: center;"
         *ngIf="contact.isSiteParticipant">Participated<br />in Site Visit</span>
-      <span class="d-flex align-items-center m-3 fw-600" style="text-align: center;">
+      <span class="flex items-center m-3 fw-600" style="text-align: center;">
       </span>
 
-      <span *ngIf="showControls()" class="d-flex align-items-center flex-00a">
-        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
+      <span *ngIf="showControls()" class="flex items-center flex-00a">
+        <button type="button" class="p-0 m-2 btn icon-button flex flex-col items-center flex-00a"
           (click)="editContact()" [disabled]="!enableMyControls">
           <span class="cset-icons-pencil fs-base-2"></span>
-          <span class="d-none d-md-flex fs-smaller">{{ t('buttons.change') }}</span>
+          <span class="d-none d-mflex fs-smaller">{{ t('buttons.change') }}</span>
         </button>
-        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
+        <button type="button" class="p-0 m-2 btn icon-button flex flex-col items-center flex-00a"
           (click)="openEmailDialog()" [disabled]="!enableMyControls" *ngIf="!auth.isLocal">
           <span class="cset-icons-envelope fs-base-2"></span>
-          <span class="d-none d-md-flex fs-smaller">{{ t('contact.email') }}</span>
+          <span class="d-none d-mflex fs-smaller">{{ t('contact.email') }}</span>
         </button>
-        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
+        <button type="button" class="p-0 m-2 btn icon-button flex flex-col items-center flex-00a"
           (click)="removeContact()" [disabled]="!enableMyControls">
           <span class="cset-icons-trash-can fs-base-2"></span>
-          <span class="d-none d-md-flex fs-smaller">{{ t('buttons.remove') }}</span>
+          <span class="d-none d-mflex fs-smaller">{{ t('buttons.remove') }}</span>
         </button>
       </span>
 
-      <span class="pe-4 align-items-center fw-300" *ngIf="!showControls()">
+      <span class="pe-4 items-center fw-300" *ngIf="!showControls()">
         <div *ngIf="creatorId == contact.userId; else Editor">{{t('contact.creator')}}</div>
         <ng-template #Editor>{{t('contact.editor')}}</ng-template>
       </span>
     </div>
 
 
-    <div *ngIf="layoutSvc.hp" class="rkw d-flex flex-row justify-content-between my-2 p-2 br-standard"
+    <div *ngIf="layoutSvc.hp" class="rkw flex flex-row justify-between my-2 p-2 br-standard"
       [ngClass]="!showControls() ? 'bgc-primary-50 c-gray-900 b-primary-200' : 'b-light'"
       style="width: 100%; height: 125px; overflow: hidden;">
-      <div class="p-3 d-flex flex-column justify-content-center align-items-start">
+      <div class="p-3 flex flex-col justify-center items-start">
         <span class="m-0 fs-base-1 fw-600">{{contact.firstName}} {{contact.lastName}}</span>
         <span class="fs-small fw-400 fst-italic" *ngIf="contact.assessmentRoleId === 2">
           ({{getRoleName(contact.assessmentRoleId)}})
@@ -101,21 +101,21 @@
           {{contact.emergencyCommunicationsProtocol}} </span>
       </div>
 
-      <div *ngIf="showControls()" class="d-flex align-items-center flex-00a">
-        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
+      <div *ngIf="showControls()" class="flex items-center flex-00a">
+        <button type="button" class="p-0 m-2 btn icon-button flex flex-col items-center flex-00a"
           (click)="editContact()" [disabled]="!enableMyControls">
           <span class="cset-icons-pencil fs-base-2"></span>
-          <span class="d-none d-md-flex fs-smaller">{{ t('buttons.change') }}</span>
+          <span class="d-none d-mflex fs-smaller">{{ t('buttons.change') }}</span>
         </button>
-        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
+        <button type="button" class="p-0 m-2 btn icon-button flex flex-col items-center flex-00a"
           (click)="openEmailDialog()" [disabled]="!enableMyControls" *ngIf="!auth.isLocal">
           <span class="cset-icons-envelope fs-base-2"></span>
-          <span class="d-none d-md-flex fs-smaller">{{ t('contact.email') }}</span>
+          <span class="d-none d-mflex fs-smaller">{{ t('contact.email') }}</span>
         </button>
-        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
+        <button type="button" class="p-0 m-2 btn icon-button flex flex-col items-center flex-00a"
           (click)="removeContact()" [disabled]="!enableMyControls">
           <span class="cset-icons-trash-can fs-base-2"></span>
-          <span class="d-none d-md-flex fs-smaller">{{ t('buttons.remove') }}</span>
+          <span class="d-none d-mflex fs-smaller">{{ t('buttons.remove') }}</span>
         </button>
       </div>
 
@@ -126,12 +126,12 @@
   <!-- Edit Mode -->
   <ng-template #contact_search [ngIf]="!editMode">
     <form #f="ngForm" (ngSubmit)="fName.valid && lName.valid && email.valid && saveContact()" (blur)="search()"
-      class="my-2 p-3 b-light br-standard d-flex flex-column flex-11a">
-      <div class="d-flex justify-content-start align-items-center flex-11a">
-        <div class="d-flex flex-column flex-11a">
-          <div class="d-flex flex-wrap flex-11a">
+      class="my-2 p-3 b-light br-standard flex flex-col flex-11a">
+      <div class="flex justify-start items-center flex-11a">
+        <div class="flex flex-col flex-11a">
+          <div class="flex flex-wrap flex-11a">
 
-            <div class="me-0 me-sm-2 d-flex flex-column flex-11a">
+            <div class="mr-0 me-sm-2 flex flex-col flex-11a">
               <label class="form-label" for="fName">{{ t('contact.first name') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="fName" id="fName"
                 [(ngModel)]="contact.firstName" #fName="ngModel" [placeholder]="t('contact.first name')"
@@ -141,7 +141,7 @@
                 required')}}</div>
             </div>
 
-            <div class="form-group d-flex flex-column flex-11a">
+            <div class="form-group flex flex-col flex-11a">
               <label class="form-label" for="lName">{{ t('contact.last name') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="lName" id="lName"
                 [(ngModel)]="contact.lastName" #lName="ngModel" [placeholder]="t('contact.last name')"
@@ -151,52 +151,52 @@
                 required')}}</div>
             </div>
           </div>
-          <div class="d-flex flex-wrap flex-11a">
-            <div class="form-group me-0 me-sm-2 d-flex flex-column flex-11a">
+          <div class="flex flex-wrap flex-11a">
+            <div class="form-group mr-0 me-sm-2 flex flex-col flex-11a">
               <label class="form-label" for="title">{{ t('contact.title') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="title" id="title"
                 [(ngModel)]="contact.title" #title="ngModel" [placeholder]="t('contact.title')"
                 (keydown.esc)="abandonEdit()" matInput>
             </div>
 
-            <div class="form-group d-flex flex-column flex-11a">
+            <div class="form-group flex flex-col flex-11a">
               <label class="form-label" for="title">{{ t('contact.report to') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="reportTo" id="reportTo"
                 [(ngModel)]="contact.reportsTo" #reportTo="ngModel" [placeholder]="t('contact.report to')"
                 (keydown.esc)="abandonEdit()" matInput>
             </div>
           </div>
-          <div class="d-flex flex-wrap flex-11a">
-            <div class="form-group me-0 me-sm-2 d-flex flex-column flex-11a">
+          <div class="flex flex-wrap flex-11a">
+            <div class="form-group mr-0 me-sm-2 flex flex-col flex-11a">
               <label class="form-label" for="title">{{ t('contact.organization') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="Organization"
                 id="organization" [(ngModel)]="contact.organizationName" #organization="ngModel"
                 [placeholder]="t('contact.organization')" (keydown.esc)="abandonEdit()" matInput>
             </div>
 
-            <div class="form-group d-flex flex-column flex-11a">
+            <div class="form-group flex flex-col flex-11a">
               <label class="form-label" for="phone">{{ t('contact.site name') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="siteName" id="siteName"
                 [(ngModel)]="contact.siteName" #siteName="ngModel" [placeholder]="t('contact.site name')"
                 (keydown.esc)="abandonEdit()" matInput>
             </div>
           </div>
-          <div class="d-flex flex-wrap flex-11a">
-            <div class="form-group me-0 me-sm-2 d-flex flex-column flex-11a">
+          <div class="flex flex-wrap flex-11a">
+            <div class="form-group mr-0 me-sm-2 flex flex-col flex-11a">
               <label class="form-label" for="title">{{ t('contact.cell phone') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="cellPhone" id="cellPhone"
                 [(ngModel)]="contact.cellPhone" #cellPhone="ngModel" [placeholder]="t('contact.cell phone')"
                 (keydown.esc)="abandonEdit()" matInput>
             </div>
 
-            <div class="form-group d-flex flex-column flex-11a">
+            <div class="form-group flex flex-col flex-11a">
               <label class="form-label" for="phone">{{ t('contact.office phone') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="officePhone"
                 id="officePhone" [(ngModel)]="contact.phone" #officePhone="ngModel"
                 [placeholder]="t('contact.office phone')" (keydown.esc)="abandonEdit()" matInput>
             </div>
           </div>
-          <div class="form-group d-flex flex-column flex-11a">
+          <div class="form-group flex flex-col flex-11a">
             <label class="form-label" for="email">{{ t('contact.email') }}</label>
             <input class="form-control" type="email" autocomplete="off" maxlength="150" name="email" id="email"
               [(ngModel)]="contact.primaryEmail" #email="ngModel" [placeholder]="t('contact.email address')"
@@ -205,7 +205,7 @@
             <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email
               address.</div>
           </div>
-          <div class="form-group d-flex flex-column flex-11a mb-3">
+          <div class="form-group flex flex-col flex-11a mb-3">
             <label class="form-label" for="email">{{ t('contact.emergency communications protocol') }}</label>
             <input class="form-control" type="text" autocomplete="off" maxlength="150" name="ecp" id="ecp"
               [(ngModel)]="contact.emergencyCommunicationsProtocol" #ecp="ngModel"
@@ -214,7 +214,7 @@
           </div>
 
           <!-- Contact Checkboxes -->
-          <div class="d-flex flex-column mb-3">
+          <div class="flex flex-col mb-3">
             <div class="mb-2">
               <input type="checkbox" class="checkbox-custom" id="primaryPoc" name="primaryPoc"
                 [(ngModel)]="contact.isPrimaryPoc" [disabled]="shouldDisablePrimaryPoc()">
@@ -229,7 +229,7 @@
           </div>
 
           <!-- Role Buttons -->
-          <div class="form-group d-flex flex-column flex-11a mb-3">
+          <div class="form-group flex flex-col flex-11a mb-3">
             <label class="form-label" for="role">{{ t('contact.role') }}</label>
             <div class="btn-group btn-group-toggle d-block" id="role" data-toggle="buttons" ngbRadioGroup>
               <label ngbButtonLabel class="btn btn-level btn-rounded form-check-label"
@@ -242,12 +242,12 @@
           </div>
 
           <!-- Buttons -->
-          <div class="d-flex justify-content-between align-items-center flex-00a">
-            <button type="submit" class="m-0  p-2 btn btn-primary d-flex align-items-center flex-00a"
+          <div class="flex justify-between items-center flex-00a">
+            <button type="submit" class="m-0  p-2 btn btn-primary flex items-center flex-00a"
               (click)="scrollToTop()">
               {{ t('buttons.save') }}
             </button>
-            <button type="button" class="m-0 p-2 btn btn-secondary d-flex align-items-center flex-00a"
+            <button type="button" class="m-0 p-2 btn btn-secondary flex items-center flex-00a"
               (click)="abandonEdit(); scrollToTop();">
               {{ t('buttons.cancel') }}
             </button>

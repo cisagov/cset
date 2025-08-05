@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="d-flex flex-row mb-3"
+<div class="flex flex-row mb-3"
     style="min-height: 10rem; align-items: flex-start; justify-content: space-between; padding-bottom:25px">
     <div class="mb-2" style="height: 13rem; width:25%;">
         <edm-triple-bar-chart [bar_chart_data]="buildHeaderTripleBarChart()" [showLegend]="true"></edm-triple-bar-chart>
@@ -36,7 +36,7 @@
     PRACTICE LEVEL PERFORMANCE SUMMARY
 </div>
 
-<table *ngFor="let d of getDomainsForDisplay()" class="w-100 outer-table" style="border-bottom: 2px solid #000">
+<table *ngFor="let d of getDomainsForDisplay()" class="w-full outer-table" style="border-bottom: 2px solid #000">
     <tr>
         <td style="width: 25%;">
             <div style="height: 11rem;">
@@ -44,7 +44,7 @@
             </div>
         </td>
         <td>
-            <table class="w-100 inner-table mb-3">
+            <table class="w-full inner-table mb-3">
                 <tr *ngFor="let g of getGoals(d)">
                     <td>
                         {{g.title}}

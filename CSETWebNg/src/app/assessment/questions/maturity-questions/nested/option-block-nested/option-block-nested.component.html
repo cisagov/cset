@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 
-<div *ngFor="let o of optRadio" id="oo{{o.optionId}}" class="nested-option-block mb-1" [class.ms-2]="layoutSvc.hp"
+<div *ngFor="let o of optRadio" id="oo{{o.optionId}}" class="nested-option-block mb-1" [class.ml-2]="layoutSvc.hp"
     [class.ms-4]="!layoutSvc.hp">
     <input #rb class="radio-custom" type="radio" [name]="optionGroupName" [id]="optionGroupName + '-' + o.optionId"
         (click)="changeRadio(o, $event)" [checked]="o.selected"
@@ -52,7 +52,7 @@
         <input *ngIf="o.hasAnswerText" type="text" [value]="o.answerText" (change)="changeText(o, $event)"
             class="form-control">
 
-        <div *ngIf="!!o.followups && o.followups.length > 0" class="mt-3" [class.ms-2]="layoutSvc.hp"
+        <div *ngIf="!!o.followups && o.followups.length > 0" class="mt-3" [class.ml-2]="layoutSvc.hp"
             [class.ms-4]="!layoutSvc.hp">
             <app-question-block-nested #questionBlock [questions]="o.followups"></app-question-block-nested>
         </div>
@@ -65,7 +65,7 @@
 
 
 
-<div *ngFor="let o of optCheckbox" id="oo{{o.optionId}}" class="nested-option-block mb-1" [class.ms-2]="layoutSvc.hp"
+<div *ngFor="let o of optCheckbox" id="oo{{o.optionId}}" class="nested-option-block mb-1" [class.ml-2]="layoutSvc.hp"
     [class.ms-4]="!layoutSvc.hp">
     <input #cb class="checkbox-custom" type="checkbox" [value]="o.optionId" [id]="optionGroupName + '-cb-' + o.optionId"
         (change)="changeCheckbox(o, $event, optCheckbox)" [checked]="o.selected"
@@ -96,9 +96,9 @@
 
 
 
-<div *ngFor="let o of optOther" id="oo{{o.optionId}}" class="nested-option-block mb-1" [class.ms-2]="layoutSvc.hp"
+<div *ngFor="let o of optOther" id="oo{{o.optionId}}" class="nested-option-block mb-1" [class.ml-2]="layoutSvc.hp"
     [class.ms-4]="!layoutSvc.hp">
-    <input type="text" *ngIf="o.optionType == 'text-first'" class="form-control me-1 mb-1" maxlength="100"
+    <input type="text" *ngIf="o.optionType == 'text-first'" class="form-control mr-1 mb-1" maxlength="100"
         style="width: 6rem; display: inline" [value]="o.answerText" (change)="changeText(o, $event)">
 
     <span class="nested-option" [innerHTML]="o.optionText"></span>

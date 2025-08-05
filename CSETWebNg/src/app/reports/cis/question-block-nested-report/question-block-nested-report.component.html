@@ -31,28 +31,28 @@
             <div *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</div>
 
             <div *ngIf="q.questionType == 'memo'">
-                <div class="form-control w-100 h-5" [innerHTML]="q.answerMemo"></div>
-                <div *ngIf="cisSvc.hasBaseline() && q.baselineAnswerMemo?.length > 0" class="d-flex flex-row mt-1 mb-2">
-                    <div class="form-control w-100 h-5" [innerHTML]="q.baselineAnswerMemo"></div>
-                    <i class="fa fa-star ms-1"></i>
+                <div class="form-control w-full h-5" [innerHTML]="q.answerMemo"></div>
+                <div *ngIf="cisSvc.hasBaseline() && q.baselineAnswerMemo?.length > 0" class="flex flex-row mt-1 mb-2">
+                    <div class="form-control w-full h-5" [innerHTML]="q.baselineAnswerMemo"></div>
+                    <i class="fa fa-star ml-1"></i>
                 </div>
             </div>
 
             <div *ngIf="q.questionType == 'text'">
-                <div class="form-control w-100" [innerHTML]="q.answerMemo"></div>
-                <div *ngIf="cisSvc.hasBaseline() && q.baselineAnswerMemo?.length > 0" class="d-flex flex-row mt-1 mb-2">
-                    <div class="form-control w-100" [innerHTML]="q.baselineAnswerMemo"></div>
-                    <i class="fa fa-star ms-1"></i>
+                <div class="form-control w-full" [innerHTML]="q.answerMemo"></div>
+                <div *ngIf="cisSvc.hasBaseline() && q.baselineAnswerMemo?.length > 0" class="flex flex-row mt-1 mb-2">
+                    <div class="form-control w-full" [innerHTML]="q.baselineAnswerMemo"></div>
+                    <i class="fa fa-star ml-1"></i>
                 </div>
             </div>
 
             <div *ngIf="q.questionType == 'min-hr-day'">
                 <div class="form-control" maxlength="5" #tsNumber [innerHTML]="getTimespanDisplay(q.answerMemo)">
                 </div>
-                <div *ngIf="cisSvc.hasBaseline() && q.baselineAnswerMemo?.length > 0" class="d-flex flex-row mt-1 mb-2">
+                <div *ngIf="cisSvc.hasBaseline() && q.baselineAnswerMemo?.length > 0" class="flex flex-row mt-1 mb-2">
                     <div class="form-control" maxlength="5" #tsNumber
                         [innerHTML]="getTimespanDisplay(q.baselineAnswerMemo)"></div>
-                    <i class="fa fa-star ms-1"></i>
+                    <i class="fa fa-star ml-1"></i>
                 </div>
             </div>
         </div>

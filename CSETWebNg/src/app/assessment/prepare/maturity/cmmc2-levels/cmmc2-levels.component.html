@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex justify-content-start flex-column flex-11a"
+<div class="white-panel flex justify-start flex-col flex-11a"
      *transloco="let t; read: 'cmmc.level selection'">
      <h3 class="wrap-text mb-3">{{'titles.cmmc target level selection' | transloco}}</h3>
 
@@ -28,7 +28,7 @@
           {{t('para 1')}}
      </p>
 
-     <div class="d-flex flex-row p-3" [class.outline]="selectedLevel == 1">
+     <div class="flex flex-row p-3" [class.outline]="selectedLevel == 1">
           <div class="w-25 text-center align-content-center">
                <label class="btn btn-l1 form-check-label" [class.answer-selected]="selectedLevel == 1"
                     (click)="saveLevel(1)">
@@ -42,7 +42,7 @@
      </div>
 
 
-     <div class="d-flex flex-row p-3" [class.outline]="selectedLevel == 2">
+     <div class="flex flex-row p-3" [class.outline]="selectedLevel == 2">
           <div class="w-25 text-center align-content-center">
                <label class="btn btn-l2 form-check-label" [class.answer-selected]="selectedLevel == 2"
                     (click)="saveLevel(2)">
@@ -61,7 +61,7 @@
      </div>
 
 
-     <div class="d-flex flex-row p-3" [class.outline]="selectedLevel == 3">
+     <div class="flex flex-row p-3" [class.outline]="selectedLevel == 3">
           <div class="w-25 text-center align-content-center">
                <label class="btn btn-l3 form-check-label" [class.answer-selected]="selectedLevel == 3"
                     (click)="saveLevel(3)">

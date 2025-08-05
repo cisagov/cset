@@ -24,7 +24,7 @@
 <img *ngIf="moduleName?.toUpperCase() == 'IMR'" src='assets/images/IMR/IMR_logo.png' class="row cmu-header-logo">
 
 <div *ngIf="!domain" class="my-5">
-    <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+    <div class="spinner-container m-0 flex justify-center items-center flex-11a">
         <div class="spinner-size-50"></div>
     </div>
 </div>
@@ -37,7 +37,7 @@
 
 <div [innerHTML]="heatmapWidget | safe"></div>
 
-<table *ngFor="let goal of domain?.groupings" class="w-100 cset-table">
+<table *ngFor="let goal of domain?.groupings" class="w-full cset-table">
     <tr>
         <td colspan="3">
             <div class="font-weight-bold mb-3">

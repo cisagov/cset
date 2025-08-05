@@ -20,52 +20,63 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="bgc-page d-flex flex-column flex-11a w-100" *transloco="let t">
-  <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
+<div class="min-h-screen flex flex-col w-full bg-base-200" *transloco="let t">
+  <div class="container max-w-none p-0 flex flex-col justify-start flex-1 w-full" id="cset-app">
     <div class="sticky-navbar">
-      <div class="no-gutters local-install mt-0 ps-0 d-flex justify-content-center align-items-center flex-00a"
+      <div class="local-install mt-0 pl-0 flex justify-center items-center"
         *ngIf="auth.isLocal && devMode">
-        <span class="col-sm-12">{{t('local installation')}}</span>
+        <span class="w-full text-center">{{t('local installation')}}</span>
       </div>
 
       <!-- Navbar -->
-      <nav class="px-4 no-gutters navbar cset-header navbar-expand-md"
+      <nav class="navbar bg-primary text-primary-content px-4"
         *ngIf="layoutSvc.isNavHeaderShown(this.router.url)">
         <!-- *ngIf="auth.userToken() && auth.userToken() !== 'null'">   -->
         <!-- Brand (BASE) -->
-        <span
-          [ngClass]="{'btn btn-link navbar-brand': this.router.url!=='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder(this.router.url)) }"
-          (click)="this.router.url!=='/resource-library' && goHome()">
-          <!-- CSET Lock Logo -->
-          <div class="d-flex justify-content-start align-items-center flex-00a">
-            <app-logo-cset mode="white" style="max-height: 3rem"></app-logo-cset>
+        <div class="navbar-start">
+          <span
+            [ngClass]="{'btn btn-ghost': this.router.url!=='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder(this.router.url)) }"
+            (click)="this.router.url!=='/resource-library' && goHome()">
+            <!-- CSET Lock Logo -->
+            <div class="flex justify-start items-center">
+              <app-logo-cset mode="white" style="max-height: 3rem"></app-logo-cset>
+            </div>
+          </span>
+        </div>
+
+        <!-- Navbar Menu (Mobile) -->
+        <div class="navbar-end">
+          <div class="dropdown dropdown-end lg:hidden">
+            <div tabindex="0" role="button" class="btn btn-ghost">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </div>
+            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              <app-top-menus></app-top-menus>
+            </ul>
           </div>
-        </span>
+          <!-- Desktop Menu -->
+          <div class="hidden lg:flex">
+            <app-top-menus></app-top-menus>
+          </div>
+        </div>
 
-        <!-- Navbar Toggler Button (only renders when screen is narrow enough) -->
-        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ms-auto" [matMenuTriggerFor]="topMenus"
-          #topMenusTrigger="matMenuTrigger" tabindex="0">
-          <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
-        </button>
-
-        <!-- Menus contained in the navbar-toggler submenu -->
-        <mat-menu #topMenus="matMenu" class="menu-panel px-3 py-2">
-          <app-top-menus (click)="$event.stopPropagation()"></app-top-menus>
-        </mat-menu>
-
-        <!-- Menus on full size navbar (collapses when screen width gets narrow) -->
-        <app-top-menus class="mt-1 collapse navbar-collapse"></app-top-menus>
         <span *ngIf="showVersionNotification" class="text-warning">
-          <span class="float-right notification-link" (click)="showNotifications()"><mat-icon
-              class="settingsIcon">settings</mat-icon> <span class="newinstaller">1</span></span>
-
+          <span class="float-right notification-link" (click)="showNotifications()">
+            <svg class="w-6 h-6 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            <span class="newinstaller">1</span>
+          </span>
         </span>
       </nav>
     </div>
 
     <!-- Body -->
-    <div class="no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
-      <div class="p-0 d-flex col-12 bgc-gray-50">
+    <div class="flex flex-nowrap justify-between flex-1 w-full">
+      <div class="p-0 flex w-full bg-gray-50">
         <router-outlet></router-outlet>
       </div>
     </div>
@@ -83,35 +94,35 @@
       <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
         data-bs-parent="#accordionFooter">
         <div class="accordion-body footer-section-2 p-0">
-          <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+          <div class="flex flex-row flex-wrap justify-center flex-1">
             <ng-container *ngIf="isRunningAnonymous()">
               <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer" (click)="showDisclaimer()">INL
                 Privacy & Accessibility</a>
-              <span class="me-2 ms-2">|</span>
+              <span class="mx-2">|</span>
               <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                 href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
-              <span class="me-2 ms-2">|</span>
+              <span class="mx-2">|</span>
             </ng-container>
             <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
               href="https://www.us-cert.gov/ics/Frequently-Asked-Questions">{{t('footer.faq')}}</a>
-            <span class="me-2 ms-2">|</span>
+            <span class="mr-2 ml-2">|</span>
             <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
               href="http://www.us-cert.gov/tlp/">{{t('footer.traffic light protocol')}}</a>
-            <span class="me-2 ms-2">|</span>
+            <span class="mr-2 ml-2">|</span>
             <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
               href="http://www.us-cert.gov/privacy/">{{t('footer.privacy and use')}}</a>
-            <span class="me-2 ms-2">|</span>
+            <span class="mr-2 ml-2">|</span>
             <a target="_blank" rel="noopener noreferrer"
               href="http://www.us-cert.gov/accessibility/">{{t('footer.accessibility')}}</a>
           </div>
-          <div class="d-flex flex-row flex-wrap justify-content-center align-items-baseline flex-11a"
+          <div class="flex flex-row flex-wrap justify-center items-baseline flex-1"
             [innerHTML]="t('footer.cisa is part of dhs') | safe">
           </div>
         </div>
       </div>
     </div>
 
-    <div class="bgc-white" *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
+    <div class="bg-white" *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
     <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
       <div class="modal-dialog" role="document">
         <div class="modal-content localversionModal">

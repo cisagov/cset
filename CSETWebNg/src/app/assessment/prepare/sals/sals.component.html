@@ -21,9 +21,9 @@
   SOFTWARE.
 -------------------------->
 <ng-container *transloco="let t">
-  <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+  <div class="white-panel flex flex-col justify-start flex-11a">
     <h3 class="mb-3">{{t('titles.sal.security assurance level (sal)')}}</h3>
-    <div class="me-0 d-flex flex-column flex-00a">
+    <div class="mr-0 flex flex-col flex-00a">
       <div class="mb-3">
         {{t('titles.sal.sal intro1')}}
         {{t('titles.sal.sal intro2')}}
@@ -34,46 +34,46 @@
       </div>
 
       <h4>{{t('titles.sal.current level')}}</h4>
-      <div class="d-flex flex-wrap flex-00a sticky-sal mb-4" *ngIf="!!this.salsSvc.selectedSAL">
-        <div class="d-flex flex-11a">
-          <div class="mb-2 p-2 quick-info-container d-flex justify-content-center flex-column flex-11a">
-            <div class="ws-no-wrap d-flex justify-content-center align-items-center flex-11a">
+      <div class="flex flex-wrap flex-00a sticky-sal mb-4" *ngIf="!!this.salsSvc.selectedSAL">
+        <div class="flex flex-11a">
+          <div class="mb-2 p-2 quick-info-container flex justify-center flex-col flex-11a">
+            <div class="ws-no-wrap flex justify-center items-center flex-11a">
               {{t('titles.sal.overall')}}</div>
-            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center align-items-center flex-11a">
+            <div class="p-2 quick-info-stats-container mt-1 flex justify-center items-center flex-11a">
               {{ salsSvc.selectedSAL?.selected_Sal_Level != null ? t('titles.sal.level.' +
               salsSvc.selectedSAL?.selected_Sal_Level.toLowerCase()) : '' }}
             </div>
           </div>
         </div>
 
-        <div class="d-flex flex-nowrap justify-content-center flex-11a mb-2" *ngIf="selectedMethodology != 'GENERAL'">
-          <div [class.ms-2]="!layoutSvc.hp"
-            class="p-2 quick-info-container d-flex justify-content-center flex-column flex-11a">
-            <div class="ws-no-wrap d-flex justify-content-center align-items-center flex-11a">
+        <div class="flex flex-nowrap justify-center flex-11a mb-2" *ngIf="selectedMethodology != 'GENERAL'">
+          <div [class.ml-2]="!layoutSvc.hp"
+            class="p-2 quick-info-container flex justify-center flex-col flex-11a">
+            <div class="ws-no-wrap flex justify-center items-center flex-11a">
               {{t('titles.sal.confidentiality')}}</div>
-            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">
+            <div class="p-2 quick-info-stats-container mt-1 flex justify-center flex-11a">
               {{ salsSvc.selectedSAL?.cLevel != null ? t('titles.sal.level.' + salsSvc.selectedSAL.cLevel.toLowerCase())
               : '' }}</div>
           </div>
 
-          <div class="ms-2 p-2 quick-info-container d-flex flex-column justify-content-center flex-11a">
-            <div class="ws-no-wrap d-flex justify-content-center align-items-center">{{t('titles.sal.integrity')}}</div>
-            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">
+          <div class="ml-2 p-2 quick-info-container flex flex-col justify-center flex-11a">
+            <div class="ws-no-wrap flex justify-center items-center">{{t('titles.sal.integrity')}}</div>
+            <div class="p-2 quick-info-stats-container mt-1 flex justify-center flex-11a">
               {{ salsSvc.selectedSAL?.iLevel != null ? t('titles.sal.level.' + salsSvc.selectedSAL.iLevel.toLowerCase())
               : '' }}</div>
           </div>
 
-          <div class="ms-2 p-2 quick-info-container d-flex flex-column justify-content-center flex-11a">
-            <div class="ws-no-wrap d-flex justify-content-center align-items-center">{{t('titles.sal.availability')}}
+          <div class="ml-2 p-2 quick-info-container flex flex-col justify-center flex-11a">
+            <div class="ws-no-wrap flex justify-center items-center">{{t('titles.sal.availability')}}
             </div>
-            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">
+            <div class="p-2 quick-info-stats-container mt-1 flex justify-center flex-11a">
               {{ salsSvc.selectedSAL?.aLevel != null ? t('titles.sal.level.' + salsSvc.selectedSAL.aLevel.toLowerCase())
               : '' }}</div>
           </div>
         </div>
       </div>
 
-      <div class="d-flex flex-column flex-11a mb-5">
+      <div class="flex flex-col flex-11a mb-5">
         <h4>{{t('titles.sal.overall sal')}}</h4>
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
           <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
@@ -88,9 +88,9 @@
         </div>
       </div>
 
-      <div class="d-flex flex-column flex-11a mb-4">
+      <div class="flex flex-col flex-11a mb-4">
         <h4>{{t('titles.sal.methodology')}}</h4>
-        <div class="d-flex flex-column flex-00a">
+        <div class="flex flex-col flex-00a">
           {{t('titles.sal.choose methodology')}}
         </div>
         <div class="btn-group-toggle" data-toggle="buttons">
@@ -112,12 +112,12 @@
               [checked]="selectedMethodology === 'NIST'">{{t('titles.sal.nist 60 fips 199')}}
           </label>
         </div>
-        <hr class="w-100 hr-sal mt-1" />
+        <hr class="w-full hr-sal mt-1" />
       </div>
 
 
-      <div class="mt-0 me-0 d-flex flex-column justify-content-start flex-11a">
-        <div [ngSwitch]="selectedMethodology" class="d-flex flex-column justify-content-start flex-00a">
+      <div class="mt-0 mr-0 flex flex-col justify-start flex-11a">
+        <div [ngSwitch]="selectedMethodology" class="flex flex-col justify-start flex-00a">
           <app-sal-simple *ngSwitchCase="'Simple'"></app-sal-simple>
           <app-sal-gen *ngSwitchCase="'GENERAL'"></app-sal-gen>
           <app-sal-nist *ngSwitchCase="'NIST'"></app-sal-nist>

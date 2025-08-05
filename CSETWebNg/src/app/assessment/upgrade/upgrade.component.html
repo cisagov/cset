@@ -21,16 +21,16 @@
   SOFTWARE.
 -------------------------->
 <div *transloco="let t" class="alert alert-warning" [hidden]="this.assessSvc.hideUpgradeAlert">
-  <div class="d-flex justify-content-between">
-    <div class="d-flex align-items-center">
+  <div class="flex justify-between">
+    <div class="flex items-center">
       <span class="p-1 fs-large cset-icons-exclamation-triangle"></span>
-      <span class="fs-base-2 p-1 justify-content-center flex-11a">
+      <span class="fs-base-2 p-1 justify-center flex-11a">
         {{ t('assessment upgrade.upgrade available') }}
       </span>
     </div>
-    <div class="align-items-start">
-      <button class="btn btn-outline-light btn-sm align-items-center" (click)="hideAlert()">
-        <i class="fa-solid fa-xmark ms-1" style="color:#664d03"></i>
+    <div class="items-start">
+      <button class="btn btn-outline-light btn-sm items-center" (click)="hideAlert()">
+        <i class="fa-solid fa-xmark ml-1" style="color:#664d03"></i>
       </button>
     </div>
   </div>
@@ -48,7 +48,7 @@
         </p>
       </div>
     </ng-template>
-    <div *ngIf="!loading" class="mb-0 d-flex justify-content-end flex-00a">
+    <div *ngIf="!loading" class="mb-0 flex justify-end flex-00a">
       <button (click)="upgrade()" class="btn btn-outline m-0"
         style="border-color: #664d03; color: #664d03;">{{t('assessment upgrade.upgrade button')}}</button>
     </div>

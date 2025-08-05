@@ -24,7 +24,7 @@
     {{domain?.title}}
 </h1>
 
-<div class="my-4 d-flex justify-content-center">
+<div class="my-4 flex justify-center">
     <app-edm-heatmap [section]="domain?.abbreviation"></app-edm-heatmap>
 </div>
 
@@ -32,7 +32,7 @@
     {{domain?.description}}
 </p>
 
-<table *ngFor="let goal of domain?.subGroupings" class="w-100 cset-table">
+<table *ngFor="let goal of domain?.subGroupings" class="w-full cset-table">
     <tr>
         <td colspan="3">
             <div class="font-weight-bold mb-3">

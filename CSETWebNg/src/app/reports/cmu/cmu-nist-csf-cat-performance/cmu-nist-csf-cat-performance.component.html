@@ -31,7 +31,7 @@
 
 
     <div *ngIf="!csfData" class="my-5">
-        <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+        <div class="spinner-container m-0 flex justify-center items-center flex-11a">
             <div class="spinner-size-50"></div>
         </div>
     </div>
@@ -72,7 +72,7 @@
                         </div>
                         <ng-container *ngIf="cat.heatMaps.length">
                             {{ moduleName }} Practices<br />
-                            <div class="d-flex align-content-center flex-wrap" style="column-gap: 15px; width: 70%">
+                            <div class="flex align-content-center flex-wrap" style="column-gap: 15px; width: 70%">
                                 <div class="flex-00a" *ngFor="let heatMap of cat.heatMaps" [innerHtml]="heatMap | safe">
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
                                     <b>{{ subCat.subCat.Subcategory.title }}:</b> {{ subCat.subCat.Subcategory.desc }}
                                 </td>
                                 <td class="references py-1 border-0" style="width: 280px;">
-                                    <div class="d-flex justify-content-start flex-wrap" style="column-gap: 15px;">
+                                    <div class="flex justify-start flex-wrap" style="column-gap: 15px;">
                                         <div class="flex-00a" *ngFor="let subCatHeatMap of subCat.heatMaps"
                                             [innerHtml]="subCatHeatMap | safe">
                                         </div>

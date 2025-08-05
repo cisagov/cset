@@ -20,15 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div *transloco="let t; read: 'filter-menu'" class="d-flex flex-column justify-content-center flex-11a">
-  <div class="p-3 d-flex justify-content-start align-items-center flex-00a"
+<div *transloco="let t; read: 'filter-menu'" class="flex flex-col justify-center flex-11a">
+  <div class="p-3 flex justify-start items-center flex-00a"
     style="color:white; background-color: #094997;">
     <!-- <span class="me-3 fs-base-6 cset-icons-filter" aria-label="{{ 'buttons.filter' | transloco }}"></span> -->
     <img src="assets/images/icons/filter.svg">
     <span>{{ t(skin + '.dialog title') }}</span>
   </div>
 
-  <mat-dialog-content class="pt-3 ps-3 pe-0 oy-auto d-flex flex-column flex-11a">
+  <mat-dialog-content class="pt-3 ps-3 pe-0 oy-auto flex flex-col flex-11a">
     <div class="question-filters pe-3 form-check">
       <div>
         <input placeholder="{{ t('search') }}" class="form-control" [value]="filterSvc.filterSearchString"
@@ -106,7 +106,7 @@
     </div>
   </mat-dialog-content>
 
-  <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-start flex-11a">
+  <mat-dialog-actions class="p-3 pt-0 mb-0 flex justify-start flex-11a">
     <button class="btn btn-secondary" (click)="close()">{{'buttons.ok' | transloco}}</button>
   </mat-dialog-actions>
 </div>

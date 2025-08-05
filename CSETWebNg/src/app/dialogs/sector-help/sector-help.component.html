@@ -20,14 +20,14 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="alert-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
-    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+<div class="alert-dialog flex flex-col justify-center flex-11a" *transloco="let t">
+    <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
         <span class="fs-base-6 me-3"></span>
         <span>Sector Descriptions</span>
     </div>
 
-    <div class="p-3 pb-0 pe-0 mt-2 oy-auto d-flex flex-column flex-11a">
-        <mat-dialog-content class="p-0 pe-3 d-flex flex-row">
+    <div class="p-3 pb-0 pe-0 mt-2 oy-auto flex flex-col flex-11a">
+        <mat-dialog-content class="p-0 pe-3 flex flex-row">
             <div class="p-2" style="border-right: 1px double rgba(0, 0, 0, .1); overflow-y: auto; width: 30%">
                 <button *ngFor="let s of sectors" (click)="scrollTo(s.sectorId)"
                     class="btn btn-link d-block text-start">{{s.sectorName}}</button>
@@ -43,7 +43,7 @@
         </mat-dialog-content>
     </div>
 
-    <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-start flex-00a">
+    <mat-dialog-actions class="p-3 mb-0 flex justify-start flex-00a">
         <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
     </mat-dialog-actions>
 

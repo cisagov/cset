@@ -30,7 +30,7 @@
     </div>
 
     <div *ngIf="!csfData" class="my-5">
-        <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+        <div class="spinner-container m-0 flex justify-center items-center flex-11a">
             <div class="spinner-size-50"></div>
         </div>
     </div>
@@ -82,7 +82,7 @@
                                     <b>{{ subCat.subCat.Subcategory.title }}:</b> {{ subCat.subCat.Subcategory.desc }}
                                 </td>
                                 <td class="align-top pb-3" style="width: 280px; border: none;">
-                                    <div [innerHtml]="subCat.chartSubCat | safe" class="ms-1"></div>
+                                    <div [innerHtml]="subCat.chartSubCat | safe" class="ml-1"></div>
                                 </td>
                             </tr>
                         </table>

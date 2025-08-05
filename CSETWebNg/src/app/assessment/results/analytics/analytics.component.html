@@ -1,4 +1,4 @@
-<div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a">
+<div class="white-panel oy-auto ox-auto flex flex-col flex-11a">
 
     <div class="container">
 
@@ -12,13 +12,13 @@
                 </p>
             </div>
             <div class="row my-4">
-                <div class="col-12 d-flex flex-row align-items-center">
-                    <button class="btn btn-sync d-flex flex-row align-items-center me-5" type="button"
+                <div class="col-12 flex flex-row items-center">
+                    <button class="btn btn-sync flex flex-row items-center me-5" type="button"
                         (click)="startUpload()">
                         <i class="fa fa-upload me-3"></i>
                         Sync
                         <div *ngIf="uploadInProgress"
-                            class="spinner-container white p-0 m-0 ms-3 d-flex justify-content-center align-items-center flex-11a">
+                            class="spinner-container white p-0 m-0 ms-3 flex justify-center items-center flex-11a">
                             <div class="spinner-size-20"></div>
                         </div>
                     </button>

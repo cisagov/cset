@@ -29,7 +29,7 @@
         <div style="margin-bottom: 10px;">
           {{t('titles.sal.confidentiality text')}}
         </div>
-        <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+        <div class="btn-group btn-group-toggle w-full" data-toggle="buttons">
           <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
             <label [attr.csetid]="'Confidentiality' + level.value" class="btn btn-level btn-rounded form-check-label"
               [class.active]="level.value === this.salsSvc.selectedSAL?.cLevel"
@@ -49,7 +49,7 @@
         <div style="margin-bottom: 10px;">
           {{t('titles.sal.integrity text')}}
         </div>
-        <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+        <div class="btn-group btn-group-toggle w-full" data-toggle="buttons">
           <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
             <label [attr.csetid]="'Integrity' + level.value" class="btn btn-level btn-rounded form-check-label"
               [class.active]="level.value === this.salsSvc.selectedSAL?.iLevel"
@@ -69,7 +69,7 @@
         <div style="margin-bottom: 10px;">
           {{t('titles.sal.availability text')}}
         </div>
-        <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+        <div class="btn-group btn-group-toggle w-full" data-toggle="buttons">
           <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
             <label [attr.csetid]="'Availability' + level.value" class="btn btn-level btn-rounded form-check-label"
               [class.active]="level.value === this.salsSvc.selectedSAL?.aLevel"
@@ -91,16 +91,16 @@
       <div class="fips-reference">
         <a href="{{configSvc.docUrl}}ApplicationDocuments/FIPS199Language.html" tabindex="0" rel="noopener noreferrer"
           target="_blank">
-          <i class="icon icon-openbookicon vmiddle me-1"></i>FIPS 199 SAL Selection Guidance</a>
+          <i class="icon icon-openbookicon vmiddle mr-1"></i>FIPS 199 SAL Selection Guidance</a>
       </div>
       <p>{{t('titles.sal.nist.fips other guides')}}</p>
       <div class="fips-reference">
         <a href="{{configSvc.apiUrl}}library/doc/511" tabindex="0" rel="noopener noreferrer" target="_blank">
-          <i class="icon icon-openbookicon vmiddle me-1"></i>FIPS 199</a>
+          <i class="icon icon-openbookicon vmiddle mr-1"></i>FIPS 199</a>
         <a href="{{configSvc.apiUrl}}library/doc/2081" tabindex="0" rel="noopener noreferrer" target="_blank">
-          <i class="icon icon-openbookicon vmiddle me-1"></i>NIST SP800-60 Vol I</a>
+          <i class="icon icon-openbookicon vmiddle mr-1"></i>NIST SP800-60 Vol I</a>
         <a href="{{configSvc.apiUrl}}library/doc/2116" tabindex="0" rel="noopener noreferrer" target="_blank">
-          <i class="icon icon-openbookicon vmiddle me-1"></i>NIST SP800-60 Vol II</a>
+          <i class="icon icon-openbookicon vmiddle mr-1"></i>NIST SP800-60 Vol II</a>
       </div>
     </div>
   </div>

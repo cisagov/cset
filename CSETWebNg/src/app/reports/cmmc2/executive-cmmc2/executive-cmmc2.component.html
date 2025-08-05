@@ -100,9 +100,9 @@
     <p>The figure shows the organization's progress throughout the CMMC based on the individual target level and
       overall cybersecurity assessment.</p>
 
-    <div class="d-flex flex-row justify-content-center" *ngFor="let l of responseLevels">
+    <div class="flex flex-row justify-center" *ngFor="let l of responseLevels">
       <!-- pie charts for compliance at each level -->
-      <div class="me-5 d-flex align-items-center">
+      <div class="me-5 flex items-center">
         <div style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold"
           [class]="'cmmc2-level-' + l.levelValue">
           {{l.name}}

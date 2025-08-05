@@ -20,13 +20,13 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="global-parameters-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+<div class="global-parameters-dialog flex flex-col justify-center flex-11a" *transloco="let t">
+  <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
     <span class="cset-icons-puzzle fs-base-6 me-3"></span>
     <span>{{t('menu.tools.parameter editor')}}</span>
   </div>
 
-  <mat-dialog-content class="p-3 pb-0 pe-0 oy-auto d-flex flex-column flex-11a">
+  <mat-dialog-content class="p-3 pb-0 pe-0 oy-auto flex flex-col flex-11a">
     <div (keydown.enter)="handleEnter($event)" class="pe-3">
       <p>
        {{t('parameters.text1')}}
@@ -44,9 +44,9 @@
       </div>
 
       <div *ngIf="defaults != null && defaults.length === 0"
-        class="alert-danger mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+        class="alert-danger mt-4 mb-4 flex flex-row justify-center items-center flex-11a">
         <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
-        <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
+        <span class="fs-base-3 p-2 flex flex-col justify-center flex-11a">
           {{t('parameters.none')}}
         </span>
       </div>

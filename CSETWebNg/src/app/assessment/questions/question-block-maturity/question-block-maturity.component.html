@@ -29,26 +29,26 @@
                 {{ myGrouping.title }}
             </div>
 
-            <div class="d-flex justify-content-end align-items-center flex-00a" *ngIf="!layoutSvc.hp">
+            <div class="flex justify-end items-center flex-00a" *ngIf="!layoutSvc.hp">
                 <span [class.display-hidden]="!myGrouping.hasReviewItems"
-                    class="d-flex justify-content-center align-items-center flex-00a"
+                    class="flex justify-center items-center flex-00a"
                     matTooltip="{{ t('tooltip.category requires review') }}">
-                    <span class="me-1 cset-icons-flag-dark fs-small"></span>
+                    <span class="mr-1 cset-icons-flag-dark fs-small"></span>
                     <span class="mb-1 fs-small">{{ t('requires review') }}</span>
                 </span>
-                <app-progress [value]="percentAnswered" class="me-2 ms-2"></app-progress>
+                <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
                 <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.expanded"></i>
             </div>
 
-            <div class="d-flex flex-column justify-content-end align-items-end flex-00a" *ngIf="layoutSvc.hp">
+            <div class="flex flex-col justify-end items-end flex-00a" *ngIf="layoutSvc.hp">
                 <div>
-                    <app-progress [value]="percentAnswered" class="me-2 ms-2"></app-progress>
+                    <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
                     <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.expanded"></i>
                 </div>
                 <span [class.display-hidden]="!myGrouping.hasReviewItems"
-                    class="d-flex justify-content-center align-items-center flex-00a"
+                    class="flex justify-center items-center flex-00a"
                     matTooltip="{{ t('tooltip.category requires review') }}">
-                    <span class="me-1 cset-icons-flag-dark fs-small"></span>
+                    <span class="mr-1 cset-icons-flag-dark fs-small"></span>
                 </span>
             </div>
         </div>
@@ -59,11 +59,11 @@
 
     <!-- this houses all of the questions -->
     <div class="subcat-question-list px-3 pt-0 pb-3" [class.display-none]="!myGrouping.expanded">
-        <div *ngFor="let q of myGrouping.questions" id="mq{{q.questionId}}" class="question-row d-flex flex-column"
+        <div *ngFor="let q of myGrouping.questions" id="mq{{q.questionId}}" class="question-row flex flex-col"
             [class.bonus-ssg-question]="q.isBonusQuestion" [class.pb-3]="q.isParentQuestion"
             [class.display-none]="!q.visible">
 
-            <div class="w-100 mt-3 mb-1 d-flex flex-row" *ngIf="!layoutSvc.hp">
+            <div class="w-full mt-3 mb-1 flex flex-row" *ngIf="!layoutSvc.hp">
                 <div class="number-and-text">
 
                     <!-- indent for child questions -->
@@ -106,7 +106,7 @@
                     <!-- build the list of answer choice buttons -->
                     <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
                         <label *ngFor="let option of q.answerOptions ?? modelAnswerOptions"
-                            class="btn form-check-label d-flex align-items-center" tabindex="0"
+                            class="btn form-check-label flex items-center" tabindex="0"
                             [class]="questionsSvc.answerOptionCss(maturityModelName, option)"
                             [class.answer-selected]="q.answer === option"
                             [matTooltip]="questionsSvc.answerButtonTooltip(maturityModelName, option)">
@@ -116,7 +116,7 @@
                             {{questionsSvc.answerButtonLabel(maturityModelName, option)}}
                         </label>
                         <!-- Mark For Review Flag  -->
-                        <label class="me-0 ms-2 btn form-check-label btn-mfr d-flex align-items-center"
+                        <label class="mr-0 ml-2 btn form-check-label btn-mfr flex items-center"
                             [class.answer-selected]="q.markForReview === true" [matTooltip]="t('tooltip.mfr-flag')">
                             <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" class="btn-check"
                                 (keydown)="checkReviewKeyPress($event, q)" tabindex="0"
@@ -133,11 +133,11 @@
                 </div>
             </div>
 
-            <div class="w-100" *ngIf="layoutSvc.hp">
+            <div class="w-full" *ngIf="layoutSvc.hp">
                 <!-- handset portrait -->
                 <div>
                     <div [class.display-hidden]="!!q.parentQuestionId"
-                        class="d-flex align-items-center mt-3 mb-2 text-nowrap">
+                        class="flex items-center mt-3 mb-2 text-nowrap">
                         <span class="font-weight-bold">
                             {{ q.displayNumber }}
                         </span>
@@ -146,7 +146,7 @@
                         </span>
                     </div>
 
-                    <div class="w-100 mb-3">
+                    <div class="w-full mb-3">
                         <div *ngIf="!!q.shortName" class="mb-1 fst-italic font-weight-bold"
                             style="color: #666; font-size: .8rem; white-space: normal;">
                             {{ q.shortName }}
@@ -179,7 +179,7 @@
                         </label>
 
                         <!-- Mark For Review Flag  -->
-                        <label class="me-0 ms-2 btn form-check-label btn-mfr"
+                        <label class="mr-0 ml-2 btn form-check-label btn-mfr"
                             [class.answer-selected]="q.markForReview === true"
                             matTooltip="This control requires further review.">
                             <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" class="btn-check"
@@ -197,7 +197,7 @@
             </div>
 
             <app-question-extras *ngIf="(q.isParentQuestion || !q.parentQuestionId)" #extrasComponent [myQuestion]="q"
-                class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()"
+                class="w-full mb-3" (changeExtras)="refreshReviewIndicator()"
                 (changeComponents)="refreshComponentOverrides()">
             </app-question-extras>
         </div>

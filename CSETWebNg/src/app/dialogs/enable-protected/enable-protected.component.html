@@ -20,12 +20,12 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="d-flex flex-column justify-content-center flex-11a" *transloco="let t">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+<div class="flex flex-col justify-center flex-11a" *transloco="let t">
+  <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
     <span class="cset-icons-key-shield fs-base-6 me-3"></span>
     <span>{{ t('protected features.protected features') }}</span>
   </div>
-  <mat-dialog-content class="pb-0 p-3 oy-auto d-flex flex-column flex-11a">
+  <mat-dialog-content class="pb-0 p-3 oy-auto flex flex-col flex-11a">
     <table class="mt-2 mb-4 mx-2" *ngIf="modulesList?.length > 0">
       <tr>
         <th style="width: 25%">{{ t('protected features.module name') }}</th>

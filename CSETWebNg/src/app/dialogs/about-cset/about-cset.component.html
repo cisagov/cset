@@ -21,14 +21,14 @@
   SOFTWARE. 
 -------------------------->
 <ng-container *transloco="let t">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+  <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
     <span class="me-3 fs-base-6 cset-icons-cset-lock"></span>
     <span>{{ t('about.dialog title') }}</span>
   </div>
-  <mat-dialog-content class="p-4 pb-0 pe-0 oy-auto d-flex flex-column flex-11a">
-    <section class="pe-4 d-flex flex-11a flex-row flex-wrap">
-      <article class="mb-4 w-100">
-        <div class="d-flex flex-column justify-content-start flex-00a">
+  <mat-dialog-content class="p-4 pb-0 pe-0 oy-auto flex flex-col flex-11a">
+    <section class="pe-4 flex flex-11a flex-row flex-wrap">
+      <article class="mb-4 w-full">
+        <div class="flex flex-col justify-start flex-00a">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             style="height: 30px; width: 210px;">
             <path class="fill-primary" stroke="transparent" stroke-width="0" transform="scale(.75)"
@@ -44,10 +44,10 @@
           {{helpContactPhone}}
         </div>
         <hr>
-        <div class="d-flex justify-content-center flex-00a mb-2">
+        <div class="flex justify-center flex-00a mb-2">
           <img src="./assets/images/CISA_Logo_183px.png" alt="cisa" style="height: 7rem;">
         </div>
-        <div class="c-primary d-flex flex-column text-center flex-00a">
+        <div class="c-primary flex flex-col text-center flex-00a">
           <h6><a target="_blank" rel="noopener noreferrer" href="https://www.cisa.gov/"
               [innerHTML]="t('about.cisa name')"></a>
           </h6>
@@ -57,7 +57,7 @@
         </p>
         <p class="wrap-text" [innerHTML]="t('about.encourage reporting')"></p>
       </article>
-      <article class="mb-4 w-100">
+      <article class="mb-4 w-full">
         <h3 class="wrap-text">{{ t('about.cset training resources') }}</h3>
         <div class="mb-4">
           <p class="wrap-text">{{ t('about.training available') }}:</p>

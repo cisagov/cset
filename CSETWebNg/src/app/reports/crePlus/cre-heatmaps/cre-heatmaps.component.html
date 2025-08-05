@@ -48,7 +48,7 @@
                </tr>
                <tr *ngFor="let d of model22?.groupings" style="border-bottom: 1px solid #555;">
                     <td class="py-3 pe-4">{{d.title}}</td>
-                    <td class="py-3 d-flex flex-wrap">
+                    <td class="py-3 flex flex-wrap">
                          <div *ngFor="let q of d.consolidatedQuestions">
                               <div class="square" [class.wide]="q.displayNumberShort.length > 3"
                                    [class]="answerCellClass(q.answerText)">
@@ -64,7 +64,7 @@
                </tr>
                <tr *ngFor="let d of model23?.groupings" style="border-bottom: 1px solid #555;">
                     <td class="py-3 pe-4">{{d.title}}</td>
-                    <td class="py-3 d-flex flex-wrap">
+                    <td class="py-3 flex flex-wrap">
                          <div *ngFor="let q of d.consolidatedQuestions">
                               <div class="square" [class.wide]="q.displayNumberShort.length > 3"
                                    [class]="answerCellClass(q.answerText)">
@@ -83,7 +83,7 @@
                </tr>
                <tr *ngFor="let d of model24?.groupings" style="border-bottom: 1px solid #555;">
                     <td class="py-3 pe-4">{{ d.title }}</td>
-                    <td class="py-3 d-flex flex-wrap">
+                    <td class="py-3 flex flex-wrap">
                          <div *ngFor="let q of d.consolidatedQuestions">
                               <div class="square" [class.wide]="q.displayNumberShort.length > 3"
                                    [class]="answerCellClass(q.answerText)">

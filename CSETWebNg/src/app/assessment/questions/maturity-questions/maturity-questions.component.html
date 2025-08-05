@@ -22,9 +22,9 @@
 -------------------------->
 <div *transloco="let t" class="white-panel">
   <div id="top"></div>
-  <div class="flex-column flex-wrap justify-content-between align-items-start flex-11a mb-4">
+  <div class="flex-col flex-wrap justify-between items-start flex-11a mb-4">
 
-    <div class="d-flex flex-row flex-wrap sticky-sal w-100 justify-content-end align-items-start flex-11a pb-3">
+    <div class="flex flex-row flex-wrap sticky-sal w-full justify-end items-start flex-11a pb-3">
       <div class="me-3 answered-count" *ngIf="!!groupings" matTooltip="{{t('tooltip.answered count')}}">
         {{ completionSvc.answeredCount }}/{{ completionSvc.totalCount }}
       </div>
@@ -54,9 +54,9 @@
     </div>
 
     <div *ngIf="!!groupings && !areGroupingsVisible() && modelSupportsTargetLevel"
-      class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+      class="alert-warning mt-4 mb-4 flex flex-row justify-center items-center flex-11a">
       <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
-      <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
+      <span class="fs-base-3 p-2 flex flex-col justify-center flex-11a">
         There are no applicable {{ questionsAlias | lowercase }} to display. Check the assessment's
         target maturity level.
       </span>
@@ -83,14 +83,14 @@
       <app-cre-question-selector [modelId]="modelId" [cumulativeLevels]="groupingsAreMil"></app-cre-question-selector>
     </ng-container>
 
-    <div *ngIf="!groupings" class="w-100">
+    <div *ngIf="!groupings" class="w-full">
       <div class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
       </div>
     </div>
 
     <ng-template [ngIf]="!!groupings">
-      <div *ngFor="let g of groupings" class="w-100">
+      <div *ngFor="let g of groupings" class="w-full">
         <app-grouping-block [grouping]="g"></app-grouping-block>
       </div>
     </ng-template>

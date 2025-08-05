@@ -20,21 +20,21 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="d-flex flex-column justify-content-center flex-11a" *transloco="let t">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+<div class="flex flex-col justify-center flex-11a" *transloco="let t">
+  <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
     <span class="cset-icons-books-stack-1 fs-base-6 me-3"></span>
     <span>{{t('menu.tools.assessment documents')}}</span>
   </div>
 
-  <mat-dialog-content class="p-3 pb-0 pe-0 mt-2 oy-auto d-flex flex-column flex-11a">
+  <mat-dialog-content class="p-3 pb-0 pe-0 mt-2 oy-auto flex flex-col flex-11a">
     <div class="pe-3">
       <div *ngIf="documents === null" class="spinner-container" style="margin: .5em auto">
         <div style="max-width: 30px; max-height: 30px;"></div>
       </div>
-      <div *ngIf="documents?.length === 0" class="d-flex flex-11a">
+      <div *ngIf="documents?.length === 0" class="flex flex-11a">
         {{t('menu.tools.has no documents')}}
       </div>
-      <div *ngIf="documents?.length > 0" class="pe-3 d-flex flex-11a">
+      <div *ngIf="documents?.length > 0" class="pe-3 flex flex-11a">
         <table class="table">
           <thead>
             <tr>

@@ -20,8 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="assess-component d-flex flex-column justify-content-start flex-11a">
-  <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+<div class="assess-component flex flex-col justify-start flex-11a">
+  <div class="white-panel flex flex-col justify-start flex-11a">
     <div *ngIf="dataSet != 0; else elseBlock">
       <div id="chart" class="mb-4">
         <h3>Answers By Component Type</h3>
@@ -61,9 +61,9 @@
     </div>
     <ng-template #elseBlock>
       <h3>Answers By Component Type</h3>
-      <div class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+      <div class="alert-warning mt-4 mb-4 flex flex-row justify-center items-center flex-11a">
         <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
-        <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
+        <span class="fs-base-3 p-2 flex flex-col justify-center flex-11a">
           There are no results to display. This may be caused by a network diagram
           that contains no network components.
         </span>

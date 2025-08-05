@@ -20,21 +20,18 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="alert-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
-  <div *ngIf="showHeader" class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span [ngClass]="iconClass" class="fs-base-6 me-3"></span>
-    <span>{{ data.title | titlecase }}</span>
+<div class="modal-box max-w-md" *transloco="let t">
+  <div *ngIf="showHeader" class="flex items-center gap-3 mb-4">
+    <span [ngClass]="iconClass" class="text-2xl text-warning"></span>
+    <h3 class="font-bold text-lg">{{ data.title | titlecase }}</h3>
   </div>
 
-  <div class="p-3 pb-0 pe-0 mt-2 oy-auto d-flex flex-column flex-11a">
-    <mat-dialog-content class="p-0 pe-3">
-      <div [innerHTML]="data.messageText | safe">
-      </div>
-    </mat-dialog-content>
+  <div class="py-4 max-h-96 overflow-y-auto">
+    <div [innerHTML]="data.messageText | safe"></div>
   </div>
 
-  <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-start flex-00a">
-    <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
-  </mat-dialog-actions>
+  <div class="modal-action">
+    <button class="btn btn-primary" (click)="close()">{{t('buttons.ok')}}</button>
+  </div>
 
 </div>

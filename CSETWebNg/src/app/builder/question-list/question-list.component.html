@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
+<div class="white-panel m-0 flex flex-col flex-11a oy-auto h-0 w-full">
 
   <div class="max-1200">
     <app-builder-breadcrumbs></app-builder-breadcrumbs>
@@ -37,7 +37,7 @@
     </div>
 
     <button class="btn btn-primary" (click)="setBuilderSvc.navAddQuestion()">
-      <span class="cset-icons-plus fs-base me-2"></span>
+      <span class="cset-icons-plus fs-base mr-2"></span>
       Add Question
     </button>
 
@@ -72,51 +72,51 @@
               Click to add subcategory question <span class="cset-icons-pencil fs-small"></span>
             </button>
           </div>
-          <div *ngIf="headingBeingEdited === subcat" class="w-100">
+          <div *ngIf="headingBeingEdited === subcat" class="w-full">
             <textarea appAutoSize #editH [(ngModel)]="subcat.subHeading" (keydown.esc)="abandonHeadingEdit(subcat)"
-              (blur)="endHeadingEdit(subcat)" class="form-control w-100 text-start"></textarea>
+              (blur)="endHeadingEdit(subcat)" class="form-control w-full text-start"></textarea>
           </div>
         </div>
 
-        <div *ngFor="let q of subcat.questions; let i = index" class="question-row d-flex flex-column p-3"
+        <div *ngFor="let q of subcat.questions; let i = index" class="question-row flex flex-col p-3"
           [class.no-bottom-border]="i == (subcat.questions.length - 1)"
           [class.mb-4]="i == (subcat.questions.length - 1)">
           <div>
             {{ q.title }}
           </div>
-          <div class="d-flex flex-row justify-content-between flex-11a w-100 align-items-start">
-            <div class="d-flex flex-column mb-3 me-3 w-100">
-              <div *ngIf="questionBeingEdited !== q" class="d-flex flex-row align-items-start">
-                <div class="font-weight-bold me-2">{{q.displayNumber}}</div>
+          <div class="flex flex-row justify-between flex-11a w-full items-start">
+            <div class="flex flex-col mb-3 me-3 w-full">
+              <div *ngIf="questionBeingEdited !== q" class="flex flex-row items-start">
+                <div class="font-weight-bold mr-2">{{q.displayNumber}}</div>
                 <div [innerHTML]="setBuilderSvc.formatLinebreaks(q.questionText)"></div>
               </div>
               <div class="alert alert-danger" *ngIf="duplicateTextQuestion === q">
                 A question with that text already exists. The edit was canceled.
               </div>
-              <div *ngIf="questionBeingEdited === q" class="w-100">
+              <div *ngIf="questionBeingEdited === q" class="w-full">
                 <div class="alert alert-danger" *ngIf="editedQuestionInUse">
                   This question is in use in other standards/question sets or assessments.
                   Changing the meaning of the question text may have an undesired effect.
                 </div>
                 <textarea appAutoSize id="Q_{{q.questionID}}" #editQ [(ngModel)]="q.questionText"
                   (keydown.esc)="abandonQuestionEdit(q)" (blur)="endQuestionEdit(q)"
-                  class="form-control w-100 text-start" [class.b-validate]="editedQuestionInUse"></textarea>
+                  class="form-control w-full text-start" [class.b-validate]="editedQuestionInUse"></textarea>
               </div>
             </div>
-            <span class="d-flex align-items-end justify-content-between flex-00a">
+            <span class="flex items-end justify-between flex-00a">
               <button *ngIf="q.isCustom" type="button" (click)="startQuestionEdit(q)"
-                class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a me-2">
+                class="p-0 btn icon-button flex flex-col items-center flex-00a mr-2">
                 <span class="cset-icons-pencil fs-base-2"></span>
-                <span class="d-none d-md-flex fs-smaller">Edit</span>
+                <span class="d-none d-mflex fs-smaller">Edit</span>
               </button>
-              <button class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" type="button"
+              <button class="p-0 btn icon-button flex flex-col items-center flex-00a" type="button"
                 (click)="removeQuestion(q)">
                 <span class="cset-icons-trash-can fs-base-2"></span>
-                <span class="d-none d-md-flex fs-smaller">Remove</span>
+                <span class="d-none d-mflex fs-smaller">Remove</span>
               </button>
             </span>
           </div>
-          <div class="w-100">
+          <div class="w-full">
             <div class="btn-group btn-group-toggle">
               <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'L')">
                 <input type="checkbox" id="SAL-L-{{q.questionID}}" name="SAL-L-{{q.questionID}}"
@@ -137,7 +137,7 @@
         </div>
       </div>
     </div>
-    <div class="d-flex flex-row mt-3 mb-3">
+    <div class="flex flex-row mt-3 mb-3">
       <button id="btnBack" class="btn btn-link" (click)="setBuilderSvc.navSetDetail()">&laquo; Back to Module
         Detail</button>
     </div>

@@ -20,8 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="d-flex flex-column justify-content-start flex-11a">
-    <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+<div class="flex flex-col justify-start flex-11a">
+    <div class="white-panel flex flex-col justify-start flex-11a">
         <div class="mb-3">
             <h3>Scorecard - Security Directive Pipeline 2021-02C</h3>
             <p>
@@ -36,7 +36,7 @@
 
             <div *ngIf="!loading">
                 <div *ngFor="let section of domains">
-                    <div *ngIf="!!section" class="w-100">
+                    <div *ngIf="!!section" class="w-full">
                         <app-grouping-block-nested-report [grouping]="section"></app-grouping-block-nested-report>
                     </div>
                 </div>

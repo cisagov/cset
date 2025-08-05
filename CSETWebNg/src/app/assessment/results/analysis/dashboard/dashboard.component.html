@@ -20,15 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel d-flex flex-column justify-content-start flex-11a" id="analysisDiv" *transloco="let t">
+<div class="white-panel flex flex-col justify-start flex-11a" id="analysisDiv" *transloco="let t">
   <h3>{{t('titles.analysis dashboard')}}</h3>
   <div *ngIf="!initialized">
     <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
-    <div class="d-flex flex-column flex-00a mb-5">
+  <div class="flex flex-col flex-11a" [class.d-none]="!initialized">
+    <div class="flex flex-col flex-00a mb-5">
       <h3 class="text-center">{{t('reports.core.dashboard.score')}}</h3>
 
       <p *ngIf="!(assessSvc.assessment?.useStandard && assessSvc.assessment?.useDiagram)">
@@ -64,7 +64,7 @@
     </div>
 
 
-    <div class="d-flex flex-column flex-00a mb-5">
+    <div class="flex flex-col flex-00a mb-5">
       <h3 class="text-center">{{t('titles.assessment compliance')}}</h3>
       <p [innerHTML]="t('reports.assessment compliance text')"></p>
       <div style="max-width: 700px">
@@ -73,7 +73,7 @@
     </div>
 
 
-    <div class="d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useStandard">
+    <div class="flex flex-col flex-00a mb-5" *ngIf="assessSvc.assessment?.useStandard">
       <h3 class="text-center">{{t('titles.ranked categories')}}</h3>
       <p class="fst-italic" [class.d-none]="showTopCategChart">
         {{t('reports.core.no ranking')}}
@@ -90,7 +90,7 @@
     </div>
 
 
-    <div class="d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useStandard">
+    <div class="flex flex-col flex-00a mb-5" *ngIf="assessSvc.assessment?.useStandard">
       <h3 class="text-center">{{t('titles.standards summary')}}</h3>
 
       <p>{{t('reports.standards summary text 1')}}</p>
@@ -106,7 +106,7 @@
     </div>
 
 
-    <div class="d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useDiagram">
+    <div class="flex flex-col flex-00a mb-5" *ngIf="assessSvc.assessment?.useDiagram">
       <h3 class="text-center">{{t('reports.core.components summary.components summary')}}</h3>
       <p>{{t('reports.core.components summary.text')}}</p>
       <div *ngIf="!compSummInitialized">

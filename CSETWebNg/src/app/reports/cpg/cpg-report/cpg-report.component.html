@@ -45,7 +45,7 @@
             </ng-container>
         </p>
 
-        <div class="chart mb-5 d-inline-block w-100">
+        <div class="chart mb-5 d-inline-block w-full">
             <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain" [techDomain]="techDomain"
                 class="mb-5"></app-cpg-domain-summary>
         </div>
@@ -70,7 +70,7 @@
                 </ng-container>
             </p>
 
-            <div class="chart mb-5 d-inline-block w-100">
+            <div class="chart mb-5 d-inline-block w-full">
                 <div *ngIf="!answerDistribByDomainOt" class="spinner-container" style="margin: 2em auto">
                     <div style="max-width: 50px; max-height: 50px;"></div>
                 </div>
@@ -94,7 +94,7 @@
                 </ng-container>
             </p>
 
-            <div class="chart mb-5 d-inline-block w-100">
+            <div class="chart mb-5 d-inline-block w-full">
                 <div *ngIf="!answerDistribByDomainIt" class="spinner-container" style="margin: 2em auto">
                     <div style="max-width: 50px; max-height: 50px;"></div>
                 </div>

@@ -36,8 +36,8 @@
             <ng-template ngFor let-doc [ngForOf]="dHeader.documents">
                 <tr>
                     <td class="cell-desc align-top"><span>{{ doc.number }}. {{ doc.document_Description }}</span></td>
-                    <td class="cell-btn align-top d-flex flex-column align-items-end">
-                        <div class="d-flex flex-row flex-nowrap">
+                    <td class="cell-btn align-top flex flex-col items-end">
+                        <div class="flex flex-row flex-nowrap">
                             <button class="req-answer btn btn-yes" tabindex="0"
                                 [ngClass]="{'answer-selected': doc.answer=='Y'}"
                                 (click)="doc.answer = 'Y';submit(doc, 'Y')">Yes</button>
@@ -59,7 +59,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2" class="pb-4 w-100">
+                    <td colspan="2" class="pb-4 w-full">
                         <div [hidden]="!doc.comment && !commentShow[doc.docId]">
                             <textarea type="text" tabindex="0" maxlength="1024" appAutoSize [(ngModel)]="doc.comment"
                                 (blur)="submit(doc)" class="form-control" placeholder="Add a comment."></textarea>

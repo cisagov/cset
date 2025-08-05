@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 oy-auto" *transloco="let t">
+<div class="white-panel m-0 flex flex-col flex-11a oy-auto h-0 oy-auto" *transloco="let t">
 
   <div class="max-1200">
     <app-builder-breadcrumbs></app-builder-breadcrumbs>
@@ -30,13 +30,13 @@
     <h5>
       {{ standardTitle }}
     </h5>
-    <div class="d-flex flex-row w-100 justify-content-between align-items-start">
+    <div class="flex flex-row w-full justify-between items-start">
       <p class="me-3">Select or upload any reference documents applicable to the standard. This will
         make them available for attaching to the requirements in the standard. Enter a string in the
         Filter field to narrow down candidates.
       </p>
       <button class="btn btn-primary add" (click)="openFileBrowser($event)">
-        <span class="cset-icons-import fs-base-1 me-2"></span>
+        <span class="cset-icons-import fs-base-1 mr-2"></span>
         Import a Document
       </button>
       <input id="docUpload" type="file" (change)="fileSelect($event)" class="display-none">
@@ -44,7 +44,7 @@
 
     <button class="btn btn-link" (click)="navBack()">&laquo; {{t('buttons.back')}}</button>
 
-    <div class="form-row align-items-end">
+    <div class="form-row items-end">
       <div class="form-group col-md-8">
         <label for="docTitleFilter">Filter</label>
         <input type="text" id="docTitleFilter" name="docTitleFilter" class="form-control" [(ngModel)]="filter"
@@ -64,14 +64,14 @@
       <th>{{t('extras.file name')}}</th>
       <tr *ngFor="let doc of filteredDocuments">
         <td class="align-top"><input type="checkbox" [(ngModel)]="doc.selected" (ngModelChange)="selectDoc(doc)"></td>
-        <td class="d-flex align-items-start justify-content-between flex-00a">
+        <td class="flex items-start justify-between flex-00a">
           {{ doc.title }}
         </td>
         <td>
           <button *ngIf="doc.isCustom" type="button" (click)="setBuilderSvc.navRefDocDetail(doc.id)"
-            class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a ms-4 me-4">
+            class="p-0 btn icon-button flex flex-col items-center flex-00a ms-4 me-4">
             <span class="cset-icons-pencil fs-base-2"></span>
-            <span class="d-none d-md-flex fs-smaller">Edit</span>
+            <span class="d-none d-mflex fs-smaller">Edit</span>
           </button>
         </td>
         <td>

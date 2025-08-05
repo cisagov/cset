@@ -33,22 +33,22 @@
 
     <div *ngIf="!loading && hasBaseline" class="mb-5 mt-3">
         <div *ngIf="hasBaseline">
-            <div class="d-flex flex-row">
+            <div class="flex flex-row">
                 <div class="col-4">
-                    <div class="alert alert-secondary h-100 mx-1" style="text-align:left;">
+                    <div class="alert alert-secondary h-full mx-1" style="text-align:left;">
                         <h4 class="alert-heading">{{t('reports.core.cis.deficiencies.gray title')}}</h4>
                         <p>{{t('reports.core.cis.deficiencies.gray body')}}
                         </p>
                     </div>
                 </div>
                 <div class="col-4">
-                    <div class="alert alert-danger h-100 mx-1">
+                    <div class="alert alert-danger h-full mx-1">
                         <h4 class="alert-heading">{{t('reports.core.cis.deficiencies.red title')}}</h4>
                         <p>{{t('reports.core.cis.deficiencies.red body')}}</p>
                     </div>
                 </div>
                 <div class="col-4">
-                    <div class="alert alert-success h-100 mx-1">
+                    <div class="alert alert-success h-full mx-1">
                         <h4 class="alert-heading">{{t('reports.core.cis.deficiencies.green title')}}</h4>
                         <p>{{t('reports.core.cis.deficiencies.green body')}}</p>
                     </div>

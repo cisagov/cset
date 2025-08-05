@@ -65,7 +65,7 @@
                         </div>
                         <ng-container *ngIf="cat.heatMaps.length">
                             CRR Practices<br />
-                            <div class="d-flex justify-content-start align-items-center flex-wrap"
+                            <div class="flex justify-start items-center flex-wrap"
                                 style="column-gap: 15px; width: 70%">
                                 <div class="flex-00a" *ngFor="let heatMap of cat.heatMaps" [innerHtml]="heatMap | safe">
                                 </div>
@@ -80,7 +80,7 @@
                                     <b>{{ subCat.subCat.Subcategory.title }}:</b> {{ subCat.subCat.Subcategory.desc }}
                                 </td>
                                 <td class="references" style="width: 280px; border: none;">
-                                    <div class="d-flex justify-content-start flex-wrap" style="column-gap: 15px;">
+                                    <div class="flex justify-start flex-wrap" style="column-gap: 15px;">
                                         <div class="flex-00a" *ngFor="let subCatHeatMap of subCat.heatMaps"
                                             [innerHtml]="subCatHeatMap | safe">
                                         </div>

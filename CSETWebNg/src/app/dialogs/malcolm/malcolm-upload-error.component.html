@@ -20,13 +20,13 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="ok-dialog d-flex flex-column justify-content-center flex-11a">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+<div class="ok-dialog flex flex-col justify-center flex-11a">
+  <div class="mat-dialog-header p-3 flex justify-start items-center flex-00a">
     <span class="me-3 fs-base-6 {{iconClass}}"></span>
     <span>{{dialogTitle}}</span>
   </div>
 
-  <mat-dialog-content class="p-3 pb-0 pe-0 oy-auto d-flex flex-column flex-11a">
+  <mat-dialog-content class="p-3 pb-0 pe-0 oy-auto flex flex-col flex-11a">
     <div *ngIf="isFileMode" class="pe-3">
       <p>It appears one or more errors occured during the Malcolm data upload process.<br></p>
 
@@ -49,7 +49,7 @@
     </div>
   </mat-dialog-content>
 
-  <mat-dialog-actions class="p-3 pt-3 mb-0 d-flex ms-auto flex-00a">
+  <mat-dialog-actions class="p-3 pt-3 mb-0 flex ms-auto flex-00a">
     <button class="btn btn-secondary" (click)="dialogRef.close(true)">OK</button>
   </mat-dialog-actions>
 </div>

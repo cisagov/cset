@@ -49,7 +49,7 @@
 
         <div *ngIf="!loading">
             <div *ngFor="let section of domains">
-                <div *ngIf="!!section" class="w-100">
+                <div *ngIf="!!section" class="w-full">
                     <app-grouping-block-nested-report [grouping]="section"></app-grouping-block-nested-report>
                 </div>
             </div>

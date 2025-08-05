@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t; read: 'reports'" class="white-panel oy-auto d-flex flex-column flex-11a">
+<div *transloco="let t; read: 'reports'" class="white-panel oy-auto flex flex-col flex-11a">
   <div>
     <h3>{{ 'titles.reports' | transloco }}</h3>
 
@@ -40,10 +40,10 @@
 
 
   <!-- Observation Tear Out Sheets -->
-  <div class="d-flex flex-column justify-content-start align-items-start mb-4">
+  <div class="flex flex-col justify-start items-start mb-4">
 
-    <div class="mb-3 p-3 w-100" [class.gray-box]="true">
-      <div class="d-flex flex-row" style="align-items: end">
+    <div class="mb-3 p-3 w-full" [class.gray-box]="true">
+      <div class="flex flex-row" style="align-items: end">
         <div>
           <button tabindex="0" (click)="clickReportLink('observations')" class="btn btn-link btn-link-dark px-0 pt-0">
             {{t('observations tear-out sheets.report title')}}
@@ -55,9 +55,9 @@
       </div>
     </div>
 
-    <div class="mb-3 p-3 w-100" [class.gray-box]="true">
+    <div class="mb-3 p-3 w-full" [class.gray-box]="true">
       <button tabindex="0" (click)="reportSvc.clickExcelLink('observations')" class="btn btn-link btn-link-dark px-0 pt-0">
-        <span class="cset-icons-export-excel fs-base me-2 align-middle"></span>
+        <span class="cset-icons-export-excel fs-base mr-2 align-middle"></span>
         {{t('observations tear-out sheets.export csv link')}}
       </button>
       <div class="mt-3">

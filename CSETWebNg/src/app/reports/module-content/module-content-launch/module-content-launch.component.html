@@ -20,14 +20,14 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel max-1200 m-0 d-flex flex-column flex-11a oy-auto h-0 w-100" *transloco="let t">
+<div class="white-panel max-1200 m-0 flex flex-col flex-11a oy-auto h-0 w-full" *transloco="let t">
     <div class="max-1200">
         <h2 class="mt-3"> {{ t('Module Content Report') }}</h2>
         <p>{{ t('ModuleContentLaunchComponent p1') }}</p>
         <p>{{ t('ModuleContentLaunchComponent p2') }}</p>
         <!-- Module Content Autocomplete Field -->
         <h5>{{ t('Select a Standard or Model') }}</h5>
-        <div class="d-flex flex-row">
+        <div class="flex flex-row">
             <div class="position-relative" style="flex: 1">
                 <input type="text" class="form-control mb-3" [(ngModel)]="selectedItem" [ngbTypeahead]="search"
                     [inputFormatter]="formatter" [resultTemplate]="resultTemplate"
@@ -45,9 +45,9 @@
 
         <!-- Result template for typeahead dropdown -->
         <ng-template #resultTemplate let-result="result" let-term="term">
-            <div class="d-flex align-items-center typeahead-result">
+            <div class="flex items-center typeahead-result">
                 <span class="result-text" [innerHTML]="highlightMatch(result.displayName, term)"></span>
-                <small class="type-label text-muted text-nowrap ms-2" [ngClass]="'type-' + result.type">
+                <small class="type-label text-muted text-nowrap ml-2" [ngClass]="'type-' + result.type">
                     {{ result.type === 'standard' ? t('Standard') : t('Model') }}
                 </small>
             </div>
