@@ -196,6 +196,7 @@ export interface Question {
     // parent questions aren't answered directly and have subparts that are answered.
     isParentQuestion: boolean;
     parentQuestionId: number;
+    isAnswerable: boolean;
 
     followups: [];
 

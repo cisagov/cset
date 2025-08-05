@@ -27,7 +27,7 @@
     </p>
 
     <!-- the table for the CPG answers -->
-    <app-cpg-practice-table></app-cpg-practice-table>
+    <app-cpg-practice-table [modelId]="modelId"></app-cpg-practice-table>
 
     <!-- a table for SSG answers, if applicable -->
     <ng-container *ngIf="isSsgApplicable">
@@ -39,4 +39,5 @@
     </ng-container>
 
     <app-nav-back-next [page]="'cpg-practices-page'"></app-nav-back-next>
+    
 </div>

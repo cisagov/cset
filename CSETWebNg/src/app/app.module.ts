@@ -270,7 +270,7 @@ import { CategoryBlockComponent } from './assessment/questions/category-block/ca
 import { MaturityQuestionsComponent } from './assessment/questions/maturity-questions/maturity-questions.component';
 import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
 import { CreQuestionSelectorComponent } from './assessment/questions/maturity-questions/cre-question-selector/cre-question-selector.component';
-import { CreSubdomainChartsComponent } from './reports/crePlus/cre-subdomain-charts/cre-subdomain-charts.component';
+import { creGoalChartsComponent } from './reports/crePlus/cre-goal-charts/cre-goal-charts.component';
 import { CreModelChartsComponent } from './reports/crePlus/cre-model-charts/cre-model-charts.component';
 import { CreMilCharts2Component } from './reports/crePlus/cre-mil-charts-2/cre-mil-charts-2.component';
 import { CreHeatmapsComponent } from './reports/crePlus/cre-heatmaps/cre-heatmaps.component';
@@ -490,6 +490,7 @@ import { CpgDomainSummaryComponent } from './assessment/results/cpg/cpg-domain-s
 import { CpgCostImpactComplexityComponent } from './assessment/results/cpg/cpg-cost-impact-complexity/cpg-cost-impact-complexity.component';
 import { CpgSummaryComponent } from './assessment/results/cpg/cpg-summary/cpg-summary.component';
 import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cpg-practices.component';
+import { CpgAnswerBlockComponent } from './assessment/results/cpg/cpg-answer-block/cpg-answer-block.component';
 import { ReferencesTableComponent } from './assessment/questions/references-table/references-table.component';
 import { ReferencesDisplayComponent } from './assessment/questions/references-display/references-display.component';
 import { DiagramVulnerabilitiesDialogComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
@@ -608,7 +609,6 @@ import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/ci
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
 import { CisaVadrInfoComponent } from './assessment/prepare/maturity/cisa-vadr-info/cisa-vadr-info.component';
-
 
 
 registerSwiper();
@@ -943,7 +943,7 @@ registerSwiper();
         CreFinalReportComponent,
         CreFinalReportGridComponent,
         CreAssessmentOverview,
-        CreSubdomainChartsComponent,
+        creGoalChartsComponent,
         CreModelChartsComponent,
         CreMilCharts2Component,
         CreHeatmapsComponent,
@@ -974,6 +974,7 @@ registerSwiper();
         CpgCostImpactComplexityComponent,
         CpgSummaryComponent,
         CpgPracticesComponent,
+        CpgAnswerBlockComponent,
         OnlineDisclaimerComponent,
         ReferencesTableComponent,
         ReferencesDisplayComponent,

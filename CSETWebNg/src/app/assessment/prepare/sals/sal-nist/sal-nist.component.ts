@@ -188,4 +188,34 @@ export class SalNistComponent implements OnInit {
     }
     return '';
   }
+
+  get confidentialitySpecialFactor(): string {
+    return this.topModel?.specialFactors?.confidentiality_Special_Factor || '';
+  }
+
+  set confidentialitySpecialFactor(value: string) {
+    if (this.topModel?.specialFactors) {
+      this.topModel.specialFactors.confidentiality_Special_Factor = value;
+    }
+  }
+
+  get integritySpecialFactor(): string {
+    return this.topModel?.specialFactors?.integrity_Special_Factor || '';
+  }
+
+  set integritySpecialFactor(value: string) {
+    if (this.topModel?.specialFactors) {
+      this.topModel.specialFactors.integrity_Special_Factor = value;
+    }
+  }
+
+  get availabilitySpecialFactor(): string {
+    return this.topModel?.specialFactors?.availability_Special_Factor || '';
+  }
+
+  set availabilitySpecialFactor(value: string) {
+    if (this.topModel?.specialFactors) {
+      this.topModel.specialFactors.availability_Special_Factor = value;
+    }
+  }
 }
