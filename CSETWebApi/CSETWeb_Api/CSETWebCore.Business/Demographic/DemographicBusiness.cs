@@ -51,12 +51,12 @@ namespace CSETWebCore.Business.Demographic
             demographics.TechDomain = extBiz.GetX(assessmentId, "TECH-DOMAIN")?.ToString();
             demographics.SectorId = (int?)extBiz.GetX(assessmentId, "SECTOR");
             demographics.IndustryId = (int?)extBiz.GetX(assessmentId, "SUBSECTOR");
-            demographics.CriticalService = (string?)extBiz.GetX(assessmentId, "CRIT-SERVICE");
+            demographics.CriticalService = (string)extBiz.GetX(assessmentId, "CRIT-SERVICE");
             demographics.PointOfContact = (int?)extBiz.GetX(assessmentId, "POC");
-            demographics.Agency = (string?)extBiz.GetX(assessmentId, "BUSINESS-UNIT");
+            demographics.Agency = (string)extBiz.GetX(assessmentId, "BUSINESS-UNIT");
             demographics.FacilitatorId = (int?)extBiz.GetX(assessmentId, "FACILITATOR");
             demographics.IsScoped = (bool?)extBiz.GetX(assessmentId, "SCOPED");
-            demographics.OrganizationName = (string?)extBiz.GetX(assessmentId, "ORG-NAME");
+            demographics.OrganizationName = (string)extBiz.GetX(assessmentId, "ORG-NAME");
             demographics.OrganizationType = (int?)extBiz.GetX(assessmentId, "ORG-TYPE");
             
             var assetId = (int?)extBiz.GetX(assessmentId, "ASSET-VALUE");

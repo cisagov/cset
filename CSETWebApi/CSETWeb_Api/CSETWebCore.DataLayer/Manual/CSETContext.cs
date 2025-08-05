@@ -941,45 +941,5 @@ namespace CSETWebCore.DataLayer.Model
 
             return myrval;
         }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <param name="modelId"></param>
-        /// <returns></returns>
-        public virtual IList<GetAnswerDistribGroupingsResult> GetAnswerDistribGroupings(int assessmentId, int? modelId = null)
-        {
-            // use the supplied modelId or if null, the proc will default to the principal model of the assessment
-            object m = modelId;
-            if (modelId == null)
-            {
-                m = DBNull.Value;
-            }
-
-            if (modelId != null)
-            {
-                FillEmptyMaturityQuestionsForModel(assessmentId, (int)modelId);
-            }
-
-
-            var parms = new IDbDataParameter[]
-            {
-                 new SqlParameter("@assessmentId", assessmentId),
-                 new SqlParameter("@modelId", m),
-            };
-
-
-            IList<GetAnswerDistribGroupingsResult> myrval = null;
-            this.LoadStoredProc("GetAnswerDistribGroupings")
-                .WithSqlParams(parms)
-                .ExecuteStoredProc((handler) =>
-                {
-                    myrval = handler.ReadToList<GetAnswerDistribGroupingsResult>();
-                });
-
-            return myrval;
-        }
     }
 }

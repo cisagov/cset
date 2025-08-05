@@ -20,24 +20,21 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex flex-column flex-11a" *transloco="let t">
-    <h3 class="d-flex flex-column flex-00a">{{t('reports.core.cpg.report.security practice checklist')}}</h3>
-    <p>
-        {{t('reports.core.cpg.report.p.b')}}
-    </p>
-
-    <!-- the table for the CPG answers -->
-    <app-cpg-practice-table [modelId]="modelId"></app-cpg-practice-table>
-
-    <!-- a table for SSG answers, if applicable -->
-    <ng-container *ngIf="isSsgApplicable">
-        <hr class="page-line">
-        <h3>{{t('reports.core.cpg.report.ssg.ssg security practice checklist')}}</h3>
-        <p class="mb-0"> {{t('reports.core.cpg.report.ssg.1')}}</p>
-
-        <app-cpg-practice-table [ssgModelId]="ssgBonusModel"></app-cpg-practice-table>
-    </ng-container>
-
-    <app-nav-back-next [page]="'cpg-practices-page'"></app-nav-back-next>
-    
-</div>
+<ng-content *transloco="let t">
+     <div class="text-nowrap" [class.font-weight-bold]="answer == 'Y'">
+          <i class="far fa-lg" [class.fa-check-square]="answer == 'Y'" [class.fa-square]="answer != 'Y'"></i>
+          {{t('answer-options.labels.imp-cpg') | uppercase}}
+     </div>
+     <div class="text-nowrap" [class.font-weight-bold]="answer == 'I'">
+          <i class="far fa-lg" [class.fa-check-square]="answer == 'I'" [class.fa-square]="answer != 'I'"></i>
+          {{t('answer-options.labels.prog-cpg') | uppercase}}
+     </div>
+     <div class="text-nowrap" [class.font-weight-bold]="answer == 'S'">
+          <i class="far fa-lg" [class.fa-check-square]="answer == 'S'" [class.fa-square]="answer != 'S'"></i>
+          {{t('answer-options.labels.scoped-cpg') | uppercase}}
+     </div>
+     <div class="text-nowrap" [class.font-weight-bold]="answer == 'N'">
+          <i class="far fa-lg" [class.fa-check-square]="answer == 'N'" [class.fa-square]="answer != 'N'"></i>
+          {{t('answer-options.labels.not-cpg') | uppercase}}
+     </div>
+</ng-content>

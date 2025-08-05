@@ -380,6 +380,7 @@ namespace CSETWebCore.Api.Controllers
                     {
                         Question_Title = q.DisplayNumber,
                         Question_Text = q.QuestionText,
+                        IsAnswerable = q.IsAnswerable,
                         Answer = new ANSWER() { Answer_Text = q.Answer },
                         ReferenceText = refText,
                         Parent_Question_Id = q.ParentQuestionId
