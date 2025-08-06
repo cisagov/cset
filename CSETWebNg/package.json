@@ -42,7 +42,7 @@
     "@kolkov/angular-editor": "^3.0.0-beta.2",
     "@ng-bootstrap/ng-bootstrap": "^19.0.1",
     "@ngstack/code-editor": "^9.0.0",
-    "@swimlane/ngx-charts": "^23.0.0-alpha.0",
+    "@swimlane/ngx-charts": "^23.0.0",
     "@types/jquery": "^3.5.32",
     "@types/sanitize-html": "^2.16.0",
     "angular2-hotkeys": "^16.0.1",
