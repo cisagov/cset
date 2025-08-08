@@ -68,7 +68,7 @@
           <span class="cset-icons-envelope fs-base-2"></span>
           <span class="d-none d-md-flex fs-smaller">{{ t('contact.email') }}</span>
         </button>
-        <button *ngIf="showControls()" type="button"
+        <button *ngIf="!getCreator()" type="button"
           class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="removeContact()"
           [disabled]="!enableMyControls">
           <span class="cset-icons-trash-can fs-base-2"></span>
@@ -226,7 +226,7 @@
 
           <!-- Contact Checkboxes -->
           <div class="d-flex flex-column mb-3">
-            <div class="mb-2">
+            <div *ngIf="!getCreator()" class="mb-2">
               <input type="checkbox" class="checkbox-custom" id="primaryPoc" name="primaryPoc"
                 [(ngModel)]="contact.isPrimaryPoc" [disabled]="shouldDisablePrimaryPoc()">
               <label class="checkbox-custom-label" for="primaryPoc">{{ t('contact.primary point of contact') }}</label>
@@ -240,7 +240,7 @@
           </div>
 
           <!-- Role Buttons -->
-          <div class="form-group d-flex flex-column flex-11a mb-3">
+          <div class="form-group d-flex flex-column flex-11a mb-3" *ngIf="!getCreator()">
             <label class="form-label" for="role">{{ t('contact.role') }}</label>
             <div class="btn-group btn-group-toggle d-block" id="role" data-toggle="buttons" ngbRadioGroup>
               <label ngbButtonLabel class="btn btn-level btn-rounded form-check-label"

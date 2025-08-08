@@ -286,7 +286,7 @@ export class ContactItemComponent implements OnInit {
    * Check if this contact is the assessment creator
    */
   getCreator(): boolean {
-    return this.creatorId == this.contact.userId;
+    return this.creatorId && this.contact.userId && this.creatorId == this.contact.userId;
   }
 
   getRoleName(roleId: number) {
@@ -306,8 +306,11 @@ export class ContactItemComponent implements OnInit {
   // Check if assessment was created by current user 
   assessmentCreator() {
     this.assessSvc.getCreator().then((response: any) => {
-      this.creatorId = response
-    })
+      this.creatorId = response;
+    }).catch(error => {
+      console.error('Error getting assessment creator:', error);
+      this.creatorId = null;
+    });
   }
 
   updatePosition(event: MouseEvent) {
