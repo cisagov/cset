@@ -60,7 +60,7 @@ namespace CSETWebCore.Helpers
 
             // Read directly from the database; UserManager does not read password and salt, in order to keep them more private
             loginUser = _context.USERS.Where(x => x.PrimaryEmail == login.Email).FirstOrDefault();
-            
+
 
             if (loginUser == null)
             {
@@ -73,11 +73,11 @@ namespace CSETWebCore.Helpers
             }
 
             var roles = (from u in _context.USERS
-                join ur in _context.USER_ROLES on u.UserId equals ur.UserId
-                join r in _context.ROLES on ur.RoleId equals r.RoleId
-                where u.UserId == loginUser.UserId
-                select r.RoleName).ToList();
-                    
+                         join ur in _context.USER_ROLES on u.UserId equals ur.UserId
+                         join r in _context.ROLES on ur.RoleId equals r.RoleId
+                         where u.UserId == loginUser.UserId
+                         select r.RoleName).ToList();
+
             List<PASSWORD_HISTORY> tempPasswords = _context.PASSWORD_HISTORY.Where(password => password.UserId == loginUser.UserId && password.Is_Temp).ToList();
 
             // Validate the supplied password against the hashed password and its salt
@@ -166,12 +166,19 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public LoginResponse AuthenticateStandalone(Login login, ITokenManager tokenManager)
         {
-            int? assessmentId = ((TokenManager)tokenManager).GetAssessmentId();
+            int? assessmentId = null;
 
-            assessmentId = assessmentId == 0 ? null : assessmentId;
-
-            int userIdSO = 100;
-            string primaryEmailSO = "";
+            // Safely try to get assessment ID from token if one exists
+            try
+            {
+                assessmentId = ((TokenManager)tokenManager).GetAssessmentId();
+                assessmentId = assessmentId == 0 ? null : assessmentId;
+            }
+            catch
+            {
+                // If no valid token exists yet, assessmentId remains null
+                assessmentId = null;
+            }
 
             // Read the file system for the LOCAL-INSTALLATION file put there at install time
             if (!_localInstallationHelper.IsLocalInstallation())
@@ -207,58 +214,43 @@ namespace CSETWebCore.Helpers
 
             string name = null;
 
+            int userIdSO = 1;
+            string primaryEmailSO = "";
+
             name = Environment.UserName;
             name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
-
             primaryEmailSO = name;
-            //check for legacy default email for local installation and set to new standard
-            var userOrg = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefault();
-            if (userOrg != null)
-            {
-                string tmp = userOrg.PrimaryEmail.Split('@')[0];
-                userOrg.PrimaryEmail = tmp;
-                if (_context.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
-                    _context.SaveChanges();
-                primaryEmailSO = userOrg.PrimaryEmail;
-            }
-            else
-            {
-                //check for legacy default local usernames (in the form HOSTNAME\USERNAME)
-                string regex = @"^.*(\\)" + primaryEmailSO + "$";
-                var allUsers = _context.USERS.ToList();
-                var legacyUser = allUsers.Where(x => Regex.Match(x.PrimaryEmail, regex).Success).FirstOrDefault();
-                if (legacyUser != null)
-                {
-                    string tmp = legacyUser.PrimaryEmail.Split('\\')[1];
-                    legacyUser.PrimaryEmail = tmp;
-                    if (_context.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
-                        _context.SaveChanges();
-                    primaryEmailSO = legacyUser.PrimaryEmail;
-                }
-            }
 
+            // Check for UserId = 1 directly
+            var user = _context.USERS.Where(x => x.UserId == 1).FirstOrDefault();
 
-            var user = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
             if (user == null)
             {
+                // Create user with UserId = 1 if it doesn't exist
                 UserDetail ud = new UserDetail()
                 {
                     Email = primaryEmailSO,
                     FirstName = name,
                     LastName = ""
                 };
-                UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud, _context);
 
+                UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud, _context);
                 _context.SaveChanges();
-                //update the userid 1 to the new user
-                var tempu = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
-                if (tempu != null)
-                    userIdSO = tempu.UserId;
+
+                // Get the newly created user and force UserId = 1
+                var newUser = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
+                if (newUser != null && newUser.UserId != 1)
+                {
+                    // Update the user to have UserId = 1
+                    newUser.UserId = 1;
+                    _context.SaveChanges();
+                }
+
                 _localInstallationHelper.determineIfUpgradedNeededAndDoSo(userIdSO, _context);
             }
             else
             {
-                userIdSO = user.UserId;
+                userIdSO = 1; // Always use UserId = 1
             }
 
             if (string.IsNullOrEmpty(primaryEmailSO))
