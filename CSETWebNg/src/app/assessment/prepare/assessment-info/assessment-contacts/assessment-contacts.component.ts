@@ -79,7 +79,7 @@ export class AssessmentContactsComponent implements OnInit {
           // this.contacts = data.contactList;
           this.userRole = data.currentUserRole;
           this.userEmail = this.auth.email();
-          this.moveUser();
+          this.moveCreatorToTop();
         });
     }
   }
@@ -88,13 +88,37 @@ export class AssessmentContactsComponent implements OnInit {
     this.triggerChange.next("Initialized");
   }
 
-  moveUser() {
-    // move the user's contact to the top of the list
+  async moveCreatorToTop() {
+    try {
+      // Get the assessment creator ID
+      const creatorId = await this.assessSvc.getCreator();
+      
+      // Find the creator contact in the list
+      const creatorIndex = this.contacts.findIndex(
+        contact => contact.userId === creatorId
+      );
+      
+      if (creatorIndex > -1) {
+        // Move creator to the top of the list
+        this.contacts.unshift(this.contacts.splice(creatorIndex, 1)[0]);
+        this.contacts[0].isFirst = true;
+      }
+    } catch (error) {
+      console.error('Error getting assessment creator for contact ordering:', error);
+      // Fallback to moving current user to top if creator lookup fails
+      this.moveCurrentUserToTop();
+    }
+  }
+
+  moveCurrentUserToTop() {
+    // Fallback method: move the current user's contact to the top of the list
     const myIndex = this.contacts.findIndex(
       contact => contact.primaryEmail.toUpperCase() === this.auth.email().toUpperCase()
     );
-    this.contacts.unshift(this.contacts.splice(myIndex, 1)[0]);
-    this.contacts[0].isFirst = true;
+    if (myIndex > -1) {
+      this.contacts.unshift(this.contacts.splice(myIndex, 1)[0]);
+      this.contacts[0].isFirst = true;
+    }
   }
 
   hasNewContact() {
@@ -227,7 +251,13 @@ export class AssessmentContactsComponent implements OnInit {
                 // Update the userId in case changing email linked to new user in backend
                 this.contacts.find(x => x.userId === contact.userId).userId = data.userId;
               }
-              this.contactItems.forEach(x => x.enableMyControls = true);
+              this.contactItems.forEach(x => {
+                x.enableMyControls = true;
+                // Refresh creator status after contact update
+                x.assessmentCreator();
+              });
+              // Restore proper contact ordering after edit to ensure creator stays on top
+              this.moveCreatorToTop();
               this.changeOccurred();
             });
           } catch (error) {
