@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Notification;
@@ -20,24 +21,29 @@ using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Helpers
 {
     public class UserAuthentication : IUserAuthentication
     {
+        private const int STANDALONE_USER_ID = 1;
+        
         private readonly IPasswordHash _password;
         private readonly IUserBusiness _userBusiness;
         private readonly ILocalInstallationHelper _localInstallationHelper;
         private readonly ITokenManager _transactionSecurity;
         private readonly INotificationBusiness _notificationBusiness;
         private readonly IConfiguration _configuration;
+        private readonly ILogger<UserAuthentication> _logger;
         private CSETContext _context;
 
         public UserAuthentication(IPasswordHash password, IUserBusiness userBusiness,
             ILocalInstallationHelper localInstallationHelper, ITokenManager transactionSecurity,
             INotificationBusiness notificationBusiness, IConfiguration configuration,
-            CSETContext context)
+            CSETContext context, ILogger<UserAuthentication> logger)
         {
             _password = password;
             _transactionSecurity = transactionSecurity;
@@ -46,6 +52,7 @@ namespace CSETWebCore.Helpers
             _notificationBusiness = notificationBusiness;
             _configuration = configuration;
             _context = context;
+            _logger = logger;
         }
 
         public LoginResponse Authenticate(Login login)
@@ -164,19 +171,23 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        public LoginResponse AuthenticateStandalone(Login login, ITokenManager tokenManager)
+        public async Task<LoginResponse> AuthenticateStandalone(Login login, ITokenManager tokenManager)
         {
             int? assessmentId = null;
 
             // Safely try to get assessment ID from token if one exists
             try
             {
-                assessmentId = ((TokenManager)tokenManager).GetAssessmentId();
-                assessmentId = assessmentId == 0 ? null : assessmentId;
+                if (tokenManager is TokenManager tm)
+                {
+                    assessmentId = tm.GetAssessmentId();
+                    assessmentId = assessmentId == 0 ? null : assessmentId;
+                }
             }
-            catch
+            catch (Exception ex)
             {
                 // If no valid token exists yet, assessmentId remains null
+                _logger.LogWarning(ex, "Failed to get assessment ID from token");
                 assessmentId = null;
             }
 
@@ -184,9 +195,10 @@ namespace CSETWebCore.Helpers
             if (!_localInstallationHelper.IsLocalInstallation())
             {
                 // this is not a local install.  Return what we know about this user (if anything).
-                if (tokenManager.Payload("userid") != null)
+                var userIdPayload = tokenManager.Payload("userid");
+                if (userIdPayload != null && int.TryParse(userIdPayload, out int userId))
                 {
-                    var loginUser = _context.USERS.Where(x => x.UserId == int.Parse(tokenManager.Payload("userid"))).FirstOrDefault();
+                    var loginUser = await _context.USERS.FirstOrDefaultAsync(x => x.UserId == userId);
 
                     if (loginUser != null)
                     {
@@ -214,19 +226,19 @@ namespace CSETWebCore.Helpers
 
             string name = null;
 
-            int userIdSO = 1;
+            int userIdSO = STANDALONE_USER_ID;
             string primaryEmailSO = "";
 
-            name = Environment.UserName;
+            name = SanitizeUsername(Environment.UserName);
             name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
             primaryEmailSO = name;
 
-            // Check for UserId = 1 directly
-            var user = _context.USERS.Where(x => x.UserId == 1).FirstOrDefault();
+            // Check for UserId = STANDALONE_USER_ID directly
+            var user = await _context.USERS.FirstOrDefaultAsync(x => x.UserId == STANDALONE_USER_ID);
 
             if (user == null)
             {
-                // Create user with UserId = 1 if it doesn't exist
+                // Create user with UserId = STANDALONE_USER_ID if it doesn't exist
                 UserDetail ud = new UserDetail()
                 {
                     Email = primaryEmailSO,
@@ -235,22 +247,22 @@ namespace CSETWebCore.Helpers
                 };
 
                 UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud, _context);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
-                // Get the newly created user and force UserId = 1
-                var newUser = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
-                if (newUser != null && newUser.UserId != 1)
+                // Get the newly created user and force UserId = STANDALONE_USER_ID
+                var newUser = await _context.USERS.FirstOrDefaultAsync(x => x.PrimaryEmail == primaryEmailSO);
+                if (newUser != null && newUser.UserId != STANDALONE_USER_ID)
                 {
-                    // Update the user to have UserId = 1
-                    newUser.UserId = 1;
-                    _context.SaveChanges();
+                    // Update the user to have UserId = STANDALONE_USER_ID
+                    newUser.UserId = STANDALONE_USER_ID;
+                    await _context.SaveChangesAsync();
                 }
 
                 _localInstallationHelper.determineIfUpgradedNeededAndDoSo(userIdSO, _context);
             }
             else
             {
-                userIdSO = 1; // Always use UserId = 1
+                userIdSO = STANDALONE_USER_ID; // Always use STANDALONE_USER_ID
             }
 
             if (string.IsNullOrEmpty(primaryEmailSO))
@@ -315,6 +327,20 @@ namespace CSETWebCore.Helpers
             return key;
         }
 
+        /// <summary>
+        /// Sanitizes a username by removing potentially harmful characters.
+        /// </summary>
+        /// <param name="username">The username to sanitize</param>
+        /// <returns>Sanitized username</returns>
+        private string SanitizeUsername(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+                return username;
+
+            // Remove potentially harmful characters and limit length
+            var sanitized = System.Text.RegularExpressions.Regex.Replace(username, @"[^\w\-._@]", "");
+            return sanitized.Length > 50 ? sanitized.Substring(0, 50) : sanitized;
+        }
 
         /// <summary>
         /// Emulates credential authentication solely by providing
