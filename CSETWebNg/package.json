@@ -76,7 +76,7 @@
   "devDependencies": {
     "@angular-builders/custom-webpack": "^20.0.0",
     "@electron/packager": "^18.3.6",
-    "electron": "^37.2.5",
+    "electron": "^37.2.6",
     "shx": "^0.4.0",
     "webpack": "^5.99.8",
     "webpack-cli": "^6.0.1",
