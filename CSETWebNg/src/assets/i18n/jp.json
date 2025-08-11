@@ -492,5 +492,10 @@
   "Launch Report": "発射報告",
   "Select a Model": "モデルを選択する",
   "ModuleContentLaunchComponent p1": "この報告書は、CSETモジュールの構造と質問内容を示しています。たとえば、業界標準、成熟度モデル、またはベストプラクティスモデルなどです",
-  "ModuleContentLaunchComponent p2": "生成された報告書には、各質問のガイダンスと参照を表示または非表示にするためのコントロールがあります。"
+  "ModuleContentLaunchComponent p2": "生成された報告書には、各質問のガイダンスと参照を表示または非表示にするためのコントロールがあります。",
+  "filters": {
+    "view all": "すべて表示",
+    "done": "完了",
+    "favorites": "お気に入り"
+  }
 }

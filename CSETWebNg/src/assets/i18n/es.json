@@ -933,5 +933,10 @@
     "Launch Report": "Abrir Informe",
     "Select a Model": "Seleccione un Modelo.",
     "ModuleContentLaunchComponent p1": "Este informe ilustra la estructura y el contenido de preguntas de un módulo CSET, por ejemplo, un estándar de la industria o un modelo de madurez o de mejores prácticas.",
-    "ModuleContentLaunchComponent p2": "El informe generado tiene controles para mostrar u ocultar la guía y las referencias para cada pregunta."
+    "ModuleContentLaunchComponent p2": "El informe generado tiene controles para mostrar u ocultar la guía y las referencias para cada pregunta.",
+  "filters": {
+    "view all": "Ver Todo",
+    "done": "Completado",
+    "favorites": "Favoritos"
+  }
 }
