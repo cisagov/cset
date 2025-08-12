@@ -73,6 +73,8 @@ interface UserAssessment {
   submittedDate?: Date;
   done?:boolean;
   favorite?:boolean;
+  firstName?:string;
+  lastName?:string;
 }
 
 @Component({
@@ -140,7 +142,7 @@ export class MyAssessmentsComponent implements OnInit {
 },
 {
   headerName: 'Status',
-  cellRenderer: this.statusRenderer.bind(this),
+  cellRenderer: this.statusRendererWithHeartFlag.bind(this),
     sortable: false,
   filter: false,
   flex: 2
@@ -563,53 +565,92 @@ defaultColDef: ColDef = {
   }
 
 // Status cell with progress and favorite icon
-  statusRenderer(params: any): string {
+  statusRendererWithHeartFlag(params: any): string {
     const assessment = params.data;
     const percentage = this.getCompletionPercentage(assessment);
-    const favoriteIcon = assessment.favorite ?
-      '<i class="material-icons text-red-500 mr-2" style="font-size: 18px;">favorite</i>' : '';
+    const favoriteIcon = assessment.favorite ? 'favorite' : 'favorite_border';
+    const favoriteClass = assessment.favorite ? 'text-red-500' : 'text-gray-400';
+    const reviewFlag = (assessment.markedForReview || assessment.altTextMissing);
+    const flagClass = reviewFlag ? 'text-orange-500' : 'text-gray-400';
+    const tooltipText = this.getProgressTooltip(assessment);
 
     return `
-    <div class="flex items-center gap-3">
-      ${favoriteIcon}
-      <progress class="progress progress-primary w-24" value="${percentage}" max="100"></progress>
-      <span class="text-xs font-medium">${percentage}%</span>
+    <div class="flex items-center gap-2 h-full">
+      <!-- Favorite Heart -->
+      <button class="btn btn-ghost btn-xs p-1 min-h-0 h-auto"
+              data-action="toggleFavorite"
+              data-assessment-id="${assessment.assessmentId}"
+              title="${assessment.favorite ? 'Remove from favorites' : 'Add to favorites'}">
+        <span class="material-icons text-lg ${favoriteClass}">
+          ${favoriteIcon}
+        </span>
+      </button>
+
+      <!-- Review Flag -->
+      <span class="cursor-pointer cset-icons-flag-dark text-lg ${flagClass}"
+            title="${reviewFlag ? 'Assessment requires review' : 'No review required'}">
+      </span>
+
+      <!-- Progress Bar -->
+      <div class="flex-1 min-w-0">
+        <progress class="progress progress-primary w-full h-2 cursor-pointer"
+                  style="color: #367190;"
+                  value="${percentage}"
+                  max="100"
+                  title="${tooltipText}"></progress>
+      </div>
+
+      <!-- Percentage -->
+      <span class="text-sm text-gray-500 min-w-fit">
+        ${percentage}%
+      </span>
     </div>
   `;
   }
 
 // Actions cell with delete and export buttons
   actionsRenderer(params: any): string {
-    const assessmentId = params.data.assessmentId;
+    const assessment = params.data;
+    const assessmentId = assessment.assessmentId;
     const rowIndex = params.rowIndex;
 
     let buttons = `
-    <button
-      class="btn btn-ghost btn-sm btn-square text-error hover:bg-error hover:text-white"
-      data-action="delete"
-      data-assessment-id="${assessmentId}"
-      data-row-index="${rowIndex}"
-      title="Remove assessment">
-<!--      <i class="material-icons" style="font-size: 16px;">delete</i>-->
-  <span class="cset-icons-trash-x fs-base-2 me-2"></span>
+    <button class="btn btn-ghost btn-sm hover:btn-error"
+            data-action="delete"
+            data-assessment-id="${assessmentId}"
+            data-row-index="${rowIndex}"
+            title="Remove assessment">
+      <span class="cset-icons-trash-x text-sm mr-2"></span>
+      <span class="text-nowrap">Remove</span>
     </button>
   `;
 
     if (this.showColumn('export')) {
       buttons += `
-      <button
-        class="btn btn-ghost btn-sm btn-square ml-1"
-        data-action="export"
-        data-assessment-id="${assessmentId}"
-        title="Export assessment">
-        <span class="cset-icons-export-up text-sm"></span>
+      <button class="btn btn-ghost btn-sm ml-1"
+              data-action="export"
+              data-assessment-id="${assessmentId}"
+              title="Export assessment">
+        <span class="cset-icons-export-up text-sm mr-2"></span>
+        <span class="text-nowrap">Export</span>
+      </button>
+    `;
+    }
+
+    if (this.showColumn('export json')) {
+      buttons += `
+      <button class="btn btn-ghost btn-sm ml-1"
+              data-action="exportJson"
+              data-assessment-id="${assessmentId}"
+              title="Export assessment JSON">
+        <span class="cset-icons-export-up text-sm mr-2"></span>
+        <span class="text-nowrap">Export JSON</span>
       </button>
     `;
     }
 
     return `<div class="flex gap-1">${buttons}</div>`;
   }
-
 // Handle grid clicks
   onCellClicked(event: any): void {
     const target = event.event.target;
@@ -624,20 +665,32 @@ defaultColDef: ColDef = {
         this.navSvc.beginAssessment(assessmentId);
         break;
 
-      case 'delete':
-        const rowIndex = parseInt(target.getAttribute('data-row-index'));
+      case 'toggleFavorite':
         const assessment = this.filteredAssessments.find(a => a.assessmentId === assessmentId);
         if (assessment) {
-          this.removeAssessment(assessment, rowIndex);
+          this.toggleFavorite(assessment);
+          // Refresh the grid to show updated heart icon
+          this.gridApi.refreshCells();
+        }
+        break;
+
+      case 'delete':
+        const rowIndex = parseInt(target.getAttribute('data-row-index'));
+        const assessmentToDelete = this.filteredAssessments.find(a => a.assessmentId === assessmentId);
+        if (assessmentToDelete) {
+          this.removeAssessment(assessmentToDelete, rowIndex);
         }
         break;
 
       case 'export':
         this.clickDownloadLink(assessmentId);
         break;
+
+      case 'exportJson':
+        this.clickDownloadLink(assessmentId, true);
+        break;
     }
   }
-
 // Grid ready event
   onGridReady(params: GridReadyEvent): void {
     this.gridApi = params.api;
@@ -649,5 +702,20 @@ defaultColDef: ColDef = {
     // Use your existing date formatting or the pipe
     const date = new Date(dateString);
     return date.toLocaleDateString();
+  }
+  toggleFavorite(assessment: UserAssessment) {
+    assessment.favorite = !assessment.favorite;
+    // Add your API call here to save favorite status
+  }
+  getProgressTooltip(assessment: UserAssessment): string {
+    if (assessment.selectedMaturityModel === 'CIS' || assessment.selectedMaturityModel === 'SD02 Series') {
+      return this.tSvc.translate('welcome page.blank assessment');
+    }
+
+    if (assessment.totalAvailableQuestionsCount > 0) {
+      return `${assessment.completedQuestionsCount}/${assessment.totalAvailableQuestionsCount} questions answered`;
+    }
+
+    return this.tSvc.translate('welcome page.blank assessment');
   }
 }
