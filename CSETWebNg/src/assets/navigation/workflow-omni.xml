@@ -46,8 +46,7 @@
         <!-- target level selection -->
         <node d="cmmc target level selection" id="cmmc-levels" path="assessment/{:id}/prepare/cmmc-levels" visible="MATURITY-ANY(2,6)" />
         <node d="cmmc target level selection" id="cmmc2-levels" path="assessment/{:id}/prepare/cmmc2-levels" visible="MATURITY-ANY(19)" />
-        <node d="cisa vadr target level selection" id="cisa-vadr-levels" path="assessment/{:id}/prepare/cisa-vadr-levels" visible="MATURITY-ANY(25)" />
-
+    
     </node>
 
 
@@ -327,7 +326,9 @@
 
         <node d="assessment complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
 
+    <!--
         <node displaytext="Sync to Server" id="analytics" path="assessment/{:id}/results/analytics" visible="IS-CSA HAS-URL-ANALYTICS"/>
+    -->
     </node>
 
 </nav>

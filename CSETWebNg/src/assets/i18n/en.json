@@ -904,9 +904,14 @@
     "protected features": "Protected Features",
     "module name": "Module Name",
     "module full name": "Module Full Name",
-    "enable modules": "Enable Modules",
-    "cisa assessor workflow": "CISA Assessor",
-    "assessor mode": "The assessment is currently in assessor workflow mode."
+    "enable modules": "Enable Modules"
+  },
+  "assessor workflow": {
+    "user is cisa assessor": "CISA Assessor",
+    "cisa assessor explanation": "This setting indicates if the user is with the CISA assessment team",
+    "control label": "CISA Assessor Workflow",
+    "assessor workflow explanation": "Turning on the Assessor Workflow includes screens exclusive to assessments conducted by the CISA assessment team",
+    "non assessor explanation": "The assessment is in assessor workflow mode, which causes other Prepare step screens to appear. Only a CISA assessor can change this setting."
   },
   "parameters": {
     "text1": "Many Standards in 'Requirements Mode' contain parameters that you can change to match your specific situation. The table below allows you to change the parameter values for the indicated parameter names in this Assessment by clicking on the Parameter Value. Changing a parameter value will update all related parameter values in the requirement text of the currently selected Cybersecurity Standard(s).",
