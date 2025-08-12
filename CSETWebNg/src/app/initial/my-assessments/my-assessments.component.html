@@ -32,25 +32,7 @@
                 <div class="mt-3 mb-4 d-flex flex-column justify-content-between flex-00a">
                     <div class="d-flex justify-content-between flex-00a">
                         <div class="d-flex flex-row">
-                            <label *ngIf="authSvc.isLocal && configSvc.showImportButton()" tabindex="0"
-                                class="m-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-00a"
-                                matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
-                                <span class="me-2 fs-base cset-icons-import"></span>
-                                <label for="importFile" class="m-0">{{t('buttons.import')}}</label>
-                                <input type="file" tabindex="0" class="display-none" id="importFile" multiple
-                                    accept="{{ importExtensions }},.cset" (change)="importAssessmentFile($event)">
-                            </label>
-
-                            <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
-                                class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
-                                matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
-                                <span class="me-2 fs-base cset-icons-import"></span>
-                                <label for="importFile" class="m-0">{{t('buttons.import')}}</label>
-                                <input type="file" tabindex="0" class="display-none" id="importFile" multiple
-                                    accept="{{ importExtensions }}" (change)="importAssessmentFile($event)">
-                            </label>
-
-                            <button *ngIf="configSvc.showExportAllButton()" tabindex="0"
+                          <button *ngIf="configSvc.showExportAllButton()" tabindex="0"
                                 class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
                                 (click)="exportAllAssessments()" matTooltip="{{ t('tooltip.export all') }}"
                                 [disabled]="exportAllInProgress">
@@ -93,66 +75,58 @@
                 {{ t('filters.favorites') || 'Favorites' }}
               </button>
             </div>
+            <div class="grid grid-cols-2 gap-3">
+              <!-- Import Button (Local) -->
+              <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
+                     tabindex="0"
+                     class="btn btn-secondary flex items-center h-12 px-6 shadow-sm w-50"
+                     matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
+                <span class="mr-3 text-lg cset-icons-import"></span>
+                <span class="text-sm font-medium">{{ t('buttons.import') }} local</span>
+                <input type="file"
+                       tabindex="0"
+                       class="hidden"
+                       id="importFile"
+                       multiple
+                       accept="{{ importExtensions }},.cset"
+                       (change)="importAssessmentFile($event)">
+              </label>
 
-            <!-- Search and Filter Controls -->
-            <div class="flex items-center gap-3">
-              <div class="relative">
-                <input type="text"
-                       placeholder="Search"
-                       class="input input-bordered input-sm pl-10 bg-white border-gray-300 focus:border-blue-500" />
-                <span class="material-icons absolute left-3 top-2 text-gray-400 text-sm">search</span>
-              </div>
-              <div class="dropdown dropdown-end">
-                <div tabindex="0" role="button" class="btn btn-sm bg-white border-gray-300 text-gray-700 hover:bg-gray-50">
-                  <span class="material-icons text-sm mr-1">tune</span>
-                  All
-                </div>
-                <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-lg bg-white rounded-lg border border-gray-200 w-52">
-                  <li><label class="label cursor-pointer"><span class="label-text text-gray-700">All</span><input type="checkbox" checked class="checkbox checkbox-sm" /></label></li>
-                  <li><label class="label cursor-pointer"><span class="label-text text-gray-700">Priority</span><input type="checkbox" class="checkbox checkbox-sm" /></label></li>
-                </ul>
-              </div>
+              <!-- Import Button (Non-Local) -->
+              <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
+                     class="btn btn-outline btn-neutral h-12 flex items-center px-6 shadow-sm flex-1 min-w-fit cursor-pointer border border-gray-200"
+                     matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
+                <span class="mr-3 text-lg cset-icons-import"></span>
+                <span class="text-sm font-medium">{{ t('buttons.import') }}</span>
+                <input type="file"
+                       tabindex="-1"
+                       class="hidden"
+                       id="importFile"
+                       multiple
+                       accept="{{ importExtensions }}"
+                       (change)="importAssessmentFile($event)">
+              </label>
+
+              <!-- New Assessment Button -->
+              <button class="btn btn-primary h-12 flex items-center px-6 shadow-sm flex-1 min-w-fit"
+                      (click)="clickNewAssessmentButton()"
+                      matTooltip="{{ t('welcome page.new assessment tooltip') }}">
+                <span class="mr-3 text-lg cset-icons-cset-lock"></span>
+                <span class="text-sm font-medium">{{ t('welcome page.new assessment') }}</span>
+              </button>
+
+              <!-- Export All Button -->
+              <button *ngIf="configSvc.showExportAllButton()"
+                      tabindex="0"
+                      class="btn btn-secondary flex items-center h-12 px-6 shadow-sm w-50"
+                      (click)="exportAllAssessments()"
+                      matTooltip="{{ t('tooltip.export all') }}"
+                      [disabled]="exportAllInProgress">
+                <span class="cset-icons-export-up text-lg mr-3"></span>
+                <span class="text-sm font-medium">{{ t('export all') }}</span>
+              </button>
             </div>
           </div>
-<!--          <div class="filter-controls mb-3">-->
-<!--            <div class="join bg-gray-200 p-1 rounded-lg">-->
-<!--              <button-->
-<!--                type="button"-->
-<!--                class="join-item btn btn-sm"-->
-<!--                [class.btn-active]="currentFilter === 'all'"-->
-<!--              [class.bg-white]="currentFilter === 'all'"-->
-<!--              [class.shadow-sm]="currentFilter === 'all'"-->
-<!--              [class.text-base-content]="currentFilter === 'all'"-->
-<!--              [class.btn-ghost]="currentFilter !== 'all'"-->
-<!--              (click)="setFilter('all')">-->
-<!--              View all-->
-<!--              </button>-->
-
-<!--              <button-->
-<!--                type="button"-->
-<!--                class="join-item btn btn-sm"-->
-<!--                [class.btn-active]="currentFilter === 'done'"-->
-<!--              [class.bg-white]="currentFilter === 'done'"-->
-<!--              [class.shadow-sm]="currentFilter === 'done'"-->
-<!--              [class.text-base-content]="currentFilter === 'done'"-->
-<!--              [class.btn-ghost]="currentFilter !== 'done'"-->
-<!--              (click)="setFilter('done')">-->
-<!--              Done-->
-<!--              </button>-->
-
-<!--              <button-->
-<!--                type="button"-->
-<!--                class="join-item btn btn-sm"-->
-<!--                [class.btn-active]="currentFilter === 'favorite'"-->
-<!--              [class.bg-white]="currentFilter === 'favorite'"-->
-<!--              [class.shadow-sm]="currentFilter === 'favorite'"-->
-<!--              [class.text-base-content]="currentFilter === 'favorite'"-->
-<!--              [class.btn-ghost]="currentFilter !== 'favorite'"-->
-<!--              (click)="setFilter('favorite')">-->
-<!--              Favorites-->
-<!--              </button>-->
-<!--            </div>-->
-<!--          </div>-->
             <ng-template #noAssessmentsElseBlock>
                 <h2 class="mt-0" *ngIf="sortedAssessments?.length == 0">
                     <div>{{ t('welcome page.welcome to', { appTitle:appTitle }) }}</div>
