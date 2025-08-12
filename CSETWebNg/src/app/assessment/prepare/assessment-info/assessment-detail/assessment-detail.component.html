@@ -75,28 +75,38 @@
         </div>
 
     </div>
-    <div *ngIf="this.configSvc.userIsCisaAssessor" class="mt-4">
+    <div class="mt-4">
         <h4>{{ t('assessment settings') }}</h4>
 
-        <div class="mb-3 col-6">
-            <label class="form-label">{{t('protected features.cisa assessor workflow')}}</label>
-            <div>
-                <div class="btn-group btn-group-toggle col-10" data-toggle="buttons"
-                    style="border: 2px solid transparent; border-radius: 8px;">
-                    <label class="btn btn-level form-check-label" [class.active]="assessment.assessorMode"
-                        (change)="updateAssessorMode()">
-                        <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
-                            [checked]="assessment.assessorMode" />
-                        {{t('answer-options.button-labels.yes')}}
-                    </label>
-                    <label class="btn btn-level form-check-label" [class.active]="!assessment.assessorMode"
-                        (change)="updateAssessorMode()">
-                        <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
-                            [checked]="!assessment.assessorMode" />
-                        {{t('answer-options.button-labels.no')}}
-                    </label>
-                </div>
+        <div *ngIf="this.configSvc.userIsCisaAssessor" class="mb-3">
+            <label>{{t('assessor workflow.control label')}}</label>
+            <label class="form-label fst-italic">{{t('assessor workflow.assessor workflow explanation')}}</label>
+            <div class="d-inline-flex btn-group align-items-start" role="group" data-toggle="buttons">
+                <label class="btn btn-level form-check-label px-4" [class.active]="!assessment.assessorMode"
+                    (change)="updateAssessorMode()">
+                    <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                        [checked]="!assessment.assessorMode" />
+                    {{t('answer-options.button-labels.no')}}
+                </label>
+                <label class="btn btn-level form-check-label px-4" [class.active]="assessment.assessorMode"
+                    (change)="updateAssessorMode()">
+                    <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                        [checked]="assessment.assessorMode" />
+                    {{t('answer-options.button-labels.yes')}}
+                </label>
             </div>
         </div>
+
+        <div class="mb-5">
+            <label class="form-label" for="techDomain">{{t('tech domain.label')}}</label>
+            <select class="form-select" id="techDomain" tabindex="0" name="techDomain" (change)="updateDemographics()"
+                [(ngModel)]="demographics.techDomain">
+                <option [ngValue]="null">-- {{t('tech domain.select')}} --</option>
+                <option value="OT">{{t('tech domain.ot')}}</option>
+                <option value="IT">{{t('tech domain.it')}}</option>
+                <option value="OT+IT">{{t('tech domain.ot+it')}}</option>
+            </select>
+        </div>
+
     </div>
 </ng-container>

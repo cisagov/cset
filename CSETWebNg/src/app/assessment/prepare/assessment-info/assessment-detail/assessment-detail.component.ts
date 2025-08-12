@@ -30,6 +30,7 @@ import { ConfigService } from '../../../../services/config.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { AwwaStandardComponent } from '../../standards/awwa-standard/awwa-standard.component';
 import { AwwaService } from '../../../../services/awwa.service';
+import { DemographicService } from '../../../../services/demographic.service';
 
 
 @Component({
@@ -45,6 +46,8 @@ export class AssessmentDetailComponent implements OnInit {
     assessmentName: ''
   };
 
+  demographics: any = {};
+
   dialogRefAwwa: MatDialogRef<AwwaStandardComponent>;
   isAwwa = false;
 
@@ -53,6 +56,7 @@ export class AssessmentDetailComponent implements OnInit {
    */
   constructor(
     private assessSvc: AssessmentService,
+    public demoSvc: DemographicService,
     public navSvc: NavigationService,
     public awwaSvc: AwwaService,
     public configSvc: ConfigService,
@@ -60,12 +64,18 @@ export class AssessmentDetailComponent implements OnInit {
     public dialog: MatDialog
   ) { }
 
+  /**
+   * 
+   */
   ngOnInit() {
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
     }
-  }
 
+    this.demoSvc.getDemographic().subscribe((data: any) => {
+      this.demographics = data;
+    });
+  }
 
   /**
    * Called every time this page is loaded.
@@ -94,6 +104,14 @@ export class AssessmentDetailComponent implements OnInit {
       }
     }
     this.assessSvc.updateAssessmentDetails(this.assessment);
+  }
+
+  /**
+   * Included demographics support for persisting Technology Domain;
+   * this may expand in the future with additional data items.
+   */
+  updateDemographics() {
+    this.demoSvc.updateDemographic(this.demographics);
   }
 
   showAssessmentNameDisclaimer() {
