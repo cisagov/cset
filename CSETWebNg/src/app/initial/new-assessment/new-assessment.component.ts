@@ -174,19 +174,34 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
   }
 
   // Add this method to get filtered items based on selected category
+  // getFilteredItems(): any[] {
+  //   if (this.selectedCategory === 'all') {
+  //     // Return all items from all categories
+  //     return this.gallerySvc.rows.reduce((acc, row) => {
+  //       return acc.concat(row.galleryItems);
+  //     }, []);
+  //   } else {
+  //     // Return items from selected category only
+  //     const selectedRow = this.gallerySvc.rows.find(row => row.group_Title === this.selectedCategory);
+  //     return selectedRow ? selectedRow.galleryItems : [];
+  //   }
+  //
+  // }
   getFilteredItems(): any[] {
-    if (this.selectedCategory === 'all') {
-      // Return all items from all categories
-      return this.gallerySvc.rows.reduce((acc, row) => {
-        return acc.concat(row.galleryItems);
-      }, []);
-    } else {
-      // Return items from selected category only
-      const selectedRow = this.gallerySvc.rows.find(row => row.group_Title === this.selectedCategory);
-      return selectedRow ? selectedRow.galleryItems : [];
+    if (!this.gallerySvc.rows || !Array.isArray(this.gallerySvc.rows)) {
+      return [];
     }
 
+    if (this.selectedCategory === 'all') {
+      return this.gallerySvc.rows.reduce((acc, row) => {
+        return acc.concat(row.galleryItems || []);
+      }, []);
+    } else {
+      const selectedRow = this.gallerySvc.rows.find(row => row.group_Title === this.selectedCategory);
+      return selectedRow && selectedRow.galleryItems ? selectedRow.galleryItems : [];
+    }
   }
+
   getCategoryIcon(categoryTitle: string): string {
     const iconMap: { [key: string]: string } = {
       'Most Popular': 'fas fa-star',
