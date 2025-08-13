@@ -9,7 +9,6 @@ using CSETWebCore.Business.Observations;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Document;
@@ -43,7 +42,6 @@ namespace CSETWebCore.Api.Controllers
         private readonly IDocumentBusiness _document;
         private readonly IHtmlFromXamlConverter _htmlConverter;
         private readonly IQuestionRequirementManager _questionRequirement;
-        private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly CSETContext _context;
 
 
@@ -53,7 +51,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         public QuestionsController(ITokenManager token, INotificationBusiness notification,
             IAssessmentUtil assessmentUtil, IContactBusiness contact, IDocumentBusiness document, IHtmlFromXamlConverter htmlConverter, IQuestionRequirementManager questionRequirement,
-            IAdminTabBusiness adminTabBusiness, IUserBusiness user, CSETContext context)
+            IUserBusiness user, CSETContext context)
         {
             _token = token;
             _context = context;
@@ -64,7 +62,6 @@ namespace CSETWebCore.Api.Controllers
             _document = document;
             _htmlConverter = htmlConverter;
             _questionRequirement = questionRequirement;
-            _adminTabBusiness = adminTabBusiness;
         }
 
 
@@ -286,7 +283,7 @@ namespace CSETWebCore.Api.Controllers
 
             if (answer.Is_Maturity)
             {
-                var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+                var mb = new MaturityBusiness(_context, _assessmentUtil);
                 var savedAnswer = mb.StoreAnswer(assessmentId, answer);
 
                 var detailsChanged = new Hooks(_context, _assessmentUtil).HookQuestionAnswered(savedAnswer);

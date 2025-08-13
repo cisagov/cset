@@ -38,7 +38,7 @@ namespace CSETWebCore.Business.Maturity.Tests
         [TestMethod()]
         public void Get_LevelScoresByGroupTest()
         {
-            MaturityBusiness maturityBusiness = new MaturityBusiness(this.context, null, null);
+            MaturityBusiness maturityBusiness = new MaturityBusiness(this.context, null);
             maturityBusiness.Get_LevelScoresByGroup(2, 8);
         }
     }

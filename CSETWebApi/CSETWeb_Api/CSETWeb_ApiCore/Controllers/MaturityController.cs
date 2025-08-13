@@ -7,7 +7,6 @@
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Maturity;
@@ -28,16 +27,14 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _tokenManager;
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
-        private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _reports;
 
         public MaturityController(ITokenManager tokenManager, CSETContext context, IAssessmentUtil assessmentUtil,
-            IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports)
+           IReportsDataBusiness reports)
         {
             _tokenManager = tokenManager;
             _context = context;
             _assessmentUtil = assessmentUtil;
-            _adminTabBusiness = adminTabBusiness;
             _reports = reports;
         }
 
@@ -51,7 +48,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetMaturityModel()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId));
+            return Ok(new MaturityBusiness(_context, _assessmentUtil).GetMaturityModel(assessmentId));
         }
 
 
@@ -64,8 +61,8 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SetMaturityModel(string modelName)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessmentId, modelName);
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessmentId));
+            new MaturityBusiness(_context, _assessmentUtil).PersistSelectedMaturityModel(assessmentId, modelName);
+            return Ok(new MaturityBusiness(_context, _assessmentUtil).GetMaturityModel(assessmentId));
         }
 
 
@@ -78,7 +75,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetDomainRemarks()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetDomainRemarks(assessmentId));
+            return Ok(new MaturityBusiness(_context, _assessmentUtil).GetDomainRemarks(assessmentId));
         }
 
 
@@ -91,7 +88,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SetDomainRemarks([FromBody] MaturityDomainRemarks remarks)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).SetDomainRemarks(assessmentId, remarks);
+            new MaturityBusiness(_context, _assessmentUtil).SetDomainRemarks(assessmentId, remarks);
             return Ok();
         }
 
@@ -106,7 +103,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetMaturityLevel()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityLevel(assessmentId));
+            return Ok(new MaturityBusiness(_context, _assessmentUtil).GetMaturityLevel(assessmentId));
         }
 
 
@@ -119,7 +116,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SetMaturityLevel([FromBody] int level)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistMaturityLevel(assessmentId, level);
+            new MaturityBusiness(_context, _assessmentUtil).PersistMaturityLevel(assessmentId, level);
             return Ok();
         }
 
@@ -135,7 +132,7 @@ namespace CSETWebCore.Api.Controllers
             string lang = _tokenManager.GetCurrentLanguage();
             string installationMode = _tokenManager.Payload("scope");
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, fill, groupingId, lang));
+            return Ok(new MaturityBusiness(_context, _assessmentUtil).GetMaturityQuestions(assessmentId, fill, groupingId, lang));
         }
 
 
@@ -152,7 +149,7 @@ namespace CSETWebCore.Api.Controllers
 
             MaturityResponse resp = new();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(
+            return Ok(new MaturityBusiness(_context, _assessmentUtil).GetMaturityQuestions(
                 assessmentId, false, 0, resp, m, lang));
         }
 
@@ -163,7 +160,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetTargetLevel(assessmentId));
+            return Ok(new MaturityBusiness(_context, _assessmentUtil).GetTargetLevel(assessmentId));
         }
 
 
@@ -177,7 +174,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetLevelScoresByGroup(int mat_model_id)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness)
+            return Ok(new MaturityBusiness(_context, _assessmentUtil)
                 .Get_LevelScoresByGroup(assessmentId, mat_model_id));
         }
 
@@ -188,7 +185,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerDistributionByLevel(assessmentId));
+            return Ok(new MaturityBusiness(_context, _assessmentUtil).GetAnswerDistributionByLevel(assessmentId));
         }
 
 
@@ -198,7 +195,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerDistributionByDomain(assessmentId));
+            return Ok(new MaturityBusiness(_context, _assessmentUtil).GetAnswerDistributionByDomain(assessmentId));
         }
 
 
@@ -213,7 +210,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var biz = new MaturityBusiness(_context, _assessmentUtil);
             var options = new StructureOptions() { IncludeQuestionText = true, IncludeSupplemental = true, IncludeOtherText = true };
             var x = biz.GetMaturityStructureAsXml(assessmentId, options);
 
@@ -260,7 +257,7 @@ namespace CSETWebCore.Api.Controllers
                 // without an assessment ID for the module content report
             }
 
-            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var biz = new MaturityBusiness(_context, _assessmentUtil);
             var x = biz.GetMaturityStructureForModel(modelId, assessmentId);
 
             return Ok(x.Model);
@@ -273,7 +270,7 @@ namespace CSETWebCore.Api.Controllers
         {
             var lang = _tokenManager.GetCurrentLanguage();
 
-            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var biz = new MaturityBusiness(_context, _assessmentUtil);
             var x = biz.GetGroupingTitles(modelId, lang);
 
             return Ok(x);
@@ -328,7 +325,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new HydroMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetResultsData(assessmentId));
+            return Ok(new HydroMaturityBusiness(_context, _assessmentUtil).GetResultsData(assessmentId));
         }
 
 
@@ -338,7 +335,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new HydroMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetHydroProgress());
+            return Ok(new HydroMaturityBusiness(_context, _assessmentUtil).GetHydroProgress());
         }
 
 
@@ -368,8 +365,8 @@ namespace CSETWebCore.Api.Controllers
             var resp1 = biz.MyModel;
 
             // convert it to a MaturityResponse
-            MaturityResponse resp = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).ConvertToMaturityResponse(resp1);
-            var excel = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            MaturityResponse resp = new MaturityBusiness(_context, _assessmentUtil).ConvertToMaturityResponse(resp1);
+            var excel = new MaturityBusiness(_context, _assessmentUtil);
 
             var model = _context.MATURITY_MODELS.FirstOrDefault(x => x.Maturity_Model_Id == grouping.Maturity_Model_Id);
             resp.ModelName = model.Model_Name;
@@ -513,7 +510,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/MaturityModels")]
         public IActionResult GetAllModels()
         {
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAllModels());
+            return Ok(new MaturityBusiness(_context, _assessmentUtil).GetAllModels());
         }
 
 
@@ -526,7 +523,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/GetGlossary")]
         public IActionResult GetGlossaryEntries(string model)
         {
-            MaturityBusiness MaturityBusiness = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            MaturityBusiness MaturityBusiness = new MaturityBusiness(_context, _assessmentUtil);
             return Ok(MaturityBusiness.GetGlossaryEntries(model));
         }
 
@@ -900,7 +897,7 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
-                MaturityBusiness MaturityBusiness = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+                MaturityBusiness MaturityBusiness = new MaturityBusiness(_context, _assessmentUtil);
                 var scores = MaturityBusiness.GetEdmScores(assessmentId, section);
 
                 return Ok(scores);
@@ -925,7 +922,7 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
-                MaturityBusiness MaturityBusiness = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+                MaturityBusiness MaturityBusiness = new MaturityBusiness(_context, _assessmentUtil);
                 var scores = MaturityBusiness.GetEdmPercentScores(assessmentId);
 
                 return Ok(scores);
@@ -966,7 +963,7 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                var MaturityBusiness = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+                var MaturityBusiness = new MaturityBusiness(_context, _assessmentUtil);
                 var refText = MaturityBusiness.GetReferenceText(model);
 
                 return Ok(refText);
@@ -984,7 +981,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetMvraScoring()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var maturity = new MaturityBusiness(_context, _assessmentUtil);
             var model = maturity.GetMaturityStructureForModel(9, assessmentId);
             var scoring = maturity.GetMvraScoring(model);
             return Ok(scoring);
@@ -996,9 +993,9 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetMvraTree([FromQuery] int id)
         {
             //int assessemntId = _tokenManager.AssessmentForUser();
-            //var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            //var maturity = new MaturityBusiness(_context, _assessmentUtil);
 
-            var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var maturity = new MaturityBusiness(_context, _assessmentUtil);
             var model = maturity.GetMaturityStructureForModel(9, id);
             //var scoring = maturity.GetMvraScoring(model);
             return Ok(model);

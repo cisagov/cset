@@ -1,5 +1,4 @@
 ﻿using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
@@ -21,13 +20,12 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentBusiness _assessment;
         private readonly IDemographicBusiness _demographic;
         private readonly IAssessmentUtil _assessmentUtil;
-        private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _report;
         private readonly CSETContext _context;
 
         public CmuController(ITokenManager token, IAssessmentBusiness assessment,
           IDemographicBusiness demographic, IReportsDataBusiness report,
-          IAssessmentUtil assessmentUtil, IAdminTabBusiness admin,
+          IAssessmentUtil assessmentUtil,
           ICmuScoringHelper cmuScoringHelper, CSETContext context)
         {
             _token = token;
@@ -35,7 +33,6 @@ namespace CSETWebCore.Api.Controllers
             _demographic = demographic;
             _report = report;
             _assessmentUtil = assessmentUtil;
-            _adminTabBusiness = admin;
             _context = context;
             _scoring = cmuScoringHelper;
         }
