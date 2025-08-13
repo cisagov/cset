@@ -63,8 +63,9 @@
           <span class="cset-icons-pencil fs-base-2"></span>
           <span class="d-none d-md-flex fs-smaller">{{ t('buttons.change') }}</span>
         </button>
-        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
-          (click)="openEmailDialog()" [disabled]="!enableMyControls" *ngIf="!auth.isLocal">
+        <button *ngIf="!auth.isLocal && !isCreator()" type="button"
+          class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="openEmailDialog()"
+          [disabled]="!enableMyControls">
           <span class="cset-icons-envelope fs-base-2"></span>
           <span class="d-none d-md-flex fs-smaller">{{ t('contact.email') }}</span>
         </button>
@@ -110,8 +111,9 @@
           <span class="cset-icons-pencil fs-base-2"></span>
           <span class="d-none d-md-flex fs-smaller">{{ t('buttons.change') }}</span>
         </button>
-        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
-          (click)="openEmailDialog()" [disabled]="!enableMyControls" *ngIf="!auth.isLocal">
+        <button *ngIf="!auth.isLocal && !isCreator()" type="button"
+          class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="openEmailDialog()"
+          [disabled]="!enableMyControls">
           <span class="cset-icons-envelope fs-base-2"></span>
           <span class="d-none d-md-flex fs-smaller">{{ t('contact.email') }}</span>
         </button>
