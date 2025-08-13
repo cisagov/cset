@@ -459,6 +459,8 @@ import { CrrNistCsfCatPerformanceComponent } from './reports/crr/crr-report/crr-
 import { CmuNistCsfCatPerformanceComponent } from './reports/cmu/cmu-nist-csf-cat-performance/cmu-nist-csf-cat-performance.component';
 import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-side-toc.component';
 import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-main-toc.component';
+import { CreGeneralReportComponent } from './reports/crePlus/cre-general-report/cre-general-report.component';
+import { CreBarPieStackedComponent } from './reports/crePlus/cre-bar-pie-stacked/cre-bar-pie-stacked.component';
 import { CreFinalReportComponent } from './reports/crePlus/cre-final-report/cre-final-report.component';
 import { CreFinalReportGridComponent } from './reports/crePlus/cre-final-report-grid/cre-final-report-grid.component';
 import { CreAssessmentOverview } from './reports/crePlus/cre-assessment-overview/cre-assessment-overview.component';
@@ -609,6 +611,7 @@ import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/ci
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
 import { CisaVadrInfoComponent } from './assessment/prepare/maturity/cisa-vadr-info/cisa-vadr-info.component';
+
 
 
 registerSwiper();
@@ -940,6 +943,8 @@ registerSwiper();
         NewAssessmentComponent,
         NewAssessmentDialogComponent,
         CrrMainTocComponent,
+        CreGeneralReportComponent,
+        CreBarPieStackedComponent,
         CreFinalReportComponent,
         CreFinalReportGridComponent,
         CreAssessmentOverview,
