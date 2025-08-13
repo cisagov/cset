@@ -1,12 +1,9 @@
-﻿using CSETWebCore.Business.Aggregation;
-using CSETWebCore.Business.Maturity;
+﻿using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
-using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Dashboard;
 using CSETWebCore.Model.Dashboard.BarCharts;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,7 +18,6 @@ namespace CSETWebCore.Business.Dashboard
         private int _assessmentId;
         private CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
-        private readonly IAdminTabBusiness _adminTabBusiness;
 
 
         /// <summary>
@@ -40,16 +36,14 @@ namespace CSETWebCore.Business.Dashboard
         /// </summary>
         /// <param name="context"></param>
         /// <param name=""></param>
-        public DashboardChartBusiness(int assessmentId, CSETContext context, IAssessmentUtil assessmentUtil,
-            IAdminTabBusiness adminTabBusiness)
+        public DashboardChartBusiness(int assessmentId, CSETContext context, IAssessmentUtil assessmentUtil)
         {
             _assessmentId = assessmentId;
             _context = context;
             _assessmentUtil = assessmentUtil;
-            _adminTabBusiness = adminTabBusiness;
 
 
-            _biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            _biz = new MaturityBusiness(_context, _assessmentUtil);
 
             // A list of selected grouping IDs, regardless of model
             _selectedGroupings = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == _assessmentId).Select(x => x.Grouping_Id).ToList();
@@ -185,7 +179,7 @@ namespace CSETWebCore.Business.Dashboard
         {
             List<NameSeriesCount> resp = [];
 
-            var mbiz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var mbiz = new MaturityBusiness(_context, _assessmentUtil);
             var structure = mbiz.GetMaturityStructureForModel(modelId, _assessmentId);
 
             // Include 'U' as an answer option for complete results

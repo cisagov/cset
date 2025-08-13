@@ -14,20 +14,14 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Standards;
-using CSETWebCore.Business.Maturity;
-using CSETWebCore.Interfaces.AdminTab;
-using System.Collections.Generic;
-using J2N.Threading;
+using CSETWebCore.Business.Maturity;using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NodaTime;
 //using static System.Runtime.InteropServices.JavaScript.JSType;
 using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.Business.Demographic;
-using CSETWebCore.Business.Question;
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Helpers;
-using DocumentFormat.OpenXml.Spreadsheet;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -41,14 +35,12 @@ namespace CSETWebCore.Api.Controllers
         private readonly IStandardsBusiness _standards;
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
-        private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IGalleryEditor _galleryEditor;
         private readonly IUtilities _utilities;
 
         public AssessmentController(IAssessmentBusiness assessmentBusiness,
             ITokenManager tokenManager, IDocumentBusiness documentBusiness, CSETContext context,
-            IStandardsBusiness standards, IAssessmentUtil assessmentUtil,
-            IAdminTabBusiness adminTabBusiness, IGalleryEditor galleryEditor, IUtilities utilities)
+            IStandardsBusiness standards, IAssessmentUtil assessmentUtil, IGalleryEditor galleryEditor, IUtilities utilities)
         {
             _assessmentBusiness = assessmentBusiness;
             _tokenManager = tokenManager;
@@ -56,7 +48,6 @@ namespace CSETWebCore.Api.Controllers
             _context = context;
             _standards = standards;
             _assessmentUtil = assessmentUtil;
-            _adminTabBusiness = adminTabBusiness;
             _galleryEditor = galleryEditor;
             _utilities = utilities;
         }
@@ -157,7 +148,7 @@ namespace CSETWebCore.Api.Controllers
             // Model
             if (config.Model != null)
             {
-                var matBiz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+                var matBiz = new MaturityBusiness(_context, _assessmentUtil);
                 matBiz.PersistSelectedMaturityModel(assessment.Id, config.Model.ModelName);
 
                 var newModel = matBiz.GetMaturityModel(assessment.Id);
