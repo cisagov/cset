@@ -424,6 +424,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.PciiNumber = result.aa.PCII_Number;
                 assessment.IseSubmitted = result.ii.Ise_Submitted;
                 assessment.AssessorMode = result.aa.AssessorMode;
+                assessment.Done = result.aa.Done ;
                 
 
                 assessment.CreatorName = new User.UserBusiness(_context, null)
@@ -1305,6 +1306,13 @@ namespace CSETWebCore.Business.Assessment
         {
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             assessment.AssessorMode = mode.ToBool();
+            _context.SaveChanges();
+        }
+
+        public void SetAssessmentDone(int assessmentId, bool isDone)
+        {
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+             assessment.Done = isDone;
             _context.SaveChanges();
         }
     }

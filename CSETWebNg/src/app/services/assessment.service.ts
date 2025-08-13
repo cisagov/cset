@@ -675,5 +675,8 @@ export class AssessmentService {
     this.assessment.assessorMode = mode;
     return this.http.post(this.apiUrl + 'assessormode', mode, headers)
   }
-
+ setAssesmentDone(done:boolean){
+    this.assessment.done=done;
+    return this.http.post(this.apiUrl + 'setAssessmentDone', done,headers)
+ }
 }

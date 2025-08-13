@@ -413,7 +413,7 @@
           </th>
           <th aria-label="date" mat-sort-header="date" style="width:15%;">{{ t('last modified') }}</th>
           <th aria-label="Actions" style="width: 5%" *ngIf="layoutSvc.hp"></th>
-          <tr *ngFor="let assessment of sortedAssessments;  let i = index">
+          <tr *ngFor="let assessment of filteredAssessments;  let i = index">
             <td>
               <button tabindex="0"
                       class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"

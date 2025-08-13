@@ -556,6 +556,22 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok();
         }
-        
+
+        [HttpPost]
+        [Route("api/setAssessmentDone")]
+        public IActionResult SetAssessmentDone([FromBody] bool done)
+        {
+            try
+            {
+                int assessmentId = _tokenManager.AssessmentForUser();
+                _assessmentBusiness.SetAssessmentDone(assessmentId, done);
+            }
+            catch (Exception e)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
+              
+            }
+            return Ok();
+        }
     }
 }

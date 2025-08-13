@@ -49,6 +49,6 @@ namespace CSETWebCore.Interfaces.Assessment
         IEnumerable<MergeDocuments> GetAssessmentDocuments(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10);
         void ConvertAssessment(int assessmentId, int originalAssessmentId, string targetAssessment);
         void SetAssessorMode(int assessmentId, string mode);
-
+        void SetAssessmentDone(int assessmentId, bool isDone);
     }
 }

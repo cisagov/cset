@@ -133,7 +133,31 @@
           {{ t('protected features.assessor mode') }}
         </p>
       </ng-template>
+      <div class="mt-4">
+        <h4> Assessment Complete</h4>
 
+        <div class="mb-3 col-6">
+          <label class="form-label">"Mark as Complete"
+            Toggle to indicate whether this assessment has been finished</label>
+          <div>
+            <div class="btn-group btn-group-toggle col-10" data-toggle="buttons"
+                 style="border: 2px solid transparent; border-radius: 8px;">
+              <label class="btn btn-level form-check-label" [class.active]="assessment.done"
+                     (change)="setAssessmentDone()">
+                <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                       [checked]="assessment.done" />
+                {{t('answer-options.button-labels.yes')}}
+              </label>
+              <label class="btn btn-level form-check-label" [class.active]="!assessment.done"
+                     (change)="setAssessmentDone()">
+                <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                       [checked]="!assessment.done" />
+                {{t('answer-options.button-labels.no')}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="mb-5">
         <label class="form-label" for="techDomain">{{t('tech domain.label')}}</label>
         <select class="form-select" id="techDomain" tabindex="0" name="techDomain" (change)="updateDemographics()"

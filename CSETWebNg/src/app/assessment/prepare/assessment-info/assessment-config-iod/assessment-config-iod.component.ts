@@ -142,4 +142,8 @@ export class AssessmentConfigIodComponent implements OnInit {
 
 
   }
+  setAssessmentDone(){
+    this.assessment.done =!this.assessment.done;
+    this.assessSvc.setAssesmentDone(this.assessment.done).subscribe();
+  }
 }

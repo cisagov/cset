@@ -654,11 +654,13 @@ defaultColDef: ColDef = {
 // Handle grid clicks
   onCellClicked(event: any): void {
     const target = event.event.target;
-    const action = target.getAttribute('data-action');
 
-    if (!action) return;
+    // Check if clicked element or its parent has data-action
+    const actionElement = target.closest('[data-action]');
+    if (!actionElement) return;
 
-    const assessmentId = parseInt(target.getAttribute('data-assessment-id'));
+    const action = actionElement.getAttribute('data-action');
+    const assessmentId = parseInt(actionElement.getAttribute('data-assessment-id'));
 
     switch(action) {
       case 'navigate':
@@ -669,13 +671,12 @@ defaultColDef: ColDef = {
         const assessment = this.filteredAssessments.find(a => a.assessmentId === assessmentId);
         if (assessment) {
           this.toggleFavorite(assessment);
-          // Refresh the grid to show updated heart icon
           this.gridApi.refreshCells();
         }
         break;
 
       case 'delete':
-        const rowIndex = parseInt(target.getAttribute('data-row-index'));
+        const rowIndex = parseInt(actionElement.getAttribute('data-row-index'));
         const assessmentToDelete = this.filteredAssessments.find(a => a.assessmentId === assessmentId);
         if (assessmentToDelete) {
           this.removeAssessment(assessmentToDelete, rowIndex);
@@ -690,8 +691,7 @@ defaultColDef: ColDef = {
         this.clickDownloadLink(assessmentId, true);
         break;
     }
-  }
-// Grid ready event
+  }// Grid ready event
   onGridReady(params: GridReadyEvent): void {
     this.gridApi = params.api;
     params.api.sizeColumnsToFit();

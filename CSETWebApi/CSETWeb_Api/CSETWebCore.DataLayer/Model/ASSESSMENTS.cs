@@ -74,7 +74,7 @@ public partial class ASSESSMENTS
     public bool ModifiedSinceLastExport { get; set; }
 
     public bool AssessorMode { get; set; }
-
+    public bool Done { get; set; }
     [InverseProperty("Assessment")]
     public virtual ICollection<ACCESS_KEY_ASSESSMENT> ACCESS_KEY_ASSESSMENT { get; set; } = new List<ACCESS_KEY_ASSESSMENT>();
 
