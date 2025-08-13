@@ -21,7 +21,7 @@ jobs:
       run:
         working-directory: ./CSETWebApi
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Registry login
         run: echo $PAT | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
@@ -41,7 +41,7 @@ jobs:
       run:
         working-directory: ./CSETWebNg
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Registry login
         run: echo $PAT | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       
       - name: Basic build test (API)
         working-directory: ./CSETWebApi
