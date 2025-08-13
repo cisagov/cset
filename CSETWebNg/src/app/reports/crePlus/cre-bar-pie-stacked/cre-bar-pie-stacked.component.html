@@ -33,7 +33,7 @@
           [dataLabelFormatting]="creSvc.fmt1">
      </ngx-charts-bar-horizontal>
 
-      <div *ngIf="!distrib" class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+     <div *ngIf="!distrib" class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
           <div class="spinner-size-50"></div>
      </div>
 
@@ -82,7 +82,8 @@
           [dataLabelFormatting]="creSvc.fmt1" [xAxisTickFormatting]="creSvc.fmt1">
      </ngx-charts-bar-horizontal-stacked>
 
-      <div *ngIf="!domainDistrib" class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+     <div *ngIf="!domainDistrib"
+          class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
           <div class="spinner-size-50"></div>
      </div>
 
@@ -94,11 +95,16 @@
 </div>
 
 
-<div class="my-4 px-3 pb-4" style="border: 1px solid #ddd">
-
-     <ngx-charts-bar-horizontal-stacked [view]="[700, stackedHeight]" [results]="stackedModel"
-          [scheme]="creSvc.colorScheme" [xAxis]="true" [yAxis]="true" [legend]="true" [trimLabels]="false"
-          [wrapTicks]="true" [barPadding]="stackedPadding" [dataLabelFormatting]="creSvc.fmt1"
-          [xAxisTickFormatting]="creSvc.fmt1">
-     </ngx-charts-bar-horizontal-stacked>
+<!-- this section is only included for pure Core, pure Optional and pure MIL sections -->
+<div *ngIf="modelIdList?.length == 1">
+     <div *ngFor="let d of domainsForModel" class="my-4 px-3 pb-4" style="border: 1px solid #ddd">
+          <h2 class="text-center">
+               {{modelDisplayName}}: {{d.name}}
+          </h2>
+          <ngx-charts-bar-horizontal-stacked [view]="[700, calcStackedHeight(d.subgroups)]" [results]="d.subgroups"
+               [scheme]="creSvc.colorScheme" [xAxis]="true" [yAxis]="true" [legend]="true" [trimLabels]="false"
+               [wrapTicks]="true" [barPadding]="calcStackedPadding(d.subgroups)" [dataLabelFormatting]="creSvc.fmt1"
+               [xAxisTickFormatting]="creSvc.fmt1">
+          </ngx-charts-bar-horizontal-stacked>
+     </div>
 </div>

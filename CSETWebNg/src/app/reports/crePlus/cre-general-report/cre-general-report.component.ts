@@ -55,6 +55,8 @@ export class CreGeneralReportComponent implements OnInit {
   domainDistribCoreMil: any[];
 
 
+
+
   /**
    * CTOR
    */
@@ -86,7 +88,7 @@ export class CreGeneralReportComponent implements OnInit {
     this.domainDistribCoreDomainMil = await this.buildDomainDistrib([22, 23, 24]);
 
     this.distribCoreMil = await this.buildAllDistrib([22, 24]);
-     this.domainDistribCoreMil = await this.buildDomainDistrib([22, 24]);
+    this.domainDistribCoreMil = await this.buildDomainDistrib([22, 24]);
   }
 
   /**
@@ -135,7 +137,7 @@ export class CreGeneralReportComponent implements OnInit {
     return `${label}: ${Math.round(slice.value)}%`;
   }
 
-   fmt3 = (label) => {
+  fmt3 = (label) => {
     const slice = this.distribCoreMil.find(slice => slice.name === label);
     return `${label}: ${Math.round(slice.value)}%`;
   }
