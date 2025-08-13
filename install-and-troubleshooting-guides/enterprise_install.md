@@ -262,11 +262,11 @@ The second way to add a new user to your CSET® Application is to use the “Add
 
   ![](img/figE30.PNG)
 
-  * Edit the text after the equal sign of value to your domain name. (e.g. value=”mailhost.YOURDOMAIN.com”).
+  * Edit the value of the "SmtpHost" property with the domain name of your mail host (e.g. mailhost.YOURDOMAIN.com).
   * Save and close the file when you are finished.
 
 ## SSL Security Certificate for Extra Security
 An SSL certificate is a web technology that establishes a secure link between a web server and a browser. This link encrypts all data (such as passwords) so that your server is more secure.
 
-  1.	You can follow [this tutorial](https://www.digicert.com/ssl-support/pfx-import-export-iis-7.htm) to add an SSL certificate to your CSET® stand-alone.
+  1.	You can follow [this tutorial](https://knowledge.digicert.com/tutorials/iis-7-how-to-import-export-ssl-certificates) to add an SSL certificate to your CSET® stand-alone.
 
