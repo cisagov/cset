@@ -573,5 +573,22 @@ namespace CSETWebCore.Api.Controllers
             }
             return Ok();
         }
+        [HttpPost]
+        [Route("api/setAssessmentFavorite")]
+        public IActionResult SetAssessmentFavorite([FromBody] bool isFavorite)
+        {
+            try
+            { 
+                int assessmentId = _tokenManager.AssessmentForUser();
+                _assessmentBusiness.SetAssessmentFavorite(assessmentId, isFavorite);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"Error setting favorite: {e}");
+                return BadRequest("Failed to update favorite status");
+            }
+        }
+        
     }
 }

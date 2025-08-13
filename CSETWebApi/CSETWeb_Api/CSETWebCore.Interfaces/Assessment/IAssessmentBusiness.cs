@@ -50,5 +50,6 @@ namespace CSETWebCore.Interfaces.Assessment
         void ConvertAssessment(int assessmentId, int originalAssessmentId, string targetAssessment);
         void SetAssessorMode(int assessmentId, string mode);
         void SetAssessmentDone(int assessmentId, bool isDone);
+        void SetAssessmentFavorite(int assessmentId, bool isFavorite);
     }
 }

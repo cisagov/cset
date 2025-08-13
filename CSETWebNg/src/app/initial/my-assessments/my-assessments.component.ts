@@ -704,8 +704,26 @@ defaultColDef: ColDef = {
     return date.toLocaleDateString();
   }
   toggleFavorite(assessment: UserAssessment) {
-    assessment.favorite = !assessment.favorite;
-    // Add your API call here to save favorite status
+    const newFavoriteStatus = !assessment.favorite;
+
+    console.log('About to set favorite for assessment:', assessment.assessmentId);
+    console.log('New favorite status:', newFavoriteStatus);
+
+    this.assessSvc.getAssessmentToken(assessment.assessmentId).then(() => {
+      console.log('Got assessment token, now calling setAssessmentFavorite');
+
+      this.assessSvc.setAssessmentFavorite(newFavoriteStatus).subscribe({
+        next: () => {
+          assessment.favorite = newFavoriteStatus;
+          this.gridApi.refreshCells();
+          console.log('Favorite status updated successfully');
+        },
+        error: (error) => {
+          console.error('Failed to update favorite status:', error);
+          console.error('Error details:', error.error);
+        }
+      });
+    });
   }
   getProgressTooltip(assessment: UserAssessment): string {
     if (assessment.selectedMaturityModel === 'CIS' || assessment.selectedMaturityModel === 'SD02 Series') {

@@ -1315,5 +1315,20 @@ namespace CSETWebCore.Business.Assessment
              assessment.Done = isDone;
             _context.SaveChanges();
         }
+        public void SetAssessmentFavorite(int assessmentId, bool isFavorite)
+        {
+            int currentUserId = _tokenManager.GetUserId() ?? throw new UnauthorizedAccessException("User ID not found in token");
+    
+            var userAssessment = _context.ASSESSMENT_CONTACTS
+                .FirstOrDefault(ac => ac.Assessment_Id == assessmentId && ac.UserId == currentUserId);
+    
+            if (userAssessment == null)
+            {
+                throw new ArgumentException($"User {currentUserId} is not associated with assessment {assessmentId}");
+            }
+    
+            userAssessment.Favorite = isFavorite; 
+            _context.SaveChanges();
+        }
     }
 }

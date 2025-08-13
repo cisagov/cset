@@ -49,6 +49,7 @@ import { SwiperOptions } from 'swiper/types';
 })
 export class NewAssessmentComponent implements OnInit, AfterViewInit {
   hoverIndex = -1;
+  selectedCategory = 'all';
 
   constructor(
     public dialog: MatDialog,
@@ -167,5 +168,40 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       data: data
     });
   }
-  
+
+  selectCategory(category: string): void {
+    this.selectedCategory = category;
+  }
+
+  // Add this method to get filtered items based on selected category
+  getFilteredItems(): any[] {
+    if (this.selectedCategory === 'all') {
+      // Return all items from all categories
+      return this.gallerySvc.rows.reduce((acc, row) => {
+        return acc.concat(row.galleryItems);
+      }, []);
+    } else {
+      // Return items from selected category only
+      const selectedRow = this.gallerySvc.rows.find(row => row.group_Title === this.selectedCategory);
+      return selectedRow ? selectedRow.galleryItems : [];
+    }
+
+  }
+  getCategoryIcon(categoryTitle: string): string {
+    const iconMap: { [key: string]: string } = {
+      'Most Popular': 'fas fa-star',
+      'CISA Sponsored': 'fas fa-shield-alt',
+      'Maturity Models': 'fas fa-chart-line',
+      'Energy and Electrical': 'fas fa-bolt',
+      'Industrial and Utilities': 'fas fa-industry',
+      'Municipal and Health Care': 'fas fa-hospital',
+      'NIST Special Publications': 'fas fa-book',
+      'Financial CSET': 'fas fa-dollar-sign',
+      'Transportation': 'fas fa-truck',
+      'Other': 'fas fa-ellipsis-h'
+    };
+
+    return iconMap[categoryTitle] || 'fas fa-folder';
+  }
+
 }

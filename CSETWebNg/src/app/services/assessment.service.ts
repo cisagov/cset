@@ -679,4 +679,7 @@ export class AssessmentService {
     this.assessment.done=done;
     return this.http.post(this.apiUrl + 'setAssessmentDone', done,headers)
  }
+  setAssessmentFavorite(isFavorite: boolean) {
+    return this.http.post(this.apiUrl + 'setAssessmentFavorite', isFavorite, headers);
+  }
 }
