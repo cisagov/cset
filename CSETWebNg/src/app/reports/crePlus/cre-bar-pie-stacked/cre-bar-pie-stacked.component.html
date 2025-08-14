@@ -23,9 +23,7 @@
 <!-- answer distrib bar chart with ONLY CRE+ AND MIL ANSWERS -->
 <div class="my-4 px-3" style="border: 1px solid #ddd">
      <h2 class="text-center">
-          <div>
-               (CRE+ and Optional MIL Questions)
-          </div>
+          {{chartTitle}}
      </h2>
      <ngx-charts-bar-horizontal [scheme]="creSvc.colorScheme" [view]="[700, 300]" [results]="distrib" [xAxis]="true"
           [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisTickFormatting]="creSvc.fmt1"
@@ -39,7 +37,7 @@
 
      <p class="text-center">
           <em>
-               This chart shows the breakdown of CRE+ and optional MIL questions
+               {{chartFooter}}
           </em>
      </p>
 </div>
@@ -48,9 +46,7 @@
 <!-- pie chart of all answers -->
 <div class="my-4 px-3" style="border: 1px solid #ddd">
      <h2 class="text-center">
-          <div>
-               (CRE+ and Optional MIL Questions)
-          </div>
+          {{chartTitle}}
      </h2>
      <ngx-charts-pie-chart [view]="[700, 450]" [results]="distrib" [scheme]="creSvc.colorScheme" [labels]="true"
           [labelFormatting]="fmt3" [trimLabels]="false" [tooltipText]="creSvc.fmt3"
@@ -63,7 +59,7 @@
 
      <p class="text-center">
           <em>
-               This chart shows the breakdown of CRE+ and optional MIL questions
+               {{chartFooter}}
           </em>
      </p>
 </div>
@@ -72,9 +68,7 @@
 <!-- Stacked bars for each domain -->
 <div class="my-4 px-3" style="border: 1px solid #ddd">
      <h2 class="text-center">
-          <div>
-               (CRE+ and Optional MIL Questions)
-          </div>
+          {{chartTitle}}
      </h2>
 
      <ngx-charts-bar-horizontal-stacked [view]="[700, 500]" [scheme]="creSvc.colorScheme" [results]="domainDistrib"
@@ -87,15 +81,16 @@
           <div class="spinner-size-50"></div>
      </div>
 
-     <p class="text-center">
+     <p class="text-center mt-4">
           <em>
-               This chart shows the breakdown of CRE+ and optional MIL questions
+               {{chartFooter}}
           </em>
      </p>
 </div>
 
 
-<!-- this section is only included for pure Core, pure Optional and pure MIL sections -->
+<!-- this section is only included for pure Core, pure Optional and pure MIL sections 
+     Show a stacked bar chart with all active goals for each active domain  -->
 <div *ngIf="modelIdList?.length == 1">
      <div *ngFor="let d of domainsForModel" class="my-4 px-3 pb-4" style="border: 1px solid #ddd">
           <h2 class="text-center">

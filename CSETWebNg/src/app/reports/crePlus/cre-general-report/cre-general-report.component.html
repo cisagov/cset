@@ -40,7 +40,7 @@
                     All Questions
                </div>
                <div>
-                    (CRE+, Optional Domains, Optional MIL Questions)
+                    (CRE+ Core, Optional Domains, Optional MIL Questions)
                </div>
           </h1>
 
@@ -50,25 +50,39 @@
 
 
      <div class="page-break">
-          <h1>CRE+ and MIL Questions</h1>
+          <h1>CRE+ Core and MIL Questions</h1>
           <app-cre-bar-pie-stacked [modelIdList]="[22, 24]"></app-cre-bar-pie-stacked>
      </div>
 
 
      <!-- Pages for pure Core, Optional and MIL answers -->
-      <div class="page-break">
-          <h1>Just CRE+ Core</h1>
+     <div class="page-break">
+          <h1>CRE+ Core Questions</h1>
           <app-cre-bar-pie-stacked [modelIdList]="[22]"></app-cre-bar-pie-stacked>
      </div>
 
      <div class="page-break">
-          <h1>Just Optional Domain</h1>
+          <h1>Optional Domain Questions</h1>
           <app-cre-bar-pie-stacked [modelIdList]="[23]"></app-cre-bar-pie-stacked>
      </div>
 
      <div class="page-break">
-          <h1>Just MIL</h1>
+          <h1>Optional MIL Questions</h1>
           <app-cre-bar-pie-stacked [modelIdList]="[24]"></app-cre-bar-pie-stacked>
+
+          <div class="my-5">
+               <h2>
+                    MIL Achievement By Domain
+               </h2>
+               <app-cre-mil-yes-no></app-cre-mil-yes-no>
+          </div>
+
+          <div class="my-5">
+               <h2>
+                    Percent Implemented for MIL Domains
+               </h2>
+               <app-cre-mil-pct-implemented></app-cre-mil-pct-implemented>
+          </div>
      </div>
 
 </div>

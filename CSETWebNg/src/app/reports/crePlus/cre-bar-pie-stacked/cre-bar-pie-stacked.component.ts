@@ -3,6 +3,7 @@ import { firstValueFrom } from 'rxjs';
 import { CreService } from '../../../services/cre.service';
 import { ConfigService } from '../../../services/config.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { Utilities } from '../../../services/utilities.service';
 
 @Component({
   selector: 'app-cre-bar-pie-stacked',
@@ -26,6 +27,10 @@ export class CreBarPieStackedComponent implements OnInit {
   modelDisplayName: string;
   domainsForModel: any[];
 
+  // context-sensitive titles
+  chartTitle: string;
+  chartFooter: string;
+
 
   /**
    * 
@@ -33,6 +38,7 @@ export class CreBarPieStackedComponent implements OnInit {
   constructor(
     public creSvc: CreService,
     public configSvc: ConfigService,
+    public utilSvc: Utilities,
     public tSvc: TranslocoService
   ) { }
 
@@ -40,6 +46,8 @@ export class CreBarPieStackedComponent implements OnInit {
    * 
    */
   async ngOnInit(): Promise<void> {
+    this.determineTitles(this.modelIdList);
+
     this.distrib = await this.buildAllDistrib(this.modelIdList);
     this.domainDistrib = await this.buildDomainDistrib(this.modelIdList);
 
@@ -144,5 +152,20 @@ export class CreBarPieStackedComponent implements OnInit {
   fmt3 = (label) => {
     const slice = this.distrib.find(slice => slice.name === label);
     return `${label}: ${Math.round(slice.value)}%`;
+  }
+
+  /**
+   * Figures out the titles for the various charts based on the
+   * models that are included in the charts.
+   */
+  determineTitles(modelIdList: number[]) {
+    if (this.utilSvc.arraysHaveSameElements(modelIdList, [22, 24])) {
+      this.chartTitle = 'You got Core and MIL here, my friend!';
+      this.chartFooter = 'Yep - Core and MIL in one neat little package!';
+      return;
+    }
+
+    this.chartTitle = '(CRE+ and Optional! MIL Questions)';
+    this.chartFooter = 'This chart shows the breakdown of CRE+ and optional MIL questions';
   }
 }

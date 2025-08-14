@@ -55,8 +55,6 @@ export class CreGeneralReportComponent implements OnInit {
   domainDistribCoreMil: any[];
 
 
-
-
   /**
    * CTOR
    */

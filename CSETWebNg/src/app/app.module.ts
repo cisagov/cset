@@ -461,6 +461,9 @@ import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-s
 import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-main-toc.component';
 import { CreGeneralReportComponent } from './reports/crePlus/cre-general-report/cre-general-report.component';
 import { CreBarPieStackedComponent } from './reports/crePlus/cre-bar-pie-stacked/cre-bar-pie-stacked.component';
+import { CisaVadrInfoComponent } from './assessment/prepare/maturity/cisa-vadr-info/cisa-vadr-info.component';
+import { CreMilYesNoComponent } from './reports/crePlus/cre-mil-yes-no/cre-mil-yes-no.component';
+import { CreMilPctImplementedComponent } from './reports/crePlus/cre-mil-pct-implemented/cre-mil-pct-implemented.component';
 import { CreFinalReportComponent } from './reports/crePlus/cre-final-report/cre-final-report.component';
 import { CreFinalReportGridComponent } from './reports/crePlus/cre-final-report-grid/cre-final-report-grid.component';
 import { CreAssessmentOverview } from './reports/crePlus/cre-assessment-overview/cre-assessment-overview.component';
@@ -610,7 +613,7 @@ import { UserService } from './services/user.service';
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
-import { CisaVadrInfoComponent } from './assessment/prepare/maturity/cisa-vadr-info/cisa-vadr-info.component';
+
 
 
 
@@ -945,6 +948,8 @@ registerSwiper();
         CrrMainTocComponent,
         CreGeneralReportComponent,
         CreBarPieStackedComponent,
+        CreMilYesNoComponent,
+        CreMilPctImplementedComponent,
         CreFinalReportComponent,
         CreFinalReportGridComponent,
         CreAssessmentOverview,

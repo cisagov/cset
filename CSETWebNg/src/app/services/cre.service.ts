@@ -39,6 +39,10 @@ export class CreService {
     domain: ['#5AA454', '#367190', '#b17300', '#DC3545', '#EEEEEE']
   }
 
+  public milPercentScheme = {
+    domain: ['#367190', '#4D89A6', '#66A1BC', '#80BAD2', '#99D2E8']
+  }
+
   /**
    * 
    */

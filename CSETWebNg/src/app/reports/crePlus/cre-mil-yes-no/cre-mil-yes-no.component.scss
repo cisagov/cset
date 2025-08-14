@@ -1,0 +1,27 @@
+table {
+     border-collapse: collapse;
+}
+
+table th, table td {
+     padding: 5px;
+     text-align: center;;
+}
+
+table th {
+     background-color: #0a3862;
+     color: #ffffff;
+}
+
+table td {
+     border: 1px solid #999999;
+}
+
+.mil-achieved {
+     background-color: #c6efce;
+     color: #327a32;
+}
+
+.mil-failed {
+     background-color: #fec7ce;
+     color: #990c0a;
+}
