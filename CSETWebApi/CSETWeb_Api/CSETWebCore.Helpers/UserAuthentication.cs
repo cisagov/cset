@@ -265,6 +265,30 @@ namespace CSETWebCore.Helpers
                 userIdSO = STANDALONE_USER_ID; // Always use STANDALONE_USER_ID
             }
 
+            // Add the standalone user to ASSESSMENT_CONTACTS if they're accessing an existing assessment
+            if (assessmentId.HasValue && assessmentId.Value > 0)
+            {
+                var existingContact = await _context.ASSESSMENT_CONTACTS
+                    .FirstOrDefaultAsync(ac => ac.Assessment_Id == assessmentId.Value && ac.UserId == userIdSO);
+
+                if (existingContact == null)
+                {
+                    var assessmentContact = new ASSESSMENT_CONTACTS
+                    {
+                        Assessment_Id = assessmentId.Value,
+                        UserId = userIdSO,
+                        FirstName = name,
+                        LastName = "",
+                        PrimaryEmail = primaryEmailSO,
+                        AssessmentRoleId = 2, // Admin role
+                        Invited = true
+                    };
+
+                    _context.ASSESSMENT_CONTACTS.Add(assessmentContact);
+                    await _context.SaveChangesAsync();
+                }
+            }
+
             if (string.IsNullOrEmpty(primaryEmailSO))
             {
                 return null;
