@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { CreService } from '../../../services/cre.service';
 import { ConfigService } from '../../../services/config.service';
@@ -13,6 +13,10 @@ import { Utilities } from '../../../services/utilities.service';
 })
 export class CreBarPieStackedComponent implements OnInit {
 
+  /**
+   * The list of models represented by the charts in this section.  
+   * Some sections have mulitple models combined into the charts.
+   */
   @Input()
   modelIdList: number[];
 
@@ -25,12 +29,15 @@ export class CreBarPieStackedComponent implements OnInit {
 
   // a list of domains in the current model
   modelDisplayName: string;
+  modelDisplayNameShort: string;
   domainsForModel: any[];
 
   // context-sensitive titles
   chartTitle: string;
-  chartFooter: string;
+  chartFooter1: string;
+  chartFooter2: string;
 
+  @Output() visibiltyChange = new EventEmitter<boolean>();
 
   /**
    * 
@@ -60,16 +67,11 @@ export class CreBarPieStackedComponent implements OnInit {
    * 
    */
   async buildAllDistrib(modelIds: number[]): Promise<any[]> {
+    console.log(9, modelIds);
     const resp = await firstValueFrom(this.creSvc.getAllAnswerDistrib([...modelIds])) || [];
-
-    // translate the answer labels
-    var opts = this.configSvc.getModuleBehavior(modelIds[0]).answerOptions;
-
-    resp.forEach(element => {
-      const key = opts?.find(x => x.code === element.name)?.buttonLabelKey.toLowerCase() ?? 'u';
-      element.name = this.tSvc.translate('answer-options.labels.' + key);
-    });
-
+    console.log(10, modelIds);
+    this.creSvc.translateAnswerOptions(modelIds[0], resp);
+    console.log(11, modelIds);
     return resp;
   }
 
@@ -79,14 +81,8 @@ export class CreBarPieStackedComponent implements OnInit {
   async buildDomainDistrib(modelIds: number[]): Promise<any[]> {
     let resp = await firstValueFrom(this.creSvc.getDomainAnswerDistrib([...modelIds])) || [];
 
-    // translate the answer labels
-    var opts = this.configSvc.getModuleBehavior(modelIds[0]).answerOptions;
-
     resp.forEach(element => {
-      element.series.forEach(series => {
-        const key = opts?.find(x => x.code === series.name)?.buttonLabelKey.toLowerCase() ?? 'u';
-        series.name = this.tSvc.translate('answer-options.labels.' + key);
-      });
+      this.creSvc.translateAnswerOptions(modelIds[0], element.series);
     });
 
     return resp;
@@ -101,15 +97,12 @@ export class CreBarPieStackedComponent implements OnInit {
 
     // translate the answer labels
     var behavior = this.configSvc.getModuleBehavior(modelId);
-    var opts = behavior.answerOptions;
     this.modelDisplayName = this.tSvc.translate(behavior.displayNameKey ?? '');
 
-    resp.forEach(x => {
-      x.subgroups.forEach(element => {
-        element.series.forEach(element => {
-          const key = opts?.find(x => x.code === element.name)?.buttonLabelKey.toLowerCase() ?? 'u';
-          element.name = this.tSvc.translate('answer-options.labels.' + key);
-        });
+    resp.forEach(domain => {
+      this.creSvc.translateAnswerOptions(modelId, domain.series);
+      domain.subgroups.forEach(goal => {
+        this.creSvc.translateAnswerOptions(modelId, goal.series);
       });
     });
 
@@ -121,18 +114,17 @@ export class CreBarPieStackedComponent implements OnInit {
    * and how long the labels are.
    */
   calcStackedHeight(items) {
-    let h = Math.max(120, items.length * 60 + 100);
-
-    // determine the max label of the bunch so that we can justify more height
-    let maxLabelLength = 0;
-    for (let l of items) {
-      if (l.name.length > maxLabelLength) {
-        maxLabelLength = l.name.length;
-      }
+    if (items == null) {
+      return 300;
     }
 
+    let h = Math.max(180, items.length * 100);
+
+    // determine the max label of the bunch so that we can justify more height
+    const maxLabelLength = Math.max(...items.map(d => d.name.length));
+
     // increase the height of the chart to accommodate the longer labels
-    if (maxLabelLength > 20) {
+    if (maxLabelLength > 50) {
       h = h * 1.3;
     }
 
@@ -142,8 +134,8 @@ export class CreBarPieStackedComponent implements OnInit {
   /**
    * Calculates a padding value for the chart based on how many bars are in it
    */
-  calcStackedPadding(goals) {
-    return Math.max(10, 30 - goals.length);
+  calcStackedPadding(items) {
+    return Math.max(10, 30 - items.length);
   }
 
   /**
@@ -159,13 +151,13 @@ export class CreBarPieStackedComponent implements OnInit {
    * models that are included in the charts.
    */
   determineTitles(modelIdList: number[]) {
-    if (this.utilSvc.arraysHaveSameElements(modelIdList, [22, 24])) {
-      this.chartTitle = 'You got Core and MIL here, my friend!';
-      this.chartFooter = 'Yep - Core and MIL in one neat little package!';
-      return;
-    }
+    const sortedList = modelIdList.sort((a, b) => a - b);
+    const ss = sortedList.join('+');
 
-    this.chartTitle = '(CRE+ and Optional! MIL Questions)';
-    this.chartFooter = 'This chart shows the breakdown of CRE+ and optional MIL questions';
+    this.chartTitle = this.tSvc.translate(`reports.core.cre.chart reports.${ss}.title`);
+    this.chartFooter1 = this.tSvc.translate(`reports.core.cre.chart reports.${ss}.chart footer1`);
+    this.chartFooter2 = this.tSvc.translate(`reports.core.cre.chart reports.${ss}.chart footer2`);
+
+    this.modelDisplayNameShort = this.tSvc.translate(`reports.core.cre.chart reports.${ss}.displayNameShort`);
   }
 }

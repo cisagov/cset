@@ -8,7 +8,7 @@ import { firstValueFrom } from 'rxjs';
   selector: 'app-cre-mil-pct-implemented',
   standalone: false,
   templateUrl: './cre-mil-pct-implemented.component.html',
-  styleUrl: './cre-mil-pct-implemented.component.scss'
+  styleUrls: ['../../reports.scss', './cre-mil-pct-implemented.component.scss']
 })
 export class CreMilPctImplementedComponent implements OnInit {
 
@@ -28,7 +28,12 @@ export class CreMilPctImplementedComponent implements OnInit {
    * 
    */
   async ngOnInit(): Promise<void> {
-    const origList = await this.getFullModel(24);
+    //const origList = await this.getFullModel(24);
+
+    const origList = await this.creSvc.getMilIncludingMil1();
+
+
+
     this.newList = this.convertData(origList);
   }
 
@@ -40,16 +45,13 @@ export class CreMilPctImplementedComponent implements OnInit {
     const top: any[] = [];
 
     for (let domain of data) {
-      const newD = { name: domain.name, series: [] as { name: string; value: number }[] };
-
-      // add in a MIL1 placeholder
-      newD.series.push({ name: 'MIL1', value: 50 });
+      const newDom = { name: domain.name, series: [] as { name: string; value: number }[] };
 
       for (let mil of domain.subgroups) {
-        newD.series.push({ name: mil.name, value: mil.series[0].value });
+        newDom.series.push({ name: mil.name, value: mil.series[0].value });
       }
 
-      top.push(newD);
+      top.push(newDom);
     }
 
     return top;
@@ -60,35 +62,35 @@ export class CreMilPctImplementedComponent implements OnInit {
    * Get the full answer distribution response from the API.
    * This contains all active domains and goals (subgroupings) for the model.
    */
-  async getFullModel(modelId: number): Promise<any[]> {
-    let resp = await firstValueFrom(this.creSvc.getDistribForModel(modelId)) || [];
+  // async getFullModel(modelId: number): Promise<any[]> {
+  //   let resp = await firstValueFrom(this.creSvc.getDistribForModel(modelId)) || [];
 
-    // translate the answer labels
-    var behavior = this.configSvc.getModuleBehavior(modelId);
-    var opts = behavior.answerOptions;
+  //   // translate the answer labels
+  //   var behavior = this.configSvc.getModuleBehavior(modelId);
+  //   var opts = behavior.answerOptions;
 
 
-    resp.forEach(domain => {
-      domain.subgroups.forEach(mil => {
-        // shorten the label
-        let i = mil.name.indexOf('-');
-        mil.name = i !== -1 ? mil.name.substring(0, i).trim() : mil.name;
+  //   resp.forEach(domain => {
+  //     domain.subgroups.forEach(mil => {
+  //       // shorten the label
+  //       let i = mil.name.indexOf('-');
+  //       mil.name = i !== -1 ? mil.name.substring(0, i).trim() : mil.name;
 
-        // translate the answer option labels
-        mil.series.forEach(ansCount => {
-          const key = opts?.find(x => x.code === ansCount.name)?.buttonLabelKey.toLowerCase() ?? 'u';
-          ansCount.name = this.tSvc.translate('answer-options.labels.' + key);
-        });
-      });
-    });
+  //       // translate the answer option labels
+  //       mil.series.forEach(ansCount => {
+  //         const key = opts?.find(x => x.code === ansCount.name)?.buttonLabelKey.toLowerCase() ?? 'u';
+  //         ansCount.name = this.tSvc.translate('answer-options.labels.' + key);
+  //       });
+  //     });
+  //   });
 
-    return resp;
-  }
+  //   return resp;
+  // }
 
   /**
    * 
    */
   calcHeight(s) {
-    return Math.max(200, s * 100);
+    return Math.max(180, s * 100);
   }
 }

@@ -37,7 +37,7 @@
 
      <p class="text-center">
           <em>
-               {{chartFooter}}
+               {{chartFooter1}}
           </em>
      </p>
 </div>
@@ -48,7 +48,7 @@
      <h2 class="text-center">
           {{chartTitle}}
      </h2>
-     <ngx-charts-pie-chart [view]="[700, 450]" [results]="distrib" [scheme]="creSvc.colorScheme" [labels]="true"
+     <ngx-charts-pie-chart [view]="[700, 400]" [results]="distrib" [scheme]="creSvc.colorScheme" [labels]="true"
           [labelFormatting]="fmt3" [trimLabels]="false" [tooltipText]="creSvc.fmt3"
           class="d-flex justify-content-center">
      </ngx-charts-pie-chart>
@@ -59,7 +59,7 @@
 
      <p class="text-center">
           <em>
-               {{chartFooter}}
+               {{chartFooter1}}
           </em>
      </p>
 </div>
@@ -71,9 +71,9 @@
           {{chartTitle}}
      </h2>
 
-     <ngx-charts-bar-horizontal-stacked [view]="[700, 500]" [scheme]="creSvc.colorScheme" [results]="domainDistrib"
-          [xAxis]="true" [yAxis]="true" [legend]="true" [trimLabels]="false" [wrapTicks]="true"
-          [dataLabelFormatting]="creSvc.fmt1" [xAxisTickFormatting]="creSvc.fmt1">
+     <ngx-charts-bar-horizontal-stacked [view]="[700, calcStackedHeight(domainDistrib)]" [scheme]="creSvc.colorScheme"
+          [results]="domainDistrib" [xAxis]="true" [yAxis]="true" [legend]="true" [trimLabels]="false"
+          [wrapTicks]="true" [dataLabelFormatting]="creSvc.fmt1" [xAxisTickFormatting]="creSvc.fmt1">
      </ngx-charts-bar-horizontal-stacked>
 
      <div *ngIf="!domainDistrib"
@@ -83,18 +83,19 @@
 
      <p class="text-center mt-4">
           <em>
-               {{chartFooter}}
+               {{chartFooter2}}
           </em>
      </p>
 </div>
 
 
-<!-- this section is only included for pure Core, pure Optional and pure MIL sections 
+<!-- this section is only included for 'pure' Core, pure Optional and pure MIL sections 
+     where only a single model is being shown.
      Show a stacked bar chart with all active goals for each active domain  -->
 <div *ngIf="modelIdList?.length == 1">
      <div *ngFor="let d of domainsForModel" class="my-4 px-3 pb-4" style="border: 1px solid #ddd">
           <h2 class="text-center">
-               {{modelDisplayName}}: {{d.name}}
+               {{modelDisplayNameShort}}: {{d.name}}
           </h2>
           <ngx-charts-bar-horizontal-stacked [view]="[700, calcStackedHeight(d.subgroups)]" [results]="d.subgroups"
                [scheme]="creSvc.colorScheme" [xAxis]="true" [yAxis]="true" [legend]="true" [trimLabels]="false"

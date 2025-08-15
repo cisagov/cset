@@ -34,6 +34,14 @@ namespace CSETWebCore.Business.Grouping
         }
 
 
+        public int GetSelectionCountForModel(int modelId)
+        {
+            var groupingIdsForModel = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == modelId).Select(x => x.Grouping_Id).ToList();
+            var gs = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == _assessment_Id && groupingIdsForModel.Contains(x.Grouping_Id));
+            return gs.Count();
+        }
+
+
         /// <summary>
         /// Saves the goruping selection status for a list of groups
         /// </summary>

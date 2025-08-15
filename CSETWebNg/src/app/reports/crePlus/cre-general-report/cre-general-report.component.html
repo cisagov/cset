@@ -63,26 +63,42 @@
 
      <div class="page-break">
           <h1>Optional Domain Questions</h1>
-          <app-cre-bar-pie-stacked [modelIdList]="[23]"></app-cre-bar-pie-stacked>
+          <ng-container *ngIf="numberOdsSelected > 0; else noOdContent">
+               <app-cre-bar-pie-stacked [modelIdList]="[23]"></app-cre-bar-pie-stacked>
+          </ng-container>
+
+          <ng-template #noOdContent>
+               Hey guys, really there are no optional domain questions selected
+          </ng-template>
      </div>
 
      <div class="page-break">
           <h1>Optional MIL Questions</h1>
-          <app-cre-bar-pie-stacked [modelIdList]="[24]"></app-cre-bar-pie-stacked>
 
-          <div class="my-5">
-               <h2>
-                    MIL Achievement By Domain
-               </h2>
-               <app-cre-mil-yes-no></app-cre-mil-yes-no>
-          </div>
+          <ng-container *ngIf="numberMilsSelected > 0; else noMilContent">
 
-          <div class="my-5">
-               <h2>
-                    Percent Implemented for MIL Domains
-               </h2>
-               <app-cre-mil-pct-implemented></app-cre-mil-pct-implemented>
-          </div>
+               <app-cre-bar-pie-stacked [modelIdList]="[24]"></app-cre-bar-pie-stacked>
+
+               <app-cre-mil-explanations></app-cre-mil-explanations>
+
+               <div class="my-5">
+                    <h2>
+                         MIL Achievement By Domain
+                    </h2>
+                    <app-cre-mil-yes-no></app-cre-mil-yes-no>
+               </div>
+
+               <div class="my-5">
+                    <h2>
+                         Percent Implemented for MIL Domains
+                    </h2>
+                    <app-cre-mil-pct-implemented></app-cre-mil-pct-implemented>
+               </div>
+          </ng-container>
+
+          <ng-template #noMilContent>
+               Hey guys, really there are no MIL questions selected
+          </ng-template>
      </div>
 
 </div>

@@ -54,6 +54,9 @@ export class CreGeneralReportComponent implements OnInit {
   distribCoreMil: any[];
   domainDistribCoreMil: any[];
 
+  numberMilsSelected: number;
+  numberOdsSelected: number;
+
 
   /**
    * CTOR
@@ -87,6 +90,12 @@ export class CreGeneralReportComponent implements OnInit {
 
     this.distribCoreMil = await this.buildAllDistrib([22, 24]);
     this.domainDistribCoreMil = await this.buildDomainDistrib([22, 24]);
+
+    this.numberOdsSelected = await firstValueFrom(this.creSvc.getSelectedGoalMilCount(23));
+    console.log('numberodsselected', this.numberOdsSelected);
+
+    this.numberMilsSelected = await firstValueFrom(this.creSvc.getSelectedGoalMilCount(24));
+    console.log('numbermilsselected', this.numberMilsSelected);
   }
 
   /**
@@ -125,9 +134,9 @@ export class CreGeneralReportComponent implements OnInit {
     return resp;
   }
 
-
+  
   /*************
-  Label and tooltip formatting functions 
+    Label and tooltip formatting functions 
   ***************/
 
   fmt2 = (label) => {

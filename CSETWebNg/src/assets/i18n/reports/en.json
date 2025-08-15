@@ -815,21 +815,34 @@
                "answer distribution": "Answer Distribution",
                "chart reports": {
                     "22": {
-                         "title": "Cyber Resilience Essentials (CRE+) (Core Module) Charts",
+                         "title": "Cyber Resilience Essentials (CRE+) (Core Module)",
                          "chart footer1": "CRE+ Core Module Answer Distribution",
-                         "chart footer2": "CRE+ Core Module Answer Distribution by domain"
+                         "chart footer2": "CRE+ Core Module Answer Distribution by domain",
+                         "displayNameShort": "CRE+ Core"
                     },
                     "23": {
-                         "title": "Cyber Resilience Essentials (CRE+) Optional Domains Charts",
+                         "title": "CRE+ Optional Domains",
                          "chart footer1": "Optional Domain Answer Distribution.  Only selected goals are included.",
                          "chart footer2": "Optional Domain Answer Distribution by domain. Only selected goals are included.",
-                         "no selected": "None of the goals were selected so there is nothing to show."
+                         "no selected": "None of the goals were selected so there is nothing to show.",
+                         "displayNameShort": "Optional Domains"
                     },
                     "24": {
-                         "title": "Cyber Resilience Essentials (CRE+) MIL Questions Charts",
+                         "title": "CRE+ MIL Questions",
                          "chart footer1": "MIL Question Answer Distribution.  Only selected MILs are included.",
                          "chart footer2": "MIL Question Answer Distribution by domain. Only selected MILs are included.",
-                         "no selected": "None of the MILs were selected so there is nothing to show."
+                         "no selected": "None of the MILs were selected so there is nothing to show.",
+                         "displayNameShort": "Optional MIL"
+                    },
+                     "22+24": {
+                         "title": "CRE+ Core, Optional MIL Questions",
+                         "chart footer1": "This chart shows the breakdown of CRE+ Core and optional MIL questions",
+                         "chart footer2": "This chart shows the breakdown of CRE+ Core and optional MIL questions by domain"
+                    },
+                    "22+23+24": {
+                         "title": "CRE+ Core, Optional Domains, Optional MIL Questions",
+                         "chart footer1": "This chart shows the breakdown of CRE+ Core, optional Domain and optional MIL questions",
+                         "chart footer2": "This chart shows the breakdown of CRE+ Core, optional Domain and optional MIL questions by domain"
                     }
                },
                "heatmap report": {
