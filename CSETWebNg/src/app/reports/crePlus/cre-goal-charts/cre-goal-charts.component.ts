@@ -48,6 +48,7 @@ export class creGoalChartsComponent implements OnChanges {
    */
   ngOnChanges(changes: SimpleChanges): void {
     if (!!this.domainDistrib) { 
+      console.log('cre-goal-charts', this.domainDistrib);
       this.stackedModel = this.domainDistrib.subgroups;
       this.calcStackedHeight();
     }

@@ -1,0 +1,16 @@
+<table class="cset-table">
+     <tr>
+          <th>Domain</th>
+          <th>MIL Level</th>
+          <th>Achieved?</th>
+     </tr>
+     <ng-content *ngFor="let d of domainList">
+          <tr *ngFor="let m of d.subgroups; index as i">
+               <td [attr.rowspan]="d.subgroups.length" *ngIf="i == 0">{{d.name}}</td>
+               <td>{{m.name}}</td>
+               <td [class]="valueCellClass(m.series[0].value)">
+                    {{valueCellLabel(m.series[0].value)}}
+               </td>
+          </tr>
+     </ng-content>
+</table>

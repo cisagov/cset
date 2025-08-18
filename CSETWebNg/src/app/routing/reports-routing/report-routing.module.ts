@@ -14,6 +14,7 @@ import { CompareReportMComponent } from '../../reports/compare-report-m/compare-
 import { CompareReportComponent } from '../../reports/compare-report/compare-report.component';
 import { CpgDeficiencyComponent } from '../../reports/cpg/cpg-deficiency/cpg-deficiency.component';
 import { CpgReportComponent } from '../../reports/cpg/cpg-report/cpg-report.component';
+import { CreGeneralReportComponent } from '../../reports/crePlus/cre-general-report/cre-general-report.component';
 import { CreFinalReportComponent } from '../../reports/crePlus/cre-final-report/cre-final-report.component';
 import { CreAssessmentOverview } from '../../reports/crePlus/cre-assessment-overview/cre-assessment-overview.component';
 import { CreModelChartsComponent } from '../../reports/crePlus/cre-model-charts/cre-model-charts.component';
@@ -48,6 +49,7 @@ import { CreHeatmapsComponent } from '../../reports/crePlus/cre-heatmaps/cre-hea
 import { CreMilCharts2Component } from '../../reports/crePlus/cre-mil-charts-2/cre-mil-charts-2.component';
 
 
+
 const routes: Routes = [
     { path: '', loadChildren: () => import('./cmmc-report-routing.module').then(m => m.CmmcReportRoutingModule) },
     { path: 'detail', component: SiteDetailComponent },
@@ -80,6 +82,7 @@ const routes: Routes = [
     { path: 'mvraReport', component: MvraReportComponent },
     { path: 'cpgReport', component: CpgReportComponent },
     { path: 'cpgDeficiency', component: CpgDeficiencyComponent },
+    { path: 'cre-general-report', component: CreGeneralReportComponent },
     { path: 'cre-final-report/:m', component: CreFinalReportComponent },
     { path: 'cre-assessment-overview', component: CreAssessmentOverview },
     { path: 'cre-model-chart-report/:m', component: CreModelChartsComponent },

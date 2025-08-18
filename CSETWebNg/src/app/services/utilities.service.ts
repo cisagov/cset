@@ -678,4 +678,13 @@ export class Utilities {
 
         return clean;
     }
+
+    public arraysHaveSameElements = (a: any[], b: any[]): boolean => {
+        const sortedA = [...a].sort();
+        const sortedB = [...b].sort();
+        return this.arraysEqual(sortedA, sortedB);
+    };
+
+    public arraysEqual = (a: any[], b: any[]): boolean =>
+        a.length === b.length && a.every((val, index) => val === b[index]);
 }
