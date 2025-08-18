@@ -109,59 +109,13 @@ export class MyAssessmentsComponent implements OnInit {
   currentFilter:'all'| 'done' | 'pending' |'favorite'= 'all';
   private gridApi!: GridApi;
 
-  columnDefs: ColDef[] = [
-    {
-      field: 'assessmentName',
-  headerName: 'Assessment Name',
-  sortable: true,
-  filter: true,
-  flex: 2,
-  cellRenderer: this.assessmentNameRenderer.bind(this)
-},
-{
-  field: 'type',
-  headerName: 'Assessment Type',
-  sortable: true,
-    filter: true,
-  flex: 1
-},
-{
-  field: 'lastModifiedDate',
-  headerName: 'Last Modified',
-  sortable: true,
-    flex: 1,
-  valueFormatter: (params) => this.formatDate(params.value)
-},
-{
-  field: 'creatorName',
-  headerName: 'Primary Assessor',
-  sortable: true,
-    flex: 1,
-  hide: !this.showColumn('primary-assessor'),
-  valueGetter: (params) => `${params.data.firstName || ''} ${params.data.lastName || ''}`.trim()
-},
-{
-  headerName: 'Status',
-  cellRenderer: this.statusRendererWithHeartFlag.bind(this),
-    sortable: false,
-  filter: false,
-  flex: 2
-},
-{
-  headerName: 'Actions',
-  cellRenderer: this.actionsRenderer.bind(this),
-    sortable: false,
-  filter: false,
-  width: 120,
-  pinned: 'right'
-}
-];
+  columnDefs: ColDef[] = [];
 
-defaultColDef: ColDef = {
-  resizable: true,
-  sortable: true,
-  filter: true
-};
+  defaultColDef: ColDef = {
+    resizable: true,
+    sortable: true,
+    filter: true
+  };
   constructor(
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
@@ -183,6 +137,7 @@ defaultColDef: ColDef = {
   ) { }
 
   ngOnInit() {
+    this.initializeColumnDefs();
     this.getAssessments();
 
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
@@ -197,6 +152,158 @@ defaultColDef: ColDef = {
 
 
     this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.userIsCisaAssessor = resp);
+  }
+
+  initializeColumnDefs() {
+    this.columnDefs = [
+      {
+        field: 'assessmentName',
+        headerName: 'Assessment Name',
+        sortable: true,
+        filter: true,
+        flex: 2,
+        cellRenderer: (params: any) => {
+          const assessmentId = params.data.assessmentId;
+          const assessmentName = params.value;
+          return `
+          <div class="flex items-center h-full">
+            <button
+              class="btn btn-link text-primary text-left justify-start p-0 h-auto min-h-0 normal-case font-medium hover:text-primary-focus"
+              data-action="navigate"
+              data-assessment-id="${assessmentId}">
+              ${assessmentName}
+            </button>
+          </div>
+        `;
+        }
+      },
+      {
+        field: 'type',
+        headerName: 'Assessment Type',
+        sortable: true,
+        filter: true,
+        flex: 1,
+        cellRenderer: (params: any) => `<div class="flex items-center h-full text-sm">${params.value}</div>`
+      },
+      {
+        field: 'lastModifiedDate',
+        headerName: 'Last Modified',
+        sortable: true,
+        flex: 1,
+        valueFormatter: (params) => {
+          if (!params.value) return '';
+          // Handle DateTime object
+          if (params.value && typeof params.value === 'object' && params.value.toJSDate) {
+            return params.value.toJSDate().toLocaleDateString();
+          }
+          return new Date(params.value).toLocaleDateString();
+        },
+        cellRenderer: (params: any) => `<div class="flex items-center h-full text-sm">${params.value}</div>`
+      },
+      {
+        field: 'creatorName',
+        headerName: 'Primary Assessor',
+        sortable: true,
+        flex: 1,
+        hide: !this.showColumn('primary-assessor'),
+        valueGetter: (params) => `${params.data.firstName || ''} ${params.data.lastName || ''}`.trim(),
+        cellRenderer: (params: any) => `<div class="flex items-center h-full text-sm">${params.value}</div>`
+      },
+      {
+        headerName: 'Status',
+        cellRenderer: (params: any) => {
+          const assessment = params.data;
+          const percentage = this.getCompletionPercentage(assessment);
+          const favoriteIcon = assessment.favorite ? 'favorite' : 'favorite_border';
+          const favoriteClass = assessment.favorite ? 'text-red-500' : 'text-gray-400';
+          const reviewFlag = (assessment.markedForReview || assessment.altTextMissing);
+          const flagClass = reviewFlag ? 'text-orange-500' : 'text-gray-400';
+          const tooltipText = this.getProgressTooltip(assessment);
+
+          return `
+          <div class="flex items-center gap-2 h-full py-2">
+            <button class="btn btn-ghost btn-xs p-1 min-h-0 h-auto hover:bg-base-200"
+                    data-action="toggleFavorite"
+                    data-assessment-id="${assessment.assessmentId}"
+                    title="${assessment.favorite ? 'Remove from favorites' : 'Add to favorites'}">
+              <span class="material-icons text-lg ${favoriteClass}">
+                ${favoriteIcon}
+              </span>
+            </button>
+
+            <span class="cursor-pointer cset-icons-flag-dark text-lg ${flagClass}"
+                  title="${reviewFlag ? 'Assessment requires review' : 'No review required'}">
+            </span>
+
+            <div class="flex-1 min-w-0">
+              <progress class="progress progress-primary w-full h-2 cursor-pointer"
+                        value="${percentage}"
+                        max="100"
+                        title="${tooltipText}"></progress>
+            </div>
+
+            <span class="text-sm text-gray-500 min-w-fit font-medium">
+              ${percentage}%
+            </span>
+          </div>
+        `;
+        },
+        sortable: false,
+        filter: false,
+        flex: 2
+      },
+      {
+        headerName: 'Actions',
+        cellRenderer: this.actionsRenderer.bind(this),
+        sortable: false,
+        filter: false,
+        width: 200,
+        pinned: 'right'
+      }
+    ];
+  }
+
+  actionsRendererBound(params: any): string {
+    const assessment = params.data;
+    const assessmentId = assessment.assessmentId;
+    const rowIndex = params.rowIndex;
+
+    let buttons = `
+      <button class="btn  btn-sm hover:btn-error tooltip"
+              data-action="delete"
+              data-assessment-id="${assessmentId}"
+              data-row-index="${rowIndex}"
+              data-tip="Remove assessment">
+        <span class="cset-icons-trash-x text-sm"></span>
+        <span class="hidden sm:inline text-nowrap ml-1">Remove</span>
+      </button>
+    `;
+
+    if (this.showColumn('export')) {
+      buttons += `
+        <button class="btn  btn-sm ml-1 tooltip"
+                data-action="export"
+                data-assessment-id="${assessmentId}"
+                data-tip="Export assessment">
+          <span class="cset-icons-export-up text-sm"></span>
+          <span class="hidden sm:inline text-nowrap ml-1">Export</span>
+        </button>
+      `;
+    }
+
+    if (this.showColumn('export json')) {
+      buttons += `
+        <button class="btn btn-sm ml-1 tooltip"
+                data-action="exportJson"
+                data-assessment-id="${assessmentId}"
+                data-tip="Export JSON">
+          <span class="cset-icons-export-up text-sm"></span>
+          <span class="hidden sm:inline text-nowrap ml-1">JSON</span>
+        </button>
+      `;
+    }
+
+    return `<div class="flex items-center gap-1 h-full">${buttons}</div>`;
   }
 
   /**
@@ -246,27 +353,27 @@ defaultColDef: ColDef = {
       concatMap((assessmentsCompletionData: any[]) =>
         this.assessSvc.getAssessments().pipe(
           map((assessments: UserAssessment[]) => {
-            assessments.forEach((item, index, arr) => {
+              assessments.forEach((item, index, arr) => {
 
-              // determine assessment type display
-              item.type = this.determineAssessmentType(item);
-
-
-              let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
-              item.completedQuestionsCount = currentAssessmentStats?.completedCount;
-              item.totalAvailableQuestionsCount =
-                (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
-                (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
-                (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
+                // determine assessment type display
+                item.type = this.determineAssessmentType(item);
 
 
+                let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
+                item.completedQuestionsCount = currentAssessmentStats?.completedCount;
+                item.totalAvailableQuestionsCount =
+                  (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
+                  (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
+                  (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
 
-            });
+
+
+              });
 
 
               this.sortedAssessments = assessments;
               console.log(assessments)
-          },
+            },
             error => {
               console.error(
                 "Unable to get Assessments for " +
@@ -352,6 +459,7 @@ defaultColDef: ColDef = {
               this.assessSvc.removeMyContact(assessment.assessmentId).pipe(
                 tap(() => {
                   this.sortedAssessments.splice(assessmentIndex, 1);
+                  if(this.gridApi) this.gridApi.redrawRows()
                 }),
                 catchError(error => {
                   this.dialog.open(AlertComponent, {
@@ -564,49 +672,7 @@ defaultColDef: ColDef = {
   `;
   }
 
-// Status cell with progress and favorite icon
-  statusRendererWithHeartFlag(params: any): string {
-    const assessment = params.data;
-    const percentage = this.getCompletionPercentage(assessment);
-    const favoriteIcon = assessment.favorite ? 'favorite' : 'favorite_border';
-    const favoriteClass = assessment.favorite ? 'text-red-500' : 'text-gray-400';
-    const reviewFlag = (assessment.markedForReview || assessment.altTextMissing);
-    const flagClass = reviewFlag ? 'text-orange-500' : 'text-gray-400';
-    const tooltipText = this.getProgressTooltip(assessment);
 
-    return `
-    <div class="flex items-center gap-2 h-full">
-      <!-- Favorite Heart -->
-      <button class="btn btn-ghost btn-xs p-1 min-h-0 h-auto"
-              data-action="toggleFavorite"
-              data-assessment-id="${assessment.assessmentId}"
-              title="${assessment.favorite ? 'Remove from favorites' : 'Add to favorites'}">
-        <span class="material-icons text-lg ${favoriteClass}">
-          ${favoriteIcon}
-        </span>
-      </button>
-
-      <!-- Review Flag -->
-      <span class="cursor-pointer cset-icons-flag-dark text-lg ${flagClass}"
-            title="${reviewFlag ? 'Assessment requires review' : 'No review required'}">
-      </span>
-
-      <!-- Progress Bar -->
-      <div class="flex-1 min-w-0">
-        <progress class="progress progress-primary w-full h-2 cursor-pointer"
-                  style="color: #367190;"
-                  value="${percentage}"
-                  max="100"
-                  title="${tooltipText}"></progress>
-      </div>
-
-      <!-- Percentage -->
-      <span class="text-sm text-gray-500 min-w-fit">
-        ${percentage}%
-      </span>
-    </div>
-  `;
-  }
 
 // Actions cell with delete and export buttons
   actionsRenderer(params: any): string {
@@ -651,11 +717,34 @@ defaultColDef: ColDef = {
 
     return `<div class="flex gap-1">${buttons}</div>`;
   }
-// Handle grid clicks
+
+  onGridReady(params: GridReadyEvent): void {
+    this.gridApi = params.api;
+    params.api.sizeColumnsToFit();
+  }
+
+// Format date helper
+  formatDate(dateString: string): string {
+    // Use your existing date formatting or the pipe
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  }
+
+  getProgressTooltip(assessment: UserAssessment): string {
+    if (assessment.selectedMaturityModel === 'CIS' || assessment.selectedMaturityModel === 'SD02 Series') {
+      return this.tSvc.translate('welcome page.blank assessment');
+    }
+
+    if (assessment.totalAvailableQuestionsCount > 0) {
+      return `${assessment.completedQuestionsCount}/${assessment.totalAvailableQuestionsCount} questions answered`;
+    }
+
+    return this.tSvc.translate('welcome page.blank assessment');
+  }
+
+// Updated onCellClicked method
   onCellClicked(event: any): void {
     const target = event.event.target;
-
-    // Check if clicked element or its parent has data-action
     const actionElement = target.closest('[data-action]');
     if (!actionElement) return;
 
@@ -671,7 +760,13 @@ defaultColDef: ColDef = {
         const assessment = this.filteredAssessments.find(a => a.assessmentId === assessmentId);
         if (assessment) {
           this.toggleFavorite(assessment);
-          this.gridApi.refreshCells();
+          // Refresh the grid after state change
+          setTimeout(() => {
+            this.gridApi.refreshCells({
+              columns: ['Status'],
+              force: true
+            });
+          }, 100);
         }
         break;
 
@@ -691,49 +786,31 @@ defaultColDef: ColDef = {
         this.clickDownloadLink(assessmentId, true);
         break;
     }
-  }// Grid ready event
-  onGridReady(params: GridReadyEvent): void {
-    this.gridApi = params.api;
-    params.api.sizeColumnsToFit();
   }
 
-// Format date helper
-  formatDate(dateString: string): string {
-    // Use your existing date formatting or the pipe
-    const date = new Date(dateString);
-    return date.toLocaleDateString();
-  }
-  toggleFavorite(assessment: UserAssessment) {
+// ONLY change this method in your TypeScript file
+  toggleFavorite(assessment: UserAssessment): void {
     const newFavoriteStatus = !assessment.favorite;
 
-    console.log('About to set favorite for assessment:', assessment.assessmentId);
-    console.log('New favorite status:', newFavoriteStatus);
-
     this.assessSvc.getAssessmentToken(assessment.assessmentId).then(() => {
-      console.log('Got assessment token, now calling setAssessmentFavorite');
-
       this.assessSvc.setAssessmentFavorite(newFavoriteStatus).subscribe({
         next: () => {
           assessment.favorite = newFavoriteStatus;
-          this.gridApi.refreshCells();
-          console.log('Favorite status updated successfully');
+          // FIX: Check if gridApi exists before calling refreshCells
+          if (this.gridApi) {
+            try {
+              this.gridApi.refreshCells({
+                force: true
+              });
+            } catch (error) {
+              console.error('Error refreshing grid cells:', error);
+            }
+          }
         },
         error: (error) => {
           console.error('Failed to update favorite status:', error);
-          console.error('Error details:', error.error);
         }
       });
     });
-  }
-  getProgressTooltip(assessment: UserAssessment): string {
-    if (assessment.selectedMaturityModel === 'CIS' || assessment.selectedMaturityModel === 'SD02 Series') {
-      return this.tSvc.translate('welcome page.blank assessment');
-    }
-
-    if (assessment.totalAvailableQuestionsCount > 0) {
-      return `${assessment.completedQuestionsCount}/${assessment.totalAvailableQuestionsCount} questions answered`;
-    }
-
-    return this.tSvc.translate('welcome page.blank assessment');
   }
 }

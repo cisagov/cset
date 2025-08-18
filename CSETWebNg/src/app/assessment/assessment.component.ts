@@ -36,6 +36,32 @@ import { NavTreeService } from '../services/navigation/nav-tree.service';
 import { NavigationService } from '../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../services/config.service';
+import { AssessmentDetail } from '../models/assessment-info.model';
+interface UserAssessment {
+  isEntry: boolean;
+  isEntryString: string;
+  assessmentId: number;
+  assessmentName: string;
+  useDiagram: boolean;
+  useStandard: boolean;
+  useMaturity: boolean;
+  type: string;
+  assessmentCreatedDate: string;
+  creatorName: string;
+  markedForReview: boolean;
+  altTextMissing: boolean;
+  selectedMaturityModel?: string;
+  selectedStandards?: string;
+  completedQuestionsCount: number;
+  totalAvailableQuestionsCount: number;
+  questionAlias: string;
+  iseSubmission: boolean;
+  submittedDate?: Date;
+  done?:boolean;
+  favorite?:boolean;
+  firstName?:string;
+  lastName?:string;
+}
 
 @Component({
     selector: 'app-assessment',
@@ -65,7 +91,10 @@ export class AssessmentComponent implements OnInit {
   scrollTop = 0;
 
   assessmentAlias = this.tSvc.translate('titles.assessment');
+  assessment: AssessmentDetail = {
 
+
+  };
 
   @Output() navSelected = new EventEmitter<string>();
   isSet: boolean;
@@ -109,8 +138,18 @@ export class AssessmentComponent implements OnInit {
     this.tSvc.langChanges$.subscribe((event) => {
       this.navSvc.buildTree();
     });
+    if (this.assessSvc.id()) {
+      this.getAssessmentDetail();
+    }
   }
-
+  getAssessmentDetail() {
+    this.assessment = this.assessSvc.assessment;
+    console.log(this.assessSvc.assessment);
+  }
+  setAssessmentDone(){
+    this.assessment.done =!this.assessment.done;
+    this.assessSvc.setAssesmentDone(this.assessment.done).subscribe();
+  }
   setTab(tab) {
     this.assessSvc.currentTab = tab;
   }
@@ -170,7 +209,7 @@ export class AssessmentComponent implements OnInit {
   }
 
   /**
-   * Returns the text for the Requirements label.  
+   * Returns the text for the Requirements label.
    */
   requirementsLabel() {
     return 'Requirements';
@@ -184,7 +223,7 @@ export class AssessmentComponent implements OnInit {
     this.expandNav = e;
   }
 
-  // isTocLoading(node) { 
+  // isTocLoading(node) {
   //   console.log(node);
   //   var s = node?.label;
   //   return  (s === "Please wait" || s === "Loading questions") ;
@@ -193,5 +232,22 @@ export class AssessmentComponent implements OnInit {
   goHome() {
     this.assessSvc.dropAssessment();
     this.router.navigate(['/home']);
+  }
+  getCompletionPercentage(assessment:UserAssessment):number{
+    if(!assessment.totalAvailableQuestionsCount ||assessment.totalAvailableQuestionsCount===0){
+      return 0;
+    }
+    return Math.round((assessment.completedQuestionsCount/assessment.totalAvailableQuestionsCount)*100)
+  }
+  getProgressTooltip(assessment: UserAssessment): string {
+    if (assessment.selectedMaturityModel === 'CIS' || assessment.selectedMaturityModel === 'SD02 Series') {
+      return this.tSvc.translate('welcome page.blank assessment');
+    }
+
+    if (assessment.totalAvailableQuestionsCount > 0) {
+      return `${assessment.completedQuestionsCount}/${assessment.totalAvailableQuestionsCount} questions answered`;
+    }
+
+    return this.tSvc.translate('welcome page.blank assessment');
   }
 }

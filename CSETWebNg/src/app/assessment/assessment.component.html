@@ -62,7 +62,9 @@
           </button>
         </li>
       </ul>
+
     </div>
+
   </div>
 
   <!-- Content -->
@@ -115,9 +117,32 @@
 
       <mat-sidenav-content class="bgc-gray-50 d-flex flex-column flex-11a oy-auto ">
         <div class="max-1000 h-0 d-flex flex-column flex-11a" id="sidenav-content">
+          <div class="flex justify-between w-full text-black m-3">
+            <div><h6>{{this.assessment.assessmentName}}</h6></div>
+            <div class="flex items-center gap-2">
+<!--              <progress class="progress progress-primary w-full h-2 cursor-pointer"-->
+<!--                        style="color: #367190;"-->
+<!--                        [value]="getCompletionPercentage(assessment)"-->
+<!--                        [matTooltip]="getProgressTooltip(assessment)"-->
+<!--                        max="100"></progress>-->
+              <span class="text-sm font-medium">Mark Assessment Done</span>
+              <input
+                type="checkbox"
+                class="toggle toggle-primary toggle-sm"
+                [checked]="assessment.done"
+                (change)="setAssessmentDone()"
+              />
+            </div>
+
+          </div>
           <router-outlet></router-outlet>
         </div>
       </mat-sidenav-content>
     </mat-sidenav-container>
+    <div class="text-black "><span>lily</span></div>
+
   </div>
+
+
+
 </div>

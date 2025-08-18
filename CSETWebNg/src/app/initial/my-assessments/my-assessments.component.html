@@ -436,23 +436,26 @@
           </tr>
         </table>
 
-        <!--        to comment out second option  using -->
-<!--                <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a">-->
-<!--                  <ag-grid-angular-->
-<!--                    class="ag-theme-alpine"-->
-<!--                    theme="legacy"-->
-<!--                    [rowData]="filteredAssessments"-->
-<!--                    [columnDefs]="columnDefs"-->
-<!--                    [defaultColDef]="defaultColDef"-->
-<!--                    [pagination]="true"-->
-<!--                    [paginationPageSize]="50"-->
-<!--                    [suppressCellFocus]="true"-->
-<!--                    [rowHeight]="50"-->
-<!--                    (gridReady)="onGridReady($event)"-->
-<!--                    (cellClicked)="onCellClicked($event)"-->
-<!--                    style="height: 600px; width: 100%;">-->
-<!--                  </ag-grid-angular>-->
-<!--                </div>-->
+        <!-- AFTER - Fixed ag-grid with proper container and styling -->
+        <div *ngIf="sortedAssessments?.length > 0" class="mt-4 mb-4 flex flex-col flex-1">
+          <div class="overflow-x-auto rounded-lg border border-gray-200">
+            <ag-grid-angular
+              class="ag-theme-alpine w-full rounded-lg [&_.ag-header-cell-label]:text-white  [&_.ag-icon-filter]:text-white [&_.ag-root-wrapper]:rounded-lg [&_.ag-header]:rounded-t-lg [&_.ag-body-viewport]:rounded-b-lg"
+              theme="legacy"
+              [rowData]="filteredAssessments"
+              [columnDefs]="columnDefs"
+              [defaultColDef]="defaultColDef"
+              [pagination]="true"
+              [paginationPageSize]="50"
+              [suppressCellFocus]="true"
+              [rowHeight]="60"
+              [headerHeight]="50"
+              (gridReady)="onGridReady($event)"
+              (cellClicked)="onCellClicked($event)"
+              style="height: 850px; width: 100%">
+            </ag-grid-angular>
+          </div>
+        </div>
       </div>
     </div>
 
