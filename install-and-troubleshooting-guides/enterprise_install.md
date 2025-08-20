@@ -22,7 +22,7 @@ The enterprise installation can be automated through the use of a provided Power
 
 4. To run the setup script in the enterprise binaries directory, type ```.\setup_enterprise``` and hit the enter key.
 
-5. The script will open the installation wizards for SQL Server Express 2022 and the .NET 7 Hosting Bundle. The script will not proceed to each subsequent installation step until each installation wizard window is closed. It will also install IIS and IIS Manager in the background.
+5. The script will open the installation wizards for SQL Server Express 2022 and the .NET 8 Hosting Bundle. The script will not proceed to each subsequent installation step until each installation wizard window is closed. It will also install IIS and IIS Manager in the background.
 
 ![](img/figES2.PNG) 
 <br/>
@@ -55,7 +55,7 @@ The enterprise installation can be automated through the use of a provided Power
   
 3.	CSET® requires your server to have the URL Rewrite Module installed as well. Again, this can be downloaded [directly from Microsoft](https://www.iis.net/downloads/microsoft/url-rewrite) (Note that this module cannot be installed until IIS has been installed first. The process for installing IIS is explained in the next section).
   
-4. CSET® requires the ASP.NET Core 7 and .NET 7 runtimes to run successfully. It is recommended to install these using the .NET 7 Hosting Bundle, which includes both of these runtimes and IIS support. This can be downloaded [directly from Microsoft](https://dotnet.microsoft.com/en-us/download/dotnet/7.0).
+4. CSET® requires the ASP.NET Core 7 and .NET 8 runtimes to run successfully. It is recommended to install these using the .NET 8 Hosting Bundle, which includes both of these runtimes and IIS support. This can be downloaded [directly from Microsoft](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 
 5.	If you are using a SQL Server, download and install Microsoft [SQL Server Management Studio (SSMS)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15).
 
@@ -106,7 +106,7 @@ The enterprise installation can be automated through the use of a provided Power
 
   * The final step is to click the Install button to finish up this process. Once this is complete, you can close out of the Server Setup window.
 
-2. Once your server is up and running, you will need to install the URL Rewrite Module and the .NET 7 Runtimes. Simply download the installation media files from Microsoft (see Page 2 links or above hyperlink) and run them to install the necessary patches.
+2. Once your server is up and running, you will need to install the URL Rewrite Module and the .NET 8 Runtimes. Simply download the installation media files from Microsoft (see Page 2 links or above hyperlink) and run them to install the necessary patches.
 
 ## Firewall Configuration
 1. Open Windows Defender Firewall
