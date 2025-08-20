@@ -62,7 +62,7 @@ The enterprise installation can be automated through the use of a provided Power
 
 2.	We will be using Microsoft SQL Server 2022 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=101064).
   
-3.	**IIS-specific**: If using IIS hosting, your server will need the URL Rewrite Module installed. This can be downloaded [directly from Microsoft](https://www.iis.net/downloads/microsoft/url-rewrite) (Note that this module cannot be installed until IIS has been installed first. The process for installing IIS is explained in the next section).
+3.	**REQUIRED for IIS deployment**: The URL Rewrite Module is a mandatory component for deploying CSET with IIS hosting. This module must be installed on your server and can be downloaded [directly from Microsoft](https://www.iis.net/downloads/microsoft/url-rewrite). **Important**: This module cannot be installed until IIS has been installed first. The process for installing IIS is explained in the next section.
   
 4. CSET® requires the ASP.NET Core 7 and .NET 8 runtimes to run successfully. For IIS hosting, install the .NET 8 Hosting Bundle, which includes both runtimes and IIS support. For Kestrel standalone, install the .NET 8 Runtime. Both can be downloaded [directly from Microsoft](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 
