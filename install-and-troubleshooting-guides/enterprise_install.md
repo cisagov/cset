@@ -96,6 +96,9 @@ Kestrel is a lightweight, cross-platform web server that can run without IIS:
 - Configuring HTTPS certificates directly in Kestrel
 - Setting up appropriate firewall rules
 
+## Installing (IIS)
+1.	On your Windows Server, open the “Server Manager” application.
+
 ![](img/figE1.PNG) 
 <br/>
 
