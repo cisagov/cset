@@ -5,6 +5,15 @@ This documentation is provided to assist users in navigating the basics of the C
 Here users will find step-by-step directions for installation, configuration, and setup, as well as links to 
 various resources to assist in this process.
 
+## Hosting Options
+CSET can be hosted on Windows using either **Kestrel** or **IIS** web servers:
+
+- **IIS (Recommended for Production)**: Provides robust process management, automatic application restarts, Windows authentication integration, and enterprise-grade features. IIS can host ASP.NET Core applications using either in-process or out-of-process hosting models.
+
+- **Kestrel**: A lightweight, cross-platform web server that can run standalone without IIS. Suitable for development environments or simpler production deployments where IIS features are not required.
+
+The instructions below focus primarily on IIS hosting as the recommended production approach, but sections marked as "IIS-specific" can be skipped if using Kestrel standalone.
+
 ## Using the Provided Setup Script
 The enterprise installation can be automated through the use of a provided PowerShell script named ```setup_enterprise.ps1``` 
 (as of CSET release v11.0.1.2). This script is located in the root of the enterprise binaries zip folder.
@@ -49,19 +58,43 @@ The enterprise installation can be automated through the use of a provided Power
 ## Manual Setup
 
 ## Prerequisites & Necessary Files
-1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases). Click the "CSETvXXXX_Enterprise_Binaries.zip" file to download it. Once the download is complete, you will need to unzip the folder. This folder includes the CSET® application binaries, as well as the required installation packages listed in prerequsites 2-4.
+1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases). Click the "CSETvXXXX_Enterprise_Binaries.zip" file to download it. Once the download is complete, you will need to unzip the folder. This folder includes the CSET® application binaries, as well as the required installation packages listed in prerequisites 2-4.
 
 2.	We will be using Microsoft SQL Server 2022 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=101064).
   
-3.	CSET® requires your server to have the URL Rewrite Module installed as well. Again, this can be downloaded [directly from Microsoft](https://www.iis.net/downloads/microsoft/url-rewrite) (Note that this module cannot be installed until IIS has been installed first. The process for installing IIS is explained in the next section).
+3.	**IIS-specific**: If using IIS hosting, your server will need the URL Rewrite Module installed. This can be downloaded [directly from Microsoft](https://www.iis.net/downloads/microsoft/url-rewrite) (Note that this module cannot be installed until IIS has been installed first. The process for installing IIS is explained in the next section).
   
-4. CSET® requires the ASP.NET Core 7 and .NET 8 runtimes to run successfully. It is recommended to install these using the .NET 8 Hosting Bundle, which includes both of these runtimes and IIS support. This can be downloaded [directly from Microsoft](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
+4. CSET® requires the ASP.NET Core 7 and .NET 8 runtimes to run successfully. For IIS hosting, install the .NET 8 Hosting Bundle, which includes both runtimes and IIS support. For Kestrel standalone, install the .NET 8 Runtime. Both can be downloaded [directly from Microsoft](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 
 5.	If you are using a SQL Server, download and install Microsoft [SQL Server Management Studio (SSMS)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15).
 
 
-## Installing IIS
-1.	On your Windows Server, open the “Server Manager” application.
+## Detailed Hosting Options
+
+### IIS Hosting (Recommended for Production)
+IIS provides enterprise-grade features including:
+- **Process Management**: Automatic application restarts and health monitoring
+- **Windows Authentication**: Seamless integration with Active Directory
+- **Performance**: In-process hosting offers better performance than out-of-process
+- **Security**: Built-in security features and SSL/TLS management
+- **Scalability**: Application pools and load balancing capabilities
+
+**IIS Hosting Models:**
+- **In-process**: ASP.NET Core runs within the IIS worker process (w3wp.exe) using IIS HTTP Server for better performance
+- **Out-of-process**: ASP.NET Core runs as a separate process with Kestrel, while IIS acts as a reverse proxy
+
+### Kestrel Standalone Hosting
+Kestrel is a lightweight, cross-platform web server that can run without IIS:
+- **Simplicity**: Direct hosting without additional web server configuration
+- **Cross-platform**: Can run on Windows, Linux, and macOS
+- **Development**: Ideal for development and testing environments
+- **Lightweight**: Minimal overhead for simple deployments
+
+**For production Kestrel deployments**, consider:
+- Running as a Windows Service for automatic startup and process management
+- Implementing proper logging and monitoring
+- Configuring HTTPS certificates directly in Kestrel
+- Setting up appropriate firewall rules
 
 ![](img/figE1.PNG) 
 <br/>
@@ -192,7 +225,9 @@ The enterprise installation can be automated through the use of a provided Power
   ![](img/figE23.PNG)
 
 ## CSET Installation
-1.	Re-open Windows Server Manager (see below). Double-click on “IIS” on the left. Then, right-click on the server name and click “Internet Information Services (IIS) Manager.”
+
+### For IIS Hosting:
+1.	Re-open Windows Server Manager (see below). Double-click on "IIS" on the left. Then, right-click on the server name and click "Internet Information Services (IIS) Manager."
 
 ![](img/figE24.PNG)
 
@@ -207,6 +242,16 @@ The enterprise installation can be automated through the use of a provided Power
   * If you set the back-end api port to something other than 5000, you will need to update the following config value found in wwwroot\CSETUI\assets\settings\config.json:
 
 ![](img/figE31.PNG)
+
+### For Kestrel Standalone Hosting:
+1. Copy the CSET application binaries to your desired directory (e.g., `C:\CSET\`)
+2. The application can be run directly using the `dotnet` command:
+   ```
+   dotnet CSETWebApi.dll
+   ```
+3. For production, consider running CSET as a Windows Service using tools like `sc.exe` or NSSM (Non-Sucking Service Manager)
+4. Configure firewall rules to allow access on your chosen port (default is 5000 for HTTP, 5001 for HTTPS)
+5. Update the frontend configuration file (CSETUI\assets\settings\config.json) to point to your Kestrel server URL
 
 ## CSET Configuration
 1.	Locate the "appsettings.json" file that should now be inside the “wwwroot\CSETWebApi” folder. Open this file using a text editor such as notepad.
