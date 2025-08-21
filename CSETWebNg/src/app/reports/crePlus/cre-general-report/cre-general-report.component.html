@@ -22,18 +22,21 @@
 -------------------------->
 <div class="report-body mb-5" *transloco="let t">
 
-     <app-cover-sheet-a [title]="title" [assessmentName]="assessmentName" [assessmentDate]="assessmentDate"
+     <app-cover-sheet-a [title]="title | uppercase" [assessmentName]="assessmentName" [assessmentDate]="assessmentDate"
           [assessorName]="assessorName" [facilityName]="facilityName"
           [selfAssessment]="selfAssessment"></app-cover-sheet-a>
+
 
      <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
           <app-report-disclaimer></app-report-disclaimer>
      </div>
 
+
      <div class="page-break">
           <app-report-advisory></app-report-advisory>
      </div>
 
+     
      <div class="page-break">
           <h1>
                <div>
@@ -69,7 +72,7 @@
 
           <ng-template #noOdContent>
                <div class="my-5">
-                    {{ t('reports.core.cre.chart reports.23.none selected') }}
+                    {{ t('reports.core.cre.charts.23.none selected') }}
                </div>
           </ng-template>
      </div>
@@ -100,7 +103,7 @@
 
           <ng-template #noMilContent>
                <div class="my-5">
-                    {{ t('reports.core.cre.chart reports.24.none selected') }}
+                    {{ t('reports.core.cre.charts.24.none selected') }}
                </div>
           </ng-template>
      </div>

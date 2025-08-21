@@ -25,6 +25,7 @@
      <app-cover-sheet-a [title]="title" [assessmentName]="assessmentName" [assessmentDate]="assessmentDate"
           [assessorName]="assessorName" [facilityName]="facilityName"
           [selfAssessment]="selfAssessment"></app-cover-sheet-a>
+          
 
      <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
           <app-report-disclaimer></app-report-disclaimer>
@@ -37,10 +38,54 @@
 
 
      <div class="page-break">
-          <h1>{{t('reports.core.cre.mil charts 2.title')}}</h1>
-          <p>{{t('reports.core.cre.mil charts 2.p1')}}</p>
-
-          
+          <h1>
+               Core Questions
+          </h1>
+          <div *ngFor="let d of domainList22">
+               <div>
+                    <app-cre-goal-charts [domainDistrib]="d" [modelId]="22"
+                         [modelDisplayName]="'Core Questions'"></app-cre-goal-charts>
+               </div>
+          </div>
      </div>
 
+
+     <div class="page-break">
+          <h1>
+               Optional Domain Questions
+          </h1>
+          <div *ngFor="let d of domainList23">
+               <div>
+                    <app-cre-goal-charts [domainDistrib]="d" [modelId]="23"
+                         [modelDisplayName]="'Optional Domain Questions'"></app-cre-goal-charts>
+               </div>
+          </div>
+     </div>
+
+
+     <div class="page-break">
+          <h1>
+               MIL Questions
+          </h1>
+          <div *ngFor="let d of domainList24">
+               <div>
+                    <app-cre-goal-charts [domainDistrib]="d" [modelId]="24"
+                         [modelDisplayName]="'MIL Questions'"></app-cre-goal-charts>
+               </div>
+          </div>
+
+          <div class="mt-5">
+               <h2 class="mb-4">MIL Domains All Responses</h2>
+               <div class="my-4 p-3 ps-4" style="border: 1px solid #ddd">
+                    <app-cre-grouped-stacked-horizontal-chart [config]="barStackedConfig"
+                         [results]="allResponsesDataMil" [scheme]="creSvc.colorScheme"
+                         [dataLabelFormatting]="creSvc.fmt1">
+                    </app-cre-grouped-stacked-horizontal-chart>
+               </div>
+          </div>
+
+          <div>
+               <app-cre-heatmaps></app-cre-heatmaps>
+          </div>
+     </div>
 </div>

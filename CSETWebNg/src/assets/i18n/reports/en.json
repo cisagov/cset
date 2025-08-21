@@ -143,44 +143,24 @@
           "cre+": {
                "sectionTitle": "Cybersecurity Resilience Essentials (CRE+)",
                "1": {
-                    "title": "CRE+ General Report",
-                    "desc": "The report that everybody gets"
+                    "title": "CRE+ General Charts Report",
+                    "desc": "This report details answers across Core, Optional, and MIL domains and goals, with accompanying charts for visual analysis."
                },
                "2": {
+                    "title": "CRE+ Detailed Charts Report",
+                    "desc": "This report expands on Goal and MIL answer details while providing at-a-glance MIL compliance status, charts, and a comprehensive heatmap of all answered questions."
+               },
+               "3": {
                     "title": "CRE+ (Core Module) Final Report",
                     "desc": "CRE Core questions and selected Optional Domain questions are detailed in this report"
                },
-               "3": {
+               "4": {
                     "title": "Optional Domains Final Report",
                     "desc": "Selected Optional Domain questions are detailed in this report"
                },
-               "4": {
+               "5": {
                     "title": "MIL Final Report",
                     "desc": "Selected MIL questions are detailed in this report"
-               },
-               "5": {
-                    "title": "Assessment Overview",
-                    "desc": "Charts showing distribution of answers across the assessment and by domain"
-               },
-               "6": {
-                    "title": "CRE+ (Core Module) Charts",
-                    "desc": "Charts showing distribution of answers in the Core module"
-               },
-               "7": {
-                    "title": "Optional Domains Charts",
-                    "desc": "Charts showing distribution of answers of the selected Optional Domains questions"
-               },
-               "8": {
-                    "title": "MIL Questions Charts 1",
-                    "desc": "Charts showing distribution of answers of the selected MIL questions"
-               },
-               "9": {
-                    "title": "MIL Questions Charts 2",
-                    "desc": "Charts showing distribution of answers of the selected MIL questions"
-               },
-               "10": {
-                    "title": "Heatmaps",
-                    "desc": "Heatmaps for all questions by domain"
                }
           },
           "cisa vadr": {
@@ -813,7 +793,13 @@
                     }
                },
                "answer distribution": "Answer Distribution",
-               "chart reports": {
+               "charts": {
+                    "general": {
+                         "title": "CISA Cyber Resilience Essentials (CRE+) General Charts Report"
+                    },
+                    "detail": {
+                         "title": "CISA Cyber Resilience Essentials (CRE+) Detail Charts Report"
+                    },
                     "22": {
                          "displayNameShort": "CRE+ Core",
                          "title": "Cyber Resilience Essentials (CRE+) (Core Module)",

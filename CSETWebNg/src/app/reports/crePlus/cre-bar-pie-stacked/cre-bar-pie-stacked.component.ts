@@ -67,11 +67,8 @@ export class CreBarPieStackedComponent implements OnInit {
    * 
    */
   async buildAllDistrib(modelIds: number[]): Promise<any[]> {
-    console.log(9, modelIds);
     const resp = await firstValueFrom(this.creSvc.getAllAnswerDistrib([...modelIds])) || [];
-    console.log(10, modelIds);
     this.creSvc.translateAnswerOptions(modelIds[0], resp);
-    console.log(11, modelIds);
     return resp;
   }
 
@@ -154,10 +151,10 @@ export class CreBarPieStackedComponent implements OnInit {
     const sortedList = modelIdList.sort((a, b) => a - b);
     const ss = sortedList.join('+');
 
-    this.chartTitle = this.tSvc.translate(`reports.core.cre.chart reports.${ss}.title`);
-    this.chartFooter1 = this.tSvc.translate(`reports.core.cre.chart reports.${ss}.chart footer1`);
-    this.chartFooter2 = this.tSvc.translate(`reports.core.cre.chart reports.${ss}.chart footer2`);
+    this.chartTitle = this.tSvc.translate(`reports.core.cre.charts.${ss}.title`);
+    this.chartFooter1 = this.tSvc.translate(`reports.core.cre.charts.${ss}.chart footer1`);
+    this.chartFooter2 = this.tSvc.translate(`reports.core.cre.charts.${ss}.chart footer2`);
 
-    this.modelDisplayNameShort = this.tSvc.translate(`reports.core.cre.chart reports.${ss}.displayNameShort`);
+    this.modelDisplayNameShort = this.tSvc.translate(`reports.core.cre.charts.${ss}.displayNameShort`);
   }
 }

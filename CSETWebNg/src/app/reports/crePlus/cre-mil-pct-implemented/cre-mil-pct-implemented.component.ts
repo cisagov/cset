@@ -32,8 +32,6 @@ export class CreMilPctImplementedComponent implements OnInit {
 
     const origList = await this.creSvc.getMilIncludingMil1();
 
-
-
     this.newList = this.convertData(origList);
   }
 
@@ -56,36 +54,6 @@ export class CreMilPctImplementedComponent implements OnInit {
 
     return top;
   }
-
-
-  /**
-   * Get the full answer distribution response from the API.
-   * This contains all active domains and goals (subgroupings) for the model.
-   */
-  // async getFullModel(modelId: number): Promise<any[]> {
-  //   let resp = await firstValueFrom(this.creSvc.getDistribForModel(modelId)) || [];
-
-  //   // translate the answer labels
-  //   var behavior = this.configSvc.getModuleBehavior(modelId);
-  //   var opts = behavior.answerOptions;
-
-
-  //   resp.forEach(domain => {
-  //     domain.subgroups.forEach(mil => {
-  //       // shorten the label
-  //       let i = mil.name.indexOf('-');
-  //       mil.name = i !== -1 ? mil.name.substring(0, i).trim() : mil.name;
-
-  //       // translate the answer option labels
-  //       mil.series.forEach(ansCount => {
-  //         const key = opts?.find(x => x.code === ansCount.name)?.buttonLabelKey.toLowerCase() ?? 'u';
-  //         ansCount.name = this.tSvc.translate('answer-options.labels.' + key);
-  //       });
-  //     });
-  //   });
-
-  //   return resp;
-  // }
 
   /**
    * 

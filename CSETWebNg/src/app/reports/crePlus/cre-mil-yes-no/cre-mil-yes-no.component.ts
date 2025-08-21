@@ -35,8 +35,6 @@ export class CreMilYesNoComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.domainList = await this.creSvc.getMilIncludingMil1();
 
-    console.log('beach', this.domainList);
-
     // if the distribution percentages are NaN, we know we have no active domains/goals
     this.activeItemsExistForModel = !this.domainList.every(x => isNaN(x.value));
     if (!this.activeItemsExistForModel) {
