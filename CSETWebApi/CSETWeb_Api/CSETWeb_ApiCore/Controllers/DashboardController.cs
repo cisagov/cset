@@ -7,7 +7,6 @@
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Dashboard;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Dashboard;
 using CSETWebCore.Model.Dashboard.BarCharts;
@@ -26,7 +25,6 @@ namespace CSETWebCore.Api.Controllers
         private CSETContext _context;
         private readonly ITokenManager _tokenManager;
         private readonly IAssessmentUtil _assessmentUtil;
-        private readonly IAdminTabBusiness _adminTabBusiness;
 
 
         /// <summary>
@@ -34,13 +32,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <param name="context"></param>
         /// <param name="tokenManager"></param>
-        public DashboardController(CSETContext context, ITokenManager tokenManager, IAssessmentUtil assessmentUtil,
-            IAdminTabBusiness adminTabBusiness)
+        public DashboardController(CSETContext context, ITokenManager tokenManager, IAssessmentUtil assessmentUtil)
         {
             _context = context;
             _tokenManager = tokenManager;
             _assessmentUtil = assessmentUtil;
-            _adminTabBusiness = adminTabBusiness;
         }
 
 
@@ -57,7 +53,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz = new DashboardChartBusiness(assessmentId, _context, _assessmentUtil, _adminTabBusiness);
+            var biz = new DashboardChartBusiness(assessmentId, _context, _assessmentUtil);
 
 
             // build a composite of all models
@@ -107,7 +103,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz = new DashboardChartBusiness(assessmentId, _context, _assessmentUtil, _adminTabBusiness);
+            var biz = new DashboardChartBusiness(assessmentId, _context, _assessmentUtil);
 
 
             // build a composite of all models
@@ -181,7 +177,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var dbiz = new DashboardChartBusiness(assessmentId, _context, _assessmentUtil, _adminTabBusiness);
+            var dbiz = new DashboardChartBusiness(assessmentId, _context, _assessmentUtil);
 
             var resp = dbiz.BuildFullDistributionForModel(modelId);
 

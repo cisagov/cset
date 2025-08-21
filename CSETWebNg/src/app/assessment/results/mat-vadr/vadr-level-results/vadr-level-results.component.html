@@ -20,34 +20,33 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-    <h3>Assessment Tiers</h3>
+<div>
+    <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
+        <h3>Assessment Tiers</h3>
 
-    <div class="d-flex flex-column flex-11a">
+        <div class="d-flex flex-column flex-11a">
 
-        <div clas="container">
-            <div class="row">
-                <div class="col-12">
-                    <h5>VADR Assessment Tiers</h5>
-                    <app-vadr-levels></app-vadr-levels>
+            <div clas="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h5>VADR Assessment Tiers</h5>
+                        <app-vadr-levels></app-vadr-levels>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-5">
-                <div class="col-12">
-                    <h5>Practices Answered Per Tier</h5>
-                    <app-vadr-answer-counts></app-vadr-answer-counts>
+                <div class="row mb-5">
+                    <div class="col-12">
+                        <h5>Practices Answered Per Tier</h5>
+                        <app-vadr-answer-counts></app-vadr-answer-counts>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <h5>Practices Distribution Per Tier</h5>
-                    <app-vadr-answer-distribution></app-vadr-answer-distribution>
+                <div class="row">
+                    <div class="col-12">
+                        <h5>Practices Distribution Per Tier</h5>
+                        <app-vadr-answer-distribution></app-vadr-answer-distribution>
+                    </div>
                 </div>
             </div>
         </div>
-
-
-        <app-nav-back-next [page]="'rra-level-results'"></app-nav-back-next>
-
-    </div>
+    </div> 
+    <app-nav-back-next [page]="'rra-level-results'"></app-nav-back-next>
 </div>

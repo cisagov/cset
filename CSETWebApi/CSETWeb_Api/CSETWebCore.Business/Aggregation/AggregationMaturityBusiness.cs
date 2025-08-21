@@ -174,14 +174,14 @@ namespace CSETWebCore.Business.Aggregation
         private static List<XElement> GetRollupElements(int modelId, XDocument mx)
         {
             // RRA and CMMC2 have a single domain, so rollup at the Goal level
-            if (modelId == 5 || modelId == 6)
+            if (modelId == Constants.Constants.Model_RRA || modelId == Constants.Constants.Model_CMMC2)
             {
                 return mx.Descendants("Goal").ToList();
             }
 
 
             // EDM is unique.  Include MIL-1 Domains plus Goal elements for MIL-2 thru -5.
-            if (modelId == 3)
+            if (modelId == Constants.Constants.Model_EDM)
             {
                 var list = new List<XElement>();
                 list.AddRange(mx.Descendants("Domain").Where(d => d.Attribute("abbreviation").Value != "MIL"));
@@ -206,13 +206,13 @@ namespace CSETWebCore.Business.Aggregation
         private static List<XElement> AdjustQuestionsByModel(int modelId, List<XElement> questions)
         {
             // EDM should not consider 'parent' questions
-            if (modelId == 3)
+            if (modelId == Constants.Constants.Model_EDM)
             {
                 questions.RemoveAll(q => q.Attribute("isparentquestion")?.Value == "true");
             }
 
             // CRR should not consider 'parent' questions
-            if (modelId == 4)
+            if (modelId == Constants.Constants.Model_CRR)
             {
                 questions.RemoveAll(q => q.Attribute("isparentquestion")?.Value == "true");
             }

@@ -57,7 +57,7 @@ export class LayoutMainComponent implements OnInit {
   localVersion: string;
   isMobile: boolean = false;
 
-  private _snackBar = inject(MatSnackBar);
+  //private _snackBar = inject(MatSnackBar);
 
 
 
@@ -71,7 +71,8 @@ export class LayoutMainComponent implements OnInit {
     public setBuilderSvc: SetBuilderService,
     public dialog: MatDialog,
     public router: Router,
-    public versionSvc: VersionService
+    public versionSvc: VersionService,
+    private _snackbar: MatSnackBar
   ) { }
   ngOnInit() {
     this.versionSvc.getLatestVersion();
@@ -119,36 +120,44 @@ export class LayoutMainComponent implements OnInit {
   checkIsMobile(){
     var hasTouchScreen = false;
     var navigator = window.navigator as any;
-    if ("maxTouchPoints" in navigator) {
-        hasTouchScreen = navigator.maxTouchPoints > 0;
-    } else if ("msMaxTouchPoints" in navigator) {
-        hasTouchScreen = navigator.msMaxTouchPoints > 0;
-    } else {
-        var mQ = window.matchMedia && matchMedia("(pointer:coarse)");
-        if (mQ && mQ.media === "(pointer:coarse)") {
-            hasTouchScreen = !!mQ.matches;
-        } else if ('orientation' in window) {
-            hasTouchScreen = true; // deprecated, but good fallback
-        } else {
-            // Only as a last resort, fall back to user agent sniffing
-            var UA = navigator.userAgent;
-            hasTouchScreen = (
-                /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
-                /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
-            );
-        }
-    }
+    if(localStorage.getItem("mobileDismissed") != "true"){
+      if (window.matchMedia("(max-width: 767px)").matches == false)
+      { 
+        hasTouchScreen = false;
+      } else if ("maxTouchPoints" in navigator) {
+          hasTouchScreen = navigator.maxTouchPoints > 0;
+      } else if ("msMaxTouchPoints" in navigator) {
+          hasTouchScreen = navigator.msMaxTouchPoints > 0;
+      } else {
+          var mQ = window.matchMedia && matchMedia("(pointer:coarse)");
+          if (mQ && mQ.media === "(pointer:coarse)") {
+              hasTouchScreen = !!mQ.matches;
+          } else if ('orientation' in window) {
+              hasTouchScreen = true; // deprecated, but good fallback
+          } else {
+              // Only as a last resort, fall back to user agent sniffing
+              var UA = navigator.userAgent;
+              hasTouchScreen = (
+                  /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
+                  /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
+              );
+          }
+      }
 
-    if (hasTouchScreen) {
-        this.isMobile = true; 
-    } else {
-      this.isMobile = false;
-    }
-    if(this.isMobile){
-      this._snackBar.open('Turn screen horizontal for best viewing experience', "Close", {
-        verticalPosition: 'top',
-        panelClass: ['notify-snackbar']
-      });
+      if (hasTouchScreen) {
+          this.isMobile = true; 
+      } else {
+        this.isMobile = false;
+      }
+      if(this.isMobile){
+        let snackBarRef = this._snackbar.open('Turn screen horizontal for best viewing experience', "Close", {
+          verticalPosition: 'top',
+          panelClass: ['notify-snackbar']
+        });
+        snackBarRef.afterDismissed().subscribe(info => {
+          localStorage.setItem("mobileDismissed", "true")
+        });
+      }
     }
     
   }

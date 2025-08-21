@@ -53,7 +53,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   private _timeoutId: NodeJS.Timeout;
 
   percentAnswered = 0;
-  modelAnswerOptions = [];
+  modelAnswerOptions: string[] = [];
 
   // tokenized placeholder for transloco, made this variable a switch between the different placeholders
   altTextPlaceholder = 'alt cset';
@@ -82,10 +82,12 @@ export class QuestionBlockMaturityComponent implements OnInit {
    *
    */
   ngOnInit(): void {
-    if (this.assessSvc.assessment.maturityModel.modelName != null) {
-      this.modelAnswerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
-      this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
-      this.maturityModelName = this.assessSvc.assessment.maturityModel.modelName;
+    const maturityModel = this.assessSvc.assessment?.maturityModel;
+
+    if (maturityModel?.modelName != null) {
+      this.modelAnswerOptions = maturityModel.answerOptions;
+      this.maturityModelId = maturityModel.modelId;
+      this.maturityModelName = maturityModel.modelName;
     }
 
     this.refreshReviewIndicator();
@@ -113,9 +115,9 @@ export class QuestionBlockMaturityComponent implements OnInit {
   }
 
   /**
- * If there are no spaces in the question text assume it's a hex string
- * @param q
- */
+   * If there are no spaces in the question text assume it's a hex string
+   * @param q
+   */
   applyWordBreak(q: Question) {
     if (q.questionText.indexOf(' ') >= 0) {
       return 'normal';
@@ -128,7 +130,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
    * hidden.  Use config moduleBehavior to define this.
    */
   showLevelIndicator(q): boolean {
-    const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment.maturityModel.modelName);
+    const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment?.maturityModel?.modelName);
     if (!!behavior) {
       return behavior.showMaturityLevelBadge ?? true;
     }
@@ -200,13 +202,12 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
     this.refreshPercentAnswered();
 
-    this.questionsSvc.storeAnswer(answer)
-      .subscribe((resp: AnswerQuestionResponse) => {
-        q.answer_Id = resp.answerId;
-        if (resp.detailsChanged) {
-          this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
-        }
-      });
+    this.questionsSvc.storeAnswer(answer).subscribe((response: AnswerQuestionResponse) => {
+      q.answer_Id = response.answerId;
+      if (response.detailsChanged) {
+        this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+      }
+    });
   }
 
   /**
@@ -244,7 +245,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
     let totalCount = 0;
 
     this.myGrouping.questions.forEach(q => {
-      if (q.isParentQuestion) {
+      if (!q.isAnswerable) {
         return;
       }
       if (q.visible) {

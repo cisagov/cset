@@ -84,8 +84,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             TinyMapper.Bind<DIAGRAM_CONTAINER, jDIAGRAM_CONTAINER>();
             TinyMapper.Bind<DOCUMENT_ANSWERS, jDOCUMENT_ANSWERS>();
             TinyMapper.Bind<DOCUMENT_FILE, jDOCUMENT_FILE>();
-            TinyMapper.Bind<FINANCIAL_ASSESSMENT_VALUES, jFINANCIAL_ASSESSMENT_VALUES>();
-            TinyMapper.Bind<FINANCIAL_HOURS, jFINANCIAL_HOURS>();
             TinyMapper.Bind<FINDING, jFINDING>();
             TinyMapper.Bind<FINDING_CONTACT, jFINDING_CONTACT>();
             TinyMapper.Bind<FRAMEWORK_TIER_TYPE_ANSWER, jFRAMEWORK_TIER_TYPE_ANSWER>();
@@ -347,17 +345,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             foreach (var item in _context.SUB_CATEGORY_ANSWERS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jSUB_CATEGORY_ANSWERS.Add(TinyMapper.Map<SUB_CATEGORY_ANSWERS, jSUB_CATEGORY_ANSWERS>(item));
-            }
-
-            // NCUA data
-            foreach (var item in _context.FINANCIAL_HOURS.Where(x => x.Assessment_Id == assessmentId))
-            {
-                model.jFINANCIAL_HOURS.Add(TinyMapper.Map<FINANCIAL_HOURS, jFINANCIAL_HOURS>(item));
-            }
-
-            foreach (var item in _context.FINANCIAL_ASSESSMENT_VALUES.Where(x => x.Assessment_Id == assessmentId))
-            {
-                model.jFINANCIAL_ASSESSMENT_VALUES.Add(TinyMapper.Map<FINANCIAL_ASSESSMENT_VALUES, jFINANCIAL_ASSESSMENT_VALUES>(item));
             }
 
             foreach (var item in _context.ASSESSMENTS_REQUIRED_DOCUMENTATION.Where(x => x.Assessment_Id == assessmentId))

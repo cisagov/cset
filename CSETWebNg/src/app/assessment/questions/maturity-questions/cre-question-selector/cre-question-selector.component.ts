@@ -74,10 +74,10 @@ export class CreQuestionSelectorComponent implements OnInit {
    * Sets the clicked level and levels below it to true. 
    */
   changeMilSelection(id: number, evt: any) {
-    const milsForSubdomain = this.selectableGroupingsSvc.findGroupingAndLesser(this.modelId, id);
+    const milsForGoal = this.selectableGroupingsSvc.findGroupingAndLesser(this.modelId, id);
 
     // persist the true group and the false group to the API
-    this.selectableGroupingsSvc.save(milsForSubdomain).subscribe();
+    this.selectableGroupingsSvc.save(milsForGoal).subscribe();
 
     this.selectableGroupingsSvc.emitSelectionChanged();
   }

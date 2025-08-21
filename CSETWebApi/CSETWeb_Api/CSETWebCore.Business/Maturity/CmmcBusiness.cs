@@ -6,7 +6,6 @@
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
-using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Maturity;
 using System.Collections.Generic;
@@ -23,7 +22,6 @@ namespace CSETWebCore.Business.Maturity
     {
         private CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
-        private readonly IAdminTabBusiness _adminTabBusiness;
         private TranslationOverlay _overlay;
 
         private AdditionalSupplemental _addlSuppl;
@@ -47,11 +45,10 @@ namespace CSETWebCore.Business.Maturity
         /// <summary>
         /// CTOR
         /// </summary>
-        public CmmcBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
+        public CmmcBusiness(CSETContext context, IAssessmentUtil assessmentUtil)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
-            _adminTabBusiness = adminTabBusiness;
 
             _addlSuppl = new AdditionalSupplemental(context);
 
@@ -161,7 +158,7 @@ namespace CSETWebCore.Business.Maturity
                 response.TargetLevel = int.Parse(selectedLevel.Standard_Specific_Sal_Level);
             }
 
-            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var biz = new MaturityBusiness(_context, _assessmentUtil);
 
             var options = new StructureOptions() {
                 IncludeQuestionText = true,
@@ -248,7 +245,7 @@ namespace CSETWebCore.Business.Maturity
 
             var response = new CmmcScoreModel();
 
-            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var biz = new MaturityBusiness(_context, _assessmentUtil);
             var options = new StructureOptions() { IncludeQuestionText = true, IncludeSupplemental = false };
             var x = biz.GetMaturityStructureAsXml(assessmentId, options);
 

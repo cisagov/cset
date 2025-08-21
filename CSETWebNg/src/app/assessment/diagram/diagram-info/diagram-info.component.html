@@ -20,50 +20,53 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel">
-    <div class="row">
-        <div class="col-12">
-            <h4>Network Diagram</h4>
-            <p>
-                Building a diagram of your system's network allows CSET to include component-specific questions in your
-                final question set.
-                This step is not required but completing a network diagram has several benefits:
-            </p>
-            <div>
-                <ul>
-                    <li>Graphically capture a picture of your control system or information technology (IT) network.
-                    </li>
-                    <li>Identify areas of vulnerability in your network and review recommendations for improvement.</li>
-                    <li>Create a foundation for the question set incorporated into the overall assessment and analysis
-                        process.</li>
-                </ul>
+<div>
+    <div class="white-panel">
+        <div class="row">
+            <div class="col-12">
+                <h4>Network Diagram</h4>
+                <p>
+                    Building a diagram of your system's network allows CSET to include component-specific questions in your
+                    final question set.
+                    This step is not required but completing a network diagram has several benefits:
+                </p>
+                <div>
+                    <ul>
+                        <li>Graphically capture a picture of your control system or information technology (IT) network.
+                        </li>
+                        <li>Identify areas of vulnerability in your network and review recommendations for improvement.</li>
+                        <li>Create a foundation for the question set incorporated into the overall assessment and analysis
+                            process.</li>
+                    </ul>
+                </div>
+
             </div>
-
         </div>
+
+        <div class="mt-3 mb-5" style="display: flex; justify-content: space-between;">
+            <button class="btn btn-primary" (click)="navToDiagram('')"><i
+                    class="fas fa-project-diagram me-2"></i>{{buttonText}}</button>
+
+            <span *ngIf="configSvc.config.behaviors.showMalcolmImport ?? false">
+                <button class="btn btn-primary" (click)="openMalcolmInstructionsDialog()">
+                    Import Malcolm
+                </button>
+                <!-- <label for="importFile" >
+                    Import Malcolm
+                </label>
+                <input type="file" class="display-none" id="importFile" multiple accept=".json"
+                    (change)="openMalcolmInstructionsDialog()"> -->
+            </span>
+        </div>
+
+        
+
+        <hr>
+
+        <div class="my-4">
+            <app-diagram-inventory></app-diagram-inventory>
+        </div>
+
     </div>
-
-    <div class="mt-3 mb-5" style="display: flex; justify-content: space-between;">
-        <button class="btn btn-primary" (click)="navToDiagram('')"><i
-                class="fas fa-project-diagram me-2"></i>{{buttonText}}</button>
-
-        <span *ngIf="configSvc.config.behaviors.showMalcolmImport ?? false">
-            <button class="btn btn-primary" (click)="openMalcolmInstructionsDialog()">
-                Import Malcolm
-            </button>
-            <!-- <label for="importFile" >
-                Import Malcolm
-            </label>
-            <input type="file" class="display-none" id="importFile" multiple accept=".json"
-                (change)="openMalcolmInstructionsDialog()"> -->
-        </span>
-    </div>
-
     <app-nav-back-next [page]="'diagram'"></app-nav-back-next>
-
-    <hr>
-
-    <div class="my-4">
-        <app-diagram-inventory></app-diagram-inventory>
-    </div>
-
 </div>

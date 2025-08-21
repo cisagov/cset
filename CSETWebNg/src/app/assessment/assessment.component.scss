@@ -35,12 +35,17 @@ li.active {
     border-color: transparent;
 }
 
+ul.nav-tabs li.active{
+    background-color: #e6e6e6 !important;
+}
+
 ul.nav-tabs li.active button {
     font-size: 1rem !important;
+    background-color: #e6e6e6 !important;
 }
 
 ul.nav-tabs li {
-    padding-top: 2px;
+    padding-top: 3px;
     padding-bottom: 2px;
 }
 

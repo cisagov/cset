@@ -1,0 +1,106 @@
+<!----------------------
+
+   Copyright 2025 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<!-- answer distrib bar chart with ONLY CRE+ AND MIL ANSWERS -->
+<div class="my-4 px-3" style="border: 1px solid #ddd">
+     <h2 class="text-center">
+          {{chartTitle}}
+     </h2>
+     <ngx-charts-bar-horizontal [scheme]="creSvc.colorScheme" [view]="[700, 300]" [results]="distrib" [xAxis]="true"
+          [yAxis]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisTickFormatting]="creSvc.fmt1"
+          [xScaleMax]="100" [xScaleMin]="0" [roundEdges]="false" [showDataLabel]="true"
+          [dataLabelFormatting]="creSvc.fmt1">
+     </ngx-charts-bar-horizontal>
+
+     <div *ngIf="!distrib" class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+          <div class="spinner-size-50"></div>
+     </div>
+
+     <p class="text-center">
+          <em>
+               {{chartFooter1}}
+          </em>
+     </p>
+</div>
+
+
+<!-- pie chart of all answers -->
+<div class="my-4 px-3" style="border: 1px solid #ddd">
+     <h2 class="text-center">
+          {{chartTitle}}
+     </h2>
+     <ngx-charts-pie-chart [view]="[700, 400]" [results]="distrib" [scheme]="creSvc.colorScheme" [labels]="true"
+          [labelFormatting]="fmt3" [trimLabels]="false" [tooltipText]="creSvc.fmt3"
+          class="d-flex justify-content-center">
+     </ngx-charts-pie-chart>
+
+     <div *ngIf="!distrib" class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+          <div class="spinner-size-50"></div>
+     </div>
+
+     <p class="text-center">
+          <em>
+               {{chartFooter1}}
+          </em>
+     </p>
+</div>
+
+
+<!-- Stacked bars for each domain -->
+<div class="my-4 px-3" style="border: 1px solid #ddd">
+     <h2 class="text-center">
+          {{chartTitle}}
+     </h2>
+
+     <ngx-charts-bar-horizontal-stacked [view]="[700, calcStackedHeight(domainDistrib)]" [scheme]="creSvc.colorScheme"
+          [results]="domainDistrib" [xAxis]="true" [yAxis]="true" [legend]="true" [trimLabels]="false"
+          [wrapTicks]="true" [dataLabelFormatting]="creSvc.fmt1" [xAxisTickFormatting]="creSvc.fmt1">
+     </ngx-charts-bar-horizontal-stacked>
+
+     <div *ngIf="!domainDistrib"
+          class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+          <div class="spinner-size-50"></div>
+     </div>
+
+     <p class="text-center mt-4">
+          <em>
+               {{chartFooter2}}
+          </em>
+     </p>
+</div>
+
+
+<!-- this section is only included for 'pure' Core, pure Optional and pure MIL sections 
+     where only a single model is being shown.
+     Show a stacked bar chart with all active goals for each active domain  -->
+<div *ngIf="modelIdList?.length == 1">
+     <div *ngFor="let d of domainsForModel" class="my-4 px-3 pb-4" style="border: 1px solid #ddd">
+          <h2 class="text-center">
+               {{modelDisplayNameShort}}: {{d.name}}
+          </h2>
+          <ngx-charts-bar-horizontal-stacked [view]="[700, calcStackedHeight(d.subgroups)]" [results]="d.subgroups"
+               [scheme]="creSvc.colorScheme" [xAxis]="true" [yAxis]="true" [legend]="true" [trimLabels]="false"
+               [wrapTicks]="true" [barPadding]="calcStackedPadding(d.subgroups)" [dataLabelFormatting]="creSvc.fmt1"
+               [xAxisTickFormatting]="creSvc.fmt1">
+          </ngx-charts-bar-horizontal-stacked>
+     </div>
+</div>

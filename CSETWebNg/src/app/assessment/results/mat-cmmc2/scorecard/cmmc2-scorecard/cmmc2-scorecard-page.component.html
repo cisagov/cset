@@ -20,37 +20,36 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel oy-auto d-flex flex-column flex-11a" *transloco="let t">
-     <h3>{{t('titles.cmmc scorecard')}}</h3>
+<div>
+     <div class="white-panel oy-auto d-flex flex-column flex-11a" *transloco="let t">
+          <h3>{{t('titles.cmmc scorecard')}}</h3>
 
-     <p>
-          {{t('cmmc.scoring.scorecard description')}}
-     </p>
+          <p>
+               {{t('cmmc.scoring.scorecard description')}}
+          </p>
 
-     <div>
-          <h4>Level 1</h4>
-          <app-level-scorecard [response]="scorecardForLevel(1)"></app-level-scorecard>
-     </div>
+          <div>
+               <h4>Level 1</h4>
+               <app-level-scorecard [response]="scorecardForLevel(1)"></app-level-scorecard>
+          </div>
 
-     <div *ngIf="scorecards.length == 0">
-          <div class="spinner-container" style="margin: 2em auto">
-               <div style="max-width: 50px; max-height: 50px;"></div>
+          <div *ngIf="scorecards.length == 0">
+               <div class="spinner-container" style="margin: 2em auto">
+                    <div style="max-width: 50px; max-height: 50px;"></div>
+               </div>
+          </div>
+
+
+          <div *ngIf="targetLevel >= 2">
+               <h4>Level 2</h4>
+               <app-level-scorecard [response]="scorecardForLevel(2)"></app-level-scorecard>
+          </div>
+
+
+          <div *ngIf="targetLevel >= 3">
+               <h4>Level 3</h4>
+               <app-level-scorecard [response]="scorecardForLevel(3)"></app-level-scorecard>
           </div>
      </div>
-
-
-     <div *ngIf="targetLevel >= 2">
-          <h4>Level 2</h4>
-          <app-level-scorecard [response]="scorecardForLevel(2)"></app-level-scorecard>
-     </div>
-
-
-     <div *ngIf="targetLevel >= 3">
-          <h4>Level 3</h4>
-          <app-level-scorecard [response]="scorecardForLevel(3)"></app-level-scorecard>
-     </div>
-
-
      <app-nav-back-next [page]="'cmmc2-scorecard'"></app-nav-back-next>
-
 </div>
