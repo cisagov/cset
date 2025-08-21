@@ -21,34 +21,36 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { FileUploadClientService } from "../../services/file-client.service";
-import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { Sort } from "@angular/material/sort";
-import { Router } from "@angular/router";
-import { AssessmentService } from "../../services/assessment.service";
-import { AuthenticationService } from "../../services/authentication.service";
-import { ConfigService } from "../../services/config.service";
-import { ConfirmComponent } from "../../dialogs/confirm/confirm.component";
-import { AlertComponent } from "../../dialogs/alert/alert.component";
-import { ImportAssessmentService } from "../../services/import-assessment.service";
-import { UploadExportComponent } from "../../dialogs/upload-export/upload-export.component";
-import { Title } from "@angular/platform-browser";
-import { NavigationService } from "../../services/navigation/navigation.service";
+import { FileUploadClientService } from '../../services/file-client.service';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Sort } from '@angular/material/sort';
+import { Router } from '@angular/router';
+import { AssessmentService } from '../../services/assessment.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ConfigService } from '../../services/config.service';
+import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
+import { AlertComponent } from '../../dialogs/alert/alert.component';
+import { ImportAssessmentService } from '../../services/import-assessment.service';
+import { UploadExportComponent } from '../../dialogs/upload-export/upload-export.component';
+import { Title } from '@angular/platform-browser';
+import { NavigationService } from '../../services/navigation/navigation.service';
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
-import { firstValueFrom, of } from "rxjs";
-import { concatMap, map, tap, catchError } from "rxjs/operators";
-import { NavTreeService } from "../../services/navigation/nav-tree.service";
-import { LayoutService } from "../../services/layout.service";
-import { Comparer } from "../../helpers/comparer";
-import { ExportAssessmentComponent } from '../../dialogs/assessment-encryption/export-assessment/export-assessment.component';
-import { DateTime } from "luxon";
-import { TranslocoService } from "@jsverse/transloco";
+import { firstValueFrom, of } from 'rxjs';
+import { concatMap, map, tap, catchError } from 'rxjs/operators';
+import { NavTreeService } from '../../services/navigation/nav-tree.service';
+import { LayoutService } from '../../services/layout.service';
+import { Comparer } from '../../helpers/comparer';
+import {
+  ExportAssessmentComponent
+} from '../../dialogs/assessment-encryption/export-assessment/export-assessment.component';
+import { DateTime } from 'luxon';
+import { TranslocoService } from '@jsverse/transloco';
 import { DateAdapter } from '@angular/material/core';
-import { ConversionService } from "../../services/conversion.service";
-import { FileExportService } from "../../services/file-export.service";
-import {ColDef, GridApi, GridReadyEvent} from 'ag-grid-community';
+import { ConversionService } from '../../services/conversion.service';
+import { FileExportService } from '../../services/file-export.service';
+import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 
 interface UserAssessment {
   isEntry: boolean;
@@ -71,15 +73,15 @@ interface UserAssessment {
   questionAlias: string;
   iseSubmission: boolean;
   submittedDate?: Date;
-  done?:boolean;
-  favorite?:boolean;
-  firstName?:string;
-  lastName?:string;
+  done?: boolean;
+  favorite?: boolean;
+  firstName?: string;
+  lastName?: string;
 }
 
 @Component({
-  selector: "app-my-assessments",
-  templateUrl: "my-assessments.component.html",
+  selector: 'app-my-assessments',
+  templateUrl: 'my-assessments.component.html',
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' },
   standalone: false
@@ -98,15 +100,10 @@ export class MyAssessmentsComponent implements OnInit {
 
   exportExtension: string;
   importExtensions: string = '.csetw';
-
-  displayedColumns: string[] = ['assessment', 'lastModified', 'creatorName', 'markedForReview', 'removeAssessment', 'exportAssessment'];
-
-  prepForMerge: boolean = false;
-
   exportAllInProgress: boolean = false;
 
   timer = ms => new Promise(res => setTimeout(res, ms));
-  currentFilter:'all'| 'done' | 'pending' |'favorite'= 'all';
+  currentFilter: 'all' | 'done' | 'pending' | 'favorite' = 'all';
   private gridApi!: GridApi;
 
   columnDefs: ColDef[] = [];
@@ -116,6 +113,7 @@ export class MyAssessmentsComponent implements OnInit {
     sortable: true,
     filter: true
   };
+
   constructor(
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
@@ -134,7 +132,8 @@ export class MyAssessmentsComponent implements OnInit {
     public dateAdapter: DateAdapter<any>,
     public reportSvc: ReportService,
     public conversionSvc: ConversionService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.initializeColumnDefs();
@@ -145,8 +144,8 @@ export class MyAssessmentsComponent implements OnInit {
     this.appTitle = this.configSvc.config.behaviors.defaultTitle;
     this.appName = 'CSET';
 
-    if (localStorage.getItem("returnPath")) { }
-    else {
+    if (localStorage.getItem('returnPath')) {
+    } else {
       this.navTreeSvc.clearTree(this.navSvc.getMagic());
     }
 
@@ -154,14 +153,16 @@ export class MyAssessmentsComponent implements OnInit {
     this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.userIsCisaAssessor = resp);
     this.tSvc.langChanges$.subscribe((lang: string) => {
       this.updateGridTranslations();
-    })
+    });
   }
+
   updateGridTranslations(): void {
     this.initializeColumnDefs();
     if (this.gridApi) {
       this.gridApi.setGridOption('columnDefs', this.columnDefs);
     }
   }
+
   initializeColumnDefs() {
     this.columnDefs = [
       {
@@ -201,15 +202,11 @@ export class MyAssessmentsComponent implements OnInit {
           let dateObj;
           if (params.value && typeof params.value === 'object' && params.value.toJSDate) {
             dateObj = params.value.toJSDate();
-          }
-
-          else if (typeof params.value === 'string') {
+          } else if (typeof params.value === 'string') {
             dateObj = new Date(params.value);
-          }
-          else if (params.value instanceof Date) {
+          } else if (params.value instanceof Date) {
             dateObj = params.value;
-          }
-          else {
+          } else {
             return '';
           }
 
@@ -325,15 +322,12 @@ export class MyAssessmentsComponent implements OnInit {
     this.sortedAssessments = null;
     this.filterSvc.refresh();
     //NOTE THIS remove to disable the menu items when clearing
-    localStorage.removeItem("assessmentId");
-    const rid = localStorage.getItem("redirectid");
+    localStorage.removeItem('assessmentId');
+    const rid = localStorage.getItem('redirectid');
     if (rid != null) {
-      localStorage.removeItem("redirectid");
+      localStorage.removeItem('redirectid');
       this.navSvc.beginAssessment(+rid);
     }
-
-    let assessmentiDs = [];
-
     this.assessSvc.getAssessmentsCompletion().pipe(
       concatMap((assessmentsCompletionData: any[]) =>
         this.assessSvc.getAssessments().pipe(
@@ -352,18 +346,17 @@ export class MyAssessmentsComponent implements OnInit {
                   (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
 
 
-
               });
 
 
               this.sortedAssessments = assessments;
-              console.log(assessments)
+              console.log(assessments);
             },
             error => {
               console.error(
-                "Unable to get Assessments for " +
+                'Unable to get Assessments for ' +
                 this.authSvc.email() +
-                ": " +
+                ': ' +
                 (<Error>error).message
               );
             }
@@ -407,8 +400,8 @@ export class MyAssessmentsComponent implements OnInit {
    */
   hasPath(rpath: string) {
     if (rpath != null) {
-      localStorage.removeItem("returnPath");
-      this.router.navigate([rpath], { queryParamsHandling: "preserve" });
+      localStorage.removeItem('returnPath');
+      this.router.navigate([rpath], { queryParamsHandling: 'preserve' });
     }
   }
 
@@ -421,7 +414,7 @@ export class MyAssessmentsComponent implements OnInit {
       this.assessSvc.isDeletePermitted().subscribe(canDelete => {
         if (!canDelete) {
           this.dialog.open(AlertComponent, {
-            data: { messageText: "You cannot remove an assessment that has other users." }
+            data: { messageText: 'You cannot remove an assessment that has other users.' }
           });
           return;
         }
@@ -461,24 +454,24 @@ export class MyAssessmentsComponent implements OnInit {
    *
    */
   sortData(sort: Sort) {
-    if (!sort.active || sort.direction === "") {
+    if (!sort.active || sort.direction === '') {
       return;
     }
 
     this.sortedAssessments.sort((a, b) => {
-      const isAsc = sort.direction === "asc";
+      const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case "assessment":
+        case 'assessment':
           return this.comparer.compare(a.assessmentName, b.assessmentName, isAsc);
-        case "date":
+        case 'date':
           return this.comparer.compare(a.lastModifiedDate, b.lastModifiedDate, isAsc);
-        case "assessor":
+        case 'assessor':
           return this.comparer.compare(a.creatorName, b.creatorName, isAsc);
-        case "type":
+        case 'type':
           return this.comparer.compare(a.type, b.type, isAsc);
-        case "status":
+        case 'status':
           return this.comparer.compareBool(a.markedForReview, b.markedForReview, isAsc);
-        case "ise-submitted":
+        case 'ise-submitted':
           return this.comparer.compareIseSubmission(a.submittedDate, b.submittedDate, isAsc);
         default:
           return 0;
@@ -497,7 +490,7 @@ export class MyAssessmentsComponent implements OnInit {
    *
    */
   async clickDownloadLink(assessment_id: number, jsonOnly: boolean = false) {
-    const obs = this.assessSvc.getEncryptPreference()
+    const obs = this.assessSvc.getEncryptPreference();
     const prom = firstValueFrom(obs);
     prom.then((response: boolean) => {
       let encryption = response;
@@ -519,15 +512,15 @@ export class MyAssessmentsComponent implements OnInit {
               let params = '';
 
               if (result.scrubData) {
-                params = params + "&scrubData=" + result.scrubData;
+                params = params + '&scrubData=' + result.scrubData;
               }
 
-              if (result.encryptionData.password != null && result.encryptionData.password !== "") {
-                params = params + "&password=" + result.encryptionData.password;
+              if (result.encryptionData.password != null && result.encryptionData.password !== '') {
+                params = params + '&password=' + result.encryptionData.password;
               }
 
-              if (result.encryptionData.hint != null && result.encryptionData.hint !== "") {
-                params = params + "&passwordHint=" + result.encryptionData.hint;
+              if (result.encryptionData.hint != null && result.encryptionData.hint !== '') {
+                params = params + '&passwordHint=' + result.encryptionData.hint;
               }
 
               if (params.length > 0) {
@@ -539,13 +532,13 @@ export class MyAssessmentsComponent implements OnInit {
 
           });
         });
-      }
-      else {
+      } else {
         this.authSvc.getShortLivedTokenForAssessment(assessment_id).subscribe((response: any) => {
           let url = this.fileSvc.exportUrl;
           this.fileExportSvc.fetchAndSaveFile(url, response.token);
-        })
-      };
+        });
+      }
+      ;
     });
   }
 
@@ -556,8 +549,8 @@ export class MyAssessmentsComponent implements OnInit {
   importAssessmentFile(event) {
     let dialogRef = null;
     this.unsupportedImportFile = false;
-    if (event.target.files[0].name.endsWith(".csetw")
-      || event.target.files[0].name.endsWith(".acet")) {
+    if (event.target.files[0].name.endsWith('.csetw')
+      || event.target.files[0].name.endsWith('.acet')) {
       // Call Standard import service
       dialogRef = this.dialog.open(UploadExportComponent, {
         data: { files: event.target.files, IsNormalLoad: true }
@@ -581,7 +574,7 @@ export class MyAssessmentsComponent implements OnInit {
 
 
   clickNewAssessmentButton() {
-    this.router.navigate(['/home'], { queryParams: { tab: 'newAssessment' } })
+    this.router.navigate(['/home'], { queryParams: { tab: 'newAssessment' } });
   }
 
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
@@ -590,8 +583,7 @@ export class MyAssessmentsComponent implements OnInit {
     let localDate = '';
     if (format == 'med') {
       localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
-    }
-    else if (format == 'short') {
+    } else if (format == 'short') {
       localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATE_SHORT);
     }
 
@@ -617,46 +609,31 @@ export class MyAssessmentsComponent implements OnInit {
   temp() {
     this.assessSvc.moveActionItemsFrom_IseActions_To_HydroData().subscribe();
   }
-  get filteredAssessments():UserAssessment[]{
-    if(!this.sortedAssessments) return[]
-    switch (this.currentFilter){
+
+  get filteredAssessments(): UserAssessment[] {
+    if (!this.sortedAssessments) return [];
+    switch (this.currentFilter) {
       case 'done':
-        return this.sortedAssessments.filter(a=>a.done==true)
+        return this.sortedAssessments.filter(a => a.done == true);
       case 'pending':
-        return this.sortedAssessments.filter(a=>a.done==false)
+        return this.sortedAssessments.filter(a => a.done == false);
       case 'favorite':
-        return this.sortedAssessments.filter(a=>a.favorite==true)
+        return this.sortedAssessments.filter(a => a.favorite == true);
       default:
         return this.sortedAssessments;
     }
   }
-  setFilter(filter:'all' | 'done'| 'pending'|'favorite'):void{
-    this.currentFilter=filter;
+
+  setFilter(filter: 'all' | 'done' | 'pending' | 'favorite'): void {
+    this.currentFilter = filter;
   }
-  getCompletionPercentage(assessment:UserAssessment):number{
-    if(!assessment.totalAvailableQuestionsCount ||assessment.totalAvailableQuestionsCount===0){
+
+  getCompletionPercentage(assessment: UserAssessment): number {
+    if (!assessment.totalAvailableQuestionsCount || assessment.totalAvailableQuestionsCount === 0) {
       return 0;
     }
-    return Math.round((assessment.completedQuestionsCount/assessment.totalAvailableQuestionsCount)*100)
+    return Math.round((assessment.completedQuestionsCount / assessment.totalAvailableQuestionsCount) * 100);
   }
-  // Assessment name cell with clickable link
-  assessmentNameRenderer(params: any): string {
-    const assessmentId = params.data.assessmentId;
-    const assessmentName = params.value;
-
-    return `
-    <button
-      class="btn btn-link btn-link-dark text-start p-0 h-auto min-h-0 normal-case justify-start"
-      data-action="navigate"
-      data-assessment-id="${assessmentId}"
-      style="text-align: left; width: 100%;">
-      ${assessmentName}
-    </button>
-  `;
-  }
-
-
-
 // Actions cell with delete and export buttons
   actionsRenderer(params: any): string {
     const assessment = params.data;
@@ -706,13 +683,6 @@ export class MyAssessmentsComponent implements OnInit {
     params.api.sizeColumnsToFit();
   }
 
-// Format date helper
-  formatDate(dateString: string): string {
-    // Use your existing date formatting or the pipe
-    const date = new Date(dateString);
-    return date.toLocaleDateString();
-  }
-
   getProgressTooltip(assessment: UserAssessment): string {
     if (assessment.selectedMaturityModel === 'CIS' || assessment.selectedMaturityModel === 'SD02 Series') {
       return this.tSvc.translate('welcome page.blank assessment');
@@ -725,7 +695,6 @@ export class MyAssessmentsComponent implements OnInit {
     return this.tSvc.translate('welcome page.blank assessment');
   }
 
-// Updated onCellClicked method
   onCellClicked(event: any): void {
     const target = event.event.target;
     const actionElement = target.closest('[data-action]');
@@ -734,7 +703,7 @@ export class MyAssessmentsComponent implements OnInit {
     const action = actionElement.getAttribute('data-action');
     const assessmentId = parseInt(actionElement.getAttribute('data-assessment-id'));
 
-    switch(action) {
+    switch (action) {
       case 'navigate':
         this.navSvc.beginAssessment(assessmentId);
         break;

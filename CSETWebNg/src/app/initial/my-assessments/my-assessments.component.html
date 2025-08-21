@@ -195,126 +195,11 @@
       <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto">
 
         <!-- table for larger layouts -->
-        <div class="overflow-x-auto rounded-lg border border-gray-200">
-          <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort
-                 (matSortChange)="sortData($event)" class="assessment-summary w-full">
-        <thead>
-            <tr>
-              <th aria-label="{{ t('assessment name')}}" mat-sort-header="assessment" style="width: 25%;">{{
-                  t('assessment name')}}
-              </th>
-              <th aria-label="{{ t('assessment type')}}" mat-sort-header="type" style="width:15%;">{{
-                  t('assessment type')}}</th>
-              <th aria-label="{{ t('last modified')}}" mat-sort-header="date" style="width:15%;">{{ t('last modified')}}</th>
-              <th *ngIf="showColumn('primary-assessor')" aria-label="assessor" mat-sort-header="assessor"
-                  style="width:15%;">{{t('primary assessor')}}</th>
-              <th aria-label="{{t('status')}}" style="width:15%;">{{t('status')}}</th>
-              <th aria-label="delete assessment" style="width:5%; min-width:25px;"></th>
-              <th aria-label="export assessment" style="width:5%;"></th>
-              <th aria-label="export JSON" style="width:5%;" *ngIf="showColumn('export json')"></th>
-              <th aria-label="Analytics" style="width:5%;" *ngIf="showColumn('analytics')"></th>
-            </tr>
-        </thead>
-            <tbody>
-            <tr *ngFor="let assessment of filteredAssessments; let i = index">
-              <td>
-                <button tabindex="0"
-                        class="btn btn-link text-left justify-start"
-                        (click)="this.navSvc.beginAssessment(assessment.assessmentId)">
-                  {{assessment.assessmentName}}
-                </button>
-              </td>
-
-              <td>{{assessment.type}}</td>
-              <td>{{assessment.lastModifiedDate | localizeDate}}</td>
-              <td *ngIf="showColumn('primary-assessor')">{{assessment.firstName}} {{assessment.lastName}}</td>
-              <td>
-                <!-- Single Row: Heart, Flag, and Progress Bar -->
-                <div class="flex items-center gap-2">
-                  <!-- Favorite Heart -->
-                  <button class="btn btn-ghost btn-xs p-1 min-h-0 h-auto"
-                          (click)="toggleFavorite(assessment)"
-                          [title]="assessment.favorite"
-                          [matTooltip]="assessment.favorite ? 'Remove from favorites' : 'Add to favorites'">
-                    <span class="material-icons text-lg"
-                          [class]="assessment.favorite ? 'text-red-500' : 'text-gray-400'">
-                      {{ assessment.favorite ? 'favorite' : 'favorite_border' }}
-                    </span>
-                  </button>
-
-                  <!-- Review Flag -->
-                  <span class="cursor-pointer"
-                        [matTooltip]="(assessment.markedForReview || assessment.altTextMissing) ? t('tooltip.assessment requires review') : 'No review required'">
-                    <span class="cset-icons-flag-dark text-lg"
-                          [class]="(assessment.markedForReview || assessment.altTextMissing) ? 'text-orange-500' : 'text-gray-400'">
-                    </span>
-                  </span>
-
-                  <!-- Progress Bar with Tooltip -->
-                  <div class="flex-1 min-w-0">
-                    <progress class="progress progress-primary w-full h-2 cursor-pointer"
-                              style="color: #367190;"
-                              [value]="getCompletionPercentage(assessment)"
-                              [matTooltip]="getProgressTooltip(assessment)"
-                              max="100"></progress>
-                  </div>
-
-                  <!-- Percentage -->
-                  <span class="text-sm text-gray-500 min-w-fit">
-                    {{ getCompletionPercentage(assessment) }}%
-                  </span>
-                </div>
-              </td>
-
-              <td>
-                <button tabindex="0"
-                        class="btn btn-ghost btn-sm hover:btn-error"
-                        (click)="removeAssessment(assessment, i)"
-                        matTooltip="{{ t('tooltip.remove assessment') }}">
-                  <span class="cset-icons-trash-x text-sm mr-2"></span>
-                  <span class="text-nowrap">{{t('buttons.remove')}}</span>
-                </button>
-              </td>
-
-              <td *ngIf="showColumn('export')">
-                <button tabindex="0" id="assess-{{i}}-export"
-                        class="btn btn-ghost btn-sm"
-                        (click)="clickDownloadLink(assessment.assessmentId)"
-                        matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
-                  <span class="cset-icons-export-up text-sm mr-2"></span>
-                  <span class="text-nowrap">{{t('buttons.export')}}</span>
-                </button>
-              </td>
-
-              <td *ngIf="showColumn('export json')">
-                <button tabindex="0" id="assess-{{i}}-export"
-                        class="btn btn-ghost btn-sm"
-                        (click)="clickDownloadLink(assessment.assessmentId, true)"
-                        matTooltip="{{ t('tooltip.export assessment json') }}">
-                  <span class="cset-icons-export-up text-sm mr-2"></span>
-                  <span>{{t('buttons.export json')}}</span>
-                </button>
-              </td>
-
-              <td style="display:none;" *ngIf="showColumn('analytics')">
-                <button tabindex="0"
-                        class="btn btn-ghost btn-sm"
-                        (click)="this.analyticsSvc.loadAssessment(assessment.assessmentId)"
-                        matTooltip="{{ t('tooltip.analytics') }}">
-                  <span class="cset-icons-bar-chart-vertical text-sm mr-2"></span>
-                  <span>{{t('buttons.analytics')}}</span>
-                </button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-
-
-<!--         old table keeping it for now -->
-<!--          <div class="overflow-x-auto rounded-lg border border-gray-200">-->
-<!--            <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort-->
-<!--                   (matSortChange)="sortData($event)" class="assessment-summary" >-->
+<!--        <div class="overflow-x-auto rounded-lg border border-gray-200">-->
+<!--          <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort-->
+<!--                 (matSortChange)="sortData($event)" class="assessment-summary w-full">-->
+<!--        <thead>-->
+<!--            <tr>-->
 <!--              <th aria-label="{{ t('assessment name')}}" mat-sort-header="assessment" style="width: 25%;">{{-->
 <!--                  t('assessment name')}}-->
 <!--              </th>-->
@@ -328,84 +213,102 @@
 <!--              <th aria-label="export assessment" style="width:5%;"></th>-->
 <!--              <th aria-label="export JSON" style="width:5%;" *ngIf="showColumn('export json')"></th>-->
 <!--              <th aria-label="Analytics" style="width:5%;" *ngIf="showColumn('analytics')"></th>-->
-<!--              <tr *ngFor="let assessment of filteredAssessments;  let i = index">-->
-<!--                <td>-->
-<!--                  <button tabindex="0"-->
-<!--                          class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-start"-->
-<!--                          (click)="this.navSvc.beginAssessment(assessment.assessmentId)">-->
-<!--                    {{assessment.assessmentName}}-->
+<!--            </tr>-->
+<!--        </thead>-->
+<!--            <tbody>-->
+<!--            <tr *ngFor="let assessment of filteredAssessments; let i = index">-->
+<!--              <td>-->
+<!--                <button tabindex="0"-->
+<!--                        class="btn btn-link text-left justify-start"-->
+<!--                        (click)="this.navSvc.beginAssessment(assessment.assessmentId)">-->
+<!--                  {{assessment.assessmentName}}-->
+<!--                </button>-->
+<!--              </td>-->
+
+<!--              <td>{{assessment.type}}</td>-->
+<!--              <td>{{assessment.lastModifiedDate | localizeDate}}</td>-->
+<!--              <td *ngIf="showColumn('primary-assessor')">{{assessment.firstName}} {{assessment.lastName}}</td>-->
+<!--              <td>-->
+<!--                &lt;!&ndash; Single Row: Heart, Flag, and Progress Bar &ndash;&gt;-->
+<!--                <div class="flex items-center gap-2">-->
+<!--                  &lt;!&ndash; Favorite Heart &ndash;&gt;-->
+<!--                  <button class="btn btn-ghost btn-xs p-1 min-h-0 h-auto"-->
+<!--                          (click)="toggleFavorite(assessment)"-->
+<!--                          [title]="assessment.favorite"-->
+<!--                          [matTooltip]="assessment.favorite ? 'Remove from favorites' : 'Add to favorites'">-->
+<!--                    <span class="material-icons text-lg"-->
+<!--                          [class]="assessment.favorite ? 'text-red-500' : 'text-gray-400'">-->
+<!--                      {{ assessment.favorite ? 'favorite' : 'favorite_border' }}-->
+<!--                    </span>-->
 <!--                  </button>-->
-<!--                </td>-->
 
+<!--                  &lt;!&ndash; Review Flag &ndash;&gt;-->
+<!--                  <span class="cursor-pointer"-->
+<!--                        [matTooltip]="(assessment.markedForReview || assessment.altTextMissing) ? t('tooltip.assessment requires review') : 'No review required'">-->
+<!--                    <span class="cset-icons-flag-dark text-lg"-->
+<!--                          [class]="(assessment.markedForReview || assessment.altTextMissing) ? 'text-orange-500' : 'text-gray-400'">-->
+<!--                    </span>-->
+<!--                  </span>-->
 
-<!--                <td>{{assessment.type}}</td>-->
-<!--                <td>{{assessment.lastModifiedDate | localizeDate}}</td>-->
-<!--                <td *ngIf="showColumn('primary-assessor')">{{assessment.firstName}} {{assessment.lastName}}</td>-->
-<!--                <td>-->
-<!--                  <div class="flex items-center gap-3">-->
-<!--                    &lt;!&ndash; Heart Icon for Favorites using Material Icon &ndash;&gt;-->
-<!--                    <mat-icon *ngIf="assessment.favorite" class="text-error" style="font-size: 20px;">-->
-<!--                      favorite-->
-<!--                    </mat-icon>-->
-
-<!--                    <progress class="progress text-primary w-56" [value]="getCompletionPercentage(assessment)" max="100"></progress>-->
+<!--                  &lt;!&ndash; Progress Bar with Tooltip &ndash;&gt;-->
+<!--                  <div class="flex-1 min-w-0">-->
+<!--                    <progress class="progress progress-primary w-full h-2 cursor-pointer"-->
+<!--                              style="color: #367190;"-->
+<!--                              [value]="getCompletionPercentage(assessment)"-->
+<!--                              [matTooltip]="getProgressTooltip(assessment)"-->
+<!--                              max="100"></progress>-->
 <!--                  </div>-->
-<!--                  <div-->
-<!--                    *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">-->
-<!--                            <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">-->
-<!--                                {{ { c: assessment.completedQuestionsCount, t:-->
-<!--                              assessment.totalAvailableQuestionsCount, qa: assessment.questionAlias, l:-->
-<!--                                tSvc.getActiveLang() } | completionCount }}-->
-<!--                            </span>-->
-<!--                    <ng-template #blankAssessment>-->
-<!--                      {{ t('welcome page.blank assessment') }}-->
-<!--                    </ng-template>-->
-<!--                    <br>-->
-<!--                  </div>-->
-<!--                  <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""-->
-<!--                        matTooltip="{{t('tooltip.assessment requires review')}}">{{t('requires review')}}-->
-<!--                        </span>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                  <button tabindex="0"-->
-<!--                          class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"-->
-<!--                          (click)="removeAssessment(assessment, i)" matTooltip="{{ t('tooltip.remove assessment') }}">-->
-<!--                    <span class="cset-icons-trash-x fs-base-2 me-2"></span>-->
-<!--                    <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.remove')}}</span>-->
-<!--                  </button>-->
-<!--                </td>-->
-<!--                <td *ngIf="showColumn('export')">-->
-<!--                  <button tabindex="0" id="assess-{{i}}-export"-->
-<!--                          class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"-->
-<!--                          (click)="clickDownloadLink(assessment.assessmentId)"-->
-<!--                          matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">-->
-<!--                    <span class="cset-icons-export-up fs-base-2 me-2"></span>-->
-<!--                    <span class="icon-link-button-text-dark text-nowrap">{{t('buttons.export')}}</span>-->
-<!--                  </button>-->
-<!--                </td>-->
-<!--                <td *ngIf="showColumn('export json')">-->
-<!--                  <button tabindex="0" id="assess-{{i}}-export"-->
-<!--                          class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"-->
-<!--                          (click)="clickDownloadLink(assessment.assessmentId, true)"-->
-<!--                          matTooltip="{{ t('tooltip.export assessment json') }}">-->
-<!--                    <span class="cset-icons-export-up fs-base-2 me-2"></span>-->
-<!--                    <span class="icon-link-button-text-dark">{{t('buttons.export json')}}</span>-->
-<!--                  </button>-->
-<!--                </td>-->
-<!--                <td style="display:none;" *ngIf="showColumn('analytics')">-->
-<!--                  <button tabindex="0"-->
-<!--                          class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"-->
-<!--                          (click)="this.analyticsSvc.loadAssessment(assessment.assessmentId)"-->
-<!--                          matTooltip="{{ t('tooltip.analytics') }}">-->
-<!--                    <span class="cset-icons-bar-chart-vertical fs-base-2 me-2"></span>-->
-<!--                    <span class="icon-link-button-text-dark">{{t('buttons.analytics')}}</span>-->
-<!--                  </button>-->
-<!--                </td>-->
-<!--              </tr>-->
-<!--            </table>-->
-<!--          </div>-->
 
+<!--                  &lt;!&ndash; Percentage &ndash;&gt;-->
+<!--                  <span class="text-sm text-gray-500 min-w-fit">-->
+<!--                    {{ getCompletionPercentage(assessment) }}%-->
+<!--                  </span>-->
+<!--                </div>-->
+<!--              </td>-->
 
+<!--              <td>-->
+<!--                <button tabindex="0"-->
+<!--                        class="btn btn-ghost btn-sm hover:btn-error"-->
+<!--                        (click)="removeAssessment(assessment, i)"-->
+<!--                        matTooltip="{{ t('tooltip.remove assessment') }}">-->
+<!--                  <span class="cset-icons-trash-x text-sm mr-2"></span>-->
+<!--                  <span class="text-nowrap">{{t('buttons.remove')}}</span>-->
+<!--                </button>-->
+<!--              </td>-->
+
+<!--              <td *ngIf="showColumn('export')">-->
+<!--                <button tabindex="0" id="assess-{{i}}-export"-->
+<!--                        class="btn btn-ghost btn-sm"-->
+<!--                        (click)="clickDownloadLink(assessment.assessmentId)"-->
+<!--                        matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">-->
+<!--                  <span class="cset-icons-export-up text-sm mr-2"></span>-->
+<!--                  <span class="text-nowrap">{{t('buttons.export')}}</span>-->
+<!--                </button>-->
+<!--              </td>-->
+
+<!--              <td *ngIf="showColumn('export json')">-->
+<!--                <button tabindex="0" id="assess-{{i}}-export"-->
+<!--                        class="btn btn-ghost btn-sm"-->
+<!--                        (click)="clickDownloadLink(assessment.assessmentId, true)"-->
+<!--                        matTooltip="{{ t('tooltip.export assessment json') }}">-->
+<!--                  <span class="cset-icons-export-up text-sm mr-2"></span>-->
+<!--                  <span>{{t('buttons.export json')}}</span>-->
+<!--                </button>-->
+<!--              </td>-->
+
+<!--              <td style="display:none;" *ngIf="showColumn('analytics')">-->
+<!--                <button tabindex="0"-->
+<!--                        class="btn btn-ghost btn-sm"-->
+<!--                        (click)="this.analyticsSvc.loadAssessment(assessment.assessmentId)"-->
+<!--                        matTooltip="{{ t('tooltip.analytics') }}">-->
+<!--                  <span class="cset-icons-bar-chart-vertical text-sm mr-2"></span>-->
+<!--                  <span>{{t('buttons.analytics')}}</span>-->
+<!--                </button>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--          </table>-->
+<!--        </div>-->
         <!-- table for handset portrait -->
         <table *ngIf="layoutSvc.hp" role="presentation" aria-label="assessments" matSort
                (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
