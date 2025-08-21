@@ -32,7 +32,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace CSETWebCore.DatabaseManager.Tests
 {
@@ -44,7 +43,6 @@ namespace CSETWebCore.DatabaseManager.Tests
         private LocalInstallationHelper? localHelper;
         private PasswordHash? passwordHash;
         private IConfiguration? config;
-        private ILogger<UserAuthentication>? logger;
 
         [TestInitialize()]
         public void Initialize()
@@ -64,7 +62,6 @@ namespace CSETWebCore.DatabaseManager.Tests
             tokenManager = provider.GetRequiredService<TokenManager>();
             localHelper = provider.GetRequiredService<LocalInstallationHelper>();
             passwordHash = provider.GetRequiredService<PasswordHash>();
-            logger = provider.GetRequiredService<ILogger<UserAuthentication>>();
             config = configuration;
 
         }
@@ -78,14 +75,14 @@ namespace CSETWebCore.DatabaseManager.Tests
         }
 
         [TestMethod()]
-        public async Task ExportAllAssessmentsTest()
+        public void ExportAllAssessmentsTest()
         {
             //setup a copy file
             //setup a destination file            
-            UserAuthentication userAuth = new UserAuthentication(passwordHash, null, localHelper, tokenManager, null, config, context, logger);
+            UserAuthentication userAuth = new UserAuthentication(passwordHash, null, localHelper, tokenManager, null, config, context);
             Login login = new Login { Email = null, Password = null, TzOffset = "300", Scope = "CSET" };
 
-            string loginToken = (await userAuth.AuthenticateStandalone(login, tokenManager)).Token;
+            string loginToken = userAuth.AuthenticateStandalone(login, tokenManager).Token;
 
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
             var assessments = context.ASSESSMENTS.Select(x => x.Assessment_Id).AsEnumerable();

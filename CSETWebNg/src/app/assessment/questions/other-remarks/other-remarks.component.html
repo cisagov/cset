@@ -20,11 +20,12 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" >
-  <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-    <h3 class="mb-3">{{t('titles.other remarks')}}</h3>
-    <label>Enter any general remarks or observations for the assessment</label>
-    <textarea [(ngModel)]="remark" appAutoSize class="form-control" (blur)="saveRemark($event)"></textarea>
-  </div>
-  <app-nav-back-next [page]="'other-remarks'"></app-nav-back-next>\
+<div *transloco="let t" class="white-panel d-flex flex-column justify-content-start flex-11a">
+  <h3 class="mb-3">{{t('titles.other remarks')}}</h3>
+
+  <label>Enter any general remarks or observations for the assessment</label>
+  <textarea [(ngModel)]="remark" appAutoSize class="form-control" (blur)="saveRemark($event)"></textarea>
+
+  <app-nav-back-next [page]="'other-remarks'"></app-nav-back-next>
+
 </div>

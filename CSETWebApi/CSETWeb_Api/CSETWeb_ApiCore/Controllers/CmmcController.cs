@@ -1,6 +1,7 @@
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _tokenManager;
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
+        private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _reports;
 
 
@@ -22,11 +24,12 @@ namespace CSETWebCore.Api.Controllers
         /// 
         /// </summary>
         public CmmcController(ITokenManager tokenManager, CSETContext context, IAssessmentUtil assessmentUtil,
-            IReportsDataBusiness reports)
+            IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports)
         {
             _tokenManager = tokenManager;
             _context = context;
             _assessmentUtil = assessmentUtil;
+            _adminTabBusiness = adminTabBusiness;
             _reports = reports;
         }
 
@@ -39,7 +42,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new CmmcBusiness(_context, _assessmentUtil).GetCmmcScores(assessmentId));
+            return Ok(new CmmcBusiness(_context, _assessmentUtil, _adminTabBusiness).GetCmmcScores(assessmentId));
         }
 
 
@@ -52,7 +55,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz = new CmmcBusiness(_context, _assessmentUtil);
+            var biz = new CmmcBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
             return Ok(biz.GetLevelScorecards(assessmentId));
         }
@@ -67,7 +70,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new CmmcBusiness(_context, _assessmentUtil).GetSPRSScore(assessmentId));
+            return Ok(new CmmcBusiness(_context, _assessmentUtil, _adminTabBusiness).GetSPRSScore(assessmentId));
         }
     }
 }

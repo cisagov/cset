@@ -20,97 +20,97 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div>
-    <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-        <h3>Detailed Gaps List</h3>
-        <p>The following chart and table show the compliance percentage for each
-            domain at target level {{assessmentSvc.assessment?.maturityModel.maturityTargetLevel}}.</p>
+<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
+    <h3>Detailed Gaps List</h3>
+    <p>The following chart and table show the compliance percentage for each
+        domain at target level {{assessmentSvc.assessment?.maturityModel.maturityTargetLevel}}.</p>
 
-        <div *ngIf="!initialized">
-            <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-                <div style="max-width: 50px; max-height: 50px;"></div>
-            </div>
-        </div>
-
-        <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
-
-            <div *ngIf="initialized && !dataError" class="gridGraphContainer mb-5">
-                <div class="gridGraphLabels">
-                    <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphLabel graphDataRow"
-                        [class.gridGraphLabelHp]="layoutSvc.hp">
-                        {{dataRow.domainName}}</div>
-                </div>
-                <div class="gridGraphDataContainer" #gridChartDataDiv>
-                    <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphData graphDataRow">
-                        <div class="gridGraphBar" [ngStyle]="getBarWidth(dataRow)">
-                        </div>
-                        <div class="gridGraphBackground  graphDataRow">
-                            <div *ngFor="let grid of gridColumns" class="gridCell"></div>
-                        </div>
-                    </div>
-                    <div class="gridGraphData graphDataRow">
-                        <div class="gridGraphBackgroundLabels graphDataRow">
-                            <div *ngFor="let label of gridColumns; let i = index; let last = last">{{(i /
-                                this.gridColumns.length) * 100 | number:'1.0-2'}}</div>
-                            <span style="width:0">100</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div *ngIf="initialized && !dataError">
-                <div *ngIf="layoutSvc.hp" class="rounded border-light">
-                    <ul>
-                        <li>Y = Total Compliant</li>
-                        <li>N = Total Not Compliant</li>
-                        <li>Tot = Total Controls</li>
-                        <li>% = Percent Complete</li>
-                    </ul>
-                </div>
-                <table class="cset-table" [class.fs-smaller]="layoutSvc.hp">
-                    <tr>
-                        <th></th>
-                        <th>{{ layoutSvc.hp ? 'Y' : 'Compliant' }}</th>
-                        <th>{{ layoutSvc.hp ? 'N' : 'Not Compliant' }}</th>
-                        <th>{{ layoutSvc.hp ? 'Tot' : 'Total Controls' }}</th>
-                        <th>{{ layoutSvc.hp ? '%' : 'Percent Complete' }}</th>
-                    </tr>
-                    <ng-template ngFor let-domainRow [ngForOf]="statsByDomain">
-                        <tr *ngIf="domainRow.questionCount > 0" class="domain-row">
-                            <td>
-                                {{domainRow?.domainName}}
-                            </td>
-                            <td>
-                                {{domainRow?.questionAnswered}}
-                            </td>
-                            <td>
-                                {{domainRow?.questionUnAnswered}}
-                            </td>
-                            <td>{{domainRow.questionCount}}</td>
-                            <td>{{domainRow.questionAnswered / domainRow.questionCount | percent}}</td>
-                        </tr>
-                        <tr *ngFor="let questionRow of domainRow.domainQuestions">
-                            <td>
-                                {{questionRow?.question_Text}}
-                            </td>
-                            <td> {{ (questionRow?.answer?.answer_Text == 'Y' || questionRow?.answer?.answer_Text == 'A') ?
-                                '1' : '0' }}
-                            </td>
-                            <td> {{ (questionRow?.answer?.answer_Text == 'N' || questionRow?.answer?.answer_Text == 'U') ?
-                                '1' : '0' }}
-                            </td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </ng-template>
-                </table>
-            </div>
-
-            <div *ngIf="initialized && dataError">
-                <h1>Error Loading Data</h1>
-                <p>There was an error retreiving the data for this page. Please reload the page.</p>
-            </div>
+    <div *ngIf="!initialized">
+        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+            <div style="max-width: 50px; max-height: 50px;"></div>
         </div>
     </div>
-    <app-nav-back-next [page]="'cmmc-gaps'"></app-nav-back-next>
+
+    <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+
+        <div *ngIf="initialized && !dataError" class="gridGraphContainer mb-5">
+            <div class="gridGraphLabels">
+                <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphLabel graphDataRow"
+                    [class.gridGraphLabelHp]="layoutSvc.hp">
+                    {{dataRow.domainName}}</div>
+            </div>
+            <div class="gridGraphDataContainer" #gridChartDataDiv>
+                <div *ngFor="let dataRow of statsByDomainAtUnderTarget" class="gridGraphData graphDataRow">
+                    <div class="gridGraphBar" [ngStyle]="getBarWidth(dataRow)">
+                    </div>
+                    <div class="gridGraphBackground  graphDataRow">
+                        <div *ngFor="let grid of gridColumns" class="gridCell"></div>
+                    </div>
+                </div>
+                <div class="gridGraphData graphDataRow">
+                    <div class="gridGraphBackgroundLabels graphDataRow">
+                        <div *ngFor="let label of gridColumns; let i = index; let last = last">{{(i /
+                            this.gridColumns.length) * 100 | number:'1.0-2'}}</div>
+                        <span style="width:0">100</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="initialized && !dataError">
+            <div *ngIf="layoutSvc.hp" class="rounded border-light">
+                <ul>
+                    <li>Y = Total Compliant</li>
+                    <li>N = Total Not Compliant</li>
+                    <li>Tot = Total Controls</li>
+                    <li>% = Percent Complete</li>
+                </ul>
+            </div>
+            <table class="cset-table" [class.fs-smaller]="layoutSvc.hp">
+                <tr>
+                    <th></th>
+                    <th>{{ layoutSvc.hp ? 'Y' : 'Compliant' }}</th>
+                    <th>{{ layoutSvc.hp ? 'N' : 'Not Compliant' }}</th>
+                    <th>{{ layoutSvc.hp ? 'Tot' : 'Total Controls' }}</th>
+                    <th>{{ layoutSvc.hp ? '%' : 'Percent Complete' }}</th>
+                </tr>
+                <ng-template ngFor let-domainRow [ngForOf]="statsByDomain">
+                    <tr *ngIf="domainRow.questionCount > 0" class="domain-row">
+                        <td>
+                            {{domainRow?.domainName}}
+                        </td>
+                        <td>
+                            {{domainRow?.questionAnswered}}
+                        </td>
+                        <td>
+                            {{domainRow?.questionUnAnswered}}
+                        </td>
+                        <td>{{domainRow.questionCount}}</td>
+                        <td>{{domainRow.questionAnswered / domainRow.questionCount | percent}}</td>
+                    </tr>
+                    <tr *ngFor="let questionRow of domainRow.domainQuestions">
+                        <td>
+                            {{questionRow?.question_Text}}
+                        </td>
+                        <td> {{ (questionRow?.answer?.answer_Text == 'Y' || questionRow?.answer?.answer_Text == 'A') ?
+                            '1' : '0' }}
+                        </td>
+                        <td> {{ (questionRow?.answer?.answer_Text == 'N' || questionRow?.answer?.answer_Text == 'U') ?
+                            '1' : '0' }}
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </ng-template>
+            </table>
+        </div>
+
+        <div *ngIf="initialized && dataError">
+            <h1>Error Loading Data</h1>
+            <p>There was an error retreiving the data for this page. Please reload the page.</p>
+        </div>
+
+        <app-nav-back-next [page]="'cmmc-gaps'"></app-nav-back-next>
+
+    </div>
 </div>

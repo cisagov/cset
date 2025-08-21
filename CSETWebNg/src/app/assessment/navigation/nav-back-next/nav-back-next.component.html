@@ -21,7 +21,7 @@
   SOFTWARE. 
 -------------------------->
 <ng-container *transloco="let t">
-  <div style="display: flex; justify-content: space-between;margin:0 1.5em 0 1.5em">
+  <div style="display: flex; justify-content: space-between;" class="my-5">
     <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack(page)"
       [class.display-hidden]="hide == 'back'" tabindex="0">{{ t('buttons.back') }}</button>
     <button class="btn btn-primary" aria-label="Next" (click)="navSvc.navNext(page)" [disabled]="!nextMode"

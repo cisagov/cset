@@ -73,8 +73,6 @@ public partial class MATURITY_QUESTIONS
 
     public string Implementation_Guides { get; set; }
 
-    public bool Is_Answerable { get; set; }
-
     [ForeignKey("Grouping_Id")]
     [InverseProperty("MATURITY_QUESTIONS")]
     public virtual MATURITY_GROUPINGS Grouping { get; set; }

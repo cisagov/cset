@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.Business.AdminTab;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
@@ -1181,7 +1182,8 @@ namespace CSETWebCore.Business.Assessment
                     };
                   
 
-                    var mb = new MaturityBusiness(_context, _assessmentUtil);
+                    var adminTabBusiness = new AdminTabBusiness(_context);
+                    var mb = new MaturityBusiness(_context, _assessmentUtil, adminTabBusiness);
                     mb.StoreAnswer(assessment_id, answer);
                     
                     var newAnswer = _context.ANSWER

@@ -66,8 +66,6 @@ namespace CSETWebCore.Business.Reports
         public int Maturity_Model_Id { get; set; }
         public int Grouping_Id { get; set; }
         public int? Parent_Question_Id { get; set; }
-
-        public bool IsAnswerable { get; set; }
         public ANSWER Answer { get; set; }
 
         /// <summary>

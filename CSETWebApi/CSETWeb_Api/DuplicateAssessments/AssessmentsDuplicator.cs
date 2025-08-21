@@ -55,10 +55,6 @@ namespace DuplicateAssessments
             //guidsToExport = new Guid[] { new Guid("F2776CC4-0FBA-4C15-A845-305FC4A70082") };
             MemoryStream assessmentsExportArchive = exportManager.BulkExportAssessments(guidsToExport, "dup");
             String testToken = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJDU0VUX0FVRCIsImlzcyI6IkNTRVRfSVNTIiwiZXhwIjoxNzEzOTkwOTg0LCJ1c2VyaWQiOjIsImFjY2tleSI6bnVsbCwidHpvZmZzZXQiOiIzNjAiLCJzY29wZSI6IkNGIn0.bmDP2wMQaCTKhztzZ39KfddgCATBBiRAYncxM5yFBvg";
-            if (_context == null)
-            {
-                throw new InvalidOperationException("Context is not initialized");
-            }
             ITokenManager tokenManager = new MockTokenManager(testToken, _context);
             IAssessmentUtil assessmentUtil = new AssessmentUtil(_context);
             IUtilities utilities = new MockUtilities();

@@ -25,7 +25,7 @@
   <!-- Display Mode -->
   <ng-template #contact_display [ngIf]="editMode">
     <div *ngIf="!layoutSvc.hp" class="d-flex my-2 pe-2 br-standard align-items-center"
-      [ngClass]="isCreator() ? 'bgc-primary-50 c-gray-900 b-primary-200' : 'b-light'"
+      [ngClass]="!showControls() ? 'bgc-primary-50 c-gray-900 b-primary-200' : 'b-light'"
       style="width: 100%; height: 125px; overflow: hidden;">
       <div class="p-3 d-flex flex-column justify-content-center align-items-start" style="flex: 0 0 25%">
         <div class="d-flex">
@@ -35,13 +35,6 @@
           </div>
         </div>
         <div><em>{{getRoleName(contact.assessmentRoleId)}}</em></div>
-
-        <!-- Creator message display -->
-        <div class="fw-bold" *ngIf="isCreator()">
-          <div *ngIf="isCreator(); else Editor">{{t('contact.creator')}}</div>
-          <ng-template #Editor>{{t('contact.editor')}}</ng-template>
-        </div>
-
         <app-contact-tooltip *ngIf="showTooltip" [firstName]="contact.firstName" [lastName]="contact.lastName"
           [email]="contact.primaryEmail" [phone]="contact.phone" [assessmentRoleId]="contact.assessmentRoleId"
           [assessmentRole]="contact.role" [title]="contact.title" [organizationName]="contact.organizationName"
@@ -57,30 +50,33 @@
       <span class="d-flex align-items-center m-3 fw-600" style="text-align: center;">
       </span>
 
-      <span class="d-flex align-items-center flex-00a">
+      <span *ngIf="showControls()" class="d-flex align-items-center flex-00a">
         <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
           (click)="editContact()" [disabled]="!enableMyControls">
           <span class="cset-icons-pencil fs-base-2"></span>
           <span class="d-none d-md-flex fs-smaller">{{ t('buttons.change') }}</span>
         </button>
-        <button *ngIf="!auth.isLocal && !isCreator()" type="button"
-          class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="openEmailDialog()"
-          [disabled]="!enableMyControls">
+        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
+          (click)="openEmailDialog()" [disabled]="!enableMyControls" *ngIf="!auth.isLocal">
           <span class="cset-icons-envelope fs-base-2"></span>
           <span class="d-none d-md-flex fs-smaller">{{ t('contact.email') }}</span>
         </button>
-        <button *ngIf="!isCreator()" type="button"
-          class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="removeContact()"
-          [disabled]="!enableMyControls">
+        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
+          (click)="removeContact()" [disabled]="!enableMyControls">
           <span class="cset-icons-trash-can fs-base-2"></span>
           <span class="d-none d-md-flex fs-smaller">{{ t('buttons.remove') }}</span>
         </button>
+      </span>
+
+      <span class="pe-4 align-items-center fw-300" *ngIf="!showControls()">
+        <div *ngIf="creatorId == contact.userId; else Editor">{{t('contact.creator')}}</div>
+        <ng-template #Editor>{{t('contact.editor')}}</ng-template>
       </span>
     </div>
 
 
     <div *ngIf="layoutSvc.hp" class="rkw d-flex flex-row justify-content-between my-2 p-2 br-standard"
-      [ngClass]="isCreator() ? 'bgc-primary-50 c-gray-900 b-primary-200' : 'b-light'"
+      [ngClass]="!showControls() ? 'bgc-primary-50 c-gray-900 b-primary-200' : 'b-light'"
       style="width: 100%; height: 125px; overflow: hidden;">
       <div class="p-3 d-flex flex-column justify-content-center align-items-start">
         <span class="m-0 fs-base-1 fw-600">{{contact.firstName}} {{contact.lastName}}</span>
@@ -105,21 +101,19 @@
           {{contact.emergencyCommunicationsProtocol}} </span>
       </div>
 
-      <div class="d-flex align-items-center flex-00a">
+      <div *ngIf="showControls()" class="d-flex align-items-center flex-00a">
         <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
           (click)="editContact()" [disabled]="!enableMyControls">
           <span class="cset-icons-pencil fs-base-2"></span>
           <span class="d-none d-md-flex fs-smaller">{{ t('buttons.change') }}</span>
         </button>
-        <button *ngIf="!auth.isLocal && !isCreator()" type="button"
-          class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="openEmailDialog()"
-          [disabled]="!enableMyControls">
+        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
+          (click)="openEmailDialog()" [disabled]="!enableMyControls" *ngIf="!auth.isLocal">
           <span class="cset-icons-envelope fs-base-2"></span>
           <span class="d-none d-md-flex fs-smaller">{{ t('contact.email') }}</span>
         </button>
-        <button *ngIf="!isCreator()" type="button"
-          class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="removeContact()"
-          [disabled]="!enableMyControls">
+        <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
+          (click)="removeContact()" [disabled]="!enableMyControls">
           <span class="cset-icons-trash-can fs-base-2"></span>
           <span class="d-none d-md-flex fs-smaller">{{ t('buttons.remove') }}</span>
         </button>
@@ -235,7 +229,7 @@
           </div>
 
           <!-- Role Buttons -->
-          <div class="form-group d-flex flex-column flex-11a mb-3" *ngIf="!isCreator()">
+          <div class="form-group d-flex flex-column flex-11a mb-3">
             <label class="form-label" for="role">{{ t('contact.role') }}</label>
             <div class="btn-group btn-group-toggle d-block" id="role" data-toggle="buttons" ngbRadioGroup>
               <label ngbButtonLabel class="btn btn-level btn-rounded form-check-label"

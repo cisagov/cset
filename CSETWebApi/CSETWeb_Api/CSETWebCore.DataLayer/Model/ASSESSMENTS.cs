@@ -137,6 +137,15 @@ public partial class ASSESSMENTS
     public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; } = new List<DOCUMENT_FILE>();
 
     [InverseProperty("Assessment")]
+    public virtual ICollection<FINANCIAL_ASSESSMENT_VALUES> FINANCIAL_ASSESSMENT_VALUES { get; set; } = new List<FINANCIAL_ASSESSMENT_VALUES>();
+
+    [InverseProperty("Assessment")]
+    public virtual ICollection<FINANCIAL_DOMAIN_FILTERS> FINANCIAL_DOMAIN_FILTERS { get; set; } = new List<FINANCIAL_DOMAIN_FILTERS>();
+
+    [InverseProperty("Assessment")]
+    public virtual ICollection<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; } = new List<FINANCIAL_HOURS>();
+
+    [InverseProperty("Assessment")]
     public virtual ICollection<FRAMEWORK_TIER_TYPE_ANSWER> FRAMEWORK_TIER_TYPE_ANSWER { get; set; } = new List<FRAMEWORK_TIER_TYPE_ANSWER>();
 
     [InverseProperty("Assessment")]

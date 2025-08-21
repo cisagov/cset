@@ -30,7 +30,6 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/cor
 })
 export class ProgressComponent implements OnInit, OnChanges {
   @Input() value: number;
-  
   radius = 15;
   circumference = 2 * Math.PI * this.radius;
   dashoffset: number;

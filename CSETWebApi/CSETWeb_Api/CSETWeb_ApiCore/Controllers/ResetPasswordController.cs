@@ -7,6 +7,7 @@
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Interfaces.User;
@@ -36,6 +37,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _tokenManager;
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
+        private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _reports;
         private readonly IUserBusiness _userBusiness;
         private readonly INotificationBusiness _notificationBusiness;
@@ -43,13 +45,14 @@ namespace CSETWebCore.Api.Controllers
         private readonly IWebHostEnvironment _webHost;
 
         public ResetPasswordController(IUserAuthentication userAuthentication, ITokenManager tokenManager, CSETContext context,
-             IAssessmentUtil assessmentUtil, IReportsDataBusiness reports,
+             IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports,
              IUserBusiness userBusiness, INotificationBusiness notificationBusiness, IConfiguration configuration, IWebHostEnvironment webHost)
         {
             _userAuthentication = userAuthentication;
             _tokenManager = tokenManager;
             _context = context;
             _assessmentUtil = assessmentUtil;
+            _adminTabBusiness = adminTabBusiness;
             _reports = reports;
             _userBusiness = userBusiness;
             _notificationBusiness = notificationBusiness;

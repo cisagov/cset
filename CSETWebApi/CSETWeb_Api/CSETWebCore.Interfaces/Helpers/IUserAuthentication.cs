@@ -4,7 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using System.Threading.Tasks;
 using CSETWebCore.Model.Authentication;
 
 namespace CSETWebCore.Interfaces.Helpers
@@ -13,7 +12,7 @@ namespace CSETWebCore.Interfaces.Helpers
     {
         LoginResponse Authenticate(Login login);
 
-        Task<LoginResponse> AuthenticateStandalone(Login login, ITokenManager tokenManager);
+        LoginResponse AuthenticateStandalone(Login login, ITokenManager tokenManager);
 
         LoginResponse AuthenticateAccessKey(AnonymousLogin login);
         string GenerateAccessKey();

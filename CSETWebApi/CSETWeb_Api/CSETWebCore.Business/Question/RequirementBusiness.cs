@@ -85,13 +85,13 @@ namespace CSETWebCore.Business.Question
                 .Select(x => new RequirementPlus { Requirement = x.r, SetShortName = x.s.Short_Name, SetName = x.s.Set_Name });
 
             var domains = new List<DomainAssessmentFactor>();
-            // if (results.Any(r => r.SetName == "ACET_V1"))
-            // {
-            //     domains = (from d in _context.FINANCIAL_DOMAINS
-            //                join fg in _context.FINANCIAL_GROUPS on d.DomainId equals fg.DomainId
-            //                join af in _context.FINANCIAL_ASSESSMENT_FACTORS on fg.AssessmentFactorId equals af.AssessmentFactorId
-            //                select new DomainAssessmentFactor { DomainName = d.Domain, AssessmentFactorName = af.AssessmentFactor }).Distinct().ToList();
-            // }
+            if (results.Any(r => r.SetName == "ACET_V1"))
+            {
+                domains = (from d in _context.FINANCIAL_DOMAINS
+                           join fg in _context.FINANCIAL_GROUPS on d.DomainId equals fg.DomainId
+                           join af in _context.FINANCIAL_ASSESSMENT_FACTORS on fg.AssessmentFactorId equals af.AssessmentFactorId
+                           select new DomainAssessmentFactor { DomainName = d.Domain, AssessmentFactorName = af.AssessmentFactor }).Distinct().ToList();
+            }
 
 
             // Get all REQUIREMENT answers for the assessment

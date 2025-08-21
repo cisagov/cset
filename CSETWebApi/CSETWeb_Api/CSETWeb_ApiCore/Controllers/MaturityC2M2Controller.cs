@@ -8,6 +8,7 @@ using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Maturity;
@@ -21,6 +22,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _tokenManager;
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
+        private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _reports;
 
         private const int _c2m2ModelId = 12;
@@ -33,11 +35,13 @@ namespace CSETWebCore.Api.Controllers
             CSETContext context,
             ITokenManager tokenManager,
             IAssessmentUtil assessmentUtil,
+            IAdminTabBusiness adminTabBusiness,
             IReportsDataBusiness reports)
         {
             _tokenManager = tokenManager;
             _context = context;
             _assessmentUtil = assessmentUtil;
+            _adminTabBusiness = adminTabBusiness;
             _reports = reports;
         }
 
@@ -51,7 +55,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz = new MaturityBusiness(_context, _assessmentUtil);
+            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var options = new StructureOptions() { IncludeQuestionText = true, IncludeSupplemental = true };
             var x = biz.GetMaturityStructureAsXml(assessmentId, options);
 
@@ -69,7 +73,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz1 = new MaturityBusiness(_context, _assessmentUtil);
+            var biz1 = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var model = biz1.GetMaturityStructureForModel(_c2m2ModelId, assessmentId);
 
             var biz2 = new C2M2Business();
@@ -85,7 +89,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz1 = new MaturityBusiness(_context, _assessmentUtil);
+            var biz1 = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var model = biz1.GetMaturityStructureForModel(_c2m2ModelId, assessmentId);
 
             var biz2 = new C2M2Business();

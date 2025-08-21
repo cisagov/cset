@@ -24,9 +24,6 @@
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { NameSeries } from '../reports/models/chart-results.model';
-
 
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
@@ -38,8 +35,6 @@ const headers = {
 })
 export class CpgService {
 
-
-
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService
@@ -50,7 +45,7 @@ export class CpgService {
    * Calls the MaturityStructure endpoint.  Specifying a domain abbreviation will limit
    * the response to a specific domain.
    */
-  getStructure(modelId?: number | null) {
+  getStructure(modelId?: number) {
     var url = this.configSvc.apiUrl + 'maturity/structure/cpg';
 
     // if a particular model is called for...
@@ -61,16 +56,12 @@ export class CpgService {
     return this.http.get(url, headers);
   }
 
-
   /**
    * 
    */
-  getAnswerDistrib(modelId: number, techDomain: string): Observable<NameSeries[]> {
-    var qs = `modelId=${modelId}`;
-    if (!!techDomain) {
-      qs = qs + `&techDomain=${techDomain}`;
-    }
-    var url = this.configSvc.apiUrl + 'answerdistrib/cpg/domains?' + qs;
-    return this.http.get<NameSeries[]>(url, headers);
+  getAnswerDistrib() {
+    var url = this.configSvc.apiUrl + 'answerdistrib/cpg/domains';
+    return this.http.get(url, headers);
   }
+
 }

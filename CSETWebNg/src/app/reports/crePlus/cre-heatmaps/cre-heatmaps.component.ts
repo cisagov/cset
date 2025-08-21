@@ -66,6 +66,19 @@ export class CreHeatmapsComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
+    setTimeout(() => {
+      this.title = this.tSvc.translate('reports.core.cre.heatmap report.title');
+      this.titleService.setTitle(this.title);
+    }, 500);
+
+    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
+      this.assessmentName = assessmentDetail.assessmentName;
+      this.assessmentDate = assessmentDetail.assessmentDate;
+      this.assessorName = assessmentDetail.facilitatorName;
+      this.facilityName = assessmentDetail.facilityName;
+      this.selfAssessment = assessmentDetail.selfAssessment;
+    });
+
     this.reportSvc.getModelContent('22').subscribe((x) => {
       this.model22 = x;
       this.consolidateQuestions(this.model22);
@@ -82,7 +95,7 @@ export class CreHeatmapsComponent implements OnInit {
 
 
   /**
-   * Lumps questions from goals into a domain-level collection
+   * Lumps questions from subdomains into a domain-level collection
    */
   consolidateQuestions(model: any) {
     for (let domain of model.groupings) {

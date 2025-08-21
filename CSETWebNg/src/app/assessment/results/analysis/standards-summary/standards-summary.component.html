@@ -20,45 +20,45 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div>
-  <div class="white-panel d-flex flex-column justify-content-start flex-11a" *transloco="let t">
-    <h3>{{t('titles.standards summary')}}</h3>
+<div class="white-panel d-flex flex-column justify-content-start flex-11a" *transloco="let t">
+  <h3>{{t('titles.standards summary')}}</h3>
 
-    <p>{{t('reports.standards summary text 1')}}</p>
+  <p>{{t('reports.standards summary text 1')}}</p>
 
-    <div id="chart" class="mb-5" style="max-width: 300px; margin: 0 auto;">
-      <canvas id="canvasStandardSummary">{{chart}}</canvas>
-    </div>
-    <div *ngIf="!initialized">
-      <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-        <div style="max-width: 50px; max-height: 50px;"></div>
-      </div>
-    </div>
-    <div class="data" [hidden]="!initialized">
-      <p>
-        {{t('reports.standards summary text 2')}}
-      </p>
-      <table class="table" [class.fs-smaller]="layoutSvc.hp">
-        <thead>
-          <tr>
-            <th *ngIf="dataSets?.length > 1">{{t('reports.standard')}}</th>
-            <th>{{t('reports.answer')}}</th>
-            <th class="align-right">{{t('reports.number')}}</th>
-            <th class="align-right">{{t('reports.total')}}</th>
-            <th class="align-right">{{t('reports.percent')}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let row of dataRows; let i = index">
-            <td *ngIf="dataSets?.length > 1">{{row.short_Name}}</td>
-            <td width=50%>{{row.answer_Full_Name}}</td>
-            <td class="align-right">{{row.qc}}</td>
-            <td class="align-right">{{row.total}}</td>
-            <td class="align-right">{{row.percent}}%</td>
-          </tr>
-        </tbody>
-      </table>
+  <div id="chart" class="mb-5" style="max-width: 300px; margin: 0 auto;">
+    <canvas id="canvasStandardSummary">{{chart}}</canvas>
+  </div>
+  <div *ngIf="!initialized">
+    <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+      <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-    <app-nav-back-next [page]="'standards-summary'"></app-nav-back-next>
+  <div class="data" [hidden]="!initialized">
+    <p>
+      {{t('reports.standards summary text 2')}}
+    </p>
+    <table class="table" [class.fs-smaller]="layoutSvc.hp">
+      <thead>
+        <tr>
+          <th *ngIf="dataSets?.length > 1">{{t('reports.standard')}}</th>
+          <th>{{t('reports.answer')}}</th>
+          <th class="align-right">{{t('reports.number')}}</th>
+          <th class="align-right">{{t('reports.total')}}</th>
+          <th class="align-right">{{t('reports.percent')}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of dataRows; let i = index">
+          <td *ngIf="dataSets?.length > 1">{{row.short_Name}}</td>
+          <td width=50%>{{row.answer_Full_Name}}</td>
+          <td class="align-right">{{row.qc}}</td>
+          <td class="align-right">{{row.total}}</td>
+          <td class="align-right">{{row.percent}}%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-nav-back-next [page]="'standards-summary'"></app-nav-back-next>
+
 </div>

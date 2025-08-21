@@ -4,15 +4,19 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Business.Contact;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Maturity.Configuration;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Reports;
+using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
@@ -33,6 +37,7 @@ namespace CSETWebCore.Business.Reports
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
         private int _assessmentId;
+        private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IMaturityBusiness _maturityBusiness;
         private readonly IQuestionRequirementManager _questionRequirement;
         private ITokenManager _tokenManager;
@@ -47,11 +52,12 @@ namespace CSETWebCore.Business.Reports
         /// Constructor.
         /// </summary>
         /// <param name="assessment_id"></param>
-        public ReportsDataBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAssessmentModeData assessmentMode,
+        public ReportsDataBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IAssessmentModeData assessmentMode,
             IMaturityBusiness maturityBusiness, IQuestionRequirementManager questionRequirement, ITokenManager tokenManager)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
+            _adminTabBusiness = adminTabBusiness;
             _maturityBusiness = maturityBusiness;
             _questionRequirement = questionRequirement;
             _tokenManager = tokenManager;
@@ -110,8 +116,6 @@ namespace CSETWebCore.Business.Reports
             var query = from a in _context.ANSWER
                         join m in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_Level)
                             on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                        join p in _context.MATURITY_QUESTION_PROPS 
-                            on m.Mat_Question_Id equals p.Mat_Question_Id
                         where a.Assessment_Id == _assessmentId
                             && m.Maturity_Model_Id == targetModelId
                             && a.Question_Type == "Maturity"
@@ -135,11 +139,6 @@ namespace CSETWebCore.Business.Reports
                 }
             }
 
-
-            // Do not include unanswerable questions
-            responseList.RemoveAll(x => !x.Mat.Is_Answerable);
-
-
             foreach (var matAns in responseList)
             {
                 var o = _overlay.GetMaturityQuestion(matAns.Mat.Mat_Question_Id, lang);
@@ -160,7 +159,7 @@ namespace CSETWebCore.Business.Reports
 
             // RRA should be always be defaulted to its maximum available level (3)
             // since the user can't configure it
-            if (targetModelId == Constants.Constants.Model_RRA)
+            if (targetModelId == 5)
             {
                 selectedLevel = 3;
             }
@@ -337,7 +336,7 @@ namespace CSETWebCore.Business.Reports
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
                         MaturityLevel = myQ.Maturity_Level_Id,
-                        IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id) || myQ.Parent_Question_Id == null,
+                        IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
                         SetName = string.Empty,
                         FreeResponseAnswer = answer?.a.Free_Response_Answer
                     };

@@ -20,31 +20,31 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div>
-  <div class="white-panel">
-    <h3>Cybersecurity Framework</h3>
-    <p class="mb-3">
-      Select the cybersecurity framework profile you want to use for your assessment. The baseline cybersecurity
-      framework profile
-      comes preloaded with CSET that you can copy to get started when creating your own custom profiles. You can also
-      create
-      a new custom profile or update and export existing profiles.
-    </p>
+<div class="white-panel">
+  <h3>Cybersecurity Framework</h3>
+  <p class="mb-3">
+    Select the cybersecurity framework profile you want to use for your assessment. The baseline cybersecurity
+    framework profile
+    comes preloaded with CSET that you can copy to get started when creating your own custom profiles. You can also
+    create
+    a new custom profile or update and export existing profiles.
+  </p>
 
-    <div *ngFor="let tt of frameworks?.tierTypes" class="cyber-framework">
-      <h4>{{ tt.tierType }}</h4>
-      <div class="cyber-tier-section" *ngFor="let t of tt.tiers">
-        <div style="display: flex; align-items: flex-start">
-          <input type="radio" id="{{ t.controlId }}" name="{{ tt.groupName }}" class="mt-1" [checked]="t.selected"
-            (change)="submit(tt, t)">
-          <label for="{{ t.controlId }}">
-            <div style="font-weight: bold">{{ t.tierName }}</div>
-            <div>{{ t.question }}
-            </div>
-          </label>
-        </div>
+  <div *ngFor="let tt of frameworks?.tierTypes" class="cyber-framework">
+    <h4>{{ tt.tierType }}</h4>
+    <div class="cyber-tier-section" *ngFor="let t of tt.tiers">
+      <div style="display: flex; align-items: flex-start">
+        <input type="radio" id="{{ t.controlId }}" name="{{ tt.groupName }}" class="mt-1" [checked]="t.selected"
+          (change)="submit(tt, t)">
+        <label for="{{ t.controlId }}">
+          <div style="font-weight: bold">{{ t.tierName }}</div>
+          <div>{{ t.question }}
+          </div>
+        </label>
       </div>
     </div>
   </div>
-  <app-nav-back-next p-nav-back-next [page]="'framework'"></app-nav-back-next>
+
+  <app-nav-back-next [page]="'framework'"></app-nav-back-next>
+
 </div>

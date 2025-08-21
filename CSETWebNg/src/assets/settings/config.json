@@ -242,7 +242,6 @@
       "moduleName": "CPG2",
       "modelId": "21",
       "displayNameKey": "modules.cpg2.display-name",
-      "questionNodeKey": "modules.cpg2.question node title",
       "hideTopLevelGroupingName": true,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
@@ -561,11 +560,6 @@
           "buttonCss": "btn-alt"
         }
       ]
-    },
-    {
-      "comment": "This is the VADR developed for TSA",
-      "moduleName": "VADR",
-      "modelId": 7
     },
     {
       "moduleName": "CISA VADR",

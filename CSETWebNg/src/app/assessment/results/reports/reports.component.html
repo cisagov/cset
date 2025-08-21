@@ -20,59 +20,58 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t; read: 'reports'">
-  <div class="white-panel oy-auto d-flex flex-column flex-11a">
-    <div>
-      <h3>{{ 'titles.reports' | transloco }}</h3>
+<div *transloco="let t; read: 'reports'" class="white-panel oy-auto d-flex flex-column flex-11a">
+  <div>
+    <h3>{{ 'titles.reports' | transloco }}</h3>
 
-      <p>
-        {{ t('assessment complete message').replace('{date}', lastModifiedTimestamp | localizeDate: 'GMT') }}
-        {{ t('reports run prior message') }}
-      </p>
-      <div class="my-3">
-        <button mat-stroked-button (click)="openSnackBar()">
-          {{ t('printing report instructions button') }}
-        </button>
-      </div>
-    </div>
-
-    <app-cisa-workflow-warnings
-      [invalidFields]="cisaAssessorWorkflowFieldValidation?.invalidFields"></app-cisa-workflow-warnings>
-
-
-    <!-- Observation Tear Out Sheets -->
-    <div class="d-flex flex-column justify-content-start align-items-start mb-4">
-
-      <div class="mb-3 p-3 w-100" [class.gray-box]="true">
-        <div class="d-flex flex-row" style="align-items: end">
-          <div>
-            <button tabindex="0" (click)="clickReportLink('observations')" class="btn btn-link btn-link-dark px-0 pt-0">
-              {{t('observations tear-out sheets.report title')}}
-            </button>
-          </div>
-        </div>
-        <div class="mt-3">
-          {{t('observations tear-out sheets.summary')}}
-        </div>
-      </div>
-
-      <div class="mb-3 p-3 w-100" [class.gray-box]="true">
-        <button tabindex="0" (click)="reportSvc.clickExcelLink('observations')" class="btn btn-link btn-link-dark px-0 pt-0">
-          <span class="cset-icons-export-excel fs-base me-2 align-middle"></span>
-          {{t('observations tear-out sheets.export csv link')}}
-        </button>
-        <div class="mt-3">
-          {{t('observations tear-out sheets.excel summary')}}
-        </div>
-      </div>
-    </div>
-
-    <div [class.div-shield]="disableEntirePage">
-
-      <!-- All reports component -->
-      <app-report-list-common *ngIf="currentSectionId" [sectionId]="currentSectionId"></app-report-list-common>
+    <p>
+      {{ t('assessment complete message').replace('{date}', lastModifiedTimestamp | localizeDate: 'GMT') }}
+      {{ t('reports run prior message') }}
+    </p>
+    <div class="my-3">
+      <button mat-stroked-button (click)="openSnackBar()">
+        {{ t('printing report instructions button') }}
+      </button>
     </div>
   </div>
-  <app-nav-back-next [page]="'reports'"
-    [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
-</div>
+
+  <app-cisa-workflow-warnings
+    [invalidFields]="cisaAssessorWorkflowFieldValidation?.invalidFields"></app-cisa-workflow-warnings>
+
+
+  <!-- Observation Tear Out Sheets -->
+  <div class="d-flex flex-column justify-content-start align-items-start mb-4">
+
+    <div class="mb-3 p-3 w-100" [class.gray-box]="true">
+      <div class="d-flex flex-row" style="align-items: end">
+        <div>
+          <button tabindex="0" (click)="clickReportLink('observations')" class="btn btn-link btn-link-dark px-0 pt-0">
+            {{t('observations tear-out sheets.report title')}}
+          </button>
+        </div>
+      </div>
+      <div class="mt-3">
+        {{t('observations tear-out sheets.summary')}}
+      </div>
+    </div>
+
+    <div class="mb-3 p-3 w-100" [class.gray-box]="true">
+      <button tabindex="0" (click)="reportSvc.clickExcelLink('observations')" class="btn btn-link btn-link-dark px-0 pt-0">
+        <span class="cset-icons-export-excel fs-base me-2 align-middle"></span>
+        {{t('observations tear-out sheets.export csv link')}}
+      </button>
+      <div class="mt-3">
+        {{t('observations tear-out sheets.excel summary')}}
+      </div>
+    </div>
+  </div>
+
+  <div [class.div-shield]="disableEntirePage">
+
+    <!-- All reports component -->
+    <app-report-list-common *ngIf="currentSectionId" [sectionId]="currentSectionId"></app-report-list-common>
+
+
+    <app-nav-back-next [page]="'reports'"
+      [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
+  </div>

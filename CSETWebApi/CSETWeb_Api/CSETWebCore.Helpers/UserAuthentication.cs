@@ -11,7 +11,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Notification;
@@ -21,29 +20,24 @@ using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Helpers
 {
     public class UserAuthentication : IUserAuthentication
     {
-        private const int STANDALONE_USER_ID = 1;
-        
         private readonly IPasswordHash _password;
         private readonly IUserBusiness _userBusiness;
         private readonly ILocalInstallationHelper _localInstallationHelper;
         private readonly ITokenManager _transactionSecurity;
         private readonly INotificationBusiness _notificationBusiness;
         private readonly IConfiguration _configuration;
-        private readonly ILogger<UserAuthentication> _logger;
         private CSETContext _context;
 
         public UserAuthentication(IPasswordHash password, IUserBusiness userBusiness,
             ILocalInstallationHelper localInstallationHelper, ITokenManager transactionSecurity,
             INotificationBusiness notificationBusiness, IConfiguration configuration,
-            CSETContext context, ILogger<UserAuthentication> logger)
+            CSETContext context)
         {
             _password = password;
             _transactionSecurity = transactionSecurity;
@@ -52,7 +46,6 @@ namespace CSETWebCore.Helpers
             _notificationBusiness = notificationBusiness;
             _configuration = configuration;
             _context = context;
-            _logger = logger;
         }
 
         public LoginResponse Authenticate(Login login)
@@ -67,7 +60,7 @@ namespace CSETWebCore.Helpers
 
             // Read directly from the database; UserManager does not read password and salt, in order to keep them more private
             loginUser = _context.USERS.Where(x => x.PrimaryEmail == login.Email).FirstOrDefault();
-
+            
 
             if (loginUser == null)
             {
@@ -80,11 +73,11 @@ namespace CSETWebCore.Helpers
             }
 
             var roles = (from u in _context.USERS
-                         join ur in _context.USER_ROLES on u.UserId equals ur.UserId
-                         join r in _context.ROLES on ur.RoleId equals r.RoleId
-                         where u.UserId == loginUser.UserId
-                         select r.RoleName).ToList();
-
+                join ur in _context.USER_ROLES on u.UserId equals ur.UserId
+                join r in _context.ROLES on ur.RoleId equals r.RoleId
+                where u.UserId == loginUser.UserId
+                select r.RoleName).ToList();
+                    
             List<PASSWORD_HISTORY> tempPasswords = _context.PASSWORD_HISTORY.Where(password => password.UserId == loginUser.UserId && password.Is_Temp).ToList();
 
             // Validate the supplied password against the hashed password and its salt
@@ -171,34 +164,22 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        public async Task<LoginResponse> AuthenticateStandalone(Login login, ITokenManager tokenManager)
+        public LoginResponse AuthenticateStandalone(Login login, ITokenManager tokenManager)
         {
-            int? assessmentId = null;
+            int? assessmentId = ((TokenManager)tokenManager).GetAssessmentId();
 
-            // Safely try to get assessment ID from token if one exists
-            try
-            {
-                if (tokenManager is TokenManager tm)
-                {
-                    assessmentId = tm.GetAssessmentId();
-                    assessmentId = assessmentId == 0 ? null : assessmentId;
-                }
-            }
-            catch (Exception ex)
-            {
-                // If no valid token exists yet, assessmentId remains null
-                _logger.LogWarning(ex, "Failed to get assessment ID from token");
-                assessmentId = null;
-            }
+            assessmentId = assessmentId == 0 ? null : assessmentId;
+
+            int userIdSO = 100;
+            string primaryEmailSO = "";
 
             // Read the file system for the LOCAL-INSTALLATION file put there at install time
             if (!_localInstallationHelper.IsLocalInstallation())
             {
                 // this is not a local install.  Return what we know about this user (if anything).
-                var userIdPayload = tokenManager.Payload("userid");
-                if (userIdPayload != null && int.TryParse(userIdPayload, out int userId))
+                if (tokenManager.Payload("userid") != null)
                 {
-                    var loginUser = await _context.USERS.FirstOrDefaultAsync(x => x.UserId == userId);
+                    var loginUser = _context.USERS.Where(x => x.UserId == int.Parse(tokenManager.Payload("userid"))).FirstOrDefault();
 
                     if (loginUser != null)
                     {
@@ -226,67 +207,58 @@ namespace CSETWebCore.Helpers
 
             string name = null;
 
-            int userIdSO = STANDALONE_USER_ID;
-            string primaryEmailSO = "";
-
-            name = SanitizeUsername(Environment.UserName);
+            name = Environment.UserName;
             name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
+
             primaryEmailSO = name;
+            //check for legacy default email for local installation and set to new standard
+            var userOrg = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO + "@myorg.org").FirstOrDefault();
+            if (userOrg != null)
+            {
+                string tmp = userOrg.PrimaryEmail.Split('@')[0];
+                userOrg.PrimaryEmail = tmp;
+                if (_context.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
+                    _context.SaveChanges();
+                primaryEmailSO = userOrg.PrimaryEmail;
+            }
+            else
+            {
+                //check for legacy default local usernames (in the form HOSTNAME\USERNAME)
+                string regex = @"^.*(\\)" + primaryEmailSO + "$";
+                var allUsers = _context.USERS.ToList();
+                var legacyUser = allUsers.Where(x => Regex.Match(x.PrimaryEmail, regex).Success).FirstOrDefault();
+                if (legacyUser != null)
+                {
+                    string tmp = legacyUser.PrimaryEmail.Split('\\')[1];
+                    legacyUser.PrimaryEmail = tmp;
+                    if (_context.USERS.Where(x => x.PrimaryEmail == tmp).FirstOrDefault() == null)
+                        _context.SaveChanges();
+                    primaryEmailSO = legacyUser.PrimaryEmail;
+                }
+            }
 
-            // Check for UserId = STANDALONE_USER_ID directly
-            var user = await _context.USERS.FirstOrDefaultAsync(x => x.UserId == STANDALONE_USER_ID);
 
+            var user = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
             if (user == null)
             {
-                // Create user with UserId = STANDALONE_USER_ID if it doesn't exist
                 UserDetail ud = new UserDetail()
                 {
                     Email = primaryEmailSO,
                     FirstName = name,
                     LastName = ""
                 };
-
                 UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud, _context);
-                await _context.SaveChangesAsync();
 
-                // Get the newly created user and force UserId = STANDALONE_USER_ID
-                var newUser = await _context.USERS.FirstOrDefaultAsync(x => x.PrimaryEmail == primaryEmailSO);
-                if (newUser != null && newUser.UserId != STANDALONE_USER_ID)
-                {
-                    // Update the user to have UserId = STANDALONE_USER_ID
-                    newUser.UserId = STANDALONE_USER_ID;
-                    await _context.SaveChangesAsync();
-                }
-
+                _context.SaveChanges();
+                //update the userid 1 to the new user
+                var tempu = _context.USERS.Where(x => x.PrimaryEmail == primaryEmailSO).FirstOrDefault();
+                if (tempu != null)
+                    userIdSO = tempu.UserId;
                 _localInstallationHelper.determineIfUpgradedNeededAndDoSo(userIdSO, _context);
             }
             else
             {
-                userIdSO = STANDALONE_USER_ID; // Always use STANDALONE_USER_ID
-            }
-
-            // Add the standalone user to ASSESSMENT_CONTACTS if they're accessing an existing assessment
-            if (assessmentId.HasValue && assessmentId.Value > 0)
-            {
-                var existingContact = await _context.ASSESSMENT_CONTACTS
-                    .FirstOrDefaultAsync(ac => ac.Assessment_Id == assessmentId.Value && ac.UserId == userIdSO);
-
-                if (existingContact == null)
-                {
-                    var assessmentContact = new ASSESSMENT_CONTACTS
-                    {
-                        Assessment_Id = assessmentId.Value,
-                        UserId = userIdSO,
-                        FirstName = name,
-                        LastName = "",
-                        PrimaryEmail = primaryEmailSO,
-                        AssessmentRoleId = 2, // Admin role
-                        Invited = true
-                    };
-
-                    _context.ASSESSMENT_CONTACTS.Add(assessmentContact);
-                    await _context.SaveChangesAsync();
-                }
+                userIdSO = user.UserId;
             }
 
             if (string.IsNullOrEmpty(primaryEmailSO))
@@ -351,20 +323,6 @@ namespace CSETWebCore.Helpers
             return key;
         }
 
-        /// <summary>
-        /// Sanitizes a username by removing potentially harmful characters.
-        /// </summary>
-        /// <param name="username">The username to sanitize</param>
-        /// <returns>Sanitized username</returns>
-        private string SanitizeUsername(string username)
-        {
-            if (string.IsNullOrWhiteSpace(username))
-                return username;
-
-            // Remove potentially harmful characters and limit length
-            var sanitized = System.Text.RegularExpressions.Regex.Replace(username, @"[^\w\-._@]", "");
-            return sanitized.Length > 50 ? sanitized.Substring(0, 50) : sanitized;
-        }
 
         /// <summary>
         /// Emulates credential authentication solely by providing

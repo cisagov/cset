@@ -20,16 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div>
-     <div class="white-panel d-flex justify-content-start flex-column flex-11a"
-          *transloco="let t; read: 'modules.cisa vadr.level selection'">
-          <h3 class="wrap-text mb-3">{{'titles.cisa vadr info' | transloco}}</h3>
+<div class="white-panel d-flex justify-content-start flex-column flex-11a"
+     *transloco="let t; read: 'modules.cisa vadr.level selection'">
+     <h3 class="wrap-text mb-3">{{'titles.cisa vadr info' | transloco}}</h3>
 
-          <div style="margin: auto; border: 1px solid #ccc; border-radius: 1rem; padding: 2rem;">
-               Custom fields for the CISA VADR assessment will be located on this page.
-               The answers will be persisted in the DETAILS_DEMOGRAPHICS table.
-          </div>
-
+     <div style="margin: auto; border: 1px solid #ccc; border-radius: 1rem; padding: 2rem;">
+          Custom fields for the CISA VADR assessment will be located on this page.
+          The answers will be persisted in the DETAILS_DEMOGRAPHICS table.
      </div>
+
+
      <app-nav-back-next [page]="'cisa-vadr-info'"></app-nav-back-next>
 </div>

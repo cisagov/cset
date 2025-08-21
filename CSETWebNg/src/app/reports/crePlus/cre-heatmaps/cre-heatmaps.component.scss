@@ -24,15 +24,13 @@ SOFTWARE.
 .square {
   border-radius: 3px;
   font-size: small;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 2.1rem;
-  height: 1.6rem;
+  text-align: center;
+  width: 34px;
+  height: 27px;
   padding: 4px;
   margin: 1px;
 }
 
-.square.wide {
-  width: 3rem;
+.wide {
+  width: 44px;
 }

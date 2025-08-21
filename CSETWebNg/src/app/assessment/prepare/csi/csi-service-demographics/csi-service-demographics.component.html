@@ -53,18 +53,14 @@
       <div class="mb-3">
         <label class="form-label" for="multisiteService">Multi-site Service?</label>
         <div class="btn-group btn-group-toggle d-block mb-2" id="multisiteService" data-toggle="buttons" ngbRadioGroup>
-          <label ngbButtonLabel class="btn btn-level border-2 mb-1 px-4" [class.active]="!csiServiceDemographic.multiSite">
+          <label ngbButtonLabel class="btn btn-level border-2 mb-1" [class.active]="csiServiceDemographic.multiSite">
             <input ngbButton type="radio" class="btn-check" autocomplete="off" name="multisiteService"
               [(ngModel)]="csiServiceDemographic.multiSite"
-              (change)="csiServiceDemographic.multiSiteDescription = null; update()" [value]="false" />
-            {{t('answer-options.button-labels.no')}}
-          </label>
-          <label ngbButtonLabel class="btn btn-level border-2 mb-1 px-4" [class.active]="csiServiceDemographic.multiSite">
+              (change)="csiServiceDemographic.multiSiteDescription = null; update()" [value]="true" />Yes</label>
+          <label ngbButtonLabel class="btn btn-level border-2 mb-1" [class.active]="!csiServiceDemographic.multiSite">
             <input ngbButton type="radio" class="btn-check" autocomplete="off" name="multisiteService"
               [(ngModel)]="csiServiceDemographic.multiSite"
-              (change)="csiServiceDemographic.multiSiteDescription = null; update()" [value]="true" />
-            {{t('answer-options.button-labels.yes')}}
-          </label>
+              (change)="csiServiceDemographic.multiSiteDescription = null; update()" [value]="false" />No</label>
         </div>
         <input [ngClass]="{
           'alert-danger':

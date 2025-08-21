@@ -20,23 +20,23 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div>
-  <div class="white-panel" *transloco="let t">
-    <h3>{{t('reports.core.crr.summary results.title')}}</h3>
-    <div>
-      <div *ngIf="!summaryResultLoaded" class="my-5 spinner-container" style="margin: 2em auto">
-        <div style="max-width: 50px; max-height: 50px;"></div>
-      </div>
-      <app-crr-mil-by-domain *ngIf="summaryResultLoaded" [model]="crrModel"></app-crr-mil-by-domain>
-    </div>
 
-    <div class="mb-5">
-      <app-crr-percentage-of-practices [model]="crrModel"></app-crr-percentage-of-practices>
-      <div *ngIf="!chartLoaded" class="spinner-container" style="margin: 2em auto">
-        <div style="max-width: 50px; max-height: 50px;"></div>
-      </div>
+<div class="white-panel" *transloco="let t">
+  <h3>{{t('reports.core.crr.summary results.title')}}</h3>
+  <div>
+    <div *ngIf="!summaryResultLoaded" class="my-5 spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
+    <app-crr-mil-by-domain *ngIf="summaryResultLoaded" [model]="crrModel"></app-crr-mil-by-domain>
+  </div>
+
+  <div class="mb-5">
+    <app-crr-percentage-of-practices [model]="crrModel"></app-crr-percentage-of-practices>
+    <div *ngIf="!chartLoaded" class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
+
   <app-nav-back-next [page]="'crr-summary-results'"></app-nav-back-next>
 
 </div>

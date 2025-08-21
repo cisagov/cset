@@ -79,27 +79,3 @@ The user has access to CSET as Local User. The Local Installation ribbon is visi
 Figure 11: Local Install Landing Page
 
 
-## Other Steps (Optional)
-### Creating CSET User
-There are two ways to add a new user to your freshly created CSET® Stand-Alone. The first way is to register for a new account inside the CSET® application itself. This will require a valid mail host as user’s will be required to enter their email address and receive a confirmation email on your network.
-
-  1.	Using a browser, navigate to your CSET® webpage.
-  2.	At right, select “Register New User Account.”
-  3.	Enter your information (name, email, and security questions), and select “Register.”
-  4.	A confirmation email will be sent to the email you entered. This email will contain a temporary password that will allow you to login to the CSET® Application.
-  5.	Once a user has logged in for the first time, they will be prompted to create their own password to replace the temporary one.
-
-The second way to add a new user to your CSET® Application is to use the “AddUser” program. This tool is intended more for testing purposes than company-wide use. It allows anybody to create a new user without the email check and should only be used by administrators. As such, do not place this program in a public or shared folder on your system. This tool can be downloaded from the latest CSET [releases page](https://github.com/cisagov/cset/releases). Simply click on the "AddUser.zip" link to download the file.
-
-  1.	Inside the “AddUser” folder, you will find a file called “AddCSETUser.exe”. It’s a config file. Open this file with a text editor such as notepad. 
-  * Inside the "connectionStrings" tags, you will need to change your “data source=” to the IP Address or domain of your server.
-  * You will then need to change the “user id=” and “password=” to the admin account you created previously.
-  * Save and close the file.
-  
-  2.	Double-click on the “AddCSETUser” application and a small dialog box should pop-up with entry fields to add a new CSET® User.
-
-  ![](img/figE29.PNG)
-
-  * Enter the required information and click “Save.”
-  * If you’ve connected with the server properly, you will see small green text at the bottom-left of the box that says, “Added Successfully”. You may now login to CSET® using that user account.
-  

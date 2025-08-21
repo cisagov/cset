@@ -11,6 +11,7 @@ using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Aggregation;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
@@ -19,8 +20,10 @@ using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
+using CSETWebCore.Model.Reports;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,6 +41,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IQuestionBusiness _question;
         private readonly IQuestionRequirementManager _questionRequirement;
         private readonly IAssessmentUtil _assessmentUtil;
+        private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IGalleryEditor _galleryEditor;
         private TranslationOverlay _overlay;
         private readonly IDocumentBusiness _documentBusiness;
@@ -45,7 +49,7 @@ namespace CSETWebCore.Api.Controllers
 
         public ReportsController(CSETContext context, IReportsDataBusiness report, ITokenManager token,
             IAggregationBusiness aggregation, IQuestionBusiness question, IQuestionRequirementManager questionRequirement,
-            IAssessmentUtil assessmentUtil, IGalleryEditor galleryEditor,
+            IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IGalleryEditor galleryEditor,
             IDocumentBusiness documentBusiness)
         {
             _context = context;
@@ -55,6 +59,7 @@ namespace CSETWebCore.Api.Controllers
             _question = question;
             _questionRequirement = questionRequirement;
             _assessmentUtil = assessmentUtil;
+            _adminTabBusiness = adminTabBusiness;
             _galleryEditor = galleryEditor;
             _overlay = new TranslationOverlay();
             _documentBusiness = documentBusiness;
@@ -203,8 +208,8 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _token.AssessmentForUser();
 
-            var mm = new MaturityBusiness(_context, _assessmentUtil);
-            ReportsDataBusiness reportsDataManager = new ReportsDataBusiness(_context, _assessmentUtil, null, mm, _questionRequirement, _token);
+            var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            ReportsDataBusiness reportsDataManager = new ReportsDataBusiness(_context, _assessmentUtil, _adminTabBusiness, null, mm, _questionRequirement, _token);
             reportsDataManager.SetReportsAssessmentId(assessmentId);
 
             MaturityReportData data = new MaturityReportData(_context);
@@ -262,7 +267,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             string lang = _token.GetCurrentLanguage();
 
-            var biz = new MaturityBusiness(_context, _assessmentUtil);
+            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
             var resp = biz.GetMaturityQuestions(assessmentId, true, 0, lang);
 
@@ -309,8 +314,8 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _token.AssessmentForUser();
 
-            var mm = new MaturityBusiness(_context, _assessmentUtil);
-            ReportsDataBusiness reportsDataManager = new ReportsDataBusiness(_context, _assessmentUtil, null, mm, _questionRequirement, _token);
+            var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            ReportsDataBusiness reportsDataManager = new ReportsDataBusiness(_context, _assessmentUtil, _adminTabBusiness, null, mm, _questionRequirement, _token);
             reportsDataManager.SetReportsAssessmentId(assessmentId);
 
             MaturityReportData data = new MaturityReportData(_context);
@@ -354,7 +359,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             string lang = _token.GetCurrentLanguage();
 
-            var mm = new MaturityBusiness(_context, _assessmentUtil);
+            var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
             var resp = mm.GetMaturityQuestions(assessmentId, true, 0, lang);
 
@@ -375,7 +380,6 @@ namespace CSETWebCore.Api.Controllers
                     {
                         Question_Title = q.DisplayNumber,
                         Question_Text = q.QuestionText,
-                        IsAnswerable = q.IsAnswerable,
                         Answer = new ANSWER() { Answer_Text = q.Answer },
                         ReferenceText = refText,
                         Parent_Question_Id = q.ParentQuestionId
@@ -404,7 +408,7 @@ namespace CSETWebCore.Api.Controllers
             // Create a memory stream to hold the Excel file
             using (var memoryStream = new MemoryStream())
             {
-                var mm = new MaturityBusiness(_context, _assessmentUtil).GetMaturityQuestions(assessmentId, true, 0, lang);
+                var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, true, 0, lang);
 
                 // Generate the Excel file
                 ExportPoamBusiness.GenerateSpreadSheet(memoryStream, mm);
@@ -434,7 +438,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
-            var hmm = new HydroMaturityBusiness(_context, _assessmentUtil);
+            var hmm = new HydroMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
             return Ok(hmm.GetHydroDonutData(assessmentId));
         }
@@ -451,7 +455,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
-            var hmm = new HydroMaturityBusiness(_context, _assessmentUtil);
+            var hmm = new HydroMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
             return Ok(hmm.GetHydroActions(assessmentId));
         }
@@ -468,7 +472,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
-            var hmm = new HydroMaturityBusiness(_context, _assessmentUtil);
+            var hmm = new HydroMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
             return Ok(hmm.GetHydroActionsReport(assessmentId));
         }

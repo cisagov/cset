@@ -408,11 +408,7 @@ label[required]::after {
 
 .white-panel {
   background-color: $gray-50;
-  margin: 1rem;
-  padding: 2em;
-  overflow-y:scroll;
-  border-radius: 8px;
-  max-height: calc(100vh - 220px);
+  padding: 2rem;
   color: $gray-800;
 }
 
@@ -2876,10 +2872,6 @@ hr.ranked-questions {
 
 .ta-center {
   text-align: center !important;
-}
-
-.bb-1-ddd {
-  border-bottom: 1px solid #ddd !important;
 }
 
 .br-0 {

@@ -72,19 +72,19 @@
 
     <div class="row mb-4">
       <div class="col-6">
-        <label for="name" class="form-label">{{t('pcii requested')}}</label>
-        <div>
-          <div class="d-inline-flex btn-group align-items-start" role="group" data-toggle="buttons">
-            <label class="btn btn-level form-check-label px-4" [class.active]="!assessment.is_PCII">
+        <div class="row">
+          <label for="name" class="form-label">{{t('pcii requested')}}</label>
+          <div class="btn-group col-10" role="group" data-toggle="buttons">
+            <label class="btn btn-level btn-rounded form-check-label" [class.active]="assessment.is_PCII">
+              <input class="btn-check" name="standardYes" id="standardYes" type="radio" autocomplete="off"
+                (change)="changeIsPCII(true)" tabindex="0" [(ngModel)]="assessment.is_PCII" />
+              Yes
+            </label>
+            <label class="btn btn-level btn-rounded form-check-label" [class.active]="!assessment.is_PCII">
               <input class="btn-check" name="standardNo" id="standardNo" type="radio" autocomplete="off"
                 (change)="changeIsPCII(false)" tabindex="0" [ngModel]="!assessment.is_PCII"
                 (ngModelChange)="assessment.is_PCII = $event" />
-              {{t('answer-options.button-labels.no')}}
-            </label>
-            <label class="btn btn-level form-check-label px-4" [class.active]="assessment.is_PCII">
-              <input class="btn-check" name="standardYes" id="standardYes" type="radio" autocomplete="off"
-                (change)="changeIsPCII(true)" tabindex="0" [(ngModel)]="assessment.is_PCII" />
-              {{t('answer-options.button-labels.yes')}}
+              No
             </label>
           </div>
         </div>
@@ -109,30 +109,55 @@
     <div class="mt-4">
       <h4>{{ t('assessment settings') }}</h4>
 
-      <div *ngIf="this.configSvc.userIsCisaAssessor; else nonassessor" class="mb-3">
-        <label>{{t('assessor workflow.control label')}}</label>
-        <label class="form-label fst-italic">{{t('assessor workflow.assessor workflow explanation')}}</label>
-        <div class="d-inline-flex btn-group align-items-start" role="group" data-toggle="buttons">
-          <label class="btn btn-level form-check-label px-4" [class.active]="!assessment.assessorMode"
-            (change)="updateAssessorMode()">
-            <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
-              [checked]="!assessment.assessorMode" />
-            {{t('answer-options.button-labels.no')}}
-          </label>
-          <label class="btn btn-level form-check-label px-4" [class.active]="assessment.assessorMode"
-            (change)="updateAssessorMode()">
-            <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
-              [checked]="assessment.assessorMode" />
-            {{t('answer-options.button-labels.yes')}}
-          </label>
+      <div *ngIf="this.configSvc.userIsCisaAssessor; else content" class="mb-3 col-6">
+        <label class="form-label">{{t('protected features.cisa assessor workflow')}}</label>
+        <div>
+          <div class="btn-group btn-group-toggle col-10" data-toggle="buttons" style="border: 2px solid transparent; border-radius: 8px;">
+            <label class="btn btn-level form-check-label" [class.active]="assessment.assessorMode"
+              (change)="updateAssessorMode()">
+              <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                [checked]="assessment.assessorMode" />
+              {{t('answer-options.button-labels.yes')}}
+            </label>
+            <label class="btn btn-level form-check-label" [class.active]="!assessment.assessorMode"
+              (change)="updateAssessorMode()">
+              <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                [checked]="!assessment.assessorMode" />
+              {{t('answer-options.button-labels.no')}}
+            </label>
+          </div>
         </div>
       </div>
-      <ng-template #nonassessor class="mb-3">
+      <ng-template #content class=" mb-3">
         <p>
-          {{ t('assessor workflow.non assessor explanation') }}
+          {{ t('protected features.assessor mode') }}
         </p>
       </ng-template>
+      <div class="mt-4">
+        <h4> Assessment Complete</h4>
 
+        <div class="mb-3 col-6">
+          <label class="form-label">"Mark as Complete"
+            Toggle to indicate whether this assessment has been finished</label>
+          <div>
+            <div class="btn-group btn-group-toggle col-10" data-toggle="buttons"
+                 style="border: 2px solid transparent; border-radius: 8px;">
+              <label class="btn btn-level form-check-label" [class.active]="assessment.done"
+                     (change)="setAssessmentDone()">
+                <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                       [checked]="assessment.done" />
+                {{t('answer-options.button-labels.yes')}}
+              </label>
+              <label class="btn btn-level form-check-label" [class.active]="!assessment.done"
+                     (change)="setAssessmentDone()">
+                <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                       [checked]="!assessment.done" />
+                {{t('answer-options.button-labels.no')}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="mb-5">
         <label class="form-label" for="techDomain">{{t('tech domain.label')}}</label>
         <select class="form-select" id="techDomain" tabindex="0" name="techDomain" (change)="updateDemographics()"
@@ -267,6 +292,7 @@
         </select>
       </div>
     </div>
+
+    <app-nav-back-next [page]="'info-config-iod'"></app-nav-back-next>
   </div>
-  <app-nav-back-next [page]="'info-config-iod'"></app-nav-back-next>
 </div>

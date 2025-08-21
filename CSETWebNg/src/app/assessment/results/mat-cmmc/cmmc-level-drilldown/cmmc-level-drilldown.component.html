@@ -20,65 +20,62 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div>
-    <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-        <h3>Level Drill Down</h3>
+<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
+    <h3>Level Drill Down</h3>
 
-        <div *ngIf="!initialized">
-            <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-                <div style="max-width: 50px; max-height: 50px;"></div>
-            </div>
-        </div>
-
-        <div class="d-flex flex-column flex-11a mt-3" [class.d-none]="!initialized">
-            <div *ngIf="initialized && !dataError" class="mb-4">
-                <h4>Compliance by Level</h4>
-            </div>
-            <div *ngIf="initialized && !dataError" class="mb-5">
-                <div class="d-flex" [class.flex-row]="!layoutSvc.hp" [class.flex-column]="layoutSvc.hp">
-                    <div class="d-flex align-items-center justify-content-center" [class.me-5]="!layoutSvc.hp"
-                        [class.mb-3]="layoutSvc.hp">
-                        <div style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold; background-color: #1f5284; color: #fff;"
-                            [class.p-2]="layoutSvc.hp">
-                            {{'Target Level ' + cmmcModel?.targetLevel}}
-                        </div>
-                    </div>
-
-                    <div class="chart-container" [class.w-500px]="!layoutSvc.hp" [class.w-100]="layoutSvc.hp">
-                        <canvas id="canvasLevelScores">{{chartLevelScores}}</canvas>
-                    </div>
-                </div>
-            </div>
-
-            <div *ngIf="initialized && !dataError" class="mb-4">
-                <h4>Compliance Detail</h4>
-            </div>
-            <div *ngFor="let l of statsByLevel">
-                <!-- pie charts for compliance at each level -->
-                <h5 *ngIf="isWithinModelLevel(l)" [innerHTML]="levelDescriptions[l.modelLevel]"></h5>
-                <div *ngIf="isWithinModelLevel(l)" class="d-flex mb-4" [class.flex-row]="!layoutSvc.hp"
-                    [class.flex-column]="layoutSvc.hp">
-                    <div class="d-flex align-items-center justify-content-center" [class.me-5]="!layoutSvc.hp"
-                        [class.mb-3]="layoutSvc.hp">
-                        <div style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold; background-color: #1f5284; color: #fff;"
-                            [class.p-2]="layoutSvc.hp">
-                            {{'Level ' + l.modelLevel}}
-                        </div>
-                    </div>
-                    <div id="chart" class="mb-3">
-                        <canvas id="{{'level' + l?.modelLevel }}"
-                            style="max-width: 800px; margin: 0 auto;">{{l.chart}}</canvas>
-                    </div>
-                </div>
-            </div>
-            <div *ngIf="initialized && dataError">
-                <h1>Error Loading Data</h1>
-                <p>There was an error retreiving the data for this page. Please reload the page.</p>
-            </div>
-
-            
-
+    <div *ngIf="!initialized">
+        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+            <div style="max-width: 50px; max-height: 50px;"></div>
         </div>
     </div>
-    <app-nav-back-next [page]="'cmmc-level-drilldown'"></app-nav-back-next>
+
+    <div class="d-flex flex-column flex-11a mt-3" [class.d-none]="!initialized">
+        <div *ngIf="initialized && !dataError" class="mb-4">
+            <h4>Compliance by Level</h4>
+        </div>
+        <div *ngIf="initialized && !dataError" class="mb-5">
+            <div class="d-flex" [class.flex-row]="!layoutSvc.hp" [class.flex-column]="layoutSvc.hp">
+                <div class="d-flex align-items-center justify-content-center" [class.me-5]="!layoutSvc.hp"
+                    [class.mb-3]="layoutSvc.hp">
+                    <div style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold; background-color: #1f5284; color: #fff;"
+                        [class.p-2]="layoutSvc.hp">
+                        {{'Target Level ' + cmmcModel?.targetLevel}}
+                    </div>
+                </div>
+
+                <div class="chart-container" [class.w-500px]="!layoutSvc.hp" [class.w-100]="layoutSvc.hp">
+                    <canvas id="canvasLevelScores">{{chartLevelScores}}</canvas>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="initialized && !dataError" class="mb-4">
+            <h4>Compliance Detail</h4>
+        </div>
+        <div *ngFor="let l of statsByLevel">
+            <!-- pie charts for compliance at each level -->
+            <h5 *ngIf="isWithinModelLevel(l)" [innerHTML]="levelDescriptions[l.modelLevel]"></h5>
+            <div *ngIf="isWithinModelLevel(l)" class="d-flex mb-4" [class.flex-row]="!layoutSvc.hp"
+                [class.flex-column]="layoutSvc.hp">
+                <div class="d-flex align-items-center justify-content-center" [class.me-5]="!layoutSvc.hp"
+                    [class.mb-3]="layoutSvc.hp">
+                    <div style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold; background-color: #1f5284; color: #fff;"
+                        [class.p-2]="layoutSvc.hp">
+                        {{'Level ' + l.modelLevel}}
+                    </div>
+                </div>
+                <div id="chart" class="mb-3">
+                    <canvas id="{{'level' + l?.modelLevel }}"
+                        style="max-width: 800px; margin: 0 auto;">{{l.chart}}</canvas>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="initialized && dataError">
+            <h1>Error Loading Data</h1>
+            <p>There was an error retreiving the data for this page. Please reload the page.</p>
+        </div>
+
+        <app-nav-back-next [page]="'cmmc-level-drilldown'"></app-nav-back-next>
+
+    </div>
 </div>

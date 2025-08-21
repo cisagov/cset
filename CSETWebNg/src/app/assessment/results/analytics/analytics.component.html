@@ -1,4 +1,3 @@
-<div>
 <div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a">
 
     <div class="container">
@@ -33,8 +32,8 @@
         <div>
             <button class="btn btn-link ps-0" (click)="logoutRemote()">Logout from Remote Server</button>
         </div>
-</div>
-    <app-nav-back-next [page]="'analytics'"
-        [hide]="navSvc.isLastVisiblePage('analytics') ? 'next' : ''"></app-nav-back-next>
 
-</div>
+        <app-nav-back-next [page]="'analytics'"
+            [hide]="navSvc.isLastVisiblePage('analytics') ? 'next' : ''"></app-nav-back-next>
+
+    </div>

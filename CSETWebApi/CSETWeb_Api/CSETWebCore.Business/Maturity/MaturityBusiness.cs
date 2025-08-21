@@ -7,6 +7,7 @@
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Enum;
 using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Model.Edm;
@@ -27,6 +28,7 @@ namespace CSETWebCore.Business.Maturity
     {
         private CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
+        private readonly IAdminTabBusiness _adminTabBusiness;
 
         private int _maturityModelId;
 
@@ -41,8 +43,6 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         private SupplementalGuidanceUtils _suppUtils;
 
-        private QuestionScopeAnalyzer _questionScope = null;
-
         public readonly List<string> ModelsWithTargetLevel = ["ACET", "CMMC", "CMMC2"];
 
         private List<int> _selectedGroupingIds = [];
@@ -52,10 +52,11 @@ namespace CSETWebCore.Business.Maturity
         /// <summary>
         /// CTOR
         /// </summary>
-        public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil)
+        public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
+            _adminTabBusiness = adminTabBusiness;
 
             _addlSuppl = new AdditionalSupplemental(context);
 
@@ -792,21 +793,6 @@ namespace CSETWebCore.Business.Maturity
             _suppUtils = new SupplementalGuidanceUtils(assessmentId, _context);
 
 
-
-            // Spin up the generic scope analyzer or a maturity model-specific one
-            _questionScope = new QuestionScopeAnalyzer(assessmentId);
-
-            // CPG 2.0
-            if (targetModelId == Constants.Constants.Model_CPG2)
-            {
-                var _techDomain = _context.DETAILS_DEMOGRAPHICS
-                    .Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "TECH-DOMAIN")
-                    .FirstOrDefault()?.StringValue ?? null;
-
-                _questionScope = new QuestionScopeAnalyzer(assessmentId, _context, _techDomain);
-            }
-
-
             // A list of the assessment's selected grouping IDs
             _selectedGroupingIds = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Grouping_Id).ToList();
 
@@ -816,6 +802,8 @@ namespace CSETWebCore.Business.Maturity
             {
                 targetModelId = (int)modelId;
             }
+
+
 
             var targetModel = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == targetModelId).FirstOrDefault();
 
@@ -895,6 +883,13 @@ namespace CSETWebCore.Business.Maturity
                     q.Risk_Addressed = o.RiskAddressed;
                     q.Services = o.Services;
                     q.Implementation_Guides = o.Implementation_Guides;
+                }
+
+
+                // CPG 2.0 may need to have its guidance modified
+                if (targetModelId == 21)
+                {
+                    q.Implementation_Guides = _suppUtils.RemoveNonApplicableTechDomains(q.Implementation_Guides);
                 }
             }
 
@@ -981,7 +976,7 @@ namespace CSETWebCore.Business.Maturity
 
 
                 // Set the Selected if the model supports selectable models
-                if (modelId == Constants.Constants.Model_CRE_OD || modelId == Constants.Constants.Model_CRE_MIL)
+                if (modelId == 23 || modelId == 24)
                 {
                     newGrouping.Selected = _selectedGroupingIds.Contains(newGrouping.GroupingId);
                 }
@@ -1003,7 +998,6 @@ namespace CSETWebCore.Business.Maturity
 
                 var parentQuestionIDs = myQuestions.Select(x => x.Parent_Question_Id).Distinct().ToList();
 
-
                 foreach (var myQ in myQuestions)
                 {
                     FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
@@ -1011,7 +1005,7 @@ namespace CSETWebCore.Business.Maturity
 
                     var qa = QuestionAnswerBuilder.BuildQuestionAnswer(myQ, answer);
                     qa.MaturityModelId = sg.Maturity_Model_Id;
-                    qa.IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id) || myQ.Parent_Question_Id == null;
+                    qa.IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id);
 
 
                     // Include CSF mappings
@@ -1030,15 +1024,6 @@ namespace CSETWebCore.Business.Maturity
                         });
                     }
 
-
-                    // see if the question should be included in the response
-                    if (_questionScope.OutOfScopeQuestionIds.Contains(qa.QuestionId))
-                    {
-                        continue;
-                    }
-
-
-                    qa.IsAnswerable = myQ.Is_Answerable;
                     qa.Countable = IsQuestionCountable(myQ.Maturity_Model_Id, qa);
 
                     if (answer != null)
@@ -1103,20 +1088,20 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         private bool IsQuestionCountable(int modelId, QuestionAnswer qa)
         {
-            // EDM and CRR and CPG2 - parent questions are unanswerable and not countable
-            if (modelId == Constants.Constants.Model_EDM || modelId == Constants.Constants.Model_CRR || modelId == Constants.Constants.Model_CPG2)
+            // EDM and CRR - parent questions are unanswerable and not countable
+            if (modelId == 3 || modelId == 4)
             {
                 return !qa.IsParentQuestion;
             }
 
             // VADR - child questions are freeform and not countable
-            if (modelId == Constants.Constants.Model_TSA_VADR)
+            if (modelId == 7)
             {
                 return qa.ParentQuestionId == null;
             }
 
             // ISE - parent questions are not answerable and not countable
-            if (modelId == Constants.Constants.Model_ISE)
+            if (modelId == 10)
             {
                 return !qa.IsParentQuestion;
             }
@@ -1464,7 +1449,6 @@ namespace CSETWebCore.Business.Maturity
             {
                 var newQ = new QuestionAnswer()
                 {
-                    IsAnswerable = q.IsAnswerable,
                     Answer = q.AnswerText,
                     AltAnswerText = q.AltAnswerText,
                     QuestionId = q.QuestionId,

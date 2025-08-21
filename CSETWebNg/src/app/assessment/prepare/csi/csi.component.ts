@@ -27,6 +27,7 @@ import { NavigationService } from '../../../services/navigation/navigation.servi
 @Component({
     selector: 'app-csi',
     templateUrl: './csi.component.html',
+    host: { class: 'white-panel d-flex flex-column justify-content-start flex-11a' },
     standalone: false
 })
 export class CsiComponent implements OnInit {

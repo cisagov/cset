@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers.ReportWidgets;
+using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
@@ -35,12 +36,13 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentBusiness _assessment;
         private readonly IDemographicBusiness _demographic;
         private readonly IAssessmentUtil _assessmentUtil;
+        private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _report;
         private readonly CSETContext _context;
 
         public ReportsCmuController(ITokenManager token, IAssessmentBusiness assessment,
           IDemographicBusiness demographic, IReportsDataBusiness report,
-          IAssessmentUtil assessmentUtil,
+          IAssessmentUtil assessmentUtil, IAdminTabBusiness admin,
           ICmuScoringHelper cmuScoringHelper, CSETContext context)
         {
             _token = token;
@@ -48,6 +50,7 @@ namespace CSETWebCore.Api.Controllers
             _demographic = demographic;
             _report = report;
             _assessmentUtil = assessmentUtil;
+            _adminTabBusiness = admin;
             _context = context;
             _scoring = cmuScoringHelper;
         }
@@ -76,7 +79,7 @@ namespace CSETWebCore.Api.Controllers
             var demographics = _demographic.GetDemographics(assessmentId);
             _report.SetReportsAssessmentId(assessmentId);
 
-            var biz = new MaturityBusiness(_context, _assessmentUtil);
+            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var options = new StructureOptions() { IncludeQuestionText = true, IncludeSupplemental = true };
             var modelXml = biz.GetMaturityStructureAsXml(assessmentId, options);
 

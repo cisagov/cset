@@ -20,36 +20,33 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div>
-  <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-    <h3>Compliance Score</h3>
+<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
+  <h3>Compliance Score</h3>
 
-    <div *ngIf="!initialized">
-      <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-        <div style="max-width: 50px; max-height: 50px;"></div>
-      </div>
-    </div>
-
-    <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
-
-      <div *ngIf="initialized && !dataError">
-        <p>
-          The following chart shows the number of practices satisfied for each level.
-          The shaded portion of each block indicates the percentage satisfied.
-        </p>
-        <div class="d-block mb-5">
-          <app-compliance-score></app-compliance-score>
-        </div>
-      </div>
-
-      <div *ngIf="initialized && dataError">
-        <h1>Error Loading Data</h1>
-        <p>There was an error retreiving the data for this page. Please reload the page.</p>
-      </div>
-
-      
-
+  <div *ngIf="!initialized">
+    <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+      <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <app-nav-back-next [page]="'cmmc-compliance'"></app-nav-back-next>
+
+  <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+
+    <div *ngIf="initialized && !dataError">
+      <p>
+        The following chart shows the number of practices satisfied for each level.
+        The shaded portion of each block indicates the percentage satisfied.
+      </p>
+      <div class="d-block mb-5">
+        <app-compliance-score></app-compliance-score>
+      </div>
+    </div>
+
+    <div *ngIf="initialized && dataError">
+      <h1>Error Loading Data</h1>
+      <p>There was an error retreiving the data for this page. Please reload the page.</p>
+    </div>
+
+    <app-nav-back-next [page]="'cmmc-compliance'"></app-nav-back-next>
+
+  </div>
 </div>
