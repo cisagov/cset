@@ -46,7 +46,7 @@
         <!-- target level selection -->
         <node d="cmmc target level selection" id="cmmc-levels" path="assessment/{:id}/prepare/cmmc-levels" visible="MATURITY-ANY(2,6)" />
         <node d="cmmc target level selection" id="cmmc2-levels" path="assessment/{:id}/prepare/cmmc2-levels" visible="MATURITY-ANY(19)" />
-    
+
     </node>
 
 
@@ -65,7 +65,7 @@
         <!-- CRE optional domain questions (model 23) -->
         <node d="optional domain questions" id="maturity-questions-m23" path="assessment/{:id}/maturity-questions/m23" visible="MATURITY-ANY(22)" />
         <!-- CRE optional MIL questions (model 24) -->
-        <node d="mil questions" id="maturity-questions-m24" path="assessment/{:id}/maturity-questions/m24" visible="MATURITY-ANY(22)" />
+        <node d="optional mil questions" id="maturity-questions-m24" path="assessment/{:id}/maturity-questions/m24" visible="MATURITY-ANY(22)" />
 
 
 
@@ -326,7 +326,7 @@
 
         <node d="assessment complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
 
-    <!--
+        <!--
         <node displaytext="Sync to Server" id="analytics" path="assessment/{:id}/results/analytics" visible="IS-CSA HAS-URL-ANALYTICS"/>
     -->
     </node>

@@ -839,7 +839,7 @@
                     "answer heatmaps": "Answer Heatmaps",
                     "core questions": "Core Questions",
                     "optional domain questions": "Optional Domain Questions",
-                    "mil questions": "MIL Questions",
+                    "optional mil questions": "Optional MIL Questions",
                     "no optional domain heatmap": "No goals were selected for Optional Domain Questions.  No Optional Domain questions are in scope for this assessment.",
                     "no mil heatmap": "No MILs were selected for MIL Question domains.  No MIL questions are in scope for this assessment."
                },
