@@ -61,13 +61,11 @@ export class AssessmentConfigIodComponent implements OnInit {
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
-    this.IsPCII = this.assessment.is_PCII;
-
-
+    this.IsPCII = this.assessment.is_PCII ?? false;
 
     this.assessSvc.isBrandNew = false;
     // Null out a 'low date' so that we display a blank
-    const assessDate: Date = new Date(this.assessment.assessmentDate);
+    const assessDate: Date = new Date(this.assessment.assessmentDate ?? '0001-01-01');
     if (assessDate.getFullYear() <= 1900) {
       this.assessment.assessmentDate = null;
     }
@@ -79,20 +77,23 @@ export class AssessmentConfigIodComponent implements OnInit {
   update(e) {
     // default Assessment Name if it is left empty
     if (this.assessment) {
-      if (this.assessment.assessmentName.trim().length === 0) {
+      if (this.assessment.assessmentName?.trim().length === 0) {
         this.assessment.assessmentName = '(Untitled Assessment)';
       }
     }
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
+  /**
+   * 
+   */
   changeIsPCII(val: boolean) {
     if (this.assessment) {
       this.IsPCII = val;
       this.assessment.is_PCII = val;
 
       if (!this.assessment.is_PCII) {
-        this.assessment.pciiNumber = null;
+        this.assessment.pciiNumber = undefined;
       }
 
       this.configSvc.userIsCisaAssessor = true;

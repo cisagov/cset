@@ -20,76 +20,67 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5" *transloco="let t">
+<div class="page-break" *transloco="let t">
+     <h1>{{t('reports.core.cre.heatmap report.answer heatmaps')}}</h1>
+     <p>{{t('reports.core.cre.heatmap report.p1')}}</p>
 
-     <app-cover-sheet-a [title]="title" [assessmentName]="assessmentName" [assessmentDate]="assessmentDate"
-          [assessorName]="assessorName" [facilityName]="facilityName"
-          [selfAssessment]="selfAssessment"></app-cover-sheet-a>
-
-     <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
-          <app-report-disclaimer></app-report-disclaimer>
-     </div>
-
-
-     <div class="page-break">
-          <app-report-advisory></app-report-advisory>
-     </div>
-
-
-     <div class="page-break">
-          <h1>{{t('reports.core.cre.heatmap report.answer Heatmaps')}}</h1>
-          <p>{{t('reports.core.cre.heatmap report.p1')}}</p>
-
-          <table>
-               <tr>
-                    <td colspan="2">
-                         <h2 style="font-size: 1.4rem">{{t('reports.core.cre.heatmap report.core questions')}}</h2>
-                    </td>
-               </tr>
-               <tr *ngFor="let d of model22?.groupings" style="border-bottom: 1px solid #555;">
-                    <td class="py-3 pe-4">{{d.title}}</td>
-                    <td class="py-3 d-flex flex-wrap">
-                         <div *ngFor="let q of d.consolidatedQuestions">
-                              <div class="square" [class.wide]="q.displayNumberShort.length > 3"
-                                   [class]="answerCellClass(q.answerText)">
-                                   {{q.displayNumberShort}}
-                              </div>
+     <table>
+          <tr>
+               <td colspan="2">
+                    <h2 style="font-size: 1.4rem">{{t('reports.core.cre.heatmap report.core questions')}}</h2>
+               </td>
+          </tr>
+          <tr *ngFor="let d of model22?.groupings" style="border-bottom: 1px solid #999;">
+               <td class="py-3 pe-4">{{d.title}}</td>
+               <td class="py-3 d-flex flex-wrap">
+                    <div *ngFor="let q of d.consolidatedQuestions">
+                         <div class="square" [class.wide]="q.displayNumberShort.length > 3"
+                              [class]="answerCellClass(q.answerText)">
+                              {{q.displayNumberShort}}
                          </div>
-                    </td>
-               </tr>
-               <tr>
-                    <td colspan="2">
-                         <h2 style="font-size: 1.4rem" class="pt-4">{{t('reports.core.cre.heatmap report.optional domain questions')}}</h2>
-                    </td>
-               </tr>
-               <tr *ngFor="let d of model23?.groupings" style="border-bottom: 1px solid #555;">
-                    <td class="py-3 pe-4">{{d.title}}</td>
-                    <td class="py-3 d-flex flex-wrap">
-                         <div *ngFor="let q of d.consolidatedQuestions">
-                              <div class="square" [class.wide]="q.displayNumberShort.length > 3"
-                                   [class]="answerCellClass(q.answerText)">
-                                   {{q.displayNumberShort}}
-                              </div>
+                    </div>
+               </td>
+          </tr>
+          <tr>
+               <td colspan="2">
+                    <h2 style="font-size: 1.4rem" class="pt-4">{{t('reports.core.cre.heatmap report.optional domain
+                         questions')}}</h2>
+               </td>
+          </tr>
+          <tr *ngFor="let d of model23?.groupings" style="border-bottom: 1px solid #999;">
+               <td class="py-3 pe-4">{{d.title}}</td>
+               <td class="py-3 d-flex flex-wrap">
+                    <div *ngFor="let q of d.consolidatedQuestions">
+                         <div class="square" [class.wide]="q.displayNumberShort.length > 3"
+                              [class]="answerCellClass(q.answerText)">
+                              {{q.displayNumberShort}}
                          </div>
-                    </td>
-               </tr>
-               <tr>
-                    <td colspan="2">
-                         <h2 style="font-size: 1.4rem" class="pt-4">{{t('reports.core.cre.heatmap report.mil questions')}}</h2>
-                    </td>
-               </tr>
-               <tr *ngFor="let d of model24?.groupings" style="border-bottom: 1px solid #555;">
-                    <td class="py-3 pe-4">{{ d.title }}</td>
-                    <td class="py-3 d-flex flex-wrap">
-                         <div *ngFor="let q of d.consolidatedQuestions">
-                              <div class="square" [class.wide]="q.displayNumberShort.length > 3"
-                                   [class]="answerCellClass(q.answerText)">
-                                   {{q.displayNumberShort}}
-                              </div>
+                    </div>
+               </td>
+          </tr>
+          <tr *ngIf="model23?.groupings.length == 0">
+               <td colspan="2" class="py-3 pe-4">{{t('reports.core.cre.heatmap report.no optional domain heatmap')}}
+               </td>
+          </tr>
+          <tr>
+               <td colspan="2">
+                    <h2 style="font-size: 1.4rem" class="pt-4">{{t('reports.core.cre.heatmap report.mil questions')}}
+                    </h2>
+               </td>
+          </tr>
+          <tr *ngFor="let d of model24?.groupings" style="border-bottom: 1px solid #999;">
+               <td class="py-3 pe-4">{{ d.title }}</td>
+               <td class="py-3 d-flex flex-wrap">
+                    <div *ngFor="let q of d.consolidatedQuestions">
+                         <div class="square" [class.wide]="q.displayNumberShort.length > 3"
+                              [class]="answerCellClass(q.answerText)">
+                              {{q.displayNumberShort}}
                          </div>
-                    </td>
-               </tr>
-          </table>
-     </div>
-
+                    </div>
+               </td>
+          </tr>
+          <tr *ngIf="model24?.groupings.length == 0">
+               <td colspan="2" class="py-3 pe-4">{{t('reports.core.cre.heatmap report.no mil heatmap')}}</td>
+          </tr>
+     </table>
 </div>

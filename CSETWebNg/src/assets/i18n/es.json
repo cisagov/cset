@@ -810,9 +810,14 @@
         "protected features": "Funciones protegidas",
         "module name": "Nombre de módulo",
         "module full name": "Nombre completo de módulo",
-        "enable modules": "Habitar módulos",
-        "cisa assessor workflow": "Evaluador de CISA",
-        "assessment mode": "La evaluación está actualmente en modo de flujo de trabajo del evaluador."
+        "enable modules": "Habitar módulos"
+    },
+    "assessor workflow": {
+        "user is cisa assessor": "Asesor CISA",
+        "cisa assessor explanation": "Esta configuración indica si el usuario está con el equipo de evaluación de CISA",
+        "control label": "Flujo de trabajo del asesor de CISA",
+        "assessor workflow explanation": "La activación del flujo de trabajo del evaluador incluye pantallas exclusivas para las evaluaciones realizadas por el equipo de evaluación de CISA",
+        "non assessor explanation": "La evaluación está en modo de flujo de trabajo del evaluador, lo que provoca que aparezcan otras pantallas del paso de Preparar. Solo un evaluador CISA puede cambiar esta configuración.."
     },
     "parameters": {
         "text1": "Muchos estándares en 'modo requisitos' contienen parámetros que se pueden cambiar para que coincidan con su situación específica. La tabla a continuación le permite cambiar los valores de los parámetros indicados en esta evaluación haciendo clic en el Valor de Parámetro. Cambiar un valor de parámetro actualizará todos los valores de parámetros relacionados en el texto del requisito de los Estándares de Ciberseguridad actualmente seleccionados.",

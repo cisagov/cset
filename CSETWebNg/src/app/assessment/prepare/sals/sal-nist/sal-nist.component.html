@@ -187,13 +187,13 @@
       <div class="form-group special-factors">
         <label for="ConfidentialitySpecialFactor">{{t('titles.sal.nist.confidentiality special factor')}}</label>
         <textarea class="form-control" tabindex="0" id="ConfidentialitySpecialFactor"
-          [(ngModel)]="topModel?.specialFactors.confidentiality_Special_Factor" (change)="specialFactor()"></textarea>
+          [(ngModel)]="confidentialitySpecialFactor" (change)="specialFactor()"></textarea>
         <label for="IntegritySpecialFactor">{{t('titles.sal.nist.integrity special factor')}}</label>
         <textarea class="form-control" id="IntegritySpecialFactor"
-          [(ngModel)]="topModel?.specialFactors.integrity_Special_Factor" (change)="specialFactor()"></textarea>
+          [(ngModel)]="integritySpecialFactor" (change)="specialFactor()"></textarea>
         <label for="AvailabilitySpecialFactor">{{t('titles.sal.nist.availability special factor')}}</label>
         <textarea class="form-control" tabindex="0" id="AvailabilitySpecialFactor"
-          [(ngModel)]="topModel?.specialFactors.availability_Special_Factor" (change)="specialFactor()"></textarea>
+          [(ngModel)]="availabilitySpecialFactor" (change)="specialFactor()"></textarea>
       </div>
     </div>
   </div>

@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<form>
+<form *transloco="let t">
   <h6 class="p-3 mb-4 alert-warning">
     NOTE: Completion of all organization demographic, assessment configuration, and critical service fields are required
     to access reports and assessment exports.
@@ -29,7 +29,7 @@
   <div class="mb-4">
     <label for="orgType" class="form-label">Organization Type</label>
     <select [ngClass]="{ 'alert-danger' : !demographicData.organizationType }" class="form-select" id="orgType"
-      tabindex="0" name="orgType" [(ngModel)]="demographicData.organizationType" (ngModelChange)="update($event)" >
+      tabindex="0" name="orgType" [(ngModel)]="demographicData.organizationType" (ngModelChange)="update($event)">
       <option [ngValue]="null">-- Select Type --</option>
       <option *ngFor="let t of demographicData.listOrgTypes" [ngValue]="t.optionValue"
         [selected]="t.optionValue === demographicData.organizationType">
@@ -131,7 +131,8 @@
     </label>
 
     <select [ngClass]="{ 'alert-danger' : !demographicData.annualRevenue }" class="form-select" id="totalAnnualRevenue"
-      tabindex="0" name="totalAnnualRevenue" [(ngModel)]="demographicData.annualRevenue" (ngModelChange)="update($event)">
+      tabindex="0" name="totalAnnualRevenue" [(ngModel)]="demographicData.annualRevenue"
+      (ngModelChange)="update($event)">
       <option [ngValue]="null">-- Select --</option>
       <option *ngFor="let i of demographicData.listRevenueAmounts" [ngValue]="i.optionValue"
         [selected]="i.optionValue === demographicData.annualRevenue">
@@ -146,26 +147,27 @@
   <!-- #6 -->
 
   <!-- #7 -->
-  <div class="mb-5">
-    <label for="assetValue" class="col-8">Does your organization use a body of practice, industry standard, or similar
-      resource to support or inform its
-      cybersecurity efforts?
+  <div class="row mb-5">
+    <label for="assetValue" class="col-9">Does your organization use a body of practice, industry standard, or similar
+      resource to support or inform its cybersecurity efforts?
     </label>
 
-    <div class="btn-group col-4" role="group" data-toggle="buttons">
-      <label class="btn btn-level btn-rounded" [class.active]="demographicData.usesStandard"
-        (change)="setBool(demographicData, 'usesStandard', true)">
-        <input class="btn-check" name="standardYes" id="standardYes" type="radio" autocomplete="off" tabindex="0"
-          [checked]="demographicData.usesStandard" />
-        Yes
-      </label>
-      <label class="btn btn-level btn-rounded" [class.active]="!demographicData.usesStandard"
+    <div class="col-3 d-inline-flex btn-group justify-content-end align-items-start" role="group" data-toggle="buttons">
+      <label class="btn btn-level btn-rounded px-4" [class.active]="!demographicData.usesStandard"
         (change)="setBool(demographicData, 'usesStandard', false)">
         <input class="btn-check" name="standardNo" id="standardNo" type="radio" autocomplete="off" tabindex="0"
           [checked]="!demographicData.usesStandard" />
-        No
+        {{t('answer-options.button-labels.no')}}
+      </label>
+      <label class="btn btn-level btn-rounded px-4" [class.active]="demographicData.usesStandard"
+        (change)="setBool(demographicData, 'usesStandard', true)">
+        <input class="btn-check" name="standardYes" id="standardYes" type="radio" autocomplete="off" tabindex="0"
+          [checked]="demographicData.usesStandard" />
+        {{t('answer-options.button-labels.yes')}}
       </label>
     </div>
+
+
 
     <div *ngIf="demographicData.usesStandard ?? false" class="ms-5">
       <div class="fst-italic my-2">
@@ -193,22 +195,22 @@
   </div>
 
   <!-- #8 -->
-  <div class="mb-5">
-    <label class="col-8" for="assetValue">Is your organization required to comply with mandatory, cybersecurity-related
+  <div class="row mb-5">
+    <label class="col-9" for="assetValue">Is your organization required to comply with mandatory, cybersecurity-related
       regulation?
     </label>
 
-    <div class="btn-group col-4" role="group" data-toggle="buttons">
-      <label class="btn btn-level btn-rounded" [class.active]="demographicData.requiredToComply">
-        <input class="btn-check" name="complyYes" id="complyYes" type="radio" autocomplete="off" tabindex="0"
-          (change)="setBool(demographicData, 'requiredToComply', true)" [checked]="demographicData.requiredToComply" />
-        Yes
-      </label>
-      <label class="btn btn-level btn-rounded" [class.active]="!demographicData.requiredToComply"
+    <div class="col-3 d-inline-flex btn-group justify-content-end align-items-start" role="group" data-toggle="buttons">
+      <label class="btn btn-level btn-rounded px-4" [class.active]="!demographicData.requiredToComply"
         (change)="setBool(demographicData, 'requiredToComply', false)">
         <input class="btn-check" name="complyNo" id="complyNo" type="radio" autocomplete="off" tabindex="0"
           [checked]="!demographicData.requiredToComply" />
-        No
+        {{t('answer-options.button-labels.no')}}
+      </label>
+      <label class="btn btn-level btn-rounded px-4" [class.active]="demographicData.requiredToComply">
+        <input class="btn-check" name="complyYes" id="complyYes" type="radio" autocomplete="off" tabindex="0"
+          (change)="setBool(demographicData, 'requiredToComply', true)" [checked]="demographicData.requiredToComply" />
+        {{t('answer-options.button-labels.yes')}}
       </label>
     </div>
 

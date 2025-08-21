@@ -475,6 +475,21 @@ namespace CSETWebCore.Api.Controllers
 
                 // update user detail                    
                 var user = _context.USERS.Where(x => x.UserId == userBeingUpdated.UserId).FirstOrDefault();
+                
+                // Check if the new email already exists for a different user
+                if (!string.IsNullOrEmpty(userBeingUpdated.PrimaryEmail) && 
+                    userBeingUpdated.PrimaryEmail != user.PrimaryEmail)
+                {
+                    var existingUserWithEmail = _context.USERS
+                        .Where(x => x.PrimaryEmail == userBeingUpdated.PrimaryEmail && x.UserId != userBeingUpdated.UserId)
+                        .FirstOrDefault();
+                    
+                    if (existingUserWithEmail != null)
+                    {
+                        return BadRequest($"A user with email '{userBeingUpdated.PrimaryEmail}' already exists.");
+                    }
+                }
+                
                 user.FirstName = userBeingUpdated.FirstName;
                 user.LastName = userBeingUpdated.LastName;
                 user.PrimaryEmail = userBeingUpdated.PrimaryEmail;

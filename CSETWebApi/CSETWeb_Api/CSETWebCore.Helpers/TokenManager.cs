@@ -14,7 +14,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -34,7 +33,7 @@ namespace CSETWebCore.Helpers
         private CSETContext _context;
         private static string _secret = null;
         private static object _myLockObject = new object();
-        
+
 
 
         /// <summary>
@@ -57,7 +56,8 @@ namespace CSETWebCore.Helpers
                 if (!string.IsNullOrEmpty(req.Headers["Authorization"]))
                 {
                     _tokenString = req.Headers["Authorization"];
-                    Init(_tokenString);
+                    // Do not call Init() here - defer validation until token is actually needed
+                    // This prevents exceptions during dependency injection
                 }
             }
         }
@@ -141,6 +141,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public string Payload(string claim)
         {
+            Init(); // Ensure token is initialized before accessing
             return ReadTokenPayload(_token, claim);
         }
 
@@ -153,6 +154,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public int? PayloadInt(string claim)
         {
+            Init(); // Ensure token is initialized before accessing
             var val = ReadTokenPayload(_token, claim);
             int result;
             bool b = int.TryParse(val, out result);
@@ -520,7 +522,7 @@ namespace CSETWebCore.Helpers
             try
             {
                 var assessment = AssessmentForUser();
-                if (assessment != null)
+                if (assessment > 0)
                     return true;
                 return false;
             }

@@ -5,6 +5,15 @@ This documentation is provided to assist users in navigating the basics of the C
 Here users will find step-by-step directions for installation, configuration, and setup, as well as links to 
 various resources to assist in this process.
 
+## Hosting Options
+CSET can be hosted on Windows using either **Kestrel** or **IIS** web servers:
+
+- **IIS (Recommended for Production)**: Provides robust process management, automatic application restarts, Windows authentication integration, and enterprise-grade features. IIS can host ASP.NET Core applications using either in-process or out-of-process hosting models.
+
+- **Kestrel**: A lightweight, cross-platform web server that can run standalone without IIS. Suitable for development environments or simpler production deployments where IIS features are not required.
+
+The instructions below focus primarily on IIS hosting as the recommended production approach, but sections marked as "IIS-specific" can be skipped if using Kestrel standalone.
+
 ## Using the Provided Setup Script
 The enterprise installation can be automated through the use of a provided PowerShell script named ```setup_enterprise.ps1``` 
 (as of CSET release v11.0.1.2). This script is located in the root of the enterprise binaries zip folder.
@@ -22,7 +31,7 @@ The enterprise installation can be automated through the use of a provided Power
 
 4. To run the setup script in the enterprise binaries directory, type ```.\setup_enterprise``` and hit the enter key.
 
-5. The script will open the installation wizards for SQL Server Express 2022 and the .NET 7 Hosting Bundle. The script will not proceed to each subsequent installation step until each installation wizard window is closed. It will also install IIS and IIS Manager in the background.
+5. The script will open the installation wizards for SQL Server Express 2022 and the .NET 8 Hosting Bundle. The script will not proceed to each subsequent installation step until each installation wizard window is closed. It will also install IIS and IIS Manager in the background.
 
 ![](img/figES2.PNG) 
 <br/>
@@ -49,18 +58,45 @@ The enterprise installation can be automated through the use of a provided Power
 ## Manual Setup
 
 ## Prerequisites & Necessary Files
-1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases). Click the "CSETvXXXX_Enterprise_Binaries.zip" file to download it. Once the download is complete, you will need to unzip the folder. This folder includes the CSET® application binaries, as well as the required installation packages listed in prerequsites 2-4.
+1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases). Click the "CSETvXXXX_Enterprise_Binaries.zip" file to download it. Once the download is complete, you will need to unzip the folder. This folder includes the CSET® application binaries, as well as the required installation packages listed in prerequisites 2-4.
 
 2.	We will be using Microsoft SQL Server 2022 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=101064).
   
-3.	CSET® requires your server to have the URL Rewrite Module installed as well. Again, this can be downloaded [directly from Microsoft](https://www.iis.net/downloads/microsoft/url-rewrite) (Note that this module cannot be installed until IIS has been installed first. The process for installing IIS is explained in the next section).
+3.	**REQUIRED for IIS deployment**: The URL Rewrite Module is a mandatory component for deploying CSET with IIS hosting. This module must be installed on your server and can be downloaded [directly from Microsoft](https://www.iis.net/downloads/microsoft/url-rewrite). **Important**: This module cannot be installed until IIS has been installed first. The process for installing IIS is explained in the next section.
   
-4. CSET® requires the ASP.NET Core 7 and .NET 7 runtimes to run successfully. It is recommended to install these using the .NET 7 Hosting Bundle, which includes both of these runtimes and IIS support. This can be downloaded [directly from Microsoft](https://dotnet.microsoft.com/en-us/download/dotnet/7.0).
+4. CSET® requires the ASP.NET Core 7 and .NET 8 runtimes to run successfully. For IIS hosting, install the .NET 8 Hosting Bundle, which includes both runtimes and IIS support. For Kestrel standalone, install the .NET 8 Runtime. Both can be downloaded [directly from Microsoft](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 
 5.	If you are using a SQL Server, download and install Microsoft [SQL Server Management Studio (SSMS)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15).
 
 
-## Installing IIS
+## Detailed Hosting Options
+
+### IIS Hosting (Recommended for Production)
+IIS provides enterprise-grade features including:
+- **Process Management**: Automatic application restarts and health monitoring
+- **Windows Authentication**: Seamless integration with Active Directory
+- **Performance**: In-process hosting offers better performance than out-of-process
+- **Security**: Built-in security features and SSL/TLS management
+- **Scalability**: Application pools and load balancing capabilities
+
+**IIS Hosting Models:**
+- **In-process**: ASP.NET Core runs within the IIS worker process (w3wp.exe) using IIS HTTP Server for better performance
+- **Out-of-process**: ASP.NET Core runs as a separate process with Kestrel, while IIS acts as a reverse proxy
+
+### Kestrel Standalone Hosting
+Kestrel is a lightweight, cross-platform web server that can run without IIS:
+- **Simplicity**: Direct hosting without additional web server configuration
+- **Cross-platform**: Can run on Windows, Linux, and macOS
+- **Development**: Ideal for development and testing environments
+- **Lightweight**: Minimal overhead for simple deployments
+
+**For production Kestrel deployments**, consider:
+- Running as a Windows Service for automatic startup and process management
+- Implementing proper logging and monitoring
+- Configuring HTTPS certificates directly in Kestrel
+- Setting up appropriate firewall rules
+
+## Installing (IIS)
 1.	On your Windows Server, open the “Server Manager” application.
 
 ![](img/figE1.PNG) 
@@ -106,7 +142,7 @@ The enterprise installation can be automated through the use of a provided Power
 
   * The final step is to click the Install button to finish up this process. Once this is complete, you can close out of the Server Setup window.
 
-2. Once your server is up and running, you will need to install the URL Rewrite Module and the .NET 7 Runtimes. Simply download the installation media files from Microsoft (see Page 2 links or above hyperlink) and run them to install the necessary patches.
+2. Once your server is up and running, you will need to install the URL Rewrite Module and the .NET 8 Runtimes. Simply download the installation media files from Microsoft (see Page 2 links or above hyperlink) and run them to install the necessary patches.
 
 ## Firewall Configuration
 1. Open Windows Defender Firewall
@@ -192,7 +228,9 @@ The enterprise installation can be automated through the use of a provided Power
   ![](img/figE23.PNG)
 
 ## CSET Installation
-1.	Re-open Windows Server Manager (see below). Double-click on “IIS” on the left. Then, right-click on the server name and click “Internet Information Services (IIS) Manager.”
+
+### For IIS Hosting:
+1.	Re-open Windows Server Manager (see below). Double-click on "IIS" on the left. Then, right-click on the server name and click "Internet Information Services (IIS) Manager."
 
 ![](img/figE24.PNG)
 
@@ -207,6 +245,16 @@ The enterprise installation can be automated through the use of a provided Power
   * If you set the back-end api port to something other than 5000, you will need to update the following config value found in wwwroot\CSETUI\assets\settings\config.json:
 
 ![](img/figE31.PNG)
+
+### For Kestrel Standalone Hosting:
+1. Copy the CSET application binaries to your desired directory (e.g., `C:\CSET\`)
+2. The application can be run directly using the `dotnet` command:
+   ```
+   dotnet CSETWebApi.dll
+   ```
+3. For production, consider running CSET as a Windows Service using tools like `sc.exe` or NSSM (Non-Sucking Service Manager)
+4. Configure firewall rules to allow access on your chosen port (default is 5000 for HTTP, 5001 for HTTPS)
+5. Update the frontend configuration file (CSETUI\assets\settings\config.json) to point to your Kestrel server URL
 
 ## CSET Configuration
 1.	Locate the "appsettings.json" file that should now be inside the “wwwroot\CSETWebApi” folder. Open this file using a text editor such as notepad.
@@ -232,29 +280,6 @@ The enterprise installation can be automated through the use of a provided Power
   * If you receive an error stating that you do not have permissions to save the appsettings.json file, find the file inside the wwwroot folder and right-click on it. Select properties and go into the security tab. Click on the edit button and make sure that all users have “Full Control” over the file.
   * Go back to the “Internet Information Services (IIS) Manager” and on the right, make sure the server is running. You may now browse to your Enterprise CSET® Installation!
 
-## Other Steps (Optional)
-### Creating CSET User
-There are two ways to add a new user to your freshly created CSET® Stand-Alone. The first way is to register for a new account inside the CSET® application itself. This will require a valid mail host as user’s will be required to enter their email address and receive a confirmation email on your network.
-
-  1.	Using a browser, navigate to your CSET® webpage.
-  2.	At right, select “Register New User Account.”
-  3.	Enter your information (name, email, and security questions), and select “Register.”
-  4.	A confirmation email will be sent to the email you entered. This email will contain a temporary password that will allow you to login to the CSET® Application.
-  5.	Once a user has logged in for the first time, they will be prompted to create their own password to replace the temporary one.
-
-The second way to add a new user to your CSET® Application is to use the “AddUser” program. This tool is intended more for testing purposes than company-wide use. It allows anybody to create a new user without the email check and should only be used by administrators. As such, do not place this program in a public or shared folder on your system. This tool can be downloaded from the latest CSET [releases page](https://github.com/cisagov/cset/releases). Simply click on the "AddUser.zip" link to download the file.
-
-  1.	Inside the “AddUser” folder, you will find a file called “AddCSETUser.exe”. It’s a config file. Open this file with a text editor such as notepad. 
-  * Inside the "connectionStrings" tags, you will need to change your “data source=” to the IP Address or domain of your server.
-  * You will then need to change the “user id=” and “password=” to the admin account you created previously.
-  * Save and close the file.
-  
-  2.	Double-click on the “AddCSETUser” application and a small dialog box should pop-up with entry fields to add a new CSET® User.
-
-  ![](img/figE29.PNG)
-
-  * Enter the required information and click “Save.”
-  * If you’ve connected with the server properly, you will see small green text at the bottom-left of the box that says, “Added Successfully”. You may now login to CSET® using that user account.
 
 ## Mail Host Configuration
 1.	Inside “wwwroot\CSETWebApi”, open the appsettings.json file.
@@ -262,11 +287,10 @@ The second way to add a new user to your CSET® Application is to use the “Add
 
   ![](img/figE30.PNG)
 
-  * Edit the text after the equal sign of value to your domain name. (e.g. value=”mailhost.YOURDOMAIN.com”).
+  * Edit the value of the "SmtpHost" property with the domain name of your mail host (e.g. mailhost.YOURDOMAIN.com).
   * Save and close the file when you are finished.
 
 ## SSL Security Certificate for Extra Security
 An SSL certificate is a web technology that establishes a secure link between a web server and a browser. This link encrypts all data (such as passwords) so that your server is more secure.
 
-  1.	You can follow [this tutorial](https://www.digicert.com/ssl-support/pfx-import-export-iis-7.htm) to add an SSL certificate to your CSET® stand-alone.
-
+  1.	You can follow [this tutorial](https://knowledge.digicert.com/tutorials/iis-7-how-to-import-export-ssl-certificates) to add an SSL certificate to your CSET® stand-alone.

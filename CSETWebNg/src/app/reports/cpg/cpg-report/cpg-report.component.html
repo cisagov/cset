@@ -34,8 +34,8 @@
         <app-report-advisory></app-report-advisory>
     </div>
 
-
-    <div class="page-break">
+    <!-- CPG 1.1 -->
+    <div class="page-break" *ngIf="modelId == 11">
         <h1>{{t('reports.core.cpg.report.performance summary')}}</h1>
 
         <p>
@@ -46,17 +46,67 @@
         </p>
 
         <div class="chart mb-5 d-inline-block w-100">
-            <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain"
+            <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain" [techDomain]="techDomain"
                 class="mb-5"></app-cpg-domain-summary>
         </div>
 
         <div>
-            <h4>{{t('reports.core.cpg.report.chart detail')}}</h4>
-
             <p>{{t('reports.core.cpg.report.p.2')}}</p>
-
             <app-cpg-domain-summary-table [data]="answerDistribByDomain"
                 [inReport]="true"></app-cpg-domain-summary-table>
+        </div>
+    </div>
+
+    <!-- CPG 2.0 -->
+    <div class="page-break" *ngIf="modelId == 21">
+        <h1>{{t('reports.core.cpg.report.performance summary')}}</h1>
+
+        <div *ngIf="techDomain == 'OT' || techDomain == 'OT+IT' || !techDomain">
+            <h2 style="font-size: 1.4rem">{{t('reports.core.cpg.ot')}}</h2>
+            <p>
+                {{t('reports.core.cpg.report.p.a')}}
+                <ng-container *ngIf="isSsgApplicable">
+                    {{t('reports.core.cpg.report.ssg.includes ssg')}}
+                </ng-container>
+            </p>
+
+            <div class="chart mb-5 d-inline-block w-100">
+                <div *ngIf="!answerDistribByDomainOt" class="spinner-container" style="margin: 2em auto">
+                    <div style="max-width: 50px; max-height: 50px;"></div>
+                </div>
+                <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomainOt" [techDomain]="techDomain"
+                    class="mb-5"></app-cpg-domain-summary>
+            </div>
+
+            <div>
+                <p>{{t('reports.core.cpg.report.p.2')}}</p>
+                <app-cpg-domain-summary-table [data]="answerDistribByDomainOt"
+                    [inReport]="true"></app-cpg-domain-summary-table>
+            </div>
+        </div>
+
+        <div *ngIf="techDomain == 'IT' || techDomain == 'OT+IT' || !techDomain">
+            <h2 style="font-size: 1.4rem">{{t('reports.core.cpg.it')}}</h2>
+            <p>
+                {{t('reports.core.cpg.report.p.a')}}
+                <ng-container *ngIf="isSsgApplicable">
+                    {{t('reports.core.cpg.report.ssg.includes ssg')}}
+                </ng-container>
+            </p>
+
+            <div class="chart mb-5 d-inline-block w-100">
+                <div *ngIf="!answerDistribByDomainIt" class="spinner-container" style="margin: 2em auto">
+                    <div style="max-width: 50px; max-height: 50px;"></div>
+                </div>
+                <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomainIt" [techDomain]="techDomain"
+                    class="mb-5"></app-cpg-domain-summary>
+            </div>
+
+            <div>
+                <p>{{t('reports.core.cpg.report.p.2')}}</p>
+                <app-cpg-domain-summary-table [data]="answerDistribByDomainIt"
+                    [inReport]="true"></app-cpg-domain-summary-table>
+            </div>
         </div>
     </div>
 
@@ -64,7 +114,7 @@
     <div class="page-break">
         <h1>{{t('reports.core.cpg.report.security practice checklist')}}</h1>
         <p class="mb-0">{{t('reports.core.cpg.report.p.b')}}</p>
-        <app-cpg-practice-table></app-cpg-practice-table>
+        <app-cpg-practice-table [modelId]="modelId"></app-cpg-practice-table>
     </div>
 
     <div class="page-break" *ngIf="isSsgApplicable">

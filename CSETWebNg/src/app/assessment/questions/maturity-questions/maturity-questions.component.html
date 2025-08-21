@@ -20,7 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" class="white-panel">
+<div *transloco="let t" >
+<div class="white-panel">
   <div id="top"></div>
   <div class="flex-column flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
@@ -95,9 +96,8 @@
       </div>
     </ng-template>
   </div>
-
-
-  <!-- normal navigation -->
+</div>
+<!-- normal navigation -->
   <app-nav-back-next *ngIf="!navTarget" [page]="'maturity-questions'"></app-nav-back-next>
 
   <!-- Show a different model (like CRE's additional models) -->
@@ -105,5 +105,4 @@
 
   <!-- Show a grouping only -->
   <app-nav-back-next *ngIf="!!navTarget && !navTarget.toLowerCase().startsWith('m')" [page]="'maturity-questions-' + navTarget"></app-nav-back-next>
-
 </div>

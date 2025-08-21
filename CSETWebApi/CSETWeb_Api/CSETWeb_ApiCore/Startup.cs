@@ -4,7 +4,6 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.AdminTab;
 using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.Common;
@@ -27,7 +26,6 @@ using CSETWebCore.Business.User;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
-using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Aggregation;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Common;
@@ -128,7 +126,6 @@ namespace CSETWeb_ApiCore
                 options => options.UseSqlServer(Configuration.GetConnectionString("CSET_DB")));
 
             //Services
-            services.AddTransient<IAdminTabBusiness, AdminTabBusiness>();
             services.AddTransient<IAnalyticsBusiness, AnalyticsBusiness>();
             services.AddTransient<IAssessmentBusiness, AssessmentBusiness>();
             services.AddTransient<IAssessmentModeData, AssessmentModeData>();

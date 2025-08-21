@@ -68,7 +68,7 @@ export class QuestionBlockVadrComponent implements OnInit {
    *
    */
   ngOnInit(): void {
-    this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
+    this.answerOptions = this.assessSvc.assessment?.maturityModel?.answerOptions;
 
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
@@ -212,7 +212,6 @@ export class QuestionBlockVadrComponent implements OnInit {
         return;
       }
       if (!q.parentQuestionId) {
-
         totalCount++;
         if (q.answer && q.answer !== "U") {
           answeredCount++;

@@ -9,7 +9,6 @@ using CSETWebCore.Business.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
 
@@ -25,7 +24,6 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _tokenManager;
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
-        private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _reports;
 
 
@@ -33,13 +31,11 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        public MaturityCpgController(ITokenManager tokenManager, CSETContext context, IAssessmentUtil assessmentUtil,
-    IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports)
+        public MaturityCpgController(ITokenManager tokenManager, CSETContext context, IAssessmentUtil assessmentUtil, IReportsDataBusiness reports)
         {
             _tokenManager = tokenManager;
             _context = context;
             _assessmentUtil = assessmentUtil;
-            _adminTabBusiness = adminTabBusiness;
             _reports = reports;
         }
 
@@ -56,7 +52,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             var lang = _tokenManager.GetCurrentLanguage();
 
-            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var biz = new MaturityBusiness(_context, _assessmentUtil);
             var x = biz.GetMaturityStructure(assessmentId, true, lang);
 
             return Ok(x);
@@ -75,7 +71,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             var lang = _tokenManager.GetCurrentLanguage();
 
-            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var biz = new MaturityBusiness(_context, _assessmentUtil);
             var x = biz.GetMaturityStructure(assessmentId, true, lang, modelId);
 
             return Ok(x);
@@ -88,13 +84,13 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/answerdistrib/cpg/domains")]
-        public IActionResult GetAnswerDistribForDomains()
+        public IActionResult GetAnswerDistribForDomains([FromQuery] int? modelId, [FromQuery] string techDomain)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             var lang = _tokenManager.GetCurrentLanguage();
 
             var cpgBiz = new CpgBusiness(_context, lang);
-            var resp = cpgBiz.GetAnswerDistribForDomains(assessmentId);
+            var resp = cpgBiz.GetAnswerDistribForDomains(assessmentId, modelId, techDomain);
 
             return Ok(resp);
         }

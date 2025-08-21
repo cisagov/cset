@@ -20,33 +20,35 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel h-0 d-flex flex-column flex-11a" *transloco="let t">
-    <h3>{{t('titles.goal performance')}}</h3>
+<div>
+    <div class="white-panel h-0 d-flex flex-column flex-11a" *transloco="let t">
+        <h3>{{t('titles.goal performance')}}</h3>
 
-    <div *ngIf="!initialized">
-        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-            <div style="max-width: 50px; max-height: 50px;"></div>
-        </div>
-    </div>
-
-    <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
-        <div clas="container">
-            <div class="row mb-5">
-                <div class="col-12">
-                    <p>{{t('reports.core.rra.goal performance summary')}}</p>
-                    <h5>{{t('reports.core.rra.report.rra performance by goal')}}</h5>
-                    <app-rra-answer-compliance></app-rra-answer-compliance>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <h5>{{t('reports.core.rra.report.rra practices')}}</h5>
-                    <app-rra-questions-scoring></app-rra-questions-scoring>
-                </div>
+        <div *ngIf="!initialized">
+            <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+                <div style="max-width: 50px; max-height: 50px;"></div>
             </div>
         </div>
 
-        <app-nav-back-next [page]="'rra-gaps'"></app-nav-back-next>
+        <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+            <div clas="container">
+                <div class="row mb-5">
+                    <div class="col-12">
+                        <p>{{t('reports.core.rra.goal performance summary')}}</p>
+                        <h5>{{t('reports.core.rra.report.rra performance by goal')}}</h5>
+                        <app-rra-answer-compliance></app-rra-answer-compliance>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h5>{{t('reports.core.rra.report.rra practices')}}</h5>
+                        <app-rra-questions-scoring></app-rra-questions-scoring>
+                    </div>
+                </div>
+            </div>
 
+            
+        </div>
     </div>
+    <app-nav-back-next [page]="'rra-gaps'"></app-nav-back-next>
 </div>

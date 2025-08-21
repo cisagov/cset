@@ -67,21 +67,23 @@
             <div *ngIf="showCisaAssessorWorkflowSwitch()">
                 <div class="d-flex align-items-center">
                     <span class="fa fa-globe fs-base-6 me-3"></span>
-                    <span class="fw-600 form-label">{{ t('protected features.cisa assessor
-                        workflow')}}</span>
+                    <span class="fw-600 form-label">{{ t('assessor workflow.user is cisa assessor')}}</span>
+                </div>
+                <div>
+                    {{ t('assessor workflow.cisa assessor explanation')}}
                 </div>
                 <div class="btn-group btn-group-toggle pt-2" data-toggle="buttons">
                     <label class="btn btn-level btn-rounded form-check-label" [class.active]="!cisaWorkflowEnabled"
                         (change)="toggleCisaAssessorWorkflow()">
                         <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
                             [checked]="!cisaWorkflowEnabled" />
-                        {{t('menu.user.off')}}
+                        {{t('answer-options.button-labels.no')}}
                     </label>
                     <label class="btn btn-level btn-rounded form-check-label" [class.active]="cisaWorkflowEnabled"
                         (change)="toggleCisaAssessorWorkflow()">
                         <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
                             [checked]="cisaWorkflowEnabled" />
-                        {{t('menu.user.on')}}
+                        {{t('answer-options.button-labels.yes')}}
                     </label>
                 </div>
             </div>

@@ -93,7 +93,15 @@ namespace CSETWebCore.AutoResponder
                 // Close Book and Excel and release COM Object
                 workbook?.Close(0);
                 excel?.Quit();
-                Marshal.ReleaseComObject(excel);
+                if (excel != null)
+                {
+#if WINDOWS || NET8_0_OR_GREATER
+                    if (OperatingSystem.IsWindows())
+                    {
+                        Marshal.ReleaseComObject(excel);
+                    }
+#endif
+                }
             }
         }
     }
