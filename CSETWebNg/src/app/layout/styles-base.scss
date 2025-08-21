@@ -408,7 +408,11 @@ label[required]::after {
 
 .white-panel {
   background-color: $gray-50;
-  padding: 2rem;
+  margin: 1rem;
+  padding: 2em;
+  overflow-y:scroll;
+  border-radius: 8px;
+  max-height: calc(100vh - 220px);
   color: $gray-800;
 }
 
