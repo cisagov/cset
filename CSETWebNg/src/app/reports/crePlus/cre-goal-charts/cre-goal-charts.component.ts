@@ -32,6 +32,8 @@ import { CreService } from '../../../services/cre.service';
 })
 export class creGoalChartsComponent implements OnChanges {
 
+  @Input() modelId: number;
+  @Input() modelDisplayName: string;
   @Input() domainDistrib: any;
 
   stackedModel: any[];
@@ -48,7 +50,6 @@ export class creGoalChartsComponent implements OnChanges {
    */
   ngOnChanges(changes: SimpleChanges): void {
     if (!!this.domainDistrib) { 
-      console.log('cre-goal-charts', this.domainDistrib);
       this.stackedModel = this.domainDistrib.subgroups;
       this.calcStackedHeight();
     }

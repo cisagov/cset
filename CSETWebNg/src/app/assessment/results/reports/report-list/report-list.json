@@ -92,6 +92,9 @@
         "linkUrl": "cre-general-report"
       },
       {
+        "linkUrl": "cre-detail-report"
+      },
+      {
         "linkUrl": "cre-final-report/22"
       },
       {
@@ -99,24 +102,6 @@
       },
       {
         "linkUrl": "cre-final-report/24"
-      },
-      {
-        "linkUrl": "cre-assessment-overview"
-      },
-      {
-        "linkUrl": "cre-model-chart-report/22"
-      },
-      {
-        "linkUrl": "cre-model-chart-report/23"
-      },
-      {
-        "linkUrl": "cre-model-chart-report/24"
-      },
-      {
-        "linkUrl": "cre-mil-charts-2"
-      },
-      {
-        "linkUrl": "cre-heatmaps"
       }
     ]
   },

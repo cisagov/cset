@@ -40,7 +40,8 @@ import { firstValueFrom } from 'rxjs';
 })
 export class CreGeneralReportComponent implements OnInit {
 
-  title = 'CISA Cyber Resilience Essentials (CRE+) General Report';
+  title: string;
+
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
@@ -75,7 +76,11 @@ export class CreGeneralReportComponent implements OnInit {
    * OnInit
    */
   async ngOnInit(): Promise<void> {
-    this.titleService.setTitle(this.title);
+    const titleKey = 'core.cre.charts.general.title';
+    this.tSvc.selectTranslate(titleKey, {}, 'reports').subscribe(t => {
+      this.title = t;
+      this.titleService.setTitle(this.title);
+    });
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
@@ -92,10 +97,8 @@ export class CreGeneralReportComponent implements OnInit {
     this.domainDistribCoreMil = await this.buildDomainDistrib([22, 24]);
 
     this.numberOdsSelected = await firstValueFrom(this.creSvc.getSelectedGoalMilCount(23));
-    console.log('numberodsselected', this.numberOdsSelected);
 
     this.numberMilsSelected = await firstValueFrom(this.creSvc.getSelectedGoalMilCount(24));
-    console.log('numbermilsselected', this.numberMilsSelected);
   }
 
   /**
@@ -134,7 +137,7 @@ export class CreGeneralReportComponent implements OnInit {
     return resp;
   }
 
-  
+
   /*************
     Label and tooltip formatting functions 
   ***************/

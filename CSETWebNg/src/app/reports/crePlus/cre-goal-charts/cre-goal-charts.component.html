@@ -21,27 +21,20 @@
   SOFTWARE.
 -------------------------->
 <h1 class="text-center">
-     CRE+ Core Module: {{domainDistrib?.name}}
+     {{ modelDisplayName }}: {{domainDistrib?.name}}
 </h1>
 
-<div class="my-4 px-3 pb-4" style="border: 1px solid #ddd">
-
-     <ngx-charts-bar-horizontal-stacked [view]="[700, stackedHeight]" [results]="stackedModel"
-          [scheme]="creSvc.colorScheme" [xAxis]="true" [yAxis]="true" [legend]="true" [trimLabels]="false"
-          [wrapTicks]="true" [barPadding]="stackedPadding" [dataLabelFormatting]="creSvc.fmt1"
-          [xAxisTickFormatting]="creSvc.fmt1">
-     </ngx-charts-bar-horizontal-stacked>
-</div>
-
-<hr style="width: 50%; margin: 2rem auto;">
 
 <div *ngFor="let goal of domainDistrib?.subgroups" class="my-4 px-3" style="border: 1px solid #ddd">
      <h2 class="text-center">
           <div>
-               CRE+ Core Module: {{domainDistrib?.name}}
+               {{ modelDisplayName }}: {{ domainDistrib?.name }}
           </div>
-          <div>
-               Goal: {{goal.name}}
+          <div *ngIf="modelId == 22 || modelId == 23">
+               Goal: {{ goal.name }}
+          </div>
+           <div *ngIf="modelId == 24">
+               {{ goal.name }}
           </div>
      </h2>
      <ngx-charts-bar-horizontal [view]="[700, 300]" [results]="goal.series" [scheme]="creSvc.colorScheme" [xAxis]="true"

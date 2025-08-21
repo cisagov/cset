@@ -24,22 +24,23 @@
 import { Component, OnInit } from '@angular/core';
 import { CreService } from '../../../services/cre.service';
 import { ConfigService } from '../../../services/config.service';
-import { TranslocoService } from '@jsverse/transloco';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ReportService } from '../../../services/report.service';
 import { QuestionsService } from '../../../services/questions.service';
+import { TranslocoService } from '@jsverse/transloco';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 
 @Component({
-  selector: 'app-cre-model-charts',
-  templateUrl: './cre-model-charts.component.html',
-  styleUrls: ['../../reports.scss'],
+  selector: 'app-cre-detail-report',
+  templateUrl: './cre-detail-report.component.html',
+  styleUrls: ['../../reports.scss', './cre-detail-report.component.scss'],
   standalone: false,
 })
-export class CreModelChartsComponent implements OnInit {
+export class CreDetailReportComponent implements OnInit {
+
+  title: string;
 
   assessmentName: string;
   assessmentDate: string;
@@ -47,14 +48,21 @@ export class CreModelChartsComponent implements OnInit {
   facilityName: string;
   selfAssessment: boolean;
 
-  modelId: number;
-
-
   // chart models
-  distribModel: any[];
-  domainDistrib: any[];
-  domainList: any[];
+  domainList22: any[];
+  domainList23: any[];
+  domainList24: any[];
 
+  allResponsesDataMil: any[];
+
+  barStackedConfig: any = {
+    margin: { top: 20, right: 120, bottom: 40, left: 120 },
+    width: 750,
+    barHeight: 32,
+    barPadding: 8,
+    groupPadding: 40,
+    colors: []
+  };
 
 
   /**
@@ -67,16 +75,18 @@ export class CreModelChartsComponent implements OnInit {
     public configSvc: ConfigService,
     public creSvc: CreService,
     public titleService: Title,
-    public tSvc: TranslocoService,
-    private route: ActivatedRoute
+    public tSvc: TranslocoService
   ) { }
 
   /**
    * 
    */
   async ngOnInit(): Promise<void> {
-    this.modelId = +this.route.snapshot.params['m'];
-
+    const titleKey = 'core.cre.charts.detail.title';
+    this.tSvc.selectTranslate(titleKey, {}, 'reports').subscribe(t => {
+      this.title = t;
+      this.titleService.setTitle(this.title);
+    });
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
@@ -84,54 +94,13 @@ export class CreModelChartsComponent implements OnInit {
       this.assessorName = assessmentDetail.facilitatorName;
       this.facilityName = assessmentDetail.facilityName;
       this.selfAssessment = assessmentDetail.selfAssessment;
-
-
-      setTimeout(() => {
-        const titleKey = `reports.core.cre.chart reports.${this.modelId}.title`;
-        var title = this.tSvc.translate(titleKey, { defaultTitle: this.configSvc.behaviors.defaultTitle });
-        this.titleService.setTitle(title);
-      }, 500);
     });
 
-    this.distribModel = await this.buildAllDistrib([this.modelId]);
-    this.domainDistrib = await this.buildDomainDistrib([this.modelId]);
-    this.domainList = await this.getFullModel(this.modelId);
-  }
+    this.domainList22 = await this.getFullModel(22);
+    this.domainList23 = await this.getFullModel(23);
+    this.domainList24 = await this.getFullModel(24);
 
-  /**
-   * 
-   */
-  async buildAllDistrib(modelIds: number[]): Promise<any[]> {
-    const resp = await firstValueFrom(this.creSvc.getAllAnswerDistrib([...modelIds])) || [];
-
-    // translate the answer labels
-    var opts = this.configSvc.getModuleBehavior(modelIds[0]).answerOptions;
-
-    resp.forEach(element => {
-      const key = opts?.find(x => x.code === element.name)?.buttonLabelKey.toLowerCase() ?? 'u';
-      element.name = this.tSvc.translate('answer-options.labels.' + key);
-    });
-
-    return resp;
-  }
-
-  /**
-   * 
-   */
-  async buildDomainDistrib(modelIds: number[]): Promise<any[]> {
-    let resp = await firstValueFrom(this.creSvc.getDomainAnswerDistrib([...modelIds])) || [];
-
-    // translate the answer labels
-    var opts = this.configSvc.getModuleBehavior(modelIds[0]).answerOptions;
-
-    resp.forEach(element => {
-      element.series.forEach(series => {
-        const key = opts?.find(x => x.code === series.name)?.buttonLabelKey.toLowerCase() ?? 'u';
-        series.name = this.tSvc.translate('answer-options.labels.' + key);
-      });
-    });
-
-    return resp;
+    this.allResponsesDataMil = this.prepMilForGroupedStacked(this.domainList24);
   }
 
   /**
@@ -152,5 +121,54 @@ export class CreModelChartsComponent implements OnInit {
     });
 
     return resp;
+  }
+
+  /**
+   * Convert the domain/mil/series data for consumption
+   * by the big grouped stacked chart
+   */
+  prepMilForGroupedStacked(d: any[]) {
+    if (!d) return [];
+
+    type ItemType = { group: string, bars: { name: string, series: any }[] };
+
+    const data: { group: string; bars: any[] }[] = [];
+
+    d.forEach(x => {
+      const domain: ItemType = { group: x.name, bars: [] };
+      data.push(domain);
+
+      x.subgroups.forEach(sg => {
+        const series: { [key: string]: number } = {};
+        sg.series.forEach(item => {
+          series[item.name] = item.value;
+        });
+
+        domain.bars.push({ name: sg.name, series: series });
+      });
+    });
+
+    return data;
+  }
+
+  /**
+   * Calculates a height for the chart based on how many bars are in it 
+   * and how long the labels are.
+   */
+  calcStackedHeight(items) {
+    if (items == null) {
+      return 300;
+    }
+
+    let h = items.length * 40 + 15;
+
+    return h;
+  }
+
+  /**
+   * Calculates a padding value for the chart based on how many bars are in it
+   */
+  calcStackedPadding(items) {
+    return Math.max(10, 20 - items.length);
   }
 }

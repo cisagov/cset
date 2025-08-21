@@ -271,9 +271,9 @@ import { MaturityQuestionsComponent } from './assessment/questions/maturity-ques
 import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
 import { CreQuestionSelectorComponent } from './assessment/questions/maturity-questions/cre-question-selector/cre-question-selector.component';
 import { creGoalChartsComponent } from './reports/crePlus/cre-goal-charts/cre-goal-charts.component';
-import { CreModelChartsComponent } from './reports/crePlus/cre-model-charts/cre-model-charts.component';
-import { CreMilCharts2Component } from './reports/crePlus/cre-mil-charts-2/cre-mil-charts-2.component';
+import { CreDetailReportComponent } from './reports/crePlus/cre-detail-report/cre-detail-report.component';
 import { CreHeatmapsComponent } from './reports/crePlus/cre-heatmaps/cre-heatmaps.component';
+import { CreGroupedStackedHorizontalChartComponent } from './reports/crePlus/cre-grouped-stacked-horizontal-chart/cre-grouped-stacked-horizontal-chart.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
 import { SitesummaryCMMCComponent } from './reports/cmmc/sitesummary-cmmc/sitesummary-cmmc.component';
@@ -467,7 +467,6 @@ import { CreMilPctImplementedComponent } from './reports/crePlus/cre-mil-pct-imp
 import { CreMilExplanationsComponent } from './reports/crePlus/cre-mil-explanations/cre-mil-explanations.component';
 import { CreFinalReportComponent } from './reports/crePlus/cre-final-report/cre-final-report.component';
 import { CreFinalReportGridComponent } from './reports/crePlus/cre-final-report-grid/cre-final-report-grid.component';
-import { CreAssessmentOverview } from './reports/crePlus/cre-assessment-overview/cre-assessment-overview.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
 import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
 import { Cmmc2ScorecardReportComponent } from './reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
@@ -614,6 +613,7 @@ import { UserService } from './services/user.service';
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
+
 
 
 
@@ -955,11 +955,10 @@ registerSwiper();
         CreMilExplanationsComponent,
         CreFinalReportComponent,
         CreFinalReportGridComponent,
-        CreAssessmentOverview,
         creGoalChartsComponent,
-        CreModelChartsComponent,
-        CreMilCharts2Component,
+        CreDetailReportComponent,
         CreHeatmapsComponent,
+        CreGroupedStackedHorizontalChartComponent,
         Cmmc2CommentsMarkedComponent,
         Cmmc2DeficiencyComponent,
         Cmmc2ScorecardReportComponent,
