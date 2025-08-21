@@ -522,7 +522,7 @@ namespace CSETWebCore.Helpers
             try
             {
                 var assessment = AssessmentForUser();
-                if (assessment != null)
+                if (assessment > 0)
                     return true;
                 return false;
             }
