@@ -152,34 +152,39 @@ export class MyAssessmentsComponent implements OnInit {
 
 
     this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.userIsCisaAssessor = resp);
+    this.tSvc.langChanges$.subscribe((lang: string) => {
+      this.updateGridTranslations();
+    })
   }
-
+  updateGridTranslations(): void {
+    this.initializeColumnDefs();
+    if (this.gridApi) {
+      this.gridApi.setGridOption('columnDefs', this.columnDefs);
+    }
+  }
   initializeColumnDefs() {
     this.columnDefs = [
       {
         field: 'assessmentName',
-        headerName: 'Assessment Name',
+        headerName: this.tSvc.translate('assessment name'),
         sortable: true,
         filter: true,
         flex: 2,
         cellRenderer: (params: any) => {
-          const assessmentId = params.data.assessmentId;
-          const assessmentName = params.value;
           return `
-          <div class="flex items-center h-full">
-            <button
-              class="btn btn-link text-primary text-left justify-start p-0 h-auto min-h-0 normal-case font-medium hover:text-primary-focus"
-              data-action="navigate"
-              data-assessment-id="${assessmentId}">
-              ${assessmentName}
-            </button>
-          </div>
-        `;
+    <button class="btn btn-link text-left justify-start h-full w-full"
+            data-action="navigate"
+            data-assessment-id="${params.data.assessmentId}"
+            style="text-align: left; justify-content: flex-start;"
+            tabindex="0">
+      ${params.value}
+    </button>
+  `;
         }
       },
       {
         field: 'type',
-        headerName: 'Assessment Type',
+        headerName: this.tSvc.translate('assessment type'),
         sortable: true,
         filter: true,
         flex: 1,
@@ -187,22 +192,43 @@ export class MyAssessmentsComponent implements OnInit {
       },
       {
         field: 'lastModifiedDate',
-        headerName: 'Last Modified',
+        headerName: this.tSvc.translate('last modified'),
         sortable: true,
         flex: 1,
         valueFormatter: (params) => {
           if (!params.value) return '';
-          // Handle DateTime object
+
+          let dateObj;
           if (params.value && typeof params.value === 'object' && params.value.toJSDate) {
-            return params.value.toJSDate().toLocaleDateString();
+            dateObj = params.value.toJSDate();
           }
-          return new Date(params.value).toLocaleDateString();
+
+          else if (typeof params.value === 'string') {
+            dateObj = new Date(params.value);
+          }
+          else if (params.value instanceof Date) {
+            dateObj = params.value;
+          }
+          else {
+            return '';
+          }
+
+          // Format as M/D/YYYY (e.g., 8/20/2025)
+          return dateObj.toLocaleDateString('en-US', {
+            month: 'numeric',
+            day: 'numeric',
+            year: 'numeric'
+          });
         },
-        cellRenderer: (params: any) => `<div class="flex items-center h-full text-sm">${params.value}</div>`
+        cellRenderer: (params: any) => {
+          // Use the formatted value, not the raw value
+          const formattedDate = params.valueFormatted || params.value;
+          return `<div class="flex items-center h-full text-sm">${formattedDate}</div>`;
+        }
       },
       {
         field: 'creatorName',
-        headerName: 'Primary Assessor',
+        headerName: this.tSvc.translate('primary assessor'),
         sortable: true,
         flex: 1,
         hide: !this.showColumn('primary-assessor'),
@@ -210,7 +236,8 @@ export class MyAssessmentsComponent implements OnInit {
         cellRenderer: (params: any) => `<div class="flex items-center h-full text-sm">${params.value}</div>`
       },
       {
-        headerName: 'Status',
+        headerName: this.tSvc.translate('status'),
+        width: 250,
         cellRenderer: (params: any) => {
           const assessment = params.data;
           const percentage = this.getCompletionPercentage(assessment);
@@ -257,54 +284,12 @@ export class MyAssessmentsComponent implements OnInit {
         cellRenderer: this.actionsRenderer.bind(this),
         sortable: false,
         filter: false,
-        width: 200,
+        width: 250,
         pinned: 'right'
       }
     ];
   }
 
-  actionsRendererBound(params: any): string {
-    const assessment = params.data;
-    const assessmentId = assessment.assessmentId;
-    const rowIndex = params.rowIndex;
-
-    let buttons = `
-      <button class="btn  btn-sm hover:btn-error tooltip"
-              data-action="delete"
-              data-assessment-id="${assessmentId}"
-              data-row-index="${rowIndex}"
-              data-tip="Remove assessment">
-        <span class="cset-icons-trash-x text-sm"></span>
-        <span class="hidden sm:inline text-nowrap ml-1">Remove</span>
-      </button>
-    `;
-
-    if (this.showColumn('export')) {
-      buttons += `
-        <button class="btn  btn-sm ml-1 tooltip"
-                data-action="export"
-                data-assessment-id="${assessmentId}"
-                data-tip="Export assessment">
-          <span class="cset-icons-export-up text-sm"></span>
-          <span class="hidden sm:inline text-nowrap ml-1">Export</span>
-        </button>
-      `;
-    }
-
-    if (this.showColumn('export json')) {
-      buttons += `
-        <button class="btn btn-sm ml-1 tooltip"
-                data-action="exportJson"
-                data-assessment-id="${assessmentId}"
-                data-tip="Export JSON">
-          <span class="cset-icons-export-up text-sm"></span>
-          <span class="hidden sm:inline text-nowrap ml-1">JSON</span>
-        </button>
-      `;
-    }
-
-    return `<div class="flex items-center gap-1 h-full">${buttons}</div>`;
-  }
 
   /**
    * Determines if a particular column should be included in the display.
@@ -432,47 +417,45 @@ export class MyAssessmentsComponent implements OnInit {
    * is not deleted, but will no longer appear in the current user's list.
    */
   removeAssessment(assessment: UserAssessment, assessmentIndex: number) {
-    // first, get a token branded for the target assessment
     this.assessSvc.getAssessmentToken(assessment.assessmentId).then(() => {
-
-      // next, call the API to see if this is a legal move
-      this.assessSvc
-        .isDeletePermitted()
-        .subscribe(canDelete => {
-          if (!canDelete) {
-            this.dialog.open(AlertComponent, {
-              data: {
-                messageText:
-                  "You cannot remove an assessment that has other users."
-              }
-            });
-            return;
-          }
-
-          // if it's legal, see if they really want to
-          const dialogRef = this.dialog.open(ConfirmComponent);
-          dialogRef.componentInstance.confirmMessage =
-            this.tSvc.translate('dialogs.remove assessment', { assessmentName: assessment.assessmentName });
-
-          dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-              this.assessSvc.removeMyContact(assessment.assessmentId).pipe(
-                tap(() => {
-                  this.sortedAssessments.splice(assessmentIndex, 1);
-                  if(this.gridApi) this.gridApi.redrawRows()
-                }),
-                catchError(error => {
-                  this.dialog.open(AlertComponent, {
-                    data: { messageText: error.statusText }
-                  });
-                  return of(null);
-                })
-              ).subscribe();
-            }
+      this.assessSvc.isDeletePermitted().subscribe(canDelete => {
+        if (!canDelete) {
+          this.dialog.open(AlertComponent, {
+            data: { messageText: "You cannot remove an assessment that has other users." }
           });
+          return;
+        }
+
+        const dialogRef = this.dialog.open(ConfirmComponent);
+        dialogRef.componentInstance.confirmMessage =
+          this.tSvc.translate('dialogs.remove assessment', { assessmentName: assessment.assessmentName });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.assessSvc.removeMyContact(assessment.assessmentId).pipe(
+              tap(() => {
+                const index = this.sortedAssessments.findIndex(a => a.assessmentId === assessment.assessmentId);
+                if (index > -1) {
+                  this.sortedAssessments.splice(index, 1);
+                }
+
+                if (this.gridApi) {
+                  this.gridApi.setGridOption('rowData', this.filteredAssessments);
+                }
+              }),
+              catchError(error => {
+                this.dialog.open(AlertComponent, {
+                  data: { messageText: error.statusText }
+                });
+                return of(null);
+              })
+            ).subscribe();
+          }
         });
+      });
     });
   }
+
 
   /**
    *
@@ -760,13 +743,6 @@ export class MyAssessmentsComponent implements OnInit {
         const assessment = this.filteredAssessments.find(a => a.assessmentId === assessmentId);
         if (assessment) {
           this.toggleFavorite(assessment);
-          // Refresh the grid after state change
-          setTimeout(() => {
-            this.gridApi.refreshCells({
-              columns: ['Status'],
-              force: true
-            });
-          }, 100);
         }
         break;
 
@@ -788,7 +764,6 @@ export class MyAssessmentsComponent implements OnInit {
     }
   }
 
-// ONLY change this method in your TypeScript file
   toggleFavorite(assessment: UserAssessment): void {
     const newFavoriteStatus = !assessment.favorite;
 
@@ -796,7 +771,6 @@ export class MyAssessmentsComponent implements OnInit {
       this.assessSvc.setAssessmentFavorite(newFavoriteStatus).subscribe({
         next: () => {
           assessment.favorite = newFavoriteStatus;
-          // FIX: Check if gridApi exists before calling refreshCells
           if (this.gridApi) {
             try {
               this.gridApi.refreshCells({
