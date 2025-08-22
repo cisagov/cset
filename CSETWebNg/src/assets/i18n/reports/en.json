@@ -617,6 +617,7 @@
                "no questions": "There are no reviewed questions."
           },
           "cpg": {
+               "cpg1": "Cybersecurity Performance Goals",
                "report title": "Cybersecurity Performance Goals (CPG)",
                "report": {
                     "cpg report": "CPG Report",
@@ -660,6 +661,13 @@
                "ot-abbrev": "OT",
                "it": "Information Technology (IT)",
                "it-abbrev": "IT"
+          },
+          "ssg": {
+               "ssg1": "Sector Specific Goals",
+               "ssg2": "SSG",
+               "chemical": "Chemical Sector Goals",
+               "it": "Information Technology Goals",
+               "other": "Other Sector Goals"
           },
           "cisa vadr": {
                "report title": "CISA Validated Architecture Design Review (VADR)",

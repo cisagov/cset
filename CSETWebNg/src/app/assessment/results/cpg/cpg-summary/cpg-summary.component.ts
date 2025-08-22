@@ -49,7 +49,10 @@ export class CpgSummaryComponent implements OnInit {
   answerDistribByDomainOt: any[];
   answerDistribByDomainIt: any[];
 
-  isSsgApplicable = false;
+  isSsgActive = false;
+  answerDistribSsg: any[];
+  ssgName: string;
+
 
   constructor(
     public assessSvc: AssessmentService,
@@ -69,36 +72,43 @@ export class CpgSummaryComponent implements OnInit {
     var demog: Demographic = await firstValueFrom(this.demoSvc.getDemographic());
     this.techDomain = demog.techDomain;
 
+    // CPG 1.1
     if (this.modelId == 11) {
-      this.answerDistribByDomain = await this.getDistribForTechDomain(this.modelId, '');
+      this.answerDistribByDomain = await this.getAnswerDistribution(this.modelId, '');
     }
 
+    // CPG 2.0
     if (this.modelId == 21) {
-      this.answerDistribByDomainOt = await this.getDistribForTechDomain(this.modelId, 'OT');
-      this.answerDistribByDomainIt = await this.getDistribForTechDomain(this.modelId, 'IT');
+      this.answerDistribByDomainOt = await this.getAnswerDistribution(this.modelId, 'OT');
+      this.answerDistribByDomainIt = await this.getAnswerDistribution(this.modelId, 'IT');
     }
 
-    this.isSsgApplicable = this.ssgSvc.doesSsgApply();
+    // SSG
+    this.isSsgActive = this.ssgSvc.isSsgActive;
+    if (this.isSsgActive) {
+      this.ssgName = this.ssgSvc.ssgLabel;
+      this.answerDistribSsg = await this.getAnswerDistribution(this.ssgSvc.activeSsgModelId ?? 0, '');
+    }
   }
 
   /**
    * 
    */
-  async getDistribForTechDomain(modelId: number, techDomain: string): Promise<any> {
+  async getAnswerDistribution(modelId: number, techDomain: string): Promise<any> {
     const resp = await firstValueFrom(this.cpgSvc.getAnswerDistrib(modelId, techDomain));
     const cpgAnswerOptions = this.configSvc.getModuleBehavior('CPG').answerOptions;
 
-      resp.forEach(r => {
-        r.series.forEach(element => {
-          if (element.name == 'U') {
-            element.name = this.tSvc.translate('answer-options.labels.u');
-          } else {
-            const key = cpgAnswerOptions?.find(x => x.code == element.name)?.buttonLabelKey;
-            element.name = this.tSvc.translate('answer-options.labels.' + key?.toLowerCase());
-          }
-        });
+    resp.forEach(r => {
+      r.series.forEach(element => {
+        if (element.name == 'U') {
+          element.name = this.tSvc.translate('answer-options.labels.u');
+        } else {
+          const key = cpgAnswerOptions?.find(x => x.code == element.name)?.buttonLabelKey;
+          element.name = this.tSvc.translate('answer-options.labels.' + key?.toLowerCase());
+        }
       });
+    });
 
-      return resp;    
+    return resp;
   }
 }

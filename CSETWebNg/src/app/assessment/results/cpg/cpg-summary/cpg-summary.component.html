@@ -25,40 +25,49 @@
         <h3 class="d-flex flex-column flex-00a">{{t('reports.core.cpg.report.performance summary')}}</h3>
         <p>
             {{t('reports.core.cpg.report.p.a')}}
-            <ng-container *ngIf="isSsgApplicable">
-                {{t('reports.core.cpg.report.ssg.includes ssg')}}
-            </ng-container>
         </p>
 
-        <!-- CPG 1.1 -->
-        <ng-content *ngIf="modelId == 11">
-            <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain" class="mb-5"></app-cpg-domain-summary>
+        <!-- CPG 1.1 chart/table -->
+        <ng-container *ngIf="modelId == 11">
+            <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain"></app-cpg-domain-summary>
 
             <p>{{t('reports.core.cpg.report.p.2')}}</p>
             <app-cpg-domain-summary-table [data]="answerDistribByDomain"></app-cpg-domain-summary-table>
-        </ng-content>
+        </ng-container>
 
 
-        <!-- CPG 2.0 -->
-        <ng-content *ngIf="modelId == 21">
+        <!-- CPG 2.0 chart/table -->
+        <ng-container *ngIf="modelId == 21">
             <div class="mb-4" *ngIf="techDomain == 'OT' || techDomain == 'OT+IT' || techDomain == null">
                 <h4>{{t('reports.core.cpg.ot')}}</h4>
-                <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomainOt"
-                    class="mb-5"></app-cpg-domain-summary>
+                <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomainOt"></app-cpg-domain-summary>
 
-                <p class="mt-5">{{t('reports.core.cpg.report.p.2')}}</p>
+                <p>{{t('reports.core.cpg.report.p.2')}}</p>
                 <app-cpg-domain-summary-table [data]="answerDistribByDomainOt"></app-cpg-domain-summary-table>
             </div>
 
             <div class="mb-4" *ngIf="techDomain == 'IT' || techDomain == 'OT+IT' || techDomain == null">
                 <h4>{{t('reports.core.cpg.it')}}</h4>
-                <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomainIt"
-                    class="mb-5"></app-cpg-domain-summary>
+                <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomainIt"></app-cpg-domain-summary>
 
-                <p class="mt-5">{{t('reports.core.cpg.report.p.2')}}</p>
+                <p>{{t('reports.core.cpg.report.p.2')}}</p>
                 <app-cpg-domain-summary-table [data]="answerDistribByDomainIt"></app-cpg-domain-summary-table>
             </div>
-        </ng-content>
+        </ng-container>
+
+
+        <!-- SSG chart/table -->
+        <ng-container *ngIf="isSsgActive">
+            <div class="mt-4 mb-4">
+                <h4>SSG - {{t(`reports.core.ssg.${ssgName}`)}}</h4>
+                <app-cpg-domain-summary [answerDistribByDomain]="answerDistribSsg"></app-cpg-domain-summary>
+
+                <p>{{t('reports.core.cpg.report.p.2')}}</p>
+                <app-cpg-domain-summary-table [data]="answerDistribSsg"></app-cpg-domain-summary-table>
+            </div>
+        </ng-container>
+
     </div>
+
     <app-nav-back-next [page]="'cpg-summary-page'"></app-nav-back-next>
 </div>

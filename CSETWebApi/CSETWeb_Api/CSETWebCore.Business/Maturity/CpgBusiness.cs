@@ -27,9 +27,6 @@ namespace CSETWebCore.Business.Maturity
 
         /// <summary>
         /// Returns the answer percentage distributions for each of the CPG domains.
-        /// 
-        /// If an SSG question set is applicable, those questions are included
-        /// in the distributions.
         /// </summary>
         /// <returns></returns>
         public List<AnswerDistribDomain> GetAnswerDistribForDomains(int assessmentId, int? modelId, string techDomain)
@@ -44,27 +41,6 @@ namespace CSETWebCore.Business.Maturity
 
             // get the CPG question distribution
             var dbListCpg = GetAnswerDistribGroupings(assessmentId, techDomain, modelId);
-
-
-            // see if an SSG is applicable and combine the results with the CPG questions
-            var ssgModelId = DetermineSsgModel(assessmentId);
-            if (ssgModelId != null)
-            {
-                var dbListSsg = GetAnswerDistribGroupings(assessmentId, techDomain, ssgModelId);
-                foreach (var ssg in dbListSsg)
-                {
-                    var target = dbListCpg.Where(x => x.title == ssg.title && x.answer_text == ssg.answer_text).FirstOrDefault();
-                    if (target != null)
-                    {
-                        target.answer_count += ssg.answer_count;
-                    }
-                    else
-                    {
-                        dbListCpg.Add(ssg);
-                    }
-                }
-            }
-
 
             foreach (var item in dbListCpg)
             {
