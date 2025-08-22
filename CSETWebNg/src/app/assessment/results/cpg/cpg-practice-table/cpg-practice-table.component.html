@@ -89,8 +89,8 @@
                         <p [innerHTML]="q.recommendedAction"></p>
                     </div>
                 </td>
-                <!-- CPG 1.1 holds the answer in the question itself -->
-                <td *ngIf="model?.modelId == 11">
+                <!-- CPG 1.1 and SSG ... holds the answer in the question itself -->
+                <td *ngIf="model?.modelId !== 21">
                     <app-cpg-answer-block [answer]="q.answer"></app-cpg-answer-block>
                 </td>
                 <!-- CPG 2.0 has child answers for OT/IT -->

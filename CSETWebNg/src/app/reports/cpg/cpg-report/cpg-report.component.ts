@@ -56,8 +56,9 @@ export class CpgReportComponent implements OnInit {
   answerDistribByDomainOt: any[];
   answerDistribByDomainIt: any[];
 
-  isSsgApplicable = false;
-  ssgBonusModel: number | null = null;
+  isSsgActive = false;
+  answerDistribSsg: any[];
+  ssgName: string;
 
 
   /**
@@ -85,48 +86,68 @@ export class CpgReportComponent implements OnInit {
       this.selfAssessment = assessmentDetail.selfAssessment;
 
       this.assessSvc.assessment = assessmentDetail;
+      this.modelId = this.assessSvc.assessment.maturityModel?.modelId ?? 0;
 
-      this.modelId = assessmentDetail.maturityModel.modelId;
-
-      if (this.modelId == 11) {
-        this.initCpg1();
-      }
-
-      if (this.modelId == 21) {
-        this.initCpg2();
-      }
-
-      this.isSsgApplicable = this.ssgSvc.doesSsgApply();
-      this.ssgBonusModel = this.ssgSvc.ssgBonusModel();
+      this.initialize();
     });
+  }
 
+  /**
+   * 
+   */
+  async initialize() {
     this.tSvc.selectTranslate('core.cpg.report.cpg report', {}, { scope: 'reports' })
-      .subscribe(title =>
-        this.titleSvc.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
+      .subscribe(title => {
+        this.titleSvc.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle)
+      });
 
     var demog: Demographic = await firstValueFrom(this.demoSvc.getDemographic());
     this.techDomain = demog.techDomain;
+
+    // CPG 1.1
+    if (this.modelId == 11) {
+      this.initCpg1();
+    }
+
+    // CPG 1.2
+    if (this.modelId == 21) {
+      this.initCpg2();
+    }
+
+    // SSG
+    this.isSsgActive = this.ssgSvc.isSsgActive;
+    if (this.isSsgActive) {
+      this.initSsg();
+    }
   }
 
   /**
    * 
    */
-  async initCpg1() {
-    this.answerDistribByDomain = await this.getDistribForTechDomain(this.modelId, '');
+  async initCpg1(): Promise<void> {
+    this.answerDistribByDomain = await this.getAnswerDistribution(this.modelId, '');
   }
 
   /**
    * 
    */
-  async initCpg2() {
-    this.answerDistribByDomainOt = await this.getDistribForTechDomain(this.modelId, 'OT');
-    this.answerDistribByDomainIt = await this.getDistribForTechDomain(this.modelId, 'IT');
+  async initCpg2(): Promise<void> {
+    this.answerDistribByDomainOt = await this.getAnswerDistribution(this.modelId, 'OT');
+    this.answerDistribByDomainIt = await this.getAnswerDistribution(this.modelId, 'IT');
   }
 
   /**
    * 
    */
-  async getDistribForTechDomain(modelId: number, techDomain: string): Promise<any> {
+  async initSsg(): Promise<void> {
+    this.answerDistribSsg = await this.getAnswerDistribution(this.ssgSvc.activeSsgModelId ?? 0, '');
+    this.ssgName = this.ssgSvc.ssgLabel;
+  }
+
+  /**
+   * 
+   */
+  async getAnswerDistribution(modelId: number, techDomain: string): Promise<any> {
     const resp = await firstValueFrom(this.cpgSvc.getAnswerDistrib(modelId, techDomain));
     const cpgAnswerOptions = this.configSvc.getModuleBehavior('CPG').answerOptions;
 

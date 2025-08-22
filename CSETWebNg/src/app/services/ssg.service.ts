@@ -79,7 +79,7 @@ export class SsgService {
     if ([13, 28].includes(s)) {
       return 20; // I.T.
     }
-    
+
     return null;
   }
 
@@ -87,7 +87,29 @@ export class SsgService {
    * Indicates if any of the SSGs apply to the assessment
    * due to its sector.
    */
-  doesSsgApply() {
+  get isSsgActive(): boolean {
     return this.ssgBonusModel() != null;
+  }
+
+  /**
+   * 
+   */
+  get activeSsgModelId(): number | null {
+    return this.ssgBonusModel();
+  }
+
+  /**
+   * Returns a label that can be used 
+   * to build for transloco keys
+   */
+  get ssgLabel(): string {
+    switch (this.activeSsgModelId) {
+      case 18:
+        return 'chemical';
+      case 20:
+        return 'it';
+      default:
+        return '';
+    }
   }
 }
