@@ -34,10 +34,9 @@
         <app-report-advisory></app-report-advisory>
     </div>
 
-    <!-- CPG 1.1 -->
-    <div class="page-break" *ngIf="modelId == 11">
-        <h1>{{t('reports.core.cpg.report.performance summary')}}</h1>
 
+    <div class="page-break">
+        <h1>{{t('reports.core.cpg.report.performance summary')}}</h1>
         <p>
             {{t('reports.core.cpg.report.p.a')}}
         </p>
@@ -81,7 +80,6 @@
                 <app-cpg-domain-summary-table [data]="answerDistribSsg"></app-cpg-domain-summary-table>
             </div>
         </ng-container>
-
     </div>
 
 
