@@ -21,20 +21,22 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'app-cpg-domain-summary',
     templateUrl: './cpg-domain-summary.component.html',
     styleUrls: ['./cpg-domain-summary.component.scss'],
-    standalone: false
+    standalone: false,
+    encapsulation: ViewEncapsulation.None
 })
-export class CpgDomainSummaryComponent implements OnInit {
+export class CpgDomainSummaryComponent implements OnInit, OnChanges {
 
   @Input()
   answerDistribByDomain = [];
 
-
+  chartWidth = 700;
+  view = [this.chartWidth, 300];
 
   xAxisTicks = [0, 25, 50, 75, 100];
   answerDistribColorScheme = { domain: ['#28A745', '#007bff', '#FFC107', '#DC3545', '#c8c8c8'] };
@@ -46,6 +48,27 @@ export class CpgDomainSummaryComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['answerDistribByDomain'] && !changes['answerDistribByDomain'].firstChange) {
+      this.resizeChart();
+    }
+  }
+
+  /**
+   * Tries to calculate a reasonable consistent height for the chart 
+   * based on the number of bars displayed. 
+   */
+  resizeChart(): void {
+    const barHeight = 32; // appropriate for short non-wrapping domain names like CPG has
+    const barGap = 10;
+    const ticksHeight = 35;
+
+    let chartHeight = this.answerDistribByDomain.length * barHeight + 
+      (this.answerDistribByDomain.length - 1) * barGap +
+      ticksHeight;
+    this.view = [this.chartWidth, chartHeight];
   }
 
   /**

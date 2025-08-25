@@ -22,22 +22,31 @@
 -------------------------->
 <div>
     <div class="white-panel d-flex flex-column flex-11a" *transloco="let t">
+        <i id="top-section"></i>
         <h3 class="d-flex flex-column flex-00a">{{t('reports.core.cpg.report.security practice checklist')}}</h3>
         <p>
             {{t('reports.core.cpg.report.p.b')}}
         </p>
 
+        <div *ngIf="isSsgActive" class="my-2">
+            <button class="btn btn-link" (click)="scrollTo('ssg-section')">Jump to SSG</button>
+        </div>
+
         <!-- the table for the CPG answers -->
         <app-cpg-practice-table [modelId]="modelId"></app-cpg-practice-table>
 
         <!-- a table for SSG answers, if applicable -->
-        <ng-container *ngIf="isSsgApplicable">
+        <div *ngIf="isSsgActive" id="ssg-section">
             <hr class="page-line">
             <h3>{{t('reports.core.cpg.report.ssg.ssg security practice checklist')}}</h3>
-            <p class="mb-0"> {{t('reports.core.cpg.report.ssg.1')}}</p>
+            <p> {{t('reports.core.cpg.report.ssg.1')}}</p>
+
+            <div class="my-2">
+                <button class="btn btn-link" (click)="scrollTo('top-section')">Jump to Top</button>
+            </div>
 
             <app-cpg-practice-table [ssgModelId]="ssgBonusModel"></app-cpg-practice-table>
-        </ng-container>
+        </div>
     </div>
     <app-nav-back-next [page]="'cpg-practices-page'"></app-nav-back-next>
 </div>
