@@ -32,3 +32,25 @@ SOFTWARE.
   --ag-header-background-color: #015288;
   --ag-odd-row-background-color: transparent;
 }
+.custom-progress {
+  // Progress bar background (empty part)
+  &::-webkit-progress-bar {
+    background-color: #e5e7eb; // Light gray background
+    border-radius: 6px;
+  }
+
+  // Progress bar fill (completed part)
+  &::-webkit-progress-value {
+    background-color: #015288;
+    border-radius: 6px;
+  }
+
+  // Firefox support
+  &::-moz-progress-bar {
+    background-color: #015288;
+    border-radius: 6px;
+  }
+
+  // Firefox background
+  background-color: #e5e7eb;
+}

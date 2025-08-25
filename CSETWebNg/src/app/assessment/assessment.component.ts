@@ -74,7 +74,9 @@ interface UserAssessment {
 export class AssessmentComponent implements OnInit {
   innerWidth: number;
   innerHeight: number;
-
+  completionPercentage:number=0;
+  completedQuestions = 0;
+  totalQuestions = 0;
   /**
    * Indicates whether the nav panel is visible (true)
    * or hidden (false).
@@ -140,6 +142,7 @@ export class AssessmentComponent implements OnInit {
     });
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
+      this.loadCompletionData();
     }
   }
   getAssessmentDetail() {
@@ -233,21 +236,32 @@ export class AssessmentComponent implements OnInit {
     this.assessSvc.dropAssessment();
     this.router.navigate(['/home']);
   }
-  getCompletionPercentage(assessment:UserAssessment):number{
-    if(!assessment.totalAvailableQuestionsCount ||assessment.totalAvailableQuestionsCount===0){
-      return 0;
-    }
-    return Math.round((assessment.completedQuestionsCount/assessment.totalAvailableQuestionsCount)*100)
+
+
+  loadCompletionData() {
+    this.assessSvc.getAssessmentsCompletion().subscribe((data: any[]) => {
+      const currentAssessment = data.find(x => x.assessmentId === this.assessSvc.id());
+      if (currentAssessment) {
+        this.completedQuestions = currentAssessment.completedCount || 0;
+        this.totalQuestions = (currentAssessment.totalMaturityQuestionsCount ?? 0) +
+          (currentAssessment.totalDiagramQuestionsCount ?? 0) +
+          (currentAssessment.totalStandardQuestionsCount ?? 0);
+
+        if (this.totalQuestions > 0) {
+          this.completionPercentage = Math.round((this.completedQuestions / this.totalQuestions) * 100);
+        } else {
+          this.completionPercentage = 0;
+        }
+      } else {
+        this.completionPercentage = 0;
+        this.completedQuestions = 0;
+        this.totalQuestions = 0;
+      }
+    });
   }
-  getProgressTooltip(assessment: UserAssessment): string {
-    if (assessment.selectedMaturityModel === 'CIS' || assessment.selectedMaturityModel === 'SD02 Series') {
-      return this.tSvc.translate('welcome page.blank assessment');
-    }
 
-    if (assessment.totalAvailableQuestionsCount > 0) {
-      return `${assessment.completedQuestionsCount}/${assessment.totalAvailableQuestionsCount} questions answered`;
-    }
-
-    return this.tSvc.translate('welcome page.blank assessment');
+  getProgressTooltip(): string {
+    if (this.totalQuestions === 0) return 'No questions available';
+    return `${this.completedQuestions}/${this.totalQuestions} questions answered`;
   }
 }

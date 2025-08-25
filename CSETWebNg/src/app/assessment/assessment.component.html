@@ -117,23 +117,36 @@
 
       <mat-sidenav-content class="bgc-gray-50 d-flex flex-column flex-11a oy-auto ">
         <div class="max-1000 h-0 d-flex flex-column flex-11a" id="sidenav-content">
-          <div class="flex justify-between w-full text-black m-3">
-            <div><h6>{{this.assessment.assessmentName}}</h6></div>
-            <div class="flex items-center gap-2">
-<!--              <progress class="progress progress-primary w-full h-2 cursor-pointer"-->
-<!--                        style="color: #367190;"-->
-<!--                        [value]="getCompletionPercentage(assessment)"-->
-<!--                        [matTooltip]="getProgressTooltip(assessment)"-->
-<!--                        max="100"></progress>-->
-              <span class="text-sm font-medium">Mark Assessment Done</span>
-              <input
-                type="checkbox"
-                class="toggle toggle-primary toggle-sm"
-                [checked]="assessment.done"
-                (change)="setAssessmentDone()"
-              />
+          <div class="flex justify-between items-center  bg-gray-100 p-4 rounded-lg shadow-sm border border-lg m-3 p-3">
+            <!-- Assessment Name -->
+            <div class="flex-1 min-w-0">
+              <h6 class="text-lg font-semibold text-base-content mb-0 truncate">
+                {{this.assessment?.assessmentName ||  'Loading ...'}}
+              </h6>
             </div>
 
+            <!-- Progress Bar (Static for now) -->
+            <div class="flex items-center gap-3">
+              <div class="flex items-center gap-2">
+                <progress class="progress  custom-progress w-32 h-3"   [value]="completionPercentage" [matTooltip]="getProgressTooltip()"  max="100"></progress>
+                <span class="text-sm font-medium text-base-content">{{ completionPercentage }}%</span>
+              </div>
+
+              <!-- Divider -->
+              <div class="divider divider-horizontal m-0"></div>
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="assessmentDoneSwitch"
+                  [checked]="assessment?.done"
+                  (change)="setAssessmentDone()"
+                >
+                <label class="form-check-label text-sm font-medium" for="assessmentDoneSwitch">
+                  Mark Assessment Done
+                </label>
+              </div>
+            </div>
           </div>
           <router-outlet></router-outlet>
         </div>

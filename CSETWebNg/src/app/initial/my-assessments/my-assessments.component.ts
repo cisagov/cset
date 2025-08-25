@@ -260,7 +260,7 @@ export class MyAssessmentsComponent implements OnInit {
             </span>
 
             <div class="flex-1 min-w-0">
-              <progress class="progress progress-primary w-full h-2 cursor-pointer"
+              <progress class="progress custom-progress  w-full h-2 cursor-pointer"
                         value="${percentage}"
                         max="100"
                         title="${tooltipText}"></progress>
