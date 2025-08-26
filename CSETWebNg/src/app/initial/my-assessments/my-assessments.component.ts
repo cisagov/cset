@@ -350,7 +350,6 @@ export class MyAssessmentsComponent implements OnInit {
 
 
               this.sortedAssessments = assessments;
-              console.log(assessments);
             },
             error => {
               console.error(
