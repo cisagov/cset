@@ -21,13 +21,13 @@
   SOFTWARE.
 -------------------------->
 <ng-container *transloco="let t">
-  <div class="container mx-auto p-6 max-w-7xl">
+  <div class="tw:container tw:mx-auto p-6 tw:max-w-7xl">
     <div *ngIf="sortedAssessments == null">
       <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
         <div class="spinner-size-50"></div>
       </div>
     </div>
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-2 sm:p-4 md:p-5 lg:p-6 lg:mt-2">
+    <div class="tw:bg-white tw:rounded-lg tw:shadow-sm tw:border tw:border-gray-200 p-2 tw:sm:p-4 tw:md:p-5 tw:lg:p-6 tw:lg:mt-2">
 
       <div *ngIf="browserIsIE" class="alert alert-danger text-start">
         {{ t('welcome page.internet explorer') }}
@@ -59,38 +59,43 @@
           </div>
         </div>
       </ng-container>
-      <div *ngIf="sortedAssessments != null" class="flex justify-between items-center mb-6 grid grid-cols-1 lg:grid-cols-2 gap-2 px-4">
-        <div class="flex">   <div class="flex bg-white rounded-lg p-1 border border-gray-200 shadow-sm">
-          <button type="button"
-                  class="px-4 py-2 rounded-md text-sm font-medium transition-colors"
-                  [class]="currentFilter === 'all' ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:text-gray-800'"
-                  (click)="setFilter('all')">
-            {{ t('filters.view all') || 'View all' }}
-          </button>
-          <button type="button"
-                  class="px-4 py-2 rounded-md text-sm font-medium transition-colors"
-                  [class]="currentFilter === 'done' ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:text-gray-800'"
-                  (click)="setFilter('done')">
-            {{ t('filters.done') || 'Done' }}
-          </button>
-          <button type="button"
-                  class="px-4 py-2 rounded-md text-sm font-medium transition-colors"
-                  [class]="currentFilter === 'favorite' ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:text-gray-800'"
-                  (click)="setFilter('favorite')">
-            {{ t('filters.favorites') || 'Favorites' }}
-          </button>
-        </div></div>
-        <div class="flex flex-col sm:flex-row gap-3 flex-wrap">
+      <div *ngIf="sortedAssessments != null" class="tw:justify-between tw:items-center tw:mb-6 tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:gap-2 px-4">
+        <div class="tw:flex">   
+          <div class="flex tw:bg-white tw:rounded-lg p-1 tw:border tw:border-gray-200 tw:shadow-sm">
+            <button type="button"
+                    class="px-4 py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors"
+                    [style.border-radius]="'0.375rem'"
+                    [class]="currentFilter === 'all' ? 'tw:bg-blue-100 tw:text-blue-700' : 'tw:text-gray-600 tw:hover:text-gray-800'"
+                    (click)="setFilter('all')">
+              {{ t('filters.view all') || 'View all' }}
+            </button>
+            <button type="button"
+                    class="px-4 py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors"
+                    [style.border-radius]="'0.375rem'"
+                    [class]="currentFilter === 'done' ? 'tw:bg-blue-100 tw:text-blue-700' : 'tw:text-gray-600 tw:hover:text-gray-800'"
+                    (click)="setFilter('done')">
+              {{ t('filters.done') || 'Done' }}
+            </button>
+            <button type="button"
+                    class="px-4 py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors"
+                    [style.border-radius]="'0.375rem'"
+                    [class]="currentFilter === 'favorite' ? 'tw:bg-blue-100 tw:text-blue-700' : 'tw:text-gray-600 tw:hover:text-gray-800'"
+                    (click)="setFilter('favorite')">
+              {{ t('filters.favorites') || 'Favorites' }}
+            </button>
+          </div>
+        </div>
+        <div class="tw:flex tw:flex-col tw:sm:flex-row tw:gap-3 flex-wrap">
           <!-- Import Button (Local) -->
           <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
                  tabindex="0"
-                 class="btn btn-secondary flex items-center h-12 px-6 shadow-sm w-50"
+                 class="btn btn-secondary tw:flex tw:items-center h-12 px-6 tw:shadow-sm w-50"
                  matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
-            <span class="mr-3 text-lg cset-icons-import"></span>
-            <span class="text-sm font-medium">{{ t('buttons.import') }} local</span>
+            <span class="tw:mr-3 tw:text-lg cset-icons-import"></span>
+            <span class="tw:text-sm tw:font-medium">{{ t('buttons.import') }} local</span>
             <input type="file"
                    tabindex="0"
-                   class="hidden"
+                   class="tw:hidden"
                    id="importFile"
                    multiple
                    accept="{{ importExtensions }},.cset"
@@ -99,13 +104,13 @@
 
           <!-- Import Button (Non-Local) -->
           <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
-                 class="btn btn-outline btn-neutral h-12 flex items-center px-6 shadow-sm flex-1 min-w-fit cursor-pointer border border-gray-200"
+                 class="btn btn-outline btn-neutral h-12 tw:flex items-center px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit cursor-pointer tw:border tw:border-gray-200"
                  matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
-            <span class="mr-3 text-lg cset-icons-import"></span>
-            <span class="text-sm font-medium">{{ t('buttons.import') }}</span>
+            <span class="tw:mr-3 tw:text-lg cset-icons-import"></span>
+            <span class="tw:text-sm tw:font-medium">{{ t('buttons.import') }}</span>
             <input type="file"
                    tabindex="-1"
-                   class="hidden"
+                   class="tw:hidden"
                    id="importFile"
                    multiple
                    accept="{{ importExtensions }}"
@@ -113,22 +118,22 @@
           </label>
 
           <!-- New Assessment Button -->
-          <button class="btn btn-primary h-12 flex items-center px-6 shadow-sm flex-1 min-w-fit"
+          <button class="btn btn-primary h-12 flex items-center px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit"
                   (click)="clickNewAssessmentButton()"
                   matTooltip="{{ t('welcome page.new assessment tooltip') }}">
-            <span class="mr-3 text-lg cset-icons-cset-lock"></span>
-            <span class="text-sm font-medium">{{ t('welcome page.new assessment') }}</span>
+            <span class="tw:mr-3 tw:text-lg cset-icons-cset-lock"></span>
+            <span class="tw:text-sm tw:font-medium">{{ t('welcome page.new assessment') }}</span>
           </button>
 
           <!-- Export All Button -->
           <button *ngIf="configSvc.showExportAllButton()"
                   tabindex="0"
-                  class="btn btn-secondary flex items-center h-12 px-6 shadow-sm w-50"
+                  class="btn btn-secondary flex items-center h-12 px-6 tw:shadow-sm w-50"
                   (click)="exportAllAssessments()"
                   matTooltip="{{ t('tooltip.export all') }}"
                   [disabled]="exportAllInProgress">
-            <span class="cset-icons-export-up text-lg mr-3"></span>
-            <span class="text-sm font-medium">{{ t('export all') }}</span>
+            <span class="cset-icons-export-up tw:text-lg tw:mr-3"></span>
+            <span class="tw:text-sm tw:font-medium">{{ t('export all') }}</span>
           </button>
         </div>
         <ng-template #noAssessmentsElseBlock>
@@ -136,22 +141,22 @@
             <div>{{ t('welcome page.welcome to', { appTitle:appTitle }) }}</div>
           </h2>
           <p>{{ t('welcome page.to get started') }}</p>
-          <div class="mt-3 mb-4 flex-column d-flex justify-content-between flex-11a">
-            <div class="flex-row d-flex flex-00a">
-              <div class="d-flex flex-wrap justify-content-between flex-11a">
+          <div class="tw:mt-3 tw:mb-4 tw:flex-column tw:d-flex tw:justify-content-between tw:flex-11a">
+            <div class="tw:flex-row tw:d-flex tw:flex-00a">
+              <div class="tw:flex tw:flex-wrap tw:justify-content-between tw:flex-11a">
                 <button
-                  class="m-0 p-3 me-sm-2 me-md-3 me-lg-4 btn btn-primary d-flex align-items-center flex-11a lp-btn-mw-lg"
+                  class="m-0 p-3 tw:me-sm-2 tw:me-md-3 tw:me-lg-4 btn btn-primary d-flex align-items-center flex-11a lp-btn-mw-lg"
                   (click)="clickNewAssessmentButton()"
                   matTooltip="{{ t('welcome page.new assessment tooltip') }}">
-                  <span class="me-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
+                  <span class="tw:me-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
                   <span class="landing-button-text landing-button-text-sm">{{ t('welcome page.new assessment') }}</span>
                 </button>
                 <!-- <hr class="landing my-4"> -->
                 <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
-                       class="mt-3 mt-sm-3 mt-md-0 p-3 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
+                       class="tw:mt-3 tw:mt-sm-3 tw:mt-md-0 tw:p-3 tw:c-gray-900 btn btn-secondary tw:d-flex tw:align-items-center tw:flex-11a tw:lp-btn-mw-lg"
                        matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
-                  <span class="me-3 landing-icon landing-icon-sm cset-icons-import"></span>
-                  <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
+                  <span class="tw:me-3 tw:landing-icon tw:landing-icon-sm cset-icons-import"></span>
+                  <label for="importFile" class="tw:m-0 tw:landing-button-text tw:landing-button-text-sm">
                     {{ t('welcome page.import assessment') }}
                   </label>
                   <input type="file" class="display-none" id="importFile" multiple

@@ -11,6 +11,12 @@ module.exports = {
 		'html.worker': 'monaco-editor/esm/vs/language/html/html.worker',
 		'ts.worker': 'monaco-editor/esm/vs/language/typescript/ts.worker'
 	},
+	resolve: {
+		alias: {
+			'tailwindcss': path.resolve(__dirname, '../node_modules/tailwindcss/index.css'),
+			'daisyui': path.resolve(__dirname, '../node_modules/daisyui')
+		}
+	},
 	output: {
 		globalObject: 'self',
 		filename: '[name].bundle.js',

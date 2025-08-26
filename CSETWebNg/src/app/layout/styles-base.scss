@@ -35,6 +35,7 @@ SOFTWARE.
 @use "@angular/material/prebuilt-themes/indigo-pink.css";
 @use "../../sass/cset-font-styles.css";
 @use "../../sass/cset2-font-styles.css";
+@use "../../styles.css";
 
 $white: #ffffff;
 $black: #000000;
@@ -412,7 +413,7 @@ label[required]::after {
   padding: 2em;
   overflow-y:scroll;
   border-radius: 8px;
-  max-height: calc(100vh - 220px);
+  max-height: calc(100vh - 340px);
   color: $gray-800;
 }
 

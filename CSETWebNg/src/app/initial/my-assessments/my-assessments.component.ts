@@ -173,7 +173,7 @@ export class MyAssessmentsComponent implements OnInit {
         flex: 2,
         cellRenderer: (params: any) => {
           return `
-    <button class="btn btn-link text-left justify-start h-full w-full"
+    <button class="btn btn-link tw:text-left tw:justify-start tw:h-full tw:w-full"
             data-action="navigate"
             data-assessment-id="${params.data.assessmentId}"
             style="text-align: left; justify-content: flex-start;"
@@ -189,7 +189,7 @@ export class MyAssessmentsComponent implements OnInit {
         sortable: true,
         filter: true,
         flex: 1,
-        cellRenderer: (params: any) => `<div class="flex items-center h-full text-sm">${params.value}</div>`
+        cellRenderer: (params: any) => `<div class="tw:flex tw:items-center tw:h-full tw:text-sm">${params.value}</div>`
       },
       {
         field: 'lastModifiedDate',
@@ -220,7 +220,7 @@ export class MyAssessmentsComponent implements OnInit {
         cellRenderer: (params: any) => {
           // Use the formatted value, not the raw value
           const formattedDate = params.valueFormatted || params.value;
-          return `<div class="flex items-center h-full text-sm">${formattedDate}</div>`;
+          return `<div class="tw:flex tw:items-center tw:h-full tw:text-sm">${formattedDate}</div>`;
         }
       },
       {
@@ -230,7 +230,7 @@ export class MyAssessmentsComponent implements OnInit {
         flex: 1,
         hide: !this.showColumn('primary-assessor'),
         valueGetter: (params) => `${params.data.firstName || ''} ${params.data.lastName || ''}`.trim(),
-        cellRenderer: (params: any) => `<div class="flex items-center h-full text-sm">${params.value}</div>`
+        cellRenderer: (params: any) => `<div class="tw:flex tw:items-center tw:h-full tw:text-sm">${params.value}</div>`
       },
       {
         headerName: this.tSvc.translate('status'),
@@ -245,8 +245,8 @@ export class MyAssessmentsComponent implements OnInit {
           const tooltipText = this.getProgressTooltip(assessment);
 
           return `
-          <div class="flex items-center gap-2 h-full py-2">
-            <button class="btn btn-ghost btn-xs p-1 min-h-0 h-auto hover:bg-base-200"
+          <div class="tw:flex tw:items-center tw:gap-2 tw:h-full tw:py-2">
+            <button class="tw:btn tw:btn-ghost tw:btn-xs p-1 tw:min-h-0 tw:h-auto tw:hover:bg-base-200"
                     data-action="toggleFavorite"
                     data-assessment-id="${assessment.assessmentId}"
                     title="${assessment.favorite ? 'Remove from favorites' : 'Add to favorites'}">
@@ -255,18 +255,18 @@ export class MyAssessmentsComponent implements OnInit {
               </span>
             </button>
 
-            <span class="cursor-pointer cset-icons-flag-dark text-lg ${flagClass}"
+            <span class="cursor-pointer cset-icons-flag-dark tw:text-lg p-1 ${flagClass}"
                   title="${reviewFlag ? 'Assessment requires review' : 'No review required'}">
             </span>
 
-            <div class="flex-1 min-w-0">
-              <progress class="progress custom-progress  w-full h-2 cursor-pointer"
+            <div class="tw:flex-1 tw:min-w-0">
+              <progress class="progress custom-progress tw:w-full h-2 cursor-pointer"
                         value="${percentage}"
                         max="100"
                         title="${tooltipText}"></progress>
             </div>
 
-            <span class="text-sm text-gray-500 min-w-fit font-medium">
+            <span class="tw:text-sm tw:text-gray-500 tw:min-w-fit tw:font-medium">
               ${percentage}%
             </span>
           </div>
@@ -646,7 +646,7 @@ export class MyAssessmentsComponent implements OnInit {
             data-assessment-id="${assessmentId}"
             data-row-index="${rowIndex}"
             title="Remove assessment">
-      <span class="cset-icons-trash-x text-sm mr-2"></span>
+      <span class="cset-icons-trash-x tw:text-sm mr-2"></span>
       <span class="text-nowrap">Remove</span>
     </button>
   `;
@@ -657,7 +657,7 @@ export class MyAssessmentsComponent implements OnInit {
               data-action="export"
               data-assessment-id="${assessmentId}"
               title="Export assessment">
-        <span class="cset-icons-export-up text-sm mr-2"></span>
+        <span class="cset-icons-export-up tw:text-sm mr-2"></span>
         <span class="text-nowrap">Export</span>
       </button>
     `;
@@ -669,13 +669,13 @@ export class MyAssessmentsComponent implements OnInit {
               data-action="exportJson"
               data-assessment-id="${assessmentId}"
               title="Export assessment JSON">
-        <span class="cset-icons-export-up text-sm mr-2"></span>
+        <span class="cset-icons-export-up tw:text-sm mr-2"></span>
         <span class="text-nowrap">Export JSON</span>
       </button>
     `;
     }
 
-    return `<div class="flex gap-1">${buttons}</div>`;
+    return `<div class="tw:flex tw:gap-1">${buttons}</div>`;
   }
 
   onGridReady(params: GridReadyEvent): void {

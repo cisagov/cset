@@ -1,2 +1,82 @@
-/*@import "tailwindcss" prefix(tw);*/
-/*@plugin "daisyui";*/
+@import "tailwindcss" prefix(tw);
+@plugin "daisyui";
+
+/* Fix Material buttons by restoring essential properties */
+.mat-button, 
+.mat-raised-button, 
+.mat-icon-button, 
+.mat-fab, 
+.mat-mini-fab,
+.mat-stroked-button,
+.mat-flat-button {
+  display: inline-block !important;
+  position: relative !important;
+  padding: 0 16px !important;
+  min-width: 64px !important;
+  height: 36px !important;
+  vertical-align: middle !important;
+  line-height: 36px !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  border-radius: 4px !important;
+  overflow: hidden !important;
+  user-select: none !important;
+  cursor: pointer !important;
+  outline: none !important;
+  border: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  box-sizing: border-box !important;
+}
+
+/* Restore Material button text */
+.mat-button-wrapper {
+  display: inline-block !important;
+  line-height: inherit !important;
+  vertical-align: middle !important;
+}
+
+/* Fix Material toolbar */
+.mat-toolbar {
+  display: flex !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+}
+
+/* Fix Material icons */
+.mat-icon {
+  display: inline-block !important;
+  font-family: 'Material Icons' !important;
+  font-weight: normal !important;
+  font-style: normal !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  white-space: nowrap !important;
+  word-wrap: normal !important;
+  direction: ltr !important;
+}
+
+/* Ensure Material buttons have proper visibility */
+.mat-button, .mat-icon-button {
+  background-color: transparent !important;
+  color: rgba(0,0,0,0.87) !important;
+}
+
+.mat-raised-button {
+  background-color: #fafafa !important;
+  color: rgba(0,0,0,0.87) !important;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Fix Material button hover states */
+.mat-button:hover, .mat-icon-button:hover {
+  background-color: rgba(0,0,0,0.04) !important;
+}
+
+.mat-raised-button:hover {
+  background-color: #f5f5f5 !important;
+}
