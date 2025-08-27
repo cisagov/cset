@@ -1,6 +1,8 @@
 @import "tailwindcss" prefix(tw);
 @plugin "daisyui";
 
+@config "../tailwind.config.js";
+
 /* Fix Material buttons by restoring essential properties */
 .mat-button, 
 .mat-raised-button, 

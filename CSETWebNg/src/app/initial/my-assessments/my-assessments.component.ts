@@ -239,14 +239,14 @@ export class MyAssessmentsComponent implements OnInit {
           const assessment = params.data;
           const percentage = this.getCompletionPercentage(assessment);
           const favoriteIcon = assessment.favorite ? 'favorite' : 'favorite_border';
-          const favoriteClass = assessment.favorite ? 'text-red-500' : 'text-gray-400';
+          const favoriteClass = assessment.favorite ? 'tw:text-red-500' : 'tw:text-gray-400';
           const reviewFlag = (assessment.markedForReview || assessment.altTextMissing);
-          const flagClass = reviewFlag ? 'text-orange-500' : 'text-gray-400';
+          const flagClass = reviewFlag ? 'tw:text-orange-500' : 'tw:text-gray-400';
           const tooltipText = this.getProgressTooltip(assessment);
 
           return `
           <div class="tw:flex tw:items-center tw:gap-2 tw:h-full tw:py-2">
-            <button class="tw:btn tw:btn-ghost tw:btn-xs p-1 tw:min-h-0 tw:h-auto tw:hover:bg-base-200"
+            <button class="tw:btn tw:btn-ghost hover:!tw:rounded-lg tw:btn-xs p-1 tw:min-h-0 tw:h-auto hover:tw:bg-base-200"
                     data-action="toggleFavorite"
                     data-assessment-id="${assessment.assessmentId}"
                     title="${assessment.favorite ? 'Remove from favorites' : 'Add to favorites'}">

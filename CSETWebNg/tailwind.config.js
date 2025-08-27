@@ -4,6 +4,7 @@ import daisyui from "daisyui";
 export default {
   content: ["./src/**/*.{html,ts}"],
   prefix: 'tw-',
+  important: true,
   theme: {
     extend: {},
   },
