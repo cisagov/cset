@@ -34,7 +34,7 @@
     "@angular/platform-browser-dynamic": "^20.1.4",
     "@angular/platform-server": "^20.1.4",
     "@angular/router": "^20.1.4",
-    "@babel/helpers": "^7.27.0",
+    "@babel/helpers": "^7.28.3",
     "@fortawesome/angular-fontawesome": "^3.0.0",
     "@fortawesome/fontawesome-free": "^7.0.0",
     "@fortawesome/fontawesome-svg-core": "^7.0.0",
