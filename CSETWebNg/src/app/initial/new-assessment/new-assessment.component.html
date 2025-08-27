@@ -61,62 +61,61 @@
 <!--        </div>-->
 <!--    </div>-->
 <!--</div>-->
-
-<div *transloco="let t" class="flex flex-col md:flex-row  min-h-screen m-4 p-6 tw:rounded-lg">
+<div *transloco="let t" class="tw:flex tw:flex-col tw:md:flex-row tw:min-h-screen tw:m-4 tw:p-6 tw:rounded-lg">
   <!-- Left Sidebar -->
-  <div class="w-full md:w-1/4 bg-gray-200 p-4 tw:rounded-l-lg">
-    <h2 class="text-xl font-bold mb-4">Categories</h2>
+  <div class="tw:w-full tw:md:w-1/4 tw:bg-gray-200 tw:p-4 tw:rounded-l-lg">
+    <h2 class="tw:text-xl tw:font-bold tw:mb-4">Categories</h2>
 
     <!-- Favorite Section -->
-    <div class="mb-4 pb-4 border-b border-gray-300">
-      <div class="flex items-center text-gray-800">
-        <i class="fas fa-heart mr-2"></i>
-        Favorites
-      </div>
-    </div>
+<!--    <div class="tw:mb-4 tw:pb-4 tw:border-b tw:border-gray-300">-->
+<!--      <div class="tw:flex tw:items-center tw:text-gray-800">-->
+<!--        <i class="fas fa-heart tw:mr-2"></i>-->
+<!--        Favorites-->
+<!--      </div>-->
+<!--    </div>-->
 
     <!-- Category List -->
     <div>
       <!-- All Categories -->
-      <div class="mb-2">
-        <button class="w-full text-left py-3 px-3 text-gray-800 border-b border-gray-300 rounded-lg"
+      <div class="tw:mb-2">
+        <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"
                 [style.background-color]="selectedCategory === 'all' ? '#367190' : ''"
                 [style.color]="selectedCategory === 'all' ? 'white' : ''"
                 (click)="selectCategory('all')">
-          <i class="fas fa-th-large mr-2"></i>
+          <i class="fas fa-th-large tw:mr-2"></i>
           All Assessments
         </button>
       </div>
 
       <!-- Dynamic Categories -->
-      <div *ngFor="let row of gallerySvc.rows" class="mb-2">
-        <button class="w-full text-left py-3 px-3 text-gray-800 border-b border-gray-300 rounded-lg"
+      <div *ngFor="let row of gallerySvc.rows" class="tw:mb-2">
+        <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"
                 [style.background-color]="selectedCategory === row.group_Title ? '#367190' : ''"
                 [style.color]="selectedCategory === row.group_Title ? 'white' : ''"
                 (click)="selectCategory(row.group_Title)">
-          <i [class]="getCategoryIcon(row.group_Title)" class="mr-2"></i>
+          <i [class]="getCategoryIcon(row.group_Title)" class="tw:mr-2"></i>
           {{row.group_Title}}
-          <span class="float-right bg-gray-300 px-2 py-1 rounded text-xs">{{row.galleryItems.length}}</span>
+          <span class="tw:float-right tw:bg-gray-300 tw:px-2 tw:py-1 tw:rounded tw:text-xs">{{row.galleryItems.length}}</span>
         </button>
       </div>
     </div>
   </div>
 
   <!-- Main Content Area -->
-  <div class="tw:flex-1 tw:bg-white p-6">
+  <div class="tw:flex-1 tw:bg-white tw:p-6">
     <!-- Page Title -->
-    <div class="mb-6" [innerHTML]="pageTitle"></div>
+    <div class="tw:mb-6" [innerHTML]="pageTitle"></div>
 
     <!-- Selected Category Title -->
-    <div class="mb-6">
-      <h2 class="text-2xl font-semibold">
+    <div class="tw:mb-6">
+      <h2 class="tw:text-2xl tw:font-semibold">
         {{selectedCategory === 'all' ? 'All Assessments' : selectedCategory}}
       </h2>
-      <span class="text-sm text-gray-600">{{getFilteredItems().length}} items</span>
+      <span class="tw:text-sm tw:text-gray-600">{{getFilteredItems().length}} items</span>
     </div>
 
     <!-- Assessment Cards Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div class="tw:grid tw:grid-cols-1 tw:sm:grid-cols-2 tw:lg:grid-cols-3 tw:xl:grid-cols-4 tw:gap-6">
       <div *ngFor="let c of getFilteredItems()"
            [attr.id]="'c'+c.gallery_Item_Guid"
            class="card gallery-card"
@@ -124,7 +123,7 @@
            (mouseleave)="onHoverOut(-1, c.gallery_Item_Guid)">
 
         <!-- Card Body -->
-        <div class="card-body gallery-card-body cursor-pointer"
+        <div class="card-body gallery-card-body tw:cursor-pointer"
              style="min-height:150px; max-height:150px;"
              (click)="navSvc.beginNewAssessmentGallery(c)">
 
@@ -134,7 +133,7 @@
           </div>
 
           <!-- Title -->
-          <h6 class="card-title max-h-20 min-h-20 font-bold text-sm">
+          <h6 class="card-title tw:max-h-20 tw:min-h-20 tw:font-bold tw:text-sm">
             {{c.title}}
           </h6>
         </div>
@@ -163,10 +162,10 @@
     </div>
 
     <!-- Empty State -->
-    <div *ngIf="getFilteredItems().length === 0" class="text-center py-12">
-      <i class="fas fa-search text-6xl text-gray-300 mb-4"></i>
-      <h3 class="text-xl font-semibold mb-2">No assessments found</h3>
-      <p class="text-gray-500">Try selecting a different category</p>
+    <div *ngIf="getFilteredItems().length === 0" class="tw:text-center tw:py-12">
+      <i class="fas fa-search tw:text-6xl tw:text-gray-300 tw:mb-4"></i>
+      <h3 class="tw:text-xl tw:font-semibold tw:mb-2">No assessments found</h3>
+      <p class="tw:text-gray-500">Try selecting a different category</p>
     </div>
   </div>
 </div>
