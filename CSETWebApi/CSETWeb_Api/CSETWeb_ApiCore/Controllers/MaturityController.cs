@@ -528,15 +528,6 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        // --------------------------------------
-        // The controller methods that follow were originally built for NCUA/ACET.
-        // It is hoped that they will eventually be refactored to fit a more
-        // 'generic' approach to maturity models.
-        // --------------------------------------
-
-
-
-
         /// <summary>
         /// Get maturity definiciency list.  
         /// If the maturity query parm is null, gets the main model for the assessment.
@@ -571,16 +562,6 @@ namespace CSETWebCore.Api.Controllers
                     DeficienciesList = _reports.GetMaturityDeficiencies(modelId),
                     Information = _reports.GetInformation()
                 };
-
-
-
-                // If the assessment is a CPG and the asset's sector warrants SSG questions, include them
-                var ssgModelId = new CpgBusiness(_context, lang).DetermineSsgModel(assessmentId);
-                if (ssgModelId != null)
-                {
-                    var ssgDeficiencies = _reports.GetMaturityDeficiencies(ssgModelId);
-                    data.DeficienciesList.AddRange(ssgDeficiencies);
-                }
 
 
                 // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
