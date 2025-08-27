@@ -20,7 +20,7 @@ public partial class MATURITY_QUESTION_PROPS
     public string PropertyName { get; set; }
 
     [Required]
-    [StringLength(1000)]
+    [StringLength(3000)]
     public string PropertyValue { get; set; }
 
     [ForeignKey("Mat_Question_Id")]
