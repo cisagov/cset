@@ -60,7 +60,7 @@
         </div>
       </ng-container>
       <div *ngIf="sortedAssessments != null" class="tw:justify-between tw:items-center tw:mb-6 tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:gap-2 px-4">
-        <div class="tw:flex">   
+        <div class="tw:flex">
           <div class="flex tw:bg-white tw:rounded-lg p-1 tw:border tw:border-gray-200 tw:shadow-sm">
             <button type="button"
                     class="px-4 py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors"
@@ -104,7 +104,7 @@
 
           <!-- Import Button (Non-Local) -->
           <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
-                 class="btn btn-outline btn-neutral h-12 tw:flex items-center px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit cursor-pointer tw:border tw:border-gray-200"
+                 class="btn btn-outline btn-neutral tw:h-12 tw:flex tw:items-center px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit cursor-pointer tw:border tw:border-gray-200"
                  matTooltip="{{ t('tooltip.import', { appName: appName }) }} ({{ importExtensions }})">
             <span class="tw:mr-3 tw:text-lg cset-icons-import"></span>
             <span class="tw:text-sm tw:font-medium">{{ t('buttons.import') }}</span>
@@ -118,7 +118,7 @@
           </label>
 
           <!-- New Assessment Button -->
-          <button class="btn btn-primary h-12 flex items-center px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit"
+          <button class="btn btn-primary tw:h-12 tw:flex tw:items-center px-6 tw:shadow-sm tw:flex-1 tw:min-w-fit"
                   (click)="clickNewAssessmentButton()"
                   matTooltip="{{ t('welcome page.new assessment tooltip') }}">
             <span class="tw:mr-3 tw:text-lg cset-icons-cset-lock"></span>
@@ -348,7 +348,7 @@
         <div *ngIf="sortedAssessments?.length > 0 && !layoutSvc.hp" class="mt-4 mb-4 flex flex-col flex-1">
           <div class="overflow-x-auto rounded-lg border border-gray-200">
             <ag-grid-angular
-              class="ag-theme-alpine w-full rounded-lg [&_.ag-header-cell-label]:text-white  [&_.ag-icon-filter]:text-white [&_.ag-root-wrapper]:rounded-lg [&_.ag-header]:rounded-t-lg [&_.ag-body-viewport]:rounded-b-lg"
+              class="ag-theme-alpine tw:w-full tw:rounded-lg tw:[&_.ag-header-cell-label]:text-white  tw:[&_.ag-icon-filter]:text-white tw:[&_.ag-root-wrapper]:rounded-lg tw:[&_.ag-header]:rounded-t-lg tw:[&_.ag-body-viewport]:rounded-b-lg"
               theme="legacy"
               [rowData]="filteredAssessments"
               [columnDefs]="columnDefs"
@@ -379,18 +379,18 @@
           <p class="text-gray-600 mb-6 max-w-md">
             {{ t('welcome page.to get started') }}
           </p>
-          <div class="flex gap-3">
+          <div class="tw:flex tw:gap-3">
             <button class="btn btn-primary"
                     (click)="clickNewAssessmentButton()">
               <span class="mr-2 cset-icons-cset-lock"></span>
-              {{ t('welcome page.new assessment') }}
+              {{ t('welcome page.new assessment') }} dddd
             </button>
 
             <!-- Local import button -->
             <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
                    class="btn btn-secondary cursor-pointer">
               <span class="mr-2 cset-icons-import"></span>
-              {{ t('welcome page.import assessment') }}
+              {{ t('welcome page.import assessment') }} lol
               <input type="file" class="hidden" accept="{{ importExtensions }},.cset"
                      (change)="importAssessmentFile($event)">
             </label>
@@ -399,7 +399,7 @@
             <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
                    class="btn btn-secondary cursor-pointer">
               <span class="mr-2 cset-icons-import"></span>
-              {{ t('welcome page.import assessment') }}
+              {{ t('welcome page.import assessment') }} lili
               <input type="file" class="hidden" accept="{{ importExtensions }}"
                      (change)="importAssessmentFile($event)">
             </label>
@@ -419,7 +419,7 @@
           <button class="btn btn-primary w-full"
                   (click)="clickNewAssessmentButton()">
             <span class="mr-2 cset-icons-cset-lock"></span>
-            {{ t('welcome page.new assessment') }}
+            {{ t('welcome page.new assessment') }} er
           </button>
 
           <!-- Local import button for mobile -->
@@ -435,7 +435,7 @@
           <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
                  class="btn btn-secondary w-full cursor-pointer">
             <span class="mr-2 cset-icons-import"></span>
-            {{ t('welcome page.import assessment') }}
+            {{ t('welcome page.import assessment') }}ggggg
             <input type="file" class="hidden" accept="{{ importExtensions }}"
                    (change)="importAssessmentFile($event)">
           </label>

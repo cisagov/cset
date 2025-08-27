@@ -246,7 +246,7 @@ export class MyAssessmentsComponent implements OnInit {
 
           return `
           <div class="tw:flex tw:items-center tw:gap-2 tw:h-full tw:py-2">
-            <button class="tw:btn tw:btn-ghost hover:!tw:rounded-lg tw:btn-xs p-1 tw:min-h-0 tw:h-auto hover:tw:bg-base-200"
+            <button class="btn btn-ghost hover:!tw:rounded-lg tw:btn-xs p-1 tw:min-h-0 tw:h-auto hover:tw:bg-base-200"
                     data-action="toggleFavorite"
                     data-assessment-id="${assessment.assessmentId}"
                     title="${assessment.favorite ? 'Remove from favorites' : 'Add to favorites'}">
