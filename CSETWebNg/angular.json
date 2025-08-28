@@ -32,9 +32,23 @@
               "rxjs/Subject",
               "sanitize-html",
               "style-loader",
+              "style-loader/dist/runtime/setAttributesWithoutAttributes.js",
+              "style-loader/dist/runtime/styleDomAPI.js",
+              "style-loader/dist/runtime/styleTagTransform.js",
+              "style-loader/dist/runtime/injectStylesIntoStyleTag.js",
+              "style-loader/dist/runtime/insertBySelector.js",
+              "style-loader/dist/runtime/insertStyleElement.js",
+              "!../../../../../../style-loader/dist/runtime/injectStylesIntoStyleTag.js",
+              "!../../../../../../style-loader/dist/runtime/insertBySelector.js",
+              "!../../../../../../style-loader/dist/runtime/insertStyleElement.js",
+              "!../../../../../../style-loader/dist/runtime/setAttributesWithoutAttributes.js",
+              "!../../../../../../style-loader/dist/runtime/styleDomAPI.js",
+              "!../../../../../../style-loader/dist/runtime/styleTagTransform.js",
               "file-saver",
               "chart.js",
-              "mousetrap"
+              "mousetrap",
+              "screenfull",
+              "monaco-editor"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
