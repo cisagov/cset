@@ -4,6 +4,9 @@
 // 
 // 
 //////////////////////////////// 
+
+using System;
+
 namespace CSETWebCore.Model.Document
 {
     public class Document
@@ -22,5 +25,7 @@ namespace CSETWebCore.Model.Document
         /// 
         /// </summary>
         public string FileName { get; set; }
+
+        public Boolean IsGlobal { get; set; }
     }
 }

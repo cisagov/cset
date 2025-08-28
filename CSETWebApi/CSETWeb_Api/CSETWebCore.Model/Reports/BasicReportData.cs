@@ -48,6 +48,7 @@ namespace CSETWebCore.Business.Reports
             public string Assessment_Name { get; set; }
             public DateTime? Assessment_Date { get; set; }
             public string Assessor_Name { get; set; }
+            public bool SelfAssessment { get; set; } = false;
             public string Facility_Name { get; set; }
             public string City_Or_Site_Name { get; set; }
             public string State_Province_Or_Region { get; set; }
@@ -194,9 +195,11 @@ namespace CSETWebCore.Business.Reports
 
     public class QuestionsMarkedForReview
     {
+        public int Id { get; set; }
         public string CategoryAndNumber { get; set; }
         public string Question { get; set; }
         public string Answer { get; set; }
+        public int AnswerId { get; set; }
     }
 
     /// <summary>
@@ -261,9 +264,11 @@ namespace CSETWebCore.Business.Reports
 
     public class QuestionsWithAltJust
     {
+        public int Id { get; set; }
         public string CategoryAndNumber { get; set; }
         public string Question { get; set; }
         public string Answer { get; set; }
+        public int AnswerId { get; set; }
         public string AlternateJustification { get; set; }
     }
 

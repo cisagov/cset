@@ -40,18 +40,18 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
 import { LayoutService } from '../../../services/layout.service';
 import { TranslocoService } from '@jsverse/transloco';
-import { CieService } from '../../../services/cie.service';
+import { FileExportService } from '../../../services/file-export.service';
 
 
 
 @Component({
-    selector: 'app-question-extras',
-    templateUrl: './question-extras.component.html',
-    styleUrls: ['./question-extras.component.css'],
-    encapsulation: ViewEncapsulation.None,
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-question-extras',
+  templateUrl: './question-extras.component.html',
+  styleUrls: ['./question-extras.component.css'],
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class QuestionExtrasComponent implements OnInit {
 
@@ -61,9 +61,6 @@ export class QuestionExtrasComponent implements OnInit {
   @ViewChild('questionExtras') questionExtrasDiv: ElementRef;
 
   @Input() myOptions: any;
-
-  // ISE options
-  @Input() ncuaDisplay: boolean = false;
   @Input() iconsToDisplay: string[] = [];
 
   extras: QuestionDetailsContentViewModel;
@@ -71,9 +68,10 @@ export class QuestionExtrasComponent implements OnInit {
   expanded = false;
   mode: string;  // selector for which data is being displayed, 'DETAIL', 'SUPP', 'CMNT', 'DOCS', 'OBSV', 'FDBK'.
   answer: Answer;
+  modelName: string;
   dialogRef: MatDialogRef<OkayComponent>;
 
-  msgNoSupplemental: string = `(${this.tSvc.translate('extras.no supplemental available')})`;
+  msgNoSupplemental: string;
 
   showMfr = false;
 
@@ -89,6 +87,7 @@ export class QuestionExtrasComponent implements OnInit {
   constructor(
     public questionsSvc: QuestionsService,
     private observationSvc: ObservationsService,
+    public fileExportSvc: FileExportService,
     public fileSvc: FileUploadClientService,
     public dialog: MatDialog,
     public configSvc: ConfigService,
@@ -96,9 +95,10 @@ export class QuestionExtrasComponent implements OnInit {
     public assessSvc: AssessmentService,
     public layoutSvc: LayoutService,
     private tSvc: TranslocoService,
-    private cieSvc: CieService,
     private resourceLibSvc: ResourceLibraryService
-  ) { }
+  ) { 
+    this.msgNoSupplemental = `(${this.tSvc.translate('extras.no supplemental available')})`;
+  }
 
 
   /**
@@ -107,11 +107,6 @@ export class QuestionExtrasComponent implements OnInit {
   ngOnInit() {
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
 
-    if (this.assessSvc.usesMaturityModel('CIE')) {
-      this.cieSvc.feedbackMap.set(this.myQuestion.questionId, this.myQuestion.feedback);
-      this.cieSvc.commentMap.set(this.myQuestion.questionId, this.myQuestion.comment);
-    }
-
     if (!!this.myOptions) {
       if (this.myOptions.eagerSupplemental) {
         this.toggleExtras('SUPP');
@@ -119,6 +114,16 @@ export class QuestionExtrasComponent implements OnInit {
 
       this.showMfr = this.myOptions.showMfr;
     }
+
+    this.modelName = this.assessSvc.assessment.maturityModel?.modelName ?? '';
+
+
+    // listen for somebody to tell me that I need to refresh the details
+    this.questionsSvc.detailsChanged$.subscribe((changedQuestionId: any) => {
+      if (changedQuestionId == this.myQuestion.questionId) {
+        this.refreshDetails();
+      }
+    });
   }
 
   /**
@@ -165,10 +170,20 @@ export class QuestionExtrasComponent implements OnInit {
     })
   }
 
+  /**
+   * Simply pull the details from the back end.
+   */
+  async refreshDetails() {
+    this.extras = await this.fetchDetails();
+  }
+
+  /**
+   *  
+   */
   async fetchDetails(): Promise<QuestionDetailsContentViewModel> {
     const details = this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType).toPromise();
     return details;
-  }
+  }  
 
   /**
    * Gets all of the extra content for the question from the API.
@@ -180,7 +195,7 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     // Call the API for content
-    this.extras = await this.fetchDetails();
+    await this.refreshDetails();
     this.extras.questionId = this.myQuestion.questionId;
 
     // populate my details with the first "non-null" tab
@@ -222,13 +237,8 @@ export class QuestionExtrasComponent implements OnInit {
    */
   saveComment(e) {
     this.defaultEmptyAnswer();
-    if (this.assessSvc.usesMaturityModel('CIE')) {
-      this.myQuestion.comment = this.cieSvc.applyContactAndEndTag(e.target.value, '\n- - End of Comment - -\n');
-      this.cieSvc.commentMap.set(this.myQuestion.questionId, this.myQuestion.comment);
-    }
-    else {
-      this.answer.comment = e.target.value;
-    }
+    this.answer.comment = e.target.value;
+
     this.saveAnswer();
   }
 
@@ -246,14 +256,7 @@ export class QuestionExtrasComponent implements OnInit {
   */
   saveFeedback(e) {
     this.defaultEmptyAnswer();
-    if (this.assessSvc.usesMaturityModel('CIE')) {
-      this.myQuestion.feedback = this.cieSvc.applyContactAndEndTag(e.target.value, '\n- - End of Feedback - -\n');
-      this.cieSvc.feedbackMap.set(this.myQuestion.questionId, this.myQuestion.feedback);
-    }
-    else {
-      this.myQuestion.feedback = e.target.value;
-    }
-
+    this.myQuestion.feedback = e.target.value;
     this.saveAnswer();
   }
 
@@ -443,11 +446,11 @@ export class QuestionExtrasComponent implements OnInit {
    */
   deleteObservation(obsToDelete) {
     // Build a message whether the observation has a title or not
-    let msg = this.tSvc.translate('observation.delete ' + this.observationOrIssue().toLowerCase() + ' confirm');
+    let msg = this.tSvc.translate('observation.delete observation confirm');
     msg = msg.replace('{title}', obsToDelete.summary);
 
     if (obsToDelete.summary === null) {
-      msg = this.tSvc.translate('observation.delete this ' + this.observationOrIssue().toLowerCase() + ' confirm');
+      msg = this.tSvc.translate('observation.delete this observation confirm');
     }
 
 
@@ -524,6 +527,16 @@ export class QuestionExtrasComponent implements OnInit {
       .subscribe();
   }
 
+  changeGlobal(document) {
+    document.isGlobal = !document.isGlobal;
+    this.questionsSvc.changeGlobal(document.document_Id, document.isGlobal).subscribe();
+  }
+  getIsGlobalColor(doc) {
+    if (doc.isGlobal)
+      return "#198754"
+    return "#dc3545"
+  }
+
   isNullOrWhiteSpace(str) {
     return str === null || str.match(/^[\t ]*$/) !== null;
   }
@@ -553,6 +566,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.extras.documents = this.extras.documents.filter(d => d.document_Id !== document.document_Id);
         this.extras.documents.forEach((item, index) => {
           if (item.document_Id == document.document_Id) this.extras.documents.splice(index, 1);
+
         })
         // push the change to the API
         this.questionsSvc.deleteDocument(document.document_Id, this.myQuestion.questionId)
@@ -610,30 +624,14 @@ export class QuestionExtrasComponent implements OnInit {
   /**
    *
    */
-  downloadFile(document) {
-    this.fileSvc.downloadFile(document.document_Id).subscribe((data: Response) => {
-      // this.downloadFileData(data),
-    },
-      error => console.log(error)
-    );
-  }
-
-  /**
-   *
-   */
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
-      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-      window.location.href = url;
+      this.fileExportSvc.fetchAndSaveFile(this.fileSvc.downloadUrl + doc.document_Id, response.token);
     });
   }
 
-  // downloadFileData(data: Response) {
-  //   const blob = new Blob([data], { type: 'text/csv' });
-  //   const url = window.URL.createObjectURL(blob);
-  //   window.open(url);
-  // }
+
 
   autoLoadSupplemental() {
     return this.questionsSvc.autoLoadSupplemental(this.assessSvc.assessment.maturityModel);
@@ -647,7 +645,8 @@ export class QuestionExtrasComponent implements OnInit {
       !!this.tab?.requirementsData?.supplementalInfo
       || !!this.myQuestion.scope
       || !!this.myQuestion.recommendedAction
-      || !!this.myQuestion.services);
+      || !!this.myQuestion.services
+      || !!this.myQuestion.implementationGuides);
   }
 
   /**
@@ -669,28 +668,10 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * check if approach exists for acet questions
-   * @param approach
-   */
-  checkForApproach(approach: string) {
-    if (!!approach) {
-      return true;
-    }
-
-    return false;
-  }
-
-  /**
    * Encapsulates logic that determines whether an icon should be displayed.
    * Use "moduleBehaviors" configuration for the current module/model.
    */
   displayIcon(mode) {
-    //NCUA asked for specific behavior. See comment on displayIconISE function.
-    if (this.ncuaDisplay) {
-      let result = this.displayIconISE(mode);
-      return result;
-    }
-
     const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment.maturityModel?.modelName);
 
     if (mode == 'DETAIL') {
@@ -732,19 +713,6 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Custom show/hide functionality for ISE icons. Requires "this.ncuaDisplay" to be true.
-   * This function takes an array of strings ("this.iconsToDisplay") and if it finds the mode (icon)
-   * you want to show (['REFS', 'SUPP'], etc)
-   */
-  displayIconISE(mode) {
-    if (this.iconsToDisplay.includes(mode)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  /**
    * Returns an "I" or "G", depending on which version of the suppemental icon
    * should be shown based on context.
    * @returns
@@ -759,28 +727,16 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Returns 'Observation' if the assessment is not ISE, 'Issue' if it is ISE
+   * Returns 'Observation' 
    */
   observationOrIssue() {
-    if (this.assessSvc.isISE()) {
-      return 'Issue';
-    }
-    else {
-      return 'Observation';
-    }
+    return 'Observation';
   }
 
   /**
-   * Returns the custom label if the model has one (currently only ISE), or the default if not
+   * Returns the custom label if the model has one or the default if not
    */
   documentLabel(defaultLabel: string) {
-    if (this.assessSvc.isISE()) {
-      if (defaultLabel === 'Source Documents') {
-        return 'Resources';
-      } else if (defaultLabel === 'Additional Documents') {
-        return 'References';
-      }
-    }
     return defaultLabel;
   }
 
@@ -818,21 +774,4 @@ export class QuestionExtrasComponent implements OnInit {
     const behavior = this.configSvc.getModuleBehavior(this.assessSvc.assessment.maturityModel?.modelName);
     return behavior?.independentSuppGuidance;
   }
-
-  /**
-   * For CIE, where feedback can be merged with other assessments
-   * @param q
-   * @returns
-   */
-  getFeedback(q: Question) {
-    if (this.cieSvc.feedbackMap.get(q.questionId) == null && q.feedback == null) {
-      return '';
-    }
-    else if (this.cieSvc.feedbackMap.get(q.questionId) == null && q.feedback != null) {
-      this.cieSvc.feedbackMap.set(q.questionId, this.cieSvc.applyContactAndEndTag(q.feedback, '\n- - End of Feedback - -\n'));
-    }
-
-    return this.cieSvc.feedbackMap.get(q.questionId);
-  }
-
 }

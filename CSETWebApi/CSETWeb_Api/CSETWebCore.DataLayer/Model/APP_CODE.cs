@@ -21,8 +21,5 @@ public partial class APP_CODE
     public string Description { get; set; }
 
     [InverseProperty("AppCodeNavigation")]
-    public virtual ICollection<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; } = new List<DEMOGRAPHICS_ASSET_VALUES>();
-
-    [InverseProperty("AppCodeNavigation")]
     public virtual ICollection<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; } = new List<MODES_SETS_MATURITY_MODELS>();
 }

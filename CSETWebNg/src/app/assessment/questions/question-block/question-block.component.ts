@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { Answer, Question, SubCategory, SubCategoryAnswers } from '../../../models/questions.model';
+import { Answer, AnswerQuestionResponse, Question, SubCategory, SubCategoryAnswers } from '../../../models/questions.model';
 import { QuestionsService } from '../../../services/questions.service';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { InlineParameterComponent } from '../../../dialogs/inline-parameter/inline-parameter.component';
@@ -31,18 +31,18 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 import { LayoutService } from '../../../services/layout.service';
 import { CompletionService } from '../../../services/completion.service';
-import { ConversionService } from '../../../services/conversion.service';
 import { MalcolmService } from '../../../services/malcolm.service';
+import { LinebreakPipe } from '../../../helpers/linebreak.pipe';
 
 
 /**
  * Represents the display container of a single subcategory with its member questions.
  */
 @Component({
-    selector: 'app-question-block',
-    templateUrl: './question-block.component.html',
-    styleUrls: ['./question-block.component.css'],
-    standalone: false
+  selector: 'app-question-block',
+  templateUrl: './question-block.component.html',
+  styleUrls: ['./question-block.component.css'],
+  standalone: false
 })
 export class QuestionBlockComponent implements OnInit {
 
@@ -84,15 +84,13 @@ export class QuestionBlockComponent implements OnInit {
     public assessSvc: AssessmentService,
     public layoutSvc: LayoutService,
     public malcolmSvc: MalcolmService,
-    private convertSvc: ConversionService
+    public linebreakPipe: LinebreakPipe
   ) {
     this.matLevelMap.set("B", "Baseline");
     this.matLevelMap.set("E", "Evolving");
     this.matLevelMap.set("Int", "Intermediate");
     this.matLevelMap.set("A", "Advanced");
     this.matLevelMap.set("Inn", "Innovative");
-
-
   }
 
   /**
@@ -108,29 +106,11 @@ export class QuestionBlockComponent implements OnInit {
       });
     }
 
-    this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
-  }
-
-  /**
-   * Replace parameter placeholders in the question text template with any overridden values.
-   * @param q
-   */
-  applyTokensToText(q: Question) {
-    if (!q.parmSubs) {
-      return q.questionText;
-    }
-
-    let text = q.questionText;
-
-    q.parmSubs.forEach(t => {
-      let s = t.substitution;
-      if (s == null) {
-        s = t.token;
-      }
-      text = this.replaceAll(text, t.token, "<span class='sub-me pid-" + t.id + "'>" + s + "</span>");
+    this.mySubCategory.questions.map((item: Question) => {
+      this.setJustificationVisibility(item);
     });
 
-    return text;
+    this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
 
   /**
@@ -184,7 +164,7 @@ export class QuestionBlockComponent implements OnInit {
       q.answer_Id = result.answerId;
 
       q.parmSubs.find(s => s.id === parameterId).substitution = result.substitution;
-      this.applyTokensToText(q);
+      this.questionsSvc.applyTokensToText(q);
       this.dialogRef = null;
     });
   }
@@ -226,10 +206,6 @@ export class QuestionBlockComponent implements OnInit {
     this.mySubCategory.hasReviewItems = false;
     this.mySubCategory.questions.forEach(q => {
       if (q.markForReview) {
-        this.mySubCategory.hasReviewItems = true;
-        return;
-      }
-      if (q.answer == 'A' && this.isAltTextRequired(q)) {
         this.mySubCategory.hasReviewItems = true;
         return;
       }
@@ -323,6 +299,18 @@ export class QuestionBlockComponent implements OnInit {
   }
 
   /**
+ * Sets a flag on the question indicating whether the
+ * "Justification" field (or 'alt text') should display
+ */
+  setJustificationVisibility(q: Question) {
+    q.showJustificationField = false;
+
+    if (q.answer === 'A') {
+      q.showJustificationField = true;
+    }
+  }
+
+  /**
    * Pushes an answer asynchronously to the API.
    * @param q
    * @param ans
@@ -333,7 +321,9 @@ export class QuestionBlockComponent implements OnInit {
       newAnswerValue = "U";
     }
 
-    q.answer = newAnswerValue;
+    if (!!newAnswerValue) {
+      q.answer = newAnswerValue;
+    }
 
     const answer: Answer = {
       answerId: q.answer_Id,
@@ -354,70 +344,19 @@ export class QuestionBlockComponent implements OnInit {
 
     this.completionSvc.setAnswer(q.questionId, q.answer);
 
+    this.setJustificationVisibility(q);
+
     this.refreshReviewIndicator();
 
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer)
-      .subscribe((ansId: number) => {
-        q.answer_Id = ansId;
-      }
-      );
-  }
-
-  /**
-   * For ACET installations, alt answers require 3 or more characters of
-   * justification.
-   */
-  isAltTextRequired(q: Question) {
-    if ((this.configSvc.installationMode === "ACET")
-      && (!q.altAnswerText || q.altAnswerText.trim().length < 3)) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Pushes the answer to the API, specifically containing the alt text
-   * @param q
-   * @param altText
-   */
-  storeAltText(q: Question) {
-
-    clearTimeout(this._timeoutId);
-    this._timeoutId = setTimeout(() => {
-      const answer: Answer = {
-        answerId: q.answer_Id,
-        questionId: q.questionId,
-        questionType: q.questionType,
-        questionNumber: q.displayNumber,
-        answerText: q.answer,
-        altAnswerText: q.altAnswerText,
-        comment: q.comment,
-        feedback: q.feedback,
-        markForReview: q.markForReview,
-        reviewed: q.reviewed,
-        is_Component: q.is_Component,
-        is_Requirement: q.is_Requirement,
-        is_Maturity: q.is_Maturity,
-        componentGuid: q.componentGuid
-      };
-
-      this.refreshReviewIndicator();
-
-      this.questionsSvc.storeAnswer(answer)
-        .subscribe((ansId: number) => {
-          q.answer_Id = ansId;
-        });
-    }, 500);
-
-  }
-
-  replaceAll(origString: string, searchStr: string, replaceStr: string) {
-    // escape regexp special characters in search string
-    searchStr = searchStr.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-
-    return origString.replace(new RegExp(searchStr, 'gi'), replaceStr);
+      .subscribe((resp: AnswerQuestionResponse) => {
+        q.answer_Id = resp.answerId;
+        if (resp.detailsChanged) {
+          this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+        }
+      });
   }
 
   /**

@@ -39,6 +39,7 @@ export interface ReferenceDocLink {
   isUploaded: boolean;
   sectionRef?: string;
   bookmarks?: string[];
+  language: string;
 }
 
 /**
@@ -49,6 +50,7 @@ export interface QuestionDocument {
   document_Id: number;
   title: string;
   fileName: string;
+  isGlobal: boolean;
 }
 
 export interface QuestionDetailsContentViewModel {

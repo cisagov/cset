@@ -73,6 +73,8 @@ public partial class ASSESSMENTS
 
     public bool ModifiedSinceLastExport { get; set; }
 
+    public bool AssessorMode { get; set; }
+
     [InverseProperty("Assessment")]
     public virtual ICollection<ACCESS_KEY_ASSESSMENT> ACCESS_KEY_ASSESSMENT { get; set; } = new List<ACCESS_KEY_ASSESSMENT>();
 
@@ -126,9 +128,6 @@ public partial class ASSESSMENTS
     public virtual ICollection<COUNTY_ANSWERS> COUNTY_ANSWERS { get; set; } = new List<COUNTY_ANSWERS>();
 
     [InverseProperty("Assessment")]
-    public virtual DEMOGRAPHICS DEMOGRAPHICS { get; set; }
-
-    [InverseProperty("Assessment")]
     public virtual DEMOGRAPHIC_ANSWERS DEMOGRAPHIC_ANSWERS { get; set; }
 
     [InverseProperty("Assessment")]
@@ -151,6 +150,9 @@ public partial class ASSESSMENTS
 
     [InverseProperty("Assessment")]
     public virtual ICollection<GENERAL_SAL> GENERAL_SAL { get; set; } = new List<GENERAL_SAL>();
+
+    [InverseProperty("Assessment")]
+    public virtual ICollection<GROUPING_SELECTION> GROUPING_SELECTION { get; set; } = new List<GROUPING_SELECTION>();
 
     [ForeignKey("GalleryItemGuid")]
     [InverseProperty("ASSESSMENTS")]

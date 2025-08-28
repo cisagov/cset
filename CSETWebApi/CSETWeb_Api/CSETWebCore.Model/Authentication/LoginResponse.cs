@@ -4,6 +4,9 @@
 // 
 // 
 //////////////////////////////// 
+
+using System.Collections.Generic;
+
 namespace CSETWebCore.Model.Authentication
 {
     public class LoginResponse
@@ -21,5 +24,6 @@ namespace CSETWebCore.Model.Authentication
         public string ImportExtensions { get; set; }
         public string LinkerTime { get; set; }
         public bool IsFirstLogin { get; set; }
+        public List<string> Roles { get; set; }
     }
 }

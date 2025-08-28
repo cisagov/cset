@@ -1,6 +1,8 @@
 {
   "NOTENODE": "Casing on config chain matters, the only item that should be changed here is the current ConfigChain value.  Once that is changed everything else should be set",
-  "currentConfigChain": ["RENEW"],
+  "currentConfigChain": [
+    "CSET"
+  ],
   "defaultLang": "en",
   "isRunningAnonymous": false,
   "app": {
@@ -23,16 +25,21 @@
     "apiIdentifier": "api"
   },
   "csetGithubApiUrl": "https://api.github.com/repos/cisagov/cset/releases/latest",
-  "helpContactEmail": "CSET_PMO@mail.dhs.cisa.gov",
+  "helpContactEmail": "CSET_PMO@cisa.dhs.gov",
   "helpContactPhone": "",
   "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
   "supplementalAutoloadInitialValue": false,
+  "analytics": {
+    "protocol": "http",
+    "host": "csetac",
+    "port": "5778"
+  },
   "debug": {
-    "showCmmcConversion": true,
     "showBuildTime": false,
     "showQuestionAndRequirementIDs": false,
     "canDeleteCustomModules": true,
-    "showExportAllButton": false
+    "showExportAllButton": false,
+    "showAssessmentUpgrade": false
   },
   "galleryLayout": "CSET",
   "installationMode": "CSET",
@@ -57,7 +64,6 @@
     "splashPageHTML": "dist/assets/splash.html",
     "homeComponentForCurrentInstallationMode": "",
     "defaultMaturityModel": "",
-    "isAcetOnly": false,
     "showExportOnReports": true,
     "showFacilityName": true,
     "showCityName": true,
@@ -152,7 +158,7 @@
       "moduleName": "RRA",
       "modelId": "5",
       "displayNameKey": "modules.rra.display-name",
-      "showDomainHeaders": false,
+      "hideTopLevelGroupingName": true,
       "questionIcons": {
         "showDetails": false,
         "guidanceIcon": "G",
@@ -196,7 +202,7 @@
       "moduleName": "CPG",
       "modelId": "11",
       "displayNameKey": "modules.cpg.display-name",
-      "showDomainHeaders": false,
+      "hideTopLevelGroupingName": true,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {
@@ -236,7 +242,8 @@
       "moduleName": "CPG2",
       "modelId": "21",
       "displayNameKey": "modules.cpg2.display-name",
-      "showDomainHeaders": false,
+      "questionNodeKey": "modules.cpg2.question node title",
+      "hideTopLevelGroupingName": true,
       "autoLoadSupplemental": true,
       "showMaturityLevelBadge": false,
       "questionIcons": {
@@ -337,6 +344,136 @@
       ]
     },
     {
+      "moduleName": "CRE+",
+      "modelId": "22",
+      "displayNameKey": "modules.cre+.display-name",
+      "questionNodeKey": "modules.cre+.question node title",
+      "hideTopLevelGroupingName": false,
+      "autoLoadSupplemental": true,
+      "showMaturityLevelBadge": false,
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
+        },
+        {
+          "code": "I",
+          "buttonLabelKey": "Prog-CPG",
+          "buttonCss": "btn-na",
+          "chartSegmentColor": "#0a4b6e"
+        },
+        {
+          "code": "S",
+          "buttonLabelKey": "Scoped-CPG",
+          "buttonCss": "btn-alt",
+          "chartSegmentColor": "#b17300"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "unansweredEquivalent": true,
+          "consideredMissed": true
+        }
+      ]
+    },
+    {
+      "moduleName": "CRE+ OPT",
+      "modelId": "23",
+      "displayNameKey": "modules.cre+ opt.display-name",
+      "questionNodeKey": "modules.cre+ opt.question node title",
+      "hideTopLevelGroupingName": false,
+      "autoLoadSupplemental": true,
+      "showMaturityLevelBadge": false,
+      "mustSelectGroupings": true,
+      "groupingsAreMil": false,
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
+        },
+        {
+          "code": "I",
+          "buttonLabelKey": "Prog-CPG",
+          "buttonCss": "btn-na",
+          "chartSegmentColor": "#0a4b6e"
+        },
+        {
+          "code": "S",
+          "buttonLabelKey": "Scoped-CPG",
+          "buttonCss": "btn-alt",
+          "chartSegmentColor": "#b17300"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "unansweredEquivalent": true,
+          "consideredMissed": true
+        }
+      ]
+    },
+    {
+      "moduleName": "CRE+ MIL",
+      "modelId": "24",
+      "displayNameKey": "modules.cre+ mil.display-name",
+      "questionNodeKey": "modules.cre+ mil.question node title",
+      "hideTopLevelGroupingName": false,
+      "autoLoadSupplemental": true,
+      "showMaturityLevelBadge": false,
+      "mustSelectGroupings": true,
+      "groupingsAreMil": true,
+      "questionIcons": {
+        "showDetails": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
+        },
+        {
+          "code": "I",
+          "buttonLabelKey": "Prog-CPG",
+          "buttonCss": "btn-na",
+          "chartSegmentColor": "#0a4b6e"
+        },
+        {
+          "code": "S",
+          "buttonLabelKey": "Scoped-CPG",
+          "buttonCss": "btn-alt",
+          "chartSegmentColor": "#b17300"
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "unansweredEquivalent": true,
+          "consideredMissed": true
+        }
+      ]
+    },
+    {
       "moduleName": "CMMC2F",
       "modelId": "19",
       "displayNameKey": "modules.cmmc2f.display-name",
@@ -399,82 +536,8 @@
         {
           "code": "NI",
           "buttonLabelKey": "NI-C2M2",
-          "buttonCss": "btn-c2m2-ni"
-        }
-      ]
-    },
-    {
-      "moduleName": "ACET",
-      "modelId": "1",
-      "independentSuppGuidance": true,
-      "showDomainHeaders": true,
-      "answerOptions": [
-        {
-          "skin": "ACET",
-          "code": "A",
-          "buttonLabelKey": "Yes(C)",
-          "buttonCss": "btn-alt",
-          "note": "This will only apply in the ACET skin.  See QuestionsService"
-        }
-      ]
-    },
-    {
-      "moduleName": "ISE",
-      "modelId": 10,
-      "showDomainHeaders": false,
-      "questionIcons": {
-        "showObservations": false
-      },
-      "answerOptions": [
-        {
-          "code": "Y",
-          "buttonLabelKey": "Yes",
-          "buttonCss": "btn-yes"
-        },
-        {
-          "code": "N",
-          "buttonLabelKey": "No",
-          "buttonCss": "btn-no"
-        },
-        {
-          "code": "U",
-          "buttonLabelKey": "Unanswered"
-        }
-      ]
-    },
-    {
-      "moduleName": "HYDRO",
-      "modelId": "13",
-      "questionIcons": {
-        "showDetails": false,
-        "showGuidance": false,
-        "showObservations": false,
-        "showReferences": false
-      }
-    },
-    {
-      "moduleName": "CIE",
-      "modelId": "17",
-      "questionIcons": {
-        "showDetails": false,
-        "showGuidance": false,
-        "showReferences": false
-      },
-      "answerOptions": [
-        {
-          "code": "NA",
-          "buttonLabelKey": "NA",
-          "buttonCss": "btn-na"
-        },
-        {
-          "code": "N",
-          "buttonLabelKey": "No",
-          "buttonCss": "btn-no"
-        },
-        {
-          "code": "Y",
-          "buttonLabelKey": "Yes",
-          "buttonCss": "btn-yes"
+          "buttonCss": "btn-c2m2-ni",
+          "unansweredEquivalent": true
         }
       ]
     },
@@ -496,6 +559,46 @@
           "code": "A",
           "buttonLabelKey": "Partial-MVRA",
           "buttonCss": "btn-alt"
+        }
+      ]
+    },
+    {
+      "comment": "This is the VADR developed for TSA",
+      "moduleName": "VADR",
+      "modelId": 7
+    },
+    {
+      "moduleName": "CISA VADR",
+      "modelId": "25",
+      "displayNameKey": "modules.cisa vadr.display-name",
+      "questionNodeKey": "modules.cisa vadr.question node title",
+      "autoLoadSupplemental": true,
+      "showMaturityLevelBadge": true,
+      "questionIcons": {
+        "showDetails": false,
+        "showGuidance": false,
+        "showReviewed": false
+      },
+      "answerOptions": [
+        {
+          "code": "Y",
+          "buttonLabelKey": "Imp-CPG",
+          "buttonCss": "btn-yes",
+          "chartSegmentColor": "#006000",
+          "consideredImplemented": true
+        },
+        {
+          "code": "N",
+          "buttonLabelKey": "Not-CPG",
+          "buttonCss": "btn-no",
+          "chartSegmentColor": "#990000",
+          "consideredMissed": true
+        },
+        {
+          "code": "NA",
+          "buttonLabelKey": "na",
+          "buttonCss": "btn-na",
+          "chartSegmentColor": "#0a4b6e"
         }
       ]
     }

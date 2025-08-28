@@ -75,6 +75,7 @@
      "link version": "リリースを表示またはダウンロードするにはここをクリックしてください。",
      "legend": "凡例",
      "img suffix": "_jp",
+     "assessment settings": " 評価設定",
      "titles": {
           "prepare": "準備",
           "assessment": "評価",
@@ -391,9 +392,10 @@
                "user language": "ユーザー言語",
                "logout": "ログアウト",
                "setting": "設定",
-               "encrypt": "評価エクスポート時のパスワード暗号化",
+               "encrypt": "評価エクスポートを暗号化する",
                "on": "の上",
-               "off": "オフ"
+               "off": "オフ",
+               "admin": "管理者設定"
           }
      },
      "tooltip": {
@@ -438,7 +440,8 @@
           "export assessment json": "この評価のコピーをJSONファイルとしてエクスポート",
           "analytics": "この評価の分析を表示。",
           "merged checked exams": "チェックされた試験をマージ",
-          "export all": "すべての評価のコピーを別の場所にエクスポート。"
+          "export all": "すべての評価のコピーを別の場所にエクスポート。",
+          "nav collapse": "ナビゲーションを展開/折りたたむ"
      },
      "welcome page": {
           "internet explorer": "現在のブラウザとしてInternet Explorerが検出されました。\nInternet Explorerはサポートされていません。\nChrome、Firefox、Edgeなどの他のブラウザの使用を強くお勧めします。",
@@ -482,6 +485,12 @@
           "upgrade": "アップグレード",
           "final": "最終バージョンへ",
           "convert": "評価を変換しています。しばらくお待ちください。",
-          "p1": "この評価の最終バージョンが利用可能になりました。回答したすべての質問、評価情報、および人口統計が転送されます。このプロセスは元に戻せないことに注意してください。"
-     }
+          "p1": "この評価の最終版が利用可能になりました。下書き版と最終版の両方に含まれる質問は、観察、添付文書、フィードバック、およびコメントとともに転送されます。さらに、すべての人口統計情報と連絡先も転送されます。元の下書きバージョンは引き続きアクセス可能で、このアップグレードにより新しい評価が生成されます。"
+     },
+  "Module Content Report": "モジュール内容報告",
+  "Select a Standard": "標準を選択する",
+  "Launch Report": "発射報告",
+  "Select a Model": "モデルを選択する",
+  "ModuleContentLaunchComponent p1": "この報告書は、CSETモジュールの構造と質問内容を示しています。たとえば、業界標準、成熟度モデル、またはベストプラクティスモデルなどです",
+  "ModuleContentLaunchComponent p2": "生成された報告書には、各質問のガイダンスと参照を表示または非表示にするためのコントロールがあります。"
 }

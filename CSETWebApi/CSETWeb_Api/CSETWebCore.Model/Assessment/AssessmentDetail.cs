@@ -20,6 +20,13 @@ namespace CSETWebCore.Model.Assessment
         public DateTime CreatedDate { get; set; }
         public int? CreatorId { get; set; }
         public string CreatorName { get; set; }
+
+        /// <summary>
+        /// Contains the name of the facilitator contact or the creator (fallback)
+        /// </summary>
+        public string FacilitatorName { get; set; }
+        public bool SelfAssessment { get; set; }
+
         public DateTime? AssessmentDate { get; set; }
         public DateTime? AssessmentEffectiveDate { get; set; }
         public string FacilityName { get; set; }
@@ -45,6 +52,8 @@ namespace CSETWebCore.Model.Assessment
         public bool UseDiagram { get; set; }
         public bool UseMaturity { get; set; }
         public bool? IsAcetOnly { get; set; }
+
+
         public bool? IseSubmitted { get; set; }
         public bool? ISE_StateLed { get; set; }
 
@@ -62,6 +71,8 @@ namespace CSETWebCore.Model.Assessment
         /// Created to be flexible to able to 'flag' an assessment for a special behavior
         /// </summary>
         public string Origin { get; set; }
+        
+        public bool AssessorMode { get; set; }
 
         // Selected maturity model and the target level
         public MaturityModel MaturityModel { get; set; }

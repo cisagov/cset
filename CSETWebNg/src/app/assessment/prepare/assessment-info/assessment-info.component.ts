@@ -25,16 +25,16 @@ import { Component, OnInit } from '@angular/core';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
-import { NCUAService } from '../../../services/ncua.service';
-import { ACETService } from '../../../services/acet.service';
-import { AssessmentDetail } from '../../../models/assessment-info.model';
+import { GalleryService } from '../../../services/gallery.service';
+import { Upgrades } from '../../../models/assessment-info.model';
+
 
 @Component({
-    selector: 'app-assessment-info',
-    templateUrl: './assessment-info.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-assessment-info',
+  templateUrl: './assessment-info.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class AssessmentInfoComponent implements OnInit {
 
@@ -45,19 +45,19 @@ export class AssessmentInfoComponent implements OnInit {
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public navSvc: NavigationService,
-    public ncuaSvc: NCUAService,
-    public acetSvc: ACETService
+    public gallerySvc: GalleryService
   ) { }
 
   ngOnInit(): void {
-    if (this.configSvc.config.debug.showCmmcConversion ?? false) {
-      this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
-        if (data.maturityModel.modelName == "CMMC2") {
-          this.showUpgrade = true;
-          this.targetModel = "CMMC2F"
-        }
-      });
-    }
 
+    if (this.configSvc.showAssessmentUpgrade() == true) {
+      this.assessSvc.checkUpgrades().subscribe((data: Upgrades) => {
+        if (data) {
+          this.showUpgrade = !!data;
+          this.assessSvc.galleryItemGuid = data.target;
+          this.assessSvc.convertToModel = data.name;
+        }
+      })
+    }
   }
 }

@@ -170,7 +170,7 @@ export class AssessmentComponent implements OnInit {
   }
 
   /**
-   * Returns the text for the Requirements label.  It might be Statements for ACET assessments.
+   * Returns the text for the Requirements label.  
    */
   requirementsLabel() {
     return 'Requirements';

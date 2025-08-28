@@ -49,13 +49,16 @@ interface GalleryItem {
   custom_Set_Name: string | null;
 }
 @Component({
-    selector: 'app-upgrade',
-    templateUrl: './upgrade.component.html',
-    standalone: false
+  selector: 'app-upgrade',
+  templateUrl: './upgrade.component.html',
+  standalone: false
 })
 export class UpgradeComponent implements OnInit {
 
-  @Input() data: any;
+  @Input() targetModel: any;
+
+  targetModelTitle: string;
+
   galleryItem: GalleryItem;
   contacts: User[];
   demographicData: Demographic = {};
@@ -65,7 +68,6 @@ export class UpgradeComponent implements OnInit {
   };
   selectedLevel: number;
   originalId: number;
-  dataToSend: string = 'Hello from Dialog Component';
   loading = false;
   iodDemographics: DemographicsIod = {};
   csiServiceDemographic: CsiServiceDemographic = {};
@@ -73,6 +75,9 @@ export class UpgradeComponent implements OnInit {
 
 
 
+  /**
+   * 
+   */
   constructor(
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
@@ -85,14 +90,24 @@ export class UpgradeComponent implements OnInit {
     public iodDemoSvc: DemographicIodService,
     public csiSvc: CsiService
   ) { }
+
+  /**
+   * 
+   */
   ngOnInit() {
+    this.targetModelTitle = AssessmentService.allMaturityModels.find(x => x.modelName === this.assessSvc.convertToModel)?.modelTitle;
   }
 
+  /**
+   * 
+   */
   hideAlert() {
     this.assessSvc.hideUpgradeAlert = true;
   }
 
-  // // Convert draft versions of assessments to final versions 
+  /**
+   * Convert old versions of assessments to final versions 
+   */
   async upgrade() {
     this.loading = true;
     this.getOriginalData()
@@ -101,15 +116,14 @@ export class UpgradeComponent implements OnInit {
       this.gallerySvc.getGalleryItems(this.configSvc.galleryLayout).subscribe(
         async (resp: any) => {
           rows: for (const row of resp.rows) {
-            items: for (const item of row.galleryItems) {
+            for (const item of row.galleryItems) {
               try {
-                const configSetup = JSON.parse(item.configuration_Setup);
-                if (configSetup.Model && configSetup.Model.ModelName == this.data) {
+                if (item.gallery_Item_Guid == this.assessSvc.galleryItemGuid.toLowerCase()) {
                   this.galleryItem = item;
                   break rows;
                 }
               } catch (error) {
-                console.error("Error parsing configuration_Setup:", error);
+                console.error(error);
               }
             }
           }
@@ -118,7 +132,7 @@ export class UpgradeComponent implements OnInit {
           this.assessment.id = newId
           this.fillNewAssessment()
           // Fill answers into new assessment from original and then navigate to the new assesment 
-          this.assessSvc.convertAssesment(this.originalId, this.data).subscribe((data: any) => {
+          this.assessSvc.convertAssesment(this.originalId).subscribe((data: any) => {
             this.navSvc.beginAssessment(newId)
             this.loading = false;
           })
@@ -129,6 +143,9 @@ export class UpgradeComponent implements OnInit {
     }
   }
 
+  /**
+   * 
+   */
   updateLevel() {
     this.maturitySvc.saveLevel(this.selectedLevel).subscribe(() => {
       this.navSvc.buildTree();
@@ -136,7 +153,9 @@ export class UpgradeComponent implements OnInit {
     });
   }
 
-  // Get details from original assessment
+  /**
+   * Get details from original assessment
+   */
   getOriginalData() {
     let draftDetails = this.assessSvc.assessment
     this.demoSvc.getDemographic().subscribe((data: any) => {
@@ -145,7 +164,7 @@ export class UpgradeComponent implements OnInit {
     this.iodDemoSvc.getDemographics().subscribe((data: any) => {
       this.iodDemographics = data;
     });
-    if (this.configSvc.cisaAssessorWorkflow == true) {
+    if (this.configSvc.userIsCisaAssessor == true) {
       this.csiSvc.getCsiServiceDemographic().subscribe((result: CsiServiceDemographic) => {
         this.csiServiceDemographic = result;
       });
@@ -154,17 +173,21 @@ export class UpgradeComponent implements OnInit {
           this.serviceComposition = data;
         });
     }
+
     this.assessment = draftDetails;
     this.originalId = this.assessment.id
     this.selectedLevel = this.assessSvc.assessment.maturityModel.maturityTargetLevel
   }
 
-  // Update new assessment with values 
+  /**
+   * Update new assessment with values 
+   */
   fillNewAssessment() {
-    this.assessSvc.assessment = this.assessment
+    // this.assessSvc.assessment = this.assessment
+    this.assessment.galleryItemGuid = this.assessSvc.galleryItemGuid.toLowerCase()
     this.demoSvc.updateDemographic(this.demographicData);
     this.iodDemoSvc.updateDemographic(this.iodDemographics);
-    if (this.configSvc.cisaAssessorWorkflow == true) {
+    if (this.configSvc.userIsCisaAssessor == true) {
       this.csiSvc.updateCsiServiceDemographic(this.csiServiceDemographic);
       this.csiSvc.updateCsiServiceComposition(this.serviceComposition);
     }

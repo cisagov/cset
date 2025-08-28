@@ -19,11 +19,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 }
 
 @Component({
-    selector: 'app-analytics-login',
-    templateUrl: './analytics-login.component.html',
-    styleUrls: ['./analytics-login.component.scss'],
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-analytics-login',
+  templateUrl: './analytics-login.component.html',
+  styleUrls: ['./analytics-login.component.scss'],
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class AnalyticsloginComponent implements OnInit {
 
@@ -31,12 +31,15 @@ export class AnalyticsloginComponent implements OnInit {
   matcherpassword = new MyErrorStateMatcher();
   matchalias = new MyErrorStateMatcher();
 
-  dataloginForm = new FormGroup ({
+  uploadInProgress = false;
+
+  dataloginForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required])
   });
 
 
+  hidePassword = true;
 
   @Input() error: string | null;
 
@@ -45,41 +48,54 @@ export class AnalyticsloginComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public analytics: any,
-    private dialog: MatDialogRef<AnalyticsloginComponent>, 
+    private dialog: MatDialogRef<AnalyticsloginComponent>,
     private snackBar: MatSnackBar,
     private analyticsSvc: AnalyticsService,
     private config: ConfigService,
     private dialogMat: MatDialog,
-    ) { }
+  ) { }
 
 
+  /**
+   * 
+   */
   ngOnInit() {
   }
 
+  /**
+   * 
+   */
   submit() {
-    this.postAnalyticsWithLogin()
+    this.uploadInProgress = true;
+    this.postAnalyticsWithLogin();
   }
 
+  /**
+   * 
+   */
   postAnalyticsWithLogin() {
-    
-    if(this.dataloginForm.valid){
+    if (this.dataloginForm.valid) {
       this.analyticsSvc.getAnalyticsToken(this.dataloginForm.controls.username.value, this.dataloginForm.controls.password.value).subscribe(
         data => {
           let token = data.token;
-          this.analyticsSvc.postAnalyticsWithLogin(token).subscribe(
+
+          localStorage.setItem('remoteToken', token);
+
+          this.analyticsSvc.postAnalytics(token).subscribe(
             (data: any) => {
-                this.dialogMat.open(AlertComponent, {
-                data: { 
-                    title: 'Success',
-                    iconClass: 'cset-icons-check-circle',
-                    messageText: "Assessment has been uploaded"
-                  }
-                });
-                
-                this.dialog.close();
-            });
+              this.uploadInProgress = false;
+              this.dialog.close('The assessment has been uploaded to the enterprise server');
+            },
+            err => {
+              let httpError: HttpErrorResponse = err;
+              console.error(err);
+              this.uploadInProgress = false;
+            }
+          );
         },
         err => {
+          this.uploadInProgress = false;
+
           if (err instanceof HttpErrorResponse) {
             let httpError: HttpErrorResponse = err;
             if (httpError.status === 403) {  // Username or password Failed
@@ -95,10 +111,11 @@ export class AnalyticsloginComponent implements OnInit {
             }
           } else {
             this.error = 'We were unable to log you in.  Error with login. Try again.';
-            
+
           }
         });
     } else {
+      this.uploadInProgress = false;
       this.error = "Fill out required fields";
     }
   }
@@ -110,6 +127,9 @@ export class AnalyticsloginComponent implements OnInit {
     return this.dialog.close({ cancel: true });
   }
 
+  /**
+   * 
+   */
   openSnackBar(message) {
     this.snackBar.open(message, "", {
       duration: 4000,

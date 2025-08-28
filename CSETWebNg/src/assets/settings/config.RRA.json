@@ -1,7 +1,0 @@
-{
-  "installationMode": "RRA",
-  "behaviors": {
-    "defaultTitle": "CISA - Ransomware Readiness",
-    "showFeedback": false
-  }
-}

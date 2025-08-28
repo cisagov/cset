@@ -13,6 +13,12 @@ namespace CSETWebCore.Model.Maturity.CPG
         public string ModelName { get; set; }
         public int ModelId { get; set; }
 
+        /// <summary>
+        /// Technology Domain, e.g., "OT", "IT", "OT+IT"
+        /// User designates the technology domain of the org being assessed.
+        /// </summary>
+        public string TechDomain { get; set; }
+
         public List<Domain> Domains { get; set; } = new List<Domain>();
     }
 

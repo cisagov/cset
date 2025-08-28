@@ -4,6 +4,9 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Business.Contact;
+using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.Maturity.Configuration;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
@@ -13,6 +16,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Reports;
+using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
@@ -112,6 +116,8 @@ namespace CSETWebCore.Business.Reports
             var query = from a in _context.ANSWER
                         join m in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_Level)
                             on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
+                        join p in _context.MATURITY_QUESTION_PROPS 
+                            on m.Mat_Question_Id equals p.Mat_Question_Id
                         where a.Assessment_Id == _assessmentId
                             && m.Maturity_Model_Id == targetModelId
                             && a.Question_Type == "Maturity"
@@ -135,6 +141,11 @@ namespace CSETWebCore.Business.Reports
                 }
             }
 
+
+            // Do not include unanswerable questions
+            responseList.RemoveAll(x => !x.Mat.Is_Answerable);
+
+
             foreach (var matAns in responseList)
             {
                 var o = _overlay.GetMaturityQuestion(matAns.Mat.Mat_Question_Id, lang);
@@ -155,7 +166,7 @@ namespace CSETWebCore.Business.Reports
 
             // RRA should be always be defaulted to its maximum available level (3)
             // since the user can't configure it
-            if (targetModelId == 5)
+            if (targetModelId == Constants.Constants.Model_RRA)
             {
                 selectedLevel = 3;
             }
@@ -296,8 +307,9 @@ namespace CSETWebCore.Business.Reports
             {
                 var newGrouping = new MaturityGrouping()
                 {
-                    GroupingID = sg.Grouping_Id,
+                    GroupingId = sg.Grouping_Id,
                     GroupingType = sg.Type.Grouping_Type_Name,
+                    GroupingLevel = sg.Group_Level ?? 1,
                     Title = sg.Title,
                     Description = sg.Description,
                     Abbreviation = sg.Abbreviation
@@ -307,7 +319,7 @@ namespace CSETWebCore.Business.Reports
 
 
                 // are there any questions that belong to this grouping?
-                var myQuestions = questions.Where(x => x.Grouping_Id == newGrouping.GroupingID).ToList();
+                var myQuestions = questions.Where(x => x.Grouping_Id == newGrouping.GroupingId).ToList();
 
                 var parentQuestionIDs = myQuestions.Select(x => x.Parent_Question_Id).Distinct().ToList();
 
@@ -331,7 +343,7 @@ namespace CSETWebCore.Business.Reports
                         Reviewed = answer?.a.Reviewed ?? false,
                         Is_Maturity = true,
                         MaturityLevel = myQ.Maturity_Level_Id,
-                        IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
+                        IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id) || myQ.Parent_Question_Id == null,
                         SetName = string.Empty,
                         FreeResponseAnswer = answer?.a.Free_Response_Answer
                     };
@@ -349,7 +361,7 @@ namespace CSETWebCore.Business.Reports
                 }
 
                 // Recurse down to build subgroupings
-                BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers);
+                BuildSubGroupings(newGrouping, newGrouping.GroupingId, allGroupings, questions, answers);
             }
         }
 
@@ -530,7 +542,7 @@ namespace CSETWebCore.Business.Reports
         public async Task<List<StandardQuestions>> GetStandardQuestionAnswers(int assessId)
         {
             CsetwebContextProcedures context = new CsetwebContextProcedures(_context);
-            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
+            var parmSub = new ParameterSubstitution(_context, _tokenManager);
             var dblist = await context.usp_GetQuestionsAsync(assessId);
 
             List<StandardQuestions> list = new List<StandardQuestions>();
@@ -552,7 +564,7 @@ namespace CSETWebCore.Business.Reports
                 {
                     ShortName = a.ShortName,
 
-                    Question = rm.ResolveParameters(a.QuestionOrRequirementID, a.AnswerID, a.QuestionText),
+                    Question = parmSub.ResolveParameters(a.QuestionOrRequirementID, a.AnswerID, a.QuestionText),
                     QuestionId = a.QuestionOrRequirementID,
                     Answer = a.AnswerText,
                     CategoryAndNumber = a.CategoryAndNumber
@@ -630,11 +642,11 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<QuestionsWithAltJust> GetQuestionsWithAlternateJustification()
         {
-
             var results = new List<QuestionsWithAltJust>();
 
-            // get any "A" answers that currently apply
+            var parmSub = new ParameterSubstitution(_context, _tokenManager);
 
+            // get any "A" answers that currently apply
             var relevantAnswers = new RelevantAnswers().GetAnswersForAssessment(_assessmentId, _context)
                 .Where(ans => ans.Answer_Text == "A").ToList();
 
@@ -652,13 +664,22 @@ namespace CSETWebCore.Business.Reports
                             join req in _context.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
                             select new QuestionsWithAltJust()
                             {
+                                Id = req.Requirement_Id,
                                 Answer = ans.Answer_Text,
+                                AnswerId = ans.Answer_ID,
                                 CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
                                 AlternateJustification = ans.Alternate_Justification,
                                 Question = req.Requirement_Text
                             };
 
-                return query.ToList();
+                var reqs = query.ToList();
+
+                foreach(var req in reqs)
+                {
+                    req.Question = parmSub.ResolveParameters(req.Id, req.AnswerId, req.Question);
+                }
+
+                return reqs;
             }
             else
             {
@@ -668,7 +689,9 @@ namespace CSETWebCore.Business.Reports
                             orderby h.Question_Group_Heading
                             select new QuestionsWithAltJust()
                             {
+                                Id = q.Question_Id,
                                 Answer = ans.Answer_Text,
+                                AnswerId = ans.Answer_ID,
                                 CategoryAndNumber = h.Question_Group_Heading + " #" + ans.Question_Number,
                                 AlternateJustification = ans.Alternate_Justification,
                                 Question = q.Simple_Question
@@ -676,7 +699,6 @@ namespace CSETWebCore.Business.Reports
 
                 return query.ToList();
             }
-
         }
 
 
@@ -688,7 +710,8 @@ namespace CSETWebCore.Business.Reports
         {
             var results = new List<QuestionsWithComments>();
 
-            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
+            var parmSub = new ParameterSubstitution(_context, _tokenManager);
+
             // get any "marked for review" or commented answers that currently apply
             var relevantAnswers = new RelevantAnswers().GetAnswersForAssessment(_assessmentId, _context)
                 .Where(ans => !string.IsNullOrEmpty(ans.Comment))
@@ -710,7 +733,7 @@ namespace CSETWebCore.Business.Reports
                             {
                                 Answer = ans.Answer_Text,
                                 CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
-                                Question = rm.ResolveParameters(ans.Question_Or_Requirement_ID, ans.Answer_ID, req.Requirement_Text),
+                                Question = parmSub.ResolveParameters(ans.Question_Or_Requirement_ID, ans.Answer_ID, req.Requirement_Text),
                                 Comment = ans.Comment
                             };
 
@@ -741,6 +764,8 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<QuestionsMarkedForReview> GetQuestionsMarkedForReview()
         {
+            var parmSub = new ParameterSubstitution(_context, _tokenManager);
+
             var results = new List<QuestionsMarkedForReview>();
 
             // get any "marked for review" or commented answers that currently apply
@@ -762,12 +787,21 @@ namespace CSETWebCore.Business.Reports
                             join req in _context.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
                             select new QuestionsMarkedForReview()
                             {
+                                Id = req.Requirement_Id,
                                 Answer = ans.Answer_Text,
+                                AnswerId = ans.Answer_ID,
                                 CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
                                 Question = req.Requirement_Text
                             };
 
-                return query.ToList();
+                var reqs = query.ToList();
+
+                foreach (var req in reqs)
+                {
+                    req.Question = parmSub.ResolveParameters(req.Id, req.AnswerId, req.Question);
+                }
+
+                return reqs;
             }
             else
             {
@@ -784,7 +818,6 @@ namespace CSETWebCore.Business.Reports
 
                 return query.ToList();
             }
-
         }
 
 
@@ -795,7 +828,8 @@ namespace CSETWebCore.Business.Reports
         public List<QuestionsMarkedForReview> GetQuestionsReviewed()
         {
             var results = new List<QuestionsMarkedForReview>();
-            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
+
+            var parmSub = new ParameterSubstitution(_context, _tokenManager);
 
             // get any "marked for review" or commented answers that currently apply
             var relevantAnswers = new RelevantAnswers().GetAnswersForAssessment(_assessmentId, _context)
@@ -816,12 +850,21 @@ namespace CSETWebCore.Business.Reports
                             join req in _context.NEW_REQUIREMENT on ans.Question_Or_Requirement_ID equals req.Requirement_Id
                             select new QuestionsMarkedForReview()
                             {
+                                Id = req.Requirement_Id,
                                 Answer = ans.Answer_Text,
+                                AnswerId = ans.Answer_ID,
                                 CategoryAndNumber = req.Standard_Category + " - " + req.Requirement_Title,
-                                Question = rm.ResolveParameters(ans.Question_Or_Requirement_ID, ans.Answer_ID, req.Requirement_Text)
+                                Question = parmSub.ResolveParameters(ans.Question_Or_Requirement_ID, ans.Answer_ID, req.Requirement_Text)
                             };
 
-                return query.ToList();
+                var reqs = query.ToList();
+
+                foreach (var req in reqs)
+                {
+                    req.Question = parmSub.ResolveParameters(req.Id, req.AnswerId, req.Question);
+                }
+
+                return reqs;
             }
             else
             {
@@ -845,7 +888,7 @@ namespace CSETWebCore.Business.Reports
         {
             var lang = _tokenManager.GetCurrentLanguage();
 
-            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
+            var parmSub = new ParameterSubstitution(_context, _tokenManager);
 
             List<RankedQuestions> list = new List<RankedQuestions>();
             List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
@@ -860,8 +903,7 @@ namespace CSETWebCore.Business.Reports
                     }
                 }
 
-
-                q.QuestionText = rm.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
+                q.QuestionText = parmSub.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
 
                 q.Category = _overlay.GetPropertyValue("STANDARD_CATEGORY", q.Category.ToLower(), lang) ?? q.Category;
 
@@ -878,11 +920,12 @@ namespace CSETWebCore.Business.Reports
             return list;
         }
 
+
         public List<PhysicalQuestions> GetQuestionsWithSupplementals()
         {
             var lang = _tokenManager.GetCurrentLanguage();
 
-            var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
+            var parmSub = new ParameterSubstitution(_context, _tokenManager);
 
             List<PhysicalQuestions> list = new List<PhysicalQuestions>();
             List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
@@ -906,7 +949,7 @@ namespace CSETWebCore.Business.Reports
                 }
 
 
-                q.QuestionText = rm.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
+                q.QuestionText = parmSub.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
 
                 q.Category = _overlay.GetPropertyValue("STANDARD_CATEGORY", q.Category.ToLower(), lang) ?? q.Category;
                 var comment = _context.Answer_Requirements.Where(x => x.Question_Or_Requirement_Id == q.QuestionOrRequirementID).FirstOrDefault()?.Comment;
@@ -1039,10 +1082,27 @@ namespace CSETWebCore.Business.Reports
             info.Assessment_Effective_Date = assessment.AssessmentEffectiveDate;
             info.Assessment_Creation_Date = assessment.AssessmentCreatedDate;
 
-            // Primary Assessor
-            var user = _context.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
-            info.Assessor_Name = user != null ? FormatName(user.FirstName, user.LastName) : string.Empty;
 
+            // Facilitator or Primary Assessor (Creator)
+            USERS userCreator = _context.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
+            var demoExtBiz = new DemographicExtBusiness(_context);
+            var facilitatorId = (int?)demoExtBiz.GetX(_assessmentId, "FACILITATOR");
+            
+            if (facilitatorId != null)
+                
+            {
+                USERS user = _context.USERS.FirstOrDefault(x => x.UserId == facilitatorId);
+                info.Assessor_Name = user != null ? FormatName(user.FirstName, user.LastName) : string.Empty;
+            }
+            else
+            {
+                info.Assessor_Name = userCreator != null ? FormatName(userCreator.FirstName, userCreator.LastName) : string.Empty;
+            }
+
+
+           
+            info.SelfAssessment = ((bool?)demoExtBiz.GetX(_assessmentId, "SELF-ASSESS")) ?? false;
+         
 
             // Other Contacts
             info.Additional_Contacts = new List<string>();
@@ -1115,13 +1175,15 @@ namespace CSETWebCore.Business.Reports
                                 join i in _context.IMPORTANCE on f.Importance_Id equals i.Importance_Id into i1
                                 from i in i1.DefaultIfEmpty()
                                 where a.Assessment_Id == _assessmentId
-                                select new ObservationIngredients() { 
-                                    Finding = f, 
+                                select new ObservationIngredients()
+                                {
+                                    Finding = f,
                                     FC = fc,
-                                    Answer = a, 
-                                    MaturityQuestion = mq, 
-                                    NewRequirement = nr, 
-                                    Importance = i }).ToList();
+                                    Answer = a,
+                                    MaturityQuestion = mq,
+                                    NewRequirement = nr,
+                                    Importance = i
+                                }).ToList();
 
             var acc = _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == _assessmentId).OrderBy(x => x.Assessment_Contact_Id).ToList();
 
@@ -1131,7 +1193,7 @@ namespace CSETWebCore.Business.Reports
             var componentQuestions = GetComponentQuestions();
 
 
-            
+
             // First handle the 'assigned' Observations
             foreach (var contact in acc)
             {
@@ -1193,12 +1255,6 @@ namespace CSETWebCore.Business.Reports
             // get the question identifier and text
             GetQuestionTitleAndText(oi, standardQuestions, componentQuestions, oi.Answer.Answer_Id,
                 out string qid, out string qtxt);
-
-            if (_maturityBusiness.GetMaturityModel(_assessmentId)?.ModelName == "CIE")
-            {
-                GetQuestionTitleAndTextForCie(oi, standardQuestions, componentQuestions, oi.Answer.Answer_Id,
-                    out qid, out qtxt);
-            }
 
             obs.QuestionIdentifier = qid;
             obs.QuestionText = qtxt;

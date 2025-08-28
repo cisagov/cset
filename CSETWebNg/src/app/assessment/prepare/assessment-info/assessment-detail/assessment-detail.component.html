@@ -23,17 +23,13 @@
 <ng-container *transloco="let t">
     <h4>{{t('organization details')}}</h4>
     <form #f="ngForm">
-        <div class="row">
+        <div class="row mb-3">
             <p *ngIf="showAssessmentNameDisclaimer()">{{t('no pii in name')}}</p>
             <div class="col">
                 <label class="form-label" for="name">{{t('assessment name')}}</label>
-                <input type="text" maxlength="100" [disabled]="configSvc.installationMode === 'ACET'"
-                    class="form-control" id="name" name="name" required focusOnInit="true"
-                    [(ngModel)]="assessment.assessmentName" (ngModelChange)="assessment.assessmentName"
-                    (change)="update($event)" autofocus tabindex="0">
-                <div class="invalid-feedback d-block text-muted" *ngIf="configSvc.installationMode === 'ACET'">
-                    Auto-populated based on data provided
-                </div>
+                <input type="text" maxlength="100" class="form-control" id="name" name="name" required
+                    focusOnInit="true" [(ngModel)]="assessment.assessmentName"
+                    (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
             </div>
             <div class="col">
                 <label class="form-label" for="date">{{t('assessment date')}}</label>
@@ -43,12 +39,14 @@
                 <mat-datepicker #picker></mat-datepicker>
             </div>
         </div>
-        <div class="col" *ngIf="showFacilityName()">
+
+        <div class="col mb-3" *ngIf="showFacilityName()">
             <label class="form-label" for="facility">{{t('facility name')}}</label>
             <input type="text" maxlength="100" class="form-control" id="facility" name="facility"
                 [(ngModel)]="assessment.facilityName" (change)="update($event)" tabindex="0">
         </div>
-        <div class="row">
+
+        <div class="row mb-4">
             <div class="col" *ngIf="showCityName()">
                 <label class="form-label" for="citySite">{{t('city or site name')}}</label>
                 <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite"
@@ -61,6 +59,7 @@
             </div>
         </div>
     </form>
+
     <div class="mt-4">
         <h4>{{t('assessment type')}}</h4>
         <h5>{{ assessment.typeTitle || 'Blank Assessment' }}</h5>
@@ -75,5 +74,29 @@
             <button class="btn btn-primary" (click)="showAwwaDialog()">Import AWWA Tool Results</button>
         </div>
 
+    </div>
+    <div *ngIf="this.configSvc.userIsCisaAssessor" class="mt-4">
+        <h4>{{ t('assessment settings') }}</h4>
+
+        <div class="mb-3 col-6">
+            <label class="form-label">{{t('protected features.cisa assessor workflow')}}</label>
+            <div>
+                <div class="btn-group btn-group-toggle col-10" data-toggle="buttons"
+                    style="border: 2px solid transparent; border-radius: 8px;">
+                    <label class="btn btn-level form-check-label" [class.active]="assessment.assessorMode"
+                        (change)="updateAssessorMode()">
+                        <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                            [checked]="assessment.assessorMode" />
+                        {{t('answer-options.button-labels.yes')}}
+                    </label>
+                    <label class="btn btn-level form-check-label" [class.active]="!assessment.assessorMode"
+                        (change)="updateAssessorMode()">
+                        <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                            [checked]="!assessment.assessorMode" />
+                        {{t('answer-options.button-labels.no')}}
+                    </label>
+                </div>
+            </div>
+        </div>
     </div>
 </ng-container>

@@ -31,13 +31,10 @@ import {
 import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
-import { DemographicExtendedService } from './demographic-extended.service';
-import { CyberFloridaService } from './cyberflorida.service';
 import { Answer } from '../models/questions.model';
 import { BehaviorSubject, first, firstValueFrom, Observable } from 'rxjs';
-import { TranslocoService } from '@jsverse/transloco';
 import { ConversionService } from './conversion.service';
-
+import { ConstantsService } from './constants.service';
 
 export interface Role {
   assessmentRoleId: number;
@@ -58,7 +55,8 @@ export class AssessmentService {
   private apiUrl: string;
   private initialized = false;
   public applicationMode: string;
-  public assessmentStateChanged$ = new BehaviorSubject(123);
+  public assessmentStateChanged$ = new BehaviorSubject(this.c.NAV_APPLY_CIE_TO_CSTATES);
+
   /**
    * This is private because we need a setter so that we can do things
    * when the assessment is loaded.
@@ -85,6 +83,10 @@ export class AssessmentService {
   //Hide upgrade assessment alert
   public hideUpgradeAlert: boolean = false;
 
+  //Assessment upgrade conversion galleryItemGuid and target model name
+  public galleryItemGuid: string = "";
+  public convertToModel: string = "";
+
   /**
    *
    */
@@ -92,9 +94,7 @@ export class AssessmentService {
     private http: HttpClient,
     private configSvc: ConfigService,
     private router: Router,
-    private extDemoSvc: DemographicExtendedService,
-    private floridaSvc: CyberFloridaService,
-    private tSvc: TranslocoService,
+    private c: ConstantsService,
     private convSvc: ConversionService
   ) {
     if (!this.initialized) {
@@ -122,7 +122,12 @@ export class AssessmentService {
     this.assessment = undefined;
     localStorage.removeItem('assessmentId');
   }
-
+  /**
+   *
+   */
+  getAllMaturityModels(): Observable<MaturityModel[]> {
+    return this.http.get<MaturityModel[]>(`${this.apiUrl}MaturityModels`);
+  }
   /**
    *
    */
@@ -136,7 +141,6 @@ export class AssessmentService {
         console.log("cleared first Time");
       }
     );
-    this.floridaSvc.clearState();
   }
 
   /**
@@ -164,10 +168,14 @@ export class AssessmentService {
   }
 
   /**
-   *
+   * Get a new token that carries the assessmentID as a claim.  This token
+   * should be used for all assessment-specific requests.
    */
   getAssessmentToken(assessId: number) {
-    const obs: Observable<object> = this.http.get(this.apiUrl + 'auth/token?assessmentId=' + assessId);
+    const headers = new HttpHeaders({
+      'AssessmentId': assessId
+    });
+    const obs: Observable<object> = this.http.get(this.apiUrl + 'auth/token', { headers: headers });
     const prom: Promise<object> = firstValueFrom(obs);
 
     return prom.then((response: { token: string }) => {
@@ -223,7 +231,7 @@ export class AssessmentService {
         headers
       )
       .subscribe(() => {
-        if (this.configSvc.cisaAssessorWorkflow) {
+        if (this.configSvc.userIsCisaAssessor) {
           this.updateAssessmentName();
         }
       });
@@ -253,7 +261,7 @@ export class AssessmentService {
   }
 
   /**
-   * 
+   *
    */
   getAssessmentContactsById(ids: number[]) {
     var id1 = (ids[0] != undefined ? ids[0] : 0);
@@ -433,12 +441,6 @@ export class AssessmentService {
   newAssessmentGallery(galleryItem: any): Promise<any> {
     let workflow = 'BASE';
     switch (this.configSvc.installationMode || '') {
-      case 'ACET':
-        workflow = 'ACET';
-        break;
-      case 'TSA':
-        workflow = 'TSA';
-        break;
       default:
         workflow = 'BASE';
     }
@@ -488,11 +490,10 @@ export class AssessmentService {
     this.hideUpgradeAlert = false;
     return new Promise((resolve, reject) => {
       this.getAssessmentToken(id).then(() => {
-        this.getAssessmentDetail().subscribe(data => {
+        this.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
           this.assessment = data;
 
           this.applicationMode = this.assessment.applicationMode;
-          //this.floridaSvc.updateStatus(this.assessment.);
 
           if (this.assessment.baselineAssessmentId) {
             localStorage.setItem("baseline", this.assessment.baselineAssessmentId.toString());
@@ -501,10 +502,7 @@ export class AssessmentService {
           }
 
           // make sure that the acet only switch is turned off when in standard CSET
-          if (this.configSvc.installationMode !== 'ACET') {
-            this.assessment.isAcetOnly = false;
-          }
-          this.extDemoSvc.preloadDemoAndGeo();
+          // this.extDemoSvc.preloadDemoAndGeo();
           const rpath = localStorage.getItem('returnPath');
 
           // normal assessment load
@@ -521,45 +519,6 @@ export class AssessmentService {
         });
       });
     });
-  }
-
-  /**
-   * Reset things to ACET defaults
-   */
-  setAcetDefaults() {
-    if (!!this.assessment) {
-      this.assessment.useMaturity = true;
-      this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
-      this.assessment.isAcetOnly = true;
-
-      this.assessment.useStandard = false;
-      this.assessment.useDiagram = false;
-    }
-  }
-
-
-  /**
-   *
-   */
-  setRraDefaults() {
-    if (!!this.assessment) {
-      this.assessment.useMaturity = true;
-      this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'RRA');
-
-      this.assessment.useStandard = false;
-      this.assessment.useDiagram = false;
-    }
-  }
-
-  setNcuaDefaults() {
-    if (!!this.assessment) {
-      this.assessment.useMaturity = true;
-      this.assessment.maturityModel = AssessmentService.allMaturityModels.find(m => m.modelName == 'ACET');
-      //this.assessment.isAcetOnly = true;
-
-      this.assessment.useStandard = false;
-      this.assessment.useDiagram = false;
-    }
   }
 
   /**
@@ -662,23 +621,6 @@ export class AssessmentService {
   }
 
   /**
-  * A check for when we need custom ISE functionaltiy
-  * but prevents other assessments (like standards) from
-  * throwing an error when maturity model is undefined
-  */
-  isISE() {
-    if (this.assessment === undefined || this.assessment === null ||
-      this.assessment.maturityModel == null || this.assessment.maturityModel.modelName == null) {
-      return false;
-    }
-    if (this.assessment.maturityModel.modelName === 'ISE') {
-      return true;
-    }
-
-    return false;
-  }
-
-  /**
    * Indicates if the assessment is PCII.  This is set in the
    * CISA Assessor Workflow's Assessment Configuration page.
    */
@@ -693,53 +635,45 @@ export class AssessmentService {
   * Saves the user's "Prevent Encrypt" toggle option to the database.
   * @param status
   */
-  persistEncryptPreference(preventEncrypt: boolean) {
-    return this.http.post(this.apiUrl + 'savePreventEncrypt', preventEncrypt, headers);
+  persistEncryptPreference(status: boolean) {
+    return this.http.post(this.apiUrl + 'saveEncryptStatus', status, headers);
   }
 
   /**
   * Gets the user's "Prevent Encrypt" toggle option from the database.
   */
   getEncryptPreference() {
-    return this.http.get(this.apiUrl + 'getPreventEncrypt');
+    return this.http.get(this.apiUrl + 'encryptStatus');
   }
 
-  isCyberFloridaComplete(): boolean {
-    if (this.configSvc.installationMode == "CF") {
-      return this.floridaSvc.isAssessmentComplete();
-    }
-    else
-      return true;
+  hasGlobalDocuments() {
+    return this.http.get(this.apiUrl + 'hasGlobalDocuments');
   }
 
-  initCyberFlorida(assessmentId: number) {
-    this.floridaSvc.getInitialState().then(() => {
-      this.assessmentStateChanged$.next(125);
-    }
-    );
-  }
 
   updateAnswer(answer: Answer) {
-    this.floridaSvc.updateCompleteStatus(answer);
-    if (this.isCyberFloridaComplete()) {
-      this.convSvc.isEntryCfAssessment().subscribe((data) => {
-        if (data)
-          this.assessmentStateChanged$.next(124);
-      });
-    }
+
   }
 
-  convertAssesment(original_id: number, targetModelName: string) {
-    // Setting up query parameters
+  //Assessment upgrade conversion
+  convertAssesment(original_id: number) {
     let queryParams = new HttpParams()
       .set('originalAssessmentId', original_id)
-      .set('targetModelName', targetModelName)
+      .set('targetModelName', this.convertToModel)
 
     return this.http.post(
       this.apiUrl + 'conversion', null, { params: queryParams }
     );
   }
 
+  //Check if assessment has an upgrade available
+  checkUpgrades() {
+    return this.http.get(this.apiUrl + 'upgrades');
+  }
 
+  setAssessorSetting(mode: boolean) {
+    this.assessment.assessorMode = mode;
+    return this.http.post(this.apiUrl + 'assessormode', mode, headers)
+  }
 
 }

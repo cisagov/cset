@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
@@ -33,7 +34,6 @@ import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { EditUserComponent } from '../../dialogs/edit-user/edit-user.component';
 import { EnableProtectedComponent } from '../../dialogs/enable-protected/enable-protected.component';
 import { ExcelExportComponent } from '../../dialogs/excel-export/excel-export.component';
-import { GlobalConfigurationComponent } from '../../dialogs/global-configuration/global-configuration.component';
 import { GlobalParametersComponent } from '../../dialogs/global-parameters/global-parameters.component';
 import { KeyboardShortcutsComponent } from '../../dialogs/keyboard-shortcuts/keyboard-shortcuts.component';
 import { RraMiniUserGuideComponent } from '../../dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
@@ -44,24 +44,30 @@ import { AggregationService } from '../../services/aggregation.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
-import { NavigationService } from '../../services/navigation/navigation.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { GalleryService } from '../../services/gallery.service';
 import { SetBuilderService } from './../../services/set-builder.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { UserSettingsComponent } from '../../dialogs/user-settings/user-settings.component';
 import { translate } from '@jsverse/transloco';
+import { FileExportService } from '../../services/file-export.service';
+import { NavigationService } from '../../services/navigation/navigation.service';
+import { AdminSettingsComponent } from '../../initial/admin-settings/admin-settings.component';
+import { UserService } from '../../services/user.service';
+
 
 @Component({
-    selector: 'app-top-menus',
-    templateUrl: './top-menus.component.html',
-    styleUrls: ['./top-menus.component.scss'],
-    standalone: false
+  selector: 'app-top-menus',
+  templateUrl: './top-menus.component.html',
+  styleUrls: ['./top-menus.component.scss'],
+  standalone: false
 })
 export class TopMenusComponent implements OnInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   showFullAccessKey = false;
+  globalDocuments: boolean = false;
+  admin: boolean = false;
 
   @Input()
   skin: string;
@@ -70,6 +76,7 @@ export class TopMenusComponent implements OnInit {
     public auth: AuthenticationService,
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
+    public navSvc: NavigationService,
     public aggregationSvc: AggregationService,
     public fileSvc: FileUploadClientService,
     public setBuilderSvc: SetBuilderService,
@@ -77,7 +84,8 @@ export class TopMenusComponent implements OnInit {
     public router: Router,
     private _hotkeysService: HotkeysService,
     private gallerySvc: GalleryService,
-    private navSvc: NavigationService
+    private fileExportSvc: FileExportService,
+    private userSvg: UserService
   ) { }
 
   ngOnInit(): void {
@@ -88,8 +96,9 @@ export class TopMenusComponent implements OnInit {
         this.hasPath(localStorage.getItem('returnPath'));
       }
     }
-
+    this.checkHasGlobalDocuments();
     this.setupShortCutKeys();
+    this.showAdminSettings();
   }
 
   hasPath(rpath: string) {
@@ -260,6 +269,10 @@ export class TopMenusComponent implements OnInit {
       return this.inAssessment() ?? false;
     }
 
+    if (item == 'admin') {
+      return this.admin;
+    }
+
 
     return true;
   }
@@ -268,13 +281,6 @@ export class TopMenusComponent implements OnInit {
    * Allows us to hide items for certain skins
    */
   showItemForCurrentSkin(item: string) {
-    // custom behavior for ACET
-    if (this.skin === 'ACET') {
-      if (item === 'assessment documents') {
-        return false;
-      }
-    }
-
     const show = this.configSvc.config.behaviors?.showAssessmentDocuments ?? true;
     return show;
   }
@@ -370,25 +376,7 @@ export class TopMenusComponent implements OnInit {
       if (results.enableFeatureButtonClicked && this.router.url == '/home/landing-page-tabs') {
         this.gallerySvc.refreshCards();
       }
-
-      // Need to reload application in two cases.
-      // Case 1: cisaWorkflow switch is now on but configSvc still has non IOD installationMode set.
-      // Case 2: cisaWorkflow switch is now off but configSvc still has IOD installationMode set.
-      if ((results.cisaWorkflowEnabled && this.configSvc.installationMode != 'IOD') ||
-        (!results.cisaWorkflowEnabled && this.configSvc.installationMode == 'IOD')) {
-        this.configSvc.setCisaAssessorWorkflow(results.cisaWorkflowEnabled).subscribe(() => {
-          this.goHome();
-          window.location.reload();
-        });
-      }
     });
-  }
-
-  setMeritExportPath() {
-    if (this.dialog.openDialogs[0]) {
-      return;
-    }
-    this.dialogRef = this.dialog.open(GlobalConfigurationComponent);
   }
 
   showKeyboardShortcuts() {
@@ -402,22 +390,19 @@ export class TopMenusComponent implements OnInit {
     const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
     const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
     if (this.dialog.openDialogs[0] || doNotShow) {
-      this.exportToExcel();
+      this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'assessment/export/excel');
       return;
     }
+
     this.dialogRef = this.dialog.open(ExcelExportComponent);
     this.dialogRef.afterClosed().subscribe();
   }
 
-  exportToExcel() {
-    const url = this.configSvc.apiUrl + 'assessment/export/excel?token=' + localStorage.getItem('userToken');
-    window.open(url);
-  }
-
-
+  /**
+   * 
+   */
   exportToExcelNCUA() {
-    const url = this.configSvc.apiUrl + 'ExcelExportISE?token=' + localStorage.getItem('userToken');
-    window.open(url);
+    this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'ExcelExportISE');
   }
 
   /**
@@ -493,14 +478,25 @@ export class TopMenusComponent implements OnInit {
   /**
    * Display a dialog to let the user change the display language.
    */
-  editLanguage() {
+  userSettings() {
     if (this.dialog.openDialogs[0]) {
       return;
     }
     this.dialogRef = this.dialog.open(UserSettingsComponent);
     this.dialogRef.afterClosed().subscribe((results) => {
       if (results) {
-        this.assessSvc.persistEncryptPreference(results.preventEncrypt).subscribe(() => { });
+        this.assessSvc.persistEncryptPreference(results.encryption).subscribe(() => { });
+        this.configSvc.setCisaAssessorWorkflow(results.cisaWorkflowEnabled).subscribe(() => { });
+        // Need to reload application in two cases.
+        // Case 1: cisaWorkflow switch is now on but configSvc still has non IOD installationMode set.
+        // Case 2: cisaWorkflow switch is now off but configSvc still has IOD installationMode set.
+        if ((results.cisaWorkflowEnabled && this.configSvc.installationMode != 'IOD') ||
+          (!results.cisaWorkflowEnabled && this.configSvc.installationMode == 'IOD')) {
+          this.configSvc.setCisaAssessorWorkflow(results.cisaWorkflowEnabled).subscribe(() => {
+            this.goHome();
+            window.location.reload();
+          });
+        }
       }
     });
   }
@@ -561,6 +557,21 @@ export class TopMenusComponent implements OnInit {
     return localStorage.getItem('assessmentId');
   }
 
+  isNullOrEmptyAssessment() {
+    let str = localStorage.getItem('assessmentId');
+    let hasNoVal = str === null || str === undefined || str === "";
+    return hasNoVal;
+  }
+
+  checkHasGlobalDocuments(): void {
+    let isGlobal = false;
+    this.assessSvc.hasGlobalDocuments().subscribe(
+      (response: any) => {
+        this.globalDocuments = response;
+      }
+    );
+  }
+
   showAssessDocs() {
     if (this.dialog.openDialogs[0]) {
       return;
@@ -583,5 +594,17 @@ export class TopMenusComponent implements OnInit {
   goHome() {
     this.assessSvc.dropAssessment();
     this.router.navigate(['/home'], { queryParams: { tab: 'myAssessments' } });
+  }
+
+  showAdminSettings() {
+    this.userSvg.getRole().subscribe(
+      (data: any) => {
+        if (data.role == 'ADMIN') {
+          this.admin = true;
+        } else {
+          this.admin = false;
+        }
+      }
+    )
   }
 }

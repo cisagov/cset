@@ -3,12 +3,5 @@
   <PropertyGroup>
     <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
-  <ItemGroup>
-    <None Update="App_Data\LanguagePacks\JP\GALLERY_ITEM.json">
-      <SubType>Component</SubType>
-    </None>
-    <None Update="App_Data\LanguagePacks\JP\SECTOR.json">
-      <SubType>Component</SubType>
-    </None>
-  </ItemGroup>
+  <ItemGroup />
 </Project>

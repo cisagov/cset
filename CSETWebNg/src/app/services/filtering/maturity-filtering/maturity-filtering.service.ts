@@ -27,12 +27,12 @@ import { ConfigService } from '../../config.service';
 import { QuestionGrouping } from '../../../models/questions.model';
 import { QuestionFilterService } from '../question-filter.service';
 import { AssessmentService } from '../../assessment.service';
-import { AcetFilteringService } from './acet-filtering.service';
 import { EdmFilteringService } from './edm-filtering.service';
 import { CrrFilteringService } from './crr-filtering.service';
 import { CmmcFilteringService } from './cmmc-filtering.service';
 import { RraFilteringService } from './rra-filtering.service';
 import { BasicFilteringService } from './basic-filtering.service';
+import { SelectableGroupingsService } from '../../selectable-groupings.service';
 
 
 const headers = {
@@ -93,23 +93,17 @@ export class MaturityFilteringService {
 
 
   constructor(
-    http: HttpClient,
     public configSvc: ConfigService,
     public questionFilterSvc: QuestionFilterService,
     public assesmentSvc: AssessmentService,
-    public acetFilteringSvc: AcetFilteringService,
     public cmmcFilteringSvc: CmmcFilteringService,
     public edmFilteringSvc: EdmFilteringService,
     public crrFilteringSvc: CrrFilteringService,
     public rraFilteringSvc: RraFilteringService,
-    public basicFilteringSvc: BasicFilteringService
+    public basicFilteringSvc: BasicFilteringService,
+    public selectableGroupingsSvc: SelectableGroupingsService
   ) {
-
-
-
-
     this.refresh();
-
   }
 
   /**
@@ -236,13 +230,13 @@ export class MaturityFilteringService {
    * based on the current filter settings.
    * @param cats
    */
-  public evaluateFilters(groupings: QuestionGrouping[]) {
+  public evaluateFilters(groupings: QuestionGrouping[] | null) {
     if (!groupings) {
       return;
     }
 
     groupings.forEach(g => {
-      this.recurseQuestions(g);
+      this.recurseQuestionsForFiltering(g);
     });
   }
 
@@ -250,7 +244,8 @@ export class MaturityFilteringService {
   /**
    * Recurses any number of grouping levels and returns any Questions found.
    */
-  public recurseQuestions(g: QuestionGrouping) {
+  public recurseQuestionsForFiltering(g: QuestionGrouping) {
+    const modelId = this.questionFilterSvc.maturityModelId;
     const filterSvc = this.questionFilterSvc;
     const filterStringLowerCase = filterSvc.filterSearchString.toLowerCase();
 
@@ -260,20 +255,19 @@ export class MaturityFilteringService {
 
     g.visible = true;
 
+
+    // first check the 'selected' property (see maturity models 23 and 24)
+    g.visible = g.selected;
+
+
+
     g.questions.forEach(q => {
       // start with false, then set true if the question should be shown
       q.visible = false;
 
       // Check maturity level filtering first.  If the question is not visible the rest of the
       // conditions can be avoided.
-      switch (this.assesmentSvc.assessment.maturityModel.modelName) {
-        case 'ACET':
-          this.acetFilteringSvc.setQuestionVisibility(q, this.currentDomainName);
-          break;
-
-        case 'ISE':
-          this.acetFilteringSvc.setIseQuestionVisibility(q, this.currentDomainName);
-          break;
+      switch (this.assesmentSvc.assessment.maturityModel?.modelName) {
 
         case 'CMMC':
         case 'CMMC2':
@@ -301,24 +295,55 @@ export class MaturityFilteringService {
         return;
       }
 
-      // If we made it this far, start over assuming visible = false
-      q.visible = false;
+      const maturityModel=this.assesmentSvc.assessment?.maturityModel;
 
-
-      // If search string is specified, any questions that don't contain the string
-      // are not shown.  No need to check anything else.
-      if (filterSvc.filterSearchString.length > 0
-        && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
-        return;
+      if (q.maturityLevel !== undefined && q.maturityLevel !== null) {
+        const questionLevel = q.maturityLevel.toString();
+        if (!filterSvc.showFilters.includes(questionLevel)) {
+          //q.visible=false;   -- quick fix for now to prevent questions from being hidden incorrectly
+          //return;
+        }
       }
 
+      // If we made it this far, start over assuming visible = false
+      q.visible = false
+      if (filterSvc.filterSearchString.length > 0) {
+        let textToSearch = '';
+
+        if (this.assesmentSvc.assessment.maturityModel?.modelName === 'CPG2' || this.assesmentSvc.assessment.maturityModel?.modelName === 'CPG') {
+          // For CPG2 and CPG, combine securityPractice and outcome for searching
+          textToSearch = (q.securityPractice || '') + ' ' + (q.outcome || '');
+        } else {
+          // For all other models, use questionText
+          textToSearch = q.questionText || '';
+        }
+
+        if (textToSearch.toLowerCase().indexOf(filterStringLowerCase) < 0) {
+          return;
+        }
+      }
+      // OLD code to filter questionText
+      // if (filterSvc.filterSearchString.length > 0
+      //   && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
+      //   return;
+      // }
+      // only apply maturity-level filtering when the user has toggled at least one numeric level
+      const hasLevelFilter = filterSvc.showFilters.some(f => /^\d+$/.test(f));
+      if (maturityModel?.levels?.length > 0
+        && q.maturityLevel != null
+        && hasLevelFilter) {
+        const questionLevel = q.maturityLevel.toString();
+        if (!filterSvc.showFilters.includes(questionLevel)) {
+          q.visible = false;
+          return;
+        }
+      }
       // add any question-specific answer options to the filter service
       q.answerOptions?.forEach(opt => {
         if (!filterSvc.answerOptions.includes(opt)) {
           filterSvc.answerOptions.push(opt);
         }
       });
-
 
       // evaluate answers
       if (filterSvc.answerOptions.includes(q.answer) && filterSvc.showFilters.includes(q.answer)) {
@@ -329,9 +354,6 @@ export class MaturityFilteringService {
       if ((q.answer == null || q.answer == 'U') && filterSvc.showFilters.includes('U')) {
         q.visible = true;
 
-        if (this.assesmentSvc.isISE() && q.isParentQuestion) { //skips parent question when checking for visibility
-          q.visible = false;
-        }
         if (this.assesmentSvc.usesMaturityModel('VADR') && (q.freeResponseAnswer && q.freeResponseAnswer.length > 0)) {
           q.visible = false;
         }
@@ -357,12 +379,16 @@ export class MaturityFilteringService {
       if (filterSvc.showFilters.includes('FR') && q.freeResponseAnswer && q.freeResponseAnswer.length > 0) {
         q.visible = true;
       }
+      const hasAnswerOrFeatureFilter = filterSvc.showFilters.some(f =>
+        filterSvc.answerOptions.includes(f) || f === "U" ||  ["C", "FB", "M", "O", "FR"].includes(f));
+      if (!hasAnswerOrFeatureFilter && q.maturityLevel != null) {  const questionLevel = q.maturityLevel.toString();
+        if (filterSvc.showFilters.includes(questionLevel)) { q.visible = true;  }}
     });
 
 
     // now dig down another level to see if there are questions
     g.subGroupings.forEach((sg: QuestionGrouping) => {
-      this.recurseQuestions(sg);
+      this.recurseQuestionsForFiltering(sg);
     });
 
     // if I have questions and they are all invisible, then I am invisible
@@ -379,4 +405,5 @@ export class MaturityFilteringService {
       g.visible = false;
     }
   }
+
 }

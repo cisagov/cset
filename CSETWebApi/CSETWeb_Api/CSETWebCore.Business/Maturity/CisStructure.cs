@@ -172,7 +172,7 @@ namespace CSETWebCore.Business.Maturity
                 var nodeName = System.Text.RegularExpressions
                     .Regex.Replace(sg.Type.Grouping_Type_Name, " ", "_");
 
-                var grouping = new Grouping()
+                var grouping = new Model.Nested.Grouping()
                 {
                     GroupType = nodeName,
                     Abbreviation = sg.Abbreviation,
@@ -188,9 +188,9 @@ namespace CSETWebCore.Business.Maturity
                     ((NestedQuestions)oParent).Groupings.Add(grouping);
                 }
 
-                if (oParent is Grouping)
+                if (oParent is Model.Nested.Grouping)
                 {
-                    ((Grouping)oParent).Groupings.Add(grouping);
+                    ((Model.Nested.Grouping)oParent).Groupings.Add(grouping);
                 }
 
 
@@ -214,6 +214,7 @@ namespace CSETWebCore.Business.Maturity
                         DisplayNumber = myQ.Question_Title,
                         ParentQuestionId = myQ.Parent_Question_Id,
                         QuestionType = myQ.Mat_Question_Type,
+                        IsAnswerable = myQ.Is_Answerable,
                         AnswerText = answer?.Answer_Text,
                         AnswerMemo = answer?.Free_Response_Answer,
                         AltAnswerText = answer?.Alternate_Justification,
@@ -282,6 +283,7 @@ namespace CSETWebCore.Business.Maturity
                     DisplayNumber = myQ.Question_Title,
                     ParentQuestionId = myQ.Parent_Question_Id,
                     QuestionType = myQ.Mat_Question_Type,
+                    IsAnswerable = myQ.Is_Answerable,
                     AnswerText = answer?.Answer_Text,
                     AnswerMemo = answer?.Free_Response_Answer,
                     AltAnswerText = answer?.Alternate_Justification,
@@ -389,6 +391,7 @@ namespace CSETWebCore.Business.Maturity
                         ParentQuestionId = myQ.Parent_Question_Id,
                         ParentOptionId = myQ.Parent_Option_Id,
                         QuestionType = myQ.Mat_Question_Type,
+                        IsAnswerable = myQ.Is_Answerable,
                         AnswerText = answer?.Answer_Text,
                         AnswerMemo = answer?.Free_Response_Answer,
                         AltAnswerText = answer?.Alternate_Justification,

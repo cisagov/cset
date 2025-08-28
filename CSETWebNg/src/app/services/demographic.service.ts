@@ -25,10 +25,10 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Demographic } from '../models/assessment-info.model';
-import { AuthenticationService } from './authentication.service';
 import { FileUploadClientService } from './file-client.service';
 import { AssessmentService } from './assessment.service';
-import { BehaviorSubject } from 'rxjs';
+import { FileExportService } from './file-export.service';
+import { ConstantsService } from './constants.service';
 
 
 const headers = {
@@ -40,15 +40,15 @@ const headers = {
 export class DemographicService {
   apiUrl: string;
   id: number;
-  shortLivedToken: any;
 
 
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    private authSvc: AuthenticationService,
     public fileSvc: FileUploadClientService,
-    public assessSvc: AssessmentService
+    private fileExportSvc: FileExportService,
+    public assessSvc: AssessmentService,
+    private c: ConstantsService
   ) {
     this.apiUrl = this.configSvc.apiUrl + 'Demographics/';
   }
@@ -88,11 +88,11 @@ export class DemographicService {
    */
   updateDemographic(demographic: Demographic) {
     this.assessSvc.assessment.sectorId = demographic.sectorId;
-    this.assessSvc.assessmentStateChanged$.next(126);
+    this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
 
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
       .subscribe(() => {
-        if (this.configSvc.cisaAssessorWorkflow) {
+        if (this.configSvc.userIsCisaAssessor) {  
 
         }
       });
@@ -103,13 +103,9 @@ export class DemographicService {
       .subscribe(() => {
 
       });
-
   }
 
   exportDemographics() {
-    let token = localStorage.getItem('userToken')
-    let url = this.apiUrl + 'export' + "?token=" + token;
-    window.location.href = url;
+    this.fileExportSvc.fetchAndSaveFile(this.apiUrl + 'export');
   }
-
 }

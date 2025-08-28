@@ -68,7 +68,8 @@ export interface QuestionGrouping {
     title: string;
     description: string;
     description_Extended: string;
-    groupingID: number;
+    groupingId: number;
+    groupingLevel: number;
     groupingType: string;
     questions: Question[];
     subGroupings: QuestionGrouping[];
@@ -81,6 +82,9 @@ export interface QuestionGrouping {
 
     // indicates if filtering has hidden the grouping
     visible: boolean;
+
+    // in CRE+, groups can be 'selected' in order to be displayed in list
+    selected: boolean;
 }
 
 export interface ACETDomain {
@@ -144,11 +148,24 @@ export interface Question {
     questionType: string;
     questionText: string;
     parmSubs: SubToken[];
+    supplementalInfo: string;
     stdRefId: string;
     answerOptions: string[];
     answer_Id: number;
     answer: string;
+
+    /**
+     * Stores a justification for the answer choice.
+     * In Standards, it is asked for Alt answer choices.
+     * In maturity models it may vary.
+    */
     altAnswerText: string;
+
+    /**
+     * Used to control the ngIf of the justification field (altAmswerText)
+     */
+    showJustificationField: boolean;
+
     freeResponseAnswer?: string;
     answerMemo?: string;
     comment: string;
@@ -166,14 +183,22 @@ export interface Question {
     is_Maturity: boolean;
     extrasExpanded: boolean;
 
+
+
     // CPG fields
+    securityPractice: string;
     scope: string;
     recommendedAction: string;
     services: string;
+    implementationGuides: string;
+    outcome?:string;
 
     // parent questions aren't answered directly and have subparts that are answered.
     isParentQuestion: boolean;
     parentQuestionId: number;
+    isAnswerable: boolean;
+
+    followups: [];
 
     visible: boolean;
     options: any[];
@@ -287,9 +312,7 @@ export interface MaturityFilter {
     isSet: boolean;
 }
 
-/**
- *
- */
-export class DomainMaturityFilterSet {
-
+export interface AnswerQuestionResponse {
+    answerId: number;
+    detailsChanged: boolean;
 }

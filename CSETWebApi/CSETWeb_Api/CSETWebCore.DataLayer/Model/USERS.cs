@@ -43,7 +43,7 @@ public partial class USERS
 
     public bool IsActive { get; set; }
 
-    public bool PreventEncrypt { get; set; }
+    public bool Encryption { get; set; }
 
     public bool CisaAssessorWorkflow { get; set; }
 
@@ -64,6 +64,9 @@ public partial class USERS
 
     [InverseProperty("User")]
     public virtual ICollection<USER_EMAIL_HISTORY> USER_EMAIL_HISTORY { get; set; } = new List<USER_EMAIL_HISTORY>();
+
+    [InverseProperty("User")]
+    public virtual ICollection<USER_ROLES> USER_ROLES { get; set; } = new List<USER_ROLES>();
 
     [InverseProperty("User")]
     public virtual USER_SECURITY_QUESTIONS USER_SECURITY_QUESTIONS { get; set; }

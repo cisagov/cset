@@ -21,3 +21,121 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 
 */
+
+// Import CSET variables
+@import '../../../../sass/variables';
+
+// Position relative container for clear button
+.position-relative {
+  position: relative;
+}
+
+// Clear button styling
+.btn-clear {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-top: -0.75rem; // Adjust for mb-3 on input
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  color: $gray-600;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $no-color;
+  }
+
+  &:focus {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  i {
+    font-size: 1rem;
+  }
+}
+
+// Style for readonly input - make it look normal, not grayed out
+input.form-control[readonly] {
+  background-color: $white;
+  cursor: default;
+
+  &:focus {
+    border-color: $gray-300;
+    box-shadow: none;
+  }
+}
+
+// Add padding to input when clear button is present
+input.form-control[readonly] {
+  padding-right: 2.5rem;
+}
+
+// Style the ng-bootstrap typeahead dropdown
+:host ::ng-deep {
+
+  // Highlighted search terms
+  mark {
+    background-color: #FFEE8C;
+    color: $gray-900;
+    font-weight: 600;
+    // padding: 0 2px;  // Removed to eliminate extra space around highlighted text
+    border-radius: 2px;
+  }
+
+  // Responsive typeahead results
+  .typeahead-result {
+    width: 100%;
+    min-width: 0; // Allow flex items to shrink below content size
+    
+    .result-text {
+      flex: 1;
+      min-width: 0; // Allow text to truncate properly
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-right: 0.5rem;
+    }
+
+    .type-label {
+      flex-shrink: 0; // Prevent label from shrinking
+      font-size: 0.875rem;
+      padding: 0.125rem 0.5rem;
+      border-radius: 0.25rem;
+      background-color: $gray-100;
+      
+      &.type-standard {
+        background-color: rgba($primary-color, 0.1);
+        color: $primary-color;
+      }
+      
+      &.type-model {
+        background-color: rgba($secondary-color, 0.1);
+        color: $secondary-color;
+      }
+    }
+  }
+
+  // Ensure dropdown has proper width constraints
+  .dropdown-menu {
+    max-width: 100%;
+    min-width: 300px;
+    
+    @media (max-width: 576px) {
+      min-width: 100%;
+    }
+  }
+
+  // Dropdown items
+  .dropdown-item {
+    padding: 0.5rem 1rem;
+    
+    &:hover .type-label {
+      opacity: 0.9;
+    }
+  }
+}

@@ -24,7 +24,6 @@
 import { Injectable } from '@angular/core';
 import { AssessmentService } from '../assessment.service';
 import { ConfigService } from '../config.service';
-import { DemographicExtendedService } from '../demographic-extended.service';
 
 /**
  * Analyzes assessment
@@ -38,7 +37,6 @@ export class PageVisibilityService {
   constructor(
     private assessSvc: AssessmentService,
     private configSvc: ConfigService,
-    private demographics: DemographicExtendedService
   ) { }
 
   /**
@@ -97,8 +95,6 @@ export class PageVisibilityService {
         show = show && !this.sourceAny(c);
       }
 
-
-
       // Installation Mode / current skin
       if (c.startsWith('INSTALL-MODE:') || c.startsWith('INSTALL-MODE-ANY(')) {
         show = show && this.skinAny(c);
@@ -154,17 +150,36 @@ export class PageVisibilityService {
         show = show && this.sectorAny(c);
       }
 
+      if (c == ('ASSESSOR')) {
+        if (this.configSvc.userIsCisaAssessor) {
+          show = show && (this.configSvc.userIsCisaAssessor && this.assessSvc.assessment?.assessorMode);
+        } else {
+          show = show && (this.configSvc.userIsCisaAssessor !== this.assessSvc.assessment?.assessorMode);
+        }
+      }
 
+      if (c == ('ASSESSOR-NONE')) {
+        if (this.configSvc.userIsCisaAssessor) {
+          show = show && !(this.configSvc.userIsCisaAssessor && this.assessSvc.assessment?.assessorMode);
+        } else {
+          show = show && !(this.configSvc.userIsCisaAssessor !== this.assessSvc.assessment?.assessorMode);
+        }
+      }
 
       if (c == ('SHOW-FEEDBACK')) {
         show = show && this.configSvc.behaviors.showFeedback;
       }
 
+      if (c == 'IS-CSA') {
+        show = show && this.isUserCisaAssessor();
+      }
+
+      if (c == 'HAS-URL-ANALYTICS') {
+        show = show && !!this.configSvc.analyticsUrl;
+      }
+
       if (c == 'SHOW-EXEC-SUMMARY') {
         show = show && this.showExecSummaryPage();
-      }
-      if (c == 'CF-DEMOGRAPHICS-COMPLETE') {
-        show = show && this.cfDemographicsComplete();
       }
     });
 
@@ -192,10 +207,6 @@ export class PageVisibilityService {
         enabled = false;
       }
 
-      if (c == 'CF-ASSESSMENT-COMPLETE') {
-        enabled = enabled && this.assessSvc.isCyberFloridaComplete();
-      }
-
     });
 
     return enabled;
@@ -214,7 +225,6 @@ export class PageVisibilityService {
     if (targets.find(x => x == 'CSET')) {
       targets.push('');
     }
-
     let has = false;
     targets.forEach((t: string) => {
       has = has || (this.configSvc.installationMode == t);
@@ -329,34 +339,17 @@ export class PageVisibilityService {
   }
 
   /**
+   * Indicates whether the current user is a CISA CSA / assessor
+   */
+  isUserCisaAssessor(): boolean {
+    return this.configSvc.userIsCisaAssessor;
+  }
+
+  /**
    * Indicates when the Executive Summary page should be included in the navigation.
    */
   showExecSummaryPage(): boolean {
     let assessment = this.assessSvc.assessment;
     return assessment?.useDiagram || assessment?.useStandard;
-  }
-
-  cfDemographicsComplete() {
-    //if this is CF installation and the demographics are not complete return false
-    //else return true; 
-    if (this.assessSvc.assessment?.origin == "CF") {
-      if (this.demographics.AreDemographicsCompleteNav()) {
-        return true;
-      }
-      return false;
-    }
-    return true;
-  }
-
-  cfEntryAssessmentComplete() {
-    //if this is CF installation and the demographics are not complete return false
-    //else return true; 
-    if (this.assessSvc.assessment?.origin == "CF") {
-      if (this.demographics.AreDemographicsCompleteNav()) {
-        return true;
-      }
-      return false;
-    }
-    return true;
   }
 }

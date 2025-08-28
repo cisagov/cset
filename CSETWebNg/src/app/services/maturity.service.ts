@@ -26,7 +26,8 @@ import { ConfigService } from './config.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AssessmentService } from './assessment.service';
 import { MaturityModel } from "../models/assessment-info.model";
-import { MaturityDomainRemarks } from '../models/questions.model';
+import { MaturityDomainRemarks, QuestionGrouping } from '../models/questions.model';
+import { Observable } from 'rxjs';
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
   params: new HttpParams()
@@ -65,10 +66,16 @@ export class MaturityService {
   ofc: any[];
 
 
-  cmmcData = null;
+  cmmcData;
 
-  mvraGroupings = [];
-  cisGroupings = [];
+  mvraGroupings: any[] = [];
+  cisGroupings: any[] = [];
+
+  /**
+   * In CRE+, the user can select which groupings they want
+   * to see and answer.  Other groupings' questions are not shown.
+   */
+  selectableGroupings: QuestionGrouping[] | null;
 
   /**
    *
@@ -80,6 +87,7 @@ export class MaturityService {
     private configSvc: ConfigService,
     private assessSvc: AssessmentService
   ) {
+    this.cmmcData = null;
 
     // get MVRA grouping titles
     this.getGroupingTitles(9).subscribe((l: any[]) => {
@@ -149,8 +157,8 @@ export class MaturityService {
    */
   targetLevelName() {
     const model = this.assessSvc.assessment.maturityModel;
-    if (!!this.assessSvc.assessment && !!model.maturityTargetLevel) {
-      const l = model.levels.find(x => x.level == this.assessSvc.assessment.maturityModel.maturityTargetLevel);
+    if (!!this.assessSvc.assessment && !!model?.maturityTargetLevel) {
+      const l = model.levels.find(x => x.level == this.assessSvc.assessment.maturityModel?.maturityTargetLevel);
       if (!!l) {
         return l.label;
       }
@@ -236,7 +244,7 @@ export class MaturityService {
   /**
    * Asks the API for 'bonus' (SSG) questions.
    */
-  getBonusQuestionList(bonusModelId: number) {
+  getBonusQuestionList(bonusModelId: number | null) {
     return this.http.get(this.configSvc.apiUrl
       + 'maturity/questions/bonus?m=' + bonusModelId);
   }
@@ -258,7 +266,7 @@ export class MaturityService {
    *
    * @param modelName
    */
-  getModel(modelName: string): MaturityModel {
+  getModel(modelName: string): MaturityModel | undefined {
     for (let m of AssessmentService.allMaturityModels) {
       if (m.modelName == modelName)
         return m;
@@ -272,7 +280,7 @@ export class MaturityService {
    * for each model that uses the nested questions structure.
    */
   showChartOnNestedQPage(): boolean {
-    if (this.assessSvc.assessment.maturityModel.modelName == "CIS") {
+    if (this.assessSvc.assessment.maturityModel?.modelName == "CIS") {
       return true;
     }
     return false;
@@ -364,8 +372,8 @@ export class MaturityService {
   /**
    *
    */
-  getGroupingTitles(modelId: number) {
-    return this.http.get(this.configSvc.apiUrl + 'maturity/groupingtitles?modelId=' + modelId);
+  getGroupingTitles(modelId: number): Observable<any[]> {
+    return this.http.get<any[]>(this.configSvc.apiUrl + 'maturity/groupingtitles?modelId=' + modelId);
   }
 
   getMvraScoring() {

@@ -1,0 +1,11 @@
+# distribution files
+node_modules
+dist
+
+# build artifacts
+bin
+obj
+
+# IDE configurations
+.idea
+.vscode

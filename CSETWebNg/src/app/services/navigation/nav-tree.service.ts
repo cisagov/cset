@@ -29,8 +29,8 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { of as observableOf, BehaviorSubject } from "rxjs";
 import { TranslocoService } from '@jsverse/transloco';
-import { CieService } from '../cie.service';
 import { SsgService } from '../ssg.service';
+import { ConfigService } from '../config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +57,7 @@ export class NavTreeService {
     private pageVisibliltySvc: PageVisibilityService,
     private tSvc: TranslocoService,
     private ssgSvc: SsgService,
-    private cieSvc: CieService
+    private configSvc: ConfigService
   ) {
     // set up the mat tree control and its data source
     this.tocControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
@@ -80,10 +80,6 @@ export class NavTreeService {
       console.warn('buildTree - magic compare failed');
       return;
     }
-    if (this.assessSvc.usesMaturityModel('CIE')) {
-      this.cieSvc.exampleExpanded = this.tocControl.isExpanded(this.findInTree(this.tocControl.dataNodes, 'cie-example'));
-      this.cieSvc.tutorialExpanded = this.tocControl.isExpanded(this.findInTree(this.tocControl.dataNodes, 'tutorial-cie'));
-    }
 
     this.workflow = workflow;
 
@@ -93,11 +89,6 @@ export class NavTreeService {
     this.setQuestionsTree();
 
     this.tocControl.expandAll();
-
-    // remembers state of ToC dropdown for CIE
-    if (this.assessSvc.usesMaturityModel('CIE')) {
-      this.applyCieToCStates();
-    }
 
     this.isNavLoading = false;
   }
@@ -146,10 +137,12 @@ export class NavTreeService {
           visible: true,
           enabled: true
         };
+
         navNode.visible = this.pageVisibliltySvc.showPage(workflowNode);
         if (navNode.visible) {
           navNode.enabled = this.pageVisibliltySvc.isEnabled(workflowNode);
         }
+
         // the node might need tweaking based on certain factors
         this.adjustNavNode(navNode);
 
@@ -171,12 +164,23 @@ export class NavTreeService {
    */
   adjustNavNode(node: NavTreeNode) {
     if (node.value == 'maturity-questions') {
+      const modelId = this.assessSvc.assessment?.maturityModel?.modelId;
+
       // Models may use a specific term (alias) for "questions" or "practices"
       const alias = this.assessSvc.assessment?.maturityModel?.questionsAlias?.toLowerCase();
       if (!!alias) {
         node.label = this.tSvc.translate(`titles.${alias}`);
       }
+
+      // Look for model-specific alias for maturity-questions.
+      // This approach does not rely on the back end and should be the primary
+      // way to override the node title.
+      const key = this.configSvc.getModuleBehavior(modelId)?.questionNodeKey;
+      if (!!key) {
+        node.label = this.tSvc.translate(key);
+      }
     }
+
 
     if (node.value == 'standard-questions') {
       const mode = this.assessSvc.applicationMode?.toLowerCase();
@@ -200,6 +204,7 @@ export class NavTreeService {
       this.tocControl.dataNodes = this.dataSource.data;
     }
   }
+
   clearNoMatterWhat() {
     this.isNavLoading = true;
     this.dataSource.data = null;
@@ -390,25 +395,5 @@ export class NavTreeService {
       behavior: 'smooth' // Add 'smooth' for smooth scrolling animation
     });
   }
-
-  /**
-   * retains CIE Tutorial and Example section states between tree builds
-   */
-  applyCieToCStates() {
-    let node = this.findInTree(this.tocControl.dataNodes, 'tutorial-cie');
-
-    if (this.cieSvc.tutorialExpanded == null || !this.cieSvc.tutorialExpanded) {
-      if (node != null) this.tocControl.collapse(node);
-    }
-    else if (node != null) this.tocControl.expand(node);
-
-    node = this.findInTree(this.tocControl.dataNodes, 'cie-example');
-
-    if (this.cieSvc.exampleExpanded == null || !this.cieSvc.exampleExpanded) {
-      if (node != null) this.tocControl.collapse(node);
-    }
-    else if (node != null) this.tocControl.expand(node);
-  }
-
 
 }

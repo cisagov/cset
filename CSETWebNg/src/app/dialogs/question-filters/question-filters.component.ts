@@ -29,11 +29,11 @@ import { QuestionFilterService } from '../../services/filtering/question-filter.
 import { QuestionsService } from '../../services/questions.service';
 
 @Component({
-    selector: 'app-question-filters',
-    templateUrl: './question-filters.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' },
-    standalone: false
+  selector: 'app-question-filters',
+  templateUrl: './question-filters.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' },
+  standalone: false
 })
 export class QuestionFiltersComponent implements OnInit {
 
@@ -71,58 +71,35 @@ export class QuestionFiltersComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   ngOnInit(): any {
-    if (this.configSvc.installationMode === 'ACET') {
-      this.skin = "acet";
-      if (this.assessSvc.isISE()) {
-        this.skin = "ise";
-        this.observations = "issues";
-        this.comments = "notes";
-      }
-      else {
-        this.observations = "observations";
-        this.comments = "comments";
-      }
-    }
     this.refreshAnswerOptions();
   }
 
   /**
-   * 
+   *
    */
   refreshAnswerOptions() {
     this.answerOptions = [];
     this.filterSvc.answerOptions.filter(x => x != 'U').forEach(o => {
-      if (this.assessSvc.isISE()) {
-        this.answerOptions.push({
-          value: o,
-          text: this.questionsSvc.answerButtonLabel(this.filterSvc.maturityModelName, o)
-        });
-      } else {
-        this.answerOptions.push({
-          value: o,
-          text: this.questionsSvc.answerDisplayLabel(this.filterSvc.maturityModelName, o)
-        });
-      }
+      this.answerOptions.push({
+        value: o,
+        text: this.questionsSvc.answerDisplayLabel(this.filterSvc.maturityModelName, o)
+      });
     });
-    if (this.assessSvc.isISE()) {
-      // Remove 'N/A' and 'Compensating Control' from ISE filters menu.
-      this.answerOptions = this.answerOptions.slice(0, 2);
-    }
   }
 
   /**
-   * 
+   *
    */
   getId(option: any): string {
     return 'cbShowOption' + option.value;
   }
 
   /**
-   * 
-   * @param e 
+   *
+   * @param e
    */
   updateFilterString(e: Event) {
     if ((<KeyboardEvent>e).keyCode === 13) {
@@ -137,8 +114,8 @@ export class QuestionFiltersComponent implements OnInit {
 
   /**
    * Turns a filter on or off, depending on the state of the checkbox.
-   * @param e 
-   * @param ans 
+   * @param e
+   * @param ans
    */
   updateFilters(e: Event, ans: string) {
     this.filterSvc.setFilter(ans, (<HTMLInputElement>e.target).checked);
@@ -147,7 +124,7 @@ export class QuestionFiltersComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   close() {
     return this.dialog.close();
@@ -163,4 +140,23 @@ export class QuestionFiltersComponent implements OnInit {
   usesMaturityModel(model: string) {
     return this.assessSvc.usesMaturityModel(model);
   }
+  public get maturityLevels(): string[] {
+    const maturityModel=this.assessSvc.assessment?.maturityModel;
+    if (!this.filterSvc?.allowableFilters || !maturityModel?.levels || maturityModel.levels.length<=1 ) {
+      return [];
+    }
+    const levels = this.filterSvc.allowableFilters
+      .filter(f => !isNaN(Number(f))) // Only numeric values
+      .map(f => Number(f)) // Convert to numbers for comparison
+      .filter(level => level <= (this.filterSvc.maturityTargetLevel || 999)) // Only levels <= target
+      .map(level => level.toString()) // Convert back to strings
+      .sort((a, b) => Number(a) - Number(b)); // Sort numerically
+    return levels;
+  }
+  public getMaturityLevelLabel(levelNumber: string | number): string
+  {
+    const maturityModel =this.assessSvc.assessment?.maturityModel;
+    if (!maturityModel?.levels) { return `Level ${levelNumber}`; }
+    const level =maturityModel.levels.find(l => l.level.toString() === levelNumber.toString());
+    return level?.label || `Level ${levelNumber}`; }
 }

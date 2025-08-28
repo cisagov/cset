@@ -6,11 +6,16 @@ namespace CSETWebCore.DataLayer.Model
     /// </summary>
     public class CsetVersion
     {
-        public int MajorVersion { get; set; }
-        public int MinorVersion { get; set; }
-        public int Build { get; set; }
-        public int Revision { get; set; }
+        public Version CodebaseVersion { get; set; }
+        public Version DatabaseVersion { get; set; }
     }
 
+    public class Version
+    {
+        public int MajorVersion { get; set; } = 0;
+        public int MinorVersion { get; set; } = 0;
+        public int Build { get; set; } = 0;
+        public int Revision { get; set; } = 0;
+    }
 }
 

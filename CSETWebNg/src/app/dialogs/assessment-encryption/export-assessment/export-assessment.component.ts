@@ -26,14 +26,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
-    selector: 'app-export-assessment',
-    templateUrl: './export-assessment.component.html',
-    styleUrls: ['./export-assessment.component.scss'],
-    standalone: false
+  selector: 'app-export-assessment',
+  templateUrl: './export-assessment.component.html',
+  styleUrls: ['./export-assessment.component.scss'],
+  standalone: false
 })
 export class ExportAssessmentComponent {
-  preventEncrypt: any;
-
 
   constructor(
     public assessSvc: AssessmentService,
@@ -43,8 +41,6 @@ export class ExportAssessmentComponent {
     dialogRef.disableClose = true;
   }
 
-  dialogTitle: string = "Export Assessment Options";
-
   data = {
     scrubData: false,
     encryptionData: {
@@ -53,11 +49,15 @@ export class ExportAssessmentComponent {
     }
   };
 
+
+  scrubSensitive = false;
+
   password = "";
   passwordHint = "";
   showPassword = false;
 
   confirm(): void {
+    this.data.scrubData = this.scrubSensitive;
     this.data.encryptionData.password = this.password;
     this.data.encryptionData.hint = this.passwordHint;
     this.dialogRef.close(this.data);
@@ -70,10 +70,4 @@ export class ExportAssessmentComponent {
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
-
-  onScrubDataChange(event: Event) {
-    const checkbox = event.target as HTMLInputElement;
-    this.data.scrubData = checkbox.checked;
-  }
-
 }

@@ -35,12 +35,17 @@ export class ModuleBehavior {
      displayNameKey?: string;
 
      /**
+      * Allows the module to define the title for the maturity-questions node 
+      */
+     questionNodeKey?: string;
+
+     /**
       * If defined for a model, this can hide the Domain headers.  
       * 
-      * This is useful if the model has a single Domain and you don't need 
+      * This is useful if the model has a single top level grouping node and you don't need 
       * that large header to show.
       */
-     showDomainHeaders?: boolean;
+     hideTopLevelGroupingName?: boolean;
 
      /**
       * Indicates if the Critical Service fields should show on the Demographics page.
@@ -51,6 +56,18 @@ export class ModuleBehavior {
       * Indicates if the "Level 1" badge/pill should show below the question title.
       */
      showMaturityLevelBadge?: boolean;
+
+     /**
+      * Indicates a model whose groupings must be selected to be presented to user.
+      * This was created for "CRE+ Optional Domains" (model 23) and "CRE+ MIL Questions" (model 24)
+      */
+     mustSelectGroupings?: boolean = false;
+
+     /**
+      * Indicates a model whose groupings are cumulative.  
+      * This was created for "CRE+ MIL" (model 24).  
+      */
+     groupingsAreMil?: boolean = false;
 
      /**
       * 
@@ -109,9 +126,21 @@ export class AnswerOptionConfig {
 
      /**
       * Indicates if this answer is considered "implemented".
-      * This is a future feature.
+      * For future implementation.
       */
      consideredImplemented: boolean;
+
+     /**
+      * Indicates if this answer is considered "missed".
+      * For future implementation.
+      */
+     consideredMissed: boolean;
+
+     /**
+      * Indicates if an unanswered question is scored like this answer option.
+      * Normally used to indicate a "NO" answer.
+      */
+     unansweredEquivalent: boolean = false;
 }
 
 

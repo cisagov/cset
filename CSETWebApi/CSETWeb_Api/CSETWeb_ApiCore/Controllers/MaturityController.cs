@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.XPath;
+using CSETWebCore.Business.Authorization;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -118,7 +119,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SetMaturityLevel([FromBody] int level)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistMaturityLevel(assessmentId, level);
+            new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistMaturityLevel(assessmentId, level);
             return Ok();
         }
 
@@ -133,11 +134,6 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             string lang = _tokenManager.GetCurrentLanguage();
             string installationMode = _tokenManager.Payload("scope");
-
-            if (installationMode == "ACET")
-            {
-                return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, fill, groupingId, lang));
-            }
 
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, fill, groupingId, lang));
         }
@@ -248,11 +244,14 @@ namespace CSETWebCore.Api.Controllers
                 assessmentId = _tokenManager.AssessmentForUser();
                 _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
-                // if the assessment ID is provided we will derive the modelId
-                var xy = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-                if (xy != null)
+                // if the modelId is not provided we will derive it
+                if (modelId == 0)
                 {
-                    modelId = xy.model_id;
+                    var xy = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+                    if (xy != null)
+                    {
+                        modelId = xy.model_id;
+                    }
                 }
             }
             catch (Exception)
@@ -515,34 +514,6 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetAllModels()
         {
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAllModels());
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/MaturityAnswerCompletionRate")]
-        public IActionResult GetAnswerCompletionRate()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerCompletionRate(assessmentId));
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/MaturityAnswerIseCompletionRate")]
-        public IActionResult GetIseAnswerCompletionRate()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-
-            return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetIseAnswerCompletionRate(assessmentId));
         }
 
 

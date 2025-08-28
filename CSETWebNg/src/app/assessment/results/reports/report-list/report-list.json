@@ -86,6 +86,38 @@
     ]
   },
   {
+    "title": "CRE+",
+    "reportList": [
+      {
+        "linkUrl": "cre-final-report/22"
+      },
+      {
+        "linkUrl": "cre-final-report/23"
+      },
+      {
+        "linkUrl": "cre-final-report/24"
+      },
+      {
+        "linkUrl": "cre-assessment-overview"
+      },
+      {
+        "linkUrl": "cre-model-chart-report/22"
+      },
+      {
+        "linkUrl": "cre-model-chart-report/23"
+      },
+      {
+        "linkUrl": "cre-model-chart-report/24"
+      },
+      {
+        "linkUrl": "cre-mil-charts-2"
+      },
+      {
+        "linkUrl": "cre-heatmaps"
+      }
+    ]
+  },
+  {
     "title": "VADR",
     "reportList": [
       {
@@ -96,6 +128,14 @@
       },
       {
         "linkUrl": "vadrOpenEndedReport"
+      }
+    ]
+  },
+  {
+    "title": "CISA VADR",
+    "reportList": [
+      {
+        "linkUrl": "cisaVadrReport"
       }
     ]
   },
@@ -129,27 +169,6 @@
     "reportList": [
       {
         "linkUrl": "mvraReport"
-      }
-    ]
-  },
-  {
-    "title": "ISE",
-    "reportList": [
-      {
-        "linkUrl": "isemerit",
-        "disabled": false
-      },
-      {
-        "linkUrl": "iseexamination",
-        "disabled": false
-      },
-      {
-        "linkUrl": "iseansweredquestions",
-        "disabled": false
-      },
-      {
-        "linkUrl": "iseexaminer",
-        "disabled": false
       }
     ]
   },
@@ -245,26 +264,6 @@
     "reportList": [
       {
         "linkUrl": "c2m2Report"
-      }
-    ]
-  },
-  {
-    "title": "ACET",
-    "reportList": [
-      {
-        "linkUrl": "acetexecutive"
-      },
-      {
-        "linkUrl": "acetgaps"
-      },
-      {
-        "linkUrl": "acetcommentsmarked"
-      },
-      {
-        "linkUrl": "acetansweredquestions"
-      },
-      {
-        "linkUrl": "acetcompensatingcontrols"
       }
     ]
   },

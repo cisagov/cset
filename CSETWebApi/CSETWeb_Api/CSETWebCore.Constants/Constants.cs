@@ -434,6 +434,29 @@ namespace CSETWebCore.Constants
         public const string MostIrp = "Most";
 
 
+        //Maturity Model IDs
+        public const int Model_EDM = 3;
+        public const int Model_CRR = 4;
+        public const int Model_RRA = 5;
+        public const int Model_CMMC2 = 6;
+        public const int Model_TSA_VADR = 7;
+        public const int Model_ISE = 10;
+        public const int Model_HYDRO = 13;
+        public const int Model_SSG_CHEM = 18;
+        public const int Model_SSG_IT = 20;
+        public const int Model_CPG2 = 21;
+        public const int Model_CRE = 22;
+        public const int Model_CRE_OD = 23;
+        public const int Model_CRE_MIL = 24;
+        public const int Model_CISA_VADR = 25;
+
+
+
+        // Observations
+        public const int ObsCreatedByVadr = 2;
+
+
+
         public const string DEFAULT_LAYER_NAME = "Background";
 
         public const int FIREWALL = 8;

@@ -30,6 +30,8 @@ import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './filtering/question-filter.service';
 import { BehaviorSubject } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
+import { LinebreakPipe } from '../helpers/linebreak.pipe';
+import { AnswerOptionConfig } from '../models/module-config.model';
 
 const headers = {
   headers: new HttpHeaders()
@@ -71,7 +73,8 @@ export class QuestionsService {
     private configSvc: ConfigService,
     private tSvc: TranslocoService,
     private assessmentSvc: AssessmentService,
-    private questionFilterSvc: QuestionFilterService
+    private questionFilterSvc: QuestionFilterService,
+    public linebreakPipe: LinebreakPipe
   ) { }
 
   /**
@@ -158,20 +161,8 @@ export class QuestionsService {
    */
   storeAnswer(answer: Answer) {
     answer.questionType = localStorage.getItem('questionSet');
-    if (this.configSvc.installationMode == 'CF') {
-      this.processNavigationDisable(answer);
-    }
     return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers);
   }
-
-  /**
-   * Posts multiple (all) Answers to the API.
-   * @param answers
-   */
-  storeAllAnswers(answers: Answer[]) {
-    return this.http.post(this.configSvc.apiUrl + 'storeAllAnswers', answers, headers);
-  }
-
 
   /**
    * Posts a block of answers to the API.
@@ -196,6 +187,10 @@ export class QuestionsService {
    */
   renameDocument(id: number, title: string) {
     return this.http.post(this.configSvc.apiUrl + 'renamedocument?id=' + id + '&title=' + title, headers);
+  }
+
+  changeGlobal(id: number, isGlobal: boolean) {
+    return this.http.post(this.configSvc.apiUrl + 'changeglobal?id=' + id + '&isGlobal=' + isGlobal, headers);
   }
 
   /**
@@ -330,6 +325,17 @@ export class QuestionsService {
     this.extrasChanged$.next(qe);
   }
 
+
+  /**
+   * If you need to refresh extras from the API, use this subject
+   */
+  private detailsChangedSubject = new BehaviorSubject<number>(0);
+  detailsChanged$ = this.detailsChangedSubject.asObservable();
+  emitRefreshQuestionDetails(questionId: number) {
+    this.detailsChangedSubject.next(questionId);
+  }
+
+
   /**
    *
    */
@@ -380,7 +386,7 @@ export class QuestionsService {
    * Standards questions screen pass '0' for the modelId.
    */
   findAnsDefinition(model: string, answerCode: string) {
-    let ansDef = null;
+    let ansDef;
 
     // assume unanswered if null or undefined
     if (!answerCode) {
@@ -424,17 +430,66 @@ export class QuestionsService {
   /**
    * 
    */
-  processNavigationDisable(answer: Answer) {
-    //have a list of all the 20 necessary id's
-    //then when the list is complete enable the navigation
-    this.assessmentSvc.updateAnswer(answer);
-  }
-
-  /**
-   * 
-   */
   getRegulatoryCitations(questionId: number) {
     return this.http.get(this.configSvc.apiUrl + 'getRegulatoryCitations?questionId=' + questionId)
   }
 
+
+  /**
+   * If there are any parameters in the text defined by double curly braces
+   * format them to look like the published standard.  No substitution is
+   * performed by this function, just formatting.
+   */
+  formatParameters(text: string) {
+    text = text.replace(/{{/g, '[<em>').replace(/}}/g, '</em>]');
+    return text;
+  }
+
+  /**
+   * Replace parameter placeholders in the question text template with any overridden values.
+   * @param q
+   */
+  applyTokensToText(q: Question) {
+    let text = q.questionText;
+
+    text = this.linebreakPipe.transform(text);
+
+    if (!q.parmSubs) {
+      return text;
+    }
+
+    // Substitute the longer tokens first, to avoid substituting a nested token
+    // and leave the outer token untouched.  We currently only support the outer tokens.
+    q.parmSubs.sort((a, b) => {
+      if (a.token.length > b.token.length) return -1;
+      if (a.token.length < b.token.length) return 1;
+      return 0;
+    });
+
+    q.parmSubs.forEach(t => {
+      if (t.substitution == null) {
+        // uncustomized
+        text = this.replaceAll(text, `{{${t.token}}}`, "[<span class='sub-me fst-italic pid-" + t.id + "'>" + t.token + "</span>]");
+      } else {
+        // customized
+        text = this.replaceAll(text, `{{${t.token}}}`, "<span class='sub-me pid-" + t.id + "'>" + t.substitution + "</span>");
+      }
+    });
+
+    return text;
+  }
+
+  /**
+   * 
+   * @param origString 
+   * @param searchStr 
+   * @param replaceStr 
+   * @returns 
+   */
+  replaceAll(origString: string, searchStr: string, replaceStr: string) {
+    // escape regexp special characters in search string
+    searchStr = searchStr.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+
+    return origString.replace(new RegExp(searchStr, 'gi'), replaceStr);
+  }
 }

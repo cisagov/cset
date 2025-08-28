@@ -8,6 +8,7 @@ using CSETWebCore.DataLayer.Model;
 using Nelibur.ObjectMapper;
 using Newtonsoft.Json;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using ICSharpCode.SharpZipLib.Zip;
@@ -34,7 +35,6 @@ namespace CSETWebCore.Business.Demographic.Export
             TinyMapper.Bind<CIS_CSI_SERVICE_COMPOSITION, jCIS_CSI_SERVICE_COMPOSITION>();
             TinyMapper.Bind<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS, jCIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>();
             TinyMapper.Bind<CIS_CSI_SERVICE_DEMOGRAPHICS, jCIS_CSI_SERVICE_DEMOGRAPHICS>();
-            TinyMapper.Bind<DEMOGRAPHICS, jDEMOGRAPHICS>();
             TinyMapper.Bind<DETAILS_DEMOGRAPHICS, jDETAILS_DEMOGRAPHICS>();
             TinyMapper.Bind<INFORMATION, jORG_DETAILS>();
         }
@@ -67,11 +67,6 @@ namespace CSETWebCore.Business.Demographic.Export
 
             }
 
-            foreach (var item in _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId))
-            {
-                model.jDEMOGRAPHICS.Add(TinyMapper.Map<DEMOGRAPHICS, jDEMOGRAPHICS>(item));
-            }
-
             foreach (var item in _context.INFORMATION.Where(x => x.Id == assessmentId))
             {
                 model.jORG_DETAILS.Add(TinyMapper.Map<INFORMATION, jORG_DETAILS>(item));
@@ -91,24 +86,22 @@ namespace CSETWebCore.Business.Demographic.Export
 
 
         /// <summary>
-        /// Gathers the data for an assessment demographic and returns a model.json file.
-        /// If desired, only the model.json will be returned, named to match the assessment name.
+        /// Gathers the data for an assessment demographic and returns a .json file.
+        /// The filename will be that of the Facility Name, if known.
         /// </summary>
         private Stream ArchiveStream(int assessmentId)
         {
+            var model = CopyForExport(assessmentId);            
+            var json = JsonConvert.SerializeObject(model, Formatting.Indented);
+
+            // Write the JSON content to the MemoryStream
+            byte[] bytes = Encoding.UTF8.GetBytes(json);
             var archiveStream = new MemoryStream();
-            var model = CopyForExport(assessmentId);
+            archiveStream.Write(bytes, 0, bytes.Length);
 
-            using (var archive = new ZipOutputStream(archiveStream))
-            {
-                var json = JsonConvert.SerializeObject(model, Formatting.Indented);
-
-                // Write only the JSON portion as a stand-alone file to the stream
-                byte[] bytes = Encoding.UTF8.GetBytes(json);
-                archiveStream.Write(bytes, 0, bytes.Length);
-
-            }
+            // Reset the position of the stream to the beginning
             archiveStream.Seek(0, SeekOrigin.Begin);
+
             return archiveStream;
         }
 
@@ -119,14 +112,15 @@ namespace CSETWebCore.Business.Demographic.Export
         /// <param name="assessmentId">The ID of the assessment to export</param>
         /// <param name="fileExtension">The extension of the export file</param>
         /// <returns>An DemographicsExportFile object containing the file name and the file contents</returns>
-        public DemographicsExportFile ExportDemographics(int assessmentId, string fileExtension)
+        public DemographicsExportFile ExportDemographics(int assessmentId)
         {
             // determine file name
-            var fileName = $"{assessmentId}{fileExtension}";
+            var fileName = $"Organization - CSET demographics.json";
+
             var facilityName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Facility_Name;
             if (!string.IsNullOrEmpty(facilityName))
             {
-                fileName = $"{facilityName}{fileExtension}";
+                fileName = $"{facilityName} - CSET demographics.json";
             }
 
             // export the assessment

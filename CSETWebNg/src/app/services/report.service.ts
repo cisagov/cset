@@ -28,7 +28,8 @@ import { TranslocoService } from '@jsverse/transloco';
 import { AuthenticationService } from './authentication.service';
 import { JwtParser } from '../helpers/jwt-parser';
 import { DateTime } from 'luxon';
-// import { NCUAService } from './ncua.service';
+import { FileExportService } from './file-export.service';
+
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -42,14 +43,16 @@ export class ReportService {
   confidentialityLevels: any[];
   confidentiality = '';
 
-  disableIseReportLinks: boolean = false;
 
   /**
    *
    */
-  constructor(private http: HttpClient,
-    private configSvc: ConfigService, private tSvc: TranslocoService,
-    private authSvc: AuthenticationService
+  constructor(
+    private http: HttpClient,
+    private configSvc: ConfigService, 
+    private tSvc: TranslocoService,
+    private authSvc: AuthenticationService,
+    private fileExportSvc: FileExportService
   ) {
     if (!this.initialized) {
       this.apiUrl = this.configSvc.apiUrl;
@@ -166,17 +169,12 @@ export class ReportService {
    * 
    */
   clickExcelLink(reportType: string) {
-    let url = '';
     if (reportType.toLowerCase() == 'poam') {
-      url = this.configSvc.apiUrl + 'reports/poam/excelexport?token=' + localStorage.getItem('userToken');
+      this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'reports/poam/excelexport');
     }
 
     if (reportType.toLowerCase() == 'observations') {
-      url = this.configSvc.apiUrl + 'reports/observations/excel?token=' + localStorage.getItem('userToken');
-    }
-
-    if (url.length > 0) {
-      window.open(url, '_blank');
+      this.fileExportSvc.fetchAndSaveFile(this.configSvc.apiUrl + 'reports/observations/excel');
     }
   }
 

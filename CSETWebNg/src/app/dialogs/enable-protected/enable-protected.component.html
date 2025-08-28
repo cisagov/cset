@@ -20,16 +20,16 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="d-flex flex-column justify-content-center flex-11a">
+<div class="d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="cset-icons-key-shield fs-base-6 me-3"></span>
-    <span>Protected Features</span>
+    <span>{{ t('protected features.protected features') }}</span>
   </div>
   <mat-dialog-content class="pb-0 p-3 oy-auto d-flex flex-column flex-11a">
     <table class="mt-2 mb-4 mx-2" *ngIf="modulesList?.length > 0">
       <tr>
-        <th style="width: 25%">Module Name</th>
-        <th style="width: 75%">Module Full Name</th>
+        <th style="width: 25%">{{ t('protected features.module name') }}</th>
+        <th style="width: 75%">{{ t('protected features.module full name') }}</th>
       </tr>
       <tr *ngFor="let module of modulesList">
         <td>{{ module.shortName }}</td>
@@ -38,14 +38,14 @@
       </tr>
     </table>
 
-    <div *ngIf="!modulesList || modulesList.length === 0 || !cisaWorkflowStatusLoaded">
+    <div *ngIf="!modulesList || modulesList.length === 0">
       <div class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
       </div>
     </div>
 
     <button class="m-0 mx-3 btn btn-primary" (click)="enableModules()" *ngIf="anyModulesLocked()">
-      Enable Modules
+      {{ t('protected features.enable modules') }}
     </button>
 
     <div class="m-0 mx-3 alert alert-success" *ngIf="allModulesUnlocked()">
@@ -53,28 +53,9 @@
       <div class="mx-3 mt-2" *ngIf="message && message.message.length > 0">{{ message.message }}</div>
     </div>
 
-    <hr class="w-100 mt-4 mb-2" *ngIf="showCisaAssessorWorkflowSwitch()" />
 
-    <div *ngIf="showCisaAssessorWorkflowSwitch()"
-      class="form-group d-flex align-items-center justify-content-between mt-4 mx-2">
-      <label for="csaToggle" class="font-weight-bold">CISA Assessor Workflow</label>
-      <div id="csaToggle" class="btn-group btn-group-toggle w-50 ms-2" data-toggle="buttons">
-        <label class="btn btn-level btn-rounded form-check-label" [class.active]="cisaWorkflowEnabled"
-          (change)="toggleCisaAssessorWorkflow()">
-          <input class="btn-check" name="csaModeYes" id="csaModeYes" type="radio" autocomplete="off" tabindex="0"
-            [checked]="cisaWorkflowEnabled" />
-          On
-        </label>
-        <label class="btn btn-level btn-rounded form-check-label" [class.active]="!cisaWorkflowEnabled"
-          (change)="toggleCisaAssessorWorkflow()">
-          <input class="btn-check" name="csaModeNo" id="csaModeNo" type="radio" autocomplete="off" tabindex="0"
-            [checked]="!cisaWorkflowEnabled" />
-          Off
-        </label>
-      </div>
-    </div>
   </mat-dialog-content>
   <mat-dialog-actions class="p-3 pt-0 mb-0 mt-2">
-    <button class="btn btn-secondary" (click)="close()">Close</button>
+    <button class="btn btn-secondary" (click)="close()">{{ t('buttons.close') }}</button>
   </mat-dialog-actions>
 </div>

@@ -69,7 +69,10 @@ export class AssessCompareAnalyticsService {
   }
 
   getAssessmentToken(assessId: number) {
-    const obs = this.http.get(this.configSvc.apiUrl + 'auth/token?assessmentId=' + assessId);
+    const headers = new HttpHeaders({
+      'AssessmentId': assessId
+    });
+    const obs = this.http.get(this.configSvc.apiUrl + 'auth/token', { headers: headers });
     const prom = firstValueFrom(obs);
 
     return prom.then((response: { token: string }) => {

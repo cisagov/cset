@@ -107,7 +107,7 @@
                },
                "4": {
                     "title": "Export POAM to Excel",
-                    "desc": "This report generates a Plan of Action and Milestones (POA&M) template which includes a list of unmet practices eligible for remediation. This POA&M will exclude any CMMC practices that are ineligible for inclusion per CMMC ruling. It is available for assessments that are targeting a Level 2 or 3 and have achieved Level 1."
+                    "desc": "This report generates a Plan of Action and Milestones (POA&M) template which includes a list of unmet practices eligible for remediation. This POA&M will exclude any CMMC practices that are ineligible for inclusion per CMMC ruling."
                }
           },
           "rra": {
@@ -138,6 +138,52 @@
                "3": {
                     "title": "Comments and Marked for Review",
                     "desc": "This document consolidates all practices that have received comments or have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
+               }
+          },
+          "cre+": {
+               "sectionTitle": "Cybersecurity Resilience Essentials (CRE+)",
+               "1": {
+                    "title": "CRE+ (Core Module) Final Report",
+                    "desc": "CRE Core questions and selected Optional Domain questions are detailed in this report"
+               },
+               "2": {
+                    "title": "Optional Domains Final Report",
+                    "desc": "Selected Optional Domain questions are detailed in this report"
+               },
+               "3": {
+                    "title": "MIL Final Report",
+                    "desc": "Selected MIL questions are detailed in this report"
+               },
+               "4": {
+                    "title": "Assessment Overview",
+                    "desc": "Charts showing distribution of answers across the assessment and by domain"
+               },
+               "5": {
+                    "title": "CRE+ (Core Module) Charts",
+                    "desc": "Charts showing distribution of answers in the Core module"
+               },
+               "6": {
+                    "title": "Optional Domains Charts",
+                    "desc": "Charts showing distribution of answers of the selected Optional Domains questions"
+               },
+               "7": {
+                    "title": "MIL Questions Charts 1",
+                    "desc": "Charts showing distribution of answers of the selected MIL questions"
+               },
+               "8": {
+                    "title": "MIL Questions Charts 2",
+                    "desc": "Charts showing distribution of answers of the selected MIL questions"
+               },
+               "9": {
+                    "title": "Heatmaps",
+                    "desc": "Heatmaps for all questions by domain"
+               }
+          },
+          "cisa vadr": {
+               "sectionTitle": "CISA Validated Architecture Design Review (VADR)",
+               "1": {
+                    "title": "CISA VADR Report",
+                    "desc": "CISA VADR Report description goes here"
                }
           },
           "mvra": {
@@ -171,29 +217,6 @@
                "4": {
                     "title": "Site Detail Report",
                     "desc": "This report includes the same information as the Site Summary Report as well as a list of all network component questions and their corresponding answers."
-               }
-          },
-          "acet": {
-               "sectionTitle": "ACET Reports",
-               "1": {
-                    "title": "ACET Executive Summary",
-                    "desc": "This report includes site information, maturity details for each domain and sub-domain, the inherent risk profile, and the overall cybersecurity maturity level of each domain."
-               },
-               "2": {
-                    "title": "ACET Gap Report",
-                    "desc": "This report includes a list of all statements that were marked as “No” during the assessment process. This report serves to identify potential deficiencies or gaps in the organization’s cybersecurity practices."
-               },
-               "3": {
-                    "title": "ACET Comments and Marked for Review",
-                    "desc": "This document consolidates all statements that have received comments and have been flagged for review during the assessment process. It provides an overview of areas where further attention or clarification may be needed."
-               },
-               "4": {
-                    "title": "ACET Answered Statements",
-                    "desc": "This report contains a list of all statements within the organization’s maturity level, which includes their answer to each statement and whether a comment was added to the statement."
-               },
-               "5": {
-                    "title": "ACET Compensating Controls",
-                    "desc": "This report includes a list of all statements that were marked as “Alt” during the assessment process and includes any justifications or comments that were provided."
                }
           },
           "vadr": {
@@ -326,6 +349,7 @@
                }
           }
      },
+     "self assessment indicator": "Self Assessment",
      "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated {date}.",
      "reports run prior message": "Any reports run prior to that update may not reflect the current state of the assessment.",
      "printing report instructions button": "Printing Reports Instructions",
@@ -681,6 +705,20 @@
                          "3": "Marked for Review",
                          "4": "There are no deficiencies to display."
                     }
+               },
+               "ot": "Operational Technology (OT)",
+               "ot-abbrev": "OT",
+               "it": "Information Technology (IT)",
+               "it-abbrev": "IT"
+          },
+          "cisa vadr": {
+               "report title": "CISA Validated Architecture Design Review (VADR)",
+               "report": {
+                    "question detail": "Question Detail",
+                    "na answer justification": "N/A Answer Justification",
+                    "p": {
+                         "1": "All questions are listed with their answers.  Provided justifications are displayed for questions answered as Not Applicable (N/A)."
+                    }
                }
           },
           "edm": {
@@ -783,61 +821,61 @@
                     "percent by domain": "Percentage of Practices Completed by Domain",
                     "para 3": "The following chart illustrates the percentage of completed practices for each individual domain. This provides a snapshot of each domain's compliance with the cybersecurity requirements measured within the assessment, regardless of the MIL achieved."
                }
-          }
-     },
-     "acet": {
-          "acet reports": "ACET Reports",
-          "executive summary": {
-               "report title": "ACET Executive Summary",
-               "tab title": "Executive Report - ACET",
-               "executive summary": "Executive Summary",
-               "site information": "Site Information"
           },
-          "gap report": {
-               "tab title": "Gap Report - ACET",
-               "gap report": "ACET Gap Report",
-               "gap report title 1": "GAP",
-               "gap report title 2": "REPORT",
-               "gap disclaimer 1": "This gap report lists the statements that are not currently compliant or 'No' answers.",
-               "gap disclaimer 2": "This is often referred to as the GAP Report. This report intends to list the gaps, assist users of the report in identifying gaps, prioritizing work, and beginning to make a plan to address the gaps by implementing the controls necessary to come into compliance with the associated statement.",
-               "gap disclaimer 3": "The percentage gap in each domain is also listed and will help to determine the priority. ACET is a cumulative maturity model meaning lower levels should be completed before moving to higher levels. Ideally baseline should be completed before focusing efforts on controls in evolving and so forth up the line of maturity levels.",
-               "gaps": "Gaps",
-               "marked for review": "Marked for Review",
-               "no deficiencies": "There are no deficiencies to display"
-          },
-          "comments and mfr": {
-               "tab title": "Comments Report - ACET",
-               "comments report": "ACET Comments and Marked for Review",
-               "comments report title 1": "COMMENTS REVIEW",
-               "comments report title 2": "REPORT",
-               "statements mfr": "Statements Marked for Review",
-               "statement": "Statement",
-               "no statements marked": "There are no statements marked for review",
-               "statement comments": "Statement Comments",
-               "no statements with comments": "There are no statements with comments"
-          },
-          "answered statements": {
-               "tab title": "Answered Statements Report - ACET",
-               "answered statements report": "ACET Answered Statements",
-               "answered statements report title 1": "ANSWERED STATEMENTS",
-               "answered statements report title 2": "REPORT",
-               "answered statements": "Answered Statements",
-               "report desc 1": "This report includes all the statements within your maturity level, your answers, and whether there is a comment attached to the statement.",
-               "report desc 2": "The answered statement set will only show statements at or below your maturity level.",
-               "maturity level key": "Maturity Level Key",
-               "answers": "Answers",
-               "comments": "Comments"
-          },
-          "compensating controls": {
-               "tab title": "Compensating Controls Report - ACET",
-               "compensating controls report": "ACET Compensating Controls",
-               "compensating controls report title 1": "COMPENSATING CONTROLS",
-               "compensating controls report title 2": "REPORT",
-               "compensating controls": "Compensating Controls",
-               "report desc": "This report contains all the statements that have an associated compensating control and the comment provided.",
-               "compensating comment": "Compensating Comment",
-               "no compensating comment": "No compensating comment or explanation was provided.",
-               "no compensating controls": "There are no compensating controls to display"
+          "cre": {
+               "final reports": {
+                    "p1": "Each question is listed with its answer and any associated comments or notes.",
+                    "22": {
+                         "title": "CISA Cyber Resilience Essentials (CRE+) Core Module Final Report",
+                         "question title": "Core Module Questions"
+                    },
+                    "23": {
+                         "title": "CISA Cyber Resilience Essentials (CRE+) Optional Domain Final Report",
+                         "question title": "Optional Domain Questions",
+                         "only selected": "Only questions from selected goals are included.",
+                         "none selected": "This report shows only selected goals.  Select one or more Optional Domain goals to see questions on this report."
+                    },
+                    "24": {
+                         "title": "CISA Cyber Resilience Essentials (CRE+) MIL Final Report",
+                         "question title": "MIL Questions",
+                         "only selected": "Only questions from selected goals are included.",
+                         "none selected": "This report shows only selected MILs.  Select one or more MILs to see questions on this report."
+                    }
+               },
+               "answer distribution": "Answer Distribution",
+               "chart reports": {
+                    "22": {
+                         "title": "Cyber Resilience Essentials (CRE+) (Core Module) Charts",
+                         "chart footer1": "CRE+ Core Module Answer Distribution",
+                         "chart footer2": "CRE+ Core Module Answer Distribution by domain"
+                    },
+                    "23": {
+                         "title": "Cyber Resilience Essentials (CRE+) Optional Domains Charts",
+                         "chart footer1": "Optional Domain Answer Distribution.  Only selected goals are included.",
+                         "chart footer2": "Optional Domain Answer Distribution by domain. Only selected goals are included.",
+                         "no selected": "None of the goals were selected so there is nothing to show."
+                    },
+                    "24": {
+                         "title": "Cyber Resilience Essentials (CRE+) MIL Questions Charts",
+                         "chart footer1": "MIL Question Answer Distribution.  Only selected MILs are included.",
+                         "chart footer2": "MIL Question Answer Distribution by domain. Only selected MILs are included.",
+                         "no selected": "None of the MILs were selected so there is nothing to show."
+                    }
+               },
+               "heatmap report": {
+                    "title": "CISA Cyber Resilience Essentials (CRE+) - Heatmaps Assessment Overview",
+                    "p1": "All in-scope answers are represented, grouped by their corresponding domains.",
+                    "answer heatmaps": "Answer Heatmaps",
+                    "core questions": "Core Questions",
+                    "optional domain questions": "Optional Domain Questions",
+                    "mil questions": "MIL Questions",
+                    "no optional domain heatmap": "No goals were selected for Optional Domain Questions.  No Optional Domain questions are in scope for this assessment.",
+                    "no mil heatmap": "No MILs were selected for MIL Question domains.  No MIL questions are in scope for this assessment."
+               },
+               "mil charts 2": {
+                    "title": "Cyber Resilience Essentials (CRE+) MIL Questions Charts 2",
+                    "p1": "maybe an intro paragraph here"
+               }
           }
      },
      "all": {

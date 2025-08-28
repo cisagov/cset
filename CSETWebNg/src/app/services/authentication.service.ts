@@ -33,6 +33,7 @@ import { ChangePassword } from '../models/reset-pass.model';
 import { CreateUser } from './../models/user.model';
 import { ConfigService } from './config.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { RoleType } from '../models/enums/role.model';
 
 export interface LoginResponse {
   token: string;
@@ -49,6 +50,7 @@ export interface LoginResponse {
   importExtensions: string;
   linkerTime: string;
   isFirstLogin: boolean;
+  roles: string[];
 }
 
 const headers = {
@@ -62,6 +64,7 @@ export class AuthenticationService {
   isLocal: boolean;
   private initialized = false;
   private parser = new JwtParser();
+  private currentUser: LoginResponse | null = null;
 
   isAuthenticated = false;
 
@@ -153,6 +156,7 @@ export class AuthenticationService {
    * @param user
    */
   storeUserData(user: LoginResponse) {
+    this.currentUser = user;
     if (user.token != null) {
       localStorage.setItem('userToken', user.token);
     }
@@ -164,7 +168,8 @@ export class AuthenticationService {
     localStorage.setItem('exportExtension', user.exportExtension);
     localStorage.setItem('importExtensions', user.importExtensions);
     localStorage.setItem('developer', String(false));
-    localStorage.setItem('isFirstLogin', String(user.isFirstLogin))
+    localStorage.setItem('isFirstLogin', String(user.isFirstLogin));
+    localStorage.setItem('role', JSON.stringify(user.roles))
     // schedule the first token refresh event
     this.scheduleTokenRefresh(this.http, user.token);
   }
@@ -184,18 +189,6 @@ export class AuthenticationService {
     switch (this.configSvc.installationMode || '') {
       case 'CSET':
         scope = 'CSET';
-        break;
-      case 'ACET':
-        scope = 'ACET';
-        break;
-      case 'TSA':
-        scope = 'TSA';
-        break;
-      case 'RRA':
-        scope = 'RRA';
-        break;
-      case 'CF':
-        scope = 'CF';
         break;
       case 'IOD':
         scope = 'IOD';
@@ -228,19 +221,13 @@ export class AuthenticationService {
       );
   }
 
+  /**
+   * 
+   */
   logout() {
     this.isAuthenticated = false;
     this.router.navigate(['/home/logout'], { queryParamsHandling: 'preserve' });
   }
-
-  /**
-   * TODO:  This is not working correctly - the local storage stuff
-   * hangs around even if we are sitting on the login page again
-   */
-  // isAuthenticated() {
-  //     const uid = localStorage.getItem('userId');
-  //     return !!uid;
-  // }
 
   /**
    * Schedules an HTTP transaction to refresh the JWT.
@@ -252,7 +239,11 @@ export class AuthenticationService {
     refresh.subscribe((val) => {
       // only schedule a refresh if the user is currently logged on
       if (localStorage.getItem('userToken') != null) {
-        http.get(this.configSvc.apiUrl + 'auth/token?refresh').subscribe(
+        const headers = new HttpHeaders({
+          'refresh': ''
+        });
+
+        http.get(this.configSvc.apiUrl + 'auth/token', { headers: headers }).subscribe(
           (resp: LoginResponse) => {
             localStorage.removeItem('userToken');
             localStorage.setItem('userToken', resp.token);
@@ -294,11 +285,23 @@ export class AuthenticationService {
    * Requests a JWT with a short lifespan.
    */
   getShortLivedToken() {
-    return this.http.get(this.configSvc.apiUrl + 'auth/token?expSeconds=30000');
+    const headers = new HttpHeaders({
+      'expSeconds': 60
+    });
+
+    return this.http.get(this.configSvc.apiUrl + 'auth/token', { headers: headers });
   }
 
+  /**
+   * Requests an assessment-specific JWT with a short lifespan.
+   */
   getShortLivedTokenForAssessment(assessment_id: number) {
-    return this.http.get(this.configSvc.apiUrl + 'auth/token?assessmentId=' + assessment_id + '&expSeconds=30000');
+    const headers = new HttpHeaders({
+      'assessmentId': assessment_id,
+      'expSeconds': 60
+    });
+
+    return this.http.get(this.configSvc.apiUrl + 'auth/token', { headers: headers });
   }
 
   changePassword(data: ChangePassword) {
@@ -431,5 +434,24 @@ export class AuthenticationService {
    */
   generateAccessKey() {
     return this.http.get(this.configSvc.apiUrl + 'auth/accesskey', { responseType: 'text' });
+  }
+
+  hasRole(requiredRoles: RoleType[]): boolean {
+    if (!this.currentUser) {
+      return false;
+    }
+    this.currentUser.roles = JSON.parse(localStorage.getItem("role"));
+
+    return this.currentUser.roles.some((role: RoleType) =>
+      requiredRoles.includes(role)
+    );
+  }
+
+  hasMultipleRoles(requiredRoles: RoleType[]): boolean {
+    if (!this.currentUser) return false;
+
+    return requiredRoles.every(role =>
+      this.currentUser!.roles.includes(role)
+    );
   }
 }

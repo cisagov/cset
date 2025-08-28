@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Version;
+
 namespace CSETWebCore.Business.Version
 {
     /// <summary>
-    /// 
+    /// Returns version breakdowns of the codebase (found by reflection of the Assembly)
+    /// and the database (as found in the CSET_VERSION table).
     /// </summary>
     public class VersionBusiness : IVersionBusiness
     {
@@ -19,7 +22,6 @@ namespace CSETWebCore.Business.Version
         public VersionBusiness(CSETContext context)
         {
             _context = context;
-
         }
 
 
@@ -29,13 +31,28 @@ namespace CSETWebCore.Business.Version
         /// <returns></returns>
         public CsetVersion GetVersionNumber()
         {
-            var version = _context.CSET_VERSION.OrderByDescending(v => v.Id).FirstOrDefault();
+            var response = new CsetVersion();
 
-            if (version != null && version.Cset_Version1?.Any() == true)
+
+            // Codebase
+            var entryAssembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
+            var verCode = entryAssembly.GetName().Version;
+            response.CodebaseVersion = new DataLayer.Model.Version
             {
-                System.Version v = new System.Version(version.Cset_Version1);
+                MajorVersion = verCode.Major,
+                MinorVersion = verCode.Minor,
+                Build = verCode.Build,
+                Revision = verCode.Revision
+            };
 
-                return new CsetVersion
+
+            // Database
+            var verData = _context.CSET_VERSION.OrderByDescending(v => v.Id).FirstOrDefault();
+            if (verData != null && verData.Cset_Version1?.Any() == true)
+            {
+                System.Version v = new System.Version(verData.Cset_Version1);
+
+                response.DatabaseVersion = new DataLayer.Model.Version
                 {
                     MajorVersion = v.Major,
                     MinorVersion = v.Minor,
@@ -44,7 +61,7 @@ namespace CSETWebCore.Business.Version
                 };
             }
 
-            return new CsetVersion { MajorVersion = 0, MinorVersion = 0, Build = 0, Revision = 0 };
+            return response;
         }
     }
 }

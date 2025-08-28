@@ -25,10 +25,10 @@ interface listSectors {
   optionText: string;
 }
 @Component({
-    selector: 'app-analytics-results',
-    templateUrl: './analytics-results.component.html',
-    styleUrls: ['./analytics-results.component.scss'],
-    standalone: false
+  selector: 'app-analytics-results',
+  templateUrl: './analytics-results.component.html',
+  styleUrls: ['./analytics-results.component.scss'],
+  standalone: false
 })
 export class AnalyticsResultsComponent implements OnInit {
 
@@ -78,7 +78,7 @@ export class AnalyticsResultsComponent implements OnInit {
         this.demoIodSvc.getDemographics().subscribe((resp: DemographicsIod) => {
           resp.listSectors.forEach(sector => {
             if (sector.optionValue == this.sectorId) {
-              this.sectorTitle = this.tSvc.translate('analytics.' + sector.optionText)
+              this.sectorTitle = sector.optionText
             }
           });
         })
@@ -117,6 +117,7 @@ export class AnalyticsResultsComponent implements OnInit {
   }
 
   toggleData(event: any): void {
+    this.sampleSize = null;
     this.dataType = event.value;
     if (this.dataType === "allSectors") {
       this.getAnalyticsResults(true);

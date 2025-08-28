@@ -9,16 +9,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using CSETWebCore.Business.Acet;
-using CSETWebCore.Business.Reports;
 using CSETWebCore.Constants;
-using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Question;
-using Microsoft.EntityFrameworkCore.Query;
-
 
 
 namespace CSETWebCore.Business.Question
@@ -191,6 +186,14 @@ namespace CSETWebCore.Business.Question
                     requirement.Supplemental_Info = reqOverlay.SupplementalInfo;
                 }
 
+                // We use an answerid of 0 because there is no need to resolve 
+                // parameters here -- we are in Questions mode, so just format the
+                // parameter tokens for display
+                var parmSub = new ParameterSubstitution(_context, _tokenManager);
+                requirement.Requirement_Text = 
+                    parmSub.ResolveParameters(requirement.Requirement_Id, 0, requirement.Requirement_Text);
+
+
                 var cat = _overlay.GetPropertyValue("STANDARD_CATEGORY", requirement.Standard_Sub_Category.ToLower(), _lang);
                 if (cat != null)
                 {
@@ -221,7 +224,7 @@ namespace CSETWebCore.Business.Question
                 tabData.SupplementalInfo = FormatSupplementalInfo(tabData.SupplementalInfo);
 
 
-                var refBuilder = new Helpers.ReferencesBuilder(_context);
+                var refBuilder = new Helpers.ReferencesBuilder(_context, _tokenManager);
                 refBuilder.BuildReferenceDocuments(requirement.Requirement_Id,
                     out List<ReferenceDocLink> sourceDocList,
                     out List<ReferenceDocLink> additionalDocList);
@@ -389,7 +392,7 @@ namespace CSETWebCore.Business.Question
             ShowSALLevel = true;
             ExaminationApproach = requirement.ExaminationApproach;
 
-            var refBuilder = new Helpers.ReferencesBuilder(_context);
+            var refBuilder = new Helpers.ReferencesBuilder(_context, _tokenManager);
             refBuilder.BuildReferenceDocuments(requirement.Requirement_Id,
                     out List<ReferenceDocLink> sourceDocList,
                     out List<ReferenceDocLink> additionalDocList);
@@ -457,7 +460,7 @@ namespace CSETWebCore.Business.Question
 
                     ShowSALLevel = true;
 
-                    var refBuilder = new Helpers.ReferencesBuilder(_context);
+                    var refBuilder = new Helpers.ReferencesBuilder(_context,_tokenManager);
                     refBuilder.BuildReferenceDocuments(frameworkData.RequirementID, out List<ReferenceDocLink> sourceDocList, out List<ReferenceDocLink> additionalDocList);
 
                     SetFrameworkQuestions(frameworkData.RequirementID);
@@ -504,7 +507,7 @@ namespace CSETWebCore.Business.Question
                 var reqid = _context.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
 
 
-                var refBuilder = new Helpers.ReferencesBuilder(_context);
+                var refBuilder = new Helpers.ReferencesBuilder(_context,_tokenManager);
                 refBuilder.BuildReferenceDocuments(reqid,
                     out List<ReferenceDocLink> sourceDocList,
                     out List<ReferenceDocLink> additionalDocList);
@@ -590,7 +593,7 @@ namespace CSETWebCore.Business.Question
                 RequirementsData = tabData;
 
 
-                var refBuilder = new Helpers.ReferencesBuilder(_context);
+                var refBuilder = new Helpers.ReferencesBuilder(_context,_tokenManager);
                 refBuilder.BuildRefDocumentsForMaturityQuestion(info.QuestionID,
                     out List<ReferenceDocLink> sourceDocList,
                     out List<ReferenceDocLink> additionalDocList);

@@ -84,11 +84,6 @@ $primary-900: map.get($primary, 900); // Main Dark Primary
 $primary-color: $primary-900;
 $secondary-color: map.get($primary, 450);
 
-$ncua-primary-background-image: linear-gradient(to right,
-    #0f3c7a,
-    #5290e5,
-    #0f3c7a);
-$ncua-secondary-color: #0f3c7a;
 
 $link-color-dark: #1a53ff; //$primary-350;
 $link-color-light: $primary-350;
@@ -944,6 +939,10 @@ table.td-align-top td {
   color: $white;
 }
 
+.btn-level.primary.active {
+  background-color: $primary-800;
+  color: $white;
+}
 
 .btn-geo {
   background-color: $gray-150;
@@ -1075,7 +1074,10 @@ ul.mat-tree-node {
 }
 
 .side-nav-container .current-node>button {
-  border: 1px solid #ffffff;
+  border: none;
+  border-radius: .3rem !important;
+  background-color: #ffffff;
+  color: $primary-600;
 }
 
 .side-nav-container .btn-home {
@@ -1132,6 +1134,11 @@ ul.mat-tree-node {
 div.spinner-size-50 {
   max-width: 50px;
   max-height: 50px;
+}
+
+div.spinner-size-20 {
+  max-width: 20px;
+  max-height: 20px;
 }
 
 /* Safari */
@@ -1222,7 +1229,8 @@ ul.mat-tree-node mat-tree-node {
 .parameter-orig-value {
   font-size: 1.1em;
   color: $primary-color;
-  margin: 10px 0;
+  font-style: italic;
+  margin: 10px 10px;
 }
 
 // .parameter-editor-default-message {
@@ -1257,6 +1265,11 @@ th.data-table {
 .chart {
   padding-bottom: 45px;
   text-align: center;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .report-links button {
@@ -1773,7 +1786,7 @@ input[type="checkbox"]+label {
   transform: scaleY(-1);
   filter: FlipH;
   -ms-filter: "FlipH";
-  margin-top: -10px;
+  margin-top: -5px;
 }
 
 .open-desc {
@@ -1910,6 +1923,8 @@ input[type="checkbox"]+label {
   -moz-transition: transform 0.3s;
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
+  display: flex;
+  align-items: center;
 }
 
 .q-expand.expand-flip {
@@ -1918,7 +1933,7 @@ input[type="checkbox"]+label {
   transform: scaleY(-1);
   filter: FlipH;
   -ms-filter: "FlipH";
-  margin-top: -10px;
+  margin-top: -5px;
 }
 
 .header-question {
@@ -2051,8 +2066,9 @@ tooltip.glossary-definition.tooltip-left::after {
   display: block;
   width: 100%;
   border-top: 1px solid $primary-550;
+  border-inline-start: 1px solid $gray-200;
   padding: 10px;
-  /*margin-bottom: 1em;*/
+  padding-left: 15px;
 }
 
 .extras-button {
@@ -2127,7 +2143,7 @@ ul.related-questions li {
 
 .group-heading {
   font-size: 25px;
-  margin: 0.4em 0;
+  margin: 1.7em 0 0.4em 0;
   color: $primary-color;
 }
 
@@ -2347,7 +2363,7 @@ mat-sidenav.mat-sidenav {
 ///////////////////////////////////////////////////////////////////////
 .sub-me {
   text-decoration: underline;
-  color: $link-color-dark;
+  color: $link-color-dark !important;
   cursor: pointer;
 }
 

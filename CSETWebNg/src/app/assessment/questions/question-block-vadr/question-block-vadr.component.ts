@@ -22,21 +22,20 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Question, QuestionGrouping, Answer } from '../../../models/questions.model';
+import { Question, QuestionGrouping, Answer, AnswerQuestionResponse } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { GroupingDescriptionComponent } from '../grouping-description/grouping-description.component';
-import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { LayoutService } from '../../../services/layout.service';
 import { CompletionService } from '../../../services/completion.service';
 
 
 @Component({
-    selector: 'app-question-block-vadr',
-    templateUrl: './question-block-vadr.component.html',
-    styleUrls: ['./question-block-vadr.component.scss'],
-    standalone: false
+  selector: 'app-question-block-vadr',
+  templateUrl: './question-block-vadr.component.html',
+  styleUrls: ['./question-block-vadr.component.scss'],
+  standalone: false
 })
 export class QuestionBlockVadrComponent implements OnInit {
   @Input() myGrouping: QuestionGrouping;
@@ -49,7 +48,6 @@ export class QuestionBlockVadrComponent implements OnInit {
 
   openendedtext = "Open Ended question";
   altTextPlaceholder = "alt cset";
-  altTextPlaceholder_ACET = "alt acet";
   openEndedQuestion = false;
   showQuestionIds = false;
   showYNQuestions = false;
@@ -61,7 +59,6 @@ export class QuestionBlockVadrComponent implements OnInit {
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
     public assessSvc: AssessmentService,
-    public acetFilteringSvc: AcetFilteringService,
     public layoutSvc: LayoutService,
     public completionSvc: CompletionService
   ) {
@@ -71,7 +68,7 @@ export class QuestionBlockVadrComponent implements OnInit {
    *
    */
   ngOnInit(): void {
-    this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
+    this.answerOptions = this.assessSvc.assessment?.maturityModel?.answerOptions;
 
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
@@ -87,14 +84,6 @@ export class QuestionBlockVadrComponent implements OnInit {
       } else {
         this.showYNQuestions = true;
       }
-    });
-
-    if (this.configSvc.installationMode === "ACET") {
-      this.altTextPlaceholder = this.altTextPlaceholder_ACET;
-    }
-    this.acetFilteringSvc.filterAcet.subscribe((filter) => {
-      this.refreshReviewIndicator();
-      this.refreshPercentAnswered();
     });
 
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
@@ -143,8 +132,10 @@ export class QuestionBlockVadrComponent implements OnInit {
     if (q.answer === newAnswerValue) {
       newAnswerValue = "U";
     }
-
-    q.answer = newAnswerValue;
+    
+    if (!!newAnswerValue) {
+      q.answer = newAnswerValue;
+    }
 
     const answer: Answer = {
       answerId: q.answer_Id,
@@ -171,8 +162,13 @@ export class QuestionBlockVadrComponent implements OnInit {
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer)
-      .subscribe((ansId: number) => {
-        q.answer_Id = ansId;
+      .subscribe((resp: AnswerQuestionResponse) => {
+        q.answer_Id = resp.answerId;
+
+        // if the back-end changed the question's details, refresh the UI
+        if (resp.detailsChanged) {
+          this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+        }
       });
   }
 
@@ -197,10 +193,6 @@ export class QuestionBlockVadrComponent implements OnInit {
         this.myGrouping.hasReviewItems = true;
         return;
       }
-      if (q.answer == 'A' && this.isAltTextRequired(q)) {
-        this.myGrouping.hasReviewItems = true;
-        return;
-      }
     });
   }
 
@@ -220,7 +212,6 @@ export class QuestionBlockVadrComponent implements OnInit {
         return;
       }
       if (!q.parentQuestionId) {
-
         totalCount++;
         if (q.answer && q.answer !== "U") {
           answeredCount++;
@@ -231,57 +222,10 @@ export class QuestionBlockVadrComponent implements OnInit {
     this.percentAnswered = (answeredCount / totalCount) * 100;
   }
 
-
   /**
-   * For ACET installations, alt answers require 3 or more characters of
-   * justification.
+   * 
    */
-  isAltTextRequired(q: Question) {
-    if ((this.configSvc.installationMode === "ACET")
-      && (!q.altAnswerText || q.altAnswerText.trim().length < 3)) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Pushes the answer to the API, specifically containing the alt text
-   * @param q
-   * @param altText
-   */
-  storeAltText(q: Question) {
-
-    clearTimeout(this._timeoutId);
-    this._timeoutId = setTimeout(() => {
-      const answer: Answer = {
-        answerId: q.answer_Id,
-        questionId: q.questionId,
-        questionType: q.questionType,
-        questionNumber: q.displayNumber,
-        answerText: q.answer,
-        altAnswerText: q.altAnswerText,
-        // freeResponseAnswer: q.freeResponseAnswer,
-        comment: q.comment,
-        feedback: q.feedback,
-        markForReview: q.markForReview,
-        reviewed: q.reviewed,
-        is_Component: q.is_Component,
-        is_Requirement: q.is_Requirement,
-        is_Maturity: q.is_Maturity,
-        componentGuid: q.componentGuid
-      };
-
-      this.refreshReviewIndicator();
-
-      this.questionsSvc.storeAnswer(answer)
-        .subscribe((ansId: number) => {
-          q.answer_Id = ansId;
-        });
-    }, 500);
-
-  }
   storeFreeText(q: Question) {
-
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
       const answer: Answer = {
@@ -305,8 +249,11 @@ export class QuestionBlockVadrComponent implements OnInit {
       this.refreshReviewIndicator();
 
       this.questionsSvc.storeAnswer(answer)
-        .subscribe((ansId: number) => {
-          q.answer_Id = ansId;
+        .subscribe((resp: AnswerQuestionResponse) => {
+          q.answer_Id = resp.answerId;
+          if (resp.detailsChanged) {
+            this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
+          }
         });
     }, 500);
 

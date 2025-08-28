@@ -26,9 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Malcolm;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using CSETWebCore.Helpers;
-using CSETWebCore.Business.Contact;
 using NLog;
 
 namespace CSETWebCore.Api.Controllers
@@ -144,6 +142,7 @@ namespace CSETWebCore.Api.Controllers
 
         }
 
+
         /// <summary>
         ///
         /// </summary>
@@ -155,6 +154,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             return _context.Get_Children_Answers(parentId, assessmentId);
         }
+
 
         /// <summary>
         ///
@@ -168,6 +168,7 @@ namespace CSETWebCore.Api.Controllers
             ObservationsManager fm = new ObservationsManager(_context, assessId);
             return fm.GetActionItems(parentId, finding_id);
         }
+
 
         /// <summary>
         /// Sets the application mode to be question or requirements based.
@@ -225,7 +226,6 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-
         /// <summary>
         /// Persists an answer.  This includes Y/N/NA/A as well as comments and alt text.
         /// </summary>
@@ -235,7 +235,12 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _token.AssessmentForUser();
 
-            var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var response = new AnswerQuestionResponse
+            {
+                AnswerId = 0,
+                DetailsChanged = false
+            };
+
 
             if (answer == null)
             {
@@ -255,35 +260,47 @@ namespace CSETWebCore.Api.Controllers
             }
 
 
-            // Save the last answered question
+            // Note the last-answered question
             var lah = new LastAnsweredHelper(_context);
             lah.Save(assessmentId, _token.GetCurrentUserId(), answer);
 
+
+            var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
 
 
             if (answer.Is_Component)
             {
                 var cb = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
-                return Ok(cb.StoreAnswer(answer));
+                var cbAnsId = cb.StoreAnswer(answer);
+                response.AnswerId = cbAnsId;
+                return Ok(response);
             }
 
             if (answer.Is_Requirement)
             {
                 var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
-                return Ok(rb.StoreAnswer(answer));
+                var rbAnsId = rb.StoreAnswer(answer);
+                response.AnswerId = rbAnsId;
+                return Ok(response);
             }
 
             if (answer.Is_Maturity)
             {
-                return Ok(mb.StoreAnswer(assessmentId, answer));
+                var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+                var savedAnswer = mb.StoreAnswer(assessmentId, answer);
+
+                var detailsChanged = new Hooks(_context, _assessmentUtil).HookQuestionAnswered(savedAnswer);
+
+
+                response.AnswerId = (int)savedAnswer.AnswerId;
+                response.DetailsChanged = detailsChanged;
+                return Ok(response);
             }
 
-            var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-            return Ok(qb.StoreAnswer(answer));
+            var qbAnsId = qb.StoreAnswer(answer);
+            response.AnswerId = qbAnsId;
+            return Ok(response);
         }
-
-
-
 
 
         /// <summary>
@@ -335,38 +352,6 @@ namespace CSETWebCore.Api.Controllers
                 var scorer = new CisScoring(assessmentId, sectionId, _context);
                 var score = scorer.CalculateGroupingScore();
                 return Ok(score);
-            }
-
-            return Ok();
-        }
-
-        /// <summary>
-        /// Persists multiple (all) assessment answers at once
-        /// during the ISE assessment merge process. This could probably
-        /// be combined with the above function, but I don't have the time
-        /// to do so currently
-        /// </summary>
-        [HttpPost]
-        [Route("api/storeAllAnswers")]
-        public IActionResult StoreAllAnswers([FromBody] List<Answer> answers)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            int? userId = _token.GetCurrentUserId();
-
-            if (answers == null || answers.Count == 0)
-            {
-                return Ok(0);
-            }
-
-            var lah = new LastAnsweredHelper(_context);
-
-            foreach (var answer in answers)
-            {
-                // save the last answered question
-                lah.Save(assessmentId, userId, answer);
-
-                var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-                mb.StoreAnswer(assessmentId, answer);
             }
 
             return Ok();
@@ -527,7 +512,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            var id = fm.UpdateObservation(obs, merge);
+            var id = fm.UpdateObservation(obs);
 
             return Ok(id);
         }
@@ -550,7 +535,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            var id = fm.UpdateObservation(obs, false);
+            var id = fm.UpdateObservation(obs);
 
             return Ok(id);
         }
@@ -621,6 +606,20 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Changes if document is Globally accessible
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isGlobal"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/ChangeGlobal")]
+        public IActionResult ChangeGlobal([FromQuery] int id, [FromQuery] Boolean isGlobal)
+        {
+            _document.ChangeGlobal(id, isGlobal);
+            return Ok();
+        }
+
 
         /// <summary>
         /// Detaches a stored document from the answer.  
@@ -658,8 +657,11 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetDefaultParametersForAssessment()
         {
             var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
+            var controls = rm.GetControls().Requirements.ToList();
 
-            return Ok(rm.GetDefaultParametersForAssessment());
+            var parmSub = new ParameterSubstitution(_context, _token);
+
+            return Ok(parmSub.GetDefaultParametersForAssessment(controls));
         }
 
 
@@ -683,9 +685,12 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SaveAnswerParameter")]
         public ParameterToken SaveAnswerParameter([FromBody] ParameterToken token)
         {
-            var rm = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
+            var assessmentId = _token.AssessmentForUser();
+            _questionRequirement.AssessmentId = assessmentId;
 
-            return rm.SaveAnswerParameter(token.RequirementId, token.Id, token.AnswerId, token.Substitution);
+            var parmSub = new ParameterSubstitution(_context, _token);
+
+            return parmSub.SaveAnswerParameter(_questionRequirement, token.RequirementId, token.Id, token.AnswerId, token.Substitution);
         }
 
 

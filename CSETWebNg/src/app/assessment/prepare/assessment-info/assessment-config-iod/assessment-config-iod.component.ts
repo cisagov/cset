@@ -6,12 +6,14 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
 import { DemographicIodService } from '../../../../services/demographic-iod.service';
 import { DemographicService } from '../../../../services/demographic.service';
+import { Upgrades } from '../../../../models/assessment-info.model';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 @Component({
-    selector: 'app-assessment-config-iod',
-    templateUrl: './assessment-config-iod.component.html',
-    styleUrls: ['./assessment-config-iod.component.scss'],
-    standalone: false
+  selector: 'app-assessment-config-iod',
+  templateUrl: './assessment-config-iod.component.html',
+  styleUrls: ['./assessment-config-iod.component.scss'],
+  standalone: false
 })
 export class AssessmentConfigIodComponent implements OnInit {
   iodDemographics: DemographicsIod = {};
@@ -22,11 +24,13 @@ export class AssessmentConfigIodComponent implements OnInit {
   showUpgrade: boolean = false;
   targetModel: string = '';
 
+
   constructor(
     private assessSvc: AssessmentService,
     private demoSvc: DemographicService,
     private iodDemoSvc: DemographicIodService,
-    private configSvc: ConfigService
+    private configSvc: ConfigService,
+    private navSvc: NavigationService
   ) { }
 
   ngOnInit() {
@@ -41,15 +45,15 @@ export class AssessmentConfigIodComponent implements OnInit {
 
     this.getAssessmentDetail();
 
-    if (this.configSvc.config.debug.showCmmcConversion ?? false) {
-      this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
-        if (data.maturityModel.modelName == "CMMC2") {
-          this.showUpgrade = true;
-          this.targetModel = "CMMC2F"
+    if (this.configSvc.showAssessmentUpgrade() == true) {
+      this.assessSvc.checkUpgrades().subscribe((data: Upgrades) => {
+        if (data) {
+          this.showUpgrade = !!data;
+          this.assessSvc.galleryItemGuid = data.target;
+          this.assessSvc.convertToModel = data.name;
         }
       })
-    };
-
+    }
   }
 
   /**
@@ -58,14 +62,7 @@ export class AssessmentConfigIodComponent implements OnInit {
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
     this.IsPCII = this.assessment.is_PCII;
-    // a few things for a brand new assessment
-    if (this.assessSvc.isBrandNew) {
-      // RRA install presets the maturity model
-      if (this.configSvc.installationMode === 'RRA') {
-        this.assessSvc.setRraDefaults();
-        this.assessSvc.updateAssessmentDetails(this.assessment);
-      }
-    }
+
 
 
     this.assessSvc.isBrandNew = false;
@@ -94,7 +91,11 @@ export class AssessmentConfigIodComponent implements OnInit {
       this.IsPCII = val;
       this.assessment.is_PCII = val;
 
-      this.configSvc.cisaAssessorWorkflow = true;
+      if (!this.assessment.is_PCII) {
+        this.assessment.pciiNumber = null;
+      }
+
+      this.configSvc.userIsCisaAssessor = true;
       this.assessSvc.updateAssessmentDetails(this.assessment);
     }
   }
@@ -126,5 +127,19 @@ export class AssessmentConfigIodComponent implements OnInit {
 
   showStateName() {
     return this.configSvc.behaviors.showStateName;
+  }
+
+  showFacilitator() {
+    return this.configSvc.behaviors.showFacilitatorDropDown;
+  }
+
+  updateAssessorMode() {
+    this.assessment.assessorMode = !this.assessment.assessorMode;
+    // Sets assessment level assessor mode and navigates to configuration page in non-assessor mode
+    this.assessSvc.setAssessorSetting(this.assessment.assessorMode).subscribe(() => {
+      this.navSvc.navBack('info2');
+    });
+
+
   }
 }

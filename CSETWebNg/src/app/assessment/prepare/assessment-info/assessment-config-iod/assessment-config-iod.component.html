@@ -25,12 +25,11 @@
     <h3 class="mb-3">{{t('titles.assessment configuration')}}</h3>
 
     <div *ngIf="this.showUpgrade">
-      <app-upgrade [data]="this.targetModel"></app-upgrade>
+      <app-upgrade></app-upgrade>
     </div>
 
-    <div class="row">
+    <div class="row mb-3">
       <div class="col">
-
         <label class="form-label" for="name">{{t('assessment name')}}</label>
         <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true"
           disabled="true" [(ngModel)]="assessment.assessmentName" (ngModelChange)="assessment.assessmentName"
@@ -44,7 +43,8 @@
         <mat-datepicker #picker></mat-datepicker>
       </div>
     </div>
-    <div class="row">
+
+    <div class="row mb-3">
       <div class="col" *ngIf="showCityName()">
         <label class="form-label" for="citySite">{{t('city or site name')}}</label>
         <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite"
@@ -56,7 +56,8 @@
           [(ngModel)]="assessment.stateProvRegion" (change)="update($event)" tabindex="0">
       </div>
     </div>
-    <div class="row">
+
+    <div class="row mb-3">
       <div class="col">
         <label for="name" class="form-label">{{t('cisa region')}}</label>
         <select class="form-select" id="cisaRegion" tabindex="0" name="cisaRegion" (change)="updateDemographicsIod()"
@@ -68,11 +69,12 @@
         </select>
       </div>
     </div>
-    <div class="row">
+
+    <div class="row mb-4">
       <div class="col-6">
         <div class="row">
           <label for="name" class="form-label">{{t('pcii requested')}}</label>
-          <div class="btn-group col-10" style="padding-left: 0px;" role="group" data-toggle="buttons">
+          <div class="btn-group col-10" role="group" data-toggle="buttons">
             <label class="btn btn-level btn-rounded form-check-label" [class.active]="assessment.is_PCII">
               <input class="btn-check" name="standardYes" id="standardYes" type="radio" autocomplete="off"
                 (change)="changeIsPCII(true)" tabindex="0" [(ngModel)]="assessment.is_PCII" />
@@ -103,11 +105,70 @@
         [innerHtml]="assessment.typeDescription | safe"></p>
     </div>
 
-    <app-assessment-contacts (triggerChange)="refreshContacts()"></app-assessment-contacts>
 
-    <hr class="w-100 hr-sal my-5" />
+    <div class="mt-4">
+      <h4>{{ t('assessment settings') }}</h4>
 
-    <div class="row">
+      <div *ngIf="this.configSvc.userIsCisaAssessor; else content" class="mb-3 col-6">
+        <label class="form-label">{{t('protected features.cisa assessor workflow')}}</label>
+        <div>
+          <div class="btn-group btn-group-toggle col-10" data-toggle="buttons" style="border: 2px solid transparent; border-radius: 8px;">
+            <label class="btn btn-level form-check-label" [class.active]="assessment.assessorMode"
+              (change)="updateAssessorMode()">
+              <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                [checked]="assessment.assessorMode" />
+              {{t('answer-options.button-labels.yes')}}
+            </label>
+            <label class="btn btn-level form-check-label" [class.active]="!assessment.assessorMode"
+              (change)="updateAssessorMode()">
+              <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
+                [checked]="!assessment.assessorMode" />
+              {{t('answer-options.button-labels.no')}}
+            </label>
+          </div>
+        </div>
+      </div>
+      <ng-template #content class=" mb-3">
+        <p>
+          {{ t('protected features.assessor mode') }}
+        </p>
+      </ng-template>
+
+      <div class="mb-5">
+        <label class="form-label" for="techDomain">{{t('tech domain.label')}}</label>
+        <select class="form-select" id="techDomain" tabindex="0" name="techDomain" (change)="updateDemographics()"
+          [(ngModel)]="demographics.techDomain">
+          <option [ngValue]="null">-- {{t('tech domain.select')}} --</option>
+          <option value="OT">{{t('tech domain.ot')}}</option>
+          <option value="IT">{{t('tech domain.it')}}</option>
+          <option value="OT+IT">{{t('tech domain.ot+it')}}</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="mt-4">
+      <app-assessment-contacts (triggerChange)="refreshContacts()"></app-assessment-contacts>
+    </div>
+    <hr class="w-100 hr-sal my-4" />
+
+    <div *ngIf="showFacilitator()" class="mb-4">
+      <label class="form-label" for="facilitator">{{t('contact.facilitator')}}</label>
+      <select class="form-select" id="facilitator" tabindex="0" name="facilitator" (change)="updateDemographics()"
+        [(ngModel)]="demographics.facilitatorId">
+        <option [ngValue]="null">-- {{t('select facilitator')}} --</option>
+        <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">{{contact.firstName}}
+          {{contact.lastName}}</option>
+      </select>
+      <div class="mt-2">
+        <input type="checkbox" name="self-assessment" id="self-assessment" class="checkbox-custom mt-1"
+          [(ngModel)]="demographics.selfAssessment" [checked]="demographics.selfAssessment"
+          (change)="updateDemographics()">
+        <label for="self-assessment" class="checkbox-custom-label d-inline">{{ t('self assessment') }}</label>
+      </div>
+    </div>
+
+    <div class="row mb-4">
       <div class="col">
         <label class="form-label" for="criticalService">{{t('critical service name')}}</label>
         <textarea [ngClass]="{ 'alert-danger' : !demographics.criticalService }" appAutoSize class="form-control"
@@ -126,7 +187,7 @@
       </div>
     </div>
 
-    <div>
+    <div class="mb-4">
       <label class="form-label" for="critSvcPointOfContact">Critical Service Point of
         Contact</label>
       <select class="form-select" id="critSvcPointOfContact" tabindex="0" name="critSvcPointOfContact"
@@ -174,7 +235,7 @@
     </div>
 
     <!-- #6 -->
-    <div class="mb-5">
+    <div class="mb-4">
       <label for="disruptedSectors" class="form-label">
         Please select in order of criticality, the two critical infrastructure
         sectors which, if they were unavailable

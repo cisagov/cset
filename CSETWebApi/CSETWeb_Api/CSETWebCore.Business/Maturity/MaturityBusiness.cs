@@ -12,6 +12,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Model.Edm;
 using CSETWebCore.Model.Maturity;
+using CSETWebCore.Model.Mvra;
 using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
@@ -19,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using CSETWebCore.Model.Mvra;
 
 
 namespace CSETWebCore.Business.Maturity
@@ -38,7 +38,16 @@ namespace CSETWebCore.Business.Maturity
 
         private AdditionalSupplemental _addlSuppl;
 
+        /// <summary>
+        /// Utilities that support manipulation of Supplemental Guidance
+        /// </summary>
+        private SupplementalGuidanceUtils _suppUtils;
+
+        private QuestionScopeAnalyzer _questionScope = null;
+
         public readonly List<string> ModelsWithTargetLevel = ["ACET", "CMMC", "CMMC2"];
+
+        private List<int> _selectedGroupingIds = [];
 
 
 
@@ -216,7 +225,7 @@ namespace CSETWebCore.Business.Maturity
                         if (!isLevelAchieved)
                         {
                             nextLevel++;
-                            pushLevel(nextLevel, item);
+                            PushLevel(nextLevel, item);
                         }
                         break;
                 }
@@ -238,7 +247,7 @@ namespace CSETWebCore.Business.Maturity
         }
 
         private Dictionary<usp_countsForLevelsByGroupMaturityModelResults, int> levels = new Dictionary<usp_countsForLevelsByGroupMaturityModelResults, int>();
-        private void pushLevel(int nextLevel, usp_countsForLevelsByGroupMaturityModelResults item)
+        private void PushLevel(int nextLevel, usp_countsForLevelsByGroupMaturityModelResults item)
         {
             //if the previous level was achieved then we can go for the next level
             //other wise we cannot
@@ -783,14 +792,33 @@ namespace CSETWebCore.Business.Maturity
 
             var targetModelId = defaultModel.model_id;
 
+            _suppUtils = new SupplementalGuidanceUtils(assessmentId, _context);
+
+
+
+            // Spin up the generic scope analyzer or a maturity model-specific one
+            _questionScope = new QuestionScopeAnalyzer(assessmentId);
+
+            // CPG 2.0
+            if (targetModelId == Constants.Constants.Model_CPG2)
+            {
+                var _techDomain = _context.DETAILS_DEMOGRAPHICS
+                    .Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "TECH-DOMAIN")
+                    .FirstOrDefault()?.StringValue ?? null;
+
+                _questionScope = new QuestionScopeAnalyzer(assessmentId, _context, _techDomain);
+            }
+
+
+            // A list of the assessment's selected grouping IDs
+            _selectedGroupingIds = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Grouping_Id).ToList();
+
 
             // If the model ID was specified by the caller, use that instead of the assessment's model
             if (modelId != null)
             {
                 targetModelId = (int)modelId;
             }
-
-
 
             var targetModel = _context.MATURITY_MODELS.Where(x => x.Maturity_Model_Id == targetModelId).FirstOrDefault();
 
@@ -829,6 +857,8 @@ namespace CSETWebCore.Business.Maturity
                 .Where(q =>
                 targetModelId == q.Maturity_Model_Id);
 
+
+            // some special logic for the CIE model
             if (groupingId != 0 && targetModelId != 17)
             {
                 questionQuery = questionQuery.Where(x => x.Question_Text.StartsWith("A"));
@@ -899,7 +929,7 @@ namespace CSETWebCore.Business.Maturity
 
             // Recursively build the grouping/question hierarchy
             var tempModel = new MaturityGrouping();
-            BuildSubGroupings(tempModel, null, allGroupings, questions, answers.ToList(), lang);
+            BuildSubGroupings(assessmentId, targetModel.Maturity_Model_Id, tempModel, null, allGroupings, questions, answers.ToList(), lang);
 
             //GRAB all the domain remarks and assign them if necessary
             Dictionary<int, MATURITY_DOMAIN_REMARKS> domainRemarks =
@@ -908,7 +938,7 @@ namespace CSETWebCore.Business.Maturity
             foreach (MaturityGrouping g in tempModel.SubGroupings)
             {
                 MATURITY_DOMAIN_REMARKS dm;
-                if (domainRemarks.TryGetValue(g.GroupingID, out dm))
+                if (domainRemarks.TryGetValue(g.GroupingId, out dm))
                 {
                     g.DomainRemark = dm.DomainRemarks;
                 }
@@ -927,7 +957,7 @@ namespace CSETWebCore.Business.Maturity
         /// Recursive method that builds subgroupings for the specified group.
         /// It also attaches any questions pertinent to this group.
         /// </summary>
-        public void BuildSubGroupings(MaturityGrouping g, int? parentID,
+        public void BuildSubGroupings(int assessmentId, int modelId, MaturityGrouping g, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
             List<MATURITY_QUESTIONS> questions,
             List<FullAnswer> answers,
@@ -944,14 +974,23 @@ namespace CSETWebCore.Business.Maturity
             {
                 var newGrouping = new MaturityGrouping()
                 {
-                    GroupingID = sg.Grouping_Id,
+                    GroupingId = sg.Grouping_Id,
                     GroupingType = sg.Type.Grouping_Type_Name,
+                    GroupingLevel = sg.Group_Level ?? 0,
                     Title = sg.Title,
                     Description = sg.Description,
                     Abbreviation = sg.Abbreviation
                 };
 
-                var o = _overlay.GetMaturityGrouping(newGrouping.GroupingID, lang);
+
+                // Set the Selected if the model supports selectable models
+                if (modelId == Constants.Constants.Model_CRE_OD || modelId == Constants.Constants.Model_CRE_MIL)
+                {
+                    newGrouping.Selected = _selectedGroupingIds.Contains(newGrouping.GroupingId);
+                }
+
+
+                var o = _overlay.GetMaturityGrouping(newGrouping.GroupingId, lang);
                 if (o != null)
                 {
                     newGrouping.Title = o.Title;
@@ -963,9 +1002,10 @@ namespace CSETWebCore.Business.Maturity
 
 
                 // are there any questions that belong to this grouping?
-                var myQuestions = questions.Where(x => x.Grouping_Id == newGrouping.GroupingID).ToList();
+                var myQuestions = questions.Where(x => x.Grouping_Id == newGrouping.GroupingId).ToList();
 
                 var parentQuestionIDs = myQuestions.Select(x => x.Parent_Question_Id).Distinct().ToList();
+
 
                 foreach (var myQ in myQuestions)
                 {
@@ -974,7 +1014,7 @@ namespace CSETWebCore.Business.Maturity
 
                     var qa = QuestionAnswerBuilder.BuildQuestionAnswer(myQ, answer);
                     qa.MaturityModelId = sg.Maturity_Model_Id;
-                    qa.IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id);
+                    qa.IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id) || myQ.Parent_Question_Id == null;
 
 
                     // Include CSF mappings
@@ -993,6 +1033,15 @@ namespace CSETWebCore.Business.Maturity
                         });
                     }
 
+
+                    // see if the question should be included in the response
+                    if (_questionScope.OutOfScopeQuestionIds.Contains(qa.QuestionId))
+                    {
+                        continue;
+                    }
+
+
+                    qa.IsAnswerable = myQ.Is_Answerable;
                     qa.Countable = IsQuestionCountable(myQ.Maturity_Model_Id, qa);
 
                     if (answer != null)
@@ -1012,7 +1061,7 @@ namespace CSETWebCore.Business.Maturity
 
 
                 // Recurse down to build subgroupings
-                BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers, lang);
+                BuildSubGroupings(assessmentId, modelId, newGrouping, newGrouping.GroupingId, allGroupings, questions, answers, lang);
             }
         }
 
@@ -1057,20 +1106,20 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         private bool IsQuestionCountable(int modelId, QuestionAnswer qa)
         {
-            // EDM and CRR - parent questions are unanswerable and not countable
-            if (modelId == 3 || modelId == 4)
+            // EDM and CRR and CPG2 - parent questions are unanswerable and not countable
+            if (modelId == Constants.Constants.Model_EDM || modelId == Constants.Constants.Model_CRR || modelId == Constants.Constants.Model_CPG2)
             {
                 return !qa.IsParentQuestion;
             }
 
             // VADR - child questions are freeform and not countable
-            if (modelId == 7)
+            if (modelId == Constants.Constants.Model_TSA_VADR)
             {
                 return qa.ParentQuestionId == null;
             }
 
             // ISE - parent questions are not answerable and not countable
-            if (modelId == 10)
+            if (modelId == Constants.Constants.Model_ISE)
             {
                 return !qa.IsParentQuestion;
             }
@@ -1083,7 +1132,7 @@ namespace CSETWebCore.Business.Maturity
         /// Stores an answer.
         /// </summary>
         /// <param name="answer"></param>
-        public int StoreAnswer(int assessmentId, Answer answer)
+        public Answer StoreAnswer(int assessmentId, Answer answer)
         {
             // Find the Maturity Question
             var question = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefault();
@@ -1127,9 +1176,12 @@ namespace CSETWebCore.Business.Maturity
             _context.ANSWER.Update(dbAnswer);
             _context.SaveChanges();
 
+            answer.AssessmentId = dbAnswer.Assessment_Id;
+            answer.AnswerId = dbAnswer.Answer_Id;
+
             _assessmentUtil.TouchAssessment(assessmentId);
 
-            return dbAnswer.Answer_Id;
+            return answer;
         }
 
 
@@ -1389,7 +1441,7 @@ namespace CSETWebCore.Business.Maturity
                     Description = cisG.Description,
                     Abbreviation = cisG.Abbreviation,
                     GroupingType = cisG.GroupType,
-                    GroupingID = cisG.GroupingId,
+                    GroupingId = cisG.GroupingId,
                     Title = cisG.Title
                 };
 
@@ -1415,6 +1467,7 @@ namespace CSETWebCore.Business.Maturity
             {
                 var newQ = new QuestionAnswer()
                 {
+                    IsAnswerable = q.IsAnswerable,
                     Answer = q.AnswerText,
                     AltAnswerText = q.AltAnswerText,
                     QuestionId = q.QuestionId,

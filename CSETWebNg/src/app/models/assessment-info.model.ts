@@ -28,7 +28,7 @@ export interface AssessmentDetail {
     assessmentName?: string;
     createdDate?: string;
     creatorId?: number;
-    assessmentDate?: string;
+    assessmentDate?: string | null | undefined;
     assessmentEffectiveDate?: string;
     baselineAssessmentId?: number;
     facilityName?: string;
@@ -42,6 +42,7 @@ export interface AssessmentDetail {
     creditUnion?: string;
     assets?: string;
 
+    galleryItemGuid?: string;
     // a few demographics to track
     sectorId?: number;
     industryId?: number;
@@ -53,7 +54,6 @@ export interface AssessmentDetail {
     regionCode?: number;
     charterType?: number;
 
-    isAcetOnly?: boolean;
     workflow?: string;
     origin?: string;
     hiddenScreens?: string[];
@@ -69,6 +69,7 @@ export interface AssessmentDetail {
     typeDescription?: string;
     pciiNumber?: string;
     is_PCII?: boolean;
+    assessorMode?: boolean;
 }
 
 export interface MaturityModel {
@@ -107,8 +108,13 @@ export interface AssessmentContactsResponse {
 
 export interface Demographic {
     assessment_Id?: number;
+
+    // PPD-21 or NIPP
+    sectorDirective?: string;
+
     sectorId?: number;
     industryId?: number;
+
     size?: number;
     assetValue?: number;
     needsPrivacy?: boolean;
@@ -117,7 +123,10 @@ export interface Demographic {
     organizationName?: string;
     agency?: string;
     organizationType?: string;
-    facilitator?: number;
+    facilitatorId?: number;
+
+    // Technology Domain (IT vs OT)
+    techDomain?: string;
 
     // Organiztion POC
     orgPointOfContact?: number;
@@ -155,7 +164,6 @@ export interface AssessmentConfig {
     galleryItemGuid?: string;
     hiddenScreens?: any;
     id?: number;
-    isAcetOnly?: boolean;
     isE_StateLed?: boolean;
     is_PCII?: boolean;
     iseSubmitted?: boolean;
@@ -216,7 +224,7 @@ export interface CriticalServiceInfo {
     assetValue?: any;
     cisaRegion?: number;
     criticalService?: string;
-    facilitator?: null;
+    facilitatorId?: number;
     id?: number;
     industryId?: any;
     isScoped?: boolean;
@@ -226,4 +234,8 @@ export interface CriticalServiceInfo {
     pointOfContact?: number;
     sectorId?: any;
     size?: any;
+}
+export interface Upgrades {
+    name: string;
+    target: string;
 }

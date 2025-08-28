@@ -11,7 +11,7 @@ using System.Linq;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
-
+using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.Helpers
 {
@@ -19,15 +19,16 @@ namespace CSETWebCore.Helpers
     {
 
         private readonly CSETContext _context;
-
+        private readonly string _lang;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="context"></param>
-        public ReferencesBuilder(CSETContext context)
+        public ReferencesBuilder(CSETContext context, ITokenManager tokenManager=null)
         {
             _context = context;
+            _lang = tokenManager !=null ? tokenManager.GetCurrentLanguage() : "en";
         }
 
 
@@ -41,21 +42,83 @@ namespace CSETWebCore.Helpers
             out List<ReferenceDocLink> sourceDocList,
             out List<ReferenceDocLink> additionalDocList)
         {
-            // Source Documents  
-            var q1 = _context.REQUIREMENT_REFERENCES
+            var sourceQuery = _context.REQUIREMENT_REFERENCES
                 .Include(x => x.Gen_File)
-                .Where(s => s.Requirement_Id == requirementId && s.Source)
-                .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Destination_String = s.Destination_String, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
+                .Where(s => s.Requirement_Id == requirementId && s.Source);
 
-            sourceDocList = SortList(q1);
+            //  1. Preferred language
+            var preferredSourceDocs = sourceQuery
+                .Where(s => s.Gen_File.Language == _lang)
+                .Select(s => new GenFileView
+                {
+                    File_Id = s.Gen_File_Id,
+                    Title = s.Gen_File.Title,
+                    File_Name = s.Gen_File.File_Name,
+                    Section_Ref = s.Section_Ref,
+                    Destination_String = s.Destination_String,
+                    Is_Uploaded = s.Gen_File.Is_Uploaded,
+                    Sequence = s.Sequence,
+                    Language = s.Gen_File.Language
+                })
+                .ToList();
 
+            // 2. English fallback
+            var fallbackEnDocs = sourceQuery
+                .Where(s => s.Gen_File.Language == "en")
+                .Select(s => new GenFileView
+                {
+                    File_Id = s.Gen_File_Id,
+                    Title = s.Gen_File.Title,
+                    File_Name = s.Gen_File.File_Name,
+                    Section_Ref = s.Section_Ref,
+                    Destination_String = s.Destination_String,
+                    Is_Uploaded = s.Gen_File.Is_Uploaded,
+                    Sequence = s.Sequence,
+                    Language = s.Gen_File.Language
+                })
+                .ToList();
+
+            // 3. Null language fallback
+            var fallbackNullDocs = sourceQuery
+                .Where(s => s.Gen_File.Language == null)
+                .Select(s => new GenFileView
+                {
+                    File_Id = s.Gen_File_Id,
+                    Title = s.Gen_File.Title,
+                    File_Name = s.Gen_File.File_Name,
+                    Section_Ref = s.Section_Ref,
+                    Destination_String = s.Destination_String,
+                    Is_Uploaded = s.Gen_File.Is_Uploaded,
+                    Sequence = s.Sequence,
+                    Language = s.Gen_File.Language
+                })
+                .ToList();
+
+            // 4. Decide what to return
+            List<GenFileView> finalSourceDocs;
+
+            if (preferredSourceDocs.Any())
+            {
+                finalSourceDocs = preferredSourceDocs;
+            }
+            else if (fallbackEnDocs.Any())
+            {
+                finalSourceDocs = fallbackEnDocs;
+            }
+            else
+            {
+                finalSourceDocs = fallbackNullDocs;
+            }
+            
+            sourceDocList = SortList(finalSourceDocs.AsQueryable());
+          
 
             // Additional Resource Documents
             var q2 = _context.REQUIREMENT_REFERENCES
                 .Include(x => x.Gen_File)
                 .Where(s => s.Requirement_Id == requirementId && !s.Source)
                 .OrderBy(s => s.Sequence)
-                .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Destination_String = s.Destination_String, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
+                .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Destination_String = s.Destination_String, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence,Language = s.Gen_File.Language });
 
             additionalDocList = SortList(q2);
         }
@@ -115,6 +178,7 @@ namespace CSETWebCore.Helpers
                     Title = doc.Title,
                     SectionRef = doc.Section_Ref.Trim(),
                     DestinationString = doc.Destination_String,
+                    Language = doc.Language,
                 };
 
 

@@ -26,13 +26,13 @@ namespace CSETWebCore.Interfaces.Maturity
         object GetEdmPercentScores(int assessmentId);
         MaturityResponse GetMaturityQuestions(int assessmentId, bool fill, int groupingId, string lang);
 
-        void BuildSubGroupings(MaturityGrouping g, int? parentID,
+        void BuildSubGroupings(int assessmentId, int modelId, MaturityGrouping g, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
             List<MATURITY_QUESTIONS> questions,
             List<FullAnswer> answers,
             string lang);
 
-        int StoreAnswer(int assessmentId, Answer answer);
+        Answer StoreAnswer(int assessmentId, Answer answer);
         object GetEdmScores(int assessmentId, string section);
         object GetReferenceText(string modelName);
         List<GlossaryEntry> GetGlossaryEntries(int modelId);

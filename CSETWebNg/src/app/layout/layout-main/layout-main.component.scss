@@ -32,6 +32,7 @@ SOFTWARE.
 @use 'swiper/scss';
 @use 'swiper/scss/navigation';
 @use 'swiper/scss/pagination';
+@use '@angular/material' as mat;
 
 
 $white: #ffffff;
@@ -812,6 +813,13 @@ table.td-align-top td {
   margin: 2px;
 }
 
+.btn-sync {
+  color: $gray-100 !important;
+  background-color: $primary-600 !important;
+  border-color: $primary-600 !important;
+  height: fit-content;
+}
+
 /* Answer option button styles */
 .btn-yes {
   background-color: $white;
@@ -1133,6 +1141,10 @@ table.td-align-top td {
   color: $white;
 }
 
+.btn-level.primary.active {
+  background-color: $primary-800;
+  color: $white;
+}
 
 .btn-geo {
   background-color: $gray-150;
@@ -1277,7 +1289,10 @@ ul.mat-tree-node {
 }
 
 .side-nav-container .current-node>button {
-  border: 1px solid #ffffff;
+  border: none;
+  border-radius: .3rem !important;
+  background-color: #ffffff;
+  color: $primary-600;
 }
 
 .side-nav-container .btn-home {
@@ -1352,9 +1367,19 @@ ul.mat-tree-node {
   border-top: 4px solid $primary-350;
 }
 
+.spinner-container.white>.spinner,
+.spinner-container.white>div {
+  border-top: 4px solid transparent;
+}
+
 div.spinner-size-50 {
   max-width: 50px;
   max-height: 50px;
+}
+
+div.spinner-size-20 {
+  max-width: 20px;
+  max-height: 20px;
 }
 
 /* Safari */
@@ -1445,7 +1470,8 @@ ul.mat-tree-node mat-tree-node {
 .parameter-orig-value {
   font-size: 1.1em;
   color: $primary-color;
-  margin: 10px 0;
+  font-style: italic;
+  margin: 10px 10px;
 }
 
 // .parameter-editor-default-message {
@@ -1480,6 +1506,11 @@ th.data-table {
 .chart {
   padding-bottom: 45px;
   text-align: center;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .report-links button {
@@ -1719,17 +1750,17 @@ ul.nav-tabs li.active button .tab-icon {
 }
 
 .menu-panel [mat-menu-item] .mat-menu-submenu-icon {
-  color: $gray-150;
+  color: $gray-150 !important;
 }
 
 .menu-panel [mat-menu-item]:focus .mat-mdc-menu-submenu-icon,
 .menu-panel [mat-menu-item]:hover .mat-mdc-menu-submenu-icon {
-  color: $primary-color;
+  color: $primary-color !important;
 }
 
 .mat-mdc-menu-item:not(:hover):not([disabled]) .mdc-list-item__primary-text,
 .mat-mdc-menu-submenu-icon {
-  color: $gray-150;
+  color: $gray-150 !important;
 }
 
 .mat-mdc-menu-item[disabled] .mdc-list-item__primary-text {
@@ -2003,7 +2034,7 @@ input[type="checkbox"]+label {
   transform: scaleY(-1);
   filter: FlipH;
   -ms-filter: "FlipH";
-  margin-top: -10px;
+  margin-top: -5px;
 }
 
 .open-desc {
@@ -2140,6 +2171,8 @@ input[type="checkbox"]+label {
   -moz-transition: transform 0.3s;
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
+  display: flex;
+  align-items: center;
 }
 
 .q-expand.expand-flip {
@@ -2148,7 +2181,7 @@ input[type="checkbox"]+label {
   transform: scaleY(-1);
   filter: FlipH;
   -ms-filter: "FlipH";
-  margin-top: -10px;
+  margin-top: -5px;
 }
 
 .header-question {
@@ -2281,8 +2314,9 @@ tooltip.glossary-definition.tooltip-left::after {
   display: block;
   width: 100%;
   border-top: 1px solid $primary-550;
+  border-inline-start: 1px solid $gray-200;
   padding: 10px;
-  /*margin-bottom: 1em;*/
+  padding-left: 15px;
 }
 
 .extras-button {
@@ -2357,7 +2391,7 @@ ul.related-questions li {
 
 .group-heading {
   font-size: 25px;
-  margin: 0.4em 0;
+  margin: 1.7em 0 0.4em 0;
   color: $primary-color;
 }
 
@@ -2591,7 +2625,7 @@ mat-sidenav.mat-sidenav {
 ///////////////////////////////////////////////////////////////////////
 .sub-me {
   text-decoration: underline;
-  color: $link-color-dark;
+  color: $link-color-dark !important;
   cursor: pointer;
 }
 
@@ -2614,17 +2648,14 @@ mat-sidenav.mat-sidenav {
 
 // About
 .about article {
-  //width: 33.33%;
-  margin-right: $spacer * 3;
+  flex: 1 1 50%;
+  box-sizing: border-box;
+  padding: .8rem;
 }
 
-.about article:nth-child(3) {
-  margin-right: 0rem;
-}
-
-@media only screen and (max-width: 360px) {
+@media only screen and (max-width: 800px) {
   .about article {
-    margin-right: 0rem;
+    flex: 1 1 100%;
   }
 }
 
@@ -2643,10 +2674,6 @@ mat-sidenav.mat-sidenav {
 .about .nccic {
   font-family: "ITC Franklin Gothic", Arial, Times, serif;
   font-size: 30px;
-}
-
-.about article {
-  max-width: 300px;
 }
 
 // Component Override
@@ -2890,12 +2917,14 @@ table.assessment-documents th {
   font-weight: bold;
   font-size: 1.1rem;
   color: $primary-900;
+  margin-bottom: .3rem;
 }
 
 .sub-header-2 {
   font-weight: bold;
   font-size: 1rem;
   color: $primary-550;
+  margin-bottom: .2rem;
 }
 
 ol.alpha-bracket {
@@ -3813,10 +3842,6 @@ div.tutorial h6 {
   border: 1px solid $primary-450;
 }
 
-.example-tree-invisible {
-  // display: none;
-}
-
 .example-tree ul,
 .example-tree li {
   margin-top: 0;
@@ -3954,10 +3979,6 @@ h6.dropdown-header {
       transform: none;
     }
 
-    &:first-child:hover {}
-
-    &:last-child:hover {}
-
     &:hover .gallery-card-body {
 
       transform: none;
@@ -3984,8 +4005,6 @@ h6.dropdown-header {
       margin-top: -15px;
       transform: scale(1.1);
     }
-
-    &:only-child {}
 
     &:first-child:hover {
       left: 20px;
@@ -4076,4 +4095,14 @@ h6.dropdown-header {
   border-radius: .8rem;
   padding: 0 1rem 1rem 1rem;
   margin-top: 1rem;
+}
+
+.notify-snackbar {
+  background-color: default !important;
+}
+
+.mat-mdc-snack-bar-container.notify-snackbar {
+  --mat-snack-bar-button-color: #000 !important;
+  --mat-snackbar-container-color: #ffc107 !important;
+  --mat-snackbar-supporting-text-color: #000 !important;
 }

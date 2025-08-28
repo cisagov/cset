@@ -380,6 +380,7 @@ namespace CSETWebCore.Api.Controllers
                     {
                         Question_Title = q.DisplayNumber,
                         Question_Text = q.QuestionText,
+                        IsAnswerable = q.IsAnswerable,
                         Answer = new ANSWER() { Answer_Text = q.Answer },
                         ReferenceText = refText,
                         Parent_Question_Id = q.ParentQuestionId
@@ -400,10 +401,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reports/poam/excelexport")]
-        public IActionResult GetExcelExport(string token)
+        public IActionResult GetExcelExport()
         {
-
-            int assessmentId = _token.AssessmentForUser(token);
+            int assessmentId = _token.AssessmentForUser();
             string lang = _token.GetCurrentLanguage();
 
             // Create a memory stream to hold the Excel file
@@ -571,12 +571,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/reports/observations/excel")]
-        public IActionResult ExportObservationsCsv(string token)
+        public IActionResult ExportObservationsCsv()
         {
-            _token.SetToken(token);
             _report.SetToken(_token);
 
-            int assessmentId = _token.AssessmentForUser(token);
+            int assessmentId = _token.AssessmentForUser();
             string lang = _token.GetCurrentLanguage();
 
             var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
@@ -854,129 +853,12 @@ namespace CSETWebCore.Api.Controllers
             var cisServiceDemographicBusiness = new CisDemographicBusiness(_context, _assessmentUtil);
 
             Demographics demographics = demoBusiness.GetDemographics(assessmentId);
-            DemographicExt iodDemograhics = iodDemoBusiness.GetDemographics(assessmentId);
+            DemographicExt iodDemograhics = iodDemoBusiness.GetExtDemographics(assessmentId);
             CisServiceDemographics cisServiceDemographics = cisServiceDemographicBusiness.GetServiceDemographics(assessmentId);
             CisServiceComposition cisServiceComposition = cisServiceDemographicBusiness.GetServiceComposition(assessmentId);
 
             CisaAssessorWorkflowFieldValidator validator = new CisaAssessorWorkflowFieldValidator(demographics, iodDemograhics, cisServiceDemographics, cisServiceComposition);
             return Ok(validator.ValidateFields());
-        }
-
-
-
-        [HttpGet]
-        [Route("api/reports/getCieAllQuestions")]
-        public IActionResult GetCieAllQuestions()
-        {
-            var assessmentId = _token.AssessmentForUser();
-            _report.SetReportsAssessmentId(assessmentId);
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-            MaturityBasicReportData data = new MaturityBasicReportData();
-
-            data.MatAnsweredQuestions = _report.GetCieQuestionList(0);
-            data.Information = _report.GetInformation();
-            return Ok(data);
-        }
-
-        [HttpGet]
-        [Route("api/reports/getCiePrincipleQuestions")]
-        public IActionResult getCiePrincipleQuestions()
-        {
-            var assessmentId = _token.AssessmentForUser();
-            _report.SetReportsAssessmentId(assessmentId);
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-            MaturityBasicReportData data = new MaturityBasicReportData();
-
-            data.MatAnsweredQuestions = _report.GetCieQuestionList(5);
-            data.Information = _report.GetInformation();
-            return Ok(data);
-        }
-
-        [HttpGet]
-        [Route("api/reports/getCiePhaseQuestions")]
-        public IActionResult getCiePhaseQuestions()
-        {
-            var assessmentId = _token.AssessmentForUser();
-            _report.SetReportsAssessmentId(assessmentId);
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-            MaturityBasicReportData data = new MaturityBasicReportData();
-
-            // the '4' signals to get levels 1 - 4
-            data.MatAnsweredQuestions = _report.GetCieQuestionList(4);
-            data.Information = _report.GetInformation();
-            return Ok(data);
-        }
-
-
-        [HttpGet]
-        [Route("api/reports/getCieNaQuestions")]
-        public IActionResult getCieNaQuestions()
-        {
-            var assessmentId = _token.AssessmentForUser();
-            _report.SetReportsAssessmentId(assessmentId);
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-            MaturityBasicReportData data = new MaturityBasicReportData();
-
-            // the '4' signals to get levels 1 - 4
-            data.MatAnsweredQuestions = _report.GetCieQuestionList(0, true);
-            data.Information = _report.GetInformation();
-            return Ok(data);
-        }
-
-
-        /// <summary>
-        /// Returns a collection of all documents attached to any question in the Assessment.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/cieAssessmentDocuments")]
-        public IActionResult CieAssessmentDocuments()
-        {
-            int assessmentId = _token.AssessmentForUser();
-            _report.SetReportsAssessmentId(assessmentId);
-            _documentBusiness.SetUserAssessmentId(assessmentId);
-
-            var data = new DocumentsReport();
-            data.information = _report.GetInformation();
-            //data.documents = _report.GetCieDocumentsForAssessment();
-
-            return Ok(data);
-        }
-
-
-        [HttpGet]
-        [Route("api/reports/getCieAllQuestionsWithDocuments")]
-        public IActionResult GetCieAllQuestionsWithDocuments()
-        {
-            var assessmentId = _token.AssessmentForUser();
-            _report.SetReportsAssessmentId(assessmentId);
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-            MaturityBasicReportData data = new MaturityBasicReportData();
-
-            data.MatAnsweredQuestions = _report.GetCieDocumentsForAssessment();
-            data.Information = _report.GetInformation();
-            return Ok(data);
-        }
-
-
-        [HttpGet]
-        [Route("api/reports/getCieAllMfrQuestionsWithDocuments")]
-        public IActionResult GetCieAllMfrQuestionsWithDocuments()
-        {
-            var assessmentId = _token.AssessmentForUser();
-            _report.SetReportsAssessmentId(assessmentId);
-            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
-
-            MaturityBasicReportData data = new MaturityBasicReportData();
-
-            data.MatAnsweredQuestions = _report.GetCieMfrQuestionList();
-            data.Information = _report.GetInformation();
-            return Ok(data);
         }
 
 
@@ -991,15 +873,6 @@ namespace CSETWebCore.Api.Controllers
             data.information = _report.GetInformation();
 
             data.StandardsQuestions = await _report.GetStandardQuestionAnswers(assessmentId);
-
-            // only need answered questions for each standard (yes this should be a stored proc, but I don't have time)
-            //foreach(var standard in data.StandardsQuestions)
-            //{
-            //    standard.Questions = standard.Questions.Where(x => x.Answer != "U").ToList();
-            //}
-
-            // only need answered questions (yes this should be a stored proc, but I don't have time)
-            //data.ComponentQuestions = data.ComponentQuestions.Where(x => x.Answer != "U").ToList();
 
             return Ok(data);
         }

@@ -1233,6 +1233,12 @@ namespace CSETWebCore.Business.ModuleBuilder
             List<NEW_REQUIREMENT> reqs = new List<NEW_REQUIREMENT>();
 
             var set = _context.SETS.Where(x => x.Set_Name == setName).FirstOrDefault();
+
+            if (set == null)
+            {
+                return response;
+            }
+
             response.SetFullName = set.Full_Name;
             response.SetShortName = set.Short_Name;
             response.SetDescription = set.Standard_ToolTip;
@@ -1513,6 +1519,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Summary = reff.Gen_File.Summary,
                     Description = reff.Gen_File.Description,
                     Comments = reff.Gen_File.Comments,
+                    Language=reff.Gen_File.Language,
                 });
             }
 
@@ -1537,6 +1544,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                     Summary = reff.Gen_File.Summary,
                     Description = reff.Gen_File.Description,
                     Comments = reff.Gen_File.Comments,
+                    Language=reff.Gen_File.Language,
+                    
                 });
             }
 

@@ -22,8 +22,8 @@
 //
 ////////////////////////////////
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Injectable, Inject, DOCUMENT } from '@angular/core';
+
 import { concat, firstValueFrom } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { merge } from 'lodash';
@@ -64,7 +64,7 @@ export class ConfigService {
   dhsEmail: string;
 
   onlineUrl: string;
-  analyticsUrl: string = 'http://134.20.8.30:5778/';
+  analyticsUrl: string | null;
 
   csetGithubApiUrl: string;
   helpContactEmail: string;
@@ -99,7 +99,7 @@ export class ConfigService {
    * will contain an empty string or "none".
    */
   mobileEnvironment = '';
-  cisaAssessorWorkflow: boolean = false;
+  userIsCisaAssessor: boolean = false;
 
   /**
    * Constructor.
@@ -188,13 +188,12 @@ export class ConfigService {
       this.serverUrl = localStorageApiUrl + '/';
       this.docUrl = localStorageApiUrl + '/' + this.config.api.documentsIdentifier + '/';
     } else {
-      this.apiUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.apiIdentifier + '/';
-      this.serverUrl = apiProtocol + this.config.api.host + apiPort + '/';
-      this.docUrl = apiProtocol + this.config.api.host + apiPort + '/' + this.config.api.documentsIdentifier + '/';
+      this.apiUrl = this.buildUrl(this.config.api) + '/' + this.config.api.apiIdentifier + '/';
+      this.serverUrl = this.buildUrl(this.config.api) + '/';
+      this.docUrl = this.buildUrl(this.config.api) + '/' + this.config.api.documentsIdentifier + '/';
     }
 
     this.appUrl = appProtocol + this.config.app.host + appPort;
-    this.analyticsUrl = 'http://134.20.8.30:5778/';
     this.helpContactEmail = this.config.helpContactEmail;
     this.helpContactPhone = this.config.helpContactPhone;
     this.csetGithubApiUrl = this.config.csetGithubApiUrl;
@@ -204,6 +203,14 @@ export class ConfigService {
         this.helpContactEmail = resp;
       }
     });
+
+
+    this.analyticsUrl = this.buildUrl(this.config.analytics);
+    if (!!this.analyticsUrl) {
+      this.analyticsUrl = this.analyticsUrl + '/';
+    } 
+
+
     // configure the reference document URL if the "library" property is defined
     // or if passed in as query param and stored as local storage variable. Local storage should
     // take precedence over the config file, since Electron uses it to dynamically set the port.
@@ -229,6 +236,26 @@ export class ConfigService {
     this.initialized = true;
   }
 
+  /** 
+   * Combines the elements provided to create a URL string
+   */
+  buildUrl(configGroup: any) {
+    if (!configGroup) {
+      return null;
+    }
+
+    let url = `${configGroup.protocol}://${configGroup.host}`;
+
+    if (!!configGroup.port) {
+      url = `${url}:${configGroup.port}`;
+    }
+
+    return url;
+  }
+
+  /**
+   * 
+   */
   checkOnlineStatusFromConfig() {
     this.checkLocalDocStatus().subscribe(
       (resp: boolean) => {
@@ -275,15 +302,6 @@ export class ConfigService {
    * Determines if the Import button should display or not
    */
   showImportButton() {
-    // hide the import button if any Cyber Florida conditions exist
-    if (
-      (this.config.isCyberFlorida ?? false) ||
-      (this.config.galleryLayout ?? '') == 'Florida' ||
-      (this.config.installationMode ?? '') == 'CF'
-    ) {
-      return false;
-    }
-
     return true;
   }
 
@@ -304,6 +322,15 @@ export class ConfigService {
 
   /**
    * Returns a boolean indicating if the app is configured to show
+   * assessment upgrade conversion. 
+   */
+  showAssessmentUpgrade() {
+    return this.config.debug.showAssessmentUpgrade;
+  }
+
+
+  /**
+   * Returns a boolean indicating if the app is configured to show
    * the API build/link datetime in the CSET help about for debugging purposes.
    * @returns
    */
@@ -319,7 +346,7 @@ export class ConfigService {
   }
 
   setCisaAssessorWorkflow(cisaAssessorWorkflowEnabled: boolean) {
-    this.cisaAssessorWorkflow = cisaAssessorWorkflowEnabled;
+    this.userIsCisaAssessor = cisaAssessorWorkflowEnabled;
     return this.http.post(this.apiUrl + 'EnableProtectedFeature/setCisaAssessorWorkflow', cisaAssessorWorkflowEnabled);
   }
 
@@ -349,58 +376,6 @@ export class ConfigService {
     title.innerText = this.config.behaviors.defaultTitle;
 
     switch (installationMode) {
-      case 'ACET':
-        {
-          var x = this.document.getElementsByClassName('root');
-          if (x.length > 0) {
-            x[0].classList.add('acet-background');
-          }
-
-          var x = document.getElementsByClassName('ncua-seal');
-          if (x.length > 0) {
-            x[0].classList.remove('d-none');
-          }
-
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_acet.ico?app=acet1';
-        }
-        break;
-      case 'TSA':
-        {
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_tsa.ico?app=tsa1';
-        }
-        break;
-      case 'CIE':
-        {
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_cie.ico?app=cie1';
-        }
-        break;
-      case 'CF':
-        {
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_cf.ico?app=cf1';
-        }
-        break;
-      case 'RRA':
-        {
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_rra.ico?app=rra1';
-        }
-        break;
-      case 'RENEW':
-        {
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_renew.ico?app=renew1';
-        }
-        break;
       default: {
         // change favicon and title
         const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");

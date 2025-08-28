@@ -10,6 +10,9 @@ namespace CSETWebCore.Model.Question
 {
     public class Answer
     {
+        public int AssessmentId { get; set; }
+
+        public int? AnswerId { get; set; }
         public int QuestionId { get; set; }
 
         /// <summary>

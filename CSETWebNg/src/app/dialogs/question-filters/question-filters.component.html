@@ -1,24 +1,24 @@
-<!---------------------- 
+<!----------------------
 
-   Copyright 2025 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy 
-  of this software and associated documentation files (the "Software"), to deal 
-  in the Software without restriction, including without limitation the rights 
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-  copies of the Software, and to permit persons to whom the Software is 
-  furnished to do so, subject to the following conditions: 
- 
-  The above copyright notice and this permission notice shall be included in all 
-  copies or substantial portions of the Software. 
- 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-  SOFTWARE. 
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 -------------------------->
 <div *transloco="let t; read: 'filter-menu'" class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
@@ -58,39 +58,52 @@
 
         </label>
       </div>
-      <div *ngIf="!isInstallation('CIE')">
+      <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('U')" id="cbShowU" name="cbShowU"
           (click)="updateFilters($event, 'U')">
         <label for="cbShowU" class="checkbox-custom-label d-block">
           {{ t(skin + '.show unanswered') }}
         </label>
       </div>
-      <div *ngIf="!isInstallation('CIE')">
+      <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('C')" id="cbShowComments"
           name="cbShowComments" (click)="updateFilters($event, 'C')">
         <label for="cbShowComments" class="checkbox-custom-label d-block">
           {{ t(skin + '.show with comments') }}
         </label>
       </div>
-      <div *ngIf="!isInstallation('ACET') && !isInstallation('CIE')">
+      <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('FB')" id="cbShowFeedback"
           name="cbShowFeedback" (click)="updateFilters($event, 'FB')">
         <label for="cbShowFeedback" class="checkbox-custom-label d-block">
           {{ t(skin + '.show with feedback') }}
         </label>
       </div>
-      <div *ngIf="!isInstallation('CIE')">
+      <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('M')" id="cbShowMarked"
           name="cbShowMarked" (click)="updateFilters($event, 'M')">
         <label for="cbShowMarked" class="checkbox-custom-label d-block">
           {{ t(skin + '.show marked for review') }}
         </label>
       </div>
-      <div *ngIf="!isInstallation('CIE')">
+      <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('O')" id="cbShowObservations"
           name="cbShowObservations" (click)="updateFilters($event, 'O')">
         <label for="cbShowObservations" class="checkbox-custom-label d-block">
           {{ t(skin + '.show with observations') }}
+        </label>
+      </div>
+      <hr *ngIf="maturityLevels.length" class="mt-2 mb-2" />
+      <div *ngFor="let lvl of maturityLevels">
+        <input
+          (click)="updateFilters($event, lvl)"
+          [checked]="filterSvc.filterOn(lvl)"
+          [id]="'cbLevel' + lvl"
+          class="checkbox-custom"
+          type="checkbox" />
+        <label [for]="'cbLevel' + lvl" class="checkbox-custom-label d-block">
+<!--          Level {{ lvl }}-->
+          {{getMaturityLevelLabel(lvl)}}
         </label>
       </div>
       <hr class="mt-2 mb-2" *ngIf="showFilterAboveTargetLevel">

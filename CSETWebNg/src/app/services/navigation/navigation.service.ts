@@ -29,8 +29,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MaturityService } from '../maturity.service';
 import { PageVisibilityService } from '../navigation/page-visibility.service';
 import { NavTreeService } from './nav-tree.service';
-import { CieService } from '../cie.service';
 import { QuestionsService } from '../questions.service';
+import { ConstantsService } from '../constants.service';
 
 
 export interface NavTreeNode {
@@ -75,7 +75,6 @@ export class NavigationService implements OnDestroy, OnInit {
   activeResultsView: string;
 
   frameworkSelected = false;
-  acetSelected = false;
   diagramSelected = true;
 
   cisSubnodes = null;
@@ -83,7 +82,7 @@ export class NavigationService implements OnDestroy, OnInit {
   /**
    * Defines the grouping or question to scroll to when "resuming"
    */
-  resumeQuestionsTarget: string = null;
+  resumeQuestionsTarget: string | null = null;
 
 
 
@@ -98,31 +97,25 @@ export class NavigationService implements OnDestroy, OnInit {
     private maturitySvc: MaturityService,
     private pageVisibliltySvc: PageVisibilityService,
     private navTreeSvc: NavTreeService,
-    private questionsSvc: QuestionsService
+    private questionsSvc: QuestionsService,
+    private c: ConstantsService
   ) {
     this.setWorkflow('omni');
     this.assessSvc.assessmentStateChanged$.subscribe((reloadState) => {
       switch (reloadState) {
-        case 123:
-          // remembers state of ToC dropdown for CIE
-          if (this.assessSvc.usesMaturityModel('CIE')) {
-            this.navTreeSvc.applyCieToCStates();
-          }
+        case this.c.NAV_APPLY_CIE_TO_CSTATES:
           break;
-        case 124:
+        case this.c.NAV_CIE_REFRESH_ENABLE_NEXT:
           this.buildTree();
           this.setNextEnabled(true);
           //this.navDirect('dashboard');
           break;
-        case 125:
-          if (this.assessSvc.usesMaturityModel('CIE')) {
-            this.navTreeSvc.applyCieToCStates();
-          }
+        case this.c.NAV_CIE_REFRESH_NAV_PREPARE:
           this.buildTree();
           this.navDirect('phase-prepare');
 
           break;
-        case 126:
+        case this.c.NAV_REFRESH_TREE_ONLY:
           // refresh tree only
           this.buildTree();
           break;
@@ -131,12 +124,7 @@ export class NavigationService implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    // remembers state of ToC dropdown for CIE
-    if (this.assessSvc.usesMaturityModel('CIE')) {
-      this.navTreeSvc.applyCieToCStates();
-      this.buildTree();
 
-    }
   }
 
   ngOnDestroy() {
@@ -159,7 +147,6 @@ export class NavigationService implements OnDestroy, OnInit {
   }
 
   setACETSelected(acet: boolean) {
-    this.acetSelected = acet;
     this.navTreeSvc.buildTree(this.workflow, this.getMagic());
   }
 
@@ -213,23 +200,12 @@ export class NavigationService implements OnDestroy, OnInit {
    */
   beginAssessment(assessmentId: number) {
     this.assessSvc.loadAssessment(assessmentId).then(() => {
-      if (this.configSvc.installationMode == "CF") {
-        this.assessSvc.initCyberFlorida(assessmentId);
-      }
-      else {
-        if (this.assessSvc.usesMaturityModel('CIE')) {
-          this.navTreeSvc.applyCieToCStates();
-        }
-        this.navDirect('phase-prepare');
-      }
+      this.navDirect('phase-prepare');
     });
   }
 
   beginNewAssessmentGallery(item: any) {
     this.assessSvc.newAssessmentGallery(item).then(() => {
-      if (this.assessSvc.usesMaturityModel('CIE')) {
-        this.navTreeSvc.applyCieToCStates();
-      }
       this.navDirect('phase-prepare');
     });
   }
@@ -258,7 +234,7 @@ export class NavigationService implements OnDestroy, OnInit {
       return;
     }
 
-    if (originPage.children.length == 0 && originPage.nextElementSibling == null && originPage.parentElement.tagName == 'nav') {
+    if (originPage.children.length == 0 && originPage.nextElementSibling == null && originPage.parentElement?.tagName == 'nav') {
       // we are at the last page, nothing to do
       return;
     }
@@ -507,21 +483,20 @@ export class NavigationService implements OnDestroy, OnInit {
       this.resumeQuestionsTarget = x;
 
 
+      // requirement?  qqXXXXXX
+      var targetReqId = x.split(',').find(x => x.startsWith('R:'))?.replace('R:', '');
+      if (targetReqId != null) {
+        // TODO:  do the subcat expansion and navigation to the requirement
+      }
+
+
+
       // is there a specific nav node for the grouping? (nested)
       var g = x.split(',').find(x => x.startsWith('MG:'))?.replace('MG:', '');
       let e = this.workflow.getElementById('maturity-questions-nested-' + g);
       if (!!e) {
         this.navDirect(e.id);
         return;
-      }
-
-      // is there a specific nav node for the grouping? (CIE nested)
-      // get the parent grouping if it exists
-      var pg = x.split(',').find(x => x.startsWith('PG:'))?.replace('PG:', '');
-      if (pg != null) {
-        e = this.workflow.getElementById('maturity-questions-cie-' + pg);
-      } else {
-        e = this.workflow.getElementById('maturity-questions-cie-' + g);
       }
 
       if (!!e) {
