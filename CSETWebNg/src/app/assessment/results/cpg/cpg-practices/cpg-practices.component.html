@@ -20,24 +20,33 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex flex-column flex-11a" *transloco="let t">
-    <h3 class="d-flex flex-column flex-00a">{{t('reports.core.cpg.report.security practice checklist')}}</h3>
-    <p>
-        {{t('reports.core.cpg.report.p.b')}}
-    </p>
+<div>
+    <div class="white-panel d-flex flex-column flex-11a" *transloco="let t">
+        <i id="top-section"></i>
+        <h3 class="d-flex flex-column flex-00a">{{t('reports.core.cpg.report.security practice checklist')}}</h3>
+        <p>
+            {{t('reports.core.cpg.report.p.b')}}
+        </p>
 
-    <!-- the table for the CPG answers -->
-    <app-cpg-practice-table [modelId]="modelId"></app-cpg-practice-table>
+        <div *ngIf="isSsgActive" class="my-2">
+            <button class="btn btn-link" (click)="scrollTo('ssg-section')">Jump to SSG</button>
+        </div>
 
-    <!-- a table for SSG answers, if applicable -->
-    <ng-container *ngIf="isSsgApplicable">
-        <hr class="page-line">
-        <h3>{{t('reports.core.cpg.report.ssg.ssg security practice checklist')}}</h3>
-        <p class="mb-0"> {{t('reports.core.cpg.report.ssg.1')}}</p>
+        <!-- the table for the CPG answers -->
+        <app-cpg-practice-table [modelId]="modelId"></app-cpg-practice-table>
 
-        <app-cpg-practice-table [ssgModelId]="ssgBonusModel"></app-cpg-practice-table>
-    </ng-container>
+        <!-- a table for SSG answers, if applicable -->
+        <div *ngIf="isSsgActive" id="ssg-section">
+            <hr class="page-line">
+            <h3>{{t('reports.core.cpg.report.ssg.ssg security practice checklist')}}</h3>
+            <p> {{t('reports.core.cpg.report.ssg.1')}}</p>
 
+            <div class="my-2">
+                <button class="btn btn-link" (click)="scrollTo('top-section')">Jump to Top</button>
+            </div>
+
+            <app-cpg-practice-table [ssgModelId]="ssgBonusModel"></app-cpg-practice-table>
+        </div>
+    </div>
     <app-nav-back-next [page]="'cpg-practices-page'"></app-nav-back-next>
-    
 </div>

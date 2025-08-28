@@ -21,3 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 
 */
+
+// help the chart out by making it push content below it down
+.ngx-charts-outer {
+  height: auto !important;
+}

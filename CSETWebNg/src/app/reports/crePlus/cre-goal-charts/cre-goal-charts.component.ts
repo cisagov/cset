@@ -32,6 +32,8 @@ import { CreService } from '../../../services/cre.service';
 })
 export class creGoalChartsComponent implements OnChanges {
 
+  @Input() modelId: number;
+  @Input() modelDisplayName: string;
   @Input() domainDistrib: any;
 
   stackedModel: any[];

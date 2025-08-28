@@ -271,9 +271,9 @@ import { MaturityQuestionsComponent } from './assessment/questions/maturity-ques
 import { AskQuestionsComponent } from './assessment/questions/ask-questions/ask-questions.component';
 import { CreQuestionSelectorComponent } from './assessment/questions/maturity-questions/cre-question-selector/cre-question-selector.component';
 import { creGoalChartsComponent } from './reports/crePlus/cre-goal-charts/cre-goal-charts.component';
-import { CreModelChartsComponent } from './reports/crePlus/cre-model-charts/cre-model-charts.component';
-import { CreMilCharts2Component } from './reports/crePlus/cre-mil-charts-2/cre-mil-charts-2.component';
+import { CreDetailReportComponent } from './reports/crePlus/cre-detail-report/cre-detail-report.component';
 import { CreHeatmapsComponent } from './reports/crePlus/cre-heatmaps/cre-heatmaps.component';
+import { CreGroupedStackedHorizontalChartComponent } from './reports/crePlus/cre-grouped-stacked-horizontal-chart/cre-grouped-stacked-horizontal-chart.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
 import { SitesummaryCMMCComponent } from './reports/cmmc/sitesummary-cmmc/sitesummary-cmmc.component';
@@ -459,9 +459,14 @@ import { CrrNistCsfCatPerformanceComponent } from './reports/crr/crr-report/crr-
 import { CmuNistCsfCatPerformanceComponent } from './reports/cmu/cmu-nist-csf-cat-performance/cmu-nist-csf-cat-performance.component';
 import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-side-toc.component';
 import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-main-toc.component';
+import { CreGeneralReportComponent } from './reports/crePlus/cre-general-report/cre-general-report.component';
+import { CreBarPieStackedComponent } from './reports/crePlus/cre-bar-pie-stacked/cre-bar-pie-stacked.component';
+import { CisaVadrInfoComponent } from './assessment/prepare/maturity/cisa-vadr-info/cisa-vadr-info.component';
+import { CreMilYesNoComponent } from './reports/crePlus/cre-mil-yes-no/cre-mil-yes-no.component';
+import { CreMilPctImplementedComponent } from './reports/crePlus/cre-mil-pct-implemented/cre-mil-pct-implemented.component';
+import { CreMilExplanationsComponent } from './reports/crePlus/cre-mil-explanations/cre-mil-explanations.component';
 import { CreFinalReportComponent } from './reports/crePlus/cre-final-report/cre-final-report.component';
 import { CreFinalReportGridComponent } from './reports/crePlus/cre-final-report-grid/cre-final-report-grid.component';
-import { CreAssessmentOverview } from './reports/crePlus/cre-assessment-overview/cre-assessment-overview.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
 import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
 import { Cmmc2ScorecardReportComponent } from './reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
@@ -521,6 +526,7 @@ import { C2m2ObjectiveTableComponent } from './reports/c2m2/c2m2-objective-table
 import { CpgDomainSummaryTableComponent } from './assessment/results/cpg/cpg-domain-summary-table/cpg-domain-summary-table.component';
 import { C2m2DomainMilBarChartComponent } from './reports/c2m2/c2m2-report/c2m2-summary-results/c2m2-domain-mil-bar-chart/c2m2-domain-mil-bar-chart.component';
 import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficiency.component';
+import { CpgDeficiencyBlockComponent } from './reports/cpg/cpg-deficiency/cpg-deficiency-block/cpg-deficiency-block.component';
 import { PdfReportsComponent } from './reports/pdf-reports/pdf-reports.component';
 import { InfoBlockComponent } from './reports/info-block/info-block.component';
 import { SiteInformationComponent } from './reports/site-information/site-information.component';
@@ -611,7 +617,7 @@ import { UserService } from './services/user.service';
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
-import { CisaVadrInfoComponent } from './assessment/prepare/maturity/cisa-vadr-info/cisa-vadr-info.component';
+
 
 
 registerSwiper();
@@ -943,13 +949,17 @@ registerSwiper();
         NewAssessmentComponent,
         NewAssessmentDialogComponent,
         CrrMainTocComponent,
+        CreGeneralReportComponent,
+        CreBarPieStackedComponent,
+        CreMilYesNoComponent,
+        CreMilPctImplementedComponent,
+        CreMilExplanationsComponent,
         CreFinalReportComponent,
         CreFinalReportGridComponent,
-        CreAssessmentOverview,
         creGoalChartsComponent,
-        CreModelChartsComponent,
-        CreMilCharts2Component,
+        CreDetailReportComponent,
         CreHeatmapsComponent,
+        CreGroupedStackedHorizontalChartComponent,
         Cmmc2CommentsMarkedComponent,
         Cmmc2DeficiencyComponent,
         Cmmc2ScorecardReportComponent,
@@ -1008,6 +1018,7 @@ registerSwiper();
         C2m2ObjectiveTableComponent,
         CpgDomainSummaryTableComponent,
         CpgDeficiencyComponent,
+        CpgDeficiencyBlockComponent,
         C2m2DomainMilBarChartComponent,
         PdfReportsComponent,
         InfoBlockComponent,

@@ -7,7 +7,6 @@
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Enum;
 using CSETWebCore.Helpers;
-using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Model.Edm;
@@ -28,7 +27,6 @@ namespace CSETWebCore.Business.Maturity
     {
         private CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
-        private readonly IAdminTabBusiness _adminTabBusiness;
 
         private int _maturityModelId;
 
@@ -54,11 +52,10 @@ namespace CSETWebCore.Business.Maturity
         /// <summary>
         /// CTOR
         /// </summary>
-        public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
+        public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
-            _adminTabBusiness = adminTabBusiness;
 
             _addlSuppl = new AdditionalSupplemental(context);
 

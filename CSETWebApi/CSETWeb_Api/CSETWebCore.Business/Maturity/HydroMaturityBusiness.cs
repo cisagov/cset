@@ -15,7 +15,7 @@ namespace CSETWebCore.Business.Maturity
     public class HydroMaturityBusiness : MaturityBusiness
     {
         private CSETContext _context;
-        public HydroMaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness) : base(context, assessmentUtil, adminTabBusiness)
+        public HydroMaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil) : base(context, assessmentUtil)
         {
             this._context = context;
         }

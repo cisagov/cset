@@ -20,27 +20,28 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel oy-auto d-flex flex-column flex-11a">
-    <h3>Assessment Complete</h3>
+<div>
+    <div class="white-panel oy-auto d-flex flex-column flex-11a">
+        <h3>Assessment Complete</h3>
 
-    <p>
-        Congratulations. You have completed a TSA assessment.
-    </p>
-    <p>
-        If you want to convert this assessment to a full CSET assessment
-        click the button below.
-    </p>
+        <p>
+            Congratulations. You have completed a TSA assessment.
+        </p>
+        <p>
+            If you want to convert this assessment to a full CSET assessment
+            click the button below.
+        </p>
 
-    <div class="mb-3">
-        <button class="btn btn-primary" (click)="convertToCSET()">Convert to CSET</button>
+        <div class="mb-3">
+            <button class="btn btn-primary" (click)="convertToCSET()">Convert to CSET</button>
+        </div>
+
+        <p>
+            Note that this is a one-way conversion. Once this assessment
+            has been converted to a full CSET, it cannot be converted
+            back to this simple workflow.
+        </p>
     </div>
-
-    <p>
-        Note that this is a one-way conversion. Once this assessment
-        has been converted to a full CSET, it cannot be converted
-        back to this simple workflow.
-    </p>
-
     <app-nav-back-next [page]="'tsa-assessment-complete'"
         [hide]="navSvc.isLastVisiblePage('tsa-assessment-complete') ? 'next' : ''"></app-nav-back-next>
 </div>

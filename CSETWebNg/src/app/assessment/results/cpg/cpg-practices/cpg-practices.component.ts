@@ -25,15 +25,15 @@ import { Component, OnInit } from '@angular/core';
 import { SsgService } from '../../../../services/ssg.service';
 
 @Component({
-    selector: 'app-cpg-practices',
-    templateUrl: './cpg-practices.component.html',
-    styleUrls: ['./cpg-practices.component.scss'],
-    standalone: false
+  selector: 'app-cpg-practices',
+  templateUrl: './cpg-practices.component.html',
+  styleUrls: ['./cpg-practices.component.scss'],
+  standalone: false
 })
 export class CpgPracticesComponent implements OnInit {
 
-  isSsgApplicable = false;
-  ssgBonusModel: number = null;
+  isSsgActive = false;
+  ssgBonusModel: number;
 
   /**
    * 
@@ -47,7 +47,20 @@ export class CpgPracticesComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.ssgBonusModel = this.ssgSvc.ssgBonusModel();
-    this.isSsgApplicable = !!this.ssgBonusModel;
+    this.ssgBonusModel = this.ssgSvc.ssgBonusModel() ?? 0;
+    this.isSsgActive = !!this.ssgBonusModel;
+  }
+
+  /**
+   * 
+   */
+  scrollTo(elementId: string): void {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
   }
 }

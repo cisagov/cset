@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { editor, languages, CancellationToken } from 'monaco-editor/esm/vs/editor/editor.api';
+import type { editor, languages, CancellationToken } from 'monaco-editor';
 
 
 export class XmlCompletionItemProvider implements languages.CompletionItemProvider {
@@ -199,7 +199,7 @@ export class XmlCompletionItemProvider implements languages.CompletionItemProvid
                 // mark it as a 'field', and get the documentation
                 availableItems.push({
                     label: elementAttrs.name,
-                    kind: languages.CompletionItemKind.Field,
+                    kind: this.monaco.languages.CompletionItemKind.Field,
                     detail: elementAttrs.type,
                     documentation: this.getItemDocumentation(children[i])
                 });
@@ -236,7 +236,7 @@ export class XmlCompletionItemProvider implements languages.CompletionItemProvid
                 // mark it as a 'property', and get it's documentation
                 availableItems.push({
                     label: attrs.name,
-                    kind: languages.CompletionItemKind.Property,
+                    kind: this.monaco.languages.CompletionItemKind.Property,
                     detail: attrs.type,
                     documentation: this.getItemDocumentation(children[i])
                 });

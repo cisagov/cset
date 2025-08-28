@@ -304,6 +304,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
 
       this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
 
+      if (this.moduleBehavior.questionPageTitleKey) {
+        this.pageTitle = this.tSvc.translate(this.moduleBehavior.questionPageTitleKey);
+      }
+
       this.glossarySvc.glossaryEntries = response.glossary;
 
       this.loaded = true;
@@ -339,6 +343,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
     }
 
     this.pageTitle = this.tSvc.translate('titles.' + this.questionsAlias.toLowerCase().trim()) + ' - ' + displayName;
+
+    // override with a specific title, if defined
+    if (this.moduleBehavior.questionPageTitleKey) {
+      this.pageTitle = this.tSvc.translate(this.moduleBehavior.questionPageTitleKey);
+    }
   }
 
   /**
@@ -376,7 +385,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
     let mq = scrollTarget.split(',').find(x => x.startsWith('MQ:'))?.replace('MQ:', '');
 
     // expand the question's group
-    var groupToExpand = this.findGroupingById(Number(mg), this.groupings);
+    var groupToExpand = this.findGroupingById(Number(mg), this.groupings ?? []);
     if (!!groupToExpand) {
       groupToExpand.expanded = true;
     }

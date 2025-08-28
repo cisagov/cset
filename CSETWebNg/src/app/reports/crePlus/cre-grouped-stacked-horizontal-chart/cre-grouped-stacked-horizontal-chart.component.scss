@@ -1,0 +1,138 @@
+.chart-container {
+     background: rgba(255, 255, 255, 0.95);
+     backdrop-filter: blur(10px);
+     border-radius: 20px;
+     padding: 30px;
+     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+     width: 100%;
+}
+
+h1 {
+     color: #2d3748;
+     margin-bottom: 30px;
+     text-align: center;
+     font-size: 28px;
+}
+
+.chart-wrapper {
+     width: 100%;
+     overflow-x: auto;
+}
+
+.legend {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+     gap: 20px;
+     margin-top: 30px;
+     padding-top: 20px;
+     border-top: 2px solid #e2e8f0;
+}
+
+.legend-item {
+     display: flex;
+     align-items: center;
+     gap: 8px;
+     font-size: 14px;
+     color: #4a5568;
+     transition: transform 0.2s;
+}
+
+.legend-item:hover {
+     transform: translateY(-2px);
+}
+
+.legend-color {
+     width: 20px;
+     height: 20px;
+     border-radius: 4px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.legend-label-text {
+     display: inline-block;
+     vertical-align: top;
+     line-height: 15px;
+     font-size: 12px;
+     width: calc(100% - 20px);
+     text-overflow: ellipsis;
+     white-space: nowrap;
+     overflow: hidden;
+}
+
+:host ::ng-deep .bar-segment {
+     transition: opacity 0.3s, filter 0.3s;
+     cursor: pointer;
+}
+
+:host ::ng-deep .bar-segment:hover {
+     opacity: 0.85;
+     filter: brightness(1.1);
+}
+
+:host ::ng-deep .group-label {
+     font-weight: 600;
+     fill: #2d3748;
+}
+
+:host ::ng-deep .bar-label {
+     // fill: #4a5568;
+     font-size: 12px;
+}
+
+:host ::ng-deep .value-label {
+     fill: white;
+     font-size: 12px;
+     font-weight: 500;
+     pointer-events: none;
+     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+:host ::ng-deep .total-label {
+     fill: #718096;
+     font-size: 13px;
+     font-weight: 600;
+}
+
+:host ::ng-deep .axis-line {
+     stroke: #ddd;
+     stroke-width: 1;
+     fill: none;
+}
+
+:host ::ng-deep .tick-label {
+     stroke-width: 0.01;
+     font-size: 12px;
+}
+
+.tooltip {
+     position: fixed;
+     background: rgba(0, 0, 0, 0.75);
+     color: white;
+     padding: 8px 12px;
+     border-radius: 3px;
+     font-size: 13px;
+     pointer-events: none;
+     opacity: 0;
+     z-index: 1000;
+     transform: translate(-50%, calc(-100% - 8px));
+     transition-delay: 0.2s;
+}
+
+.tooltip::before {
+     content: "";
+     position: absolute;
+     top: calc(100% - .8px);
+     left: 50%;
+     transform: translateX(-50%);
+     border: 8px solid transparent;
+     border-top-color: rgba(0, 0, 0, 0.75);
+}
+
+.tooltip.visible {
+     transform: translate(-50%, -100%);
+     opacity: 1;
+     transition: transform 0.2s cubic-bezier(0.64, 0.57, 0.67, 1.53), 
+          opacity 0.2s cubic-bezier(0.64, 0.57, 0.67, 1.53);
+     transition-delay: 0s;
+}

@@ -48,7 +48,7 @@ $primary: (
   300: #79a0b5,
   350: #6390a9,
   400: #4c819c,
-  450: #367190,
+  450: #005288,
   500: #206184,
   550: #0a5278,
   600: #0a4b6e,
@@ -57,7 +57,7 @@ $primary: (
   750: #083c58,
   800: #07354d,
   850: #062d42,
-  900: #052637,
+  900: #002b47,
   950: #041e2c,
 );
 
@@ -510,10 +510,36 @@ label[required]::after {
   font-size: 1.3em;
 }
 
+.page-title{
+  margin: 1em 0 .5em 2em;
+}
+
 .white-panel {
   background-color: $gray-50;
-  padding: 2rem;
+  margin: 1em 1em .5em 1em;
+  padding: 2em;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 8px;
+  max-height: calc(100vh - 275px);
   color: $gray-800;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+  clip-path: inset(0 round 8px);
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 8px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+  }
 }
 
 .white-dialog {
@@ -2093,6 +2119,7 @@ input[type="checkbox"]+label {
 
 .mat-drawer-content.mat-sidenav-content {
   overflow: hidden;
+  background-color: $gray-150;
 }
 
 // Import Modules
@@ -3197,6 +3224,10 @@ hr.ranked-questions {
   text-align: center !important;
 }
 
+.bb-1-ddd {
+  border-bottom: 1px solid #ddd !important;
+}
+
 .br-0 {
   border-radius: 0;
 }
@@ -4106,3 +4137,4 @@ h6.dropdown-header {
   --mat-snackbar-container-color: #ffc107 !important;
   --mat-snackbar-supporting-text-color: #000 !important;
 }
+

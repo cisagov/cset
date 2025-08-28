@@ -12,6 +12,7 @@ using CSETWebCore.Model.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -67,25 +68,27 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/auth/login/standalone")]
-        public IActionResult LoginStandalone([FromBody] Login login)
+        public async Task<IActionResult> LoginStandalone([FromBody] Login login)
         {
             try
             {
                 _tokenManager.GenerateSecret();
                 lock (_locker)
                 {
-                    LoginResponse resp = _userAuthentication.AuthenticateStandalone(login, _tokenManager);
-                    if (resp != null)
-                    {
-                        return Ok(resp);
-                    }
-
-                    resp = new LoginResponse()
-                    {
-                        LinkerTime = new Helpers.BuildNumberHelper().GetLinkerTime()
-                    };
+                    // Note: We can't use await inside lock, but this should be fast
+                }
+                
+                LoginResponse resp = await _userAuthentication.AuthenticateStandalone(login, _tokenManager);
+                if (resp != null)
+                {
                     return Ok(resp);
                 }
+
+                resp = new LoginResponse()
+                {
+                    LinkerTime = new Helpers.BuildNumberHelper().GetLinkerTime()
+                };
+                return Ok(resp);
             }
             catch (Exception exc)
             {

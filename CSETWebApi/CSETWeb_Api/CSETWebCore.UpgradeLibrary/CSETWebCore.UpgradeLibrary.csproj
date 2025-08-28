@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
-    <PackageReference Include="Npoi.Mapper" Version="6.2.1" />
+    <PackageReference Include="Npoi.Mapper" Version="6.2.2" />
   </ItemGroup>
 
   <ItemGroup>

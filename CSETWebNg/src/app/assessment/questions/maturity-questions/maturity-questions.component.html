@@ -20,90 +20,92 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" class="white-panel">
-  <div id="top"></div>
-  <div class="flex-column flex-wrap justify-content-between align-items-start flex-11a mb-4">
+<div *transloco="let t">
+  <div class="white-panel">
+    <div id="top"></div>
+    <div class="flex-column flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
-    <div class="d-flex flex-row flex-wrap sticky-sal w-100 justify-content-end align-items-start flex-11a pb-3">
-      <div class="me-3 answered-count" *ngIf="!!groupings" matTooltip="{{t('tooltip.answered count')}}">
-        {{ completionSvc.answeredCount }}/{{ completionSvc.totalCount }}
-      </div>
-      <div>
-        <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
-          matTooltip="{{t('buttons.collapse all')}}" aria-label="{{t('buttons.collapse all')}}">
-          <i class="fas fa-compress-alt"></i></button>
-        <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)" matTooltip="{{t('buttons.expand all')}}"
-          aria-label="{{t('buttons.expand all')}}"><i class="fas fa-expand-alt"></i></button>
-        <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()"
-          matTooltip="{{t('buttons.filter')}}">
-          <i class="cset-icons-filter" aria-label="{{t('buttons.filter')}}"></i>
-        </button>
+      <div class="d-flex flex-row flex-wrap sticky-sal w-100 justify-content-end align-items-start flex-11a pb-3">
+        <div class="me-3 answered-count" *ngIf="!!groupings" matTooltip="{{t('tooltip.answered count')}}">
+          {{ completionSvc.answeredCount }}/{{ completionSvc.totalCount }}
+        </div>
+        <div>
+          <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
+            matTooltip="{{t('buttons.collapse all')}}" aria-label="{{t('buttons.collapse all')}}">
+            <i class="fas fa-compress-alt"></i></button>
+          <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)" matTooltip="{{t('buttons.expand all')}}"
+            aria-label="{{t('buttons.expand all')}}"><i class="fas fa-expand-alt"></i></button>
+          <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()"
+            matTooltip="{{t('buttons.filter')}}">
+            <i class="cset-icons-filter" aria-label="{{t('buttons.filter')}}"></i>
+          </button>
+        </div>
+
       </div>
 
+      <div class="d-block mb-2">
+        <h3>{{ pageTitle }}</h3>
+
+        <h4>{{ groupingTitle }}</h4>
+
+        <div class="mb-2" *ngIf="showTargetLevel">
+          The target maturity level for this assessment is set to
+          <strong [innerText]="maturitySvc.targetLevelName()"></strong>.
+        </div>
+      </div>
+
+      <div *ngIf="!!groupings && !areGroupingsVisible() && modelSupportsTargetLevel"
+        class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+        <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
+        <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
+          There are no applicable {{ questionsAlias | lowercase }} to display. Check the assessment's
+          target maturity level.
+        </span>
+      </div>
+
+      <div *ngIf="!!groupings && filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filter-menu.showing only
+        filtered')}}</div>
+
+      <div *ngIf="maturityFilteringSvc.showingAboveMaturityTargetLevel()" class="filters-engaged">Including Questions
+        Above Target Level</div>
+
+
+      <ng-container *ngIf="!!groupings">
+        <p class="mb-4" *ngIf="this.navTarget?.toLowerCase() == 'bonus'">
+          {{t('questions.instructions ssg')}}
+        </p>
+
+        <p class="mb-4" *ngIf="filterSvc.showFilters.length>0 && areGroupingsVisible()">
+          {{t('questions.instructions 1')}} {{ msgUnansweredEqualsNo }}
+        </p>
+      </ng-container>
+
+      <!-- CRE+ allows the user to limit questions shown on some pages -->
+      <ng-container *ngIf="!!groupings && showGroupingSelector">
+        <app-cre-question-selector [modelId]="modelId" [cumulativeLevels]="groupingsAreMil"></app-cre-question-selector>
+      </ng-container>
+
+      <div *ngIf="!groupings" class="w-100">
+        <div class="spinner-container" style="margin: 2em auto">
+          <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+      </div>
+
+      <ng-template [ngIf]="!!groupings">
+        <div *ngFor="let g of groupings" class="w-100">
+          <app-grouping-block [grouping]="g"></app-grouping-block>
+        </div>
+      </ng-template>
     </div>
-
-    <div class="d-block mb-2">
-      <h3>{{ pageTitle }}</h3>
-
-      <h4>{{ groupingTitle }}</h4>
-
-      <div class="mb-2" *ngIf="showTargetLevel">
-        The target maturity level for this assessment is set to
-        <strong [innerText]="maturitySvc.targetLevelName()"></strong>.
-      </div>
-    </div>
-
-    <div *ngIf="!!groupings && !areGroupingsVisible() && modelSupportsTargetLevel"
-      class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
-      <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
-      <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
-        There are no applicable {{ questionsAlias | lowercase }} to display. Check the assessment's
-        target maturity level.
-      </span>
-    </div>
-
-    <div *ngIf="!!groupings && filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filter-menu.showing only filtered')}}</div>
-
-    <div *ngIf="maturityFilteringSvc.showingAboveMaturityTargetLevel()" class="filters-engaged">Including Questions
-      Above Target Level</div>
-
-
-    <ng-container *ngIf="!!groupings">
-      <p class="mb-4" *ngIf="this.navTarget?.toLowerCase() == 'bonus'">
-        {{t('questions.instructions ssg')}}
-      </p>
-
-      <p class="mb-4" *ngIf="filterSvc.showFilters.length>0 && areGroupingsVisible()">
-        {{t('questions.instructions 1')}} {{ msgUnansweredEqualsNo }}
-      </p>
-    </ng-container>
-
-    <!-- CRE+ allows the user to limit questions shown on some pages -->
-    <ng-container *ngIf="!!groupings && showGroupingSelector">
-      <app-cre-question-selector [modelId]="modelId" [cumulativeLevels]="groupingsAreMil"></app-cre-question-selector>
-    </ng-container>
-
-    <div *ngIf="!groupings" class="w-100">
-      <div class="spinner-container" style="margin: 2em auto">
-        <div style="max-width: 50px; max-height: 50px;"></div>
-      </div>
-    </div>
-
-    <ng-template [ngIf]="!!groupings">
-      <div *ngFor="let g of groupings" class="w-100">
-        <app-grouping-block [grouping]="g"></app-grouping-block>
-      </div>
-    </ng-template>
   </div>
-
-
   <!-- normal navigation -->
   <app-nav-back-next *ngIf="!navTarget" [page]="'maturity-questions'"></app-nav-back-next>
 
   <!-- Show a different model (like CRE's additional models) -->
-  <app-nav-back-next *ngIf="navTarget?.toLowerCase().startsWith('m')" [page]="'maturity-questions-' + navTarget"></app-nav-back-next>
+  <app-nav-back-next *ngIf="navTarget?.toLowerCase().startsWith('m')"
+    [page]="'maturity-questions-' + navTarget"></app-nav-back-next>
 
   <!-- Show a grouping only -->
-  <app-nav-back-next *ngIf="!!navTarget && !navTarget.toLowerCase().startsWith('m')" [page]="'maturity-questions-' + navTarget"></app-nav-back-next>
-
+  <app-nav-back-next *ngIf="!!navTarget && !navTarget.toLowerCase().startsWith('m')"
+    [page]="'maturity-questions-' + navTarget"></app-nav-back-next>
 </div>

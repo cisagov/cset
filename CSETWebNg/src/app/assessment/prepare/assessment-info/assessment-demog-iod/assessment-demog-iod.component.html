@@ -21,9 +21,12 @@
   SOFTWARE.
 -------------------------->
 <ng-container *transloco="let t">
-  <div class="assess-component d-flex flex-column justify-content-start flex-11a mb-4">
+  <div class="page-title">
+    <h3>{{t('titles.organization demographics')}}</h3>
+  </div>
+  <div class="assess-component d-flex flex-column justify-content-start flex-11a">
     <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-      <h3 class="mb-3">{{t('titles.organization demographics')}}</h3>
+     
 
       <div class="button-container">
 
@@ -48,7 +51,8 @@
 
       <app-demographics-iod [events]="eventImportExport.asObservable()" #demoIOD></app-demographics-iod>
 
-      <app-nav-back-next [page]="'info-demog-iod'"></app-nav-back-next>
+      
     </div>
   </div>
+  <app-nav-back-next [page]="'info-demog-iod'"></app-nav-back-next>
 </ng-container>
