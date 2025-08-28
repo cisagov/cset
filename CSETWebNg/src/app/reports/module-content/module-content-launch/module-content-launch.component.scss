@@ -23,7 +23,7 @@ SOFTWARE.
 */
 
 // Import CSET variables
-@import '../../../../sass/variables';
+@use '../../../../sass/variables' as vars;
 
 // Position relative container for clear button
 .position-relative {
@@ -41,15 +41,15 @@ SOFTWARE.
   border: none;
   padding: 0.25rem;
   cursor: pointer;
-  color: $gray-600;
+  color: vars.$gray-600;
   transition: color 0.2s ease;
 
   &:hover {
-    color: $no-color;
+    color: vars.$no-color;
   }
 
   &:focus {
-    outline: 2px solid $primary-color;
+    outline: 2px solid vars.$primary-color;
     outline-offset: 2px;
     border-radius: 3px;
   }
@@ -61,11 +61,11 @@ SOFTWARE.
 
 // Style for readonly input - make it look normal, not grayed out
 input.form-control[readonly] {
-  background-color: $white;
+  background-color: vars.$white;
   cursor: default;
 
   &:focus {
-    border-color: $gray-300;
+    border-color: vars.$gray-300;
     box-shadow: none;
   }
 }
@@ -81,7 +81,7 @@ input.form-control[readonly] {
   // Highlighted search terms
   mark {
     background-color: #FFEE8C;
-    color: $gray-900;
+    color: vars.$gray-900;
     font-weight: 600;
     // padding: 0 2px;  // Removed to eliminate extra space around highlighted text
     border-radius: 2px;
@@ -106,16 +106,16 @@ input.form-control[readonly] {
       font-size: 0.875rem;
       padding: 0.125rem 0.5rem;
       border-radius: 0.25rem;
-      background-color: $gray-100;
+      background-color: vars.$gray-100;
       
       &.type-standard {
-        background-color: rgba($primary-color, 0.1);
-        color: $primary-color;
+        background-color: rgba(vars.$primary-color, 0.1);
+        color: vars.$primary-color;
       }
       
       &.type-model {
-        background-color: rgba($secondary-color, 0.1);
-        color: $secondary-color;
+        background-color: rgba(vars.$secondary-color, 0.1);
+        color: vars.$secondary-color;
       }
     }
   }
