@@ -90,9 +90,9 @@ namespace CSETWebCore.Business.Question
             // populate any missing counts
             foreach (var a in list)
             {
-                if (a.CompletedQuestionCount == null || a.TotalQuestionCount == null)
+                if (a.CompletedQuestionCount == null || a.TotalQuestionCount == null || a.TotalQuestionCount == 0)
                 {
-                    new CompletionCounter(_context).CountMaturity(a.Assessment_Id);
+                    new CompletionCounter(_context).Count(a.Assessment_Id);
                 }
             }
 
@@ -254,35 +254,37 @@ namespace CSETWebCore.Business.Question
             List<int> inScopeModels = DetermineInScopeModels(assessmentId).ToList();
 
             var q =
-            from mq in _context.MATURITY_QUESTIONS
-            join ans in _context.ANSWER on mq.Mat_Question_Id equals ans.Question_Or_Requirement_Id
-            where ans.Assessment_Id == assessmentId
-                && inScopeModels.Contains(mq.Maturity_Model_Id)
-                && ans.Question_Type.ToLower() == "maturity"
-                && mq.Is_Answerable
-            select new AnswerBasic()
-            {
-                AnswerText = ans.Answer_Text,
-                MatQuestionId = mq.Mat_Question_Id
-            };
+                from mq in _context.MATURITY_QUESTIONS
+                join ans in _context.ANSWER
+                    on new { Id = mq.Mat_Question_Id, AssessmentId = assessmentId, QuestionType = "maturity" }
+                    equals new { Id = ans.Question_Or_Requirement_Id, AssessmentId = ans.Assessment_Id, QuestionType = ans.Question_Type.ToLower() }
+                    into ansGroup
+                from ans in ansGroup.DefaultIfEmpty()
+                where inScopeModels.Contains(mq.Maturity_Model_Id)
+                    && mq.Is_Answerable
+                select new AnswerBasic()
+                {
+                    AnswerText = ans.Answer_Text,
+                    MatQuestionId = mq.Mat_Question_Id
+                };
 
-            var inScopeAnswers = q.ToList();
+            var inScopeQuestions = q.ToList();
 
 
             // CRE+ has special conditions for OD and MIL to apply
             if (inScopeModels.Contains(Constants.Constants.Model_CRE))
             {
-                inScopeAnswers = FilterCrePlus(assessmentId, inScopeAnswers);
+                inScopeQuestions = FilterCrePlus(assessmentId, inScopeQuestions);
             }
 
 
             // Filter out questions above the target level, if selectable
-            inScopeAnswers = FilterByMaturityLevel(assessmentId, inScopeModels, inScopeAnswers);
+            inScopeQuestions = FilterByMaturityLevel(assessmentId, inScopeModels, inScopeQuestions);
 
 
             // get totals
-            var totalCount = inScopeAnswers.Count();
-            var completedCount = inScopeAnswers.Where(ans => ans.AnswerText != "U" && ans.AnswerText != "").Count();
+            var totalCount = inScopeQuestions.Count();
+            var completedCount = inScopeQuestions.Where(ans => ans.AnswerText != "U" && ans.AnswerText != "" && ans.AnswerText != null).Count();
 
             var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
 
