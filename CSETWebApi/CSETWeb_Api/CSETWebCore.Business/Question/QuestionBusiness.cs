@@ -416,7 +416,7 @@ namespace CSETWebCore.Business.Question
         /// Stores an answer.
         /// </summary>
         /// <param name="answer"></param>
-        public int StoreAnswer(Answer answer)
+        public Answer StoreAnswer(Answer answer)
         {
             // Find the Question or Requirement
             var question = _context.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefault();
@@ -475,9 +475,13 @@ namespace CSETWebCore.Business.Question
 
             _context.ANSWER.Update(dbAnswer);
             _context.SaveChanges();
+
+            answer.AssessmentId = dbAnswer.Assessment_Id;
+            answer.AnswerId = dbAnswer.Answer_Id;
+
             _assessmentUtil.TouchAssessment(assessmentId);
 
-            return dbAnswer.Answer_Id;
+            return answer;
         }
 
 

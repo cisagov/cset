@@ -32,4 +32,8 @@
     <ProjectReference Include="..\CSETWebCore.Interfaces\CSETWebCore.Interfaces.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CSETWebCore\Helpers\" />
+  </ItemGroup>
+
 </Project>

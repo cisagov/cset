@@ -51,6 +51,19 @@ namespace CSETWebCore.Model.Question
             }
         }
 
+        public bool Is_Question
+        {
+            get
+            {
+                return this.QuestionType == "Question";
+            }
+            set
+            {
+                if (value)
+                    this.QuestionType = "Question";
+            }
+        }
+
         public bool Is_Component
         {
             get

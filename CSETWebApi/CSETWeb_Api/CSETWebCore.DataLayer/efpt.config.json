@@ -6,7 +6,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Model",
+   "OutputPath": "Model2",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "CSETWebCore.DataLayer",
    "Schemas": null,
@@ -243,22 +243,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[DEMOGRAPHICS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[DEMOGRAPHICS_ASSET_VALUES]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[DEMOGRAPHICS_ORGANIZATION_TYPE]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[DEMOGRAPHICS_SIZE]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[DETAILS_DEMOGRAPHICS]",
          "ObjectType": 0
       },
@@ -316,74 +300,6 @@
       },
       {
          "Name": "[dbo].[FILE_TYPE]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_ASSESSMENT_FACTORS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_ASSESSMENT_VALUES]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_ATTRIBUTES]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_COMPONENTS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_DETAILS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_DOMAIN_FILTERS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_DOMAIN_FILTERS_V2]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_DOMAINS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_FFIEC_MAPPINGS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_GROUPS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_HOURS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_HOURS_COMPONENT]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_MATURITY]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_QUESTIONS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_REQUIREMENTS]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_REVIEWTYPE]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[FINANCIAL_TIERS]",
          "ObjectType": 0
       },
       {
