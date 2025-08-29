@@ -6,7 +6,6 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Observations;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Question;
 using System;
 using System.Linq;
@@ -19,7 +18,6 @@ namespace CSETWebCore.Business.Question
     /// </summary>
     public class Hooks
     {
-        private readonly IAssessmentUtil _assessmentUtil;
         private CSETContext _context;
 
 
@@ -28,13 +26,13 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="context"></param>
         /// <param name="assessmentUtil"></param>
-        public Hooks(CSETContext context, IAssessmentUtil assessmentUtil)
+        public Hooks(CSETContext context)
         {
             _context = context;
-            _assessmentUtil = assessmentUtil;
         }
 
 
+       
         /// <summary>
         /// Provides a central place to sense answered question
         /// events and do something.
@@ -44,6 +42,8 @@ namespace CSETWebCore.Business.Question
         {
             if (answer.Is_Maturity)
             {
+                new CompletionCounter(_context).CountMaturityCompletion(answer.AssessmentId);
+
                 return HookMaturityQuestionAnswered(answer);
             }
 
@@ -83,6 +83,25 @@ namespace CSETWebCore.Business.Question
             }
 
             return detailsChanged;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void HookTargetLevelChanged(int assessmentId)
+        {
+            new CompletionCounter(_context).CountMaturityCompletion(assessmentId);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public void HookGroupingSelectionChanged(int assessmentId)
+        {
+            new CompletionCounter(_context).CountMaturityCompletion(assessmentId);
         }
     }
 }

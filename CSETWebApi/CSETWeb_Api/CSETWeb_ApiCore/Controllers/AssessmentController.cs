@@ -14,10 +14,10 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Standards;
-using CSETWebCore.Business.Maturity;using System.Collections.Generic;
+using CSETWebCore.Business.Maturity;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-//using static System.Runtime.InteropServices.JavaScript.JSType;
 using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.Helpers;
@@ -198,7 +198,7 @@ namespace CSETWebCore.Api.Controllers
                 }
             }
             assessmentBusiness.SaveAssessmentDetail(assessment.Id, assessment);
-            
+
 
             return Ok(assessment);
         }
@@ -449,7 +449,7 @@ namespace CSETWebCore.Api.Controllers
                                                        [FromQuery] int id4, [FromQuery] int id5, [FromQuery] int id6,
                                                        [FromQuery] int id7, [FromQuery] int id8, [FromQuery] int id9, [FromQuery] int id10)
         {
-            
+
             return Ok(this._assessmentBusiness.GetAssessmentObservations(id1, id2, id3, id4, id5, id6, id7, id8, id9, id10));
         }
 
@@ -462,7 +462,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(this._assessmentBusiness.GetAssessmentDocuments(id1, id2, id3, id4, id5, id6, id7, id8, id9, id10));
         }
-        
+
         [HttpGet]
         [Route("api/assessmentCreator")]
         public IActionResult AssessmentCreator()
@@ -481,7 +481,7 @@ namespace CSETWebCore.Api.Controllers
 
             return null;
         }
-        
+
         [HttpPost]
         [Route("api/conversion")]
         public IActionResult AssessmentConversion([FromQuery] int originalAssessmentId, [FromQuery] string targetModelName)
@@ -489,7 +489,7 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
-               _assessmentBusiness.ConvertAssessment(assessmentId, originalAssessmentId, targetModelName);
+                _assessmentBusiness.ConvertAssessment(assessmentId, originalAssessmentId, targetModelName);
             }
             catch (Exception exc)
             {
@@ -498,7 +498,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok();
         }
-        
+
         [HttpGet]
         [Route("api/upgrades")]
         public IActionResult PossibleUpgrades()
@@ -511,7 +511,7 @@ namespace CSETWebCore.Api.Controllers
                 var rh = new ResourceHelper();
                 var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "AssessmentConversion",
                     $"upgrades.json"));
-                
+
                 JArray jsonArray = JArray.Parse(json);
                 foreach (JObject obj in jsonArray)
                 {
@@ -520,7 +520,7 @@ namespace CSETWebCore.Api.Controllers
                         return Ok(obj[assessment.GalleryItemGuid.ToString().ToUpper()]);
                     }
                 }
-                
+
                 return Ok();
             }
             catch (Exception exc)
@@ -530,7 +530,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok();
         }
-        
+
         [HttpPost]
         [Route("api/assessormode")]
         public IActionResult SetAssessorMode([FromBody] string mode)
@@ -547,6 +547,6 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok();
         }
-        
+
     }
 }

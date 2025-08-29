@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Grouping;
+using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Maturity;
@@ -60,6 +61,8 @@ namespace CSETWebCore.Api.Controllers
 
             var biz = new GroupingBusiness(assessmentId, _context);
             biz.PersistSelections(request);
+
+            new Hooks(_context).HookGroupingSelectionChanged(assessmentId);
 
             return Ok();
         }

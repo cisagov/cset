@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.XPath;
 using CSETWebCore.Business.Authorization;
+using CSETWebCore.Business.Question;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -117,6 +118,9 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             new MaturityBusiness(_context, _assessmentUtil).PersistMaturityLevel(assessmentId, level);
+
+            new Hooks(_context).HookTargetLevelChanged(assessmentId);
+
             return Ok();
         }
 

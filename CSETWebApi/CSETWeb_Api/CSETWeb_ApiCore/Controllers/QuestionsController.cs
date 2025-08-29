@@ -286,7 +286,7 @@ namespace CSETWebCore.Api.Controllers
                 var mb = new MaturityBusiness(_context, _assessmentUtil);
                 var savedAnswer = mb.StoreAnswer(assessmentId, answer);
 
-                var detailsChanged = new Hooks(_context, _assessmentUtil).HookQuestionAnswered(savedAnswer);
+                var detailsChanged = new Hooks(_context).HookQuestionAnswered(savedAnswer);
 
 
                 response.AnswerId = (int)savedAnswer.AnswerId;
