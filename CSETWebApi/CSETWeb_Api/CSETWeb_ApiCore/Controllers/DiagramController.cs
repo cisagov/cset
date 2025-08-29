@@ -4,32 +4,32 @@
 // 
 // 
 //////////////////////////////// 
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Xml;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.Diagram.Analysis;
+using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.ExportCSV;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.ReportEngine;
 using CSETWebCore.Model.Diagram;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using System.Text;
-using Microsoft.AspNetCore.Hosting;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Http.Extensions;
-using CSETWebCore.Helpers;
 using CSETWebCore.Model.Document;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Xml;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -74,16 +74,19 @@ namespace CSETWebCore.Api.Controllers
         {
             // get the assessment ID from the JWT
             var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
+
             DecodeDiagram(req);
+            
             lock (_object)
             {
                 try
                 {
-                    XmlDocument xDoc = new XmlDocument();
                     if (string.IsNullOrEmpty(req.DiagramXml))
                     {
                         req.DiagramXml = "<mxGraphModel grid=\"1\" gridSize=\"10\"><root><mxCell id=\"0\"><mxCell id=\"1\" parent=\"0\" /></mxCell></root></mxGraphModel>";
                     }
+
+                    XmlDocument xDoc = new XmlDocument();
                     xDoc.LoadXml(req.DiagramXml);
                     _diagram.SaveDiagram((int)assessmentId, xDoc, req, true);
                 }
@@ -91,7 +94,10 @@ namespace CSETWebCore.Api.Controllers
                 {
                     NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
                 }
-
+                finally 
+                { 
+                    new Hooks(_context).HookDiagramChanged((int)assessmentId);
+                }
             }
         }
 
@@ -103,6 +109,8 @@ namespace CSETWebCore.Api.Controllers
         {
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
             _diagram.SaveComponent(component, (int)assessmentId);
+
+            new Hooks(_context).HookDiagramChanged((int)assessmentId);
         }
 
 
@@ -264,6 +272,7 @@ namespace CSETWebCore.Api.Controllers
             return _diagram.GetComponentSymbols();
         }
 
+
         /// <summary>
         /// Returns the details for symbols.  This is used to build palettes and icons
         /// in the browser.
@@ -326,7 +335,6 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-
         /// <summary>
         /// Returns list of diagram components
         /// </summary>
@@ -356,6 +364,7 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+
         /// <summary>
         /// Returns list of diagram zones
         /// </summary>
@@ -383,6 +392,7 @@ namespace CSETWebCore.Api.Controllers
             {
             }
         }
+
 
         /// <summary>
         /// Returns list of diagram lines
@@ -412,6 +422,7 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+
         /// <summary>
         /// Returns list of diagram shapes
         /// </summary>
@@ -439,6 +450,7 @@ namespace CSETWebCore.Api.Controllers
             {
             }
         }
+
 
         /// <summary>
         /// Returns list of diagram shapes
@@ -693,6 +705,7 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+
         /// <summary>
         /// Deletes given product from CSAF files.
         /// </summary>
@@ -715,6 +728,7 @@ namespace CSETWebCore.Api.Controllers
                 return StatusCode(500);
             }
         }
+
 
         /// <summary>
         /// Returns the details for symbols.  This is used to build palettes and icons

@@ -4,11 +4,9 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
-using CsvHelper.Configuration.Attributes;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -94,7 +92,7 @@ namespace CSETWebCore.Business.Question
             {
                 if (a.CompletedQuestionCount == null || a.TotalQuestionCount == null)
                 {
-                    new CompletionCounter(_context).CountMaturityCompletion(a.Assessment_Id);
+                    new CompletionCounter(_context).CountMaturity(a.Assessment_Id);
                 }
             }
 
@@ -118,31 +116,64 @@ namespace CSETWebCore.Business.Question
         }
 
 
+
         /// <summary>
-        /// 
+        /// Refreshes the completion totals for the specified assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public void CountStandardsBasedCompletion(int assessmentId)
+        public void Count(int assessmentId)
+        {
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            if (assessment == null)
+            {
+                return;
+            }
+
+            if (assessment.UseMaturity)
+            {
+                CountMaturity(assessmentId);
+            }
+
+            if (assessment.UseStandard)
+            {
+                CountStandardsBasedCompletion(assessmentId);
+            }
+
+            if (assessment.UseDiagram)
+            {
+                CountComponent(assessmentId);
+            }
+        }
+
+
+
+        #region Standards-Based Assessments
+
+        /// <summary>
+        /// Counts and persists question completion totals for a standards-based assessment.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        private void CountStandardsBasedCompletion(int assessmentId)
         {
             var mode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault()?.Application_Mode;
 
             if (mode == "Questions Based")
             {
-                CountSimpleQuestionCompletion(assessmentId);
+                CountQuestionsMode(assessmentId);
             }
 
             if (mode == "Requirements Based")
             {
-                CountRequirementCompletion(assessmentId);
+                CountRequirementsMode(assessmentId);
             }
         }
 
 
         /// <summary>
-        /// 
+        /// Counts and persists question completion totals for a standards-based assessment in requirements mode.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public void CountRequirementCompletion(int assessmentId)
+        private void CountRequirementsMode(int assessmentId)
         {
             var setNames = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId).Select(y => y.Set_Name).ToList();
             string selectedSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == assessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
@@ -159,14 +190,11 @@ namespace CSETWebCore.Business.Question
 
             var inScopeAnswers = _context.ANSWER.Where(x => x.Question_Type == "Requirement" && inScopeRequirementIds.Contains(x.Question_Or_Requirement_Id)).ToList();
 
+            // get totals
             var totalCount = inScopeRequirementIds.Count();
             var completedCount = inScopeAnswers.Where(ans => ans.Answer_Text != "U" && ans.Answer_Text != "").Count();
 
             var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
-            if (assessment == null)
-            {
-                return;
-            }
 
             assessment.CompletedQuestionCount = completedCount;
             assessment.TotalQuestionCount = totalCount;
@@ -178,62 +206,41 @@ namespace CSETWebCore.Business.Question
         /// Counts and persists question completion totals for a standards-based assessment in questions mode.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public void CountSimpleQuestionCompletion(int assessmentId)
+        private void CountQuestionsMode(int assessmentId)
         {
             var setNames = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId).Select(y => y.Set_Name).ToList();
             string selectedSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == assessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
 
+            var query = from q in _context.NEW_QUESTION
+                        join qs in _context.NEW_QUESTION_SETS on q.Question_Id equals qs.Question_Id
+                        join nql in _context.NEW_QUESTION_LEVELS on qs.New_Question_Set_Id equals nql.New_Question_Set_Id
+                        join usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
+                        join stand in _context.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
+                        join qgh in _context.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
+                        join usc in _context.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
+                        join usl in _context.UNIVERSAL_SAL_LEVEL on selectedSalLevel equals usl.Full_Name_Sal
+                        where stand.Selected == true
+                                        && stand.Assessment_Id == assessmentId
+                                        && nql.Universal_Sal_Level == usl.Universal_Sal_Level1
+                        select q.Question_Id;
 
-            if (setNames.Count == 1)
-            {
-                // Single standard
-                var query1 = from q in _context.NEW_QUESTION
-                             from qs in _context.NEW_QUESTION_SETS.Where(x => x.Question_Id == q.Question_Id)
-                             from l in _context.NEW_QUESTION_LEVELS.Where(x => qs.New_Question_Set_Id == x.New_Question_Set_Id)
-                             from s in _context.SETS.Where(x => x.Set_Name == qs.Set_Name)
-                             from usl in _context.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == selectedSalLevel)
-                             where setNames.Contains(s.Set_Name)
-                                && l.Universal_Sal_Level == usl.Universal_Sal_Level1
-                             select q.Question_Id;
+            var inScopeQuestionIds = query.ToList();
 
-                var inScopeQuestionIds = query1.ToList();
+            var inScopeAnswers = _context.ANSWER.Where(x => x.Question_Type == "Question" && inScopeQuestionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
 
-                var inScopeAnswers = _context.ANSWER.Where(x => x.Question_Type == "Question" && inScopeQuestionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
+            // get totals
+            var totalCount = inScopeQuestionIds.Count();
+            var completedCount = inScopeAnswers.Where(ans => ans.Answer_Text != "U" && ans.Answer_Text != "").Count();
 
-                var totalCount = inScopeQuestionIds.Count();
-                var completedCount = inScopeAnswers.Where(ans => ans.Answer_Text != "U" && ans.Answer_Text != "").Count();
+            var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
 
-                var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
-                if (assessment == null)
-                {
-                    return;
-                }
-
-                assessment.CompletedQuestionCount = completedCount;
-                assessment.TotalQuestionCount = totalCount;
-                _context.SaveChanges();
-            }
-            else
-            {
-                // multi standard
-                var query2 = from q in _context.NEW_QUESTION
-                             join qs in _context.NEW_QUESTION_SETS on q.Question_Id equals qs.Question_Id
-                             join nql in _context.NEW_QUESTION_LEVELS on qs.New_Question_Set_Id equals nql.New_Question_Set_Id
-                             join usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
-                             join stand in _context.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
-                             join qgh in _context.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
-                             join usc in _context.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
-                             join usl in _context.UNIVERSAL_SAL_LEVEL on selectedSalLevel equals usl.Full_Name_Sal
-                             where stand.Selected == true
-                                             && stand.Assessment_Id == assessmentId
-                                             && nql.Universal_Sal_Level == usl.Universal_Sal_Level1
-                             select q.Question_Id;
-
-                //return query2.Distinct().Count();
-
-                var sssssssss = 1;
-            }
+            assessment.CompletedQuestionCount = completedCount;
+            assessment.TotalQuestionCount = totalCount;
+            _context.SaveChanges();
         }
+
+
+        #endregion
 
 
         #region Maturity Questions
@@ -242,7 +249,7 @@ namespace CSETWebCore.Business.Question
         /// Counts the number of in-scope question/answers and stores
         /// the number that have a value as well as the total.  
         /// </summary>
-        public void CountMaturityCompletion(int assessmentId)
+        private void CountMaturity(int assessmentId)
         {
             List<int> inScopeModels = DetermineInScopeModels(assessmentId).ToList();
 
@@ -273,14 +280,11 @@ namespace CSETWebCore.Business.Question
             inScopeAnswers = FilterByMaturityLevel(assessmentId, inScopeModels, inScopeAnswers);
 
 
+            // get totals
             var totalCount = inScopeAnswers.Count();
             var completedCount = inScopeAnswers.Where(ans => ans.AnswerText != "U" && ans.AnswerText != "").Count();
 
             var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
-            if (assessment == null)
-            {
-                return;
-            }
 
             assessment.CompletedQuestionCount = completedCount;
             assessment.TotalQuestionCount = totalCount;
@@ -426,6 +430,42 @@ namespace CSETWebCore.Business.Question
         }
 
         #endregion
+
+
+        #region Component Questions
+
+        /// <summary>
+        /// Counts the number of in-scope question/answers and stores
+        /// the number that have a value as well as the total.  
+        /// </summary>
+        private void CountComponent(int assessmentId)
+        {
+            var q = from adc in _context.ASSESSMENT_DIAGRAM_COMPONENTS
+                    join cq in _context.COMPONENT_QUESTIONS on adc.Component_Symbol_Id equals cq.Component_Symbol_Id
+                    join nq in _context.NEW_QUESTION on cq.Question_Id equals nq.Question_Id
+                    where adc.Assessment_Id == assessmentId
+                    select nq.Question_Id;
+
+            var inScopeQuestions = q.Distinct().ToList();
+
+            var inScopeAnswers = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                && inScopeQuestions.Contains(x.Question_Or_Requirement_Id)
+                && x.Question_Type == "Component").ToList();
+
+            // get totals
+            var totalCount = inScopeAnswers.Count();
+            var completedCount = inScopeAnswers.Where(ans => ans.Answer_Text != "U" && ans.Answer_Text != "").Count();
+
+            var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
+
+            assessment.CompletedQuestionCount = completedCount;
+            assessment.TotalQuestionCount = totalCount;
+            _context.SaveChanges();
+        }
+
+
+        #endregion
+
     }
 
 

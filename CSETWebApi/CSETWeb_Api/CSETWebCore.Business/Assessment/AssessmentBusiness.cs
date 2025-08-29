@@ -137,7 +137,7 @@ namespace CSETWebCore.Business.Assessment
 
 
             string defaultSal = "Low";
-            _salBusiness.SetDefaultSALs(assessment_id, defaultSal);
+            _salBusiness.SetDefaultSal(assessment_id, defaultSal);
 
 
             _standardsBusiness.PersistSelectedStandards(assessment_id, null);

@@ -100,7 +100,7 @@ namespace CSETWebCore.Business.Sal
         /// 
         /// </summary>
         /// <param name="assessmentId"></param>
-        public void SetDefaultSAL_IfNotSet(int assessmentId)
+        public void SetDefaultSalIfNotSet(int assessmentId)
         {
             if (_context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault() == null)
             {
@@ -113,7 +113,7 @@ namespace CSETWebCore.Business.Sal
         /// 
         /// </summary>
         /// <param name="assessmentId"></param>
-        public void SetDefaultSALs(int assessmentId, string level = "Low")
+        public void SetDefaultSal(int assessmentId, string level = "Low")
         {
             SetDefault(assessmentId, level);
         }

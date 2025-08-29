@@ -33,7 +33,6 @@ namespace CSETWebCore.Business.Question
         }
 
 
-
         /// <summary>
         /// Provides a central place to sense answered question
         /// events and do something.
@@ -41,28 +40,12 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         public bool HookQuestionAnswered(Answer answer)
         {
+            new CompletionCounter(_context).Count(answer.AssessmentId);
+
             if (answer.Is_Maturity)
             {
-                new CompletionCounter(_context).CountMaturityCompletion(answer.AssessmentId);
-
                 return HookMaturityQuestionAnswered(answer);
             }
-
-            if (answer.Is_Requirement)
-            {
-                new CompletionCounter(_context).CountRequirementCompletion(answer.AssessmentId);
-
-                return false;
-            }
-
-            if (answer.Is_Question)
-            {
-                new CompletionCounter(_context).CountSimpleQuestionCompletion(answer.AssessmentId);
-
-                return false;
-            }
-
-
 
             return false;
         }
@@ -73,7 +56,7 @@ namespace CSETWebCore.Business.Question
         /// Returns a boolean indicating if details have changed.
         /// </summary>
         /// <param name="answer"></param>
-        public bool HookMaturityQuestionAnswered(Answer answer)
+        private bool HookMaturityQuestionAnswered(Answer answer)
         {
             bool detailsChanged = false;
 
@@ -109,7 +92,7 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         public void HookTargetLevelChanged(int assessmentId)
         {
-            new CompletionCounter(_context).CountMaturityCompletion(assessmentId);
+            new CompletionCounter(_context).Count(assessmentId);
         }
 
         /// <summary>
@@ -117,7 +100,7 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         public void HookSalChanged(int assessmentId)
         {
-            new CompletionCounter(_context).CountStandardsBasedCompletion(assessmentId);
+            new CompletionCounter(_context).Count(assessmentId);
         }
 
 
@@ -127,7 +110,7 @@ namespace CSETWebCore.Business.Question
         /// <param name="assessmentId"></param>
         public void HookQuestionsModeChanged(int assessmentId)
         {
-            new CompletionCounter(_context).CountStandardsBasedCompletion(assessmentId);
+            new CompletionCounter(_context).Count(assessmentId);
         }
 
 
@@ -138,7 +121,17 @@ namespace CSETWebCore.Business.Question
         /// <param name="assessmentId"></param>
         public void HookGroupingSelectionChanged(int assessmentId)
         {
-            new CompletionCounter(_context).CountMaturityCompletion(assessmentId);
+            new CompletionCounter(_context).Count(assessmentId);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public void HookDiagramChanged(int assessmentId)
+        {
+            new CompletionCounter(_context).Count(assessmentId);
         }
     }
 }
