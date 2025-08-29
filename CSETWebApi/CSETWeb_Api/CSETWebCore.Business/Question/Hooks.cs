@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Observations;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
@@ -32,7 +33,7 @@ namespace CSETWebCore.Business.Question
         }
 
 
-       
+
         /// <summary>
         /// Provides a central place to sense answered question
         /// events and do something.
@@ -46,6 +47,22 @@ namespace CSETWebCore.Business.Question
 
                 return HookMaturityQuestionAnswered(answer);
             }
+
+            if (answer.Is_Requirement)
+            {
+                new CompletionCounter(_context).CountRequirementCompletion(answer.AssessmentId);
+
+                return false;
+            }
+
+            if (answer.Is_Question)
+            {
+                new CompletionCounter(_context).CountSimpleQuestionCompletion(answer.AssessmentId);
+
+                return false;
+            }
+
+
 
             return false;
         }
@@ -87,16 +104,36 @@ namespace CSETWebCore.Business.Question
 
 
         /// <summary>
-        /// 
+        /// Handles actions that should be taken when a maturity 
+        /// target level is changed.
         /// </summary>
         public void HookTargetLevelChanged(int assessmentId)
         {
             new CompletionCounter(_context).CountMaturityCompletion(assessmentId);
         }
 
+        /// <summary>
+        /// Handles actions that should be taken when the SAL is changed.
+        /// </summary>
+        public void HookSalChanged(int assessmentId)
+        {
+            new CompletionCounter(_context).CountStandardsBasedCompletion(assessmentId);
+        }
+
 
         /// <summary>
-        /// 
+        /// Handles actions that should be taken when the questions/requirements mode is changed.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public void HookQuestionsModeChanged(int assessmentId)
+        {
+            new CompletionCounter(_context).CountStandardsBasedCompletion(assessmentId);
+        }
+
+
+        /// <summary>
+        /// Handles actions that should be taken when a 
+        /// grouping selection is changed.
         /// </summary>
         /// <param name="assessmentId"></param>
         public void HookGroupingSelectionChanged(int assessmentId)

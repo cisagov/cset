@@ -4,9 +4,11 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
+using CsvHelper.Configuration.Attributes;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -34,6 +36,12 @@ namespace CSETWebCore.Business.Question
         }
 
 
+        /// <summary>
+        /// Returns a collection of completion counts for each assessment that the user
+        /// is associated with.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public List<CompletionCounts> GetAssessmentsCompletionForUser(int userId)
         {
             var response = new List<CompletionCounts>();
@@ -50,7 +58,8 @@ namespace CSETWebCore.Business.Question
 
 
         /// <summary>
-        /// 
+        /// Returns a collection of completion counts for each assessment that the access key
+        /// is associated with.
         /// </summary>
         /// <returns></returns>
         public List<CompletionCounts> GetAssessmentsCompletionForAccessKey(string accessKey)
@@ -69,7 +78,10 @@ namespace CSETWebCore.Business.Question
 
 
         /// <summary>
-        /// 
+        /// When "My Assessments" is requested, this makes sure that the assessments 
+        /// in the list all have values in the count fields.  If there are any
+        /// that are still null, this will quickly calculate them so that the user
+        /// gets counts for all of their assessments.
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
@@ -105,6 +117,126 @@ namespace CSETWebCore.Business.Question
             return response;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public void CountStandardsBasedCompletion(int assessmentId)
+        {
+            var mode = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault()?.Application_Mode;
+
+            if (mode == "Questions Based")
+            {
+                CountSimpleQuestionCompletion(assessmentId);
+            }
+
+            if (mode == "Requirements Based")
+            {
+                CountRequirementCompletion(assessmentId);
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public void CountRequirementCompletion(int assessmentId)
+        {
+            var setNames = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId).Select(y => y.Set_Name).ToList();
+            string selectedSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == assessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
+
+            var q = from rs in _context.REQUIREMENT_SETS
+                    from r in _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
+                    from rl in _context.REQUIREMENT_LEVELS.Where(x => x.Requirement_Id == r.Requirement_Id)
+                    from usl in _context.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == selectedSalLevel)
+                    where setNames.Contains(rs.Set_Name)
+                          && rl.Standard_Level == usl.Universal_Sal_Level1
+                    select r.Requirement_Id;
+
+            var inScopeRequirementIds = q.ToList();
+
+            var inScopeAnswers = _context.ANSWER.Where(x => x.Question_Type == "Requirement" && inScopeRequirementIds.Contains(x.Question_Or_Requirement_Id)).ToList();
+
+            var totalCount = inScopeRequirementIds.Count();
+            var completedCount = inScopeAnswers.Where(ans => ans.Answer_Text != "U" && ans.Answer_Text != "").Count();
+
+            var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
+            if (assessment == null)
+            {
+                return;
+            }
+
+            assessment.CompletedQuestionCount = completedCount;
+            assessment.TotalQuestionCount = totalCount;
+            _context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// Counts and persists question completion totals for a standards-based assessment in questions mode.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public void CountSimpleQuestionCompletion(int assessmentId)
+        {
+            var setNames = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId).Select(y => y.Set_Name).ToList();
+            string selectedSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == assessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
+
+
+            if (setNames.Count == 1)
+            {
+                // Single standard
+                var query1 = from q in _context.NEW_QUESTION
+                             from qs in _context.NEW_QUESTION_SETS.Where(x => x.Question_Id == q.Question_Id)
+                             from l in _context.NEW_QUESTION_LEVELS.Where(x => qs.New_Question_Set_Id == x.New_Question_Set_Id)
+                             from s in _context.SETS.Where(x => x.Set_Name == qs.Set_Name)
+                             from usl in _context.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == selectedSalLevel)
+                             where setNames.Contains(s.Set_Name)
+                                && l.Universal_Sal_Level == usl.Universal_Sal_Level1
+                             select q.Question_Id;
+
+                var inScopeQuestionIds = query1.ToList();
+
+                var inScopeAnswers = _context.ANSWER.Where(x => x.Question_Type == "Question" && inScopeQuestionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
+
+                var totalCount = inScopeQuestionIds.Count();
+                var completedCount = inScopeAnswers.Where(ans => ans.Answer_Text != "U" && ans.Answer_Text != "").Count();
+
+                var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
+                if (assessment == null)
+                {
+                    return;
+                }
+
+                assessment.CompletedQuestionCount = completedCount;
+                assessment.TotalQuestionCount = totalCount;
+                _context.SaveChanges();
+            }
+            else
+            {
+                // multi standard
+                var query2 = from q in _context.NEW_QUESTION
+                             join qs in _context.NEW_QUESTION_SETS on q.Question_Id equals qs.Question_Id
+                             join nql in _context.NEW_QUESTION_LEVELS on qs.New_Question_Set_Id equals nql.New_Question_Set_Id
+                             join usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
+                             join stand in _context.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
+                             join qgh in _context.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
+                             join usc in _context.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
+                             join usl in _context.UNIVERSAL_SAL_LEVEL on selectedSalLevel equals usl.Full_Name_Sal
+                             where stand.Selected == true
+                                             && stand.Assessment_Id == assessmentId
+                                             && nql.Universal_Sal_Level == usl.Universal_Sal_Level1
+                             select q.Question_Id;
+
+                //return query2.Distinct().Count();
+
+                var sssssssss = 1;
+            }
+        }
+
+
+        #region Maturity Questions
 
         /// <summary>
         /// Counts the number of in-scope question/answers and stores
@@ -292,6 +424,8 @@ namespace CSETWebCore.Business.Question
 
             return list;
         }
+
+        #endregion
     }
 
 
