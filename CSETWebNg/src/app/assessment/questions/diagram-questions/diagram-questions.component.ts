@@ -96,7 +96,8 @@ export class DiagramQuestionsComponent implements OnInit {
         this.categories = response.categories;
         this.loaded = true;
 
-        this.completionSvc.setQuestionArray(response);
+        this.completionSvc.structure = response;
+        this.completionSvc.setQuestionArray();
 
         this.refreshQuestionVisibility();
       },

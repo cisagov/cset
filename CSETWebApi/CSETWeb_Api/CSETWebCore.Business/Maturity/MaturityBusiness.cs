@@ -856,7 +856,7 @@ namespace CSETWebCore.Business.Maturity
 
 
             // some special logic for the CIE model
-            if (groupingId != 0 && targetModelId != 17)
+            if (groupingId != 0 && targetModelId != Constants.Constants.Model_CIE)
             {
                 questionQuery = questionQuery.Where(x => x.Question_Text.StartsWith("A"));
             }
@@ -1011,7 +1011,7 @@ namespace CSETWebCore.Business.Maturity
 
                     var qa = QuestionAnswerBuilder.BuildQuestionAnswer(myQ, answer);
                     qa.MaturityModelId = sg.Maturity_Model_Id;
-                    qa.IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id) || myQ.Parent_Question_Id == null;
+                    qa.IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id);
 
 
                     // Include CSF mappings
@@ -1103,10 +1103,16 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         private bool IsQuestionCountable(int modelId, QuestionAnswer qa)
         {
-            // EDM and CRR and CPG2 - parent questions are unanswerable and not countable
-            if (modelId == Constants.Constants.Model_EDM || modelId == Constants.Constants.Model_CRR || modelId == Constants.Constants.Model_CPG2)
+            // CPG2 - parent questions are marked as not answerable and are not counted
+            if (modelId == Constants.Constants.Model_CPG2)
             {
-                return !qa.IsParentQuestion;
+                return qa.IsAnswerable;
+            }
+
+            // EDM and CRR - parent questions are unanswerable and not countable
+            if (modelId == Constants.Constants.Model_EDM || modelId == Constants.Constants.Model_CRR)
+            {
+                return qa.IsAnswerable;
             }
 
             // VADR - child questions are freeform and not countable
