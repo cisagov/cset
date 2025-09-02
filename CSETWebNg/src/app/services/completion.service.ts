@@ -89,7 +89,7 @@ export class CompletionService {
       // this version gathers questions from a Maturity response structure
       this.targetMaturityLevel = this.structure.maturityTargetLevel;
 
-      this.structure.groupings.forEach(g => {
+      this.structure.groupings.filter(x => x.selected).forEach(g => {
         g.questions.forEach(q => {
           if (q.maturityLevel <= this.targetMaturityLevel && (g.selected && q.countable)) {
             this.questionflat.push({
@@ -114,11 +114,11 @@ export class CompletionService {
    * in selected groupings and are considered 'countable' are collected.
    */
   private recurseSubgroups(gg) {
-    gg.subGroupings?.forEach(g => {
+    gg.subGroupings?.filter(x => x.selected).forEach(g => {
       g.questions.forEach(q => {
         // how do we only consider 'countable' questions?  For VADR the parents are countable, but for others, parents are not.
         // so we can't blindly treat parents one way for all models.
-        if (q.maturityLevel <= this.targetMaturityLevel && (g.selected && q.countable)) {
+        if (q.maturityLevel <= this.targetMaturityLevel && q.countable) {
           this.questionflat.push({
             id: q.questionId,
             answer: q.answer,
