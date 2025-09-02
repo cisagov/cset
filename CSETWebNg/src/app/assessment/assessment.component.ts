@@ -144,6 +144,7 @@ export class AssessmentComponent implements OnInit {
       this.getAssessmentDetail();
       this.loadCompletionData();
     }
+
   }
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;

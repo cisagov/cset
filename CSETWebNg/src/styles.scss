@@ -56,11 +56,25 @@ SOFTWARE.
   // Firefox background
   background-color: #e5e7eb;
 }
+/* Progress bar styling with your brand color */
+progress::-webkit-progress-value {
+  background-color: #015288 !important;
+  border-radius: 6px;
+}
 
-.mat-button, 
-.mat-raised-button, 
-.mat-icon-button, 
-.mat-fab, 
+progress::-moz-progress-bar {
+  background-color: #015288 !important;
+  border-radius: 6px;
+}
+
+progress::-webkit-progress-bar {
+  background-color: #e5e7eb;
+  border-radius: 6px;
+}
+.mat-button,
+.mat-raised-button,
+.mat-icon-button,
+.mat-fab,
 .mat-mini-fab,
 .mat-stroked-button,
 .mat-flat-button {
