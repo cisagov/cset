@@ -443,6 +443,7 @@ namespace CSETWebCore.Constants
         public const int Model_ISE = 10;
         public const int Model_CPG = 11;
         public const int Model_HYDRO = 13;
+        public const int Model_CIE = 17;
         public const int Model_SSG_CHEM = 18;
         public const int Model_SSG_IT = 20;
         public const int Model_CPG2 = 21;

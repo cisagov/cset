@@ -306,7 +306,8 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
         this.setHasQuestions = (response.questionCount > 0);
         this.questionsSvc.questions = response;
 
-        this.completionSvc.setQuestionArray(response);
+        this.completionSvc.structure = response;
+        this.completionSvc.setQuestionArray();
 
         this.categories = response.categories;
 

@@ -44,6 +44,7 @@ export class CompletionService {
   answeredCount = 0;
   totalCount = 0;
 
+  public structure: any;
   questionflat: any[];
 
   /**
@@ -64,13 +65,16 @@ export class CompletionService {
   /**
    * Converts a question structure into a bag of IDs so that
    * we can quickly calculate answer counts.
+   * 
+   * NOTE:  this service's 'structure' property must be set before
+   * calling this function.
    */
-  setQuestionArray(data) {
+  setQuestionArray() {
     this.reset();
 
     // this version gathers questions from a Standard response structure
-    if (!!data.categories) {
-      data.categories.forEach(element => {
+    if (!!this.structure.categories) {
+      this.structure.categories.forEach(element => {
         element.subCategories.forEach(sub => {
           sub.questions.forEach(q => {
             this.questionflat.push({
@@ -81,13 +85,13 @@ export class CompletionService {
           });
         })
       });
-    } else if (!!data.groupings) {
+    } else if (!!this.structure.groupings) {
       // this version gathers questions from a Maturity response structure
-      this.targetMaturityLevel = data.maturityTargetLevel;
+      this.targetMaturityLevel = this.structure.maturityTargetLevel;
 
-      data.groupings.forEach(g => {
+      this.structure.groupings.forEach(g => {
         g.questions.forEach(q => {
-          if (q.maturityLevel <= this.targetMaturityLevel && q.countable) {
+          if (q.maturityLevel <= this.targetMaturityLevel && (g.selected && q.countable)) {
             this.questionflat.push({
               id: q.questionId,
               answer: q.answer,
@@ -105,14 +109,16 @@ export class CompletionService {
   /**
    * Loops through a maturity grouping's subgroups,
    * adding its questions to the collection.
-   * Only questions within the maturity level that are not parent questions are collected.
+   * 
+   * Only questions within the maturity level that are 
+   * in selected groupings and are considered 'countable' are collected.
    */
-  recurseSubgroups(gg) {
+  private recurseSubgroups(gg) {
     gg.subGroupings?.forEach(g => {
       g.questions.forEach(q => {
         // how do we only consider 'countable' questions?  For VADR the parents are countable, but for others, parents are not.
         // so we can't blindly treat parents one way for all models.
-        if (q.maturityLevel <= this.targetMaturityLevel && q.countable) {
+        if (q.maturityLevel <= this.targetMaturityLevel && (g.selected && q.countable)) {
           this.questionflat.push({
             id: q.questionId,
             answer: q.answer,
@@ -122,6 +128,14 @@ export class CompletionService {
       });
       this.recurseSubgroups(g);
     });
+  }
+
+  /**
+   * Recalculate question completion numbers
+   */
+  toggleGroupSelection() {
+    // rebuild from scratch to get an accurate number for the new selected groupings
+    this.setQuestionArray();
   }
 
   /**

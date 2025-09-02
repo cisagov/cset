@@ -263,7 +263,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
 
         this.loaded = true;
 
-        this.completionSvc.setQuestionArray(response);
+        this.completionSvc.structure = response;
+        this.completionSvc.setQuestionArray();
 
         this.refreshQuestionVisibility();
       },
@@ -312,7 +313,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
 
       this.loaded = true;
 
-      this.completionSvc.setQuestionArray(response);
+      this.completionSvc.structure = response;
+      this.completionSvc.setQuestionArray();
 
       this.refreshQuestionVisibility();
     },
@@ -392,6 +394,9 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
 
     // scroll to the question
     let qqElement = document.getElementById(`mq${mq}`);
+    if (qqElement == null) {
+      return;
+    }
     setTimeout(() => {
       qqElement.scrollIntoView({ behavior: 'smooth' });
       return;

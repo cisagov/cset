@@ -322,14 +322,10 @@ export class MaturityFilteringService {
           return;
         }
       }
-      // OLD code to filter questionText
-      // if (filterSvc.filterSearchString.length > 0
-      //   && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
-      //   return;
-      // }
+
       // only apply maturity-level filtering when the user has toggled at least one numeric level
       const hasLevelFilter = filterSvc.showFilters.some(f => /^\d+$/.test(f));
-      if (maturityModel?.levels?.length > 0
+      if ((maturityModel?.levels?.length ?? 0) > 0
         && q.maturityLevel != null
         && hasLevelFilter) {
         const questionLevel = q.maturityLevel.toString();
