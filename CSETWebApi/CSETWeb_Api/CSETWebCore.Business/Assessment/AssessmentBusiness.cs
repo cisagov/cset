@@ -495,6 +495,12 @@ namespace CSETWebCore.Business.Assessment
                     assessment.SectorId = d2Sector;
                 }
 
+                var ssg = (int?)d2.GetX(assessmentId, "SSG-SECTOR");
+                if(ssg != null)
+                {
+                    assessment.SsgSectorId = ssg;
+                }
+
 
                 // facilitator
                 assessment.SelfAssessment = (bool)(d2.GetX(assessmentId, "SELF-ASSESS") ?? false);

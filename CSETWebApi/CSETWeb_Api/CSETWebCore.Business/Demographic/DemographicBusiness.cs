@@ -51,6 +51,7 @@ namespace CSETWebCore.Business.Demographic
             demographics.TechDomain = extBiz.GetX(assessmentId, "TECH-DOMAIN")?.ToString();
             demographics.SectorId = (int?)extBiz.GetX(assessmentId, "SECTOR");
             demographics.IndustryId = (int?)extBiz.GetX(assessmentId, "SUBSECTOR");
+            demographics.SsgSectorId = (int?)extBiz.GetX(assessmentId, "SSG-SECTOR");
             demographics.CriticalService = (string)extBiz.GetX(assessmentId, "CRIT-SERVICE");
             demographics.PointOfContact = (int?)extBiz.GetX(assessmentId, "POC");
             demographics.Agency = (string)extBiz.GetX(assessmentId, "BUSINESS-UNIT");
@@ -114,8 +115,17 @@ namespace CSETWebCore.Business.Demographic
             extBiz.SaveX(demographics.AssessmentId, "FACILITATOR", demographics.FacilitatorId == 0 ? null : demographics.FacilitatorId);
             extBiz.SaveX(demographics.AssessmentId, "ASSET-VALUE", assetValue?.OptionValue);
             extBiz.SaveX(demographics.AssessmentId, "SIZE", assetSize?.OptionValue);
-            
-            _assessmentUtil.TouchAssessment(demographics.AssessmentId);
+
+            if (demographics.SsgSectorId == 0)
+            {
+                extBiz.RemoveX(demographics.AssessmentId, "SSG-SECTOR");
+            }
+            else
+            {
+                extBiz.SaveX(demographics.AssessmentId, "SSG-SECTOR", demographics.SsgSectorId);
+            }
+
+                _assessmentUtil.TouchAssessment(demographics.AssessmentId);
 
             return demographics.AssessmentId;
         }

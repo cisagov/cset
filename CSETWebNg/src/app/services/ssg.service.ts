@@ -48,7 +48,7 @@ export class SsgService {
   * cyber sector and one NIPP sector.
   */
   ssgSimpleSectorLabel() {
-    const s: number = Number(this.assessSvc.assessment?.sectorId);
+    const s: number = Number(this.assessSvc.assessment?.ssgSectorId);
 
     if ([1, 19].includes(s)) {
       return 'chemical';
@@ -70,7 +70,7 @@ export class SsgService {
    * cyber sector and one NIPP sector.
    */
   ssgBonusModel(): number | null {
-    const s: number = Number(this.assessSvc.assessment?.sectorId);
+    const s: number = Number(this.assessSvc.assessment?.ssgSectorId);
 
     if ([1, 19].includes(s)) {
       return 18; // chemical

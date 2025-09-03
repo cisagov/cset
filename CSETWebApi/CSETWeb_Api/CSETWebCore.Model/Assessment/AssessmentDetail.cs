@@ -46,6 +46,8 @@ namespace CSETWebCore.Model.Assessment
         public int? SectorId { get; set; }
         public int? IndustryId { get; set; }
 
+        public int? SsgSectorId { get; set; }
+
 
         // Selected features of the assessment
         public bool UseStandard { get; set; }

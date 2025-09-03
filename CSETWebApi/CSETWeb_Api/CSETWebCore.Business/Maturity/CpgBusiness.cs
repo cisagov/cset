@@ -122,7 +122,7 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public int? DetermineSsgModel(int assessmentId)
         {
-            var ddSector = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "SECTOR").FirstOrDefault();
+            var ddSector = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "SSG-SECTOR").FirstOrDefault();
 
             // CHEMICAL
             var chemicalSectors = new List<int>() { 1, 19 };

@@ -43,9 +43,11 @@ export interface AssessmentDetail {
     assets?: string;
 
     galleryItemGuid?: string;
+    
     // a few demographics to track
     sectorId?: number;
     industryId?: number;
+    ssgSectorId?: number;
 
     useStandard?: boolean;
     useMaturity?: boolean;
@@ -114,6 +116,8 @@ export interface Demographic {
 
     sectorId?: number;
     industryId?: number;
+
+    ssgSectorId?: number;
 
     size?: number;
     assetValue?: number;

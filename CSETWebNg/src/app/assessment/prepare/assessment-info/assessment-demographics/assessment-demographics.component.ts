@@ -31,6 +31,7 @@ import { ConfigService } from '../../../../services/config.service';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadDemographicsComponent } from "../../../../dialogs/import demographics/import-demographics.component";
+import { ConstantsService } from '../../../../services/constants.service';
 
 
 
@@ -88,6 +89,7 @@ export class AssessmentDemographicsComponent implements OnInit {
     constructor(
         private demoSvc: DemographicService,
         public assessSvc: AssessmentService,
+        private c: ConstantsService,
         public configSvc: ConfigService,
         public dialog: MatDialog,
     ) { }
@@ -98,8 +100,8 @@ export class AssessmentDemographicsComponent implements OnInit {
                 this.sectorsList = data;
             },
             error => {
-                console.log('Error Getting all sectors: ' + (<Error>error).name + (<Error>error).message);
-                console.log('Error Getting all sectors (cont): ' + (<Error>error).stack);
+                console.error('Error Getting all sectors: ' + (<Error>error).name + (<Error>error).message);
+                console.error('Error Getting all sectors (cont): ' + (<Error>error).stack);
             });
         this.demoSvc.getAllAssetValues().subscribe(
             (data: DemographicsAssetValue[]) => {
@@ -107,16 +109,16 @@ export class AssessmentDemographicsComponent implements OnInit {
 
             },
             error => {
-                console.log('Error Getting all asset values: ' + (<Error>error).name + (<Error>error).message);
-                console.log('Error Getting all asset values (cont): ' + (<Error>error).stack);
+                console.error('Error Getting all asset values: ' + (<Error>error).name + (<Error>error).message);
+                console.error('Error Getting all asset values (cont): ' + (<Error>error).stack);
             });
         this.demoSvc.getSizeValues().subscribe(
             (data: AssessmentSize[]) => {
                 this.sizeList = data;
             },
             error => {
-                console.log('Error Getting size values: ' + (<Error>error).name + (<Error>error).message);
-                console.log('Error Getting size values (cont): ' + (<Error>error).stack);
+                console.error('Error Getting size values: ' + (<Error>error).name + (<Error>error).message);
+                console.error('Error Getting size values (cont): ' + (<Error>error).stack);
             });
 
         if (this.demoSvc.id) {
@@ -162,6 +164,15 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.updateDemographics();
     }
 
+    onChangeSsg(evt: any) {
+        if (evt.target?.value != null) {
+            this.demographicData.ssgSectorId = +evt.target.value;
+            this.assessSvc.assessment.ssgSectorId = this.demographicData.ssgSectorId;
+            this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
+            this.updateDemographics();
+        }
+    }
+
     getDemographics() {
         this.demoSvc.getDemographic().subscribe(
             (data: Demographic) => {
@@ -176,7 +187,7 @@ export class AssessmentDemographicsComponent implements OnInit {
                 // populate Industry dropdown based on Sector
                 this.populateIndustryOptions(this.demographicData.sectorId);
             },
-            error => console.log('Demographic load Error: ' + (<Error>error).message)
+            error => console.error('Demographic load Error: ' + (<Error>error).message)
         );
 
     }
@@ -209,8 +220,8 @@ export class AssessmentDemographicsComponent implements OnInit {
                 this.industryList = data;
             },
             error => {
-                console.log('Error Getting Industry: ' + (<Error>error).name + (<Error>error).message);
-                console.log('Error Getting Industry (cont): ' + (<Error>error).stack);
+                console.error('Error Getting Industry: ' + (<Error>error).name + (<Error>error).message);
+                console.error('Error Getting Industry (cont): ' + (<Error>error).stack);
             });
     }
 

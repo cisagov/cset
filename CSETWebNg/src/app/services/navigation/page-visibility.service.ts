@@ -146,8 +146,8 @@ export class PageVisibilityService {
 
 
       // Determine if a 'Sector-Specific Goal' question set is applicable
-      if (c.startsWith('SECTOR-ANY(')) {
-        show = show && this.sectorAny(c);
+      if (c.startsWith('SSG-CHOSEN-SECTOR-ANY(')) {
+        show = show && this.ssgChosenSectorAny(c);
       }
 
       if (c == ('ASSESSOR')) {
@@ -317,6 +317,18 @@ export class PageVisibilityService {
     let has = false;
     targets.forEach((t: string) => {
       has = has || this.assessSvc.assessment?.sectorId == +t;
+    });
+    return has;
+  }
+
+  /**
+   * Returns true if the assessment's sectorId in in the specified list
+   */
+  ssgChosenSectorAny(rule: string): boolean {
+    let targets = this.getTargets(rule);
+    let has = false;
+    targets.forEach((t: string) => {
+      has = has || this.assessSvc.assessment?.ssgSectorId == +t;
     });
     return has;
   }

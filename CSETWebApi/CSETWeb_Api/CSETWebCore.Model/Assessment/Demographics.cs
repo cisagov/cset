@@ -22,6 +22,8 @@ namespace CSETWebCore.Model.Assessment
         public int? SectorId { get; set; }
         public int? IndustryId { get; set; }
 
+        public int? SsgSectorId { get; set; }
+
 
         public int? Size { get; set; }
         public int? AssetValue { get; set; }

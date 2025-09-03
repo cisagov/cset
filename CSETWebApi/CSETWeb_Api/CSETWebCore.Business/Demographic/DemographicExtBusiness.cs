@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
 
 
@@ -49,6 +50,7 @@ namespace CSETWebCore.Business.Demographic
             d.OrganizationName = info.Facility_Name;
             d.Sector = x.Find(z => z.DataItemName == "SECTOR")?.IntValue;
             d.Subsector = x.Find(z => z.DataItemName == "SUBSECTOR")?.IntValue;
+            d.SsgSector = x.Find(z => z.DataItemName == "SSG-SECTOR")?.IntValue;
 
             d.CisaRegion = x.Find(z => z.DataItemName == "CISA-REGION")?.IntValue;
 
@@ -333,6 +335,16 @@ namespace CSETWebCore.Business.Demographic
             SaveString(demographic.AssessmentId, "BARRIER1", demographic.Barrier1, existingRecords);
             SaveString(demographic.AssessmentId, "BARRIER2", demographic.Barrier2, existingRecords);
             SaveString(demographic.AssessmentId, "BUSINESS-UNIT", demographic.BusinessUnit, existingRecords);
+
+            if (demographic.SsgSector == 0)
+            {
+                RemoveX(demographic.AssessmentId, "SSG-SECTOR");
+            }
+            else
+            {
+                SaveX(demographic.AssessmentId, "SSG-SECTOR", demographic.SsgSector);
+            }
+
             _context.SaveChanges();
 
             AssessmentNaming.ProcessName(_context, userid, demographic.AssessmentId);
@@ -473,6 +485,20 @@ namespace CSETWebCore.Business.Demographic
             {
                 _context.DETAILS_DEMOGRAPHICS.Remove(item);
             }
+        }
+
+
+        /// <summary>
+        /// Deletes all DETAILS_DEMOGRAPHICS records on the assessment for the
+        /// specified name.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <param name="recName"></param>
+        public void RemoveX(int assessmentId, string recName)
+        {
+            var rec = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == recName);
+            _context.DETAILS_DEMOGRAPHICS.RemoveRange(rec);
+            _context.SaveChanges();
         }
     }
 }
