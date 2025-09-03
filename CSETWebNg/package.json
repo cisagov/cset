@@ -25,7 +25,7 @@
     "@angular/common": "^20.2.2",
     "@angular/compiler": "^20.2.2",
     "@angular/compiler-cli": "^20.2.2",
-    "@angular/core": "^20.2.2",
+    "@angular/core": "^20.2.3",
     "@angular/elements": "^20.2.2",
     "@angular/forms": "^20.2.2",
     "@angular/material": "^20.2.1",
