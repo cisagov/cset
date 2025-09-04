@@ -47,8 +47,8 @@ export class SalSimpleComponent implements OnInit {
         this.salsSvc.selectedSAL = data;
       },
       error => {
-        console.log('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error Getting all standards: ' + (<Error>error).stack);
+        console.error('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
+        console.error('Error Getting all standards: ' + (<Error>error).stack);
       });
   }
 }

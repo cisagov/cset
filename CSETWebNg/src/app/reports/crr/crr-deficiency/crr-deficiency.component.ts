@@ -102,7 +102,7 @@ export class CrrDeficiencyComponent implements OnInit {
 
         this.loading = false;
       },
-      (error) => console.log('CRR Deficiency Report Error: ' + (<Error>error).message)
+      (error) => console.error('CRR Deficiency Report Error: ' + (<Error>error).message)
     );
   }
 

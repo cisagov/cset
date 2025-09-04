@@ -142,10 +142,10 @@ export class EdmComponent implements OnInit, AfterContentInit {
               this.displayName = this.assesmentInfo.assessment_Name;
             }
           },
-          error => console.log('Demographic load Error: ' + (<Error>error).message)
+          error => console.error('Demographic load Error: ' + (<Error>error).message)
         );
       },
-      error => console.log('Assesment Information Error: ' + (<Error>error).message)
+      error => console.error('Assesment Information Error: ' + (<Error>error).message)
     );
   }
 

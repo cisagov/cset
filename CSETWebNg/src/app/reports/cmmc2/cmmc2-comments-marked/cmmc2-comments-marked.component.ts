@@ -108,7 +108,7 @@ export class Cmmc2CommentsMarkedComponent implements OnInit {
 
         this.loading = false;
       },
-      error => console.log('CMMC 2.0 Comments and Marked for Review Report Error: ' + (<Error>error).message)
+      error => console.error('CMMC 2.0 Comments and Marked for Review Report Error: ' + (<Error>error).message)
     );
   }
 

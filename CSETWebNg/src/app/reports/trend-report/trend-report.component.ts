@@ -95,7 +95,7 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
           this.nistSalA = v.justification;
         }
       },
-      error => console.log('Trend report load Error: ' + (<Error>error).message)
+      error => console.error('Trend report load Error: ' + (<Error>error).message)
     );
 
     // Populate charts

@@ -105,8 +105,8 @@ export class SalGenComponent implements OnInit {
 
       },
       error => {
-        console.log('Error getting gen sal descriptions: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error gen sal descriptions: ' + (<Error>error).stack);
+        console.error('Error getting gen sal descriptions: ' + (<Error>error).name + (<Error>error).message);
+        console.error('Error gen sal descriptions: ' + (<Error>error).stack);
       });
 
     // retrieve the existing sal_selection for this assessment
@@ -115,8 +115,8 @@ export class SalGenComponent implements OnInit {
         this.salsSvc.selectedSAL = data;
       },
       error => {
-        console.log('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error Getting all standards: ' + (<Error>error).stack);
+        console.error('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
+        console.error('Error Getting all standards: ' + (<Error>error).stack);
       });
   }
 
@@ -130,8 +130,8 @@ export class SalGenComponent implements OnInit {
         this.salsSvc.selectedSAL.selected_Sal_Level = data;
       },
       error => {
-        console.log('Error saving gensal: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error saving gensal: ' + (<Error>error).stack);
+        console.error('Error saving gensal: ' + (<Error>error).name + (<Error>error).message);
+        console.error('Error saving gensal: ' + (<Error>error).stack);
       });
   }
 }

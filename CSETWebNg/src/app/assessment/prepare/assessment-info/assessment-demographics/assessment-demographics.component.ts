@@ -98,8 +98,8 @@ export class AssessmentDemographicsComponent implements OnInit {
                 this.sectorsList = data;
             },
             error => {
-                console.log('Error Getting all sectors: ' + (<Error>error).name + (<Error>error).message);
-                console.log('Error Getting all sectors (cont): ' + (<Error>error).stack);
+                console.error('Error Getting all sectors: ' + (<Error>error).name + (<Error>error).message);
+                console.error('Error Getting all sectors (cont): ' + (<Error>error).stack);
             });
         this.demoSvc.getAllAssetValues().subscribe(
             (data: DemographicsAssetValue[]) => {
@@ -107,16 +107,16 @@ export class AssessmentDemographicsComponent implements OnInit {
 
             },
             error => {
-                console.log('Error Getting all asset values: ' + (<Error>error).name + (<Error>error).message);
-                console.log('Error Getting all asset values (cont): ' + (<Error>error).stack);
+                console.error('Error Getting all asset values: ' + (<Error>error).name + (<Error>error).message);
+                console.error('Error Getting all asset values (cont): ' + (<Error>error).stack);
             });
         this.demoSvc.getSizeValues().subscribe(
             (data: AssessmentSize[]) => {
                 this.sizeList = data;
             },
             error => {
-                console.log('Error Getting size values: ' + (<Error>error).name + (<Error>error).message);
-                console.log('Error Getting size values (cont): ' + (<Error>error).stack);
+                console.error('Error Getting size values: ' + (<Error>error).name + (<Error>error).message);
+                console.error('Error Getting size values (cont): ' + (<Error>error).stack);
             });
 
         if (this.demoSvc.id) {
@@ -176,7 +176,7 @@ export class AssessmentDemographicsComponent implements OnInit {
                 // populate Industry dropdown based on Sector
                 this.populateIndustryOptions(this.demographicData.sectorId);
             },
-            error => console.log('Demographic load Error: ' + (<Error>error).message)
+            error => console.error('Demographic load Error: ' + (<Error>error).message)
         );
 
     }
@@ -209,8 +209,8 @@ export class AssessmentDemographicsComponent implements OnInit {
                 this.industryList = data;
             },
             error => {
-                console.log('Error Getting Industry: ' + (<Error>error).name + (<Error>error).message);
-                console.log('Error Getting Industry (cont): ' + (<Error>error).stack);
+                console.error('Error Getting Industry: ' + (<Error>error).name + (<Error>error).message);
+                console.error('Error Getting Industry (cont): ' + (<Error>error).stack);
             });
     }
 

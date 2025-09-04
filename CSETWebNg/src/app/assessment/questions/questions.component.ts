@@ -325,7 +325,7 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
           (<Error>error).name +
           (<Error>error).message
         );
-        console.log('Error getting questions: ' + (<Error>error).stack);
+        console.error('Error getting questions: ' + (<Error>error).stack);
       }
     );
   }

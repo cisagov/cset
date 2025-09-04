@@ -94,7 +94,7 @@ export class MaturityQuestionsNestedComponent implements OnInit, AfterViewInit, 
       this.cisSvc.getIntegrityCheckOptions().subscribe((response: IntegrityCheckOption[]) => {
         this.cisSvc.integrityCheckOptions = response;
       }, error => {
-        console.log('Error getting CIS integrity check options: ' + (<Error>error).name + (<Error>error).message);
+        console.error('Error getting CIS integrity check options: ' + (<Error>error).name + (<Error>error).message);
       });
     }
 
@@ -156,7 +156,7 @@ export class MaturityQuestionsNestedComponent implements OnInit, AfterViewInit, 
           (<Error>error).name +
           (<Error>error).message
         );
-        console.log('Error getting questions: ' + (<Error>error).stack);
+        console.error('Error getting questions: ' + (<Error>error).stack);
       }
     );
   }

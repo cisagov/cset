@@ -59,7 +59,7 @@ export class EdmCommentsmarkedComponent implements OnInit {
         this.response = r;
         this.loading = false;
       },
-      error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
+      error => console.error('Comments Marked Report Error: ' + (<Error>error).message)
     );
   }
   getQuestion(q) {

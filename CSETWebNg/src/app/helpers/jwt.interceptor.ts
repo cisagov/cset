@@ -66,7 +66,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
 
             if (e.status === 401) {
-              console.log('Error 401! Ejecting to login page!');
+              console.error('Error 401! Ejecting to login page!');
             }
 
             if (e.status === 500 || (e.error && e.error.ExceptionMessage === 'JWT invalid')) {

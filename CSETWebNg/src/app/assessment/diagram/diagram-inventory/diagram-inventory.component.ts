@@ -79,7 +79,7 @@ export class DiagramInventoryComponent implements OnInit {
       saveAs(data, 'diagram-inventory-export.xlsx');
     },
       error => {
-        console.log('Error downloading file');
+        console.error('Error downloading file');
       });
   }
 

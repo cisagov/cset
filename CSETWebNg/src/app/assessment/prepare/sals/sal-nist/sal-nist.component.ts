@@ -59,8 +59,8 @@ export class SalNistComponent implements OnInit {
         this.salsSvc.selectedSAL = data;
       },
       error => {
-        console.log('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error Getting all standards: ' + (<Error>error).stack);
+        console.error('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
+        console.error('Error Getting all standards: ' + (<Error>error).stack);
       });
 
     this.salsSvc.getInformationTypes().subscribe(
@@ -68,8 +68,8 @@ export class SalNistComponent implements OnInit {
         this.topModel = data;
       },
       error => {
-        console.log('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error Getting all standards: ' + (<Error>error).stack);
+        console.error('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
+        console.error('Error Getting all standards: ' + (<Error>error).stack);
       });
   }
 

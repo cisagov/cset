@@ -57,12 +57,10 @@ export class CmmcCommentsMarkedComponent implements OnInit {
     this.maturitySvc.getCmmcReportData().subscribe(
       (r: any) => {
         this.model = r;
-        console.log(r)
 
         // Build up comments list
         this.model.reportData.comments.forEach(matAns => {
           const domain = matAns.mat.question_Title.split('.')[0];
-          console.log(domain);
           const cElement = this.commentsList.find(e => e.cat === this.keyToCategory[domain]);
           if (!cElement) {
             this.commentsList.push({ cat: this.keyToCategory[domain], matAnswers: [matAns] });
@@ -104,7 +102,7 @@ export class CmmcCommentsMarkedComponent implements OnInit {
 
         this.loading = false;
       },
-      error => console.log('CMMC Comments and Marked for Review Report Error: ' + (<Error>error).message)
+      error => console.error('CMMC Comments and Marked for Review Report Error: ' + (<Error>error).message)
     );
   }
 

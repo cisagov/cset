@@ -80,7 +80,7 @@ export class CmmcDeficiencyComponent implements OnInit {
 
         this.loading = false;
       },
-      error => console.log('CMMC Deficiency Report Error: ' + (<Error>error).message)
+      error => console.error('CMMC Deficiency Report Error: ' + (<Error>error).message)
     );
   }
 

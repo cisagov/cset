@@ -71,7 +71,7 @@ export class PhysicalSummaryComponent implements OnInit, AfterViewInit {
       (r: any) => {
         this.response = r;
       },
-      error => console.log('Physical Summary report load Error: ' + (<Error>error).message)
+      error => console.error('Physical Summary report load Error: ' + (<Error>error).message)
     );
   }
 
