@@ -76,7 +76,7 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
     this.reportSvc.getReport('sitesummarycmmc').subscribe((r: any) => {
       this.response = r;
     },
-      error => console.log('Site summary CMMC report load Error: ' + (<Error>error).message)
+      error => console.error('Site summary CMMC report load Error: ' + (<Error>error).message)
     );
     this.columnWidthEmitter.subscribe(item => {
       $(".gridCell").css("width", `${item}px`)

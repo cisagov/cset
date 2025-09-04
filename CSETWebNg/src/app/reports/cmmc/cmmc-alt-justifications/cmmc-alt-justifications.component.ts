@@ -60,7 +60,6 @@ export class CmmcAltJustificationsComponent implements OnInit {
         // Build up alternate justifications list
         this.model.reportData.alternateList.forEach(matAns => {
           const domain = matAns.mat.question_Title.split('.')[0];
-          console.log(domain);
           const aElement = this.altJustList.find(e => e.cat === this.keyToCategory[domain]);
           if (!aElement) {
             this.altJustList.push({ cat: this.keyToCategory[domain], matAnswers: [matAns] });
@@ -81,7 +80,7 @@ export class CmmcAltJustificationsComponent implements OnInit {
 
         this.loading = false;
       },
-      error => console.log('CMMC Alternate Justifications Report Error: ' + (<Error>error).message)
+      error => console.error('CMMC Alternate Justifications Report Error: ' + (<Error>error).message)
     );
   }
 

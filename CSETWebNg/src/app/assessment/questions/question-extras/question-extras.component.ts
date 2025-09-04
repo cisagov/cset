@@ -324,7 +324,7 @@ export class QuestionExtrasComponent implements OnInit {
       (response: number) => {
         this.myQuestion.answer_Id = response;
       },
-      error => console.log('Error saving response: ' + (<Error>error).message)
+      error => console.error('Error saving response: ' + (<Error>error).message)
     );
   }
 
@@ -415,7 +415,7 @@ export class QuestionExtrasComponent implements OnInit {
             this.myQuestion.hasObservation = (this.extras.observations.length > 0);
             this.myQuestion.answer_Id = obs.answer_Id;
           },
-          error => console.log('Error updating observations | ' + (<Error>error).message)
+          error => console.error('Error updating observations | ' + (<Error>error).message)
         );
 
       });

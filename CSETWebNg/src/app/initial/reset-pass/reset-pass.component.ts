@@ -143,7 +143,7 @@ export class ResetPassComponent implements OnInit {
 
     private handleError(msg: string, error: Response | any) {
         this.loading = false;
-        console.log(msg + (<Error>error).message);
-        console.log(msg + (<Error>error).stack);
+        console.error(msg + (<Error>error).message);
+        console.error(msg + (<Error>error).stack);
     }
 }

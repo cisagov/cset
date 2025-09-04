@@ -58,7 +58,7 @@ export class EdmDeficiencyComponent implements OnInit {
         this.response = r;
         this.loading = false;
       },
-      error => console.log('Deficiency Report Error: ' + (<Error>error).message)
+      error => console.error('Deficiency Report Error: ' + (<Error>error).message)
     );
   }
   getQuestion(q) {

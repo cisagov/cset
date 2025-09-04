@@ -88,7 +88,7 @@ export class CmmcLevelDrilldownComponent implements OnInit {
       error => {
         this.dataError = true;
         this.initialized = true;
-        console.log('CMMC level drilldown load Error: ' + (<Error>error).message);
+         console.error('CMMC level drilldown load Error: ' + (<Error>error).message);
       }
     ), (finish) => { };
   }

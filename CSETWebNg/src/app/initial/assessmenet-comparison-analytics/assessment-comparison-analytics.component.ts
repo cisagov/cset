@@ -356,7 +356,7 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
         this.populateIndustryOptions(this.demographicData.sectorId);
       },
       (error) =>
-        console.log("Demographic load Error: " + (<Error>error).message)
+        console.error("Demographic load Error: " + (<Error>error).message)
     );
   }
 
@@ -380,7 +380,7 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
           (<Error>error).name +
           (<Error>error).message
         );
-        console.log("Error Getting Industry (cont): " + (<Error>error).stack);
+        console.error("Error Getting Industry (cont): " + (<Error>error).stack);
       }
     );
   }

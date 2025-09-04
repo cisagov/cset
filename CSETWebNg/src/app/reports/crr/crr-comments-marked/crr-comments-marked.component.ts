@@ -149,7 +149,7 @@ export class CrrCommentsMarkedComponent implements OnInit {
 
         this.loading = false;
       },
-      (error) => console.log('CRR Comments Marked Report Error: ' + (<Error>error).message)
+      (error) => console.error('CRR Comments Marked Report Error: ' + (<Error>error).message)
     );
   }
 

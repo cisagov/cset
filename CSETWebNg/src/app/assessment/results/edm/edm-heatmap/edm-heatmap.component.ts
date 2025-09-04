@@ -51,7 +51,7 @@ export class EdmHeatmapComponent implements OnInit, OnChanges {
           }
           this.scores = r;
         },
-        error => console.log('RF Error: ' + (<Error>error).message)
+        error => console.error('RF Error: ' + (<Error>error).message)
       );
     }
   }

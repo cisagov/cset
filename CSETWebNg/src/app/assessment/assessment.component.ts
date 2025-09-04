@@ -184,12 +184,6 @@ export class AssessmentComponent implements OnInit {
     this.expandNav = e;
   }
 
-  // isTocLoading(node) { 
-  //   console.log(node);
-  //   var s = node?.label;
-  //   return  (s === "Please wait" || s === "Loading questions") ;
-  // }
-
   goHome() {
     this.assessSvc.dropAssessment();
     this.router.navigate(['/home']);

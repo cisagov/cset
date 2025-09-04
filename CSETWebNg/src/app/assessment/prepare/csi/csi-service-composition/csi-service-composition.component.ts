@@ -46,7 +46,7 @@ export class CsiServiceCompositionComponent implements OnInit {
         this.definingSystemsList = data;
       },
       (error) => {
-        console.log('Error getting all CSI defining systems options: ' + (<Error>error).name + (<Error>error).message);
+        console.error('Error getting all CSI defining systems options: ' + (<Error>error).name + (<Error>error).message);
       }
     );
 
@@ -137,7 +137,7 @@ export class CsiServiceCompositionComponent implements OnInit {
       (data: CsiServiceComposition) => {
         this.serviceComposition = data;
       },
-      (error) => console.log('CIS CSI service composition load Error: ' + (<Error>error).message)
+      (error) => console.error('CIS CSI service composition load Error: ' + (<Error>error).message)
     );
   }
 

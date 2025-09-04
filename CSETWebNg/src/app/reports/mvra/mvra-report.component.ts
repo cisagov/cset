@@ -49,7 +49,7 @@ export class MvraReportComponent implements OnInit {
       (r: any) => {
         this.response = r;
       },
-      error => console.log('Executive report load Error: ' + (<Error>error).message)
+      error => console.error('Executive report load Error: ' + (<Error>error).message)
     );
   }
 }

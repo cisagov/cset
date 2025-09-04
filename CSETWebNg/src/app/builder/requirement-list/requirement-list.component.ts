@@ -81,7 +81,7 @@ export class RequirementListComponent implements OnInit {
         this.categories = data.categories;
         this.subcategories = data.subcategories;
       },
-      error => console.log('Categories load Error: ' + (<Error>error).message)
+      error => console.error('Categories load Error: ' + (<Error>error).message)
     );
   }
 
@@ -208,7 +208,7 @@ export class RequirementListComponent implements OnInit {
 
             this.setBuilderSvc.navRequirementDetail(r.requirementID);
           },
-            error => console.log(error.message)
+            error => console.error(error.message)
           );
 
         } else {

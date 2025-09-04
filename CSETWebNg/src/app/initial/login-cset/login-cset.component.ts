@@ -143,7 +143,7 @@ export class LoginCsetComponent implements OnInit {
           }
 
           this.loading = false;
-          console.log('Error logging in: ' + (<Error>error).message);
+          console.error('Error logging in: ' + (<Error>error).message);
 
 
           // see if the password is expired

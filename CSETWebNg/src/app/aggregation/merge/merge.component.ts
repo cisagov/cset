@@ -93,7 +93,7 @@ export class MergeComponent implements OnInit {
           // do something?
           this.dialogRef = undefined;
         },
-        error => console.log(error.message)
+        error => console.error(error.message)
       );
   }
 }

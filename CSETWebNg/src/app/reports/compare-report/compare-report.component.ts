@@ -70,7 +70,7 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
         this.response = r;
       },
 
-      error => console.log('Compare report load Error: ' + (<Error>error).message)
+      error => console.error('Compare report load Error: ' + (<Error>error).message)
     );
 
     this.populateCharts(aggId);

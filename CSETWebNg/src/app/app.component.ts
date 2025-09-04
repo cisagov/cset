@@ -167,7 +167,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
         this.dialogRef = undefined;
       },
-      error => console.log(error.message)
+      error => console.error(error.message)
     );
     this.dialogSubscriptions.push(subscription); // Store the subscription
   }

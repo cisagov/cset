@@ -97,7 +97,7 @@ export class RraDeficiencyComponent implements OnInit {
         this.response.deficienciesList = basicList.concat(intermediateList).concat(advancedList);
         this.loading = false;
       },
-      error => console.log('Deficiency Report Error: ' + (<Error>error).message)
+      error => console.error('Deficiency Report Error: ' + (<Error>error).message)
     );
 
 
@@ -105,7 +105,7 @@ export class RraDeficiencyComponent implements OnInit {
       this.createAnswerDistribByGoal(r);
       this.createTopRankedGoals(r);
     },
-      error => console.log('RRA detail load Error: ' + (<Error>error).message)
+      error => console.error('RRA detail load Error: ' + (<Error>error).message)
     );
   }
 

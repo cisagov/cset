@@ -191,7 +191,7 @@ export class AssessmentContactsComponent implements OnInit {
           })
           .afterClosed()
           .subscribe();
-        console.log(
+        console.error(
           "Error adding assessment contact: " + JSON.stringify(contact)
         );
       }
@@ -311,7 +311,7 @@ export class AssessmentContactsComponent implements OnInit {
           .open(AlertComponent, { data: { title: "Error removing assessment contact" } })
           .afterClosed()
           .subscribe();
-        console.log(
+        console.error(
           "Error removing assessment contact: " + JSON.stringify(contact)
         );
       }

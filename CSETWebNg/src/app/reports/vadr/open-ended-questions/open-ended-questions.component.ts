@@ -141,12 +141,12 @@ export class OpenEndedQuestionsComponent implements OnInit {
 
         },
         (error) => {
-          console.log(
+          console.error(
             "Error getting questions: " +
             (<Error>error).name +
             (<Error>error).message
           );
-          console.log("Error getting questions: " + (<Error>error).stack);
+          console.error("Error getting questions: " + (<Error>error).stack);
         }
       );
   }

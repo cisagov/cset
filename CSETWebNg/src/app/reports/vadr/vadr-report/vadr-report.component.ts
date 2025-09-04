@@ -109,7 +109,7 @@ export class VadrReportComponent implements OnInit {
         // remove any child questions - they are not Y/N
         this.response.deficienciesList = this.response.deficienciesList.filter(x => x.mat.parent_Question_Id == null);
       },
-      error => console.log('Deficiency Report Error: ' + (<Error>error).message)
+      error => console.error('Deficiency Report Error: ' + (<Error>error).message)
     );
 
     // Standards Summary (pie or stacked bar)
@@ -122,7 +122,7 @@ export class VadrReportComponent implements OnInit {
 
       this.createTopRankedGoals(r);
     },
-      error => console.log('Main RRA report load Error: ' + (<Error>error).message)
+      error => console.error('Main RRA report load Error: ' + (<Error>error).message)
     );
 
 
@@ -138,7 +138,7 @@ export class VadrReportComponent implements OnInit {
       (r: any) => {
         this.mainResponse = r;
       },
-      error => console.log('Main RRA report load Error: ' + (<Error>error).message)
+      error => console.error('Main RRA report load Error: ' + (<Error>error).message)
     );
   }
 

@@ -146,7 +146,7 @@ export class RequirementDetailComponent implements OnInit {
         this.subcategories = data.subcategories;
         this.groupHeadings = data.groupHeadings;
       },
-      error => console.log('Categories load Error: ' + (<Error>error).message)
+      error => console.error('Categories load Error: ' + (<Error>error).message)
     );
   }
 

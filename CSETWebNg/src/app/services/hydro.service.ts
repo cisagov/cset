@@ -19,7 +19,6 @@ export class HydroService {
   ) { }
 
   getBulkSubCats(subCatIds: string[]) {
-    console.log(subCatIds)
     return this.http.get(this.configSvc.apiUrl + 'maturity/hydro/getBulkSubCatIds?subCatIds=' + subCatIds, headers);
   }
 
