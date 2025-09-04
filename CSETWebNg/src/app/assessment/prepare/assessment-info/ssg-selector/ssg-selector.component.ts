@@ -1,5 +1,6 @@
 import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
+import { SsgService } from '../../../../services/ssg.service';
 
 @Component({
   selector: 'app-ssg-selector',
@@ -14,39 +15,26 @@ export class SsgSelectorComponent implements OnChanges {
 
   @Output('change') valueChange = new EventEmitter<number>();
 
-
-  // SSG supported sector codes
-  sectorListSsgSupported = [
-    1, // chem
-    19, // chem
-    13, // IT
-    28 // IT
-  ];
-
-  // build a list of CSET-supported SSGs
+  /**
+   * Build a list of CSET-supported SSGs
+   */
   list1: any[] = [];
 
-
-  // Sector codes that we list for the link
-  sectorListNotYetSupported = [
-    9, // financial
-    18, // banking & finance
-    12, // healthcare
-    27, // healthcare
-    16, // water
-    34 // water
-  ];
-
-  // build a list of documented SSGs not supported in CSET
+  /**
+   * Build a list of documented SSGs not supported in CSET
+   */
   list2: string[] = [];
 
+  /**
+   * 
+   */
   constructor(
+    public ssgSvc: SsgService,
     public tSvc: TranslocoService
   ) { }
 
   /**
    * 
-   * @param changes 
    */
   ngOnChanges(changes: SimpleChanges): void {
     if (this.inputSectorList?.length > 0) {
@@ -68,12 +56,12 @@ export class SsgSelectorComponent implements OnChanges {
       this.inputSectorList = transformed;
     }
 
-    this.list1 = this.inputSectorList.filter(x => this.sectorListSsgSupported.includes(x.sectorId));
+    this.list1 = this.inputSectorList.filter(x => this.ssgSvc.sectorListSsgSupported.includes(x.sectorId));
     this.list1.unshift({ sectorId: 0, sectorName: this.tSvc.translate('extras.none') });
 
     this.list2 = [];
     this.inputSectorList.forEach(s => {
-      if (this.sectorListNotYetSupported.includes(s.sectorId)) {
+      if (this.ssgSvc.sectorListNotYetSupported.includes(s.sectorId)) {
         this.list2.push(s.sectorName);
       }
     });

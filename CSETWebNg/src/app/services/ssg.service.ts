@@ -35,6 +35,34 @@ import { AssessmentService } from './assessment.service';
 })
 export class SsgService {
 
+
+  /**
+   * Sector codes supported with SSG in CSET
+   */
+  sectorListSsgSupported = [
+    1, // chem
+    19, // chem
+    13, // IT
+    28 // IT
+  ];
+
+  /**
+   * Sector codes with CISA online documentation.
+   * We list them with a link for user reference.
+   */
+  sectorListNotYetSupported = [
+    9, // financial
+    18, // banking & finance
+    12, // healthcare
+    27, // healthcare
+    16, // water
+    34 // water
+  ];
+
+
+  /**
+   * CTOR
+   */
   constructor(
     private assessSvc: AssessmentService
   ) { }
@@ -67,7 +95,7 @@ export class SsgService {
    * 
    * Because IOD and everyone else use different sector/industry
    * value lists, these will likely be defined in pairs, one
-   * cyber sector and one NIPP sector.
+   * PPD-21 and one HSPD-7 (NIPP) sector.
    */
   ssgBonusModel(): number | null {
     const s: number = Number(this.assessSvc.assessment?.ssgSectorId);
@@ -92,7 +120,8 @@ export class SsgService {
   }
 
   /**
-   * 
+   * Returns the current SSG bonus model, if 
+   * the assessment has one.
    */
   get activeSsgModelId(): number | null {
     return this.ssgBonusModel();
@@ -100,7 +129,7 @@ export class SsgService {
 
   /**
    * Returns a label that can be used 
-   * to build for transloco keys
+   * to build for transloco keys.
    */
   get ssgLabel(): string {
     switch (this.activeSsgModelId) {

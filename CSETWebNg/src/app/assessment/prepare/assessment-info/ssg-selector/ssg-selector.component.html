@@ -1,7 +1,7 @@
-<div class="form-container">
+<div class="form-container" *transloco="let t">
      <p>
           <em>
-               Optionally select an additional sector to include Sector-Specific Goals in the assessment
+               {{t('modules.ssg.1')}}
           </em>
      </p>
 
@@ -16,9 +16,7 @@
           </div>
      </div>
      <p>
-          The following sectors include additional guidance not covered in CSET.
-          For more information about these sector-specific performance goals,
-          please visit CISA's Cross-Sector Cybersecurity Performance Goals page:
+          {{t('modules.ssg.2')}}
           <a href="https://www.cisa.gov/cross-sector-cybersecurity-performance-goals"
                target="_blank">https://www.cisa.gov/cross-sector-cybersecurity-performance-goals</a>
      </p>

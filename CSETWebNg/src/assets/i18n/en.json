@@ -981,6 +981,10 @@
       "model short title": "CPG 2.0",
       "question node title": "Goals"
     },
+    "ssg": {
+      "1": "Optionally select an additional sector to include Sector-Specific Goals in the assessment",
+      "2": "The following sectors include additional guidance not covered in CSET. For more information about these sector-specific performance goals, please visit CISA's Cross-Sector Cybersecurity Performance Goals page:"
+    },
     "cre+": {
       "display-name": "CRE+ Core",
       "model short title": "CRE+",
