@@ -63,19 +63,19 @@ export class EdmPerfMil1Component implements OnInit {
       (r: any) => {
         this.scores.set('RF', r);
       },
-      error => console.log('getEdmScores Error: ' + (<Error>error).message)
+      error => console.error('getEdmScores Error: ' + (<Error>error).message)
     );
     this.maturitySvc.getEdmScores('RMG').subscribe(
       (r: any) => {
         this.scores.set('RMG', r);
       },
-      error => console.log('getEdmScores Error: ' + (<Error>error).message)
+      error => console.error('getEdmScores Error: ' + (<Error>error).message)
     );
     this.maturitySvc.getEdmScores('SPS').subscribe(
       (r: any) => {
         this.scores.set('SPS', r);
       },
-      error => console.log('getEdmScores Error: ' + (<Error>error).message)
+      error => console.error('getEdmScores Error: ' + (<Error>error).message)
     );
   }
 

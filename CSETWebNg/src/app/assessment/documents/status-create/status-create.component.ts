@@ -98,7 +98,7 @@ export class StatusCreateComponent implements OnInit, OnDestroy {
         submittedData).subscribe(
           event2 => this.handleProgress(event2),
           () => {
-            console.log('Server error');
+            console.error('Server error');
           });
 
       statusNgForm.resetForm({});

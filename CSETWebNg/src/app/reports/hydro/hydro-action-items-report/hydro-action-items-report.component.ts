@@ -37,7 +37,7 @@ export class HydroActionItemsReportComponent implements OnInit {
   
         this.loadingCounter ++;
       },
-      error => console.log('Assessment Information Error: ' + (<Error>error).message)
+      error => console.error('Assessment Information Error: ' + (<Error>error).message)
     );
 
     this.reportSvc.getHydroActionItemsReport().subscribe(

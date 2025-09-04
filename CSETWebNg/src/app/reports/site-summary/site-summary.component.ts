@@ -93,7 +93,7 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
       (r: any) => {
         this.response = r;
       },
-      error => console.log('Site Summary report load Error: ' + (<Error>error).message)
+      error => console.error('Site Summary report load Error: ' + (<Error>error).message)
     );
 
     // Populate charts

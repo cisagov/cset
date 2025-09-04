@@ -113,7 +113,7 @@ export class CmmcStyleService {
           window.dispatchEvent(new Event('resize'));
         }
       },
-      error => console.log('CMMC Style Service load Error: ' + (<Error>error).message)
+      error => console.error('CMMC Style Service load Error: ' + (<Error>error).message)
     ), (finish) => {
       observer.complete();
     };

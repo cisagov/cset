@@ -75,7 +75,7 @@ export class SecurityplanComponent implements OnInit {
           control.controlDescription = control.controlDescription.replace(/\r/g, '<br/>');
         });
       },
-      error => console.log('Security Plan report load Error: ' + (<Error>error).message)
+      error => console.error('Security Plan report load Error: ' + (<Error>error).message)
     );
 
     // Component Types (stacked bar chart)

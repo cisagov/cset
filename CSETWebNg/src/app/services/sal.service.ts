@@ -171,8 +171,8 @@ export class SalService {
         this.selectedSAL = data;
       },
       error => {
-        console.log('Error setting sal level: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error setting sal level: ' + (<Error>error).stack);
+        console.error('Error setting sal level: ' + (<Error>error).name + (<Error>error).message);
+        console.error('Error setting sal level: ' + (<Error>error).stack);
       });
   }
 

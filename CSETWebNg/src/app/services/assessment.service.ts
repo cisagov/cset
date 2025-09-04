@@ -457,7 +457,7 @@ export class AssessmentService {
           });
         },
         error =>
-          console.log(
+          console.error(
             'Unable to create new assessment: ' + (<Error>error).message
           )
       );
@@ -492,7 +492,6 @@ export class AssessmentService {
       this.getAssessmentToken(id).then(() => {
         this.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
           this.assessment = data;
-
           this.applicationMode = this.assessment.applicationMode;
 
           if (this.assessment.baselineAssessmentId) {

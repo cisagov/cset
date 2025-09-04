@@ -84,7 +84,7 @@ export class SiteDetailComponent implements OnInit {
       (r: any) => {
         this.response = r;
       },
-      error => console.log('Detail report load Error: ' + (<Error>error).message)
+      error => console.error('Detail report load Error: ' + (<Error>error).message)
     );
 
     // Populate charts

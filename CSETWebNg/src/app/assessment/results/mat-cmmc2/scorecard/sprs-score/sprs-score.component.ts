@@ -55,7 +55,7 @@ export class SprsScoreComponent implements OnInit {
       error => {
         this.dataError = true;
         this.loading = false;
-        console.log('Site Summary report load Error: ' + (<Error>error).message);
+        console.error('Site Summary report load Error: ' + (<Error>error).message);
       });
   }
 

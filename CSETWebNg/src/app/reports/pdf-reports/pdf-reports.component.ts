@@ -251,7 +251,7 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
           this.coverImage = "<img width='700' src='" + event.target.result + "'>";
         }
         reader.onerror = (event: any) => {
-          console.log("File could not be read: " + event.target.error.code);
+          console.error("File could not be read: " + event.target.error.code);
         };
       });
   }

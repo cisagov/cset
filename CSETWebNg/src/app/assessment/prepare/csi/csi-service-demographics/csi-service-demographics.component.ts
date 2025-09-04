@@ -100,7 +100,7 @@ export class CsiServiceDemographicsComponent implements OnInit {
         this.budgetBasisList = data;
       },
       (error) => {
-        console.log('Error getting all CSI budget basis options: ' + (<Error>error).name + (<Error>error).message);
+        console.error('Error getting all CSI budget basis options: ' + (<Error>error).name + (<Error>error).message);
       }
     );
     this.csiSvc.getAllCsiStaffCounts().subscribe(
@@ -109,7 +109,7 @@ export class CsiServiceDemographicsComponent implements OnInit {
         this.cyberSecurityItIcsStaffCountList = this.filterCybersecurityItIcsStaffCounts(data);
       },
       (error) => {
-        console.log('Error getting all CSI staff count options: ' + (<Error>error).name + (<Error>error).message);
+        console.error('Error getting all CSI staff count options: ' + (<Error>error).name + (<Error>error).message);
       }
     );
     this.csiSvc.getAllCsiUserCounts().subscribe(
@@ -118,7 +118,7 @@ export class CsiServiceDemographicsComponent implements OnInit {
         this.authorizedNonOrganizationalUserCountList = this.filterNonOrganizationalUserCounts(data);
       },
       (error) => {
-        console.log('Error getting all CSI user count options: ' + (<Error>error).name + (<Error>error).message);
+        console.error('Error getting all CSI user count options: ' + (<Error>error).name + (<Error>error).message);
       }
     );
     this.csiSvc.getAllCsiCustomerCounts().subscribe(
@@ -126,7 +126,7 @@ export class CsiServiceDemographicsComponent implements OnInit {
         this.customersCountList = this.sortCustomerCounts(data);
       },
       (error) => {
-        console.log('Error getting all CSI customer count options: ' + (<Error>error).name + (<Error>error).message);
+        console.error('Error getting all CSI customer count options: ' + (<Error>error).name + (<Error>error).message);
       }
     );
 

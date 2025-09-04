@@ -53,7 +53,7 @@ export class MvraSummaryComponent implements OnInit {
       },
       error => {
         this.errors = true;
-        console.log('Mvra Gaps load Error: ' + (<Error>error).message);
+        console.error('Mvra Gaps load Error: ' + (<Error>error).message);
       }
     ),
       (finish) => {

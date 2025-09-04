@@ -69,7 +69,7 @@ export class VadrDeficiencyComponent implements OnInit {
         this.response.deficienciesList = this.response.deficienciesList.filter(x => x.mat.parent_Question_Id == null);
         this.loading = false;
       },
-      error => console.log('Deficiency Report Error: ' + (<Error>error).message)
+      error => console.error('Deficiency Report Error: ' + (<Error>error).message)
     );
   }
 

@@ -66,7 +66,7 @@ export class EditUserComponent implements OnInit {
         (data: SecurityQuestion[]) => {
           this.securityQuestions = data;
         },
-        error => console.log('Error retrieving security questions: ' + error.message)
+        error => console.error('Error retrieving security questions: ' + error.message)
       );
   }
 
@@ -79,7 +79,7 @@ export class EditUserComponent implements OnInit {
         (data: CreateUser) => {
           this.model = data;
         },
-        error => console.log('Error retrieving security questions: ' + error.message)
+        error => console.error('Error retrieving security questions: ' + error.message)
       );
   }
 
@@ -92,7 +92,7 @@ export class EditUserComponent implements OnInit {
         () => {
           this.auth.setUserInfo(this.model)
         },
-        error => console.log('Error updating the user information' + error.message)
+        error => console.error('Error updating the user information' + error.message)
       );
       this.dialog.close(this.model);
     }

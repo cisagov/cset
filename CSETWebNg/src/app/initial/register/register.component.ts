@@ -110,7 +110,7 @@ export class RegisterComponent implements OnInit {
           data: { messageText: this.errorMessage }
         })
           .afterClosed().subscribe();
-        console.log('Error Creating User Account: ' + error.message);
+        console.error('Error Creating User Account: ' + error.message);
       });
   }
 
@@ -125,7 +125,7 @@ export class RegisterComponent implements OnInit {
           this.SecurityQuestions = data;
           this.model.securityQuestion1 = data[0].securityQuestion;
         },
-        error => console.log('Error retrieving security questions: ' + error.message)
+        error => console.error('Error retrieving security questions: ' + error.message)
       );
   }
 }

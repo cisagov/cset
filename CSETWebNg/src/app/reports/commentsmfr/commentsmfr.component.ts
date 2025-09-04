@@ -82,7 +82,7 @@ export class CommentsMfrComponent implements OnInit {
 
         this.loading = false;
       },
-      error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
+      error => console.error('Comments Marked Report Error: ' + (<Error>error).message)
     );
 
     this.assessSvc.getOtherRemarks().subscribe((resp: any) => {
