@@ -27,14 +27,16 @@ namespace CSETWebCore.Api.Controllers
     {
         private readonly ITokenManager _tokenManager;
         private readonly CSETContext _context;
+        private readonly Hooks _hooks;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IReportsDataBusiness _reports;
 
-        public MaturityController(ITokenManager tokenManager, CSETContext context, IAssessmentUtil assessmentUtil,
+        public MaturityController(ITokenManager tokenManager, CSETContext context, Hooks hooks, IAssessmentUtil assessmentUtil,
            IReportsDataBusiness reports)
         {
             _tokenManager = tokenManager;
             _context = context;
+            _hooks = hooks;
             _assessmentUtil = assessmentUtil;
             _reports = reports;
         }
@@ -119,7 +121,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             new MaturityBusiness(_context, _assessmentUtil).PersistMaturityLevel(assessmentId, level);
 
-            new Hooks(_context).HookTargetLevelChanged(assessmentId);
+            _hooks.HookTargetLevelChanged(assessmentId);
 
             return Ok();
         }

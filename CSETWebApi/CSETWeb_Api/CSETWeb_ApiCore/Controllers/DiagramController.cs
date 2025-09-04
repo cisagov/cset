@@ -46,6 +46,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IWebHostEnvironment _webHost;
 
         private CSETContext _context;
+        private readonly Hooks _hooks;
 
         private readonly object _object;
 
@@ -53,7 +54,7 @@ namespace CSETWebCore.Api.Controllers
         public DiagramController(IDiagramManager diagram, ITokenManager token,
             IAssessmentBusiness assessment, IDataHandling dataHandling, 
             IMaturityBusiness maturity, IHttpContextAccessor http, 
-            IWebHostEnvironment webHost, CSETContext context)
+            IWebHostEnvironment webHost, CSETContext context, Hooks hooks)
         {
             _diagram = diagram;
             _token = token;
@@ -63,6 +64,7 @@ namespace CSETWebCore.Api.Controllers
             _http = http;
             _webHost = webHost;
             _context = context;
+            _hooks = hooks;
             _object = new object();
         }
 
@@ -96,7 +98,7 @@ namespace CSETWebCore.Api.Controllers
                 }
                 finally 
                 { 
-                    new Hooks(_context).HookDiagramChanged((int)assessmentId);
+                    _hooks.HookDiagramChanged((int)assessmentId);
                 }
             }
         }
@@ -110,7 +112,7 @@ namespace CSETWebCore.Api.Controllers
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
             _diagram.SaveComponent(component, (int)assessmentId);
 
-            new Hooks(_context).HookDiagramChanged((int)assessmentId);
+            _hooks.HookDiagramChanged((int)assessmentId);
         }
 
 
@@ -531,7 +533,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetExcelExportDiagram()
         {
             var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
-            var stream = new ExcelExporter(_context, _dataHandling, _http, _token).ExportToExcellDiagram(assessmentId ?? 0);
+            var stream = new ExcelExporter(_context, _dataHandling, _http, _token, _hooks).ExportToExcellDiagram(assessmentId ?? 0);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");

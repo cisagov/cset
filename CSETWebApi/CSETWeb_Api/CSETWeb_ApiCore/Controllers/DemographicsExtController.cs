@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using CSETWebCore.Business.Demographic.Import;
 using CSETWebCore.Business.AssessmentIO.Import;
+using CSETWebCore.Business.Question;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -30,14 +31,16 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _token;
         private readonly IAssessmentBusiness _assessment;
         private readonly IDemographicBusiness _demographic;
+        private readonly Hooks _hooks;
         private CSETContext _context;
 
-        public DemographicsExtController(ITokenManager token, IAssessmentBusiness assessment, IDemographicBusiness demographic, CSETContext context)
+        public DemographicsExtController(ITokenManager token, IAssessmentBusiness assessment, IDemographicBusiness demographic, Hooks hooks, CSETContext context)
         {
             _token = token;
             _assessment = assessment;
             _demographic = demographic;
             _context = context;
+            _hooks = hooks;
         }
 
 
@@ -81,6 +84,8 @@ namespace CSETWebCore.Api.Controllers
 
             var mgr = new DemographicExtBusiness(_context);
             mgr.SaveDemographics(demographics, userid ?? 0);
+
+            _hooks.HookDemographicsChanged(demographics.AssessmentId);
 
             return Ok();
         }

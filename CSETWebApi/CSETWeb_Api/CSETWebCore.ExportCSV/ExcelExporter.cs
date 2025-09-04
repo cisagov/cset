@@ -10,6 +10,7 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.ReportEngine;
 using Microsoft.AspNetCore.Http;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Business.Question;
 
 namespace CSETWebCore.ExportCSV
 {
@@ -19,6 +20,7 @@ namespace CSETWebCore.ExportCSV
         private readonly IDataHandling _dataHandling;
         private readonly IHttpContextAccessor _http;
         private readonly ITokenManager _token;
+        private readonly Hooks _hooks;
 
         /// <summary>
         /// Constructor.
@@ -29,12 +31,13 @@ namespace CSETWebCore.ExportCSV
         /// <param name="acet"></param>
         /// <param name="http"></param>
         ///  /// <param name="token"></param>
-        public ExcelExporter(CSETContext context, IDataHandling dataHandling, IHttpContextAccessor http, ITokenManager token)
+        public ExcelExporter(CSETContext context, IDataHandling dataHandling, IHttpContextAccessor http, ITokenManager token, Hooks hooks)
         {
             _context = context;
             _dataHandling = dataHandling;
             _http = http;
             _token = token;
+            _hooks = hooks;
         }
 
 
@@ -61,7 +64,7 @@ namespace CSETWebCore.ExportCSV
         public MemoryStream ExportToExcellDiagram(int assessmentId)
         {
             var stream = new MemoryStream();
-            CSETtoExcelDiagramMappings export = new CSETtoExcelDiagramMappings(_context, _http);
+            CSETtoExcelDiagramMappings export = new CSETtoExcelDiagramMappings(_context, _hooks, _http);
             export.ProcessDiagram(assessmentId, stream);
             return stream;
         }

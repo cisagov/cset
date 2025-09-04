@@ -52,7 +52,7 @@ namespace CSETWebCore.Business.Assessment
         public AssessmentBusiness(IHttpContextAccessor httpContext, ITokenManager authentication,
             IUtilities utilities, IContactBusiness contactBusiness, ISalBusiness salBusiness,
             IMaturityBusiness maturityBusiness, IAssessmentUtil assessmentUtil, IStandardsBusiness standardsBusiness,
-            IDiagramManager diagramManager, CSETContext context)
+            IDiagramManager diagramManager, CSETContext context, Hooks hooks)
         {
             _tokenManager = authentication;
             _utilities = utilities;
@@ -62,7 +62,7 @@ namespace CSETWebCore.Business.Assessment
             _assessmentUtil = assessmentUtil;
             _standardsBusiness = standardsBusiness;
             _context = context;
-            _diagramManager = new Diagram.DiagramManager(context);
+            _diagramManager = new Diagram.DiagramManager(_context, hooks);
             _overlay = new TranslationOverlay();
         }
 
