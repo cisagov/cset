@@ -47,7 +47,8 @@ export interface AssessmentDetail {
     // a few demographics to track
     sectorId?: number;
     industryId?: number;
-    ssgSectorId?: number;
+
+    ssgSectorIds?: number[];
 
     useStandard?: boolean;
     useMaturity?: boolean;
@@ -117,7 +118,7 @@ export interface Demographic {
     sectorId?: number;
     industryId?: number;
 
-    ssgSectorId?: number;
+    ssgSectorIds?: number[];
 
     size?: number;
     assetValue?: number;

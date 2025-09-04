@@ -205,11 +205,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
     // determine which endpoint to call to get the question list
     var obsGetQ;
 
-    if (this.navTarget?.toLowerCase() == 'bonus') {
-      const bonusModelId = this.ssgSvc.ssgBonusModel();
-      obsGetQ = this.maturitySvc.getBonusQuestionList(bonusModelId);
-
-    } else if (this.navTarget?.toLowerCase().startsWith('m')) {
+    if (this.navTarget?.toLowerCase().startsWith('m')) {
       const bonusModelId = +this.navTarget.substring(1);
       obsGetQ = this.maturitySvc.getBonusQuestionList(bonusModelId);
 
@@ -332,12 +328,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
    *
    */
   displayTitle() {
-    // Bonus questions are for SSGs.
-    if (this.navTarget?.toLowerCase() == 'bonus') {
-      this.pageTitle = this.tSvc.translate(`titles.ssg.${this.ssgSvc.ssgSimpleSectorLabel()}`);
-      return;
-    }
-
     let displayName = this.modelName;
 
     if (this.moduleBehavior?.displayNameKey != null) {

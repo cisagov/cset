@@ -140,8 +140,8 @@ export class CpgReportComponent implements OnInit {
    * 
    */
   async initSsg(): Promise<void> {
-    this.answerDistribSsg = await this.getAnswerDistribution(this.ssgSvc.activeSsgModelId ?? 0, '');
-    this.ssgName = this.ssgSvc.ssgLabel;
+    //this.answerDistribSsg = await this.getAnswerDistribution(this.ssgSvc.activeSsgModelId ?? 0, '');
+    //this.ssgName = this.ssgSvc.ssgLabel;
   }
 
   /**

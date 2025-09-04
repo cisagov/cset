@@ -7,10 +7,10 @@
 
      <div class="mb-3">
           <div *ngFor="let sector of list1">
-               <input type="radio" tabindex="0" [id]="'ssg-sector-' + sector.sectorId" [value]="sector.sectorId" name="ssg-sector"
-                    class="radio-custom mt-1" (change)="onValueChange(sector.sectorId)" 
-                    [checked]="ssgSectorId == sector.sectorId" />
-               <label [for]="'ssg-sector-' + sector.sectorId" class="radio-custom-label">
+               <input type="checkbox" tabindex="0" [id]="'ssg-sector-' + sector.sectorId" [value]="sector.sectorId" name="'ssg-sector-' + sector.sectorId"
+                    class="checkbox-custom mt-1" (change)="onSectorChange(sector.sectorId, $event)" 
+                    [checked]="isSectorChecked(sector.sectorId)" />
+               <label [for]="'ssg-sector-' + sector.sectorId" class="checkbox-custom-label">
                     {{ sector.sectorName }}
                </label>
           </div>

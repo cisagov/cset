@@ -73,8 +73,8 @@
         <!-- show SSG sector selection control for CPG2 assessments -->
         <div class="row mb-4" *ngIf="assessSvc.assessment?.maturityModel?.modelId == 21">
             <label class="form-label">SSG Selector</label>
-            <app-ssg-selector [value]="demographicData.ssgSectorId" [sectorList]="sectorsList"
-                (change)="onChangeSsg($event)"></app-ssg-selector>
+            <app-ssg-selector [value]="demographicData.ssgSectorIds" [sectorList]="sectorsList"
+                (valueChange)="onChangeSsg($event)"></app-ssg-selector>
         </div>
 
         <div class="mb-3">

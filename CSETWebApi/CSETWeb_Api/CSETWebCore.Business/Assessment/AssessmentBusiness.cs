@@ -495,10 +495,11 @@ namespace CSETWebCore.Business.Assessment
                     assessment.SectorId = d2Sector;
                 }
 
-                var ssg = (int?)d2.GetX(assessmentId, "SSG-SECTOR");
-                if(ssg != null)
+                assessment.SsgSectorIds = [];
+                var ssgs = _context.DETAILS_DEMOGRAPHICS.Where(z => z.Assessment_Id == assessmentId && z.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
+                foreach (var ssg in ssgs)
                 {
-                    assessment.SsgSectorId = ssg;
+                    assessment.SsgSectorIds.Add((int)ssg.IntValue);
                 }
 
 

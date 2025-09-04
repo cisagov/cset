@@ -86,8 +86,7 @@ export class CpgSummaryComponent implements OnInit {
     // SSG
     this.isSsgActive = this.ssgSvc.isSsgActive;
     if (this.isSsgActive) {
-      this.ssgName = this.ssgSvc.ssgLabel;
-      this.answerDistribSsg = await this.getAnswerDistribution(this.ssgSvc.activeSsgModelId ?? 0, '');
+      //this.answerDistribSsg = await this.getAnswerDistribution(this.ssgSvc.activeSsgModelId ?? 0, '');
     }
   }
 

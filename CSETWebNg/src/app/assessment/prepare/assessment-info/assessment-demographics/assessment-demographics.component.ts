@@ -164,15 +164,19 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.updateDemographics();
     }
 
-    onChangeSsg(evt: any) {
-        if (evt.target?.value != null) {
-            this.demographicData.ssgSectorId = +evt.target.value;
-            this.assessSvc.assessment.ssgSectorId = this.demographicData.ssgSectorId;
-            this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
-            this.updateDemographics();
-        }
+    /**
+     * 
+     */
+    onChangeSsg(list: number[]) {
+        this.demographicData.ssgSectorIds = list;
+        this.assessSvc.assessment.ssgSectorIds = list;
+        this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
+        this.updateDemographics();
     }
 
+    /**
+     * 
+     */
     getDemographics() {
         this.demoSvc.getDemographic().subscribe(
             (data: Demographic) => {
@@ -181,7 +185,7 @@ export class AssessmentDemographicsComponent implements OnInit {
                     this.isSLTT = true;
                 }
 
-                // Currently this screen shows PPD-21 (the original 16 critical infrastructure sector list)
+                // Currently this screen shows PPD-21 (the current 16 critical infrastructure sector list)
                 this.demographicData.sectorDirective = 'PPD-21';
 
                 // populate Industry dropdown based on Sector

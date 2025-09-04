@@ -6,6 +6,7 @@
 //////////////////////////////// 
 #nullable enable
 using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Assessment
 {
@@ -22,7 +23,7 @@ namespace CSETWebCore.Model.Assessment
         public int? SectorId { get; set; }
         public int? IndustryId { get; set; }
 
-        public int? SsgSectorId { get; set; }
+        public List<int> SsgSectorIds { get; set; } = [];
 
 
         public int? Size { get; set; }

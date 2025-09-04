@@ -33,7 +33,7 @@ import { SsgService } from '../../../../services/ssg.service';
 export class CpgPracticesComponent implements OnInit {
 
   isSsgActive = false;
-  ssgBonusModel: number;
+  ssgBonusModels: number[];
 
   /**
    * 
@@ -47,8 +47,8 @@ export class CpgPracticesComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.ssgBonusModel = this.ssgSvc.ssgBonusModel() ?? 0;
-    this.isSsgActive = !!this.ssgBonusModel;
+    this.ssgBonusModels = this.ssgSvc.activeSsgModelIds;
+    this.isSsgActive = this.ssgSvc.isSsgActive;
   }
 
   /**

@@ -99,9 +99,9 @@ export class CpgDeficiencyComponent implements OnInit {
       // get any deficient answers for the SSG model
       if (this.isSsgActive) {
         this.loadingSsg = true;
-        var ssgModelId = this.ssgSvc.ssgBonusModel();
-        if (!!ssgModelId) {
-          this.getSsgModel(ssgModelId);
+        var ssgModelIds = this.ssgSvc.activeSsgModelIds;
+        if (ssgModelIds.length > 0) {
+          this.getSsgModels(ssgModelIds);
         }
       }
     });
@@ -130,9 +130,9 @@ export class CpgDeficiencyComponent implements OnInit {
   /**
    * 
    */
-  getSsgModel(modelId: number) {
+  getSsgModels(modelIds: number[]) {
     this.loadingSsg = true;
-    this.maturitySvc.getMaturityDeficiency(modelId).subscribe((response: any) => {
+    this.maturitySvc.getMaturityDeficiency(modelIds).subscribe((response: any) => {
       const { information, deficienciesList } = response;
       this.ssgDeficiencyList = deficienciesList;
 

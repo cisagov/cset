@@ -10,10 +10,10 @@ import { SsgService } from '../../../../services/ssg.service';
 })
 export class SsgSelectorComponent implements OnChanges {
 
-  @Input('value') ssgSectorId?: number;
+  @Input('value') ssgSectorIds: number[] = [];
   @Input('sectorList') inputSectorList: any[];
 
-  @Output('change') valueChange = new EventEmitter<number>();
+  @Output('valueChange') valueChange = new EventEmitter<number[]>();
 
   /**
    * Build a list of CSET-supported SSGs
@@ -46,10 +46,6 @@ export class SsgSelectorComponent implements OnChanges {
    * 
    */
   initialize(): void {
-    if (this.ssgSectorId == null) {
-      this.ssgSectorId = 0;
-    }
-
     // make the array compatible if an optionValue/optionText list was sent
     if (this.inputSectorList.every(sector => 'optionValue' in sector)) {
       const transformed = this.inputSectorList.map(({ optionValue: sectorId, optionText: sectorName }) => ({ sectorId, sectorName }));
@@ -57,7 +53,6 @@ export class SsgSelectorComponent implements OnChanges {
     }
 
     this.list1 = this.inputSectorList.filter(x => this.ssgSvc.sectorListSsgSupported.includes(x.sectorId));
-    this.list1.unshift({ sectorId: 0, sectorName: this.tSvc.translate('extras.none') });
 
     this.list2 = [];
     this.inputSectorList.forEach(s => {
@@ -70,8 +65,26 @@ export class SsgSelectorComponent implements OnChanges {
   /**
    * 
    */
-  onValueChange(newSectorId: number): void {
-    this.ssgSectorId = newSectorId;
-    this.valueChange.emit(newSectorId);
+  isSectorChecked(sectorId: number): boolean {
+    if (this.ssgSectorIds) {
+      return this.ssgSectorIds.includes(sectorId);
+    }
+    return false;
+  }
+
+  /**
+   * 
+   */
+  onSectorChange(newSectorId: number, evt: any): void {
+    if (evt.target.checked) {
+      if (!this.ssgSectorIds) {
+        this.ssgSectorIds = [];
+      }
+      this.ssgSectorIds.push(newSectorId);
+    } else {
+      this.ssgSectorIds = this.ssgSectorIds?.filter(n => n !== newSectorId) ?? [];
+    }
+
+    this.valueChange.emit(this.ssgSectorIds);
   }
 }

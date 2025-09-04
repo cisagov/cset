@@ -31,7 +31,7 @@ namespace CSETWebCore.Model.Demographic
 
         public int? Sector { get; set; }
         public int? Subsector { get; set; }
-        public int? SsgSector { get; set; }
+        public List<int> SsgSectors { get; set; } = [];
 
         public int? OrgPointOfContact { get; set; }
 
@@ -79,7 +79,7 @@ namespace CSETWebCore.Model.Demographic
         /// share cybersecurity-related information.
         /// ISAC, FBI, CONSULT, DHS, STATE, PEERS, NCFTA
         /// </summary>
-        public List<int> ShareOrgs { get; set; } = new List<int>();
+        public List<int> ShareOrgs { get; set; } = [];
         public string ShareOther { get; set; }
 
 

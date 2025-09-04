@@ -39,62 +39,67 @@ namespace CSETWebCore.Business.Demographic
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
 
-            var x = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).ToList();
+            var myDD = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).ToList();
             var opts = _context.DETAILS_DEMOGRAPHICS_OPTIONS.ToList();
 
             var d = new DemographicExt();
             d.AssessmentId = assessmentId;
             d.AssessmentDate = assessment.Assessment_Date;
 
-            d.OrganizationType = x.Find(z => z.DataItemName == "ORG-TYPE")?.IntValue;
+            d.OrganizationType = myDD.Find(z => z.DataItemName == "ORG-TYPE")?.IntValue;
             d.OrganizationName = info.Facility_Name;
-            d.Sector = x.Find(z => z.DataItemName == "SECTOR")?.IntValue;
-            d.Subsector = x.Find(z => z.DataItemName == "SUBSECTOR")?.IntValue;
-            d.SsgSector = x.Find(z => z.DataItemName == "SSG-SECTOR")?.IntValue;
+            d.Sector = myDD.Find(z => z.DataItemName == "SECTOR")?.IntValue;
+            d.Subsector = myDD.Find(z => z.DataItemName == "SUBSECTOR")?.IntValue;
 
-            d.CisaRegion = x.Find(z => z.DataItemName == "CISA-REGION")?.IntValue;
+            var ssgs = myDD.FindAll(z => z.DataItemName.StartsWith("SSG-SECTOR-"));
+            foreach (var ssg in ssgs)
+            {
+                d.SsgSectors.Add((int)ssg.IntValue);
+            }
+
+            d.CisaRegion = myDD.Find(z => z.DataItemName == "CISA-REGION")?.IntValue;
 
 
-            d.NumberEmployeesTotal = x.Find(z => z.DataItemName == "NUM-EMP-TOTAL")?.IntValue;
-            d.NumberEmployeesUnit = x.Find(z => z.DataItemName == "NUM-EMP-UNIT")?.IntValue;
+            d.NumberEmployeesTotal = myDD.Find(z => z.DataItemName == "NUM-EMP-TOTAL")?.IntValue;
+            d.NumberEmployeesUnit = myDD.Find(z => z.DataItemName == "NUM-EMP-UNIT")?.IntValue;
 
-            d.AnnualRevenue = x.Find(z => z.DataItemName == "ANN-REVENUE")?.IntValue;
-            d.CriticalServiceRevenuePercent = x.Find(z => z.DataItemName == "ANN-REVENUE-PERCENT")?.IntValue;
-            d.NumberPeopleServedByCritSvc = x.Find(z => z.DataItemName == "NUM-PEOPLE-SERVED")?.IntValue;
+            d.AnnualRevenue = myDD.Find(z => z.DataItemName == "ANN-REVENUE")?.IntValue;
+            d.CriticalServiceRevenuePercent = myDD.Find(z => z.DataItemName == "ANN-REVENUE-PERCENT")?.IntValue;
+            d.NumberPeopleServedByCritSvc = myDD.Find(z => z.DataItemName == "NUM-PEOPLE-SERVED")?.IntValue;
 
-            d.CriticalDependencyIncidentResponseSupport = x.Find(z => z.DataItemName == "CRIT-DEPEND-INCIDENT-RESPONSE")?.StringValue;
+            d.CriticalDependencyIncidentResponseSupport = myDD.Find(z => z.DataItemName == "CRIT-DEPEND-INCIDENT-RESPONSE")?.StringValue;
 
-            d.DisruptedSector1 = x.Find(z => z.DataItemName == "DISRUPTED-SECTOR1")?.IntValue;
-            d.DisruptedSector2 = x.Find(z => z.DataItemName == "DISRUPTED-SECTOR2")?.IntValue;
+            d.DisruptedSector1 = myDD.Find(z => z.DataItemName == "DISRUPTED-SECTOR1")?.IntValue;
+            d.DisruptedSector2 = myDD.Find(z => z.DataItemName == "DISRUPTED-SECTOR2")?.IntValue;
 
             // body of practice / standard
-            d.UsesStandard = x.Find(z => z.DataItemName == "STANDARD-USED")?.BoolValue ?? true;
+            d.UsesStandard = myDD.Find(z => z.DataItemName == "STANDARD-USED")?.BoolValue ?? true;
             // most important
-            d.Standard1 = x.Find(z => z.DataItemName == "STANDARD1")?.StringValue;
+            d.Standard1 = myDD.Find(z => z.DataItemName == "STANDARD1")?.StringValue;
             // second most important
-            d.Standard2 = x.Find(z => z.DataItemName == "STANDARD2")?.StringValue;
+            d.Standard2 = myDD.Find(z => z.DataItemName == "STANDARD2")?.StringValue;
             // must comply?
-            d.RequiredToComply = x.Find(z => z.DataItemName == "REGULATION-REQD")?.BoolValue ?? true;
+            d.RequiredToComply = myDD.Find(z => z.DataItemName == "REGULATION-REQD")?.BoolValue ?? true;
             // reg type 1
-            d.RegulationType1 = x.Find(z => z.DataItemName == "REG-TYPE1")?.IntValue;
+            d.RegulationType1 = myDD.Find(z => z.DataItemName == "REG-TYPE1")?.IntValue;
             // regulation 1 (free form)
-            d.Reg1Other = x.Find(z => z.DataItemName == "REG-1-OTHER")?.StringValue;
+            d.Reg1Other = myDD.Find(z => z.DataItemName == "REG-1-OTHER")?.StringValue;
             // reg type 2
-            d.RegulationType2 = x.Find(z => z.DataItemName == "REG-TYPE2")?.IntValue;
+            d.RegulationType2 = myDD.Find(z => z.DataItemName == "REG-TYPE2")?.IntValue;
             // regulation 2 (free forma0
-            d.Reg2Other = x.Find(z => z.DataItemName == "REG-2-OTHER")?.StringValue;
+            d.Reg2Other = myDD.Find(z => z.DataItemName == "REG-2-OTHER")?.StringValue;
             // share orgs
-            List<int> shareOrgs = x.FindAll(z => z.DataItemName.StartsWith("SHARE-ORG-")).Select(org => (int)org.IntValue).ToList();
+            List<int> shareOrgs = myDD.FindAll(z => z.DataItemName.StartsWith("SHARE-ORG-")).Select(org => (int)org.IntValue).ToList();
             d.ShareOrgs = shareOrgs;
 
             // share other
-            d.ShareOther = x.Find(z => z.DataItemName == "SHARE-OTHER")?.StringValue;
+            d.ShareOther = myDD.Find(z => z.DataItemName == "SHARE-OTHER")?.StringValue;
             // barrier 1
-            d.Barrier1 = x.Find(z => z.DataItemName == "BARRIER1")?.StringValue;
+            d.Barrier1 = myDD.Find(z => z.DataItemName == "BARRIER1")?.StringValue;
             // barrier 2
-            d.Barrier2 = x.Find(z => z.DataItemName == "BARRIER2")?.StringValue;
+            d.Barrier2 = myDD.Find(z => z.DataItemName == "BARRIER2")?.StringValue;
 
-            d.BusinessUnit = x.Find(z => z.DataItemName == "BUSINESS-UNIT")?.StringValue;
+            d.BusinessUnit = myDD.Find(z => z.DataItemName == "BUSINESS-UNIT")?.StringValue;
 
             // org types
             d.ListOrgTypes = opts.Where(opt => opt.DataItemName == "ORG-TYPE").Select(opts => new ListItem2()
@@ -336,13 +341,14 @@ namespace CSETWebCore.Business.Demographic
             SaveString(demographic.AssessmentId, "BARRIER2", demographic.Barrier2, existingRecords);
             SaveString(demographic.AssessmentId, "BUSINESS-UNIT", demographic.BusinessUnit, existingRecords);
 
-            if (demographic.SsgSector == 0)
+            // replace 
+            var ssg = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == demographic.AssessmentId && x.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
+            _context.RemoveRange(ssg);
+            _context.SaveChanges();
+
+            foreach (var ssgId in demographic.SsgSectors)
             {
-                RemoveX(demographic.AssessmentId, "SSG-SECTOR");
-            }
-            else
-            {
-                SaveX(demographic.AssessmentId, "SSG-SECTOR", demographic.SsgSector);
+                SaveX(demographic.AssessmentId, $"SSG-SECTOR-{ssgId}", ssgId);
             }
 
             _context.SaveChanges();
