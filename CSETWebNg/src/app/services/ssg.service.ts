@@ -28,19 +28,18 @@ import { DemographicService } from './demographic.service';
 
 /**
  * A service that provides functionality related to Sector-Specific Goals (SSG).
- * An SSG may be automatically applied as a 'bonus' model on a CPG assessment
- * based on the assessment's chosen cybsersecurity SECTOR.
+ * One ore more SSGs may be automatically applied as additional models on a CPG assessment
+ * based on the SSG Sector selections persisted in the demographics.
  */
 @Injectable({
   providedIn: 'root'
 })
 export class SsgService {
 
-
   /**
    * Sector codes supported with SSG in CSET
    */
-  sectorListSsgSupported = [
+  csetSsgSectorList = [
     1, // chem
     19, // chem
     13, // IT
@@ -51,7 +50,7 @@ export class SsgService {
    * Sector codes with CISA online documentation.
    * We list them with a link for user reference.
    */
-  sectorListNotYetSupported = [
+  otherSsgSectorList = [
     9, // financial
     18, // banking & finance
     12, // healthcare
@@ -82,10 +81,21 @@ export class SsgService {
   }
 
   /**
-   * Returns the current SSG bonus model, if 
-   * the assessment has one.
+   * Returns the currently selected SSG models.
    */
   get activeSsgModelIds(): number[] {
-    return this.assessSvc.assessment?.ssgSectorIds ?? [];
+
+    // TODO:  crude mapping - make this slicker
+    const list = new Set<number>();
+    this.assessSvc.assessment?.ssgSectorIds?.forEach(sectorId => {
+      if (sectorId == 1 || sectorId == 19) {
+        list.add(18); // SSG CHEM
+      }
+      if (sectorId == 13 || sectorId == 28) {
+        list.add(20); // SSG IT
+      }
+    });
+
+    return Array.from(list);
   }
 }

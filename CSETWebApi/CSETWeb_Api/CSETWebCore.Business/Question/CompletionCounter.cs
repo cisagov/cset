@@ -394,11 +394,8 @@ namespace CSETWebCore.Business.Question
             response.Add(modelId);
 
             // See if any SSG models apply ....
-            var ssgModelId = new CpgBusiness(_context, "en").DetermineSsgModel(assessmentId);
-            if (ssgModelId != null)
-            {
-                response.Add((int)ssgModelId);
-            }
+            var ssgModelIds = new CpgBusiness(_context, "en").DetermineSsgModels(assessmentId);
+            response.UnionWith(ssgModelIds);
 
             return response;
         }

@@ -772,9 +772,6 @@ namespace CSETWebCore.Business.Assessment
         public List<DetailsDemographicsOptionsDTO> GetOrganizationTypes()
         {
             List<DETAILS_DEMOGRAPHICS_OPTIONS> orgTypes = _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ORG-TYPE").ToList();
-            
-            // List<DETAILS_DEMOGRAPHICS_OPTIONS> assetValues = await _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ASSET-VALUE").ToListAsync();
-            // return Ok(assetValues.OrderBy(a => a.Sequence).Select(a => new DemographicsAssetValue() { AssetValue = a.OptionText, DemographicsAssetId = a.OptionValue }).ToList());
 
             var lang = _tokenManager.GetCurrentLanguage();
             if (lang != "en")

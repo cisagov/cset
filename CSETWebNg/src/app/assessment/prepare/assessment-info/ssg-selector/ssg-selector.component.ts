@@ -52,11 +52,11 @@ export class SsgSelectorComponent implements OnChanges {
       this.inputSectorList = transformed;
     }
 
-    this.list1 = this.inputSectorList.filter(x => this.ssgSvc.sectorListSsgSupported.includes(x.sectorId));
+    this.list1 = this.inputSectorList.filter(x => this.ssgSvc.csetSsgSectorList.includes(x.sectorId));
 
     this.list2 = [];
     this.inputSectorList.forEach(s => {
-      if (this.ssgSvc.sectorListNotYetSupported.includes(s.sectorId)) {
+      if (this.ssgSvc.otherSsgSectorList.includes(s.sectorId)) {
         this.list2.push(s.sectorName);
       }
     });

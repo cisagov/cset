@@ -49,9 +49,9 @@ export class CpgSummaryComponent implements OnInit {
   answerDistribByDomainOt: any[];
   answerDistribByDomainIt: any[];
 
-  isSsgActive = false;
-  answerDistribSsg: any[];
-  ssgName: string;
+
+  answerDistribsSsg: SsgDistribution[] = [];
+
 
 
   constructor(
@@ -79,24 +79,35 @@ export class CpgSummaryComponent implements OnInit {
 
     // CPG 2.0
     if (this.modelId == 21) {
-      this.answerDistribByDomainOt = await this.getAnswerDistribution(this.modelId, 'OT');
-      this.answerDistribByDomainIt = await this.getAnswerDistribution(this.modelId, 'IT');
+      const [answerDistribByDomainOt, answerDistribByDomainIt] = await Promise.all([
+        this.getAnswerDistribution(this.modelId, 'OT'),
+        this.getAnswerDistribution(this.modelId, 'IT')
+      ]);
+
+      this.answerDistribByDomainOt = answerDistribByDomainOt;
+      this.answerDistribByDomainIt = answerDistribByDomainIt;
     }
 
     // SSG
-    this.isSsgActive = this.ssgSvc.isSsgActive;
-    if (this.isSsgActive) {
-      //this.answerDistribSsg = await this.getAnswerDistribution(this.ssgSvc.activeSsgModelId ?? 0, '');
-    }
+    const ssgPromises = this.ssgSvc.activeSsgModelIds.map(async id => {
+      const d = await this.getAnswerDistribution(id, '');
+      return {
+        modelId: id,
+        distribution: d
+      };
+    });
+    this.answerDistribsSsg = await Promise.all(ssgPromises);
   }
 
   /**
    * 
    */
   async getAnswerDistribution(modelId: number, techDomain: string): Promise<any> {
-    const resp = await firstValueFrom(this.cpgSvc.getAnswerDistrib(modelId, techDomain));
     const cpgAnswerOptions = this.configSvc.getModuleBehavior('CPG').answerOptions;
 
+    const resp = await firstValueFrom(this.cpgSvc.getAnswerDistrib(modelId, techDomain));
+
+    // get display text for answer options
     resp.forEach(r => {
       r.series.forEach(element => {
         if (element.name == 'U') {
@@ -110,4 +121,9 @@ export class CpgSummaryComponent implements OnInit {
 
     return resp;
   }
+}
+
+interface SsgDistribution {
+  modelId: number;
+  distribution: any[];
 }

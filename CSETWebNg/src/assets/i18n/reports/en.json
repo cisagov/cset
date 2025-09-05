@@ -633,7 +633,8 @@
                     "ssg": {
                          "ssg security practice checklist": "Sector-Specific Goal Security Practices",
                          "includes ssg": "Sector-Specific Goal answers are included in these results.",
-                         "1": "This table lists all applicable SSG security practices and how they have been answered."
+                         "1": "This table lists all applicable SSG security practices and how they have been answered.",
+                         "2": "Sector Specific"
                     },
                     "current assessment": "Current Assessment",
                     "notes": "Notes",
@@ -666,8 +667,8 @@
           "ssg": {
                "ssg1": "Sector Specific Goals",
                "ssg2": "SSG",
-               "chemical": "Chemical Sector Goals",
-               "it": "Information Technology Goals",
+               "18": "Chemical Sector Goals",
+               "20": "Information Technology Goals",
                "other": "Other Sector Goals"
           },
           "cisa vadr": {

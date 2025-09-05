@@ -120,27 +120,30 @@ namespace CSETWebCore.Business.Maturity
         /// Returns null if no SSG is applicable.
         /// </summary>
         /// <returns></returns>
-        public int? DetermineSsgModel(int assessmentId)
+        public List<int> DetermineSsgModels(int assessmentId)
         {
-            var ddSector = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "SSG-SECTOR").FirstOrDefault();
+            List<int> list = [];
 
-            // CHEMICAL
-            var chemicalSectors = new List<int>() { 1, 19 };
-            if (chemicalSectors.Contains(ddSector?.IntValue ?? -1))
+            var ddSectors = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
+
+            foreach (var s in ddSectors)
             {
-                return Constants.Constants.Model_SSG_CHEM;
+                // CHEMICAL
+                var chemicalSectors = new List<int>() { 1, 19 };
+                if (chemicalSectors.Contains((int)s.IntValue))
+                {
+                    list.Add(Constants.Constants.Model_SSG_CHEM);
+                }
+
+                // INFORMATION TECHNOLOGY (IT)
+                var itSectors = new List<int>() { 13, 28 };
+                if (itSectors.Contains((int)s.IntValue))
+                {
+                    list.Add(Constants.Constants.Model_SSG_IT);
+                }
             }
 
-
-            // INFORMATION TECHNOLOGY (IT)
-            var itSectors = new List<int>() { 13, 28 };
-            if (itSectors.Contains(ddSector?.IntValue ?? -1))
-            {
-                return Constants.Constants.Model_SSG_IT;
-            }
-
-
-            return null;
+            return list;
         }
 
 
@@ -156,20 +159,23 @@ namespace CSETWebCore.Business.Maturity
         {
             _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
-           
+            if (modelId != null)
+            {
+                _context.FillEmptyMaturityQuestionsForModel(assessmentId, (int)modelId);
+            }
+
+
             var resp = new List<GetAnswerDistribGroupingsResult>();
 
 
-            var query = from g in _context.MATURITY_GROUPINGS
-                       join q in _context.MATURITY_QUESTIONS on g.Grouping_Id equals q.Grouping_Id
-                       join a in _context.ANSWER on q.Mat_Question_Id equals a.Question_Or_Requirement_Id
-                       where a.Question_Type == "Maturity" && q.Is_Answerable
-                        && a.Assessment_Id == assessmentId
-                        && q.Maturity_Model_Id == modelId
-                       select new { g.Grouping_Id, g.Title, a.Answer_Id, a.Answer_Text, q.Mat_Question_Id };
+            var query = from a in _context.ANSWER
+                        join q in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals q.Mat_Question_Id
+                        join g in _context.MATURITY_GROUPINGS on q.Grouping_Id equals g.Grouping_Id
+                        where a.Question_Type == "Maturity" && q.Is_Answerable
+                           && a.Assessment_Id == assessmentId && q.Maturity_Model_Id == modelId
+                        select new { g.Grouping_Id, g.Title, a.Answer_Id, a.Answer_Text, q.Mat_Question_Id };
 
             var answerList = query.ToList();
-
 
 
             // Spin up the generic scope analyzer or a maturity model-specific one

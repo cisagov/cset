@@ -56,9 +56,11 @@ export class CpgReportComponent implements OnInit {
   answerDistribByDomainOt: any[];
   answerDistribByDomainIt: any[];
 
-  isSsgActive = false;
-  answerDistribSsg: any[];
-  ssgName: string;
+  answerDistribsSsg: SsgDistribution[] = [];
+
+  ssgBonusModels: number[];
+
+
 
 
   /**
@@ -115,10 +117,8 @@ export class CpgReportComponent implements OnInit {
     }
 
     // SSG
-    this.isSsgActive = this.ssgSvc.isSsgActive;
-    if (this.isSsgActive) {
-      this.initSsg();
-    }
+    this.initSsg();
+
   }
 
   /**
@@ -132,16 +132,28 @@ export class CpgReportComponent implements OnInit {
    * 
    */
   async initCpg2(): Promise<void> {
-    this.answerDistribByDomainOt = await this.getAnswerDistribution(this.modelId, 'OT');
-    this.answerDistribByDomainIt = await this.getAnswerDistribution(this.modelId, 'IT');
+    const [answerDistribByDomainOt, answerDistribByDomainIt] = await Promise.all([
+      this.getAnswerDistribution(this.modelId, 'OT'),
+      this.getAnswerDistribution(this.modelId, 'IT')
+    ]);
+
+    this.answerDistribByDomainOt = answerDistribByDomainOt;
+    this.answerDistribByDomainIt = answerDistribByDomainIt;
   }
 
   /**
    * 
    */
   async initSsg(): Promise<void> {
-    //this.answerDistribSsg = await this.getAnswerDistribution(this.ssgSvc.activeSsgModelId ?? 0, '');
-    //this.ssgName = this.ssgSvc.ssgLabel;
+    this.ssgBonusModels = this.ssgSvc.activeSsgModelIds;
+    const ssgPromises = this.ssgSvc.activeSsgModelIds.map(async id => {
+      const d = await this.getAnswerDistribution(id, '');
+      return {
+        modelId: id,
+        distribution: d
+      };
+    });
+    this.answerDistribsSsg = await Promise.all(ssgPromises);
   }
 
   /**
@@ -164,4 +176,9 @@ export class CpgReportComponent implements OnInit {
 
     return resp;
   }
+}
+
+interface SsgDistribution {
+  modelId: number;
+  distribution: any[];
 }

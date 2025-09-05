@@ -57,13 +57,13 @@
 
 
         <!-- SSG chart/table -->
-        <ng-container *ngIf="isSsgActive">
+        <ng-container *ngFor="let dssg of answerDistribsSsg">
             <div class="mt-4 mb-4">
-                <h4>SSG - {{t(`reports.core.ssg.${ssgName}`)}}</h4>
-                <app-cpg-domain-summary [answerDistribByDomain]="answerDistribSsg"></app-cpg-domain-summary>
+                <h4>SSG - {{t(`reports.core.ssg.${dssg.modelId}`)}}</h4>
+                <app-cpg-domain-summary [answerDistribByDomain]="dssg.distribution"></app-cpg-domain-summary>
 
                 <p>{{t('reports.core.cpg.report.p.2')}}</p>
-                <app-cpg-domain-summary-table [data]="answerDistribSsg"></app-cpg-domain-summary-table>
+                <app-cpg-domain-summary-table [data]="dssg.distribution"></app-cpg-domain-summary-table>
             </div>
         </ng-container>
 
