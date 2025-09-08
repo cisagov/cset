@@ -275,8 +275,6 @@ import { CreDetailReportComponent } from './reports/crePlus/cre-detail-report/cr
 import { CreHeatmapsComponent } from './reports/crePlus/cre-heatmaps/cre-heatmaps.component';
 import { CreGroupedStackedHorizontalChartComponent } from './reports/crePlus/cre-grouped-stacked-horizontal-chart/cre-grouped-stacked-horizontal-chart.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
-import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
-import { SitesummaryCMMCComponent } from './reports/cmmc/sitesummary-cmmc/sitesummary-cmmc.component';
 import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-level-results/cmmc-level-results.component';
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
 import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
@@ -346,9 +344,6 @@ import { EDMGoalQuestionSummary } from './reports/edm/edm-goal-question-summary/
 import { GroupingDescriptionComponent } from './assessment/questions/grouping-description/grouping-description.component';
 import { SummaryResultsComponent } from './assessment/results/edm/summary-results/summary-results.component';
 import { EDMGoalQuestionLegend } from './reports/edm/edm-bar-chart-legend copy/edm-goal-question-legend.component';
-import { CmmcDeficiencyComponent } from './reports/cmmc/cmmc-deficiency/cmmc-deficiency.component';
-import { CmmcCommentsMarkedComponent } from './reports/cmmc/cmmc-comments-marked/cmmc-comments-marked.component';
-import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justifications/cmmc-alt-justifications.component';
 import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr/tutorial-crr.component';
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
@@ -779,8 +774,6 @@ registerSwiper();
         MaturityQuestionsComponent,
         AwwaStandardComponent,
         DiagramQuestionsComponent,
-        SitesummaryCMMCComponent,
-        ExecutiveCMMCComponent,
         ExecutiveCMMC2Component,
         NavBackNextComponent,
         CsetOriginComponent,
@@ -833,9 +826,6 @@ registerSwiper();
         GroupingDescriptionComponent,
         SummaryResultsComponent,
         EDMGoalQuestionLegend,
-        CmmcDeficiencyComponent,
-        CmmcCommentsMarkedComponent,
-        CmmcAltJustificationsComponent,
         CrrDeficiencyComponent,
         CrrCommentsMarkedComponent,
         RraGapsComponent,

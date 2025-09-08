@@ -45,11 +45,15 @@ import { VadrReportComponent } from '../../reports/vadr/vadr-report/vadr-report.
 import { CisaVadrReportComponent } from '../../reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { CreHeatmapsComponent } from '../../reports/crePlus/cre-heatmaps/cre-heatmaps.component';
 import { DeficiencyTemplateComponent } from '../../reports/deficiency-template/deficiency-template.component';
+import { Cmmc2DeficiencyComponent } from '../../reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
+import { Cmmc2ScorecardReportComponent } from '../../reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
+import { Cmmc2CommentsMarkedComponent } from '../../reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
+import { ExecutiveCMMC2Component } from '../../reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
+import { EdmComponent } from '../../reports/edm/edm.component';
 
 
 
 const routes: Routes = [
-    { path: '', loadChildren: () => import('./cmmc-report-routing.module').then(m => m.CmmcReportRoutingModule) },
     { path: 'detail', component: SiteDetailComponent },
     { path: 'observations', component: ObservationTearoutsComponent },
     { path: 'executive', component: ExecutiveSummaryComponent },
@@ -59,7 +63,6 @@ const routes: Routes = [
     { path: 'trend-report', component: TrendReportComponent },
     { path: 'compare-report', component: CompareReportComponent },
     { path: 'compare-report-m', component: CompareReportMComponent },
-    { path: 'edm', loadChildren: () => import('./edm-routing.module').then(m => m.EdmRoutingModule) },
     { path: 'genDeficiencyReport', component: GeneralDeficiencyComponent },
     { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
     { path: 'cisCommentsmarked', component: CisCommentsmarkedComponent },
@@ -98,7 +101,12 @@ const routes: Routes = [
     { path: 'allAnsweredQuestions', component: AllAnsweredquestionsComponent },
     { path: 'allMfrAndComments', component: AllCommentsmarkedComponent },
     { path: 'allReviewedQuestions', component: AllReviewedComponent },
-    { path: 'deficiency', component: DeficiencyTemplateComponent }
+    { path: 'deficiency', component: DeficiencyTemplateComponent },
+    { path: 'cmmc2DeficiencyReport', component: Cmmc2DeficiencyComponent },
+    { path: 'cmmc2ScorecardReport', component: Cmmc2ScorecardReportComponent },
+    { path: 'cmmc2CommentsMarked', component: Cmmc2CommentsMarkedComponent },
+    { path: 'executivecmmc2', component: ExecutiveCMMC2Component },
+    { path: 'edm', component: EdmComponent, }
 ];
 
 @NgModule({

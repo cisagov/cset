@@ -79,8 +79,6 @@ import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.compone
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
 import { ObservationTearoutsComponent } from './reports/observation-tearouts/observation-tearouts.component';
 import { ExecutiveSummaryComponent } from './reports/executive-summary/executive-summary.component';
-import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
-import { SitesummaryCMMCComponent } from './reports/cmmc/sitesummary-cmmc/sitesummary-cmmc.component';
 import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
 import { TrendReportComponent } from './reports/trend-report/trend-report.component';
 import { CompareReportComponent } from './reports/compare-report/compare-report.component';
@@ -113,9 +111,6 @@ import { RelationshipManagementComponent } from './assessment/results/edm/relati
 import { ServiceProtectionComponent } from './assessment/results/edm/service-protection/service-protection.component';
 import { MaturityIndicatorLevelsComponent } from './assessment/results/edm/maturity-indicator-levels/maturity-indicator-levels.component';
 import { SummaryResultsComponent } from './assessment/results/edm/summary-results/summary-results.component';
-import { CmmcDeficiencyComponent } from './reports/cmmc/cmmc-deficiency/cmmc-deficiency.component';
-import { CmmcCommentsMarkedComponent } from './reports/cmmc/cmmc-comments-marked/cmmc-comments-marked.component';
-import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justifications/cmmc-alt-justifications.component';
 import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr/tutorial-crr.component';
 import { CrrReportComponent } from './reports/crr/crr-report/crr-report.component';
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
@@ -439,11 +434,6 @@ const appRoutes: Routes = [
       { path: 'trend-report', component: TrendReportComponent },
       { path: 'compare-report', component: CompareReportComponent },
       { path: 'compare-report-m', component: CompareReportMComponent },
-      { path: 'executivecmmc', component: ExecutiveCMMCComponent },
-      { path: 'sitesummarycmmc', component: SitesummaryCMMCComponent },
-      { path: 'cmmcDeficiencyReport', component: CmmcDeficiencyComponent },
-      { path: 'cmmcCommentsMarked', component: CmmcCommentsMarkedComponent },
-      { path: 'cmmcAltJustifications', component: CmmcAltJustificationsComponent },
       { path: 'cmmc2DeficiencyReport', component: Cmmc2DeficiencyComponent },
       { path: 'cmmc2ScorecardReport', component: Cmmc2ScorecardReportComponent },
       { path: 'cmmc2CommentsMarked', component: Cmmc2CommentsMarkedComponent },

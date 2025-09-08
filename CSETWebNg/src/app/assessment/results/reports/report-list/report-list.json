@@ -34,23 +34,7 @@
   },
   {
     "title": "CMMC",
-    "reportList": [
-      {
-        "linkUrl": "executivecmmc"
-      },
-      {
-        "linkUrl": "sitesummarycmmc"
-      },
-      {
-        "linkUrl": "cmmcDeficiencyReport"
-      },
-      {
-        "linkUrl": "cmmcCommentsMarked"
-      },
-      {
-        "linkUrl": "cmmcAltJustifications"
-      }
-    ]
+    "reportList": []
   },
   {
     "title": "CMMC2",
