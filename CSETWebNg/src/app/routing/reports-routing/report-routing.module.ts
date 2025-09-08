@@ -45,6 +45,7 @@ import { VadrDeficiencyComponent } from '../../reports/vadr/vadr-deficiency/vadr
 import { VadrReportComponent } from '../../reports/vadr/vadr-report/vadr-report.component';
 import { CisaVadrReportComponent } from '../../reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { CreHeatmapsComponent } from '../../reports/crePlus/cre-heatmaps/cre-heatmaps.component';
+import { DeficiencyTemplateComponent } from '../../reports/deficiency-template/deficiency-template.component';
 
 
 
@@ -98,7 +99,8 @@ const routes: Routes = [
     { path: 'appkeyreport', component: KeyReportComponent },
     { path: 'allAnsweredQuestions', component: AllAnsweredquestionsComponent },
     { path: 'allMfrAndComments', component: AllCommentsmarkedComponent },
-    { path: 'allReviewedQuestions', component: AllReviewedComponent }
+    { path: 'allReviewedQuestions', component: AllReviewedComponent },
+    { path: 'deficiency', component: DeficiencyTemplateComponent }
 ];
 
 @NgModule({

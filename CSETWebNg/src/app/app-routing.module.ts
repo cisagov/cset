@@ -193,6 +193,7 @@ import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { RoleGuard } from './guards/role.guard';
 import { RoleType } from './models/enums/role.model';
+import { DeficiencyTemplateComponent } from './reports/deficiency-template/deficiency-template.component';
 
 const appRoutes: Routes = [
   // reports routing
@@ -479,7 +480,8 @@ const appRoutes: Routes = [
       { path: 'appkeyreport', component: KeyReportComponent },
       { path: 'allAnsweredQuestions', component: AllAnsweredquestionsComponent },
       { path: 'allMfrAndComments', component: AllCommentsmarkedComponent },
-      { path: 'allReviewedQuestions', component: AllReviewedComponent }
+      { path: 'allReviewedQuestions', component: AllReviewedComponent },
+      { path: 'deficiency', component: DeficiencyTemplateComponent }
 
 
     ]
