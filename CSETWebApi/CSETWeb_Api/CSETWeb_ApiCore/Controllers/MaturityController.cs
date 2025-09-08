@@ -565,6 +565,7 @@ namespace CSETWebCore.Api.Controllers
 
                 var data = new MaturityBasicReportData
                 {
+                    ModelId = (int)modelId,
                     DeficienciesList = _reports.GetMaturityDeficiencies(modelId),
                     Information = _reports.GetInformation()
                 };
@@ -832,13 +833,13 @@ namespace CSETWebCore.Api.Controllers
 
 
             // If the assessment is a CPG and the asset's sector warrants SSG questions, include them
-            var ssgModelId = new CpgBusiness(_context, lang).DetermineSsgModel(assessmentId);
-            if (ssgModelId != null)
+            var ssgModelIds = new CpgBusiness(_context, lang).DetermineSsgModels(assessmentId);
+            foreach (var m in ssgModelIds)
             {
-                var ssgComments = _reports.GetCommentsList(ssgModelId);
+                var ssgComments = _reports.GetCommentsList(m);
                 data.Comments.AddRange(ssgComments);
 
-                var ssgMarked = _reports.GetMarkedForReviewList(ssgModelId);
+                var ssgMarked = _reports.GetMarkedForReviewList(m);
                 data.MarkedForReviewList.AddRange(ssgMarked);
             }
 
