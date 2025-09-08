@@ -1,4 +1,4 @@
-.PHONY: help build-backend launch-backend build-frontend launch-frontend launch-db load-db stop-db remove-db
+.PHONY: help build-backend launch-backend build-frontend launch-frontend launch-db load-db stop-db remove-db launch-pg-dev psql-dev mssql-to-postgres load-postgres-dump
 include .env
 export
 
@@ -76,3 +76,15 @@ remove-db:
 # target: sql - Run SQL commands in the database
 sql:
 	docker exec -it cset-mssql /opt/mssql-tools/bin/sqlcmd -U 'sa' -P "Password123"
+
+# target: launch-pgdb - Launch the Postgres database from compose.dev.yml
+launch-pgdb:
+	docker compose -f compose.dev.yml up -d db
+
+# target: mssql-to-postgres - Convert MSSQL .bak to Postgres 17 backup
+mssql-to-postgres:
+	bash DatabaseScripts/Migration/convert-mssql-bak-to-postgres.sh
+
+# target: load-postgres-dump - Load backup/CSETWeb.pg17.dump into Postgres (dev defaults)
+load-postgres-dump:
+	bash DatabaseScripts/Migration/load-postgres-dump.sh
