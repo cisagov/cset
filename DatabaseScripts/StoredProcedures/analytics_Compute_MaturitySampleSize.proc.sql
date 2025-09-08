@@ -20,14 +20,6 @@ FROM (
     ON dd.Assessment_Id = amm.Assessment_Id
     WHERE amm.model_id = @maturity_model_id
     AND (@sector_id IS NULL OR (DataItemName = 'SECTOR' AND dd.IntValue = @sector_id))
-
-    UNION
-
-    SELECT d.Assessment_Id, d.SectorId FROM DEMOGRAPHICS d
-    JOIN AVAILABLE_MATURITY_MODELS amm
-    ON d.Assessment_Id = amm.Assessment_Id
-    WHERE amm.model_id = @maturity_model_id
-    AND (@sector_id IS NULL OR d.SectorId = @sector_id)
 ) AS CombinedResult
 GROUP BY SectorId;
 END

@@ -1,5 +1,5 @@
-CREATE TRIGGER [dbo].[document_cascade_delete]
-ON [dbo].[ASSESSMENTS]
+
+CREATE TRIGGER [dbo].[document_cascade_delete] ON [dbo].[ASSESSMENTS]
 FOR DELETE
 AS
 
