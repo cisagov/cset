@@ -30,6 +30,7 @@ import { SsgService } from '../../../services/ssg.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { forkJoin, Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-cpg-deficiency',
@@ -38,24 +39,22 @@ import { TranslocoService } from '@jsverse/transloco';
   standalone: false
 })
 export class CpgDeficiencyComponent implements OnInit {
-  loadingCpg = false;
-  loadingSsg = false;
-
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
   facilityName: string;
   selfAssessment: boolean;
-
+  
   info: any;
-
+  
   // deficient answers in the principal model (CPG)
-  cpgDeficiencyList: any[];
-
+  loadingCpg = false;
+  cpgDeficiencyList: any[] = [];
+  
   // deficient SSG answers
-  isSsgActive = false;
-  ssgIncluded = false;
-  ssgDeficiencyList: any[];
+  loadingSsg = false;
+  ssgBonusModels: number[];
+  ssgModels: any[] = [];
 
   /**
    * 
@@ -76,34 +75,26 @@ export class CpgDeficiencyComponent implements OnInit {
    */
   ngOnInit(): void {
     this.tSvc.selectTranslate('core.cpg.deficiency.cpg deficiency', {}, { scope: 'reports' })
-    .subscribe(title => {
-      this.titleSvc.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle)
-    });
-    
+      .subscribe(title => {
+        this.titleSvc.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle)
+      });
+
     // make sure that the assessSvc has the assessment loaded so that we can determine any SSG model applicable
     this.loadingCpg = true;
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      
+
       this.assessSvc.assessment = assessmentDetail;
-
-      this.isSsgActive = this.ssgSvc.isSsgActive;
-
       // get the deficient answers for the CPG model
       const assessment = this.assessSvc.assessment;
       const maturityModel = assessment?.maturityModel;
+
 
       if (maturityModel?.modelId) {
         this.getCpgModel(maturityModel.modelId);
       }
 
       // get any deficient answers for the SSG model
-      if (this.isSsgActive) {
-        this.loadingSsg = true;
-        var ssgModelIds = this.ssgSvc.activeSsgModelIds;
-        if (ssgModelIds.length > 0) {
-          this.getSsgModels(ssgModelIds);
-        }
-      }
+      this.getSsgModels();
     });
   }
 
@@ -130,13 +121,16 @@ export class CpgDeficiencyComponent implements OnInit {
   /**
    * 
    */
-  getSsgModels(modelIds: number[]) {
+  getSsgModels() {
     this.loadingSsg = true;
-    this.maturitySvc.getMaturityDeficiency(modelIds).subscribe((response: any) => {
-      const { information, deficienciesList } = response;
-      this.ssgDeficiencyList = deficienciesList;
+    this.ssgBonusModels = this.ssgSvc.activeSsgModelIds;
 
+    const obs: Observable<any>[] = [];
+    this.ssgBonusModels.forEach(m => obs.push(this.maturitySvc.getMaturityDeficiency(m)));
+
+    forkJoin(obs).subscribe((results: any) => {
       this.loadingSsg = false;
+      this.ssgModels = results;
     });
   }
 }

@@ -49,20 +49,24 @@
                 <div class="spinner-size-50"></div>
             </div>
         </div>
-        <div *ngIf="cpgDeficiencyList.length == 0">
+        <div *ngIf="cpgDeficiencyList?.length == 0">
             {{t('reports.core.cpg.deficiency.p.4')}}
         </div>
 
-        <div *ngIf="isSsgActive">
-            <h1>{{t('reports.core.cpg.deficiency.ssg deficiencies')}}</h1>
 
-            <app-cpg-deficiency-block [deficiencyList]="ssgDeficiencyList"></app-cpg-deficiency-block>
-            <div *ngIf="loadingSsg">
-                <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
-                    <div class="spinner-size-50"></div>
-                </div>
+
+        <div *ngIf="loadingSsg">
+            <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+                <div class="spinner-size-50"></div>
             </div>
-            <div *ngIf="ssgDeficiencyList.length == 0">
+        </div>
+
+        <div *ngFor="let s of ssgModels">
+            <h1>{{t('reports.core.cpg.deficiency.ssg deficiencies')}} - {{t(`reports.core.ssg.${s.modelId}`)}}</h1>
+
+            <app-cpg-deficiency-block [deficiencyList]="s.deficienciesList"></app-cpg-deficiency-block>
+
+            <div *ngIf="s.deficienciesList.length == 0">
                 {{t('reports.core.cpg.deficiency.p.5')}}
             </div>
         </div>
