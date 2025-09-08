@@ -51,4 +51,3 @@ BEGIN
 	CLOSE seq_cursor;
 	DEALLOCATE seq_cursor;
 END
-
