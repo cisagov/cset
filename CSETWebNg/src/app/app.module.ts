@@ -304,7 +304,6 @@ import { AboutCsetComponent } from './dialogs/about-cset/about-cset.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
-import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { GeneralDeficiencyComponent } from './reports/general-deficiency/general-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
 import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
@@ -797,7 +796,6 @@ registerSwiper();
         GroupingBlockComponent,
         QuestionBlockMaturityComponent,
         EdmComponent,
-        EdmDeficiencyComponent,
         GeneralDeficiencyComponent,
         EdmCommentsmarkedComponent,
         CisCommentsmarkedComponent,

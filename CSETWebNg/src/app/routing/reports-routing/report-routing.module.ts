@@ -21,7 +21,6 @@ import { CrrCommentsMarkedComponent } from '../../reports/crr/crr-comments-marke
 import { CrrDeficiencyComponent } from '../../reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrReportComponent } from '../../reports/crr/crr-report/crr-report.component';
 import { EdmCommentsmarkedComponent } from '../../reports/edm-commentsmarked/edm-commentsmarked.component';
-import { EdmDeficiencyComponent } from '../../reports/edm-deficiency/edm-deficiency.component';
 import { ExecutiveSummaryComponent } from '../../reports/executive-summary/executive-summary.component';
 import { GeneralDeficiencyComponent } from '../../reports/general-deficiency/general-deficiency.component';
 import { HydroActionItemsReportComponent } from '../../reports/hydro/hydro-action-items-report/hydro-action-items-report.component';
@@ -61,7 +60,6 @@ const routes: Routes = [
     { path: 'compare-report', component: CompareReportComponent },
     { path: 'compare-report-m', component: CompareReportMComponent },
     { path: 'edm', loadChildren: () => import('./edm-routing.module').then(m => m.EdmRoutingModule) },
-    { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent },
     { path: 'genDeficiencyReport', component: GeneralDeficiencyComponent },
     { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
     { path: 'cisCommentsmarked', component: CisCommentsmarkedComponent },
