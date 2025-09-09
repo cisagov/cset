@@ -30,8 +30,11 @@ BEGIN
 		from maturity_groupings g 
 		left join maturity_questions q on q.grouping_id = g.Grouping_Id
 		left join ANSWER a on a.Question_Or_Requirement_Id = q.Mat_Question_Id
-		where a.Assessment_Id = @assessmentId and g.Parent_Id is null and 
-		g.maturitY_model_id = @maturityModelId
+		where a.Assessment_Id = @assessmentId
+		--and q.Maturity_Model_Id = @modelId
+		--and g.Parent_Id is null 
+		and q.Is_Answerable = 1 and
+		g.maturity_model_id = @maturityModelId
 	) N
 	group by n.answer_text, n.grouping_id, n.title, n.Sequence
 	order by n.Sequence

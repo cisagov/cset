@@ -102,12 +102,13 @@ begin
 	select t.Set_Name, 
 	s.Short_Name, 
 	t.standard_category as [question_group_heading],
-	0 as [QGH_Id],
+	qgh.Question_Group_Heading_Id as [QGH_Id],
 	isnull(a.qc,0) yaCount, 
 	isnull(t.qc,0) Actualcr, 
 	round(isnull(cast(a.qc as decimal(18,3))/t.qc,0),5) * 100 [prc]
 	from #tempR t 
 	left join #tempRAnswer a on t.Set_Name = a.Set_Name and t.Standard_Category = a.Standard_Category
+	left join QUESTION_GROUP_HEADING qgh on t.Standard_Category = qgh.Question_Group_Heading
 	join [SETS] s on t.Set_Name = s.Set_Name
 	order by t.standard_category desc
 

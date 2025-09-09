@@ -38,12 +38,11 @@ select a.Assessment_Id,Question_Group, Answer_Text, isnull(COUNT(a.answer_text),
 		from [Analytics_Answers] a	
 		join MATURITY_QUESTIONS q on a.Question_Or_Requirement_Id = q.Mat_Question_Id
 		join ANALYTICS_MATURITY_GROUPINGS g on q.Mat_Question_Id=g.Maturity_Question_Id
-		left join demographics d on a.assessment_id = d.assessment_id
 		left join details_demographics ddsector on a.Assessment_Id = ddsector.Assessment_Id and ddsector.DataItemName = 'SECTOR'
 		left join details_demographics ddsubsector on a.Assessment_Id = ddsubsector.Assessment_Id and ddsubsector.DataItemName = 'SUBSECTOR'
 		where a.question_type = 'Maturity' and q.Maturity_Model_Id=@maturity_model_id and g.Maturity_Model_Id=@maturity_model_id
-			and (nullif(@sector_id, sectorid) is null or nullif(@sector_id, ddsector.IntValue) is null)
-			and (nullif(@industry_id,industryid) is null or nullif(@industry_id, ddsubsector.IntValue) is null)
+			and (nullif(@sector_id, ddsector.IntValue) is null)
+			and (nullif(@industry_id, ddsubsector.IntValue) is null)
 		group by a.assessment_id, Question_Group, Answer_Text
 
 
