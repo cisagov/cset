@@ -4,18 +4,13 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Demographic;
 using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Analytics;
-using CSETWebCore.Model.Dashboard;
-using System;
+using CSETWebCore.Model.Analytics;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.Business.Demographic;
-using CSETWebCore.Model.Analytics;
-using Microsoft.EntityFrameworkCore;
 using AggregationAssessment = CSETWebCore.Model.Assessment.AggregationAssessment;
 
 namespace CSETWebCore.Business.Analytics

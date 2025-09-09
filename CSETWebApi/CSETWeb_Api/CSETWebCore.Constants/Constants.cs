@@ -440,6 +440,7 @@ namespace CSETWebCore.Constants
         public const int Model_RRA = 5;
         public const int Model_CMMC2 = 6;
         public const int Model_TSA_VADR = 7;
+        public const int Model_CIS = 8;
         public const int Model_ISE = 10;
         public const int Model_CPG = 11;
         public const int Model_HYDRO = 13;

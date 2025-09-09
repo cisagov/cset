@@ -31,6 +31,7 @@ import { ConfigService } from '../../../../services/config.service';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadDemographicsComponent } from "../../../../dialogs/import demographics/import-demographics.component";
+import { ConstantsService } from '../../../../services/constants.service';
 
 
 
@@ -88,6 +89,7 @@ export class AssessmentDemographicsComponent implements OnInit {
     constructor(
         private demoSvc: DemographicService,
         public assessSvc: AssessmentService,
+        private c: ConstantsService,
         public configSvc: ConfigService,
         public dialog: MatDialog,
     ) { }
@@ -162,6 +164,19 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.updateDemographics();
     }
 
+    /**
+     * 
+     */
+    onChangeSsg(list: number[]) {
+        this.demographicData.ssgSectorIds = list;
+        this.assessSvc.assessment.ssgSectorIds = list;
+        this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
+        this.updateDemographics();
+    }
+
+    /**
+     * 
+     */
     getDemographics() {
         this.demoSvc.getDemographic().subscribe(
             (data: Demographic) => {
@@ -170,7 +185,7 @@ export class AssessmentDemographicsComponent implements OnInit {
                     this.isSLTT = true;
                 }
 
-                // Currently this screen shows PPD-21 (the original 16 critical infrastructure sector list)
+                // Currently this screen shows PPD-21 (the current 16 critical infrastructure sector list)
                 this.demographicData.sectorDirective = 'PPD-21';
 
                 // populate Industry dropdown based on Sector

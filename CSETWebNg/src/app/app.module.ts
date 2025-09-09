@@ -562,6 +562,7 @@ import { CmuResultsDetailComponent } from './reports/cmu/cmu-domain-detail-table
 import { CmuNistCsfSummaryComponent } from './reports/cmu/cmu-nist-csf-summary/cmu-nist-csf-summary.component';
 import { AssessmentConfigIodComponent } from './assessment/prepare/assessment-info/assessment-config-iod/assessment-config-iod.component';
 import { AssessmentDemogIodComponent } from './assessment/prepare/assessment-info/assessment-demog-iod/assessment-demog-iod.component';
+import { SsgSelectorComponent } from './assessment/prepare/assessment-info/ssg-selector/ssg-selector.component';
 import { DemographicsIodComponent } from './assessment/prepare/assessment-info/demographics-iod/demographics-iod.component';
 import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr/tutorial-imr.component';
 import { ImrCoverSheetComponent } from './reports/imr/imr-cover-sheet/imr-cover-sheet.component';
@@ -614,6 +615,7 @@ import { UserService } from './services/user.service';
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
+
 
 
 
@@ -1050,6 +1052,7 @@ registerSwiper();
         CmuNistCsfSummaryComponent,
         AssessmentConfigIodComponent,
         AssessmentDemogIodComponent,
+        SsgSelectorComponent,
         DemographicsIodComponent,
         TutorialImrComponent,
         ImrCoverSheetComponent,

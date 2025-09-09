@@ -23,93 +23,79 @@
 ////////////////////////////////
 import { Injectable } from '@angular/core';
 import { AssessmentService } from './assessment.service';
+import { DemographicService } from './demographic.service';
 
 
 /**
  * A service that provides functionality related to Sector-Specific Goals (SSG).
- * An SSG may be automatically applied as a 'bonus' model on a CPG assessment
- * based on the assessment's chosen cybsersecurity SECTOR.
+ * One ore more SSGs may be automatically applied as additional models on a CPG assessment
+ * based on the SSG Sector selections persisted in the demographics.
  */
 @Injectable({
   providedIn: 'root'
 })
 export class SsgService {
 
+  /**
+   * Sector codes supported with SSG in CSET
+   */
+  csetSsgSectorList = [
+    1, // chem
+    19, // chem
+    13, // IT
+    28 // IT
+  ];
+
+  /**
+   * Sector codes with CISA online documentation.
+   * We list them with a link for user reference.
+   */
+  otherSsgSectorList = [
+    9, // financial
+    18, // banking & finance
+    12, // healthcare
+    27, // healthcare
+    16, // water
+    34 // water
+  ];
+
+
+  /**
+   * CTOR
+   */
   constructor(
-    private assessSvc: AssessmentService
+    private assessSvc: AssessmentService,
+    private demoSvc: DemographicService
   ) { }
 
-  /**
-  * Returns a simple keyword that describes the assessment's
-  * sector.  This keyword is concatenated to form a translation key.
-  * 
-  * Because IOD and everyone else use different sector/industry
-  * value lists, these will likely be defined in pairs, one
-  * cyber sector and one NIPP sector.
-  */
-  ssgSimpleSectorLabel() {
-    const s: number = Number(this.assessSvc.assessment?.sectorId);
-
-    if ([1, 19].includes(s)) {
-      return 'chemical';
-    }
-
-    if ([13, 28].includes(s)) {
-      return 'it';
-    }
-
-    return 'other';
-  }
 
   /**
-   * Returns the maturity model that applies to the
-   * assessment's current sector.  
-   * 
-   * Because IOD and everyone else use different sector/industry
-   * value lists, these will likely be defined in pairs, one
-   * cyber sector and one NIPP sector.
-   */
-  ssgBonusModel(): number | null {
-    const s: number = Number(this.assessSvc.assessment?.sectorId);
-
-    if ([1, 19].includes(s)) {
-      return 18; // chemical
-    }
-
-    if ([13, 28].includes(s)) {
-      return 20; // I.T.
-    }
-
-    return null;
-  }
-
-  /**
-   * Indicates if any of the SSGs apply to the assessment
-   * due to its sector.
+   * Indicates if any of the SSGs are selected.
    */
   get isSsgActive(): boolean {
-    return this.ssgBonusModel() != null;
-  }
-
-  /**
-   * 
-   */
-  get activeSsgModelId(): number | null {
-    return this.ssgBonusModel();
-  }
-
-  /**
-   * Returns a label that can be used 
-   * to build for transloco keys
-   */
-  get ssgLabel(): string {
-    switch (this.activeSsgModelId) {
-      case 18:
-        return 'chemical';
-      case 20:
-        return 'it';
-      default:
-        return '';
+    if (this.assessSvc.assessment?.ssgSectorIds) {
+      return this.assessSvc.assessment.ssgSectorIds.length > 0;
     }
+
+    return false;
+  }
+
+  /**
+   * Returns the currently selected SSG models.
+   */
+  get activeSsgModelIds(): number[] {
+
+    // TODO:  crude mapping - make this slicker
+    const list = new Set<number>();
+    this.assessSvc.assessment?.ssgSectorIds?.forEach(sectorId => {
+      if (sectorId == 1 || sectorId == 19) {
+        list.add(18); // SSG CHEM
+      }
+      if (sectorId == 13 || sectorId == 28) {
+        list.add(20); // SSG IT
+      }
+    });
+
+    return Array.from(list);
   }
 }

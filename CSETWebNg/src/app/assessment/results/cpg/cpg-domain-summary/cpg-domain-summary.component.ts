@@ -51,7 +51,7 @@ export class CpgDomainSummaryComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['answerDistribByDomain'] && !changes['answerDistribByDomain'].firstChange) {
+    if (changes['answerDistribByDomain']) {
       this.resizeChart();
     }
   }
@@ -68,6 +68,7 @@ export class CpgDomainSummaryComponent implements OnInit, OnChanges {
     let chartHeight = this.answerDistribByDomain.length * barHeight + 
       (this.answerDistribByDomain.length - 1) * barGap +
       ticksHeight;
+
     this.view = [this.chartWidth, chartHeight];
   }
 

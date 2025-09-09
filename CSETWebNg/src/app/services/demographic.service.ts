@@ -88,6 +88,7 @@ export class DemographicService {
    */
   updateDemographic(demographic: Demographic) {
     this.assessSvc.assessment.sectorId = demographic.sectorId;
+    this.assessSvc.assessment.ssgSectorIds = demographic.ssgSectorIds;
     this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
 
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)

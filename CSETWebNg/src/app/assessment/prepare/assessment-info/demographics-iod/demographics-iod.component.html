@@ -78,6 +78,12 @@
     </div>
   </div>
 
+  <!-- show SSG sector selection control for CPG2 assessments -->
+  <div class="row mb-4" *ngIf="assessSvc.assessment?.maturityModel?.modelId == 21 || assessSvc.assessment?.maturityModel?.modelId == 11">
+    <label class="form-label">{{ t('titles.ssg.1') }}</label>
+    <app-ssg-selector [value]="demographicData.ssgSectors" [sectorList]="demographicData.listSectors" (valueChange)="onChangeSsg($event)"></app-ssg-selector>
+  </div>
+
   <!-- #1 -->
   <div class="mb-4">
     <label for="numberEmployeesTotal" class="form-label" *ngIf="demographicData.organizationType == 1">

@@ -27,12 +27,14 @@ namespace CSETWebCore.Business.Diagram
     public class DiagramManager : IDiagramManager
     {
         private CSETContext _context;
+        private Hooks _hooks;
         static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
         
-        public DiagramManager(CSETContext context)
+        public DiagramManager(CSETContext context, Hooks hooks)
         {
             _context = context;
+            _hooks = hooks;
         }
 
         /// <summary>
@@ -112,7 +114,7 @@ namespace CSETWebCore.Business.Diagram
                     var mb = new MalcolmBusiness(_context);
                     mb.VerificationAndValidation(assessmentId);
 
-                    new Hooks(_context).HookDiagramChanged((int)assessmentId);
+                    _hooks.HookDiagramChanged((int)assessmentId);
                 }
             }
             else

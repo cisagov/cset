@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Demographic;
+using CSETWebCore.Business.Question;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -31,6 +32,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         private string _primaryEmail;
         private string _accessKey;
         private CSETContext _context;
+        private readonly Hooks _hooks;
         private ITokenManager _token;
         private IAssessmentUtil _assessmentUtil;
         private IUtilities _utilities;
@@ -45,7 +47,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// </summary>
         public Importer(UploadAssessmentModel model,
             int? currentUserId, string primaryEmail, string accessKey,
-            CSETContext context, ITokenManager token, IAssessmentUtil assessmentUtil,
+            CSETContext context, Hooks hooks, ITokenManager token, IAssessmentUtil assessmentUtil,
             IUtilities utilities)
         {
             _model = model;
@@ -54,12 +56,13 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             _accessKey = accessKey;
             _context = context;
             _token = token;
+            _hooks = hooks;
             _assessmentUtil = assessmentUtil;
             _utilities = utilities;
 
             _mb = new Maturity.MaturityBusiness(_context, null);
             _cb = new Contact.ContactBusiness(_context, _assessmentUtil, _token, null, null, null);
-            _assessmentBiz = new AssessmentBusiness(null, _token, _utilities, _cb, null, _mb, _assessmentUtil, null, null, _context);
+            _assessmentBiz = new AssessmentBusiness(null, _token, _utilities, _cb, null, _mb, _assessmentUtil, null, null, _context, _hooks);
            
         
 

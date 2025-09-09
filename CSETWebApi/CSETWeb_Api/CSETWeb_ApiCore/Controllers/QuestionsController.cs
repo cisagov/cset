@@ -43,6 +43,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IHtmlFromXamlConverter _htmlConverter;
         private readonly IQuestionRequirementManager _questionRequirement;
         private readonly CSETContext _context;
+        private readonly Hooks _hooks;
 
 
 
@@ -51,10 +52,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         public QuestionsController(ITokenManager token, INotificationBusiness notification,
             IAssessmentUtil assessmentUtil, IContactBusiness contact, IDocumentBusiness document, IHtmlFromXamlConverter htmlConverter, IQuestionRequirementManager questionRequirement,
-            IUserBusiness user, CSETContext context)
+            IUserBusiness user, CSETContext context, Hooks hooks)
         {
             _token = token;
             _context = context;
+            _hooks = hooks;
             _notification = notification;
             _assessmentUtil = assessmentUtil;
             _contact = contact;
@@ -179,7 +181,7 @@ namespace CSETWebCore.Api.Controllers
             _questionRequirement.InitializeManager(assessmentId);
             _questionRequirement.SetApplicationMode(mode);
 
-            new Hooks(_context).HookQuestionsModeChanged(assessmentId);
+            _hooks.HookQuestionsModeChanged(assessmentId);
 
             return Ok();
         }
@@ -271,7 +273,7 @@ namespace CSETWebCore.Api.Controllers
                 var cb = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
                 var savedComponentAnswer = cb.StoreAnswer(answer);
 
-                new Hooks(_context).HookQuestionAnswered(savedComponentAnswer);
+                _hooks.HookQuestionAnswered(savedComponentAnswer);
 
                 response.AnswerId = (int)savedComponentAnswer.AnswerId;
                 return Ok(response);
@@ -283,7 +285,7 @@ namespace CSETWebCore.Api.Controllers
                 var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
                 var savedRequirementAnswer = rb.StoreAnswer(answer);
 
-                new Hooks(_context).HookQuestionAnswered(savedRequirementAnswer);
+                _hooks.HookQuestionAnswered(savedRequirementAnswer);
 
 
                 response.AnswerId = (int)savedRequirementAnswer.AnswerId;
@@ -296,7 +298,7 @@ namespace CSETWebCore.Api.Controllers
                 var mb = new MaturityBusiness(_context, _assessmentUtil);
                 var savedMaturityAnswer = mb.StoreAnswer(assessmentId, answer);
 
-                var detailsChanged = new Hooks(_context).HookQuestionAnswered(savedMaturityAnswer);
+                var detailsChanged = _hooks.HookQuestionAnswered(savedMaturityAnswer);
 
 
                 response.AnswerId = (int)savedMaturityAnswer.AnswerId;
@@ -311,7 +313,7 @@ namespace CSETWebCore.Api.Controllers
                 var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
                 var savedQuestionAnswer = qb.StoreAnswer(answer);
 
-                new Hooks(_context).HookQuestionAnswered(savedQuestionAnswer);
+                _hooks.HookQuestionAnswered(savedQuestionAnswer);
 
                 response.AnswerId = (int)savedQuestionAnswer.AnswerId;
                 return Ok(response);
@@ -373,7 +375,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok(score);
             }
 
-            new Hooks(_context).HookQuestionAnswered(answers[0]);
+            _hooks.HookQuestionAnswered(answers[0]);
 
             return Ok();
         }
@@ -411,7 +413,7 @@ namespace CSETWebCore.Api.Controllers
             var qm = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
             qm.StoreSubcategoryAnswers(subCatAnswers);
 
-            new Hooks(_context).HookQuestionAnswered(subCatAnswers.Answers[0]);
+            _hooks.HookQuestionAnswered(subCatAnswers.Answers[0]);
 
             return Ok();
         }

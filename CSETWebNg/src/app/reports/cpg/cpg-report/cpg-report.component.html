@@ -52,7 +52,7 @@
 
         <!-- CPG 2.0 chart/table -->
         <ng-container *ngIf="modelId == 21">
-            <div id="randy" class="mb-4" *ngIf="techDomain == 'OT' || techDomain == 'OT+IT' || techDomain == null">
+            <div id="randy" style="margin-top: 4rem; margin-bottom: 4rem" *ngIf="techDomain == 'OT' || techDomain == 'OT+IT' || techDomain == null">
                 <h4>{{t('reports.core.cpg.ot')}}</h4>
                 <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomainOt"></app-cpg-domain-summary>
 
@@ -60,7 +60,7 @@
                 <app-cpg-domain-summary-table [data]="answerDistribByDomainOt"></app-cpg-domain-summary-table>
             </div>
 
-            <div class="mb-4" *ngIf="techDomain == 'IT' || techDomain == 'OT+IT' || techDomain == null">
+            <div style="margin-top: 4rem; margin-bottom: 4rem" *ngIf="techDomain == 'IT' || techDomain == 'OT+IT' || techDomain == null">
                 <h4>{{t('reports.core.cpg.it')}}</h4>
                 <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomainIt"></app-cpg-domain-summary>
 
@@ -71,13 +71,13 @@
 
 
         <!-- SSG chart/table -->
-        <ng-container *ngIf="isSsgActive">
-            <div class="mb-4" style="margin-top: 4rem">
-                <h4>SSG - {{t(`reports.core.ssg.${ssgName}`)}}</h4>
-                <app-cpg-domain-summary [answerDistribByDomain]="answerDistribSsg"></app-cpg-domain-summary>
+        <ng-container *ngFor="let dssg of answerDistribsSsg">
+            <div style="margin-top: 4rem; margin-bottom: 4rem">
+                <h4>{{t('reports.core.ssg.ssg1')}} - {{t(`reports.core.ssg.${dssg.modelId}`)}}</h4>
+                <app-cpg-domain-summary [answerDistribByDomain]="dssg.distribution"></app-cpg-domain-summary>
 
                 <p>{{t('reports.core.cpg.report.p.2')}}</p>
-                <app-cpg-domain-summary-table [data]="answerDistribSsg"></app-cpg-domain-summary-table>
+                <app-cpg-domain-summary-table [data]="dssg.distribution"></app-cpg-domain-summary-table>
             </div>
         </ng-container>
     </div>
@@ -89,11 +89,12 @@
         <app-cpg-practice-table [modelId]="modelId"></app-cpg-practice-table>
     </div>
 
-    <div class="page-break" *ngIf="isSsgActive">
-        <h1>{{t('reports.core.cpg.report.ssg.ssg security practice checklist')}} - <br>
-            {{t(`reports.core.ssg.${ssgName}`)}}</h1>
-        <p class="mb-0"> {{t('reports.core.cpg.report.ssg.1')}}</p>
-        <app-cpg-practice-table [ssgModelId]="ssgSvc.activeSsgModelId"></app-cpg-practice-table>
-    </div>
+    <!-- a table for SSG answers, if applicable -->
+    <div *ngFor="let s of ssgBonusModels" [id]="'ssg-section-' + s">
+        <hr class="page-line">
+        <h1>{{t('reports.core.cpg.report.ssg.2')}} - {{t(`reports.core.ssg.${s}`)}}</h1>
+        <p>{{t('reports.core.cpg.report.ssg.1')}}</p>
 
+        <app-cpg-practice-table [ssgModelId]="s"></app-cpg-practice-table>
+    </div>
 </div>
