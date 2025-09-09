@@ -126,7 +126,7 @@ export class RequirementListComponent implements OnInit {
           .open(AlertComponent, { data: { title: "Error removing requirement from set" } })
           .afterClosed()
           .subscribe();
-        console.log(
+        console.error(
           "Error removing requirement: " + JSON.stringify(r)
         );
       }

@@ -78,7 +78,7 @@ export class CustomSetComponent implements OnInit {
    *
    */
   update(e) {
-    console.log(e);
+
     if (this.setDetail.fullName?.length > 0 && e.target.id == 'fullname') {
       for (let s of this.setDetailList) {
         if (s.fullName == this.setDetail.fullName) {

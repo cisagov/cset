@@ -44,7 +44,6 @@ export class AggregationGuard {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
 
-    console.log('AggregationGuard canActivate');
     return true;
 
 
