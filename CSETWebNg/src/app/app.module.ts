@@ -415,10 +415,8 @@ import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
 import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
 import { RankedDeficiencyChartComponent } from './assessment/results/cis/ranked-deficiency-chart/ranked-deficiency-chart.component';
-import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
 import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
 import { CisScoringChartComponent } from './reports/cis/cis-section-scoring/cis-scoring-chart/cis-scoring-chart.component';
-import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 import { CharterMismatchComponent } from './dialogs/charter-mistmatch/charter-mismatch.component';
 import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.directive';
 import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
@@ -895,10 +893,8 @@ registerSwiper();
         CisRankedDeficiencyComponent,
         RankedDeficiencyChartComponent,
         CisCommentsmarkedComponent,
-        RankedDeficiencyComponent,
         CisSectionScoringComponent,
         CisScoringChartComponent,
-        SectionScoringComponent,
         CharterMismatchComponent,
         DigitsOnlyNotZeroDirective,
         LandingPageTabsComponent,

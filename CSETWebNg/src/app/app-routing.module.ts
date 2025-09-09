@@ -141,9 +141,7 @@ import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions
 import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
 import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
-import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
 import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
-import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
 import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
@@ -407,8 +405,6 @@ const appRoutes: Routes = [
               { path: 'analytics-compare', component: AnalyticsCompareComponent },
               { path: 'analytics', component: AnalyticsComponent },
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
-              { path: 'ranked-deficiency', component: RankedDeficiencyComponent },
-              { path: 'section-scoring', component: SectionScoringComponent },
               { path: '', component: DashboardComponent },
               { path: 'sd-answer-summary', component: SdAnswerSummaryComponent },
 
