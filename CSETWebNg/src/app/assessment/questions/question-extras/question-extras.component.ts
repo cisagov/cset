@@ -602,7 +602,7 @@ export class QuestionExtrasComponent implements OnInit {
             });
           });
         } else {
-          console.log('there were no domains for questions!!!');
+          console.error('there were no domains for questions!!!');
         }
 
 

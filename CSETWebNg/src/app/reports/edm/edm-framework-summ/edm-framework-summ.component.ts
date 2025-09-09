@@ -51,7 +51,7 @@ export class EDMFrameworkSummary implements OnInit {
         this.edm_framework_data = success as [];
       },
       (failure) => {
-        console.log(failure)
+        console.error(failure)
       }
     )
   }

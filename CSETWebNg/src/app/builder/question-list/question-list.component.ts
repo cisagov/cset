@@ -135,7 +135,7 @@ export class QuestionListComponent implements OnInit {
           .open(AlertComponent, { data: { title: "Error removing question from set" } })
           .afterClosed()
           .subscribe();
-        console.log(
+        console.error(
           "Error removing question: " + JSON.stringify(q)
         );
       }

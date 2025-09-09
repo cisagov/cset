@@ -138,7 +138,6 @@ export class AssessmentService {
   clearFirstTime() {
     this.http.get(this.apiUrl + 'clearFirstTime').subscribe(
       () => {
-        console.log("cleared first Time");
       }
     );
   }

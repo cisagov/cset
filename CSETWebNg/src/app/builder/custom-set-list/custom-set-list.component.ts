@@ -66,7 +66,7 @@ export class SetListComponent implements OnInit {
         this.setDetailList = response;
       },
       error =>
-        console.log(
+        console.error(
           "Unable to get Custom Standards: " +
           (<Error>error).message
         )
@@ -79,7 +79,7 @@ export class SetListComponent implements OnInit {
         this.setsInUseList = response;
       },
       error =>
-        console.log(
+        console.error(
           "Unable to get standards in use: " +
           (<Error>error).message
         )
@@ -168,7 +168,7 @@ export class SetListComponent implements OnInit {
           .open(AlertComponent, { data: "Error deleting set" })
           .afterClosed()
           .subscribe();
-        console.log(
+        console.error(
           "Error deleting set: " + setName
         );
       }

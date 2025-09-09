@@ -49,7 +49,6 @@ export class AllReviewedComponent {
 
     this.reportSvc.getReviewedQuestions().subscribe(
       (r: any) => {
-        console.log(r)
         this.response = r;
         this.titleService.setTitle(this.tSvc.translate('reports.all.reviewed questions.report title'));
       }
