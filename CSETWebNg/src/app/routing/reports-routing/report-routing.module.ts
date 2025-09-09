@@ -50,6 +50,7 @@ import { Cmmc2ScorecardReportComponent } from '../../reports/cmmc2/cmmc2-scoreca
 import { Cmmc2CommentsMarkedComponent } from '../../reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
 import { ExecutiveCMMC2Component } from '../../reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
 import { EdmComponent } from '../../reports/edm/edm.component';
+import { SecurityplanComponent } from '../../reports/securityplan/securityplan.component';
 
 
 
@@ -57,7 +58,7 @@ const routes: Routes = [
     { path: 'detail', component: SiteDetailComponent },
     { path: 'observations', component: ObservationTearoutsComponent },
     { path: 'executive', component: ExecutiveSummaryComponent },
-    { path: 'securityplan', loadChildren: () => import('./securityplan-routing.module').then(m => m.SecurityPlanRoutingModule) },
+    { path: 'securityplan', component: SecurityplanComponent },
     { path: 'sitesummary', component: SiteSummaryComponent },
     { path: 'physicalsummary', component: PhysicalSummaryComponent },
     { path: 'trend-report', component: TrendReportComponent },
