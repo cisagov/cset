@@ -129,27 +129,27 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// A special flavor of export created for sharing assessment data by CISA assessors.
-        /// Only the JSON content is returned, with a name formmated as {assessment-name}.json
+        /// Returns an assessment JSON export and downloads it as a .json file.
+        /// This mirrors the download behavior of other export endpoints.
         /// </summary>
         [HttpGet]
         [Route("api/assessment/export/json")]
-        public IActionResult ExportAssessmentAsJson([FromQuery] bool? scrubData)
+        public IActionResult ExportAssessmentJson()
         {
             try
             {
-                int assessmentId = _token.AssessmentForUser();
-
-                AssessmentExportFileJson result = new CSETWAssessmentExportManager(_context).ExportAssessmentJson(assessmentId, scrubData ?? false);
-                byte[] contents = Encoding.UTF8.GetBytes(result.JSON);
-                return File(contents, "application/json", result.FileName);
+                // No assessment lookup needed; this is a static example payload
+                var manager = new JSONAssessmentExportManager();
+                var json = manager.GetJson();
+                var contents = Encoding.UTF8.GetBytes(json);
+                var fileName = "example-assessment.json";
+                return File(contents, "application/json", fileName);
             }
             catch (Exception exc)
             {
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+                return StatusCode(500, exc.Message);
             }
-
-            return null;
         }
 
 
