@@ -55,7 +55,7 @@ namespace CSETWebCore.Api.Controllers
                 // determine extension (.csetw, .acet)
                 string ext = IOHelper.GetExportFileExtension(_token.Payload(Constants.Constants.Token_Scope));
 
-                AssessmentExportFile result = new AssessmentExportManager(_context).ExportAssessment(assessmentId, ext, password, passwordHint);
+                AssessmentExportFile result = new CSETWAssessmentExportManager(_context).ExportAssessment(assessmentId, ext, password, passwordHint);
 
                 return File(result.FileContents, "application/octet-stream", result.FileName);
             }
@@ -96,13 +96,13 @@ namespace CSETWebCore.Api.Controllers
                 // Export the assessment
                 if (!string.IsNullOrEmpty(url))
                 {
-                    var exportManager = new AssessmentExportManager(_context);
+                    var exportManager = new CSETWAssessmentExportManager(_context);
                     var exportFile = exportManager.ExportAssessment(assessmentId, ".zip", string.Empty, string.Empty);
 
                     string ext = IOHelper.GetExportFileExtension(_token.Payload(Constants.Constants.Token_Scope));
 
                     AssessmentExportFile result =
-                        new AssessmentExportManager(_context).ExportAssessment(assessmentId, ext, string.Empty,
+                        new CSETWAssessmentExportManager(_context).ExportAssessment(assessmentId, ext, string.Empty,
                             string.Empty);
                     byte[] fileContents;
                     using (var memoryStream = new MemoryStream())
@@ -140,9 +140,9 @@ namespace CSETWebCore.Api.Controllers
             {
                 int assessmentId = _token.AssessmentForUser();
 
-                AssessmentExportFileJson result = new AssessmentExportManager(_context).ExportAssessmentJson(assessmentId, scrubData ?? false);
+                AssessmentExportFileJson result = new CSETWAssessmentExportManager(_context).ExportAssessmentJson(assessmentId, scrubData ?? false);
                 byte[] contents = Encoding.UTF8.GetBytes(result.JSON);
-                return  File(contents, "application/json", result.FileName);
+                return File(contents, "application/json", result.FileName);
             }
             catch (Exception exc)
             {
@@ -180,7 +180,8 @@ namespace CSETWebCore.Api.Controllers
                     var response = await client.PostAsync(targetUrl, content);
                     return response.IsSuccessStatusCode;
 
-                };
+                }
+                ;
             }
             catch (Exception exc)
             {

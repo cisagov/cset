@@ -17,7 +17,7 @@ namespace DuplicateAssessments
 
         public static IConfigurationRoot? Configuration { get; set; }
 
-        
+
         /// <summary>
         /// CTOR
         /// </summary>
@@ -50,7 +50,7 @@ namespace DuplicateAssessments
             _context = new CSETContext(Configuration);
 
             _hooks = new Hooks(_context);
-            
+
             AssessmentsDuplicator duper = new AssessmentsDuplicator();
             await duper.RunAssessmentsDuplicator();
         }
@@ -61,7 +61,7 @@ namespace DuplicateAssessments
         /// </summary>
         public async Task RunAssessmentsDuplicator()
         {
-            AssessmentExportManager exportManager = new AssessmentExportManager(_context);
+            CSETWAssessmentExportManager exportManager = new CSETWAssessmentExportManager(_context);
 
             Guid[] guidsToExport = _context?.ASSESSMENTS
                 //.Where(x=> x.Assessment_Id ==571)
