@@ -38,7 +38,7 @@
       <!-- All Categories -->
       <div class="tw:mb-2">
         <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"
-                [style.background-color]="selectedCategory === 'all' ? '#367190' : ''"
+                [style.background-color]="selectedCategory === 'all' ? '#015288' : ''"
                 [style.color]="selectedCategory === 'all' ? 'white' : ''"
                 (click)="selectCategory('all')">
           <i class="fas fa-th-large tw:mr-2"></i>
@@ -49,7 +49,7 @@
       <!-- Dynamic Categories -->
       <div *ngFor="let row of gallerySvc.rows" class="tw:mb-2">
         <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"
-                [style.background-color]="selectedCategory === row.group_Title ? '#367190' : ''"
+                [style.background-color]="selectedCategory === row.group_Title ? '#015288' : ''"
                 [style.color]="selectedCategory === row.group_Title ? 'white' : ''"
                 (click)="selectCategory(row.group_Title)">
           <i [class]="getCategoryIcon(row.group_Title)" class="tw:mr-2"></i>
