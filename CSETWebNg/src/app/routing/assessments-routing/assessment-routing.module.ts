@@ -37,8 +37,6 @@ import { StandardsSummaryComponent } from '../../assessment/results/analysis/sta
 import { AnalyticsCompareComponent } from '../../assessment/results/analytics-compare/analytics-compare.component';
 import { AnalyticsResultsComponent } from '../../assessment/results/analytics-results/analytics-results.component';
 import { AnalyticsComponent } from '../../assessment/results/analytics/analytics.component';
-import { RankedDeficiencyComponent } from '../../assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
-import { SectionScoringComponent } from '../../assessment/results/cis/section-scoring/section-scoring.component';
 import { CpgPracticesComponent } from '../../assessment/results/cpg/cpg-practices/cpg-practices.component';
 import { CpgSummaryComponent } from '../../assessment/results/cpg/cpg-summary/cpg-summary.component';
 import { CrrResultsPage } from '../../assessment/results/crr/crr-results-page/crr-results-page.component';
@@ -88,7 +86,7 @@ const routes: Routes = [
             { path: 'info-demog-iod', component: AssessmentDemogIodComponent },
             { path: 'info-config-iod', component: AssessmentConfigIodComponent },
             { path: 'model-select', component: ModelSelectComponent },
-            
+
             { path: 'config-cis', component: ConfigCisComponent },
             { path: 'cmmc-levels', component: CmmcLevelsComponent },
             { path: 'cmmc2-levels', component: Cmmc2LevelsComponent },
@@ -180,8 +178,6 @@ const routes: Routes = [
             { path: 'analytics-compare', component: AnalyticsCompareComponent },
             { path: 'analytics', component: AnalyticsComponent },
             { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
-            { path: 'ranked-deficiency', component: RankedDeficiencyComponent },
-            { path: 'section-scoring', component: SectionScoringComponent },
             { path: '', component: DashboardComponent },
             { path: 'hydro-deficiency', component: HydroDeficiencyComponent },
             { path: 'hydro-impact', component: HydroImpactComponent },
