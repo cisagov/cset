@@ -30,7 +30,7 @@
 
   <div class="row mt-3">
     <div class="col">
-      <h1 class="text-capitalize report-title">CMMC</h1>
+      <h1 class="text-capitalize report-title">CYBER RESILIENCE REVIEW</h1>
       <h1 class="text-capitalize report-title">DEFICIENCY REPORT</h1>
     </div>
   </div>
@@ -41,7 +41,7 @@
   </div>
   <div class="row justify-content-between">
     <app-logo-for-reports />
-    <app-info-block [response]="model?.reportData"></app-info-block>
+    <app-info-block [response]="crrModel?.reportData"></app-info-block>
   </div>
 
   <div class="page-break"></div>
@@ -58,7 +58,7 @@
           the gaps by implementing the controls necessary to come into compliance with the associated statement.
         </p>
         <p>
-          The percentage gap in each domain is also listed and will help to determine the priority. CMMC is a
+          The percentage gap in each domain is also listed and will help to determine the priority. CRR is a
           cumulative maturity model meaning lower levels should be completed before moving to higher levels.
           Ideally baseline should be completed before focusing efforts on controls in evolving and so forth
           up the line of maturity levels.
@@ -87,7 +87,7 @@
         <div style="max-width: 50px; max-height: 50px;"></div>
       </div>
 
-      <div *ngIf="!model?.reportData.deficienciesList.length && !loading" class="row">
+      <div *ngIf="!crrModel?.reportData.deficienciesList.length && !loading" class="row">
         <div class="col text-start">
           There are no deficiencies to display.
         </div>
@@ -103,7 +103,7 @@
             style="page-break-inside: avoid; page-break-before: auto; page-break-after: auto;">
             <div class="row mat-section m-0 p-0">
               <div class="col-3 text-start">
-                <h3 *ngIf="matAnswer.mat.parent_Question_Id == null" class="small d-inline ">Practice {{
+                <h3 *ngIf="matAnswer.mat.parent_Question_Id == null" class="small d-inline">Practice {{
                   matAnswer.mat.question_Title }}</h3>
               </div>
               <div class="col-6 text-start">

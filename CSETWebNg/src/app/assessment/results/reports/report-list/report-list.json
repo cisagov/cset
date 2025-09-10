@@ -25,7 +25,7 @@
         "print": true
       },
       {
-        "linkUrl": "edmDeficiencyReport"
+        "linkUrl": "genDeficiencyReport?m=EDM"
       },
       {
         "linkUrl": "edmCommentsmarked"
@@ -34,23 +34,7 @@
   },
   {
     "title": "CMMC",
-    "reportList": [
-      {
-        "linkUrl": "executivecmmc"
-      },
-      {
-        "linkUrl": "sitesummarycmmc"
-      },
-      {
-        "linkUrl": "cmmcDeficiencyReport"
-      },
-      {
-        "linkUrl": "cmmcCommentsMarked"
-      },
-      {
-        "linkUrl": "cmmcAltJustifications"
-      }
-    ]
+    "reportList": []
   },
   {
     "title": "CMMC2",
