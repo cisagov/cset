@@ -21,7 +21,6 @@ import { CrrCommentsMarkedComponent } from '../../reports/crr/crr-comments-marke
 import { CrrDeficiencyComponent } from '../../reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrReportComponent } from '../../reports/crr/crr-report/crr-report.component';
 import { EdmCommentsmarkedComponent } from '../../reports/edm-commentsmarked/edm-commentsmarked.component';
-import { EdmDeficiencyComponent } from '../../reports/edm-deficiency/edm-deficiency.component';
 import { ExecutiveSummaryComponent } from '../../reports/executive-summary/executive-summary.component';
 import { GeneralDeficiencyComponent } from '../../reports/general-deficiency/general-deficiency.component';
 import { HydroActionItemsReportComponent } from '../../reports/hydro/hydro-action-items-report/hydro-action-items-report.component';
@@ -45,22 +44,26 @@ import { VadrDeficiencyComponent } from '../../reports/vadr/vadr-deficiency/vadr
 import { VadrReportComponent } from '../../reports/vadr/vadr-report/vadr-report.component';
 import { CisaVadrReportComponent } from '../../reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { CreHeatmapsComponent } from '../../reports/crePlus/cre-heatmaps/cre-heatmaps.component';
+import { DeficiencyTemplateComponent } from '../../reports/deficiency-template/deficiency-template.component';
+import { Cmmc2DeficiencyComponent } from '../../reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
+import { Cmmc2ScorecardReportComponent } from '../../reports/cmmc2/cmmc2-scorecard-report/cmmc2-scorecard-report.component';
+import { Cmmc2CommentsMarkedComponent } from '../../reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
+import { ExecutiveCMMC2Component } from '../../reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
+import { EdmComponent } from '../../reports/edm/edm.component';
+import { SecurityplanComponent } from '../../reports/securityplan/securityplan.component';
 
 
 
 const routes: Routes = [
-    { path: '', loadChildren: () => import('./cmmc-report-routing.module').then(m => m.CmmcReportRoutingModule) },
     { path: 'detail', component: SiteDetailComponent },
     { path: 'observations', component: ObservationTearoutsComponent },
     { path: 'executive', component: ExecutiveSummaryComponent },
-    { path: 'securityplan', loadChildren: () => import('./securityplan-routing.module').then(m => m.SecurityPlanRoutingModule) },
+    { path: 'securityplan', component: SecurityplanComponent },
     { path: 'sitesummary', component: SiteSummaryComponent },
     { path: 'physicalsummary', component: PhysicalSummaryComponent },
     { path: 'trend-report', component: TrendReportComponent },
     { path: 'compare-report', component: CompareReportComponent },
     { path: 'compare-report-m', component: CompareReportMComponent },
-    { path: 'edm', loadChildren: () => import('./edm-routing.module').then(m => m.EdmRoutingModule) },
-    { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent },
     { path: 'genDeficiencyReport', component: GeneralDeficiencyComponent },
     { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
     { path: 'cisCommentsmarked', component: CisCommentsmarkedComponent },
@@ -98,7 +101,13 @@ const routes: Routes = [
     { path: 'appkeyreport', component: KeyReportComponent },
     { path: 'allAnsweredQuestions', component: AllAnsweredquestionsComponent },
     { path: 'allMfrAndComments', component: AllCommentsmarkedComponent },
-    { path: 'allReviewedQuestions', component: AllReviewedComponent }
+    { path: 'allReviewedQuestions', component: AllReviewedComponent },
+    { path: 'deficiency', component: DeficiencyTemplateComponent },
+    { path: 'cmmc2DeficiencyReport', component: Cmmc2DeficiencyComponent },
+    { path: 'cmmc2ScorecardReport', component: Cmmc2ScorecardReportComponent },
+    { path: 'cmmc2CommentsMarked', component: Cmmc2CommentsMarkedComponent },
+    { path: 'executivecmmc2', component: ExecutiveCMMC2Component },
+    { path: 'edm', component: EdmComponent, }
 ];
 
 @NgModule({
