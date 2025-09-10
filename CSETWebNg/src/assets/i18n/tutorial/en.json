@@ -86,6 +86,7 @@
           "3d": "Detect",
           "3e": "Respond",
           "3f": "Recover",
+          "3g": "Users can also add Sector-Specific Goals via the Additional Goals on the Assessment Configuration page. SSGs address unique requirements in select critical infrastructure sectors and build upon the CPGs. Users are recommended to select any additional functions relevant to their organization, even if they are not the primary focus. For example, a financial institution that also maintains IT systems should include the Information Technology sector.",
           "4": "Each security practice includes the following components.",
           "5": "Each NIST CSF function has a set of associated security practices.",
           "6": "Each question has an assigned practice identifier.",
@@ -111,7 +112,14 @@
           "11a": "– An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
           "11b": "– An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
           "11c": "– An organization has identified the full set of activities required to meet the stated outcome of a goal.",
-          "11d": "– An organization has no immediate plans to implement the recommended actions for a goal."
+          "11d": "– An organization has no immediate plans to implement the recommended actions for a goal.",
+          "12a": "Scope",
+          "12b": "Within the Assessment Configuration page, users can select which technology domain will be assessed: Operational Technology (OT), Information Technology (IT), or both.",
+          "12c": "If both are selected, users can provide separate responses for each type for every requirement.",
+          "12d": "Operation Technology (OT)",
+          "12e": "A broad range of programmable systems and devices that interact with the physical environment or manage devices that interact with the physical environment. These systems and devices detect or cause a direct change through the monitoring and/or control of devices, processes, and events. Examples include industrial control systems, building automation systems, transportation systems, physical access control systems, physical environment monitoring systems, and physical environment measurement systems. (Source: NIST SP 800-82 Rev. 3)",
+          "12f": "Information Technology (IT)",
+          "12g": "Any services, equipment, or interconnected system(s) or subsystem(s) of equipment, that are used in the automatic acquisition, storage, analysis, evaluation, manipulation, management, movement, control, display, switching, interchange, transmission, or reception of data or information by the agency. For purposes of this definition, such services or equipment if used by the agency directly or is used by a contractor under a contract with the agency that requires its use; or to a significant extent, its use in the performance of a service or the furnishing of a product. Information technology includes computers, ancillary equipment (including imaging peripherals, input, output, and storage devices necessary for security and surveillance), peripheral equipment designed to be controlled by the central processing unit of a computer, software, firmware and similar procedures, services (including cloud computing and help-desk services or other professional services which support any point of the life cycle of the equipment or service), and related resources.  (Source: NIST SP 800-53 Rev. 5)"
      },
      "cmmc2": {
           "title": "Cybersecurity Maturity Model Certification (CMMC) 2.0 Tutorial",
