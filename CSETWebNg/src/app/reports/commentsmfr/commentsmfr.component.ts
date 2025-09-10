@@ -82,7 +82,7 @@ export class CommentsMfrComponent implements OnInit {
 
         this.loading = false;
       },
-      error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
+      error => console.error('Comments Marked Report Error: ' + (<Error>error).message)
     );
 
     this.assessSvc.getOtherRemarks().subscribe((resp: any) => {
@@ -94,7 +94,12 @@ export class CommentsMfrComponent implements OnInit {
    * Typically the question will have either question_Text or security_Practice.
    */
   getQuestionText(q) {
-    const text = ((q.question_Text ?? '') + ' ' + (q.security_Practice ?? '')).trim();
+    let text = q.question_Text.trim();
+
+    if (q.security_Practice) {
+      text = q.security_Practice.trim();
+    }
+
     return this.reportSvc.scrubGlossaryMarkup(text);
   }
 

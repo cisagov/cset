@@ -43,6 +43,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IHtmlFromXamlConverter _htmlConverter;
         private readonly IQuestionRequirementManager _questionRequirement;
         private readonly CSETContext _context;
+        private readonly Hooks _hooks;
 
 
 
@@ -51,10 +52,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         public QuestionsController(ITokenManager token, INotificationBusiness notification,
             IAssessmentUtil assessmentUtil, IContactBusiness contact, IDocumentBusiness document, IHtmlFromXamlConverter htmlConverter, IQuestionRequirementManager questionRequirement,
-            IUserBusiness user, CSETContext context)
+            IUserBusiness user, CSETContext context, Hooks hooks)
         {
             _token = token;
             _context = context;
+            _hooks = hooks;
             _notification = notification;
             _assessmentUtil = assessmentUtil;
             _contact = contact;
@@ -161,8 +163,8 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/GetActionItems")]
         public IList<ActionItems> GetActionItems([FromQuery] int parentId, [FromQuery] int finding_id)
         {
-            int assessId = _token.AssessmentForUser();
-            ObservationsManager fm = new ObservationsManager(_context, assessId);
+            int assessmentId = _token.AssessmentForUser();
+            ObservationsManager fm = new ObservationsManager(_context, assessmentId);
             return fm.GetActionItems(parentId, finding_id);
         }
 
@@ -175,8 +177,12 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SetMode")]
         public IActionResult SetMode([FromQuery] string mode)
         {
-            _questionRequirement.InitializeManager(_token.AssessmentForUser());
+            int assessmentId = _token.AssessmentForUser();
+            _questionRequirement.InitializeManager(assessmentId);
             _questionRequirement.SetApplicationMode(mode);
+
+            _hooks.HookQuestionsModeChanged(assessmentId);
+
             return Ok();
         }
 
@@ -252,51 +258,69 @@ namespace CSETWebCore.Api.Controllers
                     answer.QuestionType = "Maturity";
                 if (answer.Is_Requirement)
                     answer.QuestionType = "Requirement";
-                if (!answer.Is_Requirement && !answer.Is_Maturity && !answer.Is_Component)
+                if (answer.Is_Question)
                     answer.QuestionType = "Question";
             }
 
 
-            // Note the last-answered question
+            // Remember the last-answered question
             var lah = new LastAnsweredHelper(_context);
             lah.Save(assessmentId, _token.GetCurrentUserId(), answer);
-
-
-            var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
 
 
             if (answer.Is_Component)
             {
                 var cb = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
-                var cbAnsId = cb.StoreAnswer(answer);
-                response.AnswerId = cbAnsId;
+                var savedComponentAnswer = cb.StoreAnswer(answer);
+
+                _hooks.HookQuestionAnswered(savedComponentAnswer);
+
+                response.AnswerId = (int)savedComponentAnswer.AnswerId;
                 return Ok(response);
             }
+
 
             if (answer.Is_Requirement)
             {
                 var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
-                var rbAnsId = rb.StoreAnswer(answer);
-                response.AnswerId = rbAnsId;
+                var savedRequirementAnswer = rb.StoreAnswer(answer);
+
+                _hooks.HookQuestionAnswered(savedRequirementAnswer);
+
+
+                response.AnswerId = (int)savedRequirementAnswer.AnswerId;
                 return Ok(response);
             }
+
 
             if (answer.Is_Maturity)
             {
                 var mb = new MaturityBusiness(_context, _assessmentUtil);
-                var savedAnswer = mb.StoreAnswer(assessmentId, answer);
+                var savedMaturityAnswer = mb.StoreAnswer(assessmentId, answer);
 
-                var detailsChanged = new Hooks(_context, _assessmentUtil).HookQuestionAnswered(savedAnswer);
+                var detailsChanged = _hooks.HookQuestionAnswered(savedMaturityAnswer);
 
 
-                response.AnswerId = (int)savedAnswer.AnswerId;
+                response.AnswerId = (int)savedMaturityAnswer.AnswerId;
                 response.DetailsChanged = detailsChanged;
                 return Ok(response);
             }
 
-            var qbAnsId = qb.StoreAnswer(answer);
-            response.AnswerId = qbAnsId;
-            return Ok(response);
+
+            if (answer.QuestionType == "Question")
+            {
+                // 'Questions mode' question dropd through to here
+                var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
+                var savedQuestionAnswer = qb.StoreAnswer(answer);
+
+                _hooks.HookQuestionAnswered(savedQuestionAnswer);
+
+                response.AnswerId = (int)savedQuestionAnswer.AnswerId;
+                return Ok(response);
+            }
+
+            // Unknown Answer.QuestionType
+            return BadRequest();
         }
 
 
@@ -351,6 +375,8 @@ namespace CSETWebCore.Api.Controllers
                 return Ok(score);
             }
 
+            _hooks.HookQuestionAnswered(answers[0]);
+
             return Ok();
         }
 
@@ -379,8 +405,16 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _questionRequirement.AssessmentId = assessmentId;
 
+            foreach (var ans in subCatAnswers.Answers)
+            {
+                ans.AssessmentId = assessmentId;
+            }
+
             var qm = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
             qm.StoreSubcategoryAnswers(subCatAnswers);
+
+            _hooks.HookQuestionAnswered(subCatAnswers.Answers[0]);
+
             return Ok();
         }
 
@@ -584,8 +618,10 @@ namespace CSETWebCore.Api.Controllers
             string applicationMode = GetApplicationMode(assessmentId);
 
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
+
             Guid g = new Guid(guid);
             manager.HandleGuid(g, ShouldSave);
+
             return Ok();
         }
 

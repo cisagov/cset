@@ -237,7 +237,8 @@ label[required]::after {
   overflow-y:auto;
   overflow-x:hidden;
   border-radius: 8px;
-  max-height: calc(100vh - 220px);
+  max-height: calc(100cqh - 225px);
+  min-height: calc(100cqh - 225px);
   color: $gray-800;
 }
 

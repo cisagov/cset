@@ -197,7 +197,7 @@ export class LoginAccessKeyComponent implements OnInit {
       (error) => {
         this.loginAccessKeyFailed = true;
         localStorage.removeItem('accessKey');
-        console.log(error);
+        console.error(error);
       }
     );
   }

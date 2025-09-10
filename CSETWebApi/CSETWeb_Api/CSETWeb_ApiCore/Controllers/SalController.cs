@@ -4,10 +4,14 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Authorization;
+using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.Business.Standards;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Sal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +19,6 @@ using Nelibur.ObjectMapper;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using CSETWebCore.Business.Authorization;
-using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.Standards;
 
 namespace CSETWebCore.Api.Controllers
 {   [CsetAuthorize]
@@ -25,6 +26,7 @@ namespace CSETWebCore.Api.Controllers
     public class SalController : ControllerBase
     {
         private readonly CSETContext _context;
+        private readonly Hooks _hooks;
         private readonly ITokenManager _token;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IStandardsBusiness _standard;
@@ -35,11 +37,12 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// CTOR
         /// </summary>
-        public SalController(CSETContext context, ITokenManager token,
+        public SalController(CSETContext context, Hooks hooks, ITokenManager token,
             IStandardsBusiness standard, IAssessmentUtil assessmentUtil, IStandardSpecficLevelRepository standardRepo,
             IAssessmentModeData assessmentModeData)
         {
             _context = context;
+            _hooks = hooks;
             _token = token;
             _standard = standard;
             _assessmentUtil = assessmentUtil;
@@ -53,7 +56,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/SAL")]
+        [Route("api/sal")]
         public IActionResult GetSalValues()
         {
             try
@@ -73,7 +76,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         [HttpGet]
-        [Route("api/SAL/Type")]
+        [Route("api/sal/type")]
         public async Task<IActionResult> GetType(String newType)
         {
             try
@@ -96,7 +99,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         [HttpPost]
-        [Route("api/SAL")]
+        [Route("api/sal")]
         public IActionResult PostSAL(Sals tmpsal)
         {
             if (!ModelState.IsValid)
@@ -144,6 +147,9 @@ namespace CSETWebCore.Api.Controllers
                     lm.SaveSALLevel(tmpsal.Selected_Sal_Level);
                 }
 
+
+                _hooks.HookSalChanged(assessmentId);
+
                 return Ok(tmpsal);
             }
             catch (DbUpdateConcurrencyException dbe)
@@ -165,40 +171,6 @@ namespace CSETWebCore.Api.Controllers
             }
 
             return NoContent();
-        }
-
-
-        // POST: api/SAL
-        [HttpPost]
-        [Route("api/Sal_what_is_this")]
-        public async Task<IActionResult> PostSTANDARD_SELECTION(STANDARD_SELECTION sTANDARD_SELECTION)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.STANDARD_SELECTION.Add(sTANDARD_SELECTION);
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException exc)
-            {
-                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
-
-                if (STANDARD_SELECTIONExists(sTANDARD_SELECTION.Assessment_Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = sTANDARD_SELECTION.Assessment_Id }, sTANDARD_SELECTION);
         }
 
 

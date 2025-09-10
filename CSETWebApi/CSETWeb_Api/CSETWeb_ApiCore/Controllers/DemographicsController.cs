@@ -142,7 +142,7 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/Demographics/Sectors_Industry/{id}")]
-        public async Task<IActionResult> GetSECTOR_INDUSTRY(int id)
+        public async Task<IActionResult> GetSectorIndustry(int id)
         {
             var list = await _context.SECTOR_INDUSTRY.Where(x => x.SectorId == id)
                 .OrderBy(a => a.IndustryName).ToListAsync<SECTOR_INDUSTRY>();

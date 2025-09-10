@@ -60,7 +60,7 @@ export class EdmSummaryResultsComponent implements OnInit {
         this.getBlueIndicator();
       },
       (failure) => {
-        console.log(failure);
+        console.error(failure);
       }
     )
   }
@@ -158,7 +158,6 @@ export class EdmSummaryResultsComponent implements OnInit {
   getBlueBarWidth(input) {
     let width = 0;
     if (input < 0 || input > 5) {
-      // console.log("BLUE BAR WIDTH VALUE OUTSIDE OF 0-5 RANGE")
     }
     else if (input < 1) {
       width = (input * .5) * 100;

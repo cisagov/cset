@@ -66,8 +66,8 @@ export class RequiredDocsComponent implements OnInit {
                 this.documents = data;
             },
             error => {
-                console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-                console.log('Error getting all documents: ' + (<Error>error).stack);
+                console.error('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+                console.error('Error getting all documents: ' + (<Error>error).stack);
             });
     }
 

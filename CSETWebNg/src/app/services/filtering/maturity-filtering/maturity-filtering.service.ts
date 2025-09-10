@@ -24,7 +24,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../config.service';
-import { QuestionGrouping } from '../../../models/questions.model';
+import { Question, QuestionGrouping } from '../../../models/questions.model';
 import { QuestionFilterService } from '../question-filter.service';
 import { AssessmentService } from '../../assessment.service';
 import { EdmFilteringService } from './edm-filtering.service';
@@ -295,7 +295,7 @@ export class MaturityFilteringService {
         return;
       }
 
-      const maturityModel=this.assesmentSvc.assessment?.maturityModel;
+      const maturityModel = this.assesmentSvc.assessment?.maturityModel;
 
       if (q.maturityLevel !== undefined && q.maturityLevel !== null) {
         const questionLevel = q.maturityLevel.toString();
@@ -306,7 +306,8 @@ export class MaturityFilteringService {
       }
 
       // If we made it this far, start over assuming visible = false
-      q.visible = false
+      q.visible = false;
+
       if (filterSvc.filterSearchString.length > 0) {
         let textToSearch = '';
 
@@ -322,14 +323,10 @@ export class MaturityFilteringService {
           return;
         }
       }
-      // OLD code to filter questionText
-      // if (filterSvc.filterSearchString.length > 0
-      //   && q.questionText.toLowerCase().indexOf(filterStringLowerCase) < 0) {
-      //   return;
-      // }
+
       // only apply maturity-level filtering when the user has toggled at least one numeric level
       const hasLevelFilter = filterSvc.showFilters.some(f => /^\d+$/.test(f));
-      if (maturityModel?.levels?.length > 0
+      if ((maturityModel?.levels?.length ?? 0) > 0
         && q.maturityLevel != null
         && hasLevelFilter) {
         const questionLevel = q.maturityLevel.toString();
@@ -351,7 +348,7 @@ export class MaturityFilteringService {
       }
 
       // consider null answers as 'U'
-      if ((q.answer == null || q.answer == 'U') && filterSvc.showFilters.includes('U')) {
+      if (filterSvc.showFilters.includes('U') && q.isAnswerable && (q.answer == null || q.answer == 'U')) {
         q.visible = true;
 
         if (this.assesmentSvc.usesMaturityModel('VADR') && (q.freeResponseAnswer && q.freeResponseAnswer.length > 0)) {
@@ -379,10 +376,31 @@ export class MaturityFilteringService {
       if (filterSvc.showFilters.includes('FR') && q.freeResponseAnswer && q.freeResponseAnswer.length > 0) {
         q.visible = true;
       }
+
       const hasAnswerOrFeatureFilter = filterSvc.showFilters.some(f =>
-        filterSvc.answerOptions.includes(f) || f === "U" ||  ["C", "FB", "M", "O", "FR"].includes(f));
-      if (!hasAnswerOrFeatureFilter && q.maturityLevel != null) {  const questionLevel = q.maturityLevel.toString();
-        if (filterSvc.showFilters.includes(questionLevel)) { q.visible = true;  }}
+        filterSvc.answerOptions.includes(f) || f === 'U' || ['C', 'FB', 'M', 'O', 'FR'].includes(f));
+
+      if (!hasAnswerOrFeatureFilter && q.maturityLevel != null) {
+        const questionLevel = q.maturityLevel.toString();
+        if (filterSvc.showFilters.includes(questionLevel)) {
+          q.visible = true;
+        }
+      }
+    });
+
+
+    // Show the children of visible parent questions
+    g.questions.forEach(q => {
+      if (q.visible) {
+        this.setChildrenVisibility(q, g.questions, true);
+      }
+    });
+
+    // Show the parents of visible child questions
+    g.questions.forEach(q => {
+      if (q.visible && q.parentQuestionId != null) {
+        this.setParentVisibility(q, g.questions, true);
+      }
     });
 
 
@@ -406,4 +424,25 @@ export class MaturityFilteringService {
     }
   }
 
+  /**
+   * Set the child's parent visibility.  This is used to provide context
+   * so that the child question is not visible after filtering with no 
+   * visual cue as to what it belongs to.
+   */
+  setParentVisibility(q: Question, peers: Question[], visibility: boolean) {
+    const parentIndex = peers.findIndex(x => x.questionId == q.parentQuestionId);
+    peers[parentIndex].visible = visibility;
+
+  }
+
+  /**
+   * Set the child questions of a specified question to the desired visibilty.
+   */
+  setChildrenVisibility(q: Question, peers: Question[], visibility: boolean) {
+    peers.forEach(child => {
+      if (child.parentQuestionId == q.questionId) {
+        child.visible = visibility;
+      }
+    });
+  }
 }

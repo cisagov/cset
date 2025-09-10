@@ -67,7 +67,7 @@ export class ImrReportComponent implements OnInit {
       (resp: any) => {
         this.model.structure = resp;
       },
-      (error) => console.log('Error loading IMR report: ' + (<Error>error).message)
+      (error) => console.error('Error loading IMR report: ' + (<Error>error).message)
     );
 
     this.cmuSvc.getDomainCompliance().subscribe((resp: any) => {

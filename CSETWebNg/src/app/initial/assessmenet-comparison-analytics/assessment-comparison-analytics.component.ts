@@ -162,12 +162,12 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
         this.sectorsList = data;
       },
       (error) => {
-        console.log(
+        console.error(
           "Error Getting all sectors: " +
           (<Error>error).name +
           (<Error>error).message
         );
-        console.log(
+        console.error(
           "Error Getting all sectors (cont): " + (<Error>error).stack
         );
       }
@@ -177,12 +177,12 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
         this.assetValues = data;
       },
       (error) => {
-        console.log(
+        console.error(
           "Error Getting all asset values: " +
           (<Error>error).name +
           (<Error>error).message
         );
-        console.log(
+        console.error(
           "Error Getting all asset values (cont): " + (<Error>error).stack
         );
       }
@@ -192,12 +192,12 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
         this.sizeList = data;
       },
       (error) => {
-        console.log(
+        console.error(
           "Error Getting size values: " +
           (<Error>error).name +
           (<Error>error).message
         );
-        console.log(
+        console.error(
           "Error Getting size values (cont): " + (<Error>error).stack
         );
       }
@@ -356,7 +356,7 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
         this.populateIndustryOptions(this.demographicData.sectorId);
       },
       (error) =>
-        console.log("Demographic load Error: " + (<Error>error).message)
+        console.error("Demographic load Error: " + (<Error>error).message)
     );
   }
 
@@ -375,12 +375,12 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
         this.industryList = data;
       },
       (error) => {
-        console.log(
+        console.error(
           "Error Getting Industry: " +
           (<Error>error).name +
           (<Error>error).message
         );
-        console.log("Error Getting Industry (cont): " + (<Error>error).stack);
+        console.error("Error Getting Industry (cont): " + (<Error>error).stack);
       }
     );
   }
@@ -436,7 +436,7 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
     event: MouseEvent;
     active: {}[];
   }): void {
-    //console.log(event, active);
+
   }
 
   public chartHovered({
@@ -446,7 +446,7 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
     event: MouseEvent;
     active: {}[];
   }): void {
-    //console.log(event, active);
+
   }
   sectorChange(sector) {
     this.selectedSector = sector;
@@ -457,8 +457,7 @@ export class AssessmentComparisonAnalyticsComponent implements OnInit {
   }
 
   checkValue(event: any) {
-    // console.log(event);
-    // console.log(event.source.name);
+
   }
   setupChartMaturity(x: any) {
     let titles = [];

@@ -58,7 +58,7 @@ export class VersionService {
       }
     })
     error => {
-      console.log(error)
+      console.error(error)
     }
   }
 

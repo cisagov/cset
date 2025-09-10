@@ -6,13 +6,12 @@
 ////////////////////////////////
 using CSETWebCore.Business.Diagram.layers;
 using CSETWebCore.Business.Malcolm;
+using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Malcolm;
 using Newtonsoft.Json;
-using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,20 +27,22 @@ namespace CSETWebCore.Business.Diagram
     public class DiagramManager : IDiagramManager
     {
         private CSETContext _context;
+        private Hooks _hooks;
         static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
         
-        public DiagramManager(CSETContext context)
+        public DiagramManager(CSETContext context, Hooks hooks)
         {
             _context = context;
+            _hooks = hooks;
         }
 
         /// <summary>
         /// Persists the diagram XML in the database.
         /// </summary>
-        /// <param name="assessmentID"></param>
+        /// <param name="assessmentId"></param>
         /// <param name="diagramXML"></param>
-        public void SaveDiagram(int assessmentID, XmlDocument xDoc, DiagramRequest req, bool refreshQuestions = true)
+        public void SaveDiagram(int assessmentId, XmlDocument xDoc, DiagramRequest req, bool refreshQuestions = true)
         {
             int lastUsedComponentNumber = req.LastUsedComponentNumber;
             string diagramImage = req.DiagramSvg;
@@ -61,7 +62,7 @@ namespace CSETWebCore.Business.Diagram
             }
 
 
-            var assessmentRecord = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
+            var assessmentRecord = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             if (assessmentRecord != null)
             {
                 try
@@ -74,7 +75,7 @@ namespace CSETWebCore.Business.Diagram
                         validGuid.Add(c.Attributes["ComponentGuid"].InnerText);
                     }
 
-                    var list = _context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessmentID).ToList();
+                    var list = _context.ASSESSMENT_DIAGRAM_COMPONENTS.Where(x => x.Assessment_Id == assessmentId).ToList();
                     foreach (var i in list)
                     {
                         if (!validGuid.Contains(i.Component_Guid.ToString()))
@@ -82,6 +83,7 @@ namespace CSETWebCore.Business.Diagram
                             _context.ASSESSMENT_DIAGRAM_COMPONENTS.Remove(i);
                         }
                     }
+
                     _context.SaveChanges();
 
                     DiagramDifferenceManager differenceManager = new DiagramDifferenceManager(_context);
@@ -90,9 +92,9 @@ namespace CSETWebCore.Business.Diagram
                     {
                         oldDoc.LoadXml(assessmentRecord.Diagram_Markup);
                     }
-                    differenceManager.BuildDiagramDictionaries(xDoc, oldDoc);
-                    differenceManager.SaveDifferences(assessmentID, refreshQuestions);
 
+                    differenceManager.BuildDiagramDictionaries(xDoc, oldDoc);
+                    differenceManager.SaveDifferences(assessmentId, refreshQuestions);
                 }
                 catch (Exception exc)
                 {
@@ -110,15 +112,18 @@ namespace CSETWebCore.Business.Diagram
                     _context.SaveChanges();
 
                     var mb = new MalcolmBusiness(_context);
-                    mb.VerificationAndValidation(assessmentID);
+                    mb.VerificationAndValidation(assessmentId);
+
+                    _hooks.HookDiagramChanged((int)assessmentId);
                 }
             }
             else
             {
                 //what the?? where is our assessment
-                throw new ApplicationException("Assessment record is missing for id" + assessmentID);
+                throw new ApplicationException("Assessment record is missing for id" + assessmentId);
             }
         }
+
 
         /// <summary>
         /// Returns the diagram XML for the assessment ID.  
@@ -127,7 +132,6 @@ namespace CSETWebCore.Business.Diagram
         /// <returns></returns>
         public DiagramResponse GetDiagram(int assessmentID)
         {
-
             var assessmentRecord = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
 
             DiagramResponse resp = new DiagramResponse();
@@ -151,7 +155,6 @@ namespace CSETWebCore.Business.Diagram
         /// <returns></returns>
         public bool HasDiagram(int assessmentID)
         {
-
             var assessmentRecord = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentID).FirstOrDefault();
 
             DiagramResponse resp = new DiagramResponse();
@@ -360,7 +363,6 @@ namespace CSETWebCore.Business.Diagram
         /// <returns></returns>
         public List<mxGraphModelRootObject> ProcessDiagramVertices(StringReader stream, int assessment_id)
         {
-
             List<mxGraphModelRootObject> vertices = new List<mxGraphModelRootObject>();
             if (stream != null)
             {
@@ -430,7 +432,6 @@ namespace CSETWebCore.Business.Diagram
         /// <returns></returns>
         public List<mxGraphModelRootMxCell> ProcessDiagramShapes(StringReader stream, int assessment_id)
         {
-
             List<mxGraphModelRootMxCell> vertices = new List<mxGraphModelRootMxCell>();
             if (stream != null)
             {

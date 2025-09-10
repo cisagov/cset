@@ -68,7 +68,7 @@ export class AddQuestionComponent implements OnInit {
         this.groupheadings = data.groupHeadings;
         this.subcategories = data.subcategories;
       },
-      error => console.log('Categories load Error: ' + (<Error>error).message)
+      error => console.error('Categories load Error: ' + (<Error>error).message)
     );
   }
 

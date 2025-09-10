@@ -12,6 +12,7 @@ using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
 using CSETWebCore.Model.Observations;
 using CSETWebCore.Model.Document;
+using CSETWebCore.Model.Question;
 
 
 namespace CSETWebCore.Interfaces.Assessment
@@ -33,8 +34,8 @@ namespace CSETWebCore.Interfaces.Assessment
         bool IsCurrentUserOnAssessment(int assessmentId);
         ASSESSMENTS GetAssessmentById(int assessmentId);
         DateTime GetLastModifiedDateUtc(int assessmentId);
-        IEnumerable<usp_Assessments_Completion_For_UserResult> GetAssessmentsCompletionForUser(int userId);
-        IEnumerable<usp_Assessments_Completion_For_UserResult> GetAssessmentsCompletionForAccessKey(string accessKey);
+        IEnumerable<CompletionCounts> GetAssessmentsCompletionForUser(int userId);
+        IEnumerable<CompletionCounts> GetAssessmentsCompletionForAccessKey(string accessKey);
 
         IList<string> GetNames(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10);
 

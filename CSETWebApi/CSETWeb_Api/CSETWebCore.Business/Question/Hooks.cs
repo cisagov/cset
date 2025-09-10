@@ -4,12 +4,13 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Observations;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Question;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 
 namespace CSETWebCore.Business.Question
@@ -19,7 +20,6 @@ namespace CSETWebCore.Business.Question
     /// </summary>
     public class Hooks
     {
-        private readonly IAssessmentUtil _assessmentUtil;
         private CSETContext _context;
 
 
@@ -28,10 +28,9 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="context"></param>
         /// <param name="assessmentUtil"></param>
-        public Hooks(CSETContext context, IAssessmentUtil assessmentUtil)
+        public Hooks(CSETContext context)
         {
             _context = context;
-            _assessmentUtil = assessmentUtil;
         }
 
 
@@ -42,6 +41,8 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         public bool HookQuestionAnswered(Answer answer)
         {
+            new CompletionCounter(_context).Count(answer.AssessmentId);
+
             if (answer.Is_Maturity)
             {
                 return HookMaturityQuestionAnswered(answer);
@@ -56,7 +57,7 @@ namespace CSETWebCore.Business.Question
         /// Returns a boolean indicating if details have changed.
         /// </summary>
         /// <param name="answer"></param>
-        public bool HookMaturityQuestionAnswered(Answer answer)
+        private bool HookMaturityQuestionAnswered(Answer answer)
         {
             bool detailsChanged = false;
 
@@ -83,6 +84,63 @@ namespace CSETWebCore.Business.Question
             }
 
             return detailsChanged;
+        }
+
+
+        /// <summary>
+        /// Handles actions that should be taken when demographics are changed.
+        /// </summary>
+        public void HookDemographicsChanged(int assessmentId)
+        {
+            new CompletionCounter(_context).Count(assessmentId);
+        }
+
+        /// <summary>
+        /// Handles actions that should be taken when a maturity 
+        /// target level is changed.
+        /// </summary>
+        public void HookTargetLevelChanged(int assessmentId)
+        {
+            new CompletionCounter(_context).Count(assessmentId);
+        }
+
+        /// <summary>
+        /// Handles actions that should be taken when the SAL is changed.
+        /// </summary>
+        public void HookSalChanged(int assessmentId)
+        {
+            new CompletionCounter(_context).Count(assessmentId);
+        }
+
+
+        /// <summary>
+        /// Handles actions that should be taken when the questions/requirements mode is changed.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public void HookQuestionsModeChanged(int assessmentId)
+        {
+            new CompletionCounter(_context).Count(assessmentId);
+        }
+
+
+        /// <summary>
+        /// Handles actions that should be taken when a 
+        /// grouping selection is changed.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public void HookGroupingSelectionChanged(int assessmentId)
+        {
+            new CompletionCounter(_context).Count(assessmentId);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        public void HookDiagramChanged(int assessmentId)
+        {
+            new CompletionCounter(_context).Count(assessmentId);
         }
     }
 }

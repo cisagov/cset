@@ -75,6 +75,11 @@ public partial class ASSESSMENTS
 
     public bool AssessorMode { get; set; }
     public bool Done { get; set; }
+
+    public int? TotalQuestionCount { get; set; }
+
+    public int? CompletedQuestionCount { get; set; }
+    
     [InverseProperty("Assessment")]
     public virtual ICollection<ACCESS_KEY_ASSESSMENT> ACCESS_KEY_ASSESSMENT { get; set; } = new List<ACCESS_KEY_ASSESSMENT>();
 

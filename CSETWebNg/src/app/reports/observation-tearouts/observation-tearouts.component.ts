@@ -57,7 +57,7 @@ export class ObservationTearoutsComponent implements OnInit {
         var title = this.tSvc.translate('reports.observations tear-out sheets.tab title', { defaultTitle: this.configSvc.behaviors.defaultTitle });
         this.titleService.setTitle(title);
       },
-      error => console.log('Observation Tear Out Sheets report load Error: ' + (<Error>error).message)
+      error => console.error('Observation Tear Out Sheets report load Error: ' + (<Error>error).message)
     );
   }
 

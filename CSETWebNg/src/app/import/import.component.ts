@@ -24,11 +24,9 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CodeEditorComponent, CodeEditorService, CodeModel } from '@ngstack/code-editor';
 import { saveAs } from 'file-saver';
-import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
+import type { editor } from 'monaco-editor';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import screenfull from 'screenfull';
-import { Screenfull } from "screenfull";
 import { FileItem, FileUploader } from '../modules/ng2-file-upload';
 import { XmlCompletionItemProvider } from '../models/xmlCompletionItemProvider.model';
 import { ConfigService } from '../services/config.service';
@@ -264,16 +262,20 @@ export class ImportComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  public getFullScreen() {
-    return screenfull && (screenfull as Screenfull).isFullscreen;
+  public getFullScreen(): boolean {
+    return !!document.fullscreenElement;
   }
 
-  public fullScreen() {
-    if (screenfull) {
-      if (!(screenfull as Screenfull).isFullscreen) {
-        (screenfull as Screenfull).request(this.codeContainer.nativeElement);
-      } else {
-        (screenfull as Screenfull).exit();
+  public async fullScreen(): Promise<void> {
+    const element = this.codeContainer.nativeElement;
+    
+    if (!document.fullscreenElement) {
+      if (element.requestFullscreen) {
+        await element.requestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        await document.exitFullscreen();
       }
     }
   }

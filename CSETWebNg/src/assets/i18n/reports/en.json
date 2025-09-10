@@ -143,24 +143,24 @@
           "cre+": {
                "sectionTitle": "Cybersecurity Resilience Essentials (CRE+)",
                "1": {
-                    "title": "CRE+ General Charts Report",
-                    "desc": "This report details answers across Core, Optional, and MIL domains and goals, with accompanying charts for visual analysis."
-               },
-               "2": {
-                    "title": "CRE+ Detailed Charts Report",
-                    "desc": "This report expands on Goal and MIL answer details while providing at-a-glance MIL compliance status, charts, and a comprehensive heatmap of all answered questions."
-               },
-               "3": {
                     "title": "CRE+ (Core Module) Final Report",
                     "desc": "CRE Core questions and selected Optional Domain questions are detailed in this report"
                },
-               "4": {
+               "2": {
                     "title": "Optional Domains Final Report",
                     "desc": "Selected Optional Domain questions are detailed in this report"
                },
-               "5": {
+               "3": {
                     "title": "MIL Final Report",
                     "desc": "Selected MIL questions are detailed in this report"
+               },
+               "4": {
+                    "title": "CRE+ General Charts Report",
+                    "desc": "This report details answers across Core, Optional, and MIL domains and goals, with accompanying charts for visual analysis."
+               },
+               "5": {
+                    "title": "CRE+ Detailed Charts Report",
+                    "desc": "This report expands on Goal and MIL answer details while providing at-a-glance MIL compliance status, charts, and a comprehensive heatmap of all answered questions."
                }
           },
           "cisa vadr": {
@@ -633,14 +633,15 @@
                     "ssg": {
                          "ssg security practice checklist": "Sector-Specific Goal Security Practices",
                          "includes ssg": "Sector-Specific Goal answers are included in these results.",
-                         "1": "This table lists all applicable SSG security practices and how they have been answered."
+                         "1": "This table lists all applicable SSG security practices and how they have been answered.",
+                         "2": "Sector Specific"
                     },
                     "current assessment": "Current Assessment",
                     "notes": "Notes",
                     "ttp or risk addressed": "TTP or Risk Addressed",
                     "cost": "Cost",
                     "impact": "Impact",
-                    "complexity": "Complexity",
+                    "complexity": "Ease",
                     "low": "LOW",
                     "medium": "MEDIUM",
                     "high": "HIGH"
@@ -648,13 +649,14 @@
                "deficiency": {
                     "report title": "DEFICIENCY REPORT CYBERSECURITY PERFORMANCE GOALS (CPG)",
                     "cpg deficiency": "CPG Deficiency",
-                    "deficiencies": "Deficiencies",
+                    "cpg deficiencies": "Cross-Sector Goal Deficiencies",
                     "ssg deficiencies": "Sector-Specific Deficiencies",
                     "p": {
                          "1": "This deficiency report lists the practices that are \"Not Implemented\" or unanswered.",
                          "2": "This is often referred to as the GAP Report. This report intends to list the gaps, assist users of the report in identifying gaps, prioritizing work, and beginning to make a plan to address the gaps by implementing the controls necessary to come into compliance with the associated practice.",
                          "3": "Marked for Review",
-                         "4": "There are no deficiencies to display."
+                         "4": "There are no deficiencies in the cross-sector questions.",
+                         "5": "There are no deficiences in the sector-specific questions."
                     }
                },
                "ot": "Operational Technology (OT)",
@@ -665,8 +667,8 @@
           "ssg": {
                "ssg1": "Sector Specific Goals",
                "ssg2": "SSG",
-               "chemical": "Chemical Sector Goals",
-               "it": "Information Technology Goals",
+               "18": "Chemical Sector Goals",
+               "20": "Information Technology Goals",
                "other": "Other Sector Goals"
           },
           "cisa vadr": {
@@ -795,7 +797,7 @@
                     },
                     "24": {
                          "title": "CISA Cyber Resilience Essentials (CRE+) MIL Final Report",
-                         "question title": "MIL Questions",
+                         "question title": "Optional MIL Questions",
                          "only selected": "Only questions from selected goals are included.",
                          "none selected": "This report shows only selected MILs.  Select one or more MILs to see questions on this report."
                     }

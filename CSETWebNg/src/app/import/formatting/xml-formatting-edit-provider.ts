@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { XmlFormatter } from "./xml-formatter";
 import { XmlFormattingOptionsFactory } from "./xml-formatting-options";
-import { editor, languages, Range, CancellationToken } from 'monaco-editor/esm/vs/editor/editor.api';
+import type { editor, languages, Range, CancellationToken } from 'monaco-editor';
 
 export class XmlFormattingEditProvider implements
   languages.DocumentFormattingEditProvider,

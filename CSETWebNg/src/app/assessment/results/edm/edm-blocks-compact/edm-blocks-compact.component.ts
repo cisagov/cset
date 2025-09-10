@@ -91,7 +91,7 @@ export class EdmBlocksCompactComponent implements OnInit, OnChanges {
             }
           });
         },
-        error => console.log('RF Error: ' + (<Error>error).message)
+        error => console.error('RF Error: ' + (<Error>error).message)
       );
     }
   }

@@ -66,7 +66,7 @@ export class ModuleAddCloneComponent implements OnInit {
 
       },
         error =>
-          console.log(
+          console.error(
             "Unable to get Custom Standards: " +
             (<Error>error).message
           ));
@@ -82,7 +82,7 @@ export class ModuleAddCloneComponent implements OnInit {
       this.dialogRef.close(true);
     },
       error => {
-        console.log("Unable to get Custom Standards: " + (<Error>error).message);
+        console.error("Unable to get Custom Standards: " + (<Error>error).message);
         this.warning = true;
       });
   }

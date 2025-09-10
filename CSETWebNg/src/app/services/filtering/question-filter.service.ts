@@ -84,7 +84,7 @@ export class QuestionFilterService {
         }
         const keep = Number(f) <= newTargetLevel;
         if (!keep) {
-          console.log(`Removing level ${f} from showFilters due to target level decrease`);
+          console.error(`Removing level ${f} from showFilters due to target level decrease`);
         }
         return keep;
       });
@@ -183,7 +183,7 @@ export class QuestionFilterService {
     if (this.maturityTargetLevel !== newTargetLevel) {
       this.updateMaturityTargetLevel(newTargetLevel);
     } else {
-      console.log('Target level unchanged, no dynamic update needed');
+      console.error('Target level unchanged, no dynamic update needed');
     }
   }
 

@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
+import type { editor } from 'monaco-editor';
 import { XmlFormatterFactory } from "../xml-formatter";
 import { XmlFormattingEditProvider } from "../xml-formatting-edit-provider";
 

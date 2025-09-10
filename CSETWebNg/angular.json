@@ -9,7 +9,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@angular-builders/custom-webpack:browser",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
             "outputPath": "dist",
@@ -17,9 +17,6 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
-            "customWebpackConfig": {
-              "path": "./webpack/monaco-custom-webpack.config.js"
-            },
             "allowedCommonJsDependencies": [
               "jquery",
               "lodash",
@@ -31,10 +28,11 @@
               "rxjs/operators",
               "rxjs/Subject",
               "sanitize-html",
-              "style-loader",
               "file-saver",
               "chart.js",
-              "mousetrap"
+              "mousetrap",
+              "screenfull",
+              "monaco-editor"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -175,7 +173,7 @@
           "defaultConfiguration": "development"
         },
         "serve": {
-          "builder": "@angular-builders/custom-webpack:dev-server",
+          "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "buildTarget": "csetweb-ng:build"
           },

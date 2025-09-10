@@ -17,9 +17,7 @@ export class VadrGroupingBlockComponent implements OnInit {
   ) { }
 
 
-  ngOnInit(): void {
-    console.log(this.grouping);
-  }
+  ngOnInit(): void {   }
 
   /**
    * Sets the coloring of a cell based on its answer.

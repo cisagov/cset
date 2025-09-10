@@ -55,8 +55,8 @@ export class FrameworkComponent implements OnInit {
         this.frameworks = data;
       },
       error => {
-        console.log('Error getting all frameworks: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error getting all frameworks: ' + (<Error>error).stack);
+        console.error('Error getting all frameworks: ' + (<Error>error).name + (<Error>error).message);
+        console.error('Error getting all frameworks: ' + (<Error>error).stack);
       });
   }
 

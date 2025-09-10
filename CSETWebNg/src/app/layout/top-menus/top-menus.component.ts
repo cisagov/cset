@@ -471,7 +471,7 @@ export class TopMenusComponent implements OnInit {
         // the update user request happened when the dialog's form was saved
         this.dialogRef = undefined;
       },
-      (error) => console.log(error.message)
+      (error) => console.error(error.message)
     );
   }
 

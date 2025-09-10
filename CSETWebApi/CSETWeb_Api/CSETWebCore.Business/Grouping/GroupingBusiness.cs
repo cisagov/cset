@@ -1,4 +1,11 @@
-﻿using CSETWebCore.DataLayer.Model;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2025 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+using CSETWebCore.Business.Question;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Maturity;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,17 +15,17 @@ namespace CSETWebCore.Business.Grouping
 {
     public class GroupingBusiness
     {
-        private int _assessment_Id;
-        private CsetwebContext _context;
+        private int _assessmentId;
+        private CSETContext _context;
 
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="req"></param>
-        public GroupingBusiness(int assessmentId, CsetwebContext context)
+        public GroupingBusiness(int assessmentId, CSETContext context)
         {
-            _assessment_Id = assessmentId;
+            _assessmentId = assessmentId;
             _context = context;
         }
 
@@ -29,7 +36,7 @@ namespace CSETWebCore.Business.Grouping
         /// <returns></returns>
         public List<int> GetSelections()
         {
-            var gs = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == _assessment_Id);
+            var gs = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == _assessmentId);
             return gs.Select(x => x.Grouping_Id).ToList();
         }
 
@@ -37,7 +44,7 @@ namespace CSETWebCore.Business.Grouping
         public int GetSelectionCountForModel(int modelId)
         {
             var groupingIdsForModel = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == modelId).Select(x => x.Grouping_Id).ToList();
-            var gs = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == _assessment_Id && groupingIdsForModel.Contains(x.Grouping_Id));
+            var gs = _context.GROUPING_SELECTION.Where(x => x.Assessment_Id == _assessmentId && groupingIdsForModel.Contains(x.Grouping_Id));
             return gs.Count();
         }
 
@@ -50,7 +57,7 @@ namespace CSETWebCore.Business.Grouping
             foreach (var g in req.Groups)
             {
                 var dbGS = _context.GROUPING_SELECTION
-                    .Where(x => x.Assessment_Id == _assessment_Id && x.Grouping_Id == g.GroupingId)
+                    .Where(x => x.Assessment_Id == _assessmentId && x.Grouping_Id == g.GroupingId)
                     .FirstOrDefault();
 
                 if (g.Selected)
@@ -60,7 +67,7 @@ namespace CSETWebCore.Business.Grouping
                     {
                         dbGS = new GROUPING_SELECTION
                         {
-                            Assessment_Id = _assessment_Id,
+                            Assessment_Id = _assessmentId,
                             Grouping_Id = g.GroupingId
                         };
 

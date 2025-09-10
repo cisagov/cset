@@ -21,28 +21,22 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, Input } from '@angular/core';
+import { QuestionsService } from '../../../../services/questions.service';
 
-import { EdmDeficiencyComponent } from './edm-deficiency.component';
+@Component({
+  selector: 'app-cpg-deficiency-block',
+  standalone: false,
+  templateUrl: './cpg-deficiency-block.component.html',
+  styleUrl: './cpg-deficiency-block.component.scss'
+})
+export class CpgDeficiencyBlockComponent {
 
-describe('EdmDeficiencyComponent', () => {
-  let component: EdmDeficiencyComponent;
-  let fixture: ComponentFixture<EdmDeficiencyComponent>;
+  @Input()
+  deficiencyList: any[];
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [EdmDeficiencyComponent]
-    })
-      .compileComponents();
-  });
+  constructor(
+    public questionsSvc: QuestionsService
+  ) {}
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(EdmDeficiencyComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+}

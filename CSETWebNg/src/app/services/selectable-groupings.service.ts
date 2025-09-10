@@ -27,6 +27,7 @@ import { QuestionGrouping } from '../models/questions.model';
 import { BehaviorSubject, firstValueFrom, Observable, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from './config.service';
+import { CompletionService } from './completion.service';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,7 @@ export class SelectableGroupingsService {
    * 
    */
   constructor(
+    private completionSvc: CompletionService,
     private http: HttpClient,
     private configSvc: ConfigService
   ) {
@@ -147,10 +149,12 @@ export class SelectableGroupingsService {
 
 
   /**
-   * 
+   * Reevaluate the selected groupings to recalculate
+   * the completion counts.  
    */
   emitSelectionChanged() {
     this.selectionChangedSubject.next();
+    this.completionSvc.toggleGroupSelection();
   }
 
   /**

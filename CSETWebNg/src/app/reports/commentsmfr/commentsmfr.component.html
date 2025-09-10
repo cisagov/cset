@@ -53,18 +53,24 @@
                 <h1 class="page-title">
                     {{t('reports.core.rra.cmfr.with comments', {alias: aliasTranslated})}}
                 </h1>
-                <p style="color: #de761c;text-align: right;">{{t('reports.core.rra.cmfr.marked for review', {alias:
-                    aliasTranslated})}} - <img class="MarkedFlag" src="assets/images/icons/MarkedFlag.png"
-                        alt="marked for review"> </p>
             </div>
             <hr class="page-line m-0">
-            <table role="presentation">
+            <table role="presentation" class="w-100">
+                <tr *ngIf="response?.comments?.length > 0">
+                    <th>{{questionAliasSingular}}</th>
+                    <th colspan="3">
+                        <p style="color: #de761c;text-align: right;">{{t('reports.core.rra.cmfr.marked for review',
+                            {alias:
+                            aliasTranslated})}} - <img class="MarkedFlag" src="assets/images/icons/MarkedFlag.png"
+                                alt="marked for review"> </p>
+                    </th>
+                </tr>
                 <ng-template ngFor let-s [ngForOf]="response?.comments">
                     <tr>
-                        <td class="deficiencies-list-item"><b>{{questionAliasSingular}} {{s.mat.question_Title}}</b>
+                        <td class="deficiencies-list-item"><b>{{s.mat.question_Title}}</b>
                         </td>
                         <td class="deficiencies-list-comment" [innerHTML]="getQuestionText(s.mat)"></td>
-                        <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
+                        <td style="padding-left: 1rem; color: #555555">
                             <div style="width: 7rem">
                                 {{questionsSvc.answerDisplayLabel(s.mat.maturity_Model_Id, s.answer.answer_Text)}}
                             </div>
@@ -122,18 +128,24 @@
                 <h1 class="page-title">
                     {{t('reports.core.rra.cmfr.marked for review', {alias: aliasTranslated})}}
                 </h1>
-                <p style="color: #de761c;text-align: right;">{{t('reports.core.rra.cmfr.marked for review', {alias:
-                    aliasTranslated})}} - <img class="MarkedFlag" src="assets/images/icons/MarkedFlag.png"
-                        alt="marked for review"> </p>
             </div>
             <hr class="page-line m-0">
-            <table role="presentation">
+            <table role="presentation" class="w-100">
+                <tr *ngIf="response?.markedForReviewList?.length > 0">
+                    <th>{{questionAliasSingular}}</th>
+                    <th colspan="3">
+                        <p style="color: #de761c;text-align: right;">{{t('reports.core.rra.cmfr.marked for review',
+                            {alias:
+                            aliasTranslated})}} - <img class="MarkedFlag" src="assets/images/icons/MarkedFlag.png"
+                                alt="marked for review"> </p>
+                    </th>
+                </tr>
                 <ng-template ngFor let-s [ngForOf]="response?.markedForReviewList">
                     <tr>
-                        <td class="deficiencies-list-item"><b>{{questionAliasSingular}} {{s.mat.question_Title}}</b>
+                        <td class="deficiencies-list-item"><b>{{s.mat.question_Title}}</b>
                         </td>
                         <td class="deficiencies-list-comment" [innerHTML]="getQuestionText(s.mat)"></td>
-                        <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
+                        <td style="padding-left: 1rem; color: #555555">
                             <div style="width: 7rem">
                                 {{questionsSvc.answerDisplayLabel(s.mat.maturity_Model_Id, s.answer.answer_Text)}}
                             </div>

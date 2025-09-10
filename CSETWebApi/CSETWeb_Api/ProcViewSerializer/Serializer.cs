@@ -80,7 +80,7 @@ namespace ProcViewSerializer
                     fileType = "view";
                     break;
                 case "SQL_STORED_PROCEDURE":
-                    filePath = Path.Combine(this.basePath, "Stored Procedures");
+                    filePath = Path.Combine(this.basePath, "StoredProcedures");
                     fileType = "proc";
                     break;
                 case "SQL_TABLE_VALUED_FUNCTION":

@@ -66,11 +66,11 @@ export class JwtInterceptor implements HttpInterceptor {
 
 
             if (e.status === 401) {
-              console.log('Error 401! Ejecting to login page!');
+              console.error('Error 401! Ejecting to login page!');
             }
 
             if (e.status === 500 || (e.error && e.error.ExceptionMessage === 'JWT invalid')) {
-              console.log('JWT Invalid. logging out.');
+              console.error('JWT Invalid. logging out.');
             }
 
             const userToken = localStorage.getItem('userToken')

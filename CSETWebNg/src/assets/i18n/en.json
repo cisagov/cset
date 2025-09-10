@@ -279,6 +279,7 @@
     "cset icons": "CSET Icons",
     "answer buttons": "Answer Buttons",
     "ssg": {
+      "1": "Additional Goals",
       "chemical": "Chemical Sector Goals",
       "it": "Information Technology Goals",
       "other": "Other Sector Goals"
@@ -980,6 +981,10 @@
       "display-name": "Cyber Performance Goals (CPG) 2.0",
       "model short title": "CPG 2.0",
       "question node title": "Goals"
+    },
+    "ssg": {
+      "1": "Select any additional functions to include as Sector-Specific Goals",
+      "2": "The following sectors include additional guidance not covered in CSET. For more information about these sector-specific performance goals, please visit CISA's Cross-Sector Cybersecurity Performance Goals page:"
     },
     "cre+": {
       "display-name": "CRE+ Core",

@@ -34,6 +34,8 @@ export interface DemographicsIod {
   sectorDirective?: string;
   sector?: number;
   subsector?: number;
+
+  ssgSectors?: number[];
   
   numberEmployeesTotal?: number;
   numberEmployeesUnit?: number;

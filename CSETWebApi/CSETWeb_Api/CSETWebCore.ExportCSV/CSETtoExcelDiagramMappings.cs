@@ -10,6 +10,7 @@ using System.Data;
 using System.IO;
 using System.Text;
 using CSETWebCore.Business.Diagram;
+using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.AspNetCore.Http;
 
@@ -17,17 +18,19 @@ namespace CSETWebCore.ExportCSV
 {
     public class CSETtoExcelDiagramMappings
     {
-        private CSETContext db;
+        private CSETContext _context;
+        private readonly Hooks _hooks;
         private readonly IHttpContextAccessor _http;
 
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="db"></param>
-        public CSETtoExcelDiagramMappings(CSETContext db, IHttpContextAccessor http)
+        /// <param name="context"></param>
+        public CSETtoExcelDiagramMappings(CSETContext context, Hooks hooks, IHttpContextAccessor http)
         {
-            this.db = db;
+            _context = context;
+            _hooks = hooks;
             _http = http;
         }
 
@@ -58,7 +61,7 @@ namespace CSETWebCore.ExportCSV
 
         public DataTable BuildDiagramComponents(int assessmentId)
         {
-            var dm = new DiagramManager(db);
+            var dm = new DiagramManager(_context, _hooks);
             var diagramXml = dm.GetDiagramXml(assessmentId);
             var vertices = dm.ProcessDiagramVertices(diagramXml, assessmentId);
             var components = dm.GetDiagramComponents(vertices);
@@ -117,7 +120,7 @@ namespace CSETWebCore.ExportCSV
 
         public DataTable BuildDiagramZones(int assessmentId)
         {
-            var dm = new DiagramManager(db);
+            var dm = new DiagramManager(_context, _hooks);
             var diagramXml = dm.GetDiagramXml(assessmentId);
             var vertices = dm.ProcessDiagramVertices(diagramXml, assessmentId);
             var zones = dm.GetDiagramZones(vertices);
@@ -148,7 +151,7 @@ namespace CSETWebCore.ExportCSV
 
         public DataTable BuildDiagramLinks(int assessmentId)
         {
-            var dm = new DiagramManager(db);
+            var dm = new DiagramManager(_context, _hooks);
             var diagramXml = dm.GetDiagramXml(assessmentId);
             var edges = dm.ProcessDiagramEdges(diagramXml, assessmentId);
             var links = dm.GetDiagramLinks(edges);
@@ -178,7 +181,7 @@ namespace CSETWebCore.ExportCSV
 
         public DataTable BuildDiagramShapes(int assessmentId)
         {
-            var dm = new DiagramManager(db);
+            var dm = new DiagramManager(_context, _hooks);
             var diagramXml = dm.GetDiagramXml(assessmentId);
             var shapesCells = dm.ProcessDiagramShapes(diagramXml, assessmentId);
             var shapes = dm.GetDiagramShapes(shapesCells);
@@ -207,7 +210,7 @@ namespace CSETWebCore.ExportCSV
 
         public DataTable BuildDiagramText(int assessmentId)
         {
-            var dm = new DiagramManager(db);
+            var dm = new DiagramManager(_context, _hooks);
             var diagramXml = dm.GetDiagramXml(assessmentId);
             var textCells = dm.ProcessDiagramShapes(diagramXml, assessmentId);
             var texts = dm.GetDiagramText(textCells);

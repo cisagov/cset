@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { editor, languages } from 'monaco-editor/esm/vs/editor/editor.api';
+import type { editor, languages } from 'monaco-editor';
 
 export interface XmlFormattingOptions {
     editorOptions: languages.FormattingOptions;

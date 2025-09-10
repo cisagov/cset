@@ -32,6 +32,7 @@ namespace CSETWebCore.Business.Question
 
         List<FullAnswer> Answers;
 
+
         /// <summary>
         /// 
         /// </summary>
@@ -114,6 +115,7 @@ namespace CSETWebCore.Business.Question
 
             AddResponseComponentOverride(resp, dlist, "Component Overrides");
         }
+
 
         /// <summary>
         /// 
@@ -373,7 +375,7 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="answer"></param>
         /// <returns></returns>
-        public int StoreAnswer(Answer answer)
+        public Answer StoreAnswer(Answer answer)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
@@ -435,9 +437,12 @@ namespace CSETWebCore.Business.Question
             _context.ANSWER.Update(dbAnswer);
             _context.SaveChanges();
 
+            answer.AssessmentId = dbAnswer.Assessment_Id;
+            answer.AnswerId = dbAnswer.Answer_Id;
+
             _assessmentUtil.TouchAssessment(assessmentId);
 
-            return dbAnswer.Answer_Id;
+            return answer;
         }
 
 
@@ -480,6 +485,7 @@ namespace CSETWebCore.Business.Question
                             });
                         }
                     }
+
                     _context.SaveChanges();
                 }
                 else
@@ -493,6 +499,7 @@ namespace CSETWebCore.Business.Question
                 {
                     _context.ANSWER.Remove(a);
                 }
+
                 _context.SaveChanges();
             }
         }

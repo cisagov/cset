@@ -146,13 +146,13 @@ export class PageVisibilityService {
 
 
       // Determine if a 'Sector-Specific Goal' question set is applicable
-      if (c.startsWith('SECTOR-ANY(')) {
-        show = show && this.sectorAny(c);
+      if (c.startsWith('SSG-CHOSEN-SECTOR-ANY(')) {
+        show = show && this.ssgChosenSectorAny(c);
       }
 
       if (c == ('ASSESSOR')) {
         if (this.configSvc.userIsCisaAssessor) {
-          show = show && (this.configSvc.userIsCisaAssessor && this.assessSvc.assessment?.assessorMode);
+          show = show && (this.configSvc.userIsCisaAssessor && (this.assessSvc.assessment?.assessorMode ?? false));
         } else {
           show = show && (this.configSvc.userIsCisaAssessor !== this.assessSvc.assessment?.assessorMode);
         }
@@ -257,13 +257,13 @@ export class PageVisibilityService {
     targets.forEach((t: string) => {
       switch (t.toUpperCase()) {
         case 'MATURITY':
-          has = has || this.assessSvc.assessment?.useMaturity;
+          has = has || (this.assessSvc.assessment?.useMaturity ?? false);
           break;
         case 'STANDARD':
-          has = has || this.assessSvc.assessment?.useStandard;
+          has = has || (this.assessSvc.assessment?.useStandard ?? false);
           break;
         case 'DIAGRAM':
-          has = has || this.assessSvc.assessment?.useDiagram;
+          has = has || (this.assessSvc.assessment?.useDiagram ?? false);
           break;
       }
     });
@@ -290,8 +290,10 @@ export class PageVisibilityService {
     let targets = this.getTargets(rule);
     let has = false;
     targets.forEach((t: string) => {
-      has = has ||
-        (this.assessSvc.assessment?.useMaturity && this.assessSvc.usesMaturityModelId(Number.parseInt(t.trim())))
+      has = has || (
+        (this.assessSvc.assessment?.useMaturity ?? false) 
+        && (this.assessSvc.usesMaturityModelId(Number.parseInt(t.trim())) ?? false)
+      )
     });
     return has;
   }
@@ -304,7 +306,7 @@ export class PageVisibilityService {
     let has = false;
     targets.forEach((t: string) => {
       has = has ||
-        (this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard(t.trim()));
+        ((this.assessSvc.assessment?.useStandard ?? false) && this.assessSvc.usesStandard(t.trim()));
     });
     return has;
   }
@@ -317,6 +319,18 @@ export class PageVisibilityService {
     let has = false;
     targets.forEach((t: string) => {
       has = has || this.assessSvc.assessment?.sectorId == +t;
+    });
+    return has;
+  }
+
+  /**
+   * Returns true if the assessment's sectorId in in the specified list
+   */
+  ssgChosenSectorAny(rule: string): boolean {
+    let targets = this.getTargets(rule);
+    let has = false;
+    targets.forEach((t: string) => {
+      has = has || (this.assessSvc.assessment?.ssgSectorIds?.includes(+t) ?? false);
     });
     return has;
   }

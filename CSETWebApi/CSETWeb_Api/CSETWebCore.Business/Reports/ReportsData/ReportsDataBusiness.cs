@@ -107,23 +107,21 @@ namespace CSETWebCore.Business.Reports
                 _context.FillEmptyMaturityQuestionsForModel(_assessmentId, (int)modelId);
             }
 
-            var query = from a in _context.ANSWER
-                        join m in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_Level)
-                            on a.Question_Or_Requirement_Id equals m.Mat_Question_Id
-                        join p in _context.MATURITY_QUESTION_PROPS 
-                            on m.Mat_Question_Id equals p.Mat_Question_Id
+            var query = from mq in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_Level)
+                        join a in _context.ANSWER on mq.Mat_Question_Id equals a.Question_Or_Requirement_Id
+                        join p in _context.MATURITY_QUESTION_PROPS on mq.Mat_Question_Id equals p.Mat_Question_Id
                         where a.Assessment_Id == _assessmentId
-                            && m.Maturity_Model_Id == targetModelId
+                            && mq.Maturity_Model_Id == targetModelId
                             && a.Question_Type == "Maturity"
-                            && !this.OutOfScopeQuestions.Contains(m.Mat_Question_Id)
-                        orderby m.Grouping_Id, m.Maturity_Level_Id, m.Mat_Question_Id ascending
+                            && !this.OutOfScopeQuestions.Contains(mq.Mat_Question_Id)
+                        orderby mq.Grouping_Id, mq.Maturity_Level_Id, mq.Mat_Question_Id ascending
                         select new MatRelevantAnswers()
                         {
                             ANSWER = a,
-                            Mat = m
+                            Mat = mq
                         };
 
-            var responseList = query.ToList();
+            var responseList = query.Distinct().ToList();
             var childQuestions = responseList.FindAll(x => x.Mat.Parent_Question_Id != null);
 
             // Set IsParentWithChildren property for all parent questions that have child questions
@@ -138,6 +136,10 @@ namespace CSETWebCore.Business.Reports
 
             // Do not include unanswerable questions
             responseList.RemoveAll(x => !x.Mat.Is_Answerable);
+
+
+            // 
+            InjectParentValues(ref responseList);
 
 
             foreach (var matAns in responseList)
@@ -172,6 +174,34 @@ namespace CSETWebCore.Business.Reports
 
 
             return responseList;
+        }
+
+
+        /// <summary>
+        /// CPG2 has a parent/child structure.  If the children are deficient we need to 
+        /// pull some descriptive properties from their parents for display.
+        /// </summary>
+        public void InjectParentValues(ref List<MatRelevantAnswers> kids)
+        {
+            List<int> response = [];
+
+            var parentIds = kids.Select(x => x.Mat.Parent_Question_Id).ToList();
+            parentIds.RemoveAll(x => !x.HasValue);
+            var parentQuestions = _context.MATURITY_QUESTIONS.Where(x => parentIds.Contains(x.Mat_Question_Id)).Distinct().ToList();
+
+
+            kids.ForEach(kid =>
+            {
+                if (parentIds.Contains(kid.Mat.Parent_Question_Id))
+                {
+                    var myParent = parentQuestions.FirstOrDefault(parent => parent.Mat_Question_Id == kid.Mat.Parent_Question_Id);
+                    if (myParent != null)
+                    {
+                        kid.Mat.Question_Title = myParent?.Question_Title;
+                        kid.Mat.Security_Practice = $"{myParent?.Security_Practice} - {kid.Mat.Question_Text}";
+                    }
+                }
+            });
         }
 
 
@@ -668,7 +698,7 @@ namespace CSETWebCore.Business.Reports
 
                 var reqs = query.ToList();
 
-                foreach(var req in reqs)
+                foreach (var req in reqs)
                 {
                     req.Question = parmSub.ResolveParameters(req.Id, req.AnswerId, req.Question);
                 }
@@ -1081,9 +1111,9 @@ namespace CSETWebCore.Business.Reports
             USERS userCreator = _context.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
             var demoExtBiz = new DemographicExtBusiness(_context);
             var facilitatorId = (int?)demoExtBiz.GetX(_assessmentId, "FACILITATOR");
-            
+
             if (facilitatorId != null)
-                
+
             {
                 USERS user = _context.USERS.FirstOrDefault(x => x.UserId == facilitatorId);
                 info.Assessor_Name = user != null ? FormatName(user.FirstName, user.LastName) : string.Empty;
@@ -1094,9 +1124,9 @@ namespace CSETWebCore.Business.Reports
             }
 
 
-           
+
             info.SelfAssessment = ((bool?)demoExtBiz.GetX(_assessmentId, "SELF-ASSESS")) ?? false;
-         
+
 
             // Other Contacts
             info.Additional_Contacts = new List<string>();

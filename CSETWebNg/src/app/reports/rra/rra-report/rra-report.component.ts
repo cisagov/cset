@@ -114,7 +114,7 @@ export class RraReportComponent implements OnInit {
       this.createTopRankedGoals(r);
 
     },
-      error => console.log('Main RRA report load Error: ' + (<Error>error).message)
+      error => console.error('Main RRA report load Error: ' + (<Error>error).message)
     );
 
 
@@ -128,7 +128,7 @@ export class RraReportComponent implements OnInit {
       (r: any) => {
         this.response = r;
       },
-      error => console.log('Main RRA report load Error: ' + (<Error>error).message)
+      error => console.error('Main RRA report load Error: ' + (<Error>error).message)
     );
 
     this.tSvc.selectTranslate('core.rra.tab title', {}, { scope: 'reports' })

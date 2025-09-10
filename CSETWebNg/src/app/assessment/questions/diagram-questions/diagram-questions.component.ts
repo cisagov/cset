@@ -96,17 +96,18 @@ export class DiagramQuestionsComponent implements OnInit {
         this.categories = response.categories;
         this.loaded = true;
 
-        this.completionSvc.setQuestionArray(response);
+        this.completionSvc.structure = response;
+        this.completionSvc.setQuestionArray();
 
         this.refreshQuestionVisibility();
       },
       error => {
-        console.log(
+        console.error(
           'Error getting questions: ' +
           (<Error>error).name +
           (<Error>error).message
         );
-        console.log('Error getting questions: ' + (<Error>error).stack);
+        console.error('Error getting questions: ' + (<Error>error).stack);
       }
     );
   }

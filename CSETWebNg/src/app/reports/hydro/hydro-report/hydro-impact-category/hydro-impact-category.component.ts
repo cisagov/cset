@@ -37,7 +37,6 @@ export class HydroImpactCategoryComponent implements OnInit {
   ngOnInit() {
     this.maturitySvc.getHydroResults().subscribe(
       (r: any) => {
-        console.log(r)
         for (let i = 0; i < r.length; i++) {
           let domain = r[i];
 
@@ -60,7 +59,6 @@ export class HydroImpactCategoryComponent implements OnInit {
         while (this.impactData.length != this.domainGroupNames.length) {
           this.impactData.push([0,0,0,0]); // this fills the rest of impactData with blank data
         }
-        console.log(this.impactData)
 
         this.loading = false;
       }

@@ -169,6 +169,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IGalleryEditor, GalleryEditor>();
             services.AddTransient<IMalcolmBusiness, MalcolmBusiness>();
             services.AddScoped<IVersionBusiness, VersionBusiness>();
+            services.AddScoped<Hooks>();
 
             services.AddSwaggerGen(c =>
             {

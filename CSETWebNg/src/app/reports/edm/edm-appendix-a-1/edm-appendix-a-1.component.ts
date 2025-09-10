@@ -49,7 +49,7 @@ export class EDMAppendixASectionOne implements OnInit {
         this.append_a_data = success;
       },
       (failure) => {
-        console.log(failure);
+        console.error(failure);
       }
     )
   }
