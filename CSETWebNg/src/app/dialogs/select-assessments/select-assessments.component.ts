@@ -93,7 +93,7 @@ export class SelectAssessmentsComponent implements OnInit {
       });
     },
       error =>
-        console.log(
+        console.error(
           "Unable to get Assessments for " +
           this.authSvc.email() +
           ": " +

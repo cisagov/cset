@@ -320,7 +320,7 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
         this.refreshQuestionVisibility();
       },
       error => {
-        console.log(
+        console.error(
           'Error getting questions: ' +
           (<Error>error).name +
           (<Error>error).message

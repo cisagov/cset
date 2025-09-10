@@ -31,7 +31,7 @@ namespace CSETWebCore.Business.Demographic
             _context = context;
             _assessmentUtil = assessmentUtil;
         }
-        
+
         /// <summary>
         /// Gets demographics 
         /// </summary>
@@ -43,7 +43,7 @@ namespace CSETWebCore.Business.Demographic
             {
                 AssessmentId = assessmentId
             };
-           
+
             var extBiz = new DemographicExtBusiness(_context);
             demographics.CisaRegion = (int?)extBiz.GetX(assessmentId, "CISA-REGION");
             demographics.OrgPointOfContact = (int?)extBiz.GetX(assessmentId, "ORG-POC");
@@ -58,10 +58,10 @@ namespace CSETWebCore.Business.Demographic
             demographics.IsScoped = (bool?)extBiz.GetX(assessmentId, "SCOPED");
             demographics.OrganizationName = (string)extBiz.GetX(assessmentId, "ORG-NAME");
             demographics.OrganizationType = (int?)extBiz.GetX(assessmentId, "ORG-TYPE");
-            
+
             var assetId = (int?)extBiz.GetX(assessmentId, "ASSET-VALUE");
             var sizeId = (int?)extBiz.GetX(assessmentId, "SIZE");
-            
+
             //Asset value and size are stored in DETAILS_DEMOGRAPHICS_OPTIONS
             if (assetId != null)
             {
@@ -77,8 +77,15 @@ namespace CSETWebCore.Business.Demographic
                     .FirstOrDefault(opt => opt.DataItemName == "SIZE" && opt.OptionValue == sizeId);
                 demographics.Size = assetSize.OptionValue;
             }
-            
-            
+
+
+            var ssgs = _context.DETAILS_DEMOGRAPHICS.Where(z => z.Assessment_Id == assessmentId && z.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
+            foreach (var ssg in ssgs)
+            {
+                demographics.SsgSectorIds.Add((int)ssg.IntValue);
+            }
+
+
             return demographics;
         }
 
@@ -95,7 +102,7 @@ namespace CSETWebCore.Business.Demographic
 
             var assetSize = _context.DETAILS_DEMOGRAPHICS_OPTIONS
                 .FirstOrDefault(opt => opt.DataItemName == "SIZE" && opt.OptionValue == demographics.Size);
-            
+
             // Store values in DETAILS-DEMOGRAPHICS
             var extBiz = new DemographicExtBusiness(_context);
             extBiz.SaveX(demographics.AssessmentId, "CISA-REGION", demographics.CisaRegion);
@@ -105,8 +112,8 @@ namespace CSETWebCore.Business.Demographic
             extBiz.SaveX(demographics.AssessmentId, "ORG-NAME", demographics.OrganizationName);
             extBiz.SaveX(demographics.AssessmentId, "BUSINESS-UNIT", demographics.Agency);
             extBiz.SaveX(demographics.AssessmentId, "ORG-TYPE", demographics.OrganizationType == 0 ? null : demographics.OrganizationType);
-            extBiz.SaveX(demographics.AssessmentId, "SECTOR", demographics.SectorId == 0 ? null: demographics.SectorId);
-            extBiz.SaveX(demographics.AssessmentId, "SUBSECTOR", demographics.IndustryId == 0 ? null: demographics.IndustryId);
+            extBiz.SaveX(demographics.AssessmentId, "SECTOR", demographics.SectorId == 0 ? null : demographics.SectorId);
+            extBiz.SaveX(demographics.AssessmentId, "SUBSECTOR", demographics.IndustryId == 0 ? null : demographics.IndustryId);
             extBiz.SaveX(demographics.AssessmentId, "SECTOR-DIRECTIVE", demographics.SectorDirective);
             extBiz.SaveX(demographics.AssessmentId, "SCOPED", demographics.IsScoped);
             extBiz.SaveX(demographics.AssessmentId, "POC", demographics.PointOfContact == 0 ? null : demographics.PointOfContact);
@@ -114,12 +121,24 @@ namespace CSETWebCore.Business.Demographic
             extBiz.SaveX(demographics.AssessmentId, "FACILITATOR", demographics.FacilitatorId == 0 ? null : demographics.FacilitatorId);
             extBiz.SaveX(demographics.AssessmentId, "ASSET-VALUE", assetValue?.OptionValue);
             extBiz.SaveX(demographics.AssessmentId, "SIZE", assetSize?.OptionValue);
-            
+
+
+            // replace SSG sectors
+            var ssg = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == demographics.AssessmentId && x.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
+            _context.RemoveRange(ssg);
+            _context.SaveChanges();
+
+            foreach (var ssgId in demographics.SsgSectorIds)
+            {
+                extBiz.SaveX(demographics.AssessmentId, $"SSG-SECTOR-{ssgId}", ssgId);
+            }
+
+
             _assessmentUtil.TouchAssessment(demographics.AssessmentId);
 
             return demographics.AssessmentId;
         }
-        
+
 
         /// <summary>
         /// Persists a DETAILS_DEMOGRAPHICS record for the assessment.

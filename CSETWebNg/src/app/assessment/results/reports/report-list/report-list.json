@@ -73,12 +73,6 @@
     "title": "CRE+",
     "reportList": [
       {
-        "linkUrl": "cre-general-report"
-      },
-      {
-        "linkUrl": "cre-detail-report"
-      },
-      {
         "linkUrl": "cre-final-report/22"
       },
       {
@@ -86,6 +80,12 @@
       },
       {
         "linkUrl": "cre-final-report/24"
+      },
+      {
+        "linkUrl": "cre-general-report"
+      },
+      {
+        "linkUrl": "cre-detail-report"
       }
     ]
   },

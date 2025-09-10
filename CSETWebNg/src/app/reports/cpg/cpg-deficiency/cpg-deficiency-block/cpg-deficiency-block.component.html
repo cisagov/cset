@@ -1,30 +1,52 @@
+<!----------------------
+
+   Copyright 2025 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
 <table role="presentation" class="w-100">
-            <ng-template ngFor let-s [ngForOf]="deficiencyList">
-                <tr>
-                    <td class="deficiencies-list-item pe-3" style="font-weight: bold; width: 50px;">
-                        {{s.mat.question_Title}}
-                    </td>
-                    <td class="deficiencies-list-comment">{{s.mat.security_Practice}}</td>
-                    <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
-                        <div style="width: 9rem; font-weight: bold;">
-                            {{questionsSvc.answerDisplayLabel(11, s.answer.answer_Text)}}
-                        </div>
-                    </td>
-                    <td class="deficiencies-list-flag"><img class="MarkedFlag ms-2" *ngIf="s.answer.mark_For_Review"
-                            src="assets/images/icons/MarkedFlag.png"></td>
-                </tr>
+    <ng-template ngFor let-s [ngForOf]="deficiencyList">
+        <tr>
+            <td class="deficiencies-list-item pe-3" style="font-weight: bold; width: 50px;">
+                {{s.mat.question_Title}}
+            </td>
+            <td class="deficiencies-list-comment">{{s.mat.security_Practice}}</td>
+            <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
+                <div style="width: 9rem; font-weight: bold;">
+                    {{questionsSvc.answerDisplayLabel(11, s.answer.answer_Text)}}
+                </div>
+            </td>
+            <td class="deficiencies-list-flag"><img class="MarkedFlag ms-2" *ngIf="s.answer.mark_For_Review"
+                    src="assets/images/icons/MarkedFlag.png"></td>
+        </tr>
 
-                <tr *ngIf="s.answer.comment">
-                    <td></td>
-                    <td>
-                        <app-mat-comments [comment]="s.answer.comment"></app-mat-comments>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4">
-                        <hr class="my-2">
-                    </td>
-                </tr>
+        <tr *ngIf="s.answer.comment">
+            <td></td>
+            <td>
+                <app-mat-comments [comment]="s.answer.comment"></app-mat-comments>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <hr class="my-2">
+            </td>
+        </tr>
 
-            </ng-template>
-        </table>
+    </ng-template>
+</table>

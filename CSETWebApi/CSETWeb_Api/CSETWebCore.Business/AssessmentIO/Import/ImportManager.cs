@@ -23,6 +23,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using ICSharpCode.SharpZipLib.Zip;
+using CSETWebCore.Business.Question;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -32,18 +33,20 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         private IAssessmentUtil _assessmentUtil;
         private IUtilities _utilities;
         private CSETContext _context;
+        private readonly Hooks _hooks;
 
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="token"></param>
-        public ImportManager(ITokenManager token, IAssessmentUtil assessmentUtil, IUtilities utilities, CSETContext context)
+        public ImportManager(ITokenManager token, IAssessmentUtil assessmentUtil, IUtilities utilities, CSETContext context, Hooks hooks)
         {
             _token = token;
             _assessmentUtil = assessmentUtil;
             _utilities = utilities;
             _context = context;
+            _hooks = hooks;
         }
 
 
@@ -199,7 +202,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     string email = context.USERS.Where(x => x.UserId == currentUserId).FirstOrDefault()?.PrimaryEmail ?? "";
 
 
-                    Importer import = new Importer(model, currentUserId, email, accessKey, context, _token, _assessmentUtil, _utilities);
+                    Importer import = new Importer(model, currentUserId, email, accessKey, context, _hooks, _token, _assessmentUtil, _utilities);
                     int newAssessmentId = import.RunImportManualPortion(overwriteAssessment);
                     import.RunImportAutomatic(newAssessmentId, jsonObject, context);
 
@@ -207,7 +210,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     var assessment = context.ASSESSMENTS.Where(x => x.Assessment_Id == newAssessmentId).FirstOrDefault();
                     if (!string.IsNullOrEmpty(assessment.Diagram_Markup))
                     {
-                        var diagramManager = new DiagramManager(context);
+                        var diagramManager = new DiagramManager(context, _hooks);
                         var diagReq = new DiagramRequest()
                         {
                             DiagramXml = assessment.Diagram_Markup,
@@ -242,7 +245,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         //StreamReader ldr = new StreamReader(importLegacyDiagram.Open());
                         StreamReader ldr = new StreamReader(ms);
                         string oldXml = ldr.ReadToEnd();
-                        DiagramManager dm = new DiagramManager(context);
+                        DiagramManager dm = new DiagramManager(context, _hooks);
                         dm.ImportOldCSETDFile(oldXml, newAssessmentId);
                     }
                 }

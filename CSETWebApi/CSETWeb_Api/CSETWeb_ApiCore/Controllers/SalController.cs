@@ -26,6 +26,7 @@ namespace CSETWebCore.Api.Controllers
     public class SalController : ControllerBase
     {
         private readonly CSETContext _context;
+        private readonly Hooks _hooks;
         private readonly ITokenManager _token;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IStandardsBusiness _standard;
@@ -36,11 +37,12 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// CTOR
         /// </summary>
-        public SalController(CSETContext context, ITokenManager token,
+        public SalController(CSETContext context, Hooks hooks, ITokenManager token,
             IStandardsBusiness standard, IAssessmentUtil assessmentUtil, IStandardSpecficLevelRepository standardRepo,
             IAssessmentModeData assessmentModeData)
         {
             _context = context;
+            _hooks = hooks;
             _token = token;
             _standard = standard;
             _assessmentUtil = assessmentUtil;
@@ -146,7 +148,7 @@ namespace CSETWebCore.Api.Controllers
                 }
 
 
-                new Hooks(_context).HookSalChanged(assessmentId);
+                _hooks.HookSalChanged(assessmentId);
 
                 return Ok(tmpsal);
             }

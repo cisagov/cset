@@ -1,5 +1,6 @@
 ﻿using CSETWebCore.Business.AssessmentIO.Export;
 using CSETWebCore.Business.AssessmentIO.Import;
+using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
@@ -12,8 +13,19 @@ namespace DuplicateAssessments
     internal class AssessmentsDuplicator
     {
         private static CSETContext? _context = null;
+        private static Hooks? _hooks = null;
 
         public static IConfigurationRoot? Configuration { get; set; }
+
+        
+        /// <summary>
+        /// CTOR
+        /// </summary>
+        /// <param name="hooks"></param>
+        //public AssessmentsDuplicator(Hooks hooks)
+        //{
+        //    _hooks = hooks;
+        //}
 
 
         /// <summary>
@@ -31,10 +43,13 @@ namespace DuplicateAssessments
             var services = new ServiceCollection();
             services.AddDbContext<CSETContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<Hooks>();
 
             //var optionsBuilder = new DbContextOptionsBuilder<CsetwebContext>();
             //optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             _context = new CSETContext(Configuration);
+
+            _hooks = new Hooks(_context);
             
             AssessmentsDuplicator duper = new AssessmentsDuplicator();
             await duper.RunAssessmentsDuplicator();
@@ -65,7 +80,7 @@ namespace DuplicateAssessments
 
             assessmentsExportArchive.Seek(0, SeekOrigin.Begin);
 
-            ImportManager importManager = new ImportManager(tokenManager, assessmentUtil, utilities, _context);
+            ImportManager importManager = new ImportManager(tokenManager, assessmentUtil, utilities, _context, _hooks);
             await importManager.BulkImportAssessments(assessmentsExportArchive, false);
         }
     }

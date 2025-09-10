@@ -129,8 +129,6 @@ export class ModuleContentLaunchComponent implements OnInit {
           original: m
         }))
     ];
-
-    console.log(this.searchableItems);
   }
 
   /**

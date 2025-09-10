@@ -28,24 +28,25 @@
             {{t('reports.core.cpg.report.p.b')}}
         </p>
 
-        <div *ngIf="isSsgActive" class="my-2">
-            <button class="btn btn-link" (click)="scrollTo('ssg-section')">Jump to SSG</button>
+        <div *ngFor="let s of ssgBonusModels" class="my-2">
+            <button class="btn btn-link" (click)="scrollTo('ssg-section-' + s)">Jump to {{t(`reports.core.ssg.${s}`)}}</button>
         </div>
 
         <!-- the table for the CPG answers -->
         <app-cpg-practice-table [modelId]="modelId"></app-cpg-practice-table>
 
         <!-- a table for SSG answers, if applicable -->
-        <div *ngIf="isSsgActive" id="ssg-section">
+        <div *ngFor="let s of ssgBonusModels" [id]="'ssg-section-' + s">
             <hr class="page-line">
-            <h3>{{t('reports.core.cpg.report.ssg.ssg security practice checklist')}}</h3>
+            <h3>{{t('reports.core.cpg.report.ssg.2')}} - {{t(`reports.core.ssg.${s}`)}}</h3>
             <p> {{t('reports.core.cpg.report.ssg.1')}}</p>
+
 
             <div class="my-2">
                 <button class="btn btn-link" (click)="scrollTo('top-section')">Jump to Top</button>
             </div>
 
-            <app-cpg-practice-table [ssgModelId]="ssgBonusModel"></app-cpg-practice-table>
+            <app-cpg-practice-table [ssgModelId]="s"></app-cpg-practice-table>
         </div>
     </div>
     <app-nav-back-next [page]="'cpg-practices-page'"></app-nav-back-next>

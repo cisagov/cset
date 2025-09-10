@@ -52,7 +52,7 @@ namespace CSETWebCore.Business.Assessment
         public AssessmentBusiness(IHttpContextAccessor httpContext, ITokenManager authentication,
             IUtilities utilities, IContactBusiness contactBusiness, ISalBusiness salBusiness,
             IMaturityBusiness maturityBusiness, IAssessmentUtil assessmentUtil, IStandardsBusiness standardsBusiness,
-            IDiagramManager diagramManager, CSETContext context)
+            IDiagramManager diagramManager, CSETContext context, Hooks hooks)
         {
             _tokenManager = authentication;
             _utilities = utilities;
@@ -62,7 +62,7 @@ namespace CSETWebCore.Business.Assessment
             _assessmentUtil = assessmentUtil;
             _standardsBusiness = standardsBusiness;
             _context = context;
-            _diagramManager = new Diagram.DiagramManager(context);
+            _diagramManager = new Diagram.DiagramManager(_context, hooks);
             _overlay = new TranslationOverlay();
         }
 
@@ -495,6 +495,13 @@ namespace CSETWebCore.Business.Assessment
                     assessment.SectorId = d2Sector;
                 }
 
+                assessment.SsgSectorIds = [];
+                var ssgs = _context.DETAILS_DEMOGRAPHICS.Where(z => z.Assessment_Id == assessmentId && z.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
+                foreach (var ssg in ssgs)
+                {
+                    assessment.SsgSectorIds.Add((int)ssg.IntValue);
+                }
+
 
                 // facilitator
                 assessment.SelfAssessment = (bool)(d2.GetX(assessmentId, "SELF-ASSESS") ?? false);
@@ -765,9 +772,6 @@ namespace CSETWebCore.Business.Assessment
         public List<DetailsDemographicsOptionsDTO> GetOrganizationTypes()
         {
             List<DETAILS_DEMOGRAPHICS_OPTIONS> orgTypes = _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ORG-TYPE").ToList();
-            
-            // List<DETAILS_DEMOGRAPHICS_OPTIONS> assetValues = await _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ASSET-VALUE").ToListAsync();
-            // return Ok(assetValues.OrderBy(a => a.Sequence).Select(a => new DemographicsAssetValue() { AssetValue = a.OptionText, DemographicsAssetId = a.OptionValue }).ToList());
 
             var lang = _tokenManager.GetCurrentLanguage();
             if (lang != "en")

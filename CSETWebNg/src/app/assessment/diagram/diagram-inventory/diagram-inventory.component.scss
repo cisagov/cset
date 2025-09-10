@@ -22,8 +22,24 @@ SOFTWARE.
 
 */
 .stretch {
-  position: absolute;
-  left: 2rem;
-  right: 2rem;
-  max-width: max-content;
+  position: relative;
+  width: auto;
+}
+
+.scrollable-tabs {
+  height: 400px;
+  overflow: hidden;
+
+  ::ng-deep .mat-tab-body-wrapper {
+    height: calc(100% - 48px);
+    overflow: hidden;
+  }
+
+  ::ng-deep .mat-tab-body-content {
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+    height: 100% !important;
+    padding: 10px;
+    box-sizing: border-box;
+  }
 }

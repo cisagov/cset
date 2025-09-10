@@ -1,0 +1,28 @@
+<div class="form-container" *transloco="let t">
+     <p>
+          <em>
+               {{t('modules.ssg.1')}}
+          </em>
+     </p>
+
+     <div class="mb-3">
+          <div *ngFor="let sector of list1">
+               <input type="checkbox" tabindex="0" [id]="'ssg-sector-' + sector.sectorId" [value]="sector.sectorId" name="'ssg-sector-' + sector.sectorId"
+                    class="checkbox-custom mt-1" (change)="onSectorChange(sector.sectorId, $event)" 
+                    [checked]="isSectorChecked(sector.sectorId)" />
+               <label [for]="'ssg-sector-' + sector.sectorId" class="checkbox-custom-label">
+                    {{ sector.sectorName }}
+               </label>
+          </div>
+     </div>
+     <p>
+          {{t('modules.ssg.2')}}
+          <a href="https://www.cisa.gov/cross-sector-cybersecurity-performance-goals"
+               target="_blank">https://www.cisa.gov/cross-sector-cybersecurity-performance-goals</a>
+     </p>
+     <ul>
+          <li *ngFor="let sectorName of list2">
+               {{ sectorName }}
+          </li>
+     </ul>
+</div>

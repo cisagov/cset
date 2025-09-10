@@ -123,7 +123,7 @@ export class ReportService {
    *
    */
   getCRRSummary(): any {
-    this.http.get(this.configSvc.apiUrl + 'diagram/getimage').subscribe((val) => console.log(val));
+    this.http.get(this.configSvc.apiUrl + 'diagram/getimage').subscribe((val) => {});
     return this.http.get(this.configSvc.apiUrl + 'diagram/getimage');
   }
 
