@@ -36,6 +36,32 @@ import { NavTreeService } from '../services/navigation/nav-tree.service';
 import { NavigationService } from '../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../services/config.service';
+import { AssessmentDetail } from '../models/assessment-info.model';
+interface UserAssessment {
+  isEntry: boolean;
+  isEntryString: string;
+  assessmentId: number;
+  assessmentName: string;
+  useDiagram: boolean;
+  useStandard: boolean;
+  useMaturity: boolean;
+  type: string;
+  assessmentCreatedDate: string;
+  creatorName: string;
+  markedForReview: boolean;
+  altTextMissing: boolean;
+  selectedMaturityModel?: string;
+  selectedStandards?: string;
+  completedQuestionsCount: number;
+  totalAvailableQuestionsCount: number;
+  questionAlias: string;
+  iseSubmission: boolean;
+  submittedDate?: Date;
+  done?:boolean;
+  favorite?:boolean;
+  firstName?:string;
+  lastName?:string;
+}
 
 @Component({
     selector: 'app-assessment',
@@ -48,7 +74,9 @@ import { ConfigService } from '../services/config.service';
 export class AssessmentComponent implements OnInit {
   innerWidth: number;
   innerHeight: number;
-
+  completionPercentage:number=0;
+  completedQuestions = 0;
+  totalQuestions = 0;
   /**
    * Indicates whether the nav panel is visible (true)
    * or hidden (false).
@@ -65,7 +93,10 @@ export class AssessmentComponent implements OnInit {
   scrollTop = 0;
 
   assessmentAlias = this.tSvc.translate('titles.assessment');
+  assessment: AssessmentDetail = {
 
+
+  };
 
   @Output() navSelected = new EventEmitter<string>();
   isSet: boolean;
@@ -109,8 +140,20 @@ export class AssessmentComponent implements OnInit {
     this.tSvc.langChanges$.subscribe((event) => {
       this.navSvc.buildTree();
     });
-  }
+    if (this.assessSvc.id()) {
+      this.getAssessmentDetail();
+      this.loadCompletionData();
+    }
 
+  }
+  getAssessmentDetail() {
+    this.assessment = this.assessSvc.assessment;
+    console.log(this.assessSvc.assessment);
+  }
+  setAssessmentDone(){
+    this.assessment.done =!this.assessment.done;
+    this.assessSvc.setAssesmentDone(this.assessment.done).subscribe();
+  }
   setTab(tab) {
     this.assessSvc.currentTab = tab;
   }
@@ -170,7 +213,7 @@ export class AssessmentComponent implements OnInit {
   }
 
   /**
-   * Returns the text for the Requirements label.  
+   * Returns the text for the Requirements label.
    */
   requirementsLabel() {
     return 'Requirements';
@@ -184,8 +227,42 @@ export class AssessmentComponent implements OnInit {
     this.expandNav = e;
   }
 
+  // isTocLoading(node) {
+  //   console.log(node);
+  //   var s = node?.label;
+  //   return  (s === "Please wait" || s === "Loading questions") ;
+  // }
+
   goHome() {
     this.assessSvc.dropAssessment();
     this.router.navigate(['/home']);
+  }
+
+
+  loadCompletionData() {
+    this.assessSvc.getAssessmentsCompletion().subscribe((data: any[]) => {
+      const currentAssessment = data.find(x => x.assessmentId === this.assessSvc.id());
+      if (currentAssessment) {
+        this.completedQuestions = currentAssessment.completedCount || 0;
+        this.totalQuestions = (currentAssessment.totalMaturityQuestionsCount ?? 0) +
+          (currentAssessment.totalDiagramQuestionsCount ?? 0) +
+          (currentAssessment.totalStandardQuestionsCount ?? 0);
+
+        if (this.totalQuestions > 0) {
+          this.completionPercentage = Math.round((this.completedQuestions / this.totalQuestions) * 100);
+        } else {
+          this.completionPercentage = 0;
+        }
+      } else {
+        this.completionPercentage = 0;
+        this.completedQuestions = 0;
+        this.totalQuestions = 0;
+      }
+    });
+  }
+
+  getProgressTooltip(): string {
+    if (this.totalQuestions === 0) return 'No questions available';
+    return `${this.completedQuestions}/${this.totalQuestions} questions answered`;
   }
 }

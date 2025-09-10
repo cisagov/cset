@@ -1105,5 +1105,11 @@
   "Launch Report": "Launch Report",
   "Select a Model": "Select a Model",
   "ModuleContentLaunchComponent p1": "This report illustrates the structure and question content of a CSET module, e.g., an industry standard or maturity or best practices model.",
-  "ModuleContentLaunchComponent p2": "The generated report has controls to show or hide the guidance and References for each question."
+  "ModuleContentLaunchComponent p2": "The generated report has controls to show or hide the guidance and References for each question.",
+  "filters": {
+    "view all": "View All",
+    "done": "Done",
+    "favorites": "Favorites"
+  },
+  "categories": "Categories"
 }

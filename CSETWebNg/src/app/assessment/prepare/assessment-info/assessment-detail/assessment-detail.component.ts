@@ -82,7 +82,6 @@ export class AssessmentDetailComponent implements OnInit {
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
-
     this.assessSvc.isBrandNew = false;
     // Null out a 'low date' so that we display a blank
     const assessDate: Date = new Date(this.assessment.assessmentDate);
@@ -160,5 +159,9 @@ export class AssessmentDetailComponent implements OnInit {
       this.navSvc.navBack('csi2');
     });
 
+  }
+  setAssessmentDone(){
+    this.assessment.done =!this.assessment.done;
+    this.assessSvc.setAssesmentDone(this.assessment.done).subscribe();
   }
 }

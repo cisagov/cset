@@ -20,44 +20,111 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t">
-    <div class="m-4" [innerHTML]="pageTitle">
+<div *transloco="let t" class="tw:flex tw:flex-col tw:md:flex-row tw:min-h-screen tw:m-4 tw:p-6 tw:rounded-lg">
+  <!-- Left Sidebar -->
+  <div class="tw:w-full tw:md:w-1/4 tw:bg-gray-200 tw:p-4 tw:rounded-l-lg">
+    <h2 class="tw:text-xl tw:font-bold tw:mb-4">{{ t('Categories') }}</h2>
+
+    <!-- Favorite Section -->
+<!--    <div class="tw:mb-4 tw:pb-4 tw:border-b tw:border-gray-300">-->
+<!--      <div class="tw:flex tw:items-center tw:text-gray-800">-->
+<!--        <i class="fas fa-heart tw:mr-2"></i>-->
+<!--        Favorites-->
+<!--      </div>-->
+<!--    </div>-->
+
+    <!-- Category List -->
+    <div>
+      <!-- All Categories -->
+      <div class="tw:mb-2">
+        <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"
+                [style.background-color]="selectedCategory === 'all' ? '#015288' : ''"
+                [style.color]="selectedCategory === 'all' ? 'white' : ''"
+                (click)="selectCategory('all')">
+          <i class="fas fa-th-large tw:mr-2"></i>
+          All Assessments
+        </button>
+      </div>
+
+      <!-- Dynamic Categories -->
+      <div *ngFor="let row of gallerySvc.rows" class="tw:mb-2">
+        <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"
+                [style.background-color]="selectedCategory === row.group_Title ? '#015288' : ''"
+                [style.color]="selectedCategory === row.group_Title ? 'white' : ''"
+                (click)="selectCategory(row.group_Title)">
+          <i [class]="getCategoryIcon(row.group_Title)" class="tw:mr-2"></i>
+          {{row.group_Title}}
+          <span class="tw:float-right tw:bg-gray-300 tw:px-2 tw:py-1 tw:rounded tw:text-xs">{{row.galleryItems.length}}</span>
+        </button>
+      </div>
     </div>
-    <div *ngFor="let row of gallerySvc.rows" class="container m-2" style="height:240px;">
-        <div>
-            <div>
-                <h4>{{row.group_Title}}</h4>
-            </div>
-            <swiper-container class="gallery-slider">
-                <swiper-slide *ngFor="let c of row.galleryItems; let i = index">
-                    <div [attr.id]="'c'+c.gallery_Item_Guid" class="card gallery-card"
-                        (focus)="onHover(c.gallery_Item_Guid)" (mouseover)="onHover(c.gallery_Item_Guid)"
-                        (mouseleave)="onHoverOut(-1, c.gallery_Item_Guid)">
-                        <div class="card-body gallery-card-body cursor-pointer"
-                            style="min-height:150px; max-height:150px; z-index:1"
-                            (click)="navSvc.beginNewAssessmentGallery(c)">
-                            <div class="img-container">
-                                <img class="img-cropped-calc" [src]="getImageSrc(c.icon_File_Name_Small)">
-                            </div>
-                            <h6 class="card-title" ellipsis [ellipsis-content]="c.title"
-                                style="max-height:80px; min-height:80px; font-weight:bold;"></h6>
-                        </div>
-                        <div class="card-footer" [class.gallery-card-footer]="c.gallery_Item_Guid==hoverIndex"
-                            style="text-align:right;">
-                            <!--[hidden]="c.gallery_Item_Guid!=hoverIndex">-->
-                            <button [matTooltip]="t('tooltip.view detail')" [hidden]="c.gallery_Item_Guid!=hoverIndex"
-                                class="btn btn-outline-light btn-circle btn-sm gallery-btn-info" (click)="openDialog(c)"
-                                style="margin-right:5px; z-index:100"><i class="fa-solid fa-circle-info"
-                                    style="font-size: 16px;"></i></button>
-                            <button [matTooltip]="t('tooltip.create assessment')"
-                                [hidden]="c.gallery_Item_Guid!=hoverIndex"
-                                class="btn btn-light btn-circle btn-sm gallery-btn-play"
-                                (click)="navSvc.beginNewAssessmentGallery(c)"><i class="fa-solid fa-play"
-                                    style="font-size: 16px; z-index:100"></i></button>
-                        </div>
-                    </div>
-                </swiper-slide>
-            </swiper-container>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="tw:flex-1 tw:bg-white tw:p-6">
+    <!-- Page Title -->
+    <div class="tw:mb-6" [innerHTML]="pageTitle"></div>
+
+    <!-- Selected Category Title -->
+    <div class="tw:mb-6">
+      <h2 class="tw:text-2xl tw:font-semibold">
+        {{selectedCategory === 'all' ? 'All Assessments' : selectedCategory}}
+      </h2>
+      <span class="tw:text-sm tw:text-gray-600">{{getFilteredItems().length}} items</span>
+    </div>
+
+    <!-- Assessment Cards Grid -->
+    <div class="tw:grid tw:grid-cols-1 tw:sm:grid-cols-2 tw:lg:grid-cols-3 tw:xl:grid-cols-4 tw:gap-6">
+      <div *ngFor="let c of getFilteredItems()"
+           [attr.id]="'c'+c.gallery_Item_Guid"
+           class="card gallery-card"
+           (mouseover)="onHover(c.gallery_Item_Guid)"
+           (mouseleave)="onHoverOut(-1, c.gallery_Item_Guid)">
+
+        <!-- Card Body -->
+        <div class="card-body gallery-card-body tw:cursor-pointer"
+             style="min-height:150px; max-height:150px;"
+             (click)="navSvc.beginNewAssessmentGallery(c)">
+
+          <!-- Image Container -->
+          <div class="img-container">
+            <img class="img-cropped-calc" [src]="getImageSrc(c.icon_File_Name_Small)">
+          </div>
+
+          <!-- Title -->
+          <h6 class="card-title tw:max-h-20 tw:min-h-20 tw:font-bold tw:text-sm">
+            {{c.title}}
+          </h6>
         </div>
+
+        <!-- Card Footer -->
+        <div class="card-footer"
+             [class.gallery-card-footer]="c.gallery_Item_Guid==hoverIndex"
+             style="text-align:right;">
+
+          <button [matTooltip]="t('tooltip.view detail')"
+                  [hidden]="c.gallery_Item_Guid!=hoverIndex"
+                  class="btn btn-outline-light btn-circle btn-sm gallery-btn-info"
+                  (click)="openDialog(c)"
+                  style="margin-right:5px;">
+            <i class="fa-solid fa-circle-info"></i>
+          </button>
+
+          <button [matTooltip]="t('tooltip.create assessment')"
+                  [hidden]="c.gallery_Item_Guid!=hoverIndex"
+                  class="btn btn-light btn-circle btn-sm gallery-btn-play"
+                  (click)="navSvc.beginNewAssessmentGallery(c)">
+            <i class="fa-solid fa-play"></i>
+          </button>
+        </div>
+      </div>
     </div>
+
+    <!-- Empty State -->
+    <div *ngIf="getFilteredItems().length === 0" class="tw:text-center tw:py-12">
+      <i class="fas fa-search tw:text-6xl tw:text-gray-300 tw:mb-4"></i>
+      <h3 class="tw:text-xl tw:font-semibold tw:mb-2">No assessments found</h3>
+      <p class="tw:text-gray-500">Try selecting a different category</p>
+    </div>
+  </div>
 </div>
