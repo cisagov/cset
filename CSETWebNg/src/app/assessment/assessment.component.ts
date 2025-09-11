@@ -265,10 +265,6 @@ export class AssessmentComponent implements OnInit {
     }
     return 0;
   }
-  // getProgressTooltip(): string {
-  //   if (this.totalQuestions === 0) return 'No questions available';
-  //   return `${this.completedQuestions}/${this.totalQuestions} questions answered`;
-  // }
   getProgressTooltip(): string {
     if (this.completionSvc.totalCount === 0) return 'No questions available';
     return `${this.completionSvc.answeredCount}/${this.completionSvc.totalCount} questions answered`;
