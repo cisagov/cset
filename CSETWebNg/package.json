@@ -30,7 +30,7 @@
     "@angular/forms": "^20.2.2",
     "@angular/material": "^20.2.1",
     "@angular/platform-browser": "^20.2.2",
-    "@angular/platform-browser-dynamic": "^20.2.2",
+    "@angular/platform-browser-dynamic": "^20.3.0",
     "@angular/platform-server": "^20.2.2",
     "@angular/router": "^20.2.2",
     "@babel/helpers": "^7.28.3",
