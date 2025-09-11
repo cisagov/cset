@@ -75,4 +75,6 @@ public partial class ASSESSMENT_CONTACTS
     [ForeignKey("UserId")]
     [InverseProperty("ASSESSMENT_CONTACTS")]
     public virtual USERS User { get; set; }
+
+    public bool? Favorite { get; set; }
 }

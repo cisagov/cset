@@ -35,6 +35,8 @@ SOFTWARE.
 @use '@angular/material' as mat;
 
 
+
+
 $white: #ffffff;
 $black: #000000;
 
@@ -521,8 +523,10 @@ label[required]::after {
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: 8px;
+
   max-height: calc(100cqh - 225px);
   min-height: calc(100cqh - 225px);
+
   color: $gray-800;
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;

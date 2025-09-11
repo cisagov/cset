@@ -62,7 +62,9 @@
           </button>
         </li>
       </ul>
+
     </div>
+
   </div>
 
   <!-- Content -->
@@ -113,11 +115,66 @@
 
       </mat-sidenav>
 
-      <mat-sidenav-content class="bgc-gray-50 d-flex flex-column flex-11a oy-auto ">
+      <mat-sidenav-content class="bg-gray-50 d-flex flex-column flex-11a oy-auto ">
         <div class="max-1000 h-0 d-flex flex-column flex-11a" id="sidenav-content">
+          <div class="tw:flex tw:justify-between tw:items-center tw:bg-white tw:p-4 tw:rounded-lg tw:shadow-sm tw:m-3 tw:border tw:border-gray-200">
+            <!-- Assessment Name -->
+            <div class="tw:flex-1 tw:min-w-0">
+              <h6 class="tw:text-lg tw:font-semibold tw:mb-0 tw:truncate tw:text-gray-500">
+                {{this.assessment?.assessmentName || 'Loading ...'}}
+              </h6>
+            </div>
+
+            <div class="tw:flex tw:items-center tw:gap-4">
+              <!-- Progress Section -->
+              <div class="tw:flex tw:items-center tw:gap-3">
+                <div class="tw:relative">
+                  <progress
+                    class="tw:w-24 tw:h-4 tw:cursor-pointer tw:rounded-full tw:appearance-none"
+                    style="background-color: #e5e7eb;"
+                    [value]="getCompletionPercentage()"
+                    [matTooltip]="getProgressTooltip()"
+                    max="100">
+                  </progress>
+                </div>
+                <span class="tw:text-sm tw:text-gray-700 tw:font-medium tw:min-w-[3rem]">{{ getCompletionPercentage()}}%</span>
+              </div>
+
+              <!-- Divider -->
+              <div class="tw:w-px tw:h-8 tw:bg-gray-300"></div>
+
+              <!-- Custom Switch -->
+              <div class="tw:flex tw:items-center tw:gap-3">
+                <span class="tw:text-sm tw:font-medium tw:text-gray-900 tw:whitespace-nowrap">Mark Assessment Done</span>
+                <label class="tw:relative tw:inline-flex tw:items-center tw:cursor-pointer">
+                  <input
+                    type="checkbox"
+                    class="tw:sr-only"
+                    id="assessmentDoneSwitch"
+                    [checked]="assessment?.done"
+                    (change)="setAssessmentDone()"
+                  >
+                  <div class="tw:w-11 tw:h-6 tw:bg-gray-200 tw:rounded-full tw:relative tw:transition-colors tw:duration-200"
+                       [ngClass]="{
+                     'tw:bg-gray-200': !assessment?.done,
+                     'tw:bg-[#015288]': assessment?.done
+                   }">
+                    <div class="tw:absolute tw:top-0.5 tw:left-0.5 tw:w-5 tw:h-5 tw:bg-white tw:rounded-full tw:transition-transform tw:duration-200 tw:shadow-sm"
+                         [ngClass]="{'tw:translate-x-5': assessment?.done}">
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
           <router-outlet></router-outlet>
         </div>
       </mat-sidenav-content>
     </mat-sidenav-container>
+
   </div>
+
+
+
 </div>
