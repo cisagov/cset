@@ -152,7 +152,6 @@ export class AssessmentComponent implements OnInit {
   }
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
-    console.log(this.assessSvc.assessment);
   }
   setAssessmentDone(){
     this.assessment.done =!this.assessment.done;
