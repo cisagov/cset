@@ -74,7 +74,7 @@ public partial class ASSESSMENTS
     public bool ModifiedSinceLastExport { get; set; }
 
     public bool AssessorMode { get; set; }
-    public bool Done { get; set; }
+    public bool? Done { get; set; }
 
     public int? TotalQuestionCount { get; set; }
 
