@@ -34,7 +34,7 @@ import { FileUploadClientService } from '../../../services/file-client.service';
 import { ObservationsService } from '../../../services/observations.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { AuthenticationService } from './../../../services/authentication.service';
-import { ObservationsComponent } from '../observations/observations.component';
+import { ObservationDetailComponent } from '../observations/observation-detail.component';
 import { Observation } from '../observations/observations.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
@@ -373,6 +373,7 @@ export class QuestionExtrasComponent implements OnInit {
       question_Id: this.myQuestion.questionId,
       questionType: this.myQuestion.questionType,
       answer_Id: this.myQuestion.answer_Id,
+      assessmentId: this.assessSvc.assessment.id,
       observation_Id: observationId,
       summary: '',
       observation_Contacts: null,
@@ -391,10 +392,11 @@ export class QuestionExtrasComponent implements OnInit {
       actionItems: null,
       citations: null,
       auto_Generated: null,
-      supp_Guidance: null
+      supp_Guidance: null,
+      answerLevel: true
     };
 
-    this.dialog.open(ObservationsComponent, {
+    this.dialog.open(ObservationDetailComponent, {
       data: obs,
       disableClose: true,
       width: this.layoutSvc.hp ? '90%' : '750px',
@@ -404,7 +406,7 @@ export class QuestionExtrasComponent implements OnInit {
     )
       .afterClosed().subscribe(result => {
         const answerID = obs.answer_Id;
-        this.observationSvc.getAllObservations(answerID).subscribe(
+        this.observationSvc.getObservationsForAnswer(answerID).subscribe(
           (response: Observation[]) => {
             this.extras.observations = response;
             for (let i of response) {

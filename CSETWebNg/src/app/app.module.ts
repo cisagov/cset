@@ -121,7 +121,8 @@ import { SalGenComponent } from './assessment/prepare/sals/sal-gen/sal-gen.compo
 import { SalNistComponent } from './assessment/prepare/sals/sal-nist/sal-nist.component';
 import { SalSimpleComponent } from './assessment/prepare/sals/sal-simple/sal-simple.component';
 import { SalsComponent } from './assessment/prepare/sals/sals.component';
-import { ObservationsComponent } from './assessment/questions/observations/observations.component';
+import { ObservationDetailComponent } from './assessment/questions/observations/observation-detail.component';
+import { ObservationsGeneralComponent } from './assessment/questions/observations/observations-general/observations-general.component';
 import { QuestionBlockComponent } from './assessment/questions/question-block/question-block.component';
 import { QuestionExtrasComponent } from './assessment/questions/question-extras/question-extras.component';
 import { QuestionsComponent } from './assessment/questions/questions.component';
@@ -657,7 +658,8 @@ registerSwiper();
         QuestionExtrasComponent,
         ResourceLibraryComponent,
         OkayComponent,
-        ObservationsComponent,
+        ObservationDetailComponent,
+        ObservationsGeneralComponent,
         IssuesComponent,
         SafePipe,
         LinebreakPipe,

@@ -25,9 +25,10 @@
 ////////////////////////////////
 export interface Observation {
   // ACET fields
-  question_Id: number;
+  question_Id: number | null;
   questionType: string;
-  answer_Id: number;
+  answer_Id: number | null;
+  assessmentId: number | null;
   observation_Id: number;
   summary: string;
   issue: string;
@@ -49,6 +50,10 @@ export interface Observation {
   // Shared fields
   importance: Importance;
   observation_Contacts: ObservationContact[];
+
+
+  answerLevel: boolean;
+
 }
 
 export interface SubRiskArea {

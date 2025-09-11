@@ -79,7 +79,6 @@ public partial class ASSESSMENTS
 
     public int? CompletedQuestionCount { get; set; }
 
-
     [InverseProperty("Assessment")]
     public virtual ICollection<ACCESS_KEY_ASSESSMENT> ACCESS_KEY_ASSESSMENT { get; set; } = new List<ACCESS_KEY_ASSESSMENT>();
 
@@ -140,6 +139,9 @@ public partial class ASSESSMENTS
 
     [InverseProperty("Assessment")]
     public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; } = new List<DOCUMENT_FILE>();
+
+    [InverseProperty("Assessment")]
+    public virtual ICollection<FINDING> FINDING { get; set; } = new List<FINDING>();
 
     [InverseProperty("Assessment")]
     public virtual ICollection<FRAMEWORK_TIER_TYPE_ANSWER> FRAMEWORK_TIER_TYPE_ANSWER { get; set; } = new List<FRAMEWORK_TIER_TYPE_ANSWER>();

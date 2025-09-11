@@ -4,6 +4,8 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.DataLayer.Model;
+using Org.BouncyCastle.Asn1.Crmf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +14,11 @@ namespace CSETWebCore.Model.Observations
 {
     public class Observation
     {
-        public int Question_Id { get; set; }
-        public int Answer_Id { get; set; }
+        public int? Question_Id { get; set; }
+        public int? Answer_Id { get; set; }
+        public int? Assessment_Id { get; set; }
+
+        public bool AnswerLevel { get; set; }
         public int Observation_Id { get; set; }
         public string Summary { get; set; }
         public string Issue { get; set; }

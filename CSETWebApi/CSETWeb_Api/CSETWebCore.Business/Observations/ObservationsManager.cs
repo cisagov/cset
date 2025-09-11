@@ -6,13 +6,10 @@
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Observations;
-using CSETWebCore.Model.Set;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Observations
 {
@@ -50,9 +47,55 @@ namespace CSETWebCore.Business.Observations
 
 
         /// <summary>
+        /// Returns a list of assessment-level Observations (not attached to any ANSWER)
+        /// </summary>
+        /// <returns></returns>
+        public List<Observation> GetAssessmentLevelObservations()
+        {
+            List<Observation> observations = new List<Observation>();
+
+            var obsList = _context.FINDING
+                .Where(x => x.Assessment_ID == _assessmentId && x.Answer_Id == null)
+                .Include(i => i.Importance)
+               // .Include(k => k.FINDING_CONTACT)
+                .ToList();
+
+            foreach (FINDING o in obsList)
+            {
+                Observation obs = new Observation();
+                obs.Observation_Contacts = new List<ObservationContact>();
+                obs.Summary = o.Summary;
+                obs.Observation_Id = o.Finding_Id;
+                obs.Assessment_Id = _assessmentId;
+                obs.Answer_Id = null;
+                TinyMapper.Map(o, obs);
+                if (o.Importance == null)
+                    obs.Importance = new Importance()
+                    {
+                        Importance_Id = 1,
+                        Value = Constants.Constants.SAL_LOW
+                    };
+                else
+                    obs.Importance = TinyMapper.Map<IMPORTANCE, Importance>(o.Importance);
+
+                foreach (FINDING_CONTACT fc in o.FINDING_CONTACT)
+                {
+                    ObservationContact webFc = TinyMapper.Map<FINDING_CONTACT, ObservationContact>(fc);
+
+                    webFc.Observation_Id = fc.Finding_Id;
+                    webFc.Selected = (fc != null);
+                    obs.Observation_Contacts.Add(webFc);
+                }
+                observations.Add(obs);
+            }
+            return observations;
+        }
+
+
+        /// <summary>
         /// Returns a list of Observations (FINDING databse records) for an answer
         /// </summary>
-        public List<Observation> AllObservations(int answerId)
+        public List<Observation> GetAnswerObservations(int answerId)
         {
             List<Observation> observations = new List<Observation>();
 
@@ -94,10 +137,55 @@ namespace CSETWebCore.Business.Observations
 
 
         /// <summary>
-        /// 
+        /// Returns the specified Observation or returns null.
         /// </summary>
-        public Observation GetObservation(int observationId, int answerId = 0)
+        /// <param name="observationId"></param>
+        /// <returns></returns>
+        public Observation GetObservation(int observationId)
         {
+            FINDING f = _context.FINDING
+                    .Where(x => x.Finding_Id == observationId)
+                    .Include(fc => fc.FINDING_CONTACT)
+                    .FirstOrDefault();
+
+            if (f == null)
+            {
+                return null;
+            }
+
+
+            Observation obs;
+            var q = _context.ANSWER.Where(x => x.Answer_Id == f.Answer_Id).FirstOrDefault();
+
+            obs = TinyMapper.Map<Observation>(f);
+            obs.Observation_Id = f.Finding_Id;
+            obs.Question_Id = q != null ? q.Question_Or_Requirement_Id : 0;
+
+            obs.Observation_Contacts = new List<ObservationContact>();
+            foreach (var contact in _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == _assessmentId))
+            {
+                ObservationContact webContact = TinyMapper.Map<ObservationContact>(contact);
+                webContact.Name = contact.PrimaryEmail + " -- " + contact.FirstName + " " + contact.LastName;
+                webContact.Selected = (f.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == contact.Assessment_Contact_Id).FirstOrDefault() != null);
+                obs.Observation_Contacts.Add(webContact);
+            }
+
+            return obs;
+        }
+
+
+        /// <summary>
+        ///  HOPING TO DEPRECATE THIS SOON................
+        /// </summary>
+        public Observation GetOrCreateObservationDELETME(int observationId, int? answerId, string scope)
+        {
+            FINDING obs1;
+            if (observationId == 0)
+            {
+                obs1 = new FINDING();
+            }
+
+
             // look for an existing FINDING record.  If not, create one.
             FINDING f = _context.FINDING
                     .Where(x => x.Finding_Id == observationId)
@@ -106,10 +194,16 @@ namespace CSETWebCore.Business.Observations
 
             if (f == null)
             {
-                f = new FINDING()
+                f = new FINDING();
+
+                if (scope == "answer")
                 {
-                    Answer_Id = answerId
-                };
+                    f.Answer_Id = answerId;
+                }
+                else
+                { 
+                    f.Assessment_ID = _assessmentId;
+                }
 
                 _context.FINDING.Add(f);
                 _context.SaveChanges();
@@ -138,6 +232,20 @@ namespace CSETWebCore.Business.Observations
 
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public Observation CreateObservationForAnswer(int answerId)
+        {
+            var obs = new Observation();
+            obs.Answer_Id = answerId;
+            obs.AnswerLevel = true;
+
+            return obs;
+        }
+
+
+        /// <summary>
         /// Deletes an Observation (FINDING record)
         /// </summary>
         /// <param name="observation"></param>
@@ -146,6 +254,21 @@ namespace CSETWebCore.Business.Observations
             ObservationData fm = new ObservationData(observation, _context);
             fm.Delete();
             fm.Save();
+        }
+
+
+        /// <summary>
+        /// Deletes an Observation (FINDING record) by its primary key
+        /// </summary>
+        /// <param name="observationId"></param>
+        public void DeleteObservation(int observationId)
+        {
+            var obs = _context.FINDING.FirstOrDefault(x => x.Finding_Id == observationId);
+            if (obs != null)
+            {
+                _context.FINDING.Remove(obs);
+                _context.SaveChanges();
+            }
         }
 
 
@@ -242,7 +365,7 @@ namespace CSETWebCore.Business.Observations
 
 
             // create new observation record
-            var newObs = GetObservation(-1, (int)answer.AnswerId);
+            var newObs = CreateObservationForAnswer((int)answer.AnswerId);
 
             // populate with properties
             newObs.Summary = props.Where(x => x.PropertyName == "OBS-DISCOVERY").FirstOrDefault()?.PropertyValue ?? "";

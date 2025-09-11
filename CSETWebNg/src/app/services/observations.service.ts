@@ -25,6 +25,7 @@ import { ActionItemText, ActionItemTextUpdate, Observation } from '../assessment
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
+import { Observable } from 'rxjs';
 
 const headers = {
   headers: new HttpHeaders()
@@ -45,34 +46,37 @@ export class ObservationsService {
     return this.http.get(qstring, headers);
   }
 
-  getImportance(): any {
-    const qstring = this.configSvc.apiUrl + 'GetImportance';
+  getImportances(): Observable<any> {
+    const qstring = this.configSvc.apiUrl + 'importancevalues';
     return this.http.get(qstring, headers);
   }
 
   getObservation(answerId: number, observationId: number, questionId: number, questionType: string) {
     if (answerId == null) { answerId = 0; }
-    const qstring = this.configSvc.apiUrl + 'GetObservation?answerId=' + answerId
+
+    const qstring = this.configSvc.apiUrl + 'observation?answerId=' + answerId
       + '&observationId=' + observationId + '&questionId=' + questionId + '&questionType=' + questionType;
-    return this.http.post(qstring, headers);
+    return this.http.get<Observation>(qstring, headers);
   }
 
   /**
-   * retrieves all the Observations
+   * Retrieves all assessment-level Observations
    */
-  getAllObservations(answer_id: number) {
-    const qstring = 'AnswerAllObservations?Answer_Id=' + answer_id;
-    return this.http.post(this.configSvc.apiUrl + qstring, headers);
+  getAssessmentLevelObservations() {
+    return this.http.get(this.configSvc.apiUrl + 'assessment/observations');
   }
 
   /**
-   * retrieves all the observations for an assessment
+   * retrieves all the Observations for an Answer
    */
-  getAssessmentObservations() {
-    const qstring = 'GetAssessmentObservations';
-    return this.http.post(this.configSvc.apiUrl + qstring, headers);
+  getObservationsForAnswer(answer_id: number) {
+    const qstring = 'answer/observations?answerId=' + answer_id;
+    return this.http.get(this.configSvc.apiUrl + qstring, headers);
   }
 
+  /**
+   * 
+   */
   saveIssueText(actionItem: ActionItemText[], observation_Id: number) {
     const tmp: ActionItemTextUpdate = { actionTextItems: actionItem, observation_Id: observation_Id };
     return this.http.post(this.configSvc.apiUrl + 'SaveIssueOverrideText', tmp, headers);
@@ -92,6 +96,6 @@ export class ObservationsService {
   }
 
   deleteObservation(observationId: number): any {
-    return this.http.post(this.configSvc.apiUrl + 'DeleteObservation', observationId, headers);
+    return this.http.post(this.configSvc.apiUrl + 'observation/delete', observationId, headers);
   }
 }
