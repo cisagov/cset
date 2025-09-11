@@ -37,6 +37,8 @@ import { NavigationService } from '../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../services/config.service';
 import { AssessmentDetail } from '../models/assessment-info.model';
+import { Subscription } from 'rxjs'
+import { CompletionService } from '../services/completion.service';
 
 interface UserAssessment {
   isEntry: boolean;
@@ -78,6 +80,7 @@ export class AssessmentComponent implements OnInit {
   completionPercentage:number=0;
   completedQuestions = 0;
   totalQuestions = 0;
+  private completionSubscription: Subscription;
   /**
    * Indicates whether the nav panel is visible (true)
    * or hidden (false).
@@ -117,6 +120,7 @@ export class AssessmentComponent implements OnInit {
     public tSvc: TranslocoService,
     private configSvc: ConfigService,
     private appRef: ApplicationRef,
+    private completionSvc: CompletionService
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
@@ -144,8 +148,13 @@ export class AssessmentComponent implements OnInit {
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
       this.loadCompletionData();
-    }
 
+    }
+    this.completionSubscription = this.completionSvc.completionChanged$.subscribe(() => {
+      setTimeout(() => {
+        this.loadCompletionData();
+      }, 1000);
+    });
   }
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
@@ -238,10 +247,10 @@ export class AssessmentComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-
   loadCompletionData() {
     this.assessSvc.getAssessmentsCompletion().subscribe((data: any[]) => {
       const currentAssessment = data.find(x => x.assessmentId === this.assessSvc.id());
+
       if (currentAssessment) {
         this.completedQuestions = currentAssessment.completedCount || 0;
         this.totalQuestions = (currentAssessment.totalMaturityQuestionsCount ?? 0) +
@@ -253,6 +262,7 @@ export class AssessmentComponent implements OnInit {
         } else {
           this.completionPercentage = 0;
         }
+
       } else {
         this.completionPercentage = 0;
         this.completedQuestions = 0;
