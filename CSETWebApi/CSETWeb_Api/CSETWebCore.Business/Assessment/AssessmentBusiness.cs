@@ -1323,7 +1323,7 @@ namespace CSETWebCore.Business.Assessment
                 throw new ArgumentException($"User {currentUserId} is not associated with assessment {assessmentId}");
             }
     
-            userAssessment.Favorite = isFavorite; 
+            userAssessment.Favorite = isFavorite ? true : false;
             _context.SaveChanges();
         }
     }
