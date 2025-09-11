@@ -37,6 +37,8 @@ import { NavigationService } from '../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../services/config.service';
 import { AssessmentDetail } from '../models/assessment-info.model';
+import { CompletionService } from '../services/completion.service';
+import { QuestionsService } from '../services/questions.service';
 interface UserAssessment {
   isEntry: boolean;
   isEntryString: string;
@@ -115,7 +117,9 @@ export class AssessmentComponent implements OnInit {
     public layoutSvc: LayoutService,
     public tSvc: TranslocoService,
     private configSvc: ConfigService,
-    private appRef: ApplicationRef
+    private appRef: ApplicationRef,
+    public completionSvc: CompletionService,
+    private questionsSvc: QuestionsService
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
@@ -148,7 +152,6 @@ export class AssessmentComponent implements OnInit {
   }
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
-    console.log(this.assessSvc.assessment);
   }
   setAssessmentDone(){
     this.assessment.done =!this.assessment.done;
@@ -240,29 +243,29 @@ export class AssessmentComponent implements OnInit {
 
 
   loadCompletionData() {
-    this.assessSvc.getAssessmentsCompletion().subscribe((data: any[]) => {
-      const currentAssessment = data.find(x => x.assessmentId === this.assessSvc.id());
-      if (currentAssessment) {
-        this.completedQuestions = currentAssessment.completedCount || 0;
-        this.totalQuestions = (currentAssessment.totalMaturityQuestionsCount ?? 0) +
-          (currentAssessment.totalDiagramQuestionsCount ?? 0) +
-          (currentAssessment.totalStandardQuestionsCount ?? 0);
 
-        if (this.totalQuestions > 0) {
-          this.completionPercentage = Math.round((this.completedQuestions / this.totalQuestions) * 100);
-        } else {
-          this.completionPercentage = 0;
-        }
-      } else {
+    this.questionsSvc.getQuestionsList().subscribe(
+      (response: any) => {
+        this.completionSvc.structure = response;
+        this.completionSvc.setQuestionArray();
+      },
+      error => {
+        console.error('Error getting completion data:', error);
         this.completionPercentage = 0;
-        this.completedQuestions = 0;
-        this.totalQuestions = 0;
       }
-    });
+    );
   }
+  getCompletionPercentage(): number {
+    const answeredCount = this.completionSvc.answeredCount || 0;
+    const totalCount = this.completionSvc.totalCount || 0;
 
+    if (totalCount > 0) {
+      return Math.round((answeredCount / totalCount) * 100);
+    }
+    return 0;
+  }
   getProgressTooltip(): string {
-    if (this.totalQuestions === 0) return 'No questions available';
-    return `${this.completedQuestions}/${this.totalQuestions} questions answered`;
+    if (this.completionSvc.totalCount === 0) return 'No questions available';
+    return `${this.completionSvc.answeredCount}/${this.completionSvc.totalCount} questions answered`;
   }
 }

@@ -132,12 +132,12 @@
                   <progress
                     class="tw:w-24 tw:h-4 tw:cursor-pointer tw:rounded-full tw:appearance-none"
                     style="background-color: #e5e7eb;"
-                    [value]="completionPercentage"
+                    [value]="getCompletionPercentage()"
                     [matTooltip]="getProgressTooltip()"
                     max="100">
                   </progress>
                 </div>
-                <span class="tw:text-sm tw:text-gray-700 tw:font-medium tw:min-w-[3rem]">{{ completionPercentage }}%</span>
+                <span class="tw:text-sm tw:text-gray-700 tw:font-medium tw:min-w-[3rem]">{{ getCompletionPercentage()}}%</span>
               </div>
 
               <!-- Divider -->
