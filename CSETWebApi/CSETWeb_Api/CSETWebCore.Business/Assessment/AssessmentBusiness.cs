@@ -417,6 +417,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.PciiNumber = result.aa.PCII_Number;
                 assessment.IseSubmitted = result.ii.Ise_Submitted;
                 assessment.AssessorMode = result.aa.AssessorMode;
+                assessment.Done = result.aa.Done ;
                 
 
                 assessment.CreatorName = new User.UserBusiness(_context, null)
@@ -1301,6 +1302,28 @@ namespace CSETWebCore.Business.Assessment
         {
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             assessment.AssessorMode = mode.ToBool();
+            _context.SaveChanges();
+        }
+
+        public void SetAssessmentDone(int assessmentId, bool isDone)
+        {
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+             assessment.Done = isDone;
+            _context.SaveChanges();
+        }
+        public void SetAssessmentFavorite(int assessmentId, bool isFavorite)
+        {
+            int currentUserId = _tokenManager.GetUserId() ?? throw new UnauthorizedAccessException("User ID not found in token");
+    
+            var userAssessment = _context.ASSESSMENT_CONTACTS
+                .FirstOrDefault(ac => ac.Assessment_Id == assessmentId && ac.UserId == currentUserId);
+    
+            if (userAssessment == null)
+            {
+                throw new ArgumentException($"User {currentUserId} is not associated with assessment {assessmentId}");
+            }
+    
+            userAssessment.Favorite = isFavorite ? true : false;
             _context.SaveChanges();
         }
     }

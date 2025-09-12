@@ -59,7 +59,7 @@
         <!-- SSG chart/table -->
         <ng-container *ngFor="let s of answerDistribsSsg">
             <div class="mt-4 mb-4">
-                <h4>{{ t('core.cpg.report.ssg.2') }} - {{t(`reports.core.ssg.${s.modelId}`)}}</h4>
+                <h4>{{ t('reports.core.cpg.report.ssg.2') }} - {{t(`reports.core.ssg.${s.modelId}`)}}</h4>
                 <app-cpg-domain-summary [answerDistribByDomain]="s.distribution"></app-cpg-domain-summary>
 
                 <p>{{t('reports.core.cpg.report.p.2')}}</p>

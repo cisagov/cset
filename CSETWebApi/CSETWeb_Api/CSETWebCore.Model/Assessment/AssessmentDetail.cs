@@ -76,6 +76,7 @@ namespace CSETWebCore.Model.Assessment
         
         public bool AssessorMode { get; set; }
 
+        public bool? Done { get; set; }
         // Selected maturity model and the target level
         public MaturityModel MaturityModel { get; set; }
 

@@ -73,6 +73,7 @@ export interface AssessmentDetail {
     pciiNumber?: string;
     is_PCII?: boolean;
     assessorMode?: boolean;
+    done?:boolean;
 }
 
 export interface MaturityModel {
