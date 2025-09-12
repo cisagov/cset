@@ -3,6 +3,7 @@
 *.log
 *.zip
 dist
+AGENTS.md
 CLAUDE.md
 .claude/
 .serena/
