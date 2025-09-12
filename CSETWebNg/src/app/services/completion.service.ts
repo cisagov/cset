@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-
+import { Subject } from 'rxjs';
 /**
  * This service tracks questions for the current page and
  * tallies answer completion.  This feeds the "0/100" display
@@ -43,7 +43,8 @@ export class CompletionService {
 
   answeredCount = 0;
   totalCount = 0;
-
+  private completionChanged = new Subject<void>();
+  public completionChanged$ = this.completionChanged.asObservable();
   public structure: any;
   questionflat: any[];
 
@@ -65,7 +66,7 @@ export class CompletionService {
   /**
    * Converts a question structure into a bag of IDs so that
    * we can quickly calculate answer counts.
-   * 
+   *
    * NOTE:  this service's 'structure' property must be set before
    * calling this function.
    */
@@ -109,8 +110,8 @@ export class CompletionService {
   /**
    * Loops through a maturity grouping's subgroups,
    * adding its questions to the collection.
-   * 
-   * Only questions within the maturity level that are 
+   *
+   * Only questions within the maturity level that are
    * in selected groupings and are considered 'countable' are collected.
    */
   private recurseSubgroups(gg) {
@@ -146,8 +147,8 @@ export class CompletionService {
     if (!!ans) {
       ans.answer = value;
     }
-
     this.countAnswers();
+    this.completionChanged.next();
   }
 
   /**
@@ -156,5 +157,7 @@ export class CompletionService {
   countAnswers() {
     this.answeredCount = this.questionflat.filter(x => x.answer !== 'U' && x.answer !== '' && x.answer !== null).length;
     this.totalCount = this.questionflat.length;
+
+
   }
 }

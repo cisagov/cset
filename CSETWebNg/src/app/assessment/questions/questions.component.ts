@@ -165,7 +165,7 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
 
   /**
    * NOT YET OPERATIONAL
-   * 
+   *
    * If a "resume questions" target is defined, attempt to
    * scroll to it.
    */
@@ -294,7 +294,7 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
    * Retrieves the complete list of questions
    */
   loadQuestions() {
-    // set the message with the current "no" answer value.  
+    // set the message with the current "no" answer value.
     this.msgUnansweredEqualsNo = this.tSvc.translate('questions.unanswered equals no', { 'no-ans': this.questionsSvc.answerButtonLabel('', 'N') });
 
     this.completionSvc.reset();

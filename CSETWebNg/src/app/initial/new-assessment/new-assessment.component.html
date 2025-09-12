@@ -26,20 +26,22 @@
     <h2 class="tw:text-xl tw:font-bold tw:mb-4">{{ t('Categories') }}</h2>
 
     <!-- Favorite Section -->
-<!--    <div class="tw:mb-4 tw:pb-4 tw:border-b tw:border-gray-300">-->
-<!--      <div class="tw:flex tw:items-center tw:text-gray-800">-->
-<!--        <i class="fas fa-heart tw:mr-2"></i>-->
-<!--        Favorites-->
-<!--      </div>-->
-<!--    </div>-->
+    <!--    <div class="tw:mb-4 tw:pb-4 tw:border-b tw:border-gray-300">-->
+    <!--      <div class="tw:flex tw:items-center tw:text-gray-800">-->
+    <!--        <i class="fas fa-heart tw:mr-2"></i>-->
+    <!--        Favorites-->
+    <!--      </div>-->
+    <!--    </div>-->
 
     <!-- Category List -->
     <div>
       <!-- All Categories -->
       <div class="tw:mb-2">
         <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"
-                [style.background-color]="selectedCategory === 'all' ? '#015288' : ''"
-                [style.color]="selectedCategory === 'all' ? 'white' : ''"
+                [ngClass]="{
+          'tw:bg-[#015288] tw:text-white tw:[&>i]:text-black': selectedCategory === 'all',
+          'tw:text-gray-800': selectedCategory !== 'all'
+        }"
                 (click)="selectCategory('all')">
           <i class="fas fa-th-large tw:mr-2"></i>
           All Assessments
@@ -49,12 +51,19 @@
       <!-- Dynamic Categories -->
       <div *ngFor="let row of gallerySvc.rows" class="tw:mb-2">
         <button class="tw:w-full tw:text-left tw:py-3 tw:px-3 tw:text-gray-800 tw:border-b tw:border-gray-300 tw:rounded-lg"
-                [style.background-color]="selectedCategory === row.group_Title ? '#015288' : ''"
-                [style.color]="selectedCategory === row.group_Title ? 'white' : ''"
+                [ngClass]="{
+          'tw:bg-[#015288] tw:text-white tw:[&>i]:text-black': selectedCategory === row.group_Title,
+          'tw:text-gray-800': selectedCategory !== row.group_Title
+        }"
                 (click)="selectCategory(row.group_Title)">
           <i [class]="getCategoryIcon(row.group_Title)" class="tw:mr-2"></i>
           {{row.group_Title}}
-          <span class="tw:float-right tw:bg-gray-300 tw:px-2 tw:py-1 tw:rounded tw:text-xs">{{row.galleryItems.length}}</span>
+          <span class="tw:float-right tw:bg-gray-400 tw:px-2 tw:py-1 tw:rounded tw:text-xs"
+                [ngClass]="{
+          'tw:bg-gray-400': selectedCategory === row.group_Title,
+          'tw:bg-gray-300': selectedCategory !== row.group_Title
+        }"
+          >{{row.galleryItems.length}}</span>
         </button>
       </div>
     </div>
