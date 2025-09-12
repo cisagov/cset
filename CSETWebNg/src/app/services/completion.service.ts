@@ -143,7 +143,6 @@ export class CompletionService {
    *
    */
   setAnswer(id: number, value: string) {
-    console.log('🔥 CompletionService.setAnswer called:', { id, value });
     const ans = this.questionflat.find(x => x.id == id);
     if (!!ans) {
       ans.answer = value;
