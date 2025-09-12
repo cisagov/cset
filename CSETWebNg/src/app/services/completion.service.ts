@@ -143,12 +143,13 @@ export class CompletionService {
    *
    */
   setAnswer(id: number, value: string) {
+    console.log('🔥 CompletionService.setAnswer called:', { id, value });
     const ans = this.questionflat.find(x => x.id == id);
     if (!!ans) {
       ans.answer = value;
     }
-    this.completionChanged.next();
     this.countAnswers();
+    this.completionChanged.next();
   }
 
   /**
@@ -157,6 +158,7 @@ export class CompletionService {
   countAnswers() {
     this.answeredCount = this.questionflat.filter(x => x.answer !== 'U' && x.answer !== '' && x.answer !== null).length;
     this.totalCount = this.questionflat.length;
+
 
   }
 }

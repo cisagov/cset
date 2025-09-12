@@ -148,13 +148,13 @@ export class AssessmentComponent implements OnInit {
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
       this.loadCompletionData();
-
+      this.completionSubscription = this.completionSvc.completionChanged$.subscribe(() => {
+        setTimeout(() => {
+          this.loadCompletionData();
+        }, 1000);
+      });
     }
-    this.completionSubscription = this.completionSvc.completionChanged$.subscribe(() => {
-      setTimeout(() => {
-        this.loadCompletionData();
-      }, 1000);
-    });
+
   }
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
