@@ -72,7 +72,7 @@ export class NavigationService implements OnDestroy, OnInit {
   @Output()
   disableNext = new EventEmitter<boolean>();
 
-  activeResultsView: string;
+  activeResultsView: string | null;
 
   frameworkSelected = false;
   diagramSelected = true;
@@ -347,7 +347,6 @@ export class NavigationService implements OnDestroy, OnInit {
    * @param value
    */
   navDirect(id: string) {
-    console.log('navDirect:', id);
     // if the target is a simple string, find it in the pages structure
     // and navigate to its path
     if (typeof id == 'string') {
@@ -364,7 +363,6 @@ export class NavigationService implements OnDestroy, OnInit {
         return;
       }
 
-      console.log('routeToTarget:', target);
       this.routeToTarget(target);
       return;
     }
@@ -381,8 +379,8 @@ export class NavigationService implements OnDestroy, OnInit {
 
     // determine the route path
     const targetPath = targetNode.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
-    console.log('navigate: ', targetPath);
-    this.router.navigate([targetPath]);
+    this.router.navigateByUrl(targetPath);
+  //  this.router.navigate([targetPath]);
   }
 
   /**

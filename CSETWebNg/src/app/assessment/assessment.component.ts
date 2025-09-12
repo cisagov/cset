@@ -29,7 +29,7 @@ import {
   Output, HostListener,
   ApplicationRef
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
 import { LayoutService } from '../services/layout.service';
 import { NavTreeService } from '../services/navigation/nav-tree.service';
@@ -270,11 +270,17 @@ export class AssessmentComponent implements OnInit {
       }
     });
   }
+
   getCompletionPercentage(): number {
     return this.completionPercentage;
   }
+
   getProgressTooltip(): string {
     if (this.totalQuestions === 0) return 'No questions available';
     return `${this.completedQuestions}/${this.totalQuestions} questions answered`;
+  }
+
+    ngOnDestroy() {
+    this.completionSubscription?.unsubscribe();
   }
 }
