@@ -215,6 +215,8 @@
             <node id="maturity-questions-nested-2615" displaytext="Cybersecurity Assessment Plan (CAP)" path="assessment/{:id}/maturity-questions-nested/2615" />
         </node>
 
+        <node displaytext="Additional Observations!" id="other-observations" path="assessment/{:id}/other-observations" visible="MATURITY-ANY(25)" />
+        
         <node d="other remarks" id="other-remarks" path="assessment/{:id}/other-remarks" visible="MATURITY-ANY(15)" />
 
         <!-- Diagram questions -->

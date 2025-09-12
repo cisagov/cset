@@ -268,7 +268,7 @@ export class NavigationService implements OnDestroy, OnInit {
       return true;
     }
 
-    if (originPage.children.length == 0 && originPage.nextElementSibling == null && originPage.parentElement.tagName == 'nav') {
+    if (originPage.children.length == 0 && originPage.nextElementSibling == null && originPage?.parentElement?.tagName == 'nav') {
       // we are at the last page, nothing to do
       return false;
     }
@@ -313,7 +313,7 @@ export class NavigationService implements OnDestroy, OnInit {
       return;
     }
 
-    if (originPage.previousElementSibling == null && originPage.parentElement.tagName == 'nav') {
+    if (originPage.previousElementSibling == null && originPage?.parentElement?.tagName == 'nav') {
       // we are at the first page, nothing to do
       return;
     }
@@ -347,6 +347,7 @@ export class NavigationService implements OnDestroy, OnInit {
    * @param value
    */
   navDirect(id: string) {
+    console.log('navDirect:', id);
     // if the target is a simple string, find it in the pages structure
     // and navigate to its path
     if (typeof id == 'string') {
@@ -363,6 +364,7 @@ export class NavigationService implements OnDestroy, OnInit {
         return;
       }
 
+      console.log('routeToTarget:', target);
       this.routeToTarget(target);
       return;
     }
@@ -379,6 +381,7 @@ export class NavigationService implements OnDestroy, OnInit {
 
     // determine the route path
     const targetPath = targetNode.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
+    console.log('navigate: ', targetPath);
     this.router.navigate([targetPath]);
   }
 
