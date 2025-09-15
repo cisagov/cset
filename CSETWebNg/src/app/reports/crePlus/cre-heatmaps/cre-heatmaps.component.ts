@@ -46,14 +46,9 @@ export class CreHeatmapsComponent implements OnInit {
   selfAssessment: boolean;
 
 
-  model22;
-  model23;
-  model24;
-
-
-  dummy22;
-  dummy23;
-  dummy24;
+  heatmapModel22: any;
+  heatmapModel23: any;
+  heatmapModel24: any;
 
 
 
@@ -71,53 +66,14 @@ export class CreHeatmapsComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.reportSvc.getModelContent('22').subscribe((x) => {
-      this.model22 = x;
-      this.consolidateQuestions(this.model22);
-    });
-    this.reportSvc.getModelContent('23').subscribe((x) => {
-      this.model23 = x;
-      this.consolidateQuestions(this.model23);
-    });
-    this.reportSvc.getModelContent('24').subscribe((x) => {
-      this.model24 = x;
-      this.consolidateQuestions(this.model24);
-    });
-
-
-    ///////////////////////////////////////////////
     this.reportSvc.getHeatmap('22').subscribe((x) => {
-      this.dummy22 = x;
+      this.heatmapModel22 = x;
     });
     this.reportSvc.getHeatmap('23').subscribe((x) => {
-      this.dummy23 = x;
+      this.heatmapModel23 = x;
     });
     this.reportSvc.getHeatmap('24').subscribe((x) => {
-      this.dummy24 = x;
+      this.heatmapModel24 = x;
     });
-    //////////////////////////////////////////////
-
-
-  }
-
-
-  /**
-   * Lumps questions from goals into a domain-level collection
-   */
-  consolidateQuestions(model: any) {
-    for (let domain of model.groupings) {
-      domain.consolidatedQuestions = [];
-      for (let sg of domain.groupings) {
-        for (let q of sg.questions) {
-          domain.consolidatedQuestions.push(q);
-          q.displayNumberShort = this.parseQNumber(q.displayNumber);
-        }
-      }
-    }
-  }
-
-  parseQNumber(title: string) {
-    const dotIdx = title.lastIndexOf('.') + 1;
-    return 'Q' + title.substring(dotIdx);
   }
 }

@@ -41,7 +41,7 @@ export class HeatmapComponent implements OnInit {
       this.applyScoreStyle(child);
     });
     
-    const color = element.color?.toLowerCase() || 'default';
-    element.scoreClass = this.colorToClassMap[color] || this.colorToClassMap['default'];
+    const color = element.color?.toLowerCase() || 'lightgray';
+    element.scoreClass = this.colorToClassMap[color];
   }
 }

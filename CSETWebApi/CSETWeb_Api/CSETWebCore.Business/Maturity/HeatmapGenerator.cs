@@ -19,14 +19,14 @@ namespace CSETWebCore.Business.Maturity
     /// </summary>
     public class HeatmapGenerator
     {
-        private readonly int _assessmentId;
         private readonly CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
 
         private List<string> unansweredColors = [ "red", "lightgray" ];
 
+
         /// <summary>
-        /// 
+        /// CTOR
         /// </summary>
         /// <param name="context"></param>
         public HeatmapGenerator(CSETContext context, IAssessmentUtil assessmentUtil)
@@ -41,6 +41,8 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         public object GetHeatmap(int assessmentId, int modelId)
         {
+            _context.FillEmptyMaturityQuestionsForModel(assessmentId, modelId);
+
             var biz = new MaturityBusiness(_context, _assessmentUtil);
             var x = biz.GetMaturityStructureForModel(modelId, assessmentId);
 
@@ -52,14 +54,13 @@ namespace CSETWebCore.Business.Maturity
                 resp.Add(n);
             }
 
-            // score 
-
             return resp;
         }
 
 
         /// <summary>
-        /// 
+        /// Converts a Grouping to a node.  It colors the
+        /// node depending on the child Question scoring.
         /// </summary>
         public HeatmapNode ConvertToHeatmapNode(Model.Nested.Grouping source)
         {
@@ -70,9 +71,10 @@ namespace CSETWebCore.Business.Maturity
 
             var heatmapNode = new HeatmapNode
             {
-                Title = source.GroupingId.ToString(),
+                Title = source.Title,
+                GroupingId = source.GroupingId,
                 Color = "red",
-                Children = new List<HeatmapNode>()
+                Children = []
             };
 
             if (source.Questions != null && source.Questions.Any())
@@ -118,6 +120,9 @@ namespace CSETWebCore.Business.Maturity
         }
 
 
+        /// <summary>
+        /// Converts a Question to a node
+        /// </summary>
         public HeatmapNode ConvertToHeatmapNode(Model.Nested.Question source)
         {
             if (source == null)
@@ -128,9 +133,14 @@ namespace CSETWebCore.Business.Maturity
             var heatmapNode = new HeatmapNode
             {
                 Title = "Q",
-                Children = new List<HeatmapNode>()
+                QuestionId = source.QuestionId,
+                Children = []
             };
 
+            // customize the question title 
+            heatmapNode.Title = CustomizeTitle(source);
+
+            // color the question segment based on answer value
             switch (source.AnswerText)
             {
                 case "Y":
@@ -151,6 +161,20 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return heatmapNode;
+        }
+
+
+        /// <summary>
+        /// Builds a "Q1" type label to keep the heatmap
+        /// segments short.  
+        /// 
+        /// This may need to be expanded if used for other
+        /// models with different question namging conventions.
+        /// </summary>
+        private string CustomizeTitle(Model.Nested.Question q)
+        {
+            int dotIdx = q.DisplayNumber.LastIndexOf(".") + 1;
+            return "Q" + q.DisplayNumber.Substring(dotIdx);
         }
     }
 
