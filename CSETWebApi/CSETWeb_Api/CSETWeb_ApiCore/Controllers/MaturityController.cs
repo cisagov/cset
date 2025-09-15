@@ -521,7 +521,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// Get all EDM glossary entries in alphabetical order.
+        /// Get all glossary entries in alphabetical order.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -874,73 +874,6 @@ namespace CSETWebCore.Api.Controllers
             });
 
             return Ok(data);
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="section"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/getEdmScores")]
-        public IActionResult GetEdmScores(string section)
-        {
-            try
-            {
-                int assessmentId = _tokenManager.AssessmentForUser();
-                MaturityBusiness MaturityBusiness = new MaturityBusiness(_context, _assessmentUtil);
-                var scores = MaturityBusiness.GetEdmScores(assessmentId, section);
-
-                return Ok(scores);
-            }
-            catch (Exception exc)
-            {
-                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
-
-                return BadRequest();
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>        
-        /// <returns>Root node</returns>
-        [HttpGet]
-        [Route("api/getEdmPercentScores")]
-        public IActionResult GetEdmPercentScores()
-        {
-            try
-            {
-                int assessmentId = _tokenManager.AssessmentForUser();
-                MaturityBusiness MaturityBusiness = new MaturityBusiness(_context, _assessmentUtil);
-                var scores = MaturityBusiness.GetEdmPercentScores(assessmentId);
-
-                return Ok(scores);
-            }
-            catch (Exception exc)
-            {
-                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
-
-                return BadRequest();
-            }
-        }
-
-
-        /// <summary>
-        /// Get EDM answers cross-mapped to NIST CSF.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/getEdmNistCsfResults")]
-        public IActionResult GetEdmNistCsfResults()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            var manager = new EdmNistCsfMapping(_context);
-            var maturity = manager.GetEdmNistCsfResults(assessmentId);
-
-            return Ok(maturity);
         }
 
 

@@ -1,0 +1,50 @@
+/* Main container */
+.heatmap-container {
+  display: inline-grid;
+  grid-auto-flow: column; /* This makes items flow horizontally */
+  grid-auto-columns: max-content;
+  gap: 3px;
+}
+
+/* Each goal section */
+.goal-section {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 3px;
+  align-items: start;
+}
+
+/* Goal header */
+.goal-header {
+  font-size: small;
+  text-align: center;
+  padding: 4px;
+  border-radius: 3px;
+}
+
+/* Container for quarter groups */
+.goal-content {
+  display: grid;
+  grid-auto-flow: column; /* Make quarters flow horizontally */
+  grid-auto-columns: max-content;
+  gap: 3px;
+  align-items: start;
+}
+
+/* Each quarter group (Q1, Q2, etc with their children) */
+.question-group {
+  display: grid;
+  gap: 2px;
+}
+
+/* Individual score cells */
+.score-cell {
+  font-size: small;
+  padding: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.1rem;
+  border-radius: 3px;
+  height: 1.6rem;
+}

@@ -32,13 +32,25 @@
           </tr>
           <tr *ngFor="let d of model22?.groupings" style="border-bottom: 1px solid #999;">
                <td class="py-3 pe-4">{{d.title}}</td>
-               <td class="py-3 d-flex flex-wrap">
-                    <div *ngFor="let q of d.consolidatedQuestions">
-                         <div class="square" [class.wide]="q.displayNumberShort.length > 3"
-                              [class]="answerCellClass(q.answerText)">
-                              {{q.displayNumberShort}}
+               <td class="py-3 d-block">
+                    <div class="d-flex flex-wrap">
+                         <div *ngFor="let q of d.consolidatedQuestions">
+                              <div class="square" [class.wide]="q.displayNumberShort.length > 3"
+                                   [class]="answerCellClass(q.answerText)">
+                                   {{q.displayNumberShort}}
+                              </div>
                          </div>
                     </div>
+
+
+
+                    <div style="border: 1px solid green" class="p2">
+                         <app-heatmap [scores]="dummy22"></app-heatmap>
+                    </div>
+
+
+
+
                </td>
           </tr>
           <tr>
@@ -64,7 +76,8 @@
           </tr>
           <tr>
                <td colspan="2">
-                    <h2 style="font-size: 1.4rem" class="pt-4">{{t('reports.core.cre.heatmap report.optional mil questions')}}
+                    <h2 style="font-size: 1.4rem" class="pt-4">{{t('reports.core.cre.heatmap report.optional mil
+                         questions')}}
                     </h2>
                </td>
           </tr>

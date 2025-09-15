@@ -51,6 +51,9 @@ export class CreHeatmapsComponent implements OnInit {
   model24;
 
 
+  dummy22;
+
+
 
   constructor(
     public assessSvc: AssessmentService,
@@ -78,6 +81,9 @@ export class CreHeatmapsComponent implements OnInit {
       this.model24 = x;
       this.consolidateQuestions(this.model24);
     });
+
+    this.dummy22 = this.dummyScores();
+    console.log(this.dummy22);
   }
 
 
@@ -123,4 +129,196 @@ export class CreHeatmapsComponent implements OnInit {
     }
   }
 
+
+  dummyScores() {
+    const dummy =
+      [
+        {
+          "parent": {
+            "title_Id": "Goal 1",
+            "color": "blue",
+            "children": null
+          },
+          "children": [
+            {
+              "title_Id": "Q1",
+              "color": "LightGray",
+              "children": [
+                {
+                  "title_Id": "S",
+                  "color": "Red",
+                  "children": null
+                },
+                {
+                  "title_Id": "IP",
+                  "color": "Red",
+                  "children": null
+                },
+                {
+                  "title_Id": "GS",
+                  "color": "Red",
+                  "children": null
+                }
+              ]
+            },
+            {
+              "title_Id": "Q2",
+              "color": "Yellow",
+              "children": []
+            },
+            {
+              "title_Id": "Q3",
+              "color": "Green",
+              "children": []
+            }
+          ]
+        },
+        {
+          "parent": {
+            "title_Id": "Goal 2",
+            "color": "Red",
+            "children": null
+          },
+          "children": [
+            {
+              "title_Id": "Q1",
+              "color": "Gold",
+              "children": []
+            },
+            {
+              "title_Id": "Q2",
+              "color": "Blue",
+              "children": []
+            },
+            {
+              "title_Id": "Q3",
+              "color": "Red",
+              "children": []
+            },
+            {
+              "title_Id": "Q4",
+              "color": "Red",
+              "children": []
+            },
+            {
+              "title_Id": "Q5",
+              "color": "Red",
+              "children": []
+            },
+            {
+              "title_Id": "Q6",
+              "color": "Red",
+              "children": []
+            }
+          ]
+        },
+        {
+          "parent": {
+            "title_Id": "Goal 3",
+            "color": "Red",
+            "children": null
+          },
+          "children": [
+            {
+              "title_Id": "Q1",
+              "color": "Red",
+              "children": []
+            },
+            {
+              "title_Id": "Q2",
+              "color": "Red",
+              "children": []
+            },
+            {
+              "title_Id": "Q3",
+              "color": "Red",
+              "children": []
+            },
+            {
+              "title_Id": "Q4",
+              "color": "Red",
+              "children": []
+            }
+          ]
+        },
+        {
+          "parent": {
+            "title_Id": "Goal 4",
+            "color": "Red",
+            "children": null
+          },
+          "children": [
+            {
+              "title_Id": "Q1",
+              "color": "LightGray",
+              "children": [
+                {
+                  "title_Id": "I",
+                  "color": "Red",
+                  "children": null
+                },
+                {
+                  "title_Id": "T",
+                  "color": "Red",
+                  "children": null
+                },
+                {
+                  "title_Id": "F",
+                  "color": "Red",
+                  "children": null
+                },
+                {
+                  "title_Id": "P",
+                  "color": "Red",
+                  "children": null
+                }
+              ]
+            },
+            {
+              "title_Id": "Q2",
+              "color": "LightGray",
+              "children": [
+                {
+                  "title_Id": "I",
+                  "color": "Red",
+                  "children": null
+                },
+                {
+                  "title_Id": "T",
+                  "color": "Red",
+                  "children": null
+                },
+                {
+                  "title_Id": "F",
+                  "color": "Red",
+                  "children": null
+                },
+                {
+                  "title_Id": "P",
+                  "color": "Red",
+                  "children": null
+                }
+              ]
+            },
+            {
+              "title_Id": "Q3",
+              "color": "Red",
+              "children": []
+            },
+            {
+              "title_Id": "Q4",
+              "color": "Red",
+              "children": []
+            },
+            {
+              "title_Id": "Q5",
+              "color": "Red",
+              "children": []
+            }
+          ]
+        }
+      ];
+
+    return dummy;
+  }
 }
