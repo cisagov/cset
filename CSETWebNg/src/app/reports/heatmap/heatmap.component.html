@@ -21,17 +21,14 @@
   SOFTWARE. 
 -------------------------->
 <div class="heatmap-container">
-  <div class="goal-section" *ngFor="let rp of scores">
-    <div class="goal-header" [ngClass]="rp.parent.class">
-      {{rp.parent.title_Id}}
+  <div class="goal-section" *ngFor="let goal of scores.children">
+    <div class="goal-header" [ngClass]="goal.scoreClass">
+      {{goal.title}}
     </div>
     <div class="goal-content">
-      <div class="question-group" *ngFor="let rc of rp.children">
-        <div class="score-cell" [ngClass]="rc.class">
-          {{rc.title_Id}}
-        </div>
-        <div class="score-cell" *ngFor="let c of rc.children" [ngClass]="c.class">
-          {{c.title_Id}}
+      <div class="question-group" *ngFor="let q of goal.children">
+        <div class="score-cell" [ngClass]="q.scoreClass">
+          {{q.title}}
         </div>
       </div>
     </div>

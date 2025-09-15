@@ -9,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class HeatmapComponent implements OnInit {
 
   @Input()
-  scores: any[];
+  scores: any;
 
   colorToClassMap: Record<string, string> = {
     'red': 'red-score',
@@ -28,7 +28,7 @@ export class HeatmapComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.scores.forEach(element => this.applyScoreStyle(element));
+    this.scores.children.forEach(element => this.applyScoreStyle(element));
   }
 
   /**
@@ -37,15 +37,11 @@ export class HeatmapComponent implements OnInit {
    * @returns 
    */
   applyScoreStyle(element) {
-    if (!!element.parent) {
-      this.applyScoreStyle(element.parent);
-    }
-
     element.children?.forEach(child => {
       this.applyScoreStyle(child);
     });
-
+    
     const color = element.color?.toLowerCase() || 'default';
-    element.class = this.colorToClassMap[color] || this.colorToClassMap['default'];
+    element.scoreClass = this.colorToClassMap[color] || this.colorToClassMap['default'];
   }
 }

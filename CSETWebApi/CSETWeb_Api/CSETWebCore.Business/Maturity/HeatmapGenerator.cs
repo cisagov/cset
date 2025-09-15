@@ -1,7 +1,10 @@
-﻿using CSETWebCore.DataLayer.Model;
+﻿using CSETWebCore.Business.Aggregation;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Enum;
 using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Edm;
+using DocumentFormat.OpenXml.Bibliography;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,75 +19,148 @@ namespace CSETWebCore.Business.Maturity
     /// </summary>
     public class HeatmapGenerator
     {
+        private readonly int _assessmentId;
         private readonly CSETContext _context;
+        private readonly IAssessmentUtil _assessmentUtil;
 
+        private List<string> unansweredColors = [ "red", "lightgray" ];
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="context"></param>
-        public HeatmapGenerator(CSETContext context)
+        public HeatmapGenerator(CSETContext context, IAssessmentUtil assessmentUtil)
         {
             _context = context;
+            _assessmentUtil = assessmentUtil;
         }
 
 
         /// <summary>
-        /// Get edm scoring
+        /// 
         /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public object GetEdmScores(int assessmentId, string section)
+        public object GetHeatmap(int assessmentId, int modelId)
         {
-            var scoring = new ModelScoring(_context, 21);
-            scoring.LoadDataStructure();
-            scoring.SetAnswers(assessmentId);
-            var scores = scoring.GetScores().Where(x => x.Title_Id.Contains(section.ToUpper()));
+            var biz = new MaturityBusiness(_context, _assessmentUtil);
+            var x = biz.GetMaturityStructureForModel(modelId, assessmentId);
 
-            var parents = (from s in scores
-                           where !s.Title_Id.Contains('.')
-                           select new EdmScoreParent
-                           {
-                               parent = new EDMscore
-                               {
-                                   Title_Id = s.Title_Id.Contains('G') ? "Goal " + s.Title_Id.Split(':')[1][1] : s.Title_Id,
-                                   Color = s.Color
+            var resp = new List<HeatmapNode>();
 
-                               },
-                               children = (from s2 in scores
-                                           where s2.Title_Id.Contains(s.Title_Id)
-                                              && s2.Title_Id.Contains('.') && !s2.Title_Id.Contains('-')
-                                           select new EDMscore
-                                           {
-                                               Title_Id = s2.Title_Id.Contains('-') ? s2.Title_Id.Split('-')[0].Split('.')[1] : s2.Title_Id.Split('.')[1],
-                                               Color = s2.Color,
-                                               children = (from s3 in scores
-                                                           where s3.Title_Id.Contains(s2.Title_Id) &&
-                                                                 s3.Title_Id.Contains('-')
-                                                           select new EDMscore
-                                                           {
-                                                               Title_Id = s3.Title_Id.Split('-')[1],
-                                                               Color = s3.Color
-                                                           }).ToList()
-                                           }).ToList()
-                           }).ToList();
-
-            for (int p = 0; p < parents.Count(); p++)
+            foreach (var j in x.Model.Groupings)
             {
-                var parent = parents[p];
-                for (int c = 0; c < parent.children.Count(); c++)
+                var n = ConvertToHeatmapNode(j);
+                resp.Add(n);
+            }
+
+            // score 
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public HeatmapNode ConvertToHeatmapNode(Model.Nested.Grouping source)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            var heatmapNode = new HeatmapNode
+            {
+                Title = source.GroupingId.ToString(),
+                Color = "red",
+                Children = new List<HeatmapNode>()
+            };
+
+            if (source.Questions != null && source.Questions.Any())
+            {
+                foreach (var question in source.Questions)
                 {
-                    var children = parent.children[c];
-                    if (children.children.Any())
+                    var childNode = ConvertToHeatmapNode(question);
+                    if (childNode != null)
                     {
-                        parents[p].children[c].Color = ScoreStatus.LightGray.ToString();
+                        heatmapNode.Children.Add(childNode);
                     }
                 }
             }
 
-            return parents;
+            // Recursively convert all groupings to children
+            if (source.Groupings != null && source.Groupings.Any())
+            {
+                foreach (var grouping in source.Groupings)
+                {
+                    var childNode = ConvertToHeatmapNode(grouping);
+                    if (childNode != null)
+                    {
+                        heatmapNode.Children.Add(childNode);
+                    }
+                }
+            }
+
+            if (heatmapNode.Children.Count > 0)
+            {
+                // if not all red or unanswered, promote to yellow
+                if (heatmapNode.Children.Any(x => !unansweredColors.Contains(x.Color)))
+                {
+                    heatmapNode.Color = "yellow";
+                }
+                // if all green, promote to green
+                if (heatmapNode.Children.All(x => x.Color == "green"))
+                {
+                    heatmapNode.Color = "green";
+                }
+            }
+            
+            return heatmapNode;
         }
 
 
+        public HeatmapNode ConvertToHeatmapNode(Model.Nested.Question source)
+        {
+            if (source == null)
+            {
+                return null;
+            }
+
+            var heatmapNode = new HeatmapNode
+            {
+                Title = "Q",
+                Children = new List<HeatmapNode>()
+            };
+
+            switch (source.AnswerText)
+            {
+                case "Y":
+                    heatmapNode.Color = "green";
+                    break;
+                case "N":
+                    heatmapNode.Color = "red";
+                    break;
+                case "I":
+                    heatmapNode.Color = "blue";
+                    break;
+                case "S":
+                    heatmapNode.Color = "gold";
+                    break;
+                case "U":
+                    heatmapNode.Color = "lightgray";
+                    break;
+            }
+
+            return heatmapNode;
+        }
+    }
+
+
+    public class HeatmapNode
+    {
+        public int GroupingId { get; set; }
+        public int QuestionId { get; set; }
+        public string Title { get; set; }
+        public string Color { get; set; }
+        public List<HeatmapNode> Children { get; set; } = [];
     }
 }
