@@ -29,8 +29,7 @@ namespace CSETWebCore.Helpers
 {
     public class UserAuthentication : IUserAuthentication
     {
-        private const int STANDALONE_USER_ID = 1;
-        
+
         private readonly IPasswordHash _password;
         private readonly IUserBusiness _userBusiness;
         private readonly ILocalInstallationHelper _localInstallationHelper;
@@ -225,20 +224,18 @@ namespace CSETWebCore.Helpers
             }
 
             string name = null;
-
-            int userIdSO = STANDALONE_USER_ID;
             string primaryEmailSO = "";
 
             name = SanitizeUsername(Environment.UserName);
             name = string.IsNullOrWhiteSpace(name) ? "Local" : name;
             primaryEmailSO = name;
 
-            // Check for UserId = STANDALONE_USER_ID directly
-            var user = await _context.USERS.FirstOrDefaultAsync(x => x.UserId == STANDALONE_USER_ID);
+            // Look for any local account user (IsLocalAccount == true)
+            var user = await _context.USERS.FirstOrDefaultAsync(x => x.IsLocalAccount);
 
             if (user == null)
             {
-                // Create user with UserId = STANDALONE_USER_ID if it doesn't exist
+                // Create user if none exists, and mark it as local
                 UserDetail ud = new UserDetail()
                 {
                     Email = primaryEmailSO,
@@ -249,34 +246,37 @@ namespace CSETWebCore.Helpers
                 UserCreateResponse userCreateResponse = _userBusiness.CreateUser(ud, _context);
                 await _context.SaveChangesAsync();
 
-                // Get the newly created user and force UserId = STANDALONE_USER_ID
-                var newUser = await _context.USERS.FirstOrDefaultAsync(x => x.PrimaryEmail == primaryEmailSO);
-                if (newUser != null && newUser.UserId != STANDALONE_USER_ID)
+                // Fetch the newly created user (by PrimaryEmail) and set IsLocalAccount = true
+                user = await _context.USERS.FirstOrDefaultAsync(x => x.PrimaryEmail == primaryEmailSO);
+                if (user != null && !user.IsLocalAccount)
                 {
-                    // Update the user to have UserId = STANDALONE_USER_ID
-                    newUser.UserId = STANDALONE_USER_ID;
+                    user.IsLocalAccount = true;
                     await _context.SaveChangesAsync();
                 }
 
-                _localInstallationHelper.determineIfUpgradedNeededAndDoSo(userIdSO, _context);
-            }
-            else
-            {
-                userIdSO = STANDALONE_USER_ID; // Always use STANDALONE_USER_ID
+                if (user == null)
+                {
+                    // Could not create or find the user
+                    return null;
+                }
+
+                _localInstallationHelper.determineIfUpgradedNeededAndDoSo(user.UserId, _context);
             }
 
-            // Add the standalone user to ASSESSMENT_CONTACTS if they're accessing an existing assessment
+            int localUserId = user.UserId;
+
+            // Add the local user to ASSESSMENT_CONTACTS if they're accessing an existing assessment
             if (assessmentId.HasValue && assessmentId.Value > 0)
             {
                 var existingContact = await _context.ASSESSMENT_CONTACTS
-                    .FirstOrDefaultAsync(ac => ac.Assessment_Id == assessmentId.Value && ac.UserId == userIdSO);
+                    .FirstOrDefaultAsync(ac => ac.Assessment_Id == assessmentId.Value && ac.UserId == localUserId);
 
                 if (existingContact == null)
                 {
                     var assessmentContact = new ASSESSMENT_CONTACTS
                     {
                         Assessment_Id = assessmentId.Value,
-                        UserId = userIdSO,
+                        UserId = localUserId,
                         FirstName = name,
                         LastName = "",
                         PrimaryEmail = primaryEmailSO,
@@ -294,27 +294,25 @@ namespace CSETWebCore.Helpers
                 return null;
             }
 
-
             // Generate a token for this user
-            string token = _transactionSecurity.GenerateToken(userIdSO, null, login.TzOffset, -1, assessmentId, null, login.Scope);
+            string token = _transactionSecurity.GenerateToken(localUserId, null, login.TzOffset, -1, assessmentId, null, login.Scope);
 
             // Build response object
             var resp = new LoginResponse
             {
                 Token = token,
                 Email = primaryEmailSO,
-                Lang = user == null ? "en" : user.Lang ?? "en",
+                Lang = user.Lang ?? "en",
                 UserFirstName = name,
                 UserLastName = "",
                 IsSuperUser = false,
                 ResetRequired = false,
-                UserId = userIdSO,
+                UserId = localUserId,
                 ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
                 ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
                 LinkerTime = new BuildNumberHelper().GetLinkerTime(),
                 IsFirstLogin = user?.IsFirstLogin ?? false
             };
-
 
             return resp;
         }

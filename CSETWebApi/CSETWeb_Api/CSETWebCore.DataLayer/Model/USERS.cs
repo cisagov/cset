@@ -48,6 +48,9 @@ public partial class USERS
     public bool CisaAssessorWorkflow { get; set; }
 
     [Required]
+    public bool IsLocalAccount { get; set; }
+
+    [Required]
     [StringLength(10)]
     public string Lang { get; set; }
 
