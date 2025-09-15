@@ -1,11 +1,16 @@
-ALTER DATABASE CSETWeb
+ALTER DATABASE CSETWebTest
 SET SINGLE_USER
 WITH ROLLBACK IMMEDIATE
 GO
 
-RESTORE DATABASE CSETWeb
-FROM DISK = '/var/opt/mssql/backup/CSETWeb.bak'
+RESTORE DATABASE CSETWebTest
+FROM DISK = '/var/opt/mssql/backup/CSETWebTest.bak'
 WITH REPLACE,
-MOVE 'CSETWeb' TO '/var/opt/mssql/data/CSETWeb.mdf',
-MOVE 'CSETWeb_Log' TO '/var/opt/mssql/data/CSETWeb_Log.ldf'
+MOVE 'CSETWebTest' TO '/var/opt/mssql/data/CSETWebTest.mdf',
+MOVE 'CSETWebTest_Log' TO '/var/opt/mssql/data/CSETWebTest_Log.ldf'
+GO
+
+-- Return database to MULTI_USER after restore to allow client connections
+ALTER DATABASE CSETWebTest
+SET MULTI_USER
 GO
