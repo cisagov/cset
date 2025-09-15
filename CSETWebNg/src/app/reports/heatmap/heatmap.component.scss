@@ -1,0 +1,46 @@
+.heatmap-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: .4rem;
+}
+
+.goal-section {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 3px;
+  align-items: start;
+  margin-bottom: .4rem;
+}
+
+.goal-header {
+  font-size: small;
+  text-align: center;
+  padding: 4px .6rem;
+  border-radius: 3px;
+  min-height: 1rem;
+}
+
+.goal-content {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  gap: 3px;
+  align-items: start;
+}
+
+.question-group {
+  display: grid;
+  gap: 2px;
+}
+
+.score-cell {
+  font-size: small;
+  padding: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.1rem;
+  border-radius: 3px;
+  height: 1.6rem;
+}

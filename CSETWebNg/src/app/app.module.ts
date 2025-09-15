@@ -274,6 +274,7 @@ import { CreQuestionSelectorComponent } from './assessment/questions/maturity-qu
 import { creGoalChartsComponent } from './reports/crePlus/cre-goal-charts/cre-goal-charts.component';
 import { CreDetailReportComponent } from './reports/crePlus/cre-detail-report/cre-detail-report.component';
 import { CreHeatmapsComponent } from './reports/crePlus/cre-heatmaps/cre-heatmaps.component';
+import { HeatmapComponent } from './reports//heatmap/heatmap.component';
 import { CreGroupedStackedHorizontalChartComponent } from './reports/crePlus/cre-grouped-stacked-horizontal-chart/cre-grouped-stacked-horizontal-chart.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-level-results/cmmc-level-results.component';
@@ -613,6 +614,7 @@ import { DeficiencyTemplateComponent } from './reports/deficiency-template/defic
 
 
 
+
 registerSwiper();
 ModuleRegistry.registerModules([AllCommunityModule]);
 @NgModule({
@@ -797,6 +799,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         QuestionTextCpgComponent,
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
+        HeatmapComponent,
         EdmHeatmapComponent,
         EdmGlossaryComponent,
         EdmIntroTextComponent,
