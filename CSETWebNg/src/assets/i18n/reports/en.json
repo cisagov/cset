@@ -845,7 +845,7 @@
                },
                "heatmap report": {
                     "title": "CISA Cyber Resilience Essentials (CRE+) - Heatmaps Assessment Overview",
-                    "p1": "All in-scope answers are represented, grouped by their corresponding domains.",
+                    "p1": "All in-scope answers are represented, grouped by their corresponding domains and goals.",
                     "answer heatmaps": "Answer Heatmaps",
                     "core questions": "Core Questions",
                     "optional domain questions": "Optional Domain Questions",

@@ -147,6 +147,10 @@ export class ReportService {
   getModelContent(modelId: string): any {
     return this.http.get(this.configSvc.apiUrl + 'maturity/structure?modelId=' + modelId);
   }
+ 
+  getHeatmap(modelId: string) {
+    return this.http.get(this.configSvc.apiUrl + 'heatmap?modelId=' + modelId);
+  }
 
   /**
    * Opens a new window/tab

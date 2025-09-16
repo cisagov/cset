@@ -25,8 +25,8 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { DatePipe } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, inject, provideAppInitializer } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {AgGridModule} from 'ag-grid-angular';
-import {ModuleRegistry, AllCommunityModule} from 'ag-grid-community';
+import { AgGridModule } from 'ag-grid-angular';
+import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
 // import { MatAutocompleteModule } from '@angular/material/autocomplete';
 // import { MatNativeDateModule } from '@angular/material/core';
 // import { MatDialogModule } from '@angular/material/dialog';
@@ -276,6 +276,7 @@ import { CreQuestionSelectorComponent } from './assessment/questions/maturity-qu
 import { creGoalChartsComponent } from './reports/crePlus/cre-goal-charts/cre-goal-charts.component';
 import { CreDetailReportComponent } from './reports/crePlus/cre-detail-report/cre-detail-report.component';
 import { CreHeatmapsComponent } from './reports/crePlus/cre-heatmaps/cre-heatmaps.component';
+import { HeatmapComponent } from './reports//heatmap/heatmap.component';
 import { CreGroupedStackedHorizontalChartComponent } from './reports/crePlus/cre-grouped-stacked-horizontal-chart/cre-grouped-stacked-horizontal-chart.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
 import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-level-results/cmmc-level-results.component';
@@ -799,6 +800,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         QuestionTextCpgComponent,
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
+        HeatmapComponent,
         EdmHeatmapComponent,
         EdmGlossaryComponent,
         EdmIntroTextComponent,
