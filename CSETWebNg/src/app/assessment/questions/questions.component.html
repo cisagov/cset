@@ -22,10 +22,6 @@
 -------------------------->
  
 <div *transloco="let t" >
-<div class="page-title">
-  <h2 *ngIf="this.assessSvc.applicationMode == 'Q'">{{t('titles.standard questions')}}</h2>
-  <h2 *ngIf="this.assessSvc.applicationMode == 'R'">{{t('titles.standard requirements')}}</h2>
-</div>
   <div class="white-panel">  
     <div id="top"></div>
     <div class="d-flex flex-row flex-wrap sticky-sal justify-content-between align-items-start flex-11a pb-3">
@@ -72,6 +68,7 @@
         </div>
       </div>
     </div>
+    <div id="top"></div>
 
   
     <div *ngIf="!!categories && filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filter-menu.showing only filtered')}}</div>

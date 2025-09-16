@@ -26,13 +26,15 @@
     <span>{{ t('observation.observation details') }}</span>
   </div>
 
-  <mat-dialog-content class="py-3">
+
+  <mat-dialog-content class="py-3" *ngIf="observation">
     <div class="item bigitem">
       <p>{{ t('observation.observation description') }}</p>
 
       <div class="form-group">
         <label for="title" class="form-label">{{ t('observation.title') }}</label>
-        <textarea id="title" autocomplete="off" class="form-control" type="text" appAutoSize [(ngModel)]="observation.summary"></textarea>
+        <textarea id="title" autocomplete="off" class="form-control" type="text" appAutoSize
+          [(ngModel)]="observation.summary"></textarea>
       </div>
 
       <div class="form-group">

@@ -41,15 +41,17 @@ namespace CSETWebCore.Business.Observations
 
             _dbObservation = context.FINDING
                 .Include(x => x.FINDING_CONTACT)
-                .Where(x => x.Answer_Id == obs.Answer_Id && x.Finding_Id == obs.Observation_Id)
+                .Where(x => x.Finding_Id == obs.Observation_Id)
                 .FirstOrDefault();
 
             if (_dbObservation == null)
             {
                 var observation = new FINDING
                 {
+                    Assessment_ID = obs.Assessment_Id,
                     Answer_Id = obs.Answer_Id,
                     Summary = obs.Summary,
+                    Importance_Id = obs.Importance_Id,
                     Impact = obs.Impact,
                     Issue = obs.Issue,
                     Recommendations = obs.Recommendations,
@@ -64,6 +66,12 @@ namespace CSETWebCore.Business.Observations
                     ActionItems = obs.ActionItems,
                     Supp_Guidance = obs.Supp_Guidance
                 };
+
+                // null out the importance if zero - not a value
+                if (obs.Importance_Id == 0)
+                {
+                    obs.Importance_Id = null;
+                }
 
                 this._dbObservation = observation;
                 context.FINDING.Add(observation);
@@ -142,14 +150,10 @@ namespace CSETWebCore.Business.Observations
         /// </summary>
         public int Save()
         {
-            // safety valve in case this was built without an answerid
-            if (this._webObservation.Answer_Id == 0)
+            if (this._webObservation.IsObservationEmpty())
             {
                 return 0;
             }
-
-            if (this._webObservation.IsObservationEmpty())
-                return 0;
 
             _context.SaveChanges();
             _webObservation.Observation_Id = _dbObservation.Finding_Id;

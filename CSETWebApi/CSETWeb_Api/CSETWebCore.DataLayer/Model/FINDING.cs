@@ -4,13 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model;
 
 public partial class FINDING
 {
-    public int Answer_Id { get; set; }
+    public int? Answer_Id { get; set; }
 
     [Key]
     public int Finding_Id { get; set; }
@@ -52,9 +53,15 @@ public partial class FINDING
 
     public string Supp_Guidance { get; set; }
 
+    public int? Assessment_ID { get; set; }
+
     [ForeignKey("Answer_Id")]
     [InverseProperty("FINDING")]
     public virtual ANSWER Answer { get; set; }
+
+    [ForeignKey("Assessment_ID")]
+    [InverseProperty("FINDING")]
+    public virtual ASSESSMENTS Assessment { get; set; }
 
     [InverseProperty("Finding")]
     public virtual ICollection<FINDING_CONTACT> FINDING_CONTACT { get; set; } = new List<FINDING_CONTACT>();

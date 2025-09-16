@@ -520,9 +520,8 @@ label[required]::after {
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: 8px;
-  max-height: calc(100vh - 340px);
-  max-height: calc(100cqh - 225px);
-  min-height: calc(100cqh - 225px);
+  max-height: calc(100cqh - 310px);
+  min-height: calc(100cqh - 310px);
   color: $gray-800;
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;

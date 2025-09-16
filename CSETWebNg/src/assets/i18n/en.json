@@ -228,6 +228,7 @@
     "inherent risk profile summary": "Inherent Risk Profile Summary",
     "acet maturity results": "ACET Maturity Results",
     "other remarks": "Other Remarks",
+    "addl observations": "Additional Observations",
     "imr tutorial": "IMR Tutorial",
     "cmmc tutorial": "CMMC Tutorial",
     "cis tutorial": "CIS Tutorial",
@@ -1026,7 +1027,8 @@
         "desc-mod": "This is what you would pick if you are shooting for a moderate level of maturity",
         "btn-high": "High",
         "desc-high": "This is what you would pick if you are shooting for a high level of maturity"
-      }
+      },
+      "addl observations 1": "Include any other observations that might be helpful in the assessment. They will be included in the report but are not related to any specific question."
     }
   },
   "aggregation": {

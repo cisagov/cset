@@ -28,7 +28,7 @@ namespace CSETWebCore.Model.Assessment
 
         public int? Size { get; set; }
         public int? AssetValue { get; set; }
-        public string OrganizationName { get; set; } = "";
+        public string? OrganizationName { get; set; }
         public string? Agency { get; set; }
         public int? OrganizationType { get; set; }
         public int? OrgPointOfContact { get; set; }
@@ -37,7 +37,7 @@ namespace CSETWebCore.Model.Assessment
         /// <summary>
         /// The technology domain for the assessment, e.g., OT, IT or OT+IT
         /// </summary>
-        public string TechDomain { get; set; } = "";
+        public string? TechDomain { get; set; }
 
         public bool SelfAssessment { get; set; }
         public string? CriticalService { get; set; }

@@ -29,7 +29,7 @@ import {
   Output, HostListener,
   ApplicationRef
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
 import { LayoutService } from '../services/layout.service';
 import { NavTreeService } from '../services/navigation/nav-tree.service';
@@ -37,8 +37,9 @@ import { NavigationService } from '../services/navigation/navigation.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../services/config.service';
 import { AssessmentDetail } from '../models/assessment-info.model';
+import { Subscription } from 'rxjs'
 import { CompletionService } from '../services/completion.service';
-import { QuestionsService } from '../services/questions.service';
+
 interface UserAssessment {
   isEntry: boolean;
   isEntryString: string;
@@ -79,6 +80,7 @@ export class AssessmentComponent implements OnInit {
   completionPercentage:number=0;
   completedQuestions = 0;
   totalQuestions = 0;
+  private completionSubscription: Subscription;
   /**
    * Indicates whether the nav panel is visible (true)
    * or hidden (false).
@@ -118,8 +120,7 @@ export class AssessmentComponent implements OnInit {
     public tSvc: TranslocoService,
     private configSvc: ConfigService,
     private appRef: ApplicationRef,
-    public completionSvc: CompletionService,
-    private questionsSvc: QuestionsService
+    private completionSvc: CompletionService
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
@@ -147,6 +148,11 @@ export class AssessmentComponent implements OnInit {
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
       this.loadCompletionData();
+      this.completionSubscription = this.completionSvc.completionChanged$.subscribe(() => {
+        setTimeout(() => {
+          this.loadCompletionData();
+        }, 1000);
+      });
     }
 
   }
@@ -230,42 +236,45 @@ export class AssessmentComponent implements OnInit {
     this.expandNav = e;
   }
 
-  // isTocLoading(node) {
-  //   console.log(node);
-  //   var s = node?.label;
-  //   return  (s === "Please wait" || s === "Loading questions") ;
-  // }
-
   goHome() {
     this.assessSvc.dropAssessment();
     this.router.navigate(['/home']);
   }
 
-
   loadCompletionData() {
+    this.assessSvc.getAssessmentsCompletion().subscribe((data: any[]) => {
+      const currentAssessment = data.find(x => x.assessmentId === this.assessSvc.id());
 
-    this.questionsSvc.getQuestionsList().subscribe(
-      (response: any) => {
-        this.completionSvc.structure = response;
-        this.completionSvc.setQuestionArray();
-      },
-      error => {
-        console.error('Error getting completion data:', error);
+      if (currentAssessment) {
+        this.completedQuestions = currentAssessment.completedCount || 0;
+        this.totalQuestions = (currentAssessment.totalMaturityQuestionsCount ?? 0) +
+          (currentAssessment.totalDiagramQuestionsCount ?? 0) +
+          (currentAssessment.totalStandardQuestionsCount ?? 0);
+
+        if (this.totalQuestions > 0) {
+          this.completionPercentage = Math.round((this.completedQuestions / this.totalQuestions) * 100);
+        } else {
+          this.completionPercentage = 0;
+        }
+
+      } else {
         this.completionPercentage = 0;
+        this.completedQuestions = 0;
+        this.totalQuestions = 0;
       }
-    );
+    });
   }
-  getCompletionPercentage(): number {
-    const answeredCount = this.completionSvc.answeredCount || 0;
-    const totalCount = this.completionSvc.totalCount || 0;
 
-    if (totalCount > 0) {
-      return Math.round((answeredCount / totalCount) * 100);
-    }
-    return 0;
+  getCompletionPercentage(): number {
+    return this.completionPercentage;
   }
+
   getProgressTooltip(): string {
-    if (this.completionSvc.totalCount === 0) return 'No questions available';
-    return `${this.completionSvc.answeredCount}/${this.completionSvc.totalCount} questions answered`;
+    if (this.totalQuestions === 0) return 'No questions available';
+    return `${this.completedQuestions}/${this.totalQuestions} questions answered`;
+  }
+
+    ngOnDestroy() {
+    this.completionSubscription?.unsubscribe();
   }
 }
