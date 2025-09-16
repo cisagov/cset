@@ -78,6 +78,7 @@ import { LayoutSwitcherComponent } from './layout/layout-switcher/layout-switche
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
 import { ObservationTearoutsComponent } from './reports/observation-tearouts/observation-tearouts.component';
+import { AdditionalObservationsComponent } from './assessment/questions/observations/additional-observations/additional-observations.component';
 import { ExecutiveSummaryComponent } from './reports/executive-summary/executive-summary.component';
 import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
 import { TrendReportComponent } from './reports/trend-report/trend-report.component';
@@ -186,6 +187,8 @@ import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/ci
 import { RoleGuard } from './guards/role.guard';
 import { RoleType } from './models/enums/role.model';
 import { DeficiencyTemplateComponent } from './reports/deficiency-template/deficiency-template.component';
+
+
 
 const appRoutes: Routes = [
   // reports routing
@@ -343,6 +346,8 @@ const appRoutes: Routes = [
           { path: 'principle-summary/:pri', component: PrincipleSummaryComponent },
           { path: 'maturity-questions/:grp', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
+
+          { path: 'other-observations', component: AdditionalObservationsComponent },
           { path: 'other-remarks', component: OtherRemarksComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
 

@@ -390,27 +390,27 @@
 
         <div *ngIf=" !!extras && mode === 'OBSV'">
             <div>
-                <table class="table" *ngIf="tab != null && extras?.observations.length > 0">
+                <table class="table td-align-top" *ngIf="tab != null && extras?.observations.length > 0">
                     <tr>
-                        <th>{{ t('observation.observation title') }}</th>
-                        <th>{{ t('observation.importance') }}</th>
+                        <th class="form-label">{{ t('observation.observation title') }}</th>
+                        <th class="form-label">{{ t('observation.importance') }}</th>
                         <th style="width:5%;"></th>
                         <th style="width:5%;"></th>
                     </tr>
                     <tr *ngFor="let obs of extras?.observations" style="box-sizing: content-box;height:20px;">
-                        <td style="height:20px">
-                            <div>{{obs.summary}}</div>
+                        <td class="py-2 pe-3">
+                            {{obs.summary}}
                         </td>
-                        <td>
-                            <div>{{ t('observation.importance ' + obs.importance?.value.toLowerCase()) }}</div>
+                        <td class="py-2">
+                            {{ t('observation.importance ' + obs.importance?.value.toLowerCase()) }}
                         </td>
-                        <td>
+                        <td class="py-2">
                             <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
-                                (click)="addEditObservation(obs.observation_Id)">
+                                (click)="editObservation(obs.observation_Id)">
                                 <span class="me-1 cset-icons-pencil"></span>
                             </button>
                         </td>
-                        <td>
+                        <td  class="py-2">
                             <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
                                 (click)="deleteObservation(obs)">
                                 <span class="me-1 cset-icons-trash-can"></span>
@@ -418,7 +418,7 @@
                         </td>
                     </tr>
                 </table>
-                <button class="btn btn-primary add" (click)="addEditObservation(0)">{{ t('observation.add an
+                <button class="btn btn-primary add" (click)="editObservation(0)">{{ t('observation.add an
                     observation') }}</button>
             </div>
         </div>
