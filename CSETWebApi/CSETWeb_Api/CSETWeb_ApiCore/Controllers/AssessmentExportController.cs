@@ -29,18 +29,21 @@ namespace CSETWebCore.Api.Controllers
         private CSETContext _context;
         private IHttpContextAccessor _http;
         private readonly IConfiguration _configuration;
+        private readonly JSONAssessmentExportManager _jsonAssessmentExportManager;
 
 
         /// <summary>
         /// Controller
         /// </summary>
         public AssessmentExportController(ITokenManager token, CSETContext context,
-            IHttpContextAccessor http, IConfiguration configuration)
+            IHttpContextAccessor http, IConfiguration configuration,
+            JSONAssessmentExportManager jsonAssessmentExportManager)
         {
             _token = token;
             _context = context;
             _http = http;
             _configuration = configuration;
+            _jsonAssessmentExportManager = jsonAssessmentExportManager;
         }
 
 
@@ -134,16 +137,25 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/assessment/export/json")]
-        public IActionResult ExportAssessmentJson()
+        public IActionResult ExportAssessmentJson([FromQuery] int? assessmentId = null)
         {
             try
             {
-                // No assessment lookup needed; this is a static example payload
-                var manager = new JSONAssessmentExportManager();
-                var json = manager.GetJson();
+                int resolvedAssessmentId = assessmentId ?? _token.AssessmentForUser();
+                if (resolvedAssessmentId <= 0)
+                {
+                    return BadRequest("An assessment identifier is required.");
+                }
+
+                var json = _jsonAssessmentExportManager.GetJson(resolvedAssessmentId);
                 var contents = Encoding.UTF8.GetBytes(json);
-                var fileName = "example-assessment.json";
+                var fileName = $"assessment-{resolvedAssessmentId}.json";
                 return File(contents, "application/json", fileName);
+            }
+            catch (InvalidOperationException notFound)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Warn(notFound, "Assessment not found for JSON export");
+                return NotFound(notFound.Message);
             }
             catch (Exception exc)
             {
