@@ -17,6 +17,7 @@ import { PrepareComponent } from '../../assessment/prepare/prepare.component';
 import { RequiredDocsComponent } from '../../assessment/prepare/required/required.component';
 import { SalsComponent } from '../../assessment/prepare/sals/sals.component';
 import { DiagramQuestionsComponent } from '../../assessment/questions/diagram-questions/diagram-questions.component';
+import { AdditionalObservationsComponent } from '../../assessment/questions/observations/additional-observations/additional-observations.component';
 import { MaturityQuestionsComponent } from '../../assessment/questions/maturity-questions/maturity-questions.component';
 import { MaturityQuestionsNestedComponent } from '../../assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { OtherRemarksComponent } from '../../assessment/questions/other-remarks/other-remarks.component';
@@ -117,6 +118,7 @@ const routes: Routes = [
     { path: 'maturity-questions/:grp', component: MaturityQuestionsComponent },
     { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
     { path: 'maturity-questions', component: MaturityQuestionsComponent },
+    { path: 'other-observations', component: AdditionalObservationsComponent },
     { path: 'other-remarks', component: OtherRemarksComponent },
     { path: 'diagram-questions', component: DiagramQuestionsComponent },
     {
