@@ -4,14 +4,10 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Observations;
-using CSETWebCore.Model.Question;
-using DocumentFormat.OpenXml.Office2013.Excel;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -413,7 +409,7 @@ namespace CSETWebCore.Business.Observations
             ans.Question_Type = obs.Question_Type;
             ans.Mark_For_Review = false;
             ans.Reviewed = false;
-            ans.Component_Guid = Guid.Empty;
+            ans.Component_Guid = System.Guid.Empty;
 
             _context.ANSWER.Add(ans);
             _context.SaveChanges();
