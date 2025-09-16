@@ -57,7 +57,8 @@
       </div>
 
       <div class="mb-3 p-3 w-100" [class.gray-box]="true">
-        <button tabindex="0" (click)="reportSvc.clickExcelLink('observations')" class="btn btn-link btn-link-dark px-0 pt-0">
+        <button tabindex="0" (click)="reportSvc.clickExcelLink('observations')"
+          class="btn btn-link btn-link-dark px-0 pt-0">
           <span class="cset-icons-export-excel fs-base me-2 align-middle"></span>
           {{t('observations tear-out sheets.export csv link')}}
         </button>
@@ -72,7 +73,18 @@
       <!-- All reports component -->
       <app-report-list-common *ngIf="currentSectionId" [sectionId]="currentSectionId"></app-report-list-common>
     </div>
+
+    <div class="mt-5">
+      <button *ngIf="this.configSvc.behaviors.showExportOnReports" tabindex="0"
+        class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
+        (click)="clickExport()" matTooltip="{{'tooltip.export assessment' | transloco }}({{
+              exportExtension
+            }}).">
+        <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+        <span>Export</span>
+      </button>
+    </div>
+
   </div>
-  <app-nav-back-next [page]="'reports'"
-    [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
+  <app-nav-back-next [page]="'reports'" [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
 </div>
