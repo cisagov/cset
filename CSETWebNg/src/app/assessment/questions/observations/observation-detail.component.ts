@@ -85,7 +85,9 @@ export class ObservationDetailComponent implements OnInit {
   update() {
     this.observation.answer_Id = this.answerId;
     this.observation.question_Id = this.questionId;
-    this.observationsSvc.saveObservation(this.observation).subscribe(() => {
+    this.observationsSvc.saveObservation(this.observation).subscribe((resp: any) => {
+      this.observation.observation_Id = resp.observationId;
+      this.observation.answer_Id = resp.answerId;
       this.dialog.close(true);
     });
   }
@@ -114,8 +116,9 @@ export class ObservationDetailComponent implements OnInit {
   refreshContacts(): void {
     this.observation.answer_Id = this.answerId;
     this.observation.question_Id = this.questionId;
-    this.observationsSvc.saveObservation(this.observation).subscribe(() => {
-      this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.questionType)
+    
+    this.observationsSvc.saveObservation(this.observation).subscribe((resp) => {
+      this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.question_Type)
         .subscribe((response: Observation) => {
           this.observation = response;
           this.contactsModel = lodash_map(lodash_filter(this.observation.observation_Contacts,

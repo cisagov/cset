@@ -4,10 +4,14 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Observations;
+using CSETWebCore.Model.Question;
+using DocumentFormat.OpenXml.Office2013.Excel;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -392,6 +396,28 @@ namespace CSETWebCore.Business.Observations
             var listObs = _context.FINDING.Where(x => x.Answer_Id == answer.AnswerId && x.Auto_Generated == Constants.Constants.ObsCreatedByVadr).ToList();
             _context.RemoveRange(listObs);
             _context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// If the user adds an observation to a never-answered question, this
+        /// will create an ANSWER record to attach the Observation to.
+        /// </summary>
+        public int BuildEmptyAnswer(int assessmentId, Observation obs)
+        {
+            var ans = new ANSWER();
+            ans.Assessment_Id = assessmentId;
+            ans.Answer_Id = 0;
+            ans.Question_Or_Requirement_Id = (int)obs.Question_Id;
+            ans.Answer_Text = "U";
+            ans.Question_Type = obs.Question_Type;
+            ans.Mark_For_Review = false;
+            ans.Reviewed = false;
+            ans.Component_Guid = Guid.Empty;
+
+            _context.ANSWER.Add(ans);
+            _context.SaveChanges();
+            return ans.Answer_Id;
         }
     }
 }

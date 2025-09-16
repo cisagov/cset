@@ -62,7 +62,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/answer/observations")]
-        public IActionResult AllObservations([FromQuery] int answerId)
+        public IActionResult GetObservationsForAnswer([FromQuery] int answerId)
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -137,7 +137,6 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             var fm = new ObservationsManager(_context, assessmentId);
 
-
             if (obs.AnswerLevel)
             {
                 obs.Assessment_Id = null;
@@ -156,9 +155,21 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
+
+            if (obs.AnswerLevel && obs.Answer_Id == null)
+            {
+                var answerId = fm.BuildEmptyAnswer(assessmentId, obs);
+                obs.Answer_Id = answerId;
+            }
+
+
             var id = fm.UpdateObservation(obs);
 
-            return Ok(id);
+            var resp = new ObservationResponse();
+            resp.ObservationId = id;
+            resp.AnswerId = obs.Answer_Id;
+
+            return Ok(resp);
         }
 
 
@@ -214,5 +225,13 @@ namespace CSETWebCore.Api.Controllers
             ObservationsManager fm = new ObservationsManager(_context, assessmentId);
             return fm.GetActionItems(parentId, finding_id);
         }
+    }
+
+
+
+    public class ObservationResponse
+    {
+        public int ObservationId { get; set; }
+        public int? AnswerId { get; set; }
     }
 }

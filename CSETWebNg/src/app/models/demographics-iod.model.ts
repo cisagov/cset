@@ -29,14 +29,17 @@ export interface DemographicsIod {
   organizationType?: number;
   organizationName?: string;
   businessUnit?: string;
-  
+
   // PPD-21 or NIPP
   sectorDirective?: string;
   sector?: number;
   subsector?: number;
 
   ssgSectors?: number[];
-  
+
+  // Technology Domain (IT vs OT)
+  techDomain?: string;
+
   numberEmployeesTotal?: number;
   numberEmployeesUnit?: number;
   annualRevenue?: number;

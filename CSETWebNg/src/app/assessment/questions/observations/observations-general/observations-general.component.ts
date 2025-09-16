@@ -111,7 +111,7 @@ export class ObservationsGeneralComponent implements OnInit {
     return {
       // ACET fields
       question_Id: 0,
-      questionType: '',
+      question_Type: '',
       answer_Id: 0,
       assessmentId: null,
       observation_Id: 0,

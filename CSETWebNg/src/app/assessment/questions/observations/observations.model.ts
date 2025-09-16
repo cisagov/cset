@@ -20,13 +20,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-
-
 ////////////////////////////////
 export interface Observation {
   // ACET fields
   question_Id: number | null;
-  questionType: string;
+  question_Type: string;
   answer_Id: number | null;
   assessmentId: number | null;
   observation_Id: number;

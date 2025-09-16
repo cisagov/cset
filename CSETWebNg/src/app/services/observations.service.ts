@@ -63,7 +63,7 @@ export class ObservationsService {
    * Retrieves all assessment-level Observations
    */
   getAssessmentLevelObservations() {
-    return this.http.get(this.configSvc.apiUrl + 'assessment/observations');
+    return this.http.get<Observation[]>(this.configSvc.apiUrl + 'assessment/observations');
   }
 
   /**
@@ -71,7 +71,7 @@ export class ObservationsService {
    */
   getObservationsForAnswer(answer_id: number) {
     const qstring = 'answer/observations?answerId=' + answer_id;
-    return this.http.get(this.configSvc.apiUrl + qstring, headers);
+    return this.http.get<Observation[]>(this.configSvc.apiUrl + qstring, headers);
   }
 
   /**
@@ -95,6 +95,9 @@ export class ObservationsService {
     return this.http.post(this.configSvc.apiUrl + 'AnswerSaveObservation?cancel=' + cancel + '&merge=' + merge, observation, headers);
   }
 
+  /**
+   * deletes the specified observation
+   */
   deleteObservation(observationId: number): any {
     return this.http.post(this.configSvc.apiUrl + 'observation/delete', observationId, headers);
   }

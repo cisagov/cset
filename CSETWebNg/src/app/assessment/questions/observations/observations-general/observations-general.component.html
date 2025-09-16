@@ -1,25 +1,25 @@
 <div *transloco="let t">
-     <table class="table" *ngIf="observations?.length > 0">
+     <table class="table td-align-top" *ngIf="observations?.length > 0">
           <tr>
-               <th>{{ t('observation.observation title') }}</th>
-               <th>{{ t('observation.importance') }}</th>
+               <th class="form-label">{{ t('observation.observation title') }}</th>
+               <th class="form-label">{{ t('observation.importance') }}</th>
                <th style="width:5%;"></th>
                <th style="width:5%;"></th>
           </tr>
           <tr *ngFor="let obs of observations" style="box-sizing: content-box;height:20px;">
-               <td style="height:20px">
-                    <div>{{obs.summary}}</div>
+               <td class="py-2 pe-3">
+                    {{obs.summary}}
                </td>
-               <td>
-                    <div>{{ t('observation.importance ' + obs.importance?.value.toLowerCase()) }}</div>
+               <td class="py-2">
+                    {{ t('observation.importance ' + obs.importance?.value.toLowerCase()) }}
                </td>
-               <td>
+               <td class="py-2">
                     <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
                          (click)="editObservation(obs.observation_Id)">
                          <span class="me-1 cset-icons-pencil"></span>
                     </button>
                </td>
-               <td>
+               <td class="py-2">
                     <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
                          (click)="deleteObservation(obs)">
                          <span class="me-1 cset-icons-trash-can"></span>
