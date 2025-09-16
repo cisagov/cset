@@ -10,7 +10,3 @@ MOVE 'CSETWebTest' TO '/var/opt/mssql/data/CSETWebTest.mdf',
 MOVE 'CSETWebTest_Log' TO '/var/opt/mssql/data/CSETWebTest_Log.ldf'
 GO
 
--- Return database to MULTI_USER after restore to allow client connections
-ALTER DATABASE CSETWebTest
-SET MULTI_USER
-GO
