@@ -130,8 +130,6 @@ export class AssessmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //This is a hack to force the app to update the view after the assessment is loaded
-    //but not the first time.
     if (this.isSet) {
       this.isSet = true;
       this.appRef.tick();
@@ -152,6 +150,14 @@ export class AssessmentComponent implements OnInit {
         setTimeout(() => {
           this.loadCompletionData();
         }, 1000);
+      });
+      this.assessSvc.completionRefreshRequested$.subscribe((data: any) => {
+        if (data && data.completedCount !== undefined) {
+          this.completedQuestions = data.completedCount;
+          this.totalQuestions = data.totalCount;
+          this.completionPercentage = Math.round((this.completedQuestions / this.totalQuestions) * 100);
+          console.log('Progress updated immediately:', this.completionPercentage + '%');
+        }
       });
     }
 
