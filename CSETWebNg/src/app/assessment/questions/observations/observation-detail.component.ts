@@ -66,7 +66,7 @@ export class ObservationDetailComponent implements OnInit {
     });
 
     this.dialog.backdropClick().subscribe(() => {
-      this.update();
+      this.save();
     });
   }
 
@@ -82,7 +82,14 @@ export class ObservationDetailComponent implements OnInit {
   /**
    * 
    */
-  update() {
+  cancel() {
+    this.dialog.close(false);
+  }
+
+  /**
+   * 
+   */
+  save() {
     this.observation.answer_Id = this.answerId;
     this.observation.question_Id = this.questionId;
     this.observationsSvc.saveObservation(this.observation).subscribe((resp: any) => {
@@ -116,7 +123,7 @@ export class ObservationDetailComponent implements OnInit {
   refreshContacts(): void {
     this.observation.answer_Id = this.answerId;
     this.observation.question_Id = this.questionId;
-    
+
     this.observationsSvc.saveObservation(this.observation).subscribe((resp) => {
       this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.question_Type)
         .subscribe((response: Observation) => {
