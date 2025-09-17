@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CSETWebCore.Business.Authorization;
+using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
@@ -70,7 +71,29 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult Post([FromBody] Demographics demographics)
         {
             demographics.AssessmentId = _token.AssessmentForUser();
-            return Ok(_demographic.SaveDemographics(demographics));
+            // return Ok(_demographic.SaveDemographics(demographics));
+            var assessmentId = _demographic.SaveDemographics(demographics);
+            var counter = new CompletionCounter(_context);
+            counter.Count(assessmentId);
+            var userId = _token.GetCurrentUserId();
+            if (userId != null)
+            {
+                var completionStats = _assessment.GetAssessmentsCompletionForUser((int)userId)
+                    .FirstOrDefault(x => x.AssessmentId == assessmentId);
+                
+                if (completionStats != null)
+                {
+                    return Ok(new {
+                        AssessmentId = assessmentId,
+                        CompletedCount = completionStats.CompletedCount,
+                        TotalMaturityQuestionsCount = completionStats.TotalMaturityQuestionsCount ?? 0,
+                        TotalDiagramQuestionsCount = completionStats.TotalDiagramQuestionsCount ?? 0,
+                        TotalStandardQuestionsCount = completionStats.TotalStandardQuestionsCount ?? 0
+                    });
+                }
+            }
+    
+            return Ok(assessmentId);
         }
 
 

@@ -39,6 +39,7 @@ import { ConfigService } from '../services/config.service';
 import { AssessmentDetail } from '../models/assessment-info.model';
 import { Subscription } from 'rxjs'
 import { CompletionService } from '../services/completion.service';
+import { DemographicService } from '../services/demographic.service';
 
 interface UserAssessment {
   isEntry: boolean;
@@ -120,7 +121,8 @@ export class AssessmentComponent implements OnInit {
     public tSvc: TranslocoService,
     private configSvc: ConfigService,
     private appRef: ApplicationRef,
-    private completionSvc: CompletionService
+    private completionSvc: CompletionService,
+    private demoSvc: DemographicService
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
@@ -151,19 +153,16 @@ export class AssessmentComponent implements OnInit {
           this.loadCompletionData();
         }, 1000);
       });
-      this.assessSvc.completionRefreshRequested$.subscribe((data: any) => {
-        if (data && data.completedCount !== undefined) {
-          this.completedQuestions = data.completedCount;
-          this.totalQuestions = data.totalCount;
-          this.completionPercentage = Math.round((this.completedQuestions / this.totalQuestions) * 100);
-          console.log('Progress updated immediately:', this.completionPercentage + '%');
-        }
+      this.demoSvc.demographicUpdateCompleted$.subscribe(() => {
+        this.loadCompletionData();
+        console.log('Progress refreshed due to demographic update');
       });
     }
 
   }
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
+    console.log(this.assessment)
   }
   setAssessmentDone(){
     this.assessment.done =!this.assessment.done;
