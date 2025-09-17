@@ -644,7 +644,10 @@
                     "complexity": "Ease",
                     "low": "LOW",
                     "medium": "MEDIUM",
-                    "high": "HIGH"
+                    "high": "HIGH",
+                    "simple": "SIMPLE",
+                    "moderate": "MODERATE",
+                    "complex": "COMPLEX"
                },
                "deficiency": {
                     "report title": "DEFICIENCY REPORT CYBERSECURITY PERFORMANCE GOALS (CPG)",
