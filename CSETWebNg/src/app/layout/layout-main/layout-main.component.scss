@@ -524,8 +524,8 @@ label[required]::after {
   overflow-x: hidden;
   border-radius: 8px;
 
-  max-height: calc(100cqh - 20rem);
-  min-height: calc(100cqh - 20rem);
+  max-height: calc(100cqh - 310px);
+  min-height: calc(100cqh - 310px);
 
   color: $gray-800;
   scrollbar-width: thin;
@@ -1123,7 +1123,7 @@ table.td-align-top td {
 }
 
 .btn-app-mode {
-  background-color: transparent;
+  background-color: $white;
   border-color: $secondary-color;
   color: $secondary-color;
 }

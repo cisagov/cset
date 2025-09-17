@@ -4,11 +4,13 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.Authorization;
-using CSETWebCore.Business.Observations;
+using CSETWebCore.Business.Malcolm;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Document;
@@ -18,16 +20,11 @@ using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.User;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Model.Question;
-using CSETWebCore.Model.Observations;
-using CSETWebCore.Business.Assessment;
 using Microsoft.AspNetCore.Mvc;
-using Nelibur.ObjectMapper;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.Business.Malcolm;
-using CSETWebCore.Helpers;
-using NLog;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -155,20 +152,6 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _token.AssessmentForUser();
             return _context.Get_Children_Answers(parentId, assessmentId);
-        }
-
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/GetActionItems")]
-        public IList<ActionItems> GetActionItems([FromQuery] int parentId, [FromQuery] int finding_id)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            ObservationsManager fm = new ObservationsManager(_context, assessmentId);
-            return fm.GetActionItems(parentId, finding_id);
         }
 
 
@@ -436,172 +419,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        /// <summary>
-        /// Note that this only populates the summary/title and finding id. 
-        /// the rest is populated in a seperate call. 
-        /// </summary>
-        /// <param name="Answer_Id"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("api/AnswerAllObservations")]
-        public IActionResult AllObservations([FromQuery] int Answer_Id)
-        {
-            int assessmentId = _token.AssessmentForUser();
-
-            var fm = new ObservationsManager(_context, assessmentId);
-            return Ok(fm.AllObservations(Answer_Id));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("api/GetObservation")]
-        public IActionResult GetObservation([FromQuery] int answerId, [FromQuery] int observationId, [FromQuery] int questionId, [FromQuery] string questionType)
-        {
-            int assessmentId = _token.AssessmentForUser();
-
-            if (answerId == 0)
-            {
-                _questionRequirement.AssessmentId = assessmentId;
-                answerId = _questionRequirement.StoreAnswer(new Answer()
-                {
-                    QuestionId = questionId,
-                    MarkForReview = false,
-                    QuestionType = questionType
-                });
-            }
-
-            var fm2 = new ObservationsManager(_context, assessmentId);
-            return Ok(fm2.GetObservation(observationId, answerId));
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("api/GetAssessmentObservations")]
-        public IActionResult GetAssessmentObservations()
-        {
-            int assessmentId = _token.AssessmentForUser();
-
-            var result = from finding in _context.FINDING
-                         join answer in _context.ANSWER
-                            on finding.Answer_Id equals answer.Answer_Id
-                         join question in _context.MATURITY_QUESTIONS
-                            on answer.Question_Or_Requirement_Id equals question.Mat_Question_Id
-                         join category in _context.MATURITY_GROUPINGS
-                            on question.Grouping_Id equals category.Grouping_Id
-
-                         // the custom order is 'DOR', 'Examiner Finding', 'Supplemental Guidance', 'Non-reportable', and then in order by question number
-                         where answer.Assessment_Id == assessmentId
-                         orderby finding.Type.StartsWith("Non"), finding.Type.StartsWith("Supplemental"),
-                            finding.Type.StartsWith("Examiner"), finding.Type.StartsWith("DOR"), question.Mat_Question_Id
-                         select new { finding, answer, question, category };
-
-            return Ok(result.ToList());
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/GetImportance")]
-        public IActionResult GetImportance()
-        {
-            TinyMapper.Bind<IMPORTANCE, Importance>();
-            List<Importance> rlist = new List<Importance>();
-            foreach (IMPORTANCE import in _context.IMPORTANCE)
-            {
-                rlist.Add(TinyMapper.Map<IMPORTANCE, Importance>(import));
-            }
-
-            return Ok(rlist);
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="observationId"></param>
-        [HttpPost]
-        [Route("api/DeleteObservation")]
-        public IActionResult DeleteObservation([FromBody] int observationId)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            var fm = new ObservationsManager(_context, assessmentId);
-
-            var f = fm.GetObservation(observationId);
-            fm.DeleteObservation(f);
-            return Ok();
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="obs"></param>
-        [HttpPost]
-        [Route("api/AnswerSaveObservation")]
-        public IActionResult SaveObservation([FromBody] Observation obs, [FromQuery] bool cancel = false, [FromQuery] bool merge = false)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            var fm = new ObservationsManager(_context, assessmentId);
-
-
-            if (obs.IsObservationEmpty(cancel))
-            {
-                fm.DeleteObservation(obs);
-                return Ok();
-            }
-
-            var id = fm.UpdateObservation(obs);
-
-            return Ok(id);
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="obs"></param>
-        [HttpPost]
-        [Route("api/CopyObservationIntoNewObservation")]
-        public IActionResult CopyObservationIntoNewObservation([FromBody] Observation obs, [FromQuery] bool cancel = false)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            var fm = new ObservationsManager(_context, assessmentId);
-
-            if (obs.IsObservationEmpty(cancel))
-            {
-                fm.DeleteObservation(obs);
-                return Ok();
-            }
-
-            var id = fm.UpdateObservation(obs);
-
-            return Ok(id);
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
-        [HttpPost]
-        [Route("api/SaveIssueOverrideText")]
-        public IActionResult SaveOverrideIssueText([FromBody] ActionItemTextUpdate item)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            var fm = new ObservationsManager(_context, assessmentId);
-            fm.UpdateIssues(item);
-            return Ok();
-        }
+       
 
 
         /// <summary>

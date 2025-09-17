@@ -6,13 +6,10 @@
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Observations;
-using CSETWebCore.Model.Set;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Observations
 {
@@ -50,9 +47,55 @@ namespace CSETWebCore.Business.Observations
 
 
         /// <summary>
+        /// Returns a list of assessment-level Observations (not attached to any ANSWER)
+        /// </summary>
+        /// <returns></returns>
+        public List<Observation> GetAssessmentLevelObservations()
+        {
+            List<Observation> observations = new List<Observation>();
+
+            var obsList = _context.FINDING
+                .Where(x => x.Assessment_ID == _assessmentId && x.Answer_Id == null)
+                .Include(i => i.Importance)
+               // .Include(k => k.FINDING_CONTACT)
+                .ToList();
+
+            foreach (FINDING o in obsList)
+            {
+                Observation obs = new Observation();
+                obs.Observation_Contacts = new List<ObservationContact>();
+                obs.Summary = o.Summary;
+                obs.Observation_Id = o.Finding_Id;
+                obs.Assessment_Id = _assessmentId;
+                obs.Answer_Id = null;
+                TinyMapper.Map(o, obs);
+                if (o.Importance == null)
+                    obs.Importance = new Importance()
+                    {
+                        Importance_Id = 1,
+                        Value = Constants.Constants.SAL_LOW
+                    };
+                else
+                    obs.Importance = TinyMapper.Map<IMPORTANCE, Importance>(o.Importance);
+
+                foreach (FINDING_CONTACT fc in o.FINDING_CONTACT)
+                {
+                    ObservationContact webFc = TinyMapper.Map<FINDING_CONTACT, ObservationContact>(fc);
+
+                    webFc.Observation_Id = fc.Finding_Id;
+                    webFc.Selected = (fc != null);
+                    obs.Observation_Contacts.Add(webFc);
+                }
+                observations.Add(obs);
+            }
+            return observations;
+        }
+
+
+        /// <summary>
         /// Returns a list of Observations (FINDING databse records) for an answer
         /// </summary>
-        public List<Observation> AllObservations(int answerId)
+        public List<Observation> GetAnswerObservations(int answerId)
         {
             List<Observation> observations = new List<Observation>();
 
@@ -94,11 +137,12 @@ namespace CSETWebCore.Business.Observations
 
 
         /// <summary>
-        /// 
+        /// Returns the specified Observation or returns null.
         /// </summary>
-        public Observation GetObservation(int observationId, int answerId = 0)
+        /// <param name="observationId"></param>
+        /// <returns></returns>
+        public Observation GetObservation(int observationId)
         {
-            // look for an existing FINDING record.  If not, create one.
             FINDING f = _context.FINDING
                     .Where(x => x.Finding_Id == observationId)
                     .Include(fc => fc.FINDING_CONTACT)
@@ -106,17 +150,10 @@ namespace CSETWebCore.Business.Observations
 
             if (f == null)
             {
-                f = new FINDING()
-                {
-                    Answer_Id = answerId
-                };
-
-                _context.FINDING.Add(f);
-                _context.SaveChanges();
+                return null;
             }
 
 
-            // Create an Observation object from the FINDING and joined tables
             Observation obs;
             var q = _context.ANSWER.Where(x => x.Answer_Id == f.Answer_Id).FirstOrDefault();
 
@@ -138,14 +175,16 @@ namespace CSETWebCore.Business.Observations
 
 
         /// <summary>
-        /// Deletes an Observation (FINDING record)
+        /// 
         /// </summary>
-        /// <param name="observation"></param>
-        public void DeleteObservation(Observation observation)
+        /// <returns></returns>
+        public Observation CreateObservationForAnswer(int answerId)
         {
-            ObservationData fm = new ObservationData(observation, _context);
-            fm.Delete();
-            fm.Save();
+            var obs = new Observation();
+            obs.Answer_Id = answerId;
+            obs.AnswerLevel = true;
+
+            return obs;
         }
 
 
@@ -158,6 +197,21 @@ namespace CSETWebCore.Business.Observations
             ObservationData fm = new ObservationData(observation, _context);
             int id = fm.Save();
             return id;
+        }
+
+
+        /// <summary>
+        /// Deletes an Observation (FINDING record) by its primary key
+        /// </summary>
+        /// <param name="observationId"></param>
+        public void DeleteObservation(int observationId)
+        {
+            var obs = _context.FINDING.FirstOrDefault(x => x.Finding_Id == observationId);
+            if (obs != null)
+            {
+                _context.FINDING.Remove(obs);
+                _context.SaveChanges();
+            }
         }
 
 
@@ -226,14 +280,10 @@ namespace CSETWebCore.Business.Observations
         /// </summary>
         public void BuildAutoObservation(Model.Question.Answer answer)
         {
-            // get question ID
             var questionId = answer.QuestionId;
 
-            // get OBS-properties for the question
-            var props = _context.MATURITY_QUESTION_PROPS.Where(x => x.Mat_Question_Id == questionId && x.PropertyName.StartsWith("OBS-")).ToList();
 
-
-            // see if we have an existing auto observation
+            // see if there is an existing auto observation
             var existingAutoObs = _context.FINDING.Where(x => x.Answer_Id == answer.AnswerId && x.Auto_Generated == Constants.Constants.ObsCreatedByVadr).FirstOrDefault();
             if (existingAutoObs != null)
             {
@@ -242,16 +292,15 @@ namespace CSETWebCore.Business.Observations
 
 
             // create new observation record
-            var newObs = GetObservation(-1, (int)answer.AnswerId);
+            var newObs = CreateObservationForAnswer((int)answer.AnswerId);
 
-            // populate with properties
+
+            // get OBS-properties for the question
+            var props = _context.MATURITY_QUESTION_PROPS.Where(x => x.Mat_Question_Id == questionId && x.PropertyName.StartsWith("OBS-")).ToList();
             newObs.Summary = props.Where(x => x.PropertyName == "OBS-DISCOVERY").FirstOrDefault()?.PropertyValue ?? "";
             newObs.Issue = props.Where(x => x.PropertyName == "OBS-RISK-STATEMENT").FirstOrDefault()?.PropertyValue ?? "";
             newObs.Recommendations = props.Where(x => x.PropertyName == "OBS-RECOMMENDATION").FirstOrDefault()?.PropertyValue ?? "";
 
-            //newObs.Risk_Area = props.Where(x => x.PropertyName == "OBS-RISK").FirstOrDefault()?.PropertyValue ?? "";
-            //newObs.Impact = props.Where(x => x.PropertyName == "OBS-IMPACT").FirstOrDefault()?.PropertyValue ?? "";
-            //newObs.Vulnerabilities = props.Where(x => x.PropertyName == "OBS-VULNERABILITY").FirstOrDefault()?.PropertyValue ?? "";
 
             // mark the observation as created by VADR so that we can find it easily to delete 
             newObs.Auto_Generated = Constants.Constants.ObsCreatedByVadr;
@@ -269,6 +318,28 @@ namespace CSETWebCore.Business.Observations
             var listObs = _context.FINDING.Where(x => x.Answer_Id == answer.AnswerId && x.Auto_Generated == Constants.Constants.ObsCreatedByVadr).ToList();
             _context.RemoveRange(listObs);
             _context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// If the user adds an observation to a never-answered question, this
+        /// will create an ANSWER record to attach the Observation to.
+        /// </summary>
+        public int BuildEmptyAnswer(int assessmentId, Observation obs)
+        {
+            var ans = new ANSWER();
+            ans.Assessment_Id = assessmentId;
+            ans.Answer_Id = 0;
+            ans.Question_Or_Requirement_Id = (int)obs.Question_Id;
+            ans.Answer_Text = "U";
+            ans.Question_Type = obs.Question_Type;
+            ans.Mark_For_Review = false;
+            ans.Reviewed = false;
+            ans.Component_Guid = System.Guid.Empty;
+
+            _context.ANSWER.Add(ans);
+            _context.SaveChanges();
+            return ans.Answer_Id;
         }
     }
 }

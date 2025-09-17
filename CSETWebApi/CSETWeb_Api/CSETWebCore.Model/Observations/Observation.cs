@@ -12,8 +12,12 @@ namespace CSETWebCore.Model.Observations
 {
     public class Observation
     {
-        public int Question_Id { get; set; }
-        public int Answer_Id { get; set; }
+        public int? Question_Id { get; set; }
+        public string Question_Type { get; set; }
+        public int? Answer_Id { get; set; }
+        public int? Assessment_Id { get; set; }
+
+        public bool AnswerLevel { get; set; }
         public int Observation_Id { get; set; }
         public string Summary { get; set; }
         public string Issue { get; set; }

@@ -233,7 +233,7 @@ namespace CSETWebCore.Business.Question
 
                 // Get any observations for the question
                 var fm = new ObservationsManager(this._context, assessmentId);
-                this.Observations = fm.AllObservations(newAnswer.Answer_Id);
+                this.Observations = fm.GetAnswerObservations(newAnswer.Answer_Id);
 
                 // Get any documents attached to the question
                 _document.SetUserAssessmentId(assessmentId);

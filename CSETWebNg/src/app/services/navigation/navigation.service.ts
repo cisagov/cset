@@ -72,7 +72,7 @@ export class NavigationService implements OnDestroy, OnInit {
   @Output()
   disableNext = new EventEmitter<boolean>();
 
-  activeResultsView: string;
+  activeResultsView: string | null;
 
   frameworkSelected = false;
   diagramSelected = true;
@@ -268,7 +268,7 @@ export class NavigationService implements OnDestroy, OnInit {
       return true;
     }
 
-    if (originPage.children.length == 0 && originPage.nextElementSibling == null && originPage.parentElement.tagName == 'nav') {
+    if (originPage.children.length == 0 && originPage.nextElementSibling == null && originPage?.parentElement?.tagName == 'nav') {
       // we are at the last page, nothing to do
       return false;
     }
@@ -313,7 +313,7 @@ export class NavigationService implements OnDestroy, OnInit {
       return;
     }
 
-    if (originPage.previousElementSibling == null && originPage.parentElement.tagName == 'nav') {
+    if (originPage.previousElementSibling == null && originPage?.parentElement?.tagName == 'nav') {
       // we are at the first page, nothing to do
       return;
     }
@@ -379,7 +379,8 @@ export class NavigationService implements OnDestroy, OnInit {
 
     // determine the route path
     const targetPath = targetNode.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
-    this.router.navigate([targetPath]);
+    this.router.navigateByUrl(targetPath);
+  //  this.router.navigate([targetPath]);
   }
 
   /**

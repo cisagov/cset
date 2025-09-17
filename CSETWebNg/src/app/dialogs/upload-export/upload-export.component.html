@@ -46,8 +46,6 @@
     <label style="padding-right: 15px;" class="mt-4">{{statusText}}</label>
 
     <mat-dialog-actions class="me-3 p-0 mb-0 d-flex justify-content-between flex-00a">
-      <!-- <button class="btn btn-primary" [disabled]="!canBeClosed" (click)="closeDialog()">{{primaryButtonText}}</button>
-      <button class="btn btn-secondary" *ngIf="showCancelButton" mat-dialog-close>Cancel</button> -->
       <button class="btn btn-secondary" *ngIf="showCancelButton && data.isCsafUpload" (click)="cancelUpload()"
         [disabled]="canBeClosed">{{ t('buttons.cancel') }}</button>
       <button class="btn btn-secondary" *ngIf="canBeClosed" (click)="closeDialog()">{{ t('buttons.cancel') }}</button>
@@ -56,22 +54,3 @@
     </mat-dialog-actions>
   </div>
 </div>
-
-
-<!-- <div class="h-100 p-4 d-flex flex-column flex-11a">
-  <h1 mat-dialog-title>Uploading Files</h1>
-   <mat-dialog-content>
-    <mat-list>
-      <mat-list-item *ngFor="let file of files">
-        <h4 mat-line>{{file.name}}</h4>
-        <mat-progress-bar *ngIf="progress" mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar>
-      </mat-list-item>
-    </mat-list>
-  </mat-dialog-content>
-  <label>{{statusText}}</label>
-
-  <mat-dialog-actions class="upload-export-actions">
-    <button *ngIf="showCancelButton" mat-button mat-dialog-close>Cancel</button>
-    <button mat-raised-button class="btn btn-primary" [disabled]="!canBeClosed" (click)="closeDialog()">{{primaryButtonText}}</button>
-  </mat-dialog-actions>
-</div> -->

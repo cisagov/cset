@@ -25,7 +25,7 @@
      <app-cover-sheet-a [title]="title" [assessmentName]="assessmentName" [assessmentDate]="assessmentDate"
           [assessorName]="assessorName" [facilityName]="facilityName"
           [selfAssessment]="selfAssessment"></app-cover-sheet-a>
-          
+
 
      <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
           <app-report-disclaimer></app-report-disclaimer>
@@ -54,12 +54,18 @@
           <h1>
                Optional Domain Questions
           </h1>
-          <div *ngFor="let d of domainList23">
-               <div>
-                    <app-cre-goal-charts [domainDistrib]="d" [modelId]="23"
+          <div *ngIf="domainList24?.length > 0; else noOD">
+
+               <div *ngFor="let d of domainList23">
+                    <div>
+                         <app-cre-goal-charts [domainDistrib]="d" [modelId]="23"
                          [modelDisplayName]="'Optional Domain Questions'"></app-cre-goal-charts>
+                    </div>
                </div>
           </div>
+          <ng-template #noOD>
+               {{t('reports.core.cre.heatmap report.no optional domains selected')}}
+          </ng-template>
      </div>
 
 
@@ -67,22 +73,27 @@
           <h1>
                MIL Questions
           </h1>
-          <div *ngFor="let d of domainList24">
-               <div>
-                    <app-cre-goal-charts [domainDistrib]="d" [modelId]="24"
-                         [modelDisplayName]="'MIL Questions'"></app-cre-goal-charts>
+          <div *ngIf="domainList24?.length > 0; else noMil">
+               <div *ngFor="let d of domainList24">
+                    <div>
+                         <app-cre-goal-charts [domainDistrib]="d" [modelId]="24"
+                              [modelDisplayName]="'MIL Questions'"></app-cre-goal-charts>
+                    </div>
                </div>
-          </div>
 
-          <div class="mt-5">
-               <h2 class="mb-4">MIL Domains All Responses</h2>
-               <div class="my-4 p-3 ps-4" style="border: 1px solid #ddd">
-                    <app-cre-grouped-stacked-horizontal-chart [config]="barStackedConfig"
-                         [results]="allResponsesDataMil" [scheme]="creSvc.colorScheme"
-                         [dataLabelFormatting]="creSvc.fmt1">
-                    </app-cre-grouped-stacked-horizontal-chart>
+               <div class="mt-5">
+                    <h2 class="mb-4">MIL Domains All Responses</h2>
+                    <div class="my-4 p-3 ps-4" style="border: 1px solid #ddd">
+                         <app-cre-grouped-stacked-horizontal-chart [config]="barStackedConfig"
+                              [results]="allResponsesDataMil" [scheme]="creSvc.colorScheme"
+                              [dataLabelFormatting]="creSvc.fmt1">
+                         </app-cre-grouped-stacked-horizontal-chart>
+                    </div>
                </div>
           </div>
+          <ng-template #noMil>
+               {{t('reports.core.cre.heatmap report.no mils selected')}}
+          </ng-template>
 
           <div>
                <app-cre-heatmaps></app-cre-heatmaps>
