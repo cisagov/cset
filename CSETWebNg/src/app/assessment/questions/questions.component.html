@@ -24,8 +24,8 @@
 <div *transloco="let t" >
   <div class="white-panel">  
     <div id="top"></div>
-    <div class="d-flex flex-row flex-wrap sticky-sal justify-content-between align-items-start flex-11a pb-3">
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <div class="d-flex flex-row flex-wrap sticky-sal justify-content-between align-items-start flex-11a p-1" style="pointer-events: none; background-color: #ffffffcc;">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons" style="pointer-events: auto;">
         <label *ngIf="showQuestionsToggle" class="btn btn-app-mode form-check-label"
           [class.active]="assessSvc.applicationMode == 'Q'" (click)="setMode('Q')"
           matTooltip="{{t('tooltip.questions mode')}}">
@@ -42,7 +42,7 @@
         </label>
       </div>
 
-      <div class="d-flex flex-row">
+      <div class="d-flex flex-row" style="pointer-events: auto;">
         <div class="me-3 answered-count" *ngIf="!!categories" matTooltip="{{t('tooltip.answered count')}}">
           {{ completionSvc.answeredCount }}/{{ completionSvc.totalCount }}
         </div>

@@ -20,11 +20,8 @@ namespace CSETWebCore.Business.Observations
     /// </summary>
     public class ObservationData
     {
-        private int _observationId;
         private CSETContext _context;
         private FINDING _dbObservation;
-        private Observation _webObservation;
-
 
 
         /// <summary>
@@ -35,8 +32,6 @@ namespace CSETWebCore.Business.Observations
         /// <param name="context">the data context to work on</param>
         public ObservationData(Observation obs, CSETContext context)
         {
-            _webObservation = obs;
-
             _context = context;
 
             _dbObservation = context.FINDING
@@ -104,23 +99,23 @@ namespace CSETWebCore.Business.Observations
         }
 
 
-        /// <summary>
-        /// Will not create a new assessment
-        /// if you pass a non-existent Observation then it will throw an exception
-        /// </summary>
-        /// <param name="observationId"></param>
-        /// <param name="context"></param>
-        public ObservationData(int observationId, CSETContext context)
-        {
-            _observationId = observationId;
-            _context = context;
+        ///// <summary>
+        ///// Will not create a new assessment
+        ///// if you pass a non-existent Observation then it will throw an exception
+        ///// </summary>
+        ///// <param name="observationId"></param>
+        ///// <param name="context"></param>
+        //public ObservationData(int observationId, CSETContext context)
+        //{
+        //    //_observationId = observationId;
+        //    _context = context;
 
-            this._dbObservation = context.FINDING.Where(x => x.Finding_Id == observationId).FirstOrDefault();
-            if (_dbObservation == null)
-            {
-                throw new ApplicationException($"Cannot find observation_id: {observationId}");
-            }
-        }
+        //    this._dbObservation = context.FINDING.Where(x => x.Finding_Id == observationId).FirstOrDefault();
+        //    if (_dbObservation == null)
+        //    {
+        //        throw new ApplicationException($"Cannot find observation_id: {observationId}");
+        //    }
+        //}
 
 
         /// <summary>
@@ -150,13 +145,7 @@ namespace CSETWebCore.Business.Observations
         /// </summary>
         public int Save()
         {
-            if (this._webObservation.IsObservationEmpty())
-            {
-                return 0;
-            }
-
             _context.SaveChanges();
-            _webObservation.Observation_Id = _dbObservation.Finding_Id;
             return _dbObservation.Finding_Id;
         }
     }

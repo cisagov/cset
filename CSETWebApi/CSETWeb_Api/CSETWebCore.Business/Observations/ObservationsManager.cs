@@ -175,63 +175,6 @@ namespace CSETWebCore.Business.Observations
 
 
         /// <summary>
-        ///  HOPING TO DEPRECATE THIS SOON................
-        /// </summary>
-        public Observation GetOrCreateObservationDELETME(int observationId, int? answerId, string scope)
-        {
-            FINDING obs1;
-            if (observationId == 0)
-            {
-                obs1 = new FINDING();
-            }
-
-
-            // look for an existing FINDING record.  If not, create one.
-            FINDING f = _context.FINDING
-                    .Where(x => x.Finding_Id == observationId)
-                    .Include(fc => fc.FINDING_CONTACT)
-                    .FirstOrDefault();
-
-            if (f == null)
-            {
-                f = new FINDING();
-
-                if (scope == "answer")
-                {
-                    f.Answer_Id = answerId;
-                }
-                else
-                { 
-                    f.Assessment_ID = _assessmentId;
-                }
-
-                _context.FINDING.Add(f);
-                _context.SaveChanges();
-            }
-
-
-            // Create an Observation object from the FINDING and joined tables
-            Observation obs;
-            var q = _context.ANSWER.Where(x => x.Answer_Id == f.Answer_Id).FirstOrDefault();
-
-            obs = TinyMapper.Map<Observation>(f);
-            obs.Observation_Id = f.Finding_Id;
-            obs.Question_Id = q != null ? q.Question_Or_Requirement_Id : 0;
-
-            obs.Observation_Contacts = new List<ObservationContact>();
-            foreach (var contact in _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == _assessmentId))
-            {
-                ObservationContact webContact = TinyMapper.Map<ObservationContact>(contact);
-                webContact.Name = contact.PrimaryEmail + " -- " + contact.FirstName + " " + contact.LastName;
-                webContact.Selected = (f.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == contact.Assessment_Contact_Id).FirstOrDefault() != null);
-                obs.Observation_Contacts.Add(webContact);
-            }
-
-            return obs;
-        }
-
-
-        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
@@ -246,14 +189,14 @@ namespace CSETWebCore.Business.Observations
 
 
         /// <summary>
-        /// Deletes an Observation (FINDING record)
+        /// Updates an Observation in its FINDING database record
         /// </summary>
         /// <param name="observation"></param>
-        public void DeleteObservation(Observation observation)
+        public int UpdateObservation(Observation observation)
         {
             ObservationData fm = new ObservationData(observation, _context);
-            fm.Delete();
-            fm.Save();
+            int id = fm.Save();
+            return id;
         }
 
 
@@ -269,18 +212,6 @@ namespace CSETWebCore.Business.Observations
                 _context.FINDING.Remove(obs);
                 _context.SaveChanges();
             }
-        }
-
-
-        /// <summary>
-        /// Updates an Observation in its FINDING database record
-        /// </summary>
-        /// <param name="observation"></param>
-        public int UpdateObservation(Observation observation)
-        {
-            ObservationData fm = new ObservationData(observation, _context);
-            int id = fm.Save();
-            return id;
         }
 
 
@@ -349,14 +280,10 @@ namespace CSETWebCore.Business.Observations
         /// </summary>
         public void BuildAutoObservation(Model.Question.Answer answer)
         {
-            // get question ID
             var questionId = answer.QuestionId;
 
-            // get OBS-properties for the question
-            var props = _context.MATURITY_QUESTION_PROPS.Where(x => x.Mat_Question_Id == questionId && x.PropertyName.StartsWith("OBS-")).ToList();
 
-
-            // see if we have an existing auto observation
+            // see if there is an existing auto observation
             var existingAutoObs = _context.FINDING.Where(x => x.Answer_Id == answer.AnswerId && x.Auto_Generated == Constants.Constants.ObsCreatedByVadr).FirstOrDefault();
             if (existingAutoObs != null)
             {
@@ -367,14 +294,13 @@ namespace CSETWebCore.Business.Observations
             // create new observation record
             var newObs = CreateObservationForAnswer((int)answer.AnswerId);
 
-            // populate with properties
+
+            // get OBS-properties for the question
+            var props = _context.MATURITY_QUESTION_PROPS.Where(x => x.Mat_Question_Id == questionId && x.PropertyName.StartsWith("OBS-")).ToList();
             newObs.Summary = props.Where(x => x.PropertyName == "OBS-DISCOVERY").FirstOrDefault()?.PropertyValue ?? "";
             newObs.Issue = props.Where(x => x.PropertyName == "OBS-RISK-STATEMENT").FirstOrDefault()?.PropertyValue ?? "";
             newObs.Recommendations = props.Where(x => x.PropertyName == "OBS-RECOMMENDATION").FirstOrDefault()?.PropertyValue ?? "";
 
-            //newObs.Risk_Area = props.Where(x => x.PropertyName == "OBS-RISK").FirstOrDefault()?.PropertyValue ?? "";
-            //newObs.Impact = props.Where(x => x.PropertyName == "OBS-IMPACT").FirstOrDefault()?.PropertyValue ?? "";
-            //newObs.Vulnerabilities = props.Where(x => x.PropertyName == "OBS-VULNERABILITY").FirstOrDefault()?.PropertyValue ?? "";
 
             // mark the observation as created by VADR so that we can find it easily to delete 
             newObs.Auto_Generated = Constants.Constants.ObsCreatedByVadr;
