@@ -31,6 +31,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _token;
         private readonly IAssessmentBusiness _assessment;
         private readonly IDemographicBusiness _demographic;
+        private readonly Hooks _hooks;
         private CSETContext _context;
 
         private readonly TranslationOverlay _overlay;
@@ -40,13 +41,13 @@ namespace CSETWebCore.Api.Controllers
         /// CTOR
         /// </summary>
         public DemographicsController(ITokenManager token, IAssessmentBusiness assessment,
-            IDemographicBusiness demographic, CSETContext context)
+            IDemographicBusiness demographic, Hooks hooks, CSETContext context)
         {
             _token = token;
             _assessment = assessment;
             _demographic = demographic;
             _context = context;
-
+            _hooks = hooks;
             _overlay = new TranslationOverlay();
         }
 
@@ -71,10 +72,8 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult Post([FromBody] Demographics demographics)
         {
             demographics.AssessmentId = _token.AssessmentForUser();
-            // return Ok(_demographic.SaveDemographics(demographics));
             var assessmentId = _demographic.SaveDemographics(demographics);
-            var counter = new CompletionCounter(_context);
-            counter.Count(assessmentId);
+            _hooks.HookDemographicsChanged(demographics.AssessmentId);
             var userId = _token.GetCurrentUserId();
             if (userId != null)
             {
@@ -92,7 +91,7 @@ namespace CSETWebCore.Api.Controllers
                     });
                 }
             }
-    
+            
             return Ok(assessmentId);
         }
 

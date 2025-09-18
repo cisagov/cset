@@ -148,10 +148,13 @@ export class AssessmentComponent implements OnInit {
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
       this.loadCompletionData();
-      this.completionSubscription = this.completionSvc.completionChanged$.subscribe(() => {
-        setTimeout(() => {
-          this.loadCompletionData();
-        }, 1000);
+      this.assessSvc.completionRefreshRequested$.subscribe((stats) => {
+        if (stats) {
+          this.completedQuestions = stats.completedCount;
+          this.totalQuestions = stats.totalCount;
+          this.completionPercentage = this.totalQuestions > 0 ?
+            Math.round((this.completedQuestions / this.totalQuestions) * 100) : 0;
+        }
       });
       this.demoSvc.demographicUpdateCompleted$.subscribe(() => {
         this.loadCompletionData();
@@ -162,7 +165,6 @@ export class AssessmentComponent implements OnInit {
   }
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
-    console.log(this.assessment)
   }
   setAssessmentDone(){
     this.assessment.done =!this.assessment.done;
