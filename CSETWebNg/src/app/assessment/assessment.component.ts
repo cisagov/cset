@@ -158,13 +158,15 @@ export class AssessmentComponent implements OnInit {
       });
       this.demoSvc.demographicUpdateCompleted$.subscribe(() => {
         this.loadCompletionData();
-        console.log('Progress refreshed due to demographic update');
       });
     }
 
   }
   getAssessmentDetail() {
-    this.assessment = this.assessSvc.assessment;
+    this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
+      this.assessment = data;
+      this.assessSvc.assessment = data;
+    });
   }
   setAssessmentDone(){
     this.assessment.done =!this.assessment.done;

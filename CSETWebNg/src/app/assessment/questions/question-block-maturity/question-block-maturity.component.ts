@@ -215,7 +215,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
             (response.totalStandardQuestionsCount || 0)
 
         });
-        console.log("from question block maturity")
       }
     });
   }

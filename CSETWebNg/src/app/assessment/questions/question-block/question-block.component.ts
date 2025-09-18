@@ -363,7 +363,6 @@ export class QuestionBlockComponent implements OnInit {
               (resp.totalDiagramQuestionsCount || 0) +
               (resp.totalStandardQuestionsCount || 0)
           });
-          console.log("from question block regaular")
         }
       });
 
