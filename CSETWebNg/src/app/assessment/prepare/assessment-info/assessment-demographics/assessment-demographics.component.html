@@ -104,12 +104,28 @@
                 <option *ngFor="let contact of contacts" [ngValue]="contact.assessmentContactId">{{contact.firstName}}
                     {{contact.lastName}}</option>
             </select>
-            <div class="mt-2">
-                <input type="checkbox" name="self-assessment" id="self-assessment" class="checkbox-custom mt-1"
-                    [(ngModel)]="demographicData.selfAssessment" [checked]="demographicData.selfAssessment"
-                    (change)="update($event)">
-                <label for="self-assessment" class="checkbox-custom-label d-inline">{{ t('self assessment') }}</label>
+          <div class="mt-4">
+            <input type="checkbox"
+                   name="self-assessment"
+                   id="self-assessment"
+                   class="tw:sr-only"
+                   [(ngModel)]="demographicData['selfAssessment']"
+                   (change)="update($event)">
+            <div class="tw:flex tw:items-center">
+              <span class="tw:mr-3">{{ t('self assessment') }}</span>
+              <label for="self-assessment" class="tw:cursor-pointer">
+                <div class="tw:w-11 tw:h-5 tw:bg-gray-200 tw:rounded-full tw:relative tw:transition-colors tw:duration-200"
+                     [ngClass]="{
+           'tw:bg-gray-200': !demographicData['selfAssessment'],
+           'tw:bg-[#015288]': demographicData['selfAssessment']
+         }">
+                  <div class="tw:absolute tw:top-0.5 tw:left-0.5 tw:w-4 tw:h-4 tw:bg-white tw:rounded-full tw:transition-transform tw:duration-200 tw:shadow-sm"
+                       [ngClass]="{'tw:translate-x-6': demographicData['selfAssessment']}">
+                  </div>
+                </div>
+              </label>
             </div>
+          </div>
         </div>
 
         <div *ngIf="showOrganizationName()" class="mb-3">
