@@ -612,6 +612,7 @@ import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/ci
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
 import { DeficiencyTemplateComponent } from './reports/deficiency-template/deficiency-template.component';
+import { KeyDisplay1Component } from './assessment/results/key-display-1/key-display-1.component';
 
 
 registerSwiper();
@@ -800,6 +801,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         QuestionTextCpgComponent,
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
+        KeyDisplay1Component,
         HeatmapComponent,
         EdmHeatmapComponent,
         EdmGlossaryComponent,

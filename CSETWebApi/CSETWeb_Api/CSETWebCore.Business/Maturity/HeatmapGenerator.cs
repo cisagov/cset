@@ -1,15 +1,7 @@
-﻿using CSETWebCore.Business.Aggregation;
-using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Enum;
-using CSETWebCore.Helpers;
+﻿using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Model.Edm;
-using DocumentFormat.OpenXml.Bibliography;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -50,9 +42,12 @@ namespace CSETWebCore.Business.Maturity
 
             foreach (var j in x.Model.Groupings)
             {
-                var n = ConvertToHeatmapNode(j);
+                var n = ConvertToHeatmapNode(j, modelId);
                 resp.Add(n);
             }
+
+            // exclude any top-level groupings without children
+            resp.RemoveAll(x => x.Children.Count == 0);
 
             return resp;
         }
@@ -62,7 +57,7 @@ namespace CSETWebCore.Business.Maturity
         /// Converts a Grouping to a node.  It colors the
         /// node depending on the child Question scoring.
         /// </summary>
-        public HeatmapNode ConvertToHeatmapNode(Model.Nested.Grouping source)
+        public HeatmapNode ConvertToHeatmapNode(Model.Nested.Grouping source, int modelId)
         {
             if (source == null)
             {
@@ -72,6 +67,7 @@ namespace CSETWebCore.Business.Maturity
             var heatmapNode = new HeatmapNode
             {
                 Title = source.Title,
+                FullTitle = source.Title,
                 GroupingId = source.GroupingId,
                 Color = "red",
                 Children = []
@@ -81,7 +77,7 @@ namespace CSETWebCore.Business.Maturity
             {
                 foreach (var question in source.Questions)
                 {
-                    var childNode = ConvertToHeatmapNode(question);
+                    var childNode = ConvertToHeatmapNode(question, modelId);
                     if (childNode != null)
                     {
                         heatmapNode.Children.Add(childNode);
@@ -94,7 +90,7 @@ namespace CSETWebCore.Business.Maturity
             {
                 foreach (var grouping in source.Groupings)
                 {
-                    var childNode = ConvertToHeatmapNode(grouping);
+                    var childNode = ConvertToHeatmapNode(grouping, modelId);
                     if (childNode != null)
                     {
                         heatmapNode.Children.Add(childNode);
@@ -123,7 +119,7 @@ namespace CSETWebCore.Business.Maturity
         /// <summary>
         /// Converts a Question to a node
         /// </summary>
-        public HeatmapNode ConvertToHeatmapNode(Model.Nested.Question source)
+        public HeatmapNode ConvertToHeatmapNode(Model.Nested.Question source, int modelId)
         {
             if (source == null)
             {
@@ -133,12 +129,13 @@ namespace CSETWebCore.Business.Maturity
             var heatmapNode = new HeatmapNode
             {
                 Title = "Q",
+                FullTitle = source.DisplayNumber,
                 QuestionId = source.QuestionId,
                 Children = []
             };
 
             // customize the question title 
-            heatmapNode.Title = CustomizeTitle(source);
+            heatmapNode.Title = CustomizeTitle(source, modelId);
 
             // color the question segment based on answer value
             switch (source.AnswerText)
@@ -171,8 +168,16 @@ namespace CSETWebCore.Business.Maturity
         /// This may need to be expanded if used for other
         /// models with different question namging conventions.
         /// </summary>
-        private string CustomizeTitle(Model.Nested.Question q)
+        private string CustomizeTitle(Model.Nested.Question q, int modelId)
         {
+            if (modelId == Constants.Constants.Model_CPG2)
+            {
+                // 5.A
+                return q.DisplayNumber;
+            }
+
+
+            // default "Qn"
             int dotIdx = q.DisplayNumber.LastIndexOf(".") + 1;
             return "Q" + q.DisplayNumber.Substring(dotIdx);
         }
@@ -184,6 +189,10 @@ namespace CSETWebCore.Business.Maturity
         public int GroupingId { get; set; }
         public int QuestionId { get; set; }
         public string Title { get; set; }
+        /// <summary>
+        /// The question's title as defined with no formatting
+        /// </summary>
+        public string FullTitle { get; set; }
         public string Color { get; set; }
         public List<HeatmapNode> Children { get; set; } = [];
     }
