@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CSETWebCore.Business.Authorization;
+using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
@@ -30,6 +31,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _token;
         private readonly IAssessmentBusiness _assessment;
         private readonly IDemographicBusiness _demographic;
+        private readonly Hooks _hooks;
         private CSETContext _context;
 
         private readonly TranslationOverlay _overlay;
@@ -39,13 +41,13 @@ namespace CSETWebCore.Api.Controllers
         /// CTOR
         /// </summary>
         public DemographicsController(ITokenManager token, IAssessmentBusiness assessment,
-            IDemographicBusiness demographic, CSETContext context)
+            IDemographicBusiness demographic, Hooks hooks, CSETContext context)
         {
             _token = token;
             _assessment = assessment;
             _demographic = demographic;
             _context = context;
-
+            _hooks = hooks;
             _overlay = new TranslationOverlay();
         }
 
@@ -70,7 +72,27 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult Post([FromBody] Demographics demographics)
         {
             demographics.AssessmentId = _token.AssessmentForUser();
-            return Ok(_demographic.SaveDemographics(demographics));
+            var assessmentId = _demographic.SaveDemographics(demographics);
+            _hooks.HookDemographicsChanged(demographics.AssessmentId);
+            var userId = _token.GetCurrentUserId();
+            if (userId != null)
+            {
+                var completionStats = _assessment.GetAssessmentsCompletionForUser((int)userId)
+                    .FirstOrDefault(x => x.AssessmentId == assessmentId);
+                
+                if (completionStats != null)
+                {
+                    return Ok(new {
+                        AssessmentId = assessmentId,
+                        CompletedCount = completionStats.CompletedCount,
+                        TotalMaturityQuestionsCount = completionStats.TotalMaturityQuestionsCount ?? 0,
+                        TotalDiagramQuestionsCount = completionStats.TotalDiagramQuestionsCount ?? 0,
+                        TotalStandardQuestionsCount = completionStats.TotalStandardQuestionsCount ?? 0
+                    });
+                }
+            }
+            
+            return Ok(assessmentId);
         }
 
 
