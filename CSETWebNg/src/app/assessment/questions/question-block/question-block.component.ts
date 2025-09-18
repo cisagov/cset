@@ -356,7 +356,16 @@ export class QuestionBlockComponent implements OnInit {
         if (resp.detailsChanged) {
           this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
         }
+        if (resp && resp.completedCount !== undefined) {
+          this.assessSvc.completionRefreshRequested$.next({
+            completedCount: resp.completedCount,
+            totalCount: (resp.totalMaturityQuestionsCount || 0) +
+              (resp.totalDiagramQuestionsCount || 0) +
+              (resp.totalStandardQuestionsCount || 0)
+          });
+        }
       });
+
   }
 
   /**
