@@ -208,71 +208,66 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
     if (this.navTarget?.toLowerCase().startsWith('m')) {
       const bonusModelId = +this.navTarget.substring(1);
       obsGetQ = this.maturitySvc.getBonusQuestionList(bonusModelId);
-
     } else {
       obsGetQ = this.maturitySvc.getQuestionsList(false);
     }
 
+    obsGetQ.subscribe((response: MaturityQuestionResponse) => {
+      this.modelId = response.modelId;
 
-    obsGetQ.subscribe(
-      (response: MaturityQuestionResponse) => {
-        this.modelId = response.modelId;
+      this.moduleBehavior = this.configSvc.getModuleBehavior(this.modelId);
 
-        this.moduleBehavior = this.configSvc.getModuleBehavior(this.modelId);
+      // Show the selector for CRE+ Optional Domain Questions (model 23)
+      // and CRE+ Optional MIL Questions (model 24)
+      this.showGroupingSelector = this.moduleBehavior.mustSelectGroupings ?? false;
+      this.groupingsAreMil = this.moduleBehavior.groupingsAreMil ?? false;
+      this.modelName = response.modelName;
+      this.questionsAlias = response.questionsAlias;
+      this.groupings = response.groupings;
+      this.selectableGroupingSvc.setModelGroupings(this.modelId, response.groupings);
 
-
-        // Show the selector for CRE+ Optional Domain Questions (model 23)
-        // and CRE+ Optional MIL Questions (model 24)
-        this.showGroupingSelector = this.moduleBehavior.mustSelectGroupings ?? false;
-        this.groupingsAreMil = this.moduleBehavior.groupingsAreMil ?? false;
-        this.modelName = response.modelName;
-        this.questionsAlias = response.questionsAlias;
-        this.groupings = response.groupings;
-        this.selectableGroupingSvc.setModelGroupings(this.modelId, response.groupings);
-
-        if (this.assessSvc.assessment && this.assessSvc.assessment.maturityModel) {
-          this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
-          this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
-        }
-
-        // 100 is the default level if the model does not support a target
-        this.modelSupportsTargetLevel = response.maturityTargetLevel < 100;
-
-        this.filterSvc.answerOptions = response.answerOptions.slice();
-        this.filterSvc.maturityModelId = response.modelId;
-        this.filterSvc.maturityModelName = response.modelName;
-        this.filterSvc.maturityTargetLevel = response.maturityTargetLevel;
-
-        // Adding Maturity Levels to the filters
-        this.filterSvc.refreshAllowableFilters();
-        this.filterSvc.forceRefresh();
-        this.displayTitle();
-
-
-        this.glossarySvc.glossaryEntries = response.glossary;
-
-
-        // set the message with the current "no" answer value
-        let codeForNo = this.moduleBehavior.answerOptions?.find(o => o.unansweredEquivalent)?.code ?? 'N';
-        const valueForNo = this.questionsSvc.answerButtonLabel(this.modelName, codeForNo);
-        this.msgUnansweredEqualsNo = this.tSvc.translate('questions.unanswered equals no', { 'no-ans': valueForNo });
-
-        this.loaded = true;
-
-        this.completionSvc.structure = response;
-        this.completionSvc.setQuestionArray();
-
-        this.refreshQuestionVisibility();
-      },
-      error => {
-        console.error(
-          'Error getting questions: ' +
-          (<Error>error).name +
-          (<Error>error).message
-        );
-        console.error('Error getting questions: ' + (<Error>error).stack);
+      if (this.assessSvc.assessment && this.assessSvc.assessment.maturityModel) {
+        this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
+        this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
       }
-    );
+
+      // 100 is the default level if the model does not support a target
+      this.modelSupportsTargetLevel = response.maturityTargetLevel < 100;
+
+      this.filterSvc.answerOptions = response.answerOptions.slice();
+      this.filterSvc.maturityModelId = response.modelId;
+      this.filterSvc.maturityModelName = response.modelName;
+      this.filterSvc.maturityTargetLevel = response.maturityTargetLevel;
+
+      // Adding Maturity Levels to the filters
+      this.filterSvc.refreshAllowableFilters();
+      this.filterSvc.forceRefresh();
+      this.displayTitle();
+
+      this.glossarySvc.glossaryEntries = response.glossary;
+
+      // set the message with the current "no" answer value
+      let codeForNo = this.moduleBehavior.answerOptions?.find(o => o.unansweredEquivalent)?.code ?? 'N';
+      const valueForNo = this.questionsSvc.answerButtonLabel(this.modelName, codeForNo);
+      this.msgUnansweredEqualsNo = this.tSvc.translate('questions.unanswered equals no', { 'no-ans': valueForNo });
+
+      this.loaded = true;
+
+      this.completionSvc.structure = response;
+      this.completionSvc.setQuestionArray();
+
+      this.refreshQuestionVisibility();
+    },
+    
+    error => {
+      console.error(
+        'Error getting questions: ' +
+        (<Error>error).name +
+        (<Error>error).message
+      );
+      
+      console.error('Error getting questions: ' + (<Error>error).stack);
+    });
   }
 
   /**
@@ -287,10 +282,12 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
     this.groupings = null;
 
     this.maturitySvc.getGroupingQuestions(groupingId).subscribe((response: MaturityQuestionResponse) => {
+
       this.modelId = response.modelId;
       this.modelName = response.modelName;
       this.questionsAlias = response.questionsAlias;
       this.groupings = response.groupings;
+
       if (this.assessSvc.assessment && this.assessSvc.assessment.maturityModel) {
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
@@ -301,7 +298,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
 
       this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
 
-      if (this.moduleBehavior.questionPageTitleKey) {
+      if (this.moduleBehavior?.questionPageTitleKey) {
         this.pageTitle = this.tSvc.translate(this.moduleBehavior.questionPageTitleKey);
       }
 

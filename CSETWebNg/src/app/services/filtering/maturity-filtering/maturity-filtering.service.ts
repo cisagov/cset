@@ -287,6 +287,18 @@ export class MaturityFilteringService {
           this.rraFilteringSvc.setQuestionVisibility(q);
           break;
 
+        case 'MVRA':
+          q.visible = true;
+          console.log("q");
+          console.log(q);
+          if (q.maturityLevelName == "Basic")
+            q.maturityLevel = 1;
+          if (q.maturityLevelName == "Intermediate")
+            q.maturityLevel = 2;
+          if (q.maturityLevelName == "Advanced")
+            q.maturityLevel = 3;
+          break;
+
         default:
           this.basicFilteringSvc.setQuestionVisibility(q);
       }
@@ -297,8 +309,12 @@ export class MaturityFilteringService {
 
       const maturityModel = this.assesmentSvc.assessment?.maturityModel;
 
+      // console.log("q");
+      // console.log(q);
+
       if (q.maturityLevel !== undefined && q.maturityLevel !== null) {
-        const questionLevel = q.maturityLevel.toString();
+        let questionLevel = q.maturityLevel.toString();
+
         if (!filterSvc.showFilters.includes(questionLevel)) {
           //q.visible=false;   -- quick fix for now to prevent questions from being hidden incorrectly
           //return;
@@ -326,9 +342,8 @@ export class MaturityFilteringService {
 
       // only apply maturity-level filtering when the user has toggled at least one numeric level
       const hasLevelFilter = filterSvc.showFilters.some(f => /^\d+$/.test(f));
-      if ((maturityModel?.levels?.length ?? 0) > 0
-        && q.maturityLevel != null
-        && hasLevelFilter) {
+
+      if ((maturityModel?.levels?.length ?? 0) > 0 && q.maturityLevel != null && hasLevelFilter) {
         const questionLevel = q.maturityLevel.toString();
         if (!filterSvc.showFilters.includes(questionLevel)) {
           q.visible = false;
@@ -381,6 +396,7 @@ export class MaturityFilteringService {
         filterSvc.answerOptions.includes(f) || f === 'U' || ['C', 'FB', 'M', 'O', 'FR'].includes(f));
 
       if (!hasAnswerOrFeatureFilter && q.maturityLevel != null) {
+
         const questionLevel = q.maturityLevel.toString();
         if (filterSvc.showFilters.includes(questionLevel)) {
           q.visible = true;
