@@ -674,7 +674,7 @@ export class MyAssessmentsComponent implements OnInit {
     `;
     }
 
-    return `<div class="tw:flex tw:gap-1">${buttons}</div>`;
+    return `<div class="tw:flex tw:h-full tw:gap-1">${buttons}</div>`;
   }
 
   onGridReady(params: GridReadyEvent): void {
