@@ -53,7 +53,6 @@ export class SsgSelectorComponent implements OnChanges {
     }
 
     this.list1 = this.inputSectorList.filter(x => this.ssgSvc.csetSsgSectorList.includes(x.sectorId));
-    console.log('list1', this.list1);
 
     this.list2 = [];
     this.inputSectorList.forEach(s => {
