@@ -141,9 +141,7 @@ export class ObservationsGeneralComponent implements OnInit {
 
   /**
    * Fills the empty observation_Contacts field with front-facing array
-   * of contacts assigned to the assessment, which will only be saved to
-   * the database and assigned real assessment_Contact_Ids 
-   * if the user saves the observation
+   * of contacts assigned to the assessment
    */
   async getContactsForEmptyObservation(): Promise<ObservationContact[]> {
     let observationContacts = [];
