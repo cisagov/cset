@@ -262,7 +262,6 @@ namespace CSETWebCore.Api.Controllers
                 _hooks.HookQuestionAnswered(savedComponentAnswer);
 
                 response.AnswerId = (int)savedComponentAnswer.AnswerId;
-                // return Ok(response);
             }
 
 
@@ -275,7 +274,6 @@ namespace CSETWebCore.Api.Controllers
 
 
                 response.AnswerId = (int)savedRequirementAnswer.AnswerId;
-                // return Ok(response);
             }
 
 
@@ -289,27 +287,26 @@ namespace CSETWebCore.Api.Controllers
 
                 response.AnswerId = (int)savedMaturityAnswer.AnswerId;
                 response.DetailsChanged = detailsChanged;
-                // return Ok(response);
             }
 
 
             if (answer.QuestionType == "Question")
             {
-                // 'Questions mode' question dropd through to here
                 var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
                 var savedQuestionAnswer = qb.StoreAnswer(answer);
 
                 _hooks.HookQuestionAnswered(savedQuestionAnswer);
 
                 response.AnswerId = (int)savedQuestionAnswer.AnswerId;
-                // return Ok(response);
             }
-            var userId=_token.GetCurrentUserId();
+
+
+            var userId = _token.GetCurrentUserId();
             if (userId != null)
             {
                 var completionStats = _assessmentBusiness.GetAssessmentsCompletionForUser((int)userId)
                     .FirstOrDefault(x => x.AssessmentId == assessmentId);
-                 
+
                 if (completionStats != null)
                 {
                     response.CompletedCount = completionStats.CompletedCount;
@@ -318,9 +315,8 @@ namespace CSETWebCore.Api.Controllers
                     response.TotalStandardQuestionsCount = completionStats.TotalStandardQuestionsCount ?? 0;
                 }
             }
+
             return Ok(response);
-            // Unknown Answer.QuestionType
-            return BadRequest();
         }
 
 
@@ -419,7 +415,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-       
+
 
 
         /// <summary>
