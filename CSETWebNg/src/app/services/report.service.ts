@@ -148,8 +148,11 @@ export class ReportService {
     return this.http.get(this.configSvc.apiUrl + 'maturity/structure?modelId=' + modelId);
   }
  
-  getHeatmap(modelId: string) {
-    return this.http.get(this.configSvc.apiUrl + 'heatmap?modelId=' + modelId);
+  /**
+   * Gets the score structure to build a heatmap for a model
+   */
+  getHeatmap(modelId: number) {
+    return this.http.get<any[]>(this.configSvc.apiUrl + 'heatmap?modelId=' + modelId);
   }
 
   /**

@@ -95,14 +95,10 @@
       </div>
       <hr *ngIf="maturityLevels.length" class="mt-2 mb-2" />
       <div *ngFor="let lvl of maturityLevels">
-        <input
-          (click)="updateFilters($event, lvl)"
-          [checked]="filterSvc.filterOn(lvl)"
-          [id]="'cbLevel' + lvl"
-          class="checkbox-custom"
-          type="checkbox" />
+        <input (click)="updateFilters($event, lvl)" [checked]="filterSvc.filterOn(lvl)" [id]="'cbLevel' + lvl"
+          class="checkbox-custom" type="checkbox" />
         <label [for]="'cbLevel' + lvl" class="checkbox-custom-label d-block">
-<!--          Level {{ lvl }}-->
+          <!--          Level {{ lvl }}-->
           {{getMaturityLevelLabel(lvl)}}
         </label>
       </div>

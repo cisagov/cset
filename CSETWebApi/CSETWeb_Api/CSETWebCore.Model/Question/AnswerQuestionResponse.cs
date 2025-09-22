@@ -18,5 +18,10 @@ namespace CSETWebCore.Model.Question
         /// so that it can request them to refresh the UI.
         /// </summary>
         public bool DetailsChanged { get; set; }
+        public int? CompletedCount { get; set; }
+        public int? TotalMaturityQuestionsCount { get; set; }
+        public int? TotalDiagramQuestionsCount { get; set; }
+        public int? TotalStandardQuestionsCount { get; set; }
+        public int? AssessmentId { get; set; }
     }
 }

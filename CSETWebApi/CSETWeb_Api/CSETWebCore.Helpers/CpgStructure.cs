@@ -150,6 +150,10 @@ namespace CSETWebCore.Helpers
 
 
             GetSubgroups(Top.Domains, null, allGroupings, questions, answers.ToList(), allRemarks);
+
+
+            // remove any Domains that have no children - this is normal for SSG models
+            Top.Domains.RemoveAll(x => x.Questions.Count == 0 && (x.GroupingId == 0 || x.Groupings == null || x.Groupings.Count == 0));
         }
 
 

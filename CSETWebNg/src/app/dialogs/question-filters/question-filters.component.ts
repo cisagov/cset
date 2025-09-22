@@ -137,14 +137,22 @@ export class QuestionFiltersComponent implements OnInit {
     return this.configSvc.installationMode == mode;
   }
 
+  /**
+   * 
+   */
   usesMaturityModel(model: string) {
     return this.assessSvc.usesMaturityModel(model);
   }
+
+  /**
+   * 
+   */
   public get maturityLevels(): string[] {
-    const maturityModel=this.assessSvc.assessment?.maturityModel;
-    if (!this.filterSvc?.allowableFilters || !maturityModel?.levels || maturityModel.levels.length<=1 ) {
+    const maturityModel = this.assessSvc.assessment?.maturityModel;
+    if (!this.filterSvc?.allowableFilters || !maturityModel?.levels || maturityModel.levels.length <= 1) {
       return [];
     }
+    
     const levels = this.filterSvc.allowableFilters
       .filter(f => !isNaN(Number(f))) // Only numeric values
       .map(f => Number(f)) // Convert to numbers for comparison
@@ -153,10 +161,14 @@ export class QuestionFiltersComponent implements OnInit {
       .sort((a, b) => Number(a) - Number(b)); // Sort numerically
     return levels;
   }
-  public getMaturityLevelLabel(levelNumber: string | number): string
-  {
-    const maturityModel =this.assessSvc.assessment?.maturityModel;
+
+  /**
+   * 
+   */
+  getMaturityLevelLabel(levelNumber: string | number): string {
+    const maturityModel = this.assessSvc.assessment?.maturityModel;
     if (!maturityModel?.levels) { return `Level ${levelNumber}`; }
-    const level =maturityModel.levels.find(l => l.level.toString() === levelNumber.toString());
-    return level?.label || `Level ${levelNumber}`; }
+    const level = maturityModel.levels.find(l => l.level.toString() === levelNumber.toString());
+    return level?.label || `Level ${levelNumber}`;
+  }
 }
