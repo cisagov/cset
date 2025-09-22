@@ -169,7 +169,11 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IGalleryState, GalleryState>();
             services.AddTransient<IGalleryEditor, GalleryEditor>();
             services.AddTransient<IMalcolmBusiness, MalcolmBusiness>();
-            services.AddTransient<JSONAssessmentExportManager>();
+            services.AddTransient(provider =>
+                new JSONAssessmentExportManager(
+                    provider.GetRequiredService<IAssessmentBusiness>(),
+                    provider.GetRequiredService<IContactBusiness>()
+                ));
             services.AddScoped<IVersionBusiness, VersionBusiness>();
             services.AddScoped<Hooks>();
 
