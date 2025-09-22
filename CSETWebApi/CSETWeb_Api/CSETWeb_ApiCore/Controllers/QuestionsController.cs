@@ -18,6 +18,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.User;
+using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Model.Question;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
@@ -34,6 +35,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _token;
         private readonly INotificationBusiness _notification;
         private readonly IAssessmentUtil _assessmentUtil;
+        private readonly IAssessmentBusiness _assessmentBusiness;
         private readonly IContactBusiness _contact;
         private readonly IUserBusiness _user;
         private readonly IDocumentBusiness _document;
@@ -48,7 +50,7 @@ namespace CSETWebCore.Api.Controllers
         /// 
         /// </summary>
         public QuestionsController(ITokenManager token, INotificationBusiness notification,
-            IAssessmentUtil assessmentUtil, IContactBusiness contact, IDocumentBusiness document, IHtmlFromXamlConverter htmlConverter, IQuestionRequirementManager questionRequirement,
+            IAssessmentUtil assessmentUtil, IAssessmentBusiness assessmentBusiness, IContactBusiness contact, IDocumentBusiness document, IHtmlFromXamlConverter htmlConverter, IQuestionRequirementManager questionRequirement,
             IUserBusiness user, CSETContext context, Hooks hooks)
         {
             _token = token;
@@ -56,6 +58,7 @@ namespace CSETWebCore.Api.Controllers
             _hooks = hooks;
             _notification = notification;
             _assessmentUtil = assessmentUtil;
+            _assessmentBusiness = assessmentBusiness;
             _contact = contact;
             _user = user;
             _document = document;
@@ -259,7 +262,7 @@ namespace CSETWebCore.Api.Controllers
                 _hooks.HookQuestionAnswered(savedComponentAnswer);
 
                 response.AnswerId = (int)savedComponentAnswer.AnswerId;
-                return Ok(response);
+                // return Ok(response);
             }
 
 
@@ -272,7 +275,7 @@ namespace CSETWebCore.Api.Controllers
 
 
                 response.AnswerId = (int)savedRequirementAnswer.AnswerId;
-                return Ok(response);
+                // return Ok(response);
             }
 
 
@@ -286,7 +289,7 @@ namespace CSETWebCore.Api.Controllers
 
                 response.AnswerId = (int)savedMaturityAnswer.AnswerId;
                 response.DetailsChanged = detailsChanged;
-                return Ok(response);
+                // return Ok(response);
             }
 
 
@@ -299,9 +302,23 @@ namespace CSETWebCore.Api.Controllers
                 _hooks.HookQuestionAnswered(savedQuestionAnswer);
 
                 response.AnswerId = (int)savedQuestionAnswer.AnswerId;
-                return Ok(response);
+                // return Ok(response);
             }
-
+            var userId=_token.GetCurrentUserId();
+            if (userId != null)
+            {
+                var completionStats = _assessmentBusiness.GetAssessmentsCompletionForUser((int)userId)
+                    .FirstOrDefault(x => x.AssessmentId == assessmentId);
+                 
+                if (completionStats != null)
+                {
+                    response.CompletedCount = completionStats.CompletedCount;
+                    response.TotalMaturityQuestionsCount = completionStats.TotalMaturityQuestionsCount ?? 0;
+                    response.TotalDiagramQuestionsCount = completionStats.TotalDiagramQuestionsCount ?? 0;
+                    response.TotalStandardQuestionsCount = completionStats.TotalStandardQuestionsCount ?? 0;
+                }
+            }
+            return Ok(response);
             // Unknown Answer.QuestionType
             return BadRequest();
         }

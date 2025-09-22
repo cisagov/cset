@@ -65,7 +65,7 @@ export class AssessmentDetailComponent implements OnInit {
   ) { }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     if (this.assessSvc.id()) {
@@ -159,9 +159,5 @@ export class AssessmentDetailComponent implements OnInit {
       this.navSvc.navBack('csi2');
     });
 
-  }
-  setAssessmentDone(){
-    this.assessment.done =!this.assessment.done;
-    this.assessSvc.setAssesmentDone(this.assessment.done).subscribe();
   }
 }
