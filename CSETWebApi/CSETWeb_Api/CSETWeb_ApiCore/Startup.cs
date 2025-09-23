@@ -172,7 +172,9 @@ namespace CSETWeb_ApiCore
             services.AddTransient(provider =>
                 new JSONAssessmentExportManager(
                     provider.GetRequiredService<IAssessmentBusiness>(),
-                    provider.GetRequiredService<IContactBusiness>()
+                    provider.GetRequiredService<IContactBusiness>(),
+                    provider.GetRequiredService<IReportsDataBusiness>(),
+                    provider.GetRequiredService<IQuestionBusiness>()
                 ));
             services.AddScoped<IVersionBusiness, VersionBusiness>();
             services.AddScoped<Hooks>();

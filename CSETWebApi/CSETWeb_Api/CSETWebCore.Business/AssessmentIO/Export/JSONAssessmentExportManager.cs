@@ -6,11 +6,19 @@
 ////////////////////////////////
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using CSETWebCore.Business.Question;
+using CSETWebCore.Business.Reports;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Contact;
+using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Gallery;
+using CSETWebCore.Model.Question;
+using CSETWebCore.Model.Maturity;
 
 namespace CSETWebCore.Business.AssessmentIO.Export
 {
@@ -18,16 +26,24 @@ namespace CSETWebCore.Business.AssessmentIO.Export
     {
         private readonly IAssessmentBusiness _assessmentBusiness;
         private readonly IContactBusiness _contactBusiness;
+        private readonly IReportsDataBusiness _reportsDataBusiness;
+        private readonly IQuestionBusiness _questionBusiness;
         private readonly JsonSerializerOptions _serializerOptions;
 
         /// <summary>
         /// Creates an export manager that uses the assessment business service to fetch
         /// detailed assessment data for JSON serialization.
         /// </summary>
-        public JSONAssessmentExportManager(IAssessmentBusiness assessmentBusiness, IContactBusiness contactBusiness)
+        public JSONAssessmentExportManager(
+            IAssessmentBusiness assessmentBusiness,
+            IContactBusiness contactBusiness,
+            IReportsDataBusiness reportsDataBusiness,
+            IQuestionBusiness questionBusiness)
         {
             _assessmentBusiness = assessmentBusiness ?? throw new ArgumentNullException(nameof(assessmentBusiness));
             _contactBusiness = contactBusiness ?? throw new ArgumentNullException(nameof(contactBusiness));
+            _reportsDataBusiness = reportsDataBusiness ?? throw new ArgumentNullException(nameof(reportsDataBusiness));
+            _questionBusiness = questionBusiness ?? throw new ArgumentNullException(nameof(questionBusiness));
             _serializerOptions = new JsonSerializerOptions
             {
                 WriteIndented = true,
@@ -54,11 +70,102 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             }
 
             var contacts = _contactBusiness.GetContacts(assessmentId);
+            List<StandardQuestions> standardQuestions = null;
+            QuestionResponse questionList = null;
+            List<MatRelevantAnswers> maturityQuestions = null;
+
+            if (assessment.UseStandard)
+            {
+                // Ensure the standard selections are populated before exporting
+                if (assessment.Standards == null || assessment.Standards.Count == 0)
+                {
+                    _assessmentBusiness.GetSelectedStandards(ref assessment);
+                }
+
+                _reportsDataBusiness.SetReportsAssessmentId(assessment.Id);
+                standardQuestions = _reportsDataBusiness.GetQuestionsForEachStandard();
+
+                // Fallback to question list for unanswered standards so export matches api/QuestionList
+                if (standardQuestions == null || !standardQuestions.Any())
+                {
+                    _questionBusiness.SetQuestionAssessmentId(assessment.Id);
+                    questionList = _questionBusiness.GetQuestionListWithSet("*");
+
+                    if (questionList?.Categories != null)
+                    {
+                        var standardMap = new Dictionary<string, StandardQuestions>(StringComparer.OrdinalIgnoreCase);
+
+                        foreach (var group in questionList.Categories)
+                        {
+                            var key = string.IsNullOrWhiteSpace(group.SetName) ? "STANDARD" : group.SetName;
+                            if (!standardMap.TryGetValue(key, out var stdQuestions))
+                            {
+                                stdQuestions = new StandardQuestions
+                                {
+                                    StandardShortName = key,
+                                    Questions = new List<SimpleStandardQuestions>()
+                                };
+                                standardMap[key] = stdQuestions;
+                            }
+
+                            foreach (var subCategory in group.SubCategories)
+                            {
+                                foreach (var question in subCategory.Questions)
+                                {
+                                    stdQuestions.Questions.Add(new SimpleStandardQuestions
+                                    {
+                                        ShortName = key,
+                                        CategoryAndNumber = !string.IsNullOrWhiteSpace(question.DisplayNumber)
+                                            ? $"{group.GroupHeadingText} #{question.DisplayNumber}"
+                                            : group.GroupHeadingText,
+                                        Question = question.QuestionText,
+                                        QuestionId = question.QuestionId,
+                                        Answer = question.Answer
+                                    });
+                                }
+                            }
+                        }
+
+                        standardQuestions = standardMap.Values.Where(x => x.Questions.Any()).ToList();
+                    }
+                }
+            }
+
+            if (assessment.UseMaturity == true)
+            {
+                _reportsDataBusiness.SetReportsAssessmentId(assessment.Id);
+                maturityQuestions = _reportsDataBusiness.GetQuestionsList();
+            }
+
+            object details = null;
+
+            if (assessment.UseStandard)
+            {
+                if ((standardQuestions != null && standardQuestions.Any()) || questionList != null)
+                {
+                    details = new
+                    {
+                        standardQuestions,
+                        questionList
+                    };
+                }
+            }
+            else if (assessment.UseMaturity)
+            {
+                if (maturityQuestions != null && maturityQuestions.Any())
+                {
+                    details = new
+                    {
+                        maturityQuestions
+                    };
+                }
+            }
 
             var payload = new
             {
                 assessment,
-                contacts
+                contacts,
+                details
             };
 
             return JsonSerializer.Serialize(payload, _serializerOptions);
