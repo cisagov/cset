@@ -74,6 +74,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             QuestionResponse questionList = null;
             List<MatRelevantAnswers> maturityQuestions = null;
 
+            object details = null;
+
+            // Standards-based assessment
             if (assessment.UseStandard)
             {
                 // Ensure the standard selections are populated before exporting
@@ -129,36 +132,24 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                         standardQuestions = standardMap.Values.Where(x => x.Questions.Any()).ToList();
                     }
                 }
+
+                details = new
+                {
+                    standardQuestions,
+                    questionList
+                };
             }
 
-            if (assessment.UseMaturity == true)
+            // Maturity model-based assessment
+            else if (assessment.UseMaturity)
             {
                 _reportsDataBusiness.SetReportsAssessmentId(assessment.Id);
                 maturityQuestions = _reportsDataBusiness.GetQuestionsList();
-            }
 
-            object details = null;
-
-            if (assessment.UseStandard)
-            {
-                if ((standardQuestions != null && standardQuestions.Any()) || questionList != null)
+                details = new
                 {
-                    details = new
-                    {
-                        standardQuestions,
-                        questionList
-                    };
-                }
-            }
-            else if (assessment.UseMaturity)
-            {
-                if (maturityQuestions != null && maturityQuestions.Any())
-                {
-                    details = new
-                    {
-                        maturityQuestions
-                    };
-                }
+                    maturityQuestions
+                };
             }
 
             var payload = new
