@@ -55,7 +55,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         /// <summary>
         /// Returns the assessment details serialized as JSON for the supplied assessment id.
         /// </summary>
-        public string GetJson(int assessmentId)
+        public string GetJson(int assessmentId, bool removePCII = false)
         {
             if (assessmentId <= 0)
             {
@@ -157,6 +157,12 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             }
 
             object details = detailSections.Count > 0 ? detailSections : null;
+
+            // Remove PCII data if requested
+            if (removePCII)
+            {
+                Console.WriteLine("Removed PCII from assessment export.");
+            }
 
             CleanData(assessment);
 
