@@ -204,43 +204,32 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 return null;
             }
 
-            var industries = _context.SECTOR_INDUSTRY
-                .Where(x => x.SectorId == sectorEntity.SectorId)
-                .OrderBy(x => x.IndustryName)
-                .ToList();
+            int? selectedIndustryId = assessment.IndustryId;
 
-            if (industries.Count > 0)
+            if (!selectedIndustryId.HasValue)
             {
-                var otherItems = industries.Where(x => x.Is_Other).ToList();
-                foreach (var other in otherItems)
-                {
-                    industries.Remove(other);
-                    industries.Add(other);
-                }
+                selectedIndustryId = _context.DETAILS_DEMOGRAPHICS
+                    .Where(x => x.Assessment_Id == assessment.Id && x.DataItemName == "SUBSECTOR")
+                    .Select(x => x.IntValue)
+                    .FirstOrDefault();
             }
+
+            var industriesQuery = _context.SECTOR_INDUSTRY.Where(x => x.SectorId == sectorEntity.SectorId);
+
+            var selectedIndustryEntity = selectedIndustryId.HasValue
+                ? industriesQuery.FirstOrDefault(x => x.IndustryId == selectedIndustryId.Value)
+                : null;
 
             var exportDetails = new SectorExportDetails
             {
                 SectorId = sectorEntity.SectorId,
                 SectorName = sectorEntity.SectorName,
-                Industries = industries.Select(x => new SectorIndustryDetails
-                {
-                    IndustryId = x.IndustryId,
-                    SectorId = x.SectorId,
-                    IndustryName = x.IndustryName,
-                    IsOther = x.Is_Other
-                }).ToList()
             };
 
-            if (assessment.IndustryId.HasValue)
+            if (selectedIndustryEntity != null)
             {
-                var selectedIndustry = exportDetails.Industries
-                    .FirstOrDefault(x => x.IndustryId == assessment.IndustryId.Value);
-                if (selectedIndustry != null)
-                {
-                    exportDetails.SelectedIndustryId = selectedIndustry.IndustryId;
-                    exportDetails.SelectedIndustryName = selectedIndustry.IndustryName;
-                }
+                exportDetails.SelectedIndustryId = selectedIndustryEntity.IndustryId;
+                exportDetails.SelectedIndustryName = selectedIndustryEntity.IndustryName;
             }
 
             return exportDetails;
@@ -294,15 +283,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             public string SectorName { get; set; }
             public int? SelectedIndustryId { get; set; }
             public string SelectedIndustryName { get; set; }
-            public List<SectorIndustryDetails> Industries { get; set; } = new List<SectorIndustryDetails>();
-        }
-
-        private sealed class SectorIndustryDetails
-        {
-            public int IndustryId { get; set; }
-            public int SectorId { get; set; }
-            public string IndustryName { get; set; }
-            public bool IsOther { get; set; }
         }
     }
 }
