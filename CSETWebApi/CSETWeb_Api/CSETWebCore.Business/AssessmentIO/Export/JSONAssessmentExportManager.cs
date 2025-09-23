@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Reports;
@@ -28,6 +29,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         private readonly IContactBusiness _contactBusiness;
         private readonly IReportsDataBusiness _reportsDataBusiness;
         private readonly IQuestionBusiness _questionBusiness;
+        private readonly CSETContext _context;
         private readonly JsonSerializerOptions _serializerOptions;
 
         /// <summary>
@@ -38,12 +40,14 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             IAssessmentBusiness assessmentBusiness,
             IContactBusiness contactBusiness,
             IReportsDataBusiness reportsDataBusiness,
-            IQuestionBusiness questionBusiness)
+            IQuestionBusiness questionBusiness,
+            CSETContext context)
         {
             _assessmentBusiness = assessmentBusiness ?? throw new ArgumentNullException(nameof(assessmentBusiness));
             _contactBusiness = contactBusiness ?? throw new ArgumentNullException(nameof(contactBusiness));
             _reportsDataBusiness = reportsDataBusiness ?? throw new ArgumentNullException(nameof(reportsDataBusiness));
             _questionBusiness = questionBusiness ?? throw new ArgumentNullException(nameof(questionBusiness));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
             _serializerOptions = new JsonSerializerOptions
             {
                 WriteIndented = true,
@@ -76,6 +80,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             List<ComponentQuestion> componentQuestions = null;
 
             var detailSections = new Dictionary<string, object>();
+            SectorExportDetails sectorDetails = null;
 
             // Standards-based assessment
             if (assessment.UseStandard)
@@ -158,18 +163,24 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
             object details = detailSections.Count > 0 ? detailSections : null;
 
+            // Build out the Sector details
+            sectorDetails = BuildSectorDetails(assessment);
+
+            // Remove irrelevant data from the payload
+            CleanData(assessment);
+
             // Remove PCII data if requested
             if (removePCII)
             {
-                Console.WriteLine("Removed PCII from assessment export.");
-            }
+                RemovePCII(assessment);
 
-            CleanData(assessment);
+            }
 
             // Build out the full payload for serialization
             var payload = new
             {
                 assessment,
+                sectorDetails,
                 contacts,
                 details
             };
@@ -178,27 +189,120 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         }
 
         /// <summary>
+        /// Builds the sector details block for the export payload using the current assessment demographics.
+        /// </summary>
+        private SectorExportDetails BuildSectorDetails(AssessmentDetail assessment)
+        {
+            if (assessment?.SectorId == null)
+            {
+                return null;
+            }
+
+            var sectorEntity = _context.SECTOR.FirstOrDefault(s => s.SectorId == assessment.SectorId.Value);
+            if (sectorEntity == null)
+            {
+                return null;
+            }
+
+            var industries = _context.SECTOR_INDUSTRY
+                .Where(x => x.SectorId == sectorEntity.SectorId)
+                .OrderBy(x => x.IndustryName)
+                .ToList();
+
+            if (industries.Count > 0)
+            {
+                var otherItems = industries.Where(x => x.Is_Other).ToList();
+                foreach (var other in otherItems)
+                {
+                    industries.Remove(other);
+                    industries.Add(other);
+                }
+            }
+
+            var exportDetails = new SectorExportDetails
+            {
+                SectorId = sectorEntity.SectorId,
+                SectorName = sectorEntity.SectorName,
+                Industries = industries.Select(x => new SectorIndustryDetails
+                {
+                    IndustryId = x.IndustryId,
+                    SectorId = x.SectorId,
+                    IndustryName = x.IndustryName,
+                    IsOther = x.Is_Other
+                }).ToList()
+            };
+
+            if (assessment.IndustryId.HasValue)
+            {
+                var selectedIndustry = exportDetails.Industries
+                    .FirstOrDefault(x => x.IndustryId == assessment.IndustryId.Value);
+                if (selectedIndustry != null)
+                {
+                    exportDetails.SelectedIndustryId = selectedIndustry.IndustryId;
+                    exportDetails.SelectedIndustryName = selectedIndustry.IndustryName;
+                }
+            }
+
+            return exportDetails;
+        }
+
+        /// <summary>
         /// Removes export-only fields from the assessment payload to avoid leaking
         /// data that is not required by the exported JSON document.
         /// </summary>
-        private void CleanData(AssessmentDetail assessment)
+        private static void CleanData(AssessmentDetail assessment)
         {
             if (assessment == null)
             {
                 return;
             }
 
-            // Gallery selections are internal-only and should not be part of the export payload.
+            // Remove fields from all assessment types
+            assessment.Charter = null;
             assessment.GalleryItemGuid = null;
 
-            if (!assessment.UseDiagram)
+            // Remove fields specific to maturity-based assessments
+            if (assessment.UseMaturity)
+            {
+                assessment.ApplicationMode = null;
+            }
+
+            // Remove fields specific to network diagram based assessments
+            if (assessment.UseDiagram)
+            {
+                assessment.DiagramMarkup = null;
+                assessment.DiagramImage = null;
+            }
+        }
+
+        /// <summary>
+        /// Removes PCII data from the assessment payload to avoid leaking sensitive
+        /// information that is not required by the exported JSON document.
+        /// </summary>
+        private static void RemovePCII(AssessmentDetail assessment)
+        {
+            if (assessment == null)
             {
                 return;
             }
+            assessment.SectorId = null;
+        }
 
-            // Network diagram exports should not include markup or rendered images.
-            assessment.DiagramMarkup = null;
-            assessment.DiagramImage = null;
+        private sealed class SectorExportDetails
+        {
+            public int SectorId { get; set; }
+            public string SectorName { get; set; }
+            public int? SelectedIndustryId { get; set; }
+            public string SelectedIndustryName { get; set; }
+            public List<SectorIndustryDetails> Industries { get; set; } = new List<SectorIndustryDetails>();
+        }
+
+        private sealed class SectorIndustryDetails
+        {
+            public int IndustryId { get; set; }
+            public int SectorId { get; set; }
+            public string IndustryName { get; set; }
+            public bool IsOther { get; set; }
         }
     }
 }

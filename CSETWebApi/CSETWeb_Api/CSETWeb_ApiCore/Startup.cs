@@ -174,7 +174,8 @@ namespace CSETWeb_ApiCore
                     provider.GetRequiredService<IAssessmentBusiness>(),
                     provider.GetRequiredService<IContactBusiness>(),
                     provider.GetRequiredService<IReportsDataBusiness>(),
-                    provider.GetRequiredService<IQuestionBusiness>()
+                    provider.GetRequiredService<IQuestionBusiness>(),
+                    provider.GetRequiredService<CSETContext>()
                 ));
             services.AddScoped<IVersionBusiness, VersionBusiness>();
             services.AddScoped<Hooks>();
