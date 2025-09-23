@@ -51,6 +51,7 @@ import { DateAdapter } from '@angular/material/core';
 import { ConversionService } from '../../services/conversion.service';
 import { FileExportService } from '../../services/file-export.service';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { HostListener } from '@angular/core';
 
 interface UserAssessment {
   isEntry: boolean;
@@ -113,6 +114,8 @@ export class MyAssessmentsComponent implements OnInit {
     sortable: true,
     filter: true
   };
+  dynamicGridHeight: number = 600;
+  private readonly minGridHeight = 300;
 
   constructor(
     public configSvc: ConfigService,
@@ -136,8 +139,8 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initializeColumnDefs();
     this.getAssessments();
+    this.calculateGridHeight();
 
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);
@@ -150,7 +153,14 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
 
-    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.userIsCisaAssessor = resp);
+    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) =>
+    {
+      this.configSvc.userIsCisaAssessor = resp
+      this.initializeColumnDefs()
+      if (this.gridApi) {
+        this.gridApi.setGridOption('columnDefs', this.columnDefs);
+      }
+    });
     this.tSvc.langChanges$.subscribe((lang: string) => {
       this.updateGridTranslations();
     });
@@ -281,7 +291,7 @@ export class MyAssessmentsComponent implements OnInit {
         cellRenderer: this.actionsRenderer.bind(this),
         sortable: false,
         filter: false,
-        width: 250,
+        width: this.showColumn('export json') ? 345 : 200,
         pinned: 'right'
       }
     ];
@@ -680,6 +690,9 @@ export class MyAssessmentsComponent implements OnInit {
   onGridReady(params: GridReadyEvent): void {
     this.gridApi = params.api;
     params.api.sizeColumnsToFit();
+    setTimeout(() => {
+      this.calculateGridHeight();
+    }, 50);
   }
 
   getProgressTooltip(assessment: UserAssessment): string {
@@ -754,5 +767,43 @@ export class MyAssessmentsComponent implements OnInit {
         }
       });
     });
+  }
+  private calculateGridHeight(): void {
+    if (typeof window === 'undefined') return;
+
+    const viewportHeight = window.innerHeight;
+
+    // Calculate heights of fixed elements above the grid estimate
+    const topNavHeight = 60;
+    const breadcrumbHeight = 45;
+    const titleHeight = 48;
+    const filterButtonsHeight = 60;
+    const importButtonsHeight = 70;
+    const containerPadding = 48;
+    const bottomPadding = 20;
+
+    const fixedElementsHeight =
+      topNavHeight +
+      breadcrumbHeight +
+      titleHeight +
+      filterButtonsHeight +
+      importButtonsHeight +
+      containerPadding +
+      bottomPadding;
+
+    const availableHeight = viewportHeight - fixedElementsHeight;
+
+    // Ensure minimum height
+    this.dynamicGridHeight = Math.max(availableHeight, this.minGridHeight);
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.calculateGridHeight();
+    if (this.gridApi) {
+      // Refresh grid layout after height change
+      setTimeout(() => {
+        this.gridApi.sizeColumnsToFit();
+      }, 100);
+    }
   }
 }
