@@ -513,12 +513,7 @@ namespace CSETWebCore.Business.Reports
 
             return rval.Union(rval1).GroupBy(u => u.Zone_Name).Select(grp => grp.ToList()).ToList();
         }
-
-
-        public List<usp_getFinancialQuestions_Result> GetFinancialQuestions()
-        {
-            return _context.usp_getFinancialQuestions(_assessmentId).ToList();
-        }
+        
 
 
         public List<StandardQuestions> GetQuestionsForEachStandard()
