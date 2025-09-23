@@ -23,7 +23,7 @@ SOFTWARE.
 */
 
 // Import CSET variables
-@use '../../../../sass/variables' as vars;
+@use '../../../../../../../sass/variables' as vars;
 
 // Position relative container for clear button
 .position-relative {
@@ -91,7 +91,7 @@ input.form-control[readonly] {
   .typeahead-result {
     width: 100%;
     min-width: 0; // Allow flex items to shrink below content size
-    
+
     .result-text {
       flex: 1;
       min-width: 0; // Allow text to truncate properly
@@ -107,12 +107,12 @@ input.form-control[readonly] {
       padding: 0.125rem 0.5rem;
       border-radius: 0.25rem;
       background-color: vars.$gray-100;
-      
+
       &.type-standard {
         background-color: rgba(vars.$primary-color, 0.1);
         color: vars.$primary-color;
       }
-      
+
       &.type-model {
         background-color: rgba(vars.$secondary-color, 0.1);
         color: vars.$secondary-color;
@@ -124,7 +124,7 @@ input.form-control[readonly] {
   .dropdown-menu {
     max-width: 100%;
     min-width: 300px;
-    
+
     @media (max-width: 576px) {
       min-width: 100%;
     }
@@ -133,7 +133,7 @@ input.form-control[readonly] {
   // Dropdown items
   .dropdown-item {
     padding: 0.5rem 1rem;
-    
+
     &:hover .type-label {
       opacity: 0.9;
     }
