@@ -73,8 +73,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             List<StandardQuestions> standardQuestions = null;
             QuestionResponse questionList = null;
             List<MatRelevantAnswers> maturityQuestions = null;
+            List<ComponentQuestion> componentQuestions = null;
 
-            object details = null;
+            var detailSections = new Dictionary<string, object>();
 
             // Standards-based assessment
             if (assessment.UseStandard)
@@ -133,25 +134,31 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     }
                 }
 
-                details = new
-                {
-                    standardQuestions,
-                    questionList
-                };
+                detailSections["standardQuestions"] = standardQuestions;
+                detailSections["questionList"] = questionList;
             }
 
             // Maturity model-based assessment
-            else if (assessment.UseMaturity)
+            if (assessment.UseMaturity)
             {
                 _reportsDataBusiness.SetReportsAssessmentId(assessment.Id);
                 maturityQuestions = _reportsDataBusiness.GetQuestionsList();
 
-                details = new
-                {
-                    maturityQuestions
-                };
+                detailSections["maturityQuestions"] = maturityQuestions;
             }
 
+            // Network diagram-based assessment
+            if (assessment.UseDiagram)
+            {
+                _reportsDataBusiness.SetReportsAssessmentId(assessment.Id);
+                componentQuestions = _reportsDataBusiness.GetComponentQuestions() ?? new List<ComponentQuestion>();
+
+                detailSections["componentQuestions"] = componentQuestions;
+            }
+
+            object details = detailSections.Count > 0 ? detailSections : null;
+
+            // Build out the full payload for serialization
             var payload = new
             {
                 assessment,
