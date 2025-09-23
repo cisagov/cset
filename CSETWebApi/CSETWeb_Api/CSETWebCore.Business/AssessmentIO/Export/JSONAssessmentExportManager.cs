@@ -158,6 +158,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
             object details = detailSections.Count > 0 ? detailSections : null;
 
+            CleanData(assessment);
+
             // Build out the full payload for serialization
             var payload = new
             {
@@ -167,6 +169,30 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             };
 
             return JsonSerializer.Serialize(payload, _serializerOptions);
+        }
+
+        /// <summary>
+        /// Removes export-only fields from the assessment payload to avoid leaking
+        /// data that is not required by the exported JSON document.
+        /// </summary>
+        private void CleanData(AssessmentDetail assessment)
+        {
+            if (assessment == null)
+            {
+                return;
+            }
+
+            // Gallery selections are internal-only and should not be part of the export payload.
+            assessment.GalleryItemGuid = null;
+
+            if (!assessment.UseDiagram)
+            {
+                return;
+            }
+
+            // Network diagram exports should not include markup or rendered images.
+            assessment.DiagramMarkup = null;
+            assessment.DiagramImage = null;
         }
     }
 }
