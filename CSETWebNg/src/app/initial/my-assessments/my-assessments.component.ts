@@ -332,25 +332,25 @@ export class MyAssessmentsComponent implements OnInit {
       concatMap((assessmentsCompletionData: any[]) =>
         this.assessSvc.getAssessments().pipe(
           map((assessments: UserAssessment[]) => {
-              assessments.forEach((item, index, arr) => {
+            assessments.forEach((item, index, arr) => {
 
-                // determine assessment type display
-                item.type = this.determineAssessmentType(item);
-
-
-                let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
-                item.completedQuestionsCount = currentAssessmentStats?.completedCount;
-                item.totalAvailableQuestionsCount =
-                  (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
-                  (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
-                  (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
+              // determine assessment type display
+              item.type = this.determineAssessmentType(item);
 
 
-              });
+              let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
+              item.completedQuestionsCount = currentAssessmentStats?.completedCount;
+              item.totalAvailableQuestionsCount =
+                (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
+                (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
+                (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
 
 
-              this.sortedAssessments = assessments;
-            },
+            });
+
+
+            this.sortedAssessments = assessments;
+          },
             error => {
               console.error(
                 'Unable to get Assessments for ' +
@@ -510,8 +510,8 @@ export class MyAssessmentsComponent implements OnInit {
 
               let params = '';
 
-              if (result.scrubData) {
-                params = params + '&scrubData=' + result.scrubData;
+              if (result.removePCII) {
+                params = params + '&removePCII=' + result.removePCII;
               }
 
               if (result.encryptionData.password != null && result.encryptionData.password !== '') {
@@ -633,7 +633,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
     return Math.round((assessment.completedQuestionsCount / assessment.totalAvailableQuestionsCount) * 100);
   }
-// Actions cell with delete and export buttons
+  // Actions cell with delete and export buttons
   actionsRenderer(params: any): string {
     const assessment = params.data;
     const assessmentId = assessment.assessmentId;
