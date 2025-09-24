@@ -158,7 +158,7 @@ namespace CSETWebCore.Business.Question
 
                 // Get any observations for the question
                 ObservationsManager obsMan = new(_context, assessmentId);
-                response.Observations = obsMan.AllObservations(newAnswer.Answer_Id);
+                response.Observations = obsMan.GetAnswerObservations(newAnswer.Answer_Id);
 
                 // Get any documents attached to the question
                 response.Documents = _documentBusiness.GetDocumentsForAnswer(newAnswer.Answer_Id);

@@ -644,7 +644,10 @@
                     "complexity": "Ease",
                     "low": "LOW",
                     "medium": "MEDIUM",
-                    "high": "HIGH"
+                    "high": "HIGH",
+                    "simple": "SIMPLE",
+                    "moderate": "MODERATE",
+                    "complex": "COMPLEX"
                },
                "deficiency": {
                     "report title": "DEFICIENCY REPORT CYBERSECURITY PERFORMANCE GOALS (CPG)",
@@ -850,13 +853,20 @@
                     "core questions": "Core Questions",
                     "optional domain questions": "Optional Domain Questions",
                     "optional mil questions": "Optional MIL Questions",
-                    "no optional domain heatmap": "No goals were selected for Optional Domain Questions.  No Optional Domain questions are in scope for this assessment.",
-                    "no mil heatmap": "No MILs were selected for MIL Question domains.  No MIL questions are in scope for this assessment."
+                    "no optional domains selected": "No goals were selected for Optional Domain Questions.  No Optional Domain questions are in scope for this assessment.",
+                    "no mils selected": "No MILs were selected for MIL Question domains.  No MIL questions are in scope for this assessment."
                },
                "mil charts 2": {
                     "title": "Cyber Resilience Essentials (CRE+) MIL Questions Charts 2",
                     "p1": "maybe an intro paragraph here"
                }
+          },
+          "heatmap": {
+               "title": "Answer Heatmap",
+               "p1": "This section's answers are color-coded to show their status, with the summary bar reflecting overall performance based on the combined results.",
+               "performed": "Performed",
+               "incompletely performed": "Incompletely Performed",
+               "not performed": "Not Performed"
           }
      },
      "all": {

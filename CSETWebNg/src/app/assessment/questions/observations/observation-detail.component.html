@@ -26,13 +26,15 @@
     <span>{{ t('observation.observation details') }}</span>
   </div>
 
-  <mat-dialog-content class="py-3">
+
+  <mat-dialog-content class="py-3" *ngIf="observation">
     <div class="item bigitem">
       <p>{{ t('observation.observation description') }}</p>
 
       <div class="form-group">
         <label for="title" class="form-label">{{ t('observation.title') }}</label>
-        <textarea id="title" autocomplete="off" class="form-control" type="text" appAutoSize [(ngModel)]="observation.summary"></textarea>
+        <textarea id="title" autocomplete="off" class="form-control" type="text" appAutoSize
+          [(ngModel)]="observation.summary"></textarea>
       </div>
 
       <div class="form-group">
@@ -82,20 +84,21 @@
         <button class="btn-link fs-smaller" (click)="clearMulti()">{{ t('observation.clear selections') }}</button>
       </div>
 
-      <div class="ps-3">
+      <div class="ps-3 pb-5">
         <div *ngFor="let contact of observation.observation_Contacts" class="py-1">
           <input class="checkbox-custom d-none" type="checkbox" id="{{contact.assessment_Contact_Id}}"
             (change)="updateContact(contact)" [(ngModel)]="contact.selected">
           <label for="{{contact.assessment_Contact_Id}}" class="checkbox-custom-label">{{ contact.name }}</label>
         </div>
       </div>
-      <br /><br />
+
       <app-assessment-contacts (triggerChange)="refreshContacts()"
         class="mb-4 d-flex justify-content-end flex-00a"></app-assessment-contacts>
     </div>
   </mat-dialog-content>
 
   <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
-    <button class="btn btn-primary" (click)="update()">{{ t('buttons.close') }}</button>
+    <button class="btn btn-secondary" (click)="cancel()">{{ t('buttons.cancel') }}</button>
+    <button class="btn btn-primary" (click)="save()">{{ t('buttons.save') }}</button>
   </mat-dialog-actions>
 </div>

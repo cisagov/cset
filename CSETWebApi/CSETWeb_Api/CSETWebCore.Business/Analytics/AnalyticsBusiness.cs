@@ -175,7 +175,7 @@ namespace CSETWebCore.Business.Analytics
                     where f.Answer_Id == a.AnswerId
                     select new AgFinding
                     {
-                        AnswerId  = f.Answer_Id,
+                        AnswerId  = (int)f.Answer_Id,
                         FindingId = f.Finding_Id,
                         Summary = f.Summary,
                         Issue = f.Issue,

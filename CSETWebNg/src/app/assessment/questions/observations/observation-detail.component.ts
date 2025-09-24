@@ -31,24 +31,24 @@ import { ConfigService } from '../../../services/config.service';
 
 @Component({
   selector: 'app-observations',
-  templateUrl: './observations.component.html',
+  templateUrl: './observation-detail.component.html',
   host: {
     'style': 'max-width: 100%'
   },
   standalone: false
 })
-export class ObservationsComponent implements OnInit {
+export class ObservationDetailComponent implements OnInit {
 
   observation: Observation;
   importances: Importance[];
   contactsModel: any[];
-  answerId: number;
-  questionId: number;
+  answerId: number | null;
+  questionId: number | null;
 
   constructor(
     private observationsSvc: ObservationsService,
     private configSvc: ConfigService,
-    private dialog: MatDialogRef<ObservationsComponent>,
+    private dialog: MatDialogRef<ObservationDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Observation,
     public assessSvc: AssessmentService
   ) {
@@ -57,28 +57,53 @@ export class ObservationsComponent implements OnInit {
     this.questionId = data.question_Id;
   }
 
+  /**
+   * 
+   */
   ngOnInit() {
-    this.dialog.backdropClick()
-      .subscribe(() => {
-        this.update();
-      });
-
-    // send the observation to the server
-    // if it is empty or new let the server
-    // worry about it
-    this.observationsSvc.getImportance().subscribe((result: Importance[]) => {
+    this.observationsSvc.getImportances().subscribe((result: Importance[]) => {
       this.importances = result;
-      this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.questionType)
-        .subscribe((response: Observation) => {
-          this.observation = response;
-          this.answerId = this.observation.answer_Id;
-          this.questionId = this.observation.question_Id;
-          this.contactsModel = lodash_map(lodash_filter(this.observation.observation_Contacts,
-            { 'selected': true }),
-            'Assessment_Contact_Id');
-          this.data.answer_Id = this.answerId;
-        });
     });
+
+    this.dialog.backdropClick().subscribe(() => {
+      this.save();
+    });
+  }
+
+  /**
+   * 
+   */
+  clearMulti() {
+    this.observation.observation_Contacts.forEach(c => {
+      c.selected = false;
+    });
+  }
+
+  /**
+   * 
+   */
+  cancel() {
+    this.dialog.close(false);
+  }
+
+  /**
+   * 
+   */
+  save() {
+    this.observation.answer_Id = this.answerId;
+    this.observation.question_Id = this.questionId;
+    this.observationsSvc.saveObservation(this.observation).subscribe((resp: any) => {
+      this.observation.observation_Id = resp.observationId;
+      this.observation.answer_Id = resp.answerId;
+      this.dialog.close(true);
+    });
+  }
+
+  /**
+   * 
+   */
+  updateImportance(importid) {
+    this.observation.importance_Id = importid;
   }
 
   /**
@@ -98,8 +123,9 @@ export class ObservationsComponent implements OnInit {
   refreshContacts(): void {
     this.observation.answer_Id = this.answerId;
     this.observation.question_Id = this.questionId;
-    this.observationsSvc.saveObservation(this.observation).subscribe(() => {
-      this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.questionType)
+
+    this.observationsSvc.saveObservation(this.observation).subscribe((resp) => {
+      this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.question_Type)
         .subscribe((response: Observation) => {
           this.observation = response;
           this.contactsModel = lodash_map(lodash_filter(this.observation.observation_Contacts,
@@ -107,60 +133,15 @@ export class ObservationsComponent implements OnInit {
             'Assessment_Contact_Id');
         });
     });
-
   }
 
   /**
    * 
    */
-  clearMulti() {
-    this.observation.observation_Contacts.forEach(c => {
-      c.selected = false;
-    });
-  }
-
-  /**
-   * 
-   * @param obs 
-   * @returns 
-   */
-  checkObservation(obs: Observation) {
-    // and a bunch of fields together
-    // if they are all null then false
-    // else true;
-    let observationCompleted = true;
-
-    observationCompleted = (obs.impact == null);
-    observationCompleted = (obs.importance == null) && (observationCompleted);
-    observationCompleted = (obs.issue == null) && (observationCompleted);
-    observationCompleted = (obs.recommendations == null) && (observationCompleted);
-    observationCompleted = (obs.resolution_Date == null) && (observationCompleted);
-    observationCompleted = (obs.summary == null) && (observationCompleted);
-    observationCompleted = (obs.vulnerabilities == null) && (observationCompleted);
-
-    return !obs;
-  }
-
-  /**
-   * 
-   */
-  update() {
-    this.observation.answer_Id = this.answerId;
-    this.observation.question_Id = this.questionId;
-    this.observationsSvc.saveObservation(this.observation).subscribe(() => {
-      this.dialog.close(true);
-    });
-  }
-
-  updateImportance(importid) {
-    this.observation.importance_Id = importid;
-  }
-
   updateContact(contactid) {
     const c = this.observation.observation_Contacts.find(x => x.assessment_Contact_Id == contactid.assessment_Contact_Id);
     if (!!c) {
       c.selected = contactid.selected;
     }
   }
-
 }

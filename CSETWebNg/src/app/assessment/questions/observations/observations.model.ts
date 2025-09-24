@@ -20,14 +20,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-
-
 ////////////////////////////////
 export interface Observation {
   // ACET fields
-  question_Id: number;
-  questionType: string;
-  answer_Id: number;
+  question_Id: number | null;
+  question_Type: string;
+  answer_Id: number | null;
+  assessmentId: number | null;
   observation_Id: number;
   summary: string;
   issue: string;
@@ -49,6 +48,10 @@ export interface Observation {
   // Shared fields
   importance: Importance;
   observation_Contacts: ObservationContact[];
+
+
+  answerLevel: boolean;
+
 }
 
 export interface SubRiskArea {

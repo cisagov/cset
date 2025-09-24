@@ -29,7 +29,7 @@ import {
   Output, HostListener,
   ApplicationRef
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
 import { LayoutService } from '../services/layout.service';
 import { NavTreeService } from '../services/navigation/nav-tree.service';
@@ -39,6 +39,7 @@ import { ConfigService } from '../services/config.service';
 import { AssessmentDetail } from '../models/assessment-info.model';
 import { Subscription } from 'rxjs'
 import { CompletionService } from '../services/completion.service';
+import { DemographicService } from '../services/demographic.service';
 
 interface UserAssessment {
   isEntry: boolean;
@@ -120,7 +121,8 @@ export class AssessmentComponent implements OnInit {
     public tSvc: TranslocoService,
     private configSvc: ConfigService,
     private appRef: ApplicationRef,
-    private completionSvc: CompletionService
+    private completionSvc: CompletionService,
+    private demoSvc: DemographicService
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
@@ -130,8 +132,6 @@ export class AssessmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //This is a hack to force the app to update the view after the assessment is loaded
-    //but not the first time.
     if (this.isSet) {
       this.isSet = true;
       this.appRef.tick();
@@ -148,16 +148,25 @@ export class AssessmentComponent implements OnInit {
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
       this.loadCompletionData();
-      this.completionSubscription = this.completionSvc.completionChanged$.subscribe(() => {
-        setTimeout(() => {
-          this.loadCompletionData();
-        }, 1000);
+      this.assessSvc.completionRefreshRequested$.subscribe((stats) => {
+        if (stats) {
+          this.completedQuestions = stats.completedCount;
+          this.totalQuestions = stats.totalCount;
+          this.completionPercentage = this.totalQuestions > 0 ?
+            Math.round((this.completedQuestions / this.totalQuestions) * 100) : 0;
+        }
+      });
+      this.demoSvc.demographicUpdateCompleted$.subscribe(() => {
+        this.loadCompletionData();
       });
     }
 
   }
   getAssessmentDetail() {
-    this.assessment = this.assessSvc.assessment;
+    this.assessSvc.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
+      this.assessment = data;
+      this.assessSvc.assessment = data;
+    });
   }
   setAssessmentDone(){
     this.assessment.done =!this.assessment.done;
@@ -236,12 +245,6 @@ export class AssessmentComponent implements OnInit {
     this.expandNav = e;
   }
 
-  // isTocLoading(node) {
-  //   console.log(node);
-  //   var s = node?.label;
-  //   return  (s === "Please wait" || s === "Loading questions") ;
-  // }
-
   goHome() {
     this.assessSvc.dropAssessment();
     this.router.navigate(['/home']);
@@ -270,11 +273,17 @@ export class AssessmentComponent implements OnInit {
       }
     });
   }
+
   getCompletionPercentage(): number {
     return this.completionPercentage;
   }
+
   getProgressTooltip(): string {
     if (this.totalQuestions === 0) return 'No questions available';
     return `${this.completedQuestions}/${this.totalQuestions} questions answered`;
+  }
+
+    ngOnDestroy() {
+    this.completionSubscription?.unsubscribe();
   }
 }

@@ -8,8 +8,18 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class HeatmapComponent implements OnInit {
 
+  /**
+   * An array of groupings, typically the goals within a domain.
+  */
   @Input()
-  scores: any;
+  scores: any[];
+
+  /**
+   * Optional - host page can suppress question labels
+   */
+  @Input()
+  showQuestionLabels = true;
+
 
   colorToClassMap: Record<string, string> = {
     'red': 'red-score',
@@ -28,7 +38,7 @@ export class HeatmapComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.scores.children.forEach(element => this.applyScoreStyle(element));
+    this.scores.forEach(element => this.applyScoreStyle(element));
   }
 
   /**
@@ -40,8 +50,13 @@ export class HeatmapComponent implements OnInit {
     element.children?.forEach(child => {
       this.applyScoreStyle(child);
     });
-    
+
     const color = element.color?.toLowerCase() || 'lightgray';
     element.scoreClass = this.colorToClassMap[color];
+
+    // hide question labels
+    if (!this.showQuestionLabels && element.questionId && element.questionId !== 0) {
+      element.title = '';
+    }
   }
 }

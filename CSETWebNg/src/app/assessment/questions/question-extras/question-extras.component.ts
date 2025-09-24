@@ -1,4 +1,3 @@
-import { ResourceLibraryService } from './../../../services/resource-library.service';
 ////////////////////////////////
 //
 //   Copyright 2025 Battelle Energy Alliance, LLC
@@ -34,14 +33,15 @@ import { FileUploadClientService } from '../../../services/file-client.service';
 import { ObservationsService } from '../../../services/observations.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { AuthenticationService } from './../../../services/authentication.service';
-import { ObservationsComponent } from '../observations/observations.component';
+import { ObservationDetailComponent } from '../observations/observation-detail.component';
 import { Observation } from '../observations/observations.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
 import { LayoutService } from '../../../services/layout.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { FileExportService } from '../../../services/file-export.service';
-
+import { firstValueFrom } from 'rxjs';
+import { ResourceLibraryService } from './../../../services/resource-library.service';
 
 
 @Component({
@@ -86,7 +86,7 @@ export class QuestionExtrasComponent implements OnInit {
 
   constructor(
     public questionsSvc: QuestionsService,
-    private observationSvc: ObservationsService,
+    private obsSvc: ObservationsService,
     public fileExportSvc: FileExportService,
     public fileSvc: FileUploadClientService,
     public dialog: MatDialog,
@@ -96,7 +96,7 @@ export class QuestionExtrasComponent implements OnInit {
     public layoutSvc: LayoutService,
     private tSvc: TranslocoService,
     private resourceLibSvc: ResourceLibraryService
-  ) { 
+  ) {
     this.msgNoSupplemental = `(${this.tSvc.translate('extras.no supplemental available')})`;
   }
 
@@ -183,7 +183,7 @@ export class QuestionExtrasComponent implements OnInit {
   async fetchDetails(): Promise<QuestionDetailsContentViewModel> {
     const details = this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType).toPromise();
     return details;
-  }  
+  }
 
   /**
    * Gets all of the extra content for the question from the API.
@@ -360,75 +360,12 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   *
-   * @param observationId
-   */
-  addEditObservation(observationId) {
-
-    // TODO Always send an empty one for now.
-    // At some juncture we need to change this to
-    // either send the observation to be edited or
-    // send an empty one.
-    const obs: Observation = {
-      question_Id: this.myQuestion.questionId,
-      questionType: this.myQuestion.questionType,
-      answer_Id: this.myQuestion.answer_Id,
-      observation_Id: observationId,
-      summary: '',
-      observation_Contacts: null,
-      impact: '',
-      importance: null,
-      importance_Id: 1,
-      issue: '',
-      recommendations: '',
-      resolution_Date: null,
-      vulnerabilities: '',
-      title: null,
-      type: null,
-      risk_Area: null,
-      sub_Risk: null,
-      description: null,
-      actionItems: null,
-      citations: null,
-      auto_Generated: null,
-      supp_Guidance: null
-    };
-
-    this.dialog.open(ObservationsComponent, {
-      data: obs,
-      disableClose: true,
-      width: this.layoutSvc.hp ? '90%' : '750px',
-      maxWidth: this.layoutSvc.hp ? '90%' : '750px',
-    }
-
-    )
-      .afterClosed().subscribe(result => {
-        const answerID = obs.answer_Id;
-        this.observationSvc.getAllObservations(answerID).subscribe(
-          (response: Observation[]) => {
-            this.extras.observations = response;
-            for (let i of response) {
-              if ((!i.summary) && (!i.resolution_Date) && (!i.issue) && (!i.impact) && (!i.recommendations) && (!i.vulnerabilities)) {
-                this.deleteEmptyObservation(i)
-              }
-            }
-            this.myQuestion.hasObservation = (this.extras.observations.length > 0);
-            this.myQuestion.answer_Id = obs.answer_Id;
-          },
-          error => console.error('Error updating observations | ' + (<Error>error).message)
-        );
-
-      });
-
-  }
-
-  /**
    * Deletes an empty observation.
    * @param observationToDelete
    */
   deleteEmptyObservation(observationToDelete) {
-    this.observationSvc.deleteObservation(observationToDelete.observation_Id).subscribe();
-    let deleteIndex = null;
+    this.obsSvc.deleteObservation(observationToDelete.observation_Id).subscribe();
+    let deleteIndex = -1;
 
     for (let i = 0; i < this.extras.observations.length; i++) {
       if (this.extras.observations[i].observation_Id === observationToDelete.observation_Id) {
@@ -439,6 +376,45 @@ export class QuestionExtrasComponent implements OnInit {
     this.myQuestion.hasObservation = (this.extras.observations.length > 0);
   };
 
+  /**
+     * 
+     */
+  async editObservation(observationId) {
+    let obs = await firstValueFrom(this.obsSvc.getObservation(-1, observationId, -1, ''));
+
+    if (!obs) {
+      obs = this.buildEmptyObservation();
+    }
+
+    obs.answerLevel = true;
+
+    this.dialog.open(ObservationDetailComponent, {
+      data: obs,
+      disableClose: true,
+      width: this.layoutSvc.hp ? '90%' : '750px',
+      maxWidth: this.layoutSvc.hp ? '90%' : '750px',
+    })
+      .afterClosed().subscribe(result => {
+        this.populateList(obs.answer_Id);
+      });
+  }
+
+  /**
+   * 
+   */
+  populateList(answerId: number | null): void {
+    if (!answerId) {
+      return;
+    }
+
+    this.obsSvc.getObservationsForAnswer(answerId).subscribe(
+      (response: Observation[]) => {
+        this.extras.observations = response;
+      },
+      error => {
+        console.error('Error updating observations | ' + (<Error>error).message);
+      });
+  }
 
   /**
    * Deletes an Observation.
@@ -459,8 +435,8 @@ export class QuestionExtrasComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.observationSvc.deleteObservation(obsToDelete.observation_Id).subscribe();
-        let deleteIndex = null;
+        this.obsSvc.deleteObservation(obsToDelete.observation_Id).subscribe();
+        let deleteIndex = -1;
 
         for (let i = 0; i < this.extras.observations.length; i++) {
           if (this.extras.observations[i].observation_Id === obsToDelete.observation_Id) {
@@ -471,6 +447,40 @@ export class QuestionExtrasComponent implements OnInit {
         this.myQuestion.hasObservation = (this.extras.observations.length > 0);
       }
     });
+  }
+
+  /**
+   * 
+   */
+  buildEmptyObservation() {
+    const obs: Observation = {
+      question_Id: this.myQuestion.questionId,
+      question_Type: this.myQuestion.questionType,
+      answer_Id: this.myQuestion.answer_Id,
+      assessmentId: null,
+      observation_Id: 0,
+      summary: '',
+      observation_Contacts: [],
+      impact: '',
+      importance: null,
+      importance_Id: 1,
+      issue: '',
+      recommendations: '',
+      resolution_Date: null,
+      vulnerabilities: '',
+      title: "",
+      type: "",
+      risk_Area: "",
+      sub_Risk: "",
+      description: "",
+      actionItems: "",
+      citations: "",
+      auto_Generated: 0,
+      supp_Guidance: "",
+      answerLevel: true
+    };
+
+    return obs;
   }
 
   /**

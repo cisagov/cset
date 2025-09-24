@@ -30,6 +30,7 @@ import { SsgService } from '../../../services/ssg.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { Demographic } from '../../../models/assessment-info.model';
 import { DemographicService } from '../../../services/demographic.service';
+import { ReportService } from '../../../services/report.service';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -58,7 +59,10 @@ export class CpgReportComponent implements OnInit {
 
   answerDistribsSsg: SsgDistribution[] = [];
 
-  ssgBonusModels: number[];
+  ssgBonusModelIds: number[];
+
+  heatmapModelCpg: any[];
+  ssgHeatmaps: { [id: number]: any } = {};
 
 
 
@@ -68,6 +72,7 @@ export class CpgReportComponent implements OnInit {
    */
   constructor(
     public titleSvc: Title,
+    public reportSvc: ReportService,
     private assessSvc: AssessmentService,
     public demoSvc: DemographicService,
     public cpgSvc: CpgService,
@@ -114,6 +119,8 @@ export class CpgReportComponent implements OnInit {
     // CPG 1.2
     if (this.modelId == 21) {
       this.initCpg2();
+
+      this.heatmapModelCpg = await firstValueFrom(this.reportSvc.getHeatmap(21));
     }
 
     // SSG
@@ -145,15 +152,29 @@ export class CpgReportComponent implements OnInit {
    * 
    */
   async initSsg(): Promise<void> {
-    this.ssgBonusModels = this.ssgSvc.activeSsgModelIds;
-    const ssgPromises = this.ssgSvc.activeSsgModelIds.map(async id => {
+    this.ssgBonusModelIds = this.ssgSvc.activeSsgModelIds;
+
+    const ssgDistrib$ = this.ssgBonusModelIds.map(async id => {
       const d = await this.getAnswerDistribution(id, '');
       return {
         modelId: id,
         distribution: d
       };
     });
-    this.answerDistribsSsg = await Promise.all(ssgPromises);
+    this.answerDistribsSsg = await Promise.all(ssgDistrib$);
+
+
+    const ssgHeatmap$ = this.ssgBonusModelIds.map(async id => {
+      const scores = await firstValueFrom(this.reportSvc.getHeatmap(id));
+      return {
+        modelId: id,
+        scores: scores
+      };
+    });
+    const hm = await Promise.all(ssgHeatmap$);
+    hm.forEach(h => {
+      this.ssgHeatmaps[h.modelId] = h.scores;
+    });
   }
 
   /**
@@ -181,4 +202,9 @@ export class CpgReportComponent implements OnInit {
 interface SsgDistribution {
   modelId: number;
   distribution: any[];
+}
+
+interface SsgHeatmaps {
+  modelId: number;
+  scores: any[];
 }

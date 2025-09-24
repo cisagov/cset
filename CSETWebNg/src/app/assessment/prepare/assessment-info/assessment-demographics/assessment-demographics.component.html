@@ -104,14 +104,18 @@
                 <option *ngFor="let contact of contacts" [ngValue]="contact.assessmentContactId">{{contact.firstName}}
                     {{contact.lastName}}</option>
             </select>
-            <div class="mt-2">
-                <input type="checkbox" name="self-assessment" id="self-assessment" class="checkbox-custom mt-1"
-                    [(ngModel)]="demographicData.selfAssessment" [checked]="demographicData.selfAssessment"
-                    (change)="update($event)">
-                <label for="self-assessment" class="checkbox-custom-label d-inline">{{ t('self assessment') }}</label>
-            </div>
-        </div>
+          <div class="mt-4">
+            <span class="tw:mr-3">{{ t('self assessment') }}</span>
 
+            <input type="checkbox"
+                   name="self-assessment"
+                   id="self-assessment"
+                   [(ngModel)]="demographicData['selfAssessment']"
+                   (change)="update($event)"
+                   class="tw:toggle"
+                   [attr.style]="'--color-base-100: ' + (demographicData['selfAssessment'] ? '#015288' : '#e5e7eb') + '; background-color: ' + (demographicData['selfAssessment'] ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
+          </div>
+        </div>
         <div *ngIf="showOrganizationName()" class="mb-3">
             <label class="form-label" for="edmOrganizationName">{{t('org name')}}</label>
             <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150"

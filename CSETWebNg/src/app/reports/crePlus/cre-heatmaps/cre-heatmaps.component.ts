@@ -66,13 +66,13 @@ export class CreHeatmapsComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.reportSvc.getHeatmap('22').subscribe((x) => {
+    this.reportSvc.getHeatmap(22).subscribe((x) => {
       this.heatmapModel22 = x;
     });
-    this.reportSvc.getHeatmap('23').subscribe((x) => {
+    this.reportSvc.getHeatmap(23).subscribe((x) => {
       this.heatmapModel23 = x;
     });
-    this.reportSvc.getHeatmap('24').subscribe((x) => {
+    this.reportSvc.getHeatmap(24).subscribe((x) => {
       this.heatmapModel24 = x;
     });
   }

@@ -122,7 +122,9 @@ import { SalGenComponent } from './assessment/prepare/sals/sal-gen/sal-gen.compo
 import { SalNistComponent } from './assessment/prepare/sals/sal-nist/sal-nist.component';
 import { SalSimpleComponent } from './assessment/prepare/sals/sal-simple/sal-simple.component';
 import { SalsComponent } from './assessment/prepare/sals/sals.component';
-import { ObservationsComponent } from './assessment/questions/observations/observations.component';
+import { AdditionalObservationsComponent } from './assessment/questions/observations/additional-observations/additional-observations.component';
+import { ObservationDetailComponent } from './assessment/questions/observations/observation-detail.component';
+import { ObservationsGeneralComponent } from './assessment/questions/observations/observations-general/observations-general.component';
 import { QuestionBlockComponent } from './assessment/questions/question-block/question-block.component';
 import { QuestionExtrasComponent } from './assessment/questions/question-extras/question-extras.component';
 import { QuestionsComponent } from './assessment/questions/questions.component';
@@ -609,9 +611,8 @@ import { UserService } from './services/user.service';
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
-
-
-
+import { DeficiencyTemplateComponent } from './reports/deficiency-template/deficiency-template.component';
+import { KeyDisplay1Component } from './assessment/results/key-display-1/key-display-1.component';
 
 
 registerSwiper();
@@ -659,7 +660,9 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         QuestionExtrasComponent,
         ResourceLibraryComponent,
         OkayComponent,
-        ObservationsComponent,
+        AdditionalObservationsComponent,
+        ObservationDetailComponent,
+        ObservationsGeneralComponent,
         IssuesComponent,
         SafePipe,
         LinebreakPipe,
@@ -798,6 +801,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         QuestionTextCpgComponent,
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
+        KeyDisplay1Component,
         HeatmapComponent,
         EdmHeatmapComponent,
         EdmGlossaryComponent,
