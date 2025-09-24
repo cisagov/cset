@@ -25,7 +25,7 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { NameSeries } from '../assessment/results/reports/reports/models/chart-results.model';
+import { NameSeries } from '../reports/models/chart-results.model';
 
 
 const headers = {

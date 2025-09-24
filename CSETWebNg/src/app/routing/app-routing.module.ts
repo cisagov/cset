@@ -24,7 +24,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AssessmentComponent } from '../assessment/assessment.component';
-import { ModuleContentLaunchComponent } from '../assessment/results/reports/reports/module-content/module-content-launch/module-content-launch.component';
+import { ModuleContentLaunchComponent } from '../reports/module-content/module-content-launch/module-content-launch.component';
 import { AssessGuard } from '../guards/assess.guard';
 import { AuthGuard } from '../guards/auth.guard';
 import { LoginComponent } from '../initial/login/login.component';
@@ -45,7 +45,7 @@ import { AggregationGuard } from '../guards/aggregation.guard';
 import { AggregationDetailComponent } from '../aggregation/aggregation-detail/aggregation-detail.component';
 import { TrendAnalyticsComponent } from '../aggregation/trend-analytics/trend-analytics.component';
 import { CompareAnalyticsComponent } from '../aggregation/compare-analytics/compare-analytics.component';
-import { ReportTestComponent } from '../assessment/results/reports/reports/report-test/report-test.component';
+import { ReportTestComponent } from '../reports/report-test/report-test.component';
 import { LayoutSwitcherComponent } from '../layout/layout-switcher/layout-switcher.component';
 import { LayoutBlankComponent } from '../layout/layout-blank/layout-blank.component';
 import { AssessmentComparisonAnalyticsComponent } from '../initial/assessmenet-comparison-analytics/assessment-comparison-analytics.component';
