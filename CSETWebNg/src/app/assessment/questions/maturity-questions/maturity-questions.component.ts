@@ -294,6 +294,12 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
 
       this.filterSvc.answerOptions = response.answerOptions.slice();
       this.filterSvc.maturityModelId = response.modelId;
+      
+      // Adding this for MVRA to include all filters. 
+      // MVRA is a maturity that uses the loadGrouping route instead of loadQuestions
+      if (this.assessSvc.assessment.maturityModel.modelName == 'MVRA') {
+        this.filterSvc.forceRefresh();
+      }
 
       this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
 
