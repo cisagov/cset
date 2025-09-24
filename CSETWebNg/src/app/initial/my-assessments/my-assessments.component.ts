@@ -153,8 +153,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
 
-    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) =>
-    {
+    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => {
       this.configSvc.userIsCisaAssessor = resp
       this.initializeColumnDefs()
       if (this.gridApi) {
@@ -773,25 +772,13 @@ export class MyAssessmentsComponent implements OnInit {
 
     const viewportHeight = window.innerHeight;
 
-    // Calculate heights of fixed elements above the grid estimate
-    const topNavHeight = 60;
-    const breadcrumbHeight = 45;
-    const titleHeight = 48;
-    const filterButtonsHeight = 60;
-    const importButtonsHeight = 70;
-    const containerPadding = 48;
-    const bottomPadding = 20;
+    const grid = document.querySelector('.ag-root-wrapper') as HTMLElement;
+    const gridTop = grid?.getBoundingClientRect().top;
+    const bottomPadding = 25;
+    const footer = document.querySelector('#accordionFooter') as HTMLElement;
+    const footerHeight = footer?.getBoundingClientRect().height;
 
-    const fixedElementsHeight =
-      topNavHeight +
-      breadcrumbHeight +
-      titleHeight +
-      filterButtonsHeight +
-      importButtonsHeight +
-      containerPadding +
-      bottomPadding;
-
-    const availableHeight = viewportHeight - fixedElementsHeight;
+    const availableHeight = viewportHeight - gridTop - bottomPadding - footerHeight;
 
     // Ensure minimum height
     this.dynamicGridHeight = Math.max(availableHeight, this.minGridHeight);
