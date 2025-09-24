@@ -282,7 +282,6 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit, OnDest
     this.groupings = null;
 
     this.maturitySvc.getGroupingQuestions(groupingId).subscribe((response: MaturityQuestionResponse) => {
-
       this.modelId = response.modelId;
       this.modelName = response.modelName;
       this.questionsAlias = response.questionsAlias;

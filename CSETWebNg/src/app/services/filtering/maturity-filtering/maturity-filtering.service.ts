@@ -31,6 +31,7 @@ import { EdmFilteringService } from './edm-filtering.service';
 import { CrrFilteringService } from './crr-filtering.service';
 import { CmmcFilteringService } from './cmmc-filtering.service';
 import { RraFilteringService } from './rra-filtering.service';
+import { MvraFilteringService } from './mvra-filtering.service';
 import { BasicFilteringService } from './basic-filtering.service';
 import { SelectableGroupingsService } from '../../selectable-groupings.service';
 
@@ -100,6 +101,7 @@ export class MaturityFilteringService {
     public edmFilteringSvc: EdmFilteringService,
     public crrFilteringSvc: CrrFilteringService,
     public rraFilteringSvc: RraFilteringService,
+    public mvraFilteringSvc: MvraFilteringService,
     public basicFilteringSvc: BasicFilteringService,
     public selectableGroupingsSvc: SelectableGroupingsService
   ) {
@@ -255,11 +257,8 @@ export class MaturityFilteringService {
 
     g.visible = true;
 
-
     // first check the 'selected' property (see maturity models 23 and 24)
     g.visible = g.selected;
-
-
 
     g.questions.forEach(q => {
       // start with false, then set true if the question should be shown
@@ -288,15 +287,7 @@ export class MaturityFilteringService {
           break;
 
         case 'MVRA':
-          q.visible = true;
-          console.log("q");
-          console.log(q);
-          if (q.maturityLevelName == "Basic")
-            q.maturityLevel = 1;
-          if (q.maturityLevelName == "Intermediate")
-            q.maturityLevel = 2;
-          if (q.maturityLevelName == "Advanced")
-            q.maturityLevel = 3;
+          this.mvraFilteringSvc.setQuestionVisibility(q);
           break;
 
         default:
@@ -308,9 +299,6 @@ export class MaturityFilteringService {
       }
 
       const maturityModel = this.assesmentSvc.assessment?.maturityModel;
-
-      // console.log("q");
-      // console.log(q);
 
       if (q.maturityLevel !== undefined && q.maturityLevel !== null) {
         let questionLevel = q.maturityLevel.toString();
