@@ -1,96 +1,90 @@
-<!---------------------- 
+<!----------------------
 
-   Copyright 2025 Battelle Energy Alliance, LLC  
+   Copyright 2025 Battelle Energy Alliance, LLC
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy 
-  of this software and associated documentation files (the "Software"), to deal 
-  in the Software without restriction, including without limitation the rights 
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-  copies of the Software, and to permit persons to whom the Software is 
-  furnished to do so, subject to the following conditions: 
- 
-  The above copyright notice and this permission notice shall be included in all 
-  copies or substantial portions of the Software. 
- 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-  SOFTWARE. 
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 -------------------------->
 
-<div *transloco="let t" class="edit-user-dialog d-flex flex-column justify-content-center flex-11a">
-    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-        <span class="fa-solid fa-gear fs-base me-2 align-middle"></span>
-        <div class="pl-2">
+<div *transloco="let t" class="edit-user-dialog d-flex flex-column justify-content-center flex-11a tw:rounded-xl tw:shadow-xl">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span class="fa-solid fa-gear fs-base me-2 align-middle"></span>
+    <div class="pl-2">
             <span>
                 {{t('menu.user.settings')}}
             </span>
-        </div>
-
     </div>
 
-    <mat-dialog-content class="p-4 d-flex flex-column flex-11a">
-        <div>
-            <div>
-                <span class="fa-solid fa-lock fs-base-6 me-3"></span>
-                <span class="fw-600 form-label pb-2">{{t('menu.user.encrypt')}}</span>
-            </div>
-            <div class="btn-group btn-group-toggle pt-2" data-toggle="buttons">
-                <label class="btn btn-level btn-rounded form-check-label" [class.active]="!encryption"
-                    (change)="updateEncryptPreference()">
-                    <input class="btn-check" type="radio" autocomplete="off" tabindex="0" [checked]="!encryption" />
-                    {{t('menu.user.off')}}
-                </label>
-                <label class="btn btn-level btn-rounded form-check-label" [class.active]="encryption"
-                    (change)="updateEncryptPreference()">
-                    <input class="btn-check" type="radio" autocomplete="off" tabindex="0" [checked]="encryption" />
-                    {{t('menu.user.on')}}
-                </label>
-            </div>
-            <form name="form" #userForm="ngForm">
-                <div class="mb-2">
-                    <div class="d-flex align-items-center">
-                        <span class="fas fa-language fs-base-6 me-3"></span>
-                        <label class="fw-600 form-label" for="selectLang">{{t('user language')}}</label>
-                    </div>
+  </div>
+  <mat-dialog-content class="p-4 d-flex flex-column flex-11a">
+    <div class="tw:m-1">
+      <span class="fa-solid fa-lock fs-base-6 me-1" style="color: #015288;"></span>
+      <span class="fw-600 form-label pb-2" style="color: #015288;">{{t('menu.user.encrypt')}}</span>
+      <div class="d-flex align-items-center  pl-3 m-2">
+        <input type="checkbox"
+               name="encryption"
+               id="encryption"
+               [checked]="encryption"
+               (change)="updateEncryptPreference()"
+               class="tw:toggle"
+               [attr.style]="'--color-base-100: ' + (encryption ? '#015288' : '#e5e7eb') + '; background-color: ' + (encryption ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
+        <span class="tw:ml-3">{{ encryption ? t('menu.user.on') : t('menu.user.off') }}</span>
+      </div>
+      <div class="mt-3">
+        <form name="form" #userForm="ngForm">
 
-                    <select class="form-select" id="langSelection" name="langSelection" [(ngModel)]="langSelection"
-                        (change)="save()">
-                        <option *ngFor="let o of languageOptions" [value]="o.value">{{o.name}}</option>
-                    </select>
+          <div class="d-flex align-items-center" style="color: #015288;">
+            <span class="fas fa-language fs-base-6 me-1" ></span>
+            <label class="fw-600 form-label" for="selectLang">{{t('user language')}}</label>
+          </div>
 
-                </div>
-            </form>
-            <div *ngIf="showCisaAssessorWorkflowSwitch()">
-                <div class="d-flex align-items-center">
-                    <span class="fa fa-globe fs-base-6 me-3"></span>
-                    <span class="fw-600 form-label">{{ t('assessor workflow.user is cisa assessor')}}</span>
-                </div>
-                <div>
-                    {{ t('assessor workflow.cisa assessor explanation')}}
-                </div>
-                <div class="btn-group btn-group-toggle pt-2" data-toggle="buttons">
-                    <label class="btn btn-level btn-rounded form-check-label" [class.active]="!cisaWorkflowEnabled"
-                        (change)="toggleCisaAssessorWorkflow()">
-                        <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
-                            [checked]="!cisaWorkflowEnabled" />
-                        {{t('answer-options.button-labels.no')}}
-                    </label>
-                    <label class="btn btn-level btn-rounded form-check-label" [class.active]="cisaWorkflowEnabled"
-                        (change)="toggleCisaAssessorWorkflow()">
-                        <input class="btn-check" type="radio" autocomplete="off" tabindex="0"
-                            [checked]="cisaWorkflowEnabled" />
-                        {{t('answer-options.button-labels.yes')}}
-                    </label>
-                </div>
-            </div>
+          <select class="form-select" id="langSelection" name="langSelection" [(ngModel)]="langSelection"
+                  (change)="save()">
+            <option *ngFor="let o of languageOptions" [value]="o.value">{{o.name}}</option>
+          </select>
+
+
+        </form>
+      </div>
+      <div *ngIf="showCisaAssessorWorkflowSwitch()" class="mt-3">
+        <div class="d-flex align-items-center" style="color: #015288;">
+          <span class="fa fa-globe fs-base-6 me-1" ></span>
+          <span class="fw-600 form-label">{{ t('assessor workflow.user is cisa assessor')}}</span>
         </div>
+        <div>
+          {{ t('assessor workflow.cisa assessor explanation')}}
+        </div>
+        <div class="p-2">
+          <input type="checkbox"
+                 name="cisa-workflow"
+                 id="cisa-workflow"
+                 [checked]="cisaWorkflowEnabled"
+                 (change)="toggleCisaAssessorWorkflow()"
+                 class="tw:toggle"
+                 [attr.style]="'--color-base-100: ' + (cisaWorkflowEnabled ? '#015288' : '#e5e7eb') + '; background-color: ' + (cisaWorkflowEnabled ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
+          <span class="tw:ml-3">{{ cisaWorkflowEnabled ? t('answer-options.button-labels.yes') : t('answer-options.button-labels.no') }}</span>
+        </div>
+      </div>
+    </div>
 
-    </mat-dialog-content>
-    <mat-dialog-actions class="p-3 pt-0 mb-0 mt-2">
-        <button class="btn btn-secondary" (click)="cancel()">{{ t('buttons.close') }}</button>
-    </mat-dialog-actions>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="p-3 pt-0 mb-0 mt-2">
+    <button class="btn btn-secondary" (click)="cancel()">{{ t('buttons.close') }}</button>
+  </mat-dialog-actions>
 </div>

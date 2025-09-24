@@ -330,6 +330,8 @@ namespace CSETWebCore.Constants
         public const String DIAGRAM_FILE_NAME = "Diagram.csetd";
         public const String UNIDIRECTIONAL_TYPE = "Unidirectional Device";
         public const String FIREWALL_TYPE = "Firewall";
+        public const string DEFAULT_LAYER_NAME = "Background";
+        public const int FIREWALL = 8;
         public const int CONNECTOR_TYPE = 4;//"Connector";
         public const int VLAN_ROUTER = 32; //"VLAN Router";
         public const int VLAN_SWITTCH = 33;//"VLAN Switch";
@@ -454,14 +456,12 @@ namespace CSETWebCore.Constants
         public const int Model_CISA_VADR = 25;
 
 
-
         // Observations
         public const int ObsCreatedByVadr = 2;
 
 
-
-        public const string DEFAULT_LAYER_NAME = "Background";
-
-        public const int FIREWALL = 8;
+        // User Acknowledgments
+        // ****************************************************************************************
+        public const string ACK_SECTOR_UPDATED_PPD21 = "ACK-SECTOR-UPDATED-PPD21";  
     }
 }
