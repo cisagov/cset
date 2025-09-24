@@ -25,8 +25,8 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { DatePipe } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, inject, provideAppInitializer } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {AgGridModule} from 'ag-grid-angular';
-import {ModuleRegistry, AllCommunityModule} from 'ag-grid-community';
+import { AgGridModule } from 'ag-grid-angular';
+import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
 // import { MatAutocompleteModule } from '@angular/material/autocomplete';
 // import { MatNativeDateModule } from '@angular/material/core';
 // import { MatDialogModule } from '@angular/material/dialog';
@@ -609,7 +609,6 @@ import { UserService } from './services/user.service';
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
-import { DeficiencyTemplateComponent } from './reports/deficiency-template/deficiency-template.component';
 
 
 
@@ -1079,8 +1078,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         AnalyticsResultsComponent,
         UpgradeComponent,
         ImportComponent,
-        AdminSettingsComponent,
-        DeficiencyTemplateComponent
+        AdminSettingsComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
