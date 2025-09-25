@@ -61,6 +61,8 @@ public partial class ASSESSMENT_CONTACTS
     [StringLength(100)]
     public string Last_Q_Answered { get; set; }
 
+    public bool? Favorite { get; set; }
+
     [ForeignKey("Assessment_Id")]
     [InverseProperty("ASSESSMENT_CONTACTS")]
     public virtual ASSESSMENTS Assessment { get; set; }
@@ -75,6 +77,4 @@ public partial class ASSESSMENT_CONTACTS
     [ForeignKey("UserId")]
     [InverseProperty("ASSESSMENT_CONTACTS")]
     public virtual USERS User { get; set; }
-
-    public bool? Favorite { get; set; }
 }

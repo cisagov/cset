@@ -43,7 +43,7 @@ namespace CSETWebCore.DataLayer.Model
             _context = context;
         }
 
-        public virtual async Task<List<Acet_GetActionItemsForReportResult>> Acet_GetActionItemsForReportAsync(int? Assessment_Id, int? Exam_Level, int? Additional_Exam_Level, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<Acet_GetActionItemsForReportResult>> Acet_GetActionItemsForReportAsync(int? assessment_Id, int? exam_Level, int? additional_Exam_Level, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -57,19 +57,19 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 new SqlParameter
                 {
                     ParameterName = "Exam_Level",
-                    Value = Exam_Level ?? Convert.DBNull,
+                    Value = exam_Level ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 new SqlParameter
                 {
                     ParameterName = "Additional_Exam_Level",
-                    Value = Additional_Exam_Level ?? Convert.DBNull,
+                    Value = additional_Exam_Level ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -81,7 +81,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<AcetAnswerDistributionResult>> AcetAnswerDistributionAsync(int? Assessment_Id, int? targetLevel, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<AcetAnswerDistributionResult>> AcetAnswerDistributionAsync(int? assessment_Id, int? targetLevel, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -95,7 +95,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 new SqlParameter
@@ -341,7 +341,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<CheckHeadingResult>> CheckHeadingAsync(string Heading, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<CheckHeadingResult>> CheckHeadingAsync(string heading, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -356,7 +356,7 @@ namespace CSETWebCore.DataLayer.Model
                 {
                     ParameterName = "Heading",
                     Size = 500,
-                    Value = Heading ?? Convert.DBNull,
+                    Value = heading ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
@@ -455,7 +455,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<int> FillAllAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<int> FillAllAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -469,7 +469,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -481,7 +481,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<int> FillEmptyMaturityQuestionsForAnalysisAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<int> FillEmptyMaturityQuestionsForAnalysisAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -495,7 +495,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -507,7 +507,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<int> FillEmptyMaturityQuestionsForModelAsync(int? Assessment_Id, int? Model_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<int> FillEmptyMaturityQuestionsForModelAsync(int? assessment_Id, int? model_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -521,13 +521,13 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 new SqlParameter
                 {
                     ParameterName = "Model_Id",
-                    Value = Model_Id ?? Convert.DBNull,
+                    Value = model_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -539,7 +539,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<int> FillEmptyQuestionsForAnalysisAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<int> FillEmptyQuestionsForAnalysisAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -553,7 +553,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -928,14 +928,14 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<int> GetApplicationModeDefaultAsync(int? Assessment_Id, OutputParameter<string> Application_Mode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<int> GetApplicationModeDefaultAsync(int? assessment_Id, OutputParameter<string> application_Mode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterApplication_Mode = new SqlParameter
             {
                 ParameterName = "Application_Mode",
                 Size = 200,
                 Direction = System.Data.ParameterDirection.InputOutput,
-                Value = Application_Mode?._value ?? Convert.DBNull,
+                Value = application_Mode?._value ?? Convert.DBNull,
                 SqlDbType = System.Data.SqlDbType.NVarChar,
             };
             var parameterreturnValue = new SqlParameter
@@ -950,7 +950,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterApplication_Mode,
@@ -958,13 +958,13 @@ namespace CSETWebCore.DataLayer.Model
             };
             var _ = await _context.Database.ExecuteSqlRawAsync("EXEC @returnValue = [dbo].[GetApplicationModeDefault] @Assessment_Id = @Assessment_Id, @Application_Mode = @Application_Mode OUTPUT", sqlParameters, cancellationToken);
 
-            Application_Mode.SetValue(parameterApplication_Mode.Value);
+            application_Mode?.SetValue(parameterApplication_Mode.Value);
             returnValue?.SetValue(parameterreturnValue.Value);
 
             return _;
         }
 
-        public virtual async Task<List<GetAreasDataResult>> GetAreasDataAsync(int? Assessment_Id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<GetAreasDataResult>> GetAreasDataAsync(int? assessment_Id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -978,7 +978,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 new SqlParameter
@@ -997,7 +997,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<GetAreasOverallResult>> GetAreasOverallAsync(int? Assessment_Id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<GetAreasOverallResult>> GetAreasOverallAsync(int? assessment_Id, string applicationMode, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1011,7 +1011,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 new SqlParameter
@@ -1030,7 +1030,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<GetChildrenAnswersResult>> GetChildrenAnswersAsync(int? Parent_Id, int? Assess_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<GetChildrenAnswersResult>> GetChildrenAnswersAsync(int? parent_Id, int? assess_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1044,13 +1044,13 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Parent_Id",
-                    Value = Parent_Id ?? Convert.DBNull,
+                    Value = parent_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 new SqlParameter
                 {
                     ParameterName = "Assess_Id",
-                    Value = Assess_Id ?? Convert.DBNull,
+                    Value = assess_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -1062,7 +1062,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<GetCombinedOverallsResult>> GetCombinedOverallsAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<GetCombinedOverallsResult>> GetCombinedOverallsAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1076,7 +1076,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -1180,7 +1180,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<GetComparisonFilePercentageResult>> GetComparisonFilePercentageAsync(int? Assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<GetComparisonFilePercentageResult>> GetComparisonFilePercentageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1194,7 +1194,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_id",
-                    Value = Assessment_id ?? Convert.DBNull,
+                    Value = assessment_id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -1258,7 +1258,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<GetMaturityDetailsCalculationsResult>> GetMaturityDetailsCalculationsAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<GetMaturityDetailsCalculationsResult>> GetMaturityDetailsCalculationsAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1272,7 +1272,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -1284,7 +1284,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<GetMaturityGroupingsResult>> GetMaturityGroupingsAsync(int? ModelID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<GetMaturityGroupingsResult>> GetMaturityGroupingsAsync(int? modelID, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1298,7 +1298,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "ModelID",
-                    Value = ModelID ?? Convert.DBNull,
+                    Value = modelID ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -1310,7 +1310,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<GetPercentageOverallResult>> GetPercentageOverallAsync(int? Assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<GetPercentageOverallResult>> GetPercentageOverallAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1324,7 +1324,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_id",
-                    Value = Assessment_id ?? Convert.DBNull,
+                    Value = assessment_id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -1414,7 +1414,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<IseAnswerDistributionResult>> IseAnswerDistributionAsync(int? Assessment_Id, int? targetLevel, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<IseAnswerDistributionResult>> IseAnswerDistributionAsync(int? assessment_Id, int? targetLevel, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1428,7 +1428,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 new SqlParameter
@@ -1446,7 +1446,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<int> Parse_XMLAsync(string XMLString, long? strtX, OutputParameter<long?> endX, OutputParameter<string> DataStr, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<int> Parse_XMLAsync(string xMLString, long? strtX, OutputParameter<long?> endX, OutputParameter<string> dataStr, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterendX = new SqlParameter
             {
@@ -1460,7 +1460,7 @@ namespace CSETWebCore.DataLayer.Model
                 ParameterName = "DataStr",
                 Size = -1,
                 Direction = System.Data.ParameterDirection.InputOutput,
-                Value = DataStr?._value ?? Convert.DBNull,
+                Value = dataStr?._value ?? Convert.DBNull,
                 SqlDbType = System.Data.SqlDbType.NVarChar,
             };
             var parameterreturnValue = new SqlParameter
@@ -1476,7 +1476,7 @@ namespace CSETWebCore.DataLayer.Model
                 {
                     ParameterName = "XMLString",
                     Size = -1,
-                    Value = XMLString ?? Convert.DBNull,
+                    Value = xMLString ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 new SqlParameter
@@ -1491,8 +1491,8 @@ namespace CSETWebCore.DataLayer.Model
             };
             var _ = await _context.Database.ExecuteSqlRawAsync("EXEC @returnValue = [dbo].[Parse_XML] @XMLString = @XMLString, @strtX = @strtX, @endX = @endX OUTPUT, @DataStr = @DataStr OUTPUT", sqlParameters, cancellationToken);
 
-            endX.SetValue(parameterendX.Value);
-            DataStr.SetValue(parameterDataStr.Value);
+            endX?.SetValue(parameterendX.Value);
+            dataStr?.SetValue(parameterDataStr.Value);
             returnValue?.SetValue(parameterreturnValue.Value);
 
             return _;
@@ -1544,7 +1544,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<SearchAllTablesResult>> SearchAllTablesAsync(string SearchStr, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<SearchAllTablesResult>> SearchAllTablesAsync(string searchStr, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1559,7 +1559,7 @@ namespace CSETWebCore.DataLayer.Model
                 {
                     ParameterName = "SearchStr",
                     Size = 200,
-                    Value = SearchStr ?? Convert.DBNull,
+                    Value = searchStr ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
@@ -1571,7 +1571,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<SP_SearchTablesResult>> SP_SearchTablesAsync(string Tablenames, string SearchStr, bool? GenerateSQLOnly, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<SP_SearchTablesResult>> SP_SearchTablesAsync(string tablenames, string searchStr, bool? generateSQLOnly, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1586,20 +1586,20 @@ namespace CSETWebCore.DataLayer.Model
                 {
                     ParameterName = "Tablenames",
                     Size = 1000,
-                    Value = Tablenames ?? Convert.DBNull,
+                    Value = tablenames ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 new SqlParameter
                 {
                     ParameterName = "SearchStr",
                     Size = 120,
-                    Value = SearchStr ?? Convert.DBNull,
+                    Value = searchStr ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 new SqlParameter
                 {
                     ParameterName = "GenerateSQLOnly",
-                    Value = GenerateSQLOnly ?? Convert.DBNull,
+                    Value = generateSQLOnly ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Bit,
                 },
                 parameterreturnValue,
@@ -1631,7 +1631,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<usp_AggregationCustomQuestionnaireLoadResult>> usp_AggregationCustomQuestionnaireLoadAsync(string AssessmentDBName, string entity_name, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<usp_AggregationCustomQuestionnaireLoadResult>> usp_AggregationCustomQuestionnaireLoadAsync(string assessmentDBName, string entity_name, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1646,7 +1646,7 @@ namespace CSETWebCore.DataLayer.Model
                 {
                     ParameterName = "AssessmentDBName",
                     Size = 8000,
-                    Value = AssessmentDBName ?? Convert.DBNull,
+                    Value = assessmentDBName ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 new SqlParameter
@@ -1718,8 +1718,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-
-        public virtual async Task<List<usp_Assessments_For_UserResult>> usp_Assessments_For_UserAsync(int? User_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<usp_Assessments_Completion_For_UserResult>> usp_Assessments_Completion_For_UserAsync(int? user_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1733,7 +1732,33 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "User_Id",
-                    Value = User_Id ?? Convert.DBNull,
+                    Value = user_Id ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.Int,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_Assessments_Completion_For_UserResult>("EXEC @returnValue = [dbo].[usp_Assessments_Completion_For_User] @User_Id = @User_Id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<usp_Assessments_For_UserResult>> usp_Assessments_For_UserAsync(int? user_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "User_Id",
+                    Value = user_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -1771,7 +1796,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<int> usp_CopyIntoSetAsync(string SourceSetName, string DestinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<int> usp_CopyIntoSetAsync(string sourceSetName, string destinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1786,14 +1811,14 @@ namespace CSETWebCore.DataLayer.Model
                 {
                     ParameterName = "SourceSetName",
                     Size = 100,
-                    Value = SourceSetName ?? Convert.DBNull,
+                    Value = sourceSetName ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 new SqlParameter
                 {
                     ParameterName = "DestinationSetName",
                     Size = 100,
-                    Value = DestinationSetName ?? Convert.DBNull,
+                    Value = destinationSetName ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
@@ -1805,7 +1830,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<int> usp_CopyIntoSet_DeleteAsync(string DestinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<int> usp_CopyIntoSet_DeleteAsync(string destinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1820,7 +1845,7 @@ namespace CSETWebCore.DataLayer.Model
                 {
                     ParameterName = "DestinationSetName",
                     Size = 100,
-                    Value = DestinationSetName ?? Convert.DBNull,
+                    Value = destinationSetName ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.NVarChar,
                 },
                 parameterreturnValue,
@@ -1864,7 +1889,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<usp_financial_attributesResult>> usp_financial_attributesAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<usp_financial_attributesResult>> usp_financial_attributesAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1878,7 +1903,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -1942,7 +1967,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<usp_GetAssessmentPieResult>> usp_GetAssessmentPieAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<usp_GetAssessmentPieResult>> usp_GetAssessmentPieAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1956,7 +1981,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -2963,7 +2988,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<usp_GetTop5AreasResult>> usp_GetTop5AreasAsync(int? Aggregation_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<usp_GetTop5AreasResult>> usp_GetTop5AreasAsync(int? aggregation_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -2977,7 +3002,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Aggregation_id",
-                    Value = Aggregation_id ?? Convert.DBNull,
+                    Value = aggregation_id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -3119,7 +3144,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<usp_MaturityDetailsCalculationsResult>> usp_MaturityDetailsCalculationsAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<usp_MaturityDetailsCalculationsResult>> usp_MaturityDetailsCalculationsAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -3133,7 +3158,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -3145,7 +3170,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<int> usp_setTrendOrderAsync(int? Aggregation_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<int> usp_setTrendOrderAsync(int? aggregation_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -3159,7 +3184,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Aggregation_id",
-                    Value = Aggregation_id ?? Convert.DBNull,
+                    Value = aggregation_id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -3171,7 +3196,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<usp_StatementsReviewedResult>> usp_StatementsReviewedAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<usp_StatementsReviewedResult>> usp_StatementsReviewedAsync(int? assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -3185,7 +3210,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_Id",
-                    Value = Assessment_Id ?? Convert.DBNull,
+                    Value = assessment_Id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,
@@ -3197,7 +3222,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<List<usp_StatementsReviewedTabTotalsResult>> usp_StatementsReviewedTabTotalsAsync(int? Assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<usp_StatementsReviewedTabTotalsResult>> usp_StatementsReviewedTabTotalsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -3211,7 +3236,7 @@ namespace CSETWebCore.DataLayer.Model
                 new SqlParameter
                 {
                     ParameterName = "Assessment_id",
-                    Value = Assessment_id ?? Convert.DBNull,
+                    Value = assessment_id ?? Convert.DBNull,
                     SqlDbType = System.Data.SqlDbType.Int,
                 },
                 parameterreturnValue,

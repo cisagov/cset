@@ -41,4 +41,7 @@ public partial class GALLERY_ITEM
 
     [InverseProperty("Gallery_Item")]
     public virtual ICollection<GALLERY_GROUP_DETAILS> GALLERY_GROUP_DETAILS { get; set; } = new List<GALLERY_GROUP_DETAILS>();
+
+    [InverseProperty("Gallery_Item")]
+    public virtual ICollection<GALLERY_ITEM_USER> GALLERY_ITEM_USER { get; set; } = new List<GALLERY_ITEM_USER>();
 }

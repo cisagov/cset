@@ -8,20 +8,5 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class usp_MaturityDetailsCalculationsResult
     {
-        public int? grouporder { get; set; }
-        public int? Total { get; set; }
-        [StringLength(255)]
-        public string Domain { get; set; }
-        [StringLength(255)]
-        public string AssessmentFactor { get; set; }
-        [StringLength(255)]
-        public string FinComponent { get; set; }
-        [StringLength(255)]
-        public string MaturityLevel { get; set; }
-        [StringLength(1)]
-        public string Answer_Text { get; set; }
-        public int acount { get; set; }
-        public double AnswerPercent { get; set; }
-        public bool? complete { get; set; }
     }
 }
