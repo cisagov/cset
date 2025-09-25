@@ -201,6 +201,8 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<GALLERY_ITEM> GALLERY_ITEM { get; set; }
 
+    public virtual DbSet<GALLERY_ITEM_USER> GALLERY_ITEM_USER { get; set; }
+
     public virtual DbSet<GALLERY_LAYOUT> GALLERY_LAYOUT { get; set; }
 
     public virtual DbSet<GALLERY_ROWS> GALLERY_ROWS { get; set; }
@@ -485,8 +487,13 @@ public partial class CsetwebContext : DbContext
     {
         modelBuilder.Entity<ACCESS_KEY>(entity =>
         {
-            entity.Property(e => e.Encryption).HasDefaultValue(true);
-            entity.Property(e => e.Lang).HasDefaultValue("en");
+            entity.Property(e => e.CisaAssessorWorkflow).HasAnnotation("Relational:DefaultConstraintName", "DF_ACCESS_KEY_CisaAssessorWorkflow");
+            entity.Property(e => e.Encryption)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_ACCESS_KEY_PreventEncrypt");
+            entity.Property(e => e.Lang)
+                .HasDefaultValue("en")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_ACCESS_KEY_Lang");
         });
 
         modelBuilder.Entity<ACCESS_KEY_ASSESSMENT>(entity =>
@@ -544,9 +551,12 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Alternate_Justification).HasComment("The Alternate Justification is used to");
             entity.Property(e => e.Answer_Text)
                 .HasDefaultValue("U")
-                .HasComment("The Answer Text is used to");
+                .HasComment("The Answer Text is used to")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_ANSWER_Answer_Text");
             entity.Property(e => e.Comment).HasComment("The Comment is used to");
-            entity.Property(e => e.Component_Guid).HasComment("The Component Guid is used to");
+            entity.Property(e => e.Component_Guid)
+                .HasComment("The Component Guid is used to")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_ANSWER_Component_Guid");
             entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end))", false);
             entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end))", false);
             entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end))", false);
@@ -554,6 +564,7 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Mark_For_Review).HasComment("The Mark For Review is used to");
             entity.Property(e => e.Question_Number).HasComment("The Question Number is used to");
             entity.Property(e => e.Question_Or_Requirement_Id).HasComment("The Question Or Requirement Id is used to");
+            entity.Property(e => e.Reviewed).HasAnnotation("Relational:DefaultConstraintName", "DF_ANSWER_Reviewed");
 
             entity.HasOne(d => d.Answer_TextNavigation).WithMany(p => p.ANSWER)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -587,7 +598,9 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<ANSWER_PROFILE>(entity =>
         {
-            entity.Property(e => e.Profile_Date).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.Profile_Date)
+                .HasDefaultValueSql("(getdate())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_ANSWER_PROFILE_Profile_Date");
 
             entity.HasOne(d => d.Assessment).WithMany(p => p.ANSWER_PROFILE).HasConstraintName("FK_ANSWER_PROFILE_ASSESSMENTS");
         });
@@ -614,12 +627,34 @@ public partial class CsetwebContext : DbContext
                     tb.HasTrigger("document_cascade_delete");
                 });
 
-            entity.Property(e => e.AssessmentCreatedDate).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.Assessment_Date).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.Assessment_GUID).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.ISE_StateLed).HasDefaultValue(false);
-            entity.Property(e => e.MatDetail_targetBandOnly).HasDefaultValue(true);
-            entity.Property(e => e.ModifiedSinceLastExport).HasDefaultValue(true);
+            entity.Property(e => e.AnalyzeDiagram).HasAnnotation("Relational:DefaultConstraintName", "DF__ASSESSMEN__Analy__188C8DD6");
+            entity.Property(e => e.AssessmentCreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENTS_AssessmentCreatedDate");
+            entity.Property(e => e.Assessment_Date)
+                .HasDefaultValueSql("(getdate())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENTS_Assessment_Date");
+            entity.Property(e => e.Assessment_GUID)
+                .HasDefaultValueSql("(newid())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENTS_Assessment_GUID");
+            entity.Property(e => e.AssessorMode).HasAnnotation("Relational:DefaultConstraintName", "DF__ASSESSMEN__Asses__62307D25");
+            entity.Property(e => e.Done)
+                .HasDefaultValue(false)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENTS_Done");
+            entity.Property(e => e.ISE_StateLed)
+                .HasDefaultValue(false)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENTS_ISE_StateLed");
+            entity.Property(e => e.Is_PCII).HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENTS_PCII");
+            entity.Property(e => e.LastUsedComponentNumber).HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENTS_LastUsedComponentNumber");
+            entity.Property(e => e.MatDetail_targetBandOnly)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENTS_MatDetail_targetBandOnly");
+            entity.Property(e => e.ModifiedSinceLastExport)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENTS_ModifiedSinceLastExport");
+            entity.Property(e => e.UseDiagram).HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENTS_UseDiagram");
+            entity.Property(e => e.UseMaturity).HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENTS_UseMaturity");
+            entity.Property(e => e.UseStandard).HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENTS_UseStandard");
 
             entity.HasOne(d => d.AssessmentCreator).WithMany(p => p.ASSESSMENTS)
                 .OnDelete(DeleteBehavior.SetNull)
@@ -632,7 +667,9 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<ASSESSMENTS_REQUIRED_DOCUMENTATION>(entity =>
         {
-            entity.Property(e => e.Answer).HasDefaultValue("U");
+            entity.Property(e => e.Answer)
+                .HasDefaultValue("U")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENTS_REQUIRED_DOCUMENTATION_Answer");
 
             entity.HasOne(d => d.Assessment).WithMany(p => p.ASSESSMENTS_REQUIRED_DOCUMENTATION).HasConstraintName("FK_ASSESSMENTS_REQUIRED_DOCUMENTATION_ASSESSMENTS");
 
@@ -642,6 +679,10 @@ public partial class CsetwebContext : DbContext
         modelBuilder.Entity<ASSESSMENT_CONTACTS>(entity =>
         {
             entity.ToTable(tb => tb.HasComment("A collection of ASSESSMENT_CONTACTS records"));
+
+            entity.Property(e => e.AssessmentRoleId).HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENT_CONTACTS_AssessmentRole");
+            entity.Property(e => e.Is_Primary_POC).HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENT_CONTACTS_Is_Primary_POC");
+            entity.Property(e => e.Is_Site_Participant).HasAnnotation("Relational:DefaultConstraintName", "DF_ASSESSMENT_CONTACTS_Is_Site_Participant");
 
             entity.HasOne(d => d.AssessmentRole).WithMany(p => p.ASSESSMENT_CONTACTS)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -722,6 +763,8 @@ public partial class CsetwebContext : DbContext
         {
             entity.ToTable(tb => tb.HasComment("A collection of AVAILABLE_MATURITY_MODELS records"));
 
+            entity.Property(e => e.Selected).HasAnnotation("Relational:DefaultConstraintName", "DF_AVAILABLE_MATURITY_MODELS_Selected");
+
             entity.HasOne(d => d.Assessment).WithMany(p => p.AVAILABLE_MATURITY_MODELS).HasConstraintName("FK_AVAILABLE_MATURITY_MODELS_ASSESSMENTS");
 
             entity.HasOne(d => d.model).WithMany(p => p.AVAILABLE_MATURITY_MODELS)
@@ -734,7 +777,9 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of AVAILABLE_STANDARDS records"));
 
             entity.Property(e => e.Set_Name).HasComment("The Old Entity Name is used to");
-            entity.Property(e => e.Selected).HasComment("The Selected is used to");
+            entity.Property(e => e.Selected)
+                .HasComment("The Selected is used to")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_AVAILABLE_STANDARDS_Selected");
 
             entity.HasOne(d => d.Assessment).WithMany(p => p.AVAILABLE_STANDARDS).HasConstraintName("FK_AVAILABLE_STANDARDS_ASSESSMENTS");
 
@@ -844,6 +889,8 @@ public partial class CsetwebContext : DbContext
         modelBuilder.Entity<CIS_CSI_CUSTOMER_COUNTS>(entity =>
         {
             entity.HasKey(e => e.Customer_Count).HasName("PK_CIS_CSI_CUSTOMER_AMOUNTS");
+
+            entity.Property(e => e.Sequence).HasAnnotation("Relational:DefaultConstraintName", "DF_CIS_CSI_CUSTOMER_COUNTS_Sequence");
         });
 
         modelBuilder.Entity<CIS_CSI_ORGANIZATION_DEMOGRAPHICS>(entity =>
@@ -851,6 +898,16 @@ public partial class CsetwebContext : DbContext
             entity.HasKey(e => e.Assessment_Id).HasName("PK_CIS_CS_SITE_INFORMATION");
 
             entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
+            entity.Property(e => e.Completed_For_Federal).HasAnnotation("Relational:DefaultConstraintName", "DF_CIS_CS_SITE_INFORMATION_Completed_For_Federal");
+            entity.Property(e => e.Completed_For_National_Special_Event).HasAnnotation("Relational:DefaultConstraintName", "DF_CIS_CS_SITE_INFORMATION_Completed_For_National_Special_Event");
+            entity.Property(e => e.Completed_For_SLTT).HasAnnotation("Relational:DefaultConstraintName", "DF_CIS_CS_SITE_INFORMATION_Completed_For_SLTT");
+            entity.Property(e => e.Motivation_CRR).HasAnnotation("Relational:DefaultConstraintName", "DF_CIS_CS_SITE_INFORMATION_Motivation_CRR");
+            entity.Property(e => e.Motivation_Direct_Threats).HasAnnotation("Relational:DefaultConstraintName", "DF_CIS_CS_SITE_INFORMATION_Motivation_Direct_Threats");
+            entity.Property(e => e.Motivation_Law_Enforcement_Request).HasAnnotation("Relational:DefaultConstraintName", "DF_CIS_CS_SITE_INFORMATION_Motivation_Law_Enforcement_Request");
+            entity.Property(e => e.Motivation_Organization_Request).HasAnnotation("Relational:DefaultConstraintName", "DF_CIS_CS_SITE_INFORMATION_Motivation_Organization_Request");
+            entity.Property(e => e.Motivation_Other).HasAnnotation("Relational:DefaultConstraintName", "DF_CIS_CS_SITE_INFORMATION_Motivation_Other");
+            entity.Property(e => e.Motivation_RRAP).HasAnnotation("Relational:DefaultConstraintName", "DF_CIS_CS_SITE_INFORMATION_Motivation_RRAP");
+            entity.Property(e => e.Motivation_Special_Event).HasAnnotation("Relational:DefaultConstraintName", "DF_CIS_CS_SITE_INFORMATION_Motivation_Special_Event");
 
             entity.HasOne(d => d.Assessment).WithOne(p => p.CIS_CSI_ORGANIZATION_DEMOGRAPHICS).HasConstraintName("FK_CIS_CS_SITE_INFORMATION_ASSESSMENTS");
 
@@ -880,6 +937,7 @@ public partial class CsetwebContext : DbContext
             entity.HasKey(e => e.Assessment_Id).HasName("PK_CIS_CS_DEMOGRAPHICS");
 
             entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
+            entity.Property(e => e.Multi_Site).HasAnnotation("Relational:DefaultConstraintName", "DF_CIS_CS_DEMOGRAPHICS_Multi_Site");
 
             entity.HasOne(d => d.Assessment).WithOne(p => p.CIS_CSI_SERVICE_DEMOGRAPHICS).HasConstraintName("FK_CIS_CS_DEMOGRAPHICS_ASSESSMENTS");
 
@@ -902,6 +960,8 @@ public partial class CsetwebContext : DbContext
         modelBuilder.Entity<CIS_CSI_USER_COUNTS>(entity =>
         {
             entity.HasKey(e => e.User_Count).HasName("PK_CIS_CSI_USER_AMOUNTS");
+
+            entity.Property(e => e.Sequence).HasAnnotation("Relational:DefaultConstraintName", "DF_CIS_CSI_USER_COUNTS_Sequence");
         });
 
         modelBuilder.Entity<CNSS_CIA_JUSTIFICATIONS>(entity =>
@@ -956,10 +1016,17 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Abbreviation).HasComment("The Abbreviation is used to");
             entity.Property(e => e.Component_Family_Name).HasComment("The Component Family Name is used to");
             entity.Property(e => e.File_Name).HasComment("The File Name is used to");
-            entity.Property(e => e.Height).HasDefaultValue(60);
+            entity.Property(e => e.Height)
+                .HasDefaultValue(60)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_COMPONENT_SYMBOLS_Height");
+            entity.Property(e => e.IsService).HasAnnotation("Relational:DefaultConstraintName", "DF_COMPONENT_SYMBOLS_HasService");
             entity.Property(e => e.Symbol_Group_Id).HasComment("The Symbol Group Id is used to");
-            entity.Property(e => e.Symbol_Name).HasDefaultValue("");
-            entity.Property(e => e.Width).HasDefaultValue(60);
+            entity.Property(e => e.Symbol_Name)
+                .HasDefaultValue("")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_COMPONENT_SYMBOLS_Long_Name");
+            entity.Property(e => e.Width)
+                .HasDefaultValue(60)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_COMPONENT_SYMBOLS_WIdth");
 
             entity.HasOne(d => d.Component_Family_NameNavigation).WithMany(p => p.COMPONENT_SYMBOLS).HasConstraintName("FK_COMPONENT_SYMBOLS_COMPONENT_FAMILY");
 
@@ -1075,8 +1142,13 @@ public partial class CsetwebContext : DbContext
         {
             entity.ToTable(tb => tb.HasComment("A collection of DIAGRAM_CONTAINER records"));
 
-            entity.Property(e => e.Universal_Sal_Level).HasDefaultValue("L");
-            entity.Property(e => e.Visible).HasDefaultValue(true);
+            entity.Property(e => e.Parent_Id).HasAnnotation("Relational:DefaultConstraintName", "DF_DIAGRAM_CONTAINER_Parent_Id");
+            entity.Property(e => e.Universal_Sal_Level)
+                .HasDefaultValue("L")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_DIAGRAM_CONTAINER_Universal_Sal_Level");
+            entity.Property(e => e.Visible)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_DIAGRAM_CONTAINER_Visible");
 
             entity.HasOne(d => d.ContainerTypeNavigation).WithMany(p => p.DIAGRAM_CONTAINER)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -1107,10 +1179,12 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.File_Name).HasComment("The File Name is used to");
             entity.Property(e => e.Is_Read_Only)
                 .HasDefaultValue(true)
-                .HasComment("The Is Read Only is used to");
+                .HasComment("The Is Read Only is used to")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_DIAGRAM_TEMPLATES_Is_Read_Only");
             entity.Property(e => e.Is_Visible)
                 .HasDefaultValue(true)
-                .HasComment("The Is Visible is used to");
+                .HasComment("The Is Visible is used to")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_DIAGRAM_TEMPLATES_Is_Visible");
             entity.Property(e => e.Template_Name).HasComment("The Template Name is used to");
         });
 
@@ -1139,10 +1213,15 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment(""));
 
             entity.Property(e => e.Document_Id).HasComment("The Document Id is used to");
-            entity.Property(e => e.CreatedTimestamp).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreatedTimestamp)
+                .HasDefaultValueSql("(getdate())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_DOCUMENT_FILE_CreatedTimestamp");
+            entity.Property(e => e.IsGlobal).HasAnnotation("Relational:DefaultConstraintName", "DF__DOCUMENT___IsGlo__7F01C5FD");
             entity.Property(e => e.Path).HasComment("The Path is used to");
             entity.Property(e => e.Title).HasComment("The Title is used to");
-            entity.Property(e => e.UpdatedTimestamp).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.UpdatedTimestamp)
+                .HasDefaultValueSql("(getdate())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_DOCUMENT_FILE_UpdatedTimestamp");
 
             entity.HasOne(d => d.Assessment).WithMany(p => p.DOCUMENT_FILE)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -1206,7 +1285,9 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<FINDING>(entity =>
         {
-            entity.HasOne(d => d.Answer).WithMany(p => p.FINDING).HasConstraintName("FK_FINDING_ANSWER");
+            entity.HasOne(d => d.Answer).WithMany(p => p.FINDING)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_FINDING_ANSWER");
 
             entity.HasOne(d => d.Assessment).WithMany(p => p.FINDING).HasConstraintName("FK__FINDING__Assessm__1798699D");
 
@@ -1265,6 +1346,8 @@ public partial class CsetwebContext : DbContext
         {
             entity.HasKey(e => e.Group_Detail_Id).HasName("PK_GALLERY_GROUP_DETAILS_1");
 
+            entity.Property(e => e.Click_Count).HasAnnotation("Relational:DefaultConstraintName", "DF_GALLERY_GROUP_DETAILS_Click_Count");
+
             entity.HasOne(d => d.Gallery_Item).WithMany(p => p.GALLERY_GROUP_DETAILS).HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_ITEM");
 
             entity.HasOne(d => d.Group).WithMany(p => p.GALLERY_GROUP_DETAILS).HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_GROUP");
@@ -1273,8 +1356,23 @@ public partial class CsetwebContext : DbContext
         modelBuilder.Entity<GALLERY_ITEM>(entity =>
         {
             entity.Property(e => e.Gallery_Item_Guid).ValueGeneratedNever();
-            entity.Property(e => e.CreationDate).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.Is_Visible).HasDefaultValue(true);
+            entity.Property(e => e.CreationDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_GALLERY_ITEM_CreationDate");
+            entity.Property(e => e.Is_Visible)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__GALLERY_I__Is_Vi__3627DDB5");
+        });
+
+        modelBuilder.Entity<GALLERY_ITEM_USER>(entity =>
+        {
+            entity.HasOne(d => d.Gallery_Item).WithMany(p => p.GALLERY_ITEM_USER)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_GALLERY_ITEM_USER_GALLERY_ITEM");
+
+            entity.HasOne(d => d.User).WithMany(p => p.GALLERY_ITEM_USER)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_GALLERY_ITEM_USER_USERS");
         });
 
         modelBuilder.Entity<GALLERY_ROWS>(entity =>
@@ -1314,12 +1412,15 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Description).HasComment("The Description is used to");
             entity.Property(e => e.Doc_Num)
                 .HasDefaultValue("NONE")
-                .HasComment("The Doc Num is used to");
+                .HasComment("The Doc Num is used to")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_GEN_FILE_Doc_Num");
             entity.Property(e => e.Doc_Version).HasComment("The Doc Version is used to");
             entity.Property(e => e.File_Name).HasComment("The File Name is used to");
             entity.Property(e => e.File_Size).HasComment("The File Size is used to");
             entity.Property(e => e.File_Type_Id).HasComment("The File Type Id is used to");
-            entity.Property(e => e.Is_Uploaded).HasDefaultValue(true);
+            entity.Property(e => e.Is_Uploaded)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_GEN_FILE_Is_Uploaded");
             entity.Property(e => e.Name).HasComment("The Name is used to");
             entity.Property(e => e.Publish_Date).HasComment("The Publish Date is used to");
             entity.Property(e => e.Short_Name).HasComment("The Short Name is used to");
@@ -1459,7 +1560,9 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Enterprise_Evaluation_Summary).HasComment("The Enterprise Evaluation Summary is used to");
             entity.Property(e => e.Executive_Summary).HasComment("The Executive Summary is used to");
             entity.Property(e => e.Facility_Name).HasComment("The Facility Name is used to");
-            entity.Property(e => e.IsAcetOnly).HasDefaultValue(false);
+            entity.Property(e => e.IsAcetOnly)
+                .HasDefaultValue(false)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_INFORMATION_IsAcetOnly");
             entity.Property(e => e.State_Province_Or_Region).HasComment("The State Province Or Region is used to");
 
             entity.HasOne(d => d.IdNavigation).WithOne(p => p.INFORMATION).HasConstraintName("FK_INFORMATION_ASSESSMENTS");
@@ -1479,7 +1582,9 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of IRP records"));
 
             entity.Property(e => e.IRP_ID).ValueGeneratedNever();
-            entity.Property(e => e.Risk_Type).HasDefaultValue("IRP");
+            entity.Property(e => e.Risk_Type)
+                .HasDefaultValue("IRP")
+                .HasAnnotation("Relational:DefaultConstraintName", "df_Risk_Type");
 
             entity.HasOne(d => d.Header).WithMany(p => p.IRP)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -1543,9 +1648,21 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Assessment).WithMany(p => p.MALCOLM_ANSWERS).HasConstraintName("FK_MALCOLM_ANSWERS_ASSESSMENTS");
         });
 
+        modelBuilder.Entity<MALCOLM_MAPPING>(entity =>
+        {
+            entity.Property(e => e.Is_Component).HasAnnotation("Relational:DefaultConstraintName", "DF_MALCOLM_MAPPING_Is_Component");
+            entity.Property(e => e.Is_Maturity).HasAnnotation("Relational:DefaultConstraintName", "DF_MALCOLM_MAPPING_Is_Maturity");
+            entity.Property(e => e.Is_Standard).HasAnnotation("Relational:DefaultConstraintName", "DF_MALCOLM_MAPPING_Is_Requirement");
+            entity.Property(e => e.Rule_Violated).HasAnnotation("Relational:DefaultConstraintName", "DF_MALCOLM_MAPPING_Rule_Violated");
+        });
+
         modelBuilder.Entity<MATURITY_ANSWER_OPTIONS>(entity =>
         {
             entity.HasKey(e => e.Mat_Option_Id).HasName("PK_MATURITY_ANSWER_OPTIONS_1");
+
+            entity.Property(e => e.Answer_Sequence).HasAnnotation("Relational:DefaultConstraintName", "DF_MATURITY_ANSWER_OPTIONS_Answer_Sequence_1");
+            entity.Property(e => e.Has_Answer_Text).HasAnnotation("Relational:DefaultConstraintName", "DF__MATURITY___Has_A__7266E4EE");
+            entity.Property(e => e.Is_None).HasAnnotation("Relational:DefaultConstraintName", "DF__MATURITY___Is_No__259C7031");
 
             entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_ANSWER_OPTIONS).HasConstraintName("FK_MATURITY_ANSWER_OPTIONS_MATURITY_QUESTIONS1");
         });
@@ -1600,7 +1717,9 @@ public partial class CsetwebContext : DbContext
                     tb.HasTrigger("trg_update_maturity_groupings");
                 });
 
-            entity.Property(e => e.Title_Id).HasDefaultValueSql("(NEXT VALUE FOR [MaturityNodeSequence])");
+            entity.Property(e => e.Title_Id)
+                .HasDefaultValueSql("(NEXT VALUE FOR [MaturityNodeSequence])")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_MATURITY_GROUPINGS_Unique_Node_Id");
 
             entity.HasOne(d => d.Maturity_Model).WithMany(p => p.MATURITY_GROUPINGS).HasConstraintName("FK_MATURITY_GROUPINGS_MATURITY_MODELS");
 
@@ -1625,7 +1744,8 @@ public partial class CsetwebContext : DbContext
 
             entity.Property(e => e.Analytics_Rollup_Level)
                 .HasDefaultValue(1)
-                .HasComment("This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model");
+                .HasComment("This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_MATURITY_MODELS_Analytics_Rollup_Level");
 
             entity.HasOne(d => d.Maturity_Level_Usage_TypeNavigation).WithMany(p => p.MATURITY_MODELS).HasConstraintName("FK_MATURITY_MODELS_MATURITY_LEVEL_USAGE_TYPES");
         });
@@ -1664,6 +1784,8 @@ public partial class CsetwebContext : DbContext
         modelBuilder.Entity<MATURITY_REFERENCES>(entity =>
         {
             entity.ToTable(tb => tb.HasComment("A collection of MATURITY_REFERENCES records"));
+
+            entity.Property(e => e.Source).HasAnnotation("Relational:DefaultConstraintName", "DF__MATURITY___Sourc__25276EE5");
 
             entity.HasOne(d => d.Gen_File).WithMany(p => p.MATURITY_REFERENCES).HasConstraintName("FK_MATURITY_REFERENCES_GEN_FILE");
 
@@ -1719,7 +1841,9 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<NAVIGATION_STATE>(entity =>
         {
-            entity.Property(e => e.IsAvailable).HasDefaultValue(true);
+            entity.Property(e => e.IsAvailable)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_NAVIGATION_STATE_IsAvailable");
         });
 
         modelBuilder.Entity<NCSF_CATEGORY>(entity =>
@@ -1728,7 +1852,9 @@ public partial class CsetwebContext : DbContext
 
             entity.ToTable(tb => tb.HasComment("A collection of NCSF_CATEGORY records"));
 
-            entity.Property(e => e.Question_Group_Heading_Id).HasDefaultValue(50);
+            entity.Property(e => e.Question_Group_Heading_Id)
+                .HasDefaultValue(50)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_NCSF_CATEGORY_Question_Group_Heading_Id");
 
             entity.HasOne(d => d.NCSF_Function).WithMany(p => p.NCSF_CATEGORY).HasConstraintName("FK_NCSF_Category_NCSF_FUNCTIONS");
         });
@@ -1787,7 +1913,9 @@ public partial class CsetwebContext : DbContext
 
             entity.Property(e => e.Question_Hash).HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Simple_Question],(8000))),(0)))", true);
             entity.Property(e => e.Std_Ref_Id).HasComputedColumnSql("(case when [std_ref]=NULL then NULL else ([Std_Ref]+'.')+CONVERT([nvarchar](50),[Std_Ref_Number],(0)) end)", false);
-            entity.Property(e => e.Universal_Sal_Level).HasDefaultValue("none");
+            entity.Property(e => e.Universal_Sal_Level)
+                .HasDefaultValue("none")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_NEW_QUESTION_Universal_Sal_Level");
 
             entity.HasOne(d => d.Heading_Pair).WithMany(p => p.NEW_QUESTION)
                 .HasPrincipalKey(p => p.Heading_Pair_Id)
@@ -1870,7 +1998,9 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Availability_Value).HasComment("The Availability Value is used to");
             entity.Property(e => e.Confidentiality_Value).HasComment("The Confidentiality Value is used to");
             entity.Property(e => e.Integrity_Value).HasComment("The Integrity Value is used to");
-            entity.Property(e => e.Selected).HasComment("The Selected is used to");
+            entity.Property(e => e.Selected)
+                .HasComment("The Selected is used to")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_NIST_SAL_INFO_TYPES_Selected");
 
             entity.HasOne(d => d.Assessment).WithMany(p => p.NIST_SAL_INFO_TYPES).HasConstraintName("FK_NIST_SAL_STANDARD_SELECTION");
         });
@@ -1895,7 +2025,9 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<NIST_SAL_QUESTION_ANSWERS>(entity =>
         {
-            entity.Property(e => e.Question_Answer).HasDefaultValue("No");
+            entity.Property(e => e.Question_Answer)
+                .HasDefaultValue("No")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_NIST_SAL_QUESTION_ANSWERS_Question_Answer");
 
             entity.HasOne(d => d.Assessment).WithMany(p => p.NIST_SAL_QUESTION_ANSWERS).HasConstraintName("FK_NIST_SAL_QUESTION_ANSWERS_STANDARD_SELECTION");
 
@@ -1938,6 +2070,8 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<PARAMETER_VALUES>(entity =>
         {
+            entity.Property(e => e.Parameter_Is_Default).HasAnnotation("Relational:DefaultConstraintName", "DF_PARAMETER_VALUES_Parameter_Is_Default_1");
+
             entity.HasOne(d => d.Answer).WithMany(p => p.PARAMETER_VALUES).HasConstraintName("FK_PARAMETER_VALUES_ANSWER");
 
             entity.HasOne(d => d.Parameter).WithMany(p => p.PARAMETER_VALUES).HasConstraintName("FK_PARAMETER_VALUES_PARAMETERS");
@@ -1945,6 +2079,8 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<PASSWORD_HISTORY>(entity =>
         {
+            entity.Property(e => e.Is_Temp).HasAnnotation("Relational:DefaultConstraintName", "DF_PASSWORD_HISTORY_Is_Temp");
+
             entity.HasOne(d => d.User).WithMany(p => p.PASSWORD_HISTORY)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PASSWORD_HISTORY_USERS");
@@ -2021,6 +2157,7 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of QUESTION_GROUP_HEADING records"));
 
             entity.Property(e => e.Question_Group_Heading1).HasComment("The Question Group Heading is used to");
+            entity.Property(e => e.Is_Custom).HasAnnotation("Relational:DefaultConstraintName", "DF_QUESTION_GROUP_HEADING_Is_Custom");
             entity.Property(e => e.Question_Group_Heading_Id)
                 .ValueGeneratedOnAdd()
                 .HasComment("The Question Group Heading Id is used to");
@@ -2219,6 +2356,8 @@ public partial class CsetwebContext : DbContext
         {
             entity.ToTable(tb => tb.HasComment("A collection of REQUIREMENT_REFERENCES records"));
 
+            entity.Property(e => e.Source).HasAnnotation("Relational:DefaultConstraintName", "DF__REQUIREME__Sourc__7F01C5FD");
+
             entity.HasOne(d => d.Gen_File).WithMany(p => p.REQUIREMENT_REFERENCES).HasConstraintName("FK_REQUIREMENT_REFERENCES_GEN_FILE");
 
             entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_REFERENCES).HasConstraintName("FK_REQUIREMENT_REFERENCES_NEW_REQUIREMENT");
@@ -2237,6 +2376,7 @@ public partial class CsetwebContext : DbContext
 
             entity.Property(e => e.Requirement_Id).HasComment("The Requirement Id is used to");
             entity.Property(e => e.Set_Name).HasComment("The Set Name is used to");
+            entity.Property(e => e.Requirement_Sequence).HasAnnotation("Relational:DefaultConstraintName", "DF_REQUIREMENT_SETS_Requirement_Sequence");
 
             entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_SETS).HasConstraintName("FK_REQUIREMENT_SETS_NEW_REQUIREMENT");
 
@@ -2255,11 +2395,16 @@ public partial class CsetwebContext : DbContext
             entity.HasKey(e => e.SectorId).HasName("PK_SECTOR_1");
 
             entity.ToTable(tb => tb.HasComment("A collection of SECTOR records"));
+
+            entity.Property(e => e.Is_NIPP).HasAnnotation("Relational:DefaultConstraintName", "DF__SECTOR__Is_NIPP__4C214075");
         });
 
         modelBuilder.Entity<SECTOR_INDUSTRY>(entity =>
         {
             entity.ToTable(tb => tb.HasComment("A collection of SECTOR_INDUSTRY records"));
+
+            entity.Property(e => e.Is_NIPP).HasAnnotation("Relational:DefaultConstraintName", "DF__SECTOR_IN__Is_NI__4D1564AE");
+            entity.Property(e => e.Is_Other).HasAnnotation("Relational:DefaultConstraintName", "DF__SECTOR_IN__Is_Ot__4E0988E7");
 
             entity.HasOne(d => d.Sector).WithMany(p => p.SECTOR_INDUSTRY).HasConstraintName("FK_SECTOR_INDUSTRY_SECTOR");
         });
@@ -2277,7 +2422,9 @@ public partial class CsetwebContext : DbContext
         {
             entity.ToTable(tb => tb.HasComment("A collection of SECURITY_QUESTION records"));
 
-            entity.Property(e => e.IsCustomQuestion).HasDefaultValue(true);
+            entity.Property(e => e.IsCustomQuestion)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_SECURITY_QUESTION_IsCustomQuestion");
         });
 
         modelBuilder.Entity<SETS>(entity =>
@@ -2286,11 +2433,24 @@ public partial class CsetwebContext : DbContext
 
             entity.Property(e => e.Set_Name).HasComment("The Set Name is used to");
             entity.Property(e => e.Full_Name).HasComment("The Full Name is used to");
-            entity.Property(e => e.IsEncryptedModuleOpen).HasDefaultValue(true);
-            entity.Property(e => e.Is_Displayed).HasDefaultValue(true);
-            entity.Property(e => e.Is_Pass_Fail).HasComment("The Is Pass Fail is used to");
+            entity.Property(e => e.IsEncryptedModule).HasAnnotation("Relational:DefaultConstraintName", "DF_SETS_IsEncryptedModuleClosed");
+            entity.Property(e => e.IsEncryptedModuleOpen)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_SETS_IsEncryptedModuleOpen");
+            entity.Property(e => e.Is_Custom).HasAnnotation("Relational:DefaultConstraintName", "DF_SETS_Is_Custom");
+            entity.Property(e => e.Is_Deprecated).HasAnnotation("Relational:DefaultConstraintName", "DF_SETS_Is_Deprecated");
+            entity.Property(e => e.Is_Displayed)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_SETS_Is_Displayed");
+            entity.Property(e => e.Is_Pass_Fail)
+                .HasComment("The Is Pass Fail is used to")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_SETS_Is_Pass_Fail");
+            entity.Property(e => e.Is_Question).HasAnnotation("Relational:DefaultConstraintName", "DF_SETS_Is_Question");
+            entity.Property(e => e.Is_Requirement).HasAnnotation("Relational:DefaultConstraintName", "DF_SETS_Is_Requirement");
             entity.Property(e => e.Old_Std_Name).HasComment("The Old Std Name is used to");
-            entity.Property(e => e.Short_Name).HasDefaultValue("NO SHORT NAME");
+            entity.Property(e => e.Short_Name)
+                .HasDefaultValue("NO SHORT NAME")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_SETS_Short_Name");
 
             entity.HasOne(d => d.Set_Category).WithMany(p => p.SETS).HasConstraintName("FK_SETS_Sets_Category");
         });
@@ -2352,10 +2512,14 @@ public partial class CsetwebContext : DbContext
                 .HasComment("The Id is used to");
             entity.Property(e => e.Application_Mode)
                 .HasDefaultValue("Questions Based")
-                .HasComment("The Application Mode is used to");
+                .HasComment("The Application Mode is used to")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_STANDARD_SELECTION_Application_Mode");
+            entity.Property(e => e.Is_Advanced).HasAnnotation("Relational:DefaultConstraintName", "DF_STANDARD_SELECTION_Is_Instructions");
+            entity.Property(e => e.Only_Mode).HasAnnotation("Relational:DefaultConstraintName", "DF_STANDARD_SELECTION_Only_Mode");
             entity.Property(e => e.Selected_Sal_Level)
                 .HasDefaultValue("Low")
-                .HasComment("The Selected Sal Level is used to");
+                .HasComment("The Selected Sal Level is used to")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_STANDARD_SELECTION_Selected_Sal_Level");
 
             entity.HasOne(d => d.Assessment).WithOne(p => p.STANDARD_SELECTION).HasConstraintName("FK_STANDARD_SELECTION_ASSESSMENTS");
 
@@ -2387,12 +2551,19 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of STANDARD_SPECIFIC_LEVEL records"));
 
             entity.Property(e => e.Standard_Level).HasComment("The Standard Level is used to");
-            entity.Property(e => e.Display_Name).HasDefaultValue("No Display Name");
+            entity.Property(e => e.Display_Name)
+                .HasDefaultValue("No Display Name")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_STANDARD_SPECIFIC_LEVEL_Display_Name");
             entity.Property(e => e.Full_Name).HasComment("The Full Name is used to");
-            entity.Property(e => e.Level_Order).HasComment("The Level Order is used to");
+            entity.Property(e => e.Is_Default_Value).HasAnnotation("Relational:DefaultConstraintName", "DF_STANDARD_SPECIFIC_LEVEL_Is_Default_Value");
+            entity.Property(e => e.Is_Mapping_Link).HasAnnotation("Relational:DefaultConstraintName", "DF_STANDARD_SPECIFIC_LEVEL_Is_Mapping_Link");
+            entity.Property(e => e.Level_Order)
+                .HasComment("The Level Order is used to")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_STANDARD_SPECIFIC_LEVEL_Level_Order");
             entity.Property(e => e.Standard)
                 .HasDefaultValue("No Standard")
-                .HasComment("The Standard is used to");
+                .HasComment("The Standard is used to")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_STANDARD_SPECIFIC_LEVEL_Standard");
         });
 
         modelBuilder.Entity<STANDARD_TO_UNIVERSAL_MAP>(entity =>
@@ -2424,9 +2595,13 @@ public partial class CsetwebContext : DbContext
 
             entity.Property(e => e.Component_Guid)
                 .HasDefaultValueSql("((0))")
-                .HasComment("The Component Id is used to");
-            entity.Property(e => e.Is_Component).HasComment("The Is Component is used to");
+                .HasComment("The Component Id is used to")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_SUB_CATEGORY_ANSWERS_Component_Id");
+            entity.Property(e => e.Is_Component)
+                .HasComment("The Is Component is used to")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_SUB_CATEGORY_ANSWERS_Is_Component");
             entity.Property(e => e.Answer_Text).HasComment("The Answer Text is used to");
+            entity.Property(e => e.Is_Override).HasAnnotation("Relational:DefaultConstraintName", "DF_SUB_CATEGORY_ANSWERS_Is_Override");
 
             entity.HasOne(d => d.Answer_TextNavigation).WithMany(p => p.SUB_CATEGORY_ANSWERS)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -2488,6 +2663,7 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of UNIVERSAL_SUB_CATEGORIES records"));
 
             entity.Property(e => e.Universal_Sub_Category).HasComment("The Universal Sub Category is used to");
+            entity.Property(e => e.Is_Custom).HasAnnotation("Relational:DefaultConstraintName", "DF_UNIVERSAL_SUB_CATEGORIES_Is_Custom");
             entity.Property(e => e.Universal_Sub_Category_Id)
                 .ValueGeneratedOnAdd()
                 .HasComment("The Universal Sub Category Id is used to");
@@ -2499,7 +2675,9 @@ public partial class CsetwebContext : DbContext
 
             entity.ToTable(tb => tb.HasComment("A collection of UNIVERSAL_SUB_CATEGORY_HEADINGS records"));
 
-            entity.Property(e => e.Set_Name).HasDefaultValue("Standards");
+            entity.Property(e => e.Set_Name)
+                .HasDefaultValue("Standards")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_UNIVERSAL_SUB_CATEGORY_HEADINGS_Set_Name");
             entity.Property(e => e.Display_Radio_Buttons).HasComputedColumnSql("(CONVERT([bit],case when [sub_heading_question_description] IS NULL OR len(rtrim(ltrim([sub_heading_question_description])))=(0) OR charindex('?',[sub_heading_question_description])=(0) then (0) else (1) end,(0)))", false);
             entity.Property(e => e.Heading_Pair_Id).ValueGeneratedOnAdd();
 
@@ -2524,16 +2702,31 @@ public partial class CsetwebContext : DbContext
 
             entity.ToTable(tb => tb.HasComment("A collection of USERS records"));
 
-            entity.Property(e => e.Encryption).HasDefaultValue(true);
-            entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.IsFirstLogin).HasDefaultValue(true);
-            entity.Property(e => e.Lang).HasDefaultValue("en");
-            entity.Property(e => e.PasswordResetRequired).HasDefaultValue(true);
+            entity.Property(e => e.CisaAssessorWorkflow).HasAnnotation("Relational:DefaultConstraintName", "DF_USERS_CisaAssessorWorkflow");
+            entity.Property(e => e.EmailSentCount).HasAnnotation("Relational:DefaultConstraintName", "DF_USERS_EmailSentCount");
+            entity.Property(e => e.Encryption)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_USERS_PreventEncryption");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__USERS__IsActive__6849492E");
+            entity.Property(e => e.IsFirstLogin)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_USERS_IsFirstLogin");
+            entity.Property(e => e.IsSuperUser).HasAnnotation("Relational:DefaultConstraintName", "DF_USERS_IsSuperUser");
+            entity.Property(e => e.Lang)
+                .HasDefaultValue("en")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_USERS_Lang");
+            entity.Property(e => e.PasswordResetRequired)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_USERS_PasswordResetRequired");
         });
 
         modelBuilder.Entity<USER_DETAIL_INFORMATION>(entity =>
         {
-            entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("(newid())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF_USER_DETAIL_INFORMATION_Id");
         });
 
         modelBuilder.Entity<USER_EMAIL_HISTORY>(entity =>

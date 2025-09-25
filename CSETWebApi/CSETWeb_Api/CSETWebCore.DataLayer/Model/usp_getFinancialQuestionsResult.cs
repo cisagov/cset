@@ -8,13 +8,5 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class usp_getFinancialQuestionsResult
     {
-        [StringLength(250)]
-        public string Requirement_title { get; set; }
-        [StringLength(2147483647)]
-        public string Requirement_text { get; set; }
-        [StringLength(50)]
-        public string Answer_text { get; set; }
-        [StringLength(255)]
-        public string MaturityLevel { get; set; }
     }
 }
