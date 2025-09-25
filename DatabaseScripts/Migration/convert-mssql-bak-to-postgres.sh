@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# Convert an MSSQL .bak (CSETWeb) into a PostgreSQL 17 backup file.
+# Convert an MSSQL .bak (CSETWebTest) into a PostgreSQL 17 backup file.
 #
 # This script orchestrates the following steps:
-#  1) Ensure SQL Server is running via docker compose and restore backup/CSETWeb.bak
+#  1) Ensure SQL Server is running via docker compose and restore backup/CSETWebTest.bak
 #  2) Start a temporary Postgres 17 container
 #  3) Use local pgloader to migrate data from MSSQL -> Postgres
 #  4) Produce a Postgres 17-compatible backup (custom format .dump) in ./backup
@@ -11,7 +11,7 @@
 #
 # Prereqs:
 #  - Docker Desktop (alloc ≥ 10 GB RAM as per repo docs)
-#  - `make create-bak` (if using split parts in backup/bak-files/) to generate backup/CSETWeb.bak
+#  - `make create-bak` (if using split parts in backup/bak-files/) to generate backup/CSETWebTest.bak
 #  - `make up` or at least `make launch-db` so cset-mssql is running
 #
 # Usage:
@@ -21,9 +21,9 @@
 #  MSSQL_CONTAINER=cset-mssql
 #  MSSQL_HOST=localhost
 #  MSSQL_PORT=1433
-#  MSSQL_DB=CSETWeb
+#  MSSQL_DB=CSETWebTest
 #  MSSQL_SA_PASSWORD=Password123
-#  BAK_PATH=backup/CSETWeb.bak   # falls back to backup/CSET.bak if found
+#  BAK_PATH=backup/CSETWebTest.bak   # falls back to backup/CSET.bak if found
 #  PG_CONTAINER=cset-pg17
 #  PG_DB=csetweb
 #  PG_USER=cset
@@ -41,9 +41,9 @@ echo "[+] Starting MSSQL -> Postgres17 conversion"
 MSSQL_CONTAINER="${MSSQL_CONTAINER:-cset-mssql}"
 MSSQL_HOST="${MSSQL_HOST:-localhost}"
 MSSQL_PORT="${MSSQL_PORT:-1433}"
-MSSQL_DB="${MSSQL_DB:-CSETWeb}"
+MSSQL_DB="${MSSQL_DB:-CSETWebTest}"
 MSSQL_SA_PASSWORD="${MSSQL_SA_PASSWORD:-Password123}"
-BAK_PATH="${BAK_PATH:-backup/CSETWeb.bak}"
+BAK_PATH="${BAK_PATH:-backup/CSETWebTest.bak}"
 
 PG_CONTAINER="${PG_CONTAINER:-cset-pg17}"
 PG_DB="${PG_DB:-csetweb}"
