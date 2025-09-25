@@ -520,8 +520,8 @@ label[required]::after {
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: 8px;
-  height:calc(100vh - 275px);
-  max-height: calc(100vh - 275px);
+  max-height: calc(100cqh - 310px);
+  min-height: calc(100cqh - 310px);
   color: $gray-800;
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
@@ -765,8 +765,18 @@ table.td-align-top td {
 // }
 
 /* override a few bootstrap classes */
+.form-container {
+  border: 1px solid #dee2e6; 
+  border-radius: .375rem; 
+  padding: .375rem 2.25rem .375rem .75rem;
+}
+
 .form-control {
   color: $gray-800 !important;
+}
+
+.white-panel .form-label {
+  color: $primary-900;
 }
 
 .btn-primary {
@@ -1103,7 +1113,7 @@ table.td-align-top td {
 }
 
 .btn-app-mode {
-  background-color: transparent;
+  background-color: $white;
   border-color: $secondary-color;
   color: $secondary-color;
 }

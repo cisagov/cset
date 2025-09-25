@@ -66,7 +66,7 @@ export class ModuleAddCloneComponent implements OnInit {
 
       },
         error =>
-          console.log(
+          console.error(
             "Unable to get Custom Standards: " +
             (<Error>error).message
           ));

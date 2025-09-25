@@ -45,7 +45,7 @@ export class AssessGuard {
     }
 
     if (!!route.params['id'] && route.params['id'] !== this.assessSvc.id()) {
-      this.assessSvc.getAssessmentToken(route.params['id']).then(() => {
+      return this.assessSvc.getAssessmentToken(route.params['id']).then(() => {
         return this.checkToken();
       });
     }

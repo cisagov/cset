@@ -237,7 +237,8 @@ label[required]::after {
   overflow-y:auto;
   overflow-x:hidden;
   border-radius: 8px;
-  max-height: calc(100vh - 220px);
+  max-height: calc(100cqh - 20rem);
+  min-height: calc(100cqh - 20rem);
   color: $gray-800;
 }
 
@@ -676,7 +677,7 @@ table.td-align-top td {
 }
 
 .btn-app-mode {
-  background-color: transparent;
+  background-color: $white;
   border-color: $secondary-color;
   color: $secondary-color;
 }

@@ -207,6 +207,15 @@ export class QuestionBlockMaturityComponent implements OnInit {
       if (response.detailsChanged) {
         this.questionsSvc.emitRefreshQuestionDetails(answer.questionId);
       }
+      if (response && response.completedCount !== undefined) {
+        this.assessSvc.completionRefreshRequested$.next({
+          completedCount: response.completedCount,
+          totalCount: (response.totalMaturityQuestionsCount || 0) +
+            (response.totalDiagramQuestionsCount || 0) +
+            (response.totalStandardQuestionsCount || 0)
+
+        });
+      }
     });
   }
 

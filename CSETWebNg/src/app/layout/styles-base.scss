@@ -35,6 +35,7 @@ SOFTWARE.
 @use "@angular/material/prebuilt-themes/indigo-pink.css";
 @use "../../sass/cset-font-styles.css";
 @use "../../sass/cset2-font-styles.css";
+@use "../../styles.css";
 
 $white: #ffffff;
 $black: #000000;
@@ -412,7 +413,8 @@ label[required]::after {
   padding: 2em;
   overflow-y:scroll;
   border-radius: 8px;
-  max-height: calc(100vh - 220px);
+  max-height: calc(100cqh - 20rem);
+  min-height: calc(100cqh - 20rem);
   color: $gray-800;
 }
 
@@ -884,7 +886,7 @@ table.td-align-top td {
 }
 
 .btn-app-mode {
-  background-color: transparent;
+  background-color: $white;
   border-color: $secondary-color;
   color: $secondary-color;
 }

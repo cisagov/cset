@@ -58,13 +58,14 @@
         <!-- The scenario that will normally show -->
         <node d="maturity questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" visible="OPTION:MATURITY MATURITY-NONE(1,10,8,9,14,13,17)" />
 
-        <!-- Bonus model (SSG) -->
-        <node d="ssg" ssg="true" id="maturity-questions-bonus" path="assessment/{:id}/maturity-questions/bonus" visible="MATURITY-ANY(11,21) SECTOR-ANY(1,19,13,28)" />
+
+        <!-- SSG -->
+        <node d="ssg.chemical" id="maturity-questions-m18" path="assessment/{:id}/maturity-questions/m18" visible="MATURITY-ANY(11,21) SSG-CHOSEN-SECTOR-ANY(1,19)" />
+        <node d="ssg.it" id="maturity-questions-m20" path="assessment/{:id}/maturity-questions/m20" visible="MATURITY-ANY(11,21) SSG-CHOSEN-SECTOR-ANY(13,28)" />
 
 
-        <!-- CRE optional domain questions (model 23) -->
+        <!-- CRE -->
         <node d="optional domain questions" id="maturity-questions-m23" path="assessment/{:id}/maturity-questions/m23" visible="MATURITY-ANY(22)" />
-        <!-- CRE optional MIL questions (model 24) -->
         <node d="optional mil questions" id="maturity-questions-m24" path="assessment/{:id}/maturity-questions/m24" visible="MATURITY-ANY(22)" />
 
 
@@ -214,6 +215,8 @@
             <node id="maturity-questions-nested-2615" displaytext="Cybersecurity Assessment Plan (CAP)" path="assessment/{:id}/maturity-questions-nested/2615" />
         </node>
 
+        <node d="addl observations" id="other-observations" path="assessment/{:id}/other-observations" visible="MATURITY-ANY(25)" />
+        
         <node d="other remarks" id="other-remarks" path="assessment/{:id}/other-remarks" visible="MATURITY-ANY(15)" />
 
         <!-- Diagram questions -->

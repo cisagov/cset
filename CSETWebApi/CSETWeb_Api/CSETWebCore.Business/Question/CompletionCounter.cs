@@ -188,7 +188,9 @@ namespace CSETWebCore.Business.Question
 
             var inScopeRequirementIds = q.ToList();
 
-            var inScopeAnswers = _context.ANSWER.Where(x => x.Question_Type == "Requirement" && inScopeRequirementIds.Contains(x.Question_Or_Requirement_Id)).ToList();
+            var inScopeAnswers = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId 
+                && x.Question_Type == "Requirement" 
+                && inScopeRequirementIds.Contains(x.Question_Or_Requirement_Id)).ToList();
 
             // get totals
             var totalCount = inScopeRequirementIds.Count();
@@ -226,7 +228,9 @@ namespace CSETWebCore.Business.Question
 
             var inScopeQuestionIds = query.ToList();
 
-            var inScopeAnswers = _context.ANSWER.Where(x => x.Question_Type == "Question" && inScopeQuestionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
+            var inScopeAnswers = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId 
+                && x.Question_Type == "Question" 
+                && inScopeQuestionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
 
             // get totals
             var totalCount = inScopeQuestionIds.Count();
@@ -394,11 +398,8 @@ namespace CSETWebCore.Business.Question
             response.Add(modelId);
 
             // See if any SSG models apply ....
-            var ssgModelId = new CpgBusiness(_context, "en").DetermineSsgModel(assessmentId);
-            if (ssgModelId != null)
-            {
-                response.Add((int)ssgModelId);
-            }
+            var ssgModelIds = new CpgBusiness(_context, "en").DetermineSsgModels(assessmentId);
+            response.UnionWith(ssgModelIds);
 
             return response;
         }
@@ -451,8 +452,8 @@ namespace CSETWebCore.Business.Question
             var inScopeQuestions = q.Distinct().ToList();
 
             var inScopeAnswers = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
-                && inScopeQuestions.Contains(x.Question_Or_Requirement_Id)
-                && x.Question_Type == "Component").ToList();
+                && x.Question_Type == "Component"
+                && inScopeQuestions.Contains(x.Question_Or_Requirement_Id)).ToList();
 
             // get totals
             var totalCount = inScopeAnswers.Count();

@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Assessment;
+using CSETWebCore.Business.AssessmentIO.Export;
 using CSETWebCore.Business.Common;
 using CSETWebCore.Business.Contact;
 using CSETWebCore.Business.Demographic;
@@ -168,7 +169,16 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IGalleryState, GalleryState>();
             services.AddTransient<IGalleryEditor, GalleryEditor>();
             services.AddTransient<IMalcolmBusiness, MalcolmBusiness>();
+            services.AddTransient(provider =>
+                new JSONAssessmentExportManager(
+                    provider.GetRequiredService<IAssessmentBusiness>(),
+                    provider.GetRequiredService<IContactBusiness>(),
+                    provider.GetRequiredService<IReportsDataBusiness>(),
+                    provider.GetRequiredService<IQuestionBusiness>(),
+                    provider.GetRequiredService<CSETContext>()
+                ));
             services.AddScoped<IVersionBusiness, VersionBusiness>();
+            services.AddScoped<Hooks>();
 
             services.AddSwaggerGen(c =>
             {

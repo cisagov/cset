@@ -67,7 +67,6 @@ export class Cmmc2CommentsMarkedComponent implements OnInit {
         // Build up comments list
         this.model.reportData.comments.forEach(matAns => {
           const domain = matAns.mat.question_Title.split('.')[0];
-          console.log(domain);
           const cElement = this.commentsList.find(e => e.cat === this.keyToCategory[domain]);
           if (!cElement) {
             this.commentsList.push({ cat: this.keyToCategory[domain], matAnswers: [matAns] });

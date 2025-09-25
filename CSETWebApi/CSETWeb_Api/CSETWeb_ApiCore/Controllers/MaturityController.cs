@@ -27,14 +27,16 @@ namespace CSETWebCore.Api.Controllers
     {
         private readonly ITokenManager _tokenManager;
         private readonly CSETContext _context;
+        private readonly Hooks _hooks;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IReportsDataBusiness _reports;
 
-        public MaturityController(ITokenManager tokenManager, CSETContext context, IAssessmentUtil assessmentUtil,
+        public MaturityController(ITokenManager tokenManager, CSETContext context, Hooks hooks, IAssessmentUtil assessmentUtil,
            IReportsDataBusiness reports)
         {
             _tokenManager = tokenManager;
             _context = context;
+            _hooks = hooks;
             _assessmentUtil = assessmentUtil;
             _reports = reports;
         }
@@ -119,7 +121,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             new MaturityBusiness(_context, _assessmentUtil).PersistMaturityLevel(assessmentId, level);
 
-            new Hooks(_context).HookTargetLevelChanged(assessmentId);
+            _hooks.HookTargetLevelChanged(assessmentId);
 
             return Ok();
         }
@@ -519,7 +521,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// Get all EDM glossary entries in alphabetical order.
+        /// Get all glossary entries in alphabetical order.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -563,6 +565,7 @@ namespace CSETWebCore.Api.Controllers
 
                 var data = new MaturityBasicReportData
                 {
+                    ModelId = (int)modelId,
                     DeficienciesList = _reports.GetMaturityDeficiencies(modelId),
                     Information = _reports.GetInformation()
                 };
@@ -810,12 +813,13 @@ namespace CSETWebCore.Api.Controllers
 
             _reports.SetReportsAssessmentId(assessmentId);
 
+            int? primaryModelId = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault()?.model_id;
+
 
             // if this is a CIS assessment, don't include questions that
             // are "out of scope" (a descendant of a deselected Option)
             List<int> oos = new();
-            var isCis = _context.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == assessmentId && x.model_id == 8);
-            if (isCis)
+            if (primaryModelId == Constants.Constants.Model_CIS)
             {
                 var qt = new QuestionTreeXml(assessmentId, _context);
                 oos = qt.OutOfScopeQuestionIds();
@@ -829,15 +833,18 @@ namespace CSETWebCore.Api.Controllers
             };
 
 
-            // If the assessment is a CPG and the asset's sector warrants SSG questions, include them
-            var ssgModelId = new CpgBusiness(_context, lang).DetermineSsgModel(assessmentId);
-            if (ssgModelId != null)
+            // If the assessment is a CPG and the assessor is including SSG questions
+            if (primaryModelId == Constants.Constants.Model_CPG2)
             {
-                var ssgComments = _reports.GetCommentsList(ssgModelId);
-                data.Comments.AddRange(ssgComments);
+                var ssgModelIds = new CpgBusiness(_context, lang).DetermineSsgModels(assessmentId);
+                foreach (var m in ssgModelIds)
+                {
+                    var ssgComments = _reports.GetCommentsList(m);
+                    data.Comments.AddRange(ssgComments);
 
-                var ssgMarked = _reports.GetMarkedForReviewList(ssgModelId);
-                data.MarkedForReviewList.AddRange(ssgMarked);
+                    var ssgMarked = _reports.GetMarkedForReviewList(m);
+                    data.MarkedForReviewList.AddRange(ssgMarked);
+                }
             }
 
 
@@ -867,73 +874,6 @@ namespace CSETWebCore.Api.Controllers
             });
 
             return Ok(data);
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="section"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/getEdmScores")]
-        public IActionResult GetEdmScores(string section)
-        {
-            try
-            {
-                int assessmentId = _tokenManager.AssessmentForUser();
-                MaturityBusiness MaturityBusiness = new MaturityBusiness(_context, _assessmentUtil);
-                var scores = MaturityBusiness.GetEdmScores(assessmentId, section);
-
-                return Ok(scores);
-            }
-            catch (Exception exc)
-            {
-                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
-
-                return BadRequest();
-            }
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>        
-        /// <returns>Root node</returns>
-        [HttpGet]
-        [Route("api/getEdmPercentScores")]
-        public IActionResult GetEdmPercentScores()
-        {
-            try
-            {
-                int assessmentId = _tokenManager.AssessmentForUser();
-                MaturityBusiness MaturityBusiness = new MaturityBusiness(_context, _assessmentUtil);
-                var scores = MaturityBusiness.GetEdmPercentScores(assessmentId);
-
-                return Ok(scores);
-            }
-            catch (Exception exc)
-            {
-                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
-
-                return BadRequest();
-            }
-        }
-
-
-        /// <summary>
-        /// Get EDM answers cross-mapped to NIST CSF.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/getEdmNistCsfResults")]
-        public IActionResult GetEdmNistCsfResults()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            var manager = new EdmNistCsfMapping(_context);
-            var maturity = manager.GetEdmNistCsfResults(assessmentId);
-
-            return Ok(maturity);
         }
 
 

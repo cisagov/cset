@@ -50,7 +50,7 @@ export class AllCommentsmarkedComponent {
 
     this.reportSvc.getStandardCommentsAndMfr().subscribe(
       (r: any) => {
-        console.log(r)
+
         this.response = r;
         this.titleService.setTitle(this.tSvc.translate('reports.all.cmfr.report title'));
       }

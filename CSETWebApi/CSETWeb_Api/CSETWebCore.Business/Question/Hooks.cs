@@ -10,6 +10,7 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 
 namespace CSETWebCore.Business.Question
@@ -85,6 +86,14 @@ namespace CSETWebCore.Business.Question
             return detailsChanged;
         }
 
+
+        /// <summary>
+        /// Handles actions that should be taken when demographics are changed.
+        /// </summary>
+        public void HookDemographicsChanged(int assessmentId)
+        {
+            new CompletionCounter(_context).Count(assessmentId);
+        }
 
         /// <summary>
         /// Handles actions that should be taken when a maturity 

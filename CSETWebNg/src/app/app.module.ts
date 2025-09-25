@@ -25,7 +25,8 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { DatePipe } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, inject, provideAppInitializer } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { AgGridModule } from 'ag-grid-angular';
+import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
 // import { MatAutocompleteModule } from '@angular/material/autocomplete';
 // import { MatNativeDateModule } from '@angular/material/core';
 // import { MatDialogModule } from '@angular/material/dialog';
@@ -121,7 +122,9 @@ import { SalGenComponent } from './assessment/prepare/sals/sal-gen/sal-gen.compo
 import { SalNistComponent } from './assessment/prepare/sals/sal-nist/sal-nist.component';
 import { SalSimpleComponent } from './assessment/prepare/sals/sal-simple/sal-simple.component';
 import { SalsComponent } from './assessment/prepare/sals/sals.component';
-import { ObservationsComponent } from './assessment/questions/observations/observations.component';
+import { AdditionalObservationsComponent } from './assessment/questions/observations/additional-observations/additional-observations.component';
+import { ObservationDetailComponent } from './assessment/questions/observations/observation-detail.component';
+import { ObservationsGeneralComponent } from './assessment/questions/observations/observations-general/observations-general.component';
 import { QuestionBlockComponent } from './assessment/questions/question-block/question-block.component';
 import { QuestionExtrasComponent } from './assessment/questions/question-extras/question-extras.component';
 import { QuestionsComponent } from './assessment/questions/questions.component';
@@ -273,10 +276,9 @@ import { CreQuestionSelectorComponent } from './assessment/questions/maturity-qu
 import { creGoalChartsComponent } from './reports/crePlus/cre-goal-charts/cre-goal-charts.component';
 import { CreDetailReportComponent } from './reports/crePlus/cre-detail-report/cre-detail-report.component';
 import { CreHeatmapsComponent } from './reports/crePlus/cre-heatmaps/cre-heatmaps.component';
+import { HeatmapComponent } from './reports//heatmap/heatmap.component';
 import { CreGroupedStackedHorizontalChartComponent } from './reports/crePlus/cre-grouped-stacked-horizontal-chart/cre-grouped-stacked-horizontal-chart.component';
 import { DiagramQuestionsComponent } from './assessment/questions/diagram-questions/diagram-questions.component';
-import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
-import { SitesummaryCMMCComponent } from './reports/cmmc/sitesummary-cmmc/sitesummary-cmmc.component';
 import { CmmcLevelResultsComponent } from './assessment/results/mat-cmmc/cmmc-level-results/cmmc-level-results.component';
 import { CmmcLevelDrilldownComponent } from './assessment/results/mat-cmmc/cmmc-level-drilldown/cmmc-level-drilldown.component';
 import { CmmcComplianceComponent } from './assessment/results/mat-cmmc/cmmc-compliance/cmmc-compliance.component';
@@ -304,7 +306,6 @@ import { AboutCsetComponent } from './dialogs/about-cset/about-cset.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GroupingBlockComponent } from './assessment/questions/grouping-block/grouping-block.component';
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
-import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { GeneralDeficiencyComponent } from './reports/general-deficiency/general-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
 import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
@@ -347,9 +348,6 @@ import { EDMGoalQuestionSummary } from './reports/edm/edm-goal-question-summary/
 import { GroupingDescriptionComponent } from './assessment/questions/grouping-description/grouping-description.component';
 import { SummaryResultsComponent } from './assessment/results/edm/summary-results/summary-results.component';
 import { EDMGoalQuestionLegend } from './reports/edm/edm-bar-chart-legend copy/edm-goal-question-legend.component';
-import { CmmcDeficiencyComponent } from './reports/cmmc/cmmc-deficiency/cmmc-deficiency.component';
-import { CmmcCommentsMarkedComponent } from './reports/cmmc/cmmc-comments-marked/cmmc-comments-marked.component';
-import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justifications/cmmc-alt-justifications.component';
 import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr/tutorial-crr.component';
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
@@ -421,10 +419,8 @@ import { DisclaimerBlurbAComponent } from './reports/cis/shared/disclaimer-blurb
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
 import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
 import { RankedDeficiencyChartComponent } from './assessment/results/cis/ranked-deficiency-chart/ranked-deficiency-chart.component';
-import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
 import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
 import { CisScoringChartComponent } from './reports/cis/cis-section-scoring/cis-scoring-chart/cis-scoring-chart.component';
-import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 import { CharterMismatchComponent } from './dialogs/charter-mistmatch/charter-mismatch.component';
 import { DigitsOnlyNotZeroDirective } from './helpers/digits-only-not-zero.directive';
 import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
@@ -562,6 +558,7 @@ import { CmuResultsDetailComponent } from './reports/cmu/cmu-domain-detail-table
 import { CmuNistCsfSummaryComponent } from './reports/cmu/cmu-nist-csf-summary/cmu-nist-csf-summary.component';
 import { AssessmentConfigIodComponent } from './assessment/prepare/assessment-info/assessment-config-iod/assessment-config-iod.component';
 import { AssessmentDemogIodComponent } from './assessment/prepare/assessment-info/assessment-demog-iod/assessment-demog-iod.component';
+import { SsgSelectorComponent } from './assessment/prepare/assessment-info/ssg-selector/ssg-selector.component';
 import { DemographicsIodComponent } from './assessment/prepare/assessment-info/demographics-iod/demographics-iod.component';
 import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr/tutorial-imr.component';
 import { ImrCoverSheetComponent } from './reports/imr/imr-cover-sheet/imr-cover-sheet.component';
@@ -614,11 +611,12 @@ import { UserService } from './services/user.service';
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
-
+import { DeficiencyTemplateComponent } from './reports/deficiency-template/deficiency-template.component';
+import { KeyDisplay1Component } from './assessment/results/key-display-1/key-display-1.component';
 
 
 registerSwiper();
-
+ModuleRegistry.registerModules([AllCommunityModule]);
 @NgModule({
     declarations: [
         AppComponent,
@@ -662,7 +660,9 @@ registerSwiper();
         QuestionExtrasComponent,
         ResourceLibraryComponent,
         OkayComponent,
-        ObservationsComponent,
+        AdditionalObservationsComponent,
+        ObservationDetailComponent,
+        ObservationsGeneralComponent,
         IssuesComponent,
         SafePipe,
         LinebreakPipe,
@@ -779,8 +779,6 @@ registerSwiper();
         MaturityQuestionsComponent,
         AwwaStandardComponent,
         DiagramQuestionsComponent,
-        SitesummaryCMMCComponent,
-        ExecutiveCMMCComponent,
         ExecutiveCMMC2Component,
         NavBackNextComponent,
         CsetOriginComponent,
@@ -796,7 +794,6 @@ registerSwiper();
         GroupingBlockComponent,
         QuestionBlockMaturityComponent,
         EdmComponent,
-        EdmDeficiencyComponent,
         GeneralDeficiencyComponent,
         EdmCommentsmarkedComponent,
         CisCommentsmarkedComponent,
@@ -804,6 +801,8 @@ registerSwiper();
         QuestionTextCpgComponent,
         GlossaryTermComponent,
         PlaceholderQuestionsComponent,
+        KeyDisplay1Component,
+        HeatmapComponent,
         EdmHeatmapComponent,
         EdmGlossaryComponent,
         EdmIntroTextComponent,
@@ -834,9 +833,6 @@ registerSwiper();
         GroupingDescriptionComponent,
         SummaryResultsComponent,
         EDMGoalQuestionLegend,
-        CmmcDeficiencyComponent,
-        CmmcCommentsMarkedComponent,
-        CmmcAltJustificationsComponent,
         CrrDeficiencyComponent,
         CrrCommentsMarkedComponent,
         RraGapsComponent,
@@ -906,10 +902,8 @@ registerSwiper();
         CisRankedDeficiencyComponent,
         RankedDeficiencyChartComponent,
         CisCommentsmarkedComponent,
-        RankedDeficiencyComponent,
         CisSectionScoringComponent,
         CisScoringChartComponent,
-        SectionScoringComponent,
         CharterMismatchComponent,
         DigitsOnlyNotZeroDirective,
         LandingPageTabsComponent,
@@ -1050,6 +1044,7 @@ registerSwiper();
         CmuNistCsfSummaryComponent,
         AssessmentConfigIodComponent,
         AssessmentDemogIodComponent,
+        SsgSelectorComponent,
         DemographicsIodComponent,
         TutorialImrComponent,
         ImrCoverSheetComponent,
@@ -1087,7 +1082,8 @@ registerSwiper();
         AnalyticsResultsComponent,
         UpgradeComponent,
         ImportComponent,
-        AdminSettingsComponent
+        AdminSettingsComponent,
+        DeficiencyTemplateComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
@@ -1150,6 +1146,7 @@ registerSwiper();
         NgxChartsModule,
         TooltipModule,
         EllipsisModule,
+        AgGridModule,
         CodeEditorModule,
         HotkeyModule.forRoot()],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

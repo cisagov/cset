@@ -30,6 +30,7 @@ import { SsgService } from '../../../services/ssg.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { Demographic } from '../../../models/assessment-info.model';
 import { DemographicService } from '../../../services/demographic.service';
+import { ReportService } from '../../../services/report.service';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -56,9 +57,14 @@ export class CpgReportComponent implements OnInit {
   answerDistribByDomainOt: any[];
   answerDistribByDomainIt: any[];
 
-  isSsgActive = false;
-  answerDistribSsg: any[];
-  ssgName: string;
+  answerDistribsSsg: SsgDistribution[] = [];
+
+  ssgBonusModelIds: number[];
+
+  heatmapModelCpg: any[];
+  ssgHeatmaps: { [id: number]: any } = {};
+
+
 
 
   /**
@@ -66,6 +72,7 @@ export class CpgReportComponent implements OnInit {
    */
   constructor(
     public titleSvc: Title,
+    public reportSvc: ReportService,
     private assessSvc: AssessmentService,
     public demoSvc: DemographicService,
     public cpgSvc: CpgService,
@@ -112,13 +119,13 @@ export class CpgReportComponent implements OnInit {
     // CPG 1.2
     if (this.modelId == 21) {
       this.initCpg2();
+
+      this.heatmapModelCpg = await firstValueFrom(this.reportSvc.getHeatmap(21));
     }
 
     // SSG
-    this.isSsgActive = this.ssgSvc.isSsgActive;
-    if (this.isSsgActive) {
-      this.initSsg();
-    }
+    this.initSsg();
+
   }
 
   /**
@@ -132,16 +139,42 @@ export class CpgReportComponent implements OnInit {
    * 
    */
   async initCpg2(): Promise<void> {
-    this.answerDistribByDomainOt = await this.getAnswerDistribution(this.modelId, 'OT');
-    this.answerDistribByDomainIt = await this.getAnswerDistribution(this.modelId, 'IT');
+    const [answerDistribByDomainOt, answerDistribByDomainIt] = await Promise.all([
+      this.getAnswerDistribution(this.modelId, 'OT'),
+      this.getAnswerDistribution(this.modelId, 'IT')
+    ]);
+
+    this.answerDistribByDomainOt = answerDistribByDomainOt;
+    this.answerDistribByDomainIt = answerDistribByDomainIt;
   }
 
   /**
    * 
    */
   async initSsg(): Promise<void> {
-    this.answerDistribSsg = await this.getAnswerDistribution(this.ssgSvc.activeSsgModelId ?? 0, '');
-    this.ssgName = this.ssgSvc.ssgLabel;
+    this.ssgBonusModelIds = this.ssgSvc.activeSsgModelIds;
+
+    const ssgDistrib$ = this.ssgBonusModelIds.map(async id => {
+      const d = await this.getAnswerDistribution(id, '');
+      return {
+        modelId: id,
+        distribution: d
+      };
+    });
+    this.answerDistribsSsg = await Promise.all(ssgDistrib$);
+
+
+    const ssgHeatmap$ = this.ssgBonusModelIds.map(async id => {
+      const scores = await firstValueFrom(this.reportSvc.getHeatmap(id));
+      return {
+        modelId: id,
+        scores: scores
+      };
+    });
+    const hm = await Promise.all(ssgHeatmap$);
+    hm.forEach(h => {
+      this.ssgHeatmaps[h.modelId] = h.scores;
+    });
   }
 
   /**
@@ -164,4 +197,14 @@ export class CpgReportComponent implements OnInit {
 
     return resp;
   }
+}
+
+interface SsgDistribution {
+  modelId: number;
+  distribution: any[];
+}
+
+interface SsgHeatmaps {
+  modelId: number;
+  scores: any[];
 }

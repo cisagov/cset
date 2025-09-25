@@ -94,24 +94,5 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(resp);
         }
-
-
-        /// <summary>
-        /// Returns the applicable SSG model ID (if any)
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/ssg/modelid")]
-        public IActionResult GetSsgModelId()
-        {
-            int assessmentId = _tokenManager.AssessmentForUser();
-            var lang = _tokenManager.GetCurrentLanguage();
-
-            var cpgBiz = new CpgBusiness(_context, lang);
-
-            var ssgModelId = cpgBiz.DetermineSsgModel(assessmentId);
-
-            return Ok(ssgModelId);
-        }
     }
 }

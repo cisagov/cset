@@ -143,24 +143,24 @@
           "cre+": {
                "sectionTitle": "Cybersecurity Resilience Essentials (CRE+)",
                "1": {
-                    "title": "CRE+ General Charts Report",
-                    "desc": "This report details answers across Core, Optional, and MIL domains and goals, with accompanying charts for visual analysis."
-               },
-               "2": {
-                    "title": "CRE+ Detailed Charts Report",
-                    "desc": "This report expands on Goal and MIL answer details while providing at-a-glance MIL compliance status, charts, and a comprehensive heatmap of all answered questions."
-               },
-               "3": {
                     "title": "CRE+ (Core Module) Final Report",
                     "desc": "CRE Core questions and selected Optional Domain questions are detailed in this report"
                },
-               "4": {
+               "2": {
                     "title": "Optional Domains Final Report",
                     "desc": "Selected Optional Domain questions are detailed in this report"
                },
-               "5": {
+               "3": {
                     "title": "MIL Final Report",
                     "desc": "Selected MIL questions are detailed in this report"
+               },
+               "4": {
+                    "title": "CRE+ General Charts Report",
+                    "desc": "This report details answers across Core, Optional, and MIL domains and goals, with accompanying charts for visual analysis."
+               },
+               "5": {
+                    "title": "CRE+ Detailed Charts Report",
+                    "desc": "This report expands on Goal and MIL answer details while providing at-a-glance MIL compliance status, charts, and a comprehensive heatmap of all answered questions."
                }
           },
           "cisa vadr": {
@@ -633,17 +633,21 @@
                     "ssg": {
                          "ssg security practice checklist": "Sector-Specific Goal Security Practices",
                          "includes ssg": "Sector-Specific Goal answers are included in these results.",
-                         "1": "This table lists all applicable SSG security practices and how they have been answered."
+                         "1": "This table lists all applicable SSG security practices and how they have been answered.",
+                         "2": "Sector Specific"
                     },
                     "current assessment": "Current Assessment",
                     "notes": "Notes",
                     "ttp or risk addressed": "TTP or Risk Addressed",
                     "cost": "Cost",
                     "impact": "Impact",
-                    "complexity": "Complexity",
+                    "complexity": "Ease",
                     "low": "LOW",
                     "medium": "MEDIUM",
-                    "high": "HIGH"
+                    "high": "HIGH",
+                    "simple": "SIMPLE",
+                    "moderate": "MODERATE",
+                    "complex": "COMPLEX"
                },
                "deficiency": {
                     "report title": "DEFICIENCY REPORT CYBERSECURITY PERFORMANCE GOALS (CPG)",
@@ -666,8 +670,8 @@
           "ssg": {
                "ssg1": "Sector Specific Goals",
                "ssg2": "SSG",
-               "chemical": "Chemical Sector Goals",
-               "it": "Information Technology Goals",
+               "18": "Chemical Sector Goals",
+               "20": "Information Technology Goals",
                "other": "Other Sector Goals"
           },
           "cisa vadr": {
@@ -796,7 +800,7 @@
                     },
                     "24": {
                          "title": "CISA Cyber Resilience Essentials (CRE+) MIL Final Report",
-                         "question title": "MIL Questions",
+                         "question title": "Optional MIL Questions",
                          "only selected": "Only questions from selected goals are included.",
                          "none selected": "This report shows only selected MILs.  Select one or more MILs to see questions on this report."
                     }
@@ -844,18 +848,25 @@
                },
                "heatmap report": {
                     "title": "CISA Cyber Resilience Essentials (CRE+) - Heatmaps Assessment Overview",
-                    "p1": "All in-scope answers are represented, grouped by their corresponding domains.",
+                    "p1": "All in-scope answers are represented, grouped by their corresponding domains and goals.",
                     "answer heatmaps": "Answer Heatmaps",
                     "core questions": "Core Questions",
                     "optional domain questions": "Optional Domain Questions",
                     "optional mil questions": "Optional MIL Questions",
-                    "no optional domain heatmap": "No goals were selected for Optional Domain Questions.  No Optional Domain questions are in scope for this assessment.",
-                    "no mil heatmap": "No MILs were selected for MIL Question domains.  No MIL questions are in scope for this assessment."
+                    "no optional domains selected": "No goals were selected for Optional Domain Questions.  No Optional Domain questions are in scope for this assessment.",
+                    "no mils selected": "No MILs were selected for MIL Question domains.  No MIL questions are in scope for this assessment."
                },
                "mil charts 2": {
                     "title": "Cyber Resilience Essentials (CRE+) MIL Questions Charts 2",
                     "p1": "maybe an intro paragraph here"
                }
+          },
+          "heatmap": {
+               "title": "Answer Heatmap",
+               "p1": "This section's answers are color-coded to show their status, with the summary bar reflecting overall performance based on the combined results.",
+               "performed": "Performed",
+               "incompletely performed": "Incompletely Performed",
+               "not performed": "Not Performed"
           }
      },
      "all": {

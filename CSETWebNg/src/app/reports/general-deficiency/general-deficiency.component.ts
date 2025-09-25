@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { ConfigService } from '../../services/config.service';
@@ -31,10 +31,10 @@ import { QuestionsService } from '../../services/questions.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'app-general-deficiency',
-    templateUrl: './general-deficiency.component.html',
-    styleUrls: ['../reports.scss'],
-    standalone: false
+  selector: 'app-general-deficiency',
+  templateUrl: './general-deficiency.component.html',
+  styleUrls: ['../reports.scss'],
+  standalone: false
 })
 export class GeneralDeficiencyComponent implements OnInit {
 

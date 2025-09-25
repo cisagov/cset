@@ -78,9 +78,8 @@ import { LayoutSwitcherComponent } from './layout/layout-switcher/layout-switche
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
 import { ObservationTearoutsComponent } from './reports/observation-tearouts/observation-tearouts.component';
+import { AdditionalObservationsComponent } from './assessment/questions/observations/additional-observations/additional-observations.component';
 import { ExecutiveSummaryComponent } from './reports/executive-summary/executive-summary.component';
-import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
-import { SitesummaryCMMCComponent } from './reports/cmmc/sitesummary-cmmc/sitesummary-cmmc.component';
 import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
 import { TrendReportComponent } from './reports/trend-report/trend-report.component';
 import { CompareReportComponent } from './reports/compare-report/compare-report.component';
@@ -105,7 +104,6 @@ import { TutorialEdmComponent } from './assessment/prepare/maturity/tutorial-edm
 
 
 import { EdmComponent } from './reports/edm/edm.component';
-import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
 import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
@@ -114,9 +112,6 @@ import { RelationshipManagementComponent } from './assessment/results/edm/relati
 import { ServiceProtectionComponent } from './assessment/results/edm/service-protection/service-protection.component';
 import { MaturityIndicatorLevelsComponent } from './assessment/results/edm/maturity-indicator-levels/maturity-indicator-levels.component';
 import { SummaryResultsComponent } from './assessment/results/edm/summary-results/summary-results.component';
-import { CmmcDeficiencyComponent } from './reports/cmmc/cmmc-deficiency/cmmc-deficiency.component';
-import { CmmcCommentsMarkedComponent } from './reports/cmmc/cmmc-comments-marked/cmmc-comments-marked.component';
-import { CmmcAltJustificationsComponent } from './reports/cmmc/cmmc-alt-justifications/cmmc-alt-justifications.component';
 import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr/tutorial-crr.component';
 import { CrrReportComponent } from './reports/crr/crr-report/crr-report.component';
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
@@ -147,9 +142,7 @@ import { OpenEndedQuestionsComponent } from './reports/vadr/open-ended-questions
 import { CisSurveyComponent } from './reports/cis/cis-survey/cis-survey.component';
 import { CisRankedDeficiencyComponent } from './reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
 import { ConfigCisComponent } from './assessment/prepare/maturity/config-cis/config-cis.component';
-import { RankedDeficiencyComponent } from './assessment/results/cis/ranked-deficiency/ranked-deficiency.component';
 import { CisSectionScoringComponent } from './reports/cis/cis-section-scoring/cis-section-scoring.component';
-import { SectionScoringComponent } from './assessment/results/cis/section-scoring/section-scoring.component';
 import { LandingPageTabsComponent } from './initial/landing-page-tabs/landing-page-tabs.component';
 import { Cmmc2DeficiencyComponent } from './reports/cmmc2/cmmc2-deficiency/cmmc2-deficiency.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
@@ -193,6 +186,9 @@ import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { RoleGuard } from './guards/role.guard';
 import { RoleType } from './models/enums/role.model';
+import { DeficiencyTemplateComponent } from './reports/deficiency-template/deficiency-template.component';
+
+
 
 const appRoutes: Routes = [
   // reports routing
@@ -350,6 +346,8 @@ const appRoutes: Routes = [
           { path: 'principle-summary/:pri', component: PrincipleSummaryComponent },
           { path: 'maturity-questions/:grp', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
+
+          { path: 'other-observations', component: AdditionalObservationsComponent },
           { path: 'other-remarks', component: OtherRemarksComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
 
@@ -412,8 +410,6 @@ const appRoutes: Routes = [
               { path: 'analytics-compare', component: AnalyticsCompareComponent },
               { path: 'analytics', component: AnalyticsComponent },
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
-              { path: 'ranked-deficiency', component: RankedDeficiencyComponent },
-              { path: 'section-scoring', component: SectionScoringComponent },
               { path: '', component: DashboardComponent },
               { path: 'sd-answer-summary', component: SdAnswerSummaryComponent },
 
@@ -439,17 +435,11 @@ const appRoutes: Routes = [
       { path: 'trend-report', component: TrendReportComponent },
       { path: 'compare-report', component: CompareReportComponent },
       { path: 'compare-report-m', component: CompareReportMComponent },
-      { path: 'executivecmmc', component: ExecutiveCMMCComponent },
-      { path: 'sitesummarycmmc', component: SitesummaryCMMCComponent },
-      { path: 'cmmcDeficiencyReport', component: CmmcDeficiencyComponent },
-      { path: 'cmmcCommentsMarked', component: CmmcCommentsMarkedComponent },
-      { path: 'cmmcAltJustifications', component: CmmcAltJustificationsComponent },
       { path: 'cmmc2DeficiencyReport', component: Cmmc2DeficiencyComponent },
       { path: 'cmmc2ScorecardReport', component: Cmmc2ScorecardReportComponent },
       { path: 'cmmc2CommentsMarked', component: Cmmc2CommentsMarkedComponent },
       { path: 'executivecmmc2', component: ExecutiveCMMC2Component },
       { path: 'edm', component: EdmComponent },
-      { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent },
       { path: 'genDeficiencyReport', component: GeneralDeficiencyComponent },
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
       { path: 'cisCommentsmarked', component: CisCommentsmarkedComponent },
@@ -479,7 +469,8 @@ const appRoutes: Routes = [
       { path: 'appkeyreport', component: KeyReportComponent },
       { path: 'allAnsweredQuestions', component: AllAnsweredquestionsComponent },
       { path: 'allMfrAndComments', component: AllCommentsmarkedComponent },
-      { path: 'allReviewedQuestions', component: AllReviewedComponent }
+      { path: 'allReviewedQuestions', component: AllReviewedComponent },
+      { path: 'deficiency', component: DeficiencyTemplateComponent }
 
 
     ]

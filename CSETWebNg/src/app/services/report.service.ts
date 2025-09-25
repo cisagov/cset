@@ -123,7 +123,7 @@ export class ReportService {
    *
    */
   getCRRSummary(): any {
-    this.http.get(this.configSvc.apiUrl + 'diagram/getimage').subscribe((val) => console.log(val));
+    this.http.get(this.configSvc.apiUrl + 'diagram/getimage').subscribe((val) => {});
     return this.http.get(this.configSvc.apiUrl + 'diagram/getimage');
   }
 
@@ -146,6 +146,13 @@ export class ReportService {
    */
   getModelContent(modelId: string): any {
     return this.http.get(this.configSvc.apiUrl + 'maturity/structure?modelId=' + modelId);
+  }
+ 
+  /**
+   * Gets the score structure to build a heatmap for a model
+   */
+  getHeatmap(modelId: number) {
+    return this.http.get<any[]>(this.configSvc.apiUrl + 'heatmap?modelId=' + modelId);
   }
 
   /**

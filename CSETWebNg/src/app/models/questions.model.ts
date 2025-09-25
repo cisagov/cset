@@ -315,4 +315,8 @@ export interface MaturityFilter {
 export interface AnswerQuestionResponse {
     answerId: number;
     detailsChanged: boolean;
+    completedCount?: number;
+    totalMaturityQuestionsCount?: number;
+    totalDiagramQuestionsCount ?: number;
+    totalStandardQuestionsCount ?: number;
 }

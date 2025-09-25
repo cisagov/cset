@@ -8,10 +8,5 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class usp_financial_attributesResult
     {
-        public int Assessment_Id { get; set; }
-        [StringLength(250)]
-        public string AttributeName { get; set; }
-        [StringLength(50)]
-        public string AttributeValue { get; set; }
     }
 }

@@ -4,11 +4,13 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.Authorization;
-using CSETWebCore.Business.Observations;
+using CSETWebCore.Business.Malcolm;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Document;
@@ -16,17 +18,13 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.User;
+using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Model.Question;
-using CSETWebCore.Model.Observations;
-using CSETWebCore.Business.Assessment;
 using Microsoft.AspNetCore.Mvc;
-using Nelibur.ObjectMapper;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.Business.Malcolm;
-using CSETWebCore.Helpers;
-using NLog;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -37,12 +35,14 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _token;
         private readonly INotificationBusiness _notification;
         private readonly IAssessmentUtil _assessmentUtil;
+        private readonly IAssessmentBusiness _assessmentBusiness;
         private readonly IContactBusiness _contact;
         private readonly IUserBusiness _user;
         private readonly IDocumentBusiness _document;
         private readonly IHtmlFromXamlConverter _htmlConverter;
         private readonly IQuestionRequirementManager _questionRequirement;
         private readonly CSETContext _context;
+        private readonly Hooks _hooks;
 
 
 
@@ -50,13 +50,15 @@ namespace CSETWebCore.Api.Controllers
         /// 
         /// </summary>
         public QuestionsController(ITokenManager token, INotificationBusiness notification,
-            IAssessmentUtil assessmentUtil, IContactBusiness contact, IDocumentBusiness document, IHtmlFromXamlConverter htmlConverter, IQuestionRequirementManager questionRequirement,
-            IUserBusiness user, CSETContext context)
+            IAssessmentUtil assessmentUtil, IAssessmentBusiness assessmentBusiness, IContactBusiness contact, IDocumentBusiness document, IHtmlFromXamlConverter htmlConverter, IQuestionRequirementManager questionRequirement,
+            IUserBusiness user, CSETContext context, Hooks hooks)
         {
             _token = token;
             _context = context;
+            _hooks = hooks;
             _notification = notification;
             _assessmentUtil = assessmentUtil;
+            _assessmentBusiness = assessmentBusiness;
             _contact = contact;
             _user = user;
             _document = document;
@@ -154,20 +156,6 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/GetActionItems")]
-        public IList<ActionItems> GetActionItems([FromQuery] int parentId, [FromQuery] int finding_id)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            ObservationsManager fm = new ObservationsManager(_context, assessmentId);
-            return fm.GetActionItems(parentId, finding_id);
-        }
-
-
-        /// <summary>
         /// Sets the application mode to be question or requirements based.
         /// </summary>
         /// <param name="mode"></param>
@@ -179,7 +167,7 @@ namespace CSETWebCore.Api.Controllers
             _questionRequirement.InitializeManager(assessmentId);
             _questionRequirement.SetApplicationMode(mode);
 
-            new Hooks(_context).HookQuestionsModeChanged(assessmentId);
+            _hooks.HookQuestionsModeChanged(assessmentId);
 
             return Ok();
         }
@@ -271,10 +259,9 @@ namespace CSETWebCore.Api.Controllers
                 var cb = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
                 var savedComponentAnswer = cb.StoreAnswer(answer);
 
-                new Hooks(_context).HookQuestionAnswered(savedComponentAnswer);
+                _hooks.HookQuestionAnswered(savedComponentAnswer);
 
                 response.AnswerId = (int)savedComponentAnswer.AnswerId;
-                return Ok(response);
             }
 
 
@@ -283,11 +270,10 @@ namespace CSETWebCore.Api.Controllers
                 var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _token);
                 var savedRequirementAnswer = rb.StoreAnswer(answer);
 
-                new Hooks(_context).HookQuestionAnswered(savedRequirementAnswer);
+                _hooks.HookQuestionAnswered(savedRequirementAnswer);
 
 
                 response.AnswerId = (int)savedRequirementAnswer.AnswerId;
-                return Ok(response);
             }
 
 
@@ -296,29 +282,41 @@ namespace CSETWebCore.Api.Controllers
                 var mb = new MaturityBusiness(_context, _assessmentUtil);
                 var savedMaturityAnswer = mb.StoreAnswer(assessmentId, answer);
 
-                var detailsChanged = new Hooks(_context).HookQuestionAnswered(savedMaturityAnswer);
+                var detailsChanged = _hooks.HookQuestionAnswered(savedMaturityAnswer);
 
 
                 response.AnswerId = (int)savedMaturityAnswer.AnswerId;
                 response.DetailsChanged = detailsChanged;
-                return Ok(response);
             }
 
 
             if (answer.QuestionType == "Question")
             {
-                // 'Questions mode' question dropd through to here
                 var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
                 var savedQuestionAnswer = qb.StoreAnswer(answer);
 
-                new Hooks(_context).HookQuestionAnswered(savedQuestionAnswer);
+                _hooks.HookQuestionAnswered(savedQuestionAnswer);
 
                 response.AnswerId = (int)savedQuestionAnswer.AnswerId;
-                return Ok(response);
             }
 
-            // Unknown Answer.QuestionType
-            return BadRequest();
+
+            var userId = _token.GetCurrentUserId();
+            if (userId != null)
+            {
+                var completionStats = _assessmentBusiness.GetAssessmentsCompletionForUser((int)userId)
+                    .FirstOrDefault(x => x.AssessmentId == assessmentId);
+
+                if (completionStats != null)
+                {
+                    response.CompletedCount = completionStats.CompletedCount;
+                    response.TotalMaturityQuestionsCount = completionStats.TotalMaturityQuestionsCount ?? 0;
+                    response.TotalDiagramQuestionsCount = completionStats.TotalDiagramQuestionsCount ?? 0;
+                    response.TotalStandardQuestionsCount = completionStats.TotalStandardQuestionsCount ?? 0;
+                }
+            }
+
+            return Ok(response);
         }
 
 
@@ -373,7 +371,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok(score);
             }
 
-            new Hooks(_context).HookQuestionAnswered(answers[0]);
+            _hooks.HookQuestionAnswered(answers[0]);
 
             return Ok();
         }
@@ -411,178 +409,13 @@ namespace CSETWebCore.Api.Controllers
             var qm = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
             qm.StoreSubcategoryAnswers(subCatAnswers);
 
-            new Hooks(_context).HookQuestionAnswered(subCatAnswers.Answers[0]);
+            _hooks.HookQuestionAnswered(subCatAnswers.Answers[0]);
 
             return Ok();
         }
 
 
-        /// <summary>
-        /// Note that this only populates the summary/title and finding id. 
-        /// the rest is populated in a seperate call. 
-        /// </summary>
-        /// <param name="Answer_Id"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("api/AnswerAllObservations")]
-        public IActionResult AllObservations([FromQuery] int Answer_Id)
-        {
-            int assessmentId = _token.AssessmentForUser();
 
-            var fm = new ObservationsManager(_context, assessmentId);
-            return Ok(fm.AllObservations(Answer_Id));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("api/GetObservation")]
-        public IActionResult GetObservation([FromQuery] int answerId, [FromQuery] int observationId, [FromQuery] int questionId, [FromQuery] string questionType)
-        {
-            int assessmentId = _token.AssessmentForUser();
-
-            if (answerId == 0)
-            {
-                _questionRequirement.AssessmentId = assessmentId;
-                answerId = _questionRequirement.StoreAnswer(new Answer()
-                {
-                    QuestionId = questionId,
-                    MarkForReview = false,
-                    QuestionType = questionType
-                });
-            }
-
-            var fm2 = new ObservationsManager(_context, assessmentId);
-            return Ok(fm2.GetObservation(observationId, answerId));
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("api/GetAssessmentObservations")]
-        public IActionResult GetAssessmentObservations()
-        {
-            int assessmentId = _token.AssessmentForUser();
-
-            var result = from finding in _context.FINDING
-                         join answer in _context.ANSWER
-                            on finding.Answer_Id equals answer.Answer_Id
-                         join question in _context.MATURITY_QUESTIONS
-                            on answer.Question_Or_Requirement_Id equals question.Mat_Question_Id
-                         join category in _context.MATURITY_GROUPINGS
-                            on question.Grouping_Id equals category.Grouping_Id
-
-                         // the custom order is 'DOR', 'Examiner Finding', 'Supplemental Guidance', 'Non-reportable', and then in order by question number
-                         where answer.Assessment_Id == assessmentId
-                         orderby finding.Type.StartsWith("Non"), finding.Type.StartsWith("Supplemental"),
-                            finding.Type.StartsWith("Examiner"), finding.Type.StartsWith("DOR"), question.Mat_Question_Id
-                         select new { finding, answer, question, category };
-
-            return Ok(result.ToList());
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/GetImportance")]
-        public IActionResult GetImportance()
-        {
-            TinyMapper.Bind<IMPORTANCE, Importance>();
-            List<Importance> rlist = new List<Importance>();
-            foreach (IMPORTANCE import in _context.IMPORTANCE)
-            {
-                rlist.Add(TinyMapper.Map<IMPORTANCE, Importance>(import));
-            }
-
-            return Ok(rlist);
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="observationId"></param>
-        [HttpPost]
-        [Route("api/DeleteObservation")]
-        public IActionResult DeleteObservation([FromBody] int observationId)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            var fm = new ObservationsManager(_context, assessmentId);
-
-            var f = fm.GetObservation(observationId);
-            fm.DeleteObservation(f);
-            return Ok();
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="obs"></param>
-        [HttpPost]
-        [Route("api/AnswerSaveObservation")]
-        public IActionResult SaveObservation([FromBody] Observation obs, [FromQuery] bool cancel = false, [FromQuery] bool merge = false)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            var fm = new ObservationsManager(_context, assessmentId);
-
-
-            if (obs.IsObservationEmpty(cancel))
-            {
-                fm.DeleteObservation(obs);
-                return Ok();
-            }
-
-            var id = fm.UpdateObservation(obs);
-
-            return Ok(id);
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="obs"></param>
-        [HttpPost]
-        [Route("api/CopyObservationIntoNewObservation")]
-        public IActionResult CopyObservationIntoNewObservation([FromBody] Observation obs, [FromQuery] bool cancel = false)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            var fm = new ObservationsManager(_context, assessmentId);
-
-            if (obs.IsObservationEmpty(cancel))
-            {
-                fm.DeleteObservation(obs);
-                return Ok();
-            }
-
-            var id = fm.UpdateObservation(obs);
-
-            return Ok(id);
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        ///
-        [HttpPost]
-        [Route("api/SaveIssueOverrideText")]
-        public IActionResult SaveOverrideIssueText([FromBody] ActionItemTextUpdate item)
-        {
-            int assessmentId = _token.AssessmentForUser();
-            var fm = new ObservationsManager(_context, assessmentId);
-            fm.UpdateIssues(item);
-            return Ok();
-        }
 
 
         /// <summary>

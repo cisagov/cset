@@ -21,6 +21,7 @@ using Newtonsoft.Json.Linq;
 using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.Helpers;
+using CSETWebCore.Business.Assessment;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -453,6 +454,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(this._assessmentBusiness.GetAssessmentObservations(id1, id2, id3, id4, id5, id6, id7, id8, id9, id10));
         }
 
+
         [HttpGet]
         [Route("api/getAssessmentDocuments")]
         public IActionResult GetAssessmentDocuments([FromQuery] int id1, [FromQuery] int id2, [FromQuery] int id3,
@@ -462,6 +464,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(this._assessmentBusiness.GetAssessmentDocuments(id1, id2, id3, id4, id5, id6, id7, id8, id9, id10));
         }
+
 
         [HttpGet]
         [Route("api/assessmentCreator")]
@@ -482,6 +485,7 @@ namespace CSETWebCore.Api.Controllers
             return null;
         }
 
+
         [HttpPost]
         [Route("api/conversion")]
         public IActionResult AssessmentConversion([FromQuery] int originalAssessmentId, [FromQuery] string targetModelName)
@@ -498,6 +502,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok();
         }
+
 
         [HttpGet]
         [Route("api/upgrades")]
@@ -531,6 +536,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+
         [HttpPost]
         [Route("api/assessormode")]
         public IActionResult SetAssessorMode([FromBody] string mode)
@@ -548,5 +554,66 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+
+        [HttpPost]
+        [Route("api/setAssessmentDone")]
+        public IActionResult SetAssessmentDone([FromBody] bool done)
+        {
+            try
+            {
+                int assessmentId = _tokenManager.AssessmentForUser();
+                _assessmentBusiness.SetAssessmentDone(assessmentId, done);
+            }
+            catch (Exception e)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
+
+            }
+            return Ok();
+        }
+
+
+        [HttpPost]
+        [Route("api/setAssessmentFavorite")]
+        public IActionResult SetAssessmentFavorite([FromBody] bool isFavorite)
+        {
+            try
+            {
+                int assessmentId = _tokenManager.AssessmentForUser();
+                _assessmentBusiness.SetAssessmentFavorite(assessmentId, isFavorite);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"Error setting favorite: {e}");
+                return BadRequest("Failed to update favorite status");
+            }
+        }
+
+
+        /// <summary>
+        /// A general endpoint that can be used to update the state
+        /// of back-end data when the user acknowledges an
+        /// alert, informational message, etc.
+        /// 
+        /// Evolve the payload as needed.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/acknowledge")]
+        public IActionResult Acknowledge([FromBody] object ack)
+        {
+            try
+            {
+                var ua = new UserAcknowledge(_context, _tokenManager);
+                ua.Ack(ack);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"Error processing user acknowledgment: {e}");
+                return BadRequest("Failed to process user acknowledgment");
+            }
+        }
     }
 }

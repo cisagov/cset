@@ -1,0 +1,54 @@
+<!----------------------
+
+   Copyright 2025 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div *transloco="let t">
+     <table class="table td-align-top" *ngIf="observations?.length > 0">
+          <tr>
+               <th class="form-label">{{ t('observation.observation title') }}</th>
+               <th class="form-label">{{ t('observation.importance') }}</th>
+               <th style="width:5%;"></th>
+               <th style="width:5%;"></th>
+          </tr>
+          <tr *ngFor="let obs of observations" style="box-sizing: content-box;height:20px;">
+               <td class="py-2 pe-3">
+                    {{obs.summary}}
+               </td>
+               <td class="py-2">
+                    {{ t('observation.importance ' + obs.importance?.value.toLowerCase()) }}
+               </td>
+               <td class="py-2">
+                    <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
+                         (click)="editObservation(obs.observation_Id)">
+                         <span class="me-1 cset-icons-pencil"></span>
+                    </button>
+               </td>
+               <td class="py-2">
+                    <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
+                         (click)="deleteObservation(obs)">
+                         <span class="me-1 cset-icons-trash-can"></span>
+                    </button>
+               </td>
+          </tr>
+     </table>
+     <button class="btn btn-primary add" (click)="editObservation(0)">{{ t('observation.add an
+          observation') }}</button>
+</div>

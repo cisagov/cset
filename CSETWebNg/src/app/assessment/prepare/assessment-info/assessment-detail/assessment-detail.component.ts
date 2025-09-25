@@ -65,7 +65,7 @@ export class AssessmentDetailComponent implements OnInit {
   ) { }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     if (this.assessSvc.id()) {
@@ -82,7 +82,6 @@ export class AssessmentDetailComponent implements OnInit {
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
-
     this.assessSvc.isBrandNew = false;
     // Null out a 'low date' so that we display a blank
     const assessDate: Date = new Date(this.assessment.assessmentDate);

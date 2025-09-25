@@ -6,6 +6,7 @@
 //////////////////////////////// 
 #nullable enable
 using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Assessment
 {
@@ -22,10 +23,12 @@ namespace CSETWebCore.Model.Assessment
         public int? SectorId { get; set; }
         public int? IndustryId { get; set; }
 
+        public List<int> SsgSectorIds { get; set; } = [];
+
 
         public int? Size { get; set; }
         public int? AssetValue { get; set; }
-        public string OrganizationName { get; set; } = "";
+        public string? OrganizationName { get; set; }
         public string? Agency { get; set; }
         public int? OrganizationType { get; set; }
         public int? OrgPointOfContact { get; set; }
@@ -34,7 +37,7 @@ namespace CSETWebCore.Model.Assessment
         /// <summary>
         /// The technology domain for the assessment, e.g., OT, IT or OT+IT
         /// </summary>
-        public string TechDomain { get; set; } = "";
+        public string? TechDomain { get; set; }
 
         public bool SelfAssessment { get; set; }
         public string? CriticalService { get; set; }

@@ -29,6 +29,7 @@ import { FileUploadClientService } from './file-client.service';
 import { AssessmentService } from './assessment.service';
 import { FileExportService } from './file-export.service';
 import { ConstantsService } from './constants.service';
+import { Subject } from 'rxjs';
 
 
 const headers = {
@@ -41,6 +42,7 @@ export class DemographicService {
   apiUrl: string;
   id: number;
 
+  public demographicUpdateCompleted$ = new Subject<void>();
 
   constructor(
     private http: HttpClient,
@@ -88,13 +90,14 @@ export class DemographicService {
    */
   updateDemographic(demographic: Demographic) {
     this.assessSvc.assessment.sectorId = demographic.sectorId;
+    this.assessSvc.assessment.ssgSectorIds = demographic.ssgSectorIds;
     this.assessSvc.assessmentStateChanged$.next(this.c.NAV_REFRESH_TREE_ONLY);
 
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
       .subscribe(() => {
-        if (this.configSvc.userIsCisaAssessor) {  
-
+        if (this.configSvc.userIsCisaAssessor) {
         }
+        this.demographicUpdateCompleted$.next();
       });
   }
 

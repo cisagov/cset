@@ -151,7 +151,7 @@ export class MaturityQuestionsNestedComponent implements OnInit, AfterViewInit, 
         }
       },
       error => {
-        console.log(
+        console.error(
           'Error getting questions: ' +
           (<Error>error).name +
           (<Error>error).message
@@ -177,7 +177,7 @@ export class MaturityQuestionsNestedComponent implements OnInit, AfterViewInit, 
     // scroll to the question
     let mqElement = document.getElementById(`mq${mq}`);
 
-    console.log(`mq${mq}`, mqElement);
+
 
     if (mqElement) {
       setTimeout(() => {

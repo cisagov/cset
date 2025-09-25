@@ -108,10 +108,10 @@ namespace CSETWebCore.Helpers
 
         public void LoadDataStructure()
         {
-            localLoadStructure(staticLoadTree());
+            LocalLoadStructure(StaticLoadTree());
         }
 
-        private void localLoadStructure(TopLevelScoreNode topNode)
+        private void LocalLoadStructure(TopLevelScoreNode topNode)
         {
             this.topNode = topNode;
             //get the top level nodes
@@ -127,7 +127,7 @@ namespace CSETWebCore.Helpers
                 ScoringNode t = midNodes[q.b.Title_Id];
                 if (q.a.Parent_Question_Id == null)
                 {
-                    LeafNode l = processLeafNode(q.a.Mat_Question_Id, q.a.Question_Title, t);
+                    LeafNode l = ProcessLeafNode(q.a.Mat_Question_Id, q.a.Question_Title, t);
                     t.Children.Add(l);
                 }
                 else
@@ -142,7 +142,7 @@ namespace CSETWebCore.Helpers
                     string parentTitle = questionIDtoTitle[q.a.Parent_Question_Id ?? 0];
                     if (midNodes.TryGetValue(parentTitle, out outNode))
                     {
-                        LeafNode l = processLeafNode(q.a.Mat_Question_Id, q.a.Question_Title, outNode);
+                        LeafNode l = ProcessLeafNode(q.a.Mat_Question_Id, q.a.Question_Title, outNode);
                         outNode.Children.Add(l);
                     }
                     else
@@ -158,7 +158,7 @@ namespace CSETWebCore.Helpers
                             Description = "Parent of " + q.a.Question_Title
                         };
                         midNodes.Add(parentTitle, node);
-                        LeafNode l = processLeafNode(q.a.Mat_Question_Id, q.a.Question_Title, node);
+                        LeafNode l = ProcessLeafNode(q.a.Mat_Question_Id, q.a.Question_Title, node);
                         node.Children.Add(l);
                         t.Children.Add(node);
                     }
@@ -166,7 +166,7 @@ namespace CSETWebCore.Helpers
             }
         }
 
-        private LeafNode processLeafNode(int questionid, string title_id, ScoringNode t)
+        private LeafNode ProcessLeafNode(int questionid, string title_id, ScoringNode t)
         {
             LeafNode l = new LeafNode()
             {
@@ -181,31 +181,38 @@ namespace CSETWebCore.Helpers
 
         public TopLevelScoreNode GetPercentageScores(int assessment_id)
         {
-            TopLevelScoreNode t = staticAddMilTerms();
+            TopLevelScoreNode t = StaticAddMilTerms();
             SetAnswers(assessment_id);
             return getPercentageScore();
         }
 
+
         public TopLevelScoreNode GetPartialScores(int assessment_id)
         {
-            TopLevelScoreNode t = staticAddMilTerms();
+            TopLevelScoreNode t = StaticAddMilTerms();
             SetAnswers(assessment_id);
             return getPartialScore();
         }
+
 
         /// <summary>
         /// This is a recipe for disaster.  These two data structures are a little too shared. 
         /// </summary>
         /// <returns></returns>
-        private TopLevelScoreNode staticAddMilTerms()
+        private TopLevelScoreNode StaticAddMilTerms()
         {
-            cleanoutStructure();
-            TopLevelScoreNode t = staticLoadTreeMidStructure();
-            localLoadStructure(t);
+            CleanoutStructure();
+            TopLevelScoreNode t = StaticLoadTreeMidStructure();
+            LocalLoadStructure(t);
             return t;
         }
 
-        private TopLevelScoreNode staticLoadTreeMidStructure()
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private TopLevelScoreNode StaticLoadTreeMidStructure()
         {
             TopLevelScoreNode mil1 = new TopLevelScoreNode() { Title_Id = "MIL1", Description = "MIL1 - Performed" };
             midNodes.Add(mil1.Title_Id, mil1);
@@ -264,7 +271,7 @@ namespace CSETWebCore.Helpers
                 Description = "Goal 3 – Situational awareness extends to external dependencies."
             });
 
-            addChildrenToList(mil1, midNodes);
+            AddChildrenToList(mil1, midNodes);
 
             TopLevelScoreNode mIL2 = new TopLevelScoreNode() { Title_Id = "MIL2", Description = "MIL2 - Planned" };
             mIL2.TopLevelChild = mil1;
@@ -282,17 +289,17 @@ namespace CSETWebCore.Helpers
         }
 
 
-        private void addChildrenToList(ScoringNode node, Dictionary<String, ScoringNode> nodesList)
+        private void AddChildrenToList(ScoringNode node, Dictionary<String, ScoringNode> nodesList)
         {
             foreach (ScoringNode n in node.Children)
             {
                 nodesList.Add(n.Title_Id, n);
                 if (n.Children.Count > 0)
-                    addChildrenToList(n, nodesList);
+                    AddChildrenToList(n, nodesList);
             }
         }
 
-        private void cleanoutStructure()
+        private void CleanoutStructure()
         {
             //clean out current structure and then add the new structure.
             midNodes = new Dictionary<String, ScoringNode>();
@@ -301,9 +308,7 @@ namespace CSETWebCore.Helpers
         }
 
 
-
-
-        private TopLevelScoreNode staticLoadTree()
+        private TopLevelScoreNode StaticLoadTree()
         {
             TopLevelScoreNode mil1 = new TopLevelScoreNode() { Title_Id = "MIL1", Description = "MIL1 - Performed" };
             midNodes.Add(mil1.Title_Id, mil1);
@@ -396,7 +401,7 @@ namespace CSETWebCore.Helpers
             public abstract double CalculatePartialScore();
             public abstract int CalculatePercentageScore();
 
-            public ScoreStatus basicScore(List<EDMscore> scores)
+            public ScoreStatus BasicScore(List<EDMscore> scores)
             {
                 bool yellow = false;
                 bool green = false;
@@ -445,7 +450,6 @@ namespace CSETWebCore.Helpers
 
         public class LeafNode : ScoringNode
         {
-
             public String Answer { get; set; }
             public int Mat_Question_Id { get; set; }
             public ScoringNode Parent { get; internal set; }
@@ -529,6 +533,7 @@ namespace CSETWebCore.Helpers
                 return Score;
             }
 
+
             public override int CalculatePercentageScore()
             {
                 this.PercentageScore = 0;
@@ -544,6 +549,7 @@ namespace CSETWebCore.Helpers
                 return this.PercentageCountRight;
             }
 
+
             public override ScoreStatus CalculateScoreStatus(List<EDMscore> scores)
             {
                 //if (this.ColorStatus != ScoreStatus.None)
@@ -552,12 +558,13 @@ namespace CSETWebCore.Helpers
                 //return red if they are all red
                 //yellow if anything is not red but not all green
                 //green if they are all green
-                ScoreStatus score = basicScore(scores);
+                ScoreStatus score = BasicScore(scores);
                 this.ColorStatus = score;
                 scores.Add(new EDMscore() { Title_Id = this.Title_Id, Color = this.ColorStatus.ToString() });
                 return score;
             }
         }
+
 
         public class TopLevelScoreNode : ScoringNode
         {
@@ -601,7 +608,7 @@ namespace CSETWebCore.Helpers
                 //else red                
                 if (this.Title_Id == "MIL1")
                 {
-                    this.ColorStatus = basicScore(scores);
+                    this.ColorStatus = BasicScore(scores);
                 }
                 else
                 {
@@ -619,7 +626,6 @@ namespace CSETWebCore.Helpers
 
                 scores.Add(new EDMscore() { Title_Id = this.Title_Id, Color = this.ColorStatus.ToString() });
                 return this.ColorStatus;
-
             }
         }
     }

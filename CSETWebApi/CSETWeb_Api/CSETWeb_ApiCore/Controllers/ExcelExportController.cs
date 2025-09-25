@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.ExportCSV;
 using CSETWebCore.Interfaces.Helpers;
@@ -21,6 +22,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IDataHandling _data;
         private readonly IMaturityBusiness _maturity;
         private readonly IHttpContextAccessor _http;
+        private readonly Hooks _hooks;
         private CSETContext _context;
         private ExcelExporter _exporter;
 
@@ -28,14 +30,15 @@ namespace CSETWebCore.Api.Controllers
         private string excelExtension = ".xlsx";
 
         public ExcelExportController(ITokenManager token, IDataHandling data, IMaturityBusiness maturity,
-            IHttpContextAccessor http, CSETContext context)
+            IHttpContextAccessor http, CSETContext context, Hooks hooks)
         {
             _token = token;
             _data = data;
             _maturity = maturity;
             _http = http;
             _context = context;
-            _exporter = new ExcelExporter(_context, _data, _http, _token);
+            _hooks = hooks;
+            _exporter = new ExcelExporter(_context, _data, _http, _token, _hooks);
         }
 
 

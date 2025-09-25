@@ -1,0 +1,11 @@
+
+/* --- Disable Preflight --- */
+/* Declare layers so we can omit the preflight import entirely */
+@layer theme, base, components, utilities;
+
+/* Bring in Tailwind’s theme + utilities, but skip preflight */
+@import "tailwindcss/theme.css" layer(theme) prefix(tw);
+@import "tailwindcss/utilities.css" layer(utilities) prefix(tw);
+
+/* Plugins */
+@plugin "daisyui";

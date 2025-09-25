@@ -43,9 +43,12 @@ export interface AssessmentDetail {
     assets?: string;
 
     galleryItemGuid?: string;
+    
     // a few demographics to track
     sectorId?: number;
     industryId?: number;
+
+    ssgSectorIds?: number[];
 
     useStandard?: boolean;
     useMaturity?: boolean;
@@ -70,6 +73,7 @@ export interface AssessmentDetail {
     pciiNumber?: string;
     is_PCII?: boolean;
     assessorMode?: boolean;
+    done?:boolean;
 }
 
 export interface MaturityModel {
@@ -114,6 +118,8 @@ export interface Demographic {
 
     sectorId?: number;
     industryId?: number;
+
+    ssgSectorIds?: number[];
 
     size?: number;
     assetValue?: number;

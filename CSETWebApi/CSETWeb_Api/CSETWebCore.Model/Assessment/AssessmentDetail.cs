@@ -46,6 +46,8 @@ namespace CSETWebCore.Model.Assessment
         public int? SectorId { get; set; }
         public int? IndustryId { get; set; }
 
+        public List<int> SsgSectorIds { get; set; } = [];
+
 
         // Selected features of the assessment
         public bool UseStandard { get; set; }
@@ -74,6 +76,7 @@ namespace CSETWebCore.Model.Assessment
         
         public bool AssessorMode { get; set; }
 
+        public bool? Done { get; set; }
         // Selected maturity model and the target level
         public MaturityModel MaturityModel { get; set; }
 

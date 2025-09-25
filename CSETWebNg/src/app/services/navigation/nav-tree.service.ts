@@ -123,12 +123,6 @@ export class NavTreeService {
           displaytext = this.tSvc.translate(`titles.${d}`);
         }
 
-        // plug in the applicable SSG description
-        let ssg = workflowNode.attributes['ssg']?.value ?? false;
-        if (!!ssg) {
-          displaytext = this.tSvc.translate(`titles.${d}.${this.ssgSvc.ssgSimpleSectorLabel()}`);
-        }
-
         const navNode: NavTreeNode = {
           label: displaytext,
           value: workflowNode.id ?? 0,

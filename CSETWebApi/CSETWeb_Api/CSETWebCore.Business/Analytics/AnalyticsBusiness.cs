@@ -4,18 +4,13 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Demographic;
 using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Analytics;
-using CSETWebCore.Model.Dashboard;
-using System;
+using CSETWebCore.Model.Analytics;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.Business.Demographic;
-using CSETWebCore.Model.Analytics;
-using Microsoft.EntityFrameworkCore;
 using AggregationAssessment = CSETWebCore.Model.Assessment.AggregationAssessment;
 
 namespace CSETWebCore.Business.Analytics
@@ -180,7 +175,7 @@ namespace CSETWebCore.Business.Analytics
                     where f.Answer_Id == a.AnswerId
                     select new AgFinding
                     {
-                        AnswerId  = f.Answer_Id,
+                        AnswerId  = (int)f.Answer_Id,
                         FindingId = f.Finding_Id,
                         Summary = f.Summary,
                         Issue = f.Issue,

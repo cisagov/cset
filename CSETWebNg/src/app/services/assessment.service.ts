@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {Subject} from 'rxjs';
 import {
   AssessmentContactsResponse,
   AssessmentDetail,
@@ -56,6 +57,7 @@ export class AssessmentService {
   private initialized = false;
   public applicationMode: string;
   public assessmentStateChanged$ = new BehaviorSubject(this.c.NAV_APPLY_CIE_TO_CSTATES);
+  public completionRefreshRequested$ = new Subject<any>();
 
   /**
    * This is private because we need a setter so that we can do things
@@ -138,7 +140,6 @@ export class AssessmentService {
   clearFirstTime() {
     this.http.get(this.apiUrl + 'clearFirstTime').subscribe(
       () => {
-        console.log("cleared first Time");
       }
     );
   }
@@ -674,5 +675,11 @@ export class AssessmentService {
     this.assessment.assessorMode = mode;
     return this.http.post(this.apiUrl + 'assessormode', mode, headers)
   }
-
+ setAssesmentDone(done:boolean){
+    this.assessment.done=done;
+    return this.http.post(this.apiUrl + 'setAssessmentDone', done,headers)
+ }
+  setAssessmentFavorite(isFavorite: boolean) {
+    return this.http.post(this.apiUrl + 'setAssessmentFavorite', isFavorite, headers);
+  }
 }

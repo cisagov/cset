@@ -162,7 +162,7 @@ export class UploadExportComponent implements OnInit {
     allProgressObservables.forEach((element, i) => {
       element.subscribe(
         succ => {
-          // console.log(succ)
+
         },
         fail => {
           if (fail && fail.message) {

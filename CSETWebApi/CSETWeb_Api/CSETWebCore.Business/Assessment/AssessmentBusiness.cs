@@ -52,7 +52,7 @@ namespace CSETWebCore.Business.Assessment
         public AssessmentBusiness(IHttpContextAccessor httpContext, ITokenManager authentication,
             IUtilities utilities, IContactBusiness contactBusiness, ISalBusiness salBusiness,
             IMaturityBusiness maturityBusiness, IAssessmentUtil assessmentUtil, IStandardsBusiness standardsBusiness,
-            IDiagramManager diagramManager, CSETContext context)
+            IDiagramManager diagramManager, CSETContext context, Hooks hooks)
         {
             _tokenManager = authentication;
             _utilities = utilities;
@@ -62,7 +62,7 @@ namespace CSETWebCore.Business.Assessment
             _assessmentUtil = assessmentUtil;
             _standardsBusiness = standardsBusiness;
             _context = context;
-            _diagramManager = new Diagram.DiagramManager(context);
+            _diagramManager = new Diagram.DiagramManager(_context, hooks);
             _overlay = new TranslationOverlay();
         }
 
@@ -417,6 +417,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.PciiNumber = result.aa.PCII_Number;
                 assessment.IseSubmitted = result.ii.Ise_Submitted;
                 assessment.AssessorMode = result.aa.AssessorMode;
+                assessment.Done = result.aa.Done ;
                 
 
                 assessment.CreatorName = new User.UserBusiness(_context, null)
@@ -493,6 +494,13 @@ namespace CSETWebCore.Business.Assessment
                 if (d2Sector != null)
                 {
                     assessment.SectorId = d2Sector;
+                }
+
+                assessment.SsgSectorIds = [];
+                var ssgs = _context.DETAILS_DEMOGRAPHICS.Where(z => z.Assessment_Id == assessmentId && z.DataItemName.StartsWith("SSG-SECTOR-")).ToList();
+                foreach (var ssg in ssgs)
+                {
+                    assessment.SsgSectorIds.Add((int)ssg.IntValue);
                 }
 
 
@@ -765,9 +773,6 @@ namespace CSETWebCore.Business.Assessment
         public List<DetailsDemographicsOptionsDTO> GetOrganizationTypes()
         {
             List<DETAILS_DEMOGRAPHICS_OPTIONS> orgTypes = _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ORG-TYPE").ToList();
-            
-            // List<DETAILS_DEMOGRAPHICS_OPTIONS> assetValues = await _context.DETAILS_DEMOGRAPHICS_OPTIONS.Where(x => x.DataItemName == "ASSET-VALUE").ToListAsync();
-            // return Ok(assetValues.OrderBy(a => a.Sequence).Select(a => new DemographicsAssetValue() { AssetValue = a.OptionText, DemographicsAssetId = a.OptionValue }).ToList());
 
             var lang = _tokenManager.GetCurrentLanguage();
             if (lang != "en")
@@ -1297,6 +1302,28 @@ namespace CSETWebCore.Business.Assessment
         {
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             assessment.AssessorMode = mode.ToBool();
+            _context.SaveChanges();
+        }
+
+        public void SetAssessmentDone(int assessmentId, bool isDone)
+        {
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+             assessment.Done = isDone;
+            _context.SaveChanges();
+        }
+        public void SetAssessmentFavorite(int assessmentId, bool isFavorite)
+        {
+            int currentUserId = _tokenManager.GetUserId() ?? throw new UnauthorizedAccessException("User ID not found in token");
+    
+            var userAssessment = _context.ASSESSMENT_CONTACTS
+                .FirstOrDefault(ac => ac.Assessment_Id == assessmentId && ac.UserId == currentUserId);
+    
+            if (userAssessment == null)
+            {
+                throw new ArgumentException($"User {currentUserId} is not associated with assessment {assessmentId}");
+            }
+    
+            userAssessment.Favorite = isFavorite ? true : false;
             _context.SaveChanges();
         }
     }
