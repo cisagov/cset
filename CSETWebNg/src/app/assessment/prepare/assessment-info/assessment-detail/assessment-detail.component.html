@@ -88,20 +88,6 @@
                  class="tw:toggle"
                  [attr.style]="'--color-base-100: ' + (assessment.assessorMode ? '#015288' : '#e5e7eb') + '; background-color: ' + (assessment.assessorMode ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
             <label class="form-label fst-italic">{{t('assessor workflow.assessor workflow explanation')}}</label>
-            <div class="d-inline-flex btn-group align-items-start" role="group" data-toggle="buttons">
-                <label class="btn btn-level form-check-label px-4" [class.active]="!assessment.assessorMode"
-                    (change)="updateAssessorMode()">
-                    <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
-                        [checked]="!assessment.assessorMode" />
-                    {{t('answer-options.button-labels.no')}}
-                </label>
-                <label class="btn btn-level form-check-label px-4" [class.active]="assessment.assessorMode"
-                    (change)="updateAssessorMode()">
-                    <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
-                        [checked]="assessment.assessorMode" />
-                    {{t('answer-options.button-labels.yes')}}
-                </label>
-            </div>
         </div>
 
         <div class="mb-5">

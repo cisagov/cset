@@ -80,21 +80,6 @@
         (change)="changeIsPCII(!assessment.is_PCII)"
         class="tw:toggle"
         [attr.style]="'--color-base-100: ' + (assessment.is_PCII ? '#015288' : '#e5e7eb') + '; background-color: ' + (assessment.is_PCII ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
-        <div>
-          <div class="d-inline-flex btn-group align-items-start" role="group" data-toggle="buttons">
-            <label class="btn btn-level form-check-label px-4" [class.active]="!assessment.is_PCII">
-              <input class="btn-check" name="standardNo" id="standardNo" type="radio" autocomplete="off"
-                (change)="changeIsPCII(false)" tabindex="0" [ngModel]="!assessment.is_PCII"
-                (ngModelChange)="assessment.is_PCII = $event" />
-              {{t('answer-options.button-labels.no')}}
-            </label>
-            <label class="btn btn-level form-check-label px-4" [class.active]="assessment.is_PCII">
-              <input class="btn-check" name="standardYes" id="standardYes" type="radio" autocomplete="off"
-                (change)="changeIsPCII(true)" tabindex="0" [(ngModel)]="assessment.is_PCII" />
-              {{t('answer-options.button-labels.yes')}}
-            </label>
-          </div>
-        </div>
       </div>
       <div class="col-6" *ngIf="IsPCII">
         <label class="form-label" for="name">{{t('pcii number')}}</label>
@@ -126,20 +111,6 @@
                class="tw:toggle"
                [attr.style]="'--color-base-100: ' + (assessment.assessorMode ? '#015288' : '#e5e7eb') + '; background-color: ' + (assessment.assessorMode ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
         <label class="form-label fst-italic">{{t('assessor workflow.assessor workflow explanation')}}</label>
-        <div class="d-inline-flex btn-group align-items-start" role="group" data-toggle="buttons">
-          <label class="btn btn-level form-check-label px-4" [class.active]="!assessment.assessorMode"
-            (change)="updateAssessorMode()">
-            <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
-              [checked]="!assessment.assessorMode" />
-            {{t('answer-options.button-labels.no')}}
-          </label>
-          <label class="btn btn-level form-check-label px-4" [class.active]="assessment.assessorMode"
-            (change)="updateAssessorMode()">
-            <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
-              [checked]="assessment.assessorMode" />
-            {{t('answer-options.button-labels.yes')}}
-          </label>
-        </div>
       </div>
       <ng-template #nonassessor class="mb-3">
         <p>
