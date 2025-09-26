@@ -100,16 +100,6 @@ namespace CSETWeb_ApiCore
                     });
 
                 o.AddPolicy(
-                    name: "RestrictivePolicy",
-                    builder =>
-                    {
-                        builder.WithOrigins("http://localhost:4200")
-                            .AllowAnyMethod()
-                            .WithHeaders("content-type", "authorization", "noauth", "x-cset-noauth", "expseconds", "remoteauthorization", "refresh", "accept", "assessmentid", "aggregationid")
-                            .WithExposedHeaders("content-disposition");
-                    });
-
-                o.AddPolicy(
                     name: "DynamicOrigins",
                     builder =>
                 {
