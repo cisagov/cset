@@ -72,7 +72,14 @@
 
     <div class="row mb-4">
       <div class="col-6">
-        <label for="name" class="form-label">{{t('pcii requested')}}</label>
+        <label for="name" class="form-label me-2">{{t('pcii requested')}}</label>
+        <input type="checkbox"
+        name="isPCII"
+        id="isPCII"
+        [checked]="assessment.is_PCII"
+        (change)="changeIsPCII(!assessment.is_PCII)"
+        class="tw:toggle"
+        [attr.style]="'--color-base-100: ' + (assessment.is_PCII ? '#015288' : '#e5e7eb') + '; background-color: ' + (assessment.is_PCII ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
         <div>
           <div class="d-inline-flex btn-group align-items-start" role="group" data-toggle="buttons">
             <label class="btn btn-level form-check-label px-4" [class.active]="!assessment.is_PCII">
@@ -110,7 +117,14 @@
       <h4>{{ t('assessment settings') }}</h4>
 
       <div *ngIf="this.configSvc.userIsCisaAssessor; else nonassessor" class="mb-3">
-        <label>{{t('assessor workflow.control label')}}</label>
+        <label class="me-2">{{t('assessor workflow.control label')}}</label>
+        <input type="checkbox"
+               name="assessorMode"
+               id="assessorMode"
+               [checked]="assessment.assessorMode"
+               (change)="updateAssessorMode()"
+               class="tw:toggle"
+               [attr.style]="'--color-base-100: ' + (assessment.assessorMode ? '#015288' : '#e5e7eb') + '; background-color: ' + (assessment.assessorMode ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
         <label class="form-label fst-italic">{{t('assessor workflow.assessor workflow explanation')}}</label>
         <div class="d-inline-flex btn-group align-items-start" role="group" data-toggle="buttons">
           <label class="btn btn-level form-check-label px-4" [class.active]="!assessment.assessorMode"

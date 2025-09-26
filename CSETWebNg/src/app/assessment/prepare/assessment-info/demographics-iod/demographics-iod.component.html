@@ -157,7 +157,13 @@
     <label for="assetValue" class="col-9">Does your organization use a body of practice, industry standard, or similar
       resource to support or inform its cybersecurity efforts?
     </label>
-
+    <input type="checkbox"
+           name="usesStandard"
+           id="usesStandard"
+           [checked]="demographicData.usesStandard"
+           (change)="setBool(demographicData, 'usesStandard', !demographicData.usesStandard)"
+           class="tw:toggle"
+           [attr.style]="'--color-base-100: ' + (demographicData.usesStandard ? '#015288' : '#e5e7eb') + '; background-color: ' + (demographicData.usesStandard ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
     <div class="col-3 d-inline-flex btn-group justify-content-end align-items-start" role="group" data-toggle="buttons">
       <label class="btn btn-level btn-rounded px-4" [class.active]="!demographicData.usesStandard"
         (change)="setBool(demographicData, 'usesStandard', false)">
@@ -205,7 +211,13 @@
     <label class="col-9" for="assetValue">Is your organization required to comply with mandatory, cybersecurity-related
       regulation?
     </label>
-
+    <input type="checkbox"
+           name="requiredToComply"
+           id="requiredToComply"
+           [checked]="demographicData.requiredToComply"
+           (change)="setBool(demographicData, 'requiredToComply', !demographicData.requiredToComply)"
+           class="tw:toggle"
+           [attr.style]="'--color-base-100: ' + (demographicData.requiredToComply ? '#015288' : '#e5e7eb') + '; background-color: ' + (demographicData.requiredToComply ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
     <div class="col-3 d-inline-flex btn-group justify-content-end align-items-start" role="group" data-toggle="buttons">
       <label class="btn btn-level btn-rounded px-4" [class.active]="!demographicData.requiredToComply"
         (change)="setBool(demographicData, 'requiredToComply', false)">
