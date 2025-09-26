@@ -78,8 +78,7 @@
         id="isPCII"
         [checked]="assessment.is_PCII"
         (change)="changeIsPCII(!assessment.is_PCII)"
-        class="tw:toggle"
-        [attr.style]="'--color-base-100: ' + (assessment.is_PCII ? '#015288' : '#e5e7eb') + '; background-color: ' + (assessment.is_PCII ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
+        class="tw:toggle">
       </div>
       <div class="col-6" *ngIf="IsPCII">
         <label class="form-label" for="name">{{t('pcii number')}}</label>
@@ -108,8 +107,7 @@
                id="assessorMode"
                [checked]="assessment.assessorMode"
                (change)="updateAssessorMode()"
-               class="tw:toggle"
-               [attr.style]="'--color-base-100: ' + (assessment.assessorMode ? '#015288' : '#e5e7eb') + '; background-color: ' + (assessment.assessorMode ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
+               class="tw:toggle">
         <label class="form-label fst-italic">{{t('assessor workflow.assessor workflow explanation')}}</label>
       </div>
       <ng-template #nonassessor class="mb-3">

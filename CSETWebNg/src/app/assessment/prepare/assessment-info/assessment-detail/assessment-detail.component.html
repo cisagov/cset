@@ -85,8 +85,7 @@
                  id="assessorMode"
                  [checked]="assessment.assessorMode"
                  (change)="updateAssessorMode()"
-                 class="tw:toggle"
-                 [attr.style]="'--color-base-100: ' + (assessment.assessorMode ? '#015288' : '#e5e7eb') + '; background-color: ' + (assessment.assessorMode ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
+                 class="tw:toggle">
             <label class="form-label fst-italic">{{t('assessor workflow.assessor workflow explanation')}}</label>
         </div>
 
