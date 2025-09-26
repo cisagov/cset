@@ -96,8 +96,32 @@ namespace CSETWeb_ApiCore
                         builder.AllowAnyOrigin()
                             .AllowAnyMethod()
                             .AllowAnyHeader()
-                            .WithExposedHeaders("Content-Disposition");
+                            .WithExposedHeaders("content-disposition");
                     });
+
+                o.AddPolicy(
+                    name: "RestrictivePolicy",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                            .AllowAnyMethod()
+                            .WithHeaders("content-type", "authorization", "noauth", "x-cset-noauth", "expseconds", "remoteauthorization", "refresh", "accept", "assessmentid", "aggregationid")
+                            .WithExposedHeaders("content-disposition");
+                    });
+
+                o.AddPolicy(
+                    name: "DynamicOrigins",
+                    builder =>
+                {
+                    var allowedOrigins = Configuration
+                        .GetSection("Cors:AllowedOrigins")
+                        .Get<string[]>();
+
+                    builder.WithOrigins(allowedOrigins)
+                          .AllowAnyMethod()
+                          .WithHeaders("content-type", "authorization", "noauth", "x-cset-noauth", "expseconds", "remoteauthorization", "refresh", "accept", "assessmentid", "aggregationid")
+                          .WithExposedHeaders("content-disposition");
+                });
             });
 
             services.AddAuthentication(options =>
@@ -260,7 +284,7 @@ namespace CSETWeb_ApiCore
             });
             app.ConfigureExceptionHandler();
             app.UseRouting();
-            app.UseCors("AllowAll");
+            app.UseCors("DynamicOrigins");
             app.UseAuthentication();
             app.UseAuthorization();
 
