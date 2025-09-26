@@ -38,12 +38,12 @@ import { ConfigService } from '../../../services/config.service';
   standalone: false
 })
 export class ObservationDetailComponent implements OnInit {
-
   observation: Observation;
   importances: Importance[];
   contactsModel: any[];
   answerId: number | null;
   questionId: number | null;
+  impliedSave: boolean = false;
 
   constructor(
     private observationsSvc: ObservationsService,
@@ -90,6 +90,8 @@ export class ObservationDetailComponent implements OnInit {
    * 
    */
   save() {
+    console.log('save click')
+    this.impliedSave = true;
     this.observation.answer_Id = this.answerId;
     this.observation.question_Id = this.questionId;
     this.observationsSvc.saveObservation(this.observation).subscribe((resp: any) => {
