@@ -31,6 +31,7 @@ import { EdmFilteringService } from './edm-filtering.service';
 import { CrrFilteringService } from './crr-filtering.service';
 import { CmmcFilteringService } from './cmmc-filtering.service';
 import { RraFilteringService } from './rra-filtering.service';
+import { MvraFilteringService } from './mvra-filtering.service';
 import { BasicFilteringService } from './basic-filtering.service';
 import { SelectableGroupingsService } from '../../selectable-groupings.service';
 
@@ -100,6 +101,7 @@ export class MaturityFilteringService {
     public edmFilteringSvc: EdmFilteringService,
     public crrFilteringSvc: CrrFilteringService,
     public rraFilteringSvc: RraFilteringService,
+    public mvraFilteringSvc: MvraFilteringService,
     public basicFilteringSvc: BasicFilteringService,
     public selectableGroupingsSvc: SelectableGroupingsService
   ) {
@@ -255,11 +257,8 @@ export class MaturityFilteringService {
 
     g.visible = true;
 
-
     // first check the 'selected' property (see maturity models 23 and 24)
     g.visible = g.selected;
-
-
 
     g.questions.forEach(q => {
       // start with false, then set true if the question should be shown
@@ -287,6 +286,10 @@ export class MaturityFilteringService {
           this.rraFilteringSvc.setQuestionVisibility(q);
           break;
 
+        case 'MVRA':
+          this.mvraFilteringSvc.setQuestionVisibility(q);
+          break;
+
         default:
           this.basicFilteringSvc.setQuestionVisibility(q);
       }
@@ -298,7 +301,8 @@ export class MaturityFilteringService {
       const maturityModel = this.assesmentSvc.assessment?.maturityModel;
 
       if (q.maturityLevel !== undefined && q.maturityLevel !== null) {
-        const questionLevel = q.maturityLevel.toString();
+        let questionLevel = q.maturityLevel.toString();
+
         if (!filterSvc.showFilters.includes(questionLevel)) {
           //q.visible=false;   -- quick fix for now to prevent questions from being hidden incorrectly
           //return;
@@ -326,9 +330,8 @@ export class MaturityFilteringService {
 
       // only apply maturity-level filtering when the user has toggled at least one numeric level
       const hasLevelFilter = filterSvc.showFilters.some(f => /^\d+$/.test(f));
-      if ((maturityModel?.levels?.length ?? 0) > 0
-        && q.maturityLevel != null
-        && hasLevelFilter) {
+
+      if ((maturityModel?.levels?.length ?? 0) > 0 && q.maturityLevel != null && hasLevelFilter) {
         const questionLevel = q.maturityLevel.toString();
         if (!filterSvc.showFilters.includes(questionLevel)) {
           q.visible = false;
@@ -381,6 +384,7 @@ export class MaturityFilteringService {
         filterSvc.answerOptions.includes(f) || f === 'U' || ['C', 'FB', 'M', 'O', 'FR'].includes(f));
 
       if (!hasAnswerOrFeatureFilter && q.maturityLevel != null) {
+
         const questionLevel = q.maturityLevel.toString();
         if (filterSvc.showFilters.includes(questionLevel)) {
           q.visible = true;
