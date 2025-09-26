@@ -34,7 +34,7 @@ import { ObservationsService } from '../../../services/observations.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { AuthenticationService } from './../../../services/authentication.service';
 import { ObservationDetailComponent } from '../observations/observation-detail.component';
-import { Observation } from '../observations/observations.model';
+import { Observation, ObservationContact } from '../observations/observations.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
 import { LayoutService } from '../../../services/layout.service';
@@ -383,7 +383,7 @@ export class QuestionExtrasComponent implements OnInit {
     let obs = await firstValueFrom(this.obsSvc.getObservation(-1, observationId, -1, ''));
 
     if (!obs) {
-      obs = this.buildEmptyObservation();
+      obs = await this.buildEmptyObservation();
     }
 
     obs.answerLevel = true;
@@ -452,7 +452,7 @@ export class QuestionExtrasComponent implements OnInit {
   /**
    * 
    */
-  buildEmptyObservation() {
+  async buildEmptyObservation() {
     const obs: Observation = {
       question_Id: this.myQuestion.questionId,
       question_Type: this.myQuestion.questionType,
@@ -460,7 +460,7 @@ export class QuestionExtrasComponent implements OnInit {
       assessmentId: null,
       observation_Id: 0,
       summary: '',
-      observation_Contacts: [],
+      observation_Contacts: await this.getContactsForEmptyObservation(),
       impact: '',
       importance: null,
       importance_Id: 1,
@@ -482,6 +482,25 @@ export class QuestionExtrasComponent implements OnInit {
 
     return obs;
   }
+
+  /**
+     * Fills the empty observation_Contacts field with front-facing array
+     * of contacts assigned to the assessment
+     */
+    async getContactsForEmptyObservation(): Promise<ObservationContact[]> {
+      let observationContacts = [];
+      let userContacts = (await this.assessSvc.getAssessmentContacts()).contactList;
+      userContacts.forEach(user => {
+        observationContacts.push({
+          assessment_Contact_Id: user.assessmentContactId,
+          name: user.primaryEmail + ' -- ' + user.firstName + ' ' + user.lastName,
+          observation_Id: 0,
+          selected: false
+        });
+      });
+  
+      return observationContacts;
+    }
 
   /**
    * Programatically clicks the corresponding file upload element.

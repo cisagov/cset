@@ -22,7 +22,7 @@ public partial class ISE_ACTIONS
     [StringLength(1000)]
     public string Action_Items { get; set; }
 
-    [StringLength(100)]
+    [StringLength(1000)]
     public string Regulatory_Citation { get; set; }
 
     public int? Parent_Id { get; set; }

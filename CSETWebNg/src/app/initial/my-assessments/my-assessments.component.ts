@@ -51,6 +51,7 @@ import { DateAdapter } from '@angular/material/core';
 import { ConversionService } from '../../services/conversion.service';
 import { FileExportService } from '../../services/file-export.service';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { HostListener } from '@angular/core';
 
 interface UserAssessment {
   isEntry: boolean;
@@ -113,6 +114,8 @@ export class MyAssessmentsComponent implements OnInit {
     sortable: true,
     filter: true
   };
+  dynamicGridHeight: number = 600;
+  private readonly minGridHeight = 300;
 
   constructor(
     public configSvc: ConfigService,
@@ -136,8 +139,8 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initializeColumnDefs();
     this.getAssessments();
+    this.calculateGridHeight();
 
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);
@@ -150,7 +153,13 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
 
-    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.userIsCisaAssessor = resp);
+    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => {
+      this.configSvc.userIsCisaAssessor = resp
+      this.initializeColumnDefs()
+      if (this.gridApi) {
+        this.gridApi.setGridOption('columnDefs', this.columnDefs);
+      }
+    });
     this.tSvc.langChanges$.subscribe((lang: string) => {
       this.updateGridTranslations();
     });
@@ -281,7 +290,7 @@ export class MyAssessmentsComponent implements OnInit {
         cellRenderer: this.actionsRenderer.bind(this),
         sortable: false,
         filter: false,
-        width: 250,
+        width: this.showColumn('export json') ? 345 : 200,
         pinned: 'right'
       }
     ];
@@ -332,25 +341,25 @@ export class MyAssessmentsComponent implements OnInit {
       concatMap((assessmentsCompletionData: any[]) =>
         this.assessSvc.getAssessments().pipe(
           map((assessments: UserAssessment[]) => {
-              assessments.forEach((item, index, arr) => {
+            assessments.forEach((item, index, arr) => {
 
-                // determine assessment type display
-                item.type = this.determineAssessmentType(item);
-
-
-                let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
-                item.completedQuestionsCount = currentAssessmentStats?.completedCount;
-                item.totalAvailableQuestionsCount =
-                  (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
-                  (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
-                  (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
+              // determine assessment type display
+              item.type = this.determineAssessmentType(item);
 
 
-              });
+              let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
+              item.completedQuestionsCount = currentAssessmentStats?.completedCount;
+              item.totalAvailableQuestionsCount =
+                (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
+                (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
+                (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
 
 
-              this.sortedAssessments = assessments;
-            },
+            });
+
+
+            this.sortedAssessments = assessments;
+          },
             error => {
               console.error(
                 'Unable to get Assessments for ' +
@@ -510,8 +519,8 @@ export class MyAssessmentsComponent implements OnInit {
 
               let params = '';
 
-              if (result.scrubData) {
-                params = params + '&scrubData=' + result.scrubData;
+              if (result.removePCII) {
+                params = params + '&removePCII=' + result.removePCII;
               }
 
               if (result.encryptionData.password != null && result.encryptionData.password !== '') {
@@ -633,7 +642,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
     return Math.round((assessment.completedQuestionsCount / assessment.totalAvailableQuestionsCount) * 100);
   }
-// Actions cell with delete and export buttons
+  // Actions cell with delete and export buttons
   actionsRenderer(params: any): string {
     const assessment = params.data;
     const assessmentId = assessment.assessmentId;
@@ -680,6 +689,9 @@ export class MyAssessmentsComponent implements OnInit {
   onGridReady(params: GridReadyEvent): void {
     this.gridApi = params.api;
     params.api.sizeColumnsToFit();
+    setTimeout(() => {
+      this.calculateGridHeight();
+    }, 50);
   }
 
   getProgressTooltip(assessment: UserAssessment): string {
@@ -754,5 +766,31 @@ export class MyAssessmentsComponent implements OnInit {
         }
       });
     });
+  }
+  private calculateGridHeight(): void {
+    if (typeof window === 'undefined') return;
+
+    const viewportHeight = window.innerHeight;
+
+    const grid = document.querySelector('.ag-root-wrapper') as HTMLElement;
+    const gridTop = grid?.getBoundingClientRect().top;
+    const bottomPadding = 25;
+    const footer = document.querySelector('#accordionFooter') as HTMLElement;
+    const footerHeight = footer?.getBoundingClientRect().height;
+
+    const availableHeight = viewportHeight - gridTop - bottomPadding - footerHeight;
+
+    // Ensure minimum height
+    this.dynamicGridHeight = Math.max(availableHeight, this.minGridHeight);
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.calculateGridHeight();
+    if (this.gridApi) {
+      // Refresh grid layout after height change
+      setTimeout(() => {
+        this.gridApi.sizeColumnsToFit();
+      }, 100);
+    }
   }
 }
