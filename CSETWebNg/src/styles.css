@@ -4,10 +4,10 @@
 @config "../tailwind.config.js";
 
 /* Fix Material buttons by restoring essential properties */
-.mat-button, 
-.mat-raised-button, 
-.mat-icon-button, 
-.mat-fab, 
+.mat-button,
+.mat-raised-button,
+.mat-icon-button,
+.mat-fab,
 .mat-mini-fab,
 .mat-stroked-button,
 .mat-flat-button {
@@ -81,4 +81,43 @@
 
 .mat-raised-button:hover {
   background-color: #f5f5f5 !important;
+}
+/* Override DaisyUI's layered utilities with same layer and higher specificity */
+@layer utilities {
+  @supports (color: color-mix(in lab,red,red)) {
+    input[type="checkbox"].tw\:toggle:not(:checked) {
+      --color-base-100: #e5e7eb !important;
+      background-color: #FFFFFF !important;
+      --color-base-content: #015288 !important;
+      --input-color: #015288 !important;
+      border-color: #015288 !important;
+    }
+
+    input[type="checkbox"].tw\:toggle:checked {
+      --color-base-100: #015288 !important;
+      background-color: #015288 !important;
+      --color-base-content: #ffffff !important;
+      --input-color: #ffffff !important;
+      border-color: #015288 !important;
+    }
+  }
+}
+
+
+@layer utilities {
+  input[type="checkbox"].tw\:toggle:not(:checked) {
+    --color-base-100: #e5e7eb !important;
+    background-color: #FFFFFF !important;
+    --color-base-content: #015288 !important;
+    --input-color: #015288 !important;
+    border-color: #015288 !important;
+  }
+
+  input[type="checkbox"].tw\:toggle:checked {
+    --color-base-100: #015288 !important;
+    background-color: #015288 !important;
+    --color-base-content: #ffffff !important;
+    --input-color: #ffffff !important;
+    border-color: #015288 !important;
+  }
 }

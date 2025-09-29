@@ -162,8 +162,7 @@
            id="usesStandard"
            [checked]="demographicData.usesStandard"
            (change)="setBool(demographicData, 'usesStandard', !demographicData.usesStandard)"
-           class="tw:toggle"
-           [attr.style]="'--color-base-100: ' + (demographicData.usesStandard ? '#015288' : '#e5e7eb') + '; background-color: ' + (demographicData.usesStandard ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
+           class="tw:toggle">
 
     <div *ngIf="demographicData.usesStandard ?? false" class="ms-5">
       <div class="fst-italic my-2">
@@ -200,8 +199,7 @@
            id="requiredToComply"
            [checked]="demographicData.requiredToComply"
            (change)="setBool(demographicData, 'requiredToComply', !demographicData.requiredToComply)"
-           class="tw:toggle"
-           [attr.style]="'--color-base-100: ' + (demographicData.requiredToComply ? '#015288' : '#e5e7eb') + '; background-color: ' + (demographicData.requiredToComply ? '#015288' : '#e5e7eb') + ' !important; --color-base-content: #ffffff; --input-color: #ffffff !important'">
+           class="tw:toggle">
 
     <div *ngIf="demographicData.requiredToComply" class="ms-5">
       <p class="fst-italic">
