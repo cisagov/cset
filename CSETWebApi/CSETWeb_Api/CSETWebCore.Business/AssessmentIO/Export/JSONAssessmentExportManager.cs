@@ -5,11 +5,7 @@
 // 
 ////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
@@ -18,8 +14,13 @@ using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Gallery;
-using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Maturity;
+using CSETWebCore.Model.Question;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CSETWebCore.Business.AssessmentIO.Export
 {
@@ -148,6 +149,19 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             {
                 _reportsDataBusiness.SetReportsAssessmentId(assessment.Id);
                 maturityQuestions = _reportsDataBusiness.GetQuestionsList();
+
+
+
+                // RANDY
+                var biz = new MaturityBusiness(_context, null);
+                var lang = "en";
+                int groupingId = 0;
+                var fill = true;
+                var rkeResults = biz.GetMaturityQuestions(assessmentId, fill, groupingId, lang);
+
+
+
+
 
                 detailSections["maturityQuestions"] = maturityQuestions;
             }
