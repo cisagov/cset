@@ -338,13 +338,10 @@ export class QuestionsComponent implements AfterViewChecked, OnInit, AfterViewIn
    */
   visibleGroupCount() {
     let count = 0;
-    //console.log("this.categories");
-    //console.log(this.categories);
     if (this.categories) {
       count += this.categories.filter(g => g.visible).length;
     }
     
-    //console.log("count: " + count);
     return count;
   }
 
