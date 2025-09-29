@@ -238,6 +238,8 @@
               [rowHeight]="50"
               [headerHeight]="50"
               (gridReady)="onGridReady($event)"
+              (paginationChanged)="onPaginationChanged()"
+              (firstDataRendered)="onFirstDataRendered()"
               (cellClicked)="onCellClicked($event)"
               [style.height.px]="dynamicGridHeight"
               style="width: 100%">
