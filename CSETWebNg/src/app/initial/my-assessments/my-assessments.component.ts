@@ -355,10 +355,7 @@ export class MyAssessmentsComponent implements OnInit {
                   (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
                   (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
 
-
               });
-
-
               this.sortedAssessments = assessments;
             },
             error => {
@@ -805,5 +802,27 @@ export class MyAssessmentsComponent implements OnInit {
         this.gridApi.sizeColumnsToFit();
       }, 100);
     }
+  }
+  onPaginationChanged(): void {
+    if (this.gridApi) {
+      const currentPage = this.gridApi.paginationGetCurrentPage();
+      sessionStorage.setItem('cset-assessments-page', currentPage.toString());
+    }
+  }
+
+  onFirstDataRendered(): void {
+    // Wait for grid to fully initialize
+    setTimeout(() => {
+      const savedPage = sessionStorage.getItem('cset-assessments-page');
+      if (savedPage && this.gridApi) {
+        const pageNumber = parseInt(savedPage);
+        const totalPages = this.gridApi.paginationGetTotalPages();
+        if (pageNumber >= 0 && pageNumber < totalPages) {
+          this.gridApi.paginationGoToPage(pageNumber);
+        } else {
+          console.log('Invalid page number, staying on page 0');
+        }
+      }
+    }, 200);
   }
 }

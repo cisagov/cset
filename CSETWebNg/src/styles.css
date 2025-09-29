@@ -82,15 +82,15 @@
 .mat-raised-button:hover {
   background-color: #f5f5f5 !important;
 }
-/* Override DaisyUI's layered utilities with same layer and higher specificity */
+/*!* Override DaisyUI's layered utilities with same layer and higher specificity *!*/
 @layer utilities {
   @supports (color: color-mix(in lab,red,red)) {
     input[type="checkbox"].tw\:toggle:not(:checked) {
       --color-base-100: #e5e7eb !important;
-      background-color: #FFFFFF !important;
-      --color-base-content: #015288 !important;
+      background-color: #9ca3af !important;
+      --color-base-content: #9ca3af !important;
       --input-color: #015288 !important;
-      border-color: #015288 !important;
+      border-color: #9ca3af !important;
     }
 
     input[type="checkbox"].tw\:toggle:checked {
@@ -107,10 +107,10 @@
 @layer utilities {
   input[type="checkbox"].tw\:toggle:not(:checked) {
     --color-base-100: #e5e7eb !important;
-    background-color: #FFFFFF !important;
-    --color-base-content: #015288 !important;
-    --input-color: #015288 !important;
-    border-color: #015288 !important;
+    background-color: #e5e7eb !important;
+    --color-base-content: #9ca3af !important;
+    --input-color: #9ca3af !important;
+    border-color: #9ca3af !important;
   }
 
   input[type="checkbox"].tw\:toggle:checked {
@@ -121,3 +121,53 @@
     border-color: #015288 !important;
   }
 }
+/*!* Override DaisyUI's layered utilities with same layer and higher specificity *!*/
+/*@layer utilities {*/
+/*  @supports (color: color-mix(in lab,red,red)) {*/
+/*    input[type="checkbox"].tw\:toggle:not(:checked) {*/
+/*      --color-base-100: #e5e7eb !important;*/
+/*      background-color: #e5e7eb !important;*/
+/*      --color-base-content: #e5e7eb !important; !* Hollow circle - white fill *!*/
+/*      --input-color: #e5e7eb !important;*/
+/*      border-color: #015288 !important;*/
+/*    }*/
+
+/*    !* Create hollow effect with pseudo-element border *!*/
+/*    input[type="checkbox"].tw\:toggle:not(:checked):before {*/
+/*      border: 2px solid #015288 !important;*/
+/*      background-color: #e5e7eb !important;*/
+/*    }*/
+
+/*    input[type="checkbox"].tw\:toggle:checked {*/
+/*      --color-base-100: #015288 !important;*/
+/*      background-color: #015288 !important;*/
+/*      --color-base-content: #ffffff !important;*/
+/*      --input-color: #ffffff !important;*/
+/*      border-color: #015288 !important;*/
+/*    }*/
+/*  }*/
+/*}*/
+
+/*@layer utilities {*/
+/*  input[type="checkbox"].tw\:toggle:not(:checked) {*/
+/*    --color-base-100: #e5e7eb !important;*/
+/*    background-color: #e5e7eb !important;*/
+/*    --color-base-content: #e5e7eb !important; !* Hollow circle - white fill *!*/
+/*    --input-color: #e5e7eb !important;*/
+/*    border-color: #015288 !important;*/
+/*  }*/
+
+/*  !* Create hollow effect with pseudo-element border *!*/
+/*  input[type="checkbox"].tw\:toggle:not(:checked):before {*/
+/*    border: 2px solid #015288 !important;*/
+/*    background-color: #e5e7eb !important;*/
+/*  }*/
+
+/*  input[type="checkbox"].tw\:toggle:checked {*/
+/*    --color-base-100: #015288 !important;*/
+/*    background-color: #015288 !important;*/
+/*    --color-base-content: #ffffff !important;*/
+/*    --input-color: #ffffff !important;*/
+/*    border-color: #015288 !important;*/
+/*  }*/
+/*}*/
