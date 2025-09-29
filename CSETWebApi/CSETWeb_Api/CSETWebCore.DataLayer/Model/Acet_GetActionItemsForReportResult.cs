@@ -8,17 +8,5 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class Acet_GetActionItemsForReportResult
     {
-        public int? Parent_Question_Id { get; set; }
-        public int Mat_Question_Id { get; set; }
-        public int Observation_Id { get; set; }
-        [StringLength(250)]
-        public string Question_Title { get; set; }
-        [StringLength(50)]
-        public string answer_text { get; set; }
-        [StringLength(100)]
-        public string Regulatory_Citation { get; set; }
-        [StringLength(1000)]
-        public string Action_Items { get; set; }
-        public int Maturity_Level_Id { get; set; }
     }
 }

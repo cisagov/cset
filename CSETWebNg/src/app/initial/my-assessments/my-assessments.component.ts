@@ -153,8 +153,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
 
-    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) =>
-    {
+    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => {
       this.configSvc.userIsCisaAssessor = resp
       this.initializeColumnDefs()
       if (this.gridApi) {
@@ -342,22 +341,25 @@ export class MyAssessmentsComponent implements OnInit {
       concatMap((assessmentsCompletionData: any[]) =>
         this.assessSvc.getAssessments().pipe(
           map((assessments: UserAssessment[]) => {
-              assessments.forEach((item, index, arr) => {
+            assessments.forEach((item, index, arr) => {
 
-                // determine assessment type display
-                item.type = this.determineAssessmentType(item);
+              // determine assessment type display
+              item.type = this.determineAssessmentType(item);
 
 
-                let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
-                item.completedQuestionsCount = currentAssessmentStats?.completedCount;
-                item.totalAvailableQuestionsCount =
-                  (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
-                  (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
-                  (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
+              let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
+              item.completedQuestionsCount = currentAssessmentStats?.completedCount;
+              item.totalAvailableQuestionsCount =
+                (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
+                (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
+                (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
 
-              });
-              this.sortedAssessments = assessments;
-            },
+
+            });
+
+
+            this.sortedAssessments = assessments;
+          },
             error => {
               console.error(
                 'Unable to get Assessments for ' +
@@ -517,8 +519,8 @@ export class MyAssessmentsComponent implements OnInit {
 
               let params = '';
 
-              if (result.scrubData) {
-                params = params + '&scrubData=' + result.scrubData;
+              if (result.removePCII) {
+                params = params + '&removePCII=' + result.removePCII;
               }
 
               if (result.encryptionData.password != null && result.encryptionData.password !== '') {
@@ -640,7 +642,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
     return Math.round((assessment.completedQuestionsCount / assessment.totalAvailableQuestionsCount) * 100);
   }
-// Actions cell with delete and export buttons
+  // Actions cell with delete and export buttons
   actionsRenderer(params: any): string {
     const assessment = params.data;
     const assessmentId = assessment.assessmentId;
@@ -770,25 +772,13 @@ export class MyAssessmentsComponent implements OnInit {
 
     const viewportHeight = window.innerHeight;
 
-    // Calculate heights of fixed elements above the grid estimate
-    const topNavHeight = 60;
-    const breadcrumbHeight = 45;
-    const titleHeight = 48;
-    const filterButtonsHeight = 60;
-    const importButtonsHeight = 70;
-    const containerPadding = 48;
-    const bottomPadding = 20;
+    const grid = document.querySelector('.ag-root-wrapper') as HTMLElement;
+    const gridTop = grid?.getBoundingClientRect().top;
+    const bottomPadding = 25;
+    const footer = document.querySelector('#accordionFooter') as HTMLElement;
+    const footerHeight = footer?.getBoundingClientRect().height;
 
-    const fixedElementsHeight =
-      topNavHeight +
-      breadcrumbHeight +
-      titleHeight +
-      filterButtonsHeight +
-      importButtonsHeight +
-      containerPadding +
-      bottomPadding;
-
-    const availableHeight = viewportHeight - fixedElementsHeight;
+    const availableHeight = viewportHeight - gridTop - bottomPadding - footerHeight;
 
     // Ensure minimum height
     this.dynamicGridHeight = Math.max(availableHeight, this.minGridHeight);

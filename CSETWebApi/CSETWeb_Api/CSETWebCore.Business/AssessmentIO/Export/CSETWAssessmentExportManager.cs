@@ -24,7 +24,7 @@ using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.Business.AssessmentIO.Export
 {
-    public class AssessmentExportManager
+    public class CSETWAssessmentExportManager
     {
         private readonly CSETContext _context;
         private readonly IDictionary<int, string> questionGroupHeadings;
@@ -35,7 +35,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         /// CTOR
         /// </summary>
         /// <param name="context"></param>
-        public AssessmentExportManager(CSETContext context)
+        public CSETWAssessmentExportManager(CSETContext context)
         {
             this._context = context;
 
@@ -445,12 +445,12 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 {
                     item.StringValue = null;
                 }
-                
+
                 if (item.DataItemName == "SUBSECTOR")
                 {
                     item.IntValue = null;
                 }
-                
+
                 if (item.DataItemName == "ORG-NAME")
                 {
                     item.StringValue = null;

@@ -194,7 +194,7 @@
 
       </div>
 
-      <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto">
+      <div *ngIf="sortedAssessments?.length > 0" class="px-4 d-flex flex-column flex-11a oy-auto">
         <!-- table for handset portrait -->
         <table *ngIf="layoutSvc.hp" role="presentation" aria-label="assessments" matSort
                (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
@@ -224,7 +224,7 @@
             </td>
           </tr>
         </table>
-        <div *ngIf="sortedAssessments?.length > 0 && !layoutSvc.hp" class="mt-4 mb-4 flex flex-col flex-1">
+        <div *ngIf="sortedAssessments?.length > 0 && !layoutSvc.hp" class="mt-4 flex flex-col flex-1">
           <div class="overflow-x-auto rounded-lg border border-gray-200">
             <ag-grid-angular
               class="ag-theme-alpine tw:w-full tw:rounded-lg tw:[&_.ag-header-cell-label]:text-white  tw:[&_.ag-icon-filter]:text-white tw:[&_.ag-root-wrapper]:rounded-lg tw:[&_.ag-header]:rounded-t-lg tw:[&_.ag-body-viewport]:rounded-b-lg tw:[&_.ag-icon-asc]:text-white tw:[&_.ag-icon-desc]:text-white tw:[&_.ag-sort-indicator-icon]:text-white"

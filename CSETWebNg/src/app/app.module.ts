@@ -317,6 +317,7 @@ import { CmmcFilteringService } from './services/filtering/maturity-filtering/cm
 import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
 import { CrrFilteringService } from './services/filtering/maturity-filtering/crr-filtering.service';
 import { RraFilteringService } from './services/filtering/maturity-filtering/rra-filtering.service';
+import { MvraFilteringService } from './services/filtering/maturity-filtering/mvra-filtering.service';
 import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 import { EdmHeatmapComponent } from './assessment/results/edm/edm-heatmap/edm-heatmap.component';
@@ -1217,6 +1218,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         EdmFilteringService,
         CrrFilteringService,
         RraFilteringService,
+        MvraFilteringService,
         CmuService,
         CmuService,
         Utilities,

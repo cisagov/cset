@@ -42,7 +42,7 @@ export class ExportAssessmentComponent {
   }
 
   data = {
-    scrubData: false,
+    removePCII: false,
     encryptionData: {
       password: "",
       hint: "",
@@ -57,7 +57,7 @@ export class ExportAssessmentComponent {
   showPassword = false;
 
   confirm(): void {
-    this.data.scrubData = this.scrubSensitive;
+    this.data.removePCII = this.scrubSensitive;
     this.data.encryptionData.password = this.password;
     this.data.encryptionData.hint = this.passwordHint;
     this.dialogRef.close(this.data);
