@@ -1398,6 +1398,13 @@ div.spinner-size-20 {
   max-height: 20px;
 }
 
+.center-item {
+  position: fixed; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%);
+}
+
 /* Safari */
 @-webkit-keyframes spin-wait {
   0% {
