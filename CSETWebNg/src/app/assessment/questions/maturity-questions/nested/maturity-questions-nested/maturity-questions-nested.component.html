@@ -41,7 +41,7 @@
     </ng-template>
 
     <div *ngIf="!section" class="w-100">
-      <div class="spinner-container" style="margin: 2em auto">
+      <div class="spinner-container center-item" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
       </div>
     </div>
@@ -50,7 +50,7 @@
     <div *ngIf="false || (!!section && maturitySvc.showChartOnNestedQPage())" class="w-100 sticky-sal"></div>
 
     <div *ngIf="false || (!!section && maturitySvc.showChartOnNestedQPage())"
-      class="w-100 text-center mb-3 mt-3 sticky-sal" style="border: 1px solid #ccc; border-radius: .3rem; top: 5px;">
+      class="w-100 text-center mb-3 mt-3 sticky-sal" style="border: 1px solid #ccc; border-radius: .3rem; top: -2rem;">
       <h6><strong>{{title}}</strong></h6>
       <canvas id="canvasScore" class="m-3" style="width: 75%; max-height: 100px;">{{chartScore}}</canvas>
     </div>
