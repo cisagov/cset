@@ -94,5 +94,18 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(resp);
         }
+
+        [HttpGet]
+        [Route("api/cpg/score")]
+        public IActionResult GetScore()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            var lang = _tokenManager.GetCurrentLanguage();
+
+            var cpgBiz = new CpgBusiness(_context, lang);
+            var resp = cpgBiz.CalculateScore(assessmentId);
+
+            return Ok(resp);
+        }
     }
 }

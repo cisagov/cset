@@ -27,6 +27,13 @@
             {{t('reports.core.cpg.report.p.a')}}
         </p>
 
+
+        <h4>
+            {{t('reports.core.cpg.report.score')}}
+        </h4>
+        <app-cpg-score></app-cpg-score>
+
+
         <!-- CPG 1.1 chart/table -->
         <ng-container *ngIf="modelId == 11">
             <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain"></app-cpg-domain-summary>

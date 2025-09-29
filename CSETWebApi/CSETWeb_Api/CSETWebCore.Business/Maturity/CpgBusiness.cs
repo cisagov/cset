@@ -206,5 +206,16 @@ namespace CSETWebCore.Business.Maturity
 
             return groupedList;
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public double CalculateScore(int assessmentId)
+        {
+            return 99.9d;
+        }
     }
 }
