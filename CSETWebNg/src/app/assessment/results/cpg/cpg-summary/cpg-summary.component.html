@@ -28,10 +28,12 @@
         </p>
 
 
-        <h4>
-            {{t('reports.core.cpg.report.score')}}
-        </h4>
-        <app-cpg-score></app-cpg-score>
+        <div *ngIf="assessorWorkflow">
+            <h4>
+                {{t('reports.core.cpg.report.score')}}
+            </h4>
+            <app-cpg-score [techDomain]="techDomain"></app-cpg-score>
+        </div>
 
 
         <!-- CPG 1.1 chart/table -->

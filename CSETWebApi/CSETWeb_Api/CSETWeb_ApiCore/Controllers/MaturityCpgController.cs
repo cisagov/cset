@@ -95,6 +95,10 @@ namespace CSETWebCore.Api.Controllers
             return Ok(resp);
         }
 
+
+        /// <summary>
+        /// Returns the CPG scores for OT and IT.
+        /// </summary>
         [HttpGet]
         [Route("api/cpg/score")]
         public IActionResult GetScore()

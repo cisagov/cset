@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -213,9 +214,45 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public double CalculateScore(int assessmentId)
+        public CpgScoreResponse CalculateScore(int assessmentId)
         {
-            return 99.9d;
+            var amm = _context.AVAILABLE_MATURITY_MODELS.First(x => x.Assessment_Id == assessmentId);
+
+            var ot = GetAnswerDistribGroupings(assessmentId, "OT", amm.model_id);
+            var it = GetAnswerDistribGroupings(assessmentId, "IT", amm.model_id);
+
+            return new CpgScoreResponse()
+            {
+                OtScore = Math.Round(ScoreMe(ot), 2),
+                ItScore = Math.Round(ScoreMe(it), 2)
+            };
         }
+
+
+        /// <summary>
+        /// Calculates a percentage answered Yes.  
+        /// In Progress answers are given half credit.
+        /// </summary>
+        private double ScoreMe(IList<GetAnswerDistribGroupingsResult> distrib)
+        {
+            var summary = distrib
+                .GroupBy(x => x.answer_text)
+                .ToDictionary(g => g.Key, g => g.Sum(x => x.answer_count));
+
+            double total = summary.Sum(x => x.Value) ?? 0;
+            double y = (double)summary.GetValueOrDefault("Y", 0);
+            double i = (double)summary.GetValueOrDefault("I", 0) * 0.5;
+
+            double score = ((y + i) / total) * 100d;
+            return score;
+        }
+    }
+
+
+
+    public class CpgScoreResponse
+    {
+        public double OtScore { get; set; }
+        public double ItScore { get; set; }
     }
 }
