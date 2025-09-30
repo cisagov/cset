@@ -41,18 +41,28 @@ export class SsgService {
    */
   csetSsgSectorList = [
     1, // chem
-    19, // chem
+//    19, // chem
     13, // IT
-    28 // IT
+//    28 // IT
   ];
+
+  /**
+   * Define 'sisters' of sectors 
+   */
+  relatedSectors = {
+    1: 19,
+    19: 1,
+    13: 28,
+    28: 13
+  };
 
   /**
    * Sector codes with CISA online documentation.
    * We list them with a link for user reference.
    */
   otherSsgSectorList = [
-    9, // financial
-    18, // banking & finance
+    8, // energy
+    25, // energy
     12, // healthcare
     27, // healthcare
     16, // water

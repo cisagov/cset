@@ -114,6 +114,10 @@ namespace CSETWebCore.Api.Controllers
                         fileContents = memoryStream.ToArray();
                     }
 
+                    if (url.EndsWith('/'))
+                    {
+                        url = url.TrimEnd('/');
+                    }
                     bool isSuccess = await SendFileToApi($"{url}/api/assessment/import", fileContents, result.FileName);
                     if (isSuccess)
                     {

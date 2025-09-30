@@ -844,7 +844,6 @@ namespace CSETWebCore.Business.Maturity
             response.Levels = GetMaturityLevelsForModel(targetModelId, response.MaturityTargetLevel);
 
 
-
             // Get all maturity questions for the model regardless of level.
             // The user may choose to see questions above the target level via filtering. 
             var questionQuery = _context.MATURITY_QUESTIONS
@@ -1479,7 +1478,8 @@ namespace CSETWebCore.Business.Maturity
                     QuestionText = q.QuestionText,
                     QuestionType = "Maturity",
                     Comment = q.Comment,
-                    MaturityLevelName = q.MaturityLevelName
+                    MaturityLevelName = q.MaturityLevelName,
+                    MaturityLevel = q.MaturityLevel
                 };
 
                 newQ.Countable = IsQuestionCountable(this._maturityModelId, newQ);
