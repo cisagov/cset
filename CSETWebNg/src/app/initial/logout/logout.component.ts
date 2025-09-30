@@ -36,11 +36,12 @@ export class LogoutComponent implements OnInit {
   ) {
     // remove user from session storage to log user out
     localStorage.clear();
+    sessionStorage.removeItem('cset-assessments-page');
     this.router.navigate(['/home/login'], { queryParamsHandling: "preserve" });
   }
 
   /**
-   * 
+   *
    */
   ngOnInit(): void {
 

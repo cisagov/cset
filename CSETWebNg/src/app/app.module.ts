@@ -317,6 +317,7 @@ import { CmmcFilteringService } from './services/filtering/maturity-filtering/cm
 import { EdmFilteringService } from './services/filtering/maturity-filtering/edm-filtering.service';
 import { CrrFilteringService } from './services/filtering/maturity-filtering/crr-filtering.service';
 import { RraFilteringService } from './services/filtering/maturity-filtering/rra-filtering.service';
+import { MvraFilteringService } from './services/filtering/maturity-filtering/mvra-filtering.service';
 import { GlossaryTermComponent } from './assessment/questions/question-text/glossary-term/glossary-term.component';
 import { PlaceholderQuestionsComponent } from './assessment/questions/placeholder-questions/placeholder-questions.component';
 import { EdmHeatmapComponent } from './assessment/results/edm/edm-heatmap/edm-heatmap.component';
@@ -492,6 +493,7 @@ import { CpgCostImpactComplexityComponent } from './assessment/results/cpg/cpg-c
 import { CpgSummaryComponent } from './assessment/results/cpg/cpg-summary/cpg-summary.component';
 import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cpg-practices.component';
 import { CpgAnswerBlockComponent } from './assessment/results/cpg/cpg-answer-block/cpg-answer-block.component';
+import { CpgScoreComponent } from './assessment/results/cpg/cpg-score/cpg-score.component';
 import { ReferencesTableComponent } from './assessment/questions/references-table/references-table.component';
 import { ReferencesDisplayComponent } from './assessment/questions/references-display/references-display.component';
 import { DiagramVulnerabilitiesDialogComponent } from './assessment/diagram/diagram-inventory/vulnerabilities/diagram-vulnerabilities-dialog/diagram-vulnerabilities-dialog';
@@ -613,6 +615,7 @@ import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-bl
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
 import { DeficiencyTemplateComponent } from './reports/deficiency-template/deficiency-template.component';
 import { KeyDisplay1Component } from './assessment/results/key-display-1/key-display-1.component';
+
 
 
 registerSwiper();
@@ -979,6 +982,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         CpgSummaryComponent,
         CpgPracticesComponent,
         CpgAnswerBlockComponent,
+        CpgScoreComponent,
         OnlineDisclaimerComponent,
         ReferencesTableComponent,
         ReferencesDisplayComponent,
@@ -1217,6 +1221,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         EdmFilteringService,
         CrrFilteringService,
         RraFilteringService,
+        MvraFilteringService,
         CmuService,
         CmuService,
         Utilities,

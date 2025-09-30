@@ -143,27 +143,15 @@
               <!-- Divider -->
               <div class="tw:w-px tw:h-8 tw:bg-gray-300"></div>
 
-              <!-- Custom Switch -->
               <div class="tw:flex tw:items-center tw:gap-3">
                 <span class="tw:text-sm tw:font-medium tw:text-gray-900 tw:whitespace-nowrap">Mark Assessment Done</span>
-                <label class="tw:relative tw:inline-flex tw:items-center tw:cursor-pointer">
-                  <input
-                    type="checkbox"
-                    class="tw:sr-only"
-                    id="assessmentDoneSwitch"
-                    [checked]="assessment?.done"
-                    (change)="setAssessmentDone()"
-                  >
-                  <div class="tw:w-11 tw:h-6 tw:bg-gray-200 tw:rounded-full tw:relative tw:transition-colors tw:duration-200"
-                       [ngClass]="{
-                     'tw:bg-gray-200': !assessment?.done,
-                     'tw:bg-[#015288]': assessment?.done
-                   }">
-                    <div class="tw:absolute tw:top-0.5 tw:left-0.5 tw:w-5 tw:h-5 tw:bg-white tw:rounded-full tw:transition-transform tw:duration-200 tw:shadow-sm"
-                         [ngClass]="{'tw:translate-x-5': assessment?.done}">
-                    </div>
-                  </div>
-                </label>
+                <input
+                  type="checkbox"
+                  class="tw:toggle"
+                  id="assessmentDoneSwitch"
+                  [checked]="assessment?.done"
+                  (change)="setAssessmentDone()"
+                >
               </div>
             </div>
           </div>

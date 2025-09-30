@@ -47,7 +47,7 @@ public partial class DOCUMENT_FILE
 
     public byte[] Data { get; set; }
 
-    public Boolean IsGlobal { get; set; }
+    public bool IsGlobal { get; set; }
 
     [ForeignKey("Assessment_Id")]
     [InverseProperty("DOCUMENT_FILE")]

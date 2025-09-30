@@ -72,22 +72,13 @@
 
     <div class="row mb-4">
       <div class="col-6">
-        <label for="name" class="form-label">{{t('pcii requested')}}</label>
-        <div>
-          <div class="d-inline-flex btn-group align-items-start" role="group" data-toggle="buttons">
-            <label class="btn btn-level form-check-label px-4" [class.active]="!assessment.is_PCII">
-              <input class="btn-check" name="standardNo" id="standardNo" type="radio" autocomplete="off"
-                (change)="changeIsPCII(false)" tabindex="0" [ngModel]="!assessment.is_PCII"
-                (ngModelChange)="assessment.is_PCII = $event" />
-              {{t('answer-options.button-labels.no')}}
-            </label>
-            <label class="btn btn-level form-check-label px-4" [class.active]="assessment.is_PCII">
-              <input class="btn-check" name="standardYes" id="standardYes" type="radio" autocomplete="off"
-                (change)="changeIsPCII(true)" tabindex="0" [(ngModel)]="assessment.is_PCII" />
-              {{t('answer-options.button-labels.yes')}}
-            </label>
-          </div>
-        </div>
+        <label for="name" class="form-label me-2">{{t('pcii requested')}}</label>
+        <input type="checkbox"
+        name="isPCII"
+        id="isPCII"
+        [checked]="assessment.is_PCII"
+        (change)="changeIsPCII(!assessment.is_PCII)"
+        class="tw:toggle">
       </div>
       <div class="col-6" *ngIf="IsPCII">
         <label class="form-label" for="name">{{t('pcii number')}}</label>
@@ -110,22 +101,14 @@
       <h4>{{ t('assessment settings') }}</h4>
 
       <div *ngIf="this.configSvc.userIsCisaAssessor; else nonassessor" class="mb-3">
-        <label>{{t('assessor workflow.control label')}}</label>
+        <label class="me-2">{{t('assessor workflow.control label')}}</label>
+        <input type="checkbox"
+               name="assessorMode"
+               id="assessorMode"
+               [checked]="assessment.assessorMode"
+               (change)="updateAssessorMode()"
+               class="tw:toggle">
         <label class="form-label fst-italic">{{t('assessor workflow.assessor workflow explanation')}}</label>
-        <div class="d-inline-flex btn-group align-items-start" role="group" data-toggle="buttons">
-          <label class="btn btn-level form-check-label px-4" [class.active]="!assessment.assessorMode"
-            (change)="updateAssessorMode()">
-            <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
-              [checked]="!assessment.assessorMode" />
-            {{t('answer-options.button-labels.no')}}
-          </label>
-          <label class="btn btn-level form-check-label px-4" [class.active]="assessment.assessorMode"
-            (change)="updateAssessorMode()">
-            <input class="btn-check align-items-center" type="radio" autocomplete="off" tabindex="0"
-              [checked]="assessment.assessorMode" />
-            {{t('answer-options.button-labels.yes')}}
-          </label>
-        </div>
       </div>
       <ng-template #nonassessor class="mb-3">
         <p>

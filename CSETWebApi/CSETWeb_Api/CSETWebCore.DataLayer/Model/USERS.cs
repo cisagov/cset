@@ -48,19 +48,21 @@ public partial class USERS
     public bool CisaAssessorWorkflow { get; set; }
 
     [Required]
-    public bool IsLocalAccount { get; set; }
-
-    [Required]
     [StringLength(10)]
     public string Lang { get; set; }
 
     public bool IsFirstLogin { get; set; }
+
+    public bool IsLocalAccount { get; set; }
 
     [InverseProperty("AssessmentCreator")]
     public virtual ICollection<ASSESSMENTS> ASSESSMENTS { get; set; } = new List<ASSESSMENTS>();
 
     [InverseProperty("User")]
     public virtual ICollection<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; } = new List<ASSESSMENT_CONTACTS>();
+
+    [InverseProperty("User")]
+    public virtual ICollection<GALLERY_ITEM_USER> GALLERY_ITEM_USER { get; set; } = new List<GALLERY_ITEM_USER>();
 
     [InverseProperty("User")]
     public virtual ICollection<PASSWORD_HISTORY> PASSWORD_HISTORY { get; set; } = new List<PASSWORD_HISTORY>();

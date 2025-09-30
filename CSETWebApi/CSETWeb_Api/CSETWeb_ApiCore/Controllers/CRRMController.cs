@@ -35,7 +35,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 // determine extension (.csetw, .acet)
                 string ext = IOHelper.GetExportFileExtension("CSET");
-                AssessmentExportManager exportManager = new AssessmentExportManager(_context);
+                CSETWAssessmentExportManager exportManager = new CSETWAssessmentExportManager(_context);
 
                 Guid[] guidsToExport = _context.ACCESS_KEY_ASSESSMENT
                     .Include(aca => aca.Assessment)
@@ -44,7 +44,7 @@ namespace CSETWebCore.Api.Controllers
 
                 MemoryStream assessmentsExportArchive = exportManager.BulkExportAssessments(guidsToExport, ext);
 
-                if (assessmentsExportArchive == null) 
+                if (assessmentsExportArchive == null)
                 {
                     return StatusCode(204);
                 }
