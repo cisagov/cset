@@ -13,7 +13,7 @@ using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Contact;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Assessment;
-using CSETWebCore.Model.Gallery;
+using CSETWebCore.Model.ExportJson;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using System;
@@ -60,45 +60,60 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         /// <summary>
         /// Returns the assessment details serialized as JSON for the supplied assessment id.
         /// </summary>
-        public string GetJson(int assessmentId, bool removePCII = false)
+        public string GetJson(int assessmentId, string lang, bool removePCII = false)
         {
             if (assessmentId <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(assessmentId));
             }
 
-            AssessmentDetail assessment = _assessmentBusiness.GetAssessmentDetail(assessmentId);
+            AssessmentDetail assessmentDetail = _assessmentBusiness.GetAssessmentDetail(assessmentId);
 
-            if (assessment == null || assessment.Id == 0)
+            if (assessmentDetail == null || assessmentDetail.Id == 0)
             {
                 throw new InvalidOperationException($"Assessment {assessmentId} was not found.");
             }
 
+            // Create JSON object
+            var assessment = new AssessmentJson()
+            {
+                Id = assessmentDetail.Id,
+                AssessmentDate = assessmentDetail.AssessmentDate,
+                AssessmentGuid = assessmentDetail.AssessmentGuid,
+                CreatedDate = assessmentDetail.CreatedDate,
+                Name = assessmentDetail.AssessmentName,
+                SelfAssessment = assessmentDetail.SelfAssessment
+            };
+
+
             var contacts = _contactBusiness.GetContacts(assessmentId);
             List<StandardQuestions> standardQuestions = null;
             QuestionResponse questionList = null;
-            List<MatRelevantAnswers> maturityQuestions = null;
+            List<ModelJson> maturityModels = null;
             List<ComponentQuestion> componentQuestions = null;
+            SectorDetailsJson sectorDetails = null;
+
 
             var detailSections = new Dictionary<string, object>();
-            SectorExportDetails sectorDetails = null;
+
+
 
             // Standards-based assessment
-            if (assessment.UseStandard)
+            if (assessmentDetail.UseStandard)
             {
                 // Ensure the standard selections are populated before exporting
-                if (assessment.Standards == null || assessment.Standards.Count == 0)
+                if (assessmentDetail.Standards == null || assessmentDetail.Standards.Count == 0)
                 {
-                    _assessmentBusiness.GetSelectedStandards(ref assessment);
+                    _assessmentBusiness.GetSelectedStandards(ref assessmentDetail);
                 }
 
-                _reportsDataBusiness.SetReportsAssessmentId(assessment.Id);
+                _reportsDataBusiness.SetReportsAssessmentId(assessmentDetail.Id);
                 standardQuestions = _reportsDataBusiness.GetQuestionsForEachStandard();
 
                 // Fallback to question list for unanswered standards so export matches api/QuestionList
                 if (standardQuestions == null || !standardQuestions.Any())
                 {
-                    _questionBusiness.SetQuestionAssessmentId(assessment.Id);
+                    _questionBusiness.SetQuestionAssessmentId(assessmentDetail.Id);
                     questionList = _questionBusiness.GetQuestionListWithSet("*");
 
                     if (questionList?.Categories != null)
@@ -144,32 +159,47 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 detailSections["questionList"] = questionList;
             }
 
+
             // Maturity model-based assessment
-            if (assessment.UseMaturity)
+            if (assessmentDetail.UseMaturity)
             {
-                _reportsDataBusiness.SetReportsAssessmentId(assessment.Id);
-                maturityQuestions = _reportsDataBusiness.GetQuestionsList();
+                var maturityBusiness = new MaturityBusiness(_context, null);
+                var modelListJ = new List<ModelJson>();
+
+                var modelIdList = GetApplicableModels(assessmentId);
+
+                foreach (var modelId in modelIdList)
+                {
+                    // get the questions structure for the maturity model
+                    MaturityResponse resp = new();
+                    maturityBusiness.GetMaturityQuestions(assessmentId, false, 0, resp, modelId, lang);
 
 
+                    var modelJ = new ModelJson
+                    {
+                        ModelId = modelId,
+                        ModelTitle = resp.Title,
+                        ModelName = resp.ModelName,
+                        Levels = resp.Levels
+                    };
 
-                // RANDY
-                var biz = new MaturityBusiness(_context, null);
-                var lang = "en";
-                int groupingId = 0;
-                var fill = true;
-                var rkeResults = biz.GetMaturityQuestions(assessmentId, fill, groupingId, lang);
+                    modelListJ.Add(modelJ);
 
 
+                    foreach (var r in resp.Groupings)
+                    {
+                        MapGrouping(modelJ.Groupings, r);
+                    }
+                }
 
-
-
-                detailSections["maturityQuestions"] = maturityQuestions;
+                maturityModels = modelListJ;
             }
 
+
             // Network diagram-based assessment
-            if (assessment.UseDiagram)
+            if (assessmentDetail.UseDiagram)
             {
-                _reportsDataBusiness.SetReportsAssessmentId(assessment.Id);
+                _reportsDataBusiness.SetReportsAssessmentId(assessmentDetail.Id);
                 componentQuestions = _reportsDataBusiness.GetComponentQuestions() ?? new List<ComponentQuestion>();
 
                 detailSections["componentQuestions"] = componentQuestions;
@@ -178,16 +208,15 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             object details = detailSections.Count > 0 ? detailSections : null;
 
             // Build out the Sector details
-            sectorDetails = BuildSectorDetails(assessment);
+            sectorDetails = BuildSectorDetails(assessmentDetail);
 
             // Remove irrelevant data from the payload
-            CleanData(assessment);
+            CleanData(assessmentDetail);
 
             // Remove PCII data if requested
             if (removePCII)
             {
-                RemovePCII(assessment);
-
+                RemovePCII(assessmentDetail);
             }
 
             // Build out the full payload for serialization
@@ -196,16 +225,100 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 assessment,
                 sectorDetails,
                 contacts,
-                details
+                details,
+                maturityModels
             };
 
             return JsonSerializer.Serialize(payload, _serializerOptions);
         }
 
+
+        /// <summary>
+        /// Recurse Groupings to populate the JSON classes
+        /// </summary>
+        private void MapGrouping(List<GroupingJson> groupingsJ, MaturityGrouping g)
+        {
+            var gj = new GroupingJson();
+            groupingsJ.Add(gj);
+            gj.GroupingId = g.GroupingId;
+            gj.Title = g.Title;
+
+
+            // child groupings
+            foreach (MaturityGrouping subGroup in g.SubGroupings)
+            {
+                MapGrouping(gj.Groupings, subGroup);
+            }
+
+            if (g.SubGroupings.Count == 0)
+            {
+                gj.Groupings = null;
+            }
+
+
+            // questions within grouping
+            foreach (var q in g.Questions)
+            {
+                var qJ = new MaturityQuestionJson();
+
+                if (q.ParentQuestionId == null)
+                {
+                    qJ.QuestionText = q.QuestionText;
+                    if (string.IsNullOrEmpty(qJ.QuestionText))
+                    {
+                        qJ.QuestionText = q.SecurityPractice;
+                    }
+                    qJ.QuestionId = q.QuestionId;
+                    qJ.MaturityLevel = q.MaturityLevel;
+
+                    if (q.IsAnswerable)
+                    {
+                        qJ.Answer = new();
+                        qJ.Answer.AnswerText = q.Answer;
+                        qJ.Answer.Comment = q.Comment;
+                    }
+
+                    gj.Questions.Add(qJ);
+                }
+
+
+                // look for child/followup questions
+                var followups = g.Questions.Where(x => x.ParentQuestionId == q.QuestionId).ToList();
+
+                foreach (var qq in followups)
+                {
+                    var qqJ = new MaturityQuestionJson();
+                    qqJ.QuestionText = qq.QuestionText;
+                    if (string.IsNullOrEmpty(qqJ.QuestionText))
+                    {
+                        qqJ.QuestionText = qq.SecurityPractice;
+                    }
+
+                    qqJ.QuestionId = qq.QuestionId;
+                    qqJ.MaturityLevel = qq.MaturityLevel;
+
+                    qqJ.Answer = new();
+                    qqJ.Answer.AnswerText = qq.Answer;
+                    qqJ.Answer.Comment = qq.Comment;
+
+                    qJ.FollowupQuestions.Add(qqJ);
+
+                    // assuming no followup-to-followup right now
+                    qqJ.FollowupQuestions = null;
+                }
+
+                if (followups.Count == 0)
+                {
+                    qJ.FollowupQuestions = null;
+                }
+            }
+        }
+
+
         /// <summary>
         /// Builds the sector details block for the export payload using the current assessment demographics.
         /// </summary>
-        private SectorExportDetails BuildSectorDetails(AssessmentDetail assessment)
+        private SectorDetailsJson BuildSectorDetails(AssessmentDetail assessment)
         {
             if (assessment?.SectorId == null)
             {
@@ -234,7 +347,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 ? industriesQuery.FirstOrDefault(x => x.IndustryId == selectedIndustryId.Value)
                 : null;
 
-            var exportDetails = new SectorExportDetails
+            var exportDetails = new SectorDetailsJson
             {
                 SectorId = sectorEntity.SectorId,
                 SectorName = sectorEntity.SectorName,
@@ -248,6 +361,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
             return exportDetails;
         }
+
 
         /// <summary>
         /// Removes export-only fields from the assessment payload to avoid leaking
@@ -278,6 +392,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             }
         }
 
+
         /// <summary>
         /// Removes PCII data from the assessment payload to avoid leaking sensitive
         /// information that is not required by the exported JSON document.
@@ -291,12 +406,17 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             assessment.SectorId = null;
         }
 
-        private sealed class SectorExportDetails
+
+        /// <summary>
+        /// Determine which models are in scope for the assessment.
+        /// The CompletionCounter class knows how to determine this.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        private List<int> GetApplicableModels(int assessmentId)
         {
-            public int SectorId { get; set; }
-            public string SectorName { get; set; }
-            public int? SelectedIndustryId { get; set; }
-            public string SelectedIndustryName { get; set; }
+            CompletionCounter cc = new(_context);
+            return cc.DetermineInScopeModels(assessmentId).ToList();
         }
     }
 }
