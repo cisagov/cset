@@ -73,4 +73,13 @@ export class CpgService {
     var url = this.configSvc.apiUrl + 'answerdistrib/cpg/domains?' + qs;
     return this.http.get<NameSeries[]>(url, headers);
   }
+
+
+  /**
+   * 
+   */
+  getScore() {
+    var url = this.configSvc.apiUrl + 'cpg/score';
+    return this.http.get<number>(url, headers);
+  }
 }

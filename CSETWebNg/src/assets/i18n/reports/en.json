@@ -636,6 +636,7 @@
                          "1": "This table lists all applicable SSG security practices and how they have been answered.",
                          "2": "Sector Specific"
                     },
+                    "score": "Score",
                     "current assessment": "Current Assessment",
                     "notes": "Notes",
                     "ttp or risk addressed": "TTP or Risk Addressed",
