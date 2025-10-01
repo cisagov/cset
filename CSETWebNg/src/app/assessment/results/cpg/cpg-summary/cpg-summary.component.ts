@@ -52,6 +52,8 @@ export class CpgSummaryComponent implements OnInit {
 
   answerDistribsSsg: SsgDistribution[] = [];
 
+  assessorWorkflow = false;
+
 
 
   constructor(
@@ -68,6 +70,8 @@ export class CpgSummaryComponent implements OnInit {
    */
   async ngOnInit(): Promise<void> {
     this.modelId = this.assessSvc.assessment?.maturityModel?.modelId ?? 0;
+
+    this.assessorWorkflow = this.assessSvc.assessment.assessorMode ?? false;
 
     var demog: Demographic = await firstValueFrom(this.demoSvc.getDemographic());
     this.techDomain = demog.techDomain;
