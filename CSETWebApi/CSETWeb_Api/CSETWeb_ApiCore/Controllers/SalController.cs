@@ -147,8 +147,25 @@ namespace CSETWebCore.Api.Controllers
                     lm.SaveSALLevel(tmpsal.Selected_Sal_Level);
                 }
 
+                //
+                // _hooks.HookSalChanged(assessmentId);
+                //
+                // return Ok(tmpsal);
+                var stats = _hooks.HookSalChanged(assessmentId);
 
-                _hooks.HookSalChanged(assessmentId);
+                if (stats != null)
+                {
+                    return Ok(new {
+                        Selected_Sal_Level = tmpsal.Selected_Sal_Level,
+                        SelectedSALOverride = tmpsal.SelectedSALOverride,
+                        Methodology = tmpsal.Methodology,
+                        CLevel = tmpsal.CLevel,
+                        ILevel = tmpsal.ILevel,
+                        ALevel = tmpsal.ALevel,
+                        CompletedCount = stats.CompletedCount,
+                        TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0
+                    });
+                }
 
                 return Ok(tmpsal);
             }

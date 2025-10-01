@@ -121,8 +121,15 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             new MaturityBusiness(_context, _assessmentUtil).PersistMaturityLevel(assessmentId, level);
+            var stats = _hooks.HookTargetLevelChanged(assessmentId);
 
-            _hooks.HookTargetLevelChanged(assessmentId);
+            if (stats != null)
+            {
+                return Ok(new {
+                    CompletedCount = stats.CompletedCount,
+                    TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0
+                });
+            }
 
             return Ok();
         }

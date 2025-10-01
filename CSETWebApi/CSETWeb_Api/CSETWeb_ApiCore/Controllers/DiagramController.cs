@@ -107,12 +107,24 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/saveComponent")]
         [HttpPost]
-        public void SaveDiagram([FromBody] mxGraphModelRootObject component)
+        public IActionResult SaveDiagram([FromBody] mxGraphModelRootObject component)
         {
             int? assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
             _diagram.SaveComponent(component, (int)assessmentId);
 
-            _hooks.HookDiagramChanged((int)assessmentId);
+            // _hooks.HookDiagramChanged((int)assessmentId);
+            
+            var stats = _hooks.HookDiagramChanged((int)assessmentId);
+    
+            if (stats != null)
+            {
+                return Ok(new {
+                    CompletedCount = stats.CompletedCount,
+                    TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0
+                });
+            }
+
+            return Ok();
         }
 
 

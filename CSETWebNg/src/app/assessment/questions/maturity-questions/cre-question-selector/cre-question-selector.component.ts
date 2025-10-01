@@ -26,6 +26,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { MaturityService } from '../../../../services/maturity.service';
 import { SelectableGroupingsService } from '../../../../services/selectable-groupings.service';
 import { QuestionGrouping } from '../../../../models/questions.model';
+import { AssessmentService } from '../../../../services/assessment.service';
 
 @Component({
   selector: 'app-cre-question-selector',
@@ -52,30 +53,31 @@ export class CreQuestionSelectorComponent implements OnInit {
 
 
   /**
-   * 
+   *
    */
   constructor(
     public maturitySvc: MaturityService,
     public selectableGroupingsSvc: SelectableGroupingsService,
+    public assessSvc: AssessmentService,
     public cdr: ChangeDetectorRef
   ) { }
 
   /**
-   * 
+   *
    */
   async ngOnInit(): Promise<void> {
     this.model = this.selectableGroupingsSvc.models.get(this.modelId);
   }
 
   /**
-   * 
+   *
    */
   toggleExpansion() {
     this.expanded = !this.expanded;
   }
 
   /**
-   * Persists the selected/deselected state of a 
+   * Persists the selected/deselected state of a
    */
   changeGroupSelection(id: number, evt: any) {
     const g = this.selectableGroupingsSvc.findGrouping(this.modelId, id);
@@ -90,11 +92,19 @@ export class CreQuestionSelectorComponent implements OnInit {
 
     // persist the changed group(s)
     const groupsChanged = this.buildList(g);
-    this.selectableGroupingsSvc.save(groupsChanged).subscribe();
+    // this.selectableGroupingsSvc.save(groupsChanged).subscribe();
+    this.selectableGroupingsSvc.save(groupsChanged).subscribe((response: any) => {
+      if (response?.completedCount !== undefined) {
+        this.assessSvc.completionRefreshRequested$.next({
+          completedCount: response.completedCount,
+          totalCount: response.totalMaturityQuestionsCount || 0
+        });
+      }
+    });
   }
 
   /**
-   * Sets the clicked level and levels below it to true. 
+   * Sets the clicked level and levels below it to true.
    */
   changeMilSelection(id: number, evt: any) {
     const milsForGoal = this.selectableGroupingsSvc.findGroupingAndLesser(this.modelId, id);

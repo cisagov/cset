@@ -121,12 +121,13 @@ namespace CSETWebCore.Business.Question
         /// Refreshes the completion totals for the specified assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public void Count(int assessmentId)
+        public CompletionCounts Count(int assessmentId)
         {
-            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
+
             if (assessment == null)
             {
-                return;
+                return null;
             }
 
             if (assessment.UseMaturity)
@@ -143,6 +144,15 @@ namespace CSETWebCore.Business.Question
             {
                 CountComponent(assessmentId);
             }
+            // Get the assessment to get the updated counts 
+            assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
+
+            return new CompletionCounts()
+            {
+                AssessmentId = assessment.Assessment_Id,
+                TotalMaturityQuestionsCount = assessment.TotalQuestionCount,
+                CompletedCount = assessment.CompletedQuestionCount
+            };
         }
 
 

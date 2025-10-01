@@ -166,8 +166,15 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _questionRequirement.InitializeManager(assessmentId);
             _questionRequirement.SetApplicationMode(mode);
+            var stats = _hooks.HookQuestionsModeChanged(assessmentId);
 
-            _hooks.HookQuestionsModeChanged(assessmentId);
+            if (stats != null)
+            {
+                return Ok(new {
+                    CompletedCount = stats.CompletedCount,
+                    TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0
+                });
+            }
 
             return Ok();
         }
