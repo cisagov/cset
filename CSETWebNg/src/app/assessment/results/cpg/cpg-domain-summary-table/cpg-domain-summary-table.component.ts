@@ -26,12 +26,13 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
     selector: 'app-cpg-domain-summary-table',
     templateUrl: './cpg-domain-summary-table.component.html',
-    standalone: false
+    standalone: false,
+    styleUrls: ['../../../../reports/reports.scss']
 })
 export class CpgDomainSummaryTableComponent implements OnInit {
 
   @Input()
-  data: any[];
+  data!: any[];
 
   @Input()
   inReport: boolean = false;

@@ -11,7 +11,7 @@ import { SsgService } from '../../../../services/ssg.service';
 export class SsgSelectorComponent implements OnChanges {
 
   @Input('value') ssgSectorIds: number[] = [];
-  @Input('sectorList') inputSectorList: any[];
+  @Input('sectorList') inputSectorList!: any[];
 
   @Output('valueChange') valueChange = new EventEmitter<number[]>();
 

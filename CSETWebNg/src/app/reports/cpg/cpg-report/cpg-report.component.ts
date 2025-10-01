@@ -32,6 +32,8 @@ import { Demographic } from '../../../models/assessment-info.model';
 import { DemographicService } from '../../../services/demographic.service';
 import { ReportService } from '../../../services/report.service';
 import { firstValueFrom } from 'rxjs';
+import { ScoredDomainDistrib } from '../../models/chart-results.model';
+import { AnswerOptionConfig } from '../../../models/module-config.model';
 
 @Component({
   selector: 'app-cpg-report',
@@ -42,26 +44,26 @@ import { firstValueFrom } from 'rxjs';
 export class CpgReportComponent implements OnInit {
   loading = false;
 
-  assessmentName: string;
-  assessmentDate: string;
-  assessorName: string;
-  facilityName: string;
-  selfAssessment: boolean;
+  assessmentName?: string;
+  assessmentDate?: string;
+  assessorName?: string;
+  facilityName?: string;
+  selfAssessment?: boolean;
 
-  modelId: number;
+  modelId!: number;
   techDomain: string | undefined;
 
 
   answerDistribByDomain: any;
 
-  answerDistribByDomainOt: any[];
-  answerDistribByDomainIt: any[];
+  answerDistribByDomainOt?: any[];
+  answerDistribByDomainIt?: any[];
 
   answerDistribsSsg: SsgDistribution[] = [];
 
-  ssgBonusModelIds: number[];
+  ssgBonusModelIds?: number[];
 
-  heatmapModelCpg: any[];
+  heatmapModelCpg?: any[];
   ssgHeatmaps: { [id: number]: any } = {};
 
 
@@ -181,10 +183,10 @@ export class CpgReportComponent implements OnInit {
    * 
    */
   async getAnswerDistribution(modelId: number, techDomain: string): Promise<any> {
-    const resp = await firstValueFrom(this.cpgSvc.getAnswerDistrib(modelId, techDomain));
-    const cpgAnswerOptions = this.configSvc.getModuleBehavior('CPG').answerOptions;
+    const resp: ScoredDomainDistrib = await firstValueFrom(this.cpgSvc.getAnswerDistrib(modelId, techDomain));
+    const cpgAnswerOptions: AnswerOptionConfig[] | undefined = this.configSvc.getModuleBehavior('CPG').answerOptions;
 
-    resp.forEach(r => {
+    resp.distrib.forEach(r => {
       r.series.forEach(element => {
         if (element.name == 'U') {
           element.name = this.tSvc.translate('answer-options.labels.u');

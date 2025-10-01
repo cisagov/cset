@@ -52,7 +52,7 @@
 
         <!-- CPG 2.0 chart/table -->
         <ng-container *ngIf="modelId == 21">
-            <div id="randy" style="margin-top: 4rem; margin-bottom: 4rem"
+            <div style="margin-top: 4rem; margin-bottom: 4rem"
                 *ngIf="techDomain == 'OT' || techDomain == 'OT+IT' || techDomain == null">
                 <h4>{{t('reports.core.cpg.ot')}}</h4>
                 <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomainOt"></app-cpg-domain-summary>
