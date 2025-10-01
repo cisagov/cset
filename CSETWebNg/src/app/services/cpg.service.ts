@@ -25,7 +25,7 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { NameSeries } from '../reports/models/chart-results.model';
+import { ScoredDomainDistrib, NameSeries } from '../reports/models/chart-results.model';
 
 
 const headers = {
@@ -65,21 +65,12 @@ export class CpgService {
   /**
    * 
    */
-  getAnswerDistrib(modelId: number, techDomain: string): Observable<NameSeries[]> {
+  getAnswerDistrib(modelId: number, techDomain: string): Observable<ScoredDomainDistrib> {
     var qs = `modelId=${modelId}`;
     if (!!techDomain) {
       qs = qs + `&techDomain=${techDomain}`;
     }
     var url = this.configSvc.apiUrl + 'answerdistrib/cpg/domains?' + qs;
-    return this.http.get<NameSeries[]>(url, headers);
-  }
-
-
-  /**
-   * 
-   */
-  getScore() {
-    var url = this.configSvc.apiUrl + 'cpg/score';
-    return this.http.get<number>(url, headers);
+    return this.http.get<ScoredDomainDistrib>(url, headers);
   }
 }

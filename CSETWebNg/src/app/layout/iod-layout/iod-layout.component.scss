@@ -2242,6 +2242,10 @@ input[type="checkbox"]+label {
   padding: 3px 0;
 }
 
+.question-row ul {
+  list-style: unset;
+}
+
 .no-bottom-border {
   border-bottom: none;
 }
@@ -3172,6 +3176,10 @@ hr.ranked-questions {
 
 .w-20pct {
   width: 20% !important;
+}
+
+.w-fit {
+  width: fit-content !important;
 }
 
 .va-neg-17rem {

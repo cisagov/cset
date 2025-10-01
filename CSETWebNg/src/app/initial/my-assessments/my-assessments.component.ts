@@ -810,7 +810,7 @@ export class MyAssessmentsComponent implements OnInit {
         if (pageNumber >= 0 && pageNumber < totalPages) {
           this.gridApi.paginationGoToPage(pageNumber);
         } else {
-          console.log('Invalid page number, staying on page 0');
+          console.error('Invalid page number, staying on page 0');
         }
       }
     }, 200);
