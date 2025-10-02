@@ -11,6 +11,8 @@ using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Contact;
+using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.ExportJson;
@@ -30,6 +32,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         private readonly IContactBusiness _contactBusiness;
         private readonly IReportsDataBusiness _reportsDataBusiness;
         private readonly IQuestionBusiness _questionBusiness;
+        private readonly IAssessmentUtil _assessmentUtil;
+        private readonly IQuestionRequirementManager _questionRequirement;
+        private readonly ITokenManager _tokenManager;
         private readonly CSETContext _context;
         private readonly JsonSerializerOptions _serializerOptions;
 
@@ -42,12 +47,18 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             IContactBusiness contactBusiness,
             IReportsDataBusiness reportsDataBusiness,
             IQuestionBusiness questionBusiness,
+            IAssessmentUtil assessmentUtil,
+            IQuestionRequirementManager questionRequirement,
+            ITokenManager tokenManager,
             CSETContext context)
         {
             _assessmentBusiness = assessmentBusiness ?? throw new ArgumentNullException(nameof(assessmentBusiness));
             _contactBusiness = contactBusiness ?? throw new ArgumentNullException(nameof(contactBusiness));
             _reportsDataBusiness = reportsDataBusiness ?? throw new ArgumentNullException(nameof(reportsDataBusiness));
             _questionBusiness = questionBusiness ?? throw new ArgumentNullException(nameof(questionBusiness));
+            _assessmentUtil = assessmentUtil ?? throw new ArgumentNullException(nameof(assessmentUtil));
+            _questionRequirement = questionRequirement ?? throw new ArgumentNullException(nameof(questionRequirement));
+            _tokenManager = tokenManager ?? throw new ArgumentNullException(nameof(tokenManager));
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _serializerOptions = new JsonSerializerOptions
             {
@@ -99,8 +110,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
 
             var contacts = _contactBusiness.GetContacts(assessmentId);
-            List<StandardQuestions> standardQuestions = null;
-            QuestionResponse questionList = null;
+            StandardsJson standards = null;
             List<ModelJson> maturityModels = null;
             List<ComponentQuestion> componentQuestions = null;
 
@@ -118,56 +128,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     _assessmentBusiness.GetSelectedStandards(ref assessmentDetail);
                 }
 
-                _reportsDataBusiness.SetReportsAssessmentId(assessmentDetail.Id);
-                standardQuestions = _reportsDataBusiness.GetQuestionsForEachStandard();
-
-                // Fallback to question list for unanswered standards so export matches api/QuestionList
-                if (standardQuestions == null || !standardQuestions.Any())
-                {
-                    _questionBusiness.SetQuestionAssessmentId(assessmentDetail.Id);
-                    questionList = _questionBusiness.GetQuestionListWithSet("*");
-
-                    if (questionList?.Categories != null)
-                    {
-                        var standardMap = new Dictionary<string, StandardQuestions>(StringComparer.OrdinalIgnoreCase);
-
-                        foreach (var group in questionList.Categories)
-                        {
-                            var key = string.IsNullOrWhiteSpace(group.SetName) ? "STANDARD" : group.SetName;
-                            if (!standardMap.TryGetValue(key, out var stdQuestions))
-                            {
-                                stdQuestions = new StandardQuestions
-                                {
-                                    StandardShortName = key,
-                                    Questions = new List<SimpleStandardQuestions>()
-                                };
-                                standardMap[key] = stdQuestions;
-                            }
-
-                            foreach (var subCategory in group.SubCategories)
-                            {
-                                foreach (var question in subCategory.Questions)
-                                {
-                                    stdQuestions.Questions.Add(new SimpleStandardQuestions
-                                    {
-                                        ShortName = key,
-                                        CategoryAndNumber = !string.IsNullOrWhiteSpace(question.DisplayNumber)
-                                            ? $"{group.GroupHeadingText} #{question.DisplayNumber}"
-                                            : group.GroupHeadingText,
-                                        Question = question.QuestionText,
-                                        QuestionId = question.QuestionId,
-                                        Answer = question.Answer
-                                    });
-                                }
-                            }
-                        }
-
-                        standardQuestions = standardMap.Values.Where(x => x.Questions.Any()).ToList();
-                    }
-                }
-
-                detailSections["standardQuestions"] = standardQuestions;
-                detailSections["questionList"] = questionList;
+                // Build standards export using new DTO structure
+                standards = BuildStandardsJson(assessmentId, lang);
             }
 
 
@@ -216,8 +178,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 detailSections["componentQuestions"] = componentQuestions;
             }
 
-            object details = detailSections.Count > 0 ? detailSections : null;
-
             // Remove irrelevant data from the payload
             CleanData(assessmentDetail);
 
@@ -233,7 +193,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 assessment,
                 sectorDetails,
                 contacts,
-                details,
+                standards,
+                details = detailSections.Count > 0 ? detailSections : null,
                 maturityModels
             };
 
@@ -425,6 +386,213 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         {
             CompletionCounter cc = new(_context);
             return cc.DetermineInScopeModels(assessmentId).ToList();
+        }
+
+
+        /// <summary>
+        /// Gets the application mode for standards (Questions or Requirements mode).
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns>Application mode string (e.g., "Questions", "Requirements")</returns>
+        private string GetStandardsApplicationMode(int assessmentId)
+        {
+            var mode = _context.STANDARD_SELECTION
+                .Where(x => x.Assessment_Id == assessmentId)
+                .Select(x => x.Application_Mode)
+                .FirstOrDefault();
+
+            // Default to Questions mode if not set
+            if (string.IsNullOrWhiteSpace(mode))
+            {
+                return "Questions";
+            }
+
+            // Normalize the mode to either "Questions" or "Requirements"
+            return mode.Trim().StartsWith("Q", StringComparison.OrdinalIgnoreCase)
+                ? "Questions"
+                : "Requirements";
+        }
+
+
+        /// <summary>
+        /// Builds the StandardsJson export object based on the assessment's application mode.
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <param name="lang"></param>
+        /// <returns>StandardsJson containing either Questions or Requirements mode data</returns>
+        private StandardsJson BuildStandardsJson(int assessmentId, string lang)
+        {
+            var mode = GetStandardsApplicationMode(assessmentId);
+
+            if (mode == "Questions")
+            {
+                return BuildQuestionsMode(assessmentId, lang);
+            }
+            else
+            {
+                return BuildRequirementsMode(assessmentId, lang);
+            }
+        }
+
+
+        /// <summary>
+        /// Builds StandardsJson for Questions mode.
+        /// </summary>
+        private StandardsJson BuildQuestionsMode(int assessmentId, string lang)
+        {
+            // Initialize QuestionRequirementManager for this assessment
+            _questionRequirement.InitializeManager(assessmentId);
+
+            // Initialize QuestionBusiness to get questions
+            _questionBusiness.SetQuestionAssessmentId(assessmentId);
+            var questionResponse = _questionBusiness.GetQuestionListWithSet("*");
+
+            var standardsJson = new StandardsJson
+            {
+                Mode = "Questions",
+                Questions = new List<StandardQuestionJson>()
+            };
+
+            // Return empty structure if no questions found
+            if (questionResponse == null || questionResponse.Categories == null)
+            {
+                return standardsJson;
+            }
+
+            // Get all observations for this assessment
+            var observations = _context.FINDING
+                .Where(f => f.Answer_Id != 0)
+                .Join(_context.ANSWER.Where(a => a.Assessment_Id == assessmentId),
+                    f => f.Answer_Id,
+                    a => a.Answer_Id,
+                    (f, a) => new { Finding = f, Answer = a })
+                .ToList()
+                .GroupBy(x => x.Answer.Answer_Id)
+                .ToDictionary(g => g.Key, g => g.Select(x => x.Finding).ToList());
+
+            // Map questions from QuestionResponse to StandardQuestionJson
+            foreach (var category in questionResponse.Categories)
+            {
+                if (category.SubCategories == null) continue;
+
+                foreach (var subCategory in category.SubCategories)
+                {
+                    if (subCategory.Questions == null) continue;
+
+                    foreach (var question in subCategory.Questions)
+                    {
+                        var standardQuestion = new StandardQuestionJson
+                        {
+                            QuestionId = question.QuestionId,
+                            QuestionText = question.QuestionText
+                        };
+
+                        // Add answer if present
+                        if (!string.IsNullOrWhiteSpace(question.Answer) ||
+                            !string.IsNullOrWhiteSpace(question.Comment) ||
+                            question.Answer_Id.HasValue)
+                        {
+                            standardQuestion.Answer = new AnswerJson
+                            {
+                                AnswerText = question.Answer,
+                                Comment = question.Comment
+                            };
+
+                            // Add observations if they exist for this answer
+                            if (question.Answer_Id.HasValue && observations.ContainsKey(question.Answer_Id.Value))
+                            {
+                                standardQuestion.Answer.Observations = observations[question.Answer_Id.Value]
+                                    .Select(f => new ObservationJson
+                                    {
+                                        ObservationId = f.Finding_Id,
+                                        Issue = f.Issue
+                                    })
+                                    .ToList();
+                            }
+                        }
+
+                        standardsJson.Questions.Add(standardQuestion);
+                    }
+                }
+            }
+
+            return standardsJson;
+        }
+
+
+        /// <summary>
+        /// Builds StandardsJson for Requirements mode.
+        /// </summary>
+        private StandardsJson BuildRequirementsMode(int assessmentId, string lang)
+        {
+            // Initialize QuestionRequirementManager for this assessment
+            _questionRequirement.InitializeManager(assessmentId);
+
+            // Get requirements using RequirementBusiness with a valid token manager
+            var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
+            var requirementResponse = rb.GetRequirementsList();
+
+            var standardsJson = new StandardsJson
+            {
+                Mode = "Requirements",
+                Standards = new List<StandardJson>()
+            };
+
+            // Return empty structure if no requirements found
+            if (requirementResponse == null || requirementResponse.Categories == null)
+            {
+                return standardsJson;
+            }
+
+            // Get all observations for this assessment
+            var observations = _context.FINDING
+                .Where(f => f.Answer_Id != 0)
+                .Join(_context.ANSWER.Where(a => a.Assessment_Id == assessmentId),
+                    f => f.Answer_Id,
+                    a => a.Answer_Id,
+                    (f, a) => new { Finding = f, Answer = a })
+                .ToList()
+                .GroupBy(x => x.Answer.Answer_Id)
+                .ToDictionary(g => g.Key, g => g.Select(x => x.Finding).ToList());
+
+            // Group requirements by SetName
+            var standardGroups = requirementResponse.Categories
+                .GroupBy(c => c.SetName)
+                .ToDictionary(g => g.Key, g => g.ToList());
+
+            foreach (var standardGroup in standardGroups)
+            {
+                var standardJson = new StandardJson
+                {
+                    SetName = standardGroup.Key,
+                    Requirements = new List<RequirementJson>()
+                };
+
+                foreach (var category in standardGroup.Value)
+                {
+                    if (category.SubCategories == null) continue;
+
+                    foreach (var subCategory in category.SubCategories)
+                    {
+                        if (subCategory.Questions == null) continue;
+
+                        foreach (var requirement in subCategory.Questions)
+                        {
+                            var requirementJson = new RequirementJson
+                            {
+                                RequirementId = requirement.QuestionId,
+                                RequirementText = requirement.QuestionText
+                            };
+
+                            standardJson.Requirements.Add(requirementJson);
+                        }
+                    }
+                }
+
+                standardsJson.Standards.Add(standardJson);
+            }
+
+            return standardsJson;
         }
     }
 }

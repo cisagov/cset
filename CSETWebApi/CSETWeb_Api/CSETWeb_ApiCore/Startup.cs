@@ -189,6 +189,9 @@ namespace CSETWeb_ApiCore
                     provider.GetRequiredService<IContactBusiness>(),
                     provider.GetRequiredService<IReportsDataBusiness>(),
                     provider.GetRequiredService<IQuestionBusiness>(),
+                    provider.GetRequiredService<IAssessmentUtil>(),
+                    provider.GetRequiredService<IQuestionRequirementManager>(),
+                    provider.GetRequiredService<ITokenManager>(),
                     provider.GetRequiredService<CSETContext>()
                 ));
             services.AddScoped<IVersionBusiness, VersionBusiness>();
