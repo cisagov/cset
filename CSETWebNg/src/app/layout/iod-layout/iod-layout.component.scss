@@ -598,6 +598,10 @@ table.cset-table {
   color: $primary-color;
 }
 
+table.cset-table ul {
+  list-style: unset !important;
+}
+
 table.cset-table tr:nth-child(even) {
   background: $gray-100;
 }
@@ -3287,7 +3291,7 @@ table.td-text-start td {
 }
 
 .b-none {
-  border: none;
+  border: none !important;
 }
 
 .b-primary {
