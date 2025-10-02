@@ -261,6 +261,16 @@ div.disclaimer-blurb {
   border-bottom: 1px solid #ddd !important;
 }
 
+.fs-small {
+  font-size: 0.9rem !important;
+  line-height: 1rem;
+}
+
+.fs-smaller {
+  font-size: 0.8rem !important;
+  line-height: 0.9rem;
+}
+
 
 /* ---- common display container widget ---- */
 .cset-container {
@@ -491,6 +501,10 @@ table.td-align-top td {
 
 table.td-padding-half-rem td {
   padding: .5rem;
+}
+
+table.td-padding-point-4-rem td {
+  padding: .4rem;
 }
 
 .shaded-red td {
@@ -1457,7 +1471,7 @@ h1.pageHeader {
   color: #fff;
 }
 
-.light-gray-score {
+.light-gray-score, .unanswered-score {
   background-color: #d3d3d3;
   border: 1px solid #d3d3d3;
   color: #000;
@@ -1827,7 +1841,7 @@ div.function-statement {
   padding-bottom: 1em;
 }
 
-.no-border {
+.no-border, .b-none {
   border: none !important;
 }
 

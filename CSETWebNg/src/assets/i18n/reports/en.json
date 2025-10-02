@@ -867,7 +867,9 @@
                "p1": "This section's answers are color-coded to show their status, with the summary bar reflecting overall performance based on the combined results.",
                "performed": "Performed",
                "incompletely performed": "Incompletely Performed",
-               "not performed": "Not Performed"
+               "not performed": "Not Performed",
+               "goal bars": "Goal Bars",
+               "question cells": "Question Cells"
           }
      },
      "all": {
