@@ -25,7 +25,7 @@ namespace CSETWebCore.Model.ExportJson
 
         public int SectorId { get; set; }
         public string SectorName { get; set; }
-        public int SubsectorId { get; set; }
+        public int? SubsectorId { get; set; }
         public string SubsectorName { get; set; }
 
 

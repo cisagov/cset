@@ -85,13 +85,24 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 SelfAssessment = assessmentDetail.SelfAssessment
             };
 
+            // Build out the Sector details early so we can populate AssessmentJson
+            var sectorDetails = BuildSectorDetails(assessmentDetail);
+
+            // Populate sector/subsector fields on AssessmentJson
+            if (sectorDetails != null)
+            {
+                assessment.SectorId = sectorDetails.SectorId;
+                assessment.SectorName = sectorDetails.SectorName;
+                assessment.SubsectorId = sectorDetails.SelectedIndustryId;
+                assessment.SubsectorName = sectorDetails.SelectedIndustryName;
+            }
+
 
             var contacts = _contactBusiness.GetContacts(assessmentId);
             List<StandardQuestions> standardQuestions = null;
             QuestionResponse questionList = null;
             List<ModelJson> maturityModels = null;
             List<ComponentQuestion> componentQuestions = null;
-            SectorDetailsJson sectorDetails = null;
 
 
             var detailSections = new Dictionary<string, object>();
@@ -206,9 +217,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             }
 
             object details = detailSections.Count > 0 ? detailSections : null;
-
-            // Build out the Sector details
-            sectorDetails = BuildSectorDetails(assessmentDetail);
 
             // Remove irrelevant data from the payload
             CleanData(assessmentDetail);
