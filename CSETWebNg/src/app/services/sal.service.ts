@@ -27,6 +27,7 @@ import { NistSpecialFactor } from '../assessment/prepare/sals/sal-nist/nist-sal.
 import { Sal } from '../models/sal.model';
 import { ConfigService } from './config.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentService } from './assessment.service';
 
 const headers = {
   headers: new HttpHeaders()
@@ -57,7 +58,8 @@ export class SalService {
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService,
+    private assessSvc:AssessmentService
   ) {
     this.apiUrl = this.configSvc.apiUrl + 'SAL';
     this.apiUrlGenSal = this.configSvc.apiUrl + 'GeneralSal';
@@ -140,7 +142,7 @@ export class SalService {
 
 
   /**
-   * 
+   *
    */
   saveSalLevels(level: string, ltype: string) {
     switch (ltype) {
@@ -167,8 +169,14 @@ export class SalService {
     }
 
     this.updateStandardSelection(this.selectedSAL).subscribe(
-      (data: Sal) => {
+      (data: any) => {
         this.selectedSAL = data;
+        if (data?.completedCount !== undefined) {
+          this.assessSvc.completionRefreshRequested$.next({
+            completedCount: data.completedCount,
+            totalCount: data.totalMaturityQuestionsCount || 0
+          });
+        }
       },
       error => {
         console.error('Error setting sal level: ' + (<Error>error).name + (<Error>error).message);
@@ -180,7 +188,7 @@ export class SalService {
   /**
  * Primarily used to shorten the word MODERATE on NIST SAL grid
  * because it is too wide to display well on a phone.
- * 
+ *
  * Also translates to non-English if needed
  * @param level
  */

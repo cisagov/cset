@@ -108,9 +108,15 @@ export class CreQuestionSelectorComponent implements OnInit {
    */
   changeMilSelection(id: number, evt: any) {
     const milsForGoal = this.selectableGroupingsSvc.findGroupingAndLesser(this.modelId, id);
-
-    // persist the true group and the false group to the API
-    this.selectableGroupingsSvc.save(milsForGoal).subscribe();
+    this.selectableGroupingsSvc.save(milsForGoal).subscribe((response:any)=>{
+      if (response?.completedCount !== undefined) {
+        console.log(response)
+        this.assessSvc.completionRefreshRequested$.next({
+          completedCount: response.completedCount,
+          totalCount: response.totalMaturityQuestionsCount || 0
+        })
+      }
+    });
 
     this.selectableGroupingsSvc.emitSelectionChanged();
   }

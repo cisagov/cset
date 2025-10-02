@@ -146,11 +146,7 @@ namespace CSETWebCore.Api.Controllers
                     tmpsal.Selected_Sal_Level = sr.Selected_Sal_Level;
                     lm.SaveSALLevel(tmpsal.Selected_Sal_Level);
                 }
-
-                //
-                // _hooks.HookSalChanged(assessmentId);
-                //
-                // return Ok(tmpsal);
+                
                 var stats = _hooks.HookSalChanged(assessmentId);
 
                 if (stats != null)
