@@ -727,13 +727,7 @@ export class MyAssessmentsComponent implements OnInit {
     switch (action) {
       case 'navigate':
         if (actionElement) {
-          const originalHTML = actionElement.innerHTML;
-          actionElement.innerHTML = `
-      <div class="tw:flex tw:items-center tw:gap-2">
-        <div class="tw:inline-block tw:h-4 tw:w-4 tw:animate-spin tw:rounded-full tw:border-2 tw:border-solid tw:border-current tw:border-r-transparent"></div>
-        <span>${actionElement.textContent}</span>
-      </div>
-    `;
+          actionElement.innerHTML = `<span class="tw:loading tw:loading-spinner tw:loading-sm"></span> ${actionElement.textContent}`;
           actionElement.style.pointerEvents = 'none';
         }
         this.navSvc.beginAssessment(assessmentId);
