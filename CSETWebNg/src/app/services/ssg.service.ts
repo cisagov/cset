@@ -41,15 +41,17 @@ export class SsgService {
    */
   csetSsgSectorList = [
     1, // chem
-//    19, // chem
+    19, // chem
     13, // IT
-//    28 // IT
+    28 // IT
   ];
 
   /**
-   * Define 'sisters' of sectors 
+   * Define 'sisters' of sectors.  Once we 
+   * stop supporting the HSPD-7 list this will
+   * no longer be necessary.
    */
-  relatedSectors = {
+  relatedSectors: { [key: number]: number } = {
     1: 19,
     19: 1,
     13: 28,
@@ -74,8 +76,7 @@ export class SsgService {
    * CTOR
    */
   constructor(
-    private assessSvc: AssessmentService,
-    private demoSvc: DemographicService
+    private assessSvc: AssessmentService
   ) { }
 
 

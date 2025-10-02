@@ -62,7 +62,7 @@ export class EdmHeatmapComponent implements OnInit, OnChanges {
       case 'yellow': return 'yellow-score';
       case 'green': return 'green-score';
       case 'lightgray': return 'light-gray-score'
-      default: return 'default-score';
+      default: return 'unanswered-score';
     }
   }
 }

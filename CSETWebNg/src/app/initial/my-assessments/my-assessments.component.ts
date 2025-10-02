@@ -359,6 +359,9 @@ export class MyAssessmentsComponent implements OnInit {
 
 
             this.sortedAssessments = assessments;
+              if (this.gridApi) {
+                this.gridApi.setGridOption('rowData', this.filteredAssessments);
+              }
           },
             error => {
               console.error(
@@ -634,6 +637,9 @@ export class MyAssessmentsComponent implements OnInit {
 
   setFilter(filter: 'all' | 'done' | 'pending' | 'favorite'): void {
     this.currentFilter = filter;
+    if (this.gridApi) {
+      this.gridApi.setGridOption('rowData', this.filteredAssessments);
+    }
   }
 
   getCompletionPercentage(assessment: UserAssessment): number {
@@ -688,6 +694,10 @@ export class MyAssessmentsComponent implements OnInit {
 
   onGridReady(params: GridReadyEvent): void {
     this.gridApi = params.api;
+    if (this.sortedAssessments) {
+      params.api.setGridOption('rowData', this.filteredAssessments);
+    }
+
     params.api.sizeColumnsToFit();
     setTimeout(() => {
       this.calculateGridHeight();
@@ -716,6 +726,16 @@ export class MyAssessmentsComponent implements OnInit {
 
     switch (action) {
       case 'navigate':
+        if (actionElement) {
+          const originalHTML = actionElement.innerHTML;
+          actionElement.innerHTML = `
+      <div class="tw:flex tw:items-center tw:gap-2">
+        <div class="tw:inline-block tw:h-4 tw:w-4 tw:animate-spin tw:rounded-full tw:border-2 tw:border-solid tw:border-current tw:border-r-transparent"></div>
+        <span>${actionElement.textContent}</span>
+      </div>
+    `;
+          actionElement.style.pointerEvents = 'none';
+        }
         this.navSvc.beginAssessment(assessmentId);
         break;
 
@@ -810,7 +830,7 @@ export class MyAssessmentsComponent implements OnInit {
         if (pageNumber >= 0 && pageNumber < totalPages) {
           this.gridApi.paginationGoToPage(pageNumber);
         } else {
-          console.log('Invalid page number, staying on page 0');
+          console.error('Invalid page number, staying on page 0');
         }
       }
     }, 200);

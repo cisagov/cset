@@ -603,6 +603,10 @@ table.cset-table {
   color: $primary-color;
 }
 
+table.cset-table ul {
+  list-style: unset !important;
+}
+
 table.cset-table tr:nth-child(even) {
   background: $gray-100;
 }
@@ -2254,6 +2258,10 @@ input[type="checkbox"]+label {
   padding: 3px 0;
 }
 
+.question-row ul {
+  list-style: unset;
+}
+
 .no-bottom-border {
   border-bottom: none;
 }
@@ -3193,6 +3201,10 @@ hr.ranked-questions {
   width: 20% !important;
 }
 
+.w-fit {
+  width: fit-content !important;
+}
+
 .va-neg-17rem {
   vertical-align: -0.17rem !important;
 }
@@ -3298,7 +3310,7 @@ table.td-text-start td {
 }
 
 .b-none {
-  border: none;
+  border: none !important;
 }
 
 .b-primary {
