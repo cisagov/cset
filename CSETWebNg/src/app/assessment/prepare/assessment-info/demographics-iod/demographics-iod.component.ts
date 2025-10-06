@@ -7,6 +7,7 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
 import { ServiceDemographic, AssessmentConfig, ServiceComposition, CriticalServiceInfo } from '../../../../models/assessment-info.model';
 import { ConstantsService } from '../../../../services/constants.service';
+import { OkayComponent } from '../../../../dialogs/okay/okay.component';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class DemographicsIodComponent implements OnInit {
   assessmentConfig: AssessmentConfig;
   serviceDemographics: ServiceDemographic;
   serviceComposition: ServiceComposition;
+  msg:string = "Sub-sector choices have changed.  Please select a new sub-sector."
 
   /**
    * 
@@ -50,6 +52,12 @@ export class DemographicsIodComponent implements OnInit {
   populateDemographicsModel() {
     this.demoSvc.getDemographics().subscribe((data: DemographicsIod) => {
       this.demographicData = data;
+
+      if(this.demographicData.acknowledgement == true){
+      const dlgOkay = this.dialog.open(OkayComponent, { data: { title: "Sub-Sector Changes", messageText:this.msg } }).afterClosed().subscribe(result => {
+          this.assessSvc.saveAcknowledgement().subscribe();
+        });
+      }
     })
   }
 

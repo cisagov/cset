@@ -50,6 +50,7 @@ namespace CSETWebCore.Business.Demographic
             d.OrganizationName = info.Facility_Name;
             d.Sector = myDD.Find(z => z.DataItemName == "SECTOR")?.IntValue;
             d.Subsector = myDD.Find(z => z.DataItemName == "SUBSECTOR")?.IntValue;
+            d.Acknowledgement = myDD.Find(z => z.DataItemName == "ACK_SECTOR_UPDATED_PPD21")?.BoolValue;
 
             var ssgs = myDD.FindAll(z => z.DataItemName.StartsWith("SSG-SECTOR-"));
             foreach (var ssg in ssgs)
