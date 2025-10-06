@@ -30,6 +30,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { firstValueFrom } from 'rxjs';
 import { DemographicService } from '../../../../services/demographic.service';
 import { Demographic } from '../../../../models/assessment-info.model';
+import { ScoredDomainDistrib } from '../../../../reports/models/chart-results.model';
 
 @Component({
   selector: 'app-cpg-summary',
@@ -39,18 +40,20 @@ import { Demographic } from '../../../../models/assessment-info.model';
 })
 export class CpgSummaryComponent implements OnInit {
 
-  modelId: number;
+  modelId!: number;
   techDomain: string | undefined;
 
   // model for CPG 1.1
-  answerDistribByDomain: any[];
+  answerDistribByDomain?: ScoredDomainDistrib;
 
   // models for CPG 2.0
-  answerDistribByDomainOt: any[];
-  answerDistribByDomainIt: any[];
+  answerDistribByDomainOt?: ScoredDomainDistrib;
+  answerDistribByDomainIt?: ScoredDomainDistrib;
 
 
   answerDistribsSsg: SsgDistribution[] = [];
+
+  assessorWorkflow = false;
 
 
 
@@ -68,6 +71,8 @@ export class CpgSummaryComponent implements OnInit {
    */
   async ngOnInit(): Promise<void> {
     this.modelId = this.assessSvc.assessment?.maturityModel?.modelId ?? 0;
+
+    this.assessorWorkflow = this.assessSvc.assessment.assessorMode ?? false;
 
     var demog: Demographic = await firstValueFrom(this.demoSvc.getDemographic());
     this.techDomain = demog.techDomain;
@@ -93,7 +98,7 @@ export class CpgSummaryComponent implements OnInit {
       const d = await this.getAnswerDistribution(id, '');
       return {
         modelId: id,
-        distribution: d
+        distribution: d.distrib
       };
     });
     this.answerDistribsSsg = await Promise.all(ssgPromises);
@@ -105,10 +110,10 @@ export class CpgSummaryComponent implements OnInit {
   async getAnswerDistribution(modelId: number, techDomain: string): Promise<any> {
     const cpgAnswerOptions = this.configSvc.getModuleBehavior('CPG').answerOptions;
 
-    const resp = await firstValueFrom(this.cpgSvc.getAnswerDistrib(modelId, techDomain));
+    const resp: ScoredDomainDistrib = await firstValueFrom(this.cpgSvc.getAnswerDistrib(modelId, techDomain));
 
     // get display text for answer options
-    resp.forEach(r => {
+    resp.distrib.forEach(r => {
       r.series.forEach(element => {
         if (element.name == 'U') {
           element.name = this.tSvc.translate('answer-options.labels.u');
@@ -122,6 +127,7 @@ export class CpgSummaryComponent implements OnInit {
     return resp;
   }
 }
+
 
 interface SsgDistribution {
   modelId: number;

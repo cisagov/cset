@@ -22,7 +22,7 @@
 -------------------------->
 <ng-container *transloco="let t">
   <div class="tw:container tw:mx-auto p-6 tw:max-w-7xl">
-    <div *ngIf="sortedAssessments == null">
+    <div *ngIf="sortedAssessments == null" class="center-item">
       <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
         <div class="spinner-size-50"></div>
       </div>
@@ -229,7 +229,6 @@
             <ag-grid-angular
               class="ag-theme-alpine tw:w-full tw:rounded-lg tw:[&_.ag-header-cell-label]:text-white  tw:[&_.ag-icon-filter]:text-white tw:[&_.ag-root-wrapper]:rounded-lg tw:[&_.ag-header]:rounded-t-lg tw:[&_.ag-body-viewport]:rounded-b-lg tw:[&_.ag-icon-asc]:text-white tw:[&_.ag-icon-desc]:text-white tw:[&_.ag-sort-indicator-icon]:text-white"
               theme="legacy"
-              [rowData]="filteredAssessments"
               [columnDefs]="columnDefs"
               [defaultColDef]="defaultColDef"
               [pagination]="true"

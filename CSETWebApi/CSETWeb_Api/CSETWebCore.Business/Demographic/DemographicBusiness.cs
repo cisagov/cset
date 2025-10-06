@@ -58,6 +58,7 @@ namespace CSETWebCore.Business.Demographic
             demographics.IsScoped = (bool?)extBiz.GetX(assessmentId, "SCOPED");
             demographics.OrganizationName = (string)extBiz.GetX(assessmentId, "ORG-NAME");
             demographics.OrganizationType = (int?)extBiz.GetX(assessmentId, "ORG-TYPE");
+            demographics.Acknowledgement = (bool?)extBiz.GetX(assessmentId, "ACK_SECTOR_UPDATED_PPD21") ?? false;
 
             var assetId = (int?)extBiz.GetX(assessmentId, "ASSET-VALUE");
             var sizeId = (int?)extBiz.GetX(assessmentId, "SIZE");

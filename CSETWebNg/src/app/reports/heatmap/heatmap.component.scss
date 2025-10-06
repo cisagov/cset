@@ -35,6 +35,17 @@
 }
 
 .score-cell {
+  font-size: .6rem;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.5rem;
+  border-radius: 3px;
+  height: 1.5rem;
+}
+
+.score-cell_large {
   font-size: small;
   padding: 4px;
   display: flex;
