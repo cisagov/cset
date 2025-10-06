@@ -110,7 +110,6 @@ export class CreQuestionSelectorComponent implements OnInit {
     const milsForGoal = this.selectableGroupingsSvc.findGroupingAndLesser(this.modelId, id);
     this.selectableGroupingsSvc.save(milsForGoal).subscribe((response:any)=>{
       if (response?.completedCount !== undefined) {
-        console.log(response)
         this.assessSvc.completionRefreshRequested$.next({
           completedCount: response.completedCount,
           totalCount: response.totalMaturityQuestionsCount || 0

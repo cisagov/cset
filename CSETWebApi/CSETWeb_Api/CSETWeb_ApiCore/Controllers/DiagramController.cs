@@ -30,6 +30,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Xml;
+using CSETWebCore.Model.Question;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -72,11 +73,11 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [Route("api/diagram/save")]
         [HttpPost]
-        public void SaveDiagram([FromBody] DiagramRequest req)
+        public IActionResult SaveDiagram([FromBody] DiagramRequest req)
         {
             // get the assessment ID from the JWT
             var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
-
+            var stats = (CompletionCounts)null;
             DecodeDiagram(req);
             
             lock (_object)
@@ -98,9 +99,18 @@ namespace CSETWebCore.Api.Controllers
                 }
                 finally 
                 { 
-                    _hooks.HookDiagramChanged((int)assessmentId);
+                    stats= _hooks.HookDiagramChanged((int)assessmentId);
                 }
             }
+            if (stats != null)
+            {
+                return Ok(new {
+                    CompletedCount = stats.CompletedCount,
+                    TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0
+                });
+            }
+
+            return Ok();
         }
 
 

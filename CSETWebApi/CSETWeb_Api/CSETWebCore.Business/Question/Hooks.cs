@@ -115,10 +115,6 @@ namespace CSETWebCore.Business.Question
         /// Handles actions that should be taken when the questions/requirements mode is changed.
         /// </summary>
         /// <param name="assessmentId"></param>
-        // public void HookQuestionsModeChanged(int assessmentId)
-        // {
-        //     new CompletionCounter(_context).Count(assessmentId);
-        // }
         public CompletionCounts HookQuestionsModeChanged(int assessmentId)
         {
             return new CompletionCounter(_context).Count(assessmentId);
