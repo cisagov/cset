@@ -462,6 +462,6 @@ namespace CSETWebCore.Constants
 
         // User Acknowledgments
         // ****************************************************************************************
-        public const string ACK_SECTOR_UPDATED_PPD21 = "ACK-SECTOR-UPDATED-PPD21";  
+        public const string ACK_SECTOR_UPDATED_PPD21 = "ACK_SECTOR_UPDATED_PPD21";  
     }
 }

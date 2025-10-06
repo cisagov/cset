@@ -601,12 +601,12 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/acknowledge")]
-        public IActionResult Acknowledge([FromBody] object ack)
+        public IActionResult Acknowledge()
         {
             try
             {
                 var ua = new UserAcknowledge(_context, _tokenManager);
-                ua.Ack(ack);
+                ua.Ack(null);
                 return Ok();
             }
             catch (Exception e)
