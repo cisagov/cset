@@ -22,21 +22,6 @@
 -------------------------->
 <div class="report-body mb-5" *transloco="let t">
 
-  <!-- <div class="flex-container">
-    <div class="column mt-3">
-      <h1 class="report-title">
-        {{t('reports.core.rra.deficiency.report title') | uppercase}}
-      </h1>
-    </div>
-    <div class="column d-flex justify-content-center">
-      <img width="471" height="529" src="assets/images/ExecutiveFiles/image002.jpg">
-    </div>
-
-    <div class="cover-page-bottom">
-      <app-logo-for-reports></app-logo-for-reports>
-      <app-info-block [response]="response" />
-    </div>
-  </div> -->
   <app-cover-page [response]="info" [title]="t('reports.core.rra.deficiency.report title') | uppercase" />
   <div class="page-break">
 
