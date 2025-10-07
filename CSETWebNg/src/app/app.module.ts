@@ -613,7 +613,6 @@ import { UserService } from './services/user.service';
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
-import { DeficiencyTemplateComponent } from './reports/deficiency-template/deficiency-template.component';
 import { KeyDisplay1Component } from './assessment/results/key-display-1/key-display-1.component';
 
 
@@ -1087,6 +1086,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         UpgradeComponent,
         ImportComponent,
         AdminSettingsComponent
+
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
