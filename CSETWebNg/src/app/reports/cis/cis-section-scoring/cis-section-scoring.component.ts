@@ -26,12 +26,14 @@ import { Title } from '@angular/platform-browser';
 import { AssessmentService } from '../../../services/assessment.service';
 import { CisService } from '../../../services/cis.service';
 import { MaturityService } from '../../../services/maturity.service';
+import { ReportService } from '../../../services/report.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-cis-section-scoring',
-    templateUrl: './cis-section-scoring.component.html',
-    styleUrls: ['../../../reports/reports.scss'],
-    standalone: false
+  selector: 'app-cis-section-scoring',
+  templateUrl: './cis-section-scoring.component.html',
+  styleUrls: ['../../../reports/reports.scss'],
+  standalone: false
 })
 export class CisSectionScoringComponent implements OnInit {
 
@@ -47,6 +49,7 @@ export class CisSectionScoringComponent implements OnInit {
   baselineAssessmentName: string;
 
   myModel: any;
+  response: string;
 
   /**
    * 
@@ -55,7 +58,9 @@ export class CisSectionScoringComponent implements OnInit {
     public maturitySvc: MaturityService,
     public cisSvc: CisService,
     public assessSvc: AssessmentService,
-    public titleService: Title
+    public titleService: Title,
+    public reportSvc: ReportService,
+    public tSvc: TranslocoService
   ) { }
 
   /**
@@ -63,15 +68,12 @@ export class CisSectionScoringComponent implements OnInit {
    */
   ngOnInit(): void {
     this.loading = true;
-    this.titleService.setTitle("Section Scoring Report - CISA CIS");
 
-    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      this.assessmentName = assessmentDetail.assessmentName;
-      this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.facilitatorName;
-      this.facilityName = assessmentDetail.facilityName;
-      this.selfAssessment = assessmentDetail.selfAssessment;
-    });
+    this.reportSvc.getAssessmentInfoForReport().subscribe(
+      (r: any) => {
+        this.response = r;
+      }
+    );
 
     this.cisSvc.getCisSectionScoring().subscribe((resp: any) => {
       this.myModel = resp.myModel;
