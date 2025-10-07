@@ -27,6 +27,8 @@ import { Title } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
 import { QuestionsService } from '../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
+import { AssessmentDetail } from '../../models/assessment-info.model';
+import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
   selector: 'app-all-answeredquestions',
@@ -36,20 +38,21 @@ import { ConfigService } from '../../services/config.service';
 })
 export class AllAnsweredquestionsComponent implements OnInit {
 
-  response: any;
+  response: AssessmentDetail;
 
   constructor(
     public tSvc: TranslocoService,
     public reportSvc: ReportService,
     public titleService: Title,
     public questionsSvc: QuestionsService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public assessSvc: AssessmentService
   ) { }
 
   ngOnInit() {
 
-    this.reportSvc.getAssessmentInfoForReport().subscribe(
-      (r: any) => {
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
         this.response = r;
       }
     );
