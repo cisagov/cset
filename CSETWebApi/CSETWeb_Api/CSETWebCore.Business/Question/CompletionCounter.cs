@@ -201,8 +201,8 @@ namespace CSETWebCore.Business.Question
 
             var inScopeRequirementIds = q.ToList();
 
-            var inScopeAnswers = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId 
-                && x.Question_Type == "Requirement" 
+            var inScopeAnswers = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                && x.Question_Type == "Requirement"
                 && inScopeRequirementIds.Contains(x.Question_Or_Requirement_Id)).ToList();
 
             // get totals
@@ -226,23 +226,43 @@ namespace CSETWebCore.Business.Question
             var setNames = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId).Select(y => y.Set_Name).ToList();
             string selectedSalLevel = _context.STANDARD_SELECTION.Where(ss => ss.Assessment_Id == assessmentId).Select(c => c.Selected_Sal_Level).FirstOrDefault();
 
-            var query = from q in _context.NEW_QUESTION
-                        join qs in _context.NEW_QUESTION_SETS on q.Question_Id equals qs.Question_Id
-                        join nql in _context.NEW_QUESTION_LEVELS on qs.New_Question_Set_Id equals nql.New_Question_Set_Id
-                        join usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
-                        join stand in _context.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
-                        join qgh in _context.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
-                        join usc in _context.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
-                        join usl in _context.UNIVERSAL_SAL_LEVEL on selectedSalLevel equals usl.Full_Name_Sal
-                        where stand.Selected == true
-                                        && stand.Assessment_Id == assessmentId
-                                        && nql.Universal_Sal_Level == usl.Universal_Sal_Level1
-                        select q.Question_Id;
 
-            var inScopeQuestionIds = query.ToList();
+            List<int> inScopeQuestionIds = [];
 
-            var inScopeAnswers = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId 
-                && x.Question_Type == "Question" 
+            if (setNames.Count == 1)
+            {
+                var query = from q in _context.NEW_QUESTION
+                            from qs in _context.NEW_QUESTION_SETS.Where(x => x.Question_Id == q.Question_Id)
+                            from l in _context.NEW_QUESTION_LEVELS.Where(x => qs.New_Question_Set_Id == x.New_Question_Set_Id)
+                            from s in _context.SETS.Where(x => x.Set_Name == qs.Set_Name && x.Set_Name == qs.Set_Name)
+                            from usl in _context.UNIVERSAL_SAL_LEVEL.Where(x => x.Full_Name_Sal == selectedSalLevel)
+                            from usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Heading_Pair_Id == q.Heading_Pair_Id)
+                            from qgh in _context.QUESTION_GROUP_HEADING.Where(x => x.Question_Group_Heading_Id == usch.Question_Group_Heading_Id)
+                            from usc in _context.UNIVERSAL_SUB_CATEGORIES.Where(x => x.Universal_Sub_Category_Id == usch.Universal_Sub_Category_Id)
+                            where setNames.Contains(s.Set_Name)
+                               && l.Universal_Sal_Level == usl.Universal_Sal_Level1
+                            select q.Question_Id;
+
+                inScopeQuestionIds = query.Distinct().ToList();
+            }
+            else
+            {
+                var query = from q in _context.NEW_QUESTION
+                            join qs in _context.NEW_QUESTION_SETS on q.Question_Id equals qs.Question_Id
+                            join nql in _context.NEW_QUESTION_LEVELS on qs.New_Question_Set_Id equals nql.New_Question_Set_Id
+                            join usch in _context.UNIVERSAL_SUB_CATEGORY_HEADINGS on q.Heading_Pair_Id equals usch.Heading_Pair_Id
+                            join stand in _context.AVAILABLE_STANDARDS on qs.Set_Name equals stand.Set_Name
+                            join s in _context.SETS on stand.Set_Name equals s.Set_Name
+                            join qgh in _context.QUESTION_GROUP_HEADING on usch.Question_Group_Heading_Id equals qgh.Question_Group_Heading_Id
+                            join usc in _context.UNIVERSAL_SUB_CATEGORIES on usch.Universal_Sub_Category_Id equals usc.Universal_Sub_Category_Id
+                            where stand.Selected == true && stand.Assessment_Id == assessmentId
+                            select q.Question_Id;
+
+                inScopeQuestionIds = query.Distinct().ToList();
+            }
+
+            var inScopeAnswers = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId
+                && x.Question_Type == "Question"
                 && inScopeQuestionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
 
             // get totals
