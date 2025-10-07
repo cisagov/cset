@@ -25,7 +25,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GeneralSalDescriptionsWeights } from '../../../../models/sal.model';
 import { AssessmentService } from '../../../../services/assessment.service';
-import { Sal } from '../../../../models/sal.model';
 import { SalService } from '../../../../services/sal.service';
 import { TranslocoService } from '@jsverse/transloco';
 
@@ -40,7 +39,7 @@ import { TranslocoService } from '@jsverse/transloco';
 })
 export class SalGenComponent implements OnInit {
 
-  sliders: GenSalPairs[];
+  sliders!: GenSalPairs[];
 
   /**
    * 
@@ -107,16 +106,6 @@ export class SalGenComponent implements OnInit {
       error => {
         console.error('Error getting gen sal descriptions: ' + (<Error>error).name + (<Error>error).message);
         console.error('Error gen sal descriptions: ' + (<Error>error).stack);
-      });
-
-    // retrieve the existing sal_selection for this assessment
-    this.salsSvc.getSalSelection().subscribe(
-      (data: Sal) => {
-        this.salsSvc.selectedSAL = data;
-      },
-      error => {
-        console.error('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
-        console.error('Error Getting all standards: ' + (<Error>error).stack);
       });
   }
 
