@@ -29,10 +29,10 @@ import { QuestionsService } from '../../services/questions.service';
 import { ReportService } from '../../services/report.service';
 
 @Component({
-    selector: 'app-all-reviewed',
-    templateUrl: './all-reviewed.component.html',
-    styleUrls: ['../reports.scss', './all-reviewed.component.scss'],
-    standalone: false
+  selector: 'app-all-reviewed',
+  templateUrl: './all-reviewed.component.html',
+  styleUrls: ['../reports.scss', './all-reviewed.component.scss'],
+  standalone: false
 })
 export class AllReviewedComponent {
   response: any;
@@ -47,10 +47,9 @@ export class AllReviewedComponent {
 
   ngOnInit() {
 
-    this.reportSvc.getReviewedQuestions().subscribe(
+    this.reportSvc.getAssessmentInfoForReport().subscribe(
       (r: any) => {
         this.response = r;
-        this.titleService.setTitle(this.tSvc.translate('reports.all.reviewed questions.report title'));
       }
     );
   }

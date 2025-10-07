@@ -29,10 +29,10 @@ import { QuestionsService } from '../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
-    selector: 'app-all-answeredquestions',
-    templateUrl: './all-answeredquestions.component.html',
-    styleUrls: ['../reports.scss', './all-answeredquestions.component.scss'],
-    standalone: false
+  selector: 'app-all-answeredquestions',
+  templateUrl: './all-answeredquestions.component.html',
+  styleUrls: ['../reports.scss', './all-answeredquestions.component.scss'],
+  standalone: false
 })
 export class AllAnsweredquestionsComponent implements OnInit {
 
@@ -48,10 +48,9 @@ export class AllAnsweredquestionsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.reportSvc.getStandardAnsweredQuestions().subscribe(
+    this.reportSvc.getAssessmentInfoForReport().subscribe(
       (r: any) => {
         this.response = r;
-        this.titleService.setTitle(this.tSvc.translate('reports.all.answered statements.tab title'));
       }
     );
   }

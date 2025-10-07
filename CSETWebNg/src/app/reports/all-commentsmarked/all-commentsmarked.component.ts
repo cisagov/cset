@@ -29,10 +29,10 @@ import { QuestionsService } from '../../services/questions.service';
 import { ReportService } from '../../services/report.service';
 
 @Component({
-    selector: 'app-all-commentsmarked',
-    templateUrl: './all-commentsmarked.component.html',
-    styleUrls: ['../reports.scss', './all-commentsmarked.component.scss'],
-    standalone: false
+  selector: 'app-all-commentsmarked',
+  templateUrl: './all-commentsmarked.component.html',
+  styleUrls: ['../reports.scss', './all-commentsmarked.component.scss'],
+  standalone: false
 })
 export class AllCommentsmarkedComponent {
 
@@ -48,11 +48,9 @@ export class AllCommentsmarkedComponent {
 
   ngOnInit() {
 
-    this.reportSvc.getStandardCommentsAndMfr().subscribe(
+    this.reportSvc.getAssessmentInfoForReport().subscribe(
       (r: any) => {
-
         this.response = r;
-        this.titleService.setTitle(this.tSvc.translate('reports.all.cmfr.report title'));
       }
     );
   }
