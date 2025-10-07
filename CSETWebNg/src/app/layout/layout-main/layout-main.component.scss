@@ -29,10 +29,10 @@ SOFTWARE.
 @use "@angular/material/prebuilt-themes/indigo-pink.css";
 @use "../../../sass/cset-font-styles.css";
 @use "../../../sass/cset2-font-styles.css";
-@use 'swiper/scss';
-@use 'swiper/scss/navigation';
-@use 'swiper/scss/pagination';
 @use '@angular/material' as mat;
+@import 'swiper/swiper.css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
 
 
 
