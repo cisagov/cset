@@ -76,6 +76,7 @@
      "legend": "凡例",
      "img suffix": "_jp",
      "assessment settings": " 評価設定",
+     "sector acknowledgement": "T重要インフラセクターは、HSPD-7から現在の16セクターの枠組みに更新されました。以前選択されたサブセクターは適用されなくなったため、再選択する必要があります。",
      "titles": {
           "prepare": "準備",
           "assessment": "評価",
