@@ -251,7 +251,6 @@ import { LayoutSwitcherComponent } from './layout/layout-switcher/layout-switche
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
 import { IodLayoutComponent } from './layout/iod-layout/iod-layout.component';
-import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
 import { ObservationTearoutsComponent } from './reports/observation-tearouts/observation-tearouts.component';
 import { EvalAgainstStandardsComponent } from './reports/eval-against-standards/eval-against-standards.component';
@@ -741,7 +740,6 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         LayoutBlankComponent,
         LayoutSwitcherComponent,
         LayoutMainComponent,
-        ReportTestComponent,
         SiteDetailComponent,
         ObservationTearoutsComponent,
         EvalAgainstStandardsComponent,

@@ -73,7 +73,6 @@ import { AggregationDetailComponent } from './aggregation/aggregation-detail/agg
 import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-analytics.component';
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
 //import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
-import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { LayoutSwitcherComponent } from './layout/layout-switcher/layout-switcher.component';
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
@@ -191,14 +190,6 @@ import { CoverPageComponent } from './reports/cover-page/cover-page.component';
 
 
 const appRoutes: Routes = [
-  // reports routing
-  {
-    path: 'report-test',
-    component: LayoutSwitcherComponent,
-    children: [
-      { path: '', component: ReportTestComponent }
-    ]
-  },
   {
     path: 'home',
     component: LayoutSwitcherComponent,
