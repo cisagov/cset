@@ -48,10 +48,9 @@ export class CisRankedDeficiencyComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.reportSvc.getReviewedQuestions().subscribe(
+    this.reportSvc.getAssessmentInfoForReport().subscribe(
       (r: any) => {
         this.response = r;
-        this.titleService.setTitle(this.tSvc.translate('reports.all.reviewed questions.report title'));
       }
     );
   }
