@@ -1,13 +1,13 @@
 <div style="line-height: 150%;" class="me-4 text-start" *transloco="let t">
-    <div>{{response?.assessment_Name}}</div>
+    <div>{{response?.assessmentName}}</div>
     <div>
-        {{response?.assessment_Date | localizeDate}}
+        {{response?.assessmentDate | localizeDate}}
     </div>
     <div>
-        {{response?.facility_Name}}
+        {{response?.facilityName}}
     </div>
     <div>
-        {{response?.assessor_Name}}
+        {{response?.creatorName}}
     </div>
     <div *ngIf="response?.selfAssessment" class="self-assess">
         {{ t('reports.self assessment indicator') | uppercase }}
