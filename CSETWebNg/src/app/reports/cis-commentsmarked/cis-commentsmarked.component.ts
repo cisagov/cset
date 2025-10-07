@@ -37,8 +37,9 @@ import { AssessmentService } from '../../services/assessment.service';
   standalone: false
 })
 export class CisCommentsmarkedComponent implements OnInit {
-  response: AssessmentDetail;
+  response: any;
   loading: boolean = false;
+  info: AssessmentDetail
 
   constructor(
     public analysisSvc: ReportAnalysisService,
@@ -53,9 +54,15 @@ export class CisCommentsmarkedComponent implements OnInit {
 
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
+        this.info = r;
+      }
+    );
+    this.maturitySvc.getCommentsMarked().subscribe(
+      (r: any) => {
         this.response = r;
         this.loading = false;
-      }
+      },
+      error => console.error('Comments Marked Report Error: ' + (<Error>error).message)
     );
   }
 }
