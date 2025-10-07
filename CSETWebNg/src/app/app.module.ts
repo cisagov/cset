@@ -614,6 +614,7 @@ import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/ci
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
 import { KeyDisplay1Component } from './assessment/results/key-display-1/key-display-1.component';
+import { CoverPageComponent } from './reports/cover-page/cover-page.component';
 
 
 
@@ -1085,7 +1086,8 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         AnalyticsResultsComponent,
         UpgradeComponent,
         ImportComponent,
-        AdminSettingsComponent
+        AdminSettingsComponent,
+        CoverPageComponent
 
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,

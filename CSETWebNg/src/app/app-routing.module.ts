@@ -186,6 +186,7 @@ import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { RoleGuard } from './guards/role.guard';
 import { RoleType } from './models/enums/role.model';
+import { CoverPageComponent } from './reports/cover-page/cover-page.component';
 
 
 
@@ -468,7 +469,8 @@ const appRoutes: Routes = [
       { path: 'appkeyreport', component: KeyReportComponent },
       { path: 'allAnsweredQuestions', component: AllAnsweredquestionsComponent },
       { path: 'allMfrAndComments', component: AllCommentsmarkedComponent },
-      { path: 'allReviewedQuestions', component: AllReviewedComponent }
+      { path: 'allReviewedQuestions', component: AllReviewedComponent },
+      { path: 'coverpage', component: CoverPageComponent }
     ]
   },
   { path: '**', redirectTo: 'home' }
