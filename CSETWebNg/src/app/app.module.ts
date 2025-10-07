@@ -251,7 +251,6 @@ import { LayoutSwitcherComponent } from './layout/layout-switcher/layout-switche
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
 import { IodLayoutComponent } from './layout/iod-layout/iod-layout.component';
-import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
 import { ObservationTearoutsComponent } from './reports/observation-tearouts/observation-tearouts.component';
 import { EvalAgainstStandardsComponent } from './reports/eval-against-standards/eval-against-standards.component';
@@ -613,8 +612,8 @@ import { UserService } from './services/user.service';
 import { CisaVadrReportComponent } from './reports/cisa-vadr/cisa-vadr-report/cisa-vadr-report.component';
 import { VadrGroupingBlockComponent } from './reports/cisa-vadr/vadr-grouping-block/vadr-grouping-block.component';
 import { CisaVadrLevelsComponent } from './assessment/prepare/maturity/cisa-vadr-levels/cisa-vadr-levels.component';
-import { DeficiencyTemplateComponent } from './reports/deficiency-template/deficiency-template.component';
 import { KeyDisplay1Component } from './assessment/results/key-display-1/key-display-1.component';
+import { CoverPageComponent } from './reports/cover-page/cover-page.component';
 
 
 
@@ -741,7 +740,6 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         LayoutBlankComponent,
         LayoutSwitcherComponent,
         LayoutMainComponent,
-        ReportTestComponent,
         SiteDetailComponent,
         ObservationTearoutsComponent,
         EvalAgainstStandardsComponent,
@@ -1087,7 +1085,8 @@ ModuleRegistry.registerModules([AllCommunityModule]);
         UpgradeComponent,
         ImportComponent,
         AdminSettingsComponent,
-        DeficiencyTemplateComponent
+        CoverPageComponent
+
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,

@@ -30,15 +30,18 @@ import { RraDataService } from '../../../services/rra-data.service';
 import Chart from 'chart.js/auto';
 import { ConfigService } from '../../../services/config.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentService } from '../../../services/assessment.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
-    selector: 'rra-report',
-    templateUrl: './rra-report.component.html',
-    styleUrls: ['../../reports.scss'],
-    standalone: false
+  selector: 'rra-report',
+  templateUrl: './rra-report.component.html',
+  styleUrls: ['../../reports.scss'],
+  standalone: false
 })
 export class RraReportComponent implements OnInit {
   response: any;
+  info: AssessmentDetail;
 
   overallScoreDisplay: string;
   standardBasedScore: number;
@@ -91,7 +94,8 @@ export class RraReportComponent implements OnInit {
     public cmmcStyleSvc: CmmcStyleService,
     public rraDataSvc: RraDataService,
     public configSvc: ConfigService,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService,
+    public assessSvc: AssessmentService
   ) {
     this.columnWidthEmitter = new BehaviorSubject<number>(25)
   }
@@ -134,6 +138,12 @@ export class RraReportComponent implements OnInit {
     this.tSvc.selectTranslate('core.rra.tab title', {}, { scope: 'reports' })
       .subscribe(title =>
         this.titleService.setTitle(title + ' - ' + this.configSvc.behaviors.defaultTitle));
+
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
+        this.info = r;
+      }
+    );
   }
 
   /**

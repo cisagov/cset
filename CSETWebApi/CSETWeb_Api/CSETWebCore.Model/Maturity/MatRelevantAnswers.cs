@@ -21,6 +21,11 @@ namespace CSETWebCore.Model.Maturity
         // but that getter would ping the database, and the GetMissingParents() function
         // in MaturyBasicReportData can calculate this with data already present.
         public bool IsParentWithChildren { get; set; }
+        
+        /// <summary>
+        /// The oridinal level of the question: 1,2,3 etc. 
+        /// </summary>
+        public int MaturityLevel { get; set; }
 
         /// <summary>
         /// This property is used to know when to suppress the bottom border.

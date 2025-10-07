@@ -513,29 +513,7 @@ namespace CSETWebCore.DataLayer.Model
                      });
             return myrval;
         }
-
-
-        /// <summary>
-        /// Executes stored procedure usp_getFinancialQuestions.
-        /// </summary>
-        /// <param name="assessment_id"></param>
-        /// <returns></returns>
-        public virtual IList<usp_getFinancialQuestions_Result> usp_getFinancialQuestions(Nullable<int> assessment_id)
-        {
-            if (!assessment_id.HasValue)
-                throw new ApplicationException("parameters may not be null");
-
-            IList<usp_getFinancialQuestions_Result> myrval = null;
-            this.LoadStoredProc("usp_getFinancialQuestions")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_getFinancialQuestions_Result>();
-                     });
-            return myrval;
-        }
-
+        
 
         /// <summary>
         /// Executes stored procedure usp_GetRankedQuestions.
@@ -726,32 +704,7 @@ namespace CSETWebCore.DataLayer.Model
                      });
             return myrval;
         }
-
-
-
-
-
-        /// <summary>
-        /// Executes stored procedure usp_financial_attributes.
-        /// </summary>
-        /// <param name="assessment_id"></param>
-        /// <returns></returns>
-        public virtual IList<usp_financial_attributes_result> usp_financial_attributes(Nullable<int> assessment_id)
-        {
-            if (!assessment_id.HasValue)
-                throw new ApplicationException("parameters may not be null");
-
-            IList<usp_financial_attributes_result> myrval = null;
-            this.LoadStoredProc("usp_financial_attributes")
-                     .WithSqlParam("assessment_id", assessment_id)
-
-                     .ExecuteStoredProc((handler) =>
-                     {
-                         myrval = handler.ReadToList<usp_financial_attributes_result>();
-                     });
-            return myrval;
-        }
-
+        
 
         /// <summary>
         /// Executes stored procedure usp_GetTop5Areas.

@@ -27,17 +27,19 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
-    selector: 'app-crr-comments-marked',
-    templateUrl: './crr-comments-marked.component.html',
-    styleUrls: ['./../crr-report/crr-report.component.scss'],
-    standalone: false
+  selector: 'app-crr-comments-marked',
+  templateUrl: './crr-comments-marked.component.html',
+  styleUrls: ['./../crr-report/crr-report.component.scss'],
+  standalone: false
 })
 export class CrrCommentsMarkedComponent implements OnInit {
   crrModel: CmuReportModel;
   loading: boolean = false;
   keyToCategory: any;
+  info: AssessmentDetail;
 
   commentsList = [];
   markedForReviewList = [];
@@ -57,6 +59,7 @@ export class CrrCommentsMarkedComponent implements OnInit {
     this.cmuSvc.getCmuModel().subscribe(
       (r: CmuReportModel) => {
         this.crrModel = r;
+        this.info = r.assessmentDetails;
         const commentsCategories = [];
 
         // Build up comments list
