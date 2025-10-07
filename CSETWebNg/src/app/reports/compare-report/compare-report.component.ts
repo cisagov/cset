@@ -42,7 +42,8 @@ import { AssessmentDetail } from '../../models/assessment-info.model';
 })
 
 export class CompareReportComponent implements OnInit, AfterViewChecked {
-  response: AssessmentDetail;
+  response: any;
+  info: AssessmentDetail;
 
   chartOverallAverage: Chart;
   aggSvc: AggregationService;
@@ -70,8 +71,15 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     this.isCmmc = this.maturitySvc.maturityModelIsCMMC();
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
-        this.response = r;
+        this.info = r;
       }
+    );
+    this.reportSvc.getAggReport('compare-report', aggId).subscribe(
+      (r: any) => {
+        this.response = r;
+      },
+
+      error => console.error('Compare report load Error: ' + (<Error>error).message)
     );
 
     this.populateCharts(aggId);

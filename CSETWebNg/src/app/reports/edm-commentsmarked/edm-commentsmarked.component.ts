@@ -38,7 +38,8 @@ import { AssessmentDetail } from '../../models/assessment-info.model';
   standalone: false
 })
 export class EdmCommentsmarkedComponent implements OnInit {
-  response: AssessmentDetail;
+  response: any;
+  info: AssessmentDetail;
 
   loading: boolean = false;
 
@@ -59,8 +60,15 @@ export class EdmCommentsmarkedComponent implements OnInit {
 
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
-        this.response = r;
+        this.info = r;
       }
+    );
+    this.maturitySvc.getCommentsMarked().subscribe(
+      (r: any) => {
+        this.response = r;
+        this.loading = false;
+      },
+      error => console.error('Comments Marked Report Error: ' + (<Error>error).message)
     );
   }
   getQuestion(q) {

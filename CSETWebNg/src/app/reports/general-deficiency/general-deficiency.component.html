@@ -22,7 +22,7 @@
 -------------------------->
 <div class="report-body mb-5">
 
-    <div class="flex-container">
+    <!-- <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
                 DEFICIENCY REPORT CISA {{ moduleName }}
@@ -36,7 +36,9 @@
             <app-logo-for-reports></app-logo-for-reports>
             <app-info-block [response]="response" />
         </div>
-    </div>
+    </div> -->
+    <app-cover-page [response]="response" [title]="'DEFICIENCY REPORT CISA ' + moduleName" />
+
     <div class="page-break">
 
         <div class="disclaimer-blurb mt-4">

@@ -29,6 +29,8 @@ import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 import { QuestionsService } from '../../services/questions.service';
 import { ActivatedRoute } from '@angular/router';
+import { AssessmentService } from '../../services/assessment.service';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 @Component({
   selector: 'app-general-deficiency',
@@ -39,6 +41,7 @@ import { ActivatedRoute } from '@angular/router';
 export class GeneralDeficiencyComponent implements OnInit {
 
   response: any;
+  info: AssessmentDetail;
 
   moduleName: string;
 
@@ -51,7 +54,8 @@ export class GeneralDeficiencyComponent implements OnInit {
     public questionsSvc: QuestionsService,
     private titleService: Title,
     public maturitySvc: MaturityService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public assessSvc: AssessmentService
   ) { }
 
   /**
@@ -65,6 +69,11 @@ export class GeneralDeficiencyComponent implements OnInit {
 
       this.titleService.setTitle("Deficiency Report - " + this.moduleName);
 
+      this.assessSvc.getAssessmentDetail().subscribe(
+        (r: AssessmentDetail) => {
+          this.info = r;
+        }
+      );
       this.maturitySvc.getMaturityDeficiency(this.moduleName).subscribe(
         (r: any) => {
           this.response = r;
