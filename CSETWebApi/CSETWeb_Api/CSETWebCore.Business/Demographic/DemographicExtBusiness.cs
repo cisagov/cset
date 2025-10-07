@@ -175,7 +175,7 @@ namespace CSETWebCore.Business.Demographic
                 OptionText = opts.OptionText
             }).ToList();
 
-            var sectors = _context.SECTOR.Where(x => x.Is_NIPP).ToList().OrderBy(y => y.SectorName);
+            var sectors = _context.SECTOR.Where(x => !x.Is_NIPP).ToList().OrderBy(y => y.SectorName);
 
             d.ListSectors = new List<ListItem2>();
             foreach (var sec in sectors)
