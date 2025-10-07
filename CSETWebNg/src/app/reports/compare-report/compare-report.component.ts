@@ -30,17 +30,19 @@ import { MaturityService } from '../../services/maturity.service';
 import Chart from 'chart.js/auto';
 import { ConfigService } from '../../services/config.service';
 import { ColorService } from '../../services/color.service';
+import { AssessmentService } from '../../services/assessment.service';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 
 @Component({
-    selector: 'compare-report',
-    templateUrl: './compare-report.component.html',
-    styleUrls: ['../reports.scss'],
-    standalone: false
+  selector: 'compare-report',
+  templateUrl: './compare-report.component.html',
+  styleUrls: ['../reports.scss'],
+  standalone: false
 })
 
 export class CompareReportComponent implements OnInit, AfterViewChecked {
-  response: any;
+  response: AssessmentDetail;
 
   chartOverallAverage: Chart;
   aggSvc: AggregationService;
@@ -57,7 +59,8 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     public chartSvc: ChartService,
     public colorSvc: ColorService,
     public maturitySvc: MaturityService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public assessSvc: AssessmentService
   ) { }
 
 
@@ -65,12 +68,10 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     this.titleService.setTitle("Compare Report - " + this.configSvc.behaviors.defaultTitle);
     var aggId: number = +localStorage.getItem("aggregationId");
     this.isCmmc = this.maturitySvc.maturityModelIsCMMC();
-    this.reportSvc.getAggReport('compare-report', aggId).subscribe(
-      (r: any) => {
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
         this.response = r;
-      },
-
-      error => console.error('Compare report load Error: ' + (<Error>error).message)
+      }
     );
 
     this.populateCharts(aggId);

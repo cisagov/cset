@@ -22,34 +22,7 @@
 -------------------------->
 <div class="report-body mb-5" *transloco="let t">
 
-  <div class="flex-container">
-    <div class="column mt-3">
-      <p class="report-title">
-        {{t('aggregation.compare.report title') | uppercase}}
-      </p>
-    </div>
-
-    <div class="column d-flex justify-content-center">
-      <img width="471" height="529" alt="cset" src="assets/images/ExecutiveFiles/image002.jpg">
-    </div>
-
-    <div class="cover-page-bottom">
-      <app-logo-for-reports />
-      <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-        <div> {{response?.information.assessment_Name}} </div>
-        <div> {{response?.information.assessment_Date | localizeDate}} </div>
-        <div> {{response?.information.assessor_Name}} </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
-    <app-report-disclaimer></app-report-disclaimer>
-  </div>
-
-  <div class="page-break">
-    <app-report-advisory></app-report-advisory>
-  </div>
+  <app-cover-page [response]="response" [title]="t('aggregation.compare.report title') | uppercase" />
 
   <div class="page-break">
     <h1>Summary Percent Compliance</h1>
