@@ -28,6 +28,7 @@ import { CisService } from '../../../services/cis.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { ReportService } from '../../../services/report.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
   selector: 'app-cis-section-scoring',
@@ -49,7 +50,7 @@ export class CisSectionScoringComponent implements OnInit {
   baselineAssessmentName: string;
 
   myModel: any;
-  response: string;
+  response: AssessmentDetail;
 
   /**
    * 
@@ -69,8 +70,8 @@ export class CisSectionScoringComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
 
-    this.reportSvc.getAssessmentInfoForReport().subscribe(
-      (r: any) => {
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
         this.response = r;
       }
     );
