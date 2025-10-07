@@ -25,38 +25,35 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AssessmentService } from '../../../services/assessment.service';
 import { CisService } from '../../../services/cis.service';
+import { ReportService } from '../../../services/report.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-cis-ranked-deficiency',
-    templateUrl: './cis-ranked-deficiency.component.html',
-    styleUrls: ['./cis-ranked-deficiency.component.scss', '../../../reports/reports.scss'],
-    standalone: false
+  selector: 'app-cis-ranked-deficiency',
+  templateUrl: './cis-ranked-deficiency.component.html',
+  styleUrls: ['./cis-ranked-deficiency.component.scss', '../../../reports/reports.scss'],
+  standalone: false
 })
 export class CisRankedDeficiencyComponent implements OnInit {
 
-  assessmentName: string;
-  assessmentDate: string;
-  assessorName: string;
-  facilityName: string;
-
-  baselineAssessmentName: string;
+  response: string;
 
   constructor(
     public cisSvc: CisService,
     public assessSvc: AssessmentService,
-    public titleService: Title
+    public titleService: Title,
+    public reportSvc: ReportService,
+    public tSvc: TranslocoService,
   ) { }
 
 
   ngOnInit(): void {
-    this.titleService.setTitle("Deficiency Report - CISA CIS");
-
-    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      this.assessmentName = assessmentDetail.assessmentName;
-      this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.facilitatorName;
-      this.facilityName = assessmentDetail.facilityName;
-    });
+    this.reportSvc.getReviewedQuestions().subscribe(
+      (r: any) => {
+        this.response = r;
+        this.titleService.setTitle(this.tSvc.translate('reports.all.reviewed questions.report title'));
+      }
+    );
   }
 
 }
