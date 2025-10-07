@@ -27,7 +27,9 @@ import {
   EventEmitter,
   OnInit,
   Output, HostListener,
-  ApplicationRef
+  ApplicationRef,
+  Renderer2,
+  ElementRef
 } from '@angular/core';
 import { ActivatedRoute, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
@@ -61,24 +63,24 @@ interface UserAssessment {
   questionAlias: string;
   iseSubmission: boolean;
   submittedDate?: Date;
-  done?:boolean;
-  favorite?:boolean;
-  firstName?:string;
-  lastName?:string;
+  done?: boolean;
+  favorite?: boolean;
+  firstName?: string;
+  lastName?: string;
 }
 
 @Component({
-    selector: 'app-assessment',
-    styleUrls: ['./assessment.component.scss'],
-    templateUrl: './assessment.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a w-100' },
-    standalone: false
+  selector: 'app-assessment',
+  styleUrls: ['./assessment.component.scss'],
+  templateUrl: './assessment.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a w-100' },
+  standalone: false
 })
 export class AssessmentComponent implements OnInit {
   innerWidth: number;
   innerHeight: number;
-  completionPercentage:number=0;
+  completionPercentage: number = 0;
   completedQuestions = 0;
   totalQuestions = 0;
   private completionSubscription: Subscription;
@@ -111,6 +113,11 @@ export class AssessmentComponent implements OnInit {
     this.evaluateWindowSize();
   }
 
+  private wheelListener: (() => void) | undefined;
+
+  /**
+   * 
+   */
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -122,7 +129,9 @@ export class AssessmentComponent implements OnInit {
     private configSvc: ConfigService,
     private appRef: ApplicationRef,
     private completionSvc: CompletionService,
-    private demoSvc: DemographicService
+    private demoSvc: DemographicService,
+    private renderer: Renderer2,
+    private el: ElementRef
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
@@ -136,6 +145,14 @@ export class AssessmentComponent implements OnInit {
       this.isSet = true;
       this.appRef.tick();
     }
+
+    this.wheelListener = this.renderer.listen(
+      this.el.nativeElement,
+      'wheel',
+      (event: WheelEvent) => this.scrollWhitePanel(event),
+      { passive: true }
+    );
+
     this.evaluateWindowSize();
 
     if (this.configSvc.behaviors.replaceAssessmentWithAnalysis) {
@@ -168,8 +185,8 @@ export class AssessmentComponent implements OnInit {
       this.assessSvc.assessment = data;
     });
   }
-  setAssessmentDone(){
-    this.assessment.done =!this.assessment.done;
+  setAssessmentDone() {
+    this.assessment.done = !this.assessment.done;
     this.assessSvc.setAssesmentDone(this.assessment.done).subscribe();
   }
   setTab(tab) {
@@ -206,6 +223,20 @@ export class AssessmentComponent implements OnInit {
     } else {
       this.expandNav = true;
       this.lockNav = true;
+    }
+  }
+
+  /**
+   * Allow the user to scroll the white-panel content
+   * by mousewheel out in the gray part.
+   */
+  scrollWhitePanel(event: WheelEvent) {
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('mat-drawer-content')) {
+      const element = document.querySelector('.white-panel');
+      if (element) {
+        element.scrollBy({ top: event.deltaY });
+      }
     }
   }
 
@@ -283,7 +314,11 @@ export class AssessmentComponent implements OnInit {
     return `${this.completedQuestions}/${this.totalQuestions} questions answered`;
   }
 
-    ngOnDestroy() {
+  ngOnDestroy() {
     this.completionSubscription?.unsubscribe();
+
+    if (this.wheelListener) {
+      this.wheelListener();
+    }
   }
 }

@@ -22,19 +22,19 @@
 -------------------------->
 <ng-container *transloco="let t">
   <div class="tw:container tw:mx-auto p-6 tw:max-w-7xl">
-    <div *ngIf="sortedAssessments == null">
+    <div *ngIf="sortedAssessments == null" class="center-item">
       <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
         <div class="spinner-size-50"></div>
       </div>
     </div>
-    <div class="tw:bg-white tw:rounded-lg tw:shadow-sm tw:border tw:border-gray-200 p-2 tw:sm:p-4 tw:md:p-5 tw:lg:p-6 tw:lg:mt-2">
+    <div>
 
       <div *ngIf="browserIsIE" class="alert alert-danger text-start">
         {{ t('welcome page.internet explorer') }}
       </div>
       <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
         <h3 class="mt-0 px-4 mt-4" *ngIf="sortedAssessments?.length > 0">{{ t('my assessments') }}</h3>
-        <div class="mt-3 mb-4 d-flex flex-column justify-content-between flex-00a">
+        <div class="mt-1 mb-1 d-flex flex-column justify-content-between flex-00a">
           <div class="d-flex justify-content-between flex-00a">
             <div class="d-flex flex-row">
               <button *ngIf="configSvc.showExportAllButton()" tabindex="0"
@@ -59,33 +59,30 @@
           </div>
         </div>
       </ng-container>
-      <div *ngIf="sortedAssessments != null" class="tw:justify-between tw:items-center tw:mb-6 tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:gap-2 px-4">
-        <div class="tw:flex">
-          <div class="flex tw:bg-white tw:rounded-lg p-1 tw:border tw:border-gray-200 tw:shadow-sm">
+      <div *ngIf="sortedAssessments != null" class="tw:justify-between tw:items-center tw:mb-2 tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:lg:gap-36 px-4">
+        <div class="tw:flex tw:w-full sm:tw:w-auto">
+          <div class="tw:flex tw:w-full sm:tw:w-auto tw:bg-white tw:rounded-lg tw:p-1 tw:border tw:border-gray-200 tw:shadow-sm">
             <button type="button"
-                    class="px-4 py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors"
-                    [style.border-radius]="'0.375rem'"
+                    class="tw:px-4 tw:py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors tw:flex-1 sm:tw:flex-none"
                     [class]="currentFilter === 'all' ? 'tw:bg-blue-100 tw:text-blue-700' : 'tw:text-gray-600 tw:hover:text-gray-800'"
                     (click)="setFilter('all')">
               {{ t('filters.view all') || 'View all' }}
             </button>
             <button type="button"
-                    class="px-4 py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors"
-                    [style.border-radius]="'0.375rem'"
+                    class="tw:px-4 tw:py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors tw:flex-1 sm:tw:flex-none"
                     [class]="currentFilter === 'done' ? 'tw:bg-blue-100 tw:text-blue-700' : 'tw:text-gray-600 tw:hover:text-gray-800'"
                     (click)="setFilter('done')">
               {{ t('filters.done') || 'Done' }}
             </button>
             <button type="button"
-                    class="px-4 py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors"
-                    [style.border-radius]="'0.375rem'"
+                    class="tw:px-4 tw:py-2 tw:rounded-md tw:text-sm tw:font-medium tw:transition-colors tw:flex-1 sm:tw:flex-none"
                     [class]="currentFilter === 'favorite' ? 'tw:bg-blue-100 tw:text-blue-700' : 'tw:text-gray-600 tw:hover:text-gray-800'"
                     (click)="setFilter('favorite')">
               {{ t('filters.favorites') || 'Favorites' }}
             </button>
           </div>
         </div>
-        <div class="tw:flex tw:flex-col tw:sm:flex-row tw:gap-3 flex-wrap">
+        <div class="tw:flex tw:flex-col tw:sm:flex-row tw:gap-3 flex-wrap mt-2">
           <!-- Import Button (Local) -->
           <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
                  tabindex="0"
@@ -197,7 +194,7 @@
 
       </div>
 
-      <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto">
+      <div *ngIf="sortedAssessments?.length > 0" class="px-4 d-flex flex-column flex-11a oy-auto">
         <!-- table for handset portrait -->
         <table *ngIf="layoutSvc.hp" role="presentation" aria-label="assessments" matSort
                (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
@@ -227,24 +224,24 @@
             </td>
           </tr>
         </table>
-
-        <!-- AFTER - Fixed ag-grid with proper container and styling -->
-        <div *ngIf="sortedAssessments?.length > 0 && !layoutSvc.hp" class="mt-4 mb-4 flex flex-col flex-1">
+        <div *ngIf="sortedAssessments?.length > 0 && !layoutSvc.hp" class="mt-4 flex flex-col flex-1">
           <div class="overflow-x-auto rounded-lg border border-gray-200">
             <ag-grid-angular
               class="ag-theme-alpine tw:w-full tw:rounded-lg tw:[&_.ag-header-cell-label]:text-white  tw:[&_.ag-icon-filter]:text-white tw:[&_.ag-root-wrapper]:rounded-lg tw:[&_.ag-header]:rounded-t-lg tw:[&_.ag-body-viewport]:rounded-b-lg tw:[&_.ag-icon-asc]:text-white tw:[&_.ag-icon-desc]:text-white tw:[&_.ag-sort-indicator-icon]:text-white"
               theme="legacy"
-              [rowData]="filteredAssessments"
               [columnDefs]="columnDefs"
               [defaultColDef]="defaultColDef"
               [pagination]="true"
-              [paginationPageSize]="50"
+              [paginationPageSize]="20"
               [suppressCellFocus]="true"
-              [rowHeight]="60"
+              [rowHeight]="50"
               [headerHeight]="50"
               (gridReady)="onGridReady($event)"
+              (paginationChanged)="onPaginationChanged()"
+              (firstDataRendered)="onFirstDataRendered()"
               (cellClicked)="onCellClicked($event)"
-              style="height: 850px; width: 100%">
+              [style.height.px]="dynamicGridHeight"
+              style="width: 100%">
             </ag-grid-angular>
           </div>
         </div>

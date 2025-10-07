@@ -8,13 +8,5 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class usp_GetRawCountsForEachAssessment_StandardsResult
     {
-        public int Assessment_Id { get; set; }
-        [StringLength(250)]
-        public string Question_Group_Heading { get; set; }
-        [StringLength(50)]
-        public string Answer_Text { get; set; }
-        public int? Answer_Count { get; set; }
-        public int? Total { get; set; }
-        public int? Percentage { get; set; }
     }
 }

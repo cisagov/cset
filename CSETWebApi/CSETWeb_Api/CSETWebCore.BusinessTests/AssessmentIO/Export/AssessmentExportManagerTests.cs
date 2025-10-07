@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 namespace CSETWebCore.Business.AssessmentIO.Export.Tests
 {
     [TestClass()]
-    public class AssessmentExportManagerTests
+    public class CSETWAssessmentExportManagerTests
     {
         private CSETContext? context;
 
@@ -31,8 +31,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export.Tests
         [TestMethod()]
         public void GetAnswerProfilesTest()
         {
-            AssessmentExportManager exportManager = new AssessmentExportManager(context);
-            
+            CSETWAssessmentExportManager exportManager = new CSETWAssessmentExportManager(context);
+
         }
     }
 }

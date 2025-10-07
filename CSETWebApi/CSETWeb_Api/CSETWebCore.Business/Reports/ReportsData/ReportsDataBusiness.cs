@@ -109,7 +109,8 @@ namespace CSETWebCore.Business.Reports
 
             var query = from mq in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_Level)
                         join a in _context.ANSWER on mq.Mat_Question_Id equals a.Question_Or_Requirement_Id
-                        join p in _context.MATURITY_QUESTION_PROPS on mq.Mat_Question_Id equals p.Mat_Question_Id
+                        join p in _context.MATURITY_QUESTION_PROPS on mq.Mat_Question_Id equals p.Mat_Question_Id into propGroup
+                        from p in propGroup.DefaultIfEmpty()
                         where a.Assessment_Id == _assessmentId
                             && mq.Maturity_Model_Id == targetModelId
                             && a.Question_Type == "Maturity"

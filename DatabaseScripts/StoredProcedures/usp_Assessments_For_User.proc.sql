@@ -41,6 +41,8 @@ select
 	submittedDate = i.Submitted_Date,
 	SelectedStandards = string_agg(s.Short_Name, ', '),
 	case when a.assessment_id in (select assessment_id from @ATM) then CAST(1 AS BIT) else CAST(0 AS BIT) END as AltTextMissing,
+    a.Done,
+    c.Favorite,
 	c.UserId
 	from ASSESSMENTS a 
 		join INFORMATION i on a.Assessment_Id = i.Id
@@ -74,10 +76,6 @@ select
 		group by a.Assessment_Id, Assessment_Name, Assessment_Date, AssessmentCreatedDate, 
 					LastModifiedDate, mark_for_review, UseDiagram,
 					UseStandard, UseMaturity, Workflow, Model_Name, 
-					Ise_Submitted, Submitted_Date, c.UserId
-
-
-
-					
+					Ise_Submitted, Submitted_Date, a.Done, c.Favorite, c.UserId
 
 					

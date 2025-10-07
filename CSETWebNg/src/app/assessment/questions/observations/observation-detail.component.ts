@@ -124,7 +124,12 @@ export class ObservationDetailComponent implements OnInit {
     this.observation.answer_Id = this.answerId;
     this.observation.question_Id = this.questionId;
 
-    this.observationsSvc.saveObservation(this.observation).subscribe((resp) => {
+    this.observationsSvc.saveObservation(this.observation).subscribe((resp: any) => {
+      if (this.observation.observation_Id == 0 && resp.observationId)
+        this.observation.observation_Id = resp.observationId;
+      if (this.observation.answer_Id == 0 && resp.answerId)
+        this.observation.answer_Id = resp.answerId;
+      
       this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.question_Type)
         .subscribe((response: Observation) => {
           this.observation = response;

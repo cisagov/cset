@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Assessment;
+using CSETWebCore.Business.AssessmentIO.Export;
 using CSETWebCore.Business.Common;
 using CSETWebCore.Business.Contact;
 using CSETWebCore.Business.Demographic;
@@ -95,8 +96,22 @@ namespace CSETWeb_ApiCore
                         builder.AllowAnyOrigin()
                             .AllowAnyMethod()
                             .AllowAnyHeader()
-                            .WithExposedHeaders("Content-Disposition");
+                            .WithExposedHeaders("content-disposition");
                     });
+
+                o.AddPolicy(
+                    name: "DynamicOrigins",
+                    builder =>
+                {
+                    var allowedOrigins = Configuration
+                        .GetSection("Cors:AllowedOrigins")
+                        .Get<string[]>();
+
+                    builder.WithOrigins(allowedOrigins)
+                          .AllowAnyMethod()
+                          .WithHeaders("content-type", "authorization", "noauth", "x-cset-noauth", "expseconds", "remoteauthorization", "refresh", "accept", "assessmentid", "aggregationid")
+                          .WithExposedHeaders("content-disposition");
+                });
             });
 
             services.AddAuthentication(options =>
@@ -168,6 +183,17 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IGalleryState, GalleryState>();
             services.AddTransient<IGalleryEditor, GalleryEditor>();
             services.AddTransient<IMalcolmBusiness, MalcolmBusiness>();
+            services.AddTransient(provider =>
+                new JSONAssessmentExportManager(
+                    provider.GetRequiredService<IAssessmentBusiness>(),
+                    provider.GetRequiredService<IContactBusiness>(),
+                    provider.GetRequiredService<IReportsDataBusiness>(),
+                    provider.GetRequiredService<IQuestionBusiness>(),
+                    provider.GetRequiredService<IAssessmentUtil>(),
+                    provider.GetRequiredService<IQuestionRequirementManager>(),
+                    provider.GetRequiredService<ITokenManager>(),
+                    provider.GetRequiredService<CSETContext>()
+                ));
             services.AddScoped<IVersionBusiness, VersionBusiness>();
             services.AddScoped<Hooks>();
 
@@ -251,7 +277,7 @@ namespace CSETWeb_ApiCore
             });
             app.ConfigureExceptionHandler();
             app.UseRouting();
-            app.UseCors("AllowAll");
+            app.UseCors("DynamicOrigins");
             app.UseAuthentication();
             app.UseAuthorization();
 

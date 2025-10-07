@@ -29,18 +29,21 @@ namespace CSETWebCore.Api.Controllers
         private CSETContext _context;
         private IHttpContextAccessor _http;
         private readonly IConfiguration _configuration;
+        private readonly JSONAssessmentExportManager _jsonAssessmentExportManager;
 
 
         /// <summary>
         /// Controller
         /// </summary>
         public AssessmentExportController(ITokenManager token, CSETContext context,
-            IHttpContextAccessor http, IConfiguration configuration)
+            IHttpContextAccessor http, IConfiguration configuration,
+            JSONAssessmentExportManager jsonAssessmentExportManager)
         {
             _token = token;
             _context = context;
             _http = http;
             _configuration = configuration;
+            _jsonAssessmentExportManager = jsonAssessmentExportManager;
         }
 
 
@@ -55,7 +58,7 @@ namespace CSETWebCore.Api.Controllers
                 // determine extension (.csetw, .acet)
                 string ext = IOHelper.GetExportFileExtension(_token.Payload(Constants.Constants.Token_Scope));
 
-                AssessmentExportFile result = new AssessmentExportManager(_context).ExportAssessment(assessmentId, ext, password, passwordHint);
+                AssessmentExportFile result = new CSETWAssessmentExportManager(_context).ExportAssessment(assessmentId, ext, password, passwordHint);
 
                 return File(result.FileContents, "application/octet-stream", result.FileName);
             }
@@ -96,13 +99,13 @@ namespace CSETWebCore.Api.Controllers
                 // Export the assessment
                 if (!string.IsNullOrEmpty(url))
                 {
-                    var exportManager = new AssessmentExportManager(_context);
+                    var exportManager = new CSETWAssessmentExportManager(_context);
                     var exportFile = exportManager.ExportAssessment(assessmentId, ".zip", string.Empty, string.Empty);
 
                     string ext = IOHelper.GetExportFileExtension(_token.Payload(Constants.Constants.Token_Scope));
 
                     AssessmentExportFile result =
-                        new AssessmentExportManager(_context).ExportAssessment(assessmentId, ext, string.Empty,
+                        new CSETWAssessmentExportManager(_context).ExportAssessment(assessmentId, ext, string.Empty,
                             string.Empty);
                     byte[] fileContents;
                     using (var memoryStream = new MemoryStream())
@@ -111,6 +114,10 @@ namespace CSETWebCore.Api.Controllers
                         fileContents = memoryStream.ToArray();
                     }
 
+                    if (url.EndsWith('/'))
+                    {
+                        url = url.TrimEnd('/');
+                    }
                     bool isSuccess = await SendFileToApi($"{url}/api/assessment/import", fileContents, result.FileName);
                     if (isSuccess)
                     {
@@ -129,27 +136,38 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// A special flavor of export created for sharing assessment data by CISA assessors.
-        /// Only the JSON content is returned, with a name formmated as {assessment-name}.json
+        /// Returns an assessment JSON export and downloads it as a .json file.
+        /// This mirrors the download behavior of other export endpoints.
         /// </summary>
         [HttpGet]
         [Route("api/assessment/export/json")]
-        public IActionResult ExportAssessmentAsJson([FromQuery] bool? scrubData)
+        public IActionResult ExportAssessmentJson([FromQuery] int? assessmentId = null, bool removePCII = false)
         {
             try
             {
-                int assessmentId = _token.AssessmentForUser();
+                int resolvedAssessmentId = assessmentId ?? _token.AssessmentForUser();
+                if (resolvedAssessmentId <= 0)
+                {
+                    return BadRequest("An assessment identifier is required.");
+                }
 
-                AssessmentExportFileJson result = new AssessmentExportManager(_context).ExportAssessmentJson(assessmentId, scrubData ?? false);
-                byte[] contents = Encoding.UTF8.GetBytes(result.JSON);
-                return  File(contents, "application/json", result.FileName);
+                var lang = _token.GetCurrentLanguage();
+
+                var json = _jsonAssessmentExportManager.GetJson(resolvedAssessmentId, lang, removePCII);
+                var contents = Encoding.UTF8.GetBytes(json);
+                var fileName = $"assessment-{resolvedAssessmentId}.json";
+                return File(contents, "application/json", fileName);
+            }
+            catch (InvalidOperationException notFound)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Warn(notFound, "Assessment not found for JSON export");
+                return NotFound(notFound.Message);
             }
             catch (Exception exc)
             {
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+                return StatusCode(500, exc.Message);
             }
-
-            return null;
         }
 
 
@@ -180,7 +198,8 @@ namespace CSETWebCore.Api.Controllers
                     var response = await client.PostAsync(targetUrl, content);
                     return response.IsSuccessStatusCode;
 
-                };
+                }
+                ;
             }
             catch (Exception exc)
             {

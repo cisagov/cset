@@ -12,7 +12,13 @@ export class HeatmapComponent implements OnInit {
    * An array of groupings, typically the goals within a domain.
   */
   @Input()
-  scores: any[];
+  scores!: any[];
+
+  /**
+   * Optional - host page can suppress goal labels
+   */
+  @Input()
+  showGoalLabels = true;
 
   /**
    * Optional - host page can suppress question labels
@@ -46,15 +52,19 @@ export class HeatmapComponent implements OnInit {
    * @param score 
    * @returns 
    */
-  applyScoreStyle(element) {
-    element.children?.forEach(child => {
+  applyScoreStyle(element: any) {
+    element.children?.forEach((child: any) => {
       this.applyScoreStyle(child);
     });
 
     const color = element.color?.toLowerCase() || 'lightgray';
     element.scoreClass = this.colorToClassMap[color];
 
-    // hide question labels
+    // suppress goal label
+    if (!this.showGoalLabels && !element.questionId) {
+      element.title = '';
+    }
+    // suppress question label
     if (!this.showQuestionLabels && element.questionId && element.questionId !== 0) {
       element.title = '';
     }

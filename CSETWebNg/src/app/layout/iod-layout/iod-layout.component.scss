@@ -598,6 +598,10 @@ table.cset-table {
   color: $primary-color;
 }
 
+table.cset-table ul {
+  list-style: unset !important;
+}
+
 table.cset-table tr:nth-child(even) {
   background: $gray-100;
 }
@@ -1396,6 +1400,13 @@ div.spinner-size-50 {
 div.spinner-size-20 {
   max-width: 20px;
   max-height: 20px;
+}
+
+.center-item {
+  position: fixed; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%);
 }
 
 /* Safari */
@@ -2233,6 +2244,10 @@ input[type="checkbox"]+label {
   align-items: flex-start;
   border-bottom: 1px solid $gray-250;
   padding: 3px 0;
+}
+
+.question-row ul {
+  list-style: unset;
 }
 
 .no-bottom-border {
@@ -3167,6 +3182,10 @@ hr.ranked-questions {
   width: 20% !important;
 }
 
+.w-fit {
+  width: fit-content !important;
+}
+
 .va-neg-17rem {
   vertical-align: -0.17rem !important;
 }
@@ -3272,7 +3291,7 @@ table.td-text-start td {
 }
 
 .b-none {
-  border: none;
+  border: none !important;
 }
 
 .b-primary {
