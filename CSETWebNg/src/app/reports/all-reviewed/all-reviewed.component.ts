@@ -37,7 +37,8 @@ import { AssessmentDetail } from '../../models/assessment-info.model';
   standalone: false
 })
 export class AllReviewedComponent {
-  response: AssessmentDetail;
+  response: any;
+  info: AssessmentDetail;
 
   constructor(
     public tSvc: TranslocoService,
@@ -52,7 +53,13 @@ export class AllReviewedComponent {
 
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
+        this.info = r;
+      }
+    );
+    this.reportSvc.getReviewedQuestions().subscribe(
+      (r: any) => {
         this.response = r;
+        this.titleService.setTitle(this.tSvc.translate('reports.all.reviewed questions.report title'));
       }
     );
   }

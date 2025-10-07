@@ -20,7 +20,7 @@
 -------------------------->
 <div class="report-body mb-5" *transloco="let t; read: 'reports.all.reviewed questions'">
 
-    <app-cover-page [response]="response" [title]="t('reviewed report title 1')" />
+    <app-cover-page [response]="info" [title]="t('reviewed report title 1')" />
 
     <div class="page-break">
         <app-questions-reviewed [data]="response"></app-questions-reviewed>

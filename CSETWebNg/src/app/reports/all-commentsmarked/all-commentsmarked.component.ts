@@ -38,7 +38,8 @@ import { AssessmentDetail } from '../../models/assessment-info.model';
 })
 export class AllCommentsmarkedComponent {
 
-  response: AssessmentDetail;
+  response: any;
+  info: AssessmentDetail;
 
   constructor(
     public tSvc: TranslocoService,
@@ -52,7 +53,14 @@ export class AllCommentsmarkedComponent {
   ngOnInit() {
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
+        this.info = r;
+      }
+    );
+    this.reportSvc.getStandardCommentsAndMfr().subscribe(
+      (r: any) => {
+
         this.response = r;
+        this.titleService.setTitle(this.tSvc.translate('reports.all.cmfr.report title'));
       }
     );
   }
