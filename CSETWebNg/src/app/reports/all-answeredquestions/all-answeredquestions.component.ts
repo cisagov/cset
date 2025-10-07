@@ -38,7 +38,8 @@ import { AssessmentService } from '../../services/assessment.service';
 })
 export class AllAnsweredquestionsComponent implements OnInit {
 
-  response: AssessmentDetail;
+  response: any;
+  info: AssessmentDetail;
 
   constructor(
     public tSvc: TranslocoService,
@@ -50,10 +51,16 @@ export class AllAnsweredquestionsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.reportSvc.getStandardAnsweredQuestions().subscribe(
+      (r: any) => {
+        this.response = r;
+        this.titleService.setTitle(this.tSvc.translate('reports.all.answered statements.tab title'));
+      }
+    );
 
     this.assessSvc.getAssessmentDetail().subscribe(
       (r: AssessmentDetail) => {
-        this.response = r;
+        this.info = r;
       }
     );
   }
