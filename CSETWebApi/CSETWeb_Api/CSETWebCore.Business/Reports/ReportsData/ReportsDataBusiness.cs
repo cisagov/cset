@@ -107,20 +107,22 @@ namespace CSETWebCore.Business.Reports
                 _context.FillEmptyMaturityQuestionsForModel(_assessmentId, (int)modelId);
             }
 
-            var query = from mq in _context.MATURITY_QUESTIONS.Include(x => x.Maturity_Level)
-                        join a in _context.ANSWER on mq.Mat_Question_Id equals a.Question_Or_Requirement_Id
-                        join p in _context.MATURITY_QUESTION_PROPS on mq.Mat_Question_Id equals p.Mat_Question_Id into propGroup
-                        from p in propGroup.DefaultIfEmpty()
-                        where a.Assessment_Id == _assessmentId
-                            && mq.Maturity_Model_Id == targetModelId
-                            && a.Question_Type == "Maturity"
-                            && !this.OutOfScopeQuestions.Contains(mq.Mat_Question_Id)
-                        orderby mq.Grouping_Id, mq.Maturity_Level_Id, mq.Mat_Question_Id ascending
-                        select new MatRelevantAnswers()
-                        {
-                            ANSWER = a,
-                            Mat = mq
-                        };
+            var query = from mq in _context.MATURITY_QUESTIONS
+                join ml in _context.MATURITY_LEVELS on mq.Maturity_Level_Id equals ml.Maturity_Level_Id
+                join a in _context.ANSWER on mq.Mat_Question_Id equals a.Question_Or_Requirement_Id
+                join p in _context.MATURITY_QUESTION_PROPS on mq.Mat_Question_Id equals p.Mat_Question_Id into propGroup
+                from p in propGroup.DefaultIfEmpty()
+                where a.Assessment_Id == _assessmentId
+                      && mq.Maturity_Model_Id == targetModelId
+                      && a.Question_Type == "Maturity"
+                      && !this.OutOfScopeQuestions.Contains(mq.Mat_Question_Id)
+                orderby mq.Grouping_Id, mq.Maturity_Level_Id, mq.Mat_Question_Id ascending
+                select new MatRelevantAnswers()
+                {
+                    ANSWER = a,
+                    Mat = mq,
+                    MaturityLevel = ml.Level
+                };
 
             var responseList = query.Distinct().ToList();
             var childQuestions = responseList.FindAll(x => x.Mat.Parent_Question_Id != null);
@@ -170,7 +172,7 @@ namespace CSETWebCore.Business.Reports
 
             if (selectedLevel != null && selectedLevel != 0)
             {
-                responseList = responseList.Where(x => x.Mat.Maturity_Level.Level <= selectedLevel).ToList();
+                responseList = responseList.Where(x => x.MaturityLevel <= selectedLevel).ToList();
             }
 
 
