@@ -28,7 +28,7 @@ import { ConfigService } from '../../../services/config.service';
 import { CpgService } from '../../../services/cpg.service';
 import { SsgService } from '../../../services/ssg.service';
 import { TranslocoService } from '@jsverse/transloco';
-import { Demographic } from '../../../models/assessment-info.model';
+import { AssessmentDetail, Demographic } from '../../../models/assessment-info.model';
 import { DemographicService } from '../../../services/demographic.service';
 import { ReportService } from '../../../services/report.service';
 import { firstValueFrom } from 'rxjs';
@@ -65,6 +65,7 @@ export class CpgReportComponent implements OnInit {
 
   heatmapModelCpg?: any[];
   ssgHeatmaps: { [id: number]: any } = {};
+  info: AssessmentDetail;
 
 
 
@@ -87,13 +88,8 @@ export class CpgReportComponent implements OnInit {
    * 
    */
   async ngOnInit(): Promise<void> {
-    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
-      this.assessmentName = assessmentDetail.assessmentName;
-      this.assessmentDate = assessmentDetail.assessmentDate;
-      this.assessorName = assessmentDetail.facilitatorName;
-      this.facilityName = assessmentDetail.facilityName;
-      this.selfAssessment = assessmentDetail.selfAssessment;
-
+    this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: AssessmentDetail) => {
+      this.info = assessmentDetail;
       this.assessSvc.assessment = assessmentDetail;
       this.modelId = this.assessSvc.assessment.maturityModel?.modelId ?? 0;
 
