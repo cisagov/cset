@@ -36,6 +36,7 @@
   "select contact": "Select Contact",
   "select facilitator": "Select Facilitator",
   "self assessment": "Self Assessment",
+  "sector acknowledgement": "The critical infrastructure sectors have been updated from HSPD-7 to the current 16-sector framework. Previously selected subsectors are no longer applicable and should be re-selected.",
   "tech domain": {
     "label": "Technology Domain for Assessment",
     "select": "Select Technology Domain",

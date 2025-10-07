@@ -39,6 +39,7 @@
     "select contact": "Seleccionar contacto",
     "select facilitator": "Seleccionar facilitador",
     "self assessment": "Autoevaluación",
+    "sector acknowledgement": "Los sectores de infraestructura crítica se han actualizado de la HSPD-7 al marco actual de 16 sectores. Los subsectores seleccionados previamente ya no son aplicables y deben volver a seleccionarse.",
     "crit svc poc": "Punto de contacto del servicio crítico",
     "asset gross value": "¿Cuál es el valor bruto del activo que intenta proteger?",
     "select gross value": "Selecciona valor",
