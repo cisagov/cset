@@ -27,6 +27,8 @@ import { TranslocoService } from '@jsverse/transloco';
 import { ConfigService } from '../../services/config.service';
 import { QuestionsService } from '../../services/questions.service';
 import { ReportService } from '../../services/report.service';
+import { AssessmentService } from '../../services/assessment.service';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 @Component({
   selector: 'app-all-commentsmarked',
@@ -36,20 +38,20 @@ import { ReportService } from '../../services/report.service';
 })
 export class AllCommentsmarkedComponent {
 
-  response: any;
+  response: AssessmentDetail;
 
   constructor(
     public tSvc: TranslocoService,
     public reportSvc: ReportService,
     public titleService: Title,
     public questionsSvc: QuestionsService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public assessSvc: AssessmentService
   ) { }
 
   ngOnInit() {
-
-    this.reportSvc.getAssessmentInfoForReport().subscribe(
-      (r: any) => {
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
         this.response = r;
       }
     );
