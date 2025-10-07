@@ -150,8 +150,11 @@ namespace CSETWebCore.Business.Question
             return new CompletionCounts()
             {
                 AssessmentId = assessment.Assessment_Id,
-                TotalMaturityQuestionsCount = assessment.TotalQuestionCount,
-                CompletedCount = assessment.CompletedQuestionCount
+                CompletedCount = assessment.CompletedQuestionCount,
+        
+                TotalMaturityQuestionsCount = assessment.UseMaturity ? assessment.TotalQuestionCount : null,
+                TotalStandardQuestionsCount = assessment.UseStandard ? assessment.TotalQuestionCount : null,
+                TotalDiagramQuestionsCount = assessment.UseDiagram ? assessment.TotalQuestionCount : null
             };
         }
 

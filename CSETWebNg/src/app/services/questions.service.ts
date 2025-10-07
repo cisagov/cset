@@ -98,9 +98,13 @@ export class QuestionsService {
       .pipe(
       tap((response: any) => {
         if (response?.completedCount !== undefined) {
-          this.assessSvc.completionRefreshRequested$.next({
+          const totalCount =
+            (response.totalMaturityQuestionsCount || 0) +
+            (response.totalDiagramQuestionsCount || 0) +
+            (response.totalStandardQuestionsCount || 0);
+           this.assessSvc.completionRefreshRequested$.next({
             completedCount: response.completedCount,
-            totalCount: response.totalMaturityQuestionsCount || 0
+            totalCount: totalCount
           });
         }
       })
@@ -179,9 +183,23 @@ export class QuestionsService {
    * Posts a block of answers to the API.
    */
   storeSubCategoryAnswers(answers: SubCategoryAnswers) {
-    return this.http.post(this.configSvc.apiUrl + 'answersubcategory', answers, headers);
+    return this.http.post(this.configSvc.apiUrl + 'answersubcategory', answers, headers)
+      .pipe(
+        tap((response: any) => {
+          if (response?.completedCount !== undefined) {
+            // Find whichever count has a value (only one will)
+            const totalCount =
+              (response.totalMaturityQuestionsCount || 0) +
+              (response.totalDiagramQuestionsCount || 0) +
+              (response.totalStandardQuestionsCount || 0);
+            this.assessSvc.completionRefreshRequested$.next({
+              completedCount: response.completedCount,
+              totalCount: totalCount
+            });
+          }
+        })
+      );
   }
-
   /**
    * Retrieves the extra detail content for the question.
    * @param questionId

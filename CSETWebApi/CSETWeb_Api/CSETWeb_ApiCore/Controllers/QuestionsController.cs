@@ -166,16 +166,16 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _questionRequirement.InitializeManager(assessmentId);
             _questionRequirement.SetApplicationMode(mode);
-            var stats = _hooks.HookQuestionsModeChanged(assessmentId);
-
+            CompletionCounts stats = _hooks.HookQuestionsModeChanged(assessmentId);
             if (stats != null)
             {
                 return Ok(new {
                     CompletedCount = stats.CompletedCount,
-                    TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0
+                    TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0,
+                    TotalDiagramQuestionsCount = stats.TotalDiagramQuestionsCount ?? 0,
+                    TotalStandardQuestionsCount = stats.TotalStandardQuestionsCount ?? 0
                 });
             }
-
             return Ok();
         }
 
@@ -417,6 +417,16 @@ namespace CSETWebCore.Api.Controllers
             qm.StoreSubcategoryAnswers(subCatAnswers);
 
             _hooks.HookQuestionAnswered(subCatAnswers.Answers[0]);
+           CompletionCounts stats = new CompletionCounter(_context).Count(assessmentId);
+            if (stats != null)
+            {
+                return Ok(new {
+                    CompletedCount = stats.CompletedCount,
+                    TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0,
+                    TotalDiagramQuestionsCount = stats.TotalDiagramQuestionsCount ?? 0,
+                    TotalStandardQuestionsCount = stats.TotalStandardQuestionsCount ?? 0
+                });
+            }
 
             return Ok();
         }
