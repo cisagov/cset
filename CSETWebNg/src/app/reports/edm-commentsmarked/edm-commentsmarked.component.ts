@@ -28,15 +28,17 @@ import { QuestionsService } from '../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
 import { Title, DomSanitizer } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
+import { AssessmentService } from '../../services/assessment.service';
+import { AssessmentDetail } from '../../models/assessment-info.model';
 
 @Component({
-    selector: 'app-edm-commentsmarked',
-    templateUrl: './edm-commentsmarked.component.html',
-    styleUrls: ['../reports.scss'],
-    standalone: false
+  selector: 'app-edm-commentsmarked',
+  templateUrl: './edm-commentsmarked.component.html',
+  styleUrls: ['../reports.scss'],
+  standalone: false
 })
 export class EdmCommentsmarkedComponent implements OnInit {
-  response: any = null;
+  response: AssessmentDetail;
 
   loading: boolean = false;
 
@@ -47,19 +49,18 @@ export class EdmCommentsmarkedComponent implements OnInit {
     public configSvc: ConfigService,
     private titleService: Title,
     public maturitySvc: MaturityService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public assessSvc: AssessmentService
   ) { }
 
   ngOnInit(): void {
     this.loading = true;
     this.titleService.setTitle("Comments Report - CISA EDM");
 
-    this.maturitySvc.getCommentsMarked().subscribe(
-      (r: any) => {
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
         this.response = r;
-        this.loading = false;
-      },
-      error => console.error('Comments Marked Report Error: ' + (<Error>error).message)
+      }
     );
   }
   getQuestion(q) {

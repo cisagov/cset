@@ -22,21 +22,8 @@
 -------------------------->
 <div class="report-body mb-5">
 
-    <div class="flex-container">
-        <div class="column mt-3">
-            <p class="report-title">
-                COMMENTS REVIEW REPORT CISA EDM
-            </p>
-        </div>
-        <div class="column d-flex justify-content-center">
-            <img width="471" height="529" src="assets/images/ExecutiveFiles/image002.jpg">
-        </div>
+    <app-cover-page [response]="response" [title]="'COMMENTS REVIEW REPORT CISA EDM'" />
 
-        <div class="cover-page-bottom">
-            <app-logo-for-reports />
-            <app-info-block [response]="response" />
-        </div>
-    </div>
     <div class="page-break"></div>
 
     <div *ngIf="loading; else mainContent" class="spinner-container" style="margin: 2em auto">
