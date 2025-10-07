@@ -79,7 +79,7 @@ export class CmuResultsDetailComponent implements OnChanges {
       case 'N':
         return 'red-score';
       case 'U':
-        return 'default-score';
+        return 'unanswered-score';
     }
   }
 

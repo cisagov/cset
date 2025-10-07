@@ -312,7 +312,7 @@ namespace CSETWebCore.Business.Question
         /// Based on the assessment's current state, returns a list of
         /// all maturity model IDs that are currently applicable/in scope.
         /// </summary>
-        private HashSet<int> DetermineInScopeModels(int assessmentId)
+        public HashSet<int> DetermineInScopeModels(int assessmentId)
         {
             HashSet<int> response = [];
 

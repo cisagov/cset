@@ -43,7 +43,7 @@
 
         <!-- CPG 1.1 chart/table -->
         <ng-container *ngIf="modelId == 11">
-            <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain"></app-cpg-domain-summary>
+            <app-cpg-domain-summary [distrib]="answerDistribByDomain"></app-cpg-domain-summary>
 
             <p>{{t('reports.core.cpg.report.p.2')}}</p>
             <app-cpg-domain-summary-table [data]="answerDistribByDomain"></app-cpg-domain-summary-table>
@@ -52,22 +52,22 @@
 
         <!-- CPG 2.0 chart/table -->
         <ng-container *ngIf="modelId == 21">
-            <div id="randy" style="margin-top: 4rem; margin-bottom: 4rem"
+            <div style="margin-top: 4rem; margin-bottom: 4rem"
                 *ngIf="techDomain == 'OT' || techDomain == 'OT+IT' || techDomain == null">
                 <h4>{{t('reports.core.cpg.ot')}}</h4>
-                <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomainOt"></app-cpg-domain-summary>
+                <app-cpg-domain-summary [distrib]="answerDistribByDomainOt?.distrib"></app-cpg-domain-summary>
 
                 <p>{{t('reports.core.cpg.report.p.2')}}</p>
-                <app-cpg-domain-summary-table [data]="answerDistribByDomainOt"></app-cpg-domain-summary-table>
+                <app-cpg-domain-summary-table [data]="answerDistribByDomainOt?.distrib"></app-cpg-domain-summary-table>
             </div>
 
             <div style="margin-top: 4rem; margin-bottom: 4rem"
                 *ngIf="techDomain == 'IT' || techDomain == 'OT+IT' || techDomain == null">
                 <h4>{{t('reports.core.cpg.it')}}</h4>
-                <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomainIt"></app-cpg-domain-summary>
+                <app-cpg-domain-summary [distrib]="answerDistribByDomainIt?.distrib"></app-cpg-domain-summary>
 
                 <p>{{t('reports.core.cpg.report.p.2')}}</p>
-                <app-cpg-domain-summary-table [data]="answerDistribByDomainIt"></app-cpg-domain-summary-table>
+                <app-cpg-domain-summary-table [data]="answerDistribByDomainIt?.distrib"></app-cpg-domain-summary-table>
             </div>
         </ng-container>
 
@@ -76,10 +76,10 @@
         <ng-container *ngFor="let dssg of answerDistribsSsg">
             <div style="margin-top: 4rem; margin-bottom: 4rem">
                 <h4>{{t('reports.core.ssg.ssg1')}} - {{t(`reports.core.ssg.${dssg.modelId}`)}}</h4>
-                <app-cpg-domain-summary [answerDistribByDomain]="dssg.distribution"></app-cpg-domain-summary>
+                <app-cpg-domain-summary [distrib]="dssg.distribution.distrib"></app-cpg-domain-summary>
 
                 <p>{{t('reports.core.cpg.report.p.2')}}</p>
-                <app-cpg-domain-summary-table [data]="dssg.distribution"></app-cpg-domain-summary-table>
+                <app-cpg-domain-summary-table [data]="dssg.distribution.distrib"></app-cpg-domain-summary-table>
             </div>
         </ng-container>
     </div>

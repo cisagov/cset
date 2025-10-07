@@ -47,12 +47,24 @@ export class SsgService {
   ];
 
   /**
+   * Define 'sisters' of sectors.  Once we 
+   * stop supporting the HSPD-7 list this will
+   * no longer be necessary.
+   */
+  relatedSectors: { [key: number]: number } = {
+    1: 19,
+    19: 1,
+    13: 28,
+    28: 13
+  };
+
+  /**
    * Sector codes with CISA online documentation.
    * We list them with a link for user reference.
    */
   otherSsgSectorList = [
-    9, // financial
-    18, // banking & finance
+    8, // energy
+    25, // energy
     12, // healthcare
     27, // healthcare
     16, // water
@@ -64,8 +76,7 @@ export class SsgService {
    * CTOR
    */
   constructor(
-    private assessSvc: AssessmentService,
-    private demoSvc: DemographicService
+    private assessSvc: AssessmentService
   ) { }
 
 
