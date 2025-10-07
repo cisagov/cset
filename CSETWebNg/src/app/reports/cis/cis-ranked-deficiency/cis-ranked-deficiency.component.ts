@@ -27,6 +27,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { CisService } from '../../../services/cis.service';
 import { ReportService } from '../../../services/report.service';
 import { TranslocoService } from '@jsverse/transloco';
+import { AssessmentDetail } from '../../../models/assessment-info.model';
 
 @Component({
   selector: 'app-cis-ranked-deficiency',
@@ -36,7 +37,7 @@ import { TranslocoService } from '@jsverse/transloco';
 })
 export class CisRankedDeficiencyComponent implements OnInit {
 
-  response: string;
+  response: AssessmentDetail;
 
   constructor(
     public cisSvc: CisService,
@@ -48,8 +49,8 @@ export class CisRankedDeficiencyComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.reportSvc.getAssessmentInfoForReport().subscribe(
-      (r: any) => {
+    this.assessSvc.getAssessmentDetail().subscribe(
+      (r: AssessmentDetail) => {
         this.response = r;
       }
     );
