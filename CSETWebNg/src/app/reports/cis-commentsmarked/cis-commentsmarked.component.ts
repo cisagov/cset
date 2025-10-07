@@ -57,12 +57,5 @@ export class CisCommentsmarkedComponent implements OnInit {
         this.loading = false;
       }
     );
-    // this.maturitySvc.getCommentsMarked().subscribe(
-    //   (r: any) => {
-    //     this.response = r;
-    //     this.loading = false;
-    //   },
-    //   error => console.error('Comments Marked Report Error: ' + (<Error>error).message)
-    // );
   }
 }
