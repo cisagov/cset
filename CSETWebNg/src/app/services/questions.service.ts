@@ -176,7 +176,21 @@ export class QuestionsService {
    */
   storeAnswer(answer: Answer) {
     answer.questionType = localStorage.getItem('questionSet');
-    return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers);
+    return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers).pipe(
+      tap((response: any) => {
+        if (response?.completedCount !== undefined) {
+          // Find whichever count has a value (only one will)
+          const totalCount =
+            (response.totalMaturityQuestionsCount || 0) +
+            (response.totalDiagramQuestionsCount || 0) +
+            (response.totalStandardQuestionsCount || 0);
+          this.assessSvc.completionRefreshRequested$.next({
+            completedCount: response.completedCount,
+            totalCount: totalCount
+          });
+        }
+      })
+    );
   }
 
   /**

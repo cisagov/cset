@@ -260,7 +260,6 @@ namespace CSETWebCore.Api.Controllers
             var lah = new LastAnsweredHelper(_context);
             lah.Save(assessmentId, _token.GetCurrentUserId(), answer);
 
-
             if (answer.Is_Component)
             {
                 var cb = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
@@ -308,19 +307,13 @@ namespace CSETWebCore.Api.Controllers
             }
 
 
-            var userId = _token.GetCurrentUserId();
-            if (userId != null)
+            CompletionCounts stats = new CompletionCounter(_context).Count(assessmentId);
+            if (stats != null)
             {
-                var completionStats = _assessmentBusiness.GetAssessmentsCompletionForUser((int)userId)
-                    .FirstOrDefault(x => x.AssessmentId == assessmentId);
-
-                if (completionStats != null)
-                {
-                    response.CompletedCount = completionStats.CompletedCount;
-                    response.TotalMaturityQuestionsCount = completionStats.TotalMaturityQuestionsCount ?? 0;
-                    response.TotalDiagramQuestionsCount = completionStats.TotalDiagramQuestionsCount ?? 0;
-                    response.TotalStandardQuestionsCount = completionStats.TotalStandardQuestionsCount ?? 0;
-                }
+                response.CompletedCount = stats.CompletedCount;
+                response.TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0;
+                response.TotalDiagramQuestionsCount = stats.TotalDiagramQuestionsCount ?? 0;
+                response.TotalStandardQuestionsCount = stats.TotalStandardQuestionsCount ?? 0;
             }
 
             return Ok(response);

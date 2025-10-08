@@ -28,6 +28,7 @@ import { Sal } from '../models/sal.model';
 import { ConfigService } from './config.service';
 import { TranslocoService } from '@jsverse/transloco';
 import { AssessmentService } from './assessment.service';
+import { tap } from 'rxjs/operators';
 
 const headers = {
   headers: new HttpHeaders()
@@ -75,9 +76,25 @@ export class SalService {
   }
 
   updateStandardSelection(sal: Sal): any {
-    return this.http.post(this.apiUrl, sal, headers);
-  }
+    return this.http.post(this.apiUrl, sal, headers)
+      .pipe(
+        tap((response: any) => {
+          if (response?.completedCount !== undefined) {
+            const totalCount =
+              (response.totalMaturityQuestionsCount || 0) +
+              (response.totalDiagramQuestionsCount || 0) +
+              (response.totalStandardQuestionsCount || 0);
+            this.assessSvc.completionRefreshRequested$.next({
+              completedCount: response.completedCount,
+              totalCount: totalCount
+            });
 
+          } else {
+            console.log('No completedCount in response');
+          }
+        })
+      );
+  }
   updateNistSpecialFactors(nistSal: NistSpecialFactor): any {
     return this.http.post(this.apiUrl + '/NistDataSpecialFactor', nistSal, headers);
   }
@@ -171,12 +188,6 @@ export class SalService {
     this.updateStandardSelection(this.selectedSAL).subscribe(
       (data: any) => {
         this.selectedSAL = data;
-        if (data?.completedCount !== undefined) {
-          this.assessSvc.completionRefreshRequested$.next({
-            completedCount: data.completedCount,
-            totalCount: data.totalMaturityQuestionsCount || 0
-          });
-        }
       },
       error => {
         console.error('Error setting sal level: ' + (<Error>error).name + (<Error>error).message);

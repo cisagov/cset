@@ -159,7 +159,9 @@ namespace CSETWebCore.Api.Controllers
                         ILevel = tmpsal.ILevel,
                         ALevel = tmpsal.ALevel,
                         CompletedCount = stats.CompletedCount,
-                        TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0
+                        TotalMaturityQuestionsCount = stats.TotalMaturityQuestionsCount ?? 0,
+                        TotalDiagramQuestionsCount = stats.TotalDiagramQuestionsCount ?? 0,
+                        TotalStandardQuestionsCount = stats.TotalStandardQuestionsCount ?? 0
                     });
                 }
 
