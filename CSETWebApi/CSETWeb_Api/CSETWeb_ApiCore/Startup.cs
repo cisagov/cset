@@ -109,7 +109,7 @@ namespace CSETWeb_ApiCore
 
                     builder.WithOrigins(allowedOrigins)
                           .AllowAnyMethod()
-                          .WithHeaders("content-type", "authorization", "noauth", "x-cset-noauth", "expseconds", "remoteauthorization", "refresh", "accept", "assessmentid", "aggregationid")
+                          .WithHeaders("content-type", "authorization", "noauth", "x-cset-noauth", "expseconds", "remoteauthorization", "refresh", "accept", "assessmentid", "aggregationid", "pwd")
                           .WithExposedHeaders("content-disposition");
                 });
             });
