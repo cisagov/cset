@@ -127,8 +127,8 @@
 
             <div class="tw:flex tw:items-center tw:gap-4">
               <!-- Progress Section -->
-              <div class="tw:flex tw:items-center tw:gap-3">
-                <div class="tw:relative">
+              <div class="tw:flex tw:items-center tw:gap-3" *ngIf="assessment?.maturityModel?.modelName !== 'CIS'">
+                <div class="tw:relative" >
                   <progress
                     class="tw:w-24 tw:h-4 tw:cursor-pointer tw:rounded-full tw:appearance-none"
                     style="background-color: #e5e7eb;"
@@ -138,6 +138,7 @@
                   </progress>
                 </div>
                 <span class="tw:text-sm tw:text-gray-700 tw:font-medium tw:min-w-[3rem]">{{ getCompletionPercentage()}}%</span>
+
               </div>
 
               <!-- Divider -->
