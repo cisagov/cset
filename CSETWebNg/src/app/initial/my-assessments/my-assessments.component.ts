@@ -252,7 +252,19 @@ export class MyAssessmentsComponent implements OnInit {
           const reviewFlag = (assessment.markedForReview || assessment.altTextMissing);
           const flagClass = reviewFlag ? 'tw:text-orange-500' : 'tw:text-gray-400';
           const tooltipText = this.getProgressTooltip(assessment);
+          const isCIS=assessment?.selectedMaturityModel==='CIS';
 
+          const progressBarHtml = isCIS ? '' : `
+      <div class="tw:flex-1 tw:min-w-0">
+        <progress class="progress custom-progress tw:w-full h-2 cursor-pointer"
+                  value="${percentage}"
+                  max="100"
+                  title="${tooltipText}"></progress>
+      </div>
+      <span class="tw:text-sm tw:text-gray-500 tw:min-w-fit tw:font-medium">
+        ${percentage}%
+      </span>
+    `;
           return `
           <div class="tw:flex tw:items-center tw:gap-2 tw:h-full tw:py-2">
             <button class="btn btn-ghost hover:!tw:rounded-lg tw:btn-xs p-1 tw:min-h-0 tw:h-auto hover:tw:bg-base-200"
@@ -267,17 +279,8 @@ export class MyAssessmentsComponent implements OnInit {
             <span class="cursor-pointer cset-icons-flag-dark tw:text-lg p-1 ${flagClass}"
                   title="${reviewFlag ? 'Assessment requires review' : 'No review required'}">
             </span>
+             ${progressBarHtml}
 
-            <div class="tw:flex-1 tw:min-w-0">
-              <progress class="progress custom-progress tw:w-full h-2 cursor-pointer"
-                        value="${percentage}"
-                        max="100"
-                        title="${tooltipText}"></progress>
-            </div>
-
-            <span class="tw:text-sm tw:text-gray-500 tw:min-w-fit tw:font-medium">
-              ${percentage}%
-            </span>
           </div>
         `;
         },
@@ -341,28 +344,28 @@ export class MyAssessmentsComponent implements OnInit {
       concatMap((assessmentsCompletionData: any[]) =>
         this.assessSvc.getAssessments().pipe(
           map((assessments: UserAssessment[]) => {
-            assessments.forEach((item, index, arr) => {
+              assessments.forEach((item, index, arr) => {
 
-              // determine assessment type display
-              item.type = this.determineAssessmentType(item);
-
-
-              let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
-              item.completedQuestionsCount = currentAssessmentStats?.completedCount;
-              item.totalAvailableQuestionsCount =
-                (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
-                (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
-                (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
+                // determine assessment type display
+                item.type = this.determineAssessmentType(item);
 
 
-            });
+                let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
+                item.completedQuestionsCount = currentAssessmentStats?.completedCount;
+                item.totalAvailableQuestionsCount =
+                  (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
+                  (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
+                  (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
 
 
-            this.sortedAssessments = assessments;
+              });
+
+
+              this.sortedAssessments = assessments;
               if (this.gridApi) {
                 this.gridApi.setGridOption('rowData', this.filteredAssessments);
               }
-          },
+            },
             error => {
               console.error(
                 'Unable to get Assessments for ' +
