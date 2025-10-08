@@ -211,7 +211,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
       'Industrial and Utilities': 'fas fa-industry',
       'Municipal and Health Care': 'fas fa-hospital',
       'NIST Special Publications': 'fas fa-book',
-      'Financial CSET': 'fas fa-dollar-sign',
+      'Financial': 'fas fa-dollar-sign',
       'Transportation': 'fas fa-truck',
       'Other': 'fas fa-ellipsis-h'
     };
