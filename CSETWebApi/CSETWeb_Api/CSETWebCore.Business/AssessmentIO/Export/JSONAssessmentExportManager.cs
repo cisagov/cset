@@ -423,7 +423,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                         var standardQuestion = new StandardQuestionJson
                         {
                             QuestionId = question.QuestionId,
-                            QuestionText = question.QuestionText
+                            QuestionText = question.QuestionText,
+                            Title = question.DisplayNumber
                         };
 
                         // Add answer if present
@@ -520,7 +521,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                             var requirementJson = new RequirementJson
                             {
                                 RequirementId = requirement.QuestionId,
-                                RequirementText = requirement.QuestionText
+                                RequirementText = requirement.QuestionText,
+                                Title = requirement.DisplayNumber
                             };
 
                             standardJson.Requirements.Add(requirementJson);
